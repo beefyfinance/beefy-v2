@@ -5,7 +5,7 @@ import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { BridgeInfo } from './components/BridgeInfo';
 import {
-  selectSteperState,
+  selectStepperState,
   selectStepperCurrentStepData,
   selectStepperFinished,
 } from '../../features/data/selectors/stepper';
@@ -27,7 +27,7 @@ const _Stepper = () => {
   const currentStepData = useAppSelector(selectStepperCurrentStepData);
 
   const stepperFinished = useAppSelector(selectStepperFinished);
-  const steps = useAppSelector(selectSteperState);
+  const steps = useAppSelector(selectStepperState);
 
   React.useEffect(() => {
     if (!isEmpty(currentStepData) && steps.modal && currentStepData.pending === false) {

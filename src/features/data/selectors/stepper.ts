@@ -3,13 +3,12 @@ import { BeefyState } from '../../../redux-types';
 import { formatBigDecimals } from '../../../helpers/format';
 import { isTokenErc20 } from '../entities/token';
 import { WalletActionsState } from '../reducers/wallet/wallet-action';
-import { selectBridgeStatus } from './bridge';
 
-export const selectSteperState = (state: BeefyState) => {
+export const selectStepperState = (state: BeefyState) => {
   return state.ui.stepperState;
 };
 
-export const selectSteperChainId = (state: BeefyState) => {
+export const selectStepperChainId = (state: BeefyState) => {
   return state.ui.stepperState.chainId;
 };
 
@@ -77,98 +76,42 @@ export function selectMintResult(walletActionsState: WalletActionsState) {
   return result;
 }
 
-export const selectIsProgressBar25 = (state: BeefyState) => {
+export const selectStepperProgress = (state: BeefyState) => {
+  const currentStep = state.ui.stepperState.currentStep;
+  const step = state.ui.stepperState.items[currentStep].step;
+  const percentPerStep = 100 / state.ui.stepperState.items.length;
+  const subProccessSum =
+    step === 'bridge'
+      ? selectBridgeTxProgress(state, percentPerStep)
+      : selectStandardTxPercentage(state, percentPerStep);
+
+  return currentStep * percentPerStep + subProccessSum;
+};
+
+const selectStandardTxPercentage = (state: BeefyState, percentPerStep: number) => {
   const walletActionsStateResult = state.user.walletActions.result;
-  const stepperItems = selectStepperItems(state);
-  const currentStep = selectStepperCurrentStep(state);
-  const currentStepData = selectStepperCurrentStepData(state);
-  const totalSteps = stepperItems.length;
-  const isBridgeStep = currentStepData?.step === 'bridge';
+  const subStep =
+    walletActionsStateResult === null ? 0 : walletActionsStateResult === 'success_pending' ? 1 : 2;
+  const percentPerSubstep = percentPerStep / (3 - 1);
 
-  return isBridgeStep
-    ? totalSteps === 1 && walletActionsStateResult === 'success_pending'
-    : totalSteps === 2 && currentStep === 0 && walletActionsStateResult === 'success_pending';
+  return subStep * percentPerSubstep;
 };
 
-export const selectIsProgressBar50 = (state: BeefyState) => {
+export const selectBridgeTxProgress = (state: BeefyState, percentPerStep: number) => {
+  const bridgeStatus = state.ui.bridge.status;
   const walletActionsStateResult = state.user.walletActions.result;
-  const stepperItems = selectStepperItems(state);
-  const currentStep = selectStepperCurrentStep(state);
-  const currentStepData = selectStepperCurrentStepData(state);
-  const totalSteps = stepperItems.length;
-  const isBridgeStep = currentStepData?.step === 'bridge';
-
-  return (
-    (isBridgeStep && totalSteps === 1 && walletActionsStateResult === 'success') ||
-    (totalSteps === 1 && walletActionsStateResult === 'success_pending') ||
-    (totalSteps === 2 && currentStep === 1 && walletActionsStateResult === null)
-  );
-};
-
-export const selectIsProgressBar60 = (state: BeefyState) => {
-  const walletActionsStateResult = state.user.walletActions.result;
-  const stepperItems = selectStepperItems(state);
-  const currentStep = selectStepperCurrentStep(state);
-  const currentStepData = selectStepperCurrentStepData(state);
-  const totalSteps = stepperItems.length;
-  const isBridgeStep = currentStepData?.step === 'bridge';
-
-  return (
-    isBridgeStep &&
-    totalSteps === 2 &&
-    currentStep === 1 &&
-    walletActionsStateResult === 'success_pending'
-  );
-};
-
-export const selectIsProgressBar70 = (state: BeefyState) => {
-  const walletActionsStateResult = state.user.walletActions.result;
-  const stepperItems = selectStepperItems(state);
-  const currentStep = selectStepperCurrentStep(state);
-  const currentStepData = selectStepperCurrentStepData(state);
-  const totalSteps = stepperItems.length;
-  const isBridgeStep = currentStepData?.step === 'bridge';
-
-  return (
-    isBridgeStep && totalSteps === 2 && currentStep === 1 && walletActionsStateResult === 'success'
-  );
-};
-
-export const selectIsProgressBar80 = (state: BeefyState) => {
-  const bridgeStatus = selectBridgeStatus(state);
-  const stepperItems = selectStepperItems(state);
-  const currentStep = selectStepperCurrentStep(state);
-  const totalSteps = stepperItems.length;
-
-  return bridgeStatus === 'loading' && totalSteps === 2 && currentStep === 1;
-};
-
-export const selectIsProgressBar90 = (state: BeefyState) => {
-  const bridgeStatus = selectBridgeStatus(state);
-  const stepperItems = selectStepperItems(state);
-  const currentStep = selectStepperCurrentStep(state);
-  const totalSteps = stepperItems.length;
-
-  return bridgeStatus === 'confirming' && totalSteps === 2 && currentStep === 1;
-};
-
-export const selectIsProgressBar75 = (state: BeefyState) => {
-  const bridgeStatus = selectBridgeStatus(state);
-  const walletActionsStateResult = state.user.walletActions.result;
-  const stepperItems = selectStepperItems(state);
-  const currentStep = selectStepperCurrentStep(state);
-  const totalSteps = stepperItems.length;
-  return (
-    (totalSteps === 1 && bridgeStatus === 'confirming') ||
-    (totalSteps === 2 && currentStep === 1 && walletActionsStateResult === 'success_pending')
-  );
-};
-
-export const selectSuccessBar = (state: BeefyState) => {
-  const bridgeStatus = selectBridgeStatus(state);
-  const stepperFinished = selectStepperFinished(state);
-  const currentStepData = selectStepperCurrentStepData(state);
-  return bridgeStatus === 'success' || (stepperFinished && currentStepData?.step !== 'bridge');
+  const subStep =
+    walletActionsStateResult === null
+      ? 0
+      : walletActionsStateResult === 'success_pending'
+      ? 1
+      : bridgeStatus === 'loading'
+      ? 2
+      : bridgeStatus === 'confirming'
+      ? 3
+      : 4;
+  const percentPerSubstep = percentPerStep / (5 - 1);
+  return subStep * percentPerSubstep;
 };
 
 export const selectErrorBar = (state: BeefyState) => {

@@ -4,7 +4,7 @@ import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import { selectChainById } from '../../../../features/data/selectors/chains';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../store';
-import { selectSteperChainId } from '../../../../features/data/selectors/stepper';
+import { selectStepperChainId } from '../../../../features/data/selectors/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -12,7 +12,7 @@ export function TransactionLink() {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const chainId = useAppSelector(selectSteperChainId);
+  const chainId = useAppSelector(selectStepperChainId);
   const walletActionsState = useAppSelector(state => state.user.walletActions);
   const chain = useAppSelector(state => selectChainById(state, chainId));
 

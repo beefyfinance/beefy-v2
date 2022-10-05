@@ -12,7 +12,7 @@ import { AlertWarning } from '../../../Alerts';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { styles } from './styles';
 import {
-  selectSteperState,
+  selectStepperState,
   selectStepperCurrentStepData,
 } from '../../../../features/data/selectors/stepper';
 import { isEmpty } from '../../../../helpers/utils';
@@ -39,7 +39,7 @@ const BridgeTxProgress = memo(function () {
   });
   const classes = useStyles();
   const { t } = useTranslation();
-  const steps = useAppSelector(selectSteperState);
+  const steps = useAppSelector(selectStepperState);
   const walletActionsState = useAppSelector(state => state.user.walletActions);
   const currentChaindId = useAppSelector(state => selectCurrentChainId(state));
   const bridgeState = useAppSelector(selectBridgeState);
