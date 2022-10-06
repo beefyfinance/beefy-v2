@@ -9,6 +9,7 @@ import { BoostEntity } from '../../entities/boost';
 import { chunk } from 'lodash';
 import {
   BoostContractData,
+  BoostContractDataResponse,
   FetchAllContractDataResult,
   GovVaultContractData,
   IContractDataApi,
@@ -22,9 +23,7 @@ import { selectTokenByAddress } from '../../selectors/tokens';
 // fix ts types
 const BeefyV2AppMulticallAbi = _BeefyV2AppMulticallAbi as AbiItem | AbiItem[];
 
-export class ContractDataAPI<T extends ChainEntity & { fetchContractDataAddress: string }>
-  implements IContractDataApi
-{
+export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi {
   constructor(protected web3: Web3, protected chain: T) {}
 
   public async fetchAllContractData(
@@ -35,7 +34,7 @@ export class ContractDataAPI<T extends ChainEntity & { fetchContractDataAddress:
   ): Promise<FetchAllContractDataResult> {
     const mc = new this.web3.eth.Contract(
       BeefyV2AppMulticallAbi,
-      this.chain.fetchContractDataAddress
+      this.chain.appMulticallContractAddress
     );
 
     // if we send too much in a single call, we get "execution reversed"
@@ -126,7 +125,7 @@ export class ContractDataAPI<T extends ChainEntity & { fetchContractDataAddress:
   protected boostFormatter(
     state: BeefyState,
 
-    result: AllValuesAsString<BoostContractData>,
+    result: BoostContractDataResponse,
     boost: BoostEntity
   ) {
     const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
@@ -139,6 +138,7 @@ export class ContractDataAPI<T extends ChainEntity & { fetchContractDataAddress:
       /* assuming period finish is a UTC timestamp in seconds */
       periodFinish:
         result.periodFinish === '0' ? null : new Date(parseInt(result.periodFinish) * 1000),
+      isPreStake: result.isPreStake,
     } as BoostContractData;
   }
 }

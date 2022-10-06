@@ -7,21 +7,22 @@ export const styles = (theme: Theme) => ({
     borderRadius: '12px',
   },
   containerBoost: {
-    marginTop: '24px',
+    marginTop: theme.spacing(3),
     padding: theme.spacing(3),
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
     borderRadius: '12px',
+    backgroundColor: theme.palette.background.default,
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '16px',
   },
   containerExpired: {
-    marginTop: '24px',
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '16px',
     padding: '24px',
     backgroundColor: theme.palette.background.default,
     borderRadius: '12px',
-  },
-  expiredBoostContainer: {
-    background: theme.palette.background.vaults.defaultOutline,
-    borderRadius: theme.spacing(1),
-    padding: theme.spacing(2),
+    marginTop: theme.spacing(3),
   },
   boostImg: {
     width: 30,
@@ -33,7 +34,6 @@ export const styles = (theme: Theme) => ({
     color: '#E88225',
     display: 'flex',
     alignItems: 'center',
-    margin: '0 0 24px 0',
   },
   titleWhite: {
     color: '#fff',
@@ -52,9 +52,10 @@ export const styles = (theme: Theme) => ({
   boostStats: {
     display: 'grid',
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-    rowGap: '16px',
     columnGap: '16px',
-    margin: '0 0 24px 0',
+    backgroundColor: '#2D3153',
+    padding: '12px',
+    borderRadius: '8px',
   },
   boostStat: {
     '& :last-child': {
@@ -70,12 +71,7 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.secondary,
   },
   button: {
-    '& + $button': {
-      marginTop: '12px',
-    },
-  },
-  expiredBoostName: {
-    ...theme.typography['h3'],
-    marginBottom: '16px',
+    backgroundColor: theme.palette.background.vaults.defaultOutline,
+    borderRadius: '8px',
   },
 });

@@ -18,11 +18,11 @@ import { DepositState } from './features/data/reducers/wallet/deposit';
 import { WalletActionsState } from './features/data/reducers/wallet/wallet-action';
 import { ZapsState } from './features/data/reducers/zaps';
 import { WithdrawState } from './features/data/reducers/wallet/withdraw';
-import { BoostModalState } from './features/data/reducers/wallet/boost-modal';
+import { BoostState } from './features/data/reducers/wallet/boost';
 import { MintersState } from './features/data/reducers/minters';
 import { Action } from 'redux';
 import { InfoCardsState } from './features/data/reducers/info-cards';
-import { BridgeModalState } from './features/data/reducers/wallet/bridge-modal';
+import { BridgeState } from './features/data/reducers/wallet/bridge';
 import { OnRampTypes } from './features/data/reducers/on-ramp-types';
 import { DataLoaderState } from './features/data/reducers/data-loader-types';
 import { FeesState } from './features/data/reducers/fees';
@@ -59,8 +59,8 @@ export interface BeefyState {
     transact: TransactState;
     deposit: DepositState;
     withdraw: WithdrawState;
-    boostModal: BoostModalState;
-    bridgeModal: BridgeModalState;
+    boost: BoostState;
+    bridge: BridgeState;
     onRamp: OnRampTypes;
   };
 }

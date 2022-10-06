@@ -178,7 +178,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     <>
       <CardContent className={classes.cardContent}>
         <div className={classes.content}>
-          {t('burn-Content', {
+          {t('Burn-Content', {
             token1: minter.mintedToken.symbol,
             token2: minter.depositToken.symbol,
           })}
@@ -251,7 +251,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
                 onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
                 className={classes.btn}
               >
-                {t('Network-Change', { network: chain.name.toUpperCase() })}
+                {t('Network-Change', { network: chain.name })}
               </Button>
             ) : (
               <Button

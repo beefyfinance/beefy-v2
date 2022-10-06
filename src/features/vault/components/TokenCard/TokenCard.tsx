@@ -11,12 +11,9 @@ import {
   selectShouldInitAddressBook,
 } from '../../../data/selectors/data-loader';
 import { selectIsTokenLoaded, selectTokenById } from '../../../data/selectors/tokens';
-import { Card } from '../Card/Card';
-import { CardContent } from '../Card/CardContent';
-import { CardHeader } from '../Card/CardHeader';
-import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../store';
+import { AssetsImage } from '../../../../components/AssetsImage';
 
 const useStyles = makeStyles(styles);
 
@@ -27,34 +24,32 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
   const chain = useAppSelector(state => selectChainById(state, token.chainId));
 
   return (
-    <Card>
-      <CardHeader>
-        <div className={classes.detailTitle}>{t('Token-Detail')}</div>
-        <CardTitle title={token.symbol} />
-        <div className={classes.cardActions}>
+    <div className={classes.container}>
+      <div className={classes.titleContainer}>
+        <div className={classes.title}>
+          <AssetsImage assetIds={[token.id]} chainId={chain.id} size={24} />
+          <span>{token.symbol}</span>
+        </div>
+        <div className={classes.buttonsContainer}>
           {token.website && (
-            <div className={classes.cardAction}>
-              <LinkButton type="link" href={token.website} text={t('Token-Site')} />
-            </div>
+            <LinkButton hideIconOnMobile={true} href={token.website} text={t('Token-Site')} />
           )}
           {isTokenErc20(token) && (
-            <div className={classes.cardAction}>
-              <LinkButton
-                href={`${chain.explorerUrl}/token/${token.address}`}
-                className={classes.cardAction}
-                text={t('Token-Contract')}
-                type="code"
-              />
-            </div>
+            <LinkButton
+              hideIconOnMobile={true}
+              href={`${chain.explorerUrl}/token/${token.address}`}
+              text={t('Token-Contract')}
+            />
+          )}
+          {token.documentation && (
+            <LinkButton hideIconOnMobile={true} href={token.documentation} text={t('Token-Docs')} />
           )}
         </div>
-      </CardHeader>
-      <CardContent>
-        <div className={classes.text}>
-          {token.description ? token.description : t('Token-NoDescrip')}
-        </div>
-      </CardContent>
-    </Card>
+      </div>
+      <div className={classes.description}>
+        {token.description ? token.description : t('Token-NoDescrip')}
+      </div>
+    </div>
   );
 }
 

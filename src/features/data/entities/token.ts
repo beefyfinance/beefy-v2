@@ -27,6 +27,7 @@ export interface TokenErc20 {
   type: 'erc20';
   website: string | null;
   description: string | null;
+  documentation: string | null;
 }
 
 /**
@@ -47,6 +48,7 @@ export interface TokenNative {
   type: 'native';
   website: string | null;
   description: string | null;
+  documentation: string | null;
 }
 
 // provide type guards

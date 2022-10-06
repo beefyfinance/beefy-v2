@@ -27,6 +27,181 @@
     "createdAt": 1621450869
   },
   {
+    "id": "dystopia-usd+-usdc",
+    "name": "USD+-USDC sLP",
+    "token": "USD+-USDC sLP",
+    "tokenAddress": "0x421a018cC5839c4C0300AfB21C725776dc389B1a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaUSD+-USDC",
+    "earnedTokenAddress": "0xe3BfD4259778596747C9BA75f259Eab0BbD9Cb08",
+    "earnContractAddress": "0xe3BfD4259778596747C9BA75f259Eab0BbD9Cb08",
+    "oracle": "lps",
+    "oracleId": "dystopia-usd+-usdc",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["USD+", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1664033343
+  },
+  {
+    "id": "dystopia-wmatic-bifi",
+    "name": "BIFI-MATIC vLP",
+    "token": "BIFI-MATIC vLP",
+    "tokenAddress": "0xC9e4a017ae5c2F89C085c534A38a3e6d3A183A43",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaMATIC-BIFI",
+    "earnedTokenAddress": "0xa83171B123a18303c5aed8F5D20AeA6CfdF76Bc6",
+    "earnContractAddress": "0xa83171B123a18303c5aed8F5D20AeA6CfdF76Bc6",
+    "oracle": "lps",
+    "oracleId": "dystopia-wmatic-bifi",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["BIFI", "MATIC"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_MEDIUM", "IL_HIGH", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1663633681
+  },
+  {
+    "id": "dystopia-usd+-stmatic",
+    "name": "USD+-stMATIC vLP",
+    "token": "USD+-stMATIC vLP",
+    "tokenAddress": "0x6f2Fed287E47590b7702f9d331344c7dACbAcfe5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaUSD+-stMATIC",
+    "earnedTokenAddress": "0x727555858111Bf77027710c19bc4a4B35b38727E",
+    "earnContractAddress": "0x727555858111Bf77027710c19bc4a4B35b38727E",
+    "oracle": "lps",
+    "oracleId": "dystopia-usd+-stmatic",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["USD+", "stMATIC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1663633680
+  },
+  {
+    "id": "dystopia-wmatic-usd+",
+    "name": "USD+-MATIC vLP",
+    "token": "USD+-MATIC vLP",
+    "tokenAddress": "0x1A5FEBA5D5846B3b840312Bd04D76ddaa6220170",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaMATIC-USD+",
+    "earnedTokenAddress": "0x3af3563Ba5C68EB7DCbAdd2dF0FcE4CC9818e75c",
+    "earnContractAddress": "0x3af3563Ba5C68EB7DCbAdd2dF0FcE4CC9818e75c",
+    "oracle": "lps",
+    "oracleId": "dystopia-wmatic-usd+",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["USD+", "MATIC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1663633679
+  },
+  {
+    "id": "dystopia-wmatic-usdc",
+    "name": "USDC-MATIC vLP",
+    "token": "USDC-MATIC vLP",
+    "tokenAddress": "0x60c088234180b36EDcec7AA8Aa23912Bb6bed114",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaMATIC-USDC",
+    "earnedTokenAddress": "0x3532b6f723948eF39d5DCf44C16855239aF81082",
+    "earnContractAddress": "0x3532b6f723948eF39d5DCf44C16855239aF81082",
+    "oracle": "lps",
+    "oracleId": "dystopia-wmatic-usdc",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["USDC", "MATIC"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "IL_HIGH", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1662740322
+  },
+  {
+    "id": "dystopia-wmatic-weth",
+    "name": "ETH-MATIC vLP",
+    "token": "ETH-MATIC vLP",
+    "tokenAddress": "0x62fC1E1fDABC0C9f2b096019e2D98204DA049457",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaMATIC-ETH",
+    "earnedTokenAddress": "0x643DD1f9D43B210c4BA2648145757480cB664175",
+    "earnContractAddress": "0x643DD1f9D43B210c4BA2648145757480cB664175",
+    "oracle": "lps",
+    "oracleId": "dystopia-wmatic-weth",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["ETH", "MATIC"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "IL_HIGH", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1662740322
+  },
+  {
+    "id": "dystopia-usdc-weth",
+    "name": "ETH-USDC vLP",
+    "token": "ETH-USDC vLP",
+    "tokenAddress": "0xCE1923D2242BBA540f1d56c8E23b1FBEAe2596dc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaUSDC-ETH",
+    "earnedTokenAddress": "0xe58604bF5B0bb2B0ec431470Db7C41573f9a18b4",
+    "earnContractAddress": "0xe58604bF5B0bb2B0ec431470Db7C41573f9a18b4",
+    "oracle": "lps",
+    "oracleId": "dystopia-usdc-weth",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["ETH", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "IL_HIGH", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1662740322
+  },
+  {
     "id": "dystopia-usdc-frax",
     "name": "FRAX-USDC sLP",
     "token": "FRAX-USDC sLP",
@@ -40,7 +215,7 @@
     "oracleId": "dystopia-usdc-frax",
     "status": "active",
     "platformId": "dystopia",
-    "assets": ["FRAX","USDC"],
+    "assets": ["FRAX", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -49,7 +224,7 @@
       "MCAP_MEDIUM",
       "CONTRACTS_VERIFIED",
       "ALGO_STABLE"
-     ],
+    ],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
     "network": "polygon",
@@ -127,14 +302,7 @@
     "platformId": "dystopia",
     "assets": ["stMATIC", "MATIC"],
     "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "MCAP_LARGE",
-      "IL_NONE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "IL_NONE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
     "network": "polygon",
@@ -156,14 +324,7 @@
     "platformId": "dystopia",
     "assets": ["MaticX", "MATIC"],
     "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "MCAP_MEDIUM",
-      "IL_NONE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_MEDIUM", "IL_NONE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
     "network": "polygon",
@@ -269,7 +430,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -297,7 +458,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -325,7 +486,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -372,7 +533,8 @@
     "earnContractAddress": "0xB0D20b7d047e10a8Af2bE8C7c4C976653A0f2ECA",
     "oracle": "lps",
     "oracleId": "balancer-matic-maticx",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["MaticX", "MATIC"],
     "strategyTypeId": "multi-lp",
@@ -389,6 +551,62 @@
     "createdAt": 1656705594
   },
   {
+    "id": "balancer-matic-maticx-v2",
+    "name": "MaticX-MATIC V2",
+    "token": "MaticX-MATIC V2",
+    "tokenAddress": "0xb20fC01D21A50d2C734C4a1262B4404d41fA7BF0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancersMatic-MaticXV2",
+    "earnedTokenAddress": "0x42Cbb13EC7b35AA76D5fE7B0A446fA7B64F7086A",
+    "earnContractAddress": "0x42Cbb13EC7b35AA76D5fE7B0A446fA7B64F7086A",
+    "oracle": "lps",
+    "oracleId": "balancer-matic-maticx-v2",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["MATIC", "MaticX"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xb20fc01d21a50d2c734c4a1262b4404d41fa7bf000000000000000000000075c",
+    "network": "polygon",
+    "createdAt": 1664553072
+  },
+  {
+    "id": "balancer-matic-stmatic-v2",
+    "name": "stMATIC-MATIC V2",
+    "token": "stMATIC-MATIC V2",
+    "tokenAddress": "0x8159462d255C1D24915CB51ec361F700174cD994",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerstMATIC-MATICV2",
+    "earnedTokenAddress": "0xF79BF908d0e6d8E7054375CD80dD33424B1980bf",
+    "earnContractAddress": "0xF79BF908d0e6d8E7054375CD80dD33424B1980bf",
+    "oracle": "lps",
+    "oracleId": "balancer-matic-stmatic-v2",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["stMATIC", "MATIC"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x8159462d255c1d24915cb51ec361f700174cd99400000000000000000000075d",
+    "network": "polygon",
+    "createdAt": 1664553071
+  },
+  {
     "id": "balancer-matic-stmatic",
     "name": "stMATIC-MATIC",
     "token": "stMATIC-MATIC",
@@ -400,7 +618,8 @@
     "earnContractAddress": "0x755e426A8B445eAE53b1c051c1E7acA7381fCDb7",
     "oracle": "lps",
     "oracleId": "balancer-matic-stmatic",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["stMATIC", "MATIC"],
     "strategyTypeId": "multi-lp",
@@ -408,7 +627,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -631,7 +850,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_MICRO",
+      "MCAP_MEDIUM",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -4559,7 +4778,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/37/deposit",
     "network": "polygon",
@@ -5157,11 +5377,12 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/23/deposit",
     "network": "polygon",
-    "createdAt": 1653323113
+    "createdAt": 1663633677
   },
   {
     "id": "popsicle-ice-eth",
@@ -5442,6 +5663,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_LOW",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
@@ -6127,37 +6349,6 @@
     "retireReason": "rewards"
   },
   {
-    "id": "quick-usdc-orbs-eol",
-    "name": "ORBS-USDC LP",
-    "token": "ORBS-USDC LP",
-    "tokenAddress": "0xB2b6D423e535b57aaD06E9866803B95fB66152EA",
-    "tokenDecimals": 18,
-    "tokenProviderId": "quickswap",
-    "earnedToken": "mooQuickSwapORBS-USDC",
-    "earnedTokenAddress": "0x333F81C94e388002aAc75ccF23Ab4865B52D7a10",
-    "earnContractAddress": "0x333F81C94e388002aAc75ccF23Ab4865B52D7a10",
-    "oracle": "lps",
-    "oracleId": "quick-usdc-orbs",
-    "status": "eol",
-    "platformId": "quickswap",
-    "retireReason": "rewards",
-    "assets": ["ORBS", "USDC"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "MCAP_MICRO",
-      "IL_HIGH",
-      "PLATFORM_ESTABLISHED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x614389EaAE0A6821DC49062D56BDA3d9d45Fa2ff",
-    "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x614389EaAE0A6821DC49062D56BDA3d9d45Fa2ff",
-    "createdAt": 1647302895,
-    "network": "polygon"
-  },
-  {
     "id": "quick-fodl-matic-eol",
     "name": "FODL-MATIC LP",
     "token": "FODL-MATIC LP",
@@ -6204,9 +6395,15 @@
     "platformId": "jarvis",
     "assets": ["jSGD", "XSGD"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/22/deposit",
-    "createdAt": 1653327757,
+    "createdAt": 1663633677,
     "network": "polygon"
   },
   {
@@ -6906,7 +7103,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://dmm.exchange/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c/0xa1219dbe76eecbf7571fed6b020dd9154396b70e",
     "buyTokenUrl": "https://dmm.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c",
@@ -6970,7 +7168,8 @@
       "IL_LOW",
       "MCAP_MICRO",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "createdAt": 1634040443,
     "retireReason": "rewards"
@@ -7000,7 +7199,8 @@
       "IL_LOW",
       "MCAP_MICRO",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "createdAt": 1634042173,
     "retireReason": "rewards"
@@ -7288,7 +7488,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/85/deposit",
     "createdAt": 1641144218,
@@ -7307,7 +7508,8 @@
     "earnContractAddress": "0x6720C2b7fd7dE1CAD3242dd3E8a86d033D4ed3f9",
     "oracle": "lps",
     "oracleId": "jarvis-2nzd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "jarvis",
     "assets": ["jNZD", "NZDS"],
     "strategyTypeId": "lp",
@@ -7318,7 +7520,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/228/deposit",
     "createdAt": 1653327832,
@@ -7347,10 +7550,11 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/255/deposit",
-    "createdAt": 1653321475,
+    "createdAt": 1663633677,
     "network": "polygon"
   },
   {
@@ -7376,10 +7580,11 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/209/deposit",
-    "createdAt": 1653230127,
+    "createdAt": 1663633677,
     "network": "polygon"
   },
   {
@@ -7670,7 +7875,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -7873,7 +8079,8 @@
     "earnContractAddress": "0x6dB1f01b58485234e5433fBe01398120701a3D4F",
     "oracle": "lps",
     "oracleId": "quick-matic-pae",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "quickswap",
     "assets": ["MATIC", "PAE"],
     "strategyTypeId": "lp",
@@ -7914,10 +8121,11 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/286/deposit",
-    "createdAt": 1658909850,
+    "createdAt": 1663633677,
     "network": "polygon"
   },
   {
@@ -7943,10 +8151,11 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/285/deposit",
-    "createdAt": 1658916346,
+    "createdAt": 1663633677,
     "network": "polygon"
   },
   {
@@ -7976,5 +8185,35 @@
     "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a",
     "network": "polygon",
     "createdAt": 1661772010
+  },
+  {
+    "id": "jarvis-2eure",
+    "name": "jEUR-EURe LP",
+    "token": "jEUR-EURe LP",
+    "tokenAddress": "0x2F3E9CA3bFf85B91D9fe6a9f3e8F9B1A6a4c3cF4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooJarvis2EURe",
+    "earnedTokenAddress": "0x58a3e6d5501180fb9fcE7cFC2368F9Dc5e186A6f",
+    "earnContractAddress": "0x58a3e6d5501180fb9fcE7cFC2368F9Dc5e186A6f",
+    "oracle": "lps",
+    "oracleId": "jarvis-2eure",
+    "status": "active",
+    "platformId": "jarvis",
+    "assets": ["jEUR", "EURe"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://polygon.curve.fi/factory/304/deposit",
+    "createdAt": 1663633678,
+    "network": "polygon"
   }
 ]

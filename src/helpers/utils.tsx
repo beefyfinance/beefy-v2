@@ -40,4 +40,6 @@ export const bluechipTokens = [
   'COMP',
   'SNX',
   'BIFI',
+  'sarETH', //Stargate Arbitrum ETH
+  'soETH', //Stargate Optimism ETH
 ];

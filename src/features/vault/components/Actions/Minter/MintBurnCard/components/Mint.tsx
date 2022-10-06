@@ -185,16 +185,19 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       <CardContent className={classes.cardContent}>
         {minter.canBurnReserves ? (
           <div className={classes.content}>
-            {t('Mint-Content', {
-              token1: minter.mintedToken.symbol,
-              token2: minter.depositToken.symbol,
-            })}
+            {t(
+              minter.hasEarningsPool ? 'Mint-Content-Burnable-Earnings' : 'Mint-Content-Burnable',
+              {
+                token1: minter.mintedToken.symbol,
+                token2: minter.depositToken.symbol,
+              }
+            )}
           </div>
         ) : (
           <>
             {' '}
             <div className={classes.content}>
-              {t('Mint-Content-Short', {
+              {t('Mint-Content', {
                 token1: minter.mintedToken.symbol,
                 token2: minter.depositToken.symbol,
               })}
@@ -268,7 +271,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
                 onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
                 className={classes.btn}
               >
-                {t('Network-Change', { network: chain.name.toUpperCase() })}
+                {t('Network-Change', { network: chain.name })}
               </Button>
             ) : (
               <Button

@@ -30,16 +30,15 @@ export const styles = (theme: Theme) => ({
     },
     '&:active, &:hover:active': {
       color: '#ffffff',
-      backgroundColor: theme.palette.primary.main,
     },
   },
   selected: {
     pointerEvents: 'none' as const,
     color: '#ffffff',
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.background.vaults.defaultOutline,
     '&:hover': {
       color: '#ffffff',
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.background.vaults.defaultOutline,
     },
   },
   untogglable: {

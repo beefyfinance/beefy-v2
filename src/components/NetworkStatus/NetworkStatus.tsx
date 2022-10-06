@@ -145,8 +145,8 @@ const findChainIdMatching = (state: BeefyState, matcher: (loader: LoaderState) =
       chainIds.push(chainId);
     }
   }
-  if (matcher(state.ui.dataLoader.global.boostForm) && state.ui.boostModal.boostId) {
-    const boost = selectBoostById(state, state.ui.boostModal.boostId);
+  if (matcher(state.ui.dataLoader.global.boostForm) && state.ui.boost.boostId) {
+    const boost = selectBoostById(state, state.ui.boost.boostId);
     chainIds.push(boost.chainId);
   }
   if (matcher(state.ui.dataLoader.global.depositForm) && state.ui.deposit.vaultId) {

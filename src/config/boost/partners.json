@@ -3,7 +3,7 @@
     "text": "Stader aims to be the distribution layer of staking while building protocols and products which enhance the security, decentralization, liquidity, governance of some of the major DPoS blockchain networks like Ethereum, Terra, Polygon, Solana and BNB Chain.",
     "website": "https://polygon.staderlabs.com/liquid-staking/maticx",
     "social": {
-      "telegram": "https://discord.com/invite/ReasyJB4Rq",
+      "discord": "https://discord.com/invite/ReasyJB4Rq",
       "twitter": "https://twitter.com/stader_polygon"
     }
   },
@@ -19,7 +19,7 @@
     "text": "Swapsicle is a decentralised exchange built on the avalanche blockchain offering swaps, farming and staking opportunities.\n\nSwapsicle DEX is built by the community and for the community meaning POPS holders are rewarded for using the platform.",
     "website": "https://www.swapsicle.io/en/swap",
     "social": {
-      "telegram": "https://discord.com/invite/swapsicle",
+      "discord": "https://discord.com/invite/swapsicle",
       "twitter": "https://twitter.com/SwapsicleDEX"
     }
   },
@@ -50,7 +50,7 @@
     "text": "Supporting the only pegged algorithmic stable currency currently on AVAX, $GRAPE which is pegged to $MIM. The goal is to create a DAO run by the community offering a high yield for investors and utilize two tokens $GRAPE and $WINE to bootstrap liquidity and provide funding for the extensive roadmap. An extensive roadmap including Launchpad, great partnerships, and upcoming lending protocol/new stable reserve currency. Future goals to support multiple chains and create a total defi ecosystem under the GrapeFi umbrella.",
     "website": "https://grapefinance.app/",
     "social": {
-      "telegram": "https://discord.gg/mZ4QrZwH5M",
+      "discord": "https://discord.gg/mZ4QrZwH5M",
       "twitter": "https://twitter.com/grape_finance"
     }
   },
@@ -60,7 +60,7 @@
     "text": "Ripae’s mission is to construct a cross-chain algorithmic stablecoin (ASC) economy and connect DeFi networks to make open finance capital efficient and accessible to everyone.\n\nWith its experienced team, Ripae Finance will strive to build DeFi’s most convenient, secure, fair, and cost-effective ASC solution in order to help the industry thrive by enabling all participants to work together effortlessly.",
     "website": "https://ripae.finance/",
     "social": {
-      "telegram": "https://discord.gg/6zq53FB4TS",
+      "discord": "https://discord.gg/6zq53FB4TS",
       "twitter": "https://twitter.com/ripaefinance"
     }
   },
@@ -820,7 +820,6 @@
     "text": "Ester.Finance is a Decentralized Finance (DeFi) Yield Optimizer project on the Fantom Opera Blockchain. Ester can make you earn more crypto with crypto. Through a set of smart contracts and several investment strategies, Ester.Finance automatically maximizes the user rewards from various liquidity pools (LPs), automated market-making (AMM) projects, and other yield farming opportunities in the DeFi ecosystem. This provides a huge advantage over attempting to do this manually yourself.",
     "website": "https://app.ester.finance/",
     "social": {
-      "telegram": "",
       "twitter": "https://twitter.com/EsterFinance"
     }
   },
@@ -830,7 +829,7 @@
     "text": "2omb Finance is a proud fork of Tomb Finance, with 4x faster TSHARE (2SHARE) emissions. People are always looking for the next fork of successful projects. 2omb Finance simplifies this process into a trusted team that delivers an ecosystem of symbiotic forks that thrive on the success of one another. Native tokens of previous forks are utilized for participation in genesis pools of new forks.",
     "website": "https://2omb.finance/",
     "social": {
-      "telegram": "https://discord.gg/sTXFJ82HcP",
+      "discord": "https://discord.gg/sTXFJ82HcP",
       "twitter": "https://twitter.com/2ombfinance"
     }
   },
@@ -840,7 +839,7 @@
     "text": "The SpiritSwap protocol provides a platform for trading, staking, and farming. SpiritSwap incentivizes Fantom network participation through revenue sharing by locking SPIRIT in return for inSPIRIT. inSPIRIT vests at the end of the lock and is non-transferrable. Lock your SPIRIT on Beefy to mint binSPIRIT, Beefy’s liquid version of inSPIRIT. Stake your binSPIRIT-SPIRIT LP in our vault, and earn high interests on the pair with near-zero impermanent loss. Deposit your mooSpiritBinSPIRIT-SPIRIT (receipt for LP deposited in our vaults) into the boost to earn mooBinSPIRIT.",
     "website": "https://app.spiritswap.finance/",
     "social": {
-      "telegram": "https://discord.gg/spiritswap",
+      "discord": "https://discord.gg/spiritswap",
       "twitter": "https://twitter.com/Spirit_Swap"
     }
   },
@@ -1103,7 +1102,7 @@
     "text": "Lido on Polygon is a liquid staking solution for MATIC backed by industry-leading staking providers. With Lido on Polygon you can stake your MATIC tokens in a decentralized and secure way and use your stMATIC on the secondary market.\nLido on Polygon is brought to you by Shard Labs, a new generation of blockchain architects who are building a borderless, transparent, and democratic world.",
     "website": "https://polygon.lido.fi/",
     "social": {
-      "telegram": "https://discord.com/invite/vgdPfhZ",
+      "discord": "https://discord.com/invite/vgdPfhZ",
       "twitter": "https://twitter.com/LidoOnPolygon"
     }
   },
@@ -1111,7 +1110,7 @@
     "text": "Lido on Moonriver is a liquid staking solution for KSM backed by industry-leading staking providers. With Lido on Moonriver you can stake your KSM tokens in a decentralized and secure way and use your stKSM on the secondary market.\nLido on Moonriver is formed by a new generation of blockchain architects who are building a borderless, transparent, and democratic world.",
     "website": "https://kusama.lido.fi/",
     "social": {
-      "telegram": "https://discord.com/invite/FwG5QFWvfn",
+      "discord": "https://discord.com/invite/FwG5QFWvfn",
       "twitter": "https://twitter.com/lidofinance"
     }
   },
@@ -1119,7 +1118,7 @@
     "text": "Lido on Moonbeam is a liquid staking solution for DOT backed by industry-leading staking providers. With Lido on Moonbeam you can stake your DOT tokens in a decentralized and secure way and use your stDOT on the secondary market.\nLido on Moonbeam is formed by a new generation of blockchain architects who are building a borderless, transparent, and democratic world.",
     "website": "https://polkadot.lido.fi/",
     "social": {
-      "telegram": "https://discord.com/invite/vgdPfhZ",
+      "discord": "https://discord.com/invite/vgdPfhZ",
       "twitter": "https://twitter.com/lidofinance"
     }
   }

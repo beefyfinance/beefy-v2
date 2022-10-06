@@ -27,6 +27,9 @@ export function walletActionsMiddleware(store: BeefyStore) {
     await next(action);
     const walletAddressAfter = store.getState().user.wallet.address;
 
+    // On rehydrate, avoid refetching since it will be triggered from scenario already
+    if (action.type === 'persist/REHYDRATE') return;
+
     if (walletAddressBefore !== walletAddressAfter && walletAddressAfter !== null) {
       // reload data if account has changed and we don't already have some data
       // ie: when user selects a totally new account, we want to fetch

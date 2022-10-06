@@ -15,4 +15,13 @@ export const zaps = [
     ammPairInitHash: '0xef3f1aabf6b944a53c06890783ddef260a21995d1eaea6d52f980cfe082a877d',
     lpProviderFee: 0.002,
   },
+  {
+    // hermes
+    type: 'solidly',
+    zapAddress: '0x60837b25506540adcfaB339a8aD03a6a1CA7131C',
+    ammRouter: '0x2d4F788fDb262a25161Aa6D6e8e1f18458da8441',
+    ammFactory: '0x633a093C9e94f64500FC8fCBB48e90dd52F6668F',
+    ammPairInitHash: '0x1206c53c96c9926d750268b77c1897f0b6035ff853c3ba6088623ed7df249367',
+    lpProviderFee: 0.0001,
+  },
 ];

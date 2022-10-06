@@ -47,7 +47,7 @@ export const getContractDataApi = createFactoryWithCacheByChain(async chain => {
   const web3 = await getWeb3Instance(chain);
 
   console.debug(`Instanciating ContractDataAPI for chain ${chain.id}`);
-  return new ContractDataAPI(web3, chain as ChainEntity & { fetchContractDataAddress: string });
+  return new ContractDataAPI(web3, chain as ChainEntity);
 });
 
 const BalanceAPIPromise = import('./balance');
@@ -57,7 +57,7 @@ export const getBalanceApi = createFactoryWithCacheByChain(async chain => {
   const web3 = await getWeb3Instance(chain);
 
   console.debug(`Instanciating BalanceAPI for chain ${chain.id}`);
-  return new BalanceAPI(web3, chain as ChainEntity & { fetchBalancesAddress: string });
+  return new BalanceAPI(web3, chain as ChainEntity);
 });
 
 const AllowanceAPIPromise = import('./allowance');
@@ -67,7 +67,7 @@ export const getAllowanceApi = createFactoryWithCacheByChain(async chain => {
   const web3 = await getWeb3Instance(chain);
 
   console.debug(`Instanciating AllowanceAPI for chain ${chain.id}`);
-  return new AllowanceAPI(web3, chain as ChainEntity & { fetchBalancesAddress: string });
+  return new AllowanceAPI(web3, chain as ChainEntity);
 });
 
 let walletConnection: IWalletConnectionApi | null = null;

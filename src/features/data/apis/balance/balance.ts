@@ -1,4 +1,4 @@
-import _BeefyV2AppMulticallUserAbi from '../../../../config/abi/BeefyV2AppUserMulticall.json';
+import _BeefyV2AppMulticallUserAbi from '../../../../config/abi/BeefyV2AppMulticall.json';
 import { AbiItem } from 'web3-utils';
 import Web3 from 'web3';
 import { VaultGov } from '../../entities/vault';
@@ -33,9 +33,7 @@ import {
 // fix ts types
 const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];
 
-export class BalanceAPI<T extends ChainEntity & { fetchBalancesAddress: string }>
-  implements IBalanceApi
-{
+export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   constructor(protected web3: Web3, protected chain: T) {}
 
   public async fetchAllBalances(
@@ -47,7 +45,7 @@ export class BalanceAPI<T extends ChainEntity & { fetchBalancesAddress: string }
   ): Promise<FetchAllBalancesResult> {
     const mc = new this.web3.eth.Contract(
       BeefyV2AppMulticallUserAbi,
-      this.chain.fetchBalancesAddress
+      this.chain.appMulticallContractAddress
     );
 
     // if we send too much in a single call, we get "execution reversed"
@@ -65,21 +63,12 @@ export class BalanceAPI<T extends ChainEntity & { fetchBalancesAddress: string }
       }
     }
     const erc20TokensBatches = chunk(erc20Tokens, CHUNK_SIZE);
-    const govVaultBatches = chunk(govVaults, CHUNK_SIZE);
-    const boostBatches = chunk(boosts, CHUNK_SIZE);
+    const boostAndGovVaultBatches = chunk([...boosts, ...govVaults], CHUNK_SIZE);
 
-    const boostPromises = boostBatches.map(boostBatch =>
-      mc.methods
-        .getBoostOrGovBalance(
-          boostBatch.map(boost => boost.earnContractAddress),
-          walletAddress
-        )
-        .call()
-    );
-    const govVaultPromises = govVaultBatches.map(govVaultBatch => {
+    const boostAndGovVaultPromises = boostAndGovVaultBatches.map(boostAndGovVaultBatch => {
       return mc.methods
         .getBoostOrGovBalance(
-          govVaultBatch.map(vault => vault.earnContractAddress),
+          boostAndGovVaultBatch.map(boostOrGovVaultt => boostOrGovVaultt.earnContractAddress),
           walletAddress
         )
         .call();
@@ -95,8 +84,7 @@ export class BalanceAPI<T extends ChainEntity & { fetchBalancesAddress: string }
     const nativeTokenPromises = nativeTokens.map(_ => this.web3.eth.getBalance(walletAddress));
 
     const results = await Promise.all([
-      ...boostPromises,
-      ...govVaultPromises,
+      ...boostAndGovVaultPromises,
       ...erc20TokensPromises,
       ...nativeTokenPromises,
     ]);
@@ -110,20 +98,27 @@ export class BalanceAPI<T extends ChainEntity & { fetchBalancesAddress: string }
     };
 
     let resultsIdx = 0;
-    for (const boostBatch of boostBatches) {
-      const batchRes = results[resultsIdx].map((boostRes, elemidx) =>
-        this.boostFormatter(state, boostRes, boostBatch[elemidx])
-      );
-      res.boosts = res.boosts.concat(batchRes);
+
+    let boostIndex = 0;
+    for (let j = 0; j < boostAndGovVaultBatches.length; j++) {
+      for (let i = 0; i < results[resultsIdx].length; i++) {
+        const boostOrGovVaultRes = results[resultsIdx][i];
+        if (boostIndex < boosts.length) {
+          res.boosts.push(this.boostFormatter(state, boostOrGovVaultRes, boosts[boostIndex]));
+        } else {
+          res.govVaults.push(
+            this.govVaultFormatter(
+              state,
+              boostOrGovVaultRes,
+              govVaults[boostIndex - boosts.length] as any
+            )
+          );
+        }
+        boostIndex++;
+      }
       resultsIdx++;
     }
-    for (const govVaultBatch of govVaultBatches) {
-      const batchRes = results[resultsIdx].map((vaultRes, elemidx) =>
-        this.govVaultFormatter(state, vaultRes, govVaultBatch[elemidx])
-      );
-      res.govVaults = res.govVaults.concat(batchRes);
-      resultsIdx++;
-    }
+
     for (const erc20TokenBatch of erc20TokensBatches) {
       const batchRes = results[resultsIdx].map((vaultRes, elemidx) =>
         this.erc20TokenFormatter(vaultRes, erc20TokenBatch[elemidx])

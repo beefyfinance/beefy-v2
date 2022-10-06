@@ -25,7 +25,7 @@ export const ProposalBanner = memo(function ProposalBanner() {
 
   React.useEffect(() => {
     const setRandomCardIndex = () => {
-      setBifiCardIndex(sample([1, 2, 3]));
+      setBifiCardIndex(sample([1, 2]));
     };
 
     intervalRef.current = setInterval(setRandomCardIndex, 3000);
@@ -57,7 +57,7 @@ export const ProposalBanner = memo(function ProposalBanner() {
                   alt="snapshot"
                 />
                 <div>
-                  New Beefy On-Ramp is live:
+                  The new Beefy On-Ramp is live:
                   <Link to={'/onramp'} className={classes.link}>
                     {' '}
                     Buy Crypto

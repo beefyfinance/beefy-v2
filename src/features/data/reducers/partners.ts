@@ -4,7 +4,6 @@ import { fetchPartnersConfig } from '../actions/partners';
 import { ChainEntity } from '../entities/chain';
 import { PartnerEntity } from '../entities/partner';
 import { VaultEntity } from '../entities/vault';
-import { MoonpotConfig } from '../apis/config-types';
 
 /**
  * State containing Vault infos
@@ -15,7 +14,7 @@ export type PartnersState = {
   };
   moonpot: {
     byVaultId: {
-      [vaultId: VaultEntity['id']]: MoonpotConfig;
+      [vaultId: VaultEntity['id']]: boolean;
     };
   };
   insurace: {
@@ -58,10 +57,9 @@ export const partnersSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchPartnersConfig.fulfilled, (sliceState, action) => {
-      for (const moonpotConfig of action.payload.Moonpot) {
-        const vaultId = moonpotConfig.id;
+      for (const vaultId of action.payload.Moonpot) {
         if (!sliceState.moonpot.byVaultId[vaultId]) {
-          sliceState.moonpot.byVaultId[vaultId] = moonpotConfig;
+          sliceState.moonpot.byVaultId[vaultId] = true;
         }
       }
       for (const chainId of action.payload.Insurace) {

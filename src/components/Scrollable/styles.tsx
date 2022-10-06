@@ -39,5 +39,6 @@ export const styles = (theme: Theme) => ({
   bottomShadow: {
     bottom: 0,
     background: 'linear-gradient(180deg, rgba(35, 39, 67, 0) 0%, #232743 100%)',
+    borderRadius: '12px',
   },
 });

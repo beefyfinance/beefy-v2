@@ -1,6 +1,9 @@
 import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
+  header: {
+    display: 'flex',
+  },
   riskList: {
     marginBottom: '32px',
   },
@@ -8,7 +11,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'row' as const,
     justifyContent: 'space-between',
-    marginBottom: '24px',
+    marginBottom: '16px',
     '&:last-child': {
       marginBottom: 0,
     },
@@ -30,6 +33,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
   },
   notes: {
+    marginTop: theme.spacing(2),
     '& p': {
       margin: '0 0 12px 0',
       color: theme.palette.text.secondary,
@@ -47,10 +51,19 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
   },
   safetyLabel: {
-    ...theme.typography['subline-lg'],
-    color: theme.palette.text.disabled,
+    ...theme.typography.h2,
+    color: theme.palette.text.primary,
+    marginRight: theme.spacing(2),
   },
   tooltipHolder: {
     marginLeft: theme.spacing(0.5),
+  },
+  howItWorksContainer: {
+    padding: 16,
+    backgroundColor: theme.palette.background.vaults.defaultOutline,
+  },
+  titleClassName: {
+    ...theme.typography['body-lg-med'],
+    color: theme.palette.text.primary,
   },
 });

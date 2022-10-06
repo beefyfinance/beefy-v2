@@ -5,12 +5,14 @@ import { memo } from 'react';
 
 const useStyles = makeStyles(styles);
 
-const _Divider = ({ onClick }: { onClick?: () => void }) => {
-  const classes = useStyles();
+const _Divider = ({ onClick, clickleable }: { onClick?: () => void; clickleable?: boolean }) => {
+  const classes = useStyles({ clickleable });
   return (
     <Box className={classes.customDivider}>
       <Box className={classes.line} />
-      <ArrowDown onClick={onClick} />
+      <Box className={classes.arrowContainer}>
+        <ArrowDown onClick={onClick} />
+      </Box>
       <Box className={classes.line} />
     </Box>
   );

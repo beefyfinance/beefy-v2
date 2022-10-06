@@ -1,5 +1,123 @@
 [
   {
+    "id": "stellaswap-poop-wglmr",
+    "name": "POOP-GLMR LP",
+    "token": "POOP-GLMR LP",
+    "tokenAddress": "0x4EfB208eeEb5A8C85af70e8FBC43D6806b422bec",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "earnedToken": "mooStellaswapPOOP-GLMR",
+    "earnedTokenAddress": "0xe184De2A8495184a9cCe8843e1Db192564cF1b9c",
+    "earnContractAddress": "0xe184De2A8495184a9cCe8843e1Db192564cF1b9c",
+    "oracle": "lps",
+    "oracleId": "stellaswap-poop-wglmr",
+    "status": "active",
+    "platformId": "stellaswap",
+    "assets": ["POOP", "GLMR"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xFFfffFFecB45aFD30a637967995394Cc88C0c194",
+    "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
+    "network": "moonbeam",
+    "createdAt": 1662910200
+  },
+  {
+    "id": "stellaswap-wglmr-xcintr",
+    "name": "xcINTR-GLMR LP",
+    "token": "xcINTR-GLMR LP",
+    "tokenAddress": "0xD3DFb90f7996a97f9f394E130342485e37DD28F7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "earnedToken": "mooStellaXCINTR-GLMR",
+    "earnedTokenAddress": "0x2F5708acf8AF3648c9290217B9B8A4a7c275b27D",
+    "earnContractAddress": "0x2F5708acf8AF3648c9290217B9B8A4a7c275b27D",
+    "oracle": "lps",
+    "oracleId": "stellaswap-wglmr-xcintr",
+    "status": "active",
+    "platformId": "stellaswap",
+    "assets": ["xcINTR", "GLMR"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xFffFFFFF4C1cbCd97597339702436d4F18a375Ab",
+    "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
+    "network": "moonbeam",
+    "createdAt": 1662574638
+  },
+  {
+    "id": "stellaswap-wglmr-xcibtc",
+    "name": "xciBTC-GLMR LP",
+    "token": "xciBTC-GLMR LP",
+    "tokenAddress": "0x4C5f99045AF91D2b6d4fa0Ea89FC47cF42711555",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "earnedToken": "mooStellaXCIBTC-GLMR",
+    "earnedTokenAddress": "0xbaAcbb2A18Db15D185AE5fAdc53bEe21Ed626a5e",
+    "earnContractAddress": "0xbaAcbb2A18Db15D185AE5fAdc53bEe21Ed626a5e",
+    "oracle": "lps",
+    "oracleId": "stellaswap-wglmr-xcibtc",
+    "status": "active",
+    "platformId": "stellaswap",
+    "assets": ["xciBTC", "GLMR"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xFFFFFfFf5AC1f9A51A93F5C527385edF7Fe98A52",
+    "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
+    "network": "moonbeam",
+    "createdAt": 1662570612
+  },
+  {
+    "id": "stellaswap-wglmr-xcausd",
+    "name": "xcaUSD-GLMR LP",
+    "token": "xcaUSD-GLMR LP",
+    "tokenAddress": "0xd95cab0Ed89269390f2aD121798e6092Ea395139",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "earnedToken": "mooStellaXCAUSD-GLMR",
+    "earnedTokenAddress": "0xA3cC783A4a1A4cDFa0D62230EC47F9D36342b2Fb",
+    "earnContractAddress": "0xA3cC783A4a1A4cDFa0D62230EC47F9D36342b2Fb",
+    "oracle": "lps",
+    "oracleId": "stellaswap-wglmr-xcausd",
+    "status": "active",
+    "platformId": "stellaswap",
+    "assets": ["xcaUSD", "GLMR"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_SMALL",
+      "ALGO_STABLE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xfFfFFFFF52C56A9257bB97f4B2b6F7B2D624ecda",
+    "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
+    "network": "moonbeam",
+    "createdAt": 1662563208
+  },
+  {
     "id": "moonbeam-bifi-gov",
     "name": "BIFI Earnings Pool",
     "token": "BIFI",
@@ -147,37 +265,6 @@
     "createdAt": 1661191064
   },
   {
-    "id": "beamswap-wglmr-xcausd",
-    "name": "xcaUSD-GLMR LP",
-    "token": "xcaUSD-GLMR TLP",
-    "tokenAddress": "0x91ed237532E2fFFa3F114e9A1B9AF3e65a8495ec",
-    "tokenDecimals": 18,
-    "tokenProviderId": "beamswap",
-    "earnedToken": "mooBeamGLMR-xcaUSD",
-    "earnedTokenAddress": "0x40802d092739d6817173464b398D1eD77CCA7382",
-    "earnContractAddress": "0x40802d092739d6817173464b398D1eD77CCA7382",
-    "oracle": "lps",
-    "oracleId": "beamswap-wglmr-xcausd",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "beamswap",
-    "assets": ["xcaUSD", "GLMR"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_HIGH",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0xfFfFFFFF52C56A9257bB97f4B2b6F7B2D624ecda/0xAcc15dC74880C9944775448304B263D191c6077F",
-    "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xAcc15dC74880C9944775448304B263D191c6077F&outputCurrency=0xfFfFFFFF52C56A9257bB97f4B2b6F7B2D624ecda",
-    "network": "moonbeam",
-    "createdAt": 1659949276
-  },
-  {
     "id": "beamswap-4pool",
     "name": "BUSD/USDC/USDT/DAI",
     "token": "multi-4pool",
@@ -199,7 +286,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?outputCurrency=0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/multi/multichain3pool",
@@ -287,7 +375,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable/add/0x7FbE3126C03444D43fC403626ec81E3e809E6b46",
     "createdAt": 1655845404,
@@ -343,7 +432,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -371,7 +460,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -401,7 +490,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -460,7 +549,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
@@ -519,7 +608,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -549,7 +638,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -578,7 +667,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_LOW",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -608,7 +697,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -695,7 +784,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -783,7 +872,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -813,7 +902,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -843,7 +932,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -873,7 +962,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -902,7 +991,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -931,7 +1020,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -961,7 +1050,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
@@ -992,7 +1081,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1022,7 +1111,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1052,7 +1141,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1081,7 +1170,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1110,7 +1199,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1139,7 +1228,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1168,7 +1257,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1198,7 +1287,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1227,7 +1316,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1284,7 +1373,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1313,7 +1402,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1343,7 +1432,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED",
       "ALGO_STABLE"
@@ -1374,7 +1463,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED",
       "ALGO_STABLE"
@@ -1436,7 +1525,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1465,7 +1554,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],

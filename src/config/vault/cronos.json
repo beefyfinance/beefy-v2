@@ -988,7 +988,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -1298,36 +1299,6 @@
     "network": "cronos"
   },
   {
-    "id": "vvs-tusd-usdc",
-    "name": "TUSD-USDC LP",
-    "token": "TUSD-USDC LP",
-    "tokenAddress": "0x94FD83482016BCC5FcA5972A3635aA6524C3F557",
-    "tokenDecimals": 18,
-    "tokenProviderId": "vvs",
-    "earnedToken": "mooVVSTUSD-USDC",
-    "earnedTokenAddress": "0xA4D3044b9e790464A14c9801aBe39743d95498f2",
-    "earnContractAddress": "0xA4D3044b9e790464A14c9801aBe39743d95498f2",
-    "oracle": "lps",
-    "oracleId": "vvs-tusd-usdc",
-    "status": "eol",
-    "retireReason": "tvl",
-    "platformId": "vvs",
-    "assets": ["TUSD", "USDC"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "buyTokenUrl": "https://vvs.finance/swap?inputCurrency=0xc21223249ca28397b4b6541dffaecc539bff0c59&outputCurrency=0x87efb3ec1576dec8ed47e58b832bedcd86ee186e",
-    "addLiquidityUrl": "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0x87EFB3ec1576Dec8ED47e58B832bEdCd86eE186e",
-    "createdAt": 1657018675,
-    "network": "cronos"
-  },
-  {
     "id": "ripae-pcro-cro",
     "name": "pCRO-CRO",
     "token": "pCRO-CRO LP",
@@ -1346,7 +1317,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -1383,6 +1355,35 @@
     "buyTokenUrl": " https://mm.finance/swap?outputCurrency=0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
     "createdAt": 1657602778,
+    "network": "cronos"
+  },
+  {
+    "id": "vvs-cro-fira",
+    "name": "FIRA-CRO LP",
+    "token": "FIRA-CRO LP",
+    "tokenAddress": "0x689E7BA5170001aC887965a5Db1C9Ce932c93462",
+    "tokenDecimals": 18,
+    "tokenProviderId": "vvs",
+    "earnedToken": "mooVvsCRO-FIRA",
+    "earnedTokenAddress": "0x8d49e7F962D6815c71a5F7Aa60599EdF393Bad44",
+    "earnContractAddress": "0x8d49e7F962D6815c71a5F7Aa60599EdF393Bad44",
+    "oracle": "lps",
+    "oracleId": "vvs-cro-fira",
+    "status": "active",
+    "platformId": "vvs",
+    "assets": ["FIRA", "CRO"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x7ABa852082b6F763E13010CA33B5D9Ea4EeE2983",
+    "addLiquidityUrl": "https://vvs.finance/add/CRO/0x7ABa852082b6F763E13010CA33B5D9Ea4EeE2983",
+    "createdAt": 1662489253,
     "network": "cronos"
   }
 ]

@@ -1,4 +1,6 @@
-export const minters = [
+import { MinterConfig } from '../../features/data/apis/config-types';
+
+export const minters: MinterConfig[] = [
   {
     id: 'bejoe',
     name: 'beJoe',
@@ -18,6 +20,7 @@ export const minters = [
       decimals: 18,
     },
     canBurnReserves: true,
+    hasEarningsPool: true,
     reserveBalanceMethod: 'balanceOfWant',
     vaultIds: ['beefy-beJoe-earnings', 'beefy-beJoe'],
   },

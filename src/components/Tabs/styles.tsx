@@ -17,8 +17,8 @@ export const styles = (theme: Theme) => ({
       color: theme.palette.text.disabled,
     },
     '& .Mui-selected': {
-      backgroundColor: theme.palette.primary.main,
-      borderRadius: 8,
+      backgroundColor: theme.palette.background.vaults.defaultOutline,
+      borderRadius: 4,
       color: theme.palette.text.primary,
       padding: '5px',
     },

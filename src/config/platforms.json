@@ -882,7 +882,7 @@
   {
     "id": "solidly",
     "name": "Solidly",
-    "filter": true
+    "filter": false
   },
   {
     "id": "dystopia",
@@ -892,6 +892,11 @@
   {
     "id": "cone",
     "name": "Cone",
+    "filter": true
+  },
+  {
+    "id": "hermes",
+    "name": "Hermes",
     "filter": true
   }
 ]

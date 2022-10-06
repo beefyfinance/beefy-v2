@@ -44,16 +44,10 @@ export interface FeaturedVaultConfig {
   [vaultId: VaultEntity['id']]: boolean;
 }
 
-export interface MoonpotConfig {
-  id: VaultEntity['id'];
-  img: string;
-  link: string;
-}
-
 export interface PartnersConfig {
   QiDao: VaultEntity['id'][];
   Insurace: ChainEntity['id'][];
-  Moonpot: MoonpotConfig[];
+  Moonpot: VaultEntity['id'][];
   Solace: ChainEntity['id'][];
 }
 
@@ -96,8 +90,7 @@ export interface ChainConfig {
   rpc: string[];
   explorerUrl: string;
   multicallAddress: string;
-  fetchContractDataAddress?: string;
-  fetchBalancesAddress?: string;
+  appMulticallContractAddress: string;
   providerName: string;
   walletSettings: {
     chainId: string;
@@ -149,6 +142,7 @@ export interface MinterConfig {
   depositToken: MinterConfigToken;
   mintedToken: MinterConfigToken;
   canBurnReserves: boolean;
+  hasEarningsPool: boolean;
   reserveBalanceMethod?: string;
   vaultIds: string[];
 }
