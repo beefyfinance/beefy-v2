@@ -23,7 +23,18 @@ export const zapsSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchAllZapsAction.fulfilled, (sliceState, action) => {
-      sliceState.byChainId = action.payload.byChainId;
+      for (const [chainId, zaps] of Object.entries(action.payload.byChainId)) {
+        sliceState.byChainId[chainId] = zaps.map(zap => ({
+          zapAddress: zap.zapAddress,
+          ammRouter: zap.ammRouter,
+          ammFactory: zap.ammFactory,
+          ammPairInitHash: zap.ammPairInitHash,
+          type: zap.type ?? 'uniswapv2',
+          withdrawEstimateMode: zap.withdrawEstimateMode ?? 'getAmountOut',
+          withdrawEstimateFee: zap.withdrawEstimateFee ?? '0',
+          lpProviderFee: zap.lpProviderFee,
+        }));
+      }
     });
   },
 });

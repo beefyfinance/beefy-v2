@@ -27,6 +27,7 @@ import { infoCardsSlice } from './info-cards';
 import { bridgeModalSlice } from './wallet/bridge-modal';
 import { onRamp } from './on-ramp';
 import { feesSlice } from './fees';
+import { transactReducer } from './wallet/transact';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -57,6 +58,7 @@ const userReducer = combineReducers<BeefyState['user']>({
 const uiReducer = combineReducers<BeefyState['ui']>({
   filteredVaults: persistReducer({ key: 'filters', storage }, filteredVaultsSlice.reducer),
   theme: persistReducer({ key: 'theme', storage }, uiThemeSlice.reducer),
+  transact: transactReducer,
   deposit: depositSlice.reducer,
   withdraw: withdrawSlice.reducer,
   boostModal: boostModalSlice.reducer,

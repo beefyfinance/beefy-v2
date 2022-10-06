@@ -3,9 +3,9 @@ import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { Item } from './Item';
 import { ItemInner, ItemInnerProps } from './ItemInner';
-import { SearchInput } from '../SearchInput';
+import { SearchInput } from '../../../../../../components/SearchInput';
 import { useTranslation } from 'react-i18next';
-import { Scrollable } from '../Scrollable';
+import { Scrollable } from '../../../../../../components/Scrollable';
 
 const useStyles = makeStyles(styles);
 

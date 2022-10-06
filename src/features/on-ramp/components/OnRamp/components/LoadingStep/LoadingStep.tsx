@@ -1,11 +1,14 @@
 import React, { memo } from 'react';
 import { Step } from '../Step';
-import { LoadingIndicator } from '../LoadingIndicator';
+import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
+import { useTranslation } from 'react-i18next';
 
 export const LoadingStep = memo(function () {
+  const { t } = useTranslation();
+
   return (
     <Step title={null}>
-      <LoadingIndicator />
+      <LoadingIndicator text={t('OnRamp-Loading')} />
     </Step>
   );
 });

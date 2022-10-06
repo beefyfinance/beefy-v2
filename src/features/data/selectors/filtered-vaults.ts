@@ -166,7 +166,7 @@ function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchTex
       return true;
     }
 
-    // Boost earned token
+    // Boosts earned token
     if (selectIsVaultPreStakedOrBoosted(state, vault.id)) {
       const boostAssets = selectPreStakeOrActiveBoostIds(state, vault.id)
         .map(boostId => selectBoostById(state, boostId))

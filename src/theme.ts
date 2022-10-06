@@ -121,6 +121,9 @@ const theme = createTheme({
       primary: '#F5F5FF',
       secondary: '#D0D0DA',
       disabled: '#999CB3',
+      dark: '#999CB3',
+      middle: '#D0D0DA',
+      light: '#F5F5FF',
     },
   },
   typography: {

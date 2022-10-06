@@ -26,6 +26,7 @@ import { BridgeModalState } from './features/data/reducers/wallet/bridge-modal';
 import { OnRampTypes } from './features/data/reducers/on-ramp-types';
 import { DataLoaderState } from './features/data/reducers/data-loader-types';
 import { FeesState } from './features/data/reducers/fees';
+import { TransactState } from './features/data/reducers/wallet/transact';
 
 export interface BeefyState {
   entities: {
@@ -55,6 +56,7 @@ export interface BeefyState {
     dataLoader: DataLoaderState;
     filteredVaults: FilteredVaultsState;
     theme: UIThemeState;
+    transact: TransactState;
     deposit: DepositState;
     withdraw: WithdrawState;
     boostModal: BoostModalState;

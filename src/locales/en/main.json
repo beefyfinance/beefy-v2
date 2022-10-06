@@ -435,5 +435,7 @@
   "OnRamp-YouBuy": "You Buy",
   "OnRamp-BestRateVia": "Best Rate Via",
   "OnRamp-SelectedRateVia": "Selected Rate Via",
-  "OnRamp-Continue": "Continue"
+  "OnRamp-Continue": "Continue",
+  "Transact-SelectToken": "Select token",
+  "Transact-Available": "Available:"
 }

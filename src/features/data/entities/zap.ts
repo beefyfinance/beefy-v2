@@ -1,4 +1,10 @@
-import { ZapConfig } from '../apis/config-types';
-
-// for now, both structures are the same
-export type ZapEntity = ZapConfig;
+export type ZapEntity = {
+  zapAddress: string;
+  ammRouter: string;
+  ammFactory: string;
+  ammPairInitHash: string;
+  type: 'uniswapv2' | 'solidly';
+  withdrawEstimateMode: 'getAmountOut' | 'getAmountsOut' | 'getAmountOutWithFee';
+  withdrawEstimateFee: string;
+  lpProviderFee: number;
+};

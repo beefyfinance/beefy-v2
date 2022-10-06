@@ -1,12 +1,10 @@
-import { Button, Container, Hidden, makeStyles } from '@material-ui/core';
+import { Container, Hidden, makeStyles } from '@material-ui/core';
 import React, { lazy, memo, PropsWithChildren, useState } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { DisplayTags } from '../../components/vaultTags';
 import { AssetsImage } from '../../components/AssetsImage';
 import { styles } from './styles';
-import { Deposit } from './components/Deposit';
-import { Withdraw } from './components/Withdraw';
 import { TokenCard } from './components/TokenCard';
 import { StrategyCard } from './components/StrategyCard';
 import { SafetyCard } from './components/SafetyCard';
@@ -32,7 +30,6 @@ import {
 } from '../data/selectors/partners';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { CowLoader } from '../../components/CowLoader';
-import { MinterCards } from './components/MinterCards';
 import { InfoCards } from './components/InfoCards/InfoCards';
 import { RetirePauseReason } from './components/RetirePauseReason';
 import { InsuraceCard } from './components/InsuraceCard';
@@ -42,6 +39,7 @@ import { VaultMeta } from './components/VaultMeta';
 import { useAppSelector } from '../../store';
 import { VaultPlatform } from '../../components/VaultPlatform';
 import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdown';
+import { Actions } from './components/Actions';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -132,24 +130,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               <Hidden mdUp>
                 <RetirePauseReason vaultId={vaultId} className={classes.retirePauseReason} />
               </Hidden>
-              <div className={classes.dw}>
-                <div className={classes.tabs}>
-                  <Button
-                    onClick={() => setDw('deposit')}
-                    className={dw === 'deposit' ? classes.selected : ''}
-                  >
-                    {t('Deposit-Verb')}
-                  </Button>
-                  <Button
-                    onClick={() => setDw('withdraw')}
-                    className={dw === 'withdraw' ? classes.selected : ''}
-                  >
-                    {t('Withdraw-Verb')}
-                  </Button>
-                </div>
-                {dw === 'deposit' ? <Deposit vaultId={vaultId} /> : <Withdraw vaultId={vaultId} />}
-              </div>
-              <MinterCards vaultId={vaultId} />
+              <Actions vaultId={vaultId} />
               <div>
                 <NexusCard />
               </div>

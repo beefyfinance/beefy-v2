@@ -19,7 +19,7 @@ interface FetchAllZapFulfilledPayload {
 // TODO: To be more efficient we could only load zaps for one chain at a time
 export const fetchAllZapsAction = createAsyncThunk<
   FetchAllZapFulfilledPayload,
-  {},
+  void,
   { state: BeefyState }
 >('zap/fetchAllZapsAction', async (_, { getState }) => {
   const api = getConfigApi();

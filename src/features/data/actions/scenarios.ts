@@ -234,7 +234,7 @@ export async function initDepositForm(
   // we need zaps
   const zapsLoader = store.getState().ui.dataLoader.global.zaps;
   if (zapsLoader && isInitialLoader(zapsLoader)) {
-    await store.dispatch(fetchAllZapsAction({}));
+    await store.dispatch(fetchAllZapsAction());
   }
 
   // then we can init the form
@@ -256,7 +256,7 @@ export async function initWithdrawForm(
   // we need zaps
   const zapsLoader = store.getState().ui.dataLoader.global.zaps;
   if (zapsLoader && isInitialLoader(zapsLoader)) {
-    await store.dispatch(fetchAllZapsAction({}));
+    await store.dispatch(fetchAllZapsAction());
   }
 
   // then we can init the form

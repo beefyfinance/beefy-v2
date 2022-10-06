@@ -194,7 +194,7 @@ const _Steps = ({
                     </Box>
                   </>
                 )}
-              {/* Boost Success */}
+              {/* Boosts Success */}
               {steps.items[steps.currentStep].step === 'stake' &&
                 walletActionsState.result === 'success' && (
                   <>

@@ -38,6 +38,16 @@ declare module '@material-ui/core/styles/createPalette' {
       error: string;
     };
   }
+
+  export interface TypeText {
+    primary: string;
+    secondary: string;
+    disabled: string;
+    hint: string;
+    dark: string;
+    middle: string;
+    light: string;
+  }
 }
 
 declare module '@material-ui/core/styles' {

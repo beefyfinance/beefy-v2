@@ -92,7 +92,7 @@ export const selectPastBoostIdsWithUserBalance = (
   return boostIds;
 };
 
-export const selectShouldDisplayBoostWidget = (state: BeefyState, vaultId: VaultEntity['id']) => {
+export const selectShouldDisplayVaultBoost = (state: BeefyState, vaultId: VaultEntity['id']) => {
   if (!state.entities.boosts.byVaultId[vaultId]) {
     return false;
   }

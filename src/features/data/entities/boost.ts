@@ -18,7 +18,7 @@ export interface BoostEntity {
    * "Earned" token is the token you get back for staking into a boost
    * you stake in boosts but they don't give you anything in return
    * so we created a fake "unique token identifier"
-   * and for boosts we do: boostSymbol = ${boost.token}${boost.id}Boost;
+   * and for boosts we do: boostSymbol = ${boost.token}${boost.id}Boosts;
    */
   earnedTokenAddress: string;
 
