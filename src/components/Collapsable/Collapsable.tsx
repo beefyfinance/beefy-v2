@@ -31,18 +31,18 @@ export const Collapsable = memo<CollapsableProps>(function ({
   }, []);
 
   return (
-    <>
-      <div className={clsx(containerClassName, classes.container)}>
-        <Button fullWidth={true} onClick={handleCollapse} className={classes.title}>
-          <div className={titleClassName}>{title}</div>
-          <IconButton className={classes.iconButton}>
-            {open ? <ExpandLess /> : <ExpandMore />}
-          </IconButton>
-        </Button>
-        <Collapse in={open} timeout="auto">
-          {children}
-        </Collapse>
-      </div>
-    </>
+    <div className={clsx(containerClassName, classes.container)}>
+      <Button fullWidth={true} onClick={handleCollapse} className={classes.title}>
+        <div className={titleClassName}>{title}</div>
+        {open ? (
+          <ExpandLess className={classes.titleIcon} />
+        ) : (
+          <ExpandMore className={classes.titleIcon} />
+        )}
+      </Button>
+      <Collapse in={open} timeout="auto">
+        {children}
+      </Collapse>
+    </div>
   );
 });
