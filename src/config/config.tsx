@@ -445,6 +445,7 @@ export const config = {
       'DOLA',
       'soUSDC',
       'USD+',
+      'MIM',
     ],
   },
 };
