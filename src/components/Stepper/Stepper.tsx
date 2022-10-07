@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { makeStyles, Snackbar } from '@material-ui/core';
 import { isEmpty } from '../../helpers/utils';
 import { styles } from './styles';
@@ -7,10 +7,9 @@ import { BridgeInfo } from './components/BridgeInfo';
 import {
   selectStepperState,
   selectStepperCurrentStepData,
-  selectStepperFinished,
+  selectStepperStepContent,
 } from '../../features/data/selectors/stepper';
-import { stepperActions } from '../../features/data/reducers/wallet/stepper';
-import { Title } from './components/Title';
+import { StepContent, stepperActions } from '../../features/data/reducers/wallet/stepper';
 import {
   ErrorContent,
   StepsCountContent,
@@ -19,14 +18,23 @@ import {
 } from './components/Content';
 import { ProgressBar } from './components/PogressBar';
 
+const stepToComponent: Record<StepContent, FC> = {
+  [StepContent.StartTx]: StepsCountContent,
+  [StepContent.WaitingTx]: WaitingContent,
+  [StepContent.BridgeTx]: BridgeInfo,
+  [StepContent.ErrorTx]: ErrorContent,
+  [StepContent.SuccessTx]: SuccessContent,
+};
+
 const useStyles = makeStyles(styles);
 
 const _Stepper = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const currentStepData = useAppSelector(selectStepperCurrentStepData);
+  const content = useAppSelector(selectStepperStepContent);
+  const StepContent = stepToComponent[content];
 
-  const stepperFinished = useAppSelector(selectStepperFinished);
   const steps = useAppSelector(selectStepperState);
 
   React.useEffect(() => {
@@ -48,18 +56,7 @@ const _Stepper = () => {
       <div className={classes.snackbarContainer}>
         <ProgressBar />
         <div className={classes.contentContainer}>
-          {/*Title */}
-          <Title />
-          {/* Steps Count Content */}
-          <StepsCountContent />
-          {/* Waiting Content */}
-          <WaitingContent />
-          {/* Error content */}
-          <ErrorContent />
-          {/*Bridge Info */}
-          <BridgeInfo />
-          {/* Steps finished */}
-          {stepperFinished && <SuccessContent />}
+          <StepContent />
         </div>
       </div>
     </Snackbar>

@@ -3,6 +3,7 @@ import { BeefyState } from '../../../redux-types';
 import { formatBigDecimals } from '../../../helpers/format';
 import { isTokenErc20 } from '../entities/token';
 import { WalletActionsState } from '../reducers/wallet/wallet-action';
+import { StepContent } from '../reducers/wallet/stepper';
 
 export const selectStepperState = (state: BeefyState) => {
   return state.ui.stepperState;
@@ -13,11 +14,7 @@ export const selectStepperChainId = (state: BeefyState) => {
 };
 
 export const selectIsStepperStepping = (state: BeefyState) => {
-  return state.ui.stepperState.modal && !state.ui.stepperState.finished;
-};
-
-export const selectStepperFinished = (state: BeefyState) => {
-  return state.ui.stepperState.finished;
+  return state.ui.stepperState.modal && state.ui.stepperState.stepContent !== StepContent.SuccessTx;
 };
 
 export const selectStepperCurrentStep = (state: BeefyState) => {
@@ -31,6 +28,10 @@ export const selectStepperCurrentStepData = (state: BeefyState) => {
 
 export const selectStepperItems = (state: BeefyState) => {
   return state.ui.stepperState.items;
+};
+
+export const selectStepperStepContent = (state: BeefyState) => {
+  return state.ui.stepperState.stepContent;
 };
 
 export function selectMintResult(walletActionsState: WalletActionsState) {

@@ -251,7 +251,7 @@
   "Transactn-Close": "Close",
   "Transactn-ConfirmPending": "Confirmation pending",
   "Transactn-Wait": "Waiting for network to confirm transaction",
-  "Transactn-Confirmed": "Transaction confirmed",
+  "Transactn-Confirmed": "{{currentStep}} / {{totalTxs}} Transaction confirmed",
   "Transactn-ViewTrnsactn": "View transaction",
   "Remember": "Remember: ",
   "Remember-Msg": "mooTokens are the interest-bearing, tokenized proof of your deposit. You will need them to withdraw your funds. Losing ownership of your mooTokens will mean you lose ownership of your deposit",

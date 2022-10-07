@@ -11,20 +11,17 @@ import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import { AlertWarning } from '../../../Alerts';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { styles } from './styles';
-import {
-  selectStepperState,
-  selectStepperCurrentStepData,
-} from '../../../../features/data/selectors/stepper';
+import { selectStepperCurrentStepData } from '../../../../features/data/selectors/stepper';
 import { isEmpty } from '../../../../helpers/utils';
-import { selectBridgeState } from '../../../../features/data/selectors/bridge';
+import { selectBridgeState, selectBridgeStatus } from '../../../../features/data/selectors/bridge';
 import { Button } from '../../../Button';
-import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
+import { StepContent, stepperActions } from '../../../../features/data/reducers/wallet/stepper';
 import { walletActions } from '../../../../features/data/actions/wallet-actions';
+import { Title } from '../Title';
 
 const useStyles = makeStyles(styles);
 
 interface TxStateInterface {
-  msg: string;
   error: string | null;
   swapTx: string | null;
   status: 0 | 3 | 10 | 8 | 9 | 12 | 14;
@@ -32,17 +29,16 @@ interface TxStateInterface {
 
 const BridgeTxProgress = memo(function () {
   const [txData, setTxData] = React.useState<TxStateInterface>({
-    msg: '',
     error: null,
     swapTx: null,
     status: 0,
   });
   const classes = useStyles();
   const { t } = useTranslation();
-  const steps = useAppSelector(selectStepperState);
   const walletActionsState = useAppSelector(state => state.user.walletActions);
   const currentChaindId = useAppSelector(state => selectCurrentChainId(state));
   const bridgeState = useAppSelector(selectBridgeState);
+  const bridgeStatus = useAppSelector(selectBridgeStatus);
   const chain = useAppSelector(state => selectChainById(state, currentChaindId));
   const destChain = useAppSelector(state => selectChainById(state, bridgeState.destChainId));
   const dispatch = useAppDispatch();
@@ -71,7 +67,6 @@ const BridgeTxProgress = memo(function () {
         .then(res => {
           if (res.msg === 'Error') {
             setTxData({
-              msg: 'Error',
               error: res.error,
               swapTx: null,
               status: 0,
@@ -79,7 +74,6 @@ const BridgeTxProgress = memo(function () {
           }
           if (res.msg === 'Success') {
             setTxData({
-              msg: 'Success',
               swapTx: res.info.swaptx,
               error: null,
               status: res.info.status,
@@ -105,7 +99,6 @@ const BridgeTxProgress = memo(function () {
           setTxData({
             swapTx: null,
             error: `Request Error ${err}`,
-            msg: 'Error',
             status: 14,
           });
         });
@@ -123,7 +116,7 @@ const BridgeTxProgress = memo(function () {
 
   return (
     <>
-      {txData?.status === 10 && (
+      {bridgeStatus === 'success' && (
         <Box className={classes.successContainer}>
           <div className={classes.textSuccess}>
             {t('bridge-Success-Content', {
@@ -173,10 +166,10 @@ const BridgeTxProgress = memo(function () {
             />
             <div className={classes.chainName}>{destChain.name}</div>
           </Box>
-          {steps.finished && walletActionsState.result === 'success' && (
+          {walletActionsState.result === 'success' && (
             <Box className={classes.chainStatusContainer}>
-              {txData?.status !== 10 && <CircularProgress size={20} />}
-              {txData?.status === 10 && (
+              {bridgeStatus !== 'success' && <CircularProgress size={20} />}
+              {bridgeStatus === 'success' && (
                 <img
                   style={{ height: '16px' }}
                   alt="check"
@@ -184,14 +177,14 @@ const BridgeTxProgress = memo(function () {
                 />
               )}
               <div className={classes.statusText}>
-                {txData?.status !== 9 && txData?.status !== 10 && t('Pending')}
-                {txData.status === 9 && t('Confirming')}
-                {txData?.status === 10 && t('Success')}
+                {bridgeStatus === 'loading' && t('Pending')}
+                {bridgeStatus === 'confirming' && t('Confirming')}
+                {bridgeStatus === 'success' && t('Success')}
               </div>
             </Box>
           )}
         </Box>
-        {txData.msg !== 'Error' && txData.swapTx && (
+        {!txData.error && txData.swapTx && (
           <MuiButton
             className={classes.redirectLinkSuccess}
             href={destChain.explorerUrl + '/tx/' + txData.swapTx}
@@ -211,7 +204,7 @@ const BridgeTxProgress = memo(function () {
           {<OpenInNewRoundedIcon htmlColor="#59A662" fontSize="inherit" />}
         </MuiButton>
       )}
-      {txData?.status === 10 && (
+      {bridgeStatus === 'success' && (
         <Button
           borderless={true}
           fullWidth={true}

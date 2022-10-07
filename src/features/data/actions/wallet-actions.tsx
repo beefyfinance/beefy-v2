@@ -51,6 +51,7 @@ import { selectChainById } from '../selectors/chains';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { ZapDepositEstimate, ZapOptions } from '../apis/zap/zap-types';
 import { updateSteps } from './stepper';
+import { StepContent, stepperActions } from '../reducers/wallet/stepper';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -934,6 +935,7 @@ function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity
   transaction
     .on('transactionHash', function (hash: TrxHash) {
       dispatch(createWalletActionPendingAction(hash, additionalData));
+      dispatch(stepperActions.setStepContent({ stepContent: StepContent.WaitingTx }));
     })
     .on('receipt', function (receipt: TrxReceipt) {
       dispatch(createWalletActionSuccessAction(receipt, additionalData));
@@ -962,6 +964,7 @@ function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity
     })
     .on('error', function (error: TrxError) {
       dispatch(createWalletActionErrorAction(error, additionalData));
+      dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
     })
     .catch(error => {
       dispatch(createWalletActionErrorAction({ message: String(error) }, additionalData));

@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isEmpty } from '../../../helpers/utils';
 import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
-import { stepperActions } from '../reducers/wallet/stepper';
+import { StepContent, stepperActions } from '../reducers/wallet/stepper';
 
 type StartStepperParams = ChainEntity['id'];
 
@@ -30,12 +30,13 @@ export const updateSteps = createAsyncThunk<void, void, { state: BeefyState }>(
     const store = getState();
     const walletActionsState = store.user.walletActions;
     const steps = store.ui.stepperState;
-    if (walletActionsState.result === 'success' && !steps.finished) {
+    if (walletActionsState.result === 'success' && steps.stepContent !== StepContent.SuccessTx) {
       const nextStep = steps.currentStep + 1;
       if (!isEmpty(steps.items[nextStep])) {
         dispatch(stepperActions.updateCurrentStepIndex({ stepIndex: nextStep }));
+        dispatch(stepperActions.setStepContent({ stepContent: StepContent.StartTx }));
       } else {
-        dispatch(stepperActions.setFinished({ finished: true }));
+        dispatch(stepperActions.setStepContent({ stepContent: StepContent.SuccessTx }));
       }
     }
   }

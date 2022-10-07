@@ -7,10 +7,6 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
-  icon: {
-    height: '20px',
-    marginRight: theme.spacing(1),
-  },
   titleContainer: {
     display: 'flex',
     justifyContent: 'space-between',

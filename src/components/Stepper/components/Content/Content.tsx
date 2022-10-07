@@ -3,34 +3,34 @@ import clsx from 'clsx';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
-import { selectBridgeStatus } from '../../../../features/data/selectors/bridge';
 import {
   selectMintResult,
+  selectStepperCurrentStep,
   selectStepperCurrentStepData,
-  selectStepperFinished,
+  selectStepperItems,
 } from '../../../../features/data/selectors/stepper';
 import { formatBigDecimals } from '../../../../helpers/format';
-import { isEmpty } from '../../../../helpers/utils';
+
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { Button } from '../../../Button';
 import { TransactionLink } from '../TransactionLink';
 import { walletActions } from '../../../../features/data/actions/wallet-actions';
 import { styles } from './styles';
+import { Title } from '../Title';
 
 const useStyles = makeStyles(styles);
 
 export const StepsCountContent = memo(function () {
+  const { t } = useTranslation();
   const classes = useStyles();
-  const walletActionsStateResult = useAppSelector(state => state.user.walletActions.result);
   const currentStepData = useAppSelector(selectStepperCurrentStepData);
-  const stepsFinished = useAppSelector(selectStepperFinished);
+  const currentStep = useAppSelector(selectStepperCurrentStep);
+  const stepperItems = useAppSelector(selectStepperItems);
 
   return (
     <>
-      {!isEmpty(currentStepData) &&
-        walletActionsStateResult !== 'error' &&
-        walletActionsStateResult !== 'success_pending' &&
-        !stepsFinished && <div className={classes.message}>{currentStepData.message}</div>}
+      <Title>{t('Transactn-Confirmed', { currentStep, totalTxs: stepperItems.length })}</Title>
+      <div className={classes.message}>{currentStepData.message}</div>
     </>
   );
 });
@@ -38,17 +38,11 @@ export const StepsCountContent = memo(function () {
 export const WaitingContent = memo(function () {
   const { t } = useTranslation();
   const classes = useStyles();
-  const bridgeStatus = useAppSelector(selectBridgeStatus);
-  const needShowBridgeInfo = bridgeStatus === 'loading' || bridgeStatus === 'confirming';
-  const walletActionsStateResult = useAppSelector(state => state.user.walletActions.result);
-  const stepsFinished = useAppSelector(selectStepperFinished);
 
   return (
     <>
-      {((needShowBridgeInfo && walletActionsStateResult !== null) ||
-        (!stepsFinished && walletActionsStateResult === 'success_pending')) && (
-        <div className={classes.message}>{t('Transactn-Wait')}</div>
-      )}
+      <Title>{t('Transactn-ConfirmPending')}</Title>
+      <div className={classes.message}>{t('Transactn-Wait')}</div>
     </>
   );
 });
@@ -57,45 +51,34 @@ export const ErrorContent = memo(function () {
   const { t } = useTranslation();
   const classes = useStyles();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
-  const stepsFinished = useAppSelector(selectStepperFinished);
-  const dispatch = useAppDispatch();
-
-  const handleClose = React.useCallback(() => {
-    dispatch(stepperActions.reset());
-    dispatch(walletActions.resetWallet());
-  }, [dispatch]);
 
   return (
     <>
-      {!stepsFinished && walletActionsState.result === 'error' && (
-        <>
-          <div className={clsx(classes.content, classes.errorContent)}>
-            {walletActionsState.data.error.friendlyMessage ? (
-              <div className={classes.friendlyMessage}>
-                {walletActionsState.data.error.friendlyMessage}
-              </div>
-            ) : null}
-            <div className={classes.message}>{walletActionsState.data.error.message}</div>
+      <Title>
+        <img
+          className={classes.icon}
+          src={require('../../../../images/icons/error.svg').default}
+          alt="error"
+        />
+        {t('Transactn-Error')}
+      </Title>
+      <div className={clsx(classes.content, classes.errorContent)}>
+        {walletActionsState.data.error.friendlyMessage && (
+          <div className={classes.friendlyMessage}>
+            {walletActionsState.data.error.friendlyMessage}
           </div>
-          <Button
-            borderless={true}
-            fullWidth={true}
-            className={classes.closeBtn}
-            onClick={handleClose}
-          >
-            {t('Transactn-Close')}
-          </Button>
-        </>
-      )}
+        )}
+        <div className={classes.message}>{walletActionsState.data.error.message}</div>
+      </div>
+      <CloseButton />
     </>
   );
 });
 
-export const ButtonsContent = memo(function () {
+export const CloseButton = memo(function () {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const currentStepData = useAppSelector(selectStepperCurrentStepData);
 
   const handleClose = React.useCallback(() => {
     dispatch(stepperActions.reset());
@@ -103,18 +86,9 @@ export const ButtonsContent = memo(function () {
   }, [dispatch]);
 
   return (
-    <>
-      {currentStepData.step !== 'bridge' && (
-        <Button
-          borderless={true}
-          fullWidth={true}
-          className={classes.closeBtn}
-          onClick={handleClose}
-        >
-          {t('Transactn-Close')}
-        </Button>
-      )}
-    </>
+    <Button borderless={true} fullWidth={true} className={classes.closeBtn} onClick={handleClose}>
+      {t('Transactn-Close')}
+    </Button>
   );
 });
 
@@ -154,22 +128,19 @@ export const SuccessContent = memo(function () {
 
   return (
     <>
-      {currentStepData.step !== 'bridge' && (
-        <>
-          <div className={clsx(classes.content, classes.successContent)}>
-            <div className={classes.message}>{successMessage}</div>
-            <TransactionLink />
+      <Title>{t(`${currentStepData.step}-Success-Title`)}</Title>
+      <div className={clsx(classes.content, classes.successContent)}>
+        <div className={classes.message}>{successMessage}</div>
+        <TransactionLink />
+      </div>
+      {hasRememberMsg && (
+        <div className={classes.rememberContainer}>
+          <div className={classes.message}>
+            <span>{t('Remember')}</span> {t(rememberMsg)}
           </div>
-          {hasRememberMsg && (
-            <div className={classes.rememberContainer}>
-              <div className={classes.message}>
-                <span>{t('Remember')}</span> {t(rememberMsg)}
-              </div>
-            </div>
-          )}
-          <ButtonsContent />
-        </>
+        </div>
       )}
+      <CloseButton />
     </>
   );
 });

@@ -4,6 +4,14 @@ import { startStepper } from '../../actions/stepper';
 import { ChainEntity } from '../../entities/chain';
 import { TokenEntity } from '../../entities/token';
 
+export enum StepContent {
+  StartTx = 1,
+  WaitingTx,
+  BridgeTx,
+  ErrorTx,
+  SuccessTx,
+}
+
 export type Step = {
   step:
     | 'approve'
@@ -31,16 +39,16 @@ export type Step = {
 export interface StepperState {
   modal: boolean;
   currentStep: number;
+  stepContent: StepContent;
   items: Step[];
-  finished: boolean;
   chainId: ChainEntity['id'] | null;
 }
 
 export const initialStepperStater: StepperState = {
   modal: false,
   currentStep: -1,
+  stepContent: StepContent.StartTx,
   items: [],
-  finished: false,
   chainId: null,
 };
 
@@ -61,14 +69,14 @@ export const stepperSlice = createSlice({
     updateCurrentStepIndex(sliceState, action: PayloadAction<{ stepIndex: number }>) {
       sliceState.currentStep = action.payload.stepIndex;
     },
-    setFinished(sliceState, action: PayloadAction<{ finished: boolean }>) {
-      sliceState.finished = action.payload.finished;
-    },
     setModal(sliceState, action: PayloadAction<{ modal: boolean }>) {
       sliceState.modal = action.payload.modal;
     },
     setChainId(sliceState, action: PayloadAction<{ chainId: ChainEntity['id'] }>) {
       sliceState.chainId = action.payload.chainId;
+    },
+    setStepContent(sliceState, action: PayloadAction<{ stepContent: StepContent }>) {
+      sliceState.stepContent = action.payload.stepContent;
     },
   },
   extraReducers: builder => {
