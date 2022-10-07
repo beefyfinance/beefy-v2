@@ -15,9 +15,8 @@ import { selectStepperCurrentStepData } from '../../../../features/data/selector
 import { isEmpty } from '../../../../helpers/utils';
 import { selectBridgeState, selectBridgeStatus } from '../../../../features/data/selectors/bridge';
 import { Button } from '../../../Button';
-import { StepContent, stepperActions } from '../../../../features/data/reducers/wallet/stepper';
+import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
 import { walletActions } from '../../../../features/data/actions/wallet-actions';
-import { Title } from '../Title';
 
 const useStyles = makeStyles(styles);
 
