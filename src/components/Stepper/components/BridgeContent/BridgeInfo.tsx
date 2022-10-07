@@ -6,11 +6,14 @@ import { selectCurrentChainId } from '../../../../features/data/selectors/wallet
 import { formatBigNumberSignificant } from '../../../../helpers/format';
 import { TransactionLink } from '../TransactionLink';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
-import { useAppSelector } from '../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../store';
 import { styles } from './styles';
 import { selectBridgeState, selectBridgeStatus } from '../../../../features/data/selectors/bridge';
 import { ChainEntity } from '../../../../features/data/entities/chain';
 import { TxStateInterface } from './hooks';
+import { Button } from '../../../Button';
+import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
+import { walletActions } from '../../../../features/data/actions/wallet-actions';
 
 const useStyles = makeStyles(styles);
 
@@ -129,19 +132,20 @@ export const DestChainStatus = memo(function ({ txData }: { txData: TxStateInter
 export const BridgeSuccesInfo = memo(function () {
   const classes = useStyles();
   const { t } = useTranslation();
+  const bridgeStatus = useAppSelector(selectBridgeStatus);
 
   const bridgeState = useAppSelector(selectBridgeState);
   const destChain = useAppSelector(state => selectChainById(state, bridgeState.destChainId));
-  return (
-    <Box className={classes.successContainer}>
+  return bridgeStatus === 'success' ? (
+    <div className={classes.successContainer}>
       <div className={classes.textSuccess}>
         {t('bridge-Success-Content', {
           amount: formatBigNumberSignificant(bridgeState.amount, 4),
           chain: destChain.name,
         })}
       </div>
-    </Box>
-  );
+    </div>
+  ) : null;
 });
 
 export const AnySwapLinkButton = memo(function () {
@@ -164,5 +168,23 @@ export const AnySwapLinkButton = memo(function () {
       {t('Transactn-ViewMultichain')}{' '}
       {<OpenInNewRoundedIcon htmlColor="#59A662" fontSize="inherit" />}
     </MuiButton>
+  ) : null;
+});
+
+export const CloseButton = memo(function () {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const dispatch = useAppDispatch();
+  const bridgeStatus = useAppSelector(selectBridgeStatus);
+
+  const handleClose = React.useCallback(() => {
+    dispatch(stepperActions.reset());
+    dispatch(walletActions.resetWallet());
+  }, [dispatch]);
+
+  return bridgeStatus === 'success' ? (
+    <Button borderless={true} fullWidth={true} className={classes.closeBtn} onClick={handleClose}>
+      {t('Transactn-Close')}
+    </Button>
   ) : null;
 });
