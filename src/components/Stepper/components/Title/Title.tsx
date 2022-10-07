@@ -10,10 +10,10 @@ import { stepperActions } from '../../../../features/data/reducers/wallet/steppe
 const useStyles = makeStyles(styles);
 
 interface TitleProps {
-  children: ReactNode;
+  text: ReactNode;
 }
 
-export const Title = memo<TitleProps>(function ({ children }) {
+export const Title = memo<TitleProps>(function ({ text }) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const handleClose = React.useCallback(() => {
@@ -22,7 +22,7 @@ export const Title = memo<TitleProps>(function ({ children }) {
 
   return (
     <div className={classes.titleContainer}>
-      <div className={classes.title}>{children}</div>
+      <div className={classes.title}>{text}</div>
       <IconButton className={classes.closeIcon} onClick={handleClose}>
         <CloseRoundedIcon fontSize="small" htmlColor="#8A8EA8" />
       </IconButton>

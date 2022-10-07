@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
 import {
@@ -29,7 +29,7 @@ export const StepsCountContent = memo(function () {
 
   return (
     <>
-      <Title>{t('Transactn-Confirmed', { currentStep, totalTxs: stepperItems.length })}</Title>
+      <Title text={t('Transactn-Confirmed', { currentStep, totalTxs: stepperItems.length })} />
       <div className={classes.message}>{currentStepData.message}</div>
     </>
   );
@@ -41,7 +41,7 @@ export const WaitingContent = memo(function () {
 
   return (
     <>
-      <Title>{t('Transactn-ConfirmPending')}</Title>
+      <Title text={t('Transactn-ConfirmPending')} />
       <div className={classes.message}>{t('Transactn-Wait')}</div>
     </>
   );
@@ -54,14 +54,19 @@ export const ErrorContent = memo(function () {
 
   return (
     <>
-      <Title>
-        <img
-          className={classes.icon}
-          src={require('../../../../images/icons/error.svg').default}
-          alt="error"
-        />
-        {t('Transactn-Error')}
-      </Title>
+      <Title
+        text={
+          <>
+            <img
+              className={classes.icon}
+              src={require('../../../../images/icons/error.svg').default}
+              alt="error"
+            />
+            {t('Transactn-Error')}
+          </>
+        }
+      />
+
       <div className={clsx(classes.content, classes.errorContent)}>
         {walletActionsState.data.error.friendlyMessage && (
           <div className={classes.friendlyMessage}>
@@ -98,37 +103,45 @@ export const SuccessContent = memo(function () {
   const walletActionsState = useAppSelector(state => state.user.walletActions);
   const currentStepData = useAppSelector(selectStepperCurrentStepData);
   const hasRememberMsg = currentStepData.step === 'deposit' || currentStepData.step === 'stake';
-  const rememberMsg =
-    currentStepData.step === 'deposit'
-      ? 'Remember-Msg'
-      : currentStepData.step === 'stake'
-      ? 'Remember-Msg-Bst'
-      : '';
+  const rememberMsg = useMemo(() => {
+    if (currentStepData.step === 'deposit') {
+      return 'Remember-Msg';
+    }
+    if (currentStepData.step === 'stake') {
+      return 'Remember-Msg-Bst';
+    }
+    return '';
+  }, [currentStepData.step]);
 
-  const textParams = currentStepData.extraInfo?.rewards
-    ? {
+  const textParams = useMemo(() => {
+    if (currentStepData.extraInfo?.rewards) {
+      return {
         amount: formatBigDecimals(walletActionsState?.data.amount, 4),
         token: walletActionsState?.data.token.symbol,
         rewards: formatBigDecimals(currentStepData.extraInfo.rewards.amount),
         rewardToken: currentStepData.extraInfo.rewards.token.symbol,
-      }
-    : {
-        amount: selectMintResult(walletActionsState).amount,
-        token: walletActionsState.data.token.symbol,
       };
+    }
+    return {
+      amount: selectMintResult(walletActionsState).amount,
+      token: walletActionsState.data.token.symbol,
+    };
+  }, [currentStepData.extraInfo?.rewards, walletActionsState]);
 
   const isZapOutMessage = currentStepData.extraInfo?.zap && currentStepData.step === 'withdraw';
 
-  const successMessage =
-    currentStepData.step === 'mint'
-      ? t(`${selectMintResult(walletActionsState).type}-Success-Content`, { ...textParams })
-      : isZapOutMessage
-      ? t('withdraw-zapout-Success-Content', { ...textParams })
-      : t(`${currentStepData.step}-Success-Content`, { ...textParams });
+  const successMessage = useMemo(() => {
+    if (currentStepData.step === 'mint')
+      t(`${selectMintResult(walletActionsState).type}-Success-Content`, { ...textParams });
+
+    if (isZapOutMessage) t('withdraw-zapout-Success-Content', { ...textParams });
+
+    return t(`${currentStepData.step}-Success-Content`, { ...textParams });
+  }, [currentStepData.step, isZapOutMessage, t, textParams, walletActionsState]);
 
   return (
     <>
-      <Title>{t(`${currentStepData.step}-Success-Title`)}</Title>
+      <Title text={t(`${currentStepData.step}-Success-Title`)} />
       <div className={clsx(classes.content, classes.successContent)}>
         <div className={classes.message}>{successMessage}</div>
         <TransactionLink />
