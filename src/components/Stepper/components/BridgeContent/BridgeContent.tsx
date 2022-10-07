@@ -11,12 +11,11 @@ import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import { AlertWarning } from '../../../Alerts';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { styles } from './styles';
-import { selectStepperCurrentStepData } from '../../../../features/data/selectors/stepper';
-import { isEmpty } from '../../../../helpers/utils';
 import { selectBridgeState, selectBridgeStatus } from '../../../../features/data/selectors/bridge';
 import { Button } from '../../../Button';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
 import { walletActions } from '../../../../features/data/actions/wallet-actions';
+import { Title } from '../Title';
 
 const useStyles = makeStyles(styles);
 
@@ -25,8 +24,9 @@ interface TxStateInterface {
   swapTx: string | null;
   status: 0 | 3 | 10 | 8 | 9 | 12 | 14;
 }
+//FOR MORE INFO WATCH https://github.com/anyswap/CrossChain-Router/wiki/How-to-integrate-AnySwap-Router POINT 4
 
-const BridgeTxProgress = memo(function () {
+export const BridgeContent = memo(function () {
   const [txData, setTxData] = React.useState<TxStateInterface>({
     error: null,
     swapTx: null,
@@ -35,6 +35,7 @@ const BridgeTxProgress = memo(function () {
   const classes = useStyles();
   const { t } = useTranslation();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
+  const walletActionsStateResult = useAppSelector(state => state.user.walletActions.result);
   const currentChaindId = useAppSelector(state => selectCurrentChainId(state));
   const bridgeState = useAppSelector(selectBridgeState);
   const bridgeStatus = useAppSelector(selectBridgeStatus);
@@ -52,9 +53,9 @@ const BridgeTxProgress = memo(function () {
   const intervalRef: any = useRef();
 
   const hash =
-    walletActionsState.result === 'success'
+    walletActionsStateResult === 'success'
       ? walletActionsState.data.receipt.transactionHash
-      : walletActionsState.result === 'success_pending'
+      : walletActionsStateResult === 'success_pending'
       ? walletActionsState.data.hash
       : '';
 
@@ -77,17 +78,13 @@ const BridgeTxProgress = memo(function () {
               error: null,
               status: res.info.status,
             });
-            // STATUS 8 = Confirming \ STATUS 9 = Swapping
             if (res.info.status === 8 || res.info.status === 9) {
               dispatch(bridgeActions.setStatus({ status: 'confirming' }));
             }
-            //STATUS 10 = Success
-            //FOR MORE INFO WATCH https://github.com/anyswap/CrossChain-Router/wiki/How-to-integrate-AnySwap-Router POINTN 4
             if (res.info.status === 10) {
               dispatch(bridgeActions.setStatus({ status: 'success' }));
               clearInterval(intervalRef.current);
             }
-            //STATUS 14= Failure
             if (res.info.status === 14) {
               dispatch(bridgeActions.setStatus({ status: 'idle' }));
               clearInterval(intervalRef.current);
@@ -105,16 +102,20 @@ const BridgeTxProgress = memo(function () {
 
     intervalRef.current = setInterval(getTxData, 5000);
 
-    // Clear the interval when this hook/component unmounts so it doesn't keep
-    // running when this component is gone.
     return () => {
       clearInterval(intervalRef.current);
       dispatch(bridgeActions.setStatus({ status: 'idle' }));
     };
   }, [dispatch, hash]);
 
+  const isWaitingTitle = bridgeStatus !== 'success';
+
   return (
     <>
+      <Title>
+        {isWaitingTitle && t('Transactn-ConfirmPending')}
+        {!isWaitingTitle && t(`bridge-Success-Title`)}
+      </Title>
       {bridgeStatus === 'success' && (
         <Box className={classes.successContainer}>
           <div className={classes.textSuccess}>
@@ -213,20 +214,6 @@ const BridgeTxProgress = memo(function () {
           {t('Transactn-Close')}
         </Button>
       )}
-    </>
-  );
-});
-
-export const BridgeInfo = memo(function () {
-  const walletActionsStateResult = useAppSelector(state => state.user.walletActions.result);
-  const currentStepData = useAppSelector(selectStepperCurrentStepData);
-
-  return (
-    <>
-      {!isEmpty(currentStepData) &&
-        currentStepData.step === 'bridge' &&
-        (walletActionsStateResult === 'success_pending' ||
-          walletActionsStateResult === 'success') && <BridgeTxProgress />}
     </>
   );
 });

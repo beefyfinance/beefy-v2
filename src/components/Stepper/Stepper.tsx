@@ -3,7 +3,7 @@ import { makeStyles, Snackbar } from '@material-ui/core';
 import { isEmpty } from '../../helpers/utils';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { BridgeInfo } from './components/BridgeInfo';
+import { BridgeContent } from './components/BridgeContent';
 import {
   selectStepperState,
   selectStepperCurrentStepData,
@@ -21,7 +21,7 @@ import { ProgressBar } from './components/PogressBar';
 const stepToComponent: Record<StepContent, FC> = {
   [StepContent.StartTx]: StepsCountContent,
   [StepContent.WaitingTx]: WaitingContent,
-  [StepContent.BridgeTx]: BridgeInfo,
+  [StepContent.BridgeTx]: BridgeContent,
   [StepContent.ErrorTx]: ErrorContent,
   [StepContent.SuccessTx]: SuccessContent,
 };

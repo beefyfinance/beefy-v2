@@ -865,7 +865,8 @@ const bridge = (
         chainId: chainId,
         spenderAddress: routerAddr,
         tokens: uniqBy([gasToken, bridgeToken, destToken], 'id'),
-      }
+      },
+      'bridge'
     );
   });
 };
@@ -930,12 +931,17 @@ function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity
     govVaultId?: VaultEntity['id'];
     boostId?: BoostEntity['id'];
     minterId?: MinterEntity['id'];
-  }
+  },
+  step?: string
 ) {
   transaction
     .on('transactionHash', function (hash: TrxHash) {
       dispatch(createWalletActionPendingAction(hash, additionalData));
-      dispatch(stepperActions.setStepContent({ stepContent: StepContent.WaitingTx }));
+      if (step === 'bridge') {
+        dispatch(stepperActions.setStepContent({ stepContent: StepContent.BridgeTx }));
+      } else {
+        dispatch(stepperActions.setStepContent({ stepContent: StepContent.WaitingTx }));
+      }
     })
     .on('receipt', function (receipt: TrxReceipt) {
       dispatch(createWalletActionSuccessAction(receipt, additionalData));
