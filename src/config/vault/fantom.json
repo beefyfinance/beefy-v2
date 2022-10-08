@@ -141,7 +141,7 @@
     ],
     "depositFee": "0.5%",
     "addLiquidityUrl": "https://ftm.curve.fi/factory/61/deposit",
-    "network": "polygon",
+    "network": "fantom",
     "createdAt": 1665241476
   },
   {
