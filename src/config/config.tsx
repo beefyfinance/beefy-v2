@@ -446,6 +446,7 @@ export const config = {
       'soUSDC',
       'USD+',
       'MIM',
+      'bbrfaUSD',
     ],
   },
 };
