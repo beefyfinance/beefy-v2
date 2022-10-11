@@ -47,7 +47,6 @@ const _Stepper = () => {
 
   return (
     <Snackbar
-      key={steps.currentStep}
       open={steps.modal}
       anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
       autoHideDuration={6000}

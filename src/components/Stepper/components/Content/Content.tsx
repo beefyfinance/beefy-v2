@@ -30,7 +30,7 @@ export const StepsCountContent = memo(function () {
   return (
     <>
       <Title text={t('Transactn-Confirmed', { currentStep, totalTxs: stepperItems.length })} />
-      <div className={classes.message}>{currentStepData.message}</div>
+      <div className={classes.message}>{currentStepData?.message}</div>
     </>
   );
 });

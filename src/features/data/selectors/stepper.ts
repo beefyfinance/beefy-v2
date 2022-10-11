@@ -79,7 +79,7 @@ export function selectMintResult(walletActionsState: WalletActionsState) {
 
 export const selectStepperProgress = (state: BeefyState) => {
   const currentStep = state.ui.stepperState.currentStep;
-  const step = state.ui.stepperState.items[currentStep].step;
+  const step = state.ui.stepperState.items[currentStep]?.step;
   const percentagePerStep = 100 / state.ui.stepperState.items.length;
   const currentTxProgress =
     step === 'bridge' ? selectBridgeTxProgress(state) : selectStandardTxPercentage(state);
