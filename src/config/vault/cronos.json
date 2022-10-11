@@ -56,6 +56,35 @@
     "createdAt": 1637054454
   },
   {
+    "id": "vvs-usdc-busd",
+    "name": "BUSD-USDC",
+    "token": "BUSD-USDC LP",
+    "tokenAddress": "0x792Df67276615d6E85e36497c4514b7b102Af4A9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "vvs",
+    "earnedToken": "mooVvsBUSD-USDC",
+    "earnedTokenAddress": "0xb8792531D7B6416987A375Bd5945Bb9d6295A809",
+    "earnContractAddress": "0xb8792531D7B6416987A375Bd5945Bb9d6295A809",
+    "oracle": "lps",
+    "oracleId": "vvs-usdc-busd",
+    "status": "active",
+    "platformId": "vvs",
+    "assets": ["BUSD", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xC74D59A548ecf7fc1754bb7810D716E9Ac3e3AE5",
+    "addLiquidityUrl": "https://vvs.finance/add/0xC74D59A548ecf7fc1754bb7810D716E9Ac3e3AE5/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
+    "network": "cronos",
+    "createdAt": 1665156411
+  },
+  {
     "id": "vvs-vvs-usdc",
     "name": "VVS-USDC",
     "token": "VVS-USDC LP",
