@@ -39,3 +39,7 @@ export const selectBifiAddress = (state: BeefyState, chain: ChainEntity) => {
       : '';
   return bifiAddress;
 };
+
+export const selectBridgeTxData = (state: BeefyState) => {
+  return state.ui.bridge.bridgeTxData;
+};

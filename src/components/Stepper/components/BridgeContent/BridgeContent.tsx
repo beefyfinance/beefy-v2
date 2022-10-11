@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { AlertWarning } from '../../../Alerts';
 import { useAppSelector } from '../../../../store';
 import { styles } from './styles';
-import { selectBridgeStatus } from '../../../../features/data/selectors/bridge';
+import { selectBridgeStatus, selectBridgeTxData } from '../../../../features/data/selectors/bridge';
 import { Title } from '../Title';
 import { useBridgeStatus } from './hooks';
 import {
@@ -21,27 +21,38 @@ export const BridgeContent = memo(function () {
   const classes = useStyles();
   const { t } = useTranslation();
   const bridgeStatus = useAppSelector(selectBridgeStatus);
-  const txData = useBridgeStatus();
+  const txData = useAppSelector(selectBridgeTxData);
+  const walletActionsState = useAppSelector(state => state.user.walletActions);
+  useBridgeStatus();
+
+  const isBridgeSuccess = bridgeStatus === 'success';
+
+  const hash =
+    walletActionsState.result === 'success'
+      ? walletActionsState.data.receipt.transactionHash
+      : walletActionsState.result === 'success_pending'
+      ? walletActionsState.data.hash
+      : '';
 
   const title = useMemo(() => {
-    if (bridgeStatus === 'success') {
+    if (isBridgeSuccess) {
       return 'bridge-Success-Title';
     } else {
       return 'Transactn-ConfirmPending';
     }
-  }, [bridgeStatus]);
+  }, [isBridgeSuccess]);
 
   return (
     <>
       <Title text={t(title)} />
-      <BridgeSuccesInfo />
+      {isBridgeSuccess && <BridgeSuccesInfo />}
       {txData?.status === 14 && (
         <AlertWarning className={classes.errorMessage}>{t('Multichain-Error')}</AlertWarning>
       )}
       <FromChainStatus />
-      <DestChainStatus txData={txData} />
-      <AnySwapLinkButton />
-      <CloseButton />
+      <DestChainStatus />
+      {hash && <AnySwapLinkButton hash={hash} />}
+      {isBridgeSuccess && <CloseButton />}
     </>
   );
 });

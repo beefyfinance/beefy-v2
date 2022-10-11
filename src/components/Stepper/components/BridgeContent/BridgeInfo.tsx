@@ -8,9 +8,12 @@ import { TransactionLink } from '../TransactionLink';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { styles } from './styles';
-import { selectBridgeState, selectBridgeStatus } from '../../../../features/data/selectors/bridge';
+import {
+  selectBridgeState,
+  selectBridgeStatus,
+  selectBridgeTxData,
+} from '../../../../features/data/selectors/bridge';
 import { ChainEntity } from '../../../../features/data/entities/chain';
-import { TxStateInterface } from './hooks';
 import { Button } from '../../../Button';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
 import { walletActions } from '../../../../features/data/actions/wallet-actions';
@@ -77,13 +80,14 @@ export const FromChainStatus = memo(function () {
   );
 });
 
-export const DestChainStatus = memo(function ({ txData }: { txData: TxStateInterface }) {
+export const DestChainStatus = memo(function () {
   const classes = useStyles();
   const { t } = useTranslation();
   const bridgeState = useAppSelector(selectBridgeState);
   const destChain = useAppSelector(state => selectChainById(state, bridgeState.destChainId));
   const walletActionsStateResult = useAppSelector(state => state.user.walletActions.result);
   const bridgeStatus = useAppSelector(selectBridgeStatus);
+  const txData = useAppSelector(selectBridgeTxData);
 
   const StatusIcon = useMemo(() => {
     if (bridgeStatus === 'success') {
@@ -132,11 +136,10 @@ export const DestChainStatus = memo(function ({ txData }: { txData: TxStateInter
 export const BridgeSuccesInfo = memo(function () {
   const classes = useStyles();
   const { t } = useTranslation();
-  const bridgeStatus = useAppSelector(selectBridgeStatus);
 
   const bridgeState = useAppSelector(selectBridgeState);
   const destChain = useAppSelector(state => selectChainById(state, bridgeState.destChainId));
-  return bridgeStatus === 'success' ? (
+  return (
     <div className={classes.successContainer}>
       <div className={classes.textSuccess}>
         {t('bridge-Success-Content', {
@@ -145,21 +148,14 @@ export const BridgeSuccesInfo = memo(function () {
         })}
       </div>
     </div>
-  ) : null;
+  );
 });
 
-export const AnySwapLinkButton = memo(function () {
+export const AnySwapLinkButton = memo(function ({ hash }: { hash: string }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const walletActionsState = useAppSelector(state => state.user.walletActions);
 
-  const hash =
-    walletActionsState.result === 'success'
-      ? walletActionsState.data.receipt.transactionHash
-      : walletActionsState.result === 'success_pending'
-      ? walletActionsState.data.hash
-      : '';
-  return hash ? (
+  return (
     <MuiButton
       className={classes.redirectLinkSuccess}
       href={`https://anyswap.net/explorer/tx?params=${hash}`}
@@ -168,23 +164,22 @@ export const AnySwapLinkButton = memo(function () {
       {t('Transactn-ViewMultichain')}{' '}
       {<OpenInNewRoundedIcon htmlColor="#59A662" fontSize="inherit" />}
     </MuiButton>
-  ) : null;
+  );
 });
 
 export const CloseButton = memo(function () {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const bridgeStatus = useAppSelector(selectBridgeStatus);
 
   const handleClose = React.useCallback(() => {
     dispatch(stepperActions.reset());
     dispatch(walletActions.resetWallet());
   }, [dispatch]);
 
-  return bridgeStatus === 'success' ? (
+  return (
     <Button borderless={true} fullWidth={true} className={classes.closeBtn} onClick={handleClose}>
       {t('Transactn-Close')}
     </Button>
-  ) : null;
+  );
 });

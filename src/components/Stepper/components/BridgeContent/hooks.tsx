@@ -3,19 +3,7 @@ import { getBridgeTxData } from '../../../../features/data/actions/bridge';
 import { bridgeActions } from '../../../../features/data/reducers/wallet/bridge';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 
-export interface TxStateInterface {
-  error: string | null;
-  swapTx: string | null;
-  status: 0 | 3 | 10 | 8 | 9 | 12 | 14;
-}
-//FOR MORE INFO WATCH https://github.com/anyswap/CrossChain-Router/wiki/How-to-integrate-AnySwap-Router POINT 4
-
 export function useBridgeStatus() {
-  const [txData, setTxData] = React.useState<TxStateInterface>({
-    error: null,
-    swapTx: null,
-    status: 0,
-  });
   const walletActionsState = useAppSelector(state => state.user.walletActions);
 
   // Use a ref to keep track of a stateful value that doesn't affect rendering,
@@ -37,18 +25,26 @@ export function useBridgeStatus() {
       getBridgeTxData(hash)
         .then(res => {
           if (res.msg === 'Error') {
-            setTxData({
-              error: res.error,
-              swapTx: null,
-              status: 0,
-            });
+            dispatch(
+              bridgeActions.setBridgeTxData({
+                txData: {
+                  error: res.error,
+                  swapTx: null,
+                  status: 0,
+                },
+              })
+            );
           }
           if (res.msg === 'Success') {
-            setTxData({
-              swapTx: res.info.swaptx,
-              error: null,
-              status: res.info.status,
-            });
+            dispatch(
+              bridgeActions.setBridgeTxData({
+                txData: {
+                  swapTx: res.info.swaptx,
+                  error: null,
+                  status: res.info.status,
+                },
+              })
+            );
             // STATUS 8 = Confirming \ STATUS 9 = Swapping
             if (res.info.status === 8 || res.info.status === 9) {
               dispatch(bridgeActions.setStatus({ status: 'confirming' }));
@@ -60,17 +56,21 @@ export function useBridgeStatus() {
             }
             //STATUS 14= Failure
             if (res.info.status === 14) {
-              dispatch(bridgeActions.setStatus({ status: 'idle' }));
+              dispatch(bridgeActions.setStatus({ status: 'error' }));
               clearInterval(intervalRef.current);
             }
           }
         })
         .catch(err => {
-          setTxData({
-            swapTx: null,
-            error: `Request Error ${err}`,
-            status: 14,
-          });
+          dispatch(
+            bridgeActions.setBridgeTxData({
+              txData: {
+                swapTx: null,
+                error: `Request Error ${err}`,
+                status: 14,
+              },
+            })
+          );
         });
     };
 
@@ -81,6 +81,4 @@ export function useBridgeStatus() {
       dispatch(bridgeActions.setStatus({ status: 'idle' }));
     };
   }, [dispatch, hash]);
-
-  return txData;
 }
