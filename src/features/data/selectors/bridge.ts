@@ -3,7 +3,10 @@ import { ChainEntity } from '../entities/chain';
 import { isInitialLoader } from '../reducers/data-loader-types';
 
 export const selectBridgeState = (state: BeefyState) => state.ui.bridge;
+
 export const selectBridgeSuportedChains = (state: BeefyState) => state.ui.bridge.supportedChains;
+
+export const selectBridgeStatus = (state: BeefyState) => state.ui.bridge.status;
 
 export const selectIsBridgeLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.bridge.alreadyLoadedOnce;
@@ -35,4 +38,8 @@ export const selectBifiAddress = (state: BeefyState, chain: ChainEntity) => {
       ? Object.keys(address)[0]
       : '';
   return bifiAddress;
+};
+
+export const selectBridgeTxData = (state: BeefyState) => {
+  return state.ui.bridge.bridgeTxData;
 };

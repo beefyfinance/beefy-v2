@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button';
 import { Divider } from '../../../../../../components/Divider';
-import { Step } from '../../../../../../components/Steps/types';
 import { formatAddressShort } from '../../../../../../helpers/format';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { fetchAllowanceAction } from '../../../../../data/actions/allowance';
@@ -24,8 +23,10 @@ import {
   selectWalletAddress,
 } from '../../../../../data/selectors/wallet';
 import { styles } from './styles';
-import { useStepper } from '../../../../../../components/Steps/hooks';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
+import { stepperActions } from '../../../../../data/reducers/wallet/stepper';
+import { startStepper } from '../../../../../data/actions/stepper';
+import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -50,8 +51,6 @@ function _Confirm() {
 
   const destChain = useAppSelector(state => selectChainById(state, formState.destChainId));
 
-  const [startStepper, isStepping, Stepper] = useStepper(fromChain.id);
-
   const destChainData = useAppSelector(state =>
     selectBridgeBifiDestChainData(state, fromChain.id, destChain.networkChainId)
   );
@@ -62,6 +61,8 @@ function _Confirm() {
   const depositedToken = useAppSelector(state =>
     selectTokenByAddress(state, formState.fromChainId, fromChainData.address)
   );
+
+  const isStepping = useAppSelector(selectIsStepperStepping);
 
   React.useEffect(() => {
     //need to refresh the allowance
@@ -93,34 +94,41 @@ function _Confirm() {
   }, [destChainData]);
 
   const handleBridge = () => {
-    const steps: Step[] = [];
     if (
       depositTokenAllowance.isLessThan(formState.amount) &&
       isRouter &&
       depositedToken.type !== 'native'
     ) {
-      steps.push({
-        step: 'approve',
-        message: t('Vault-ApproveMsg'),
-        action: walletActions.approval(depositedToken, routerAddress),
-        pending: false,
-      });
+      dispatch(
+        stepperActions.addStep({
+          step: {
+            step: 'approve',
+            message: t('Vault-ApproveMsg'),
+            action: walletActions.approval(depositedToken, routerAddress),
+            pending: false,
+          },
+        })
+      );
     }
 
-    steps.push({
-      step: 'bridge',
-      message: t('Vault-TxnConfirm', { type: t('Bridge-noun') }),
-      action: walletActions.bridge(
-        formState.fromChainId,
-        formState.destChainId,
-        routerAddress,
-        formState.amount,
-        isRouter
-      ),
-      pending: false,
-    });
+    dispatch(
+      stepperActions.addStep({
+        step: {
+          step: 'bridge',
+          message: t('Vault-TxnConfirm', { type: t('Bridge-noun') }),
+          action: walletActions.bridge(
+            formState.fromChainId,
+            formState.destChainId,
+            routerAddress,
+            formState.amount,
+            isRouter
+          ),
+          pending: false,
+        },
+      })
+    );
 
-    startStepper(steps);
+    dispatch(startStepper(fromChain.id));
   };
 
   const handleConnectWallet = () => {
@@ -208,7 +216,6 @@ function _Confirm() {
         <ItemInfo title={t('Bridge-Gas')}> {destChainData.MinimumSwapFee} BIFI</ItemInfo>
         <ItemInfo title={t('Bridge-EstimatedTime')}>3 - 30 min</ItemInfo>
       </div>
-      <Stepper />
     </>
   );
 }

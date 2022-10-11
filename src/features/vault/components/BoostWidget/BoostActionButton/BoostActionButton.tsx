@@ -5,17 +5,18 @@ import clsx from 'clsx';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../components/Button';
-import { useStepper } from '../../../../../components/Steps/hooks';
-import { Step } from '../../../../../components/Steps/types';
 import { formatBigDecimals } from '../../../../../helpers/format';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../../store';
 import { initBoostForm } from '../../../../data/actions/scenarios';
+import { startStepper } from '../../../../data/actions/stepper';
 import { walletActions } from '../../../../data/actions/wallet-actions';
 import { BoostEntity } from '../../../../data/entities/boost';
 import { isFulfilled } from '../../../../data/reducers/data-loader-types';
 import { boostActions } from '../../../../data/reducers/wallet/boost';
+import { stepperActions } from '../../../../data/reducers/wallet/stepper';
 import { selectBoostById } from '../../../../data/selectors/boosts';
 import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loader';
+import { selectIsStepperStepping } from '../../../../data/selectors/stepper';
 import { selectErc20TokenByAddress } from '../../../../data/selectors/tokens';
 import { selectStandardVaultById } from '../../../../data/selectors/vaults';
 import { selectIsWalletKnown, selectWalletAddress } from '../../../../data/selectors/wallet';
@@ -63,7 +64,7 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function ({
     selectIsWalletKnown(state) ? selectWalletAddress(state) : null
   );
 
-  const [startStepper, isStepping, Stepper] = useStepper(boost.chainId);
+  const isStepping = useAppSelector(selectIsStepperStepping);
 
   const isDisabled = !formReady || formState.amount.isLessThanOrEqualTo(0) || isStepping;
 
@@ -92,80 +93,87 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function ({
   };
 
   const handleAction = () => {
-    const steps: Step[] = [];
     if (isStake) {
       if (needsApproval) {
-        steps.push({
-          step: 'approve',
-          message: t('Vault-ApproveMsg'),
-          action: walletActions.approval(mooToken, spenderAddress),
-          pending: false,
-        });
+        dispatch(
+          stepperActions.addStep({
+            step: {
+              step: 'approve',
+              message: t('Vault-ApproveMsg'),
+              action: walletActions.approval(mooToken, spenderAddress),
+              pending: false,
+            },
+          })
+        );
       }
-
-      steps.push({
-        step: 'stake',
-        message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
-        action: walletActions.stakeBoost(boost, formState.amount),
-        pending: false,
-      });
+      dispatch(
+        stepperActions.addStep({
+          step: {
+            step: 'stake',
+            message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
+            action: walletActions.stakeBoost(boost, formState.amount),
+            pending: false,
+          },
+        })
+      );
     } else {
-      steps.push({
-        step: 'unstake',
-        message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
-        action: walletActions.unstakeBoost(boost, formState.amount),
-        pending: false,
-      });
+      dispatch(
+        stepperActions.addStep({
+          step: {
+            step: 'unstake',
+            message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+            action: walletActions.unstakeBoost(boost, formState.amount),
+            pending: false,
+          },
+        })
+      );
     }
 
-    startStepper(steps);
+    dispatch(startStepper(boost.chainId));
   };
 
   return (
-    <>
-      <div className={clsx(classes.container)}>
-        <div className={classes.title} onClick={handleCollapse}>
-          <IconButton className={classes.iconButton}>
-            {open ? <ExpandLess /> : <ExpandMore />}
-          </IconButton>
-          <div className={classes.text}>
-            {t(isStake ? 'Boost-Button-Stake' : 'Boost-Button-Unstake')}
-          </div>
-          <div className={classes.balance}>
-            {t(isStake ? 'Available' : 'Staked')} <span>{formatBigDecimals(balance, 4)}</span>
-          </div>
+    <div className={clsx(classes.container)}>
+      <div className={classes.title} onClick={handleCollapse}>
+        <IconButton className={classes.iconButton}>
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </IconButton>
+        <div className={classes.text}>
+          {t(isStake ? 'Boost-Button-Stake' : 'Boost-Button-Unstake')}
         </div>
-        <Collapse in={open} timeout="auto">
-          <div className={classes.actions}>
-            <InputBase
-              className={classes.input}
-              value={formState.formattedInput}
-              onChange={e => handleInput(e.target.value)}
-              fullWidth={true}
-              endAdornment={
-                <Button
-                  disabled={!formReady || isStepping}
-                  className={classes.maxButton}
-                  onClick={handleMax}
-                >
-                  MAX
-                </Button>
-              }
-              placeholder={`0`}
-            />
-            <Button
-              borderless={true}
-              className={classes.button}
-              onClick={handleAction}
-              fullWidth={true}
-              disabled={isDisabled}
-            >
-              {t(isStake ? 'Boost-Button-Stake' : 'Boost-Button-Unstake')}
-            </Button>
-          </div>
-        </Collapse>
+        <div className={classes.balance}>
+          {t(isStake ? 'Available' : 'Staked')} <span>{formatBigDecimals(balance, 4)}</span>
+        </div>
       </div>
-      <Stepper />
-    </>
+      <Collapse in={open} timeout="auto">
+        <div className={classes.actions}>
+          <InputBase
+            className={classes.input}
+            value={formState.formattedInput}
+            onChange={e => handleInput(e.target.value)}
+            fullWidth={true}
+            endAdornment={
+              <Button
+                disabled={!formReady || isStepping}
+                className={classes.maxButton}
+                onClick={handleMax}
+              >
+                MAX
+              </Button>
+            }
+            placeholder={`0`}
+          />
+          <Button
+            borderless={true}
+            className={classes.button}
+            onClick={handleAction}
+            fullWidth={true}
+            disabled={isDisabled}
+          >
+            {t(isStake ? 'Boost-Button-Stake' : 'Boost-Button-Unstake')}
+          </Button>
+        </div>
+      </Collapse>
+    </div>
   );
 });
