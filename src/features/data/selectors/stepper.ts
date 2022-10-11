@@ -99,8 +99,6 @@ const selectStandardTxPercentage = (state: BeefyState) => {
     return 0;
   } else if (walletActionsStateResult === 'success_pending') {
     return 0.5;
-  } else {
-    return 1;
   }
 };
 
@@ -124,8 +122,6 @@ export const selectBridgeTxProgress = (state: BeefyState) => {
     return 0.5;
   } else if (bridgeStatus === 'confirming') {
     return 0.75;
-  } else {
-    return 1;
   }
 };
 
@@ -133,4 +129,11 @@ export const selectErrorBar = (state: BeefyState) => {
   const walletActionsStateResult = state.user.walletActions.result;
 
   return walletActionsStateResult === 'error';
+};
+
+export const selectSuccessBar = (state: BeefyState) => {
+  const stepContent = state.ui.stepperState.stepContent;
+  const bridgeStatus = state.ui.bridge.status;
+
+  return stepContent === StepContent.SuccessTx || bridgeStatus === 'success';
 };

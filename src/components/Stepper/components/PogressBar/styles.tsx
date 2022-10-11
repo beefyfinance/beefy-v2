@@ -19,13 +19,19 @@ export const styles = (theme: Theme) => ({
   progressBar: {
     ...baseProgressBar,
     width: props => `${props.progress}%`,
-    borderRadius: props => (props.progress === 100 ? '4px 4px 0 0' : '4px 0 0 0'),
+    borderRadius: '4px 0 0 0',
     backgroundColor: theme.palette.primary.main,
   },
   errorBar: {
     ...baseProgressBar,
     width: '100%',
     backgroundColor: theme.palette.background.snackbars.error,
+    borderRadius: '4px 4px 0 0',
+  },
+  successBar: {
+    ...baseProgressBar,
+    width: '100%',
+    backgroundColor: theme.palette.primary.main,
     borderRadius: '4px 4px 0 0',
   },
 });
