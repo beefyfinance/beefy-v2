@@ -114,6 +114,35 @@
     "mintTokenUrl": "https://beta.beefy.finance/#/fantom/vault/beefy-beFTM"
   },
   {
+    "id": "beets-another-dei-another-dollar",
+    "name": "Another DEI, another dollar",
+    "token": "Another DEI, another dollar",
+    "tokenAddress": "0x4E415957AA4Fd703ad701e43Ee5335D1D7891D83",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsAnotherDEIAnotherDollar",
+    "earnedTokenAddress": "0x6aB501afC4326071A9d53EE039Ee2fb448C78037",
+    "earnContractAddress": "0x6aB501afC4326071A9d53EE039Ee2fb448C78037",
+    "oracle": "lps",
+    "oracleId": "beets-another-dei-another-dollar",
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["DEI", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "ALGO_STABLE"
+    ],
+    "addLiquidityUrl": "https://beets.fi/pool/0x4e415957aa4fd703ad701e43ee5335d1d7891d8300020000000000000000053b",
+    "createdAt": 1664755105,
+    "network": "fantom"
+  },
+  {
     "id": "spiritV2-wftm-comb",
     "name": "COMB-FTM vLP",
     "token": "COMB-FTM vLP",
@@ -4572,8 +4601,8 @@
   },
   {
     "id": "spirit-usdc-dei",
-    "name": "DEI-USDC LP",
-    "token": "DEI-USDC SLP",
+    "name": "DEI_OLD-USDC LP",
+    "token": "DEI_OLD-USDC SLP",
     "tokenAddress": "0x8eFD36aA4Afa9F4E157bec759F1744A7FeBaEA0e",
     "tokenDecimals": 18,
     "tokenProviderId": "spiritswap",
@@ -4585,7 +4614,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["DEI", "USDC"],
+    "assets": ["DEI_OLD", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6838,8 +6867,8 @@
   },
   {
     "id": "boo-usdc-dei",
-    "name": "DEI-USDC LP",
-    "token": "DEI-USDC LP",
+    "name": "DEI_OLD-USDC LP",
+    "token": "DEI_OLD-USDC LP",
     "tokenAddress": "0xD343b8361Ce32A9e570C1fC8D4244d32848df88B",
     "tokenDecimals": 18,
     "tokenProviderId": "spookyswap",
@@ -6851,7 +6880,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spookyswap",
-    "assets": ["DEI", "USDC"],
+    "assets": ["DEI_OLD", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6911,7 +6940,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "beethovenx",
-    "assets": ["DEUS", "DEI"],
+    "assets": ["DEUS", "DEI_OLD"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7637,7 +7666,7 @@
     "oracleId": "beets-god-between-stables",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["DEI", "USDC"],
+    "assets": ["DEI_OLD", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
