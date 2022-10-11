@@ -74,7 +74,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -82,7 +82,7 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xC74D59A548ecf7fc1754bb7810D716E9Ac3e3AE5",
     "addLiquidityUrl": "https://vvs.finance/add/0xC74D59A548ecf7fc1754bb7810D716E9Ac3e3AE5/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1665156411
+    "createdAt": 1665023337
   },
   {
     "id": "vvs-vvs-usdc",

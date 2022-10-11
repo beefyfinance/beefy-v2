@@ -171,7 +171,7 @@
     "addLiquidityUrl": "https://exchange.biswap.org/#/add/ETH/0x3d6545b08693dae087e957cb1180ee38b9e3c25e",
     "buyTokenUrl": "https://exchange.biswap.org/#/swap?outputCurrency=0x3d6545b08693daE087E957cb1180ee38B9e3c25E",
     "network": "bsc",
-    "createdAt": 1664327914
+    "createdAt": 1665023338
   },
   {
     "id": "cakev2-hay-busd",

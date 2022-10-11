@@ -132,14 +132,14 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_NONE",
+      "IL_LOW",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED",
       "ALGO_STABLE"
     ],
     "addLiquidityUrl": "https://beets.fi/pool/0x4e415957aa4fd703ad701e43ee5335d1d7891d8300020000000000000000053b",
-    "createdAt": 1664755105,
+    "createdAt": 1665023336,
     "network": "fantom"
   },
   {
