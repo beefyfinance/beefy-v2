@@ -1268,36 +1268,6 @@
     "network": "cronos"
   },
   {
-    "id": "vvs-ape-cro",
-    "name": "APE-CRO LP",
-    "token": "APE-CRO LP",
-    "tokenAddress": "0x2eA92065D2c2908bB3C7d6BB9318aF4F8d735dD5",
-    "tokenDecimals": 18,
-    "tokenProviderId": "vvs",
-    "earnedToken": "mooVvsAPE-CRO",
-    "earnedTokenAddress": "0xAEFf1F0D0e392a2DB1973b749B3dC7D3b4EF311d",
-    "earnContractAddress": "0xAEFf1F0D0e392a2DB1973b749B3dC7D3b4EF311d",
-    "oracle": "lps",
-    "oracleId": "vvs-ape-cro",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "vvs",
-    "assets": ["APE", "CRO"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x9C62F89a8C9907582f21205Ce90443730361EA05",
-    "addLiquidityUrl": "https://vvs.finance/add/CRO/0x9C62F89a8C9907582f21205Ce90443730361EA05",
-    "createdAt": 1656454474,
-    "network": "cronos"
-  },
-  {
     "id": "vvs-fer-vvs",
     "name": "VVS-FER",
     "token": "VVS-FER LP",
