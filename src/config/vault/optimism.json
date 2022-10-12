@@ -27,6 +27,28 @@
     "createdAt": 1663091478
   },
   {
+    "id": "velodrome-wsteth-weth",
+    "name": "wstETH-ETH sLP",
+    "token": "wstETH-ETH sLP",
+    "tokenAddress": "0xBf205335De602ac38244F112d712ab04CB59A498",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelowstETH-ETH",
+    "earnedTokenAddress": "0xcAdC68d5834898D54929E694eD19e833e0117694",
+    "earnContractAddress": "0xcAdC68d5834898D54929E694eD19e833e0117694",
+    "oracle": "lps",
+    "oracleId": "velodrome-wsteth-weth",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["wstETH", "ETH"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1665617208
+  },
+  {
     "id": "beets-lido-shuffle",
     "name": "Lido Shuffle",
     "token": "Lido Shuffle",
