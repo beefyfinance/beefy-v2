@@ -71,7 +71,7 @@
     "oracleId": "yuzu-wrose-weth",
     "status": "active",
     "platformId": "yuzuswap",
-    "assets": ["ETH", "ROSE"],
+    "assets": ["WETH", "ROSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",

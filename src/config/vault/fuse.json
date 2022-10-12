@@ -454,7 +454,7 @@
     "oracleId": "voltagev2-wbtc-weth",
     "status": "active",
     "platformId": "voltage",
-    "assets": ["WBTC", "ETH"],
+    "assets": ["WBTC", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -483,7 +483,7 @@
     "oracleId": "voltagev2-wfuse-weth",
     "status": "active",
     "platformId": "voltage",
-    "assets": ["ETH", "FUSE"],
+    "assets": ["WETH", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",

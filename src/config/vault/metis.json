@@ -189,7 +189,7 @@
     "oracleId": "hermes-weth-metis",
     "status": "active",
     "platformId": "hermes",
-    "assets": ["ETH", "METIS"],
+    "assets": ["WETH", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -218,7 +218,7 @@
     "oracleId": "hermes-weth-m.usdc",
     "status": "active",
     "platformId": "hermes",
-    "assets": ["ETH", "mUSDC"],
+    "assets": ["WETH", "mUSDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -395,7 +395,7 @@
     "oracleId": "netswap-weth-metis",
     "status": "active",
     "platformId": "netswap",
-    "assets": ["ETH", "METIS"],
+    "assets": ["WETH", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -453,7 +453,7 @@
     "oracleId": "netswap-weth-m.usdc",
     "status": "active",
     "platformId": "netswap",
-    "assets": ["mUSDC", "ETH"],
+    "assets": ["mUSDC", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -626,7 +626,7 @@
     "oracleId": "tethys-weth-metis",
     "status": "active",
     "platformId": "tethys",
-    "assets": ["ETH", "METIS"],
+    "assets": ["WETH", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
