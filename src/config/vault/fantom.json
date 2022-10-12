@@ -114,6 +114,36 @@
     "mintTokenUrl": "https://beta.beefy.finance/#/fantom/vault/beefy-beFTM"
   },
   {
+    "id": "mai-curve-ftm-mai",
+    "name": "MAI/fUSDT/USDC",
+    "token": "MAI3Pool-f",
+    "tokenAddress": "0xA58F16498c288c357e28EE899873fF2b55D7C437",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveMAI3Pool-f",
+    "earnedTokenAddress": "0x67139281bEBb24518B1fBb6D2258A8253a7cafAa",
+    "earnContractAddress": "0x67139281bEBb24518B1fBb6D2258A8253a7cafAa",
+    "oracle": "lps",
+    "oracleId": "curve-ftm-mai",
+    "status": "active",
+    "platformId": "mai",
+    "assets": ["MAI", "fUSDT", "USDC"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "depositFee": "0.5%",
+    "addLiquidityUrl": "https://ftm.curve.fi/factory/61/deposit",
+    "network": "fantom",
+    "createdAt": 1665241476
+  {
     "id": "beets-another-dei-another-dollar",
     "name": "Another DEI, another dollar",
     "token": "Another DEI, another dollar",
