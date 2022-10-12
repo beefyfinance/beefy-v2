@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "id": "moo_velodrome-velo-usdc-velodrome",
+    "poolId": "velodrome-velo-usdc",
+    "name": "Velodrome",
+    "assets": ["VELO", "USDC"],
+    "tokenAddress": "0x81F2F132465Ffb4B3C5d11f3d94582cC5c281c04",
+    "earnedToken": "OP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
+    "earnContractAddress": "0x18eCCe7f6B8bB54933643751D3C2D4b3Ea034463",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OP",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["velodrome"]
+  }
+]

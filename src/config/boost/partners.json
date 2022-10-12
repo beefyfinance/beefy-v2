@@ -1,4 +1,12 @@
 {
+  "velodrome": {
+    "text": "Velodrome Finance, at its core, is a solution for protocols on Optimism to properly incentivize liquidity for their own use cases. Building on top of the groundwork laid out by Solidly, our team has addressed that first iteration's core issues to realize its full potential.",
+    "website": "https://app.velodrome.finance/swap",
+    "social": {
+      "telegram": "https://discord.com/invite/velodrome",
+      "twitter": "https://twitter.com/VelodromeFi"
+    }
+  },
   "stader": {
     "text": "Stader aims to be the distribution layer of staking while building protocols and products which enhance the security, decentralization, liquidity, governance of some of the major DPoS blockchain networks like Ethereum, Terra, Polygon, Solana and BNB Chain.",
     "website": "https://polygon.staderlabs.com/liquid-staking/maticx",
