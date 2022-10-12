@@ -48,6 +48,7 @@ export const selectUserGlobalStats = (state: BeefyState) => {
     monthly: BIG_ZERO,
     yearly: BIG_ZERO,
     apy: BIG_ZERO,
+    depositedVaults: 0,
   };
 
   // while loading all necessary data, return 0
@@ -58,6 +59,8 @@ export const selectUserGlobalStats = (state: BeefyState) => {
   const userVaults = selectUserDepositedVaults(state).map(vaultId =>
     selectVaultById(state, vaultId)
   );
+
+  newGlobalStats.depositedVaults = userVaults.length;
 
   const dailyYield = [];
 

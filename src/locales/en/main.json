@@ -19,6 +19,7 @@
   "Header-Proposals": "Proposals",
   "Header-BuyCrypto": "Buy Crypto",
   "Header-BridgeBifi": "Bridge BIFI",
+  "Header-Dashboard": "Dashboard",
   "Header-News": "News",
   "Header-Docs": "Docs",
   "Footer-Audit": "Audit",
@@ -449,5 +450,10 @@
   "Add-To-Wallet": "Add to Wallet",
   "Insurance": "Insurance",
   "Leverage": "Leverage",
-  "Saving-Games": "Savings Games"
+  "Saving-Games": "Savings Games",
+  "Dashboard-Title": "Your Dashboard",
+  "Resume-Deposit": "Your deposits",
+  "Resume-Monthly": "Est. Monthly yield",
+  "Resume-Daily": "Est. daily yield",
+  "Resume-Vaults": "Vaults"
 }

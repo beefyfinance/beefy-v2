@@ -116,6 +116,10 @@ const theme = createTheme({
         text: '#2D3153',
         error: '#DC2C10',
       },
+      dashboard: {
+        resumeCard: '#121421',
+        iconBg: 'rgba(92, 112, 214, 0.2)',
+      },
     },
     text: {
       primary: '#F5F5FF',
