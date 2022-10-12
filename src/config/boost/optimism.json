@@ -2,7 +2,7 @@
   {
     "id": "moo_velodrome-velo-usdc-velodrome",
     "poolId": "velodrome-velo-usdc",
-    "name": "Velodrome",
+    "name": "Beefy",
     "assets": ["VELO", "USDC"],
     "tokenAddress": "0x81F2F132465Ffb4B3C5d11f3d94582cC5c281c04",
     "earnedToken": "OP",
