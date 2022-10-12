@@ -445,7 +445,7 @@
     "oracleId": "beets-rocket-fuel",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["WETH", "rETH"],
+    "assets": ["ETH", "rETH"],
     "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://op.beets.fi/pool/0x4fd63966879300cafafbb35d157dc5229278ed2300020000000000000000002b",

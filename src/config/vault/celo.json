@@ -99,7 +99,7 @@
     "oracleId": "sushi-celo-weth-daiv2",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["DAI", "WETH"],
+    "assets": ["DAI", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -158,7 +158,7 @@
     "oracleId": "sushi-celo-wethv2-celo",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["CELO", "WETH"],
+    "assets": ["CELO", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -187,7 +187,7 @@
     "oracleId": "sushi-celo-wethv2-cusd",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["cUSD", "WETH"],
+    "assets": ["cUSD", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
