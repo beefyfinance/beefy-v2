@@ -424,7 +424,7 @@
     "oracleId": "balancer-matic-usdc-eth-bal",
     "status": "active",
     "platformId": "balancer",
-    "assets": ["WMATIC", "USDC", "ETH", "BAL"],
+    "assets": ["MATIC", "USDC", "ETH", "BAL"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
