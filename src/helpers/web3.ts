@@ -1,11 +1,11 @@
 import Web3 from 'web3';
 
 export function makeBatchRequest(web3: Web3, calls: Web3Call[]): Promise<any[]> {
-  let batch = new web3.BatchRequest();
+  const batch = new web3.BatchRequest();
 
-  let promises = calls.map(call => {
+  const promises = calls.map(call => {
     return new Promise((res, rej) => {
-      let req = call.method.request(call.params, (err, data) => {
+      const req = call.method.request(call.params, (err, data) => {
         if (err) rej(err);
         else res(data);
       });
