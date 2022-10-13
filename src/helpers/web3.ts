@@ -1,11 +1,11 @@
 import Web3 from 'web3';
 
-export function makeBatchRequest(web3: Web3, calls: any[], params: any[]): Promise<any[]> {
+export function makeBatchRequest(web3: Web3, calls: Web3Call[]): Promise<any[]> {
   let batch = new web3.BatchRequest();
 
-  let promises = calls.map((call, index) => {
+  let promises = calls.map(call => {
     return new Promise((res, rej) => {
-      let req = call.request(params[index], (err, data) => {
+      let req = call.method.request(call.params, (err, data) => {
         if (err) rej(err);
         else res(data);
       });
@@ -15,4 +15,9 @@ export function makeBatchRequest(web3: Web3, calls: any[], params: any[]): Promi
   batch.execute();
 
   return Promise.all(promises);
+}
+
+export interface Web3Call {
+  method: any;
+  params: any;
 }

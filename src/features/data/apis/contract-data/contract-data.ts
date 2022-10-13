@@ -19,7 +19,7 @@ import { featureFlag_getContractDataApiChunkSize } from '../../utils/feature-fla
 import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
 import { selectTokenByAddress } from '../../selectors/tokens';
-import { makeBatchRequest } from '../../../../helpers/web3';
+import { makeBatchRequest, Web3Call } from '../../../../helpers/web3';
 
 // fix ts types
 const BeefyV2AppMulticallAbi = _BeefyV2AppMulticallAbi as AbiItem | AbiItem[];
@@ -45,29 +45,29 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const govVaultBatches = chunk(govVaults, CHUNK_SIZE);
     const vaultBatches = chunk(standardVaults, CHUNK_SIZE);
 
-    let requestsForBatch: any[] = [];
-    let paramsForBatch: any[] = [];
+    const requestsForBatch: Web3Call[] = [];
 
     boostBatches.forEach(boostBatch => {
-      requestsForBatch.push(
-        mc.methods.getBoostInfo(boostBatch.map(boost => boost.earnContractAddress)).call
-      );
-      paramsForBatch.push({ from: '0x0000000000000000000000000000000000000000' });
+      requestsForBatch.push({
+        method: mc.methods.getBoostInfo(boostBatch.map(boost => boost.earnContractAddress)).call,
+        params: { from: '0x0000000000000000000000000000000000000000' },
+      });
     });
     vaultBatches.forEach(vaultBatch => {
-      requestsForBatch.push(
-        mc.methods.getVaultInfo(vaultBatch.map(vault => vault.earnContractAddress)).call
-      );
-      paramsForBatch.push({ from: '0x0000000000000000000000000000000000000000' });
+      requestsForBatch.push({
+        method: mc.methods.getVaultInfo(vaultBatch.map(vault => vault.earnContractAddress)).call,
+        params: { from: '0x0000000000000000000000000000000000000000' },
+      });
     });
     govVaultBatches.forEach(govVaultBatch => {
-      requestsForBatch.push(
-        mc.methods.getGovVaultInfo(govVaultBatch.map(vault => vault.earnContractAddress)).call
-      );
-      paramsForBatch.push({ from: '0x0000000000000000000000000000000000000000' });
+      requestsForBatch.push({
+        method: mc.methods.getGovVaultInfo(govVaultBatch.map(vault => vault.earnContractAddress))
+          .call,
+        params: { from: '0x0000000000000000000000000000000000000000' },
+      });
     });
 
-    const results: any[] = await makeBatchRequest(this.web3, requestsForBatch, paramsForBatch);
+    const results: any[] = await makeBatchRequest(this.web3, requestsForBatch);
 
     // now reasign results
 

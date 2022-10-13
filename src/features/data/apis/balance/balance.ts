@@ -29,7 +29,7 @@ import {
   selectGovVaultBalanceTokenEntity,
   selectGovVaultRewardsTokenEntity,
 } from '../../selectors/balance';
-import { makeBatchRequest } from '../../../../helpers/web3';
+import { makeBatchRequest, Web3Call } from '../../../../helpers/web3';
 
 // fix ts types
 const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];
@@ -66,33 +66,33 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     const erc20TokensBatches = chunk(erc20Tokens, CHUNK_SIZE);
     const boostAndGovVaultBatches = chunk([...boosts, ...govVaults], CHUNK_SIZE);
 
-    let requestsForBatch: any[] = [];
-    let paramsForBatch: any[] = [];
+    const requestsForBatch: Web3Call[] = [];
 
     boostAndGovVaultBatches.forEach(boostAndGovVaultBatch => {
-      requestsForBatch.push(
-        mc.methods.getBoostOrGovBalance(
+      requestsForBatch.push({
+        method: mc.methods.getBoostOrGovBalance(
           boostAndGovVaultBatch.map(boostOrGovVaultt => boostOrGovVaultt.earnContractAddress),
           walletAddress
-        ).call
-      );
-      paramsForBatch.push({ from: '0x0000000000000000000000000000000000000000' });
+        ).call,
+        params: { from: '0x0000000000000000000000000000000000000000' },
+      });
     });
 
     erc20TokensBatches.forEach(erc20TokenBatch => {
-      requestsForBatch.push(
-        mc.methods.getTokenBalances(
+      requestsForBatch.push({
+        method: mc.methods.getTokenBalances(
           erc20TokenBatch.map(token => token.address),
           walletAddress
-        ).call
-      );
-      paramsForBatch.push({ from: '0x0000000000000000000000000000000000000000' });
+        ).call,
+        params: { from: '0x0000000000000000000000000000000000000000' },
+      });
     });
-    var getBalance: any = this.web3.eth.getBalance;
-    requestsForBatch.push(getBalance);
-    paramsForBatch.push(walletAddress);
+    requestsForBatch.push({
+      method: this.web3.eth.getBalance,
+      params: walletAddress,
+    });
 
-    let results: any[] = await makeBatchRequest(this.web3, requestsForBatch, paramsForBatch);
+    const results: any[] = await makeBatchRequest(this.web3, requestsForBatch);
 
     // now reasign results
 
