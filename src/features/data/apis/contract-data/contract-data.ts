@@ -19,6 +19,7 @@ import { featureFlag_getContractDataApiChunkSize } from '../../utils/feature-fla
 import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
 import { selectTokenByAddress } from '../../selectors/tokens';
+import { makeBatchRequest } from '../../../../helpers/web3';
 
 // fix ts types
 const BeefyV2AppMulticallAbi = _BeefyV2AppMulticallAbi as AbiItem | AbiItem[];
@@ -26,6 +27,83 @@ const BeefyV2AppMulticallAbi = _BeefyV2AppMulticallAbi as AbiItem | AbiItem[];
 export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi {
   constructor(protected web3: Web3, protected chain: T) {}
 
+  public async fetchAllContractData(
+    state: BeefyState,
+    standardVaults: VaultStandard[],
+    govVaults: VaultGov[],
+    boosts: BoostEntity[]
+  ): Promise<FetchAllContractDataResult> {
+    const mc = new this.web3.eth.Contract(
+      BeefyV2AppMulticallAbi,
+      this.chain.appMulticallContractAddress
+    );
+
+    // if we send too much in a single call, we get "execution reversed"
+    const CHUNK_SIZE = featureFlag_getContractDataApiChunkSize();
+
+    const boostBatches = chunk(boosts, CHUNK_SIZE);
+    const govVaultBatches = chunk(govVaults, CHUNK_SIZE);
+    const vaultBatches = chunk(standardVaults, CHUNK_SIZE);
+
+    let requestsForBatch: any[] = [];
+    let paramsForBatch: any[] = [];
+
+    boostBatches.forEach(boostBatch => {
+      requestsForBatch.push(
+        mc.methods.getBoostInfo(boostBatch.map(boost => boost.earnContractAddress)).call
+      );
+      paramsForBatch.push({ from: '0x0000000000000000000000000000000000000000' });
+    });
+    vaultBatches.forEach(vaultBatch => {
+      requestsForBatch.push(
+        mc.methods.getVaultInfo(vaultBatch.map(vault => vault.earnContractAddress)).call
+      );
+      paramsForBatch.push({ from: '0x0000000000000000000000000000000000000000' });
+    });
+    govVaultBatches.forEach(govVaultBatch => {
+      requestsForBatch.push(
+        mc.methods.getGovVaultInfo(govVaultBatch.map(vault => vault.earnContractAddress)).call
+      );
+      paramsForBatch.push({ from: '0x0000000000000000000000000000000000000000' });
+    });
+
+    const results: any[] = await makeBatchRequest(this.web3, requestsForBatch, paramsForBatch);
+
+    // now reasign results
+
+    const res: FetchAllContractDataResult = {
+      boosts: [],
+      govVaults: [],
+      standardVaults: [],
+    };
+
+    let resultsIdx = 0;
+    for (const boostBatch of boostBatches) {
+      const batchRes = results[resultsIdx].map((boostRes, elemidx) =>
+        this.boostFormatter(state, boostRes, boostBatch[elemidx])
+      );
+      res.boosts = res.boosts.concat(batchRes);
+      resultsIdx++;
+    }
+    for (const vaultBatch of vaultBatches) {
+      const batchRes = results[resultsIdx].map((vaultRes, elemidx) =>
+        this.standardVaultFormatter(state, vaultRes, vaultBatch[elemidx])
+      );
+      res.standardVaults = res.standardVaults.concat(batchRes);
+      resultsIdx++;
+    }
+    for (const vaultBatch of govVaultBatches) {
+      const batchRes = results[resultsIdx].map((vaultRes, elemidx) =>
+        this.govVaultFormatter(state, vaultRes, vaultBatch[elemidx])
+      );
+      res.govVaults = res.govVaults.concat(batchRes);
+      resultsIdx++;
+    }
+
+    return res;
+  }
+
+  /* legacy non-batched method
   public async fetchAllContractData(
     state: BeefyState,
     standardVaults: VaultStandard[],
@@ -90,7 +168,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     }
 
     return res;
-  }
+  } */
 
   protected standardVaultFormatter(
     state: BeefyState,
