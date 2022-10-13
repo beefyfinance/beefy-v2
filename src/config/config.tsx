@@ -417,7 +417,7 @@ export const config = {
   optimism: {
     name: 'Optimism',
     chainId: 10,
-    rpc: ['https://mainnet.optimism.io'],
+    rpc: ['https://rpc.ankr.com/optimism'],
     explorerUrl: 'https://optimistic.etherscan.io',
     multicallAddress: '0x820ae7bf39792d7ce7befc70b0172f4d267f1938',
     appMulticallContractAddress: '0x88D537a86e09B753361D70448d60D3dC2D75883d',
@@ -430,7 +430,7 @@ export const config = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://mainnet.optimism.io'],
+      rpcUrls: ['https://rpc.ankr.com/optimism'],
       blockExplorerUrls: ['https://optimistic.etherscan.io/'],
     },
     stableCoins: [
