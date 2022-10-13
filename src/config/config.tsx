@@ -447,6 +447,7 @@ export const config = {
       'USD+',
       'MIM',
       'bbrfaUSD',
+      'agEUR'
     ],
   },
 };
