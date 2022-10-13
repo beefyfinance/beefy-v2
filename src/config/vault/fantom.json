@@ -114,6 +114,36 @@
     "mintTokenUrl": "https://beta.beefy.finance/#/fantom/vault/beefy-beFTM"
   },
   {
+    "id": "boo-deus-wftm",
+    "name": "DEUS-FTM LP",
+    "token": "DEUS-FTM LP",
+    "tokenAddress": "0xaF918eF5b9f33231764A5557881E6D3e5277d456",
+    "tokenDecimals": 18,
+    "tokenProviderId": "spookyswap",
+    "earnedToken": " mooSpookyDEUS-FTM",
+    "earnedTokenAddress": "0x168D2069cC58f0bB3847172dcC47c295dc49F06f",
+    "earnContractAddress": "0x168D2069cC58f0bB3847172dcC47c295dc49F06f",
+    "oracle": "lps",
+    "oracleId": "boo-deus-wftm",
+    "status": "active",
+    "platformId": "spookyswap",
+    "assets": ["DEUS", "FTM"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xde5ed76e7c05ec5e4572cfc88d1acea165109e44",
+    "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xde5ed76e7c05ec5e4572cfc88d1acea165109e44",
+    "network": "fantom",
+    "retireReason": "rewards",
+    "createdAt": 1665666444
+  },
+  {
     "id": "mai-curve-ftm-mai",
     "name": "MAI/fUSDT/USDC",
     "token": "MAI3Pool-f",
