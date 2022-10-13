@@ -1,4 +1,12 @@
 {
+  "synthetix": {
+    "text": "Synthetix is a new financial primitive enabling the creation of synthetic assets, offering unique derivatives and exposure to real-world assets on the blockchain.",
+    "website": "https://synthetix.io/",
+    "social": {
+      "telegram": "https://discord.com/invite/AEdUHzt",
+      "twitter": "https://twitter.com/synthetix_io"
+    }
+  },
   "velodrome": {
     "text": "Velodrome Finance, at its core, is a solution for protocols on Optimism to properly incentivize liquidity for their own use cases. Building on top of the groundwork laid out by Solidly, their team has addressed that first iteration's core issues to realize its full potential.",
     "website": "https://app.velodrome.finance/swap",
