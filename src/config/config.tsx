@@ -449,6 +449,27 @@ export const config = {
       'bbrfaUSD',
     ],
   },
+  kava: {
+    name: 'Kava',
+    chainId: 2222,
+    rpc: ['https://evm.kava.io'],
+    explorerUrl: 'https://explorer.kava.io',
+    multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
+    appMulticallContractAddress: '0x41D44B276904561Ac51855159516FD4cB2c90968',
+    providerName: 'Kava',
+    walletSettings: {
+      chainId: `0x${parseInt('2222', 10).toString(16)}`,
+      chainName: 'kava',
+      nativeCurrency: {
+        name: 'KAVA',
+        symbol: 'KAVA',
+        decimals: 18,
+      },
+      rpcUrls: ['https://evm.kava.io'],
+      blockExplorerUrls: ['https://explorer.kava.io/'],
+    },
+    stableCoins: ['USDC', 'DAI', 'USDT'],
+  },
 };
 
 /*
