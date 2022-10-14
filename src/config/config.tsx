@@ -447,6 +447,8 @@ export const config = {
       'USD+',
       'MIM',
       'bbrfaUSD',
+      'agEUR',
+      'jEUR',
     ],
   },
   kava: {
