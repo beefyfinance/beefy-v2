@@ -5,10 +5,18 @@ import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { isGovVault, VaultEntity, VaultGov } from '../entities/vault';
 import { selectActiveVaultBoostIds, selectAllVaultBoostIds, selectBoostById } from './boosts';
-import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
+import {
+  selectHaveBreakdownData,
+  selectLpBreakdownByAddress,
+  selectTokenByAddress,
+  selectTokenPriceByAddress,
+} from './tokens';
 import { selectStandardVaultById, selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { selectIsWalletKnown, selectWalletAddress } from './wallet';
 import { BIG_ZERO } from '../../../helpers/big-number';
+import BigNumber from 'bignumber.js';
+import { selectUserGlobalStats } from './apy';
+import { KeysOfType } from '../utils/types-utils';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (selectIsWalletKnown(state)) {
@@ -252,4 +260,92 @@ export const selectGovVaultBalanceTokenEntity = (state: BeefyState, vaultId: Vau
 export const selectGovVaultRewardsTokenEntity = (state: BeefyState, vaultId: VaultGov['id']) => {
   const vault = selectVaultById(state, vaultId);
   return selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+};
+
+export const selectUserExposureByKey = (
+  state: BeefyState,
+  key: KeysOfType<VaultEntity, string>
+) => {
+  const userVaults = selectUserDepositedVaults(state).map(vaultId =>
+    selectVaultById(state, vaultId)
+  );
+
+  const valueByKey = userVaults.reduce((totals, vault) => {
+    totals[vault[key]] = (totals[vault[key]] || BIG_ZERO).plus(
+      selectUserVaultDepositInUsd(state, vault.id)
+    );
+    return totals;
+  }, {} as Record<string, BigNumber>);
+
+  const userBalance = selectUserGlobalStats(state).deposited;
+
+  const exposureByKey = [];
+
+  for (const keyValue of Object.keys(valueByKey)) {
+    exposureByKey.push({
+      key: keyValue,
+      value: valueByKey[keyValue],
+      percent: valueByKey[keyValue].multipliedBy(1).dividedBy(userBalance).toNumber(),
+    });
+  }
+
+  return exposureByKey;
+};
+
+export const selectUserTokenExposure = (state: BeefyState) => {
+  const userVaults = selectUserDepositedVaults(state).map(vaultId =>
+    selectVaultById(state, vaultId)
+  );
+
+  const valuesByToken = userVaults.reduce((totals, vault) => {
+    if (vault.assetIds.length === 1) {
+      totals[vault.assetIds[0]] = (totals[vault.assetIds[0]] || BIG_ZERO).plus(
+        selectUserVaultDepositInUsd(state, vault.id)
+      );
+    } else {
+      const haveBreakdownData = selectHaveBreakdownData(state, vault);
+      if (haveBreakdownData) {
+        const breakdown = selectLpBreakdownByAddress(
+          state,
+          vault.chainId,
+          vault.depositTokenAddress
+        );
+        const lpTotalSupplyDecimal = new BigNumber(breakdown.totalSupply);
+        const userBalanceDecimal = isGovVault(vault)
+          ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+          : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
+
+        const userShareOfPool = lpTotalSupplyDecimal.gt(BIG_ZERO)
+          ? userBalanceDecimal.dividedBy(lpTotalSupplyDecimal)
+          : BIG_ZERO;
+        breakdown.tokens.map((tokenAddress, i) => {
+          const reserves = new BigNumber(breakdown.balances[i]);
+          const assetToken = selectTokenByAddress(state, vault.chainId, tokenAddress);
+          const valuePerDecimal = selectTokenPriceByAddress(state, vault.chainId, tokenAddress);
+          const totalValue = reserves.multipliedBy(valuePerDecimal);
+          totals[assetToken.symbol] = (totals[assetToken.symbol] || BIG_ZERO).plus(
+            userShareOfPool.multipliedBy(totalValue)
+          );
+        });
+      } else {
+        totals[vault.name] = selectUserVaultDepositInUsd(state, vault.id);
+      }
+    }
+
+    return totals;
+  }, {} as Record<string, BigNumber>);
+
+  const userBalance = selectUserGlobalStats(state).deposited;
+
+  const exposureByTokens = [];
+
+  for (const token of Object.keys(valuesByToken)) {
+    exposureByTokens.push({
+      key: token,
+      value: valuesByToken[token],
+      percent: valuesByToken[token].multipliedBy(1).dividedBy(userBalance).toNumber(),
+    });
+  }
+
+  return exposureByTokens;
 };

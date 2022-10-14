@@ -4,6 +4,8 @@ import { ChainEntity } from '../entities/chain';
 import { isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
 import { selectChainById } from './chains';
 import { BIG_ONE } from '../../../helpers/big-number';
+import { selectIsAddressBookLoaded } from './data-loader';
+import { VaultEntity } from '../entities/vault';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -160,4 +162,34 @@ export const selectLpBreakdownByAddress = (
 ) => {
   const token = selectTokenByAddress(state, chainId, address);
   return selectLpBreakdownByOracleId(state, token.oracleId);
+};
+
+export const selectHaveBreakdownData = (state: BeefyState, vault: VaultEntity) => {
+  const chainId = vault.chainId;
+  const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
+  const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
+  const breakdown = selectLpBreakdownByAddress(state, chainId, vault.depositTokenAddress);
+
+  if (
+    !isPricesLoaded ||
+    !isAddressBookLoaded ||
+    !breakdown ||
+    !breakdown.tokens ||
+    !breakdown.tokens.length ||
+    !breakdown.balances ||
+    breakdown.balances.length !== breakdown.tokens.length
+  ) {
+    return false;
+  }
+
+  // Must have tokens in state
+  const tokens = breakdown.tokens.map(
+    address => state.entities.tokens.byChainId[vault.chainId].byAddress[address.toLowerCase()]
+  );
+  if (tokens.findIndex(token => !token) !== -1) {
+    return false;
+  }
+
+  // Must have prices of tokens in state
+  return tokens.findIndex(token => !state.entities.tokens.prices.byOracleId[token.oracleId]) === -1;
 };

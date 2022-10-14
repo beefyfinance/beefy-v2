@@ -40,6 +40,7 @@ declare module '@material-ui/core/styles/createPalette' {
     dashboard: {
       resumeCard: string;
       iconBg: string;
+      cardBg: string;
     };
   }
 }

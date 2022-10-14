@@ -455,5 +455,8 @@
   "Resume-Deposit": "Your deposits",
   "Resume-Monthly": "Est. Monthly yield",
   "Resume-Daily": "Est. daily yield",
-  "Resume-Vaults": "Vaults"
+  "Resume-Vaults": "Vaults",
+  "Exposure-Platform": "Platform Exposure",
+  "Exposure-Chain": "Chain Exposure",
+  "Exposure-Tokens": "Token Exposure"
 }

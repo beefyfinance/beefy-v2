@@ -12,7 +12,10 @@ import { useCalculatedBreakdown } from './hooks';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { TokenLpBreakdown } from '../../../data/entities/token';
-import { selectLpBreakdownByAddress } from '../../../data/selectors/tokens';
+import {
+  selectHaveBreakdownData,
+  selectLpBreakdownByAddress,
+} from '../../../data/selectors/tokens';
 import { VaultEntity } from '../../../data/entities/vault';
 import {
   selectIsAddressBookLoaded,
@@ -89,41 +92,14 @@ export const LiquidityPoolBreakdownLoader = memo<LiquidityPoolBreakdownLoaderPro
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
     const chainId = vault.chainId;
     const isAddressBookLoaded = useAppSelector(state => selectIsAddressBookLoaded(state, chainId));
-    const isPricesLoaded = useAppSelector(
-      state => state.ui.dataLoader.global.prices.alreadyLoadedOnce
-    );
+
     const shouldInitAddressBook = useAppSelector(state =>
       selectShouldInitAddressBook(state, chainId)
     );
     const breakdown = useAppSelector(state =>
       selectLpBreakdownByAddress(state, chainId, vault.depositTokenAddress)
     );
-    const haveBreakdownData = useAppSelector(state => {
-      if (
-        !isPricesLoaded ||
-        !isAddressBookLoaded ||
-        !breakdown ||
-        !breakdown.tokens ||
-        !breakdown.tokens.length ||
-        !breakdown.balances ||
-        breakdown.balances.length !== breakdown.tokens.length
-      ) {
-        return false;
-      }
-
-      // Must have tokens in state
-      const tokens = breakdown.tokens.map(
-        address => state.entities.tokens.byChainId[vault.chainId].byAddress[address.toLowerCase()]
-      );
-      if (tokens.findIndex(token => !token) !== -1) {
-        return false;
-      }
-
-      // Must have prices of tokens in state
-      return (
-        tokens.findIndex(token => !state.entities.tokens.prices.byOracleId[token.oracleId]) === -1
-      );
-    });
+    const haveBreakdownData = useAppSelector(state => selectHaveBreakdownData(state, vault));
 
     // Load address book if needed
     useEffect(() => {

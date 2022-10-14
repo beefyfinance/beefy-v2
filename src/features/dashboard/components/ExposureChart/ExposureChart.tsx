@@ -1,9 +1,13 @@
 import { makeStyles } from '@material-ui/core';
-import { memo, useCallback, useState } from 'react';
-import { CalculatedAsset } from '../../types';
+import React, { memo, useCallback, useState } from 'react';
 import { Cell, Pie, PieChart, PieProps, Sector } from 'recharts';
+import { formatPercent } from '../../../../helpers/format';
 import { styles } from './styles';
-import { formatPercent } from '../../../../../../helpers/format';
+
+interface ExposureChartProps {
+  title: string;
+  data?: any;
+}
 
 const useStyles = makeStyles(styles);
 
@@ -18,9 +22,9 @@ type ActiveShapeProps = {
   fill: string;
   stroke: string;
   strokeWidth: number;
-  payload: CalculatedAsset;
   percent: number;
-  value: CalculatedAsset['percent'];
+  value: number;
+  key: string;
 };
 const ActiveShape = function ({
   cx,
@@ -33,17 +37,17 @@ const ActiveShape = function ({
   fill,
   stroke,
   strokeWidth,
-  payload,
   percent,
+  key,
   value,
 }: ActiveShapeProps) {
   return (
     <g>
       <text x={cx} y={cy} dy={-8} textAnchor="middle" alignmentBaseline="middle" fill="#D0D0DA">
-        {payload.symbol}
+        {key}
       </text>
       <text x={cx} y={cy} dy={8} textAnchor="middle" alignmentBaseline="middle" fill="#D0D0DA">
-        {formatPercent(payload.percent)}
+        {formatPercent(percent)}
       </text>
       <Sector
         cx={cx}
@@ -60,10 +64,7 @@ const ActiveShape = function ({
   );
 };
 
-export type ChartProps = {
-  assets: CalculatedAsset[];
-};
-export const Chart = memo<ChartProps>(function Chart({ assets }) {
+export const ExposureChart = memo<ExposureChartProps>(function ({ title, data }) {
   const classes = useStyles();
   const [activeIndex, setActiveIndex] = useState<undefined | number>(undefined);
   const onPieEnter = useCallback<PieProps['onMouseEnter']>(
@@ -76,32 +77,37 @@ export const Chart = memo<ChartProps>(function Chart({ assets }) {
     setActiveIndex(undefined);
   }, [setActiveIndex]);
 
-  console.log(assets);
+  const colors = ['#5C70D6', '#5C99D6'];
 
   return (
-    <div className={classes.holder}>
-      <PieChart width={164} height={164}>
-        <Pie
-          data={assets}
-          dataKey="percent"
-          valueKey="symbol"
-          cx="50%"
-          cy="50%"
-          innerRadius={50}
-          outerRadius={80}
-          paddingAngle={0}
-          startAngle={90}
-          endAngle={450}
-          onMouseEnter={onPieEnter}
-          onMouseLeave={onPieLeave}
-          activeShape={ActiveShape}
-          activeIndex={activeIndex}
-        >
-          {assets.map((asset, i) => (
-            <Cell key={asset.address} fill={asset.color} stroke={'#2D3153'} strokeWidth={3} />
-          ))}
-        </Pie>
-      </PieChart>
+    <div className={classes.container}>
+      <div className={classes.title}>{title}</div>
+      {data && (
+        <div className={classes.holder}>
+          <PieChart width={164} height={164}>
+            <Pie
+              data={data}
+              dataKey="percent"
+              valueKey="value"
+              cx="50%"
+              cy="50%"
+              innerRadius={50}
+              outerRadius={80}
+              paddingAngle={0}
+              startAngle={90}
+              endAngle={450}
+              onMouseEnter={onPieEnter}
+              onMouseLeave={onPieLeave}
+              activeShape={ActiveShape}
+              activeIndex={activeIndex}
+            >
+              {data.map((asset: any, i) => (
+                <Cell key={asset.address} fill={colors[i]} stroke={'#2D3153'} strokeWidth={1} />
+              ))}
+            </Pie>
+          </PieChart>
+        </div>
+      )}
     </div>
   );
 });
