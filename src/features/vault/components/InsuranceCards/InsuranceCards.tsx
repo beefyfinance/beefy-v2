@@ -4,7 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { Collapsable } from '../../../../components/Collapsable';
 import { useAppSelector } from '../../../../store';
 import { VaultEntity } from '../../../data/entities/vault';
-import { selectIsVaultInsurace, selectIsVaultSolace } from '../../../data/selectors/partners';
+import {
+  selectIsVaultInsurace,
+  selectIsVaultNexus,
+  selectIsVaultSolace,
+} from '../../../data/selectors/partners';
 import { InsuraceCard } from '../InsuraceCard';
 import { NexusCard } from '../NexusCard';
 import { SolaceCard } from '../SolaceCard';
@@ -21,11 +25,16 @@ export const InsuranceCards = memo<InsuraceCardProps>(function ({ vaultId }) {
   const classes = useStyles();
   const isInsurace = useAppSelector(state => selectIsVaultInsurace(state, vaultId));
   const isSolace = useAppSelector(state => selectIsVaultSolace(state, vaultId));
+  const isNexus = useAppSelector(state => selectIsVaultNexus(state, vaultId));
+
+  if (!isInsurace && !isSolace && !isNexus) {
+    return null;
+  }
 
   return (
     <div className={classes.container}>
       <Collapsable openByDefault={true} titleClassName={classes.title} title={t('Insurance')}>
-        <NexusCard />
+        {isNexus && <NexusCard />}
         {isInsurace && <InsuraceCard />}
         {isSolace && <SolaceCard />}
       </Collapsable>
