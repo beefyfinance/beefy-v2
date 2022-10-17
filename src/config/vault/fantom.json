@@ -140,7 +140,6 @@
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xde5ed76e7c05ec5e4572cfc88d1acea165109e44",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xde5ed76e7c05ec5e4572cfc88d1acea165109e44",
     "network": "fantom",
-    "retireReason": "rewards",
     "createdAt": 1665666444
   },
   {
