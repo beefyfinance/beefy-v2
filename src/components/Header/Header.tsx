@@ -60,7 +60,6 @@ const NavLinks = memo(function () {
     { title: t('Header-Proposals'), url: 'https://vote.beefy.finance' },
     { title: t('Header-BuyCrypto'), url: '/onramp' },
     { title: t('Header-BridgeBifi'), url: '/bridge' },
-    // { title: t('Header-Dashboard'), url: '/dashboard' },
     { title: t('Header-News'), url: 'https://beefy.com/articles/' },
     { title: t('Header-Docs'), url: 'https://docs.beefy.finance' },
   ];
