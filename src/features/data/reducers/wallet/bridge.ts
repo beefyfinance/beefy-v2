@@ -19,7 +19,14 @@ export enum FormStep {
   SelectToNetwork,
 }
 
-type statusType = 'idle' | 'loading' | 'confirming' | 'success';
+export interface TxStateInterface {
+  error: string | null;
+  swapTx: string | null;
+  status: 0 | 3 | 10 | 8 | 9 | 12 | 14;
+}
+//FOR MORE INFO WATCH https://github.com/anyswap/CrossChain-Router/wiki/How-to-integrate-AnySwap-Router POINT 4
+
+type statusType = 'idle' | 'loading' | 'confirming' | 'success' | 'error';
 
 export type BridgeState = {
   step: FormStep;
@@ -34,6 +41,7 @@ export type BridgeState = {
   };
   supportedChains: ChainEntity['id'][];
   status: statusType;
+  bridgeTxData: TxStateInterface;
 };
 
 const initialBridgeState: BridgeState = {
@@ -47,6 +55,11 @@ const initialBridgeState: BridgeState = {
   bridgeDataByChainId: {},
   supportedChains: [],
   status: 'idle',
+  bridgeTxData: {
+    error: null,
+    swapTx: null,
+    status: 0,
+  },
 };
 
 export const bridgeSlice = createSlice({
@@ -210,6 +223,9 @@ export const bridgeSlice = createSlice({
     },
     setStep(sliceState, action: PayloadAction<{ step: FormStep }>) {
       sliceState.step = action.payload.step;
+    },
+    setBridgeTxData(sliceState, action: PayloadAction<{ txData: TxStateInterface }>) {
+      sliceState.bridgeTxData = action.payload.txData;
     },
   },
 

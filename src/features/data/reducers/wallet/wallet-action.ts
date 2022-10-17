@@ -22,23 +22,14 @@ type MandatoryAdditionalData = {
   token: TokenEntity;
 };
 
-export type WalletActionsState =
-  | {
-      result: null;
-      data: null;
-    }
-  | {
-      result: 'error';
-      data: { error: TrxError } & MandatoryAdditionalData;
-    }
-  | {
-      result: 'success';
-      data: { receipt: TrxReceipt } & MandatoryAdditionalData;
-    }
-  | {
-      result: 'success_pending';
-      data: { hash: TrxHash } & MandatoryAdditionalData;
-    };
+export type WalletActionsState = {
+  result: null | 'error' | 'success' | 'success_pending';
+  data: {
+    error: TrxError;
+    receipt: TrxReceipt;
+    hash: TrxHash;
+  } & MandatoryAdditionalData;
+};
 
 const initialWalletActionState: WalletActionsState = {
   result: null,

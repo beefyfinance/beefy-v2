@@ -50,6 +50,8 @@ import { reloadReserves } from './minters';
 import { selectChainById } from '../selectors/chains';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { ZapDepositEstimate, ZapOptions } from '../apis/zap/zap-types';
+import { updateSteps } from './stepper';
+import { StepContent, stepperActions } from '../reducers/wallet/stepper';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -227,9 +229,6 @@ const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOpt
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const contract = new web3.eth.Contract(zapAbi as any, zapOptions.address);
-    const vaultAssets = vault.assetIds.map(tokenId =>
-      selectTokenById(state, vault.chainId, tokenId)
-    );
 
     const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
@@ -253,7 +252,7 @@ const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOpt
         spender: zapOptions.address,
         // TODO: this should contain 2 assets and 2 amounts
         amount: oracleAmount,
-        token: vaultAssets[0],
+        token: depositToken,
       },
       {
         chainId: vault.chainId,
@@ -515,8 +514,7 @@ const exitGovVault = (vault: VaultGov) => {
     }
 
     const balanceAmount = selectGovVaultUserStackedBalanceInDepositToken(state, vault.id);
-    const rewardAmount = selectGovVaultPendingRewardsInToken(state, vault.id);
-    const token = selectGovVaultRewardsTokenEntity(state, vault.id);
+    const token = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
@@ -536,7 +534,7 @@ const exitGovVault = (vault: VaultGov) => {
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount: rewardAmount, token },
+      { spender: contractAddr, amount: balanceAmount, token },
       {
         chainId: vault.chainId,
         spenderAddress: contractAddr,
@@ -591,9 +589,8 @@ const exitBoost = (boost: BoostEntity) => {
     }
 
     const boostAmount = selectBoostUserBalanceInToken(state, boost.id);
-    const rewardAmount = selectBoostUserRewardsInToken(state, boost.id);
-    const token = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
     const vault = selectVaultById(state, boost.vaultId);
+    const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
 
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
@@ -613,7 +610,7 @@ const exitBoost = (boost: BoostEntity) => {
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount: rewardAmount, token },
+      { spender: contractAddr, amount: boostAmount, token },
       {
         chainId: boost.chainId,
         spenderAddress: contractAddr,
@@ -868,8 +865,15 @@ const bridge = (
         chainId: chainId,
         spenderAddress: routerAddr,
         tokens: uniqBy([gasToken, bridgeToken, destToken], 'id'),
-      }
+      },
+      'bridge'
     );
+  });
+};
+
+const resetWallet = () => {
+  return captureWalletErrors(async dispatch => {
+    dispatch({ type: WALLET_ACTION_RESET });
   });
 };
 
@@ -891,6 +895,7 @@ export const walletActions = {
   mintDeposit,
   burnWithdraw,
   bridge,
+  resetWallet,
 };
 
 function captureWalletErrors<ReturnType>(
@@ -926,14 +931,21 @@ function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity
     govVaultId?: VaultEntity['id'];
     boostId?: BoostEntity['id'];
     minterId?: MinterEntity['id'];
-  }
+  },
+  step?: string
 ) {
   transaction
     .on('transactionHash', function (hash: TrxHash) {
       dispatch(createWalletActionPendingAction(hash, additionalData));
+      if (step === 'bridge') {
+        dispatch(stepperActions.setStepContent({ stepContent: StepContent.BridgeTx }));
+      } else {
+        dispatch(stepperActions.setStepContent({ stepContent: StepContent.WaitingTx }));
+      }
     })
     .on('receipt', function (receipt: TrxReceipt) {
       dispatch(createWalletActionSuccessAction(receipt, additionalData));
+      dispatch(updateSteps());
 
       // fetch new balance and allowance of native token (gas spent) and allowance token
       if (refreshOnSuccess) {
@@ -958,6 +970,7 @@ function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity
     })
     .on('error', function (error: TrxError) {
       dispatch(createWalletActionErrorAction(error, additionalData));
+      dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
     })
     .catch(error => {
       dispatch(createWalletActionErrorAction({ message: String(error) }, additionalData));

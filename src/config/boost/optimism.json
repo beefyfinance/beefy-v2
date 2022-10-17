@@ -1,1 +1,36 @@
-[]
+[
+  {
+    "id": "moo_velodrome-snx-usdc-synthetix",
+    "poolId": "velodrome-snx-usdc",
+    "name": "Beefy",
+    "assets": ["SNX", "USDC"],
+    "tokenAddress": "0x48B3EdF0D7412B11c232BD9A5114B590B7F28134",
+    "earnedToken": "OP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
+    "earnContractAddress": "0xe4b3CCbB1E48c579Ea3D764Fb258Bc908e46487E",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OP",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["synthetix"]
+  },
+  {
+    "id": "moo_velodrome-velo-usdc-velodrome",
+    "poolId": "velodrome-velo-usdc",
+    "name": "Beefy",
+    "assets": ["VELO", "USDC"],
+    "tokenAddress": "0x81F2F132465Ffb4B3C5d11f3d94582cC5c281c04",
+    "earnedToken": "OP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
+    "earnContractAddress": "0x18eCCe7f6B8bB54933643751D3C2D4b3Ea034463",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OP",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["velodrome"]
+  }
+]

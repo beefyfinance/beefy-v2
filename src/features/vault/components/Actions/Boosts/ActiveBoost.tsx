@@ -5,10 +5,8 @@ import { styles } from './styles';
 import { formatBigDecimals } from '../../../../../helpers/format';
 import { askForNetworkChange, askForWalletConnection } from '../../../../data/actions/wallet';
 import { selectVaultById } from '../../../../data/selectors/vaults';
-import { useStepper } from '../../../../../components/Steps/hooks';
 import { selectCurrentChainId, selectIsWalletConnected } from '../../../../data/selectors/wallet';
 import { selectBoostById, selectBoostContractState } from '../../../../data/selectors/boosts';
-import { Step } from '../../../../../components/Steps/types';
 import { walletActions } from '../../../../data/actions/wallet-actions';
 import { BoostEntity } from '../../../../data/entities/boost';
 import {
@@ -23,6 +21,9 @@ import { selectChainById } from '../../../../data/selectors/chains';
 import { useAppDispatch, useAppSelector } from '../../../../../store';
 import { IconWithBasicTooltip } from '../../../../../components/Tooltip/IconWithBasicTooltip';
 import { Button } from '../../../../../components/Button';
+import { stepperActions } from '../../../../data/reducers/wallet/stepper';
+import { selectIsStepperStepping } from '../../../../data/selectors/stepper';
+import { startStepper } from '../../../../data/actions/stepper';
 import { BoostActionButton } from './BoostActionButton';
 import { boostActions } from '../../../../data/reducers/wallet/boost';
 
@@ -51,7 +52,8 @@ export function ActiveBoost({ boostId }: { boostId: BoostEntity['id'] }) {
   const isWalletOnVaultChain = useAppSelector(
     state => selectCurrentChainId(state) === boost.chainId
   );
-  const [startStepper, isStepping, Stepper] = useStepper(chain.id);
+
+  const isStepping = useAppSelector(selectIsStepperStepping);
 
   const [collapseOpen, setCollapseOpen] = useState({
     stake: false,
@@ -75,7 +77,6 @@ export function ActiveBoost({ boostId }: { boostId: BoostEntity['id'] }) {
   );
 
   const handleExit = (boost: BoostEntity) => {
-    const steps: Step[] = [];
     if (!isWalletConnected) {
       return dispatch(askForWalletConnection());
     }
@@ -83,18 +84,27 @@ export function ActiveBoost({ boostId }: { boostId: BoostEntity['id'] }) {
       return dispatch(askForNetworkChange({ chainId: vault.chainId }));
     }
 
-    steps.push({
-      step: 'claim-unstake',
-      message: t('Vault-TxnConfirm', { type: t('Claim-Unstake-noun') }),
-      action: walletActions.exitBoost(boost),
-      pending: false,
-    });
+    dispatch(
+      stepperActions.addStep({
+        step: {
+          step: 'claim-unstake',
+          message: t('Vault-TxnConfirm', { type: t('Claim-Unstake-noun') }),
+          action: walletActions.exitBoost(boost),
+          pending: false,
+          extraInfo: {
+            rewards: {
+              token: rewardToken,
+              amount: boostPendingRewards,
+            },
+          },
+        },
+      })
+    );
 
-    startStepper(steps);
+    dispatch(startStepper(chain.id));
   };
 
   const handleClaim = () => {
-    const steps: Step[] = [];
     if (!isWalletConnected) {
       return dispatch(askForWalletConnection());
     }
@@ -102,14 +112,18 @@ export function ActiveBoost({ boostId }: { boostId: BoostEntity['id'] }) {
       return dispatch(askForNetworkChange({ chainId: vault.chainId }));
     }
 
-    steps.push({
-      step: 'claim-boost',
-      message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
-      action: walletActions.claimBoost(boost),
-      pending: false,
-    });
+    dispatch(
+      stepperActions.addStep({
+        step: {
+          step: 'claim-boost',
+          message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
+          action: walletActions.claimBoost(boost),
+          pending: false,
+        },
+      })
+    );
 
-    startStepper(steps);
+    dispatch(startStepper(chain.id));
   };
 
   return (
@@ -209,7 +223,6 @@ export function ActiveBoost({ boostId }: { boostId: BoostEntity['id'] }) {
           {t('Network-ConnectWallet')}
         </Button>
       )}
-      <Stepper />
     </div>
   );
 }

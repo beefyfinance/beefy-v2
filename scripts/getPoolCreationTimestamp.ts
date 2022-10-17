@@ -19,9 +19,10 @@ const explorerApiUrls = {
   fuse: 'https://explorer.fuse.io/',
   emerald: 'https://explorer.emerald.oasis.dev/',
   optimism: 'https://api-optimistic.etherscan.io/api',
+  kava: 'https://explorer.kava.io/',
 };
 
-const blockScoutChainsTimeout = new Set(['fuse', 'metis', 'celo', 'emerald']);
+const blockScoutChainsTimeout = new Set(['fuse', 'metis', 'celo', 'emerald', 'kava']);
 const harmonyRpcChains = new Set(['one']);
 
 const getCreationTimestamp = async (vaultAddress, explorerUrl) => {

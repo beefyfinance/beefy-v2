@@ -28,6 +28,7 @@ import { bridgeSlice } from './wallet/bridge';
 import { onRamp } from './on-ramp';
 import { feesSlice } from './fees';
 import { transactReducer } from './wallet/transact';
+import { stepperSlice } from './wallet/stepper';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -65,6 +66,7 @@ const uiReducer = combineReducers<BeefyState['ui']>({
   bridge: bridgeSlice.reducer,
   onRamp: onRamp.reducer,
   dataLoader: dataLoaderSlice.reducer,
+  stepperState: stepperSlice.reducer,
 });
 
 export const rootReducer = combineReducers<BeefyState>({
