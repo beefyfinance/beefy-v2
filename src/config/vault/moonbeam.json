@@ -1,5 +1,34 @@
 [
   {
+    "id": "stellaswap-wbtcwh-wglmr",
+    "name": "WBTC-GLMR LP",
+    "token": "WBTC-GLMR LP",
+    "tokenAddress": "0xf8f5E8B9Ee84664695B14862212D8092E16331F6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "earnedToken": "mooStellaswapWBTCwh-GLMR",
+    "earnedTokenAddress": "0x1f36bBa3b906D6EA46409454Fe6376B5BE4fd268",
+    "earnContractAddress": "0x1f36bBa3b906D6EA46409454Fe6376B5BE4fd268",
+    "oracle": "lps",
+    "oracleId": "stellaswap-wbtcwh-wglmr",
+    "status": "active",
+    "platformId": "stellaswap",
+    "assets": ["WBTCwh", "GLMR"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xE57eBd2d67B462E9926e04a8e33f01cD0D64346D",
+    "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
+    "network": "moonbeam",
+    "createdAt": 1666033338
+  },
+  {
     "id": "stellaswap-ethwh-wglmr",
     "name": "ETH-GLMR LP",
     "token": "ETH-GLMR LP",
