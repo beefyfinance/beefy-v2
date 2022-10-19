@@ -5,6 +5,10 @@ export const styles = (theme: Theme) => ({
     borderRadius: '8px',
     backgroundColor: theme.palette.background.dashboard.cardBg,
   },
+  infoContainer: {
+    display: 'flex',
+    columnGap: '24px',
+  },
   title: {
     ...theme.typography['body-lg-med'],
     color: theme.palette.text.secondary,

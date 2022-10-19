@@ -458,5 +458,7 @@
   "Resume-Vaults": "Vaults",
   "Exposure-Platform": "Platform Exposure",
   "Exposure-Chain": "Chain Exposure",
-  "Exposure-Tokens": "Token Exposure"
+  "Exposure-Tokens": "Token Exposure",
+  "Dashboard-Deposited": "Deposited: ",
+  "Dashboard-Percentage": "Percentage: "
 }

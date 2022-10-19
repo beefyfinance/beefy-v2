@@ -1,12 +1,14 @@
 import { makeStyles } from '@material-ui/core';
 import React, { memo, useCallback, useState } from 'react';
-import { Cell, Pie, PieChart, PieProps, Sector } from 'recharts';
-import { formatPercent } from '../../../../helpers/format';
+import { Cell, Pie, PieChart, PieProps, Sector, Tooltip } from 'recharts';
+import { ChartDetails } from '../ChartDetails';
+import { PieChartTooltip } from '../PieChartTooltip';
 import { styles } from './styles';
 
 interface ExposureChartProps {
   title: string;
   data?: any;
+  type: 'chain' | 'platform' | 'token';
 }
 
 const useStyles = makeStyles(styles);
@@ -14,7 +16,6 @@ const useStyles = makeStyles(styles);
 type ActiveShapeProps = {
   cx: number;
   cy: number;
-  midAngle: number;
   innerRadius: number;
   outerRadius: number;
   startAngle: number;
@@ -22,14 +23,10 @@ type ActiveShapeProps = {
   fill: string;
   stroke: string;
   strokeWidth: number;
-  percent: number;
-  value: number;
-  key: string;
 };
 const ActiveShape = function ({
   cx,
   cy,
-  midAngle,
   innerRadius,
   outerRadius,
   startAngle,
@@ -37,18 +34,9 @@ const ActiveShape = function ({
   fill,
   stroke,
   strokeWidth,
-  percent,
-  key,
-  value,
 }: ActiveShapeProps) {
   return (
     <g>
-      <text x={cx} y={cy} dy={-8} textAnchor="middle" alignmentBaseline="middle" fill="#D0D0DA">
-        {key}
-      </text>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" alignmentBaseline="middle" fill="#D0D0DA">
-        {formatPercent(percent)}
-      </text>
       <Sector
         cx={cx}
         cy={cy}
@@ -64,7 +52,7 @@ const ActiveShape = function ({
   );
 };
 
-export const ExposureChart = memo<ExposureChartProps>(function ({ title, data }) {
+export const ExposureChart = memo<ExposureChartProps>(function ({ title, data, type }) {
   const classes = useStyles();
   const [activeIndex, setActiveIndex] = useState<undefined | number>(undefined);
   const onPieEnter = useCallback<PieProps['onMouseEnter']>(
@@ -77,35 +65,37 @@ export const ExposureChart = memo<ExposureChartProps>(function ({ title, data })
     setActiveIndex(undefined);
   }, [setActiveIndex]);
 
-  const colors = ['#5C70D6', '#5C99D6'];
-
   return (
     <div className={classes.container}>
       <div className={classes.title}>{title}</div>
       {data && (
-        <div className={classes.holder}>
-          <PieChart width={164} height={164}>
-            <Pie
-              data={data}
-              dataKey="percent"
-              valueKey="value"
-              cx="50%"
-              cy="50%"
-              innerRadius={50}
-              outerRadius={80}
-              paddingAngle={0}
-              startAngle={90}
-              endAngle={450}
-              onMouseEnter={onPieEnter}
-              onMouseLeave={onPieLeave}
-              activeShape={ActiveShape}
-              activeIndex={activeIndex}
-            >
-              {data.map((asset: any, i) => (
-                <Cell key={asset.address} fill={colors[i]} stroke={'#2D3153'} strokeWidth={1} />
-              ))}
-            </Pie>
-          </PieChart>
+        <div className={classes.infoContainer}>
+          <div className={classes.holder}>
+            <PieChart width={164} height={164}>
+              <Pie
+                data={data}
+                dataKey="percentage"
+                valueKey="value"
+                cx="50%"
+                cy="50%"
+                innerRadius={50}
+                outerRadius={80}
+                paddingAngle={0}
+                startAngle={90}
+                endAngle={450}
+                onMouseEnter={onPieEnter}
+                onMouseLeave={onPieLeave}
+                activeShape={ActiveShape}
+                activeIndex={activeIndex}
+              >
+                {data.map((asset: any, i) => (
+                  <Cell key={asset.address} fill={asset.color} stroke={'#2D3153'} strokeWidth={1} />
+                ))}
+              </Pie>
+              <Tooltip content={<PieChartTooltip type={type} />} />
+            </PieChart>
+          </div>
+          <ChartDetails data={data} />
         </div>
       )}
     </div>
