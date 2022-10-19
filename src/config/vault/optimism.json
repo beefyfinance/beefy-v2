@@ -27,6 +27,33 @@
     "createdAt": 1663091478
   },
   {
+    "id": "beefy-bevelo",
+    "name": "beVELO",
+    "token": "beVELO",
+    "tokenAddress": "0xfDeFFc7Ad816BF7867C642dF7eBC2CC5554ec265",
+    "tokenDecimals": 18,
+    "earnedToken": "moobeVELO",
+    "earnedTokenAddress": "0x5cD57fe9d760E6302aba167993a0D1cC03895eD9",
+    "earnContractAddress": "0x5cD57fe9d760E6302aba167993a0D1cC03895eD9",
+    "oracle": "tokens",
+    "oracleId": "beVELO",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["beVELO"],
+    "strategyTypeId": "single",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "createdAt": 1666200900,
+    "network": "optimism"
+  },
+  {
     "id": "velodrome-wsteth-weth",
     "name": "wstETH-ETH sLP",
     "token": "wstETH-ETH sLP",
