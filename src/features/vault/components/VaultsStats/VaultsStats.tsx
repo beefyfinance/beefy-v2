@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { Box, Divider, Grid, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
@@ -12,6 +11,7 @@ import { VaultDeposited } from '../../../../components/VaultDeposited/VaultDepos
 import { GovVaultRewards } from '../../../../components/GovVaultRewards/GovVaultRewards';
 import { getBeefyApi } from '../../../data/apis/instances';
 import { useAppSelector } from '../../../../store';
+import { formatDistance } from 'date-fns';
 
 const useStyles = makeStyles(styles);
 
@@ -88,11 +88,7 @@ const useLastHarvestStr = (vaultId: string) => {
       if (lastHarvest === null) {
         setState('never');
       } else {
-        const lhStr = moment(lastHarvest)
-          .fromNow()
-          .replace(' hours', 'h')
-          .replace(' minutes', 'm')
-          .replace(' days', 'd');
+        const lhStr = formatDistance(lastHarvest, new Date(), { addSuffix: true });
 
         setState(lhStr);
       }
