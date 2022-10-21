@@ -26,7 +26,7 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xE57eBd2d67B462E9926e04a8e33f01cD0D64346D",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1666033338
+    "createdAt": 1666357714
   },
   {
     "id": "stellaswap-ethwh-wglmr",
