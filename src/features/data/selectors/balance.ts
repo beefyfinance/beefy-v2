@@ -431,3 +431,25 @@ export const selectUserStablecoinsExposure = (state: BeefyState) => {
 
   return sortBy(stablecoinsExposure, ['percentage']).reverse();
 };
+
+export const selectUserVaultBalance = (state: BeefyState) => {
+  const userVaults = selectUserDepositedVaults(state).map(vaultId =>
+    selectVaultById(state, vaultId)
+  );
+
+  return userVaults.reduce((totals, vault) => {
+    const chainId = vault.chainId;
+    const vaultsTemp = totals[chainId]?.vaults ?? [];
+    const vaults = [...vaultsTemp, vault];
+    const depositedByChain = (totals[chainId]?.depositedByChain || BIG_ZERO).plus(
+      selectUserVaultDepositInUsd(state, vault.id)
+    );
+
+    totals[chainId] = {
+      vaults,
+      depositedByChain,
+    };
+
+    return totals;
+  }, {} as Record<string, { vaults: VaultEntity[]; depositedByChain: BigNumber }>);
+};

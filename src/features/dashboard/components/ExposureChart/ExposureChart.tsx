@@ -89,7 +89,7 @@ export const ExposureChart = memo<ExposureChartProps>(function ({ title, data, t
                 activeIndex={activeIndex}
               >
                 {data.map((asset: any, i) => (
-                  <Cell key={asset.address} fill={asset.color} stroke={'#2D3153'} strokeWidth={1} />
+                  <Cell key={asset.address} fill={asset.color} stroke={'#242842'} strokeWidth={2} />
                 ))}
               </Pie>
               <Tooltip content={<PieChartTooltip type={type} />} />
