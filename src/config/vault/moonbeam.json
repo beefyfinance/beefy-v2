@@ -1,5 +1,34 @@
 [
   {
+    "id": "stellaswap-4pool",
+    "name": "USDC/USDT/BUSD/FRAX LP",
+    "token": "4Pool LP",
+    "tokenAddress": "0xB326b5189AA42Acaa3C649B120f084Ed8F4dCaA6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "earnedToken": "mooStellaswap4pool",
+    "earnedTokenAddress": "0xA576b4429d190f8EcD0f82c0C1f492cEA8c7DE9B",
+    "earnContractAddress": "0xA576b4429d190f8EcD0f82c0C1f492cEA8c7DE9B",
+    "oracle": "lps",
+    "oracleId": "stellaswap-4pool",
+    "status": "active",
+    "platformId": "stellaswap",
+    "assets": ["USDCwh", "USDT", "BUSD", "FRAX"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable",
+    "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
+    "network": "moonbeam",
+    "createdAt": 1666514304
+  },
+  {
     "id": "stellaswap-wbtcwh-wglmr",
     "name": "WBTC-GLMR LP",
     "token": "WBTC-GLMR LP",
