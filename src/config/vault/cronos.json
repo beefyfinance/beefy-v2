@@ -57,7 +57,7 @@
   },
   {
     "id": "vvs-usdc-busd",
-    "name": "BUSD-USDC",
+    "name": "BUSD-USDC LP",
     "token": "BUSD-USDC LP",
     "tokenAddress": "0x792Df67276615d6E85e36497c4514b7b102Af4A9",
     "tokenDecimals": 18,

@@ -59,8 +59,8 @@
   },
   {
     "id": "biswap-bat-bnb",
-    "name": "BAT-BNB BLP",
-    "token": "BAT-BNB BLP",
+    "name": "BAT-BNB LP",
+    "token": "BAT-BNB BiLP",
     "tokenAddress": "0xa099F0D90Eb17283Ae7d302d0a6ebb0CaCab39DF",
     "tokenDecimals": 18,
     "tokenProviderId": "biswap",
@@ -146,8 +146,8 @@
   },
   {
     "id": "biswap-etc-bnb",
-    "name": "ETC-BNB BLP",
-    "token": "ETC-BNB BLP",
+    "name": "ETC-BNB LP",
+    "token": "ETC-BNB BiLP",
     "tokenAddress": "0x1Cba970a6E06d4BcC0c4717BE677d1A8AA0211DA",
     "tokenDecimals": 18,
     "tokenProviderId": "biswap",
@@ -14830,7 +14830,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://stargate.finance/pool/BUSD-BSC",
+    "addLiquidityUrl": "https://stargate.finance/pool/busd-bnb/add",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     "createdAt": 1648672017,
     "network": "bsc"
@@ -14858,7 +14858,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://stargate.finance/pool/USDT-BSC",
+    "addLiquidityUrl": "https://stargate.finance/pool/usdt-bnb/add",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x55d398326f99059fF775485246999027B3197955",
     "createdAt": 1648675805,
     "network": "bsc"

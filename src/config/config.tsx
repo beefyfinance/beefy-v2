@@ -52,6 +52,7 @@ export const config = {
       'USD+',
       'HAY',
       'jCHF',
+      'TOR',
     ],
   },
   heco: {
@@ -202,6 +203,9 @@ export const config = {
       'USTaxl',
       'USDL',
       'TOR',
+      'DEI',
+      'BUSD',
+      'alUSD',
     ],
   },
   harmony: {
@@ -449,6 +453,7 @@ export const config = {
       'bbrfaUSD',
       'agEUR',
       'jEUR',
+      'TUSD',
     ],
   },
   kava: {
