@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_velodrome-weth-bifi-beefy",
+    "poolId": "velodrome-weth-bifi",
+    "name": "Beefy",
+    "assets": ["BIFI", "ETH"],
+    "tokenAddress": "0x3532b6f723948eF39d5DCf44C16855239aF81082",
+    "earnedToken": "OP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
+    "earnContractAddress": "0x8F755873546F4D0EDf7d41fF8604C8A632113eB7",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OP",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["beefy"]
+  },
+  {
     "id": "moo_velodrome-snx-usdc-synthetix",
     "poolId": "velodrome-snx-usdc",
     "name": "Beefy",
