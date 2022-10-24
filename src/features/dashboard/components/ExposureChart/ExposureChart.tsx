@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme, useMediaQuery } from '@material-ui/core';
 import React, { memo, useCallback, useState } from 'react';
 import { Cell, Pie, PieChart, PieProps, Sector, Tooltip } from 'recharts';
 import { ChartDetails } from '../ChartDetails';
@@ -54,6 +54,9 @@ const ActiveShape = function ({
 
 export const ExposureChart = memo<ExposureChartProps>(function ({ title, data, type }) {
   const classes = useStyles();
+  const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
+
+  const chartPxs = smUp ? 164 : 124;
   const [activeIndex, setActiveIndex] = useState<undefined | number>(undefined);
   const onPieEnter = useCallback<PieProps['onMouseEnter']>(
     (_, index) => {
@@ -71,15 +74,15 @@ export const ExposureChart = memo<ExposureChartProps>(function ({ title, data, t
       {data && (
         <div className={classes.infoContainer}>
           <div className={classes.holder}>
-            <PieChart width={164} height={164}>
+            <PieChart width={chartPxs} height={chartPxs}>
               <Pie
                 data={data}
                 dataKey="percentage"
                 valueKey="value"
                 cx="50%"
                 cy="50%"
-                innerRadius={50}
-                outerRadius={80}
+                innerRadius={smUp ? 50 : 30}
+                outerRadius={smUp ? 80 : 60}
                 paddingAngle={0}
                 startAngle={90}
                 endAngle={450}

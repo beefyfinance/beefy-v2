@@ -12,6 +12,9 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     padding: '16px 24px',
     borderRadius: '8px 8px 0px 0px',
+    [theme.breakpoints.down('md')]: {
+      padding: '16px',
+    },
   },
   title: {
     ...theme.typography.h3,

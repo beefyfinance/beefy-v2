@@ -4,6 +4,9 @@ export const styles = (theme: Theme) => ({
     padding: '16px 24px',
     borderRadius: '8px',
     backgroundColor: theme.palette.background.dashboard.cardBg,
+    [theme.breakpoints.down('md')]: {
+      padding: '16px',
+    },
   },
   infoContainer: {
     display: 'flex',
