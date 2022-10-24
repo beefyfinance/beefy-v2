@@ -163,7 +163,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
       "MCAP_LARGE",
       "OVER_COLLAT_ALGO_STABLECOIN",
       "AUDIT",

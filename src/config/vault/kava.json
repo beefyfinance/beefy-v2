@@ -21,7 +21,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://kava.curve.fi/factory/0/deposit",
     "network": "kava",
