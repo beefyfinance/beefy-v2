@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_velodrome-wsteth-weth-lido",
+    "poolId": "velodrome-wsteth-weth",
+    "name": "Lido",
+    "assets": ["wstETH", "ETH"],
+    "tokenAddress": "0xcAdC68d5834898D54929E694eD19e833e0117694",
+    "earnedToken": "OP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
+    "earnContractAddress": "0x65F8a09A1C3581a02C8788a6959652E32a87FC77",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OP",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["lido-eth"]
+  },
+  {
     "id": "moo_velodrome-weth-bifi-beefy",
     "poolId": "velodrome-weth-bifi",
     "name": "Beefy",
