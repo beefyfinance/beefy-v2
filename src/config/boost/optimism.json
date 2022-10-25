@@ -2,7 +2,7 @@
   {
     "id": "moo_velodrome-wsteth-weth-lido",
     "poolId": "velodrome-wsteth-weth",
-    "name": "Lido",
+    "name": "Beefy",
     "assets": ["wstETH", "ETH"],
     "tokenAddress": "0xcAdC68d5834898D54929E694eD19e833e0117694",
     "earnedToken": "OP",
