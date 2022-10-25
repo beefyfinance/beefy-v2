@@ -120,6 +120,7 @@ const theme = createTheme({
         resumeCard: '#121421',
         iconBg: 'rgba(92, 112, 214, 0.2)',
         cardBg: '#242842',
+        filter: '#121421',
       },
     },
     text: {

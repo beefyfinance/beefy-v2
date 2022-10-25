@@ -15,6 +15,7 @@ export type VaultValueStatProps = {
   blur?: boolean;
   loading: boolean;
   boosted?: boolean;
+  showLabel?: boolean;
 };
 export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat({
   label,
@@ -24,12 +25,13 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
   blur,
   loading,
   boosted,
+  showLabel = true,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
   return (
-    <VaultLabelledStat label={t(label)} tooltip={loading ? null : tooltip}>
+    <VaultLabelledStat showLabel={showLabel} label={t(label)} tooltip={loading ? null : tooltip}>
       {loading ? (
         '...'
       ) : (

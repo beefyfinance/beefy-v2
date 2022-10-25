@@ -65,6 +65,7 @@
   "Filter-SortSafety": "Safety",
   "Filter-SortTvl": "TVL",
   "Filter-SortWallet": "Wallet",
+  "Filter-SortPlatform": "Platform",
   "Filter-Btn": "Filters",
   "Filter-HideZero": "Hide Zero balances",
   "Filter-Retired": "Retired vaults",
@@ -94,6 +95,7 @@
   "VaultStat-APY": "APY",
   "VaultStat-APR": "APR",
   "VaultStat-DAILY": "DAILY",
+  "VaultStat-PLATFORM": "PLATFORM",
   "VaultStat-TVL": "TVL",
   "VaultStat-DEPOSITED": "DEPOSITED",
   "VaultStat-WALLET": "WALLET",
@@ -459,6 +461,7 @@
   "Exposure-Platform": "Platform Exposure",
   "Exposure-Chain": "Chain Exposure",
   "Exposure-Tokens": "Token Exposure",
+  "Exposure-Stables": "Stablecoin Exposure",
   "Dashboard-Deposited": "Deposited: ",
   "Dashboard-Percentage": "Percentage: "
 }

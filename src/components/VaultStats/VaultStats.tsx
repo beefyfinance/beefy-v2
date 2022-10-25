@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import React, { memo } from 'react';
-import { VaultEntity } from '../../../../../data/entities/vault';
+import { VaultEntity } from '../../features/data/entities/vault';
 import clsx from 'clsx';
 import { VaultDepositStat } from './VaultDepositStat';
 import { VaultWalletStat } from './VaultWalletStat';

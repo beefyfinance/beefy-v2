@@ -1,5 +1,14 @@
 import { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
+  scroller: {
+    whiteSpace: 'nowrap' as const,
+    [theme.breakpoints.down('md')]: {
+      overflowX: 'scroll',
+      '&::-webkit-scrollbar': {
+        display: 'none',
+      },
+    },
+  },
   tableContainer: {
     display: 'grid',
     gridTemplateColumns: '1fr',
@@ -28,6 +37,18 @@ export const styles = (theme: Theme) => ({
     height: '32px',
     width: '32px',
   },
-  filterContainer: {},
-  vaultsContainer: {},
+  sortColumns: {
+    backgroundColor: theme.palette.background.dashboard.filter,
+    padding: '16px 24px',
+    display: 'grid',
+    justifyItems: 'start',
+    width: '100%',
+    columnGap: '24px',
+    gridTemplateColumns: 'repeat(5,1fr)',
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px',
+      gridTemplateColumns: 'repeat(5,150px)',
+      width: 'calc(150px * 6)',
+    },
+  },
 });

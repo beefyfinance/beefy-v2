@@ -1,11 +1,11 @@
-import { VaultEntity } from '../../../../../data/entities/vault';
+import { VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
 import { connect } from 'react-redux';
-import { BeefyState } from '../../../../../../redux-types';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
-import { VaultValueStat } from '../VaultValueStat';
-import { selectVaultTvl } from '../../../../../data/selectors/tvl';
-import { formatBigUsd } from '../../../../../../helpers/format';
+import { BeefyState } from '../../redux-types';
+import { selectVaultById } from '../../features/data/selectors/vaults';
+import { VaultValueStat } from '../../features/home/components/Vault/components/VaultValueStat';
+import { selectVaultTvl } from '../../features/data/selectors/tvl';
+import { formatBigUsd } from '../../helpers/format';
 
 export type VaultTvlStatProps = {
   vaultId: VaultEntity['id'];
