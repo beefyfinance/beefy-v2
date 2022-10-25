@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/styles';
-import { keyBy } from 'lodash';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../components/AssetsImage';
