@@ -10,8 +10,8 @@ const useStyles = makeStyles(styles);
 
 interface ResumeStatProps {
   title: string;
-  icon?: 'wallet' | 'vault' | 'daily-yield' | 'monthly-yield';
-  value?: string;
+  icon: 'wallet' | 'vault' | 'daily-yield' | 'monthly-yield';
+  value: string;
 }
 
 const ResumeStat = memo<ResumeStatProps>(function ({ title, icon, value }) {

@@ -5,6 +5,7 @@ import { SortColumnHeader } from '../../../../components/SortColumnHeader';
 import { formatUsd } from '../../../../helpers/format';
 import { useAppSelector } from '../../../../store';
 import { ChainEntity } from '../../../data/entities/chain';
+import { VaultEntity } from '../../../data/entities/vault';
 import { selectChainById } from '../../../data/selectors/chains';
 import {
   selectFilterSearchSortDirection,
@@ -15,7 +16,7 @@ import { styles } from './styles';
 
 interface ChainTableProps {
   chainId: ChainEntity['id'];
-  data: any;
+  data: { vaults: VaultEntity[]; depositedByChain: BigNumber };
 }
 
 const useStyles = makeStyles(styles);

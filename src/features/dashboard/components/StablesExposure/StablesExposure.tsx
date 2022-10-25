@@ -26,7 +26,7 @@ export const StablesExposure = memo(function () {
       <div className={classes.legendContainer}>
         {stablecoinsExposureData.map(item => {
           return (
-            <div className={classes.legendItem}>
+            <div key={item.key} className={classes.legendItem}>
               <div className={classes.square} style={{ backgroundColor: item.color }} />
               <div className={classes.label}>
                 {item.key} <span>{formatPercent(item.percentage)}</span>

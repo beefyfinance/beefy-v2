@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core';
+import BigNumber from 'bignumber.js';
 import React, { memo } from 'react';
 import { formatPercent } from '../../../../helpers/format';
 import { styles } from './styles';
@@ -6,7 +7,7 @@ import { styles } from './styles';
 const useStyles = makeStyles(styles);
 
 interface ChartDetailsProps {
-  data: any;
+  data: { key: string; value: BigNumber; percentage: number; color: string }[];
 }
 
 export const ChartDetails = memo<ChartDetailsProps>(function ({ data }) {

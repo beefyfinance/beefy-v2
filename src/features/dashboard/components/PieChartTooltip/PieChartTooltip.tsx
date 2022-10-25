@@ -7,14 +7,13 @@ import { formatPercent, formatUsd } from '../../../../helpers/format';
 import { styles } from './styles';
 
 interface TooltipProps {
-  active?: any;
   payload?: any;
   type: 'chain' | 'platform' | 'token';
 }
 
 const useStyles = makeStyles(styles);
 
-export const PieChartTooltip = memo<TooltipProps>(function ({ active, payload, type }) {
+export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type }) {
   const classes = useStyles();
   const { t } = useTranslation();
 

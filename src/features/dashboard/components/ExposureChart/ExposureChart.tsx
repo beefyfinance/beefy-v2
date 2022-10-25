@@ -1,4 +1,5 @@
 import { makeStyles, Theme, useMediaQuery } from '@material-ui/core';
+import BigNumber from 'bignumber.js';
 import React, { memo, useCallback, useState } from 'react';
 import { Cell, Pie, PieChart, PieProps, Sector, Tooltip } from 'recharts';
 import { ChartDetails } from '../ChartDetails';
@@ -7,7 +8,7 @@ import { styles } from './styles';
 
 interface ExposureChartProps {
   title: string;
-  data?: any;
+  data: { key: string; value: BigNumber; percentage: number; color: string }[];
   type: 'chain' | 'platform' | 'token';
 }
 
@@ -91,8 +92,8 @@ export const ExposureChart = memo<ExposureChartProps>(function ({ title, data, t
                 activeShape={ActiveShape}
                 activeIndex={activeIndex}
               >
-                {data.map((asset: any, i) => (
-                  <Cell key={asset.address} fill={asset.color} stroke={'#242842'} strokeWidth={2} />
+                {data.map((asset, i) => (
+                  <Cell key={asset.key} fill={asset.color} stroke={'#242842'} strokeWidth={2} />
                 ))}
               </Pie>
               <Tooltip content={<PieChartTooltip type={type} />} />
