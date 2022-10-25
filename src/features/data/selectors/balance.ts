@@ -23,6 +23,7 @@ import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
 import { selectUserGlobalStats } from './apy';
 import { KeysOfType } from '../utils/types-utils';
+import { getTop6Array } from '../utils/array-utils';
 import { sortBy } from 'lodash';
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (selectIsWalletKnown(state)) {
@@ -310,7 +311,6 @@ export const selectUserExposureByKey = (
   state: BeefyState,
   key: KeysOfType<VaultEntity, string>
 ) => {
-  const colors = ['#5C70D6', '#5C99D6', '#5CC2D6', '#5CD6AD', '#70D65C', '#7FB24D'];
   const userVaults = selectUserDepositedVaults(state).map(vaultId =>
     selectVaultById(state, vaultId)
   );
@@ -329,18 +329,19 @@ export const selectUserExposureByKey = (
       key: token,
       value: valueByKey[token],
       percentage: valueByKey[token].dividedBy(userBalance).toNumber(),
-      color: colors[i % Object.keys(valueByKey).length],
     };
   });
 
-  return sortBy(exposureByKey, ['percentage']).reverse();
+  const sortedItems = getTop6Array(exposureByKey);
+
+  return sortedItems;
 };
 
 export const selectUserTokenExposure = (state: BeefyState) => {
   const userVaults = selectUserDepositedVaults(state).map(vaultId =>
     selectVaultById(state, vaultId)
   );
-  const colors = ['#5C70D6', '#5C99D6', '#5CC2D6', '#5CD6AD', '#70D65C', '#7FB24D'];
+
   const valuesByToken = userVaults.reduce((totals, vault) => {
     if (vault.assetIds.length === 1) {
       totals[vault.assetIds[0]] = (totals[vault.assetIds[0]] || BIG_ZERO).plus(
@@ -376,11 +377,12 @@ export const selectUserTokenExposure = (state: BeefyState) => {
       key: token,
       value: valuesByToken[token],
       percentage: valuesByToken[token].dividedBy(userBalance).toNumber(),
-      color: colors[i % Object.keys(valuesByToken).length],
     };
   });
 
-  return sortBy(exposureByTokens, ['percentage']).reverse();
+  const sortedItems = getTop6Array(exposureByTokens);
+
+  return sortedItems;
 };
 
 export const selectUserStablecoinsExposure = (state: BeefyState) => {
@@ -429,7 +431,7 @@ export const selectUserStablecoinsExposure = (state: BeefyState) => {
     };
   });
 
-  return sortBy(stablecoinsExposure, ['percentage']).reverse();
+  return sortBy(stablecoinsExposure, ['key']).reverse();
 };
 
 export const selectUserVaultBalance = (state: BeefyState) => {

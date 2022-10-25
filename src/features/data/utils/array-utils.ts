@@ -1,4 +1,5 @@
-import { isArray, isPlainObject, mapValues } from 'lodash';
+import { isArray, isPlainObject, mapValues, sortBy } from 'lodash';
+import { BIG_ZERO } from '../../../helpers/big-number';
 
 // https://github.com/lodash/lodash/issues/1244#issuecomment-356676695
 export const mapValuesDeep = (obj: any, fn: (val: any, key: string, obj: any) => any) =>
@@ -24,3 +25,22 @@ export const intersperse = <T>(arr: T[], separator: (n: number) => T): T[] =>
     const isLast = currentIndex === arr.length - 1;
     return [...acc, currentElement, ...(isLast ? [] : [separator(currentIndex)])];
   }, []);
+
+export const getTop6Array = (arry: any) => {
+  const sortedArray = sortBy(arry, ['percentage']).reverse();
+
+  if (sortedArray.length <= 6) {
+    return sortedArray;
+  }
+
+  return sortedArray.slice(0, 5).concat(
+    sortedArray.slice(6, sortedArray.length).reduce(
+      (tot, cur) => {
+        tot.value = (tot.value || BIG_ZERO).plus(cur.value);
+        tot.percentage += cur.percentage;
+        return tot;
+      },
+      { key: 'others', value: 0, percentage: 0 }
+    )
+  );
+};

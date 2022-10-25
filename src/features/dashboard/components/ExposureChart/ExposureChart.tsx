@@ -8,7 +8,7 @@ import { styles } from './styles';
 
 interface ExposureChartProps {
   title: string;
-  data: { key: string; value: BigNumber; percentage: number; color: string }[];
+  data: { key: string; value: BigNumber; percentage: number }[];
   type: 'chain' | 'platform' | 'token';
 }
 
@@ -53,6 +53,8 @@ const ActiveShape = function ({
   );
 };
 
+const COLORS = ['#5C70D6', '#5C99D6', '#5CC2D6', '#5CD6AD', '#70D65C', '#7FB24D'];
+
 export const ExposureChart = memo<ExposureChartProps>(function ({ title, data, type }) {
   const classes = useStyles();
   const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
@@ -93,7 +95,12 @@ export const ExposureChart = memo<ExposureChartProps>(function ({ title, data, t
                 activeIndex={activeIndex}
               >
                 {data.map((asset, i) => (
-                  <Cell key={asset.key} fill={asset.color} stroke={'#242842'} strokeWidth={2} />
+                  <Cell
+                    key={asset.key}
+                    fill={COLORS[i % data.length]}
+                    stroke={'#242842'}
+                    strokeWidth={2}
+                  />
                 ))}
               </Pie>
               <Tooltip content={<PieChartTooltip type={type} />} />

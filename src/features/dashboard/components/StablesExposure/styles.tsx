@@ -25,7 +25,8 @@ export const styles = (theme: Theme) => ({
   stableBar: {
     height: '100%',
     width: props => props.stablesPercentage,
-    borderRadius: '80px',
+    borderRadius: '80px 0px 0px 80px',
+    borderRight: '2px solid #242842',
     backgroundColor: '#3D5CF5',
   },
   legendContainer: {

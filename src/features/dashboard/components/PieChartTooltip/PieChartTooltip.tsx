@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/styles';
+import { keyBy } from 'lodash';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../components/AssetsImage';
@@ -25,15 +26,19 @@ export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type }) {
     return (
       <div className={classes.container}>
         <div className={classes.titleContainer}>
-          {type === 'chain' && data?.key && (
-            <img
-              className={classes.icon}
-              src={require(`../../../../images/networks/${data.key}.svg`).default}
-              alt={title}
-            />
-          )}
-          {type === 'token' && data?.key && (
-            <AssetsImage size={24} chainId={'bsc'} assetIds={[data.key]} />
+          {data?.key && data.key !== 'others' && (
+            <>
+              {type === 'chain' && (
+                <img
+                  className={classes.icon}
+                  src={require(`../../../../images/networks/${data.key}.svg`).default}
+                  alt={title}
+                />
+              )}
+              {type === 'token' && data?.key && (
+                <AssetsImage size={24} chainId={'bsc'} assetIds={[data.key]} />
+              )}
+            </>
           )}
           <div className={classes.title}>{title}</div>
         </div>
