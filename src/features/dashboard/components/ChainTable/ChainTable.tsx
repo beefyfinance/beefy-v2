@@ -22,7 +22,6 @@ const useStyles = makeStyles(styles);
 
 export const ChainTable = memo<ChainTableProps>(function ({ chainId, data }) {
   const classes = useStyles();
-  console.log(data);
   return (
     <div className={classes.tableContainer}>
       <TableTitle chainId={chainId} deposited={data.depositedByChain} />
