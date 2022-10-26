@@ -51,4 +51,8 @@ export const styles = (theme: Theme) => ({
       width: 'calc(150px * 6)',
     },
   },
+  columnHeader: {
+    ...theme.typography['subline-sm'],
+    color: theme.palette.text.disabled,
+  },
 });

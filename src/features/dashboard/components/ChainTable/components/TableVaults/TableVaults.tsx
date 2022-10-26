@@ -2,18 +2,19 @@ import { memo } from 'react';
 import { Vault } from './Vault';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
+import { VaultEntity } from '../../../../../data/entities/vault';
 
 const useStyles = makeStyles(styles);
 
 interface TableVaultsProps {
-  data: any;
+  vaults: VaultEntity[];
 }
 
-export const TableVaults = memo<TableVaultsProps>(function ({ data }) {
+export const TableVaults = memo<TableVaultsProps>(function ({ vaults }) {
   const classes = useStyles();
   return (
     <div className={classes.vaultsContainer}>
-      {data.vaults.map(vault => (
+      {vaults.map(vault => (
         <Vault vaultId={vault.id} />
       ))}
     </div>

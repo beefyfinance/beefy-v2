@@ -53,7 +53,11 @@ export const ExposureChart = memo<ExposureChartProps>(function ({ title, data, t
                     />
                   ))}
                 </Pie>
-                <Tooltip content={<PieChartTooltip type={type} />} />
+                <Tooltip
+                  animationDuration={0}
+                  isAnimationActive={false}
+                  content={<PieChartTooltip type={type} />}
+                />
               </PieChart>
             </ResponsiveContainer>
           </div>

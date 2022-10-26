@@ -455,3 +455,19 @@ export const selectUserVaultBalance = (state: BeefyState) => {
     return totals;
   }, {} as Record<string, { vaults: VaultEntity[]; depositedByChain: BigNumber }>);
 };
+
+export const selectVaultsWithBalanceByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
+  const userVaults = selectUserDepositedVaults(state).map(vaultId =>
+    selectVaultById(state, vaultId)
+  );
+
+  const vaults = {};
+
+  for (const vault of userVaults) {
+    if (vault.chainId === chainId) {
+      vaults[vault.id] = selectUserVaultDepositInUsd(state, vault.id);
+    }
+  }
+
+  return vaults;
+};

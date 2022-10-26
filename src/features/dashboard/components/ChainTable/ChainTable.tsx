@@ -1,17 +1,16 @@
 import { makeStyles } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
 import React, { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SortColumnHeader } from '../../../../components/SortColumnHeader';
 import { formatUsd } from '../../../../helpers/format';
 import { useAppSelector } from '../../../../store';
 import { ChainEntity } from '../../../data/entities/chain';
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectChainById } from '../../../data/selectors/chains';
-import {
-  selectFilterSearchSortDirection,
-  selectFilterSearchSortField,
-} from '../../../data/selectors/filtered-vaults';
+
 import { TableVaults } from './components/TableVaults/TableVaults';
+import { SortedOptions, useSortVaults } from './hooks';
 import { styles } from './styles';
 
 interface ChainTableProps {
@@ -23,12 +22,15 @@ const useStyles = makeStyles(styles);
 
 export const ChainTable = memo<ChainTableProps>(function ({ chainId, data }) {
   const classes = useStyles();
+
+  const { sortedVaults, sortedOptions, handleSort } = useSortVaults(data.vaults, chainId);
+
   return (
     <div className={classes.tableContainer}>
       <TableTitle chainId={chainId} deposited={data.depositedByChain} />
       <div className={classes.scroller}>
-        <TableFilter chainId={chainId} />
-        <TableVaults data={data} />
+        <TableFilter sortOptions={sortedOptions} handleSort={handleSort} />
+        <TableVaults vaults={sortedVaults} />
       </div>
     </div>
   );
@@ -56,45 +58,36 @@ const TableTitle = memo<TableTitleProps>(function ({ chainId, deposited }) {
   );
 });
 
-interface TableFilterProps {
-  chainId: ChainEntity['id'];
-}
-
 const SORT_COLUMNS: {
   label: string;
-  sortKey: 'platform' | 'deposited' | 'apy' | 'daily';
+  sortKey: 'platform' | 'depositValue' | 'apy' | 'daily';
 }[] = [
   { label: 'Filter-SortPlatform', sortKey: 'platform' },
-  { label: 'Filter-SortDeposited', sortKey: 'deposited' },
+  { label: 'Filter-SortDeposited', sortKey: 'depositValue' },
   { label: 'Filter-SortApy', sortKey: 'apy' },
   { label: 'Filter-SortDaily', sortKey: 'daily' },
 ];
 
-const TableFilter = memo<TableFilterProps>(function () {
+interface TableFilterProps {
+  sortOptions: SortedOptions;
+  handleSort: (field: string) => void;
+}
+
+const TableFilter = memo<TableFilterProps>(function ({ sortOptions, handleSort }) {
   const classes = useStyles();
+  const { t } = useTranslation();
 
-  const sortField = useAppSelector(selectFilterSearchSortField);
-  const sortDirection = useAppSelector(selectFilterSearchSortDirection);
-
-  const handleSort = () => {
-    console.log('hola');
-  };
+  const { sort, sortDirection } = sortOptions;
 
   return (
     <div className={classes.sortColumns}>
-      <SortColumnHeader
-        onChange={handleSort}
-        key="vault"
-        label="Vaults"
-        sortKey="default"
-        sorted="none"
-      />
+      <div className={classes.columnHeader}>{t('Vaults')}</div>
       {SORT_COLUMNS.map(({ label, sortKey }) => (
         <SortColumnHeader
           key={label}
           label={label}
           sortKey={sortKey}
-          sorted={sortField === sortKey ? sortDirection : 'none'}
+          sorted={sort === sortKey ? sortDirection : 'none'}
           onChange={handleSort}
         />
       ))}
