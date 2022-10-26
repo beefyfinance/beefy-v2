@@ -4,6 +4,7 @@ import { hexToNumber, isHexStrict } from 'web3-utils';
 import { ReactNode } from 'react';
 import { AllValuesAsString } from '../features/data/utils/types-utils';
 import { BIG_ONE, BIG_ZERO, isBigNumber } from './big-number';
+import { padStart } from 'lodash';
 
 export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
   const number = num.toFormat({
@@ -271,4 +272,8 @@ export function formatEns(ens: string): string {
     return ens.substring(0, 4) + '...' + ens.substring(ens.length - 3);
   }
   return ens;
+}
+
+export function zeroPad(value: number | undefined): string {
+  return padStart((value || 0).toString(), 2, '0');
 }

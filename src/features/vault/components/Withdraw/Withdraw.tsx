@@ -61,6 +61,7 @@ import { BIG_ZERO } from '../../../../helpers/big-number';
 import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
 import { isFulfilled } from '../../../data/reducers/data-loader-types';
 import { FeeBreakdown } from '../FeeBreakdown';
+import { GlpWithdrawCountdown } from '../GlpWithdrawCountdown';
 
 const useStyles = makeStyles(styles);
 
@@ -79,6 +80,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     selectIsWalletKnown(state) ? selectWalletAddress(state) : null
   );
   const [priceImpactDisableWithdraw, setPriceImpactDisableWithdraw] = useState(false);
+  const [glpWithdrawLocked, setGlpWithdrawLocked] = useState(false);
 
   // initialize our form
   React.useEffect(() => {
@@ -471,6 +473,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
         <Box mt={3}>
           {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
           <ScreamAvailableLiquidity vaultId={vaultId} />
+          <GlpWithdrawCountdown vaultId={vaultId} onChange={setGlpWithdrawLocked} />
           {isWalletConnected ? (
             !isWalletOnVaultChain ? (
               <>
@@ -519,7 +522,8 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     disabled={
                       formState.amount.isLessThanOrEqualTo(0) ||
                       !formReady ||
-                      priceImpactDisableWithdraw
+                      priceImpactDisableWithdraw ||
+                      glpWithdrawLocked
                     }
                   >
                     {isZapEstimateLoading
