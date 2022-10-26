@@ -76,8 +76,6 @@ export const Chart = memo<ChartProps>(function Chart({ assets }) {
     setActiveIndex(undefined);
   }, [setActiveIndex]);
 
-  console.log(assets);
-
   return (
     <div className={classes.holder}>
       <PieChart width={164} height={164}>
