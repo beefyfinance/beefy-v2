@@ -463,5 +463,8 @@
   "Exposure-Tokens": "Token Exposure",
   "Exposure-Stables": "Stablecoin Exposure",
   "Dashboard-Deposited": "Deposited: ",
-  "Dashboard-Percentage": "Percentage: "
+  "Dashboard-Percentage": "Percentage: ",
+  "Dashboard-NoData": "No data available",
+  "Dashboard-NoConnected": "Connect your wallet to view your investments",
+  "Dashboard-NoVaults": "Deposit in a vault to view your investments"
 }
