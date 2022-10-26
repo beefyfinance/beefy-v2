@@ -372,7 +372,7 @@ export const selectUserTokenExposure = (state: BeefyState) => {
     BIG_ZERO
   );
 
-  const exposureByTokens = Object.keys(valuesByToken).map((token, i) => {
+  const exposureByTokens = Object.keys(valuesByToken).map(token => {
     return {
       key: token,
       value: valuesByToken[token],
