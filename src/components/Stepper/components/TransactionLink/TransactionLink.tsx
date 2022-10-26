@@ -1,17 +1,18 @@
 import { Button, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
-import { ChainEntity } from '../../../../features/data/entities/chain';
 import { selectChainById } from '../../../../features/data/selectors/chains';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../store';
+import { selectStepperChainId } from '../../../../features/data/selectors/stepper';
 
 const useStyles = makeStyles(styles);
 
-export function TransactionLink({ chainId }: { chainId: ChainEntity['id'] }) {
+export function TransactionLink() {
   const classes = useStyles();
   const { t } = useTranslation();
 
+  const chainId = useAppSelector(selectStepperChainId);
   const walletActionsState = useAppSelector(state => state.user.walletActions);
   const chain = useAppSelector(state => selectChainById(state, chainId));
 

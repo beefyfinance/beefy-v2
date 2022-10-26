@@ -55,4 +55,7 @@ export const styles = (theme: Theme) => ({
       marginLeft: '4px',
     },
   },
+  closeBtn: {
+    marginTop: theme.spacing(3),
+  },
 });

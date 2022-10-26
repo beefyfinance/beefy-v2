@@ -26,6 +26,7 @@ import { BridgeState } from './features/data/reducers/wallet/bridge';
 import { OnRampTypes } from './features/data/reducers/on-ramp-types';
 import { DataLoaderState } from './features/data/reducers/data-loader-types';
 import { FeesState } from './features/data/reducers/fees';
+import { StepperState } from './features/data/reducers/wallet/stepper';
 
 export interface BeefyState {
   entities: {
@@ -60,6 +61,7 @@ export interface BeefyState {
     boost: BoostState;
     bridge: BridgeState;
     onRamp: OnRampTypes;
+    stepperState: StepperState;
   };
 }
 
