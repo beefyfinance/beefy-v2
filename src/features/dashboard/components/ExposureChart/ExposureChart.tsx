@@ -1,7 +1,7 @@
 import { makeStyles, Theme, useMediaQuery } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
 import React, { memo } from 'react';
-import { Cell, Pie, PieChart, Tooltip } from 'recharts';
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import { ChartDetails } from '../ChartDetails';
 import { PieChartTooltip } from '../PieChartTooltip';
 import { styles } from './styles';
@@ -20,7 +20,9 @@ export const ExposureChart = memo<ExposureChartProps>(function ({ title, data, t
   const classes = useStyles();
   const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
 
-  const chartPxs = smUp ? 164 : 124;
+  const chartPxs = React.useMemo(() => {
+    return smUp ? 164 : 124;
+  }, [smUp]);
 
   return (
     <div className={classes.container}>
@@ -28,30 +30,32 @@ export const ExposureChart = memo<ExposureChartProps>(function ({ title, data, t
       {data && (
         <div className={classes.infoContainer}>
           <div className={classes.holder}>
-            <PieChart width={chartPxs} height={chartPxs}>
-              <Pie
-                data={data}
-                dataKey="percentage"
-                valueKey="value"
-                cx="50%"
-                cy="50%"
-                innerRadius={smUp ? 50 : 30}
-                outerRadius={smUp ? 80 : 60}
-                paddingAngle={0}
-                startAngle={90}
-                endAngle={450}
-              >
-                {data.map((asset, i) => (
-                  <Cell
-                    key={asset.key}
-                    fill={COLORS[i % data.length]}
-                    stroke={'#242842'}
-                    strokeWidth={2}
-                  />
-                ))}
-              </Pie>
-              <Tooltip content={<PieChartTooltip type={type} />} />
-            </PieChart>
+            <ResponsiveContainer width={chartPxs} height={chartPxs}>
+              <PieChart>
+                <Pie
+                  data={data}
+                  dataKey="percentage"
+                  valueKey="value"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={smUp ? 50 : 30}
+                  outerRadius={smUp ? 80 : 60}
+                  paddingAngle={0}
+                  startAngle={90}
+                  endAngle={450}
+                >
+                  {data.map((asset, i) => (
+                    <Cell
+                      key={asset.key}
+                      fill={COLORS[i % data.length]}
+                      stroke={'#242842'}
+                      strokeWidth={2}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip content={<PieChartTooltip type={type} />} />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
           <ChartDetails data={data} />
         </div>
