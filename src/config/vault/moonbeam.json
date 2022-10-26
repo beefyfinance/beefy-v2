@@ -1,5 +1,34 @@
 [
   {
+    "id": "stellaswap-wstdot-xcdot",
+    "name": "wstDOT-xcDOT LP",
+    "token": "wstDOT-xcDOT LP",
+    "tokenAddress": "0x61BF1b38930e37850D459f3CB926Cd197F5F88c0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "earnedToken": "mooStellaswapwstDOT-xcDOT",
+    "earnedTokenAddress": "0x6EA8ad7228eBcA6C686096269d60bb1C72D13fa8",
+    "earnContractAddress": "0x6EA8ad7228eBcA6C686096269d60bb1C72D13fa8",
+    "oracle": "lps",
+    "oracleId": "stellaswap-wstdot-xcdot",
+    "status": "active",
+    "platformId": "stellaswap",
+    "assets": ["wstDOT", "xcDOT"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x191cf2602Ca2e534c5Ccae7BCBF4C46a704bb949/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
+    "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
+    "network": "moonbeam",
+    "createdAt": 1666809486
+  },
+  {
     "id": "stellaswap-4pool",
     "name": "USDC/USDT/BUSD/FRAX LP",
     "token": "4Pool LP",
