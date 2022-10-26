@@ -33,28 +33,29 @@
     "id": "gmx-arb-glp",
     "name": "GLP",
     "token": "GLP",
+    "tokenAddress": "0x5402B5F40310bDED796c7D0F3FF6683f5C0cFfdf",
     "tokenDecimals": 18,
     "tokenProviderId": "gmx",
-    "earnedToken": "mooGMXGLP",
-    "earnedTokenAddress": "0x9Fe732dBeE7B403d1C7e7A55BDA28F452e91D29f",
-    "earnContractAddress": "0x9Fe732dBeE7B403d1C7e7A55BDA28F452e91D29f",
-    "oracle": "tokens",
-    "oracleId": "ETH",
+    "earnedToken": "mooGmxGLP",
+    "earnedTokenAddress": "0x9dbbBaecACEDf53d5Caa295b8293c1def2055Adc",
+    "earnContractAddress": "0x9dbbBaecACEDf53d5Caa295b8293c1def2055Adc",
+    "oracle": "lps",
+    "oracleId": "gmx-arb-glp",
     "status": "active",
     "platformId": "gmx",
     "assets": ["GLP"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
-      "NEW_STRAT",
-      "IL_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
       "MCAP_MEDIUM",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/USDC/ETH",
+    "addLiquidityUrl": "https://app.gmx.io/#/buy_glp/?ref=beefy",
     "network": "arbitrum",
-    "createdAt": 1666195686
+    "createdAt": 1666793250
   },
   {
     "id": "gmx-arb-gmx",
@@ -63,9 +64,9 @@
     "tokenAddress": "0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a",
     "tokenDecimals": 18,
     "tokenProviderId": "gmx",
-    "earnedToken": "mooGMXGMX",
-    "earnedTokenAddress": "0x26C9c8f4F8aA6E6D96f897e70173552FbC41F35C",
-    "earnContractAddress": "0x26C9c8f4F8aA6E6D96f897e70173552FbC41F35C",
+    "earnedToken": "mooGmxGMX",
+    "earnedTokenAddress": "0x5B904f19fb9ccf493b623e5c8cE91603665788b0",
+    "earnContractAddress": "0x5B904f19fb9ccf493b623e5c8cE91603665788b0",
     "oracle": "tokens",
     "oracleId": "GMX",
     "status": "active",
@@ -80,9 +81,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/USDC/GMX",
+    "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/GMX",
     "network": "arbitrum",
-    "createdAt": 1666195685
+    "createdAt": 1666793248
   },
   {
     "id": "stargate-arb-eth",

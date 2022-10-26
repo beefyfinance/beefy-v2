@@ -5128,28 +5128,29 @@
     "id": "gmx-avax-glp",
     "name": "GLP",
     "token": "GLP",
+    "tokenAddress": "0xaE64d55a6f09E4263421737397D1fdFA71896a69",
     "tokenDecimals": 18,
     "tokenProviderId": "gmx",
-    "earnedToken": "mooGMXGLP",
-    "earnedTokenAddress": "0x09d13bB083226b34a2AC44e74aEEC411984f2423",
-    "earnContractAddress": "0x09d13bB083226b34a2AC44e74aEEC411984f2423",
-    "oracle": "tokens",
-    "oracleId": "AVAX",
+    "earnedToken": "mooGmxGLP",
+    "earnedTokenAddress": "0x22EafB9C7E2858cfDA712940896464DdAA83d053",
+    "earnContractAddress": "0x22EafB9C7E2858cfDA712940896464DdAA83d053",
+    "oracle": "lps",
+    "oracleId": "gmx-avax-glp",
     "status": "active",
     "platformId": "gmx",
     "assets": ["GLP"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
-      "NEW_STRAT",
-      "IL_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
       "MCAP_MEDIUM",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=AVAX",
+    "addLiquidityUrl": "https://app.gmx.io/#/buy_glp/?ref=beefy",
     "network": "avax",
-    "createdAt": 1666195684
+    "createdAt": 1666793249
   },
   {
     "id": "gmx-avax-gmx",
@@ -5158,9 +5159,9 @@
     "tokenAddress": "0x62edc0692BD897D2295872a9FFCac5425011c661",
     "tokenDecimals": 18,
     "tokenProviderId": "gmx",
-    "earnedToken": "mooGMXGMX",
-    "earnedTokenAddress": "0xC38f6a532ceF73729bA68a20657e7e0Ff6D410D6",
-    "earnContractAddress": "0xC38f6a532ceF73729bA68a20657e7e0Ff6D410D6",
+    "earnedToken": "mooGmxGMX",
+    "earnedTokenAddress": "0x408835a5616baE0ECE4d3eF821C1D1CC88a2179E",
+    "earnContractAddress": "0x408835a5616baE0ECE4d3eF821C1D1CC88a2179E",
     "oracle": "tokens",
     "oracleId": "GMX",
     "status": "active",
@@ -5175,8 +5176,8 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x62edc0692BD897D2295872a9FFCac5425011c661",
+    "buyTokenUrl": "https://app.1inch.io/#/43114/unified/swap/AVAX/GMX",
     "network": "avax",
-    "createdAt": 1666195683
+    "createdAt": 1666793247
   }
 ]
