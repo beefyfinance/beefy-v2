@@ -15,7 +15,7 @@ export const TableVaults = memo<TableVaultsProps>(function ({ vaults }) {
   return (
     <div className={classes.vaultsContainer}>
       {vaults.map(vault => (
-        <Vault vaultId={vault.id} />
+        <Vault key={vault.id} vaultId={vault.id} />
       ))}
     </div>
   );

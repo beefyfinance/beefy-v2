@@ -97,7 +97,7 @@ export const VirtualList = function () {
     <>
       <div className={classes.tablesContainer} ref={containerRef}>
         {renderVaultIds.map(chainId => {
-          return <ChainTable chainId={chainId} data={vaults[chainId]} />;
+          return <ChainTable key={chainId} chainId={chainId} data={vaults[chainId]} />;
         })}
       </div>
       <div ref={bottomRef} />

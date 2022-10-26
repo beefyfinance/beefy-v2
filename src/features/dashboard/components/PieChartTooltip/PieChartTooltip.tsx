@@ -8,24 +8,25 @@ import { styles } from './styles';
 
 interface TooltipProps {
   payload?: any;
+  active?: boolean;
   type: 'chain' | 'platform' | 'token';
 }
 
 const useStyles = makeStyles(styles);
 
-export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type }) {
+export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type, active }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  if (payload) {
-    const data = payload[0]?.payload;
-    const usdValue = formatUsd(data?.value ?? BIG_ZERO);
-    const percent = formatPercent(data?.percentage ?? 0);
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    const usdValue = formatUsd(data.value ?? BIG_ZERO);
+    const percent = formatPercent(data.percentage ?? 0);
     const title = data?.key ?? '';
     return (
       <div className={classes.container}>
         <div className={classes.titleContainer}>
-          {data?.key && data.key !== 'others' && (
+          {data.key !== 'others' && (
             <>
               {type === 'chain' && (
                 <img
@@ -34,12 +35,10 @@ export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type }) {
                   alt={title}
                 />
               )}
-              {type === 'token' && data?.key && (
-                <AssetsImage size={24} chainId={'bsc'} assetIds={[data.key]} />
-              )}
+              {type === 'token' && <AssetsImage size={24} chainId={'bsc'} assetIds={[data.key]} />}
             </>
           )}
-          <div className={classes.title}>{title}</div>
+          <div className={classes.title}>{data.key}</div>
         </div>
         <div className={classes.infoContainer}>
           <div className={classes.valueContainer}>
