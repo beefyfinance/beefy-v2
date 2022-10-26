@@ -23,5 +23,8 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    '& .recharts-surface:focus': {
+      outline: 'none' as const,
+    },
   },
 });
