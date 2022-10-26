@@ -302,7 +302,7 @@
     "oracleId": "balancer-wbtc-eth-usdc",
     "status": "active",
     "platformId": "balancer",
-    "assets": ["WBTC", "WETH", "USDC"],
+    "assets": ["WBTC", "ETH", "USDC"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",

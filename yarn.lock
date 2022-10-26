@@ -5301,10 +5301,10 @@ blakejs@^1.1.0:
   resolved "https://registry.yarnpkg.com/blakejs/-/blakejs-1.2.1.tgz#5057e4206eadb4a97f7c0b6e197a505042fc3814"
   integrity sha512-QXUSXI3QVc/gJME0dBpXrag1kbzOqCjCX8/b54ntNyW6sjtoqxqRk3LTmXzaJoh71zMsDCjM+47jS7XiwN/+fQ==
 
-blockchain-addressbook@^0.39.5:
-  version "0.39.5"
-  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.39.5.tgz#cd42e36e8f08ebfdaf9ea92f05be337dfe297b62"
-  integrity sha512-1MJojfv6DWW8rpnckVUVrH/nxPShKOoctMlljorjRS6hL5QV72bDqwEovwuO/HUxX8Ob0lnb0tZXnGmaY/QFzg==
+blockchain-addressbook@^0.39.13:
+  version "0.39.13"
+  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.39.13.tgz#eb7d545be415261e15c904b1c41ea6ec075501d6"
+  integrity sha512-g9zBTP0l0iD3Mji4RPL4yg2T0vE74JO2SLzC71dXsjmUeK6ZhAvWe297+v4qqRkRqMuS7miWsdtvJtqLIPEP1g==
 
 bluebird@^3.5.0, bluebird@^3.5.2, bluebird@^3.5.5:
   version "3.7.2"
@@ -9076,7 +9076,7 @@ get-stream@^5.0.0, get-stream@^5.1.0:
 
 get-stream@^6.0.0:
   version "6.0.1"
-  resolved "https://registry.npmjs.org/get-stream/-/get-stream-6.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/get-stream/-/get-stream-6.0.1.tgz#a262d8eef67aced57c2852ad6167526a43cbf7b7"
   integrity sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==
 
 get-symbol-description@^1.0.0:

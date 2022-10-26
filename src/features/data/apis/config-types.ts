@@ -49,6 +49,7 @@ export interface PartnersConfig {
   Insurace: ChainEntity['id'][];
   Moonpot: VaultEntity['id'][];
   Solace: ChainEntity['id'][];
+  Nexus: ChainEntity['id'][];
 }
 
 interface BoostPartnerConfig {
