@@ -5140,7 +5140,7 @@
     "oracleId": "gmx-avax-glp",
     "status": "active",
     "platformId": "gmx",
-    "assets": ["GLP"],
+    "assets": ["AVAX", "USDCe", "USDC", "WBTCe", "BTCb", "USDTe", "WETHe"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",

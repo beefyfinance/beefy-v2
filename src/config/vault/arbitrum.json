@@ -43,7 +43,7 @@
     "oracleId": "gmx-arb-glp",
     "status": "active",
     "platformId": "gmx",
-    "assets": ["GLP"],
+    "assets": ["WETH", "WBTC", "LINK", "UNI", "USDC", "USDT", "DAI", "FRAX"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
