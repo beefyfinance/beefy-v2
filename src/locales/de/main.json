@@ -449,5 +449,7 @@
   "Add-To-Wallet": "Add to Wallet",
   "Insurance": "Insurance",
   "Leverage": "Leverage",
-  "Saving-Games": "Savings Games"
+  "Saving-Games": "Savings Games",
+  "Glp-Withdraw-Notice": "The underlying protocol requires withdrawals to be at least 15 minutes after a deposit/harvest.",
+  "Glp-Withdraw-Notice-Unlocks": "Unlocks in <countdown/>"
 }
