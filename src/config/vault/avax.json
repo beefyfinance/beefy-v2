@@ -5125,5 +5125,61 @@
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE",
     "createdAt": 1657121627,
     "network": "avax"
+  },
+  {
+    "id": "gmx-avax-glp",
+    "name": "GLP",
+    "token": "GLP",
+    "tokenAddress": "0xaE64d55a6f09E4263421737397D1fdFA71896a69",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gmx",
+    "earnedToken": "mooGmxGLP",
+    "earnedTokenAddress": "0x22EafB9C7E2858cfDA712940896464DdAA83d053",
+    "earnContractAddress": "0x22EafB9C7E2858cfDA712940896464DdAA83d053",
+    "oracle": "lps",
+    "oracleId": "gmx-avax-glp",
+    "status": "active",
+    "platformId": "gmx",
+    "assets": ["GLP"],
+    "strategyTypeId": "single",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.gmx.io/#/buy_glp/?ref=beefy",
+    "network": "avax",
+    "createdAt": 1666793249
+  },
+  {
+    "id": "gmx-avax-gmx",
+    "name": "GMX",
+    "token": "GMX",
+    "tokenAddress": "0x62edc0692BD897D2295872a9FFCac5425011c661",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gmx",
+    "earnedToken": "mooGmxGMX",
+    "earnedTokenAddress": "0x408835a5616baE0ECE4d3eF821C1D1CC88a2179E",
+    "earnContractAddress": "0x408835a5616baE0ECE4d3eF821C1D1CC88a2179E",
+    "oracle": "tokens",
+    "oracleId": "GMX",
+    "status": "active",
+    "platformId": "gmx",
+    "assets": ["GMX"],
+    "strategyTypeId": "single",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://app.1inch.io/#/43114/unified/swap/AVAX/GMX",
+    "network": "avax",
+    "createdAt": 1666793247
   }
 ]

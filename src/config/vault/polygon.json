@@ -7014,7 +7014,7 @@
     "oracle": "lps",
     "oracleId": "quick-wmatic-maticx",
     "status": "eol",
-    "retireReason":"rewards",
+    "retireReason": "rewards",
     "platformId": "quickswap",
     "assets": ["MaticX", "MATIC"],
     "strategyTypeId": "lp",

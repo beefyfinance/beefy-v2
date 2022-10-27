@@ -898,5 +898,10 @@
     "id": "hermes",
     "name": "Hermes",
     "filter": true
+  },
+  {
+    "id": "gmx",
+    "name": "GMX",
+    "filter": true
   }
 ]
