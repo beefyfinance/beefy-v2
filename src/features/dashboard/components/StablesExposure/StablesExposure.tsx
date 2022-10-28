@@ -10,10 +10,10 @@ const useStyles = makeStyles(styles);
 
 export const StablesExposure = memo(function () {
   const { t } = useTranslation();
-  const stablecoinsExposureData = useAppSelector(selectUserStablecoinsExposure);
-
+  const stablecoinsExposureData = useAppSelector(state =>
+    selectUserStablecoinsExposure(state, 'stablesExposure')
+  );
   const stablePercentage = stablecoinsExposureData.filter(item => item.key === 'stable');
-
   const classes = useStyles({
     stablesPercentage: formatPercent(stablePercentage[0]?.percentage, 0),
   });

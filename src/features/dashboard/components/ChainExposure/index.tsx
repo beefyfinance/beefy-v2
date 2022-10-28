@@ -9,6 +9,7 @@ const ChainExposure = memo(function () {
   const { t } = useTranslation();
 
   const chainExposureData = useAppSelector(state => selectUserExposureByKey(state, 'chainId'));
+
   return <ExposureChart title={t('Exposure-Chain')} type="chain" data={chainExposureData} />;
 });
 
