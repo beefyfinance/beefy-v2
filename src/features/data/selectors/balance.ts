@@ -21,7 +21,6 @@ import {
 import { selectIsWalletKnown, selectWalletAddress } from './wallet';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
-import { selectUserGlobalStats } from './apy';
 import { KeysOfType } from '../utils/types-utils';
 import { getTop6Array } from '../utils/array-utils';
 import { sortBy } from 'lodash';
@@ -203,6 +202,16 @@ export const selectUserVaultDepositInUsd = (
   return vaultTokenDeposit.multipliedBy(oraclePrice);
 };
 
+export const selectTotalUserDepositInUsd = (state: BeefyState) => {
+  const vaultIds = selectUserDepositedVaults(state);
+  let total = BIG_ZERO;
+  for (const vaultId of vaultIds) {
+    const vault = selectVaultById(state, vaultId);
+    total = total.plus(selectUserVaultDepositInUsd(state, vault.id));
+  }
+  return total;
+};
+
 export const selectUserVaultDepositTokenWalletBalanceInUsd = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
@@ -322,7 +331,7 @@ export const selectUserExposureByKey = (
     return totals;
   }, {} as Record<string, BigNumber>);
 
-  const userBalance = selectUserGlobalStats(state).deposited;
+  const userBalance = selectTotalUserDepositInUsd(state);
 
   const exposureByKey = Object.keys(valueByKey).map((token, i) => {
     return {
