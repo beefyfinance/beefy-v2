@@ -42,7 +42,7 @@
     "oracleId": "stellaswap-4pool",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["USDCwh", "USDT", "BUSD", "FRAX"],
+    "assets": ["USDCwh", "USDTxc", "BUSDwh", "FRAX"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
