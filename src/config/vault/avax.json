@@ -5141,7 +5141,7 @@
     "status": "active",
     "platformId": "gmx",
     "assets": ["AVAX", "USDCe", "USDC", "WBTCe", "BTCb", "USDTe", "WETHe"],
-    "strategyTypeId": "single",
+    "strategyTypeId": "glp-gmx",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -5169,7 +5169,7 @@
     "status": "active",
     "platformId": "gmx",
     "assets": ["GMX"],
-    "strategyTypeId": "single",
+    "strategyTypeId": "glp-gmx",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",

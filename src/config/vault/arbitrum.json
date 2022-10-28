@@ -44,7 +44,7 @@
     "status": "active",
     "platformId": "gmx",
     "assets": ["WETH", "WBTC", "LINK", "UNI", "USDC", "USDT", "DAI", "FRAX"],
-    "strategyTypeId": "single",
+    "strategyTypeId": "glp-gmx",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -72,7 +72,7 @@
     "status": "active",
     "platformId": "gmx",
     "assets": ["GMX"],
-    "strategyTypeId": "single",
+    "strategyTypeId": "glp-gmx",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
