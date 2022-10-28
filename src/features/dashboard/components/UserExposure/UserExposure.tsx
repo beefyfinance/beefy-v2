@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChainExposureLoader } from '../ChainExposure';
-import { PlatformExposureLoader } from '../PlatformExposure ';
+import { PlatformExposureLoader } from '../PlatformExposure';
 import { Section } from '../Section';
 import { StablesExposure } from '../StablesExposure';
 import { TokenExposureLoader } from '../TokenExposure';
