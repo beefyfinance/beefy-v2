@@ -466,5 +466,8 @@
   "Dashboard-Percentage": "Percentage: ",
   "Dashboard-NoData": "No data available",
   "Dashboard-NoConnected": "Connect your wallet to view your investments",
-  "Dashboard-NoVaults": "Deposit in a vault to view your investments"
+  "Dashboard-NoVaults": "Deposit in a vault to view your investments",
+  "Glp-Withdraw-Notice": "The underlying protocol requires withdrawals to be at least 15 minutes after a deposit/harvest.",
+  "Glp-Withdraw-Notice-Unlocks": "Unlocks in <countdown/>",
+  "Details-Here": "Details here"
 }

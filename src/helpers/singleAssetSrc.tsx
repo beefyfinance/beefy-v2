@@ -8,8 +8,8 @@ const singleAssets = Object.fromEntries(
 const singleAssetCache = {};
 
 export function getSingleAssetSrc(symbol: TokenEntity['id'], chainId?: ChainEntity['id']) {
-  symbol.replace('.', '');
-  const ids = chainId ? [`${chainId}/${symbol}`, symbol] : [symbol];
+  const parsedSymbol = symbol.replace('.', '');
+  const ids = chainId ? [`${chainId}/${parsedSymbol}`, parsedSymbol] : [parsedSymbol];
 
   for (const id of ids) {
     if (id in singleAssetCache) {
@@ -24,7 +24,8 @@ export function getSingleAssetSrc(symbol: TokenEntity['id'], chainId?: ChainEnti
 }
 
 export function singleAssetExists(symbol: TokenEntity['id'], chainId?: ChainEntity['id']): boolean {
-  const ids = chainId ? [`${chainId}/${symbol}`, symbol] : [symbol];
+  let parsedSymbol = symbol.replace('.', '');
+  const ids = chainId ? [`${chainId}/${parsedSymbol}`, parsedSymbol] : [parsedSymbol];
 
   for (const id of ids) {
     if (id in singleAssets) {
