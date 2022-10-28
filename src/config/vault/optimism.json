@@ -7,8 +7,8 @@
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
     "earnedToken": "mooVeloWETH-HOP",
-    "earnedTokenAddress": "0xDf621749a6DE54f06371fAEae9c3BCaFCD4d46A3",
-    "earnContractAddress": "0xDf621749a6DE54f06371fAEae9c3BCaFCD4d46A3",
+    "earnedTokenAddress": "0x3a00d6D1D8fC0eD0cf481A8Eb835f1c1B8760708",
+    "earnContractAddress": "0x3a00d6D1D8fC0eD0cf481A8Eb835f1c1B8760708",
     "oracle": "lps",
     "oracleId": "velodrome-weth-hop",
     "status": "active",
@@ -19,7 +19,7 @@
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
-    "createdAt": 1666887508
+    "createdAt": 1666954558
   },
   {
     "id": "optimism-bifi-maxi",
