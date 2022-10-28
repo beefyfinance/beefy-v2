@@ -65,4 +65,7 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     color: theme.palette.text.secondary,
   },
+  detailsLink: {
+    color: theme.palette.text.secondary,
+  },
 });

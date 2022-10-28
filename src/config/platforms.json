@@ -900,6 +900,11 @@
     "filter": true
   },
   {
+    "id": "gmx",
+    "name": "GMX",
+    "filter": true
+  },
+  {
     "id": "ferro",
     "name": "Ferro",
     "filter": true
