@@ -91,5 +91,6 @@
   "StrategyDescription-single-syrup": "The vault stakes the {{depositToken}} in {{vaultPlatform}} for staked-{{depositToken}}. The staked-{{depositToken}} is deposited in {{vaultPlatform}} syrup pool and farms for an earned token. The earned token is swapped for {{depositToken}} and is then staked back into {{vaultPlatform}} to repeat the process. The transaction cost required to do all this is socialized among the vault's users.",
   "StrategyDescription-maxi": "BIFI Maxi 金库允许用户像在收益池中一样质押他们的 BIFI，但在这里您会得到更多 BIFI 作为奖励。通过质押 BIFI，每个参与者将其在 Beefy 网络上的收入份额转化为更多的 BIFI 代币。由于 BIFI 代币不能再被铸造，奖励的 BIFI 是使用网络的原生代币（例如 {{chain}} 上的 {{nativeToken}}）在公开市场上购买的。",
   "StrategyDescription-default": "尚未添加对当前策略的描述。",
+  "StrategyDescription-glp-gmx": "{{depositToken}} is staked to earn {{nativeToken}} and esGMX. This {{nativeToken}} is compounded to more {{depositToken}}, and the esGMX is staked separately to earn still more {{nativeToken}} rewards which are then compounded back into more {{depositToken}} and multiplier points. All of this works to optimally boost APR. <details/>. ",
   "xyz": "最后一行的占位符"
 }
