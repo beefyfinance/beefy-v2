@@ -5,16 +5,8 @@ export const styles = (theme: Theme) => ({
     borderRadius: '4px',
     width: '150px',
     padding: '8px',
-    position: 'relative' as const,
-    marginTop: '75px',
-    '&::before': {
-      content: '""',
-      position: 'absolute' as const,
-      top: '-15px',
-      left: '50x',
-      zIndex: 1,
-      border: 'solid 8px transparent',
-      borderBottomColor: ' #FFF',
+    '&:focus': {
+      outline: 'none',
     },
   },
   titleContainer: {

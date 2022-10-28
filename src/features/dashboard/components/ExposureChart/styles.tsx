@@ -11,20 +11,15 @@ export const styles = (theme: Theme) => ({
   infoContainer: {
     display: 'flex',
     columnGap: '24px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& .recharts-surface:focus': {
+      outline: 'none',
+    },
   },
   title: {
     ...theme.typography['body-lg-med'],
     color: theme.palette.text.secondary,
     marginBottom: '24px',
-  },
-  holder: {
-    ...theme.typography['subline-sm'],
-    color: '#D0D0DA',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    '& .recharts-surface:focus': {
-      outline: 'none' as const,
-    },
   },
 });
