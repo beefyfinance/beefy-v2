@@ -1,5 +1,7 @@
 import { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
-  dashboard: {},
+  dashboard: {
+    backgroundColor: '#121420',
+  },
 });

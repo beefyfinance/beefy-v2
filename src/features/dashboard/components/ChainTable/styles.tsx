@@ -45,6 +45,7 @@ export const styles = (theme: Theme) => ({
     width: '100%',
     columnGap: '24px',
     gridTemplateColumns: 'repeat(5,1fr)',
+    marginBottom: '2px',
     [theme.breakpoints.down('sm')]: {
       padding: '16px',
       gridTemplateColumns: 'repeat(5,150px)',
