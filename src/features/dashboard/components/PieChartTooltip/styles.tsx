@@ -5,9 +5,6 @@ export const styles = (theme: Theme) => ({
     borderRadius: '4px',
     width: '150px',
     padding: '8px',
-    '&:focus': {
-      outline: 'none',
-    },
   },
   titleContainer: {
     display: 'flex',
@@ -41,5 +38,13 @@ export const styles = (theme: Theme) => ({
   label: {
     ...theme.typography['body-sm-med'],
     color: '#363C63',
+  },
+  triangle: {
+    width: 0,
+    height: 0,
+    marginLeft: '10px',
+    borderLeft: '8px solid transparent',
+    borderRight: '8px solid transparent',
+    borderBottom: '8px solid #FFF',
   },
 });

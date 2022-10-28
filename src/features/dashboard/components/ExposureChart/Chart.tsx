@@ -42,7 +42,7 @@ export const Chart = memo<ChartProps>(function ({ data, type }) {
             />
           ))}
         </Pie>
-        <Tooltip content={<PieChartTooltip type={type} />} />
+        <Tooltip wrapperStyle={{ outline: 'none' }} content={<PieChartTooltip type={type} />} />
       </PieChart>
     </ResponsiveContainer>
   );
