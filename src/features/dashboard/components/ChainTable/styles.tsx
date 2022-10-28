@@ -31,7 +31,7 @@ export const styles = (theme: Theme) => ({
   },
   value: {
     ...theme.typography.h3,
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.disabled,
   },
   icon: {
     height: '32px',
