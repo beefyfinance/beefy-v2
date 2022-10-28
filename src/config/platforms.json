@@ -898,5 +898,10 @@
     "id": "hermes",
     "name": "Hermes",
     "filter": true
+  },
+  {
+    "id": "ferro",
+    "name": "Ferro",
+    "filter": true
   }
 ]
