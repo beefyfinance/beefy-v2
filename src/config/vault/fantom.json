@@ -12,7 +12,9 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": ["BIFI"],
+    "assets": [
+      "BIFI"
+    ],
     "strategyTypeId": "maxi",
     "risks": [
       "COMPLEXITY_LOW",
@@ -42,7 +44,9 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": ["BIFI"],
+    "assets": [
+      "BIFI"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -72,7 +76,9 @@
     "oracleId": "beFTM",
     "status": "active",
     "platformId": "beefy",
-    "assets": ["beFTM"],
+    "assets": [
+      "beFTM"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -99,7 +105,9 @@
     "oracleId": "beFTM",
     "status": "active",
     "platformId": "beefy",
-    "assets": ["beFTM"],
+    "assets": [
+      "beFTM"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -112,6 +120,38 @@
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x7381eD41F6dE418DdE5e84B55590422a57917886",
     "createdAt": 1646162527,
     "mintTokenUrl": "https://beta.beefy.finance/#/fantom/vault/beefy-beFTM"
+  },
+  {
+    "id": "boo-usdc-dei",
+    "name": "USDC-DEI LP",
+    "token": "USDC-DEI LP",
+    "tokenAddress": "0x91f7120898b4be26cC1e84F421e76725c07d1361",
+    "tokenDecimals": 18,
+    "tokenProviderId": "spookyswap",
+    "earnedToken": "mooBooUSDC-DEI",
+    "earnedTokenAddress": "0xa43A80F527aC3619ce904C55758D83A7b468fb16",
+    "earnContractAddress": "0xa43A80F527aC3619ce904C55758D83A7b468fb16",
+    "oracle": "lps",
+    "oracleId": "boo-usdc-dei",
+    "status": "active",
+    "platformId": "spookyswap",
+    "assets": [
+      "USDC",
+      "DEI"
+    ],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://spooky.fi/#/add/0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+    "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0",
+    "network": "fantom",
+    "createdAt": 1667003277
   },
   {
     "id": "boo-deus-wftm",
@@ -127,7 +167,10 @@
     "oracleId": "boo-deus-wftm",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["DEUS", "FTM"],
+    "assets": [
+      "DEUS",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -156,7 +199,11 @@
     "oracleId": "curve-ftm-mai",
     "status": "active",
     "platformId": "mai",
-    "assets": ["MAI", "fUSDT", "USDC"],
+    "assets": [
+      "MAI",
+      "fUSDT",
+      "USDC"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -187,7 +234,10 @@
     "oracleId": "beets-another-dei-another-dollar",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["DEI", "USDC"],
+    "assets": [
+      "DEI",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -216,9 +266,18 @@
     "oracleId": "spiritV2-wftm-comb",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["COMB", "FTM"],
+    "assets": [
+      "COMB",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
@@ -238,9 +297,18 @@
     "oracleId": "spiritV2-wftm-sftmx",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["sFTMx", "FTM"],
+    "assets": [
+      "sFTMx",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
@@ -260,9 +328,18 @@
     "oracleId": "spiritV2-wftm-eth",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["ETH", "FTM"],
+    "assets": [
+      "ETH",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
@@ -282,9 +359,18 @@
     "oracleId": "spiritV2-usdc-busd",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["BUSD", "USDC"],
+    "assets": [
+      "BUSD",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
@@ -304,9 +390,18 @@
     "oracleId": "spiritV2-wftm-galcx",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["gALCX", "FTM"],
+    "assets": [
+      "gALCX",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
@@ -326,9 +421,18 @@
     "oracleId": "spiritV2-wftm-cre8r",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["CRE8R", "FTM"],
+    "assets": [
+      "CRE8R",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
@@ -348,7 +452,10 @@
     "oracleId": "spiritV2-usdc-mim",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["MIM", "USDC"],
+    "assets": [
+      "MIM",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -377,7 +484,10 @@
     "oracleId": "spiritV2-usdc-alusd",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["alUSD", "USDC"],
+    "assets": [
+      "alUSD",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -406,7 +516,10 @@
     "oracleId": "spiritV2-usdc-mimatic",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["MAI", "USDC"],
+    "assets": [
+      "MAI",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -435,9 +548,18 @@
     "oracleId": "spiritV2-fusdt-wftm",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["fUSDT", "FTM"],
+    "assets": [
+      "fUSDT",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
@@ -457,9 +579,18 @@
     "oracleId": "spiritV2-wftm-btc",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["WBTC", "FTM"],
+    "assets": [
+      "WBTC",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
@@ -479,9 +610,18 @@
     "oracleId": "spiritV2-usdc-wftm",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["USDC", "FTM"],
+    "assets": [
+      "USDC",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
@@ -501,7 +641,10 @@
     "oracleId": "spiritV2-usdc-frax",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["FRAX", "USDC"],
+    "assets": [
+      "FRAX",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -530,7 +673,10 @@
     "oracleId": "spiritV2-usdc-dai",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["DAI", "USDC"],
+    "assets": [
+      "DAI",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -559,9 +705,18 @@
     "oracleId": "spiritV2-usdc-fusdt",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["fUSDT", "USDC"],
+    "assets": [
+      "fUSDT",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
@@ -581,9 +736,18 @@
     "oracleId": "spiritV2-wftm-spirit",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["SPIRIT", "FTM"],
+    "assets": [
+      "SPIRIT",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
@@ -603,9 +767,18 @@
     "oracleId": "spiritV2-binspirit-spirit",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["binSPIRIT", "SPIRIT"],
+    "assets": [
+      "binSPIRIT",
+      "SPIRIT"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
@@ -625,9 +798,18 @@
     "oracleId": "spiritV2-wftm-bifi",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["BIFI", "FTM"],
+    "assets": [
+      "BIFI",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap/FTM/BIFI",
     "network": "fantom",
@@ -648,7 +830,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "solidly",
-    "assets": ["MIM", "USDC"],
+    "assets": [
+      "MIM",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -678,9 +863,18 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "solidly",
-    "assets": ["USDC", "FTM"],
+    "assets": [
+      "USDC",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://solidly.exchange/liquidity/create",
     "buyTokenUrl": "https://solidly.exchange/swap",
     "network": "fantom",
@@ -701,9 +895,18 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "solidly",
-    "assets": ["SOLID", "FTM"],
+    "assets": [
+      "SOLID",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://solidly.exchange/liquidity/create",
     "buyTokenUrl": "https://solidly.exchange/swap",
     "network": "fantom",
@@ -724,9 +927,18 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "solidly",
-    "assets": ["POTS", "FTM"],
+    "assets": [
+      "POTS",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://solidly.exchange/liquidity/create",
     "buyTokenUrl": "https://solidly.exchange/swap",
     "network": "fantom",
@@ -747,7 +959,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["COMB", "FTM"],
+    "assets": [
+      "COMB",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -775,7 +990,9 @@
     "oracleId": "SOLACE",
     "status": "active",
     "platformId": "solace",
-    "assets": ["SOLACE"],
+    "assets": [
+      "SOLACE"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -803,7 +1020,13 @@
     "oracleId": "beets-battle-bands-remastered",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["FTM", "MATIC", "SOL", "AVAX", "BNB"],
+    "assets": [
+      "FTM",
+      "MATIC",
+      "SOL",
+      "AVAX",
+      "BNB"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -831,7 +1054,12 @@
     "oracleId": "beets-song-ice-fire",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["FTM", "SPELL", "MIM", "ICE"],
+    "assets": [
+      "FTM",
+      "SPELL",
+      "MIM",
+      "ICE"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -860,7 +1088,12 @@
     "oracleId": "beets-tubular-bells",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["USDC", "CRV", "FTM", "LINK"],
+    "assets": [
+      "USDC",
+      "CRV",
+      "FTM",
+      "LINK"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -888,7 +1121,11 @@
     "oracleId": "curve-ftm-geist",
     "status": "active",
     "platformId": "curve",
-    "assets": ["fUSDT", "USDC", "DAI"],
+    "assets": [
+      "fUSDT",
+      "USDC",
+      "DAI"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -917,7 +1154,12 @@
     "oracleId": "beets-late-quartet",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["USDC", "FTM", "WBTC", "ETH"],
+    "assets": [
+      "USDC",
+      "FTM",
+      "WBTC",
+      "ETH"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -944,7 +1186,9 @@
     "oracleId": "DOLA",
     "status": "paused",
     "platformId": "scream",
-    "assets": ["DOLA"],
+    "assets": [
+      "DOLA"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -972,7 +1216,11 @@
     "oracleId": "beets-guqin-qi-2",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["USDC", "DAI", "MAI"],
+    "assets": [
+      "USDC",
+      "DAI",
+      "MAI"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1002,7 +1250,15 @@
     "status": "eol",
     "platformId": "beethovenx",
     "retireReason": "rewards",
-    "assets": ["FTM", "SPIRIT", "BOO", "TAROT", "ANY", "SCREAM", "BEETS"],
+    "assets": [
+      "FTM",
+      "SPIRIT",
+      "BOO",
+      "TAROT",
+      "ANY",
+      "SCREAM",
+      "BEETS"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1030,7 +1286,12 @@
     "oracleId": "beets-sound-of-moosic",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["FTM", "mooBIFI", "BIFI", "BEETS"],
+    "assets": [
+      "FTM",
+      "mooBIFI",
+      "BIFI",
+      "BEETS"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1058,7 +1319,16 @@
     "oracleId": "beets-dance-of-degens",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["FTM", "SPELL", "SPIRIT", "BOO", "TAROT", "ANY", "SCREAM", "ICE"],
+    "assets": [
+      "FTM",
+      "SPELL",
+      "SPIRIT",
+      "BOO",
+      "TAROT",
+      "ANY",
+      "SCREAM",
+      "ICE"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1087,9 +1357,19 @@
     "oracleId": "beets-e-major",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["USDC", "ETH"],
+    "assets": [
+      "USDC",
+      "ETH"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "NEW_STRAT", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://app.beethovenx.io/#/pool/0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
     "network": "fantom",
     "createdAt": 1634911153
@@ -1108,9 +1388,19 @@
     "oracleId": "beets-b-major",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["USDC", "WBTC"],
+    "assets": [
+      "USDC",
+      "WBTC"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "NEW_STRAT", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://app.beethovenx.io/#/pool/0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
     "network": "fantom",
     "createdAt": 1634914810
@@ -1129,7 +1419,11 @@
     "oracleId": "beets-ziggy-mim",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["USDC", "fUSDT", "MIM"],
+    "assets": [
+      "USDC",
+      "fUSDT",
+      "MIM"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1158,7 +1452,10 @@
     "oracleId": "beets-fidelio-duetto",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["FTM", "BEETS"],
+    "assets": [
+      "FTM",
+      "BEETS"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1186,9 +1483,20 @@
     "oracleId": "beets-grand-orchestra",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["FTM", "WBTC", "ETH"],
+    "assets": [
+      "FTM",
+      "WBTC",
+      "ETH"
+    ],
     "strategyTypeId": "multi-lp",
-    "risks": ["COMPLEXITY_LOW", "NEW_STRAT", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://app.beethovenx.io/#/pool/0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
     "network": "fantom",
     "createdAt": 1634740557
@@ -1207,9 +1515,19 @@
     "oracleId": "beets-fantom-of-opera",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["USDC", "FTM"],
+    "assets": [
+      "USDC",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "NEW_STRAT", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://app.beethovenx.io/#/pool/0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
     "network": "fantom",
     "createdAt": 1634805280
@@ -1227,7 +1545,9 @@
     "oracleId": "FRAX",
     "status": "paused",
     "platformId": "scream",
-    "assets": ["FRAX"],
+    "assets": [
+      "FRAX"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1253,7 +1573,9 @@
     "oracleId": "MIM",
     "status": "paused",
     "platformId": "scream",
-    "assets": ["MIM"],
+    "assets": [
+      "MIM"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1283,7 +1605,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["wMEMO", "MIM"],
+    "assets": [
+      "wMEMO",
+      "MIM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1314,7 +1639,11 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "mim",
-    "assets": ["MIM", "USDC", "fUSDT"],
+    "assets": [
+      "MIM",
+      "USDC",
+      "fUSDT"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1343,7 +1672,10 @@
     "oracleId": "geist-geist-ftm",
     "status": "active",
     "platformId": "geist",
-    "assets": ["GEIST", "FTM"],
+    "assets": [
+      "GEIST",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1372,7 +1704,10 @@
     "oracleId": "boo-wftm-spell",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["SPELL", "FTM"],
+    "assets": [
+      "SPELL",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1401,7 +1736,11 @@
     "oracleId": "curve-ftm-tricrypto",
     "status": "active",
     "platformId": "curve",
-    "assets": ["fUSDT", "WBTC", "ETH"],
+    "assets": [
+      "fUSDT",
+      "WBTC",
+      "ETH"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1430,7 +1769,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["USDC", "FTM"],
+    "assets": [
+      "USDC",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1460,7 +1802,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["CRV", "FTM"],
+    "assets": [
+      "CRV",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1489,7 +1834,10 @@
     "oracleId": "jetswap-fantom-btc-usdc",
     "status": "active",
     "platformId": "jetswap",
-    "assets": ["WBTC", "USDC"],
+    "assets": [
+      "WBTC",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1518,7 +1866,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tomb",
-    "assets": ["TOMB", "FTM"],
+    "assets": [
+      "TOMB",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1548,7 +1899,10 @@
     "oracleId": "boo-wftm-treeb",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["TREEB", "FTM"],
+    "assets": [
+      "TREEB",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1576,7 +1930,9 @@
     "oracleId": "CRV",
     "status": "paused",
     "platformId": "scream",
-    "assets": ["CRV"],
+    "assets": [
+      "CRV"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1603,7 +1959,9 @@
     "oracleId": "LINK",
     "status": "paused",
     "platformId": "scream",
-    "assets": ["LINK"],
+    "assets": [
+      "LINK"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1630,7 +1988,9 @@
     "oracleId": "BOO",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["BOO"],
+    "assets": [
+      "BOO"
+    ],
     "strategyTypeId": "single-syrup",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1658,7 +2018,10 @@
     "oracleId": "steakhouse-scream-ftm",
     "status": "active",
     "platformId": "steakhouse",
-    "assets": ["SCREAM", "FTM"],
+    "assets": [
+      "SCREAM",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1686,7 +2049,9 @@
     "oracleId": "WFTM",
     "status": "paused",
     "platformId": "scream",
-    "assets": ["FTM"],
+    "assets": [
+      "FTM"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1713,7 +2078,9 @@
     "oracleId": "USDC",
     "status": "paused",
     "platformId": "scream",
-    "assets": ["USDC"],
+    "assets": [
+      "USDC"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1740,7 +2107,9 @@
     "oracleId": "WBTC",
     "status": "paused",
     "platformId": "scream",
-    "assets": ["WBTC"],
+    "assets": [
+      "WBTC"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1767,7 +2136,9 @@
     "oracleId": "DAI",
     "status": "paused",
     "platformId": "scream",
-    "assets": ["DAI"],
+    "assets": [
+      "DAI"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1795,7 +2166,9 @@
     "oracleId": "ETH",
     "status": "paused",
     "platformId": "scream",
-    "assets": ["ETH"],
+    "assets": [
+      "ETH"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1822,7 +2195,9 @@
     "oracleId": "USDT",
     "status": "paused",
     "platformId": "scream",
-    "assets": ["fUSDT"],
+    "assets": [
+      "fUSDT"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1850,7 +2225,10 @@
     "oracleId": "boo-yfi-eth",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["YFI", "ETH"],
+    "assets": [
+      "YFI",
+      "ETH"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1880,7 +2258,10 @@
     "status": "eol",
     "platformId": "curve",
     "retireReason": "rewards",
-    "assets": ["USDC", "DAI"],
+    "assets": [
+      "USDC",
+      "DAI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1909,7 +2290,10 @@
     "oracleId": "curve-ftm-ren",
     "status": "active",
     "platformId": "curve",
-    "assets": ["WBTC", "renBTC"],
+    "assets": [
+      "WBTC",
+      "renBTC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1937,7 +2321,10 @@
     "oracleId": "boo-mim-ftm",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["MIM", "FTM"],
+    "assets": [
+      "MIM",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1967,7 +2354,10 @@
     "oracleId": "boo-boo-ftm",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["BOO", "FTM"],
+    "assets": [
+      "BOO",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1996,7 +2386,10 @@
     "oracleId": "boo-bifi-ftm",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["BIFI", "FTM"],
+    "assets": [
+      "BIFI",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2026,7 +2419,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spookyswap",
-    "assets": ["ICE", "FTM"],
+    "assets": [
+      "ICE",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2055,7 +2451,10 @@
     "oracleId": "boo-ftm-sushi",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["SUSHI", "FTM"],
+    "assets": [
+      "SUSHI",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2084,7 +2483,10 @@
     "oracleId": "boo-ftm-usdc",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["USDC", "FTM"],
+    "assets": [
+      "USDC",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2114,7 +2516,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spookyswap",
-    "assets": ["ANY", "FTM"],
+    "assets": [
+      "ANY",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2143,7 +2548,10 @@
     "oracleId": "boo-dai-ftm",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["DAI", "FTM"],
+    "assets": [
+      "DAI",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2173,7 +2581,10 @@
     "oracleId": "boo-bnb-ftm",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["BNB", "FTM"],
+    "assets": [
+      "BNB",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2202,7 +2613,10 @@
     "oracleId": "boo-link-ftm",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["LINK", "FTM"],
+    "assets": [
+      "LINK",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2232,7 +2646,10 @@
     "status": "eol",
     "platformId": "spookyswap",
     "retireReason": "rewards",
-    "assets": ["COVER", "FTM"],
+    "assets": [
+      "COVER",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xB01E8419d842beebf1b70A7b5f7142abbaf7159D",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xB01E8419d842beebf1b70A7b5f7142abbaf7159D",
@@ -2253,7 +2670,10 @@
     "oracleId": "boo-usdt-ftm",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["fUSDT", "FTM"],
+    "assets": [
+      "fUSDT",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2282,7 +2702,10 @@
     "oracleId": "boo-btc-ftm",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["WBTC", "FTM"],
+    "assets": [
+      "WBTC",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2311,7 +2734,10 @@
     "oracleId": "boo-eth-ftm",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["ETH", "FTM"],
+    "assets": [
+      "ETH",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2340,7 +2766,10 @@
     "oracleId": "boo-crv-ftm",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["CRV", "FTM"],
+    "assets": [
+      "CRV",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2369,7 +2798,10 @@
     "oracleId": "boo-usdc-mai",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["USDC", "MAI"],
+    "assets": [
+      "USDC",
+      "MAI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2400,7 +2832,10 @@
     "status": "eol",
     "platformId": "spookyswap",
     "retireReason": "rewards",
-    "assets": ["JOE", "FTM"],
+    "assets": [
+      "JOE",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2429,7 +2864,11 @@
     "oracleId": "beets-baron-von-binance",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["USDC", "FTM", "BNB"],
+    "assets": [
+      "USDC",
+      "FTM",
+      "BNB"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2457,7 +2896,10 @@
     "oracleId": "boo-usdc-tusd",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["TUSD", "USDC"],
+    "assets": [
+      "TUSD",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2485,7 +2927,9 @@
     "oracleId": "TUSD",
     "status": "paused",
     "platformId": "scream",
-    "assets": ["TUSD"],
+    "assets": [
+      "TUSD"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2515,9 +2959,20 @@
     "oracleId": "beets-solana-sonata",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["USDC", "FTM", "SOL"],
+    "assets": [
+      "USDC",
+      "FTM",
+      "SOL"
+    ],
     "strategyTypeId": "multi-lp",
-    "risks": ["COMPLEXITY_LOW", "NEW_STRAT", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://app.beets.fi/#/pool/0x41870439b607a29293d48f7c9da10e67142176240001000000000000000000a4",
     "network": "fantom",
     "createdAt": 1638210632
@@ -2537,7 +2992,10 @@
     "status": "eol",
     "platformId": "spookyswap",
     "retireReason": "rewards",
-    "assets": ["OOE", "FTM"],
+    "assets": [
+      "OOE",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2566,7 +3024,10 @@
     "oracleId": "boo-wftm-wshec",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["wsHEC", "FTM"],
+    "assets": [
+      "wsHEC",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2595,7 +3056,10 @@
     "oracleId": "boo-wftm-yoshi",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["YOSHI", "FTM"],
+    "assets": [
+      "YOSHI",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2624,7 +3088,10 @@
     "oracleId": "pearzap-fpear-ftm",
     "status": "eol",
     "platformId": "pearzap",
-    "assets": ["PEAR", "FTM"],
+    "assets": [
+      "PEAR",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2654,7 +3121,10 @@
     "oracleId": "pearzap-fpear-usdc",
     "status": "eol",
     "platformId": "pearzap",
-    "assets": ["PEAR", "USDC"],
+    "assets": [
+      "PEAR",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2684,7 +3154,10 @@
     "oracleId": "boo-wftm-shade",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["SHADE", "FTM"],
+    "assets": [
+      "SHADE",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2714,7 +3187,10 @@
     "oracleId": "stakesteak-fusd-usdc",
     "status": "eol",
     "platformId": "stakesteak",
-    "assets": ["fUSD", "USDC"],
+    "assets": [
+      "fUSD",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2745,7 +3221,10 @@
     "oracleId": "boo-steak-wftm",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["STEAK", "FTM"],
+    "assets": [
+      "STEAK",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2775,7 +3254,11 @@
     "oracleId": "curve-ftm-fusdt",
     "status": "eol",
     "platformId": "curve",
-    "assets": ["fUSDT", "USDC", "DAI"],
+    "assets": [
+      "fUSDT",
+      "USDC",
+      "DAI"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2805,7 +3288,10 @@
     "oracleId": "boo-woofy-ftm",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["WOOFY", "FTM"],
+    "assets": [
+      "WOOFY",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2834,7 +3320,9 @@
     "oracleId": "CRV",
     "status": "active",
     "platformId": "geist",
-    "assets": ["CRV"],
+    "assets": [
+      "CRV"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2862,7 +3350,10 @@
     "oracleId": "boo-wftm-avax",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["AVAX", "FTM"],
+    "assets": [
+      "AVAX",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2891,7 +3382,10 @@
     "oracleId": "boo-wftm-woo",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["WOO", "FTM"],
+    "assets": [
+      "WOO",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2918,7 +3412,9 @@
     "oracleId": "FTM",
     "status": "active",
     "platformId": "geist",
-    "assets": ["FTM"],
+    "assets": [
+      "FTM"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2945,7 +3441,9 @@
     "oracleId": "WBTC",
     "status": "active",
     "platformId": "geist",
-    "assets": ["WBTC"],
+    "assets": [
+      "WBTC"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2972,7 +3470,9 @@
     "oracleId": "ETH",
     "status": "active",
     "platformId": "geist",
-    "assets": ["ETH"],
+    "assets": [
+      "ETH"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -2999,7 +3499,9 @@
     "oracleId": "USDC",
     "status": "active",
     "platformId": "geist",
-    "assets": ["USDC"],
+    "assets": [
+      "USDC"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3028,7 +3530,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["DAI", "USDC"],
+    "assets": [
+      "DAI",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3057,7 +3562,9 @@
     "oracleId": "MIM",
     "status": "active",
     "platformId": "geist",
-    "assets": ["MIM"],
+    "assets": [
+      "MIM"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3086,7 +3593,10 @@
     "oracleId": "beets-symphony-nr-10",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["USDC", "BEETS"],
+    "assets": [
+      "USDC",
+      "BEETS"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3115,7 +3625,10 @@
     "oracleId": "boo-zoo-ftm",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["ZOO", "FTM"],
+    "assets": [
+      "ZOO",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3145,7 +3658,10 @@
     "oracleId": "boo-snx-ftm",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["SNX", "FTM"],
+    "assets": [
+      "SNX",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3176,7 +3692,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "popsicle",
-    "assets": ["ICE", "FTM"],
+    "assets": [
+      "ICE",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3204,7 +3723,9 @@
     "oracleId": "SPELL",
     "status": "paused",
     "platformId": "scream",
-    "assets": ["SPELL"],
+    "assets": [
+      "SPELL"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3234,7 +3755,10 @@
     "oracleId": "boo-wftm-matic",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["MATIC", "FTM"],
+    "assets": [
+      "MATIC",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3263,7 +3787,10 @@
     "oracleId": "spirit-ftm-mim",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["MIM", "FTM"],
+    "assets": [
+      "MIM",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3293,7 +3820,10 @@
     "oracleId": "spirit-ftm-ice",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["ICE", "FTM"],
+    "assets": [
+      "ICE",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3323,7 +3853,10 @@
     "oracleId": "beets-steady-beets-2",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["USDC", "DAI"],
+    "assets": [
+      "USDC",
+      "DAI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3352,7 +3885,11 @@
     "oracleId": "beets-two-became-one",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["USDC", "HND", "FTM"],
+    "assets": [
+      "USDC",
+      "HND",
+      "FTM"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3381,7 +3918,13 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beethovenx",
-    "assets": ["FTM", "WBTC", "ETH", "WSTA", "BEETS"],
+    "assets": [
+      "FTM",
+      "WBTC",
+      "ETH",
+      "WSTA",
+      "BEETS"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3409,7 +3952,10 @@
     "oracleId": "beets-steady-beets",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["USDC", "DAI"],
+    "assets": [
+      "USDC",
+      "DAI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3439,7 +3985,10 @@
     "oracleId": "spirit-zoo-ftm",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["ZOO", "FTM"],
+    "assets": [
+      "ZOO",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3469,7 +4018,10 @@
     "oracleId": "spirit-fusdt-spell",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["SPELL", "fUSDT"],
+    "assets": [
+      "SPELL",
+      "fUSDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3500,7 +4052,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["fUSDT", "USDC"],
+    "assets": [
+      "fUSDT",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3530,7 +4085,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["FRAX", "USDC"],
+    "assets": [
+      "FRAX",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3561,7 +4119,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["MIM", "USDC"],
+    "assets": [
+      "MIM",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3591,7 +4152,10 @@
     "oracleId": "boo-wftm-brush",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["BRUSH", "FTM"],
+    "assets": [
+      "BRUSH",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3620,7 +4184,10 @@
     "oracleId": "boo-wftm-beets",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["BEETS", "FTM"],
+    "assets": [
+      "BEETS",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3649,7 +4216,10 @@
     "oracleId": "boo-btc-eth",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["WBTC", "ETH"],
+    "assets": [
+      "WBTC",
+      "ETH"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3678,7 +4248,10 @@
     "oracleId": "sushi-ftm-usdc-wftm",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["USDC", "FTM"],
+    "assets": [
+      "USDC",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3707,7 +4280,10 @@
     "oracleId": "sushi-ftm-wftm-eth",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["ETH", "FTM"],
+    "assets": [
+      "ETH",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3736,7 +4312,10 @@
     "oracleId": "sushi-ftm-fusdt-wftm",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["fUSDT", "FTM"],
+    "assets": [
+      "fUSDT",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3765,7 +4344,10 @@
     "oracleId": "sushi-ftm-eth-dai",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["ETH", "DAI"],
+    "assets": [
+      "ETH",
+      "DAI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3795,7 +4377,10 @@
     "oracleId": "sushi-ftm-usdc-mim",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["MIM", "USDC"],
+    "assets": [
+      "MIM",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3825,7 +4410,10 @@
     "oracleId": "sushi-ftm-btc-eth",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["ETH", "WBTC"],
+    "assets": [
+      "ETH",
+      "WBTC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3854,7 +4442,10 @@
     "oracleId": "sushi-ftm-wftm-sushi",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["SUSHI", "FTM"],
+    "assets": [
+      "SUSHI",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3881,7 +4472,9 @@
     "oracleId": "WFTM",
     "status": "eol",
     "platformId": "0xdao",
-    "assets": ["FTM"],
+    "assets": [
+      "FTM"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3909,7 +4502,9 @@
     "oracleId": "USDC",
     "status": "eol",
     "platformId": "0xdao",
-    "assets": ["USDC"],
+    "assets": [
+      "USDC"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3937,7 +4532,9 @@
     "oracleId": "DAI",
     "status": "eol",
     "platformId": "0xdao",
-    "assets": ["DAI"],
+    "assets": [
+      "DAI"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3966,7 +4563,9 @@
     "oracleId": "MIM",
     "status": "eol",
     "platformId": "0xdao",
-    "assets": ["MIM"],
+    "assets": [
+      "MIM"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -3995,7 +4594,9 @@
     "oracleId": "WBTC",
     "status": "eol",
     "platformId": "0xdao",
-    "assets": ["WBTC"],
+    "assets": [
+      "WBTC"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4023,7 +4624,9 @@
     "oracleId": "ETH",
     "status": "eol",
     "platformId": "0xdao",
-    "assets": ["ETH"],
+    "assets": [
+      "ETH"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4052,7 +4655,10 @@
     "oracleId": "spirit-spell-sspell",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["sSPELL", "SPELL"],
+    "assets": [
+      "sSPELL",
+      "SPELL"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4081,7 +4687,9 @@
     "oracleId": "binSPIRIT",
     "status": "active",
     "platformId": "beefy",
-    "assets": ["binSPIRIT"],
+    "assets": [
+      "binSPIRIT"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4111,7 +4719,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["SPIRIT", "FTM"],
+    "assets": [
+      "SPIRIT",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4141,7 +4752,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["binSPIRIT", "SPIRIT"],
+    "assets": [
+      "binSPIRIT",
+      "SPIRIT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4171,7 +4785,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["wsHEC", "FTM"],
+    "assets": [
+      "wsHEC",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4201,7 +4818,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["JEWEL", "FTM"],
+    "assets": [
+      "JEWEL",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4231,7 +4851,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["FRAX", "FTM"],
+    "assets": [
+      "FRAX",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4261,7 +4884,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["MAI", "FTM"],
+    "assets": [
+      "MAI",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4292,7 +4918,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["gOHM", "FTM"],
+    "assets": [
+      "gOHM",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4321,7 +4950,10 @@
     "oracleId": "spirit-yfi-ftm",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["YFI", "FTM"],
+    "assets": [
+      "YFI",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4351,7 +4983,10 @@
     "oracleId": "spirit-any-ftm",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["ANY", "FTM"],
+    "assets": [
+      "ANY",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4381,7 +5016,10 @@
     "oracleId": "spirit-ftm-just",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["JUST", "FTM"],
+    "assets": [
+      "JUST",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4411,7 +5049,10 @@
     "oracleId": "ripae-pftm-ftm",
     "status": "active",
     "platformId": "ripae",
-    "assets": ["pFTM", "FTM"],
+    "assets": [
+      "pFTM",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4441,7 +5082,10 @@
     "oracleId": "ripae-pae-ftm",
     "status": "active",
     "platformId": "ripae",
-    "assets": ["PAE", "FTM"],
+    "assets": [
+      "PAE",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4469,7 +5113,9 @@
     "oracleId": "xSCREAM",
     "status": "eol",
     "platformId": "0xdao",
-    "assets": ["xSCREAM"],
+    "assets": [
+      "xSCREAM"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4498,7 +5144,9 @@
     "oracleId": "xBOO",
     "status": "eol",
     "platformId": "0xdao",
-    "assets": ["xBOO"],
+    "assets": [
+      "xBOO"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4527,7 +5175,9 @@
     "oracleId": "OXD",
     "status": "eol",
     "platformId": "0xdao",
-    "assets": ["OXD"],
+    "assets": [
+      "OXD"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4555,7 +5205,9 @@
     "oracleId": "TOMB",
     "status": "eol",
     "platformId": "0xdao",
-    "assets": ["TOMB"],
+    "assets": [
+      "TOMB"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4585,7 +5237,10 @@
     "oracleId": "oxd-oxd-usdc",
     "status": "eol",
     "platformId": "0xdao",
-    "assets": ["OXD", "USDC"],
+    "assets": [
+      "OXD",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4614,7 +5269,9 @@
     "oracleId": "SUMMIT",
     "status": "eol",
     "platformId": "summitdefi",
-    "assets": ["SUMMIT"],
+    "assets": [
+      "SUMMIT"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4643,7 +5300,10 @@
     "oracleId": "summit-summit-ftm",
     "status": "eol",
     "platformId": "summitdefi",
-    "assets": ["SUMMIT", "FTM"],
+    "assets": [
+      "SUMMIT",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4674,7 +5334,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["DEI_OLD", "USDC"],
+    "assets": [
+      "DEI_OLD",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4704,7 +5367,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["DEUS", "FTM"],
+    "assets": [
+      "DEUS",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4734,7 +5400,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["CRE8R", "FTM"],
+    "assets": [
+      "CRE8R",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4763,7 +5432,10 @@
     "oracleId": "spirit-fusdt-ftm",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["fUSDT", "FTM"],
+    "assets": [
+      "fUSDT",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4793,7 +5465,10 @@
     "oracleId": "spirit-ftm-sushi",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["SUSHI", "FTM"],
+    "assets": [
+      "SUSHI",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4823,7 +5498,10 @@
     "oracleId": "boo-ftm-multi",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["MULTI", "FTM"],
+    "assets": [
+      "MULTI",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4851,7 +5529,9 @@
     "oracleId": "DAI",
     "status": "eol",
     "platformId": "geist",
-    "assets": ["DAI"],
+    "assets": [
+      "DAI"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4882,7 +5562,10 @@
     "oracleId": "sing-ftm-usdc-sing",
     "status": "eol",
     "platformId": "singular",
-    "assets": ["SING", "USDC"],
+    "assets": [
+      "SING",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4913,7 +5596,10 @@
     "oracleId": "jetswap-fantom-eth-btc",
     "status": "eol",
     "platformId": "jetswap",
-    "assets": ["ETH", "WBTC"],
+    "assets": [
+      "ETH",
+      "WBTC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4943,7 +5629,10 @@
     "oracleId": "jetswap-fantom-fwings-ftm",
     "status": "eol",
     "platformId": "jetswap",
-    "assets": ["fWINGS", "FTM"],
+    "assets": [
+      "fWINGS",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -4974,7 +5663,10 @@
     "oracleId": "jetswap-fantom-fwings-usdc",
     "status": "eol",
     "platformId": "jetswap",
-    "assets": ["fWINGS", "USDC"],
+    "assets": [
+      "fWINGS",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5004,7 +5696,9 @@
     "oracleId": "fWINGS",
     "status": "eol",
     "platformId": "jetswap",
-    "assets": ["fWINGS"],
+    "assets": [
+      "fWINGS"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5034,7 +5728,10 @@
     "oracleId": "boo-ftm-scream",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["SCREAM", "FTM"],
+    "assets": [
+      "SCREAM",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5065,7 +5762,10 @@
     "oracleId": "ester-est-ftm",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["EST", "FTM"],
+    "assets": [
+      "EST",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5095,7 +5795,9 @@
     "oracleId": "EST",
     "status": "eol",
     "platformId": "ester",
-    "assets": ["EST"],
+    "assets": [
+      "EST"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5125,7 +5827,11 @@
     "oracleId": "froyo-3pool",
     "status": "eol",
     "platformId": "froyo",
-    "assets": ["USDT", "DAI", "USDC"],
+    "assets": [
+      "USDT",
+      "DAI",
+      "USDC"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5156,7 +5862,10 @@
     "oracleId": "froyo-froyo-ftm",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": ["FROYO", "FTM"],
+    "assets": [
+      "FROYO",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5188,7 +5897,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spookyswap",
-    "assets": ["KAE", "FTM"],
+    "assets": [
+      "KAE",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5217,7 +5929,10 @@
     "oracleId": "wigo-wigo-ftm",
     "status": "active",
     "platformId": "wigoswap",
-    "assets": ["WIGO", "FTM"],
+    "assets": [
+      "WIGO",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5246,7 +5961,10 @@
     "oracleId": "wigo-usdc-wigo",
     "status": "active",
     "platformId": "wigoswap",
-    "assets": ["WIGO", "USDC"],
+    "assets": [
+      "WIGO",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5276,7 +5994,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "wigoswap",
-    "assets": ["TREEB", "FTM"],
+    "assets": [
+      "TREEB",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5305,7 +6026,10 @@
     "oracleId": "wigo-crv-ftm",
     "status": "active",
     "platformId": "wigoswap",
-    "assets": ["CRV", "FTM"],
+    "assets": [
+      "CRV",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5334,7 +6058,10 @@
     "oracleId": "wigo-dai-ftm",
     "status": "active",
     "platformId": "wigoswap",
-    "assets": ["DAI", "FTM"],
+    "assets": [
+      "DAI",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5364,7 +6091,10 @@
     "oracleId": "wigo-usdc-ftm",
     "status": "active",
     "platformId": "wigoswap",
-    "assets": ["USDC", "FTM"],
+    "assets": [
+      "USDC",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5393,7 +6123,10 @@
     "oracleId": "wigo-eth-ftm",
     "status": "active",
     "platformId": "wigoswap",
-    "assets": ["ETH", "FTM"],
+    "assets": [
+      "ETH",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5422,7 +6155,10 @@
     "oracleId": "wigo-eth-btc",
     "status": "active",
     "platformId": "wigoswap",
-    "assets": ["ETH", "WBTC"],
+    "assets": [
+      "ETH",
+      "WBTC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5451,7 +6187,10 @@
     "oracleId": "wigo-usdc-dai",
     "status": "active",
     "platformId": "wigoswap",
-    "assets": ["USDC", "DAI"],
+    "assets": [
+      "USDC",
+      "DAI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5482,7 +6221,10 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "wigoswap",
-    "assets": ["USDC", "fUSDT"],
+    "assets": [
+      "USDC",
+      "fUSDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5512,7 +6254,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "wigoswap",
-    "assets": ["FRAX", "USDC"],
+    "assets": [
+      "FRAX",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5542,7 +6287,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "based",
-    "assets": ["BASED", "TOMB"],
+    "assets": [
+      "BASED",
+      "TOMB"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5573,7 +6321,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "based",
-    "assets": ["BSHARE", "FTM"],
+    "assets": [
+      "BSHARE",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5602,7 +6353,10 @@
     "oracleId": "spirit-ftm-atlas",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["ATLAS", "FTM"],
+    "assets": [
+      "ATLAS",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5632,7 +6386,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["BIFI", "FTM"],
+    "assets": [
+      "BIFI",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5662,7 +6419,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["beFTM", "FTM"],
+    "assets": [
+      "beFTM",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5691,7 +6451,10 @@
     "oracleId": "wigo-solid-wigo",
     "status": "eol",
     "platformId": "wigoswap",
-    "assets": ["SOLID", "WIGO"],
+    "assets": [
+      "SOLID",
+      "WIGO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5721,7 +6484,10 @@
     "oracleId": "wigo-tomb-ftm",
     "status": "eol",
     "platformId": "wigoswap",
-    "assets": ["TOMB", "FTM"],
+    "assets": [
+      "TOMB",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5752,7 +6518,10 @@
     "oracleId": "wigo-beets-ftm",
     "status": "eol",
     "platformId": "wigoswap",
-    "assets": ["BEETS", "FTM"],
+    "assets": [
+      "BEETS",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5782,7 +6551,10 @@
     "oracleId": "wigo-geist-ftm",
     "status": "eol",
     "platformId": "wigoswap",
-    "assets": ["GEIST", "FTM"],
+    "assets": [
+      "GEIST",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5812,7 +6584,10 @@
     "oracleId": "wigo-fusdt-ftm",
     "status": "eol",
     "platformId": "wigoswap",
-    "assets": ["fUSDT", "FTM"],
+    "assets": [
+      "fUSDT",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5843,7 +6618,10 @@
     "status": "eol",
     "platformId": "tombswap",
     "retireReason": "rewards",
-    "assets": ["TOMB", "MAI"],
+    "assets": [
+      "TOMB",
+      "MAI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5873,7 +6651,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["HND", "FTM"],
+    "assets": [
+      "HND",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5903,7 +6684,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["TREEB", "FTM"],
+    "assets": [
+      "TREEB",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5933,7 +6717,10 @@
     "status": "eol",
     "platformId": "based",
     "retireReason": "rewards",
-    "assets": ["BASED", "MAI"],
+    "assets": [
+      "BASED",
+      "MAI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5965,7 +6752,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["USTw", "FTM"],
+    "assets": [
+      "USTw",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -5994,7 +6784,10 @@
     "oracleId": "beets-treeb-me-bro",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["TREEB", "USDC"],
+    "assets": [
+      "TREEB",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6023,7 +6816,10 @@
     "oracleId": "boo-kek-ftm",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["KEK", "FTM"],
+    "assets": [
+      "KEK",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6054,7 +6850,10 @@
     "oracleId": "spartacadabra-charm-usdc",
     "status": "eol",
     "platformId": "spartacadabra",
-    "assets": ["CHARM", "USDC"],
+    "assets": [
+      "CHARM",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6085,7 +6884,10 @@
     "oracleId": "spirit-link-ftm",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["LINK", "FTM"],
+    "assets": [
+      "LINK",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6116,7 +6918,10 @@
     "oracleId": "boo-wftm-foo",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["FOO", "FTM"],
+    "assets": [
+      "FOO",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6147,7 +6952,10 @@
     "oracleId": "beets-cre8r-f-major",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["CRE8R", "FTM"],
+    "assets": [
+      "CRE8R",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6174,7 +6982,9 @@
     "oracleId": "WIGO",
     "status": "active",
     "platformId": "wigoswap",
-    "assets": ["WIGO"],
+    "assets": [
+      "WIGO"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6203,7 +7013,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "based",
-    "assets": ["BASED", "TOMB"],
+    "assets": [
+      "BASED",
+      "TOMB"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6234,7 +7047,10 @@
     "oracleId": "boo-wftm-ape",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["APE", "FTM"],
+    "assets": [
+      "APE",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6263,7 +7079,10 @@
     "oracleId": "boo-usdc-boo",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["BOO", "USDC"],
+    "assets": [
+      "BOO",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6293,7 +7112,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "based",
-    "assets": ["BASED", "BSHARE"],
+    "assets": [
+      "BASED",
+      "BSHARE"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6324,7 +7146,10 @@
     "oracleId": "boo-wftm-beftm",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["beFTM", "FTM"],
+    "assets": [
+      "beFTM",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6353,7 +7178,10 @@
     "oracleId": "sushi-ftm-yfi-eth",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": ["YFI", "ETH"],
+    "assets": [
+      "YFI",
+      "ETH"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6382,7 +7210,10 @@
     "oracleId": "sushi-ftm-wftm-link",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": ["FTM", "LINK"],
+    "assets": [
+      "FTM",
+      "LINK"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6411,7 +7242,10 @@
     "oracleId": "boo-font-ftm",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["FONT", "FTM"],
+    "assets": [
+      "FONT",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6441,7 +7275,10 @@
     "status": "eol",
     "platformId": "tombswap",
     "retireReason": "rewards",
-    "assets": ["TSHARE", "MAI"],
+    "assets": [
+      "TSHARE",
+      "MAI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6469,7 +7306,9 @@
     "oracleId": "sfUSDC",
     "status": "active",
     "platformId": "stargate",
-    "assets": ["sfUSDC"],
+    "assets": [
+      "sfUSDC"
+    ],
     "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6499,7 +7338,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tombswap",
-    "assets": ["TOMB", "FTM"],
+    "assets": [
+      "TOMB",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6528,7 +7370,10 @@
     "oracleId": "boo-hnd-wftm",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["HND", "FTM"],
+    "assets": [
+      "HND",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6558,9 +7403,18 @@
     "oracleId": "beets-beefy-tale",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["beFTM", "FTM"],
+    "assets": [
+      "beFTM",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_LOW",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://beets.fi/#/pool/0x3bd4c3d1f6f40d77b2e9d0007d6f76e4f183a46d0002000000000000000002d7",
     "createdAt": 1646864556,
     "network": "fantom"
@@ -6579,7 +7433,10 @@
     "oracleId": "2omb-2omb-2share",
     "status": "eol",
     "platformId": "2omb",
-    "assets": ["2OMB", "2SHARES"],
+    "assets": [
+      "2OMB",
+      "2SHARES"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6610,7 +7467,10 @@
     "oracleId": "2omb-2omb-ftm",
     "status": "eol",
     "platformId": "2omb",
-    "assets": ["2OMB", "FTM"],
+    "assets": [
+      "2OMB",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6641,7 +7501,10 @@
     "oracleId": "2omb-2share-ftm",
     "status": "eol",
     "platformId": "2omb",
-    "assets": ["2SHARES", "FTM"],
+    "assets": [
+      "2SHARES",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6672,7 +7535,12 @@
     "status": "eol",
     "platformId": "curve",
     "retireReason": "rewards",
-    "assets": ["USDL", "fUSDT", "DAI", "USDC"],
+    "assets": [
+      "USDL",
+      "fUSDT",
+      "DAI",
+      "USDC"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6702,7 +7570,10 @@
     "oracleId": "curve-ftm-f-ftml",
     "status": "active",
     "platformId": "curve",
-    "assets": ["FTML", "FTM"],
+    "assets": [
+      "FTML",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6731,7 +7602,14 @@
     "oracleId": "beets-wagmi-index",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["FTM", "SPELL", "MIM", "SUSHI", "wMEMO", "ICE"],
+    "assets": [
+      "FTM",
+      "SPELL",
+      "MIM",
+      "SUSHI",
+      "wMEMO",
+      "ICE"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6761,7 +7639,11 @@
     "oracleId": "beets-spooky-tempered-clavier",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["BOO", "USDC", "FTM"],
+    "assets": [
+      "BOO",
+      "USDC",
+      "FTM"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6790,7 +7672,10 @@
     "oracleId": "boo-wftm-dola",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["DOLA", "FTM"],
+    "assets": [
+      "DOLA",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6820,7 +7705,15 @@
     "oracleId": "beets-ftm-sonata",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["USDC", "CRV", "FTM", "SPIRIT", "BOO", "LINK", "SCREAM"],
+    "assets": [
+      "USDC",
+      "CRV",
+      "FTM",
+      "SPIRIT",
+      "BOO",
+      "LINK",
+      "SCREAM"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6849,7 +7742,13 @@
     "oracleId": "beets-magic-touch-daniele",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["FTM", "SPELL", "MIM", "wMEMO", "ICE"],
+    "assets": [
+      "FTM",
+      "SPELL",
+      "MIM",
+      "wMEMO",
+      "ICE"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6879,7 +7778,10 @@
     "oracleId": "boo-aave-ftm",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["AAVE", "FTM"],
+    "assets": [
+      "AAVE",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6910,7 +7812,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spookyswap",
-    "assets": ["DEI_OLD", "USDC"],
+    "assets": [
+      "DEI_OLD",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6940,7 +7845,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spookyswap",
-    "assets": ["DEUS", "FTM"],
+    "assets": [
+      "DEUS",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6970,7 +7878,10 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "beethovenx",
-    "assets": ["DEUS", "DEI_OLD"],
+    "assets": [
+      "DEUS",
+      "DEI_OLD"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -6998,7 +7909,10 @@
     "oracleId": "beets-demeters-degree",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["gOHM", "FTM"],
+    "assets": [
+      "gOHM",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7027,7 +7941,10 @@
     "oracleId": "beets-variation-theme",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["USDC", "asUSDC"],
+    "assets": [
+      "USDC",
+      "asUSDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7056,7 +7973,11 @@
     "oracleId": "beets-double-dollar-fugue",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["USDC", "MIM", "UST"],
+    "assets": [
+      "USDC",
+      "MIM",
+      "UST"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7086,9 +8007,20 @@
     "oracleId": "beets-classic-trio",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["USDC", "WBTC", "ETH"],
+    "assets": [
+      "USDC",
+      "WBTC",
+      "ETH"
+    ],
     "strategyTypeId": "multi-lp",
-    "risks": ["COMPLEXITY_LOW", "NEW_STRAT", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://app.beethovenx.io/#/pool/0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
     "network": "fantom",
     "createdAt": 1634908480,
@@ -7109,7 +8041,10 @@
     "status": "eol",
     "platformId": "beethovenx",
     "retireReason": "rewards",
-    "assets": ["USDB", "DAI"],
+    "assets": [
+      "USDB",
+      "DAI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7139,7 +8074,12 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "curve",
-    "assets": ["USTw", "FRAX", "fUSDT", "USDC"],
+    "assets": [
+      "USTw",
+      "FRAX",
+      "fUSDT",
+      "USDC"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7168,7 +8108,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["ORKAN", "FTM"],
+    "assets": [
+      "ORKAN",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7197,7 +8140,10 @@
     "oracleId": "boo-wftm-sftmx",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["sFTMx", "FTM"],
+    "assets": [
+      "sFTMx",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7226,7 +8172,10 @@
     "oracleId": "boo-mst-wftm",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["MST", "FTM"],
+    "assets": [
+      "MST",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7256,7 +8205,10 @@
     "oracleId": "spirit-ftm-dai",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["DAI", "FTM"],
+    "assets": [
+      "DAI",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7287,7 +8239,10 @@
     "oracleId": "spirit-ftm-multi",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["MULTI", "FTM"],
+    "assets": [
+      "MULTI",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7317,7 +8272,10 @@
     "oracleId": "spirit-ftm-spell",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["SPELL", "FTM"],
+    "assets": [
+      "SPELL",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7347,7 +8305,10 @@
     "oracleId": "spirit-ftm-pills",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["PILLS", "FTM"],
+    "assets": [
+      "PILLS",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7377,7 +8338,10 @@
     "oracleId": "spirit-ftm-eth",
     "status": "eol",
     "platformId": "spiritswap",
-    "assets": ["ETH", "FTM"],
+    "assets": [
+      "ETH",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7407,7 +8371,10 @@
     "oracleId": "boo-usdc-fs",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["FS", "USDC"],
+    "assets": [
+      "FS",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7437,7 +8404,11 @@
     "oracleId": "curve-ftm-lambda",
     "status": "eol",
     "platformId": "spartacadabra",
-    "assets": ["LAMBDA", "DAI", "USDC"],
+    "assets": [
+      "LAMBDA",
+      "DAI",
+      "USDC"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7467,7 +8438,10 @@
     "oracleId": "boo-wftm-wsspa",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["wsSPA", "FTM"],
+    "assets": [
+      "wsSPA",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7496,7 +8470,9 @@
     "oracleId": "fUSDT",
     "status": "eol",
     "platformId": "geist",
-    "assets": ["fUSDT"],
+    "assets": [
+      "fUSDT"
+    ],
     "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7525,7 +8501,10 @@
     "oracleId": "beets-phantom-dai-opera",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["FTM", "DAI"],
+    "assets": [
+      "FTM",
+      "DAI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7556,9 +8535,18 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tombswap",
-    "assets": ["TSHARE", "WBTC"],
+    "assets": [
+      "TSHARE",
+      "WBTC"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://swap.tomb.com/#/add/0x321162Cd933E2Be498Cd2267a90534A804051b11/0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37",
     "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11&outputCurrency=0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37",
     "createdAt": 1651725562,
@@ -7578,7 +8566,10 @@
     "oracleId": "beets-statera-duet",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["WSTA", "BEETS"],
+    "assets": [
+      "WSTA",
+      "BEETS"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7607,7 +8598,11 @@
     "oracleId": "hector-tor-crv",
     "status": "active",
     "platformId": "hector",
-    "assets": ["TOR", "DAI", "USDC"],
+    "assets": [
+      "TOR",
+      "DAI",
+      "USDC"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7637,7 +8632,10 @@
     "oracleId": "boo-wftm-tor",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["TOR", "FTM"],
+    "assets": [
+      "TOR",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7667,7 +8665,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["sFTMx", "FTM"],
+    "assets": [
+      "sFTMx",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7696,7 +8697,10 @@
     "oracleId": "beets-god-between-stables",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["DEI_OLD", "USDC"],
+    "assets": [
+      "DEI_OLD",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7725,7 +8729,11 @@
     "oracleId": "beets-clair-de-lune",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["FTM", "LUNAw", "USTw"],
+    "assets": [
+      "FTM",
+      "LUNAw",
+      "USTw"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7754,7 +8762,10 @@
     "oracleId": "beets-ust-ust",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["USTw", "USTaxl"],
+    "assets": [
+      "USTw",
+      "USTaxl"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7784,9 +8795,23 @@
     "oracleId": "beets-battle-bands",
     "status": "eol",
     "platformId": "beethovenx",
-    "assets": ["FTM", "MATIC", "SOL", "AVAX", "LUNA", "BNB"],
+    "assets": [
+      "FTM",
+      "MATIC",
+      "SOL",
+      "AVAX",
+      "LUNA",
+      "BNB"
+    ],
     "strategyTypeId": "multi-lp",
-    "risks": ["COMPLEXITY_LOW", "NEW_STRAT", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://app.beets.fi/#/pool/0x9af1f0e9ac9c844a4a4439d446c14378071830750001000000000000000000da",
     "network": "fantom",
     "createdAt": 1640018890,
@@ -7807,9 +8832,18 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tombswap",
-    "assets": ["FTM", "USDC"],
+    "assets": [
+      "FTM",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://swap.tomb.com/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
     "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83&outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
     "createdAt": 1653010779,
@@ -7830,9 +8864,18 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tombswap",
-    "assets": ["TSHARE", "USDC"],
+    "assets": [
+      "TSHARE",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_SMALL",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://swap.tomb.com/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37",
     "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37",
     "createdAt": 1653012955,
@@ -7853,7 +8896,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tombswap",
-    "assets": ["TOMB", "USDC"],
+    "assets": [
+      "TOMB",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7883,9 +8929,18 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tombswap",
-    "assets": ["fUSDT", "USDC"],
+    "assets": [
+      "fUSDT",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://swap.tomb.com/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
     "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A",
     "createdAt": 1653065311,
@@ -7906,7 +8961,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tombswap",
-    "assets": ["MIM", "USDC"],
+    "assets": [
+      "MIM",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7936,7 +8994,10 @@
     "status": "eol",
     "platformId": "tombswap",
     "retireReason": "rewards",
-    "assets": ["MAI", "USDC"],
+    "assets": [
+      "MAI",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -7966,9 +9027,18 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tombswap",
-    "assets": ["TSHARE", "ETH"],
+    "assets": [
+      "TSHARE",
+      "ETH"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_SMALL",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://swap.tomb.com/#/add/0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37/0x74b23882a30290451A17c44f4F05243b6b58C76d",
     "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37&outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
     "createdAt": 1653013670,
@@ -7988,7 +9058,10 @@
     "oracleId": "boo-wftm-luna",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["LUNA", "FTM"],
+    "assets": [
+      "LUNA",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -8018,7 +9091,10 @@
     "oracleId": "boo-wftm-ust",
     "status": "eol",
     "platformId": "spookyswap",
-    "assets": ["USTw", "FTM"],
+    "assets": [
+      "USTw",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -8049,7 +9125,10 @@
     "oracleId": "tomb-tshare-ftm",
     "status": "eol",
     "platformId": "tomb",
-    "assets": ["TSHARE", "FTM"],
+    "assets": [
+      "TSHARE",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -8080,7 +9159,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "spiritswap",
-    "assets": ["MIDAS", "FTM"],
+    "assets": [
+      "MIDAS",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -8110,9 +9192,18 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tombswap",
-    "assets": ["TREEB", "USDC"],
+    "assets": [
+      "TREEB",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://swap.tomb.com/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xc60D7067dfBc6f2caf30523a064f416A5Af52963",
     "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xc60D7067dfBc6f2caf30523a064f416A5Af52963",
     "createdAt": 1653831633,
@@ -8133,7 +9224,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "based",
-    "assets": ["BASED", "USDC"],
+    "assets": [
+      "BASED",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -8163,9 +9257,18 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tombswap",
-    "assets": ["ETH", "FTM"],
+    "assets": [
+      "ETH",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://swap.tomb.com/#/add/ETH/0x74b23882a30290451A17c44f4F05243b6b58C76d",
     "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=ETH&outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
     "createdAt": 1654075223,
@@ -8186,9 +9289,18 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tombswap",
-    "assets": ["BTC", "FTM"],
+    "assets": [
+      "BTC",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://swap.tomb.com/#/add/ETH/0x321162Cd933E2Be498Cd2267a90534A804051b11",
     "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=ETH&outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11",
     "createdAt": 1654075440,
@@ -8208,7 +9320,10 @@
     "oracleId": "boo-wftm-galcx",
     "status": "active",
     "platformId": "spookyswap",
-    "assets": ["gALCX", "FTM"],
+    "assets": [
+      "gALCX",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
