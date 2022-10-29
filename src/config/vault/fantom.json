@@ -120,7 +120,7 @@
     "tokenAddress": "0x91f7120898b4be26cC1e84F421e76725c07d1361",
     "tokenDecimals": 18,
     "tokenProviderId": "spookyswap",
-    "earnedToken": "mooSpookyDEI-USDC",
+    "earnedToken": "mooSpookyUSDC-DEI",
     "earnedTokenAddress": "0xa43A80F527aC3619ce904C55758D83A7b468fb16",
     "earnContractAddress": "0xa43A80F527aC3619ce904C55758D83A7b468fb16",
     "oracle": "lps",
