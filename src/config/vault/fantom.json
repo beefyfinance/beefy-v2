@@ -114,7 +114,7 @@
     "mintTokenUrl": "https://beta.beefy.finance/#/fantom/vault/beefy-beFTM"
   },
   {
-    "id": "boo-usdc-dei",
+    "id": "boo-usdc-dei-v2",
     "name": "USDC-DEI LP",
     "token": "USDC-DEI LP",
     "tokenAddress": "0x91f7120898b4be26cC1e84F421e76725c07d1361",
