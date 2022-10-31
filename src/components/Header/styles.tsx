@@ -86,21 +86,6 @@ export const styles = (theme: Theme) => ({
       marginRight: '5px',
     },
   },
-  chain: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.disabled,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    [theme.breakpoints.down('md')]: {
-      justifyContent: 'flex-start',
-      marginRight: theme.spacing(2),
-    },
-    '& img': {
-      height: '18px',
-      marginRight: '5px',
-    },
-  },
   toggleDrawer: {
     background: 'transparent',
     margin: '0 0 0 16px',
@@ -118,16 +103,5 @@ export const styles = (theme: Theme) => ({
   },
   hide: {
     display: 'none',
-  },
-  walletContainer: {
-    minWidth: '195px',
-    minHeight: '10px',
-    display: 'block',
-    paddingLeft: '24px',
-
-    [theme.breakpoints.down('xs')]: {
-      minWidth: '165px',
-      paddingLeft: '16px',
-    },
   },
 });

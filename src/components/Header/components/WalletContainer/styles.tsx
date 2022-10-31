@@ -2,17 +2,11 @@ import { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   container: {
-    width: '100%',
-    height: 40,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '8px',
-    '& .MuiGrid-container': {
-      flexWrap: 'inherit',
-      padding: '8px 16px',
-      cursor: 'pointer',
-    },
+    padding: '8px 16px',
   },
   address: {
     ...theme.typography['body-lg-med'],
@@ -31,11 +25,6 @@ export const styles = (theme: Theme) => ({
   },
   known: {
     border: `2px solid #D19847`,
-    '& .MuiAvatar-root': {
-      height: '24px',
-      width: '24px',
-      marginRight: '8px',
-    },
     '& $address': {
       color: theme.palette.text.secondary,
     },

@@ -55,7 +55,7 @@ export function NetworkStatus() {
   const pulseClassName = clsx(classes.pulseCircle, colorClasses);
 
   return (
-    <div>
+    <>
       <button
         ref={anchorEl}
         className={clsx({ [classes.container]: true, open: open })}
@@ -112,7 +112,7 @@ export function NetworkStatus() {
           )}
         </div>
       </Floating>
-    </div>
+    </>
   );
 }
 

@@ -48,8 +48,8 @@ export const styles = (theme: Theme) => ({
     marginBottom: '2px',
     [theme.breakpoints.down('sm')]: {
       padding: '16px',
-      gridTemplateColumns: 'repeat(5,150px)',
-      width: 'calc(150px * 6)',
+      gridTemplateColumns: 'repeat(5,164px)',
+      width: 'calc(164px * 6)',
     },
   },
   columnHeader: {

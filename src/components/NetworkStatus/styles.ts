@@ -6,19 +6,18 @@ const successColor = '#59A662';
 
 export const styles = (theme: Theme) => ({
   container: {
-    width: '44px',
     height: '40px',
-    border: '2px solid #30354F',
+    border: 'none',
     borderRadius: '8px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
     backgroundColor: 'transparent',
-    padding: 0,
     '&.open': {
       backgroundColor: '#242737',
     },
+    padding: '0px 0px 0px 16px',
   },
   circle: {
     width: '12px',
@@ -89,7 +88,6 @@ export const styles = (theme: Theme) => ({
     borderRadius: '8px',
     padding: `${12 - 2}px ${16 - 2}px`,
     position: 'relative' as const, // to position the close button
-    width: '257px',
     maxWidth: 'min(100%, 380px)',
     color: '#D0D0DA', // default text color
     lineHeight: '24px', // make everything nicely spaced
