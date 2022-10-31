@@ -22,6 +22,26 @@
     "createdAt": 1666954558
   },
   {
+    "id": "sonne-dai",
+    "name": "DAI",
+    "token": "DAI",
+    "tokenAddress": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSonneDAI",
+    "earnedTokenAddress": "0x3Af60c18c5c4F57dae157e0418D5d1c5A2f4fa91",
+    "earnContractAddress": "0x3Af60c18c5c4F57dae157e0418D5d1c5A2f4fa91",
+    "oracle": "tokens",
+    "oracleId": "DAI",
+    "status": "active",
+    "platformId": "sonne",
+    "assets": ["DAI"],
+    "strategyTypeId": "lending",
+    "risks": ["COMPLEXITY_MID", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1667054658
+  },
+  {
     "id": "optimism-bifi-maxi",
     "name": "BIFI Maxi",
     "token": "BIFI",
