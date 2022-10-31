@@ -114,7 +114,7 @@
     "mintTokenUrl": "https://beta.beefy.finance/#/fantom/vault/beefy-beFTM"
   },
   {
-    "id": "boo-dei-usdc-v2",
+    "id": "boo-dei-usdc",
     "name": "DEI-USDC LP",
     "token": "DEI-USDC LP",
     "tokenAddress": "0x91f7120898b4be26cC1e84F421e76725c07d1361",
@@ -134,7 +134,6 @@
       "BATTLE_TESTED",
       "IL_LOW",
       "ALGO_STABLE",
-      "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
