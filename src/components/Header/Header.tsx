@@ -1,4 +1,4 @@
-import React, { memo, Suspense, useState } from 'react';
+import React, { memo, Suspense, useCallback, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
@@ -111,23 +111,48 @@ export const Header = connect((state: BeefyState) => {
 
     const isMobile = useMediaQuery('(max-width: 500px)');
 
+    const [halloweenLogoSource, setHalloweenLogoSource] = useState('logo-wizard');
+
     const [mobileOpen, setMobileOpen] = useState(false);
     const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
     };
+
+    const handleEnterMove = useCallback(
+      e => {
+        if (!isMobile) {
+          setHalloweenLogoSource('logo-wizard-hover');
+        }
+      },
+      [isMobile]
+    );
+
+    const handleLeaveMove = useCallback(
+      e => {
+        if (!isMobile) {
+          setHalloweenLogoSource('logo-wizard');
+        }
+      },
+      [isMobile]
+    );
+
     return (
       <Box sx={{ flexGrow: 1 }}>
         <AppBar className={clsx([classes.navHeader, classes.hasPortfolio])} position="static">
           <Container className={classes.container} maxWidth="lg">
             <Toolbar disableGutters={true}>
-              <Box sx={{ flexGrow: 1 }}>
+              <Box
+                onMouseEnter={handleEnterMove}
+                onMouseLeave={handleLeaveMove}
+                sx={{ flexGrow: 1 }}
+              >
                 <Link className={classes.beefy} to="/">
                   <img
                     alt="BIFI"
                     src={
                       isMobile
-                        ? require(`../../images/bifi-logos/header-logo-notext.svg`).default
-                        : require(`../../images/bifi-logos/header-logo.svg`).default
+                        ? require(`../../images/bifi-logos/logo-wizard-notext.png`).default
+                        : require(`../../images/bifi-logos/${halloweenLogoSource}.png`).default
                     }
                   />
                 </Link>
