@@ -36,7 +36,11 @@ export const Chart = memo<ChartProps>(function ({ data, type }) {
           <Cell key={asset.key} fill={COLORS[i % data.length]} stroke={'#242842'} strokeWidth={2} />
         ))}
       </Pie>
-      <Tooltip wrapperStyle={{ outline: 'none' }} content={<PieChartTooltip type={type} />} />
+      <Tooltip
+        allowEscapeViewBox={{ x: true, y: true }}
+        wrapperStyle={{ outline: 'none' }}
+        content={<PieChartTooltip type={type} />}
+      />
     </PieChart>
   );
 });

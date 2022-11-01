@@ -352,12 +352,16 @@ export const selectUserExposureByKey = createCachedSelector(
 
 export const selectTokenExposures = (state: BeefyState) => {
   const vaultIds = selectUserDepositedVaults(state);
+
   return vaultIds.reduce((totals, vaultId) => {
     const vault = selectVaultById(state, vaultId);
     if (vault.assetIds.length === 1) {
-      totals[vault.assetIds[0]] = (totals[vault.assetIds[0]] || BIG_ZERO).plus(
-        selectUserVaultDepositInUsd(state, vault.id)
-      );
+      totals[vault.assetIds[0]] = {
+        value: (totals[vault.assetIds[0]]?.value || BIG_ZERO).plus(
+          selectUserVaultDepositInUsd(state, vault.id)
+        ),
+        assetIds: [vault.assetIds[0]],
+      };
     } else {
       const haveBreakdownData = selectHaveBreakdownData(state, vault);
       if (haveBreakdownData) {
@@ -368,15 +372,22 @@ export const selectTokenExposures = (state: BeefyState) => {
         );
         const { assets } = selectLpBreakdownBalance(state, vault, breakdown);
         for (const asset of assets) {
-          totals[asset.id] = (totals[asset.id] || BIG_ZERO).plus(asset.userValue);
+          totals[asset.id] = {
+            value: (totals[asset.id]?.value || BIG_ZERO).plus(asset.userValue),
+            assetIds: [asset.id],
+          };
         }
       } else {
-        totals[vault.name] = selectUserVaultDepositInUsd(state, vault.id);
+        totals[vault.name] = {
+          value: selectUserVaultDepositInUsd(state, vault.id),
+          assetIds: vault.assetIds,
+          chainId: vault.chainId,
+        };
       }
     }
 
     return totals;
-  }, {} as Record<string, BigNumber>);
+  }, {} as Record<string, { value: BigNumber; assetIds: TokenEntity['id'][]; chainId?: ChainEntity['id'] }>);
 };
 
 export const selectUserTokenExposure = createCachedSelector(
@@ -384,14 +395,16 @@ export const selectUserTokenExposure = createCachedSelector(
   (state: BeefyState, key: 'tokenExposure') => key,
   (valuesByToken, key) => {
     const userBalance = Object.keys(valuesByToken).reduce(
-      (cur, tot) => valuesByToken[tot].plus(cur),
+      (cur, tot) => valuesByToken[tot].value.plus(cur),
       BIG_ZERO
     );
     const exposureByTokens = Object.keys(valuesByToken).map(token => {
       return {
         key: token,
-        value: valuesByToken[token],
-        percentage: valuesByToken[token].dividedBy(userBalance).toNumber(),
+        value: valuesByToken[token].value,
+        percentage: valuesByToken[token].value.dividedBy(userBalance).toNumber(),
+        assetIds: valuesByToken[token].assetIds,
+        chainId: valuesByToken[token].chainId,
       };
     });
     return getTop6Array(exposureByTokens);
