@@ -92,6 +92,7 @@ const theme = createTheme({
       contentLight: '#F4F4F4',
       header: '#121212',
       footer: '#121212',
+      alternativeFooterHeader: '#020203',
       cta: '#59A662',
       appBG: '#1B1E31',
       filters: {

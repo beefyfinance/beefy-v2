@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   AppBar,
@@ -74,6 +74,9 @@ const NavLinks = memo(function () {
 });
 
 export const Header = memo(function () {
+  const location = useLocation();
+
+  const isOnDashboard = location.pathname.includes('dashboard');
   const classes = useStyles();
 
   const isMobile = useMediaQuery('(max-width: 500px)');
@@ -82,9 +85,15 @@ export const Header = memo(function () {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar className={clsx([classes.navHeader, classes.hasPortfolio])} position="static">
+      <AppBar
+        className={clsx([classes.navHeader, classes.hasPortfolio], {
+          [classes.userOnDashboard]: isOnDashboard,
+        })}
+        position="static"
+      >
         <Container className={classes.container} maxWidth="lg">
           <Toolbar disableGutters={true}>
             <Box sx={{ flexGrow: 1 }}>
