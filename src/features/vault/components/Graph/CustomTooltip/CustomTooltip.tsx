@@ -21,7 +21,7 @@ export const CustomTooltip: React.FC<CustomTooltipProps> = ({
   const LABELS = [t('TVL'), t('Graph-PriceTkn'), t('APY')];
 
   if (active && payload && payload.length) {
-    const formattedDate = format(new Date(payload[0].payload.ts), 'MMM d, yyyy h:m a');
+    const formattedDate = format(new Date(payload[0].payload.ts), 'MMM d, yyyy h:mm a');
     const formattedValue =
       stat === 2 ? formatPercent(payload[0].value) : formatUsd(payload[0].value);
     const formattedAverageValue = showSimpleAverage

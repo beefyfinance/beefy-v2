@@ -26,5 +26,9 @@
   {
     "id": "maxi",
     "name": "Beefy Maxi"
+  },
+  {
+    "id": "glp-gmx",
+    "name": "GMX"
   }
 ]

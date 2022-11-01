@@ -1,15 +1,19 @@
 import { memo, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { VaultEntity, VaultStandard } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectPlatformById } from '../../../data/selectors/platforms';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectChainById } from '../../../data/selectors/chains';
+import { styles } from './styles';
+import { makeStyles } from '@material-ui/core';
 
 export type StrategyDescriptionProps = {
   vaultId: VaultEntity['id'];
 };
+
+const useStyles = makeStyles(styles);
 
 export const StrategyDescription = memo<StrategyDescriptionProps>(function StrategyDescription({
   vaultId,
@@ -60,5 +64,35 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
     chainNativeToken,
   ]);
 
-  return <>{t(i18nKey, options)}</>;
+  return (
+    <>
+      {vault.strategyTypeId === 'glp-gmx' ? (
+        <Trans
+          t={t}
+          i18nKey={i18nKey}
+          tOptions={options}
+          components={{
+            details: <DetailsLink />,
+          }}
+        />
+      ) : (
+        t(i18nKey, options)
+      )}
+    </>
+  );
+});
+
+const DetailsLink = memo(function () {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  return (
+    <a
+      className={classes.detailsLink}
+      target="__blank"
+      rel="noopener"
+      href={'https://beefy.com/articles/earn-glp-with-beefy-s-new-glp-strategy-and-vaults/'}
+    >
+      {t('Details-Here')}
+    </a>
+  );
 });

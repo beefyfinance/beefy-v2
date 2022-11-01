@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_curve-op-f-susd-synthetix",
+    "poolId": "curve-op-f-susd",
+    "name": "Beefy",
+    "assets": ["sUSD", "DAI", "USDC", "USDT"],
+    "tokenAddress": "0x107Dbf9c9C0EF2Df114159e5C7DC2baf7C444cFF",
+    "earnedToken": "OP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
+    "earnContractAddress": "0x0E8a8936cb42B40AF9bcC56C81065f5D20b9Cb6a",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OP",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["synthetix"]
+  },
+  {
     "id": "moo_velodrome-wsteth-weth-lido",
     "poolId": "velodrome-wsteth-weth",
     "name": "Beefy",
