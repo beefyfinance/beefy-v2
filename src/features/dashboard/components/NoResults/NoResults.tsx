@@ -1,10 +1,11 @@
-import { Container, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import React, { memo, PropsWithChildren, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonLink } from '../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { askForWalletConnection, doDisconnectWallet } from '../../../data/actions/wallet';
 import { selectWalletAddressIfKnown } from '../../../data/selectors/wallet';
+import { Section } from '../Section';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
@@ -27,7 +28,7 @@ const Text = memo<TextProps>(function ({ text, children }) {
   const { t } = useTranslation();
   const classes = useStyles();
   return (
-    <Container maxWidth="lg">
+    <Section>
       <div className={classes.container}>
         <div>
           <img
@@ -42,7 +43,7 @@ const Text = memo<TextProps>(function ({ text, children }) {
         </div>
         {children}
       </div>
-    </Container>
+    </Section>
   );
 });
 

@@ -6,8 +6,10 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.dashboard.cardBg,
     borderRadius: '8px',
     display: 'grid',
-    gridTemplateColums: '1fr',
     rowGap: '16px',
+    [theme.breakpoints.only('md')]: {
+      height: '120px',
+    },
     [theme.breakpoints.down('md')]: {
       padding: '16px',
     },
@@ -31,7 +33,7 @@ export const styles = (theme: Theme) => ({
   },
   legendContainer: {
     display: 'flex',
-    columnGap: '40px',
+    columnGap: '32px',
   },
   legendItem: {
     display: 'flex',

@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { Hidden, makeStyles } from '@material-ui/core';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChainExposureLoader } from '../ChainExposure';
@@ -20,8 +20,13 @@ export const UserExposure = memo(function () {
         <ChainExposureLoader />
         <PlatformExposureLoader />
         <TokenExposureLoader />
+        <Hidden lgUp>
+          <StablesExposure />
+        </Hidden>
       </div>
-      <StablesExposure />
+      <Hidden mdDown>
+        <StablesExposure />
+      </Hidden>
     </Section>
   );
 });

@@ -5,7 +5,7 @@ import { styles } from './styles';
 const useStyles = makeStyles(styles);
 
 interface SectionProps {
-  title: string;
+  title?: string;
   children: ReactNode;
 }
 
@@ -14,7 +14,7 @@ export const Section = memo<SectionProps>(function ({ title, children }) {
   return (
     <div className={classes.sectionContainer}>
       <Container maxWidth="lg">
-        <div className={classes.title}>{title}</div>
+        {title && <div className={classes.title}>{title}</div>}
         {children}
       </Container>
     </div>

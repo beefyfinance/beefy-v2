@@ -8,12 +8,15 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     rowGap: '24px',
-    margin: '48px 0px',
     borderRadius: '8px',
   },
   icon: {
     width: '120px',
     height: '120px',
+    [theme.breakpoints.up('md')]: {
+      width: '132px',
+      height: '132px',
+    },
   },
   textContainer: {
     display: 'flex',

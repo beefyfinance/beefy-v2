@@ -1,7 +1,7 @@
 import { Theme, useMediaQuery } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
 import { memo, useMemo } from 'react';
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 import { PieChartTooltip } from '../PieChartTooltip';
 
 type ChartProps = {
@@ -19,31 +19,24 @@ export const Chart = memo<ChartProps>(function ({ data, type }) {
   }, [smUp]);
 
   return (
-    <ResponsiveContainer height={chartPxs} width="100%">
-      <PieChart>
-        <Pie
-          data={data}
-          dataKey="percentage"
-          valueKey="value"
-          cx="50%"
-          cy="50%"
-          innerRadius={smUp ? 50 : 30}
-          outerRadius={smUp ? 80 : 60}
-          paddingAngle={0}
-          startAngle={90}
-          endAngle={450}
-        >
-          {data.map((asset, i) => (
-            <Cell
-              key={asset.key}
-              fill={COLORS[i % data.length]}
-              stroke={'#242842'}
-              strokeWidth={2}
-            />
-          ))}
-        </Pie>
-        <Tooltip wrapperStyle={{ outline: 'none' }} content={<PieChartTooltip type={type} />} />
-      </PieChart>
-    </ResponsiveContainer>
+    <PieChart height={chartPxs} width={chartPxs}>
+      <Pie
+        data={data}
+        dataKey="percentage"
+        valueKey="value"
+        cx="50%"
+        cy="50%"
+        innerRadius={smUp ? 50 : 30}
+        outerRadius={smUp ? 80 : 60}
+        paddingAngle={0}
+        startAngle={90}
+        endAngle={450}
+      >
+        {data.map((asset, i) => (
+          <Cell key={asset.key} fill={COLORS[i % data.length]} stroke={'#242842'} strokeWidth={2} />
+        ))}
+      </Pie>
+      <Tooltip wrapperStyle={{ outline: 'none' }} content={<PieChartTooltip type={type} />} />
+    </PieChart>
   );
 });
