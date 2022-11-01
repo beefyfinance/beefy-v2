@@ -58,6 +58,22 @@ const _YearlyBreakdownTooltip = ({
     });
   }
 
+  if ('liquidStakingApr' in rates) {
+    rows.push({
+      label: t('Vault-Breakdown-LiquidStakingApr'),
+      value: rates.liquidStakingApr,
+      last: false,
+    });
+  }
+
+  if ('composablePoolApr' in rates) {
+    rows.push({
+      label: t('Vault-Breakdown-ComposablePoolApr'),
+      value: rates.composablePoolApr,
+      last: false,
+    });
+  }
+
   if ('boostApr' in rates) {
     rows.push({
       label: t('Vault-Breakdown-BoostApr'),
@@ -111,6 +127,22 @@ const _DailyBreakdownTooltip = ({
     rows.push({
       label: t('Vault-Breakdown-TradingDaily'),
       value: rates.tradingDaily,
+      last: false,
+    });
+  }
+
+  if ('liquidStakingDaily' in rates) {
+    rows.push({
+      label: t('Vault-Breakdown-LiquidStakingDaily'),
+      value: rates.liquidStakingDaily,
+      last: false,
+    });
+  }
+
+  if ('composablePoolDaily' in rates) {
+    rows.push({
+      label: t('Vault-Breakdown-ComposablePoolDaily'),
+      value: rates.composablePoolDaily,
       last: false,
     });
   }
