@@ -37,6 +37,8 @@ export interface ApyStandard {
   compoundingsPerYear: number;
   vaultApy: number;
   tradingApr?: number;
+  composablePoolApr?: number;
+  liquidStakingApr?: number;
   totalApy: number;
   // todo: does it make sense to have fees and apy in the same entities?
   lpFee: number;
