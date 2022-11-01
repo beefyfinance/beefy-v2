@@ -1575,7 +1575,7 @@
     ],
     "addLiquidityUrl": "https://optimism.curve.fi/factory/0/deposit",
     "network": "optimism",
-    "createdAt": 1657018676
+    "createdAt": 1667194759
   },
   {
     "id": "velodrome-op-usdc",

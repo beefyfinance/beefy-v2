@@ -112,6 +112,20 @@ const YearlyTooltipContent = memo<YearlyTooltipContentProps>(function YearlyTool
         });
       }
 
+      if ('liquidStakingApr' in rates) {
+        items.push({
+          label: 'Vault-Breakdown-LiquidStakingApr',
+          value: rates.liquidStakingApr,
+        });
+      }
+
+      if ('composablePoolApr' in rates) {
+        items.push({
+          label: 'Vault-Breakdown-ComposablePoolApr',
+          value: rates.composablePoolApr,
+        });
+      }
+
       if ('boostApr' in rates) {
         items.push({
           label: 'Vault-Breakdown-BoostApr',

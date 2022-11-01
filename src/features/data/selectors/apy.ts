@@ -92,21 +92,28 @@ export const selectUserGlobalStats = (state: BeefyState) => {
     } else {
       const apyData = selectStandardVaultRawApy(state, vault.id);
       // If no tradingApr returned from API, we assume there is no trading component
-      const tradingApr = 'tradingApr' in apyData ? apyData.tradingApr || 0 : 0;
+      const nonCompoundableComponents: (keyof ApyStandard)[] = [
+        'tradingApr',
+        'liquidStakingApr',
+        'composablePoolApr',
+      ];
       // If no vaultApr returned from API, we assume totalApy is all from vault, and not trading
       const vaultApr =
         'vaultApr' in apyData
           ? apyData.vaultApr || 0
           : (Math.pow((apyData.totalApy || 0) + 1, 1 / 365) - 1) * 365;
 
-      // Trading APR is not compoundable
-      if (tradingApr > 0) {
-        dailyYield.push({
-          id: vault.id,
-          deposit: vaultUsdBalance,
-          rate: tradingApr / 365,
-          compoundable: false,
-        });
+      // non-compoundable components
+      for (const key of nonCompoundableComponents) {
+        const apr = key in apyData ? apyData[key] || 0 : 0;
+        if (apr > 0) {
+          dailyYield.push({
+            id: vault.id,
+            deposit: vaultUsdBalance,
+            rate: apr / 365,
+            compoundable: false,
+          });
+        }
       }
 
       // Vault APR is compoundable

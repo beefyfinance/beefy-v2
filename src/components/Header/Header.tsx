@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
@@ -75,16 +75,31 @@ const NavLinks = memo(function () {
 
 export const Header = memo(function () {
   const location = useLocation();
-
   const isOnDashboard = location.pathname.includes('dashboard');
   const classes = useStyles();
-
+  const [halloweenLogoSource, setHalloweenLogoSource] = useState('logo-wizard');
   const isMobile = useMediaQuery('(max-width: 500px)');
-
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const handleEnterMove = useCallback(
+    e => {
+      if (!isMobile) {
+        setHalloweenLogoSource('logo-wizard-hover');
+      }
+    },
+    [isMobile]
+  );
+
+  const handleLeaveMove = useCallback(
+    e => {
+      if (!isMobile) {
+        setHalloweenLogoSource('logo-wizard');
+      }
+    },
+    [isMobile]
+  );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -96,14 +111,14 @@ export const Header = memo(function () {
       >
         <Container className={classes.container} maxWidth="lg">
           <Toolbar disableGutters={true}>
-            <Box sx={{ flexGrow: 1 }}>
+            <Box onMouseEnter={handleEnterMove} onMouseLeave={handleLeaveMove} sx={{ flexGrow: 1 }}>
               <Link className={classes.beefy} to="/">
                 <img
                   alt="BIFI"
                   src={
                     isMobile
-                      ? require(`../../images/bifi-logos/header-logo-notext.svg`).default
-                      : require(`../../images/bifi-logos/header-logo.svg`).default
+                      ? require(`../../images/bifi-logos/logo-wizard-notext.png`).default
+                      : require(`../../images/bifi-logos/${halloweenLogoSource}.png`).default
                   }
                 />
               </Link>
