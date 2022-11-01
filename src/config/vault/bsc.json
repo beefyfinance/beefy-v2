@@ -58,6 +58,28 @@
     "network": "bsc"
   },
   {
+    "id": "cone-bnbx-wbnb",
+    "name": "BNBx-BNB vLP",
+    "token": "BNBx-BNB vLP",
+    "tokenAddress": "0xE483f60682a11Da3455Dfa7912a6eaC6176F5797",
+    "tokenDecimals": 18,
+    "tokenProviderId": "cone",
+    "earnedToken": "mooConeBNBx-BNB",
+    "earnedTokenAddress": "0x6163cd2c8e4c5Ad1aaFE48A363741029AFA17048",
+    "earnContractAddress": "0x6163cd2c8e4c5Ad1aaFE48A363741029AFA17048",
+    "oracle": "lps",
+    "oracleId": "cone-bnbx-wbnb",
+    "status": "active",
+    "platformId": "cone",
+    "assets": ["BNBx", "BNB"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.cone.exchange/liquidity",
+    "buyTokenUrl": "https://www.cone.exchange/swap",
+    "network": "bsc",
+    "createdAt": 1667325937
+  },
+  {
     "id": "biswap-bat-bnb",
     "name": "BAT-BNB LP",
     "token": "BAT-BNB BiLP",
