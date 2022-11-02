@@ -115,6 +115,7 @@ export const config = {
       'saUSDT',
       'saUSDC',
       'USTw',
+      'USD+',
     ],
   },
   polygon: {
