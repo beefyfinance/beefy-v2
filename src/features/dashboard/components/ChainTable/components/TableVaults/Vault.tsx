@@ -18,13 +18,14 @@ interface VaultProps {
 
 export const Vault = memo<VaultProps>(function ({ vaultId }) {
   const classes = useStyles();
+
   return (
     <div className={classes.vault}>
       <VaultName vaultId={vaultId} />
-      <VaultPlatformStat showLabel={false} vaultId={vaultId} />
-      <VaultDepositStat showLabel={false} vaultId={vaultId} />
-      <VaultYearlyStat showLabel={false} vaultId={vaultId} />
-      <VaultDailyStat showLabel={false} vaultId={vaultId} />
+      <VaultPlatformStat className={classes.item} showLabel={false} vaultId={vaultId} />
+      <VaultDepositStat className={classes.item} showLabel={false} vaultId={vaultId} />
+      <VaultYearlyStat className={classes.item} showLabel={false} vaultId={vaultId} />
+      <VaultDailyStat className={classes.item} showLabel={false} vaultId={vaultId} />
     </div>
   );
 });
@@ -35,7 +36,7 @@ const VaultName = memo(function ({ vaultId }: { vaultId: VaultEntity['id'] }) {
   return (
     <div className={classes.vaultName}>
       <AssetsImage size={24} chainId={vault.chainId} assetIds={vault.assetIds} />
-      {vault.name}
+      <div>{vault.name}</div>
     </div>
   );
 });

@@ -12,6 +12,7 @@ export type VaultValueStatProps = {
   tooltip?: ReactNode;
   value: ReactNode;
   subValue?: ReactNode;
+  className?: string;
   blur?: boolean;
   loading: boolean;
   boosted?: boolean;
@@ -26,6 +27,7 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
   loading,
   boosted,
   showLabel = true,
+  className,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -37,7 +39,7 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
       ) : (
         <>
           <div
-            className={clsx(classes.value, {
+            className={clsx(classes.value, className, {
               [classes.blurValue]: blur,
               [classes.boostedValue]: boosted,
             })}

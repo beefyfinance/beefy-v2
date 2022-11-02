@@ -27,5 +27,18 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.primary,
     display: 'flex',
     columnGap: '8px',
+    [theme.breakpoints.down('sm')]: {
+      '& div': {
+        width: '164px',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+      },
+    },
+  },
+  item: {
+    [theme.breakpoints.down('md')]: {
+      width: '164px',
+    },
   },
 });
