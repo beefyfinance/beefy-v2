@@ -18,8 +18,8 @@ export const styles = (theme: Theme) => ({
     gridTemplateColumns: 'repeat(5,1fr)',
     [theme.breakpoints.down('sm')]: {
       padding: '16px',
-      gridTemplateColumns: 'repeat(5,150px)',
-      width: 'calc(150px * 6)',
+      gridTemplateColumns: 'repeat(5,auto)',
+      width: '150%',
     },
   },
   vaultName: {
@@ -28,17 +28,25 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     columnGap: '8px',
     [theme.breakpoints.down('sm')]: {
+      width: '200px',
       '& div': {
-        width: '164px',
+        width: '100%',
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
       },
     },
   },
-  item: {
+  itemSmall: {
+    justifyContent: 'flex-start',
     [theme.breakpoints.down('md')]: {
-      width: '164px',
+      width: '120px',
+    },
+  },
+  itemBig: {
+    justifyContent: 'flex-start',
+    [theme.breakpoints.down('md')]: {
+      width: '170px',
     },
   },
 });

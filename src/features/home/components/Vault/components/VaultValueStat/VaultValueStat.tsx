@@ -39,9 +39,10 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
       ) : (
         <>
           <div
-            className={clsx(classes.value, className, {
+            className={clsx(classes.value, {
               [classes.blurValue]: blur,
               [classes.boostedValue]: boosted,
+              [className]: className,
             })}
           >
             {value}

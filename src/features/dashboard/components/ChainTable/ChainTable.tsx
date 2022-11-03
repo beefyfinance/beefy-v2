@@ -8,7 +8,6 @@ import { useAppSelector } from '../../../../store';
 import { ChainEntity } from '../../../data/entities/chain';
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectChainById } from '../../../data/selectors/chains';
-
 import { TableVaults } from './components/TableVaults/TableVaults';
 import { SortedOptions, useSortVaults } from './hooks';
 import { styles } from './styles';
@@ -29,8 +28,10 @@ export const ChainTable = memo<ChainTableProps>(function ({ chainId, data }) {
     <div className={classes.tableContainer}>
       <TableTitle chainId={chainId} deposited={data.depositedByChain} />
       <div className={classes.scroller}>
-        <TableFilter sortOptions={sortedOptions} handleSort={handleSort} />
-        <TableVaults vaults={sortedVaults} />
+        <div>
+          <TableFilter sortOptions={sortedOptions} handleSort={handleSort} />
+          <TableVaults vaults={sortedVaults} />
+        </div>
       </div>
     </div>
   );
@@ -61,11 +62,12 @@ const TableTitle = memo<TableTitleProps>(function ({ chainId, deposited }) {
 const SORT_COLUMNS: {
   label: string;
   sortKey: 'platform' | 'depositValue' | 'apy' | 'daily';
+  bigClassName: boolean;
 }[] = [
-  { label: 'Filter-SortPlatform', sortKey: 'platform' },
-  { label: 'Filter-SortDeposited', sortKey: 'depositValue' },
-  { label: 'Filter-SortApy', sortKey: 'apy' },
-  { label: 'Filter-SortDaily', sortKey: 'daily' },
+  { label: 'Filter-SortPlatform', sortKey: 'platform', bigClassName: false },
+  { label: 'Filter-SortDeposited', sortKey: 'depositValue', bigClassName: true },
+  { label: 'Filter-SortApy', sortKey: 'apy', bigClassName: false },
+  { label: 'Filter-SortDaily', sortKey: 'daily', bigClassName: true },
 ];
 
 interface TableFilterProps {
@@ -82,13 +84,14 @@ const TableFilter = memo<TableFilterProps>(function ({ sortOptions, handleSort }
   return (
     <div className={classes.sortColumns}>
       <div className={classes.columnHeader}>{t('Vaults')}</div>
-      {SORT_COLUMNS.map(({ label, sortKey }) => (
+      {SORT_COLUMNS.map(({ label, sortKey, bigClassName }) => (
         <SortColumnHeader
           key={label}
           label={label}
           sortKey={sortKey}
           sorted={sort === sortKey ? sortDirection : 'none'}
           onChange={handleSort}
+          className={bigClassName ? classes.itemBig : classes.itemSmall}
         />
       ))}
     </div>

@@ -21,11 +21,12 @@ import { InterestTooltipContent } from '../../features/home/components/Vault/com
 
 export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];
+  className?: string;
 };
 
 export const VaultDailyStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps) {
+function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailyStatProps) {
   const label = 'VaultStat-DAILY';
 
   const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
@@ -36,6 +37,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps) {
       subValue: null,
       blur: false,
       loading: false,
+      className: className ?? '',
     };
   }
 
@@ -47,6 +49,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps) {
       subValue: null,
       blur: false,
       loading: true,
+      className: className ?? '',
     };
   }
 
@@ -58,6 +61,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps) {
       subValue: null,
       blur: false,
       loading: false,
+      className: className ?? '',
     };
   }
 
@@ -73,6 +77,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps) {
     loading: !isLoaded,
     boosted: isBoosted,
     tooltip: <DailyContentTooltip vaultId={vaultId} isBoosted={isBoosted} rates={formatted} />,
+    className: className ?? '',
   };
 }
 

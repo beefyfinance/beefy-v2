@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core';
+import clsx from 'clsx';
 import { memo, ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
@@ -31,6 +32,7 @@ type SortColumnHeaderProps = {
   sorted: 'none' | 'asc' | 'desc';
   onChange?: (field: string) => void;
   tooltip?: ReactNode;
+  className?: string;
 };
 export const SortColumnHeader = memo<SortColumnHeaderProps>(function SortColumnHeader({
   label,
@@ -38,6 +40,7 @@ export const SortColumnHeader = memo<SortColumnHeaderProps>(function SortColumnH
   sorted,
   onChange,
   tooltip,
+  className,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -46,7 +49,7 @@ export const SortColumnHeader = memo<SortColumnHeaderProps>(function SortColumnH
   }, [sortKey, onChange]);
 
   return (
-    <button className={classes.sortColumn} onClick={handleChange}>
+    <button className={clsx(classes.sortColumn, className)} onClick={handleChange}>
       {t(label)}
       {tooltip}
       <SortIcon direction={sorted} />

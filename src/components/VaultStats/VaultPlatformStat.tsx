@@ -8,11 +8,12 @@ import { BeefyState } from '../../redux-types';
 
 interface VaultPlatformProps {
   vaultId: VaultEntity['id'];
+  className?: string;
 }
 
 export const VaultPlatformStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId }: VaultPlatformProps) {
+function mapStateToProps(state: BeefyState, { vaultId, className }: VaultPlatformProps) {
   const label = 'VaultStat-PLATFORM';
 
   const vault = selectVaultById(state, vaultId);
@@ -28,6 +29,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultPlatformProps) {
       subValue: null,
       blur: false,
       loading: true,
+      className: className ?? '',
     };
   }
 
@@ -37,5 +39,6 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultPlatformProps) {
     subValue: null,
     blur: false,
     loading: false,
+    className: className ?? '',
   };
 }

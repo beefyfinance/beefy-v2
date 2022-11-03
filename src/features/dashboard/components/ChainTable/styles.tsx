@@ -1,7 +1,7 @@
 import { Theme } from '@material-ui/core';
+
 export const styles = (theme: Theme) => ({
   scroller: {
-    whiteSpace: 'nowrap' as const,
     [theme.breakpoints.down('md')]: {
       overflowX: 'scroll',
       '&::-webkit-scrollbar': {
@@ -48,12 +48,27 @@ export const styles = (theme: Theme) => ({
     marginBottom: '2px',
     [theme.breakpoints.down('sm')]: {
       padding: '16px',
-      gridTemplateColumns: 'repeat(5,150px)',
-      width: 'calc(150px * 6)',
+      gridTemplateColumns: 'repeat(5,auto)',
+      width: '150%',
     },
   },
   columnHeader: {
     ...theme.typography['subline-sm'],
     color: theme.palette.text.disabled,
+    [theme.breakpoints.down('md')]: {
+      width: '200px',
+    },
+  },
+  itemSmall: {
+    justifyContent: 'flex-start',
+    [theme.breakpoints.down('md')]: {
+      width: '120px',
+    },
+  },
+  itemBig: {
+    justifyContent: 'flex-start',
+    [theme.breakpoints.down('md')]: {
+      width: '170px',
+    },
   },
 });

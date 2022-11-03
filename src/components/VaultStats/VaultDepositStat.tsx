@@ -14,11 +14,12 @@ import { VaultValueStat } from '../../features/home/components/Vault/components/
 
 export type VaultDepositStatProps = {
   vaultId: VaultEntity['id'];
+  className?: string;
 };
 
 export const VaultDepositStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId }: VaultDepositStatProps) {
+function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDepositStatProps) {
   const label = 'VaultStat-DEPOSITED';
   const vault = selectVaultById(state, vaultId);
   const hideBalance = selectIsBalanceHidden(state);
@@ -35,6 +36,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDepositStatProps) 
       subValue: null,
       blur: hideBalance,
       loading: true,
+      className: className ?? '',
     };
   }
 
@@ -50,6 +52,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDepositStatProps) 
       subValue: null,
       blur: hideBalance,
       loading: false,
+      className: className ?? '',
     };
   }
 
@@ -62,5 +65,6 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDepositStatProps) 
     subValue: totalDepositedUsd,
     blur: hideBalance,
     loading: false,
+    className: className ?? '',
   };
 }

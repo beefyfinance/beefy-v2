@@ -22,10 +22,10 @@ export const Vault = memo<VaultProps>(function ({ vaultId }) {
   return (
     <div className={classes.vault}>
       <VaultName vaultId={vaultId} />
-      <VaultPlatformStat className={classes.item} showLabel={false} vaultId={vaultId} />
-      <VaultDepositStat className={classes.item} showLabel={false} vaultId={vaultId} />
-      <VaultYearlyStat className={classes.item} showLabel={false} vaultId={vaultId} />
-      <VaultDailyStat className={classes.item} showLabel={false} vaultId={vaultId} />
+      <VaultPlatformStat className={classes.itemSmall} showLabel={false} vaultId={vaultId} />
+      <VaultDepositStat className={classes.itemBig} showLabel={false} vaultId={vaultId} />
+      <VaultYearlyStat className={classes.itemSmall} showLabel={false} vaultId={vaultId} />
+      <VaultDailyStat className={classes.itemBig} showLabel={false} vaultId={vaultId} />
     </div>
   );
 });
