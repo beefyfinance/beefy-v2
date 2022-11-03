@@ -111,30 +111,22 @@ export const Header = connect((state: BeefyState) => {
 
     const isMobile = useMediaQuery('(max-width: 500px)');
 
-    const [halloweenLogoSource, setHalloweenLogoSource] = useState('logo-wizard');
+    const [isLogoHover, setIsLogoHover] = useState(false);
 
     const [mobileOpen, setMobileOpen] = useState(false);
     const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
     };
 
-    const handleEnterMove = useCallback(
-      e => {
-        if (!isMobile) {
-          setHalloweenLogoSource('logo-wizard-hover');
-        }
-      },
-      [isMobile]
-    );
+    const handleEnterMove = useCallback(e => {
+      setIsLogoHover(true);
+    }, []);
 
-    const handleLeaveMove = useCallback(
-      e => {
-        if (!isMobile) {
-          setHalloweenLogoSource('logo-wizard');
-        }
-      },
-      [isMobile]
-    );
+    const handleLeaveMove = useCallback(e => {
+      setIsLogoHover(false);
+    }, []);
+
+    const logoPrefix = isLogoHover ? '-eyes.png' : '.svg';
 
     return (
       <Box sx={{ flexGrow: 1 }}>
@@ -151,8 +143,8 @@ export const Header = connect((state: BeefyState) => {
                     alt="BIFI"
                     src={
                       isMobile
-                        ? require(`../../images/bifi-logos/logo-wizard-notext.png`).default
-                        : require(`../../images/bifi-logos/${halloweenLogoSource}.png`).default
+                        ? require(`../../images/bifi-logos/header-logo-notext${logoPrefix}`).default
+                        : require(`../../images/bifi-logos/header-logo${logoPrefix}`).default
                     }
                   />
                 </Link>
