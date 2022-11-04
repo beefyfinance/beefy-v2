@@ -478,6 +478,27 @@ export const config = {
     },
     stableCoins: ['USDC', 'DAI', 'USDT'],
   },
+  ethereum: {
+    name: 'Ethereum',
+    chainId: 1,
+    rpc: ['https://rpc.ankr.com/eth'],
+    explorerUrl: 'https://etherscan.io/',
+    multicallAddress: '0x9dA9f3C6c45F1160b53D395b0A982aEEE1D212fE',
+    appMulticallContractAddress: '0xce6ef394f61918c89bDFCC53Ef4b8fB74879C2B2',
+    providerName: 'Ethereum',
+    walletSettings: {
+      chainId: `0x${parseInt('1', 10).toString(16)}`,
+      chainName: 'ethereum',
+      nativeCurrency: {
+        name: 'ETH',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://rpc.ankr.com/eth'],
+      blockExplorerUrls: ['https://etherscan.io/'],
+    },
+    stableCoins: ['USDC', 'DAI', 'USDT', 'bbaUSDC', 'bbaUSDT', 'bbaDAI', 'bbaUSD', 'MAI'],
+  },
 };
 
 /*

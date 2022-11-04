@@ -908,5 +908,10 @@
     "id": "ferro",
     "name": "Ferro",
     "filter": true
+  },
+  {
+    "id": "aura",
+    "name": "Aura",
+    "filter": true
   }
 ]
