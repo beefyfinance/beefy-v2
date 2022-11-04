@@ -1,6 +1,8 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
 import React, { memo } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
+import { Tooltip } from '../../../../../../components/Tooltip';
+import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { VaultDailyStat } from '../../../../../../components/VaultStats/VaultDailyStat';
 import { VaultDepositStat } from '../../../../../../components/VaultStats/VaultDepositStat';
 import { VaultPlatformStat } from '../../../../../../components/VaultStats/VaultPlatformStat';
@@ -33,10 +35,20 @@ export const Vault = memo<VaultProps>(function ({ vaultId }) {
 const VaultName = memo(function ({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const isMobile = useMediaQuery('(max-width: 600px)');
+  const needTooltip = isMobile && vault.name.length > 15;
+
   return (
     <div className={classes.vaultName}>
       <AssetsImage size={24} chainId={vault.chainId} assetIds={vault.assetIds} />
-      <div>{vault.name}</div>
+      {needTooltip ? (
+        <Tooltip content={<BasicTooltipContent title={vault.name} />}>{`${vault.name.slice(
+          0,
+          10
+        )}...`}</Tooltip>
+      ) : (
+        <div>{vault.name}</div>
+      )}
     </div>
   );
 });
