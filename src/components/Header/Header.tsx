@@ -1,4 +1,4 @@
-import React, { memo, Suspense, useCallback, useState } from 'react';
+import React, { memo, Suspense, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
@@ -111,22 +111,10 @@ export const Header = connect((state: BeefyState) => {
 
     const isMobile = useMediaQuery('(max-width: 500px)');
 
-    const [isLogoHover, setIsLogoHover] = useState(false);
-
     const [mobileOpen, setMobileOpen] = useState(false);
     const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
     };
-
-    const handleEnterMove = useCallback(e => {
-      setIsLogoHover(true);
-    }, []);
-
-    const handleLeaveMove = useCallback(e => {
-      setIsLogoHover(false);
-    }, []);
-
-    const logoPrefix = isLogoHover ? '-eyes.png' : '.svg';
 
     return (
       <Box sx={{ flexGrow: 1 }}>
@@ -136,13 +124,11 @@ export const Header = connect((state: BeefyState) => {
               <Box sx={{ flexGrow: 1 }}>
                 <Link className={classes.beefy} to="/">
                   <img
-                    onMouseEnter={handleEnterMove}
-                    onMouseLeave={handleLeaveMove}
                     alt="BIFI"
                     src={
                       isMobile
-                        ? require(`../../images/bifi-logos/header-logo-notext${logoPrefix}`).default
-                        : require(`../../images/bifi-logos/header-logo${logoPrefix}`).default
+                        ? require(`../../images/bifi-logos/header-logo-notext.svg`).default
+                        : require(`../../images/bifi-logos/header-logo.svg`).default
                     }
                   />
                 </Link>
