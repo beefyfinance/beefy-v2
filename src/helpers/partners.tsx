@@ -11,7 +11,17 @@ const QiDao = [
   'aavev3-op-eth',
 ];
 
-const Insurace = ['bsc', 'avax', 'celo', 'cronos', 'fantom', 'harmony', 'moonriver', 'polygon'];
+const Insurace = [
+  'bsc',
+  'avax',
+  'celo',
+  'cronos',
+  'fantom',
+  'harmony',
+  'moonriver',
+  'polygon',
+  'ethereum',
+];
 
 const Solace = ['polygon'];
 
@@ -31,6 +41,7 @@ const Nexus = [
   'aurora',
   'moonbeam',
   'optimism',
+  'ethereum',
 ];
 
 const Moonpot = [

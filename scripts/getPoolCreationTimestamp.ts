@@ -20,6 +20,7 @@ const explorerApiUrls = {
   emerald: 'https://explorer.emerald.oasis.dev/',
   optimism: 'https://api-optimistic.etherscan.io/api',
   kava: 'https://explorer.kava.io/',
+  ethereum: 'https://api.etherscan.io/api',
 };
 
 const blockScoutChainsTimeout = new Set(['fuse', 'metis', 'celo', 'emerald', 'kava']);
