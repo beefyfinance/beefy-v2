@@ -86,7 +86,7 @@
   {
     "id": "aura-bbausd",
     "name": "Balancer Boosted USD (bb-a-USD)",
-    "token": "Balancer Boosted USD",
+    "token": "bbaUSD",
     "tokenAddress": "0xA13a9247ea42D743238089903570127DdA72fE44",
     "tokenDecimals": 18,
     "tokenProviderId": "aura",
