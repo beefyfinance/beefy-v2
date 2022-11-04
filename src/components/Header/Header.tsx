@@ -133,13 +133,11 @@ export const Header = connect((state: BeefyState) => {
         <AppBar className={clsx([classes.navHeader, classes.hasPortfolio])} position="static">
           <Container className={classes.container} maxWidth="lg">
             <Toolbar disableGutters={true}>
-              <Box
-                onMouseEnter={handleEnterMove}
-                onMouseLeave={handleLeaveMove}
-                sx={{ flexGrow: 1 }}
-              >
+              <Box sx={{ flexGrow: 1 }}>
                 <Link className={classes.beefy} to="/">
                   <img
+                    onMouseEnter={handleEnterMove}
+                    onMouseLeave={handleLeaveMove}
                     alt="BIFI"
                     src={
                       isMobile
