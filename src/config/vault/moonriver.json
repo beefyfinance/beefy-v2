@@ -699,7 +699,6 @@
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0xf50225a84382c74CbdeA10b0c176f71fc3DE0C4d",
     "createdAt": 1639683150,
     "network": "moonriver",
-    "retireReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -730,7 +729,6 @@
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0x868892CCcEdbfF0B028F3b3595205Ea91b99376B",
     "createdAt": 1640141208,
     "network": "moonriver",
-    "retireReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -761,7 +759,6 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0x1A93B23281CC1CDE4C4741353F3064709A16197d/0x4a436073552044D5f2f49B176853ad3Ad473d9d6",
     "createdAt": 1639145934,
     "network": "moonriver",
-    "retireReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -792,7 +789,6 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/MOVR/0x78F811A431D248c1EDcF6d95ec8551879B2897C3",
     "createdAt": 1638046680,
     "network": "moonriver",
-    "retireReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -823,7 +819,6 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/MOVR/0x41562ae242d194247389152aCAa7a9397136b09F",
     "createdAt": 1637920962,
     "network": "moonriver",
-    "retireReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -854,7 +849,6 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0xE936CAA7f6d9F5C9e907111FCAf7c351c184CDA7/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "createdAt": 1638049728,
     "network": "moonriver",
-    "retireReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -885,7 +879,6 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0xc005A7A1502c9DE16CCDaBA7CDA0cee4Ac304993/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "createdAt": 1638048906,
     "network": "moonriver",
-    "retireReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -916,7 +909,6 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0xd924f195C6012C301f42290cf0fdE385A66039DE/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "createdAt": 1638053964,
     "network": "moonriver",
-    "retireReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -947,7 +939,6 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0xf47002E6151E06554b8f16E9Cc704edD3fC078b8/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "createdAt": 1638055338,
     "network": "moonriver",
-    "retireReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -978,7 +969,6 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x9D5bc9B873AeD984e2B6A64d4792249D68BbA2Fe/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "createdAt": 1638048018,
     "network": "moonriver",
-    "retireReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -1009,7 +999,6 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x682F81e57EAa716504090C3ECBa8595fB54561D8",
     "createdAt": 1635802614,
     "network": "moonriver",
-    "retireReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -1040,7 +1029,6 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0xbD90A6125a84E5C512129D622a75CDDE176aDE5E",
     "createdAt": 1635789006,
     "network": "moonriver",
-    "retireReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -1071,7 +1059,6 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0xAd7F1844696652ddA7959a49063BfFccafafEfe7",
     "createdAt": 1635803946,
     "network": "moonriver",
-    "retireReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -1102,7 +1089,6 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x1e0F2A75Be02c025Bd84177765F89200c04337Da",
     "createdAt": 1635808950,
     "network": "moonriver",
-    "retireReason": "tvl",
     "retireReason": "tvl"
   },
   {
