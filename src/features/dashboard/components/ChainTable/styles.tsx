@@ -1,14 +1,6 @@
 import { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
-  scroller: {
-    [theme.breakpoints.down('md')]: {
-      overflowX: 'scroll',
-      '&::-webkit-scrollbar': {
-        display: 'none',
-      },
-    },
-  },
   tableContainer: {
     display: 'grid',
     gridTemplateColumns: '1fr',

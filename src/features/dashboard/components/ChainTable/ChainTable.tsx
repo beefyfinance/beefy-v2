@@ -8,6 +8,7 @@ import { useAppSelector } from '../../../../store';
 import { ChainEntity } from '../../../data/entities/chain';
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectChainById } from '../../../data/selectors/chains';
+import { HorizontalScrolleable } from '../../../../components/HorizontalScrolleable';
 import { TableVaults } from './components/TableVaults/TableVaults';
 import { SortedOptions, useSortVaults } from './hooks';
 import { styles } from './styles';
@@ -27,10 +28,10 @@ export const ChainTable = memo<ChainTableProps>(function ({ chainId, data }) {
   return (
     <div className={classes.tableContainer}>
       <TableTitle chainId={chainId} deposited={data.depositedByChain} />
-      <div className={classes.scroller}>
+      <HorizontalScrolleable>
         <TableFilter sortOptions={sortedOptions} handleSort={handleSort} />
         <TableVaults vaults={sortedVaults} />
-      </div>
+      </HorizontalScrolleable>
     </div>
   );
 });

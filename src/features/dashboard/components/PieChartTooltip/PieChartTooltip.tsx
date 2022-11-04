@@ -24,35 +24,32 @@ export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type, act
     const percent = formatPercent(data.percentage ?? 0);
     const title = data?.key ?? '';
     return (
-      <div>
-        <div className={classes.triangle} />
-        <div className={classes.container}>
-          <div className={classes.titleContainer}>
-            {data.key !== 'others' && (
-              <>
-                {type === 'chain' && (
-                  <img
-                    className={classes.icon}
-                    src={require(`../../../../images/networks/${data.key}.svg`).default}
-                    alt={title}
-                  />
-                )}
-                {type === 'token' && (
-                  <AssetsImage size={24} chainId={data.chainId} assetIds={data.assetIds} />
-                )}
-              </>
-            )}
-            <div className={classes.title}>{data.key}</div>
+      <div className={classes.container}>
+        <div className={classes.titleContainer}>
+          {data.key !== 'others' && (
+            <>
+              {type === 'chain' && (
+                <img
+                  className={classes.icon}
+                  src={require(`../../../../images/networks/${data.key}.svg`).default}
+                  alt={title}
+                />
+              )}
+              {type === 'token' && (
+                <AssetsImage size={24} chainId={data.chainId} assetIds={data.assetIds} />
+              )}
+            </>
+          )}
+          <div className={classes.title}>{data.key}</div>
+        </div>
+        <div className={classes.infoContainer}>
+          <div className={classes.valueContainer}>
+            <div className={classes.label}>{t('Dashboard-Deposited')}</div>
+            <div className={classes.value}>{usdValue}</div>
           </div>
-          <div className={classes.infoContainer}>
-            <div className={classes.valueContainer}>
-              <div className={classes.label}>{t('Dashboard-Deposited')}</div>
-              <div className={classes.value}>{usdValue}</div>
-            </div>
-            <div className={classes.valueContainer}>
-              <div className={classes.label}>{t('Dashboard-Percentage')}</div>
-              <div className={classes.value}>{percent}</div>
-            </div>
+          <div className={classes.valueContainer}>
+            <div className={classes.label}>{t('Dashboard-Percentage')}</div>
+            <div className={classes.value}>{percent}</div>
           </div>
         </div>
       </div>
