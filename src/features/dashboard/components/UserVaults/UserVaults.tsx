@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/styles';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../store';
-import { selectUserVaultBalance } from '../../../data/selectors/balance';
+import { selectUserVaultBalances } from '../../../data/selectors/balance';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { debounce } from 'lodash';
 import { useInView } from 'react-intersection-observer';
@@ -23,7 +23,7 @@ export const UserVaults = memo(function () {
 
 export const VirtualList = function () {
   const classes = useStyles();
-  const vaults = useAppSelector(selectUserVaultBalance);
+  const vaults = useAppSelector(selectUserVaultBalances);
   const vaultIds = Object.keys(vaults);
   const totalVaults = vaultIds.length;
   const minBatchSize = 3;

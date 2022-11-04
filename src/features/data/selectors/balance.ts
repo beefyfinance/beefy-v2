@@ -25,6 +25,7 @@ import { KeysOfType } from '../utils/types-utils';
 import { getTop6Array } from '../utils/array-utils';
 import { sortBy } from 'lodash';
 import createCachedSelector from 're-reselect';
+import { createSelector } from '@reduxjs/toolkit';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (selectIsWalletKnown(state)) {
@@ -318,8 +319,10 @@ export const selectLpBreakdownBalance = (
   return { assets, userShareOfPool, lpTotalSupplyDecimal, userBalanceDecimal, oneLpShareOfPool };
 };
 
+const selectState = (state: BeefyState) => state;
+
 export const selectUserExposureByKey = createCachedSelector(
-  (state: BeefyState) => state,
+  (state: BeefyState) => selectState(state),
   (state: BeefyState) => selectUserDepositedVaults(state),
   (state: BeefyState, key: KeysOfType<VaultEntity, string>) => key,
   (state, userVaults, key) => {
@@ -350,48 +353,50 @@ export const selectUserExposureByKey = createCachedSelector(
   }
 )((state: BeefyState, key: KeysOfType<VaultEntity, string>) => key);
 
-export const selectTokenExposures = (state: BeefyState) => {
-  const vaultIds = selectUserDepositedVaults(state);
-
-  return vaultIds.reduce((totals, vaultId) => {
-    const vault = selectVaultById(state, vaultId);
-    if (vault.assetIds.length === 1) {
-      totals[vault.assetIds[0]] = {
-        value: (totals[vault.assetIds[0]]?.value || BIG_ZERO).plus(
-          selectUserVaultDepositInUsd(state, vault.id)
-        ),
-        assetIds: [vault.assetIds[0]],
-      };
-    } else {
-      const haveBreakdownData = selectHaveBreakdownData(state, vault);
-      if (haveBreakdownData) {
-        const breakdown = selectLpBreakdownByAddress(
-          state,
-          vault.chainId,
-          vault.depositTokenAddress
-        );
-        const { assets } = selectLpBreakdownBalance(state, vault, breakdown);
-        for (const asset of assets) {
-          totals[asset.id] = {
-            value: (totals[asset.id]?.value || BIG_ZERO).plus(asset.userValue),
-            assetIds: [asset.id],
+export const selectTokenExposure = createSelector(
+  (state: BeefyState) => selectState(state),
+  (state: BeefyState) => selectUserDepositedVaults(state),
+  (state, vaultIds) => {
+    return vaultIds.reduce((totals, vaultId) => {
+      const vault = selectVaultById(state, vaultId);
+      if (vault.assetIds.length === 1) {
+        totals[vault.assetIds[0]] = {
+          value: (totals[vault.assetIds[0]]?.value || BIG_ZERO).plus(
+            selectUserVaultDepositInUsd(state, vault.id)
+          ),
+          assetIds: [vault.assetIds[0]],
+        };
+      } else {
+        const haveBreakdownData = selectHaveBreakdownData(state, vault);
+        if (haveBreakdownData) {
+          const breakdown = selectLpBreakdownByAddress(
+            state,
+            vault.chainId,
+            vault.depositTokenAddress
+          );
+          const { assets } = selectLpBreakdownBalance(state, vault, breakdown);
+          for (const asset of assets) {
+            totals[asset.id] = {
+              value: (totals[asset.id]?.value || BIG_ZERO).plus(asset.userValue),
+              assetIds: [asset.id],
+            };
+          }
+        } else {
+          totals[vault.name] = {
+            value: selectUserVaultDepositInUsd(state, vault.id),
+            assetIds: vault.assetIds,
+            chainId: vault.chainId,
           };
         }
-      } else {
-        totals[vault.name] = {
-          value: selectUserVaultDepositInUsd(state, vault.id),
-          assetIds: vault.assetIds,
-          chainId: vault.chainId,
-        };
       }
-    }
 
-    return totals;
-  }, {} as Record<string, { value: BigNumber; assetIds: TokenEntity['id'][]; chainId?: ChainEntity['id'] }>);
-};
+      return totals;
+    }, {} as Record<string, { value: BigNumber; assetIds: TokenEntity['id'][]; chainId?: ChainEntity['id'] }>);
+  }
+);
 
 export const selectUserTokenExposure = createCachedSelector(
-  (state: BeefyState) => selectTokenExposures(state),
+  (state: BeefyState) => selectTokenExposure(state),
   (state: BeefyState, key: 'tokenExposure') => key,
   (valuesByToken, key) => {
     const userBalance = Object.keys(valuesByToken).reduce(
@@ -411,39 +416,42 @@ export const selectUserTokenExposure = createCachedSelector(
   }
 )((state: BeefyState, key: 'tokenExposure') => key);
 
-export const selectStablecoinsExposure = (state: BeefyState) => {
-  const vaultIds = selectUserDepositedVaults(state);
-  return vaultIds.reduce((totals, vaultId) => {
-    const vault = selectVaultById(state, vaultId);
-    if (selectIsVaultStable(state, vault.id)) {
-      totals['stable'] = (totals['stable'] || BIG_ZERO).plus(
-        selectUserVaultDepositInUsd(state, vault.id)
-      );
-    } else {
-      const haveBreakdownData = selectHaveBreakdownData(state, vault);
-      if (haveBreakdownData) {
-        const breakdown = selectLpBreakdownByAddress(
-          state,
-          vault.chainId,
-          vault.depositTokenAddress
-        );
-        const { assets } = selectLpBreakdownBalance(state, vault, breakdown);
-        for (const asset of assets) {
-          if (selectIsTokenStable(state, asset.chainId, asset.id)) {
-            totals['stable'] = (totals['stable'] || BIG_ZERO).plus(asset.userValue);
-          } else {
-            totals['other'] = (totals['other'] || BIG_ZERO).plus(asset.userValue);
-          }
-        }
-      } else {
-        totals['other'] = (totals['other'] || BIG_ZERO).plus(
+export const selectStablecoinsExposure = createSelector(
+  (state: BeefyState) => selectState(state),
+  (state: BeefyState) => selectUserDepositedVaults(state),
+  (state, vaultIds) => {
+    return vaultIds.reduce((totals, vaultId) => {
+      const vault = selectVaultById(state, vaultId);
+      if (selectIsVaultStable(state, vault.id)) {
+        totals['stable'] = (totals['stable'] || BIG_ZERO).plus(
           selectUserVaultDepositInUsd(state, vault.id)
         );
+      } else {
+        const haveBreakdownData = selectHaveBreakdownData(state, vault);
+        if (haveBreakdownData) {
+          const breakdown = selectLpBreakdownByAddress(
+            state,
+            vault.chainId,
+            vault.depositTokenAddress
+          );
+          const { assets } = selectLpBreakdownBalance(state, vault, breakdown);
+          for (const asset of assets) {
+            if (selectIsTokenStable(state, asset.chainId, asset.id)) {
+              totals['stable'] = (totals['stable'] || BIG_ZERO).plus(asset.userValue);
+            } else {
+              totals['other'] = (totals['other'] || BIG_ZERO).plus(asset.userValue);
+            }
+          }
+        } else {
+          totals['other'] = (totals['other'] || BIG_ZERO).plus(
+            selectUserVaultDepositInUsd(state, vault.id)
+          );
+        }
       }
-    }
-    return totals;
-  }, {} as Record<string, BigNumber>);
-};
+      return totals;
+    }, {} as Record<string, BigNumber>);
+  }
+);
 
 export const selectUserStablecoinsExposure = createCachedSelector(
   (state: BeefyState) => selectStablecoinsExposure(state),
@@ -453,7 +461,6 @@ export const selectUserStablecoinsExposure = createCachedSelector(
       (cur, tot) => stablesExposure[tot].plus(cur),
       BIG_ZERO
     );
-
     const stablecoinsExposure = Object.keys(stablesExposure).map(type => {
       return {
         key: type,
@@ -466,7 +473,7 @@ export const selectUserStablecoinsExposure = createCachedSelector(
   }
 )((state: BeefyState, key: 'stablesExposure') => key);
 
-export const selectUserVaultBalance = (state: BeefyState) => {
+export const selectUserVaultBalances = (state: BeefyState) => {
   const userVaults = selectUserDepositedVaults(state);
   return userVaults.reduce((totals, vaultId) => {
     const vault = selectVaultById(state, vaultId);

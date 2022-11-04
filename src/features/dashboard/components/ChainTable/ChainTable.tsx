@@ -28,10 +28,8 @@ export const ChainTable = memo<ChainTableProps>(function ({ chainId, data }) {
     <div className={classes.tableContainer}>
       <TableTitle chainId={chainId} deposited={data.depositedByChain} />
       <div className={classes.scroller}>
-        <div>
-          <TableFilter sortOptions={sortedOptions} handleSort={handleSort} />
-          <TableVaults vaults={sortedVaults} />
-        </div>
+        <TableFilter sortOptions={sortedOptions} handleSort={handleSort} />
+        <TableVaults vaults={sortedVaults} />
       </div>
     </div>
   );
