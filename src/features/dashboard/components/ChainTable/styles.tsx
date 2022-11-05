@@ -3,7 +3,7 @@ import { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   tableContainer: {
     display: 'grid',
-    gridTemplateColumns: '1fr',
+    gridTemplateColumns: 'minmax(0, 1fr)',
     rowGap: '2px',
   },
   titleContainer: {
