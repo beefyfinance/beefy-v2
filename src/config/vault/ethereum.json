@@ -1,5 +1,26 @@
 [
   {
+    "id": "aura-reth-bbausd",
+    "name": "rETH-bbaUSD",
+    "token": "rETH-bbaUSD",
+    "tokenAddress": "0x334C96d792e4b26B841d28f53235281cec1be1F2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aura",
+    "earnedToken": "mooAurarETH-bbaUSD",
+    "earnedTokenAddress": "0xe6cFc9d27f8bfC8ddcB86d75381cD21570A21B20",
+    "earnContractAddress": "0xe6cFc9d27f8bfC8ddcB86d75381cD21570A21B20",
+    "oracle": "lps",
+    "oracleId": "aura-reth-bbausd",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["rETH", "bbaUSD"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_MID", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.balancer.fi/#/pool/0x334c96d792e4b26b841d28f53235281cec1be1f200020000000000000000038a",
+    "network": "ethereum",
+    "createdAt": 1667658496
+  },
+  {
     "id": "stargate-eth-usdc",
     "name": "USDC LP",
     "token": "S*USDC",
