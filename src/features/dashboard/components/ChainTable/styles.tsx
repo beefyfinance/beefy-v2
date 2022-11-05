@@ -36,12 +36,12 @@ export const styles = (theme: Theme) => ({
     justifyItems: 'start',
     width: '100%',
     columnGap: '24px',
-    gridTemplateColumns: 'repeat(5,1fr)',
     marginBottom: '2px',
+    gridTemplateColumns: 'repeat(5,minmax(0,1fr))',
     [theme.breakpoints.down('sm')]: {
       padding: '16px',
-      gridTemplateColumns: 'repeat(5,auto)',
-      width: '150%',
+      gridTemplateColumns: 'repeat(5,minmax(0,auto))',
+      width: 'calc(200px + 120px * 2 + 170px * 3)',
     },
   },
   columnHeader: {

@@ -12,14 +12,13 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     columnGap: '24px',
     rowGap: '24px',
-    width: '100%',
     padding: '16px 24px',
     backgroundColor: theme.palette.background.dashboard.cardBg,
-    gridTemplateColumns: 'repeat(5,1fr)',
+    gridTemplateColumns: 'repeat(5,minmax(0,1fr))',
     [theme.breakpoints.down('sm')]: {
       padding: '16px',
-      gridTemplateColumns: 'repeat(5,auto)',
-      width: '150%',
+      gridTemplateColumns: 'repeat(5,minmax(0,auto))',
+      width: 'calc(200px + 120px*2 + 170px * 3)',
     },
   },
   vaultName: {

@@ -57,6 +57,5 @@ export const styles = (theme: Theme) => ({
     right: 0,
     width: 80,
     background: 'linear-gradient(90deg, rgba(35, 39, 67, 0) 0%, #232743 100%)',
-    borderRadius: '12px',
   },
 });
