@@ -913,5 +913,10 @@
     "id": "aura",
     "name": "Aura",
     "filter": true
+  },
+  {
+    "id": "hop",
+    "name": "Hop",
+    "filter": true
   }
 ]
