@@ -13,7 +13,7 @@
     "oracleId": "stellaswap-mai4pool",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["USDCwh", "USDT", "BUSD", "FRAX", "MAI"],
+    "assets": ["stella4pool", "MAI"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -60,7 +60,7 @@
   {
     "id": "stellaswap-4pool",
     "name": "USDC/USDT/BUSD/FRAX LP",
-    "token": "4Pool LP",
+    "token": "stella4pool",
     "tokenAddress": "0xB326b5189AA42Acaa3C649B120f084Ed8F4dCaA6",
     "tokenDecimals": 18,
     "tokenProviderId": "stellaswap",
