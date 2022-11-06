@@ -1,4 +1,4 @@
-import { getDefaultProvider } from '@ethersproject/providers';
+import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
 import { getWeb3Instance } from '../features/data/apis/instances';
 import { ChainEntity } from '../features/data/entities/chain';
 import SID, { getSidAddress } from '@siddomains/sidjs';
@@ -15,20 +15,17 @@ export function isNativeAlternativeAddress(address: string) {
   return NATIVE_ADDRESS_ALTERNATIVES.includes(address.toLowerCase());
 }
 
-export async function getEnsAddress(address: string): Promise<string> {
+export async function getEnsAddress(address: string, chain: ChainEntity): Promise<string> {
   try {
-    const ensProvider = await getDefaultProvider();
-    const ensName = await ensProvider.lookupAddress(address);
-    return ensName;
+    const web3 = await getWeb3Instance(chain);
+    const ensProvider = new Web3Provider(web3.currentProvider as ExternalProvider);
+    return await ensProvider.lookupAddress(address);
   } catch (error) {
     return '';
   }
 }
 
-export async function getSpaceIdAddress(
-  address: string,
-  bscChain: ChainEntity
-): Promise<{ name: string }> {
+export async function getSpaceIdAddress(address: string, bscChain: ChainEntity): Promise<string> {
   const web3 = await getWeb3Instance(bscChain);
   const sidProvider = web3.currentProvider;
   try {
@@ -37,8 +34,8 @@ export async function getSpaceIdAddress(
       sidAddress: getSidAddress(`${bscChain.networkChainId}`),
     });
     const sidName = await id.getName(address);
-    return sidName;
+    return sidName.name;
   } catch (error) {
-    return { name: '' };
+    return '';
   }
 }

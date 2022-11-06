@@ -14,17 +14,37 @@ import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 import { selectIsWalletConnected } from '../selectors/wallet';
 import { getEnsAddress, getSpaceIdAddress } from '../../../helpers/addresses';
 
-export const getEns = createAsyncThunk<
-  { ens: string },
-  { address: string | null },
-  { state: BeefyState }
->('wallet/getEns', async ({ address }, { getState }) => {
-  const bscChain = selectChainById(getState(), 'bsc');
-  const ensName = await getEnsAddress(address);
-  if (ensName) return { ens: ensName };
-  const sidName = await getSpaceIdAddress(address, bscChain);
-  return { ens: sidName?.name ?? '' };
-});
+const ensCache: Record<string, string> = {};
+export const getEns = createAsyncThunk<string, { address: string | null }, { state: BeefyState }>(
+  'wallet/getEns',
+  async ({ address }, { getState }) => {
+    if (!address) {
+      return '';
+    }
+
+    const addressLower = address.toLowerCase();
+    if (addressLower in ensCache) {
+      return ensCache[addressLower];
+    }
+
+    const bscChain = selectChainById(getState(), 'bsc');
+    const ethChain = selectChainById(getState(), 'ethereum');
+    const results = await Promise.allSettled([
+      getEnsAddress(address, ethChain),
+      getSpaceIdAddress(address, bscChain),
+    ]);
+
+    for (const result of results) {
+      if (result.status === 'fulfilled' && result.value) {
+        ensCache[addressLower] = result.value;
+        return result.value;
+      }
+    }
+
+    ensCache[addressLower] = '';
+    return '';
+  }
+);
 
 export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
   'wallet/initWallet',
