@@ -18,7 +18,18 @@ export const config = {
       rpcUrls: ['https://rpc.ankr.com/eth'],
       blockExplorerUrls: ['https://etherscan.io/'],
     },
-    stableCoins: ['USDC', 'DAI', 'USDT', 'bbaUSDC', 'bbaUSDT', 'bbaDAI', 'bbaUSD', 'MAI'],
+    stableCoins: [
+      'USDC',
+      'DAI',
+      'USDT',
+      'bbaUSDC',
+      'bbaUSDT',
+      'bbaDAI',
+      'bbaUSD',
+      'MAI',
+      'sethUSDC',
+      'sethUSDT',
+    ],
   },
   polygon: {
     name: 'Polygon',
@@ -128,7 +139,7 @@ export const config = {
   optimism: {
     name: 'Optimism',
     chainId: 10,
-    rpc: ['https://rpc.ankr.com/optimism'],
+    rpc: ['https://mainnet.optimism.io'],
     explorerUrl: 'https://optimistic.etherscan.io',
     multicallAddress: '0x820ae7bf39792d7ce7befc70b0172f4d267f1938',
     appMulticallContractAddress: '0x88D537a86e09B753361D70448d60D3dC2D75883d',
@@ -141,7 +152,7 @@ export const config = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://rpc.ankr.com/optimism'],
+      rpcUrls: ['https://mainnet.optimism.io'],
       blockExplorerUrls: ['https://optimistic.etherscan.io/'],
     },
     stableCoins: [
