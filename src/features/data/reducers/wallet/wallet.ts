@@ -99,7 +99,7 @@ export const walletSlice = createSlice({
       sliceState.initialized = true;
     });
     builder.addCase(getEns.fulfilled, (sliceState, action) => {
-      sliceState.ens = action.payload.ens;
+      sliceState.ens = action.payload;
     });
   },
 });
