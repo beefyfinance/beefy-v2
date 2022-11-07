@@ -3,7 +3,7 @@
     "id": "moo_dystopia-usd+-stmatic-lido",
     "poolId": "dystopia-usd+-stmatic",
     "name": "Lido",
-    "assets": ["USD+", "stMATIC"],
+    "assets": ["pUSD+", "stMATIC"],
     "tokenAddress": "0x727555858111Bf77027710c19bc4a4B35b38727E",
     "earnedToken": "LDO",
     "earnedTokenDecimals": 18,

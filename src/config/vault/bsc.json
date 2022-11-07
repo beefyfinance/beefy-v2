@@ -123,7 +123,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "cone",
-    "assets": ["USD+", "BNB"],
+    "assets": ["bUSD+", "BNB"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -153,7 +153,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "cone",
-    "assets": ["USD+", "BUSD"],
+    "assets": ["bUSD+", "BUSD"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
