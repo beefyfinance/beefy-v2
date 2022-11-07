@@ -1,39 +1,27 @@
-import React, { memo, useRef } from 'react';
+import React, { memo, useCallback } from 'react';
 import { Container, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { Clear } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
-import { sample } from 'lodash';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { filteredVaultsActions } from '../../features/data/reducers/filtered-vaults';
+import { selectFilterPopinFilterCount } from '../../features/data/selectors/filtered-vaults';
+import { Trans, useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(styles);
 
 export const ProposalBanner = memo(function ProposalBanner() {
   const classes = useStyles();
 
-  const [bifiCardIndex, setBifiCardIndex] = React.useState(1);
+  const { t } = useTranslation();
 
   const [showProposalBanner, setShowProposalBanner] = React.useState(() => {
     try {
-      const storageValue = localStorage.getItem('hideOnRampBanner');
+      const storageValue = localStorage.getItem('hideEthBanner');
       return storageValue !== 'true';
     } catch {
       return true;
     }
   });
-
-  const intervalRef: any = useRef();
-
-  React.useEffect(() => {
-    const setRandomCardIndex = () => {
-      setBifiCardIndex(sample([1, 2]));
-    };
-
-    intervalRef.current = setInterval(setRandomCardIndex, 3000);
-
-    return () => {
-      clearInterval(intervalRef.current);
-    };
-  }, []);
 
   const closeBanner = React.useCallback(() => {
     setShowProposalBanner(false);
@@ -53,17 +41,16 @@ export const ProposalBanner = memo(function ProposalBanner() {
               <div className={classes.content}>
                 <img
                   className={classes.icon}
-                  src={require(`../../images/icons/beefy-card-${bifiCardIndex}.png`).default}
-                  alt="snapshot"
+                  src={require(`../../images/networks/ethereum.svg`).default}
+                  alt="eth"
                 />
-                <div>
-                  The new Beefy On-Ramp is live:
-                  <Link to={'/onramp'} className={classes.link}>
-                    {' '}
-                    Buy Crypto
-                  </Link>{' '}
-                  using card or bank transfer from selected providers
-                </div>
+                <Trans
+                  t={t}
+                  i18nKey="ETH-Banner"
+                  components={{
+                    ethereum: <Eth />,
+                  }}
+                />
               </div>
               <Clear onClick={closeBanner} className={classes.cross} />
             </div>
@@ -71,5 +58,25 @@ export const ProposalBanner = memo(function ProposalBanner() {
         </div>
       ) : null}
     </>
+  );
+});
+
+const Eth = memo(function () {
+  const classes = useStyles();
+  const dispatch = useAppDispatch();
+  const count = useAppSelector(selectFilterPopinFilterCount);
+  const { t } = useTranslation();
+
+  const filterEthereum = useCallback(() => {
+    if (count > 0) {
+      dispatch(filteredVaultsActions.reset());
+    }
+    dispatch(filteredVaultsActions.setChainIds(['ethereum']));
+  }, [count, dispatch]);
+
+  return (
+    <div className={classes.link} onClick={filterEthereum}>
+      {t('Ethereum')}
+    </div>
   );
 });

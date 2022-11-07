@@ -458,5 +458,7 @@
   "Saving-Games": "Savings Games",
   "Glp-Withdraw-Notice": "The underlying protocol requires withdrawals to be at least 15 minutes after a deposit/harvest.",
   "Glp-Withdraw-Notice-Unlocks": "Unlocks in <countdown/>",
-  "Details-Here": "Details here"
+  "Details-Here": "Details here",
+  "ETH-Banner": "Beefy is now deployed on <ethereum/>! New autocompounding vaults from Convex, Aura and Stargate are already available and more are coming soon.",
+  "Ethereum": "Ethereum"
 }
