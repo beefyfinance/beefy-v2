@@ -5,14 +5,12 @@ import { Clear } from '@material-ui/icons';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { filteredVaultsActions } from '../../features/data/reducers/filtered-vaults';
 import { selectFilterPopinFilterCount } from '../../features/data/selectors/filtered-vaults';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(styles);
 
 export const ProposalBanner = memo(function ProposalBanner() {
   const classes = useStyles();
-
-  const { t } = useTranslation();
 
   const [showProposalBanner, setShowProposalBanner] = React.useState(() => {
     try {
@@ -44,13 +42,10 @@ export const ProposalBanner = memo(function ProposalBanner() {
                   src={require(`../../images/networks/ethereum.svg`).default}
                   alt="eth"
                 />
-                <Trans
-                  t={t}
-                  i18nKey="ETH-Banner"
-                  components={{
-                    ethereum: <Eth />,
-                  }}
-                />
+                <div>
+                  Beefy is now deployed on <Eth />! New autocompounding vaults from Convex, Aura and
+                  Stargate are already available and more are coming soon.
+                </div>
               </div>
               <Clear onClick={closeBanner} className={classes.cross} />
             </div>
@@ -75,8 +70,8 @@ const Eth = memo(function () {
   }, [count, dispatch]);
 
   return (
-    <div className={classes.link} onClick={filterEthereum}>
+    <span className={classes.link} onClick={filterEthereum}>
       {t('Ethereum')}
-    </div>
+    </span>
   );
 });

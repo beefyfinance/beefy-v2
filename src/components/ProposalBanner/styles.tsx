@@ -23,7 +23,6 @@ export const styles = (theme: Theme) => ({
   link: {
     textDecoration: 'none',
     color: theme.palette.primary.main,
-    marginLeft: '4px',
     '&:hover': {
       cursor: 'pointer',
     },
