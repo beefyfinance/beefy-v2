@@ -232,7 +232,7 @@
     "oracleId": "velodrome-usd+-lusd",
     "status": "active",
     "platformId": "velodrome",
-    "assets": ["USD+", "LUSD"],
+    "assets": ["oUSD+", "LUSD"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
@@ -407,7 +407,7 @@
     "oracleId": "velodrome-usdp-usdc",
     "status": "active",
     "platformId": "velodrome",
-    "assets": ["USD+", "USDC"],
+    "assets": ["oUSD+", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",

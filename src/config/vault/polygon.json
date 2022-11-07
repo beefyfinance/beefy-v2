@@ -40,7 +40,7 @@
     "oracleId": "dystopia-usd+-usdc",
     "status": "active",
     "platformId": "dystopia",
-    "assets": ["USD+", "USDC"],
+    "assets": ["pUSD+", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -91,7 +91,7 @@
     "oracleId": "dystopia-usd+-stmatic",
     "status": "active",
     "platformId": "dystopia",
-    "assets": ["USD+", "stMATIC"],
+    "assets": ["pUSD+", "stMATIC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -120,7 +120,7 @@
     "oracleId": "dystopia-wmatic-usd+",
     "status": "active",
     "platformId": "dystopia",
-    "assets": ["USD+", "MATIC"],
+    "assets": ["pUSD+", "MATIC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
