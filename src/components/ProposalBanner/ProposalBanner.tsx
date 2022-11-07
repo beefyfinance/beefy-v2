@@ -26,7 +26,7 @@ export const ProposalBanner = memo(function ProposalBanner() {
   const closeBanner = React.useCallback(() => {
     setShowProposalBanner(false);
     try {
-      localStorage.setItem('hideOnRampBanner', 'true');
+      localStorage.setItem('hideEthBanner', 'true');
     } catch (error) {
       // swallow error
     }
