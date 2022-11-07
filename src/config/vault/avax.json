@@ -71,7 +71,7 @@
     "oracleId": "sicle-wavax-usd+",
     "status": "active",
     "platformId": "swapsicle",
-    "assets": ["aUSD+", "AVAX"],
+    "assets": ["USD+", "AVAX"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -100,7 +100,7 @@
     "oracleId": "sicle-usdc-usd+",
     "status": "active",
     "platformId": "swapsicle",
-    "assets": ["aUSD+", "USDC"],
+    "assets": ["USD+", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
