@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { BIG_ZERO } from '../../../../helpers/big-number';
-import { formatPercent, formatUsd } from '../../../../helpers/format';
+import { formatBigUsd, formatPercent } from '../../../../helpers/format';
 import { styles } from './styles';
 
 interface TooltipProps {
@@ -20,7 +20,7 @@ export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type, act
 
   if (active && payload && payload.length) {
     const data = payload[0].payload;
-    const usdValue = formatUsd(data.value ?? BIG_ZERO);
+    const usdValue = formatBigUsd(data.value ?? BIG_ZERO);
     const percent = formatPercent(data.percentage ?? 0);
     const title = data?.key ?? '';
     return (

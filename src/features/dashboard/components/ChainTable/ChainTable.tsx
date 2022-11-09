@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SortColumnHeader } from '../../../../components/SortColumnHeader';
-import { formatUsd } from '../../../../helpers/format';
+import { formatBigUsd } from '../../../../helpers/format';
 import { useAppSelector } from '../../../../store';
 import { ChainEntity } from '../../../data/entities/chain';
 import { VaultEntity } from '../../../data/entities/vault';
@@ -53,7 +53,7 @@ const TableTitle = memo<TableTitleProps>(function ({ chainId, deposited }) {
         alt={chain.name}
       />
       <div className={classes.title}>{chain.name}</div>
-      <div className={classes.value}>{formatUsd(deposited)}</div>
+      <div className={classes.value}>{formatBigUsd(deposited)}</div>
     </div>
   );
 });
