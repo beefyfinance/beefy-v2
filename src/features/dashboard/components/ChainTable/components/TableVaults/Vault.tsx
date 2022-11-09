@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
-import { VaultDailyStat } from '../../../../../../components/VaultStats/VaultDailyStat';
+import { VaultDailyUsdStat } from '../../../../../../components/VaultStats/VaultDailyUsdStat';
 import { VaultDepositStat } from '../../../../../../components/VaultStats/VaultDepositStat';
 import { VaultPlatformStat } from '../../../../../../components/VaultStats/VaultPlatformStat';
 import { VaultYearlyStat } from '../../../../../../components/VaultStats/VaultYearlyStat';
@@ -27,7 +27,7 @@ export const Vault = memo<VaultProps>(function ({ vaultId }) {
       <VaultPlatformStat className={classes.itemSmall} showLabel={false} vaultId={vaultId} />
       <VaultDepositStat className={classes.itemBig} showLabel={false} vaultId={vaultId} />
       <VaultYearlyStat className={classes.itemSmall} showLabel={false} vaultId={vaultId} />
-      <VaultDailyStat className={classes.itemBig} showLabel={false} vaultId={vaultId} />
+      <VaultDailyUsdStat className={classes.itemBig} showLabel={false} vaultId={vaultId} />
     </div>
   );
 });

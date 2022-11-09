@@ -33,6 +33,7 @@ export function useSortVaults(vaults: VaultEntity[], chainId: ChainEntity['id'])
         }
 
         const apy = apyByVaultId[vault.id];
+
         if (!apy) {
           return -1;
         }
@@ -58,16 +59,8 @@ export function useSortVaults(vaults: VaultEntity[], chainId: ChainEntity['id'])
         if (!apy) {
           return -1;
         }
-
-        if (apy.boostedTotalDaily !== undefined) {
-          return sortDirMul * apy.boostedTotalDaily;
-        } else if (apy.totalDaily !== undefined) {
-          return sortDirMul * apy.totalDaily;
-        } else if (apy.vaultDaily !== undefined) {
-          return sortDirMul * apy.vaultDaily;
-        } else {
-          throw new Error('Daily type not supported');
-        }
+        const balance = vaultsWithBalance[vault.id];
+        return sortDirMul * balance.times(apy.totalDaily);
       });
     }
     if (sortedOptions.sort === 'platform') {
@@ -85,14 +78,8 @@ export function useSortVaults(vaults: VaultEntity[], chainId: ChainEntity['id'])
     }
 
     setSortedVaults(sortedResult);
-  }, [
-    apyByVaultId,
-    sortedOptions.sort,
-    sortedOptions.sortDirection,
-    sortedVaults,
-    vaults,
-    vaultsWithBalance,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortedOptions.sort, sortedOptions.sortDirection]);
 
   const handleSort = useCallback(
     field => {
