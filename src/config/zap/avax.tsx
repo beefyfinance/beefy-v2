@@ -23,4 +23,12 @@ export const zaps = [
     ammPairInitHash: '0x0bbca9af0511ad1a1da383135cf3a8d2ac620e549ef9f6ae3a4c33c2fed0af91',
     lpProviderFee: 0.003,
   },
+  {
+    // Swapsicle
+    zapAddress: '0x149b9db9479c12841002f503099ebf5f6DafD60c',
+    ammRouter: '0xC7f372c62238f6a5b79136A9e5D16A2FD7A3f0F5',
+    ammFactory: '0x9C60C867cE07a3c403E2598388673C10259EC768',
+    ammPairInitHash: '0x9e43ee37212e3296c7f6087d3e0a37b48a4e4e413538dac0fd18cfe2f80666c1',
+    lpProviderFee: 0.003,
+  },
 ];

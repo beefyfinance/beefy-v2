@@ -58,6 +58,64 @@
     "network": "avax"
   },
   {
+    "id": "sicle-wavax-usd+",
+    "name": "USD+-AVAX LP",
+    "token": "USD+-AVAX LP",
+    "tokenAddress": "0x7B4BFbEed1DEBb17c612a343CE392A9aFa1B3F6A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapsicle",
+    "earnedToken": "mooSicleAVAX-USD+",
+    "earnedTokenAddress": "0xF6933FfC6240679D3dE6407141611b3388d9652B",
+    "earnContractAddress": "0xF6933FfC6240679D3dE6407141611b3388d9652B",
+    "oracle": "lps",
+    "oracleId": "sicle-wavax-usd+",
+    "status": "active",
+    "platformId": "swapsicle",
+    "assets": ["USD+", "AVAX"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://www.swapsicle.io/de/add/0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65/ETH",
+    "buyTokenUrl": "https://www.swapsicle.io/swap?inputCurrency=ETH&outputCurrency=0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65",
+    "createdAt": 1667061097,
+    "network": "avax"
+  },
+  {
+    "id": "sicle-usdc-usd+",
+    "name": "USD+-USDC LP",
+    "token": "USD+-USDC LP",
+    "tokenAddress": "0x3e938F737696a0370bF01E8Cc30ed0e845cF78F2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapsicle",
+    "earnedToken": "mooSicleUSDC-USD+",
+    "earnedTokenAddress": "0x06EE4eDD02e9f2513C57BC08a691a8D9f62F075E",
+    "earnContractAddress": "0x06EE4eDD02e9f2513C57BC08a691a8D9f62F075E",
+    "oracle": "lps",
+    "oracleId": "sicle-usdc-usd+",
+    "status": "active",
+    "platformId": "swapsicle",
+    "assets": ["USD+", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://www.swapsicle.io/de/add/0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    "buyTokenUrl": "https://www.swapsicle.io/swap?inputCurrency=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&outputCurrency=0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65",
+    "createdAt": 1667061097,
+    "network": "avax"
+  },
+  {
     "id": "joe-busd-wavax",
     "name": "BUSD-AVAX LP",
     "token": "BUSD-AVAX JLP",
@@ -1946,36 +2004,6 @@
     "createdAt": 1629466194
   },
   {
-    "id": "pangolin-uni.e-wavax-eol",
-    "name": "UNI.e-AVAX LP",
-    "token": "UNI.e-AVAX LP",
-    "tokenAddress": "0x99dD520748eB0355c69DAE2692E4615C8Ab031ce",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pangolin",
-    "earnedToken": "mooPangolinUNI.e-AVAX",
-    "earnedTokenAddress": "0x48cc86214C58d7EaA78C100156c55DD45A676Ed1",
-    "earnContractAddress": "0x48cc86214C58d7EaA78C100156c55DD45A676Ed1",
-    "oracle": "lps",
-    "oracleId": "pangolin-uni.e-wavax",
-    "status": "eol",
-    "platformId": "pangolin",
-    "retireReason": "rewards",
-    "assets": ["UNIe", "AVAX"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x8eBAf22B6F053dFFeaf46f4Dd9eFA95D89ba8580",
-    "buyTokenUrl": "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x8eBAf22B6F053dFFeaf46f4Dd9eFA95D89ba8580",
-    "network": "avax",
-    "createdAt": 1629466081
-  },
-  {
     "id": "pangolin-wavax-xava-eol",
     "name": "XAVA-AVAX LP",
     "token": "XAVA-AVAX LP",
@@ -2658,7 +2686,7 @@
     "buyTokenUrl": "https://www.traderjoexyz.com/trade",
     "network": "avax",
     "createdAt": 1636308849,
-    "retiredReason": "tvl"
+    "retireReason": "tvl"
   },
   {
     "id": "sing-usdt.e-sing-eol",
@@ -2680,7 +2708,7 @@
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xf9a075c9647e91410bf6c402bdf166e1540f67f0",
     "network": "avax",
     "createdAt": 1633701180,
-    "retiredReason": "tvl"
+    "retireReason": "tvl"
   },
   {
     "id": "aave-usdt.e-eol",
@@ -2709,7 +2737,7 @@
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
     "createdAt": 1633529509,
-    "retiredReason": "tvl"
+    "retireReason": "tvl"
   },
   {
     "id": "olive-olive-avax-eol",
@@ -2739,7 +2767,7 @@
     "buyTokenUrl": "https://avax.olive.cash/swap?inputCurrency=AVAX&outputCurrency=0x617724974218A18769020A70162165A539c07E8a",
     "network": "avax",
     "createdAt": 1617865515,
-    "retiredReason": "tvl"
+    "retireReason": "tvl"
   },
   {
     "id": "ripae-pavax-wavax",
