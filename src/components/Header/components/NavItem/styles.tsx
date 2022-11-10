@@ -15,24 +15,14 @@ export const styles = (theme: Theme) => ({
       color: theme.palette.text.primary,
       cursor: 'pointer',
     },
-    [theme.breakpoints.up('md')]: {
-      '&:hover': {
-        '& .MuiTypography-root': {
-          borderColor: 'white',
-        },
-      },
-    },
-    '& svg ': {
-      color: theme.palette.text.disabled,
-      '&:hover': {
-        color: theme.palette.text.primary,
-      },
-    },
     '& a': {
       textDecoration: 'none',
       color: theme.palette.text.disabled,
       '&:hover': {
         color: theme.palette.text.primary,
+        '& svg': {
+          color: theme.palette.text.primary,
+        },
       },
     },
   },

@@ -43,7 +43,7 @@ export const ConnectionStatus = memo(function () {
         <NetworkStatus />
         {isWalletConnected && <ActiveChain chainId={currentChainId} />}
       </div>
-      <div className={classes.walletContainer}>
+      <div>
         <Suspense fallback={<>...</>}>
           <WalletContainer />
         </Suspense>

@@ -15,4 +15,17 @@ export const styles = (theme: Theme) => ({
   active: {
     color: theme.palette.text.primary,
   },
+  arrow: {
+    height: '16px',
+    width: '16px',
+  },
+  dropdown: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '12px',
+    padding: `${8 - 2}px ${16 - 2}px`,
+    border: '2px solid #30354F',
+    backgroundColor: '#242737',
+    borderRadius: '4px',
+  },
 });

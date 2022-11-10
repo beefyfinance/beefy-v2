@@ -1,57 +1,61 @@
-import { makeStyles, Popover, SvgIcon } from '@material-ui/core';
+import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import React, { memo } from 'react';
+import React, { memo, MouseEventHandler, useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ReactComponent as ArrowDownIcon } from '../../../../images/icons/navigation/arrow.svg';
+import { ExpandMore } from '@material-ui/icons';
+import { Floating } from '../../../Floating';
 import { styles } from './styles';
+import { NavItem } from '../NavItem';
 
 const useStyles = makeStyles(styles);
 
 interface DropNavItemProps {
   title: string;
   Icon: React.FC;
-  items?: [];
+  items: { url: string; title: string; Icon: React.FC }[];
 }
 
-export const DropNavItem = memo<DropNavItemProps>(function ({ title, Icon }) {
+export const DropNavItem = memo<DropNavItemProps>(function ({ title, Icon, items }) {
   const { t } = useTranslation();
-  const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
   const classes = useStyles();
+  const [isOpen, setIsOpen] = useState(false);
+  const anchorEl = useRef<HTMLDivElement | null>(null);
+
+  const handleToggle = useCallback<MouseEventHandler<HTMLDivElement>>(
+    e => {
+      e.stopPropagation();
+      setIsOpen(open => !open);
+    },
+    [setIsOpen]
+  );
+
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+  }, [setIsOpen]);
 
   return (
-    <div>
+    <ClickAwayListener onClickAway={handleClose} mouseEvent="onMouseDown" touchEvent="onTouchStart">
       <div
-        className={clsx(classes.label, { [classes.active]: open })}
-        aria-describedby={id}
-        onClick={handleClick}
+        onClick={handleToggle}
+        className={clsx(classes.label, { [classes.active]: isOpen })}
+        ref={anchorEl}
       >
         <Icon />
         {t(title)}
-        <ArrowDownIcon />
+        <ExpandMore className={classes.arrow} />
+        <Floating
+          open={isOpen}
+          anchorEl={anchorEl}
+          placement="bottom-start"
+          className={classes.dropdown}
+          display="flex"
+          autoWidth={false}
+        >
+          {items.map(item => {
+            return <NavItem title={item.title} url={item.url} Icon={item.Icon} />;
+          })}
+        </Floating>
       </div>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        x
-      </Popover>
-    </div>
+    </ClickAwayListener>
   );
 });

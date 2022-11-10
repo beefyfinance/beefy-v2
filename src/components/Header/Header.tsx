@@ -5,15 +5,12 @@ import {
   AppBar,
   Box,
   Container,
-  Divider,
-  Drawer,
   Hidden,
-  IconButton,
   makeStyles,
   Toolbar,
   useMediaQuery,
 } from '@material-ui/core';
-import { Close, Menu } from '@material-ui/icons';
+import { Menu } from '@material-ui/icons';
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import { formatBigUsd } from '../../helpers/format';
@@ -28,7 +25,12 @@ import { ReactComponent as BridgeIcon } from '../../images/icons/navigation/brid
 import { ReactComponent as BuyCryptoIcon } from '../../images/icons/navigation/buy-crypto.svg';
 import { ReactComponent as DaoIcon } from '../../images/icons/navigation/dao.svg';
 import { ReactComponent as ResourcesIcon } from '../../images/icons/navigation/resources.svg';
-
+import { ReactComponent as ProposalsIcon } from '../../images/icons/navigation/proposals.svg';
+import { ReactComponent as PlatformDashboardIcon } from '../../images/icons/navigation/platform-dashboard.svg';
+import { ReactComponent as DocsIcon } from '../../images/icons/navigation/docs.svg';
+import { ReactComponent as NewsIcon } from '../../images/icons/navigation/news.svg';
+import { ReactComponent as MediaKitIcon } from '../../images/icons/navigation/media-kit.svg';
+import { ReactComponent as AuditIcon } from '../../images/icons/navigation/audit.svg';
 import { ConnectionStatus } from './components/ConnectionStatus';
 import { DropNavItem } from './components/DropNavItem';
 
@@ -51,14 +53,22 @@ const BifiPrice = connect((state: BeefyState) => {
     </a>
   );
 });
-// const navLinks = [
-//   { title: t('Header-Vaults'), url: '/' },
-//   { title: t('Header-Proposals'), url: 'https://vote.beefy.finance' },
-//   { title: t('Header-BuyCrypto'), url: '/onramp' },
-//   { title: t('Header-BridgeBifi'), url: '/bridge' },
-//   { title: t('Header-News'), url: 'https://beefy.com/articles/' },
-//   { title: t('Header-Docs'), url: 'https://docs.beefy.finance' },
-// ];
+
+const DaoNavItems = [
+  { title: 'Header-Proposals', Icon: ProposalsIcon, url: 'https://vote.beefy.finance/#/' },
+  {
+    title: 'Header-PlatformDashboard',
+    Icon: PlatformDashboardIcon,
+    url: 'https://dashboard.beefy.finance/',
+  },
+];
+
+const ResourcesNavItems = [
+  { title: 'Header-Docs', Icon: DocsIcon, url: 'https://docs.beefy.finance/' },
+  { title: 'Header-News', Icon: NewsIcon, url: 'https://beefy.com/articles/' },
+  { title: 'Header-MediaKit', Icon: MediaKitIcon, url: 'https://beefy.com/media-kit/' },
+  { title: 'Header-Audit', Icon: AuditIcon, url: 'https://github.com/beefyfinance/beefy-audits' },
+];
 
 export const Header = memo(function () {
   const location = useLocation();
@@ -94,8 +104,12 @@ export const Header = memo(function () {
               <Hidden mdDown>
                 <NavItem title={'Header-Vaults'} url="/" Icon={VaultsIcon} />
                 <NavItem title={'Header-Dashboard'} url="/dashboard" Icon={DashboardIcon} />
-                <DropNavItem title={'Header-Dao'} Icon={DaoIcon} />
-                <DropNavItem title={'Header-Resources'} Icon={ResourcesIcon} />
+                <DropNavItem title={'Header-Dao'} Icon={DaoIcon} items={DaoNavItems} />
+                <DropNavItem
+                  title={'Header-Resources'}
+                  Icon={ResourcesIcon}
+                  items={ResourcesNavItems}
+                />
               </Hidden>
             </div>
             <div className={classes.flex}>

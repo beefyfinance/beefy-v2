@@ -19,6 +19,7 @@ export type FloatingProps = {
   autoHeight?: boolean;
   autoWidth?: boolean;
   autoHide?: boolean;
+  display?: string;
 };
 export const Floating = memo<FloatingProps>(function Floating({
   open = false,
@@ -29,6 +30,7 @@ export const Floating = memo<FloatingProps>(function Floating({
   autoHeight = true,
   autoWidth = true,
   autoHide = true,
+  display = 'block',
 }) {
   const middleware = useMemo(() => {
     const middlewares = [];
@@ -77,7 +79,7 @@ export const Floating = memo<FloatingProps>(function Floating({
         position: strategy,
         top: y ?? '',
         left: x ?? '',
-        display: middlewareData.hide?.referenceHidden ? 'none' : 'block',
+        display: middlewareData.hide?.referenceHidden ? 'none' : display,
       }}
     >
       {children}

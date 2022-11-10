@@ -7,11 +7,6 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     borderRadius: '8px',
   },
-  walletContainer: {
-    [theme.breakpoints.down('xs')]: {
-      paddingLeft: '16px',
-    },
-  },
   statusContainer: {
     paddingRight: '16px',
     display: 'flex',
