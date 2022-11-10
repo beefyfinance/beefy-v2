@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   AppBar,
@@ -16,13 +16,21 @@ import {
 import { Close, Menu } from '@material-ui/icons';
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
-import { useTranslation } from 'react-i18next';
 import { formatBigUsd } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
 import { LanguageDropdown } from '../LanguageDropdown';
 import { styles } from './styles';
 import { BIG_ZERO } from '../../helpers/big-number';
+import { NavItem } from './components/NavItem';
+import { ReactComponent as VaultsIcon } from '../../images/icons/navigation/vault.svg';
+import { ReactComponent as DashboardIcon } from '../../images/icons/navigation/dashboard.svg';
+import { ReactComponent as BridgeIcon } from '../../images/icons/navigation/bridge.svg';
+import { ReactComponent as BuyCryptoIcon } from '../../images/icons/navigation/buy-crypto.svg';
+import { ReactComponent as DaoIcon } from '../../images/icons/navigation/dao.svg';
+import { ReactComponent as ResourcesIcon } from '../../images/icons/navigation/resources.svg';
+
 import { ConnectionStatus } from './components/ConnectionStatus';
+import { DropNavItem } from './components/DropNavItem';
 
 const useStyles = makeStyles(styles);
 
@@ -43,35 +51,14 @@ const BifiPrice = connect((state: BeefyState) => {
     </a>
   );
 });
-
-const NavLinks = memo(function () {
-  const { t } = useTranslation();
-  const classes = useStyles();
-  const navLinks = [
-    { title: t('Header-Vaults'), url: '/' },
-    { title: t('Header-Proposals'), url: 'https://vote.beefy.finance' },
-    { title: t('Header-BuyCrypto'), url: '/onramp' },
-    { title: t('Header-BridgeBifi'), url: '/bridge' },
-    { title: t('Header-News'), url: 'https://beefy.com/articles/' },
-    { title: t('Header-Docs'), url: 'https://docs.beefy.finance' },
-  ];
-  return (
-    <>
-      {navLinks.map(({ title, url }) => (
-        <NavLink
-          activeClassName={classes.active}
-          exact={true}
-          className={classes.navLink}
-          key={url}
-          to={url[0] === '/' ? url : { pathname: url }}
-          target={url[0] === '/' ? undefined : '_blank'}
-        >
-          {t(title)}
-        </NavLink>
-      ))}
-    </>
-  );
-});
+// const navLinks = [
+//   { title: t('Header-Vaults'), url: '/' },
+//   { title: t('Header-Proposals'), url: 'https://vote.beefy.finance' },
+//   { title: t('Header-BuyCrypto'), url: '/onramp' },
+//   { title: t('Header-BridgeBifi'), url: '/bridge' },
+//   { title: t('Header-News'), url: 'https://beefy.com/articles/' },
+//   { title: t('Header-Docs'), url: 'https://docs.beefy.finance' },
+// ];
 
 export const Header = memo(function () {
   const location = useLocation();
@@ -92,8 +79,8 @@ export const Header = memo(function () {
         position="static"
       >
         <Container className={classes.container} maxWidth="lg">
-          <Toolbar disableGutters={true}>
-            <div style={{ flexGrow: 1 }}>
+          <Toolbar className={classes.content} disableGutters={true}>
+            <div className={classes.flex}>
               <Link className={classes.beefy} to="/">
                 <img
                   alt="BIFI"
@@ -104,60 +91,31 @@ export const Header = memo(function () {
                   }
                 />
               </Link>
-            </div>
-            <Hidden mdDown>
-              <Box className={classes.flex} sx={{ flexGrow: 1 }}>
-                <NavLinks />
-              </Box>
-            </Hidden>
-            <Box className={classes.flex}>
               <Hidden mdDown>
+                <NavItem title={'Header-Vaults'} url="/" Icon={VaultsIcon} />
+                <NavItem title={'Header-Dashboard'} url="/dashboard" Icon={DashboardIcon} />
+                <DropNavItem title={'Header-Dao'} Icon={DaoIcon} />
+                <DropNavItem title={'Header-Resources'} Icon={ResourcesIcon} />
+              </Hidden>
+            </div>
+            <div className={classes.flex}>
+              <Hidden mdDown>
+                <NavItem title={'Header-BuyCrypto'} url="/onramp" Icon={BuyCryptoIcon} />
+                <NavItem title={'Header-BridgeBifi'} url="/bridge" Icon={BridgeIcon} />
                 <BifiPrice />
-                <Box>
-                  <LanguageDropdown />
-                </Box>
+                <LanguageDropdown />
               </Hidden>
               <ConnectionStatus />
-            </Box>
-            <Hidden lgUp>
-              <button
-                aria-label="menu"
-                onClick={handleDrawerToggle}
-                className={classes.toggleDrawer}
-              >
-                <Menu fontSize="inherit" className={classes.toggleDrawerIcon} />
-              </button>
-              <Drawer anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
-                <Box className={classes.drawerBlack}>
-                  <Box display="flex" alignContent="center" justifyContent="flex-end" mx={2} my={1}>
-                    <IconButton onClick={handleDrawerToggle}>
-                      <Close />
-                    </IconButton>
-                  </Box>
-                </Box>
-                <Divider />
-                <Box
-                  className={classes.mobileMenu}
-                  role="presentation"
+              <Hidden lgUp>
+                <button
+                  aria-label="menu"
                   onClick={handleDrawerToggle}
-                  onKeyDown={handleDrawerToggle}
-                  flexGrow={1}
+                  className={classes.toggleDrawer}
                 >
-                  <Box mt={2} className={classes.navMobile}>
-                    <NavLinks />
-                  </Box>
-                </Box>
-                <Divider />
-                <Box className={classes.drawerBlack}>
-                  <Box mx={2} my={2}>
-                    <BifiPrice />
-                  </Box>
-                  <Box mx={2} my={1} display="flex">
-                    <LanguageDropdown />
-                  </Box>
-                </Box>
-              </Drawer>
-            </Hidden>
+                  <Menu fontSize="inherit" className={classes.toggleDrawerIcon} />
+                </button>
+              </Hidden>
+            </div>
           </Toolbar>
         </Container>
       </AppBar>
