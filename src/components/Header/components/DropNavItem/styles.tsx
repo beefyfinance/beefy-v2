@@ -23,7 +23,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '12px',
-    padding: `${8 - 2}px ${16 - 2}px`,
+    padding: `8px 16px 8px 0px`,
     border: '2px solid #30354F',
     backgroundColor: '#242737',
     borderRadius: '4px',

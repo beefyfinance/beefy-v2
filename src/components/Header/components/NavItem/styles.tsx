@@ -32,4 +32,14 @@ export const styles = (theme: Theme) => ({
       color: theme.palette.text.primary,
     },
   },
+  itemMobile: {
+    padding: '16px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  flex: {
+    display: 'flex',
+    columnGap: '8px',
+  },
 });

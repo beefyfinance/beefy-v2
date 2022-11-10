@@ -1,6 +1,5 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { connect } from 'react-redux';
 import {
   AppBar,
   Box,
@@ -10,14 +9,9 @@ import {
   Toolbar,
   useMediaQuery,
 } from '@material-ui/core';
-import { Menu } from '@material-ui/icons';
-import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
-import { formatBigUsd } from '../../helpers/format';
-import { BeefyState } from '../../redux-types';
 import { LanguageDropdown } from '../LanguageDropdown';
 import { styles } from './styles';
-import { BIG_ZERO } from '../../helpers/big-number';
 import { NavItem } from './components/NavItem';
 import { ReactComponent as VaultsIcon } from '../../images/icons/navigation/vault.svg';
 import { ReactComponent as DashboardIcon } from '../../images/icons/navigation/dashboard.svg';
@@ -33,28 +27,12 @@ import { ReactComponent as MediaKitIcon } from '../../images/icons/navigation/me
 import { ReactComponent as AuditIcon } from '../../images/icons/navigation/audit.svg';
 import { ConnectionStatus } from './components/ConnectionStatus';
 import { DropNavItem } from './components/DropNavItem';
+import { MobileMenu } from './components/MobileMenu';
+import { BifiPrice } from './components/BifiPrice';
 
 const useStyles = makeStyles(styles);
 
-const BifiPrice = connect((state: BeefyState) => {
-  const beefyPrice = state.entities.tokens.prices.byOracleId['BIFI'] || BIG_ZERO;
-  return { beefyPrice };
-})(({ beefyPrice }: { beefyPrice: BigNumber }) => {
-  const classes = useStyles();
-  return (
-    <a
-      className={classes.bifiPrice}
-      href="https://app.1inch.io/#/56/swap/BNB/BIFI"
-      target="_blank"
-      rel="noreferrer"
-    >
-      <img alt="BIFI" src={require(`../../images/bifi-logos/BIFI-TOKEN.svg`).default} />
-      {formatBigUsd(beefyPrice)}
-    </a>
-  );
-});
-
-const DaoNavItems = [
+export const DaoNavItems = [
   { title: 'Header-Proposals', Icon: ProposalsIcon, url: 'https://vote.beefy.finance/#/' },
   {
     title: 'Header-PlatformDashboard',
@@ -63,7 +41,7 @@ const DaoNavItems = [
   },
 ];
 
-const ResourcesNavItems = [
+export const ResourcesNavItems = [
   { title: 'Header-Docs', Icon: DocsIcon, url: 'https://docs.beefy.finance/' },
   { title: 'Header-News', Icon: NewsIcon, url: 'https://beefy.com/articles/' },
   { title: 'Header-MediaKit', Icon: MediaKitIcon, url: 'https://beefy.com/media-kit/' },
@@ -75,10 +53,6 @@ export const Header = memo(function () {
   const isOnDashboard = location.pathname.includes('dashboard');
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width: 500px)');
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -121,13 +95,7 @@ export const Header = memo(function () {
               </Hidden>
               <ConnectionStatus />
               <Hidden lgUp>
-                <button
-                  aria-label="menu"
-                  onClick={handleDrawerToggle}
-                  className={classes.toggleDrawer}
-                >
-                  <Menu fontSize="inherit" className={classes.toggleDrawerIcon} />
-                </button>
+                <MobileMenu />
               </Hidden>
             </div>
           </Toolbar>
