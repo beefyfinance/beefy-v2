@@ -6,6 +6,7 @@ import { styles } from './styles';
 import { ExpandMore } from '@material-ui/icons';
 import clsx from 'clsx';
 import { Floating } from '../Floating';
+import { Placement } from '@floating-ui/react-dom';
 
 const useStyles = makeStyles(styles);
 
@@ -39,6 +40,8 @@ export type LabeledSelectProps = LabeledSelectCommonProps & {
   SelectedItemComponent?: FC<SelectedItemProps>;
   DropdownItemComponent?: FC<DropdownItemProps>;
   DropdownItemLabelComponent?: FC<DropdownItemLabelProps>;
+  placement?: Placement;
+  showArrow?: boolean;
 };
 
 type DropdownItemProps = {
@@ -133,6 +136,8 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
   dropdownAutoWidth = true,
   dropdownAutoHeight = true,
   dropdownAutoHide = true,
+  placement = 'bottom-start',
+  showArrow = true,
 }) {
   const baseClasses = useStyles();
   const [isOpen, setIsOpen] = useState(false);
@@ -206,12 +211,12 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
           <div className={classes.selectValue}>
             <SelectedItemComponent options={options} value={value} />
           </div>
-          <ExpandMore className={classes.selectIcon} />
+          {showArrow && <ExpandMore className={classes.selectIcon} />}
         </div>
         <Floating
           open={isOpen}
           anchorEl={anchorEl}
-          placement="bottom-start"
+          placement={placement}
           className={classes.dropdown}
           autoWidth={dropdownAutoWidth}
           autoHeight={dropdownAutoHeight}

@@ -14,6 +14,9 @@ export const styles = (theme: Theme) => ({
   },
   active: {
     color: theme.palette.text.primary,
+    '& $arrow': {
+      transform: 'rotateX(180deg)',
+    },
   },
   arrow: {
     height: '16px',
@@ -23,7 +26,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '12px',
-    padding: `8px 16px 8px 0px`,
+    padding: `8px 16px`,
     border: '2px solid #30354F',
     backgroundColor: '#242737',
     borderRadius: '4px',

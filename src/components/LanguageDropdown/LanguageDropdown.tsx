@@ -1,9 +1,10 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
 import React, { memo, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { localeToLanguageMap } from '../../i18n';
 import { styles } from './styles';
 import { LabeledSelect, LabeledSelectProps } from '../LabeledSelect';
+import { ReactComponent as Globe } from '../../images/icons/navigation/globe.svg';
 const useStyles = makeStyles(styles);
 
 const getSelectedLanguage = i18n => {
@@ -26,13 +27,21 @@ const getSelectedLanguage = i18n => {
 };
 
 const SelectedLanguage = memo<LabeledSelectProps>(function SelectedLanguage({ value }) {
-  return <>{value.toUpperCase()}</>;
+  const isMobile = useMediaQuery('(max-width: 960px)');
+  const classes = useStyles();
+  return (
+    <div className={classes.flex}>
+      <Globe />
+      {isMobile && value.toUpperCase()}
+    </div>
+  );
 });
 
 export const LanguageDropdown = () => {
   const { i18n } = useTranslation();
   const i18nLanguage = getSelectedLanguage(i18n);
   const [language, setLanguage] = React.useState(i18nLanguage);
+  const isMobile = useMediaQuery('(max-width: 960px)');
 
   const classes = useStyles();
 
@@ -51,6 +60,8 @@ export const LanguageDropdown = () => {
       SelectedItemComponent={SelectedLanguage}
       dropdownAutoWidth={false}
       selectClass={classes.select}
+      placement={isMobile ? 'bottom-start' : 'bottom-end'}
+      showArrow={isMobile ? true : false}
     />
   );
 };

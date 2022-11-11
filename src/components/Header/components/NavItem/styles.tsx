@@ -42,4 +42,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     columnGap: '8px',
   },
+  arrow: {
+    height: '12px',
+  },
 });

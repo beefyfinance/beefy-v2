@@ -4,6 +4,7 @@ import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { styles } from './styles';
+import { ArrowForwardIosRounded as RightArrow } from '@material-ui/icons';
 
 interface NavItemProps {
   url: string;
@@ -31,13 +32,20 @@ export const NavItem = memo<NavItemProps>(function ({ url, title, Icon }) {
   );
 });
 
-type NavItemPropsMobile = NavItemProps & { className?: string };
+type NavItemPropsMobile = NavItemProps & { className?: string; onClick: () => void };
 
-export const NavItemMobile = memo<NavItemPropsMobile>(function ({ url, title, Icon, className }) {
+export const NavItemMobile = memo<NavItemPropsMobile>(function ({
+  url,
+  title,
+  Icon,
+  className,
+  onClick,
+}) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
     <NavLink
+      onClick={onClick}
       activeClassName={classes.active}
       exact={true}
       className={clsx(classes.navLink, classes.itemMobile, className)}
@@ -49,7 +57,7 @@ export const NavItemMobile = memo<NavItemPropsMobile>(function ({ url, title, Ic
         <Icon />
         {t(title)}
       </div>
-      {'>'}
+      <RightArrow className={classes.arrow} />
     </NavLink>
   );
 });

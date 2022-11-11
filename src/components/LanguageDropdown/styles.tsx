@@ -7,4 +7,9 @@ export const styles = (theme: Theme) => ({
     background: 'transparent',
     color: theme.palette.text.disabled,
   },
+  flex: {
+    display: 'flex',
+    alignItems: 'center',
+    columnGap: '8px',
+  },
 });

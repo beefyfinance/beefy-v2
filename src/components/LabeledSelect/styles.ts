@@ -17,6 +17,9 @@ export const styles = (theme: Theme) => ({
     '&:hover': {
       boxShadow: 'none',
     },
+    '&$selectOpen': {
+      color: theme.palette.text.primary,
+    },
   },
   selectCurrent: {
     display: 'flex',
@@ -52,6 +55,10 @@ export const styles = (theme: Theme) => ({
     padding: `8px 16px`,
   },
   selectOpen: {
+    color: theme.palette.text.primary,
+    '& svg': {
+      color: theme.palette.text.primary,
+    },
     '& $selectIcon': {
       transform: 'rotateX(180deg)',
     },

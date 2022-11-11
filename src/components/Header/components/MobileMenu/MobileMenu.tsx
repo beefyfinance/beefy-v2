@@ -5,15 +5,8 @@ import { styles } from './styles';
 import { BifiPrice } from '../BifiPrice';
 import { LanguageDropdown } from '../../../LanguageDropdown';
 import { NavItemMobile } from '../NavItem';
-import { ReactComponent as VaultsIcon } from '../../../../images/icons/navigation/vault.svg';
-import { ReactComponent as DashboardIcon } from '../../../../images/icons/navigation/dashboard.svg';
-import { ReactComponent as BridgeIcon } from '../../../../images/icons/navigation/bridge.svg';
-import { ReactComponent as BuyCryptoIcon } from '../../../../images/icons/navigation/buy-crypto.svg';
-import { ReactComponent as DaoIcon } from '../../../../images/icons/navigation/dao.svg';
-import { ReactComponent as ResourcesIcon } from '../../../../images/icons/navigation/resources.svg';
-
 import { useTranslation } from 'react-i18next';
-import { DaoNavItems, ResourcesNavItems } from '../../Header';
+import { MobileList } from '../../list';
 
 const useStyles = makeStyles(styles);
 
@@ -38,14 +31,24 @@ export const MobileMenu = memo(function () {
             <Close className={classes.cross} onClick={handleDrawerToggle} />
           </div>
           <Divider className={classes.divider} />
-          <NavItemMobile title={'Header-Vaults'} url="/" Icon={VaultsIcon} />
-          <Divider className={classes.divider} />
-          <NavItemMobile title={'Header-Dashboard'} url="/dashboard" Icon={DashboardIcon} />
-          <Divider className={classes.divider} />
-          <DropMobile title={'Header-Dao'} Icon={DaoIcon} items={DaoNavItems} />
-          <DropMobile title={'Header-Resources'} Icon={ResourcesIcon} items={ResourcesNavItems} />
-          <NavItemMobile title={'Header-BuyCrypto'} url="/onramp" Icon={BuyCryptoIcon} />
-          <NavItemMobile title={'Header-BridgeBifi'} url="/bridge" Icon={BridgeIcon} />
+
+          {MobileList.map(({ title, Icon, url, items }) => {
+            return (
+              <div key={title}>
+                {url ? (
+                  <NavItemMobile onClick={handleDrawerToggle} title={title} url={url} Icon={Icon} />
+                ) : (
+                  <DropMobile
+                    onClick={handleDrawerToggle}
+                    title={title}
+                    Icon={Icon}
+                    items={items}
+                  />
+                )}
+                <Divider className={classes.divider} />
+              </div>
+            );
+          })}
         </div>
       </Drawer>
     </div>
@@ -56,9 +59,10 @@ interface DropMobileProps {
   title: string;
   Icon: React.FC;
   items: { url: string; title: string; Icon: React.FC }[];
+  onClick: () => void;
 }
 
-export const DropMobile = memo<DropMobileProps>(function ({ title, Icon, items }) {
+export const DropMobile = memo<DropMobileProps>(function ({ title, Icon, items, onClick }) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
@@ -72,6 +76,7 @@ export const DropMobile = memo<DropMobileProps>(function ({ title, Icon, items }
           {items.map(item => {
             return (
               <NavItemMobile
+                onClick={onClick}
                 className={classes.customPadding}
                 title={item.title}
                 url={item.url}
