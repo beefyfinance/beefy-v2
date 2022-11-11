@@ -29,6 +29,7 @@ export const styles = (theme: Theme) => ({
       color: theme.palette.text.secondary,
     },
     '&:hover': {
+      cursor: 'pointer',
       borderColor: '#3F466D',
     },
   },

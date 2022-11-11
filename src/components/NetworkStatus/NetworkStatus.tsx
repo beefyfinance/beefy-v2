@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { isEqual, sortedUniq, uniq } from 'lodash';
-import React, { useCallback, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { memo, useCallback, useRef } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { ChainEntity } from '../../features/data/entities/chain';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader';
 import { selectBoostById } from '../../features/data/selectors/boosts';
@@ -18,12 +18,16 @@ import {
   isRejected,
   LoaderState,
 } from '../../features/data/reducers/data-loader-types';
+import {
+  selectCurrentChainId,
+  selectIsWalletConnected,
+} from '../../features/data/selectors/wallet';
+import { selectChainById } from '../../features/data/selectors/chains';
 
 const useStyles = makeStyles(styles);
 
 export function NetworkStatus() {
   const classes = useStyles();
-
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const anchorEl = useRef();
@@ -34,6 +38,8 @@ export function NetworkStatus() {
     () => dispatch(open ? dataLoaderActions.closeIndicator() : dataLoaderActions.openIndicator()),
     [dispatch, open]
   );
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+  const currentChainId = useAppSelector(selectCurrentChainId);
 
   const rpcErrors = useNetStatus(findChainIdMatching, isRejected);
   const rpcPending = useNetStatus(findChainIdMatching, isPending);
@@ -72,19 +78,32 @@ export function NetworkStatus() {
         open={open}
         placement="bottom-start"
         anchorEl={anchorEl}
+        className={classes.dropdown}
+        display="flex"
         autoWidth={false}
-        autoHeight={false}
-        autoHide={false}
-        className={classes.floating}
       >
-        <div className={classes.popoverSpacer} />
-        <div className={classes.popover}>
-          <div className={classes.closeIconButton} onClick={handleClose}>
-            <CloseIcon fontSize="inherit" />
+        <div className={classes.titleContainer}>
+          <div className={classes.title}>
+            {isWalletConnected ? (
+              currentChainId ? (
+                <Trans
+                  t={t}
+                  i18nKey="NetworkStatus-Connected-To"
+                  components={{ chain: <ConnectedChain chainId={currentChainId} /> }}
+                />
+              ) : (
+                t('Network-Unsupported')
+              )
+            ) : (
+              t('NetworkStatus-NoWallet')
+            )}
           </div>
+          <CloseIcon onClick={handleClose} className={classes.cross} />
+        </div>
+        <div className={classes.content}>
+          <div className={classes.contentTitle}>{t('NetworkStatus-Status')}</div>
           {hasAnyError ? (
             <>
-              <div className={classes.popoverTitle}>{t('NetworkStatus-Title-RpcError')}</div>
               {rpcErrors.map(chainId => (
                 <div className={classes.popoverLine} key={chainId}>
                   <div className={clsx([classes.circle, 'warning', 'circle'])} />
@@ -103,11 +122,17 @@ export function NetworkStatus() {
             </>
           ) : hasAnyLoading ? (
             <>
-              <div className={classes.popoverTitle}>{t('NetworkStatus-Title-Loading')}</div>
+              <div className={classes.popoverLine}>
+                <div className={clsx([classes.circle, 'loading', 'circle'])} />
+                {t('NetworkStatus-Title-Loading')}
+              </div>
             </>
           ) : (
             <>
-              <div className={classes.popoverTitle}>{t('NetworkStatus-Title-OK')}</div>
+              <div className={classes.popoverLine}>
+                <div className={clsx([classes.circle, 'success', 'circle'])} />
+                {t('NetworkStatus-Title-OK')}
+              </div>
             </>
           )}
         </div>
@@ -115,6 +140,16 @@ export function NetworkStatus() {
     </>
   );
 }
+
+const ConnectedChain = memo(function ({ chainId }: { chainId: ChainEntity['id'] }) {
+  const chain = useAppSelector(state => selectChainById(state, chainId));
+  return (
+    <>
+      <img alt={chainId} src={require(`../../images/networks/${chainId}.svg`).default} />
+      {chain.name}
+    </>
+  );
+});
 
 function useNetStatus<
   R extends string[],

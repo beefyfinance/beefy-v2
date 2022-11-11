@@ -12,6 +12,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
+    columnGap: theme.spacing(2),
   },
   hasPortfolio: {
     backgroundColor: theme.palette.background.header,
@@ -23,9 +24,8 @@ export const styles = (theme: Theme) => ({
     paddingTop: '12px',
     paddingBottom: '12px',
   },
-  mobileMenu: {
-    width: 250,
-    backgroundColor: theme.palette.background.header,
+  content: {
+    justifyContent: 'space-between',
   },
   beefy: {
     display: 'block',
@@ -33,78 +33,5 @@ export const styles = (theme: Theme) => ({
       height: '40px',
       display: 'block',
     },
-  },
-  navLink: {
-    ...theme.typography['body-lg-med'],
-    textDecoration: 'none',
-    color: theme.palette.text.disabled,
-    margin: '12px',
-    '& .MuiBadge-root': {
-      padding: '0px 12px 0px 0px',
-      verticalAlign: 'initial',
-    },
-    '&:hover': {
-      color: theme.palette.text.primary,
-      cursor: 'pointer',
-    },
-    [theme.breakpoints.up('md')]: {
-      '&:hover': {
-        '& .MuiTypography-root': {
-          borderColor: 'white',
-        },
-      },
-    },
-    [theme.breakpoints.down('md')]: {
-      margin: '16px',
-    },
-    '& a': {
-      textDecoration: 'none',
-      color: theme.palette.text.disabled,
-      '&:hover': {
-        color: theme.palette.text.primary,
-      },
-    },
-  },
-  navMobile: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-  },
-  active: {
-    color: theme.palette.text.primary,
-  },
-  bifiPrice: {
-    ...theme.typography['body-lg-med'],
-    display: 'flex',
-    justifyContent: 'center' as const,
-    alignItems: 'center' as const,
-    marginRight: theme.spacing(3),
-    color: theme.palette.text.disabled,
-    whiteSpace: 'nowrap' as const,
-    textDecoration: 'none',
-    [theme.breakpoints.down('md')]: {
-      justifyContent: 'flex-start',
-    },
-    '& img': {
-      height: '18px',
-      marginRight: '5px',
-    },
-  },
-  toggleDrawer: {
-    background: 'transparent',
-    margin: '0 0 0 16px',
-    padding: '3px',
-    border: 0,
-    boxShadow: 'none',
-    color: theme.palette.text.primary,
-    fontSize: '30px',
-  },
-  toggleDrawerIcon: {
-    display: 'block',
-  },
-  drawerBlack: {
-    backgroundColor: '#0D0E14',
-  },
-  hide: {
-    display: 'none',
   },
 });
