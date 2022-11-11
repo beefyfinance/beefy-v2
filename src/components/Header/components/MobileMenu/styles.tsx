@@ -1,6 +1,11 @@
 import { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
+  bg: {
+    '& .MuiDrawer-paper': {
+      backgroundColor: '#0F0F0F',
+    },
+  },
   toggleDrawer: {
     background: 'transparent',
     padding: '3px',
@@ -13,9 +18,7 @@ export const styles = (theme: Theme) => ({
     display: 'block',
   },
   menuContainer: {
-    backgroundColor: '#0F0F0F',
     height: '100%',
-    width: '100%',
     [theme.breakpoints.down('lg')]: {
       width: '320px',
     },

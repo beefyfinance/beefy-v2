@@ -21,7 +21,7 @@ export const MobileMenu = memo(function () {
       <button aria-label="menu" onClick={handleDrawerToggle} className={classes.toggleDrawer}>
         <Menu fontSize="inherit" className={classes.toggleDrawerIcon} />
       </button>
-      <Drawer anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
+      <Drawer className={classes.bg} anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
         <div className={classes.menuContainer}>
           <div className={classes.head}>
             <div className={classes.flex}>
@@ -31,7 +31,6 @@ export const MobileMenu = memo(function () {
             <Close className={classes.cross} onClick={handleDrawerToggle} />
           </div>
           <Divider className={classes.divider} />
-
           {MobileList.map(({ title, Icon, url, items }) => {
             return (
               <div key={title}>
@@ -66,27 +65,24 @@ export const DropMobile = memo<DropMobileProps>(function ({ title, Icon, items, 
   const classes = useStyles();
   const { t } = useTranslation();
   return (
-    <>
-      <div className={classes.itemsContainer}>
-        <div className={classes.itemTitle}>
-          <Icon />
-          {t(title)}
-        </div>
-        <div>
-          {items.map(item => {
-            return (
-              <NavItemMobile
-                onClick={onClick}
-                className={classes.customPadding}
-                title={item.title}
-                url={item.url}
-                Icon={item.Icon}
-              />
-            );
-          })}
-        </div>
+    <div className={classes.itemsContainer}>
+      <div className={classes.itemTitle}>
+        <Icon />
+        {t(title)}
       </div>
-      <Divider className={classes.divider} />
-    </>
+      <div>
+        {items.map(item => {
+          return (
+            <NavItemMobile
+              onClick={onClick}
+              className={classes.customPadding}
+              title={item.title}
+              url={item.url}
+              Icon={item.Icon}
+            />
+          );
+        })}
+      </div>
+    </div>
   );
 });
