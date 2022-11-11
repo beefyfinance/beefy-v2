@@ -72,42 +72,55 @@ export const styles = (theme: Theme) => ({
       animationDelay: '3s',
     },
   },
-  floating: {
-    zIndex: 1000,
-  },
-  popoverPaper: {
-    backgroundColor: 'transparent',
-  },
-  popoverSpacer: {
-    height: '4px', // space between button and content
-    width: '100%',
-  },
-  popover: {
-    border: '2px solid #30354F',
+  dropdown: {
+    display: 'flex',
+    flexDirection: 'column' as const,
     backgroundColor: '#242737',
+    border: '2px solid #30354F',
     borderRadius: '8px',
-    padding: `${12 - 2}px ${16 - 2}px`,
-    position: 'relative' as const, // to position the close button
-    maxWidth: 'min(100%, 380px)',
-    color: '#D0D0DA', // default text color
-    lineHeight: '24px', // make everything nicely spaced
+    marginTop: '4px',
+    minWidth: '270px',
   },
-  popoverTitle: {
+  titleContainer: {
     ...theme.typography['body-lg-med'],
-    color: '#F5F5FF',
-    paddingRight: '32px', // to leave some room for the close button
-    marginBottom: '8px',
-    '&:last-child': {
-      marginBottom: 0,
+    color: theme.palette.text.primary,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: `${12 - 2}px`,
+    backgroundColor: '#30354F',
+  },
+  title: {
+    display: 'flex',
+    alignItems: 'center',
+    '& img': {
+      height: '24px',
+      margin: '0px 4px',
     },
+  },
+  cross: {
+    color: theme.palette.text.disabled,
+    '&:hover': {
+      color: theme.palette.text.primary,
+      cursor: 'pointer',
+    },
+  },
+  content: {
+    padding: `${12 - 2}px`,
+  },
+  contentTitle: {
+    ...theme.typography['subline-sm'],
+    fontWeight: 700,
+    color: theme.palette.text.disabled,
   },
   popoverLine: {
     ...theme.typography['body-sm'],
+    color: theme.palette.text.secondary,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
     '& .circle': {
-      marginRight: '10px', // space between circle and text
+      marginRight: '10px',
     },
     '& + $popoverLine': {
       marginTop: '4px',
@@ -116,15 +129,5 @@ export const styles = (theme: Theme) => ({
   popoverHelpText: {
     ...theme.typography['body-sm'],
     marginTop: '8px',
-  },
-  closeIconButton: {
-    color: '#8A8EA8',
-    position: 'absolute' as const,
-    fontSize: '22px',
-    width: '22px',
-    height: '22px',
-    top: `${12 - 2}px`,
-    right: `${16 - 2}px`,
-    cursor: 'pointer',
   },
 });
