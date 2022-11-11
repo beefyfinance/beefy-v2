@@ -26,9 +26,10 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '12px',
-    padding: `8px 16px`,
+    padding: `8px`,
     border: '2px solid #30354F',
     backgroundColor: '#242737',
     borderRadius: '4px',
+    marginLeft: '-8px',
   },
 });
