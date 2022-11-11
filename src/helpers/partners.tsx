@@ -23,8 +23,6 @@ const Insurace = [
   'ethereum',
 ];
 
-const Solace = ['polygon'];
-
 const Nexus = [
   'bsc',
   'avax',
@@ -61,4 +59,4 @@ const Moonpot = [
   'spirit-orkan-ftm',
 ];
 
-export { QiDao, Insurace, Moonpot, Solace, Nexus };
+export { QiDao, Insurace, Moonpot, Nexus };
