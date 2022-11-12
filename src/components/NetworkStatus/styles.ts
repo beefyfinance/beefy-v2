@@ -9,6 +9,7 @@ export const styles = (theme: Theme) => ({
     height: '40px',
     border: 'none',
     borderRadius: '8px',
+    columnGap: '8px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -17,7 +18,7 @@ export const styles = (theme: Theme) => ({
     '&.open': {
       backgroundColor: '#242737',
     },
-    padding: '0px 0px 0px 16px',
+    padding: '0px 16px',
   },
   circle: {
     width: '12px',
@@ -129,5 +130,18 @@ export const styles = (theme: Theme) => ({
   popoverHelpText: {
     ...theme.typography['body-sm'],
     marginTop: '8px',
+  },
+  line: {
+    height: '16px',
+    width: '2px',
+    borderRadius: '3px',
+    backgroundColor: '#30354F',
+  },
+  chain: {
+    display: 'flex',
+    alignItems: 'center',
+    '& img': {
+      height: '24px',
+    },
   },
 });

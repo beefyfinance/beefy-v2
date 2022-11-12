@@ -13,6 +13,9 @@ export const styles = (theme: Theme) => ({
     whiteSpace: 'nowrap' as const,
     textOverflow: 'ellipsis',
     overflow: 'hidden',
+    '&:hover': {
+      cursor: 'pointer',
+    },
   },
   disconnected: {
     display: 'flex',
@@ -29,7 +32,6 @@ export const styles = (theme: Theme) => ({
       color: theme.palette.text.secondary,
     },
     '&:hover': {
-      cursor: 'pointer',
       borderColor: '#3F466D',
     },
   },

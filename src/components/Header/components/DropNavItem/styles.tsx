@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     display: 'flex',
     alignItems: 'center',
-    columnGap: '8px',
+    columnGap: '4px',
     color: theme.palette.text.disabled,
     '&:hover': {
       cursor: 'pointer',
@@ -19,8 +19,8 @@ export const styles = (theme: Theme) => ({
     },
   },
   arrow: {
-    height: '16px',
-    width: '16px',
+    height: '18px',
+    width: '18px',
   },
   dropdown: {
     display: 'flex',

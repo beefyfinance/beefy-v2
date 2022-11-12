@@ -5,18 +5,18 @@ import { ReactComponent as BuyCryptoIcon } from '../../images/icons/navigation/b
 import { ReactComponent as DaoIcon } from '../../images/icons/navigation/dao.svg';
 import { ReactComponent as ResourcesIcon } from '../../images/icons/navigation/resources.svg';
 import { ReactComponent as ProposalsIcon } from '../../images/icons/navigation/proposals.svg';
-import { ReactComponent as PlatformDashboardIcon } from '../../images/icons/navigation/platform-dashboard.svg';
 import { ReactComponent as DocsIcon } from '../../images/icons/navigation/docs.svg';
 import { ReactComponent as NewsIcon } from '../../images/icons/navigation/news.svg';
 import { ReactComponent as MediaKitIcon } from '../../images/icons/navigation/media-kit.svg';
 import { ReactComponent as AuditIcon } from '../../images/icons/navigation/audit.svg';
+import { ReactComponent as TreasuryIcon } from '../../images/icons/navigation/treasury.svg';
 
 export const DaoNavItems = [
   { title: 'Header-Proposals', Icon: ProposalsIcon, url: 'https://vote.beefy.finance/#/' },
   {
-    title: 'Header-PlatformDashboard',
-    Icon: PlatformDashboardIcon,
-    url: 'https://dashboard.beefy.finance/',
+    title: 'Header-Treasury',
+    Icon: TreasuryIcon,
+    url: '/treasury',
   },
 ];
 

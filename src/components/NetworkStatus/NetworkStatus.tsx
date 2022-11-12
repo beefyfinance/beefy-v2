@@ -26,6 +26,26 @@ import { selectChainById } from '../../features/data/selectors/chains';
 
 const useStyles = makeStyles(styles);
 
+const ActiveChain = ({ chainId }: { chainId: string | null }) => {
+  const classes = useStyles();
+
+  return (
+    <>
+      <div className={classes.line} />
+      <div className={classes.chain} style={{ textDecoration: 'none' }}>
+        <img
+          alt={chainId}
+          src={
+            chainId
+              ? require(`../../images/networks/${chainId}.svg`).default
+              : require('../../images/icons/navigation/unsuported-chain.svg').default
+          }
+        />
+      </div>
+    </>
+  );
+};
+
 export function NetworkStatus() {
   const classes = useStyles();
   const dispatch = useAppDispatch();
@@ -73,6 +93,7 @@ export function NetworkStatus() {
           <div className={pulseClassName} />
           <div className={pulseClassName} />
         </div>
+        {isWalletConnected && <ActiveChain chainId={currentChainId} />}
       </button>
       <Floating
         open={open}
