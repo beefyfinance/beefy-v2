@@ -40,6 +40,7 @@ export const styles = (theme: Theme) => ({
   itemTitle: {
     display: 'flex',
     columnGap: '8px',
+    color: theme.palette.text.disabled,
   },
   itemsContainer: {
     padding: '16px 0px 16px 16px',

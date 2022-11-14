@@ -37,6 +37,7 @@ export const styles = (theme: Theme) => ({
   },
   connected: {
     borderColor: theme.palette.background.cta,
+    backgroundColor: '#242737',
   },
   loading: {
     paddingTop: '4px',

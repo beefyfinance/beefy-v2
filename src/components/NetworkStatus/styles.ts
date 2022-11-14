@@ -16,7 +16,10 @@ export const styles = (theme: Theme) => ({
     cursor: 'pointer',
     backgroundColor: 'transparent',
     '&.open': {
-      backgroundColor: '#242737',
+      backgroundColor: '#30354F',
+      '& $line': {
+        backgroundColor: '#434A6F',
+      },
     },
     padding: '0px 16px',
   },
@@ -121,7 +124,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     justifyContent: 'flex-start',
     '& .circle': {
-      marginRight: '10px',
+      marginRight: '8px',
     },
     '& + $popoverLine': {
       marginTop: '4px',

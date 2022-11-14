@@ -7,4 +7,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     borderRadius: '8px',
   },
+  open: {
+    backgroundColor: '#30354F',
+  },
 });
