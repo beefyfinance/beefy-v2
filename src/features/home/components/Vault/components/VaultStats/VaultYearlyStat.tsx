@@ -13,7 +13,10 @@ import {
   selectDidAPIReturnValuesForVault,
   selectVaultTotalApy,
 } from '../../../../../data/selectors/apy';
-import { selectIsVaultBoosted } from '../../../../../data/selectors/boosts';
+import {
+  selectIsVaultBoosted,
+  selectIsVaultPrestakedBoost,
+} from '../../../../../data/selectors/boosts';
 import { useAppSelector } from '../../../../../../store';
 import { InterestTooltipContent } from '../InterestTooltipContent';
 import { AllValuesAsString } from '../../../../../data/utils/types-utils';
@@ -65,10 +68,11 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultYearlyStatProps) {
   const values = selectVaultTotalApy(state, vaultId);
   const formatted = formattedTotalApy(values, '???');
   const isBoosted = selectIsVaultBoosted(state, vaultId);
+  const isPrestake = selectIsVaultPrestakedBoost(state, vaultId);
 
   return {
     label,
-    value: isBoosted ? formatted.boostedTotalApy : formatted.totalApy,
+    value: isPrestake ? 'PRE-STAKE' : isBoosted ? formatted.boostedTotalApy : formatted.totalApy,
     subValue: isBoosted ? formatted.totalApy : null,
     blur: false,
     loading: !isLoaded,

@@ -13,7 +13,10 @@ import {
   selectDidAPIReturnValuesForVault,
   selectVaultTotalApy,
 } from '../../../../../data/selectors/apy';
-import { selectIsVaultBoosted } from '../../../../../data/selectors/boosts';
+import {
+  selectIsVaultBoosted,
+  selectIsVaultPrestakedBoost,
+} from '../../../../../data/selectors/boosts';
 import { AllValuesAsString } from '../../../../../data/utils/types-utils';
 import { TotalApy } from '../../../../../data/reducers/apy';
 import { useAppSelector } from '../../../../../../store';
@@ -64,10 +67,15 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps): V
   const values = selectVaultTotalApy(state, vaultId);
   const formatted = formattedTotalApy(values, '???');
   const isBoosted = selectIsVaultBoosted(state, vaultId);
+  const isPrestake = selectIsVaultPrestakedBoost(state, vaultId);
 
   return {
     label,
-    value: isBoosted ? formatted.boostedTotalDaily : formatted.totalDaily,
+    value: isPrestake
+      ? 'PRE-STAKE'
+      : isBoosted
+      ? formatted.boostedTotalDaily
+      : formatted.totalDaily,
     subValue: isBoosted ? formatted.totalDaily : null,
     blur: false,
     loading: !isLoaded,
