@@ -169,35 +169,6 @@
     "createdAt": 1664545721
   },
   {
-    "id": "biswap-etc-bnb",
-    "name": "ETC-BNB LP",
-    "token": "ETC-BNB BiLP",
-    "tokenAddress": "0x1Cba970a6E06d4BcC0c4717BE677d1A8AA0211DA",
-    "tokenDecimals": 18,
-    "tokenProviderId": "biswap",
-    "earnedToken": "mooBiswapETC-BNB",
-    "earnedTokenAddress": "0xF1237FbbD307d515DE8839dB93b1a91287C600F6",
-    "earnContractAddress": "0xF1237FbbD307d515DE8839dB93b1a91287C600F6",
-    "oracle": "lps",
-    "oracleId": "biswap-etc-bnb",
-    "status": "active",
-    "platformId": "biswap",
-    "assets": ["ETC", "BNB"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "addLiquidityUrl": "https://exchange.biswap.org/#/add/ETH/0x3d6545b08693dae087e957cb1180ee38b9e3c25e",
-    "buyTokenUrl": "https://exchange.biswap.org/#/swap?outputCurrency=0x3d6545b08693daE087E957cb1180ee38B9e3c25E",
-    "network": "bsc",
-    "createdAt": 1665023338
-  },
-  {
     "id": "cakev2-hay-busd",
     "name": "HAY-BUSD LP",
     "token": "HAY-BUSD LP2",
