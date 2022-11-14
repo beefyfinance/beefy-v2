@@ -112,6 +112,20 @@ const DailyContentTooltip = memo<DailyTooltipContentProps>(function DailyTooltip
         });
       }
 
+      if ('liquidStakingDaily' in rates) {
+        items.push({
+          label: 'Vault-Breakdown-LiquidStakingDaily',
+          value: rates.liquidStakingDaily,
+        });
+      }
+
+      if ('composablePoolDaily' in rates) {
+        items.push({
+          label: 'Vault-Breakdown-ComposablePoolDaily',
+          value: rates.composablePoolDaily,
+        });
+      }
+
       if ('boostDaily' in rates) {
         items.push({
           label: 'Vault-Breakdown-BoostDaily',

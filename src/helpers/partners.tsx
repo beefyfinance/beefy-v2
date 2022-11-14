@@ -11,9 +11,17 @@ const QiDao = [
   'aavev3-op-eth',
 ];
 
-const Insurace = ['bsc', 'avax', 'celo', 'cronos', 'fantom', 'harmony', 'moonriver', 'polygon'];
-
-const Solace = ['polygon'];
+const Insurace = [
+  'bsc',
+  'avax',
+  'celo',
+  'cronos',
+  'fantom',
+  'harmony',
+  'moonriver',
+  'polygon',
+  'ethereum',
+];
 
 const Nexus = [
   'bsc',
@@ -31,6 +39,7 @@ const Nexus = [
   'aurora',
   'moonbeam',
   'optimism',
+  'ethereum',
 ];
 
 const Moonpot = [
@@ -50,4 +59,4 @@ const Moonpot = [
   'spirit-orkan-ftm',
 ];
 
-export { QiDao, Insurace, Moonpot, Solace, Nexus };
+export { QiDao, Insurace, Moonpot, Nexus };

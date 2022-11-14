@@ -42,4 +42,5 @@ export const bluechipTokens = [
   'BIFI',
   'sarETH', //Stargate Arbitrum ETH
   'soETH', //Stargate Optimism ETH
+  'sethETH', //Stargate Ethereum ETH
 ];

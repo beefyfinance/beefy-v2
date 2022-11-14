@@ -1085,7 +1085,7 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
     "createdAt": 1638061783,
     "network": "cronos",
-    "retiredReason": "tvl"
+    "retireReason": "tvl"
   },
   {
     "id": "crona-wbtc-cro-eol",
@@ -1115,7 +1115,7 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52",
     "createdAt": 1637150470,
     "network": "cronos",
-    "retiredReason": "tvl"
+    "retireReason": "tvl"
   },
   {
     "id": "vvs-tonic-usdc-eol",
@@ -1368,7 +1368,8 @@
     "earnContractAddress": "0x8d49e7F962D6815c71a5F7Aa60599EdF393Bad44",
     "oracle": "lps",
     "oracleId": "vvs-cro-fira",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "vvs",
     "assets": ["FIRA", "CRO"],
     "strategyTypeId": "lp",

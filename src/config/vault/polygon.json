@@ -505,7 +505,8 @@
     "earnContractAddress": "0xefA25E8b9AC6E7f09EBf5b51816cDB2B3Abb53d5",
     "oracle": "tokens",
     "oracleId": "SOLACE",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solace",
     "assets": ["SOLACE"],
     "strategyTypeId": "single",
@@ -1275,7 +1276,8 @@
     "earnContractAddress": "0xf5881fF8fF609C1202E0c6481bc16B4273407A04",
     "oracle": "lps",
     "oracleId": "sushi-poly-avax-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushiswap",
     "assets": ["AVAX", "ETH"],
     "strategyTypeId": "lp",
@@ -3222,7 +3224,8 @@
     "earnContractAddress": "0x75424BE5378621AeC2eEF25965f40FeB59039B52",
     "oracle": "lps",
     "oracleId": "sushi-poly-usdc-dai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushiswap",
     "assets": ["USDC", "DAI"],
     "strategyTypeId": "lp",
@@ -4965,7 +4968,8 @@
     "earnContractAddress": "0xf49cB3B72d170407AeD7ED5B34d6e7bbE58Ac917",
     "oracle": "lps",
     "oracleId": "sushi-poly-eth-gohm",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushiswap",
     "assets": ["gOHM", "ETH"],
     "strategyTypeId": "lp",
@@ -4995,7 +4999,8 @@
     "earnContractAddress": "0x6E1D1Eb4581E4C612240Ec603a243ce9AE3265E4",
     "oracle": "lps",
     "oracleId": "sushi-poly-eth2x-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushiswap",
     "assets": ["ETH2x", "ETH"],
     "strategyTypeId": "lp",
@@ -5438,7 +5443,8 @@
     "earnContractAddress": "0x18a20abeba0086ac0c564B2bA3a7BaF18568667D",
     "oracle": "lps",
     "oracleId": "sushi-poly-eth-mana",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushiswap",
     "assets": ["ETH", "MANA"],
     "strategyTypeId": "lp",
@@ -5958,7 +5964,6 @@
     "buyTokenUrl": "https://app.apeswap.finance/swap",
     "network": "polygon",
     "createdAt": 1634055850,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -5981,7 +5986,6 @@
     "buyTokenUrl": "https://polygondex.cafeswap.finance/#/swap?outputCurrency=0xb5106a3277718ecad2f20ab6b86ce0fee7a21f09",
     "network": "polygon",
     "createdAt": 1633695157,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -6004,7 +6008,6 @@
     "buyTokenUrl": "https://polygondex.cafeswap.finance/#/swap?outputCurrency=0xb5106a3277718ecad2f20ab6b86ce0fee7a21f09",
     "network": "polygon",
     "createdAt": 1633695451,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -6027,7 +6030,6 @@
     "buyTokenUrl": "https://app.apeswap.finance/#/swap?outputCurrency=0xCB898b0eFb084Df14dd8E018dA37B4d0f06aB26D",
     "network": "polygon",
     "createdAt": 1633615462,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -6050,7 +6052,6 @@
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?inputCurrency=0xD86b5923F3AD7b585eD81B448170ae026c65ae9a&outputCurrency=0x4A81f8796e0c6Ad4877A51C86693B0dE8093F2ef",
     "network": "polygon",
     "createdAt": 1630075988,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -6073,7 +6074,6 @@
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0xb82A20B4522680951F11c94c54B8800c1C237693",
     "network": "polygon",
     "createdAt": 1627447004,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -6096,7 +6096,6 @@
     "buyTokenUrl": "https://swap.wault.finance/polygon/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0xb82A20B4522680951F11c94c54B8800c1C237693",
     "network": "polygon",
     "createdAt": 1627447222,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -6119,7 +6118,6 @@
     "buyTokenUrl": "https://app.firebird.finance/swap?outputCurrency=0x4A81f8796e0c6Ad4877A51C86693B0dE8093F2ef",
     "network": "polygon",
     "createdAt": 1626155225,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -6142,7 +6140,6 @@
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?outputCurrency=0x4A81f8796e0c6Ad4877A51C86693B0dE8093F2ef",
     "network": "polygon",
     "createdAt": 1626164436,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -6163,7 +6160,6 @@
     "buyTokenUrl": "https://polygon-exchange.jetswap.finance/#/swap?outputCurrency=0x845E76A8691423fbc4ECb8Dd77556Cb61c09eE25",
     "network": "polygon",
     "createdAt": 1625919720,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -6186,7 +6182,6 @@
     "buyTokenUrl": "https://polygon-exchange.jetswap.finance/#/swap?outputCurrency=0x845E76A8691423fbc4ECb8Dd77556Cb61c09eE25",
     "network": "polygon",
     "createdAt": 1625845966,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -6209,7 +6204,6 @@
     "buyTokenUrl": "https://polyzap.app/#/swap?outputCurrency=0xeb2778f74E5ee038E67AA6c77f0F0451ABd748FD",
     "network": "polygon",
     "createdAt": 1621345663,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -6232,7 +6226,6 @@
     "buyTokenUrl": "https://polyzap.app/#/swap?outputCurrency=0xeb2778f74E5ee038E67AA6c77f0F0451ABd748FD",
     "network": "polygon",
     "createdAt": 1621425966,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {

@@ -37,6 +37,10 @@ export interface TotalApy {
   vaultDaily?: number;
   tradingApr?: number;
   tradingDaily?: number;
+  composablePoolApr?: number;
+  composablePoolDaily?: number;
+  liquidStakingApr?: number;
+  liquidStakingDaily?: number;
   boostApr?: number;
   boostDaily?: number;
   boostedTotalApy?: number;
@@ -234,8 +238,27 @@ function recomputeTotalApy(
       values.tradingDaily = apy.tradingApr / 365;
     }
 
-    if (values.vaultDaily || values.tradingDaily) {
-      values.totalDaily = (values.vaultDaily || 0) + (values.tradingDaily || 0);
+    if (apy.composablePoolApr) {
+      values.composablePoolApr = apy.composablePoolApr;
+      values.composablePoolDaily = apy.composablePoolApr / 365;
+    }
+
+    if (apy.liquidStakingApr) {
+      values.liquidStakingApr = apy.liquidStakingApr;
+      values.liquidStakingDaily = apy.liquidStakingApr / 365;
+    }
+
+    if (
+      values.vaultDaily ||
+      values.tradingDaily ||
+      values.composablePoolDaily ||
+      values.liquidStakingDaily
+    ) {
+      values.totalDaily =
+        (values.vaultDaily || 0) +
+        (values.tradingDaily || 0) +
+        (values.composablePoolDaily || 0) +
+        (values.liquidStakingDaily || 0);
     } else {
       values.totalDaily = yearlyToDaily(values.totalApy);
     }
