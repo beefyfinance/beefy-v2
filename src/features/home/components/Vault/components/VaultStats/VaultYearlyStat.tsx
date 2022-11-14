@@ -73,7 +73,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultYearlyStatProps) {
   return {
     label,
     value: isPrestake ? 'PRE-STAKE' : isBoosted ? formatted.boostedTotalApy : formatted.totalApy,
-    subValue: isBoosted ? formatted.totalApy : null,
+    subValue: isBoosted || isPrestake ? formatted.totalApy : null,
     blur: false,
     loading: !isLoaded,
     boosted: isBoosted,

@@ -76,7 +76,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps): V
       : isBoosted
       ? formatted.boostedTotalDaily
       : formatted.totalDaily,
-    subValue: isBoosted ? formatted.totalDaily : null,
+    subValue: isBoosted || isPrestake ? formatted.totalDaily : null,
     blur: false,
     loading: !isLoaded,
     boosted: isBoosted,
