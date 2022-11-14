@@ -34,10 +34,10 @@ export const getTop6Array = (arry: any) => {
   }
 
   return sortedArray.slice(0, 5).concat(
-    sortedArray.slice(6, sortedArray.length).reduce(
+    sortedArray.slice(5, sortedArray.length).reduce(
       (tot, cur) => {
         tot.value = (tot.value || BIG_ZERO).plus(cur.value);
-        tot.percentage += cur.percentage;
+        tot.percentage = (tot.percentage || BIG_ZERO).plus(cur.percentage);
         return tot;
       },
       { key: 'others', value: 0, percentage: 0 }
