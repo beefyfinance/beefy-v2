@@ -916,6 +916,7 @@ function captureWalletErrors<ReturnType>(
           token: null,
         })
       );
+      dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
     }
   };
 }
@@ -974,6 +975,7 @@ function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity
     })
     .catch(error => {
       dispatch(createWalletActionErrorAction({ message: String(error) }, additionalData));
+      dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
     });
 }
 
