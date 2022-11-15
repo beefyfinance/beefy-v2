@@ -428,8 +428,7 @@
       "BATTLE_TESTED",
       "IL_HIGH",
       "MCAP_MICRO",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
@@ -1486,7 +1485,6 @@
       "COMPLEXITY_LOW",
       "IL_NONE",
       "MCAP_LARGE",
-      "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",

@@ -2004,36 +2004,6 @@
     "createdAt": 1629466194
   },
   {
-    "id": "pangolin-uni.e-wavax-eol",
-    "name": "UNI.e-AVAX LP",
-    "token": "UNI.e-AVAX LP",
-    "tokenAddress": "0x99dD520748eB0355c69DAE2692E4615C8Ab031ce",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pangolin",
-    "earnedToken": "mooPangolinUNI.e-AVAX",
-    "earnedTokenAddress": "0x48cc86214C58d7EaA78C100156c55DD45A676Ed1",
-    "earnContractAddress": "0x48cc86214C58d7EaA78C100156c55DD45A676Ed1",
-    "oracle": "lps",
-    "oracleId": "pangolin-uni.e-wavax",
-    "status": "eol",
-    "platformId": "pangolin",
-    "retireReason": "rewards",
-    "assets": ["UNIe", "AVAX"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x8eBAf22B6F053dFFeaf46f4Dd9eFA95D89ba8580",
-    "buyTokenUrl": "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x8eBAf22B6F053dFFeaf46f4Dd9eFA95D89ba8580",
-    "network": "avax",
-    "createdAt": 1629466081
-  },
-  {
     "id": "pangolin-wavax-xava-eol",
     "name": "XAVA-AVAX LP",
     "token": "XAVA-AVAX LP",
