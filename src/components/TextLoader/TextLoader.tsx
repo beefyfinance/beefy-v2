@@ -14,8 +14,9 @@ export const TextLoader = memo<TextLoaderProps>(function TextLoader({ placeholde
   const classes = useStyles();
 
   return (
-    <span className={clsx(classes.loader, className)}>
+    <span className={clsx(classes.holder, className)}>
       <span className={classes.placeholder}>{placeholder}</span>
+      <span className={classes.loader} />
     </span>
   );
 });

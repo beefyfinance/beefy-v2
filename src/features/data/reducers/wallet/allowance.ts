@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { fetchAllAllowanceAction, fetchAllowanceAction } from '../../actions/allowance';
-import { initiateDepositForm } from '../../actions/deposit';
 import { TokenAllowance } from '../../apis/allowance/allowance-types';
 import { WritableDraft } from 'immer/dist/internal';
 import { ChainEntity } from '../../entities/chain';
@@ -9,7 +8,6 @@ import { TokenEntity } from '../../entities/token';
 import { accountHasChanged, walletHasDisconnected } from './wallet';
 import { selectVaultById } from '../../selectors/vaults';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
-import { initiateWithdrawForm } from '../../actions/withdraw';
 import { initiateBoostForm } from '../../actions/boosts';
 import { selectBoostById } from '../../selectors/boosts';
 import { initiateMinterForm } from '../../actions/minters';
@@ -58,14 +56,6 @@ export const allowanceSlice = createSlice({
     });
     builder.addCase(fetchAllowanceAction.fulfilled, (sliceState, action) => {
       addAllowancesToState(sliceState, action.payload.chainId, action.payload.data);
-    });
-    builder.addCase(initiateDepositForm.fulfilled, (sliceState, action) => {
-      const vault = selectVaultById(action.payload.state, action.payload.vaultId);
-      addAllowancesToState(sliceState, vault.chainId, action.payload.allowance);
-    });
-    builder.addCase(initiateWithdrawForm.fulfilled, (sliceState, action) => {
-      const vault = selectVaultById(action.payload.state, action.payload.vaultId);
-      addAllowancesToState(sliceState, vault.chainId, action.payload.allowance);
     });
     builder.addCase(initiateBoostForm.fulfilled, (sliceState, action) => {
       const boost = selectBoostById(action.payload.state, action.payload.boostId);

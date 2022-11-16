@@ -118,3 +118,10 @@ export async function getTransactApi(): Promise<ITransactApi> {
   transactApiInstance = new TransactApi();
   return transactApiInstance;
 }
+
+const OneInchApiPromise = import('./one-inch');
+export const getOneInchApi = createFactoryWithCacheByChain(async chain => {
+  const { OneInchApi } = await OneInchApiPromise;
+  console.debug(`Instanciating OneInchApi for chain ${chain.id}`);
+  return new OneInchApi(chain);
+});

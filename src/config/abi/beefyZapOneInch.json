@@ -1,0 +1,170 @@
+[
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_oneInchRouter", "type": "address" },
+      { "internalType": "address", "name": "_WETH", "type": "address" },
+      { "internalType": "address", "name": "_dataSource", "type": "address" }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "WETH",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "beefyVault", "type": "address" },
+      { "internalType": "address", "name": "inputToken", "type": "address" },
+      { "internalType": "uint256", "name": "tokenInAmount", "type": "uint256" },
+      { "internalType": "bytes", "name": "token0", "type": "bytes" },
+      { "internalType": "bytes", "name": "token1", "type": "bytes" }
+    ],
+    "name": "beefIn",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "beefyVault", "type": "address" },
+      { "internalType": "bytes", "name": "token0", "type": "bytes" },
+      { "internalType": "bytes", "name": "token1", "type": "bytes" }
+    ],
+    "name": "beefInETH",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "beefyVault", "type": "address" },
+      { "internalType": "uint256", "name": "withdrawAmount", "type": "uint256" }
+    ],
+    "name": "beefOut",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "fromMooVault", "type": "address" },
+      { "internalType": "address", "name": "toMooVault", "type": "address" },
+      { "internalType": "uint256", "name": "mooTokenAmount", "type": "uint256" },
+      { "internalType": "bytes", "name": "token0ToFrom", "type": "bytes" },
+      { "internalType": "bytes", "name": "token1ToFrom", "type": "bytes" }
+    ],
+    "name": "beefOutAndReInvest",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "beefyVault", "type": "address" },
+      { "internalType": "uint256", "name": "withdrawAmount", "type": "uint256" },
+      { "internalType": "address", "name": "desiredToken", "type": "address" },
+      { "internalType": "bytes", "name": "dataToken0", "type": "bytes" },
+      { "internalType": "bytes", "name": "dataToken1", "type": "bytes" }
+    ],
+    "name": "beefOutAndSwap",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "dataSource",
+    "outputs": [{ "internalType": "contract IBeefyDataSource", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "minimumAmount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "oneInchRouter",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bool", "name": "success", "type": "bool" },
+      { "internalType": "bytes", "name": "data", "type": "bytes" },
+      { "internalType": "string", "name": "errorMessage", "type": "string" }
+    ],
+    "name": "propagateError",
+    "outputs": [],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "contract IBeefyVault", "name": "beefyVault", "type": "address" },
+      { "internalType": "uint256", "name": "mooTokenAmt", "type": "uint256" }
+    ],
+    "name": "quoteRemoveLiquidity",
+    "outputs": [
+      { "internalType": "uint256", "name": "amt0", "type": "uint256" },
+      { "internalType": "uint256", "name": "amt1", "type": "uint256" },
+      { "internalType": "address", "name": "token0", "type": "address" },
+      { "internalType": "address", "name": "token1", "type": "address" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "contract IBeefyVault", "name": "beefyVault", "type": "address" }],
+    "name": "quoteStableAddLiquidityRatio",
+    "outputs": [{ "internalType": "uint256", "name": "ratio0to1", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "_dataSource", "type": "address" }],
+    "name": "setDataSource",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  { "stateMutability": "payable", "type": "receive" }
+]

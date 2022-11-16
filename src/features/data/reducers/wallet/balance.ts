@@ -5,9 +5,7 @@ import { uniq } from 'lodash';
 import { BeefyState } from '../../../../redux-types';
 import { fetchAllBalanceAction } from '../../actions/balance';
 import { initiateBoostForm } from '../../actions/boosts';
-import { initiateDepositForm } from '../../actions/deposit';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
-import { initiateWithdrawForm } from '../../actions/withdraw';
 import { BoostBalance, GovVaultPoolBalance, TokenBalance } from '../../apis/balance/balance-types';
 import { BoostEntity } from '../../entities/boost';
 import { ChainEntity } from '../../entities/chain';
@@ -15,10 +13,10 @@ import { TokenEntity } from '../../entities/token';
 import { VaultEntity } from '../../entities/vault';
 import { selectAllVaultBoostIds, selectBoostById } from '../../selectors/boosts';
 import {
-  selectGovVaultVaultIdsByOracleAddress,
+  selectGovVaultVaultIdsByDepositTokenAddress,
   selectIsStandardVaultEarnTokenAddress,
   selectStandardVaultByEarnTokenAddress,
-  selectStandardVaultIdsByOracleAddress,
+  selectStandardVaultIdsByDepositTokenAddress,
   selectVaultById,
 } from '../../selectors/vaults';
 import { initiateMinterForm } from '../../actions/minters';
@@ -82,6 +80,7 @@ export interface BalanceState {
     };
   };
 }
+
 export const initialBalanceState: BalanceState = {
   byAddress: {},
 };
@@ -102,36 +101,6 @@ export const balanceSlice = createSlice({
       addTokenBalanceToState(state, walletState, chainId, balance.tokens);
       addBoostBalanceToState(state, walletState, balance.boosts);
       addGovVaultBalanceToState(walletState, balance.govVaults);
-    });
-
-    builder.addCase(initiateDepositForm.fulfilled, (sliceState, action) => {
-      const state = action.payload.state;
-      if (!action.payload.walletAddress) {
-        return;
-      }
-      const vault = selectVaultById(state, action.payload.vaultId);
-      const walletAddress = action.payload.walletAddress.toLowerCase();
-
-      const walletState = getWalletState(sliceState, walletAddress);
-      const balance = action.payload.balance;
-      addTokenBalanceToState(state, walletState, vault.chainId, balance.tokens);
-      addGovVaultBalanceToState(walletState, balance.govVaults);
-      addBoostBalanceToState(state, walletState, balance.boosts);
-    });
-
-    builder.addCase(initiateWithdrawForm.fulfilled, (sliceState, action) => {
-      const state = action.payload.state;
-      if (!action.payload.walletAddress) {
-        return;
-      }
-      const vault = selectVaultById(state, action.payload.vaultId);
-      const walletAddress = action.payload.walletAddress.toLowerCase();
-
-      const walletState = getWalletState(sliceState, walletAddress);
-      const balance = action.payload.balance;
-      addTokenBalanceToState(state, walletState, vault.chainId, balance.tokens);
-      addGovVaultBalanceToState(walletState, balance.govVaults);
-      addBoostBalanceToState(state, walletState, balance.boosts);
     });
 
     builder.addCase(initiateBoostForm.fulfilled, (sliceState, action) => {
@@ -262,7 +231,7 @@ function addTokenBalanceToState(
 
       // if the token is the oracleId of a vault
       // this means the user can deposit in a vault
-      const stdVaultIds = selectStandardVaultIdsByOracleAddress(
+      const stdVaultIds = selectStandardVaultIdsByDepositTokenAddress(
         state,
         chainId,
         tokenBalance.tokenAddress
@@ -270,7 +239,7 @@ function addTokenBalanceToState(
       for (const vaultId of stdVaultIds) {
         addOrRemoveFromEligibleList(walletState, tokenBalance.amount, vaultId);
       }
-      const govVaultIds = selectGovVaultVaultIdsByOracleAddress(
+      const govVaultIds = selectGovVaultVaultIdsByDepositTokenAddress(
         state,
         chainId,
         tokenBalance.tokenAddress

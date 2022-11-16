@@ -8,11 +8,11 @@ import minterAbi from '../../../config/abi/minter.json';
 import zapAbi from '../../../config/abi/zap.json';
 import bridgeAbi from '../../../config/abi/BridgeAbi.json';
 import { BeefyState, BeefyThunk } from '../../../redux-types';
-import { getWalletConnectionApiInstance } from '../apis/instances';
+import { getOneInchApi, getWalletConnectionApiInstance } from '../apis/instances';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { isTokenNative, TokenEntity, TokenErc20 } from '../entities/token';
-import { isStandardVault, VaultEntity, VaultGov } from '../entities/vault';
+import { isStandardVault, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
   createWalletActionErrorAction,
   createWalletActionPendingAction,
@@ -48,10 +48,14 @@ import { FriendlyError } from '../utils/error-utils';
 import { MinterEntity } from '../entities/minter';
 import { reloadReserves } from './minters';
 import { selectChainById } from '../selectors/chains';
-import { BIG_ZERO } from '../../../helpers/big-number';
-import { ZapDepositEstimate, ZapOptions } from '../apis/zap/zap-types';
+import { BIG_ZERO, fromWeiString, toWei, toWeiString } from '../../../helpers/big-number';
 import { updateSteps } from './stepper';
 import { StepContent, stepperActions } from '../reducers/wallet/stepper';
+import { InputTokenAmount, TokenAmount, ZapQuoteStepSwap } from '../apis/transact/transact-types';
+import { ZapEntityBeefy, ZapEntityOneInch } from '../entities/zap';
+import { BeefyZapOneInchAbi } from '../../../config/abi';
+import { OneInchZapProvider } from '../apis/transact/providers/one-inch/one-inch';
+import { MultiCall } from 'eth-multicall';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -149,10 +153,10 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
 
 const beefIn = (
   vault: VaultEntity,
-  tokenAmount: BigNumber,
-  zapOptions: ZapOptions,
-  zapEstimate: ZapDepositEstimate,
-  slippageTolerance: number
+  fullAmount: BigNumber,
+  swap: ZapQuoteStepSwap,
+  zap: ZapEntityBeefy,
+  slippageTolerance: number = 0.01
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
@@ -161,24 +165,20 @@ const beefIn = (
     if (!address) {
       return;
     }
-    const earnedToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
-    const vaultAddress = earnedToken.address;
-    const { tokenIn, tokenOut } = zapEstimate;
 
+    const vaultAddress = vault.earnedTokenAddress;
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-
-    const contract = new web3.eth.Contract(zapAbi as any, zapOptions.address);
-
-    const rawSwapAmountOutMin = zapEstimate.amountOut
-      .times(1 - slippageTolerance)
-      .shiftedBy(zapEstimate.tokenOut.decimals)
-      .decimalPlaces(0);
-    const rawAmount = tokenAmount.shiftedBy(tokenIn.decimals).decimalPlaces(0);
+    const contract = new web3.eth.Contract(zapAbi as any, zap.zapAddress);
+    const rawSwapAmountOutMin = toWei(
+      swap.toAmount.times(1 - slippageTolerance),
+      swap.toToken.decimals
+    );
+    const rawAmount = toWei(fullAmount, swap.fromToken.decimals);
     const gasPrices = await getGasPriceOptions(web3);
 
     const transaction = (() => {
-      if (isTokenNative(tokenIn)) {
+      if (isTokenNative(swap.fromToken)) {
         return contract.methods.beefInETH(vaultAddress, rawSwapAmountOutMin.toString(10)).send({
           from: address,
           value: rawAmount.toString(10),
@@ -189,7 +189,7 @@ const beefIn = (
           .beefIn(
             vaultAddress,
             rawSwapAmountOutMin.toString(10),
-            tokenIn.address,
+            swap.fromToken.address,
             rawAmount.toString(10)
           )
           .send({
@@ -202,17 +202,20 @@ const beefIn = (
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: zapOptions.address, amount: tokenAmount, token: tokenIn },
+      { spender: zap.zapAddress, amount: fullAmount, token: swap.fromToken },
       {
         chainId: vault.chainId,
-        spenderAddress: zapOptions.address,
-        tokens: uniqBy(getVaultTokensToRefresh(state, vault).concat([tokenIn, tokenOut]), 'id'),
+        spenderAddress: zap.zapAddress,
+        tokens: uniqBy(
+          getVaultTokensToRefresh(state, vault).concat([swap.fromToken, swap.toToken]),
+          'id'
+        ),
       }
     );
   });
 };
 
-const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOptions) => {
+const beefOut = (vault: VaultEntity, depositTokenAmount: BigNumber, zap: ZapEntityBeefy) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
@@ -228,14 +231,14 @@ const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOpt
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
 
-    const contract = new web3.eth.Contract(zapAbi as any, zapOptions.address);
+    const contract = new web3.eth.Contract(zapAbi as any, zap.zapAddress);
 
     const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const ppfs = selectVaultPricePerFullShare(state, vault.id);
 
-    const mooAmount = oracleAmountToMooAmount(mooToken, depositToken, ppfs, oracleAmount);
-    const rawAmount = mooAmount.shiftedBy(mooToken.decimals).decimalPlaces(0);
+    const mooAmount = oracleAmountToMooAmount(mooToken, depositToken, ppfs, depositTokenAmount);
+    const rawAmount = toWei(mooAmount, mooToken.decimals);
     const gasPrices = await getGasPriceOptions(web3);
 
     const transaction = (() => {
@@ -249,15 +252,393 @@ const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOpt
       dispatch,
       transaction,
       {
-        spender: zapOptions.address,
+        spender: zap.zapAddress,
         // TODO: this should contain 2 assets and 2 amounts
-        amount: oracleAmount,
+        amount: depositTokenAmount,
         token: depositToken,
       },
       {
         chainId: vault.chainId,
-        spenderAddress: zapOptions.address,
+        spenderAddress: zap.zapAddress,
         tokens: getVaultTokensToRefresh(state, vault),
+      }
+    );
+  });
+};
+
+const oneInchBeefInSingle = (
+  vault: VaultEntity,
+  inputToken: TokenEntity,
+  swap: ZapQuoteStepSwap,
+  zap: ZapEntityOneInch,
+  slippageTolerance: number = 0.01
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const vaultAddress = vault.earnedTokenAddress;
+    const chain = selectChainById(state, vault.chainId);
+    const oneInchApi = await getOneInchApi(chain);
+    const swapTokenInAddress = swap.fromToken.address;
+    const swapTokenOutAddress = swap.toToken.address;
+    const swapAmountInWei = toWeiString(swap.fromAmount, swap.fromToken.decimals);
+    const swapData = await oneInchApi.getSwap({
+      disableEstimate: true, // otherwise will fail due to no allowance
+      fromAddress: zap.zapAddress,
+      amount: swapAmountInWei,
+      fromTokenAddress: swapTokenInAddress,
+      toTokenAddress: swapTokenOutAddress,
+      slippage: slippageTolerance * 100,
+    });
+    const swapAmountOut = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
+
+    // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
+    if (swapAmountOut.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
+      throw new Error(`Output is less than expected. Please try again.`);
+    }
+
+    const walletApi = await getWalletConnectionApiInstance();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const contract = new web3.eth.Contract(BeefyZapOneInchAbi, zap.zapAddress);
+    const gasPrices = await getGasPriceOptions(web3);
+    const tx0 = swapData.tx.data;
+    const tx1 = '0x0';
+
+    const transaction = (() => {
+      if (isTokenNative(inputToken)) {
+        return contract.methods.beefInETH(vaultAddress, tx0, tx1).send({
+          from: address,
+          value: swapAmountInWei,
+          ...gasPrices,
+        });
+      } else {
+        return contract.methods
+          .beefIn(vaultAddress, swap.fromToken.address, swapAmountInWei, tx0, tx1)
+          .send({
+            from: address,
+            ...gasPrices,
+          });
+      }
+    })();
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      { spender: zap.zapAddress, amount: swap.fromAmount, token: swap.fromToken },
+      {
+        chainId: vault.chainId,
+        spenderAddress: zap.zapAddress,
+        tokens: uniqBy(
+          getVaultTokensToRefresh(state, vault).concat([swap.fromToken, swap.toToken]),
+          'id'
+        ),
+      }
+    );
+  });
+};
+
+const oneInchBeefInLP = (
+  vault: VaultEntity,
+  input: TokenAmount,
+  swaps: ZapQuoteStepSwap[],
+  zap: ZapEntityOneInch,
+  lpTokens: TokenErc20[],
+  slippageTolerance: number = 0.01
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const vaultAddress = vault.earnedTokenAddress;
+    const chain = selectChainById(state, vault.chainId);
+    const oneInchApi = await getOneInchApi(chain);
+    const swapData = await Promise.all(
+      swaps.map(async swap => {
+        const swapTokenInAddress = swap.fromToken.address;
+        const swapTokenOutAddress = swap.toToken.address;
+        const swapAmountInWei = toWeiString(swap.fromAmount, swap.fromToken.decimals);
+        const swapData = await oneInchApi.getSwap({
+          disableEstimate: true, // otherwise will fail due to no allowance
+          fromAddress: zap.zapAddress,
+          amount: swapAmountInWei,
+          fromTokenAddress: swapTokenInAddress,
+          toTokenAddress: swapTokenOutAddress,
+          slippage: slippageTolerance * 100,
+        });
+        const swapAmountOut = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
+
+        // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
+        if (swapAmountOut.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
+          throw new Error(`Output is less than expected. Please try again.`);
+        }
+
+        return swapData;
+      })
+    );
+
+    const walletApi = await getWalletConnectionApiInstance();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const contract = new web3.eth.Contract(BeefyZapOneInchAbi, zap.zapAddress);
+    const gasPrices = await getGasPriceOptions(web3);
+    const swap0 = swapData.find(
+      data => data.toToken.address.toLowerCase() === lpTokens[0].address.toLowerCase()
+    );
+    const swap1 = swapData.find(
+      data => data.toToken.address.toLowerCase() === lpTokens[1].address.toLowerCase()
+    );
+
+    if (!swap0 && !swap1) {
+      throw new Error(`Mismatched swap`);
+    }
+
+    const tx0 = swap0 ? swap0.tx.data : '0x0';
+    const tx1 = swap1 ? swap1.tx.data : '0x0';
+    const inputAmountWei = toWeiString(input.amount, input.token.decimals);
+
+    const transaction = (() => {
+      if (isTokenNative(input.token)) {
+        return contract.methods.beefInETH(vaultAddress, tx0, tx1).send({
+          from: address,
+          value: inputAmountWei,
+          ...gasPrices,
+        });
+      } else {
+        return contract.methods
+          .beefIn(vaultAddress, input.token.address, inputAmountWei, tx0, tx1)
+          .send({
+            from: address,
+            ...gasPrices,
+          });
+      }
+    })();
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      { spender: zap.zapAddress, amount: input.amount, token: input.token },
+      {
+        chainId: vault.chainId,
+        spenderAddress: zap.zapAddress,
+        tokens: uniqBy(
+          getVaultTokensToRefresh(state, vault).concat(
+            swaps.map(swap => [swap.fromToken, swap.toToken]).flat()
+          ),
+          'id'
+        ),
+      }
+    );
+  });
+};
+
+const oneInchBeefOutSingle = (
+  vault: VaultStandard,
+  input: InputTokenAmount,
+  swap: ZapQuoteStepSwap,
+  zap: ZapEntityOneInch,
+  slippageTolerance: number = 0.01
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      throw new Error(`Wallet not connected`);
+    }
+
+    const walletApi = await getWalletConnectionApiInstance();
+    const chain = selectChainById(state, vault.chainId);
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const multicall = new MultiCall(web3, chain.multicallAddress);
+    const {
+      mooToken,
+      mooTokensToWithdraw,
+      depositToken,
+      depositTokensToWithdraw,
+      depositTokensWithdrawnAfterFee,
+    } = await OneInchZapProvider.getWithdrawnFromContract(
+      input,
+      address,
+      vault,
+      state,
+      web3,
+      multicall
+    );
+
+    const oneInchApi = await getOneInchApi(chain);
+    const swapTokenInAddress = swap.fromToken.address;
+    const swapTokenOutAddress = swap.toToken.address;
+    const swapAmountInWei = toWeiString(depositTokensWithdrawnAfterFee, swap.fromToken.decimals);
+    const swapData = await oneInchApi.getSwap({
+      disableEstimate: true, // otherwise will fail due to no allowance
+      fromAddress: zap.zapAddress,
+      amount: swapAmountInWei,
+      fromTokenAddress: swapTokenInAddress,
+      toTokenAddress: swapTokenOutAddress,
+      slippage: slippageTolerance * 100,
+    });
+    const swapAmountOut = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
+    const vaultAddress = vault.earnedTokenAddress;
+    const mooTokensToWithdrawWei = toWeiString(mooTokensToWithdraw, mooToken.decimals);
+
+    console.log({
+      depositTokensUiWantedToWithdraw: input.amount.toString(10),
+      mooTokensToWithdraw: mooTokensToWithdraw.toString(10),
+      depositTokensToWithdraw: depositTokensToWithdraw.toString(10),
+      depositTokensWithdrawnAfterFee: depositTokensWithdrawnAfterFee.toString(10),
+      swapAmountOut: swapAmountOut.toString(10),
+    });
+
+    // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
+    if (swapAmountOut.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
+      throw new Error(`Output is less than expected. Please try again.`);
+    }
+
+    const contract = new web3.eth.Contract(BeefyZapOneInchAbi, zap.zapAddress);
+    const gasPrices = await getGasPriceOptions(web3);
+    const tx0 = swapData.tx.data;
+    const tx1 = '0x0';
+
+    const transaction = (() => {
+      return contract.methods
+        .beefOutAndSwap(vaultAddress, mooTokensToWithdrawWei, swapTokenOutAddress, tx0, tx1)
+        .send({
+          from: address,
+          ...gasPrices,
+        });
+    })();
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      { spender: zap.zapAddress, amount: depositTokensToWithdraw, token: depositToken },
+      {
+        chainId: vault.chainId,
+        spenderAddress: zap.zapAddress,
+        tokens: uniqBy(
+          getVaultTokensToRefresh(state, vault).concat([swap.fromToken, swap.toToken]),
+          'id'
+        ),
+      }
+    );
+  });
+};
+
+const oneInchBeefOutLP = (
+  vault: VaultStandard,
+  input: InputTokenAmount,
+  swaps: ZapQuoteStepSwap[],
+  zap: ZapEntityOneInch,
+  lpTokens: TokenErc20[],
+  slippageTolerance: number = 0.01
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      throw new Error(`Wallet not connected`);
+    }
+
+    const walletApi = await getWalletConnectionApiInstance();
+    const chain = selectChainById(state, vault.chainId);
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const multicall = new MultiCall(web3, chain.multicallAddress);
+    const contract = new web3.eth.Contract(BeefyZapOneInchAbi, zap.zapAddress);
+
+    // use up to date ppfs to calc shares + equiv deposit token
+    const { mooToken, mooTokensToWithdraw, depositToken, depositTokensToWithdraw } =
+      await OneInchZapProvider.getWithdrawnFromContract(
+        input,
+        address,
+        vault,
+        state,
+        web3,
+        multicall
+      );
+    const mooTokensToWithdrawWei = toWeiString(mooTokensToWithdraw, mooToken.decimals);
+    const vaultAddress = vault.earnedTokenAddress;
+    const swapAmountsIn = await OneInchZapProvider.quoteRemoveLiquidity(
+      contract,
+      vaultAddress,
+      mooTokensToWithdrawWei,
+      lpTokens
+    );
+
+    const oneInchApi = await getOneInchApi(chain);
+    const swapData = await Promise.all(
+      swaps.map(async swap => {
+        const tokenN = lpTokens.findIndex(
+          t => t.address.toLowerCase() === swap.fromToken.address.toLowerCase()
+        );
+        const swapTokenInAddress = swap.fromToken.address;
+        const swapTokenOutAddress = swap.toToken.address;
+        const swapAmountInWei = toWeiString(swapAmountsIn[tokenN], swap.fromToken.decimals);
+        const swapData = await oneInchApi.getSwap({
+          disableEstimate: true, // otherwise will fail due to no allowance
+          fromAddress: zap.zapAddress,
+          amount: swapAmountInWei,
+          fromTokenAddress: swapTokenInAddress,
+          toTokenAddress: swapTokenOutAddress,
+          slippage: slippageTolerance * 100,
+        });
+        const swapAmountOut = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
+
+        // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
+        if (swapAmountOut.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
+          throw new Error(`Output is less than expected. Please try again.`);
+        }
+
+        return swapData;
+      })
+    );
+
+    const swap0 = swapData.find(
+      data => data.fromToken.address.toLowerCase() === lpTokens[0].address.toLowerCase()
+    );
+    const swap1 = swapData.find(
+      data => data.fromToken.address.toLowerCase() === lpTokens[1].address.toLowerCase()
+    );
+
+    if (!swap0 && !swap1) {
+      throw new Error(`Mismatched swap`);
+    }
+
+    const swapTokenOutAddress = swaps[0].toToken.address;
+    const tx0 = swap0 ? swap0.tx.data : '0x0';
+    const tx1 = swap1 ? swap1.tx.data : '0x0';
+
+    const gasPrices = await getGasPriceOptions(web3);
+    const transaction = (() => {
+      return contract.methods
+        .beefOutAndSwap(vaultAddress, mooTokensToWithdrawWei, swapTokenOutAddress, tx0, tx1)
+        .send({
+          from: address,
+          ...gasPrices,
+        });
+    })();
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      { spender: zap.zapAddress, amount: depositTokensToWithdraw, token: depositToken },
+      {
+        chainId: vault.chainId,
+        spenderAddress: zap.zapAddress,
+        tokens: uniqBy(
+          getVaultTokensToRefresh(state, vault).concat(
+            swaps.map(swap => [swap.fromToken, swap.toToken]).flat()
+          ),
+          'id'
+        ),
       }
     );
   });
@@ -266,9 +647,9 @@ const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOpt
 const beefOutAndSwap = (
   vault: VaultEntity,
   depositTokenAmount: BigNumber,
-  zapOptions: ZapOptions,
-  zapEstimate: ZapDepositEstimate,
-  slippageTolerance: number
+  swap: ZapQuoteStepSwap,
+  zap: ZapEntityBeefy,
+  slippageTolerance: number = 0.01
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
@@ -282,16 +663,11 @@ const beefOutAndSwap = (
     const wnative = selectChainWrappedNativeToken(state, vault.chainId);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const vaultAddress = earnedToken.address;
-    const { tokenIn, tokenOut } = zapEstimate;
-
-    const tokenOutEntity = selectTokenByAddress(state, vault.chainId, tokenOut.address);
+    const tokenOutEntity = selectTokenByAddress(state, vault.chainId, swap.toToken.address);
     const tokenOutAddress = getZapAddress(tokenOutEntity, wnative);
-
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-
-    const contract = new web3.eth.Contract(zapAbi as any, zapOptions.address);
-
+    const contract = new web3.eth.Contract(zapAbi as any, zap.zapAddress);
     const ppfs = selectVaultPricePerFullShare(state, vault.id);
     const earnedTokenAmount = oracleAmountToMooAmount(
       earnedToken,
@@ -299,13 +675,19 @@ const beefOutAndSwap = (
       ppfs,
       depositTokenAmount
     );
-    const rawSwapAmountOutMin = zapEstimate.amountOut
-      .times(1 - slippageTolerance)
-      .shiftedBy(zapEstimate.tokenOut.decimals)
-      .decimalPlaces(0);
-    const rawAmount = earnedTokenAmount.shiftedBy(earnedToken.decimals).decimalPlaces(0);
+    const rawSwapAmountOutMin = toWei(
+      swap.toAmount.times(1 - slippageTolerance),
+      swap.toToken.decimals
+    );
+    const rawAmount = toWei(earnedTokenAmount, earnedToken.decimals);
     const gasPrices = await getGasPriceOptions(web3);
-
+    console.log(
+      'beefOutAndSwap',
+      vaultAddress,
+      rawAmount.toString(10),
+      tokenOutAddress,
+      rawSwapAmountOutMin.toString(10)
+    );
     const transaction = (() => {
       return contract.methods
         .beefOutAndSwap(
@@ -323,12 +705,16 @@ const beefOutAndSwap = (
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: zapOptions.address, amount: earnedTokenAmount, token: depositToken },
+      { spender: zap.zapAddress, amount: depositTokenAmount, token: depositToken },
       {
         chainId: vault.chainId,
-        spenderAddress: zapOptions.address,
+        spenderAddress: zap.zapAddress,
         tokens: uniqBy(
-          getVaultTokensToRefresh(state, vault).concat([tokenIn, tokenOut, tokenOutEntity]),
+          getVaultTokensToRefresh(state, vault).concat([
+            swap.fromToken,
+            swap.toToken,
+            tokenOutEntity,
+          ]),
           'id'
         ),
       }
@@ -896,6 +1282,10 @@ export const walletActions = {
   burnWithdraw,
   bridge,
   resetWallet,
+  oneInchBeefInSingle,
+  oneInchBeefInLP,
+  oneInchBeefOutSingle,
+  oneInchBeefOutLP,
 };
 
 function captureWalletErrors<ReturnType>(
@@ -916,6 +1306,7 @@ function captureWalletErrors<ReturnType>(
           token: null,
         })
       );
+      dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
     }
   };
 }
@@ -974,6 +1365,7 @@ function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity
     })
     .catch(error => {
       dispatch(createWalletActionErrorAction({ message: String(error) }, additionalData));
+      dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
     });
 }
 

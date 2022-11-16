@@ -1,10 +1,6 @@
-export type ZapEntity = {
-  zapAddress: string;
-  ammRouter: string;
-  ammFactory: string;
-  ammPairInitHash: string;
-  type: 'uniswapv2' | 'solidly';
-  withdrawEstimateMode: 'getAmountOut' | 'getAmountsOut' | 'getAmountOutWithFee';
-  withdrawEstimateFee: string;
-  lpProviderFee: number;
-};
+import { BeefyZapConfig, OneInchZapConfig } from '../apis/config-types';
+
+export type ZapEntityBeefy = BeefyZapConfig & { type: 'beefy' };
+export type ZapEntityOneInch = OneInchZapConfig & { type: 'one-inch' };
+
+export type ZapEntity = ZapEntityBeefy | ZapEntityOneInch;

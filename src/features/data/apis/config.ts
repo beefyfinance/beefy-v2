@@ -13,7 +13,9 @@ import {
   PlatformConfig,
   StrategyTypeConfig,
   VaultConfig,
-  ZapConfig,
+  BeefyZapConfig,
+  AmmConfig,
+  OneInchZapConfig,
 } from './config-types';
 const featuredVaults = require('../../../config/vault/featured');
 const boostPartners = require('../../../config/boost/partners');
@@ -50,11 +52,11 @@ for (const chainId in chainConfigs) {
   });
 }
 
-const zapsByChainId: {
-  [chainId: ChainEntity['id']]: ZapConfig[];
+const ammsByChainId: {
+  [chainId: ChainEntity['id']]: AmmConfig[];
 } = {};
 for (const chainId in chainConfigs) {
-  zapsByChainId[chainId] = require(`../../../config/zap/${chainId}`).zaps;
+  ammsByChainId[chainId] = require(`../../../config/amm/${chainId}`).amms;
 }
 
 const mintersByChainId: {
@@ -82,8 +84,16 @@ export class ConfigAPI {
     return { QiDao, Insurace, Moonpot, Solace };
   }
 
-  public async fetchZapsConfig(): Promise<{ [chainId: ChainEntity['id']]: ZapConfig[] }> {
-    return zapsByChainId;
+  public async fetchAmmsConfig(): Promise<{ [chainId: ChainEntity['id']]: AmmConfig[] }> {
+    return ammsByChainId;
+  }
+
+  public async fetchBeefyZapsConfig(): Promise<BeefyZapConfig[]> {
+    return (await import('../../../config/zap/beefy')).zaps;
+  }
+
+  public async fetchOneInchZapsConfig(): Promise<OneInchZapConfig[]> {
+    return (await import('../../../config/zap/one-inch')).zaps;
   }
 
   public async fetchAllVaults(): Promise<{ [chainId: ChainEntity['id']]: VaultConfig[] }> {

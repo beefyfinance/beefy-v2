@@ -35,3 +35,19 @@ export function truncateBigNumber(value: BigNumber, places: number): BigNumber {
 
   return value.decimalPlaces(places);
 }
+
+export function toWei(value: BigNumber, decimals: number): BigNumber {
+  return value.shiftedBy(decimals).decimalPlaces(0);
+}
+
+export function toWeiString(value: BigNumber, decimals: number): string {
+  return toWei(value, decimals).toString(10);
+}
+
+export function fromWei(value: BigNumber, decimals: number): BigNumber {
+  return value.shiftedBy(-decimals).decimalPlaces(decimals, BigNumber.ROUND_FLOOR);
+}
+
+export function fromWeiString(value: string, decimals: number): BigNumber {
+  return fromWei(new BigNumber(value), decimals);
+}

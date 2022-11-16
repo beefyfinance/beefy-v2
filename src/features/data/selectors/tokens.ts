@@ -4,6 +4,7 @@ import { ChainEntity } from '../entities/chain';
 import { isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
 import { selectChainById } from './chains';
 import { BIG_ONE } from '../../../helpers/big-number';
+import { createCachedSelector } from 're-reselect';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -53,6 +54,18 @@ export const selectTokenByAddress = (
   }
   return byChainId[chainId].byAddress[address.toLowerCase()];
 };
+
+export const selectTokenByAddressOrNull = createCachedSelector(
+  (state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) => chainId,
+  (state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) =>
+    address.toLowerCase(),
+  (state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) =>
+    state.entities.tokens.byChainId,
+  (chainId, address, byChainId) => byChainId[chainId]?.byAddress[address] || null
+)(
+  (state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) =>
+    `${chainId}-${address.toLowerCase()}`
+);
 
 export const selectErc20TokenByAddress = (
   state: BeefyState,

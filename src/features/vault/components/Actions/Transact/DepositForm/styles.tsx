@@ -35,7 +35,7 @@ export const styles = (theme: Theme) => ({
   quote: {
     marginTop: '12px',
   },
-  deposit: {
+  actions: {
     marginTop: '24px',
   },
 });

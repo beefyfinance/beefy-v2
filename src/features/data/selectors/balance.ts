@@ -157,6 +157,23 @@ const selectUserVaultDepositInDepositToken = (
   }
 };
 
+export const selectUserVaultDepositInDepositTokenExcludingBoosts = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  const vault = selectVaultById(state, vaultId);
+  if (isGovVault(vault)) {
+    return selectGovVaultUserStackedBalanceInDepositToken(state, vaultId, walletAddress);
+  } else {
+    return selectStandardVaultUserBalanceInDepositTokenExcludingBoosts(
+      state,
+      vaultId,
+      walletAddress
+    );
+  }
+};
+
 export const selectBoostUserBalanceInToken = (
   state: BeefyState,
   boostId: BoostEntity['id'],

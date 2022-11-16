@@ -1,5 +1,5 @@
 import { Container, Hidden, makeStyles } from '@material-ui/core';
-import React, { lazy, memo, PropsWithChildren, useState } from 'react';
+import React, { lazy, memo, PropsWithChildren } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../components/AssetsImage';

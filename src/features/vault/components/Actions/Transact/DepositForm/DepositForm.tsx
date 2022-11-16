@@ -2,23 +2,26 @@ import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { useAppSelector } from '../../../../../../store';
 import { TokenSelectButton } from '../TokenSelectButton';
 import {
-  selectTransactFormIsLoading,
+  selectTransactOptionsError,
+  selectTransactOptionsStatus,
   selectTransactSelectedChainId,
   selectTransactSelectedTokenAddresses,
-  selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
-import { formatBigDecimals } from '../../../../../../helpers/format';
+import { errorToString, formatBigDecimals } from '../../../../../../helpers/format';
 import { TextLoader } from '../../../../../../components/TextLoader';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
 import { DepositTokenAmountInput } from '../DepositTokenAmountInput';
 import { DepositBuyLinks } from '../DepositBuyLinks';
-import { DepositButton } from '../DepositButton';
-import { DepositQuote } from '../DepositQuote';
+import { DepositActions } from '../DepositActions';
+import { TransactQuote } from '../TransactQuote';
+import { AlertError } from '../../../../../../components/Alerts';
+import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
+import { VaultFees } from '../VaultFees';
 
 const useStyles = makeStyles(styles);
 
@@ -48,15 +51,18 @@ const SelectedInWallet = memo(function () {
 
 export const DepositForm = memo(function () {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const classes = useStyles();
-  const vaultId = useAppSelector(selectTransactVaultId);
-  const isLoading = useAppSelector(selectTransactFormIsLoading);
+  const status = useAppSelector(selectTransactOptionsStatus);
+  const error = useAppSelector(selectTransactOptionsError);
+  const isLoading = status === TransactStatus.Idle || status === TransactStatus.Pending;
+  const isError = status === TransactStatus.Rejected;
 
   return (
     <div className={classes.container}>
       {isLoading ? (
-        <LoadingIndicator text={t('Transact-Loading-Deposit')} />
+        <LoadingIndicator text={t('Transact-Loading')} />
+      ) : isError ? (
+        <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
       ) : (
         <>
           <div className={classes.labels}>
@@ -73,8 +79,9 @@ export const DepositForm = memo(function () {
             <DepositTokenAmountInput />
           </div>
           <DepositBuyLinks className={classes.links} />
-          <DepositQuote className={classes.quote} />
-          <DepositButton className={classes.deposit} />
+          <TransactQuote title={t('Transact-YouDeposit')} className={classes.quote} />
+          <DepositActions className={classes.actions} />
+          <VaultFees />
         </>
       )}
     </div>

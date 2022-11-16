@@ -20,6 +20,10 @@ export const styles = (theme: Theme) => ({
     userSelect: 'none' as const,
     pointerEvents: 'none' as const,
   },
+  holder: {
+    display: 'inline-block',
+    position: 'relative' as const,
+  },
   loader: {
     backgroundImage: 'linear-gradient(90deg, #313759, #8585A6, #313759)',
     backgroundSize: '300% 100%',
@@ -27,7 +31,13 @@ export const styles = (theme: Theme) => ({
     animationDuration: '3s',
     animationIterationCount: 'infinite',
     animationTimingFunction: 'ease',
-    display: 'inline-block',
     borderRadius: '0.25em',
+    display: 'inline-block',
+    position: 'absolute' as const,
+    height: '1em',
+    width: '100%',
+    left: '0',
+    top: '50%',
+    transform: 'translate(0,-50%)',
   },
 });

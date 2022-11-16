@@ -1,40 +1,23 @@
 import { BigNumber } from 'bignumber.js';
 import { first } from 'lodash';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { transactFetchDepositOptions, transactInit } from '../../actions/transact';
-import { VaultEntity } from '../../entities/vault';
-import { TransactOption } from '../../apis/transact/transact-types';
-import { ChainEntity } from '../../entities/chain';
-import { logger } from '../../utils/logger';
+import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit';
+import { transactFetchOptions, transactFetchQuotes, transactInit } from '../../actions/transact';
+import {
+  QuoteOutputTokenAmountChange,
+  TransactOption,
+  TransactQuote,
+} from '../../apis/transact/transact-types';
 import { WritableDraft } from 'immer/dist/internal';
-import { TokenEntity } from '../../entities/token';
 import { BIG_ZERO } from '../../../../helpers/big-number';
-
-export enum TransactStep {
-  Loading,
-  Form,
-  TokenSelect,
-  RouteNotice,
-}
-
-export enum TransactMode {
-  Deposit,
-  Withdraw,
-}
-
-export enum TransactStatus {
-  Idle,
-  Pending,
-  Rejected,
-  Fulfilled,
-}
-
-export type TransactTokens = {
-  allTokensIds: string[];
-  byTokensId: Record<TransactOption['tokensId'], TokenEntity['address'][]>;
-  allChainIds: ChainEntity['id'][];
-  byChainId: Record<ChainEntity['id'], TransactOption['tokensId'][]>;
-};
+import {
+  TransactMode,
+  TransactOptions,
+  TransactQuotes,
+  TransactState,
+  TransactStatus,
+  TransactStep,
+  TransactTokens,
+} from './transact-types';
 
 const initialTransactTokens: TransactTokens = {
   allTokensIds: [],
@@ -43,34 +26,30 @@ const initialTransactTokens: TransactTokens = {
   byChainId: {},
 };
 
-export type TransactOptions = {
-  vaultId: VaultEntity['id'];
-  mode: TransactMode;
-  status: TransactStatus;
-  allOptionIds: TransactOption['id'][];
-  byOptionId: Record<TransactOption['id'], TransactOption>;
-  byTokensId: Record<TransactOption['tokensId'], TransactOption['id'][]>;
-};
-
 const initialTransactOptions: TransactOptions = {
   vaultId: null,
   mode: TransactMode.Deposit,
   status: TransactStatus.Idle,
+  requestId: null,
+  error: null,
   allOptionIds: [],
   byOptionId: {},
   byTokensId: {},
 };
 
-export type TransactState = {
-  vaultId: VaultEntity['id'] | null;
-  selectedChainId: string | null;
-  selectedTokensId: string | null;
-  selectedQuoteId: string | null;
-  inputAmount: BigNumber;
-  mode: TransactMode;
-  step: TransactStep;
-  tokens: TransactTokens;
-  options: TransactOptions;
+const initialTransactQuotes: TransactQuotes = {
+  allQuoteIds: [],
+  byQuoteId: {},
+  status: TransactStatus.Idle,
+  requestId: null,
+  error: null,
+};
+
+const initialTransactConfirm = {
+  changes: [],
+  status: TransactStatus.Idle,
+  requestId: null,
+  error: null,
 };
 
 const initialTransactState: TransactState = {
@@ -79,10 +58,13 @@ const initialTransactState: TransactState = {
   selectedTokensId: null,
   selectedQuoteId: null,
   inputAmount: BIG_ZERO,
+  inputMax: false,
   mode: TransactMode.Deposit,
   step: TransactStep.Form,
   tokens: initialTransactTokens,
   options: initialTransactOptions,
+  quotes: initialTransactQuotes,
+  confirm: initialTransactConfirm,
 };
 
 const transactSlice = createSlice({
@@ -97,20 +79,75 @@ const transactSlice = createSlice({
     switchStep(sliceState, action: PayloadAction<TransactStep>) {
       sliceState.step = action.payload;
     },
-    selectToken(sliceState, action: PayloadAction<string>) {
-      sliceState.selectedTokensId = action.payload;
-      sliceState.inputAmount = BIG_ZERO;
+    selectToken(sliceState, action: PayloadAction<{ tokensId: string; resetInput: boolean }>) {
+      sliceState.selectedTokensId = action.payload.tokensId;
       sliceState.step = TransactStep.Form;
+      if (action.payload.resetInput) {
+        sliceState.inputAmount = BIG_ZERO;
+        sliceState.inputMax = false;
+      }
     },
-    setInputAmount(sliceState, action: PayloadAction<BigNumber>) {
-      if (!sliceState.inputAmount.isEqualTo(action.payload)) {
-        sliceState.inputAmount = action.payload;
+    setInputAmount(sliceState, action: PayloadAction<{ amount: BigNumber; max: boolean }>) {
+      console.log('setInputAmount', action.payload.amount.toString(10), action.payload.max);
+      if (!sliceState.inputAmount.isEqualTo(action.payload.amount)) {
+        sliceState.inputAmount = action.payload.amount;
+      }
+      if (sliceState.inputMax !== action.payload.max) {
+        sliceState.inputMax = action.payload.max;
+      }
+    },
+    clearQuotes(sliceState) {
+      resetQuotes(sliceState);
+    },
+    confirmPending(sliceState, action: PayloadAction<{ requestId: string }>) {
+      console.debug('confirm/pending', action);
+      resetConfirm(sliceState);
+      sliceState.confirm.status = TransactStatus.Pending;
+      sliceState.confirm.requestId = action.payload.requestId;
+    },
+    confirmRejected(
+      sliceState,
+      action: PayloadAction<{ requestId: string; error: SerializedError }>
+    ) {
+      console.debug('confirm/rejected', action);
+      if (sliceState.confirm.requestId === action.payload.requestId) {
+        sliceState.confirm.status = TransactStatus.Rejected;
+        sliceState.confirm.error = action.payload.error;
+      }
+    },
+    confirmNeeded(
+      sliceState,
+      action: PayloadAction<{
+        requestId: string;
+        changes: QuoteOutputTokenAmountChange[];
+        newQuote: TransactQuote;
+        originalQuoteId: TransactQuote['id'];
+      }>
+    ) {
+      console.debug('confirm/needed', action);
+      if (sliceState.confirm.requestId === action.payload.requestId) {
+        sliceState.confirm.status = TransactStatus.Fulfilled;
+        sliceState.confirm.changes = action.payload.changes;
+
+        delete sliceState.quotes.byQuoteId[action.payload.originalQuoteId];
+        sliceState.quotes.byQuoteId[action.payload.newQuote.id] = action.payload.newQuote;
+        sliceState.quotes.allQuoteIds = Object.keys(sliceState.quotes.byQuoteId);
+        sliceState.selectedQuoteId = action.payload.newQuote.id;
+      }
+    },
+    confirmUnneeded(sliceState, action: PayloadAction<{ requestId: string }>) {
+      console.debug('confirm/unneeded', action);
+      if (sliceState.confirm.requestId === action.payload.requestId) {
+        sliceState.confirm.status = TransactStatus.Fulfilled;
+        sliceState.confirm.changes = [];
       }
     },
   },
   extraReducers: builder => {
     builder
       .addCase(transactInit.pending, (sliceState, action) => {
+        resetForm(sliceState);
+
         sliceState.vaultId = action.meta.arg.vaultId;
         sliceState.step = TransactStep.Loading;
         sliceState.mode = TransactMode.Deposit;
@@ -121,31 +158,22 @@ const transactSlice = createSlice({
         sliceState.step = TransactStep.Form;
         sliceState.mode = TransactMode.Deposit;
       })
-      .addCase(transactFetchDepositOptions.pending, (sliceState, action) => {
+      .addCase(transactFetchOptions.pending, (sliceState, action) => {
+        resetForm(sliceState);
+
         sliceState.options.vaultId = action.meta.arg.vaultId;
-        sliceState.options.mode = TransactMode.Deposit;
-        sliceState.options.status = TransactStatus.Pending;
-
-        sliceState.selectedChainId = null;
-        sliceState.selectedTokensId = null;
-
-        sliceState.tokens.allTokensIds = [];
-        sliceState.tokens.allChainIds = [];
-        sliceState.tokens.byTokensId = {};
-        sliceState.tokens.byChainId = {};
-
-        sliceState.options.allOptionIds = [];
-        sliceState.options.byOptionId = {};
-        sliceState.options.byTokensId = {};
+        sliceState.options.mode = action.meta.arg.mode;
+        sliceState.options.requestId = action.meta.requestId;
       })
-      .addCase(transactFetchDepositOptions.rejected, (sliceState, action) => {
-        if (sliceState.vaultId === action.meta.arg.vaultId) {
+      .addCase(transactFetchOptions.rejected, (sliceState, action) => {
+        if (sliceState.options.requestId === action.meta.requestId) {
           sliceState.options.status = TransactStatus.Rejected;
+          sliceState.options.error = action.error;
         }
       })
-      .addCase(transactFetchDepositOptions.fulfilled, (sliceState, action) => {
-        logger.log('transact reducer', action.payload);
-        if (sliceState.vaultId === action.meta.arg.vaultId) {
+      .addCase(transactFetchOptions.fulfilled, (sliceState, action) => {
+        console.debug('transact reducer', action.payload);
+        if (sliceState.options.requestId === action.meta.requestId) {
           sliceState.options.status = TransactStatus.Fulfilled;
 
           addOptionsToState(sliceState, action.payload.options);
@@ -154,9 +182,90 @@ const transactSlice = createSlice({
           sliceState.selectedTokensId = defaultOption.tokensId;
           sliceState.selectedChainId = defaultOption.chainId;
         }
+      })
+      .addCase(transactFetchQuotes.pending, (sliceState, action) => {
+        console.debug('quotes/pending', action);
+        resetQuotes(sliceState);
+        sliceState.quotes.status = TransactStatus.Pending;
+        sliceState.quotes.requestId = action.meta.requestId;
+      })
+      .addCase(transactFetchQuotes.rejected, (sliceState, action) => {
+        console.debug('quotes/rejected', action);
+        if (sliceState.quotes.requestId === action.meta.requestId) {
+          sliceState.quotes.status = TransactStatus.Rejected;
+          sliceState.quotes.error = action.error;
+        }
+      })
+      .addCase(transactFetchQuotes.fulfilled, (sliceState, action) => {
+        console.debug('quotes/fulfilled', action);
+        if (sliceState.quotes.requestId === action.meta.requestId) {
+          if (action.payload.quotes.length === 0) {
+            sliceState.quotes.status = TransactStatus.Rejected;
+            sliceState.quotes.error = { name: 'No quotes returned.' };
+          } else {
+            sliceState.quotes.status = TransactStatus.Fulfilled;
+
+            addQuotesToState(sliceState, action.payload.quotes);
+
+            if (sliceState.selectedQuoteId === null) {
+              const firstQuote = first(action.payload.quotes);
+              sliceState.selectedQuoteId = firstQuote.id;
+            }
+          }
+        }
       });
   },
 });
+
+function resetForm(sliceState: WritableDraft<TransactState>) {
+  sliceState.selectedChainId = null;
+  sliceState.selectedTokensId = null;
+  sliceState.inputAmount = BIG_ZERO;
+  sliceState.inputMax = false;
+
+  sliceState.options.status = TransactStatus.Idle;
+  sliceState.options.error = null;
+  sliceState.options.allOptionIds = [];
+  sliceState.options.byOptionId = {};
+  sliceState.options.byTokensId = {};
+
+  sliceState.tokens.allTokensIds = [];
+  sliceState.tokens.allChainIds = [];
+  sliceState.tokens.byTokensId = {};
+  sliceState.tokens.byChainId = {};
+
+  resetQuotes(sliceState);
+}
+
+function resetQuotes(sliceState: WritableDraft<TransactState>) {
+  sliceState.selectedQuoteId = null;
+  sliceState.quotes.status = TransactStatus.Idle;
+  sliceState.quotes.allQuoteIds = [];
+  sliceState.quotes.byQuoteId = {};
+  sliceState.quotes.error = null;
+  sliceState.quotes.requestId = null;
+
+  resetConfirm(sliceState);
+}
+
+function resetConfirm(sliceState: WritableDraft<TransactState>) {
+  sliceState.confirm.requestId = null;
+  sliceState.confirm.error = null;
+  sliceState.confirm.status = TransactStatus.Idle;
+  sliceState.confirm.changes = [];
+}
+
+function addQuotesToState(sliceState: WritableDraft<TransactState>, quotes: TransactQuote[]) {
+  for (const quote of quotes) {
+    if (quote.id in sliceState.quotes.byQuoteId) {
+      console.warn(`Attempting to add duplicate quote id ${quote.id} to state`);
+      continue;
+    }
+
+    sliceState.quotes.byQuoteId[quote.id] = quote;
+    sliceState.quotes.allQuoteIds.push(quote.id);
+  }
+}
 
 function addOptionsToState(sliceState: WritableDraft<TransactState>, options: TransactOption[]) {
   for (const option of options) {
@@ -186,7 +295,7 @@ function addOptionsToState(sliceState: WritableDraft<TransactState>, options: Tr
     if (!(option.chainId in sliceState.tokens.byChainId)) {
       sliceState.tokens.byChainId[option.chainId] = [option.tokensId];
       sliceState.tokens.allChainIds.push(option.chainId);
-    } else {
+    } else if (!sliceState.tokens.byChainId[option.chainId].includes(option.tokensId)) {
       sliceState.tokens.byChainId[option.chainId].push(option.tokensId);
     }
   }

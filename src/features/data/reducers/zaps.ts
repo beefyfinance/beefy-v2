@@ -1,18 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllZapsAction } from '../actions/zap';
 import { ChainEntity } from '../entities/chain';
-import { ZapEntity } from '../entities/zap';
+import { ZapEntityBeefy, ZapEntityOneInch } from '../entities/zap';
+import { AmmEntity } from '../entities/amm';
 
 /**
  * State containing Vault infos
  */
 export type ZapsState = {
-  byChainId: {
-    [chainId: ChainEntity['id']]: ZapEntity[];
+  beefy: {
+    byChainId: {
+      [chainId: ChainEntity['id']]: ZapEntityBeefy[];
+    };
+    byAmmId: {
+      [ammId: AmmEntity['id']]: ZapEntityBeefy;
+    };
+  };
+  oneInch: {
+    byChainId: {
+      [chainId: ChainEntity['id']]: ZapEntityOneInch;
+    };
   };
 };
 const initialZapsState: ZapsState = {
-  byChainId: {},
+  beefy: {
+    byChainId: {},
+    byAmmId: {},
+  },
+  oneInch: {
+    byChainId: {},
+  },
 };
 
 export const zapsSlice = createSlice({
@@ -23,17 +40,34 @@ export const zapsSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchAllZapsAction.fulfilled, (sliceState, action) => {
-      for (const [chainId, zaps] of Object.entries(action.payload.byChainId)) {
-        sliceState.byChainId[chainId] = zaps.map(zap => ({
-          zapAddress: zap.zapAddress,
-          ammRouter: zap.ammRouter,
-          ammFactory: zap.ammFactory,
-          ammPairInitHash: zap.ammPairInitHash,
-          type: zap.type ?? 'uniswapv2',
-          withdrawEstimateMode: zap.withdrawEstimateMode ?? 'getAmountOut',
-          withdrawEstimateFee: zap.withdrawEstimateFee ?? '0',
-          lpProviderFee: zap.lpProviderFee,
-        }));
+      for (const zap of action.payload.beefy) {
+        const typedZap: ZapEntityBeefy = {
+          type: 'beefy',
+          ...zap,
+        };
+
+        if (!(zap.ammId in sliceState.beefy.byAmmId)) {
+          sliceState.beefy.byAmmId[zap.ammId] = typedZap;
+
+          if (!(zap.chainId in sliceState.beefy.byChainId)) {
+            sliceState.beefy.byChainId[zap.chainId] = [];
+          }
+
+          sliceState.beefy.byChainId[zap.chainId].push(typedZap);
+        } else {
+          console.warn(`Ignoring duplicate beefy zap for amm ${zap.ammId}`);
+        }
+      }
+
+      for (const zap of action.payload.oneInch) {
+        if (!(zap.chainId in sliceState.oneInch.byChainId)) {
+          sliceState.oneInch.byChainId[zap.chainId] = {
+            type: 'one-inch',
+            ...zap,
+          };
+        } else {
+          console.warn(`Ignoring duplicate 1inch zap for chain ${zap.chainId}`);
+        }
       }
     });
   },

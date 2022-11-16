@@ -1,4 +1,4 @@
-import { Collapse, IconButton, makeStyles } from '@material-ui/core';
+import { Collapse, makeStyles } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import clsx from 'clsx';
 import React, { memo, ReactNode, useCallback, useState } from 'react';

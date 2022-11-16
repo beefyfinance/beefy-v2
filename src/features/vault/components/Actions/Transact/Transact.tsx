@@ -5,11 +5,11 @@ import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../store';
 import { transactInit } from '../../../../data/actions/transact';
 import { selectTransactStep, selectTransactVaultId } from '../../../../data/selectors/transact';
-import { TransactStep } from '../../../../data/reducers/wallet/transact';
 import { LoadingStep } from './LoadingStep';
 import { FormStep } from './FormStep';
 import { Card } from '../../Card';
 import { TokenSelectStep } from './TokenSelectStep';
+import { TransactStep } from '../../../../data/reducers/wallet/transact-types';
 
 const useStyles = makeStyles(styles);
 

@@ -10,7 +10,6 @@ import { fetchAllVaults, fetchFeaturedVaults } from './vaults';
 import { fetchAllBalanceAction } from './balance';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_noDataPolling } from '../utils/feature-flags';
-//import { fetchAllAllowanceAction } from './allowance';
 import { BeefyStore } from '../../../redux-types';
 import { chains as chainsConfig } from '../../../config/config';
 import { initWallet } from './wallet';
@@ -20,8 +19,6 @@ import { fetchAddressBookAction, fetchAllAddressBookAction } from './tokens';
 import { fetchAllZapsAction } from './zap';
 import { VaultEntity } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
-import { initiateDepositForm } from './deposit';
-import { initiateWithdrawForm } from './withdraw';
 import { BoostEntity } from '../entities/boost';
 import { selectBoostById } from '../selectors/boosts';
 import { selectShouldInitAddressBook } from '../selectors/data-loader';
@@ -217,50 +214,6 @@ function preLoadPages() {
     await import('../../../features/vault');
     console.debug('pre-loading vault page done');
   });
-}
-
-export async function initDepositForm(
-  store: BeefyStore,
-  vaultId: VaultEntity['id'],
-  walletAddress: string | null
-) {
-  const vault = selectVaultById(store.getState(), vaultId);
-
-  // we need the addressbook
-  if (selectShouldInitAddressBook(store.getState(), vault.chainId)) {
-    await store.dispatch(fetchAddressBookAction({ chainId: vault.chainId }));
-  }
-
-  // we need zaps
-  const zapsLoader = store.getState().ui.dataLoader.global.zaps;
-  if (zapsLoader && isInitialLoader(zapsLoader)) {
-    await store.dispatch(fetchAllZapsAction());
-  }
-
-  // then we can init the form
-  store.dispatch(initiateDepositForm({ vaultId, walletAddress }));
-}
-
-export async function initWithdrawForm(
-  store: BeefyStore,
-  vaultId: VaultEntity['id'],
-  walletAddress: string | null
-) {
-  const vault = selectVaultById(store.getState(), vaultId);
-
-  // we need the addressbook
-  if (selectShouldInitAddressBook(store.getState(), vault.chainId)) {
-    await store.dispatch(fetchAddressBookAction({ chainId: vault.chainId }));
-  }
-
-  // we need zaps
-  const zapsLoader = store.getState().ui.dataLoader.global.zaps;
-  if (zapsLoader && isInitialLoader(zapsLoader)) {
-    await store.dispatch(fetchAllZapsAction());
-  }
-
-  // then we can init the form
-  store.dispatch(initiateWithdrawForm({ vaultId, walletAddress }));
 }
 
 export async function initBoostForm(

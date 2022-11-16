@@ -1,50 +1,51 @@
 import React, { memo, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectTransactInputAmount,
   selectTransactSelectedTokens,
-  selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
 import clsx from 'clsx';
-import { AmountInput, AmountInputProps } from '../AmountInput';
-import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
-import { AmountInputMax } from '../AmountInput/InputAmountMax';
+import { AmountInput, AmountInputProps } from '../AmountInput';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
+import { BigNumber } from 'bignumber.js';
 
 const useStyles = makeStyles(styles);
 
-export type TokenSelectButtonProps = {
+export type DepositTokenAmountInputProps = {
   className?: string;
 };
 
-export const DepositTokenAmountInput = memo<TokenSelectButtonProps>(function ({ className }) {
+export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(function ({ className }) {
   const dispatch = useAppDispatch();
   const classes = useStyles();
   const selectedTokens = useAppSelector(selectTransactSelectedTokens);
-  const depositToken = selectedTokens[0];
+  const depositToken = selectedTokens[0]; // TODO univ3; only 1 deposit token supported
   const userBalance = useAppSelector(state =>
     selectUserBalanceOfToken(state, depositToken.chainId, depositToken.address)
   );
   const value = useAppSelector(selectTransactInputAmount);
   const handleChange = useCallback<AmountInputProps['onChange']>(
-    value => {
-      dispatch(transactActions.setInputAmount(value));
+    (value, isMax) => {
+      dispatch(
+        transactActions.setInputAmount({
+          amount: value.decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR),
+          max: isMax,
+        })
+      );
     },
-    [dispatch]
+    [dispatch, depositToken]
   );
 
   return (
-    <AmountInputMax
+    <AmountInput
       className={clsx(classes.input, className)}
       value={value}
-      onChange={handleChange}
+      maxValue={userBalance}
       maxDecimals={depositToken.decimals}
-      max={userBalance}
+      onChange={handleChange}
     />
   );
 });

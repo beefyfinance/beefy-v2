@@ -1,4 +1,4 @@
-import React, { ComponentType, FC, memo, useEffect } from 'react';
+import React, { ComponentType, memo, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { NetworkStep } from './components/NetworkStep';

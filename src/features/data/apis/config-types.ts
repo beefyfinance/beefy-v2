@@ -3,6 +3,7 @@ import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { PlatformEntity } from '../entities/platform';
 import { StrategyTypeEntity } from '../entities/strategy-type';
+import { AmmEntity } from '../entities/amm';
 
 export interface VaultConfig {
   id: string;
@@ -106,15 +107,49 @@ export interface ChainConfig {
   stableCoins: string[];
 }
 
-export interface ZapConfig {
+export interface AmmConfigBase {
+  id: string;
+  name: string;
+  routerAddress: string;
+  factoryAddress: string;
+  pairInitHash: string;
+  swapFee: number;
+}
+
+export interface AmmConfigUniswapV2 extends AmmConfigBase {
+  type: 'uniswapv2';
+  getAmountOutMode: 'getAmountOut' | 'getAmountsOut' | 'getAmountOutWithFee';
+  getAmountOutFee?: string;
+}
+
+export interface AmmConfigSolidly extends AmmConfigBase {
+  type: 'solidly';
+  getAmountOutMode: 'getAmountOut';
+}
+
+export type AmmConfig = AmmConfigUniswapV2 | AmmConfigSolidly;
+
+export function isSolidlyAmmConfig(amm: AmmConfig): amm is AmmConfigSolidly {
+  return amm.type === 'solidly';
+}
+
+export function isUniswapV2AmmConfig(amm: AmmConfig): amm is AmmConfigUniswapV2 {
+  return amm.type === 'uniswapv2';
+}
+
+export interface BeefyZapConfig {
   zapAddress: string; // identifier
-  ammRouter: string;
-  ammFactory: string;
-  ammPairInitHash: string;
-  type?: 'uniswapv2' | 'solidly';
-  withdrawEstimateMode?: 'getAmountOut' | 'getAmountsOut' | 'getAmountOutWithFee';
-  withdrawEstimateFee?: string;
-  lpProviderFee: number;
+  ammId: AmmEntity['id'];
+  chainId: ChainEntity['id'];
+}
+
+export interface OneInchZapConfig {
+  zapAddress: string; // identifier
+  chainId: ChainEntity['id'];
+  depositFromTokens: TokenEntity['id'][];
+  withdrawToTokens: TokenEntity['id'][];
+  blockedDepositToTokens: TokenEntity['id'][]; // these two block lists might end up being the same
+  blockedWithdrawFromTokens: TokenEntity['id'][]; // these two block lists might end up being the same
 }
 
 export interface MinterConfigTokenErc20 {

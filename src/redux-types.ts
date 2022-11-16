@@ -14,10 +14,8 @@ import { VaultsState } from './features/data/reducers/vaults';
 import { WalletState } from './features/data/reducers/wallet/wallet';
 import { AllowanceState } from './features/data/reducers/wallet/allowance';
 import { BalanceState } from './features/data/reducers/wallet/balance';
-import { DepositState } from './features/data/reducers/wallet/deposit';
 import { WalletActionsState } from './features/data/reducers/wallet/wallet-action';
 import { ZapsState } from './features/data/reducers/zaps';
-import { WithdrawState } from './features/data/reducers/wallet/withdraw';
 import { BoostState } from './features/data/reducers/wallet/boost';
 import { MintersState } from './features/data/reducers/minters';
 import { Action } from 'redux';
@@ -26,8 +24,9 @@ import { BridgeState } from './features/data/reducers/wallet/bridge';
 import { OnRampTypes } from './features/data/reducers/on-ramp-types';
 import { DataLoaderState } from './features/data/reducers/data-loader-types';
 import { FeesState } from './features/data/reducers/fees';
-import { TransactState } from './features/data/reducers/wallet/transact';
 import { StepperState } from './features/data/reducers/wallet/stepper';
+import { TransactState } from './features/data/reducers/wallet/transact-types';
+import { AmmsState } from './features/data/reducers/amms';
 
 export interface BeefyState {
   entities: {
@@ -38,6 +37,7 @@ export interface BeefyState {
     fees: FeesState;
     platforms: PlatformsState;
     zaps: ZapsState;
+    amms: AmmsState;
     minters: MintersState;
     infoCards: InfoCardsState;
   };
@@ -58,8 +58,6 @@ export interface BeefyState {
     filteredVaults: FilteredVaultsState;
     theme: UIThemeState;
     transact: TransactState;
-    deposit: DepositState;
-    withdraw: WithdrawState;
     boost: BoostState;
     bridge: BridgeState;
     onRamp: OnRampTypes;
