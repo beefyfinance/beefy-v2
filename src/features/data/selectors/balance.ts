@@ -192,7 +192,15 @@ export const selectBoostUserRewardsInToken = (
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.rewards || BIG_ZERO;
 };
 
-export const selectUserVaultDepositInUsd = (
+export const selectUserVaultDepositInUsd = createSelector(
+  (state: BeefyState, vault: VaultEntity, walletAddress?: string) =>
+    selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress),
+  (state: BeefyState, vault: VaultEntity, walletAddress?: string) =>
+    selectUserVaultDepositInDepositToken(state, vault.id, walletAddress),
+  (oraclePrice, vaultTokenDeposit) => vaultTokenDeposit.multipliedBy(oraclePrice)
+);
+
+export const selectUserVaultDepositInUsd1 = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -210,7 +218,7 @@ export const selectTotalUserDepositInUsd = (state: BeefyState) => {
   let total = BIG_ZERO;
   for (const vaultId of vaultIds) {
     const vault = selectVaultById(state, vaultId);
-    total = total.plus(selectUserVaultDepositInUsd(state, vault.id));
+    total = total.plus(selectUserVaultDepositInUsd(state, vault));
   }
   return total;
 };
@@ -329,7 +337,7 @@ export const selectUserExposureByKey = createCachedSelector(
     const valueByKey = userVaults.reduce((totals, vaultId) => {
       const vault = selectVaultById(state, vaultId);
       totals[vault[key]] = (totals[vault[key]] || BIG_ZERO).plus(
-        selectUserVaultDepositInUsd(state, vault.id)
+        selectUserVaultDepositInUsd(state, vault)
       );
       return totals;
     }, {} as Record<string, BigNumber>);
@@ -355,14 +363,14 @@ export const selectUserExposureByKey = createCachedSelector(
 
 export const selectTokenExposure = createSelector(
   (state: BeefyState) => selectState(state),
-  (state: BeefyState) => selectUserDepositedVaults(state),
+  selectUserDepositedVaults,
   (state, vaultIds) => {
     return vaultIds.reduce((totals, vaultId) => {
       const vault = selectVaultById(state, vaultId);
       if (vault.assetIds.length === 1) {
         totals[vault.assetIds[0]] = {
           value: (totals[vault.assetIds[0]]?.value || BIG_ZERO).plus(
-            selectUserVaultDepositInUsd(state, vault.id)
+            selectUserVaultDepositInUsd(state, vault)
           ),
           assetIds: [vault.assetIds[0]],
         };
@@ -383,7 +391,7 @@ export const selectTokenExposure = createSelector(
           }
         } else {
           totals[vault.name] = {
-            value: selectUserVaultDepositInUsd(state, vault.id),
+            value: selectUserVaultDepositInUsd(state, vault),
             assetIds: vault.assetIds,
             chainId: vault.chainId,
           };
@@ -424,7 +432,7 @@ export const selectStablecoinsExposure = createSelector(
       const vault = selectVaultById(state, vaultId);
       if (selectIsVaultStable(state, vault.id)) {
         totals['stable'] = (totals['stable'] || BIG_ZERO).plus(
-          selectUserVaultDepositInUsd(state, vault.id)
+          selectUserVaultDepositInUsd(state, vault)
         );
       } else {
         const haveBreakdownData = selectHaveBreakdownData(state, vault);
@@ -444,7 +452,7 @@ export const selectStablecoinsExposure = createSelector(
           }
         } else {
           totals['other'] = (totals['other'] || BIG_ZERO).plus(
-            selectUserVaultDepositInUsd(state, vault.id)
+            selectUserVaultDepositInUsd(state, vault)
           );
         }
       }
@@ -475,20 +483,25 @@ export const selectUserStablecoinsExposure = createCachedSelector(
 
 export const selectUserVaultBalances = (state: BeefyState) => {
   const userVaults = selectUserDepositedVaults(state);
-  return userVaults.reduce((totals, vaultId) => {
+  const result = userVaults.reduce((totals, vaultId) => {
     const vault = selectVaultById(state, vaultId);
     const chainId = vault.chainId;
-    const vaultsTemp = totals[chainId]?.vaults ?? [];
-    const vaults = [...vaultsTemp, vault];
+    const vaults = totals[chainId]?.vaults || [];
+    vaults.push(vault);
     const depositedByChain = (totals[chainId]?.depositedByChain || BIG_ZERO).plus(
-      selectUserVaultDepositInUsd(state, vault.id)
+      selectUserVaultDepositInUsd(state, vault)
     );
     totals[chainId] = {
+      chainId,
       vaults,
       depositedByChain,
     };
     return totals;
-  }, {} as Record<string, { vaults: VaultEntity[]; depositedByChain: BigNumber }>);
+  }, {} as Record<string, { vaults: VaultEntity[]; depositedByChain: BigNumber; chainId: ChainEntity['id'] }>);
+
+  return Object.values(result).sort((a, b) => {
+    return a.depositedByChain.gte(b.depositedByChain) ? -1 : 1;
+  });
 };
 
 export const selectVaultsWithBalanceByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
@@ -497,7 +510,7 @@ export const selectVaultsWithBalanceByChainId = (state: BeefyState, chainId: Cha
   for (const vaultId of userVaults) {
     const vault = selectVaultById(state, vaultId);
     if (vault.chainId === chainId) {
-      vaults[vaultId] = selectUserVaultDepositInUsd(state, vaultId);
+      vaults[vaultId] = selectUserVaultDepositInUsd(state, vault);
     }
   }
   return vaults;

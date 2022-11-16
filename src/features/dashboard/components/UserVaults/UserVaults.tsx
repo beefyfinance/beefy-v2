@@ -24,13 +24,12 @@ export const UserVaults = memo(function () {
 export const VirtualList = function () {
   const classes = useStyles();
   const vaults = useAppSelector(selectUserVaultBalances);
-  const vaultIds = Object.keys(vaults);
-  const totalVaults = vaultIds.length;
+  const totalVaults = vaults.length;
   const minBatchSize = 3;
   const [renderCount, setRenderCount] = useState(minBatchSize);
   const containerRef = useRef<HTMLDivElement>();
   const bottomRef = useRef<HTMLDivElement>();
-  const renderVaultIds = useMemo(() => vaultIds.slice(0, renderCount), [vaultIds, renderCount]);
+  const renderVaultIds = useMemo(() => vaults.slice(0, renderCount), [vaults, renderCount]);
   const remainingVaults = useMemo(() => {
     return Math.max(0, totalVaults - renderCount);
   }, [totalVaults, renderCount]);
@@ -96,8 +95,8 @@ export const VirtualList = function () {
   return (
     <>
       <div className={classes.tablesContainer} ref={containerRef}>
-        {renderVaultIds.map(chainId => {
-          return <ChainTable key={chainId} chainId={chainId} data={vaults[chainId]} />;
+        {renderVaultIds.map(data => {
+          return <ChainTable key={data.chainId} data={data} />;
         })}
       </div>
       <div ref={bottomRef} />

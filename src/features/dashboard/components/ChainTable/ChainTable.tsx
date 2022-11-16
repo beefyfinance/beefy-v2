@@ -14,20 +14,19 @@ import { styles } from './styles';
 import { Scrollable } from '../../../../components/Scrollable';
 
 interface ChainTableProps {
-  chainId: ChainEntity['id'];
-  data: { vaults: VaultEntity[]; depositedByChain: BigNumber };
+  data: { vaults: VaultEntity[]; depositedByChain: BigNumber; chainId: ChainEntity['id'] };
 }
 
 const useStyles = makeStyles(styles);
 
-export const ChainTable = memo<ChainTableProps>(function ({ chainId, data }) {
+export const ChainTable = memo<ChainTableProps>(function ({ data }) {
   const classes = useStyles();
 
-  const { sortedVaults, sortedOptions, handleSort } = useSortVaults(data.vaults, chainId);
+  const { sortedVaults, sortedOptions, handleSort } = useSortVaults(data.vaults, data.chainId);
 
   return (
     <div className={classes.tableContainer}>
-      <TableTitle chainId={chainId} deposited={data.depositedByChain} />
+      <TableTitle chainId={data.chainId} deposited={data.depositedByChain} />
       <Scrollable autoHeight={true}>
         <TableFilter sortOptions={sortedOptions} handleSort={handleSort} />
         <TableVaults vaults={sortedVaults} />

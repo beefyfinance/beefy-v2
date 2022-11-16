@@ -1,20 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
+import createCachedSelector from 're-reselect';
 import { BeefyState } from '../../../redux-types';
-import { ChainEntity } from '../entities/chain';
 
-export const selectChainById = createSelector(
-  // get a tiny bit of the data
-  (state: BeefyState) => state.entities.chains.byId,
-  // get the user passed ID
-  (_: BeefyState, chainId: ChainEntity['id']) => chainId,
-  // last function receives previous function outputs as parameters
-  (chainsById, chainId) => {
-    if (chainsById[chainId] === undefined) {
-      throw new Error(`selectChainById: Unknown chain id ${chainId}`);
-    }
-    return chainsById[chainId];
-  }
-);
+export const selectChainById = createCachedSelector(
+  (state, chainId) => chainId,
+  state => state.entities.chains.byId,
+  (chainId, byId) => byId[chainId]
+)((state, chainId) => chainId);
 
 export const selectAllChains = createSelector(
   // get a tiny bit of the data

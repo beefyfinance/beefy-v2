@@ -6,6 +6,8 @@ import { selectChainById } from './chains';
 import { BIG_ONE } from '../../../helpers/big-number';
 import { selectIsAddressBookLoaded } from './data-loader';
 import { VaultEntity } from '../entities/vault';
+import { createSelector } from '@reduxjs/toolkit';
+import createCachedSelector from 're-reselect';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -38,23 +40,22 @@ export const selectTokenById = (
   return byChainId[chainId].byAddress[address];
 };
 
-export const selectTokenByAddress = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  address: TokenEntity['address']
-) => {
-  const byChainId = state.entities.tokens.byChainId;
-  if (byChainId[chainId] === undefined) {
-    throw new Error(`selectTokenById: Unknown chain id ${chainId}`);
+export const selectTokenByAddress = createCachedSelector(
+  (state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) =>
+    selectTokensByChainId(state, chainId),
+  (state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) => address,
+  (tokensByChainId, address) => tokensByChainId.byAddress[address.toLowerCase()]
+)((state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) => address);
+
+export const selectTokensByChainId = createSelector(
+  (state: BeefyState, chainId: ChainEntity['id']) => state.entities.tokens.byChainId[chainId],
+  tokensByChainId => {
+    if (tokensByChainId === undefined) {
+      throw new Error(`selectTokenById: Unknown chain id`);
+    }
+    return tokensByChainId;
   }
-  if (byChainId[chainId].byAddress[address.toLowerCase()] === undefined) {
-    // fallback to addressbook token
-    throw new Error(
-      `selectTokenByAddress: Unknown token address ${address} for chain ${chainId}, maybe you need to load the addressbook`
-    );
-  }
-  return byChainId[chainId].byAddress[address.toLowerCase()];
-};
+);
 
 export const selectErc20TokenByAddress = (
   state: BeefyState,
@@ -141,13 +142,14 @@ export const selectTokenPriceByAddress = (
   address: string
 ) => {
   const token = state.entities.tokens.byChainId[chainId].byAddress[address.toLowerCase()];
-  return state.entities.tokens.prices.byOracleId[token.oracleId] || BIG_ONE;
+  return selectTokenPriceByTokenOracleId(state, token.oracleId);
 };
 
-export const selectTokenPriceByTokenOracleId = (
-  state: BeefyState,
-  oracleId: TokenEntity['oracleId']
-) => state.entities.tokens.prices.byOracleId[oracleId] || BIG_ONE;
+export const selectTokenPriceByTokenOracleId = createCachedSelector(
+  (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
+    state.entities.tokens.prices.byOracleId[oracleId],
+  price => price || BIG_ONE
+)((state: BeefyState, oracleId: TokenEntity['oracleId']) => oracleId);
 
 export const selectLpBreakdownByOracleId = (
   state: BeefyState,
