@@ -1,5 +1,33 @@
 [
   {
+    "id": "curve-op-f-wsteth",
+    "name": "wstETH-ETH",
+    "token": "wstETHCRV",
+    "tokenAddress": "0xEfDE221f306152971D8e9f181bFe998447975810",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveWSTETH",
+    "earnedTokenAddress": "0x0892a178c363b4739e5Ac89E9155B9c30214C0c0",
+    "earnContractAddress": "0x0892a178c363b4739e5Ac89E9155B9c30214C0c0",
+    "oracle": "lps",
+    "oracleId": "curve-op-f-wsteth",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["wstETH", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/wsteth/deposit",
+    "network": "optimism",
+    "createdAt": 1668590265
+  },
+  {
     "id": "hop-op-snx",
     "name": "SNX LP",
     "token": "SNX-hSNX LP",
@@ -423,13 +451,7 @@
     "platformId": "velodrome",
     "assets": ["SONNE", "USDC"],
     "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
@@ -1481,12 +1503,7 @@
     "platformId": "velodrome",
     "assets": ["sETH", "ETH"],
     "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
