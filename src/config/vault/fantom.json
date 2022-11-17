@@ -114,6 +114,64 @@
     "mintTokenUrl": "https://beta.beefy.finance/#/fantom/vault/beefy-beFTM"
   },
   {
+    "id": "boo-dei-usdc",
+    "name": "DEI-USDC LP",
+    "token": "DEI-USDC LP",
+    "tokenAddress": "0x91f7120898b4be26cC1e84F421e76725c07d1361",
+    "tokenDecimals": 18,
+    "tokenProviderId": "spookyswap",
+    "earnedToken": "mooSpookyUSDC-DEI",
+    "earnedTokenAddress": "0xa43A80F527aC3619ce904C55758D83A7b468fb16",
+    "earnContractAddress": "0xa43A80F527aC3619ce904C55758D83A7b468fb16",
+    "oracle": "lps",
+    "oracleId": "boo-dei-usdc",
+    "status": "active",
+    "platformId": "spookyswap",
+    "assets": ["DEI", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "ALGO_STABLE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://spooky.fi/#/add/0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+    "buyTokenUrl": "https://spooky.fi/#/swap",
+    "network": "fantom",
+    "createdAt": 1667003277
+  },
+  {
+    "id": "boo-deus-wftm",
+    "name": "DEUS-FTM LP",
+    "token": "DEUS-FTM LP",
+    "tokenAddress": "0xaF918eF5b9f33231764A5557881E6D3e5277d456",
+    "tokenDecimals": 18,
+    "tokenProviderId": "spookyswap",
+    "earnedToken": "mooSpookyDEUS-FTM",
+    "earnedTokenAddress": "0x168D2069cC58f0bB3847172dcC47c295dc49F06f",
+    "earnContractAddress": "0x168D2069cC58f0bB3847172dcC47c295dc49F06f",
+    "oracle": "lps",
+    "oracleId": "boo-deus-wftm",
+    "status": "active",
+    "platformId": "spookyswap",
+    "assets": ["DEUS", "FTM"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xde5ed76e7c05ec5e4572cfc88d1acea165109e44",
+    "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xde5ed76e7c05ec5e4572cfc88d1acea165109e44",
+    "network": "fantom",
+    "createdAt": 1665666444
+  },
+  {
     "id": "mai-curve-ftm-mai",
     "name": "MAI/fUSDT/USDC",
     "token": "MAI3Pool-f",
@@ -744,7 +802,8 @@
     "earnContractAddress": "0x3F19d52af24fc79745f82FEf1F0Cfe36589A2FEF",
     "oracle": "tokens",
     "oracleId": "SOLACE",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solace",
     "assets": ["SOLACE"],
     "strategyTypeId": "single",
@@ -4836,7 +4895,6 @@
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
     "createdAt": 1636100990,
     "network": "fantom",
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -4867,7 +4925,6 @@
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x53D831e1db0947c74e8a52618f662209ec5dE0cE",
     "createdAt": 1634116608,
     "network": "fantom",
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -4897,7 +4954,6 @@
     "addLiquidityUrl": "https://fantom-exchange.jetswap.finance/#/add/0x74b23882a30290451A17c44f4F05243b6b58C76d/0x321162Cd933E2Be498Cd2267a90534A804051b11",
     "createdAt": 1632980637,
     "network": "fantom",
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -4928,7 +4984,6 @@
     "buyTokenUrl": "https://fantom-exchange.jetswap.finance/#/swap?outputCurrency=0x3D8f1ACCEe8e263F837138829B6C4517473d0688",
     "createdAt": 1632906330,
     "network": "fantom",
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -4959,7 +5014,6 @@
     "buyTokenUrl": "https://fantom-exchange.jetswap.finance/#/swap?outputCurrency=0x3D8f1ACCEe8e263F837138829B6C4517473d0688",
     "createdAt": 1632906651,
     "network": "fantom",
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -4988,7 +5042,6 @@
     "buyTokenUrl": "https://fantom-exchange.jetswap.finance/#/swap?outputCurrency=0x3D8f1ACCEe8e263F837138829B6C4517473d0688",
     "createdAt": 1632911389,
     "network": "fantom",
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -5019,7 +5072,6 @@
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
     "createdAt": 1630352068,
     "network": "fantom",
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -5050,7 +5102,6 @@
     "buyTokenUrl": "https://swap.spiritswap.finance/#/exchange/swap/0x181F3F22C9a751E2ce673498A03E1FDFC0ebBFB6",
     "createdAt": 1621505384,
     "network": "fantom",
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -5079,7 +5130,6 @@
     "buyTokenUrl": "https://swap.spiritswap.finance/#/exchange/swap/0x181F3F22C9a751E2ce673498A03E1FDFC0ebBFB6",
     "createdAt": 1621508945,
     "network": "fantom",
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -5110,7 +5160,6 @@
     "addLiquidityUrl": "https://frozenyogurt.finance/pool",
     "createdAt": 1620633860,
     "network": "fantom",
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -5141,7 +5190,6 @@
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0xA92d41Ab8eFeE617d80a829CD9F5683c5F793ADA",
     "createdAt": 1620626525,
     "network": "fantom",
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -6008,7 +6056,6 @@
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x627524d78B4fC840C887ffeC90563c7A42b671fD",
     "network": "fantom",
     "createdAt": 1642139577,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -6039,7 +6086,6 @@
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x248cb87dda803028dfead98101c9465a2fbda0d4",
     "network": "fantom",
     "createdAt": 1641550679,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -6070,7 +6116,6 @@
     "buyTokenUrl": "https://swap.spiritswap.finance/#/exchange/swap/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
     "network": "fantom",
     "createdAt": 1633336526,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {
@@ -6101,7 +6146,6 @@
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xFbc3c04845162F067A0B6F8934383E63899c3524",
     "network": "fantom",
     "createdAt": 1631054248,
-    "retiredReason": "tvl",
     "retireReason": "tvl"
   },
   {

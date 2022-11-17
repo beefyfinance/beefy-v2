@@ -14,6 +14,10 @@ import { BoostEntity } from '../../../../../data/entities/boost';
 import { isFulfilled } from '../../../../../data/reducers/data-loader-types';
 import { boostActions } from '../../../../../data/reducers/wallet/boost';
 import { stepperActions } from '../../../../../data/reducers/wallet/stepper';
+import {
+  selectBoostRewardsTokenEntity,
+  selectBoostUserRewardsInToken,
+} from '../../../../../data/selectors/balance';
 import { selectBoostById } from '../../../../../data/selectors/boosts';
 import { selectIsAddressBookLoaded } from '../../../../../data/selectors/data-loader';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
@@ -55,6 +59,11 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function ({
   const mooToken = useAppSelector(state =>
     selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
   );
+  const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
+  const boostPendingRewards = useAppSelector(state =>
+    selectBoostUserRewardsInToken(state, boost.id)
+  );
+
   const formReady = useAppSelector(
     state =>
       selectIsAddressBookLoaded(state, boost.chainId) &&
@@ -117,16 +126,36 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function ({
         })
       );
     } else {
-      dispatch(
-        stepperActions.addStep({
-          step: {
-            step: 'unstake',
-            message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
-            action: walletActions.unstakeBoost(boost, formState.amount),
-            pending: false,
-          },
-        })
-      );
+      // If user is withdrawing all their assets, UI won't allow to claim individually later on, so claim as well
+      if (formState.max) {
+        dispatch(
+          stepperActions.addStep({
+            step: {
+              step: 'claim-unstake',
+              message: t('Vault-TxnConfirm', { type: t('Claim-Unstake-noun') }),
+              action: walletActions.exitBoost(boost),
+              pending: false,
+              extraInfo: {
+                rewards: {
+                  token: rewardToken,
+                  amount: boostPendingRewards,
+                },
+              },
+            },
+          })
+        );
+      } else {
+        dispatch(
+          stepperActions.addStep({
+            step: {
+              step: 'unstake',
+              message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+              action: walletActions.unstakeBoost(boost, formState.amount),
+              pending: false,
+            },
+          })
+        );
+      }
     }
 
     dispatch(startStepper(boost.chainId));

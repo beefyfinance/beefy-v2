@@ -898,5 +898,30 @@
     "id": "hermes",
     "name": "Hermes",
     "filter": true
+  },
+  {
+    "id": "gmx",
+    "name": "GMX",
+    "filter": true
+  },
+  {
+    "id": "ferro",
+    "name": "Ferro",
+    "filter": true
+  },
+  {
+    "id": "aura",
+    "name": "Aura",
+    "filter": true
+  },
+  {
+    "id": "hop",
+    "name": "Hop",
+    "filter": true
+  },
+  {
+    "id": "convex",
+    "name": "Convex",
+    "filter": true
   }
 ]

@@ -2,7 +2,7 @@ import { AmmConfig } from '../../features/data/apis/config-types';
 
 export const amms: AmmConfig[] = [
   {
-    id: 'arbitrum-pangolin',
+    id: 'avax-pangolin',
     name: 'Pangolin',
     type: 'uniswapv2',
     routerAddress: '0xE54Ca86531e17Ef3616d22Ca28b0D458b6C89106',
@@ -12,7 +12,7 @@ export const amms: AmmConfig[] = [
     getAmountOutMode: 'getAmountOut',
   },
   {
-    id: 'arbitrum-olive',
+    id: 'avax-olive',
     name: 'Olive',
     type: 'uniswapv2',
     routerAddress: '0x0c45FB63001b56a21e29c7dcc1727bfDA273a368',
@@ -22,12 +22,22 @@ export const amms: AmmConfig[] = [
     getAmountOutMode: 'getAmountOut',
   },
   {
-    id: 'arbitrum-joe',
+    id: 'avax-joe',
     name: 'Joe',
     type: 'uniswapv2',
     routerAddress: '0x60aE616a2155Ee3d9A68541Ba4544862310933d4',
     factoryAddress: '0x9Ad6C38BE94206cA50bb0d90783181662f0Cfa10',
     pairInitHash: '0x0bbca9af0511ad1a1da383135cf3a8d2ac620e549ef9f6ae3a4c33c2fed0af91',
+    swapFee: 0.003,
+    getAmountOutMode: 'getAmountOut',
+  },
+  {
+    id: 'avax-swapsicle',
+    name: 'Swapsicle',
+    type: 'uniswapv2',
+    routerAddress: '0xC7f372c62238f6a5b79136A9e5D16A2FD7A3f0F5',
+    factoryAddress: '0x9C60C867cE07a3c403E2598388673C10259EC768',
+    pairInitHash: '0x9e43ee37212e3296c7f6087d3e0a37b48a4e4e413538dac0fd18cfe2f80666c1',
     swapFee: 0.003,
     getAmountOutMode: 'getAmountOut',
   },

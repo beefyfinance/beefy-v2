@@ -1,5 +1,5 @@
 // todo: load these asynchronously
-import { Insurace, Moonpot, QiDao, Solace } from '../../../helpers/partners';
+import { Insurace, Moonpot, Nexus, QiDao } from '../../../helpers/partners';
 import { config as chainConfigs } from '../../../config/config';
 import { ChainEntity } from '../entities/chain';
 import { infoCards } from '../../../config/info-cards';
@@ -81,7 +81,7 @@ export class ConfigAPI {
   }
 
   public async fetchPartnersConfig(): Promise<PartnersConfig> {
-    return { QiDao, Insurace, Moonpot, Solace };
+    return { QiDao, Insurace, Moonpot, Nexus };
   }
 
   public async fetchAmmsConfig(): Promise<{ [chainId: ChainEntity['id']]: AmmConfig[] }> {

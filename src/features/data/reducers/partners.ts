@@ -27,7 +27,8 @@ export type PartnersState = {
       [vaultId: VaultEntity['id']]: boolean;
     };
   };
-  solace: {
+
+  nexus: {
     byChainId: {
       [chainId: ChainEntity['id']]: boolean;
     };
@@ -44,7 +45,8 @@ export const initialPartnersState: PartnersState = {
   qidao: {
     byVaultId: {},
   },
-  solace: {
+
+  nexus: {
     byChainId: {},
   },
 };
@@ -72,9 +74,9 @@ export const partnersSlice = createSlice({
           sliceState.qidao.byVaultId[vaultId] = true;
         }
       }
-      for (const chainId of action.payload.Solace) {
-        if (!sliceState.solace.byChainId[chainId]) {
-          sliceState.solace.byChainId[chainId] = true;
+      for (const chainId of action.payload.Nexus) {
+        if (!sliceState.nexus.byChainId[chainId]) {
+          sliceState.nexus.byChainId[chainId] = true;
         }
       }
     });

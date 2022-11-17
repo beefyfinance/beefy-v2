@@ -6,6 +6,7 @@ import { AllValuesAsString } from '../features/data/utils/types-utils';
 import { BIG_ONE, BIG_ZERO, isBigNumber } from './big-number';
 import { SerializedError } from '@reduxjs/toolkit';
 import { isString } from 'lodash';
+import { padStart } from 'lodash';
 
 export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
   const number = num.toFormat({
@@ -277,4 +278,8 @@ export function formatEns(ens: string): string {
 
 export function errorToString(error: SerializedError | string) {
   return isString(error) ? error : (error?.message || error?.name || error?.code) + '';
+}
+
+export function zeroPad(value: number | undefined): string {
+  return padStart((value || 0).toString(), 2, '0');
 }

@@ -14,9 +14,10 @@ export const selectIsVaultInsurace = (state: BeefyState, vaultId: VaultEntity['i
   const vault = selectVaultById(state, vaultId);
   return state.biz.partners.insurace.byChainId[vault.chainId] !== undefined;
 };
-export const selectIsVaultSolace = (state: BeefyState, vaultId: VaultEntity['id']) => {
+
+export const selectIsVaultNexus = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
-  return state.biz.partners.solace.byChainId[vault.chainId] !== undefined;
+  return state.biz.partners.nexus.byChainId[vault.chainId] !== undefined;
 };
 export const selectIsVaultBinSpirit = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);

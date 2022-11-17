@@ -3,7 +3,6 @@ import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   AppBar,
-  Badge,
   Box,
   Container,
   Divider,
@@ -60,13 +59,13 @@ const NavLinks = memo(function () {
     { title: t('Header-Vaults'), url: '/' },
     { title: t('Header-Proposals'), url: 'https://vote.beefy.finance' },
     { title: t('Header-BuyCrypto'), url: '/onramp' },
-    { title: t('Header-BridgeBifi'), url: '/bridge', badge: true },
+    { title: t('Header-BridgeBifi'), url: '/bridge' },
     { title: t('Header-News'), url: 'https://beefy.com/articles/' },
     { title: t('Header-Docs'), url: 'https://docs.beefy.finance' },
   ];
   return (
     <>
-      {navLinks.map(({ title, url, badge }) => (
+      {navLinks.map(({ title, url }) => (
         <NavLink
           activeClassName={classes.active}
           exact={true}
@@ -75,13 +74,7 @@ const NavLinks = memo(function () {
           to={url[0] === '/' ? url : { pathname: url }}
           target={url[0] === '/' ? undefined : '_blank'}
         >
-          {badge ? (
-            <Badge badgeContent="New" color="primary">
-              {t(title)}
-            </Badge>
-          ) : (
-            t(title)
-          )}
+          {t(title)}
         </NavLink>
       ))}
     </>
@@ -122,6 +115,7 @@ export const Header = connect((state: BeefyState) => {
     const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
     };
+
     return (
       <Box sx={{ flexGrow: 1 }}>
         <AppBar className={clsx([classes.navHeader, classes.hasPortfolio])} position="static">

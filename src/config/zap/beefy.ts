@@ -22,6 +22,11 @@ export const zaps: BeefyZapConfig[] = [
     zapAddress: '0x6674f3961C5908B086A5551377806f4BA8F0Ac99',
   },
   {
+    chainId: 'avax',
+    ammId: 'avax-swapsicle',
+    zapAddress: '0x149b9db9479c12841002f503099ebf5f6DafD60c',
+  },
+  {
     chainId: 'bsc',
     ammId: 'bsc-pancakeswap-v2',
     zapAddress: '0x03c509fd85d51dc7E75fa2De06276cFA147486EA',
