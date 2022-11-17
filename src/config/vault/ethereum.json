@@ -323,7 +323,7 @@
     "platformId": "aura",
     "assets": ["rETH", "bbaUSD"],
     "strategyTypeId": "multi-lp",
-    "risks": ["COMPLEXITY_MID", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_MID", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://app.balancer.fi/#/pool/0x334c96d792e4b26b841d28f53235281cec1be1f200020000000000000000038a",
     "network": "ethereum",
     "createdAt": 1667658496
@@ -431,7 +431,7 @@
     "platformId": "aura",
     "assets": ["rETH", "ETH"],
     "strategyTypeId": "multi-lp",
-    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://app.balancer.fi/#/pool/0x1e19cf2d73a72ef1332c882f20534b6519be0276000200000000000000000112",
     "network": "ethereum",
     "createdAt": 1667575517
