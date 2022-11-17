@@ -1,5 +1,26 @@
 [
   {
+    "id": "aura-wsteth-reth-sfrxeth",
+    "name": "wstETH/rETH/sfrxETH",
+    "token": "wstETH/rETH/sfrxETH",
+    "tokenAddress": "0x8e85e97ed19C0fa13B2549309965291fbbc0048b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAurawstETH-rETH-sfrxETH",
+    "earnedTokenAddress": "0xeAa61217fbbaB972fEBFAEa8D62105139D0240E8",
+    "earnContractAddress": "0xeAa61217fbbaB972fEBFAEa8D62105139D0240E8",
+    "oracle": "lps",
+    "oracleId": "aura-wsteth-reth-sfrxeth",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["wstETH", "rETH", "sfrxETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x8e85e97ed19c0fa13b2549309965291fbbc0048b0000000000000000000003ba",
+    "network": "ethereum",
+    "createdAt": 1668704940
+  },
+  {
     "id": "aura-aurabal",
     "name": "auraBAL",
     "token": "auraBAL",
