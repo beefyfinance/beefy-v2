@@ -8,13 +8,13 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-interface ResumeStatProps {
+interface SummaryStatProps {
   title: string;
   icon: 'wallet' | 'vault' | 'daily-yield' | 'monthly-yield';
   value: string;
 }
 
-const ResumeStat = memo<ResumeStatProps>(function ({ title, icon, value }) {
+const SummaryStat = memo<SummaryStatProps>(function ({ title, icon, value }) {
   const classes = useStyles();
   return (
     <div className={classes.container}>
@@ -33,28 +33,28 @@ const ResumeStat = memo<ResumeStatProps>(function ({ title, icon, value }) {
   );
 });
 
-export const ResumeStats = memo(function () {
+export const SummaryStats = memo(function () {
   const { t } = useTranslation();
   const classes = useStyles();
   const stats = useAppSelector(selectUserGlobalStats);
   return (
     <div className={classes.resumeContainer}>
-      <ResumeStat
+      <SummaryStat
         icon="wallet"
-        title={t('Resume-Deposit')}
+        title={t('Summary-Deposit')}
         value={formatUsd(stats.deposited.toNumber())}
       />
-      <ResumeStat
+      <SummaryStat
         icon="monthly-yield"
-        title={t('Resume-Monthly')}
+        title={t('Summary-Monthly')}
         value={formatUsd(stats.monthly.toNumber())}
       />
-      <ResumeStat
+      <SummaryStat
         icon="daily-yield"
-        title={t('Resume-Daily')}
+        title={t('Summary-Daily')}
         value={formatUsd(stats.daily.toNumber())}
       />
-      <ResumeStat icon="vault" title={t('Resume-Vaults')} value={`${stats.depositedVaults}`} />
+      <SummaryStat icon="vault" title={t('Summary-Vaults')} value={`${stats.depositedVaults}`} />
     </div>
   );
 });

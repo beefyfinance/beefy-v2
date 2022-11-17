@@ -6,7 +6,7 @@ import { TokenEntity, TokenLpBreakdown } from '../entities/token';
 import { isGovVault, VaultEntity, VaultGov } from '../entities/vault';
 import { selectActiveVaultBoostIds, selectAllVaultBoostIds, selectBoostById } from './boosts';
 import {
-  selectHaveBreakdownData,
+  selectHasBreakdownData,
   selectIsTokenStable,
   selectLpBreakdownByAddress,
   selectTokenByAddress,
@@ -57,7 +57,7 @@ export const selectHasWalletBalanceBeenFetched = (state: BeefyState, walletAddre
 
 export const selectUserDepositedVaults = (state: BeefyState) => {
   const walletBalance = _selectWalletBalance(state);
-  return walletBalance ? walletBalance.depositedVaultIds : [];
+  return walletBalance?.depositedVaultIds || [];
 };
 
 export const selectHasUserDepositInVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
@@ -199,19 +199,6 @@ export const selectUserVaultDepositInUsd = createSelector(
     selectUserVaultDepositInDepositToken(state, vault.id, walletAddress),
   (oraclePrice, vaultTokenDeposit) => vaultTokenDeposit.multipliedBy(oraclePrice)
 );
-
-export const selectUserVaultDepositInUsd1 = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  walletAddress?: string
-) => {
-  // TODO: do this in the state?
-  const vault = selectVaultById(state, vaultId);
-  const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const vaultTokenDeposit = selectUserVaultDepositInDepositToken(state, vaultId, walletAddress);
-
-  return vaultTokenDeposit.multipliedBy(oraclePrice);
-};
 
 export const selectTotalUserDepositInUsd = (state: BeefyState) => {
   const vaultIds = selectUserDepositedVaults(state);
@@ -355,7 +342,7 @@ export const selectUserExposureByKey = createCachedSelector(
       };
     });
 
-    const sortedItems = getTop6Array(exposureByKey);
+    const sortedItems = getTop6Array(exposureByKey, 'percentage');
 
     return sortedItems;
   }
@@ -375,7 +362,7 @@ export const selectTokenExposure = createSelector(
           assetIds: [vault.assetIds[0]],
         };
       } else {
-        const haveBreakdownData = selectHaveBreakdownData(state, vault);
+        const haveBreakdownData = selectHasBreakdownData(state, vault);
         if (haveBreakdownData) {
           const breakdown = selectLpBreakdownByAddress(
             state,
@@ -420,7 +407,7 @@ export const selectUserTokenExposure = createCachedSelector(
         chainId: valuesByToken[token].chainId,
       };
     });
-    return getTop6Array(exposureByTokens);
+    return getTop6Array(exposureByTokens, 'percentage');
   }
 )((state: BeefyState, key: 'tokenExposure') => key);
 
@@ -435,7 +422,7 @@ export const selectStablecoinsExposure = createSelector(
           selectUserVaultDepositInUsd(state, vault)
         );
       } else {
-        const haveBreakdownData = selectHaveBreakdownData(state, vault);
+        const haveBreakdownData = selectHasBreakdownData(state, vault);
         if (haveBreakdownData) {
           const breakdown = selectLpBreakdownByAddress(
             state,

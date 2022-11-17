@@ -9,7 +9,7 @@ import { ChainEntity } from '../../../data/entities/chain';
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectChainById } from '../../../data/selectors/chains';
 import { TableVaults } from './components/TableVaults/TableVaults';
-import { SortedOptions, useSortVaults } from './hooks';
+import { SortedOptions, useSortedVaults } from './hooks';
 import { styles } from './styles';
 import { Scrollable } from '../../../../components/Scrollable';
 
@@ -22,7 +22,7 @@ const useStyles = makeStyles(styles);
 export const ChainTable = memo<ChainTableProps>(function ({ data }) {
   const classes = useStyles();
 
-  const { sortedVaults, sortedOptions, handleSort } = useSortVaults(data.vaults, data.chainId);
+  const { sortedVaults, sortedOptions, handleSort } = useSortedVaults(data.vaults, data.chainId);
 
   return (
     <div className={classes.tableContainer}>

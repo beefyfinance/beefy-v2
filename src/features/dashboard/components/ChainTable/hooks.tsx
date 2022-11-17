@@ -10,7 +10,7 @@ export type SortedOptions = {
   sortDirection: 'asc' | 'desc' | 'none';
 };
 
-export function useSortVaults(vaults: VaultEntity[], chainId: ChainEntity['id']) {
+export function useSortedVaults(vaults: VaultEntity[], chainId: ChainEntity['id']) {
   const [sortedVaults, setSortedVaults] = useState<VaultEntity[]>(vaults);
   const apyByVaultId = useAppSelector(state => state.biz.apy.totalApy.byVaultId);
 

@@ -13,7 +13,7 @@ export const styles = (theme: Theme) => ({
       justifyContent: 'flex-start',
     },
     '& img': {
-      height: '18px',
+      height: '24px',
       marginRight: '5px',
     },
   },

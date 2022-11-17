@@ -2,7 +2,6 @@ import { ReactComponent as VaultsIcon } from '../../images/icons/navigation/vaul
 import { ReactComponent as DashboardIcon } from '../../images/icons/navigation/dashboard.svg';
 import { ReactComponent as BridgeIcon } from '../../images/icons/navigation/bridge.svg';
 import { ReactComponent as BuyCryptoIcon } from '../../images/icons/navigation/buy-crypto.svg';
-// import { ReactComponent as DaoIcon } from '../../images/icons/navigation/dao.svg';
 import { ReactComponent as ResourcesIcon } from '../../images/icons/navigation/resources.svg';
 import { ReactComponent as ProposalsIcon } from '../../images/icons/navigation/proposals.svg';
 import { ReactComponent as DocsIcon } from '../../images/icons/navigation/docs.svg';

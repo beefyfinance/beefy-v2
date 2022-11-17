@@ -26,8 +26,8 @@ export const intersperse = <T>(arr: T[], separator: (n: number) => T): T[] =>
     return [...acc, currentElement, ...(isLast ? [] : [separator(currentIndex)])];
   }, []);
 
-export const getTop6Array = (arry: any) => {
-  const sortedArray = sortBy(arry, ['percentage']).reverse();
+export const getTop6Array = (arry: any[], key: string) => {
+  const sortedArray = sortBy(arry, [key]).reverse();
 
   if (sortedArray.length <= 6) {
     return sortedArray;

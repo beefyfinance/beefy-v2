@@ -119,14 +119,12 @@ export const selectChainWrappedNativeToken = (state: BeefyState, chainId: ChainE
   return token;
 };
 
-export const selectIsTokenStable = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  tokenId: TokenEntity['id']
-) => {
-  const chain = selectChainById(state, chainId);
-  return chain.stableCoins.includes(tokenId);
-};
+export const selectIsTokenStable = createCachedSelector(
+  (state: BeefyState, chainId: ChainEntity['id'], tokenId: TokenEntity['id']) =>
+    selectChainById(state, chainId),
+  (state: BeefyState, chainId: ChainEntity['id'], tokenId: TokenEntity['id']) => tokenId,
+  (chain, tokenId) => chain.stableCoins.includes(tokenId)
+)((state: BeefyState, chainId: ChainEntity['id'], tokenId: TokenEntity['id']) => tokenId);
 
 export const selectIsBeefyToken = (_: BeefyState, tokenId: TokenEntity['id']) => {
   return ['BIFI', 'POTS', 'beFTM', 'beQI', 'beJOE', 'binSPIRIT', 'beVELO'].includes(tokenId);
@@ -151,12 +149,12 @@ export const selectTokenPriceByTokenOracleId = createCachedSelector(
   price => price || BIG_ONE
 )((state: BeefyState, oracleId: TokenEntity['oracleId']) => oracleId);
 
-export const selectLpBreakdownByOracleId = (
-  state: BeefyState,
-  oracleId: TokenEntity['oracleId']
-) => {
-  return state.entities.tokens.breakdown.byOracleId[oracleId];
-};
+export const selectLpBreakdownByOracleId = createSelector(
+  (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
+    state.entities.tokens.breakdown.byOracleId[oracleId],
+  price => price
+);
+
 export const selectLpBreakdownByAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
@@ -166,7 +164,7 @@ export const selectLpBreakdownByAddress = (
   return selectLpBreakdownByOracleId(state, token.oracleId);
 };
 
-export const selectHaveBreakdownData = (state: BeefyState, vault: VaultEntity) => {
+export const selectHasBreakdownData = (state: BeefyState, vault: VaultEntity) => {
   const chainId = vault.chainId;
   const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
   const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);

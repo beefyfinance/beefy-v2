@@ -17,7 +17,7 @@ export const NoResults = memo(function () {
     return <NoVaults />;
   }
 
-  return <NoConnected />;
+  return <NotConnected />;
 });
 
 type TextProps = PropsWithChildren<{
@@ -47,7 +47,7 @@ const Text = memo<TextProps>(function ({ text, children }) {
   );
 });
 
-const NoConnected = memo(function () {
+const NotConnected = memo(function () {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);

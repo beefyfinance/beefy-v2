@@ -163,45 +163,25 @@ export const selectDailyApyVault = (state: BeefyState, vaultId: VaultEntity['id'
     : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
   const vaultUsdBalance = tokenBalance.times(oraclePrice);
 
-  let dailyToUsd = BIG_ZERO;
+  let dailyUsd = BIG_ZERO;
   let dailyTokens = BIG_ZERO;
 
   if (isGovVault(vault)) {
     const apr = selectGovVaultRawApr(state, vault.id);
     const rate = apr / 365;
-    dailyToUsd = dailyToUsd.plus(vaultUsdBalance.times(rate));
+    dailyUsd = dailyUsd.plus(vaultUsdBalance.times(rate));
     dailyTokens = dailyTokens.plus(tokenBalance.times(rate));
   } else {
-    const apyData = selectStandardVaultRawApy(state, vault.id);
+    const apyData = selectVaultTotalApy(state, vault.id);
 
-    // If no tradingApr returned from API, we assume there is no trading component
-    const nonCompoundableComponents: (keyof ApyStandard)[] = [
-      'tradingApr',
-      'liquidStakingApr',
-      'composablePoolApr',
-    ];
-    // If no vaultApr returned from API, we assume totalApy is all from vault, and not trading
-    const vaultApr =
-      'vaultApr' in apyData
-        ? apyData.vaultApr || 0
-        : (Math.pow((apyData.totalApy || 0) + 1, 1 / 365) - 1) * 365;
-
-    // non-compoundable components
-    for (const key of nonCompoundableComponents) {
-      const apr = key in apyData ? apyData[key] || 0 : 0;
-      if (apr > 0) {
-        const rate = apr / 365;
-        dailyToUsd = dailyToUsd.plus(vaultUsdBalance.times(rate));
-        dailyTokens = dailyTokens.plus(tokenBalance.times(rate));
-      }
-    }
-    // Vault APR is compoundable
-    if (vaultApr > 0) {
-      const rate = vaultApr / 365;
-      dailyToUsd = dailyToUsd.plus(vaultUsdBalance.times(rate));
-      dailyTokens = dailyTokens.plus(tokenBalance.times(rate));
+    if ('boostedTotalDaily' in apyData) {
+      dailyUsd = vaultUsdBalance.times(apyData.boostedTotalDaily);
+      dailyTokens = tokenBalance.times(apyData.boostedTotalDaily);
+    } else {
+      dailyUsd = vaultUsdBalance.times(apyData.totalDaily);
+      dailyTokens = tokenBalance.times(apyData.totalDaily);
     }
   }
 
-  return { dailyToUsd, dailyTokens };
+  return { dailyUsd, dailyTokens };
 };

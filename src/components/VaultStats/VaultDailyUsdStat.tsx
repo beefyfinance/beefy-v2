@@ -64,7 +64,7 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailySt
   return {
     label,
     value: dailyInfo.dailyTokens.toFixed(2),
-    subValue: formatBigUsd(dailyInfo.dailyToUsd),
+    subValue: formatBigUsd(dailyInfo.dailyUsd),
     blur: false,
     loading: !isLoaded,
     boosted: false,

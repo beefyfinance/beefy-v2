@@ -12,10 +12,7 @@ import { useCalculatedBreakdown } from './hooks';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { TokenLpBreakdown } from '../../../data/entities/token';
-import {
-  selectHaveBreakdownData,
-  selectLpBreakdownByAddress,
-} from '../../../data/selectors/tokens';
+import { selectHasBreakdownData, selectLpBreakdownByAddress } from '../../../data/selectors/tokens';
 import { VaultEntity } from '../../../data/entities/vault';
 import {
   selectIsAddressBookLoaded,
@@ -99,7 +96,7 @@ export const LiquidityPoolBreakdownLoader = memo<LiquidityPoolBreakdownLoaderPro
     const breakdown = useAppSelector(state =>
       selectLpBreakdownByAddress(state, chainId, vault.depositTokenAddress)
     );
-    const haveBreakdownData = useAppSelector(state => selectHaveBreakdownData(state, vault));
+    const haveBreakdownData = useAppSelector(state => selectHasBreakdownData(state, vault));
 
     // Load address book if needed
     useEffect(() => {
