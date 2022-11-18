@@ -8,9 +8,7 @@ import { ExposureChart } from '../ExposureChart';
 const TokenExposure = memo(function () {
   const { t } = useTranslation();
 
-  const tokensExposureData = useAppSelector(state =>
-    selectUserTokenExposure(state, 'tokenExposure')
-  );
+  const tokensExposureData = useAppSelector(state => selectUserTokenExposure(state));
 
   return <ExposureChart title={t('Exposure-Tokens')} type="token" data={tokensExposureData} />;
 });

@@ -320,157 +320,144 @@ export const selectLpBreakdownBalance = (
 
 const selectState = (state: BeefyState) => state;
 
-export const selectUserExposureByKey = createCachedSelector(
-  (state: BeefyState) => selectState(state),
-  (state: BeefyState) => selectUserDepositedVaults(state),
-  (state: BeefyState, key: KeysOfType<VaultEntity, string>) => key,
-  (state, userVaults, key) => {
-    const valueByKey = userVaults.reduce((totals, vaultId) => {
-      const vault = selectVaultById(state, vaultId);
-      totals[vault[key]] = (totals[vault[key]] || BIG_ZERO).plus(
-        selectUserVaultDepositInUsd(state, vaultId)
-      );
-      return totals;
-    }, {} as Record<string, BigNumber>);
-
-    const userBalance = Object.keys(valueByKey).reduce(
-      (cur, tot) => valueByKey[tot].plus(cur),
-      BIG_ZERO
+export const selectUserExposureByKey = (
+  state: BeefyState,
+  key: KeysOfType<VaultEntity, string>
+) => {
+  const userVaults = selectUserDepositedVaults(state);
+  const valueByKey = userVaults.reduce((totals, vaultId) => {
+    const vault = selectVaultById(state, vaultId);
+    totals[vault[key]] = (totals[vault[key]] || BIG_ZERO).plus(
+      selectUserVaultDepositInUsd(state, vaultId)
     );
+    return totals;
+  }, {} as Record<string, BigNumber>);
 
-    const exposureByKey = Object.keys(valueByKey).map((token, i) => {
-      return {
-        key: token,
-        value: valueByKey[token],
-        percentage: valueByKey[token].dividedBy(userBalance).toNumber(),
+  const userBalance = Object.keys(valueByKey).reduce(
+    (cur, tot) => valueByKey[tot].plus(cur),
+    BIG_ZERO
+  );
+
+  const exposureByKey = Object.keys(valueByKey).map((token, i) => {
+    return {
+      key: token,
+      value: valueByKey[token],
+      percentage: valueByKey[token].dividedBy(userBalance).toNumber(),
+    };
+  });
+
+  const sortedItems = getTop6Array(exposureByKey, 'percentage');
+
+  return sortedItems;
+};
+
+export const selectTokenExposure = (state: BeefyState) => {
+  const vaultIds = selectUserDepositedVaults(state);
+  return vaultIds.reduce((totals, vaultId) => {
+    const vault = selectVaultById(state, vaultId);
+    if (vault.assetIds.length === 1) {
+      totals[vault.assetIds[0]] = {
+        value: (totals[vault.assetIds[0]]?.value || BIG_ZERO).plus(
+          selectUserVaultDepositInUsd(state, vaultId)
+        ),
+        assetIds: [vault.assetIds[0]],
       };
-    });
-
-    const sortedItems = getTop6Array(exposureByKey, 'percentage');
-
-    return sortedItems;
-  }
-)((state: BeefyState, key: KeysOfType<VaultEntity, string>) => key);
-
-export const selectTokenExposure = createSelector(
-  (state: BeefyState) => selectState(state),
-  selectUserDepositedVaults,
-  (state, vaultIds) => {
-    return vaultIds.reduce((totals, vaultId) => {
-      const vault = selectVaultById(state, vaultId);
-      if (vault.assetIds.length === 1) {
-        totals[vault.assetIds[0]] = {
-          value: (totals[vault.assetIds[0]]?.value || BIG_ZERO).plus(
-            selectUserVaultDepositInUsd(state, vaultId)
-          ),
-          assetIds: [vault.assetIds[0]],
-        };
-      } else {
-        const haveBreakdownData = selectHasBreakdownData(state, vault);
-        if (haveBreakdownData) {
-          const breakdown = selectLpBreakdownByAddress(
-            state,
-            vault.chainId,
-            vault.depositTokenAddress
-          );
-          const { assets } = selectLpBreakdownBalance(state, vault, breakdown);
-          for (const asset of assets) {
-            totals[asset.id] = {
-              value: (totals[asset.id]?.value || BIG_ZERO).plus(asset.userValue),
-              assetIds: [asset.id],
-            };
-          }
-        } else {
-          totals[vault.name] = {
-            value: selectUserVaultDepositInUsd(state, vaultId),
-            assetIds: vault.assetIds,
-            chainId: vault.chainId,
+    } else {
+      const haveBreakdownData = selectHasBreakdownData(state, vault);
+      if (haveBreakdownData) {
+        const breakdown = selectLpBreakdownByAddress(
+          state,
+          vault.chainId,
+          vault.depositTokenAddress
+        );
+        const { assets } = selectLpBreakdownBalance(state, vault, breakdown);
+        for (const asset of assets) {
+          totals[asset.id] = {
+            value: (totals[asset.id]?.value || BIG_ZERO).plus(asset.userValue),
+            assetIds: [asset.id],
           };
         }
+      } else {
+        totals[vault.name] = {
+          value: selectUserVaultDepositInUsd(state, vaultId),
+          assetIds: vault.assetIds,
+          chainId: vault.chainId,
+        };
       }
+    }
 
-      return totals;
-    }, {} as Record<string, { value: BigNumber; assetIds: TokenEntity['id'][]; chainId?: ChainEntity['id'] }>);
-  }
-);
+    return totals;
+  }, {} as Record<string, { value: BigNumber; assetIds: TokenEntity['id'][]; chainId?: ChainEntity['id'] }>);
+};
 
-export const selectUserTokenExposure = createCachedSelector(
-  (state: BeefyState) => selectTokenExposure(state),
-  (state: BeefyState, key: 'tokenExposure') => key,
-  (valuesByToken, key) => {
-    const userBalance = Object.keys(valuesByToken).reduce(
-      (cur, tot) => valuesByToken[tot].value.plus(cur),
-      BIG_ZERO
-    );
-    const exposureByTokens = Object.keys(valuesByToken).map(token => {
-      return {
-        key: token,
-        value: valuesByToken[token].value,
-        percentage: valuesByToken[token].value.dividedBy(userBalance).toNumber(),
-        assetIds: valuesByToken[token].assetIds,
-        chainId: valuesByToken[token].chainId,
-      };
-    });
-    return getTop6Array(exposureByTokens, 'percentage');
-  }
-)((state: BeefyState, key: 'tokenExposure') => key);
+export const selectUserTokenExposure = (state: BeefyState) => {
+  const valuesByToken = selectTokenExposure(state);
+  const userBalance = Object.keys(valuesByToken).reduce(
+    (cur, tot) => valuesByToken[tot].value.plus(cur),
+    BIG_ZERO
+  );
+  const exposureByTokens = Object.keys(valuesByToken).map(token => {
+    return {
+      key: token,
+      value: valuesByToken[token].value,
+      percentage: valuesByToken[token].value.dividedBy(userBalance).toNumber(),
+      assetIds: valuesByToken[token].assetIds,
+      chainId: valuesByToken[token].chainId,
+    };
+  });
+  return getTop6Array(exposureByTokens, 'percentage');
+};
 
-export const selectStablecoinsExposure = createSelector(
-  (state: BeefyState) => selectState(state),
-  (state: BeefyState) => selectUserDepositedVaults(state),
-  (state, vaultIds) => {
-    return vaultIds.reduce((totals, vaultId) => {
-      const vault = selectVaultById(state, vaultId);
-      if (selectIsVaultStable(state, vault.id)) {
-        totals['stable'] = (totals['stable'] || BIG_ZERO).plus(
+export const selectStablecoinsExposure = (state: BeefyState) => {
+  const vaultIds = selectUserDepositedVaults(state);
+  return vaultIds.reduce((totals, vaultId) => {
+    const vault = selectVaultById(state, vaultId);
+    if (selectIsVaultStable(state, vault.id)) {
+      totals['stable'] = (totals['stable'] || BIG_ZERO).plus(
+        selectUserVaultDepositInUsd(state, vaultId)
+      );
+    } else {
+      const haveBreakdownData = selectHasBreakdownData(state, vault);
+      if (haveBreakdownData) {
+        const breakdown = selectLpBreakdownByAddress(
+          state,
+          vault.chainId,
+          vault.depositTokenAddress
+        );
+        const { assets } = selectLpBreakdownBalance(state, vault, breakdown);
+        for (const asset of assets) {
+          if (selectIsTokenStable(state, asset.chainId, asset.id)) {
+            totals['stable'] = (totals['stable'] || BIG_ZERO).plus(asset.userValue);
+          } else {
+            totals['other'] = (totals['other'] || BIG_ZERO).plus(asset.userValue);
+          }
+        }
+      } else {
+        totals['other'] = (totals['other'] || BIG_ZERO).plus(
           selectUserVaultDepositInUsd(state, vaultId)
         );
-      } else {
-        const haveBreakdownData = selectHasBreakdownData(state, vault);
-        if (haveBreakdownData) {
-          const breakdown = selectLpBreakdownByAddress(
-            state,
-            vault.chainId,
-            vault.depositTokenAddress
-          );
-          const { assets } = selectLpBreakdownBalance(state, vault, breakdown);
-          for (const asset of assets) {
-            if (selectIsTokenStable(state, asset.chainId, asset.id)) {
-              totals['stable'] = (totals['stable'] || BIG_ZERO).plus(asset.userValue);
-            } else {
-              totals['other'] = (totals['other'] || BIG_ZERO).plus(asset.userValue);
-            }
-          }
-        } else {
-          totals['other'] = (totals['other'] || BIG_ZERO).plus(
-            selectUserVaultDepositInUsd(state, vaultId)
-          );
-        }
       }
-      return totals;
-    }, {} as Record<string, BigNumber>);
-  }
-);
+    }
+    return totals;
+  }, {} as Record<string, BigNumber>);
+};
 
-export const selectUserStablecoinsExposure = createCachedSelector(
-  (state: BeefyState) => selectStablecoinsExposure(state),
-  (state: BeefyState, key: 'stablesExposure') => key,
-  (stablesExposure, key) => {
-    const userBalance = Object.keys(stablesExposure).reduce(
-      (cur, tot) => stablesExposure[tot].plus(cur),
-      BIG_ZERO
-    );
-    const stablecoinsExposure = Object.keys(stablesExposure).map(type => {
-      return {
-        key: type,
-        value: stablesExposure[type],
-        percentage: stablesExposure[type].dividedBy(userBalance).toNumber(),
-        color: type === 'stable' ? '#3D5CF5' : '#C2D65C',
-      };
-    });
-    return sortBy(stablecoinsExposure, ['key']).reverse();
-  }
-)((state: BeefyState, key: 'stablesExposure') => key);
+export const selectUserStablecoinsExposure = (state: BeefyState) => {
+  const stablesExposure = selectStablecoinsExposure(state);
+  const userBalance = Object.keys(stablesExposure).reduce(
+    (cur, tot) => stablesExposure[tot].plus(cur),
+    BIG_ZERO
+  );
+  const stablecoinsExposure = Object.keys(stablesExposure).map(type => {
+    return {
+      key: type,
+      value: stablesExposure[type],
+      percentage: stablesExposure[type].dividedBy(userBalance).toNumber(),
+      color: type === 'stable' ? '#3D5CF5' : '#C2D65C',
+    };
+  });
+  return sortBy(stablecoinsExposure, ['key']).reverse();
+};
 
 export const selectUserVaultBalances = (state: BeefyState) => {
   const userVaults = selectUserDepositedVaults(state);
