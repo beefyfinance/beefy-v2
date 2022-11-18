@@ -18,8 +18,10 @@ export const ChartDetails = memo<ChartDetailsProps>(function ({ data }) {
     <div className={classes.itemsContainer}>
       {data.map((item, i) => (
         <div key={item.key} className={classes.item}>
-          <div style={{ backgroundColor: COLORS[i % data.length] }} className={classes.square} />
-          <div className={classes.label}>{item.key}</div>
+          <div className={classes.flex}>
+            <div style={{ backgroundColor: COLORS[i % data.length] }} className={classes.square} />
+            <div className={classes.label}>{item.key}</div>
+          </div>
           <div className={classes.value}>{formatPercent(item.percentage)}</div>
         </div>
       ))}

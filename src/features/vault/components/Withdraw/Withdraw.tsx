@@ -8,7 +8,6 @@ import {
   Radio,
   RadioGroup,
 } from '@material-ui/core';
-import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import { isArray } from 'lodash';
 import React, { useCallback, useState } from 'react';
@@ -54,7 +53,6 @@ import { TokenWithDeposit } from '../TokenWithDeposit';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
 import { ScreamAvailableLiquidity } from '../ScreamAvailableLiquidity';
-import { BIG_ZERO } from '../../../../helpers/big-number';
 import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
 import { isFulfilled } from '../../../data/reducers/data-loader-types';
 import { stepperActions } from '../../../data/reducers/wallet/stepper';

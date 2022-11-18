@@ -3,7 +3,8 @@ export const styles = (theme: Theme) => ({
   container: {
     backgroundColor: '#FFF',
     borderRadius: '4px',
-    width: '150px',
+    minWidth: '150px',
+    maxWidth: '180px',
     padding: '8px',
   },
   titleContainer: {
@@ -26,6 +27,10 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     color: '#272B4A',
     textTransform: 'uppercase' as const,
+    textOverflow: 'ellipsis',
+    width: '90%',
+    whiteSpace: 'nowrap' as const,
+    overflow: 'hidden',
   },
   valueContainer: {
     display: 'flex',
