@@ -192,20 +192,24 @@ export const selectBoostUserRewardsInToken = (
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.rewards || BIG_ZERO;
 };
 
-export const selectUserVaultDepositInUsd = createSelector(
-  (state: BeefyState, vault: VaultEntity, walletAddress?: string) =>
-    selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress),
-  (state: BeefyState, vault: VaultEntity, walletAddress?: string) =>
-    selectUserVaultDepositInDepositToken(state, vault.id, walletAddress),
-  (oraclePrice, vaultTokenDeposit) => vaultTokenDeposit.multipliedBy(oraclePrice)
-);
+export const selectUserVaultDepositInUsd = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  // TODO: do this in the state?
+  const vault = selectVaultById(state, vaultId);
+  const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const vaultTokenDeposit = selectUserVaultDepositInDepositToken(state, vaultId, walletAddress);
+
+  return vaultTokenDeposit.multipliedBy(oraclePrice);
+};
 
 export const selectTotalUserDepositInUsd = (state: BeefyState) => {
   const vaultIds = selectUserDepositedVaults(state);
   let total = BIG_ZERO;
   for (const vaultId of vaultIds) {
-    const vault = selectVaultById(state, vaultId);
-    total = total.plus(selectUserVaultDepositInUsd(state, vault));
+    total = total.plus(selectUserVaultDepositInUsd(state, vaultId));
   }
   return total;
 };
@@ -324,7 +328,7 @@ export const selectUserExposureByKey = createCachedSelector(
     const valueByKey = userVaults.reduce((totals, vaultId) => {
       const vault = selectVaultById(state, vaultId);
       totals[vault[key]] = (totals[vault[key]] || BIG_ZERO).plus(
-        selectUserVaultDepositInUsd(state, vault)
+        selectUserVaultDepositInUsd(state, vaultId)
       );
       return totals;
     }, {} as Record<string, BigNumber>);
@@ -357,7 +361,7 @@ export const selectTokenExposure = createSelector(
       if (vault.assetIds.length === 1) {
         totals[vault.assetIds[0]] = {
           value: (totals[vault.assetIds[0]]?.value || BIG_ZERO).plus(
-            selectUserVaultDepositInUsd(state, vault)
+            selectUserVaultDepositInUsd(state, vaultId)
           ),
           assetIds: [vault.assetIds[0]],
         };
@@ -378,7 +382,7 @@ export const selectTokenExposure = createSelector(
           }
         } else {
           totals[vault.name] = {
-            value: selectUserVaultDepositInUsd(state, vault),
+            value: selectUserVaultDepositInUsd(state, vaultId),
             assetIds: vault.assetIds,
             chainId: vault.chainId,
           };
@@ -419,7 +423,7 @@ export const selectStablecoinsExposure = createSelector(
       const vault = selectVaultById(state, vaultId);
       if (selectIsVaultStable(state, vault.id)) {
         totals['stable'] = (totals['stable'] || BIG_ZERO).plus(
-          selectUserVaultDepositInUsd(state, vault)
+          selectUserVaultDepositInUsd(state, vaultId)
         );
       } else {
         const haveBreakdownData = selectHasBreakdownData(state, vault);
@@ -439,7 +443,7 @@ export const selectStablecoinsExposure = createSelector(
           }
         } else {
           totals['other'] = (totals['other'] || BIG_ZERO).plus(
-            selectUserVaultDepositInUsd(state, vault)
+            selectUserVaultDepositInUsd(state, vaultId)
           );
         }
       }
@@ -476,7 +480,7 @@ export const selectUserVaultBalances = (state: BeefyState) => {
     const vaults = totals[chainId]?.vaults || [];
     vaults.push(vault);
     const depositedByChain = (totals[chainId]?.depositedByChain || BIG_ZERO).plus(
-      selectUserVaultDepositInUsd(state, vault)
+      selectUserVaultDepositInUsd(state, vaultId)
     );
     totals[chainId] = {
       chainId,
@@ -497,7 +501,7 @@ export const selectVaultsWithBalanceByChainId = (state: BeefyState, chainId: Cha
   for (const vaultId of userVaults) {
     const vault = selectVaultById(state, vaultId);
     if (vault.chainId === chainId) {
-      vaults[vaultId] = selectUserVaultDepositInUsd(state, vault);
+      vaults[vaultId] = selectUserVaultDepositInUsd(state, vaultId);
     }
   }
   return vaults;

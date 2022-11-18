@@ -57,7 +57,7 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDeposit
   }
 
   const totalDeposited = formatBigDecimals(deposit, 8, false);
-  const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vault));
+  const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vaultId));
 
   return {
     label,

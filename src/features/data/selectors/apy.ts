@@ -10,6 +10,7 @@ import { selectIsUserBalanceAvailable } from './data-loader';
 import { selectTokenPriceByAddress } from './tokens';
 import { selectVaultById } from './vaults';
 import { BIG_ZERO, compound } from '../../../helpers/big-number';
+import { selectUserBalanceOnActiveOrPastBoost } from './boosts';
 
 const selectGovVaultRawApr = (state: BeefyState, vaultId: VaultGov['id']) => {
   const vaultApy = state.biz.apy.rawApy.byVaultId[vaultId];
@@ -174,7 +175,9 @@ export const selectDailyApyVault = (state: BeefyState, vaultId: VaultEntity['id'
   } else {
     const apyData = selectVaultTotalApy(state, vault.id);
 
-    if ('boostedTotalDaily' in apyData) {
+    const boostBalance = selectUserBalanceOnActiveOrPastBoost(state, vault.id);
+
+    if ('boostedTotalDaily' in apyData && boostBalance.gt(BIG_ZERO)) {
       dailyUsd = vaultUsdBalance.times(apyData.boostedTotalDaily);
       dailyTokens = tokenBalance.times(apyData.boostedTotalDaily);
     } else {

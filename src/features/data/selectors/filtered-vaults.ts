@@ -363,7 +363,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
     });
   } else if (filterOptions.sort === 'depositValue') {
     sortedVaults = sortBy(sortedVaults, vault => {
-      const balance = selectUserVaultDepositInUsd(state, vault);
+      const balance = selectUserVaultDepositInUsd(state, vault.id);
       return sortDirMul * balance.toNumber();
     });
   } else if (filterOptions.sort === 'walletValue') {

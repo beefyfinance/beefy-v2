@@ -25,7 +25,7 @@ const _BoostedVaultDepositedLarge = connect(
       : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
     const hasDeposit = deposit.gt(0);
     const totalDeposited = deposit.isZero() ? '0.00' : formatBigDecimals(deposit, 8, false);
-    const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vault));
+    const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vaultId));
     const blurred = selectIsBalanceHidden(state);
     const isLoaded =
       state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
@@ -77,7 +77,7 @@ const _NonBoostedVaultDeposited = connect(
       : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
     const hasDeposit = deposit.gt(0);
     const totalDeposited = formatBigDecimals(deposit, 8, !hasDeposit);
-    const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vault));
+    const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vaultId));
     const blurred = selectIsBalanceHidden(state);
     const isLoaded =
       state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
