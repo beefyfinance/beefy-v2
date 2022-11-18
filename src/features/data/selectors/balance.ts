@@ -24,8 +24,6 @@ import BigNumber from 'bignumber.js';
 import { KeysOfType } from '../utils/types-utils';
 import { getTop6Array } from '../utils/array-utils';
 import { sortBy } from 'lodash';
-import createCachedSelector from 're-reselect';
-import { createSelector } from '@reduxjs/toolkit';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (selectIsWalletKnown(state)) {
@@ -317,8 +315,6 @@ export const selectLpBreakdownBalance = (
 
   return { assets, userShareOfPool, lpTotalSupplyDecimal, userBalanceDecimal, oneLpShareOfPool };
 };
-
-const selectState = (state: BeefyState) => state;
 
 export const selectUserExposureByKey = (
   state: BeefyState,
