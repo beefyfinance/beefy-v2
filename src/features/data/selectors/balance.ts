@@ -11,6 +11,7 @@ import {
   selectLpBreakdownByAddress,
   selectTokenByAddress,
   selectTokenPriceByAddress,
+  selectTokensByChainId,
 } from './tokens';
 import {
   selectIsVaultStable,
@@ -39,16 +40,10 @@ const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   }
 };
 
-export const selectAllTokenWhereUserCouldHaveBalance = (
-  state: BeefyState,
-  chainId: ChainEntity['id']
-) => {
-  const byChainId = state.entities.tokens.byChainId;
-  if (byChainId[chainId] === undefined) {
-    throw new Error(`selectTokenByAddress: Unknown chain id ${chainId}`);
-  }
-  return byChainId[chainId].interestingBalanceTokenAddresses;
-};
+export const selectAllTokenWhereUserCouldHaveBalance = createSelector(
+  (state: BeefyState, chainId: ChainEntity['id']) => selectTokensByChainId(state, chainId),
+  tokens => tokens.interestingBalanceTokenAddresses
+);
 
 export const selectHasWalletBalanceBeenFetched = (state: BeefyState, walletAddress: string) => {
   return state.user.balance.byAddress[walletAddress.toLowerCase()] !== undefined;

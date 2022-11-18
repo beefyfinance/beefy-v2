@@ -28,9 +28,11 @@ export const selectIsBoostActiveOrPreStake = (state: BeefyState, boostId: BoostE
   return status === 'active' || status === 'prestake';
 };
 
-export const selectBoostsByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
-  return state.entities.boosts.byChainId[chainId]?.allBoostsIds || [];
-};
+export const selectBoostsByChainId = createCachedSelector(
+  (state: BeefyState, chainId: ChainEntity['id']) =>
+    state.entities.boosts.byChainId[chainId]?.allBoostsIds,
+  boostsByChain => boostsByChain || []
+)((state: BeefyState, chainId: ChainEntity['id']) => chainId);
 
 export const selectIsVaultBoosted = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
