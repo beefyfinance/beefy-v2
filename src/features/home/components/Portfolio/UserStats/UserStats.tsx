@@ -45,25 +45,25 @@ export const UserStats = memo(function () {
     <div className={classes.userStats}>
       <UserStat
         label={t('Portfolio-Deposited')}
-        value={formatUsd(stats.deposited.toNumber())}
+        value={formatUsd(stats.deposited)}
         blurred={hideBalance}
       />
       <UserStat
         label={t('Portfolio-YieldMnth')}
-        value={formatUsd(stats.monthly.toNumber())}
+        value={formatUsd(stats.monthly)}
         blurred={hideBalance}
       />
       <Hidden xsDown>
         <UserStat
           label={t('Portfolio-YieldDay')}
-          value={formatUsd(stats.daily.toNumber())}
+          value={formatUsd(stats.daily)}
           blurred={hideBalance}
         />
       </Hidden>
       <VisibleAbove width={430}>
         <UserStat
           label={t('Portfolio-AvgAPY')}
-          value={formatPercent(stats.apy.toNumber(), 2, '0%')}
+          value={formatPercent(stats.apy, 2, '0%')}
           blurred={hideBalance}
         />
       </VisibleAbove>

@@ -24,6 +24,7 @@ import BigNumber from 'bignumber.js';
 import { KeysOfType } from '../utils/types-utils';
 import { getTop6Array } from '../utils/array-utils';
 import { sortBy } from 'lodash';
+import { createSelector } from '@reduxjs/toolkit';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (selectIsWalletKnown(state)) {
@@ -53,10 +54,16 @@ export const selectHasWalletBalanceBeenFetched = (state: BeefyState, walletAddre
   return state.user.balance.byAddress[walletAddress.toLowerCase()] !== undefined;
 };
 
-export const selectUserDepositedVaults = (state: BeefyState) => {
+export const selectUserDepositedVaultIds = (state: BeefyState) => {
   const walletBalance = _selectWalletBalance(state);
   return walletBalance?.depositedVaultIds || [];
 };
+
+export const selectAddressDepositedVaultIds = createSelector(
+  (state: BeefyState, address: string) =>
+    state.user.balance.byAddress[address.toLowerCase()]?.depositedVaultIds,
+  maybeDepositedVaultIds => maybeDepositedVaultIds || []
+);
 
 export const selectHasUserDepositInVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const walletBalance = _selectWalletBalance(state);
@@ -130,20 +137,23 @@ export const selectStandardVaultUserBalanceInDepositTokenIncludingBoosts = (
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
-  const vaultOracleBalance = selectStandardVaultUserBalanceInDepositTokenExcludingBoosts(
+
+  // vault
+  let mooTokenBalance = selectUserBalanceOfToken(
     state,
-    vaultId,
+    vault.chainId,
+    mooToken.address,
     walletAddress
   );
+
   // we also need to account for deposits in boost (even those expired)
-  let mooTokenBalance = BIG_ZERO;
   const boostIds = selectAllVaultBoostIds(state, vaultId);
   for (const boostId of boostIds) {
     const boostMooToken = selectBoostUserBalanceInToken(state, boostId, walletAddress);
     mooTokenBalance = mooTokenBalance.plus(boostMooToken);
   }
-  const boostOracleBalance = mooAmountToOracleAmount(mooToken, depositToken, ppfs, mooTokenBalance);
-  return vaultOracleBalance.plus(boostOracleBalance);
+
+  return mooAmountToOracleAmount(mooToken, depositToken, ppfs, mooTokenBalance);
 };
 
 export const selectGovVaultUserStackedBalanceInDepositToken = (
@@ -204,7 +214,7 @@ export const selectUserVaultDepositInUsd = (
 };
 
 export const selectTotalUserDepositInUsd = (state: BeefyState) => {
-  const vaultIds = selectUserDepositedVaults(state);
+  const vaultIds = selectUserDepositedVaultIds(state);
   let total = BIG_ZERO;
   for (const vaultId of vaultIds) {
     total = total.plus(selectUserVaultDepositInUsd(state, vaultId));
@@ -320,7 +330,7 @@ export const selectUserExposureByKey = (
   state: BeefyState,
   key: KeysOfType<VaultEntity, string>
 ) => {
-  const userVaults = selectUserDepositedVaults(state);
+  const userVaults = selectUserDepositedVaultIds(state);
   const valueByKey = userVaults.reduce((totals, vaultId) => {
     const vault = selectVaultById(state, vaultId);
     totals[vault[key]] = (totals[vault[key]] || BIG_ZERO).plus(
@@ -348,7 +358,7 @@ export const selectUserExposureByKey = (
 };
 
 export const selectTokenExposure = (state: BeefyState) => {
-  const vaultIds = selectUserDepositedVaults(state);
+  const vaultIds = selectUserDepositedVaultIds(state);
   return vaultIds.reduce((totals, vaultId) => {
     const vault = selectVaultById(state, vaultId);
     if (vault.assetIds.length === 1) {
@@ -357,6 +367,7 @@ export const selectTokenExposure = (state: BeefyState) => {
           selectUserVaultDepositInUsd(state, vaultId)
         ),
         assetIds: [vault.assetIds[0]],
+        chainId: vault.chainId,
       };
     } else {
       const haveBreakdownData = selectHasBreakdownData(state, vault);
@@ -371,6 +382,7 @@ export const selectTokenExposure = (state: BeefyState) => {
           totals[asset.id] = {
             value: (totals[asset.id]?.value || BIG_ZERO).plus(asset.userValue),
             assetIds: [asset.id],
+            chainId: vault.chainId,
           };
         }
       } else {
@@ -383,7 +395,7 @@ export const selectTokenExposure = (state: BeefyState) => {
     }
 
     return totals;
-  }, {} as Record<string, { value: BigNumber; assetIds: TokenEntity['id'][]; chainId?: ChainEntity['id'] }>);
+  }, {} as Record<string, { value: BigNumber; assetIds: TokenEntity['id'][]; chainId: ChainEntity['id'] }>);
 };
 
 export const selectUserTokenExposure = (state: BeefyState) => {
@@ -405,7 +417,7 @@ export const selectUserTokenExposure = (state: BeefyState) => {
 };
 
 export const selectStablecoinsExposure = (state: BeefyState) => {
-  const vaultIds = selectUserDepositedVaults(state);
+  const vaultIds = selectUserDepositedVaultIds(state);
   return vaultIds.reduce((totals, vaultId) => {
     const vault = selectVaultById(state, vaultId);
     if (selectIsVaultStable(state, vault.id)) {
@@ -456,7 +468,7 @@ export const selectUserStablecoinsExposure = (state: BeefyState) => {
 };
 
 export const selectUserVaultBalances = (state: BeefyState) => {
-  const userVaults = selectUserDepositedVaults(state);
+  const userVaults = selectUserDepositedVaultIds(state);
   const result = userVaults.reduce((totals, vaultId) => {
     const vault = selectVaultById(state, vaultId);
     const chainId = vault.chainId;
@@ -479,7 +491,7 @@ export const selectUserVaultBalances = (state: BeefyState) => {
 };
 
 export const selectVaultsWithBalanceByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
-  const userVaults = selectUserDepositedVaults(state);
+  const userVaults = selectUserDepositedVaultIds(state);
   const vaults = {};
   for (const vaultId of userVaults) {
     const vault = selectVaultById(state, vaultId);

@@ -39,21 +39,13 @@ export const SummaryStats = memo(function () {
   const stats = useAppSelector(selectUserGlobalStats);
   return (
     <div className={classes.resumeContainer}>
-      <SummaryStat
-        icon="wallet"
-        title={t('Summary-Deposit')}
-        value={formatUsd(stats.deposited.toNumber())}
-      />
+      <SummaryStat icon="wallet" title={t('Summary-Deposit')} value={formatUsd(stats.deposited)} />
       <SummaryStat
         icon="monthly-yield"
         title={t('Summary-Monthly')}
-        value={formatUsd(stats.monthly.toNumber())}
+        value={formatUsd(stats.monthly)}
       />
-      <SummaryStat
-        icon="daily-yield"
-        title={t('Summary-Daily')}
-        value={formatUsd(stats.daily.toNumber())}
-      />
+      <SummaryStat icon="daily-yield" title={t('Summary-Daily')} value={formatUsd(stats.daily)} />
       <SummaryStat icon="vault" title={t('Summary-Vaults')} value={`${stats.depositedVaults}`} />
     </div>
   );
