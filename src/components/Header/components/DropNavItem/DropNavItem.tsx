@@ -52,7 +52,7 @@ export const DropNavItem = memo<DropNavItemProps>(function ({ title, Icon, items
           autoWidth={false}
         >
           {items.map(item => {
-            return <NavItem title={item.title} url={item.url} Icon={item.Icon} />;
+            return <NavItem key={item.title} title={item.title} url={item.url} Icon={item.Icon} />;
           })}
         </Floating>
       </div>
