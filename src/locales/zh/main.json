@@ -325,8 +325,6 @@
   "NetworkStatus-BeefyError": "Beefy API 加载失败",
   "Nexus-Title": "保障您的存款",
   "Nexus-Content": "Nexus Mutual 是一个基于区块链的传统保险的替代方案。成为 Mutual 会员，为您的 Beefy 仓位购买全面保险。",
-  "Solace-Title": "Solace",
-  "Solace-Content": "Insure your portfolio against smart contract risks with a personalized policy that dynamically updates coverage as your portfolio changes. No need to file a claim when you lose funds. Payouts arrive within one week.",
   "beFTM-description": "beFTM 意味着 Beefy Escrowed Fantom。该代币与FTM挂钩，可以质押于Beefy平台，并在主要去中心化交易所进行耕种。BeFTM 让质押者能够获得最大化的验证者奖励，而个人投资者在不锁定 FTM 一年的情况下通常无法获得这些奖励。",
   "mint": "Mint",
   "Mint-Title": "Mint {{token}}",
@@ -458,5 +456,7 @@
   "Saving-Games": "Savings Games",
   "Glp-Withdraw-Notice": "The underlying protocol requires withdrawals to be at least 15 minutes after a deposit/harvest.",
   "Glp-Withdraw-Notice-Unlocks": "Unlocks in <countdown/>",
-  "Details-Here": "Details here"
+  "Details-Here": "Details here",
+  "ETH-Banner": "Beefy is now deployed on <ethereum/>! New autocompounding vaults from Convex, Aura and Stargate are already available and more are coming soon.",
+  "Ethereum": "Ethereum"
 }
