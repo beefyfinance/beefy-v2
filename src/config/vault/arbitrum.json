@@ -30,6 +30,34 @@
     "network": "arbitrum"
   },
   {
+    "id": "curve-arb-f-wsteth",
+    "name": "wstETH-ETH",
+    "token": "wstETHCRV",
+    "tokenAddress": "0xDbcD16e622c95AcB2650b38eC799f76BFC557a0b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveWSTETH",
+    "earnedTokenAddress": "0x9E75f8298e458B76382870982788988A0799195b",
+    "earnContractAddress": "0x9E75f8298e458B76382870982788988A0799195b",
+    "oracle": "lps",
+    "oracleId": "curve-arb-f-wsteth",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["wstETH", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/wsteth/deposit",
+    "network": "arbitrum",
+    "createdAt": 1668590265
+  },
+  {
     "id": "gmx-arb-glp",
     "name": "GLP",
     "token": "GLP",
