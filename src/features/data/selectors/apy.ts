@@ -2,14 +2,21 @@ import { BeefyState } from '../../../redux-types';
 import { isGovVault, isVaultActive, VaultEntity } from '../entities/vault';
 import {
   selectAddressDepositedVaultIds,
+  selectBoostUserBalanceInToken,
   selectGovVaultUserStackedBalanceInDepositToken,
   selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
+  selectUserVaultDepositInDepositToken,
 } from './balance';
 import { selectIsUserBalanceAvailable } from './data-loader';
 import { selectTokenPriceByAddress } from './tokens';
 import { selectVaultById } from './vaults';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { selectUserBalanceOnActiveOrPastBoost } from './boosts';
+import {
+  selectBoostById,
+  selectIsVaultBoosted,
+  selectPreStakeOrActiveBoostIds,
+  selectUserActiveBoostBalanceInToken,
+} from './boosts';
 import { selectWalletAddressIfKnown } from './wallet';
 import { TotalApy } from '../reducers/apy';
 import { compoundInterest } from '../../../helpers/number';
@@ -125,12 +132,10 @@ export const selectUserGlobalStats = (state: BeefyState) => {
   return newGlobalStats;
 };
 
-export const selectDailyApyVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
+export const selectVaultDailyYieldStats = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const tokenBalance = isGovVault(vault)
-    ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
-    : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
+  const tokenBalance = selectUserVaultDepositInDepositToken(state, vault.id);
   const vaultUsdBalance = tokenBalance.times(oraclePrice);
 
   let dailyUsd = BIG_ZERO;
@@ -142,7 +147,8 @@ export const selectDailyApyVault = (state: BeefyState, vaultId: VaultEntity['id'
     dailyTokens = tokenBalance.times(apyData.totalDaily);
   } else {
     const apyData = selectVaultTotalApy(state, vault.id);
-    const boostBalance = selectUserBalanceOnActiveOrPastBoost(state, vault.id);
+
+    const boostBalance = selectUserActiveBoostBalanceInToken(state, vaultId);
 
     // Note: this assumes 100% mooTokens in active boost
     if ('boostedTotalDaily' in apyData && boostBalance.gt(BIG_ZERO)) {

@@ -160,7 +160,7 @@ export const selectGovVaultUserStackedBalanceInDepositToken = (
   return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.balance || BIG_ZERO;
 };
 
-const selectUserVaultDepositInDepositToken = (
+export const selectUserVaultDepositInDepositToken = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string

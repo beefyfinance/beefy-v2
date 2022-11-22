@@ -9,8 +9,8 @@ import {
   selectVaultShouldShowInterest,
 } from '../../features/data/selectors/data-loader';
 import {
-  selectDailyApyVault,
   selectDidAPIReturnValuesForVault,
+  selectVaultDailyYieldStats,
 } from '../../features/data/selectors/apy';
 
 export type VaultDailyStatProps = {
@@ -59,7 +59,7 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailySt
     };
   }
 
-  const dailyInfo = selectDailyApyVault(state, vaultId);
+  const dailyInfo = selectVaultDailyYieldStats(state, vaultId);
 
   return {
     label,
