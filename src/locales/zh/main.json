@@ -277,6 +277,7 @@
   "Safety-BeefySecure": "您的资金在 Beefy.Finance 上始终保持安全。团队在检查金库方面投入了大量的精力。每个金库也具有一项紧急设施，如果需要，甚至发现有可疑的活动，金库可以在短时间内停止活动，以保护用户的资金。",
   "Strat-Address": "策略地址",
   "Strat-AddressVault": "金库地址",
+  "Strat-PoolAddress": "Pool address",
   "Asset-Detail": "Asset Details",
   "Token-Site": "网站",
   "Token-Docs": "Docs",
