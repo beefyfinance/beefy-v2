@@ -277,6 +277,7 @@
   "Safety-BeefySecure": "Il punteggio di sicurezza è calcolato dagli sviluppatori di Beefy quando si esamina un vault, il team impegna molte energie nel controllare i vault prima di aggiungerli. Ogni vault dispone anche di una funzione di panico per proteggere i fondi degli utenti immediatamente in caso di necessità, o in caso di attività sospette.",
   "Strat-Address": "Indirizzo della strategia",
   "Strat-AddressVault": "Indirizzo del vault",
+  "Strat-PoolAddress": "Pool address",
   "Asset-Detail": "Dettagli Asset",
   "Token-Site": "Sito web",
   "Token-Docs": "Documentazione",
