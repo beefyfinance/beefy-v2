@@ -2,7 +2,6 @@ import { BeefyState } from '../../../redux-types';
 import { isGovVault, isVaultActive, VaultEntity } from '../entities/vault';
 import {
   selectAddressDepositedVaultIds,
-  selectBoostUserBalanceInToken,
   selectGovVaultUserStackedBalanceInDepositToken,
   selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
   selectUserVaultDepositInDepositToken,
@@ -11,12 +10,7 @@ import { selectIsUserBalanceAvailable } from './data-loader';
 import { selectTokenPriceByAddress } from './tokens';
 import { selectVaultById } from './vaults';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import {
-  selectBoostById,
-  selectIsVaultBoosted,
-  selectPreStakeOrActiveBoostIds,
-  selectUserActiveBoostBalanceInToken,
-} from './boosts';
+import { selectUserActiveBoostBalanceInToken } from './boosts';
 import { selectWalletAddressIfKnown } from './wallet';
 import { TotalApy } from '../reducers/apy';
 import { compoundInterest } from '../../../helpers/number';
