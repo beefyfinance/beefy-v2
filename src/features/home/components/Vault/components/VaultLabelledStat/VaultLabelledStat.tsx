@@ -8,6 +8,7 @@ const useStyles = makeStyles(styles);
 
 export type VaultLabelledStatProps = {
   label: string;
+  showLabel?: boolean;
   tooltip?: ReactNode;
   children: ReactNode;
 };
@@ -15,13 +16,14 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
   label,
   children,
   tooltip,
+  showLabel = true,
 }) {
   const classes = useStyles();
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 
   return (
     <div>
-      {!lgUp ? (
+      {!lgUp && showLabel ? (
         <div className={classes.label}>
           <div className={classes.labelText}>{label}</div>
           {tooltip ? (

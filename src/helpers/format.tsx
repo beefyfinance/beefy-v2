@@ -268,8 +268,8 @@ export function formatAddressShort(addr: string): string {
 }
 
 export function formatEns(ens: string): string {
-  if (ens.length > 18) {
-    return ens.substring(0, 4) + '...' + ens.substring(ens.length - 3);
+  if (ens.length > 16) {
+    return ens.substring(0, 6) + '...' + ens.substring(ens.length - 3);
   }
   return ens;
 }

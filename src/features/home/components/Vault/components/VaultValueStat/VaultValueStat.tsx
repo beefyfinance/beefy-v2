@@ -12,9 +12,11 @@ export type VaultValueStatProps = {
   tooltip?: ReactNode;
   value: ReactNode;
   subValue?: ReactNode;
+  className?: string;
   blur?: boolean;
   loading: boolean;
   boosted?: boolean;
+  showLabel?: boolean;
 };
 export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat({
   label,
@@ -24,12 +26,14 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
   blur,
   loading,
   boosted,
+  showLabel = true,
+  className,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
   return (
-    <VaultLabelledStat label={t(label)} tooltip={loading ? null : tooltip}>
+    <VaultLabelledStat showLabel={showLabel} label={t(label)} tooltip={loading ? null : tooltip}>
       {loading ? (
         '...'
       ) : (
@@ -38,6 +42,7 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
             className={clsx(classes.value, {
               [classes.blurValue]: blur,
               [classes.boostedValue]: boosted,
+              [className]: className,
             })}
           >
             {value}

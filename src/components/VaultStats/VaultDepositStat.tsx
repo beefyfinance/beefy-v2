@@ -1,24 +1,25 @@
-import { isGovVault, VaultEntity } from '../../../../../data/entities/vault';
+import { isGovVault, VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
 import { connect } from 'react-redux';
-import { BeefyState } from '../../../../../../redux-types';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
+import { BeefyState } from '../../redux-types';
+import { selectVaultById } from '../../features/data/selectors/vaults';
 import {
   selectGovVaultUserStackedBalanceInDepositToken,
   selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
   selectUserVaultDepositInUsd,
-} from '../../../../../data/selectors/balance';
-import { formatBigDecimals, formatBigUsd } from '../../../../../../helpers/format';
-import { selectIsBalanceHidden, selectIsWalletKnown } from '../../../../../data/selectors/wallet';
-import { VaultValueStat } from '../VaultValueStat';
+} from '../../features/data/selectors/balance';
+import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
+import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/selectors/wallet';
+import { VaultValueStat } from '../../features/home/components/Vault/components/VaultValueStat';
 
 export type VaultDepositStatProps = {
   vaultId: VaultEntity['id'];
+  className?: string;
 };
 
 export const VaultDepositStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId }: VaultDepositStatProps) {
+function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDepositStatProps) {
   const label = 'VaultStat-DEPOSITED';
   const vault = selectVaultById(state, vaultId);
   const hideBalance = selectIsBalanceHidden(state);
@@ -35,6 +36,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDepositStatProps) 
       subValue: null,
       blur: hideBalance,
       loading: true,
+      className: className ?? '',
     };
   }
 
@@ -50,11 +52,12 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDepositStatProps) 
       subValue: null,
       blur: hideBalance,
       loading: false,
+      className: className ?? '',
     };
   }
 
   const totalDeposited = formatBigDecimals(deposit, 8, false);
-  const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vault.id));
+  const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vaultId));
 
   return {
     label,
@@ -62,5 +65,6 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDepositStatProps) 
     subValue: totalDepositedUsd,
     blur: hideBalance,
     loading: false,
+    className: className ?? '',
   };
 }

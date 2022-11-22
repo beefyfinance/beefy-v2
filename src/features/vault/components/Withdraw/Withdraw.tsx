@@ -8,7 +8,6 @@ import {
   Radio,
   RadioGroup,
 } from '@material-ui/core';
-import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import { isArray } from 'lodash';
 import React, { useCallback, useState } from 'react';
@@ -22,7 +21,6 @@ import { TokenEntity } from '../../../data/entities/token';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { withdrawActions } from '../../../data/reducers/wallet/withdraw';
 import {
-  selectBoostUserBalanceInToken,
   selectGovVaultPendingRewardsInToken,
   selectGovVaultRewardsTokenEntity,
   selectGovVaultUserStackedBalanceInDepositToken,
@@ -30,10 +28,9 @@ import {
   selectUserBalanceOfToken,
 } from '../../../data/selectors/balance';
 import {
-  selectBoostById,
   selectIsVaultPreStakedOrBoosted,
   selectPastBoostIdsWithUserBalance,
-  selectPreStakeOrActiveBoostIds,
+  selectUserBalanceOnActiveOrPastBoost,
 } from '../../../data/selectors/boosts';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
@@ -56,7 +53,6 @@ import { TokenWithDeposit } from '../TokenWithDeposit';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
 import { ScreamAvailableLiquidity } from '../ScreamAvailableLiquidity';
-import { BIG_ZERO } from '../../../../helpers/big-number';
 import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
 import { isFulfilled } from '../../../data/reducers/data-loader-types';
 import { stepperActions } from '../../../data/reducers/wallet/stepper';
@@ -299,10 +295,6 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   const isBoosted = useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId));
 
-  const activeBoost = useAppSelector(state =>
-    isBoosted ? selectBoostById(state, selectPreStakeOrActiveBoostIds(state, vaultId)[0]) : null
-  );
-
   const pastBoostsWithUserBalance = useAppSelector(state =>
     selectPastBoostIdsWithUserBalance(state, vaultId).map(boostId => {
       return boostId;
@@ -311,18 +303,8 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   const isBoostedOrHaveBalanceInPastBoost = isBoosted || pastBoostsWithUserBalance.length === 1;
 
-  const boost = useAppSelector(state =>
-    isBoosted
-      ? selectBoostById(state, activeBoost.id)
-      : pastBoostsWithUserBalance.length === 1
-      ? selectBoostById(state, pastBoostsWithUserBalance[0])
-      : null
-  );
-
   const boostBalance = useAppSelector(state =>
-    isBoostedOrHaveBalanceInPastBoost
-      ? selectBoostUserBalanceInToken(state, boost.id)
-      : new BigNumber(BIG_ZERO)
+    selectUserBalanceOnActiveOrPastBoost(state, vaultId)
   );
 
   const mooBalance = useAppSelector(state =>

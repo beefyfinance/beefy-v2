@@ -1,31 +1,32 @@
-import { VaultEntity } from '../../../../../data/entities/vault';
+import { VaultEntity } from '../../features/data/entities/vault';
 import React, { memo, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { BeefyState } from '../../../../../../redux-types';
-import { selectIsVaultGov } from '../../../../../data/selectors/vaults';
-import { formattedTotalApy } from '../../../../../../helpers/format';
-import { VaultValueStat, VaultValueStatProps } from '../VaultValueStat';
+import { BeefyState } from '../../redux-types';
+import { selectIsVaultGov } from '../../features/data/selectors/vaults';
+import { formattedTotalApy } from '../../helpers/format';
+import { VaultValueStat } from '../../features/home/components/Vault/components/VaultValueStat';
 import {
   selectVaultApyAvailable,
   selectVaultShouldShowInterest,
-} from '../../../../../data/selectors/data-loader';
+} from '../../features/data/selectors/data-loader';
 import {
   selectDidAPIReturnValuesForVault,
   selectVaultTotalApy,
-} from '../../../../../data/selectors/apy';
-import { selectIsVaultBoosted } from '../../../../../data/selectors/boosts';
-import { AllValuesAsString } from '../../../../../data/utils/types-utils';
-import { TotalApy } from '../../../../../data/reducers/apy';
-import { useAppSelector } from '../../../../../../store';
-import { InterestTooltipContent } from '../InterestTooltipContent';
+} from '../../features/data/selectors/apy';
+import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
+import { AllValuesAsString } from '../../features/data/utils/types-utils';
+import { TotalApy } from '../../features/data/reducers/apy';
+import { useAppSelector } from '../../store';
+import { InterestTooltipContent } from '../../features/home/components/Vault/components/InterestTooltipContent';
 
 export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];
+  className?: string;
 };
 
 export const VaultDailyStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps): VaultValueStatProps {
+function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailyStatProps) {
   const label = 'VaultStat-DAILY';
 
   const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
@@ -36,6 +37,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps): V
       subValue: null,
       blur: false,
       loading: false,
+      className: className ?? '',
     };
   }
 
@@ -47,6 +49,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps): V
       subValue: null,
       blur: false,
       loading: true,
+      className: className ?? '',
     };
   }
 
@@ -58,6 +61,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps): V
       subValue: null,
       blur: false,
       loading: false,
+      className: className ?? '',
     };
   }
 
@@ -73,6 +77,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps): V
     loading: !isLoaded,
     boosted: isBoosted,
     tooltip: <DailyContentTooltip vaultId={vaultId} isBoosted={isBoosted} rates={formatted} />,
+    className: className ?? '',
   };
 }
 

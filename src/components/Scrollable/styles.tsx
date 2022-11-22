@@ -15,9 +15,9 @@ export const styles = (theme: Theme) => ({
     borderRadius: 4,
   },
   horizontalTrack: {
-    right: 2,
+    right: 0,
     bottom: 0,
-    left: 2,
+    left: 0,
   },
   verticalTrack: {
     right: 0,
@@ -26,19 +26,36 @@ export const styles = (theme: Theme) => ({
   },
   shadow: {
     position: 'absolute' as const,
-    left: 0,
-    right: 0,
-    height: 80,
     pointerEvents: 'none' as const,
     transition: 'opacity 0.2s linear',
   },
   topShadow: {
+    left: 0,
+    right: 0,
     top: 0,
+    height: 80,
     background: 'linear-gradient(0deg, rgba(35, 39, 67, 0) 0%, #232743 100%)',
   },
   bottomShadow: {
+    left: 0,
+    right: 0,
     bottom: 0,
+    height: 80,
     background: 'linear-gradient(180deg, rgba(35, 39, 67, 0) 0%, #232743 100%)',
     borderRadius: '12px',
+  },
+  leftShadow: {
+    top: 0,
+    bottom: 0,
+    left: 0,
+    width: 80,
+    background: 'linear-gradient(270deg, rgba(35, 39, 67, 0) 0%, #232743 100%)',
+  },
+  rightShadow: {
+    top: 0,
+    bottom: 0,
+    right: 0,
+    width: 80,
+    background: 'linear-gradient(90deg, rgba(35, 39, 67, 0) 0%, #232743 100%)',
   },
 });
