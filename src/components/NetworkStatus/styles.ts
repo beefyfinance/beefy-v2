@@ -84,6 +84,7 @@ export const styles = (theme: Theme) => ({
     borderRadius: '8px',
     marginTop: '4px',
     minWidth: '270px',
+    zIndex: 999,
   },
   titleContainer: {
     ...theme.typography['body-lg-med'],
