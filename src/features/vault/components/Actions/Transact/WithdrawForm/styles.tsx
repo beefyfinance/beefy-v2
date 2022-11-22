@@ -42,4 +42,7 @@ export const styles = (theme: Theme) => ({
     gap: '24px',
     width: '100%',
   },
+  fees: {
+    marginTop: '24px',
+  },
 });

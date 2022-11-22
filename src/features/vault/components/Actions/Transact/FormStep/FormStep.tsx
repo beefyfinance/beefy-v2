@@ -40,6 +40,7 @@ export const FormStep = memo(function () {
   );
 
   useEffect(() => {
+    // only dispatches if vaultId or mode changes
     dispatch(transactFetchOptions({ vaultId, mode }));
   }, [dispatch, mode, vaultId]);
 

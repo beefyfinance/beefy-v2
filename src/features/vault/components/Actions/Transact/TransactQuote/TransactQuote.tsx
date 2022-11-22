@@ -15,7 +15,10 @@ import {
   selectTransactSelectedTokensId,
 } from '../../../../../data/selectors/transact';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { transactFetchQuotes } from '../../../../../data/actions/transact';
+import {
+  transactFetchQuotes,
+  transactFetchQuotesIfNeeded,
+} from '../../../../../data/actions/transact';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { TokenAmountIcon, TokenAmountIconLoader } from '../TokenAmountIcon/TokenAmountIcon';
 import { QuoteArrowDivider } from '../QuoteArrowDivider';
@@ -42,10 +45,14 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   const status = useAppSelector(selectTransactQuoteStatus);
 
   useEffect(() => {
+    // TODO: when switching back from quote select; this shouldn't re-run
+    // or it will re-select the best quote
+    // in fact if this ever reruns, a new quote id will be made
+    // ,,,
     if (inputAmount.lte(BIG_ZERO)) {
       dispatch(transactActions.clearQuotes());
     } else {
-      dispatch(transactFetchQuotes()); // TODO? debounce
+      dispatch(transactFetchQuotesIfNeeded()); // TODO? debounce
     }
   }, [dispatch, mode, chainId, tokensId, inputAmount, inputMax]);
 

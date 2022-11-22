@@ -18,6 +18,7 @@ export type ApyPerformanceFeeData = {
 export type ApyVaultFeeData = {
   performance: ApyPerformanceFeeData;
   withdraw: number;
+  deposit?: number;
   lastUpdated: number;
 };
 

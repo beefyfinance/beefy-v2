@@ -99,11 +99,12 @@ type PoolMetadata = {
 };
 
 export class OneInchZapProvider implements ITransactProvider {
+  public static readonly ID = 'one-inch';
   private depositCache: Record<string, OneInchZapOption[]> = {};
   private withdrawCache: Record<string, OneInchZapOption[]> = {};
 
   getId(): string {
-    return '1inch';
+    return OneInchZapProvider.ID;
   }
 
   async isSingleAssetVault(vault: VaultStandard, state: BeefyState): Promise<boolean> {
@@ -340,6 +341,7 @@ export class OneInchZapProvider implements ITransactProvider {
     } else if (isLPOption(option)) {
       return this.getLPDepositQuoteFor(option, amounts, state);
     } else {
+      console.error(option);
       throw new Error(`Wrong option type passed to ${this.getId()}`);
     }
   }
@@ -1483,7 +1485,7 @@ export class OneInchZapProvider implements ITransactProvider {
 }
 
 function isOneInchOption(option: TransactOption): option is OneInchZapOption {
-  return option.type === 'zap' && option.providerId === '1inch';
+  return option.type === 'zap' && option.providerId === OneInchZapProvider.ID;
 }
 
 function isSingleOption(option: TransactOption): option is OneInchZapOptionSingle {

@@ -23,7 +23,7 @@ export const TokenSelectStep = memo(function () {
 
   return (
     <div className={classes.container}>
-      <StepHeader onBack={handleBack}>Select token</StepHeader>
+      <StepHeader onBack={handleBack}>{t('Transact-SelectToken')}</StepHeader>
       {mode === TransactMode.Deposit ? <DepositTokenSelectList /> : <WithdrawTokenSelectList />}
     </div>
   );

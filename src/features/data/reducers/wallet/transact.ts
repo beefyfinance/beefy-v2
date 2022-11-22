@@ -142,6 +142,10 @@ const transactSlice = createSlice({
         sliceState.confirm.changes = [];
       }
     },
+    selectQuote(sliceState, action: PayloadAction<{ quoteId: string }>) {
+      sliceState.selectedQuoteId = action.payload.quoteId;
+      sliceState.step = TransactStep.Form;
+    },
   },
   extraReducers: builder => {
     builder

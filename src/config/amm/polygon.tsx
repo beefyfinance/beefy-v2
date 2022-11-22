@@ -73,7 +73,7 @@ export const amms: AmmConfig[] = [
   },
   {
     id: 'polygon-dystopia',
-    name: 'dystopia',
+    name: 'Dystopia',
     type: 'solidly',
     routerAddress: '0xbE75Dd16D029c6B32B7aD57A0FD9C1c20Dd2862e',
     factoryAddress: '0x1d21Db6cde1b18c7E47B0F7F42f4b3F68b9beeC9',

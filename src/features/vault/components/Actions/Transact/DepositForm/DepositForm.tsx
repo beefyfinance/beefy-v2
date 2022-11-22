@@ -81,7 +81,7 @@ export const DepositForm = memo(function () {
           <DepositBuyLinks className={classes.links} />
           <TransactQuote title={t('Transact-YouDeposit')} className={classes.quote} />
           <DepositActions className={classes.actions} />
-          <VaultFees />
+          <VaultFees className={classes.fees} />
         </>
       )}
     </div>

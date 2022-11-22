@@ -17,6 +17,7 @@ import {
   selectTransactOptionsMode,
   selectTransactOptionsVaultId,
   selectTransactSelectedChainId,
+  selectTransactSelectedQuote,
   selectTransactSelectedTokensId,
   selectTransactTokensIdTokens,
   selectTransactVaultId,
@@ -42,7 +43,7 @@ import { startStepperWithSteps } from './stepper';
 import { KeysOfType } from '../utils/types-utils';
 import { TransactMode } from '../reducers/wallet/transact-types';
 import { selectTokenByAddress } from '../selectors/tokens';
-import { groupBy, uniqBy } from 'lodash';
+import { first, groupBy, uniqBy } from 'lodash';
 import { fetchAllowanceAction } from './allowance';
 import { fetchAllAmmsAction } from './amm';
 import { fetchFees } from './fees';
@@ -241,6 +242,34 @@ export const transactFetchQuotes = createAsyncThunk<
     quotes,
   };
 });
+
+export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state: BeefyState }>(
+  'transact/fetchQuotesIfNeeded',
+  async (_, { getState, dispatch }) => {
+    const state = getState();
+    const quote = selectTransactSelectedQuote(state);
+    let shouldFetch = true;
+
+    if (quote) {
+      const option = selectTransactOptionById(state, quote.optionId);
+      const vaultId = selectTransactVaultId(state);
+      const chainId = selectTransactSelectedChainId(state);
+      const tokensId = selectTransactSelectedTokensId(state);
+      const inputAmount = selectTransactInputAmount(state);
+      const input = first(quote.inputs);
+
+      shouldFetch =
+        option.chainId !== chainId ||
+        option.vaultId !== vaultId ||
+        option.tokensId !== tokensId ||
+        !input.amount.eq(inputAmount);
+    }
+
+    if (shouldFetch) {
+      dispatch(transactFetchQuotes());
+    }
+  }
+);
 
 const actionForByMode: Record<
   TransactMode,

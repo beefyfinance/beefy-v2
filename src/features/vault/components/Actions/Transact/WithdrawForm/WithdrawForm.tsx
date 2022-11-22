@@ -78,7 +78,7 @@ export const WithdrawForm = memo(function () {
           <div className={classes.actions}>
             <WithdrawActions />
           </div>
-          <VaultFees />
+          <VaultFees className={classes.fees} />
         </>
       )}
     </div>

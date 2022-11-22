@@ -1,4 +1,4 @@
-import React, { ComponentType, Fragment, memo, useMemo } from 'react';
+import React, { ComponentType, Fragment, memo, useCallback, useMemo } from 'react';
 import {
   ZapQuote,
   ZapQuoteStep,
@@ -9,13 +9,20 @@ import {
 } from '../../../../../data/apis/transact/transact-types';
 import { Trans, useTranslation } from 'react-i18next';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
-import { useAppSelector } from '../../../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectPlatformById } from '../../../../../data/selectors/platforms';
 import { ListJoin } from '../../../../../../components/ListJoin';
-import { selectTransactOptionById } from '../../../../../data/selectors/transact';
+import {
+  selectTransactOptionById,
+  selectTransactOptionIdsForTokensId,
+  selectTransactQuoteIds,
+} from '../../../../../data/selectors/transact';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
+import { ZapProvider } from '../ZapProvider';
+import { transactActions } from '../../../../../data/reducers/wallet/transact';
+import { TransactStep } from '../../../../../data/reducers/wallet/transact-types';
 
 const useStyles = makeStyles(styles);
 
@@ -148,14 +155,26 @@ export type ZapRouteProps = {
 export const ZapRoute = memo<ZapRouteProps>(function ({ quote, className }) {
   const { t } = useTranslation();
   const classes = useStyles();
+  const dispatch = useAppDispatch();
   const option = useAppSelector(state => selectTransactOptionById(state, quote.optionId));
+  const quotes = useAppSelector(selectTransactQuoteIds);
+  const hasMultipleOptions = quotes.length > 1;
+  const handleSwitch = useCallback(() => {
+    dispatch(transactActions.switchStep(TransactStep.QuoteSelect));
+  }, [dispatch]);
 
   return (
     <div className={clsx(classes.holder, className)}>
       <div className={classes.title}>{t('Transact-ZapRoute')}</div>
       <div className={classes.routeHolder}>
-        <div className={classes.routeHeader}>
-          <div>{option.providerId}</div>
+        <div
+          className={clsx(classes.routeHeader, {
+            [classes.routerHeaderClickable]: hasMultipleOptions,
+          })}
+          onClick={hasMultipleOptions ? handleSwitch : undefined}
+        >
+          <ZapProvider providerId={option.providerId} className={classes.routeHeaderProvider} />
+          {hasMultipleOptions ? '>' : undefined}
         </div>
         <div className={classes.routeContent}>
           <div className={classes.steps}>

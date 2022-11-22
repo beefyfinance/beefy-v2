@@ -1,25 +1,38 @@
 import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
-  btnContainer: {
-    display: 'flex',
-    flexWrap: 'wrap' as const,
-    columnGap: '8px',
-    rowGap: '8px',
+  container: {
+    border: 'solid 2px #2D3153',
+    borderRadius: '8px',
+    padding: '12px',
   },
-  btnSecondary: {
-    ...theme.typography['body-lg'],
-    textDecoration: 'none',
-    color: theme.palette.text.secondary,
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
-    borderRadius: '4px',
-    transition: 'color 0.2s',
-    padding: '2px 8px',
-    width: 'max-content',
-    '&:hover': {
-      color: theme.palette.text.primary,
-      backgroundColor: '#3F466D',
-      transition: 'color 0.1s',
+  transactionFees: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+    gap: '4px',
+  },
+  label: {
+    ...theme.typography['subline-sm'],
+    color: theme.palette.text.dark,
+  },
+  value: {
+    ...theme.typography['body-sm-med'],
+    color: theme.palette.text.middle,
+    textAlign: 'right' as const,
+  },
+  performanceFees: {
+    ...theme.typography['body-sm'],
+    color: theme.palette.text.dark,
+    marginTop: '12px',
+  },
+  tooltipTrigger: {
+    width: '16px',
+    height: '16px',
+    margin: 0,
+    verticalAlign: 'middle',
+    '& svg': {
+      width: '16px',
+      height: '16px',
     },
   },
 });

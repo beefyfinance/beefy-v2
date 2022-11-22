@@ -38,4 +38,7 @@ export const styles = (theme: Theme) => ({
   actions: {
     marginTop: '24px',
   },
+  fees: {
+    marginTop: '24px',
+  },
 });

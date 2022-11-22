@@ -13,7 +13,7 @@ export enum TransactStep {
   Loading,
   Form,
   TokenSelect,
-  RouteNotice,
+  QuoteSelect,
 }
 
 export enum TransactMode {

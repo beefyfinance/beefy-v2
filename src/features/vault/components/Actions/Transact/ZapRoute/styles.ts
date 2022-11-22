@@ -17,7 +17,13 @@ export const styles = (theme: Theme) => ({
     background: '#2D3153',
     borderRadius: '8px 8px 0px 0px',
     padding: '8px 12px',
+    display: 'flex',
+    justifyContent: 'space-between',
   },
+  routerHeaderClickable: {
+    cursor: 'pointer',
+  },
+  routeHeaderProvider: {},
   routeContent: {
     borderRadius: '0px 0px 8px 8px',
     padding: '16px',

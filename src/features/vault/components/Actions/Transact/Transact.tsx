@@ -10,6 +10,7 @@ import { FormStep } from './FormStep';
 import { Card } from '../../Card';
 import { TokenSelectStep } from './TokenSelectStep';
 import { TransactStep } from '../../../../data/reducers/wallet/transact-types';
+import { QuoteSelectStep } from './QuoteSelectStep';
 
 const useStyles = makeStyles(styles);
 
@@ -17,7 +18,7 @@ const stepToComponent: Record<TransactStep, ComponentType> = {
   [TransactStep.Loading]: LoadingStep,
   [TransactStep.Form]: FormStep,
   [TransactStep.TokenSelect]: TokenSelectStep,
-  [TransactStep.RouteNotice]: LoadingStep,
+  [TransactStep.QuoteSelect]: QuoteSelectStep,
 };
 
 export type TransactProps = {

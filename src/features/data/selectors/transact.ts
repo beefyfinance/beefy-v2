@@ -50,6 +50,14 @@ export const selectTransactQuoteById = createSelector(
 
 export const selectTransactQuoteStatus = (state: BeefyState) => state.ui.transact.quotes.status;
 
+export const selectTransactQuoteIds = (state: BeefyState) => state.ui.transact.quotes.allQuoteIds;
+
+export const selectTransactQuotes = createSelector(
+  selectTransactQuoteIds,
+  (state: BeefyState) => state.ui.transact.quotes.byQuoteId,
+  (ids, byQuoteId) => ids.map(id => byQuoteId[id])
+);
+
 export const selectTransactTokensIdTokenAddresses = createSelector(
   (state: BeefyState, tokensId: TransactOption['tokensId']) => tokensId,
   (state: BeefyState) => state.ui.transact.tokens.byTokensId,
