@@ -277,6 +277,7 @@
   "Safety-BeefySecure": "The Safety Score is computed by Beefy’s developers when assessing a vault, team puts a lot of effort into checking vaults added. Each vault also has a panic facility to pause activity to protect user funds at short notice if the need arises, or even suspicious activity is identified.",
   "Strat-Address": "Strategy address",
   "Strat-AddressVault": "Vault address",
+  "Strat-PoolAddress": "Pool address",
   "Asset-Detail": "Asset Details",
   "Token-Site": "Website",
   "Token-Docs": "Docs",
