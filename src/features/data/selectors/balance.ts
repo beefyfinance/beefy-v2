@@ -413,7 +413,11 @@ export const selectUserTokenExposure = (state: BeefyState) => {
 
 export const selectStablecoinsExposure = (state: BeefyState) => {
   const vaultIds = selectUserDepositedVaultIds(state);
-  return vaultIds.reduce((totals, vaultId) => {
+  let totals = {
+    stable: BIG_ZERO,
+    other: BIG_ZERO,
+  };
+  for (const vaultId of vaultIds) {
     const vault = selectVaultById(state, vaultId);
     if (selectIsVaultStable(state, vault.id)) {
       totals['stable'] = (totals['stable'] || BIG_ZERO).plus(
@@ -441,8 +445,8 @@ export const selectStablecoinsExposure = (state: BeefyState) => {
         );
       }
     }
-    return totals;
-  }, {} as Record<string, BigNumber>);
+  }
+  return totals;
 };
 
 export const selectUserStablecoinsExposure = (state: BeefyState) => {
