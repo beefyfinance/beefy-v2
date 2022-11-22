@@ -1,6 +1,6 @@
 import { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
-  resumeContainer: {
+  summaryContainer: {
     display: 'grid',
     gridTemplateColumns: 'repeat(4, 1fr)',
     rowGap: '16px',
@@ -18,7 +18,7 @@ export const styles = (theme: Theme) => ({
     columnGap: '16px',
     padding: '16px',
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.dashboard.resumeCard,
+    backgroundColor: theme.palette.background.dashboard.summaryCard,
     alignItems: 'center',
   },
   iconContainer: {

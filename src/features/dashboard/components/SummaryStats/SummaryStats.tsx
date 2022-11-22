@@ -38,7 +38,7 @@ export const SummaryStats = memo(function () {
   const classes = useStyles();
   const stats = useAppSelector(selectUserGlobalStats);
   return (
-    <div className={classes.resumeContainer}>
+    <div className={classes.summaryContainer}>
       <SummaryStat icon="wallet" title={t('Summary-Deposit')} value={formatUsd(stats.deposited)} />
       <SummaryStat
         icon="monthly-yield"

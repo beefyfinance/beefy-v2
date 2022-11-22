@@ -39,7 +39,7 @@ declare module '@material-ui/core/styles/createPalette' {
       error: string;
     };
     dashboard: {
-      resumeCard: string;
+      summaryCard: string;
       iconBg: string;
       cardBg: string;
       filter: string;
