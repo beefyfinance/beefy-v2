@@ -12,4 +12,9 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['subline-lg'],
     color: '#8585A6',
   },
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
 });
