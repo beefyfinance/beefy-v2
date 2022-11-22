@@ -131,26 +131,25 @@ export const selectVaultDailyYieldStats = (state: BeefyState, vaultId: VaultEnti
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
   const tokenBalance = selectUserVaultDepositInDepositToken(state, vault.id);
   const vaultUsdBalance = tokenBalance.times(oraclePrice);
+  const apyData = selectVaultTotalApy(state, vault.id);
 
   let dailyUsd = BIG_ZERO;
   let dailyTokens = BIG_ZERO;
 
   if (isGovVault(vault)) {
-    const apyData = selectVaultTotalApy(state, vault.id);
     dailyUsd = vaultUsdBalance.times(apyData.totalDaily);
     dailyTokens = tokenBalance.times(apyData.totalDaily);
   } else {
-    const apyData = selectVaultTotalApy(state, vault.id);
-
     const boostBalance = selectUserActiveBoostBalanceInToken(state, vaultId);
+    const nonBoostBalanceInTokens = tokenBalance.minus(boostBalance);
+    const nonBoostBalanceInUsd = nonBoostBalanceInTokens.times(oraclePrice);
 
-    // Note: this assumes 100% mooTokens in active boost
+    dailyUsd = nonBoostBalanceInUsd.times(apyData.totalDaily);
+    dailyTokens = nonBoostBalanceInTokens.times(apyData.totalDaily);
+
     if ('boostedTotalDaily' in apyData && boostBalance.gt(BIG_ZERO)) {
-      dailyUsd = vaultUsdBalance.times(apyData.boostedTotalDaily);
-      dailyTokens = tokenBalance.times(apyData.boostedTotalDaily);
-    } else {
-      dailyUsd = vaultUsdBalance.times(apyData.totalDaily);
-      dailyTokens = tokenBalance.times(apyData.totalDaily);
+      dailyUsd = dailyUsd.plus(tokenBalance.times(apyData.boostedTotalDaily));
+      dailyTokens = dailyUsd.plus(vaultUsdBalance.times(apyData.boostedTotalDaily));
     }
   }
 
