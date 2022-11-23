@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(styles);
 
-export const AnnouncementsBanner = memo(function ProposalBanner() {
+export const AnnouncementBanner = memo(function ProposalBanner() {
   const classes = useStyles();
 
   const [showBanner, setShowBanner] = React.useState(() => {
