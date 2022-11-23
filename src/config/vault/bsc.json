@@ -17150,36 +17150,6 @@
     "network": "bsc"
   },
   {
-    "id": "ellipsis-val3eps",
-    "name": "BUSD/USDC/USDT",
-    "token": "val3eps",
-    "tokenAddress": "0x5b5bD8913D766D005859CE002533D4838B0Ebbb5",
-    "tokenDecimals": 18,
-    "tokenProviderId": "ellipsis",
-    "earnedToken": "mooEllipsisval3eps",
-    "earnedTokenAddress": "0xad357578E1243EE744f491C1f557f743a2745b49",
-    "earnContractAddress": "0xad357578E1243EE744f491C1f557f743a2745b49",
-    "oracle": "lps",
-    "oracleId": "ellipsis-val3eps",
-    "status": "eol",
-    "retireReason": "tvl",
-    "platformId": "dotdot",
-    "assets": ["BUSD", "USDC", "USDT"],
-    "strategyTypeId": "multi-lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "addLiquidityUrl": "https://ellipsis.finance/pool/0x19EC9e3F7B21dd27598E7ad5aAe7dC0Db00A806d",
-    "buyTokenUrl": "https://ellipsis.finance/pool/0x19EC9e3F7B21dd27598E7ad5aAe7dC0Db00A806d",
-    "createdAt": 1658414563,
-    "network": "bsc"
-  },
-  {
     "id": "ellipsis-2brl",
     "name": "jBRL-BRZ LP",
     "token": "jBRL-BRZ LP",
