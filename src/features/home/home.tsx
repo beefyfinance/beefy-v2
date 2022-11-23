@@ -7,7 +7,7 @@ import { selectIsVaultListAvailable } from '../data/selectors/data-loader';
 import { styles } from './styles';
 import { Vaults } from './components/Vaults';
 import { useAppSelector } from '../../store';
-import { ProposalBanner } from '../../components/ProposalBanner';
+import { AnnouncementsBanner } from '../../components/AnnouncementsBanner';
 const useStyles = makeStyles(styles);
 
 export const Home = memo(function Home() {
@@ -20,7 +20,7 @@ export const Home = memo(function Home() {
 
   return (
     <>
-      <ProposalBanner />
+      <AnnouncementsBanner />
       <Portfolio />
       <Container maxWidth="lg" className={classes.vaultContainer}>
         <Filters />
