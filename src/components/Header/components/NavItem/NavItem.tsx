@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { Badge, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,7 @@ interface NavItemProps {
   url: string;
   title: string;
   Icon: React.FC;
+  withBadge?: boolean;
 }
 
 const useStyles = makeStyles(styles);
@@ -32,7 +33,7 @@ const AutoNavLink = memo<AutoNavLinkProps>(function ({ to, className, children, 
   return <NavLink className={className} to={to} children={children} {...rest} />;
 });
 
-export const NavItem = memo<NavItemProps>(function ({ url, title, Icon }) {
+export const NavItem = memo<NavItemProps>(function ({ url, title, Icon, withBadge = false }) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
@@ -43,8 +44,17 @@ export const NavItem = memo<NavItemProps>(function ({ url, title, Icon }) {
       key={url}
       to={url}
     >
-      <Icon />
-      {t(title)}
+      {withBadge ? (
+        <Badge badgeContent="New" color="primary">
+          <Icon />
+          {t(title)}
+        </Badge>
+      ) : (
+        <>
+          <Icon />
+          {t(title)}
+        </>
+      )}
     </AutoNavLink>
   );
 });
@@ -57,6 +67,7 @@ export const NavItemMobile = memo<NavItemPropsMobile>(function ({
   Icon,
   className,
   onClick,
+  withBadge = false,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -70,8 +81,17 @@ export const NavItemMobile = memo<NavItemPropsMobile>(function ({
       to={url}
     >
       <div className={classes.flex}>
-        <Icon />
-        {t(title)}
+        {withBadge ? (
+          <Badge badgeContent="New" color="primary">
+            <Icon />
+            {t(title)}
+          </Badge>
+        ) : (
+          <>
+            <Icon />
+            {t(title)}
+          </>
+        )}
       </div>
       <RightArrow className={classes.arrow} />
     </AutoNavLink>
