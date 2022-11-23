@@ -413,36 +413,39 @@ export const selectUserTokenExposure = (state: BeefyState) => {
 
 export const selectStablecoinsExposure = (state: BeefyState) => {
   const vaultIds = selectUserDepositedVaultIds(state);
-  return vaultIds.reduce((totals, vaultId) => {
-    const vault = selectVaultById(state, vaultId);
-    if (selectIsVaultStable(state, vault.id)) {
-      totals['stable'] = (totals['stable'] || BIG_ZERO).plus(
-        selectUserVaultDepositInUsd(state, vaultId)
-      );
-    } else {
-      const haveBreakdownData = selectHasBreakdownData(state, vault);
-      if (haveBreakdownData) {
-        const breakdown = selectLpBreakdownByAddress(
-          state,
-          vault.chainId,
-          vault.depositTokenAddress
-        );
-        const { assets } = selectLpBreakdownBalance(state, vault, breakdown);
-        for (const asset of assets) {
-          if (selectIsTokenStable(state, asset.chainId, asset.id)) {
-            totals['stable'] = (totals['stable'] || BIG_ZERO).plus(asset.userValue);
-          } else {
-            totals['other'] = (totals['other'] || BIG_ZERO).plus(asset.userValue);
-          }
-        }
-      } else {
-        totals['other'] = (totals['other'] || BIG_ZERO).plus(
+  return vaultIds.reduce(
+    (totals, vaultId) => {
+      const vault = selectVaultById(state, vaultId);
+      if (selectIsVaultStable(state, vault.id)) {
+        totals['stable'] = (totals['stable'] || BIG_ZERO).plus(
           selectUserVaultDepositInUsd(state, vaultId)
         );
+      } else {
+        const haveBreakdownData = selectHasBreakdownData(state, vault);
+        if (haveBreakdownData) {
+          const breakdown = selectLpBreakdownByAddress(
+            state,
+            vault.chainId,
+            vault.depositTokenAddress
+          );
+          const { assets } = selectLpBreakdownBalance(state, vault, breakdown);
+          for (const asset of assets) {
+            if (selectIsTokenStable(state, asset.chainId, asset.id)) {
+              totals['stable'] = (totals['stable'] || BIG_ZERO).plus(asset.userValue);
+            } else {
+              totals['other'] = (totals['other'] || BIG_ZERO).plus(asset.userValue);
+            }
+          }
+        } else {
+          totals['other'] = (totals['other'] || BIG_ZERO).plus(
+            selectUserVaultDepositInUsd(state, vaultId)
+          );
+        }
       }
-    }
-    return totals;
-  }, {} as Record<string, BigNumber>);
+      return totals;
+    },
+    { stable: BIG_ZERO, other: BIG_ZERO } as Record<string, BigNumber>
+  );
 };
 
 export const selectUserStablecoinsExposure = (state: BeefyState) => {

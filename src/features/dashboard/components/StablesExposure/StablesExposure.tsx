@@ -13,7 +13,7 @@ export const StablesExposure = memo(function () {
   const stablecoinsExposureData = useAppSelector(state => selectUserStablecoinsExposure(state));
   const stablePercentage = stablecoinsExposureData.filter(item => item.key === 'stable');
   const classes = useStyles({
-    stablesPercentage: formatPercent(stablePercentage[0]?.percentage, 0),
+    stablesPercentage: formatPercent(stablePercentage[0]?.percentage, 0, '0%'),
   });
   return (
     <div className={classes.container}>
@@ -27,7 +27,7 @@ export const StablesExposure = memo(function () {
             <div key={item.key} className={classes.legendItem}>
               <div className={classes.square} style={{ backgroundColor: item.color }} />
               <div className={classes.label}>
-                {item.key} <span>{formatPercent(item.percentage)}</span>
+                {item.key} <span>{formatPercent(item.percentage, 2, '0%')}</span>
               </div>
             </div>
           );
