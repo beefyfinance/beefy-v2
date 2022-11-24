@@ -28,7 +28,7 @@ export const ResourcesNavItems = [
 
 export const MobileList = [
   { title: 'Header-Vaults', Icon: VaultsIcon, url: '/' },
-  { title: 'Header-Dashboard', Icon: DashboardIcon, url: '/dashboard' },
+  { title: 'Header-Dashboard', Icon: DashboardIcon, url: '/dashboard', badge: true },
   { title: 'Header-Proposals', Icon: ProposalsIcon, url: 'https://vote.beefy.finance/#/' },
   { title: 'Header-Resources', Icon: ResourcesIcon, items: ResourcesNavItems },
   { title: 'Header-BuyCrypto', Icon: BuyCryptoIcon, url: '/onramp' },

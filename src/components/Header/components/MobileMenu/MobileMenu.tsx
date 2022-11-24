@@ -31,11 +31,17 @@ export const MobileMenu = memo(function () {
             <Close className={classes.cross} onClick={handleDrawerToggle} />
           </div>
           <Divider className={classes.divider} />
-          {MobileList.map(({ title, Icon, url, items }) => {
+          {MobileList.map(({ title, Icon, url, items, badge }) => {
             return (
               <div key={title}>
                 {url ? (
-                  <NavItemMobile onClick={handleDrawerToggle} title={title} url={url} Icon={Icon} />
+                  <NavItemMobile
+                    onClick={handleDrawerToggle}
+                    withBadge={badge}
+                    title={title}
+                    url={url}
+                    Icon={Icon}
+                  />
                 ) : (
                   <DropMobile
                     onClick={handleDrawerToggle}
