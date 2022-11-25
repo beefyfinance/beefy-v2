@@ -5,13 +5,14 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     paddingBottom: theme.spacing(3),
   },
-  icon: { marginRight: theme.spacing(1), height: '24px' },
+  icon: { marginRight: theme.spacing(1), height: '24px', width: '24px' },
   box: {
     backgroundColor: 'rgba(140, 147, 191, 0.1)',
     borderRadius: '8px',
     padding: '16px',
     display: 'flex',
     justifyContent: 'center',
+    gap: '8px',
   },
   content: {
     display: 'flex',
