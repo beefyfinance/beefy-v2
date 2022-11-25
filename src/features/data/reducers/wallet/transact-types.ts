@@ -66,6 +66,7 @@ export type TransactState = {
   selectedChainId: string | null;
   selectedTokensId: string | null;
   selectedQuoteId: string | null;
+  swapSlippage: number;
   inputAmount: BigNumber;
   inputMax: boolean;
   mode: TransactMode;

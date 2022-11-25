@@ -1,4 +1,5 @@
 import { BigNumber } from 'bignumber.js';
+import { mapValues } from 'lodash';
 
 export type BigNumberish = BigNumber.Value;
 
@@ -50,4 +51,25 @@ export function fromWei(value: BigNumber, decimals: number): BigNumber {
 
 export function fromWeiString(value: string, decimals: number): BigNumber {
   return fromWei(new BigNumber(value), decimals);
+}
+
+/**
+ * Recursively maps over an object and replaces any BigNumber object with string value
+ * e.g. "BigNumber(123.567)"
+ * Use only for debugging
+ */
+export function bigNumberToStringDeep(input: unknown) {
+  if (input && typeof input === 'object') {
+    if (BigNumber.isBigNumber(input)) {
+      return `BigNumber(${input.toString(10)})`;
+    }
+
+    if (Array.isArray(input)) {
+      return input.map(bigNumberToStringDeep);
+    }
+
+    return mapValues(input, bigNumberToStringDeep);
+  }
+
+  return input;
 }

@@ -1,11 +1,10 @@
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { AUTO_REFRESH_SECONDS, styles } from './styles';
+import { styles } from './styles';
 import { Refresh } from '@material-ui/icons';
 import clsx from 'clsx';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { useAppDispatch } from '../../../../../../store';
 import { transactFetchQuotes } from '../../../../../data/actions/transact';
-import { selectTransactSelectedQuoteId } from '../../../../../data/selectors/transact';
 
 const useStyles = makeStyles(styles);
 

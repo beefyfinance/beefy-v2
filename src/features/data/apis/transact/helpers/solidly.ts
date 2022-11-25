@@ -53,6 +53,9 @@ export type NormalizedReserves = {
   decimalsOut: BigNumber;
 };
 
+/**
+ * Returns reserves normalized to 18 decimals; which makes the rest of solidly math more straightforward
+ */
 function getNormalizedReserves(tokenIn: string, metadata: Metadata): NormalizedReserves {
   const inIsZero = tokenIn.toLowerCase() === metadata.token0.toLowerCase();
 
@@ -62,8 +65,8 @@ function getNormalizedReserves(tokenIn: string, metadata: Metadata): NormalizedR
   const decimalsOut = inIsZero ? metadata.decimals1 : metadata.decimals0;
 
   return {
-    reservesIn: reservesIn.shiftedBy(18).dividedToIntegerBy(decimalsIn),
-    reservesOut: reservesOut.shiftedBy(18).dividedToIntegerBy(decimalsOut),
+    reservesIn: reservesIn.shiftedBy(18).dividedToIntegerBy(decimalsIn).shiftedBy(-18),
+    reservesOut: reservesOut.shiftedBy(18).dividedToIntegerBy(decimalsOut).shiftedBy(-18),
     decimalsIn,
     decimalsOut,
   };
@@ -77,15 +80,15 @@ export function calculatePriceImpact(
   const reserves = getNormalizedReserves(tokenIn, metadata);
 
   const priceWithoutImpact = getPrice(
-    reserves.reservesIn.shiftedBy(-18),
-    reserves.reservesOut.shiftedBy(-18),
+    reserves.reservesIn,
+    reserves.reservesOut,
     metadata.stable
   ).times(amountIn.div(reserves.decimalsIn));
 
   const priceAfterSwap = getAmountOut(
     amountIn.div(reserves.decimalsIn),
-    reserves.reservesIn.shiftedBy(-18),
-    reserves.reservesOut.shiftedBy(-18),
+    reserves.reservesIn,
+    reserves.reservesOut,
     metadata.stable
   );
 
@@ -97,19 +100,20 @@ export type SwapResult = {
   amountOut: BigNumber;
   priceImpact: null;
 };
+
 export function calculateSwap(amountIn: BigNumber, tokenIn: string, metadata: Metadata) {
   const reserves = getNormalizedReserves(tokenIn, metadata);
 
   const priceWithoutImpact = getPrice(
-    reserves.reservesIn.shiftedBy(-18),
-    reserves.reservesOut.shiftedBy(-18),
+    reserves.reservesIn,
+    reserves.reservesOut,
     metadata.stable
   ).times(amountIn.div(reserves.decimalsIn));
 
   const priceAfterSwap = getAmountOut(
     amountIn.div(reserves.decimalsIn),
-    reserves.reservesIn.shiftedBy(-18),
-    reserves.reservesOut.shiftedBy(-18),
+    reserves.reservesIn,
+    reserves.reservesOut,
     metadata.stable
   );
 
@@ -121,15 +125,17 @@ export function calculateSwap(amountIn: BigNumber, tokenIn: string, metadata: Me
   };
 }
 
-function getPrice(reserveIn: BigNumber, reserveOut: BigNumber, stable): BigNumber {
-  const minimalValue = BIG_ONE.shiftedBy(-9);
-  if (stable) {
-    return getAmountOutStable(minimalValue, reserveIn, reserveOut).div(minimalValue);
-  } else {
-    return getAmountOutVolatile(minimalValue, reserveIn, reserveOut).div(minimalValue);
-  }
+/**
+ * Must use normalized reserves
+ */
+function getPrice(reserveIn: BigNumber, reserveOut: BigNumber, stable: boolean): BigNumber {
+  const minimalValue = BIG_ONE.shiftedBy(-9); // i.e. 0.000000001 of tokenIn since we are using normalized reserves
+  return getAmountOut(minimalValue, reserveIn, reserveOut, stable).div(minimalValue);
 }
 
+/**
+ * Must use normalized reserves
+ */
 function getAmountOut(
   amountIn: BigNumber,
   reserveIn: BigNumber,

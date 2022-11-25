@@ -2,7 +2,6 @@ import { VaultEntity } from '../../entities/vault';
 import { ChainEntity } from '../../entities/chain';
 import { TokenEntity, TokenErc20, TokenNative } from '../../entities/token';
 import { sortBy } from 'lodash';
-import BigNumber from 'bignumber.js';
 import { BeefyState } from '../../../../redux-types';
 import {
   selectChainNativeToken,

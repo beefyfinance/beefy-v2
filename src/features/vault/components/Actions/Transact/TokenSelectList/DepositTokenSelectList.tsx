@@ -5,7 +5,6 @@ import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectTransactDepositTokensForChainIdWithBalances,
-  selectTransactTokenChains,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
@@ -29,9 +28,9 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(function
   const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const availableChains = useAppSelector(selectTransactTokenChains);
+  // const availableChains = useAppSelector(selectTransactTokenChains);
   const [dustHidden, setDustHidden] = useState(false);
-  const [selectedChain, setSelectedChain] = useState(vault.chainId);
+  const [selectedChain] = useState(vault.chainId);
   const [search, setSearch] = useState('');
   const optionsForChain = useAppSelector(state =>
     selectTransactDepositTokensForChainIdWithBalances(state, selectedChain)
@@ -55,7 +54,7 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(function
 
     return options;
   }, [optionsForChain, search, dustHidden]);
-  const hasMultipleChains = availableChains.length > 1;
+  // const hasMultipleChains = availableChains.length > 1;
   const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
     tokenId => {
       dispatch(
@@ -80,20 +79,20 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(function
         <SearchInput value={search} onChange={setSearch} className={classes.searchInput} />
       </div>
       <div className={classes.walletToggle}>
-        <div className={classes.inWallet}>{t('In your wallet') /* TODO */}</div>
+        <div className={classes.inWallet}>{t('Transact-TokenSelect-InYourWallet')}</div>
         <div className={classes.hideDust}>
           <Toggle
             checked={dustHidden}
             onChange={handleToggleDust}
-            startAdornment={t('Hide dust')}
+            startAdornment={t('Transact-TokenSelect-HideDust')}
           />
         </div>
       </div>
-      {hasMultipleChains ? <div className={classes.chainSelector}>TODO {selectedChain}</div> : null}
+      {/*hasMultipleChains ? <div className={classes.chainSelector}>TODO {selectedChain}</div> : null*/}
       <Scrollable className={classes.listContainer}>
-        {filteredOptionsForChain.length ? (
-          <div className={classes.list}>
-            {filteredOptionsForChain.map(option => (
+        <div className={classes.list}>
+          {filteredOptionsForChain.length ? (
+            filteredOptionsForChain.map(option => (
               <ListItem
                 key={option.id}
                 tokenId={option.id}
@@ -102,11 +101,11 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(function
                 chainId={selectedChain}
                 onSelect={handleTokenSelect}
               />
-            ))}
-          </div>
-        ) : (
-          'TODO No tokens available for this chain / filter is hiding options'
-        )}
+            ))
+          ) : (
+            <div className={classes.noResults}>{t('Transact-TokenSelect-NoResults')}</div>
+          )}
+        </div>
       </Scrollable>
     </div>
   );

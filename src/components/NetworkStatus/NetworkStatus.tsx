@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { ChainEntity } from '../../features/data/entities/chain';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader';
 import { selectBoostById } from '../../features/data/selectors/boosts';
-import { selectVaultById } from '../../features/data/selectors/vaults';
 import { BeefyState } from '../../redux-types';
 import { styles } from './styles';
 import { Floating } from '../Floating';

@@ -122,7 +122,6 @@ export class BeefySolidlyZapProvider extends BeefyBaseZapProvider {
 
     // before swap
     const metadata = metadataToObject(pair.metadata);
-    const isStable = metadata.stable;
     const token0 = metadata.token0;
     const totalSupply = new BigNumber(pair.totalSupply);
     const inIsToken0 = swapTokenIn.address.toLowerCase() === token0.toLowerCase();
@@ -370,14 +369,9 @@ export class BeefySolidlyZapProvider extends BeefyBaseZapProvider {
     }
 
     // swap
-    const isStable = metadata.stable;
-    const dec0 = metadata.decimals0;
-    const dec1 = metadata.decimals1;
     const inIsToken0 = swapTokenIn.address.toLowerCase() === token0.toLowerCase();
     const withdrawnIn = inIsToken0 ? withdrawn0 : withdrawn1;
     const withdrawnOut = inIsToken0 ? withdrawn1 : withdrawn0;
-    const reserves0AfterWithdraw = reserves0.minus(withdrawn0);
-    const reserves1AfterWithdraw = reserves1.minus(withdrawn1);
     const swapAmountIn = withdrawnIn;
     const swapAmountInAfterFee = swapAmountIn
       .minus(swapAmountIn.multipliedBy(option.amm.swapFee))

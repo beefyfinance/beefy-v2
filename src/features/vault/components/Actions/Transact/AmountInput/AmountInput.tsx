@@ -143,7 +143,8 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
       onBlur={handleBlur}
       fullWidth={true}
       endAdornment={endAdornment}
-      placeholder={`0`}
+      placeholder="0"
+      inputMode="decimal"
     />
   );
 });

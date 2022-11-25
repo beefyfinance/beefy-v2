@@ -158,7 +158,7 @@ export class GovVaultProvider implements ITransactProvider {
 
     if (isWithdrawAll) {
       const rewardTokenAmount =
-        quote.outputs.length == 2
+        quote.outputs.length === 2
           ? quote.outputs[1]
           : {
               token: selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress),

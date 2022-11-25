@@ -1,9 +1,7 @@
 import { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
-  holder: {
-    marginTop: '24px',
-  },
+  holder: {},
   title: {
     ...theme.typography['body-lg'],
     color: theme.palette.text.dark,

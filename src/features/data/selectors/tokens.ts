@@ -5,6 +5,8 @@ import { isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
 import { selectChainById } from './chains';
 import { BIG_ONE } from '../../../helpers/big-number';
 import { createCachedSelector } from 're-reselect';
+import { VaultEntity } from '../entities/vault';
+import { selectVaultById } from './vaults';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -53,6 +55,11 @@ export const selectTokenByAddress = (
     );
   }
   return byChainId[chainId].byAddress[address.toLowerCase()];
+};
+
+export const selectDepositTokenByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const vault = selectVaultById(state, vaultId);
+  return selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 };
 
 export const selectTokenByAddressOrNull = createCachedSelector(

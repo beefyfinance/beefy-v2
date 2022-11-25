@@ -5,8 +5,7 @@ import { ReactNode } from 'react';
 import { AllValuesAsString } from '../features/data/utils/types-utils';
 import { BIG_ONE, BIG_ZERO, isBigNumber } from './big-number';
 import { SerializedError } from '@reduxjs/toolkit';
-import { isString } from 'lodash';
-import { padStart } from 'lodash';
+import { isString, padStart } from 'lodash';
 
 export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
   const number = num.toFormat({
@@ -65,6 +64,24 @@ export const formatPercent = (
         minimumFractionDigits: 0,
       }) + '%';
 };
+
+/**
+ * @param percent 0..1
+ * @param maxPlaces
+ * @param minPlaces
+ */
+export function formatSmallPercent(
+  percent: number,
+  maxPlaces: number = 1,
+  minPlaces: number = 0
+): string {
+  return percent === 0
+    ? '0%'
+    : (percent * 100).toLocaleString('en-US', {
+        maximumFractionDigits: maxPlaces,
+        minimumFractionDigits: minPlaces,
+      }) + '%';
+}
 
 export const formattedTotalApy = (
   totalApy: TotalApy,

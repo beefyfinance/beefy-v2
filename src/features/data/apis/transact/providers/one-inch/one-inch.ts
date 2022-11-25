@@ -46,12 +46,12 @@ import { selectChainById } from '../../../../selectors/chains';
 import { walletActions } from '../../../../actions/wallet-actions';
 import {
   nativeToWNative,
-  tokensToZapWithdraw,
   tokensToLp,
   tokensToZapIn,
+  tokensToZapWithdraw,
   wnativeToNative,
 } from '../../helpers/tokens';
-import { selectTokenAmountValue } from '../../../../selectors/transact';
+import { selectTokenAmountValue, selectTransactSlippage } from '../../../../selectors/transact';
 import BigNumber from 'bignumber.js';
 import {
   computeSolidlyPairAddress,
@@ -62,7 +62,6 @@ import {
 import {
   computeUniswapV2PairAddress,
   getOptimalAddLiquidityAmounts,
-  LiquidityAmounts,
   quoteMint,
 } from '../../helpers/uniswapv2';
 import Web3 from 'web3';
@@ -772,8 +771,12 @@ export class OneInchZapProvider implements ITransactProvider {
     inputToken: TokenErc20,
     inputAmount: BigNumber
   ): Promise<[BigNumber, BigNumber]> {
-    const amount0 = inputAmount.dividedBy(2).decimalPlaces(inputToken.decimals);
-    const amount1 = inputAmount.minus(amount0);
+    const amount0 = inputAmount
+      .dividedBy(2)
+      .decimalPlaces(inputToken.decimals, BigNumber.ROUND_FLOOR);
+    const amount1 = inputAmount
+      .minus(amount0)
+      .decimalPlaces(inputToken.decimals, BigNumber.ROUND_FLOOR);
 
     return [amount0, amount1];
   }
@@ -794,17 +797,31 @@ export class OneInchZapProvider implements ITransactProvider {
       depositToken.address
     );
 
-    let amount0 = inputAmount.dividedToIntegerBy(2);
+    console.log({
+      inputToken,
+      inputAmount: inputAmount.toString(10),
+      depositToken,
+      isStable,
+    });
+
+    let amount0 = inputAmount
+      .dividedBy(2)
+      .decimalPlaces(inputToken.decimals, BigNumber.ROUND_FLOOR);
     if (isStable) {
       const zapContract = new web3.eth.Contract(BeefyZapOneInchAbi, option.zap.zapAddress);
       const ratioWei = await zapContract.methods
         .quoteStableAddLiquidityRatio(vault.earnContractAddress)
         .call();
       const ratio = fromWeiString(ratioWei, 18);
-      amount0 = inputAmount.multipliedBy(BIG_ONE.minus(ratio)).decimalPlaces(inputToken.decimals);
+
+      amount0 = inputAmount
+        .multipliedBy(BIG_ONE.minus(ratio))
+        .decimalPlaces(inputToken.decimals, BigNumber.ROUND_FLOOR);
     }
 
-    const amount1 = inputAmount.minus(amount0);
+    const amount1 = inputAmount
+      .minus(amount0)
+      .decimalPlaces(inputToken.decimals, BigNumber.ROUND_FLOOR);
     return [amount0, amount1];
   }
 
@@ -830,6 +847,7 @@ export class OneInchZapProvider implements ITransactProvider {
     t: TFunction<Namespace>
   ): Promise<Step> {
     const vault = selectVaultById(state, option.vaultId);
+    const slippage = selectTransactSlippage(state);
     const inputToken = first(quote.inputs).token;
     const swap = quote.steps.find(step => isZapQuoteStepSwap(step));
     if (!swap || !isZapQuoteStepSwap(swap)) {
@@ -839,7 +857,7 @@ export class OneInchZapProvider implements ITransactProvider {
     return {
       step: 'deposit',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-      action: walletActions.oneInchBeefInSingle(vault, inputToken, swap, option.zap, 0.01),
+      action: walletActions.oneInchBeefInSingle(vault, inputToken, swap, option.zap, slippage),
       pending: false,
     };
   }
@@ -851,6 +869,7 @@ export class OneInchZapProvider implements ITransactProvider {
     t: TFunction<Namespace>
   ): Promise<Step> {
     const vault = selectVaultById(state, option.vaultId);
+    const slippage = selectTransactSlippage(state);
     const input = first(quote.inputs);
     const swaps: ZapQuoteStepSwap[] = quote.steps.filter(isZapQuoteStepSwap);
     if (!swaps || !swaps.length) {
@@ -860,7 +879,14 @@ export class OneInchZapProvider implements ITransactProvider {
     return {
       step: 'deposit',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-      action: walletActions.oneInchBeefInLP(vault, input, swaps, option.zap, option.lpTokens, 0.01),
+      action: walletActions.oneInchBeefInLP(
+        vault,
+        input,
+        swaps,
+        option.zap,
+        option.lpTokens,
+        slippage
+      ),
       pending: false,
     };
   }
@@ -1439,6 +1465,7 @@ export class OneInchZapProvider implements ITransactProvider {
     t: TFunction<Namespace>
   ): Promise<Step> {
     const vault = selectStandardVaultById(state, option.vaultId);
+    const slippage = selectTransactSlippage(state);
     const input = first(quote.inputs);
     const swap = quote.steps.find(step => isZapQuoteStepSwap(step));
     if (!swap || !isZapQuoteStepSwap(swap)) {
@@ -1448,7 +1475,7 @@ export class OneInchZapProvider implements ITransactProvider {
     return {
       step: 'withdraw',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-      action: walletActions.oneInchBeefOutSingle(vault, input, swap, option.zap, 0.01),
+      action: walletActions.oneInchBeefOutSingle(vault, input, swap, option.zap, slippage),
       pending: false,
       extraInfo: { zap: true },
     };
@@ -1461,6 +1488,7 @@ export class OneInchZapProvider implements ITransactProvider {
     t: TFunction<Namespace>
   ): Promise<Step> {
     const vault = selectStandardVaultById(state, option.vaultId);
+    const slippage = selectTransactSlippage(state);
     const input = first(quote.inputs);
     const swaps = quote.steps.filter(isZapQuoteStepSwap);
     if (!swaps || !swaps.length) {
@@ -1476,7 +1504,7 @@ export class OneInchZapProvider implements ITransactProvider {
         swaps,
         option.zap,
         option.lpTokens,
-        0.01
+        slippage
       ),
       pending: false,
       extraInfo: { zap: true },

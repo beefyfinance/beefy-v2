@@ -14,7 +14,6 @@ import { selectPlatformById } from '../../../../../data/selectors/platforms';
 import { ListJoin } from '../../../../../../components/ListJoin';
 import {
   selectTransactOptionById,
-  selectTransactOptionIdsForTokensId,
   selectTransactQuoteIds,
 } from '../../../../../data/selectors/transact';
 import clsx from 'clsx';

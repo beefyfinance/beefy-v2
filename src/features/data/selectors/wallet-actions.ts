@@ -1,9 +1,8 @@
 import { BeefyState } from '../../../redux-types';
-import { oracleAmountToMooAmount } from '../utils/ppfs';
 import { selectAllowanceByTokenAddress } from './allowances';
 import { selectBoostById } from './boosts';
 import { selectTokenByAddress } from './tokens';
-import { selectStandardVaultById, selectVaultById, selectVaultPricePerFullShare } from './vaults';
+import { selectStandardVaultById } from './vaults';
 
 export const selectIsApprovalNeededForBoostStaking = (
   state: BeefyState,

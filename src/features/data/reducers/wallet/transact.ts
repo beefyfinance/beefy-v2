@@ -8,7 +8,7 @@ import {
   TransactQuote,
 } from '../../apis/transact/transact-types';
 import { WritableDraft } from 'immer/dist/internal';
-import { BIG_ZERO } from '../../../../helpers/big-number';
+import { BIG_ZERO, bigNumberToStringDeep } from '../../../../helpers/big-number';
 import {
   TransactMode,
   TransactOptions,
@@ -57,6 +57,7 @@ const initialTransactState: TransactState = {
   selectedChainId: null,
   selectedTokensId: null,
   selectedQuoteId: null,
+  swapSlippage: 0.01, // 1%s
   inputAmount: BIG_ZERO,
   inputMax: false,
   mode: TransactMode.Deposit,
@@ -88,7 +89,7 @@ const transactSlice = createSlice({
       }
     },
     setInputAmount(sliceState, action: PayloadAction<{ amount: BigNumber; max: boolean }>) {
-      console.log('setInputAmount', action.payload.amount.toString(10), action.payload.max);
+      console.log('setInputAmount', bigNumberToStringDeep(action));
       if (!sliceState.inputAmount.isEqualTo(action.payload.amount)) {
         sliceState.inputAmount = action.payload.amount;
       }
@@ -100,7 +101,7 @@ const transactSlice = createSlice({
       resetQuotes(sliceState);
     },
     confirmPending(sliceState, action: PayloadAction<{ requestId: string }>) {
-      console.debug('confirm/pending', action);
+      console.debug('confirm/pending', bigNumberToStringDeep(action));
       resetConfirm(sliceState);
       sliceState.confirm.status = TransactStatus.Pending;
       sliceState.confirm.requestId = action.payload.requestId;
@@ -109,7 +110,7 @@ const transactSlice = createSlice({
       sliceState,
       action: PayloadAction<{ requestId: string; error: SerializedError }>
     ) {
-      console.debug('confirm/rejected', action);
+      console.debug('confirm/rejected', bigNumberToStringDeep(action));
       if (sliceState.confirm.requestId === action.payload.requestId) {
         sliceState.confirm.status = TransactStatus.Rejected;
         sliceState.confirm.error = action.payload.error;
@@ -124,7 +125,7 @@ const transactSlice = createSlice({
         originalQuoteId: TransactQuote['id'];
       }>
     ) {
-      console.debug('confirm/needed', action);
+      console.debug('confirm/needed', bigNumberToStringDeep(action));
       if (sliceState.confirm.requestId === action.payload.requestId) {
         sliceState.confirm.status = TransactStatus.Fulfilled;
         sliceState.confirm.changes = action.payload.changes;
@@ -136,7 +137,7 @@ const transactSlice = createSlice({
       }
     },
     confirmUnneeded(sliceState, action: PayloadAction<{ requestId: string }>) {
-      console.debug('confirm/unneeded', action);
+      console.debug('confirm/unneeded', bigNumberToStringDeep(action));
       if (sliceState.confirm.requestId === action.payload.requestId) {
         sliceState.confirm.status = TransactStatus.Fulfilled;
         sliceState.confirm.changes = [];
@@ -145,6 +146,9 @@ const transactSlice = createSlice({
     selectQuote(sliceState, action: PayloadAction<{ quoteId: string }>) {
       sliceState.selectedQuoteId = action.payload.quoteId;
       sliceState.step = TransactStep.Form;
+    },
+    setSlippage(sliceState, action: PayloadAction<{ slippage: number }>) {
+      sliceState.swapSlippage = action.payload.slippage;
     },
   },
   extraReducers: builder => {
@@ -176,7 +180,7 @@ const transactSlice = createSlice({
         }
       })
       .addCase(transactFetchOptions.fulfilled, (sliceState, action) => {
-        console.debug('transact reducer', action.payload);
+        console.debug('transact reducer', bigNumberToStringDeep(action));
         if (sliceState.options.requestId === action.meta.requestId) {
           sliceState.options.status = TransactStatus.Fulfilled;
 
@@ -188,20 +192,20 @@ const transactSlice = createSlice({
         }
       })
       .addCase(transactFetchQuotes.pending, (sliceState, action) => {
-        console.debug('quotes/pending', action);
+        console.debug('quotes/pending', bigNumberToStringDeep(action));
         resetQuotes(sliceState);
         sliceState.quotes.status = TransactStatus.Pending;
         sliceState.quotes.requestId = action.meta.requestId;
       })
       .addCase(transactFetchQuotes.rejected, (sliceState, action) => {
-        console.debug('quotes/rejected', action);
+        console.debug('quotes/rejected', bigNumberToStringDeep(action));
         if (sliceState.quotes.requestId === action.meta.requestId) {
           sliceState.quotes.status = TransactStatus.Rejected;
           sliceState.quotes.error = action.error;
         }
       })
       .addCase(transactFetchQuotes.fulfilled, (sliceState, action) => {
-        console.debug('quotes/fulfilled', action);
+        console.debug('quotes/fulfilled', bigNumberToStringDeep(action));
         if (sliceState.quotes.requestId === action.meta.requestId) {
           if (action.payload.quotes.length === 0) {
             sliceState.quotes.status = TransactStatus.Rejected;

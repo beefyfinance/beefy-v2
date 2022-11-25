@@ -21,6 +21,7 @@ import { TransactStatus } from '../../../../../data/reducers/wallet/transact-typ
 import { WithdrawTokenAmountInput } from '../WithdrawTokenAmountInput';
 import { VaultFees } from '../VaultFees';
 import { WithdrawActions } from '../WithdrawActions';
+import { StakedInBoost } from '../StakedInboost';
 
 const useStyles = makeStyles(styles);
 
@@ -61,6 +62,7 @@ export const WithdrawForm = memo(function () {
         <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
       ) : (
         <>
+          <StakedInBoost className={classes.stakedInBoost} />
           <div className={classes.labels}>
             <div className={classes.selectLabel}>{t('Transact-SelectToken')}</div>
             <div className={classes.availableLabel}>

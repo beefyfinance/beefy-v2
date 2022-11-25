@@ -47,4 +47,9 @@ export const styles = (theme: Theme) => ({
     rowGap: '16px',
     overflowY: 'auto' as const,
   },
+  noResults: {
+    padding: '8px 12px',
+    borderRadius: '8px',
+    background: '#2D3153',
+  },
 });

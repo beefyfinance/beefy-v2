@@ -3,7 +3,6 @@ import BigNumber from 'bignumber.js';
 import { startStepper } from '../../actions/stepper';
 import { ChainEntity } from '../../entities/chain';
 import { TokenEntity } from '../../entities/token';
-import { WALLET_ACTION } from '../../actions/wallet-actions';
 
 export enum StepContent {
   StartTx = 1,

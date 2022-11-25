@@ -16,9 +16,6 @@ import { initWallet } from './wallet';
 import { recomputeBoostStatus } from '../reducers/boosts';
 import { fetchPartnersConfig } from './partners';
 import { fetchAddressBookAction, fetchAllAddressBookAction } from './tokens';
-import { fetchAllZapsAction } from './zap';
-import { VaultEntity } from '../entities/vault';
-import { selectVaultById } from '../selectors/vaults';
 import { BoostEntity } from '../entities/boost';
 import { selectBoostById } from '../selectors/boosts';
 import { selectShouldInitAddressBook } from '../selectors/data-loader';
@@ -27,9 +24,9 @@ import { MinterEntity } from '../entities/minter';
 import { selectMinterById } from '../selectors/minters';
 import { initiateBridgeForm } from './bridge';
 import { fetchPlatforms } from './platforms';
-import { isInitialLoader } from '../reducers/data-loader-types';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
+
 export interface CapturedFulfilledActions {
   contractData: CapturedFulfilledActionGetter;
   user: {

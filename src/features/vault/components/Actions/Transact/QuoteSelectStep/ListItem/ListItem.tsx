@@ -1,13 +1,8 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { formatBigDecimals } from '../../../../../../../helpers/format';
-import { ChainEntity } from '../../../../../../data/entities/chain';
 import clsx from 'clsx';
-import { TokenEntity } from '../../../../../../data/entities/token';
-import BigNumber from 'bignumber.js';
 import { ChevronRight } from '@material-ui/icons';
-import { TokensImage } from '../../../../../../../components/TokenImage/TokenImage';
 import { ListJoin } from '../../../../../../../components/ListJoin';
 import { useAppSelector } from '../../../../../../../store';
 import {
@@ -15,7 +10,7 @@ import {
   selectTransactQuoteById,
 } from '../../../../../../data/selectors/transact';
 import { ZapProvider } from '../../ZapProvider';
-import { TokenAmount, TokenAmountFromEntity } from '../../../../../../../components/TokenAmount';
+import { TokenAmountFromEntity } from '../../../../../../../components/TokenAmount';
 
 const useStyles = makeStyles(styles);
 

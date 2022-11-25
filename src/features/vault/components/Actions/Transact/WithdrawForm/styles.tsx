@@ -4,6 +4,9 @@ export const styles = (theme: Theme) => ({
   container: {
     padding: '24px',
   },
+  stakedInBoost: {
+    marginBottom: '24px',
+  },
   labels: {
     display: 'flex',
     flexWrap: 'nowrap' as const,

@@ -45,8 +45,9 @@ import {
 import Web3 from 'web3';
 import { TransactMode } from '../../../../reducers/wallet/transact-types';
 import { oracleAmountToMooAmount } from '../../../../utils/ppfs';
-import { AmmEntity, isUniswapV2Amm } from '../../../../entities/amm';
+import { AmmEntity } from '../../../../entities/amm';
 import { selectBeefyZapByAmmId, selectBeefyZapsByChainId } from '../../../../selectors/zap';
+import { selectTransactSlippage } from '../../../../selectors/transact';
 
 export type BeefyZapOption = {
   zap: ZapEntityBeefy;
@@ -276,6 +277,7 @@ export abstract class BeefyBaseZapProvider implements ITransactProvider {
 
     const vault = selectVaultById(state, option.vaultId);
     const swap = quote.steps.find(step => isZapQuoteStepSwap(step));
+    const slippage = selectTransactSlippage(state);
     if (!swap || !isZapQuoteStepSwap(swap)) {
       throw new Error(`No swap step in zap quote`);
     }
@@ -283,7 +285,7 @@ export abstract class BeefyBaseZapProvider implements ITransactProvider {
     return {
       step: 'deposit',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-      action: walletActions.beefIn(vault, quote.inputs[0].amount, swap, option.zap, 0.01),
+      action: walletActions.beefIn(vault, quote.inputs[0].amount, swap, option.zap, slippage),
       pending: false,
     };
   }
@@ -441,12 +443,13 @@ export abstract class BeefyBaseZapProvider implements ITransactProvider {
     const vault = selectVaultById(state, option.vaultId);
     const swap = quote.steps.find(step => isZapQuoteStepSwap(step));
     const isSwap = swap && isZapQuoteStepSwap(swap);
+    const slippage = selectTransactSlippage(state);
 
     return {
       step: 'withdraw',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
       action: isSwap
-        ? walletActions.beefOutAndSwap(vault, quote.inputs[0].amount, swap, option.zap, 0.01)
+        ? walletActions.beefOutAndSwap(vault, quote.inputs[0].amount, swap, option.zap, slippage)
         : walletActions.beefOut(vault, quote.inputs[0].amount, option.zap),
       pending: false,
       extraInfo: { zap: true },

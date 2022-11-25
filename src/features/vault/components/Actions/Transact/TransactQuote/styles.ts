@@ -11,4 +11,10 @@ export const styles = (theme: Theme) => ({
     gap: '8px',
     width: '100%',
   },
+  route: {
+    marginTop: '24px',
+  },
+  slippage: {
+    marginTop: '24px',
+  },
 });

@@ -12,6 +12,7 @@ import { TransactStatus } from '../reducers/wallet/transact-types';
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) => state.ui.transact.vaultId;
 export const selectTransactMode = (state: BeefyState) => state.ui.transact.mode;
+export const selectTransactSlippage = (state: BeefyState) => state.ui.transact.swapSlippage;
 
 export const selectTransactOptionsStatus = (state: BeefyState) => state.ui.transact.options.status;
 export const selectTransactOptionsError = (state: BeefyState) => state.ui.transact.options.error;
