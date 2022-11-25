@@ -71,7 +71,7 @@
     "oracleId": "stellaswap-4pool",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["USDCwh", "USDT", "BUSD", "FRAX"],
+    "assets": ["USDCwh", "USDTxc", "BUSDwh", "FRAX"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -185,7 +185,8 @@
     "earnContractAddress": "0xe184De2A8495184a9cCe8843e1Db192564cF1b9c",
     "oracle": "lps",
     "oracleId": "stellaswap-poop-wglmr",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["POOP", "GLMR"],
     "strategyTypeId": "lp",

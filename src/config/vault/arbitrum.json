@@ -1,5 +1,33 @@
 [
   {
+    "id": "curve-arb-f-fraxbp",
+    "name": "FRAX/USDC",
+    "token": "FRAXBP-f",
+    "tokenAddress": "0xC9B8a3FDECB9D5b218d02555a8Baf332E5B740d5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooConvexFraxBP",
+    "earnedTokenAddress": "0x63934e5aBA120f2BAE2418711Ef0f20F7DB26CD2",
+    "earnContractAddress": "0x63934e5aBA120f2BAE2418711Ef0f20F7DB26CD2",
+    "oracle": "lps",
+    "oracleId": "curve-arb-f-fraxbp",
+    "status": "active",
+    "platformId": "convex",
+    "assets": ["FRAX", "USDC"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-41/deposit",
+    "network": "arbitrum",
+    "createdAt": 1669279735
+  },
+  {
     "id": "arbi-bifi-gov",
     "name": "BIFI Earnings Pool",
     "token": "BIFI",
@@ -28,6 +56,34 @@
     "callFee": 0.5,
     "createdAt": 1623706144,
     "network": "arbitrum"
+  },
+  {
+    "id": "curve-arb-f-wsteth",
+    "name": "wstETH-ETH",
+    "token": "wstETHCRV",
+    "tokenAddress": "0xDbcD16e622c95AcB2650b38eC799f76BFC557a0b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveWSTETH",
+    "earnedTokenAddress": "0x9E75f8298e458B76382870982788988A0799195b",
+    "earnContractAddress": "0x9E75f8298e458B76382870982788988A0799195b",
+    "oracle": "lps",
+    "oracleId": "curve-arb-f-wsteth",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["wstETH", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/wsteth/deposit",
+    "network": "arbitrum",
+    "createdAt": 1668590265
   },
   {
     "id": "gmx-arb-glp",

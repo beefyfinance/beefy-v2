@@ -20,6 +20,7 @@ const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const OnRamp = React.lazy(() => import(`./features/on-ramp`));
 const Bridge = React.lazy(() => import(`./features/bridge`));
+const Dashboard = React.lazy(() => import(`./features/dashboard`));
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 
 export const App = () => {
@@ -58,6 +59,9 @@ export const App = () => {
                 </Route>
                 <Route exact path="/bridge">
                   <Bridge />
+                </Route>
+                <Route exact path="/dashboard">
+                  <Dashboard />
                 </Route>
                 <Route>
                   <PageNotFound />

@@ -6,6 +6,8 @@ import { VaultGov } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { useAppSelector } from '../../../../store';
+import { LinkButton } from '../../../../components/LinkButton';
+import { selectChainById } from '../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles);
 export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
@@ -15,14 +17,16 @@ export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
   const earnedToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
   );
+  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
 
   return (
     <Card>
-      <CardHeader>
-        <div className={classes.preTitle}>{t('Gov-How')}</div>
-        <div>
-          <CardTitle title={t('Gov-Pool')} />
-        </div>
+      <CardHeader className={classes.header}>
+        <CardTitle title={t('Gov-Pool')} />
+        <LinkButton
+          href={`${chain.explorerUrl}/address/${vault.earnContractAddress}`}
+          text={t('Strat-PoolAddress')}
+        />
       </CardHeader>
       <CardContent>
         <p className={classes.text}>

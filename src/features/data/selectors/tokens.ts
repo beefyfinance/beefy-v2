@@ -4,6 +4,10 @@ import { ChainEntity } from '../entities/chain';
 import { isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
 import { selectChainById } from './chains';
 import { BIG_ONE } from '../../../helpers/big-number';
+import { selectIsAddressBookLoaded } from './data-loader';
+import { VaultEntity } from '../entities/vault';
+import { createSelector } from '@reduxjs/toolkit';
+import createCachedSelector from 're-reselect';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -36,23 +40,22 @@ export const selectTokenById = (
   return byChainId[chainId].byAddress[address];
 };
 
-export const selectTokenByAddress = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  address: TokenEntity['address']
-) => {
-  const byChainId = state.entities.tokens.byChainId;
-  if (byChainId[chainId] === undefined) {
-    throw new Error(`selectTokenById: Unknown chain id ${chainId}`);
+export const selectTokenByAddress = createCachedSelector(
+  (state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) =>
+    selectTokensByChainId(state, chainId),
+  (state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) => address,
+  (tokensByChainId, address) => tokensByChainId.byAddress[address.toLowerCase()]
+)((state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) => address);
+
+export const selectTokensByChainId = createSelector(
+  (state: BeefyState, chainId: ChainEntity['id']) => state.entities.tokens.byChainId[chainId],
+  tokensByChainId => {
+    if (tokensByChainId === undefined) {
+      throw new Error(`selectTokenById: Unknown chain id`);
+    }
+    return tokensByChainId;
   }
-  if (byChainId[chainId].byAddress[address.toLowerCase()] === undefined) {
-    // fallback to addressbook token
-    throw new Error(
-      `selectTokenByAddress: Unknown token address ${address} for chain ${chainId}, maybe you need to load the addressbook`
-    );
-  }
-  return byChainId[chainId].byAddress[address.toLowerCase()];
-};
+);
 
 export const selectErc20TokenByAddress = (
   state: BeefyState,
@@ -116,14 +119,12 @@ export const selectChainWrappedNativeToken = (state: BeefyState, chainId: ChainE
   return token;
 };
 
-export const selectIsTokenStable = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  tokenId: TokenEntity['id']
-) => {
-  const chain = selectChainById(state, chainId);
-  return chain.stableCoins.includes(tokenId);
-};
+export const selectIsTokenStable = createCachedSelector(
+  (state: BeefyState, chainId: ChainEntity['id'], tokenId: TokenEntity['id']) =>
+    selectChainById(state, chainId),
+  (state: BeefyState, chainId: ChainEntity['id'], tokenId: TokenEntity['id']) => tokenId,
+  (chain, tokenId) => chain.stableCoins.includes(tokenId)
+)((state: BeefyState, chainId: ChainEntity['id'], tokenId: TokenEntity['id']) => tokenId);
 
 export const selectIsBeefyToken = (_: BeefyState, tokenId: TokenEntity['id']) => {
   return ['BIFI', 'POTS', 'beFTM', 'beQI', 'beJOE', 'binSPIRIT', 'beVELO'].includes(tokenId);
@@ -139,20 +140,21 @@ export const selectTokenPriceByAddress = (
   address: string
 ) => {
   const token = state.entities.tokens.byChainId[chainId].byAddress[address.toLowerCase()];
-  return state.entities.tokens.prices.byOracleId[token.oracleId] || BIG_ONE;
+  return selectTokenPriceByTokenOracleId(state, token.oracleId);
 };
 
-export const selectTokenPriceByTokenOracleId = (
-  state: BeefyState,
-  oracleId: TokenEntity['oracleId']
-) => state.entities.tokens.prices.byOracleId[oracleId] || BIG_ONE;
+export const selectTokenPriceByTokenOracleId = createCachedSelector(
+  (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
+    state.entities.tokens.prices.byOracleId[oracleId],
+  price => price || BIG_ONE
+)((state: BeefyState, oracleId: TokenEntity['oracleId']) => oracleId);
 
-export const selectLpBreakdownByOracleId = (
-  state: BeefyState,
-  oracleId: TokenEntity['oracleId']
-) => {
-  return state.entities.tokens.breakdown.byOracleId[oracleId];
-};
+export const selectLpBreakdownByOracleId = createSelector(
+  (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
+    state.entities.tokens.breakdown.byOracleId[oracleId],
+  price => price
+);
+
 export const selectLpBreakdownByAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
@@ -160,4 +162,34 @@ export const selectLpBreakdownByAddress = (
 ) => {
   const token = selectTokenByAddress(state, chainId, address);
   return selectLpBreakdownByOracleId(state, token.oracleId);
+};
+
+export const selectHasBreakdownData = (state: BeefyState, vault: VaultEntity) => {
+  const chainId = vault.chainId;
+  const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
+  const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
+  const breakdown = selectLpBreakdownByAddress(state, chainId, vault.depositTokenAddress);
+
+  if (
+    !isPricesLoaded ||
+    !isAddressBookLoaded ||
+    !breakdown ||
+    !breakdown.tokens ||
+    !breakdown.tokens.length ||
+    !breakdown.balances ||
+    breakdown.balances.length !== breakdown.tokens.length
+  ) {
+    return false;
+  }
+
+  // Must have tokens in state
+  const tokens = breakdown.tokens.map(
+    address => state.entities.tokens.byChainId[vault.chainId].byAddress[address.toLowerCase()]
+  );
+  if (tokens.findIndex(token => !token) !== -1) {
+    return false;
+  }
+
+  // Must have prices of tokens in state
+  return tokens.findIndex(token => !state.entities.tokens.prices.byOracleId[token.oracleId]) === -1;
 };
