@@ -61,8 +61,6 @@ export const GlpNotice = memo<GlpNoticeProps>(function GlpNotice({
 
   const AlertComponent = isLocked ? AlertError : AlertWarning;
 
-  console.log(isLocked, unlockTime);
-
   return (
     <AlertComponent className={classes.alert}>
       <p>{t(noticeKey)}</p>
