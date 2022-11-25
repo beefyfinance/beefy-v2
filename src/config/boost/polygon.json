@@ -619,22 +619,5 @@
     "status": "active",
     "isMooStaked": true,
     "partners": ["lido"]
-  },
-  {
-    "id": "moo_testerino_testerino",
-    "poolId": "dystopia-usd+-stmatic",
-    "name": "Lido",
-    "assets": ["USD+", "stMATIC"],
-    "tokenAddress": "0x727555858111Bf77027710c19bc4a4B35b38727E",
-    "earnedToken": "LDO",
-    "earnedTokenDecimals": 18,
-    "earnedTokenAddress": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
-    "earnContractAddress": "0x61681035C2dA1a28393212eE58276AaA2713272B",
-    "earnedOracle": "tokens",
-    "earnedOracleId": "LDO",
-    "partnership": true,
-    "status": "active",
-    "isMooStaked": true,
-    "partners": ["lido"]
   }
 ]
