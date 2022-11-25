@@ -31,17 +31,11 @@ export const MobileMenu = memo(function () {
             <Close className={classes.cross} onClick={handleDrawerToggle} />
           </div>
           <Divider className={classes.divider} />
-          {MobileList.map(({ title, Icon, url, items, badge }) => {
+          {MobileList.map(({ title, Icon, url, items }) => {
             return (
               <div key={title}>
                 {url ? (
-                  <NavItemMobile
-                    onClick={handleDrawerToggle}
-                    withBadge={badge}
-                    title={title}
-                    url={url}
-                    Icon={Icon}
-                  />
+                  <NavItemMobile onClick={handleDrawerToggle} title={title} url={url} Icon={Icon} />
                 ) : (
                   <DropMobile
                     onClick={handleDrawerToggle}
@@ -63,7 +57,7 @@ export const MobileMenu = memo(function () {
 interface DropMobileProps {
   title: string;
   Icon: React.FC;
-  items: { url: string; title: string; Icon: React.FC }[];
+  items: { url: string; title: string; Icon: React.FC; badge?: boolean }[];
   onClick: () => void;
 }
 
@@ -85,6 +79,7 @@ export const DropMobile = memo<DropMobileProps>(function ({ title, Icon, items, 
               title={item.title}
               url={item.url}
               Icon={item.Icon}
+              withBadge={item.badge}
             />
           );
         })}

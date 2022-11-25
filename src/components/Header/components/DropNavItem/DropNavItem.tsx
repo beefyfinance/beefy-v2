@@ -12,7 +12,7 @@ const useStyles = makeStyles(styles);
 interface DropNavItemProps {
   title: string;
   Icon: React.FC;
-  items: { url: string; title: string; Icon: React.FC }[];
+  items: { url: string; title: string; Icon: React.FC; badge?: boolean }[];
 }
 
 export const DropNavItem = memo<DropNavItemProps>(function ({ title, Icon, items }) {
@@ -52,7 +52,15 @@ export const DropNavItem = memo<DropNavItemProps>(function ({ title, Icon, items
           autoWidth={false}
         >
           {items.map(item => {
-            return <NavItem key={item.title} title={item.title} url={item.url} Icon={item.Icon} />;
+            return (
+              <NavItem
+                key={item.title}
+                title={item.title}
+                url={item.url}
+                Icon={item.Icon}
+                withBadge={item.badge}
+              />
+            );
           })}
         </Floating>
       </div>

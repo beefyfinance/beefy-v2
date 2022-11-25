@@ -17,9 +17,9 @@ import { ReactComponent as VaultsIcon } from '../../images/icons/navigation/vaul
 import { ReactComponent as DashboardIcon } from '../../images/icons/navigation/dashboard.svg';
 import { ReactComponent as BridgeIcon } from '../../images/icons/navigation/bridge.svg';
 import { ReactComponent as BuyCryptoIcon } from '../../images/icons/navigation/buy-crypto.svg';
-import { ReactComponent as ProposalsIcon } from '../../images/icons/navigation/proposals.svg';
+import { ReactComponent as DaoIcon } from '../../images/icons/navigation/dao.svg';
 import { ReactComponent as ResourcesIcon } from '../../images/icons/navigation/resources.svg';
-import { ResourcesNavItems } from './list';
+import { DaoNavItems, ResourcesNavItems } from './list';
 import { ConnectionStatus } from './components/ConnectionStatus';
 import { DropNavItem } from './components/DropNavItem';
 import { MobileMenu } from './components/MobileMenu';
@@ -57,17 +57,8 @@ export const Header = memo(function () {
 
               <Hidden mdDown>
                 <NavItem title={'Header-Vaults'} url="/" Icon={VaultsIcon} />
-                <NavItem
-                  title={'Header-Dashboard'}
-                  url="/dashboard"
-                  withBadge={true}
-                  Icon={DashboardIcon}
-                />
-                <NavItem
-                  title={'Header-Proposals'}
-                  Icon={ProposalsIcon}
-                  url="https://vote.beefy.finance/#/"
-                />
+                <NavItem title={'Header-Dashboard'} url="/dashboard" Icon={DashboardIcon} />
+                <DropNavItem title={'Header-Dao'} Icon={DaoIcon} items={DaoNavItems} />
                 <DropNavItem
                   title={'Header-Resources'}
                   Icon={ResourcesIcon}
