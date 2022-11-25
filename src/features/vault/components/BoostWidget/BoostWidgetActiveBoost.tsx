@@ -138,7 +138,7 @@ export function BoostWidgetActiveBoost({
           <Trans
             t={t}
             i18nKey="Boost-Title"
-            tOptions={{ title }}
+            values={{ title }}
             components={{ white: <span className={classes.titleWhite} /> }}
           />
         </span>

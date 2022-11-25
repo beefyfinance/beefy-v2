@@ -483,5 +483,6 @@
   "Glp-Withdraw-Notice-Unlocks": "Unlocks in <countdown/>",
   "Details-Here": "Details here",
   "ETH-Banner": "Beefy is now deployed on <ethereum/>! New autocompounding vaults from Convex, Aura and Stargate are already available and more are coming soon.",
-  "Ethereum": "Ethereum"
+  "Ethereum": "Ethereum",
+  "PRE-STAKE": "PRE-STAKE"
 }
