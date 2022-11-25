@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Box, FormControl, Grid, makeStyles } from '@material-ui/core';
+import { Box, FormControl, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -85,7 +85,7 @@ export const WalletContainer = connect((state: BeefyState) => {
         })}
       >
         <FormControl {...formControlProps}>
-          <Grid container direction="row" alignItems="center">
+          <div>
             {walletPending ? (
               <Box className={classes.loading}>
                 <StatLoader
@@ -95,11 +95,6 @@ export const WalletContainer = connect((state: BeefyState) => {
               </Box>
             ) : (
               <React.Fragment>
-                {walletProfileUrl ? (
-                  <Avatar className={clsx({ [classes.blurred]: blurred })} src={walletProfileUrl} />
-                ) : (
-                  ''
-                )}
                 <div className={clsx(classes.address, { [classes.blurred]: blurred })}>
                   {walletAddress
                     ? ens
@@ -109,7 +104,7 @@ export const WalletContainer = connect((state: BeefyState) => {
                 </div>
               </React.Fragment>
             )}
-          </Grid>
+          </div>
         </FormControl>
       </Box>
     );

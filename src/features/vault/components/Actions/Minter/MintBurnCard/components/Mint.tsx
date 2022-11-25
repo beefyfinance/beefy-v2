@@ -192,7 +192,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
 
   return (
     <CardContent className={classes.cardContent}>
-      {minter.canBurnReserves ? (
+      {!minter.canBurnReserves ? (
         <div className={classes.content}>
           {t('Mint-Content', {
             token1: minter.mintedToken.symbol,

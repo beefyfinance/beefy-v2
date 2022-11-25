@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { useAppSelector } from '../../../../store';
 import { Link } from 'react-router-dom';
 import { VaultIdentity } from './components/VaultIdentity';
-import { VaultStats } from './components/VaultStats';
+import { VaultStats } from '../../../../components/VaultStats';
 
 const useStyles = makeStyles(styles);
 

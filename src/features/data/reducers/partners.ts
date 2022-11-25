@@ -12,11 +12,6 @@ export type PartnersState = {
   byId: {
     [partnerId: PartnerEntity['id']]: PartnerEntity;
   };
-  moonpot: {
-    byVaultId: {
-      [vaultId: VaultEntity['id']]: boolean;
-    };
-  };
   insurace: {
     byChainId: {
       [chainId: ChainEntity['id']]: boolean;
@@ -36,9 +31,6 @@ export type PartnersState = {
 };
 export const initialPartnersState: PartnersState = {
   byId: {},
-  moonpot: {
-    byVaultId: {},
-  },
   insurace: {
     byChainId: {},
   },
@@ -59,11 +51,6 @@ export const partnersSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchPartnersConfig.fulfilled, (sliceState, action) => {
-      for (const vaultId of action.payload.Moonpot) {
-        if (!sliceState.moonpot.byVaultId[vaultId]) {
-          sliceState.moonpot.byVaultId[vaultId] = true;
-        }
-      }
       for (const chainId of action.payload.Insurace) {
         if (!sliceState.insurace.byChainId[chainId]) {
           sliceState.insurace.byChainId[chainId] = true;

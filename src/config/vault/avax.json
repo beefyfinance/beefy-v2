@@ -5098,35 +5098,6 @@
     "retireReason": "rewards"
   },
   {
-    "id": "aavev3-link.e",
-    "name": "LINK.e",
-    "token": "LINK.e",
-    "tokenAddress": "0x5947BB275c521040051D82396192181b413227A3",
-    "tokenDecimals": 18,
-    "earnedToken": "mooAaveLINK.e",
-    "earnedTokenAddress": "0x49cBd37fb87312C506fF84c7585A401C4377dDeD",
-    "earnContractAddress": "0x49cBd37fb87312C506fF84c7585A401C4377dDeD",
-    "oracle": "tokens",
-    "oracleId": "LINK.e",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "aave",
-    "assets": ["LINKe"],
-    "strategyTypeId": "lending",
-    "risks": [
-      "COMPLEXITY_MID",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x5947BB275c521040051D82396192181b413227A3",
-    "createdAt": 1655845403,
-    "network": "avax"
-  },
-  {
     "id": "aavev3-savax",
     "name": "sAVAX",
     "token": "sAVAX",

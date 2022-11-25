@@ -13,6 +13,7 @@ declare module '@material-ui/core/styles/createPalette' {
     content: string;
     contentLight: string;
     header: string;
+    alternativeFooterHeader: string;
     cta: string;
     appBG: string;
     filters: {
@@ -36,6 +37,12 @@ declare module '@material-ui/core/styles/createPalette' {
       bgBtn: string;
       text: string;
       error: string;
+    };
+    dashboard: {
+      summaryCard: string;
+      iconBg: string;
+      cardBg: string;
+      filter: string;
     };
   }
 

@@ -7,6 +7,8 @@ import { ReactComponent as IconTelegram } from '../../images/socials/telegram.sv
 import { ReactComponent as IconDiscord } from '../../images/socials/discord.svg';
 import { ReactComponent as IconTwitter } from '../../images/socials/twitter.svg';
 import { ReactComponent as IconReddit } from '../../images/socials/reddit.svg';
+import clsx from 'clsx';
+import { useLocation } from 'react-router';
 
 // Re-using header translations, allowing overwrite with footer specific ones
 const navLinks = [
@@ -71,8 +73,11 @@ export const Footer = memo(function () {
   const classes = useStyles();
   const { t } = useTranslation();
 
+  const location = useLocation();
+  const isOnDashboard = location.pathname.includes('dashboard');
+
   return (
-    <div className={classes.footer}>
+    <div className={clsx(classes.footer, { [classes.userOnDashboard]: isOnDashboard })}>
       <ul className={classes.nav}>
         {navLinks.map(({ title, path }) => (
           <li key={path} className={classes.navItem}>

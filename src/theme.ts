@@ -92,6 +92,7 @@ const theme = createTheme({
       contentLight: '#F4F4F4',
       header: '#121212',
       footer: '#121212',
+      alternativeFooterHeader: '#020203',
       cta: '#59A662',
       appBG: '#1B1E31',
       filters: {
@@ -115,6 +116,12 @@ const theme = createTheme({
         bgBtn: '#363B63',
         text: '#2D3153',
         error: '#DC2C10',
+      },
+      dashboard: {
+        summaryCard: '#121421',
+        iconBg: 'rgba(92, 112, 214, 0.2)',
+        cardBg: '#242842',
+        filter: '#1B1E32',
       },
     },
     text: {

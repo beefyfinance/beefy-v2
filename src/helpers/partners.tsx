@@ -42,21 +42,4 @@ const Nexus = [
   'ethereum',
 ];
 
-const Moonpot = [
-  'cake-cakev2',
-  'belt-beltbnb',
-  'pacoca-pacoca',
-  'banana-bananav2',
-  'banana-pots-bnb',
-  'bifi-maxi',
-  'belt-4belt',
-  'beefy-beFTM',
-  'tomb-tomb-ftm',
-  'curve-ftm-geist',
-  'beefy-binspirit',
-  'fantom-bifi-maxi',
-  'based-based-mai',
-  'spirit-orkan-ftm',
-];
-
-export { QiDao, Insurace, Moonpot, Nexus };
+export { QiDao, Insurace, Nexus };

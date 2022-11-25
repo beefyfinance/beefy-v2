@@ -3,10 +3,6 @@ import { VaultEntity } from '../entities/vault';
 import { selectBoostById, selectPreStakeOrActiveBoostIds } from './boosts';
 import { selectVaultById } from './vaults';
 
-export const selectIsVaultMoonpot = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  return state.biz.partners.moonpot.byVaultId[vaultId] !== undefined;
-};
-
 export const selectIsVaultQidao = (state: BeefyState, vaultId: VaultEntity['id']) => {
   return state.biz.partners.qidao.byVaultId[vaultId] !== undefined;
 };

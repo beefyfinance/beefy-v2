@@ -8,7 +8,6 @@ import {
   isVaultRetired,
   VaultEntity,
   VaultGov,
-  VaultStandard,
 } from '../entities/vault';
 import { selectIsBeefyToken, selectIsTokenBluechip, selectIsTokenStable } from './tokens';
 import { createCachedSelector } from 're-reselect';
@@ -63,16 +62,15 @@ export const selectGovVaultById = (state: BeefyState, vaultId: VaultEntity['id']
   return vault;
 };
 
-export const selectStandardVaultById = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-): VaultStandard => {
-  const vault = selectVaultById(state, vaultId);
-  if (isGovVault(vault)) {
-    throw new Error(`selectStandardVaultById: Vault ${vaultId} is not a standard vault`);
+export const selectStandardVaultById = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  standarVault => {
+    if (isGovVault(standarVault)) {
+      throw new Error(`selectStandardVaultById: Vault ${standarVault.id} is not a standard vault`);
+    }
+    return standarVault;
   }
-  return vault;
-};
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectVaultByChainId = createSelector(
   // get a tiny bit of the data
@@ -82,8 +80,11 @@ export const selectVaultByChainId = createSelector(
     vaultsChainId ? vaultsChainId.allActiveIds.concat(vaultsChainId.allRetiredIds) : []
 );
 
-export const selectVaultPricePerFullShare = (state: BeefyState, vaultId: VaultEntity['id']) =>
-  state.entities.vaults.contractData.byVaultId[vaultId]?.pricePerFullShare || BIG_ONE;
+export const selectVaultPricePerFullShare = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    state.entities.vaults.contractData.byVaultId[vaultId]?.pricePerFullShare,
+  price => price || BIG_ONE
+);
 
 export const selectVaultStrategyAddress = (state: BeefyState, vaultId: VaultEntity['id']) =>
   state.entities.vaults.contractData.byVaultId[vaultId]?.strategyAddress || null;

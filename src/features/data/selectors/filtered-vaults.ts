@@ -19,7 +19,6 @@ import {
   selectIsVaultPreStakedOrBoosted,
   selectPreStakeOrActiveBoostIds,
 } from './boosts';
-import { selectIsVaultMoonpot } from './partners';
 import {
   selectIsVaultBeefy,
   selectIsVaultBlueChip,
@@ -58,7 +57,6 @@ export const selectFilterPopinFilterCount = createSelector(
   filterOptions =>
     (filterOptions.onlyRetired ? 1 : 0) +
     (filterOptions.onlyPaused ? 1 : 0) +
-    (filterOptions.onlyMoonpot ? 1 : 0) +
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.platformId !== null ? 1 : 0) +
     (filterOptions.vaultType !== 'all' ? 1 : 0) +
@@ -75,7 +73,6 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.vaultType !== 'all' ||
     filterOptions.onlyRetired !== false ||
     filterOptions.onlyPaused !== false ||
-    filterOptions.onlyMoonpot !== false ||
     filterOptions.onlyBoosted !== false ||
     filterOptions.searchText !== '' ||
     filterOptions.platformId !== null ||
@@ -90,7 +87,6 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.vaultType !== 'all' ||
     filterOptions.onlyRetired !== false ||
     filterOptions.onlyPaused !== false ||
-    filterOptions.onlyMoonpot !== false ||
     filterOptions.onlyBoosted !== false ||
     filterOptions.searchText !== '' ||
     filterOptions.platformId !== null ||
@@ -237,9 +233,6 @@ export const selectFilteredVaults = (state: BeefyState) => {
       isVaultRetired(vault) &&
       filterOptions.userCategory !== 'deposited'
     ) {
-      return false;
-    }
-    if (filterOptions.onlyMoonpot && !selectIsVaultMoonpot(state, vault.id)) {
       return false;
     }
     if (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) {

@@ -10,7 +10,7 @@ import { fetchAllVaults, fetchFeaturedVaults } from './vaults';
 import { fetchAllBalanceAction } from './balance';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_noDataPolling } from '../utils/feature-flags';
-import { BeefyStore } from '../../../redux-types';
+import { BeefyStore, BeefyThunk } from '../../../redux-types';
 import { chains as chainsConfig } from '../../../config/config';
 import { initWallet } from './wallet';
 import { recomputeBoostStatus } from '../reducers/boosts';
@@ -24,6 +24,7 @@ import { MinterEntity } from '../entities/minter';
 import { selectMinterById } from '../selectors/minters';
 import { initiateBridgeForm } from './bridge';
 import { fetchPlatforms } from './platforms';
+import { selectAllChainIds } from '../selectors/chains';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 
@@ -126,6 +127,10 @@ export async function initHomeDataV4(store: BeefyStore) {
 
   if (featureFlag_noDataPolling()) {
     console.debug('Polling disabled');
+    try {
+      (window as any).__manual_poll = () => store.dispatch(manualPoll());
+      console.debug('Use window.__manual_poll(); to simulate.');
+    } catch {}
     return;
   }
 
@@ -180,6 +185,27 @@ export async function initHomeDataV4(store: BeefyStore) {
   }
 
   preLoadPages();
+}
+
+export function manualPoll(): BeefyThunk {
+  return (dispatch, getState) => {
+    const state = getState();
+    const chains = selectAllChainIds(state);
+
+    dispatch(recomputeBoostStatus());
+    dispatch(fetchAllPricesAction());
+    dispatch(fetchApyAction({}));
+
+    for (const chainId of chains) {
+      dispatch(fetchAllContractDataByChainAction({ chainId: chainId }));
+    }
+
+    if (selectIsWalletKnown(state)) {
+      for (const chainId of chains) {
+        dispatch(fetchAllBalanceAction({ chainId }));
+      }
+    }
+  };
 }
 
 export function fetchCaptureUserData(

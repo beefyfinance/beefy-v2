@@ -48,7 +48,6 @@ export interface FeaturedVaultConfig {
 export interface PartnersConfig {
   QiDao: VaultEntity['id'][];
   Insurace: ChainEntity['id'][];
-  Moonpot: VaultEntity['id'][];
   Nexus: ChainEntity['id'][];
 }
 

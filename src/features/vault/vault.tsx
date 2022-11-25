@@ -29,7 +29,6 @@ import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdow
 import { AssetsCard } from './components/AssetsCard';
 import { InsuranceCards } from './components/InsuranceCards';
 import { LeverageCards } from './components/LeverageCards';
-import { GamesCards } from './components/GamesCards';
 import { Actions } from './components/Actions';
 
 const useStyles = makeStyles(styles);
@@ -115,7 +114,6 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               <Hidden smDown>
                 <InsuranceCards vaultId={vaultId} />
                 <LeverageCards vaultId={vaultId} />
-                <GamesCards vaultId={vaultId} />
               </Hidden>
             </div>
             <div className={classes.columnInfo}>
@@ -133,7 +131,6 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               <Hidden mdUp>
                 <InsuranceCards vaultId={vaultId} />
                 <LeverageCards vaultId={vaultId} />
-                <GamesCards vaultId={vaultId} />
               </Hidden>
             </div>
           </div>
