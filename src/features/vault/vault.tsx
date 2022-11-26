@@ -33,7 +33,7 @@ import { AssetsCard } from './components/AssetsCard';
 import { InsuranceCards } from './components/InsuranceCards';
 import { LeverageCards } from './components/LeverageCards';
 import { BoostWidget } from './components/BoostWidget';
-import { RenBannerVault } from '../../components/RenProject';
+import { RenBannerVault } from '../../components/Banners/RenBanner';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));

@@ -5,7 +5,6 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     paddingBottom: theme.spacing(3),
   },
-  icon: { marginRight: theme.spacing(1), height: '24px', width: '24px' },
   box: {
     backgroundColor: 'rgba(140, 147, 191, 0.1)',
     borderRadius: '8px',
@@ -19,14 +18,9 @@ export const styles = (theme: Theme) => ({
     alignItems: 'flex-start',
     flexGrow: 1,
     justifyContent: 'center',
+    gap: '8px',
   },
-  link: {
-    textDecoration: 'none',
-    color: theme.palette.primary.main,
-    '&:hover': {
-      cursor: 'pointer',
-    },
-  },
+  text: {},
   cross: {
     fill: '#D0D0DA',
     '&:hover': {
