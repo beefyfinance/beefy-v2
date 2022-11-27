@@ -9,7 +9,7 @@ const useStyles = makeStyles(styles);
 
 export const AnnouncementBanner = memo(function AnnouncementBanner() {
   const classes = useStyles();
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideDashboardBanner', false);
+  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideBip58Banner', false);
 
   const closeBanner = useCallback(() => {
     setHideBanner(true);
