@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import { Container, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { Clear } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(styles);
 
@@ -11,7 +10,7 @@ export const AnnouncementBanner = memo(function ProposalBanner() {
 
   const [showBanner, setShowBanner] = React.useState(() => {
     try {
-      const storageValue = localStorage.getItem('hideDashboardBanner');
+      const storageValue = localStorage.getItem('hideBip58Banner');
       return storageValue !== 'true';
     } catch {
       return true;
@@ -21,7 +20,7 @@ export const AnnouncementBanner = memo(function ProposalBanner() {
   const closeBanner = React.useCallback(() => {
     setShowBanner(false);
     try {
-      localStorage.setItem('hideDashboardBanner', 'true');
+      localStorage.setItem('hideBip58Banner', 'true');
     } catch (error) {
       // swallow error
     }
@@ -36,15 +35,24 @@ export const AnnouncementBanner = memo(function ProposalBanner() {
               <div className={classes.content}>
                 <img
                   className={classes.icon}
-                  src={require(`../../images/icons/dashboard.svg`).default}
-                  alt="dashboard"
+                  src={require(`../../images/partners/snapshot-logo.svg`).default}
+                  alt="snapshot"
                 />
                 <div>
-                  New Beefy{' '}
-                  <Link className={classes.link} to="/dashboard">
-                    Dashboard
-                  </Link>{' '}
-                  is live! Explore your exposure to chains, platforms, tokens and more.
+                  [BIP:58] Adopt Governance Guidelines. Discuss on
+                  <a className={classes.link} target="__blank" href="https://discord.gg/yq8wfHd">
+                    {' '}
+                    Discord{' '}
+                  </a>
+                  and vote on
+                  <a
+                    target="__blank"
+                    className={classes.link}
+                    href="https://vote.beefy.finance/#/proposal/0x90e15a8ba3cfa8b9539b6a428130ae2987d77336ed6f9005f198b744552bc081"
+                  >
+                    {' '}
+                    Snapshot.
+                  </a>
                 </div>
               </div>
               <Clear onClick={closeBanner} className={classes.cross} />
