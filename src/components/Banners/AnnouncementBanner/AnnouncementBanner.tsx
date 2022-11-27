@@ -24,14 +24,20 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
       icon={<img className={classes.icon} src={snapshotLogo} alt="snapshot" />}
       text={
         <>
-          [BIP:58] Adopt Governance Guidelines. Discuss on
-          <a className={classes.link} target="__blank" href="https://discord.gg/yq8wfHd">
+          New proposal is live: [BIP:58] Adopt Governance Guidelines. Discuss on
+          <a
+            target="_blank"
+            rel="noreferrer"
+            className={classes.link}
+            href="https://discord.gg/yq8wfHd"
+          >
             {' '}
             Discord{' '}
           </a>
           and vote on
           <a
-            target="__blank"
+            target="_blank"
+            rel="noreferrer"
             className={classes.link}
             href="https://vote.beefy.finance/#/proposal/0x90e15a8ba3cfa8b9539b6a428130ae2987d77336ed6f9005f198b744552bc081"
           >
