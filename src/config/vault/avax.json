@@ -3961,36 +3961,6 @@
     "retireReason": "rewards"
   },
   {
-    "id": "joe-wbtc.e-usdc.e-eol",
-    "name": "WBTC.e-USDC.e LP",
-    "token": "WBTC.e-USDC.e JLP",
-    "tokenAddress": "0x62475f52aDd016A06B398aA3b2C2f2E540d36859",
-    "tokenDecimals": 18,
-    "tokenProviderId": "traderjoe",
-    "earnedToken": "mooJoeWBTC.e-USDC.e",
-    "earnedTokenAddress": "0x0D6f7D5Bf8406FAaa1eeB66756f684dBc6790350",
-    "earnContractAddress": "0x0D6f7D5Bf8406FAaa1eeB66756f684dBc6790350",
-    "oracle": "lps",
-    "oracleId": "joe-wbtc.e-usdc.e",
-    "status": "eol",
-    "platformId": "traderjoe",
-    "assets": ["WBTCe", "USDCe"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0x50b7545627a5162f82a992c33b87adc75187b218/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
-    "buyTokenUrl": "https://www.traderjoexyz.com/trade",
-    "network": "avax",
-    "createdAt": 1632850669,
-    "retireReason": "rewards"
-  },
-  {
     "id": "joe-lost-wavax",
     "name": "LOST-AVAX LP",
     "token": "LOST-AVAX LP",
