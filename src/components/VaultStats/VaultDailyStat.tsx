@@ -84,7 +84,7 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailySt
     blur: false,
     loading: !isLoaded,
     boosted: isBoosted || isPrestake,
-    isValueString: isPrestake,
+    shouldTranslate: isPrestake,
     tooltip: <DailyContentTooltip vaultId={vaultId} isBoosted={isBoosted} rates={formatted} />,
     className: className ?? '',
   };

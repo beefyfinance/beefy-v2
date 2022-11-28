@@ -77,7 +77,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultYearlyStatProps) {
     blur: false,
     loading: !isLoaded,
     boosted: isBoosted || isPrestake,
-    isValueString: isPrestake,
+    shouldTranslate: isPrestake,
     tooltip: <YearlyTooltipContent vaultId={vaultId} isBoosted={isBoosted} rates={formatted} />,
   };
 }
