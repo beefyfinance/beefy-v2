@@ -165,6 +165,7 @@
   "Vault-PauseReason-upgrade": "Diese Vault ist pausiert, bis die Strategie aktualisiert wurde. Neue Einlagen sind vorübergehend nicht verfügbar.",
   "Vault-PauseReason-rewards": "Diese Vault ist pausiert, da die zugrunde liegende Plattform vorübergehend die Belohnungen gestoppt hat. Neue Einlagen sind vorübergehend nicht verfügbar.",
   "Vault-PauseReason-viability": "Diese Vault ist pausiert, während ihre Plausibilität untersucht wird. Neue Einlagen sind vorübergehend nicht verfügbar.",
+  "Vault-PauseReason-ren-sunset": "This vault is paused to new deposits due to the sunsetting of Ren 1.0",
   "Vault-PauseReason-default": "Diese Vault ist pausiert. Neue Einlagen sind vorübergehend nicht verfügbar.",
   "Vault-LpBreakdown-YourDeposit": "Your Deposit",
   "Vault-LpBreakdown-1LP": "1 LP",
@@ -479,6 +480,8 @@
   "Dashboard-NoVaults": "Deposit in a vault to view your investments",
   "Glp-Withdraw-Notice": "The underlying protocol requires withdrawals to be at least 15 minutes after a deposit/harvest.",
   "Glp-Withdraw-Notice-Unlocks": "Unlocks in <countdown/>",
+  "Glp-Deposit-Notice": "The underlying protocol requires deposits to be at least 15 minutes after adding or transferring liquidity.",
+  "Glp-Deposit-Notice-Unlocks": "Unlocks in <countdown/>",
   "Details-Here": "Details here",
   "ETH-Banner": "Beefy is now deployed on <ethereum/>! New autocompounding vaults from Convex, Aura and Stargate are already available and more are coming soon.",
   "Ethereum": "Ethereum"
