@@ -234,7 +234,7 @@
   "Fee-Performance": "Commissione sui rendimenti",
   "Fee-PerformExt": "Le commissioni sui rendimenti sono già sottratte dall'APY visualizzata.",
   "Fee-Transaction": "Costo Stimato Per La Transazione",
-  "Boost-Title": "BOOST <white>Attivo</white>",
+  "Boost-Title": "<white>{{title}}</white> BOOST",
   "Boost-ExpiredBoost": "BOOST <white>Terminato</white>",
   "Boost-NameBoost": "{{name}} Boost",
   "Boost-Stake": "Metti in Stake i tuoi {{mooToken}}",
@@ -249,6 +249,8 @@
   "Boost-Button-Claim": "Richiedi e togli dallo stake",
   "Boost-Button-Unstake": "Togli dallo staking",
   "Boost-Ends": "Termina in",
+  "Boost-Active": "Active",
+  "Boost-Upcoming": "Upcoming",
   "Claim-And-Withdraw-All": "Richiedi e Preleva Tutto",
   "Boost-Button-Claim-Unstake": "Richiedi e Togli Dallo Stake",
   "Transact-Max": "Massimo",
@@ -484,5 +486,6 @@
   "Glp-Deposit-Notice-Unlocks": "Sblocca in <countdown/>",
   "Details-Here": "Dettagli qui",
   "ETH-Banner": "Beefy is now deployed on <ethereum/>! New autocompounding vaults from Convex, Aura and Stargate are already available and more are coming soon.",
-  "Ethereum": "Ethereum"
+  "Ethereum": "Ethereum",
+  "PRE-STAKE": "PRE-STAKE"
 }
