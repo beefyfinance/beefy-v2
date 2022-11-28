@@ -59,7 +59,7 @@ import { stepperActions } from '../../../data/reducers/wallet/stepper';
 import { startStepper } from '../../../data/actions/stepper';
 import { selectIsStepperStepping } from '../../../data/selectors/stepper';
 import { FeeBreakdown } from '../FeeBreakdown';
-import { GlpWithdrawCountdown } from '../GlpWithdrawCountdown';
+import { GlpWithdrawNotice } from '../GlpNotices';
 
 const useStyles = makeStyles(styles);
 
@@ -489,7 +489,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       <Box mt={3}>
         {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
         <ScreamAvailableLiquidity vaultId={vaultId} />
-        <GlpWithdrawCountdown vaultId={vaultId} onChange={setGlpWithdrawLocked} />
+        <GlpWithdrawNotice vaultId={vaultId} onChange={setGlpWithdrawLocked} />
         {isWalletConnected ? (
           !isWalletOnVaultChain ? (
             <>

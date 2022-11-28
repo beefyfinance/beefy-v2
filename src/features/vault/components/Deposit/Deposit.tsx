@@ -40,6 +40,7 @@ import { stepperActions } from '../../../data/reducers/wallet/stepper';
 import { startStepper } from '../../../data/actions/stepper';
 import { selectIsStepperStepping } from '../../../data/selectors/stepper';
 import { FeeBreakdown } from '../FeeBreakdown';
+import { GlpDepositNotice } from '../GlpNotices';
 
 const useStyles = makeStyles(styles);
 
@@ -57,6 +58,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     isWalletConnected ? selectWalletAddress(state) : null
   );
   const [priceImpactDisableDeposit, setPriceImpactDisableDeposit] = useState(false);
+  const [glpDepositLocked, setGlpDepositLocked] = useState(false);
 
   // initialize form data
   React.useEffect(() => {
@@ -103,7 +105,8 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     formState.amount.isLessThanOrEqualTo(0) ||
     !formReady ||
     (formState.max && formState.selectedToken.type === 'native') ||
-    priceImpactDisableDeposit;
+    priceImpactDisableDeposit ||
+    glpDepositLocked;
 
   const handleAsset = useCallback<ChangeEventHandler<HTMLInputElement>>(
     e => {
@@ -280,8 +283,9 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
         </>
       ) : null}
       <FeeBreakdown vaultId={vaultId} />
-      <MaxNativeDepositAlert />
       <Box mt={3}>
+        <MaxNativeDepositAlert />
+        <GlpDepositNotice vaultId={vaultId} onChange={setGlpDepositLocked} />
         {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
         {vault.status !== 'active' ? (
           <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
