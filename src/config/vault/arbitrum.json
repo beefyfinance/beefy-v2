@@ -558,7 +558,7 @@
     "oracle": "lps",
     "oracleId": "curve-arb-tricrypto",
     "status": "active",
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["USDT", "WBTC", "ETH"],
     "strategyTypeId": "multi-lp",
     "risks": [
@@ -571,7 +571,7 @@
     ],
     "addLiquidityUrl": "https://arbitrum.curve.fi/tricrypto/deposit",
     "network": "arbitrum",
-    "createdAt": 1652662923
+    "createdAt": 1669709222
   },
   {
     "id": "curve-arb-2pool",
@@ -586,7 +586,7 @@
     "oracle": "lps",
     "oracleId": "curve-arb-2pool",
     "status": "active",
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["USDT", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
@@ -599,7 +599,7 @@
     ],
     "addLiquidityUrl": "https://arbitrum.curve.fi/2pool/deposit",
     "network": "arbitrum",
-    "createdAt": 1652662923
+    "createdAt": 1669709222
   },
   {
     "id": "curve-arb-ren",
