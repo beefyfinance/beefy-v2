@@ -12,7 +12,7 @@ import {
 import { selectAllChains, selectChainById } from '../selectors/chains';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 import { selectIsWalletConnected } from '../selectors/wallet';
-import { getEnsAddress, getSpaceIdAddress } from '../../../helpers/addresses';
+import { getEnsAddress, getSpaceIdAddress, getUnsAddress } from '../../../helpers/addresses';
 
 const ensCache: Record<string, string> = {};
 export const getEns = createAsyncThunk<string, { address: string | null }, { state: BeefyState }>(
@@ -31,6 +31,7 @@ export const getEns = createAsyncThunk<string, { address: string | null }, { sta
     const ethChain = selectChainById(getState(), 'ethereum');
     const results = await Promise.allSettled([
       getEnsAddress(address, ethChain),
+      getUnsAddress(address),
       getSpaceIdAddress(address, bscChain),
     ]);
 

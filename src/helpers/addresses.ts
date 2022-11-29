@@ -2,6 +2,7 @@ import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
 import { getWeb3Instance } from '../features/data/apis/instances';
 import { ChainEntity } from '../features/data/entities/chain';
 import SID, { getSidAddress } from '@siddomains/sidjs';
+import resolution from '@unstoppabledomains/resolution';
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const EEEE_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
@@ -35,6 +36,15 @@ export async function getSpaceIdAddress(address: string, bscChain: ChainEntity):
     });
     const sidName = await id.getName(address);
     return sidName.name;
+  } catch (error) {
+    return '';
+  }
+}
+
+export async function getUnsAddress(address: string): Promise<string> {
+  try {
+    const Resolution = new resolution();
+    return await Resolution.reverse(address);
   } catch (error) {
     return '';
   }
