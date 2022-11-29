@@ -3,7 +3,7 @@ export const config = {
     name: 'Ethereum',
     chainId: 1,
     rpc: ['https://rpc.ankr.com/eth'],
-    explorerUrl: 'https://etherscan.io/',
+    explorerUrl: 'https://etherscan.io',
     multicallAddress: '0x9dA9f3C6c45F1160b53D395b0A982aEEE1D212fE',
     appMulticallContractAddress: '0xce6ef394f61918c89bDFCC53Ef4b8fB74879C2B2',
     providerName: 'Ethereum',
