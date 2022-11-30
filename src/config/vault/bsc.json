@@ -199,6 +199,35 @@
     "createdAt": 1663954507
   },
   {
+    "id": "cakev2-mgp-busd",
+    "name": "MGP-BUSD LP",
+    "token": "MGP-BUSD LP2",
+    "tokenAddress": "0x76B0d10A4540B6743aa086EA31DC48E8AB691c4d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooCakeV2MGP-BUSD",
+    "earnedTokenAddress": "0x70D24C99E411c98628C63C27F30044eb777d9624",
+    "earnContractAddress": "0x70D24C99E411c98628C63C27F30044eb777d9624",
+    "oracle": "lps",
+    "oracleId": "cakev2-mgp-busd",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["MGP", "BUSD"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://pancakeswap.finance/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0xD06716E1Ff2E492Cc5034c2E81805562dd3b45fa",
+    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xD06716E1Ff2E492Cc5034c2E81805562dd3b45fa",
+    "network": "bsc",
+    "createdAt": 1669812064
+  },
+  {
     "id": "cakev2-busd-hoop",
     "name": "HOOP-BUSD LP",
     "token": "HOOP-BUSD LP2",
