@@ -453,7 +453,7 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://arbitrum.curve.fi/factory/0/deposit",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-0/deposit",
     "network": "arbitrum",
     "createdAt": 1633276273
   },
@@ -569,7 +569,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://arbitrum.curve.fi/tricrypto/deposit",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/tricrypto/deposit",
     "network": "arbitrum",
     "createdAt": 1669709222
   },
@@ -597,7 +597,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://arbitrum.curve.fi/2pool/deposit",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/2pool/deposit",
     "network": "arbitrum",
     "createdAt": 1669709222
   },

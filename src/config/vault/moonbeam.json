@@ -1509,36 +1509,6 @@
     "network": "moonbeam"
   },
   {
-    "id": "stellaswap-ape-wglmr-eol",
-    "name": "APE-GLMR LP",
-    "token": "APE-GLMR LP",
-    "tokenAddress": "0x55Db71E6bEaB323290f6571C428C171e15CDBAD2",
-    "tokenDecimals": 18,
-    "tokenProviderId": "stellaswap",
-    "earnedToken": "mooStellaswapAPE-GLMR",
-    "earnedTokenAddress": "0x77089478c41b6a8B29dDD6E3cb2F475475A228A5",
-    "earnContractAddress": "0x77089478c41b6a8B29dDD6E3cb2F475475A228A5",
-    "oracle": "lps",
-    "oracleId": "stellaswap-ape-wglmr",
-    "status": "eol",
-    "platformId": "stellaswap",
-    "assets": ["APE", "GLMR"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x3D632d9e1a60a0880Dd45E61f279D919b5748377/ETH",
-    "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
-    "createdAt": 1648601028,
-    "network": "moonbeam",
-    "retireReason": "rewards"
-  },
-  {
     "id": "stella-xstella",
     "name": "STELLA",
     "token": "STELLA",
