@@ -9,7 +9,7 @@ const useStyles = makeStyles(styles);
 
 export const AnnouncementBanner = memo(function AnnouncementBanner() {
   const classes = useStyles();
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideBip58Banner', false);
+  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideQuantumMiami', false);
 
   const closeBanner = useCallback(() => {
     setHideBanner(true);
@@ -24,7 +24,7 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
       icon={<img className={classes.icon} src={snapshotLogo} alt="snapshot" />}
       text={
         <>
-          New proposal is live: [BIP:58] Adopt Governance Guidelines. Discuss on
+          New proposal is live: Request for Funds: Quantum Miami Sponsorship. Discuss on
           <a
             target="_blank"
             rel="noreferrer"
@@ -39,7 +39,7 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
             target="_blank"
             rel="noreferrer"
             className={classes.link}
-            href="https://vote.beefy.finance/#/proposal/0x90e15a8ba3cfa8b9539b6a428130ae2987d77336ed6f9005f198b744552bc081"
+            href="https://vote.beefy.finance/#/proposal/0x9dcee63fd9ee4ec94ca51ce07d2f559fad40a9083d786dfac59b1ba9232b3961"
           >
             {' '}
             Snapshot.
