@@ -19,6 +19,7 @@ export const styles = (theme: Theme) => ({
     columnGap: '8px',
     backgroundColor: theme.palette.background.dashboard.cardBg,
     borderRadius: '4px',
+    alignItems: 'center',
   },
   chainLogo: {
     height: '32px',

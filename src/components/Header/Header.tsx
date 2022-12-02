@@ -29,7 +29,8 @@ const useStyles = makeStyles(styles);
 
 export const Header = memo(function () {
   const location = useLocation();
-  const isOnDashboard = location.pathname.includes('dashboard');
+  const isOnDashboard =
+    location.pathname.includes('dashboard') || location.pathname.includes('treasury');
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width: 500px)');
 
