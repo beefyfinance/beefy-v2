@@ -58,6 +58,34 @@
     "network": "arbitrum"
   },
   {
+    "id": "swapfish-dai-usdc",
+    "name": "DAI-USDC",
+    "token": "DAI-USDC LP",
+    "tokenAddress": "0x978DE910e7645fA7861aF89a156D3c86ad09Db79",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapfish",
+    "earnedToken": "mooFishDAI-USDC",
+    "earnedTokenAddress": "0x9B40e357937bCE323B1eB3832173B3D028520708",
+    "earnContractAddress": "0x9B40e357937bCE323B1eB3832173B3D028520708",
+    "oracle": "lps",
+    "oracleId": "swapfish-dai-usdc",
+    "status": "active",
+    "platformId": "swapfish",
+    "assets": ["DAI", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://swapfish.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+    "network": "arbitrum",
+    "createdAt": 1670116603
+  },
+  {
     "id": "curve-arb-f-wsteth",
     "name": "wstETH-ETH",
     "token": "wstETHCRV",
