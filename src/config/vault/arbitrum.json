@@ -82,6 +82,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://swapfish.fi/add/0xb348B87b23D5977E2948E6f36ca07E1EC94d7328/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xb348B87b23D5977E2948E6f36ca07E1EC94d7328&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "createdAt": 1670231942
   },
@@ -110,6 +111,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://swapfish.fi/add/0x5979D7b546E38E414F7E9822514be443A4800529/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x5979D7b546E38E414F7E9822514be443A4800529&outputCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
     "network": "arbitrum",
     "createdAt": 1670231942
   },
@@ -138,6 +140,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://swapfish.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+    "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "createdAt": 1670231942
   },
@@ -166,6 +169,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://swapfish.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+    "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "createdAt": 1670116603
   },
