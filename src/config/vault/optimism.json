@@ -1780,7 +1780,7 @@
     ],
     "addLiquidityUrl": "https://optimism.curve.fi/factory/10/deposit",
     "network": "optimism",
-    "createdAt": 1660548010
+    "createdAt": 1670252930
   },
   {
     "id": "curve-op-f-sbtc",

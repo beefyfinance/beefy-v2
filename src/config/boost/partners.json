@@ -1,4 +1,12 @@
 {
+  "opx": {
+    "text": "OPX Finance is a Decentralized swap and perpetual Exchange built on Optimism. Inspired by GMX.IO, OPX Finance is designed to provide a wide range of trading features and very deep liquidity for many large-cap crypto assets. \nTraders can use it in two ways:\n- Spot trading: with swaps and limit orders.\n- Perpetual futures trading: with up to 30x leverage on short and long positions.\nTrading is supported by a unique multi-asset pool that earns liquidity providers fees from market making, swap fees and leverage trading. In addition, Dynamic pricing is supported by Chainlink Oracles and an aggregate of prices from leading volume exchanges, making OPX non-liquidation wicks and no slippage platform for every trading. This ensures fair trade and long-term benefits for both traders and liquidity providers.\n✅ Spot and Leverage  ✅ No Price Impact ✅ Extremely Low Transaction Fees",
+    "website": "https://www.opx.finance/",
+    "social": {
+      "telegram": "https://discord.gg/mNdHE52zZp",
+      "twitter": "https://twitter.com/opxfinance"
+    }
+  },
   "synthetix": {
     "text": "Synthetix is a new financial primitive enabling the creation of synthetic assets, offering unique derivatives and exposure to real-world assets on the blockchain.",
     "website": "https://synthetix.io/",
