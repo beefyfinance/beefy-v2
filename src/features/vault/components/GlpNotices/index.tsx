@@ -3,7 +3,7 @@ import { VaultEntity } from '../../../data/entities/vault';
 import { GlpDepositNoticeImpl } from './GlpDepositNoticeImpl';
 import { GlpWithdrawNoticeImpl } from './GlpWithdrawNoticeImpl';
 
-export const enableForVaults: VaultEntity['id'][] = ['gmx-arb-glp', 'gmx-avax-glp'];
+export const enableForVaults: VaultEntity['id'][] = ['gmx-arb-glp', 'gmx-avax-glp', 'opx-olp'];
 
 type GlpDepositNoticeProps = {
   vaultId: VaultEntity['id'];
