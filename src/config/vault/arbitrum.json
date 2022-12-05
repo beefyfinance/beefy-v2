@@ -58,6 +58,34 @@
     "network": "arbitrum"
   },
   {
+    "id": "swapfish-bifi-eth",
+    "name": "BIFI-WETH",
+    "token": "BIFI-WETH LP",
+    "tokenAddress": "0x6716Ed27F13161cE3374f0D2cC8cEF181681e5Eb",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapfish",
+    "earnedToken": "mooFishBIFI-WETH",
+    "earnedTokenAddress": "0x6138fae8c4A97F68CCAe16d6CeEA6535510fB1e4",
+    "earnContractAddress": "0x6138fae8c4A97F68CCAe16d6CeEA6535510fB1e4",
+    "oracle": "lps",
+    "oracleId": "swapfish-bifi-eth",
+    "status": "active",
+    "platformId": "swapfish",
+    "assets": ["BIFI", "WETH"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://swapfish.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+    "network": "arbitrum",
+    "createdAt": 1670249514
+  },
+  {
     "id": "swapfish-fish-usdc",
     "name": "FISH-USDC",
     "token": "FISH-USDC LP",
