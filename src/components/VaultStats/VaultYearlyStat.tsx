@@ -13,7 +13,10 @@ import {
   selectDidAPIReturnValuesForVault,
   selectVaultTotalApy,
 } from '../../features/data/selectors/apy';
-import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
+import {
+  selectIsVaultBoosted,
+  selectIsVaultPrestakedBoost,
+} from '../../features/data/selectors/boosts';
 import { useAppSelector } from '../../store';
 import { InterestTooltipContent } from '../../features/home/components/Vault/components/InterestTooltipContent';
 import { AllValuesAsString } from '../../features/data/utils/types-utils';
@@ -65,14 +68,16 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultYearlyStatProps) {
   const values = selectVaultTotalApy(state, vaultId);
   const formatted = formattedTotalApy(values, '???');
   const isBoosted = selectIsVaultBoosted(state, vaultId);
+  const isPrestake = selectIsVaultPrestakedBoost(state, vaultId);
 
   return {
     label,
-    value: isBoosted ? formatted.boostedTotalApy : formatted.totalApy,
-    subValue: isBoosted ? formatted.totalApy : null,
+    value: isPrestake ? 'PRE-STAKE' : isBoosted ? formatted.boostedTotalApy : formatted.totalApy,
+    subValue: isBoosted || isPrestake ? formatted.totalApy : null,
     blur: false,
     loading: !isLoaded,
-    boosted: isBoosted,
+    boosted: isBoosted || isPrestake,
+    shouldTranslate: isPrestake,
     tooltip: <YearlyTooltipContent vaultId={vaultId} isBoosted={isBoosted} rates={formatted} />,
   };
 }

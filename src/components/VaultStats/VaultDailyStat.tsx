@@ -13,7 +13,10 @@ import {
   selectDidAPIReturnValuesForVault,
   selectVaultTotalApy,
 } from '../../features/data/selectors/apy';
-import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
+import {
+  selectIsVaultBoosted,
+  selectIsVaultPrestakedBoost,
+} from '../../features/data/selectors/boosts';
 import { AllValuesAsString } from '../../features/data/utils/types-utils';
 import { TotalApy } from '../../features/data/reducers/apy';
 import { useAppSelector } from '../../store';
@@ -68,14 +71,20 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailySt
   const values = selectVaultTotalApy(state, vaultId);
   const formatted = formattedTotalApy(values, '???');
   const isBoosted = selectIsVaultBoosted(state, vaultId);
+  const isPrestake = selectIsVaultPrestakedBoost(state, vaultId);
 
   return {
     label,
-    value: isBoosted ? formatted.boostedTotalDaily : formatted.totalDaily,
-    subValue: isBoosted ? formatted.totalDaily : null,
+    value: isPrestake
+      ? 'PRE-STAKE'
+      : isBoosted
+      ? formatted.boostedTotalDaily
+      : formatted.totalDaily,
+    subValue: isBoosted || isPrestake ? formatted.totalDaily : null,
     blur: false,
     loading: !isLoaded,
-    boosted: isBoosted,
+    boosted: isBoosted || isPrestake,
+    shouldTranslate: isPrestake,
     tooltip: <DailyContentTooltip vaultId={vaultId} isBoosted={isBoosted} rates={formatted} />,
     className: className ?? '',
   };

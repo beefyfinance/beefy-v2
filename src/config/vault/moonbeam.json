@@ -1,5 +1,34 @@
 [
   {
+    "id": "beamswap-wstdot-xcdot",
+    "name": "wstDOT-xcDOT LP",
+    "token": "wstDOT-xcDOT LP",
+    "tokenAddress": "0x79f05B32e29139C35Cd219aEDB5D99cedb1915aC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beamswap",
+    "earnedToken": "mooBeamswapwstDOT-xcDOT",
+    "earnedTokenAddress": "0xc302DF25DA018444f8B9261CF7f0f4eA0999e97B",
+    "earnContractAddress": "0xc302DF25DA018444f8B9261CF7f0f4eA0999e97B",
+    "oracle": "lps",
+    "oracleId": "beamswap-wstdot-xcdot",
+    "status": "active",
+    "platformId": "beamswap",
+    "assets": ["wstDOT", "xcDOT"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://app.beamswap.io/exchange/swap?outputCurrency=0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
+    "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0x191cf2602Ca2e534c5Ccae7BCBF4C46a704bb949/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
+    "createdAt": 1669432695,
+    "network": "moonbeam"
+  },
+  {
     "id": "stellaswap-mai4pool",
     "name": "Mai4Pool Stable LP",
     "token": "Mai4Pool Stable LP",
@@ -1478,36 +1507,6 @@
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1649857842,
     "network": "moonbeam"
-  },
-  {
-    "id": "stellaswap-ape-wglmr-eol",
-    "name": "APE-GLMR LP",
-    "token": "APE-GLMR LP",
-    "tokenAddress": "0x55Db71E6bEaB323290f6571C428C171e15CDBAD2",
-    "tokenDecimals": 18,
-    "tokenProviderId": "stellaswap",
-    "earnedToken": "mooStellaswapAPE-GLMR",
-    "earnedTokenAddress": "0x77089478c41b6a8B29dDD6E3cb2F475475A228A5",
-    "earnContractAddress": "0x77089478c41b6a8B29dDD6E3cb2F475475A228A5",
-    "oracle": "lps",
-    "oracleId": "stellaswap-ape-wglmr",
-    "status": "eol",
-    "platformId": "stellaswap",
-    "assets": ["APE", "GLMR"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x3D632d9e1a60a0880Dd45E61f279D919b5748377/ETH",
-    "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
-    "createdAt": 1648601028,
-    "network": "moonbeam",
-    "retireReason": "rewards"
   },
   {
     "id": "stella-xstella",

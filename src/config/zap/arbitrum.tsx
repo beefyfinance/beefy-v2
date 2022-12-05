@@ -8,4 +8,12 @@ export const zaps = [
     lpProviderFee: 0.003,
     network: 'polygon',
   },
+  {
+    // SwapFish
+    zapAddress: '0x64D02377e3A28141c4E4663dC7F107dE010D4369',
+    ammRouter: '0xcDAeC65495Fa5c0545c5a405224214e3594f30d8',
+    ammFactory: '0x71539D09D3890195dDa87A6198B98B75211b72F3',
+    ammPairInitHash: '0xfa92cf9f91596341d1d4b5e0903226886fea1aebab892d11d3c2c1d14ae97534',
+    lpProviderFee: 0.0025,
+  },
 ];

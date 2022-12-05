@@ -1,5 +1,33 @@
 [
   {
+    "id": "opx-olp",
+    "name": "OLP",
+    "token": "fOLP",
+    "tokenAddress": "0x2a1DA94AFd3BE55e9Ca4697d1013D1c557Eefff1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "opx",
+    "earnedToken": "mooOPXOLP",
+    "earnedTokenAddress": "0xb89d07F739c88A04aC804a39B1AE4F70AC0a63bB",
+    "earnContractAddress": "0xb89d07F739c88A04aC804a39B1AE4F70AC0a63bB",
+    "oracle": "lps",
+    "oracleId": "opx-olp",
+    "status": "active",
+    "platformId": "opx",
+    "assets": ["WETH", "WBTC", "USDC", "USDT", "DAI", "OP"],
+    "strategyTypeId": "single",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://www.opx.finance/#/buy_olp",
+    "network": "optimism",
+    "createdAt": 1670252431
+  },
+  {
     "id": "curve-op-f-wsteth",
     "name": "wstETH-ETH",
     "token": "wstETHCRV",
@@ -1780,7 +1808,7 @@
     ],
     "addLiquidityUrl": "https://optimism.curve.fi/factory/10/deposit",
     "network": "optimism",
-    "createdAt": 1660548010
+    "createdAt": 1670252930
   },
   {
     "id": "curve-op-f-sbtc",

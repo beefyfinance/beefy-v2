@@ -157,8 +157,8 @@ export function shouldVaultShowInterest(vault: VaultEntity) {
   }
 
   if (isVaultPaused(vault)) {
-    // Only 'viability' is still earning
-    return vault.pauseReason === 'viability';
+    // Still earning reasons
+    return ['viability', 'ren-sunset'].includes(vault.pauseReason);
   }
 
   return true;

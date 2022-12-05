@@ -58,6 +58,122 @@
     "network": "arbitrum"
   },
   {
+    "id": "swapfish-fish-usdc",
+    "name": "FISH-USDC",
+    "token": "FISH-USDC LP",
+    "tokenAddress": "0x570Eab8422160840ce3b7b2BE4c71D657659868f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapfish",
+    "earnedToken": "mooFishFISH-USDC",
+    "earnedTokenAddress": "0xE63aCEbE35265896cC6E8BdB8eCC0640a1807141",
+    "earnContractAddress": "0xE63aCEbE35265896cC6E8BdB8eCC0640a1807141",
+    "oracle": "lps",
+    "oracleId": "swapfish-fish-usdc",
+    "status": "active",
+    "platformId": "swapfish",
+    "assets": ["FISH", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://swapfish.fi/add/0xb348B87b23D5977E2948E6f36ca07E1EC94d7328/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xb348B87b23D5977E2948E6f36ca07E1EC94d7328&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "network": "arbitrum",
+    "createdAt": 1670231942
+  },
+  {
+    "id": "swapfish-wsteth-eth",
+    "name": "wstETH-ETH",
+    "token": "wstETH-ETH LP",
+    "tokenAddress": "0xe263353986a4638144c41E44cEBAc9d0A76ECab3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapfish",
+    "earnedToken": "mooFishWSTETH-ETH",
+    "earnedTokenAddress": "0xf6Dc553658eAcA3f58fF46B612b0A75a86e38431",
+    "earnContractAddress": "0xf6Dc553658eAcA3f58fF46B612b0A75a86e38431",
+    "oracle": "lps",
+    "oracleId": "swapfish-wsteth-eth",
+    "status": "active",
+    "platformId": "swapfish",
+    "assets": ["wstETH", "ETH"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://swapfish.fi/add/0x5979D7b546E38E414F7E9822514be443A4800529/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x5979D7b546E38E414F7E9822514be443A4800529&outputCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "network": "arbitrum",
+    "createdAt": 1670231942
+  },
+  {
+    "id": "swapfish-usdt-usdc",
+    "name": "USDT-USDC",
+    "token": "USDT-USDC LP",
+    "tokenAddress": "0x106AE154e4c24b6e11E70cfee7E075B14a182244",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapfish",
+    "earnedToken": "mooFishUSDT-USDC",
+    "earnedTokenAddress": "0x2Aa134990140f9B558f4127Af267f5240C1fB2B1",
+    "earnContractAddress": "0x2Aa134990140f9B558f4127Af267f5240C1fB2B1",
+    "oracle": "lps",
+    "oracleId": "swapfish-usdt-usdc",
+    "status": "active",
+    "platformId": "swapfish",
+    "assets": ["USDT", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://swapfish.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+    "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "network": "arbitrum",
+    "createdAt": 1670231942
+  },
+  {
+    "id": "swapfish-dai-usdc",
+    "name": "DAI-USDC",
+    "token": "DAI-USDC LP",
+    "tokenAddress": "0x978DE910e7645fA7861aF89a156D3c86ad09Db79",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapfish",
+    "earnedToken": "mooFishDAI-USDC",
+    "earnedTokenAddress": "0x9B40e357937bCE323B1eB3832173B3D028520708",
+    "earnContractAddress": "0x9B40e357937bCE323B1eB3832173B3D028520708",
+    "oracle": "lps",
+    "oracleId": "swapfish-dai-usdc",
+    "status": "active",
+    "platformId": "swapfish",
+    "assets": ["DAI", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://swapfish.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+    "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "network": "arbitrum",
+    "createdAt": 1670116603
+  },
+  {
     "id": "curve-arb-f-wsteth",
     "name": "wstETH-ETH",
     "token": "wstETHCRV",
@@ -453,7 +569,7 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://arbitrum.curve.fi/factory/0/deposit",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-0/deposit",
     "network": "arbitrum",
     "createdAt": 1633276273
   },
@@ -558,7 +674,7 @@
     "oracle": "lps",
     "oracleId": "curve-arb-tricrypto",
     "status": "active",
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["USDT", "WBTC", "ETH"],
     "strategyTypeId": "multi-lp",
     "risks": [
@@ -569,9 +685,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://arbitrum.curve.fi/tricrypto/deposit",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/tricrypto/deposit",
     "network": "arbitrum",
-    "createdAt": 1652662923
+    "createdAt": 1669709222
   },
   {
     "id": "curve-arb-2pool",
@@ -586,7 +702,7 @@
     "oracle": "lps",
     "oracleId": "curve-arb-2pool",
     "status": "active",
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["USDT", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
@@ -597,9 +713,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://arbitrum.curve.fi/2pool/deposit",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/2pool/deposit",
     "network": "arbitrum",
-    "createdAt": 1652662923
+    "createdAt": 1669709222
   },
   {
     "id": "curve-arb-ren",
@@ -613,7 +729,8 @@
     "earnContractAddress": "0x14d07853560436aEe38BE12DD66d944B07D5E59F",
     "oracle": "lps",
     "oracleId": "curve-arb-ren",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "ren-sunset",
     "platformId": "curve",
     "assets": ["WBTC", "renBTC"],
     "strategyTypeId": "lp",

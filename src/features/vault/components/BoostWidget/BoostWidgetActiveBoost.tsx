@@ -29,11 +29,16 @@ import { boostActions } from '../../../data/reducers/wallet/boost';
 
 const useStyles = makeStyles(styles);
 
-export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id'] }) {
+export function BoostWidgetActiveBoost({
+  boostId,
+  title,
+}: {
+  boostId: BoostEntity['id'];
+  title: string;
+}) {
   const boost = useAppSelector(state => selectBoostById(state, boostId));
   const vault = useAppSelector(state => selectVaultById(state, boost.vaultId));
   const chain = useAppSelector(state => selectChainById(state, boost.chainId));
-  const isBoosted = true;
   const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
   const mooTokenBalance = useAppSelector(state =>
     selectUserBalanceOfToken(state, boost.chainId, vault.earnedTokenAddress)
@@ -45,7 +50,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   const { periodFinish, isPreStake } = useAppSelector(state =>
     selectBoostContractState(state, boost.id)
   );
-  const classes = useStyles({ isBoosted });
+  const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
@@ -133,6 +138,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
           <Trans
             t={t}
             i18nKey="Boost-Title"
+            values={{ title }}
             components={{ white: <span className={classes.titleWhite} /> }}
           />
         </span>

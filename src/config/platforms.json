@@ -919,9 +919,19 @@
     "name": "Hop",
     "filter": true
   },
-  {  
+  {
     "id": "convex",
     "name": "Convex",
     "filter": true
+  },
+  {
+    "id": "swapfish",
+    "name": "SwapFish",
+    "filter": false
+  },
+  {
+    "id": "opx",
+    "name": "OPX",
+    "filter": false
   }
 ]

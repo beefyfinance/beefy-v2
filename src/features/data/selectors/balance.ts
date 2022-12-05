@@ -60,6 +60,14 @@ export const selectAddressDepositedVaultIds = createSelector(
   maybeDepositedVaultIds => maybeDepositedVaultIds || []
 );
 
+export const selectUserDepositedVaultIdsForAsset = (state: BeefyState, asset: string) => {
+  const vaultIds = selectUserDepositedVaultIds(state);
+  return vaultIds.filter(vaultId => {
+    const vault = selectVaultById(state, vaultId);
+    return vault.assetIds.includes(asset);
+  });
+};
+
 export const selectHasUserDepositInVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const walletBalance = _selectWalletBalance(state);
   return walletBalance ? walletBalance.depositedVaultIds.indexOf(vaultId) !== -1 : false;

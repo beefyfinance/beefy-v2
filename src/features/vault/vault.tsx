@@ -33,6 +33,7 @@ import { AssetsCard } from './components/AssetsCard';
 import { InsuranceCards } from './components/InsuranceCards';
 import { LeverageCards } from './components/LeverageCards';
 import { BoostWidget } from './components/BoostWidget';
+import { RenBannerVault } from '../../components/Banners/RenBanner';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -84,6 +85,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
     <>
       <VaultMeta vaultId={vaultId} />
       <div className={classes.vaultContainer}>
+        <RenBannerVault vaultId={vaultId} />
         <Container maxWidth="lg">
           <div className={classes.header}>
             <div className={classes.titleHolder}>

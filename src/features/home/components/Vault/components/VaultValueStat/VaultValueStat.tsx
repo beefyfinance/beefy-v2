@@ -17,6 +17,7 @@ export type VaultValueStatProps = {
   loading: boolean;
   boosted?: boolean;
   showLabel?: boolean;
+  shouldTranslate?: boolean;
 };
 export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat({
   label,
@@ -27,6 +28,7 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
   loading,
   boosted,
   showLabel = true,
+  shouldTranslate = false,
   className,
 }) {
   const classes = useStyles();
@@ -45,7 +47,7 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
               [className]: className,
             })}
           >
-            {value}
+            {shouldTranslate ? t(`${value}`) : value}
           </div>
           {subValue ? (
             <div
