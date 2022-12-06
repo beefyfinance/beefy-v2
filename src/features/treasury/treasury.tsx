@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { memo } from 'react';
 import { DaoExposure } from './components/DaoExposure';
+import { DaoHoldings } from './components/DaoHoldings';
 import { DaoInflows } from './components/DaoInflows';
 import { DaoSummary } from './components/DaoSummary';
 import { styles } from './styles';
@@ -14,6 +15,7 @@ export const Treasury = memo(function () {
       <DaoSummary />
       <DaoExposure />
       <DaoInflows />
+      <DaoHoldings />
     </div>
   );
 });

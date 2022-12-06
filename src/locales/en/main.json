@@ -491,7 +491,8 @@
   "Details-Here": "Details here",
   "ETH-Banner": "Beefy is now deployed on <ethereum/>! New autocompounding vaults from Convex, Aura and Stargate are already available and more are coming soon.",
   "Ethereum": "Ethereum",
+  "PRE-STAKE": "PRE-STAKE",
   "Treasury-Title": "Beefy Treasury",
   "Treasury-Title-Inflows": "Treasury Inflows by Chain",
-  "PRE-STAKE": "PRE-STAKE"
+  "Treasury-Title-Holdings": "Treasury Holdings"
 }
