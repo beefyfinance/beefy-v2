@@ -82,6 +82,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://swapfish.fi/add/0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "createdAt": 1670446708
   },
