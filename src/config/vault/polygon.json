@@ -7845,7 +7845,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
-    "addLiquidityUrl": "https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
+    "addLiquidityUrl": "https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32/v2",
     "createdAt": 1653558100,
     "network": "polygon"
   },
@@ -7875,7 +7875,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
-    "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
+    "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32/v2",
     "createdAt": 1653558999,
     "network": "polygon"
   },
@@ -8026,7 +8026,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xc2A45FE7d40bCAc8369371B08419DDAFd3131b4a",
-    "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0xc2A45FE7d40bCAc8369371B08419DDAFd3131b4a",
+    "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0xc2A45FE7d40bCAc8369371B08419DDAFd3131b4a/v2",
     "createdAt": 1654005716,
     "network": "polygon"
   },
