@@ -58,6 +58,35 @@
     "network": "arbitrum"
   },
   {
+    "id": "swapfish-gmx-usdc",
+    "name": "GMX-USDC",
+    "token": "GMX-USDC LP",
+    "tokenAddress": "0xB2A72A9FA965adE9bD21b1a60d29ccCE5E2C5A62",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapfish",
+    "earnedToken": "mooFishGMX-USDC",
+    "earnedTokenAddress": "0xB1bFc21bEE2b2DDA4728481dbF52eDC3b9F5Fb79",
+    "earnContractAddress": "0xB1bFc21bEE2b2DDA4728481dbF52eDC3b9F5Fb79",
+    "oracle": "lps",
+    "oracleId": "swapfish-gmx-usdc",
+    "status": "active",
+    "platformId": "swapfish",
+    "assets": ["GMX", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://swapfish.fi/add/0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "network": "arbitrum",
+    "createdAt": 1670446708
+  },
+  {
     "id": "swapfish-bifi-eth",
     "name": "BIFI-WETH",
     "token": "BIFI-WETH LP",
