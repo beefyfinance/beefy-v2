@@ -41,7 +41,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_MICRO",
+      "MCAP_SMALL",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
@@ -541,7 +541,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_MEDIUM",
+      "MCAP_LARGE",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
@@ -1675,7 +1675,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_MEDIUM",
+      "MCAP_LARGE",
       "ALGO_STABLE",
       "CONTRACTS_VERIFIED"
     ],
