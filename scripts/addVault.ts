@@ -39,11 +39,15 @@ async function vaultData(chain, vaultAddress) {
   const provider =
     params.mooToken.startsWith('mooCurve') || params.mooToken.startsWith('mooConvex')
       ? 'curve'
+      : params.mooToken.startsWith('mooCake')
+      ? 'pancakeswap'
       : 'XXX';
   const platform = params.mooToken.startsWith('mooCurve')
     ? 'curve'
     : params.mooToken.startsWith('mooConvex')
     ? 'convex'
+    : params.mooToken.startsWith('mooCake')
+    ? 'pancakeswap'
     : 'XXX';
 
   return { ...params, ...token, ...{ provider, platform } };

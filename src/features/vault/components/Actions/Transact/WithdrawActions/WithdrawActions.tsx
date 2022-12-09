@@ -31,7 +31,7 @@ import { ActionButtonProps, ActionConnect, ActionSwitch } from '../CommonActions
 import { selectGovVaultPendingRewardsInToken } from '../../../../../data/selectors/balance';
 import { VaultGov } from '../../../../../data/entities/vault';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { GlpWithdrawLockNotice } from '../GlpWithdrawLockNotice';
+import { GlpWithdrawNotice } from '../GlpNotices';
 
 const useStyles = makeStyles(styles);
 
@@ -150,7 +150,7 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ({ option, quote, clas
   return (
     <>
       {option.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
-      <GlpWithdrawLockNotice vaultId={option.vaultId} onChange={setIsDisabledByGlpLock} />
+      <GlpWithdrawNotice vaultId={option.vaultId} onChange={setIsDisabledByGlpLock} />
       <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <Button

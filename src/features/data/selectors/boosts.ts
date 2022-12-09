@@ -45,6 +45,25 @@ export const selectIsVaultPreStakedOrBoosted = createCachedSelector(
   (activeBoostIds, prestakeBoostIds) => activeBoostIds.length + prestakeBoostIds.length > 0
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
+export const selectVaultCurrentBoostIdWithStatus = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
+  (activeBoostIds, prestakeBoostIds) => {
+    if (activeBoostIds.length > 0) {
+      return { id: activeBoostIds[0], status: 'active' };
+    }
+    if (prestakeBoostIds.length > 0) {
+      return { id: prestakeBoostIds[0], status: 'prestake' };
+    }
+    return null;
+  }
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectIsVaultPrestakedBoost = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
+  prestakeBoostIds => prestakeBoostIds.length > 0
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
 export const selectActiveVaultBoostIds = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     state.entities.boosts.byVaultId[vaultId]?.activeBoostsIds,

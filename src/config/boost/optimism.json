@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_curve-op-f-seth-opx",
+    "poolId": "curve-op-f-seth",
+    "name": "OPX",
+    "assets": ["sETH", "ETH"],
+    "tokenAddress": "0x92651E1bBfE0f8423119AfC4B0610C747Fa125a1",
+    "earnedToken": "OPX",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xcdB4bB51801A1F399d4402c61bC098a72c382E65",
+    "earnContractAddress": "0x55782BdF08e0e03DF79d3A5430762a3FCb2DCb1B",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OPX",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["opx"]
+  },
+  {
     "id": "moo_curve-op-f-susd-synthetix",
     "poolId": "curve-op-f-susd",
     "name": "Beefy",

@@ -23,6 +23,7 @@ import clsx from 'clsx';
 import { ConfirmNotice } from '../ConfirmNotice';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { ActionButtonProps, ActionConnect, ActionSwitch } from '../CommonActions';
+import { GlpDepositNotice } from '../GlpNotices';
 
 const useStyles = makeStyles(styles);
 
@@ -80,12 +81,17 @@ const ActionDeposit = memo<ActionDepositProps>(function ({ option, quote, classN
   const [isDisabledByPriceImpact, setIsDisabledByPriceImpact] = useState(false);
   const [isDisabledByMaxNative, setIsDisabledByMaxNative] = useState(false);
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
+  const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
   const isDisabled =
-    isTxInProgress || isDisabledByPriceImpact || isDisabledByMaxNative || isDisabledByConfirm;
+    isTxInProgress ||
+    isDisabledByPriceImpact ||
+    isDisabledByMaxNative ||
+    isDisabledByConfirm ||
+    isDisabledByGlpLock;
   const handleClick = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
@@ -93,6 +99,7 @@ const ActionDeposit = memo<ActionDepositProps>(function ({ option, quote, classN
   return (
     <div className={clsx(classes.actions, className)}>
       {option.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
+      <GlpDepositNotice vaultId={option.vaultId} onChange={setIsDisabledByGlpLock} />
       <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
       <MaxNativeNotice quote={quote} onChange={setIsDisabledByMaxNative} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />

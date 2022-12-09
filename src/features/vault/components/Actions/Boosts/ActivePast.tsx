@@ -1,25 +1,26 @@
 import { VaultEntity } from '../../../../data/entities/vault';
 import { memo } from 'react';
 import { useAppSelector } from '../../../../../store';
-import {
-  selectIsVaultPreStakedOrBoosted,
-  selectPreStakeOrActiveBoostIds,
-} from '../../../../data/selectors/boosts';
-import { first } from 'lodash';
+import { selectVaultCurrentBoostIdWithStatus } from '../../../../data/selectors/boosts';
 import { ActiveBoost } from './ActiveBoost';
 import { PastBoosts } from './PastBoosts';
+import { useTranslation } from 'react-i18next';
 
 export type ActivePastProps = {
   vaultId: VaultEntity['id'];
 };
 export const ActivePast = memo<ActivePastProps>(function ({ vaultId }) {
-  const hasActiveBoost = useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId));
-  const activeBoostId = useAppSelector(state =>
-    hasActiveBoost ? first(selectPreStakeOrActiveBoostIds(state, vaultId)) : null
-  );
+  const { t } = useTranslation();
+  const boost = useAppSelector(state => selectVaultCurrentBoostIdWithStatus(state, vaultId));
+
   return (
     <>
-      {hasActiveBoost && <ActiveBoost boostId={activeBoostId} />}
+      {boost && (
+        <ActiveBoost
+          boostId={boost.id}
+          title={t(boost.status === 'prestake' ? 'Boost-Upcoming' : 'Boost-Active')}
+        />
+      )}
       <PastBoosts vaultId={vaultId} />
     </>
   );

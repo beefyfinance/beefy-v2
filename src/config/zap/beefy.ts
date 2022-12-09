@@ -7,6 +7,11 @@ export const zaps: BeefyZapConfig[] = [
     zapAddress: '0x6D973E33af0801Af13b7939956745c72bB17aa1E',
   },
   {
+    chainId: 'arbitrum',
+    ammId: 'arbitrum-swapfish',
+    zapAddress: '0x64D02377e3A28141c4E4663dC7F107dE010D4369',
+  },
+  {
     chainId: 'avax',
     ammId: 'avax-pangolin',
     zapAddress: '0x7f62aF30081178F502c3d4DA17825e58d240D737',

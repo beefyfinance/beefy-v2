@@ -15,4 +15,18 @@ export const amms: AmmConfig[] = [
     swapFeeDenominator: '1000',
     getAmountOutMode: 'getAmountOut', // router.getAmountOut(uint amountIn, uint reserveIn, uint reserveOut)
   },
+  {
+    id: 'arbitrum-swapfish',
+    name: 'SwapFish',
+    type: 'uniswapv2',
+    routerAddress: '0xcDAeC65495Fa5c0545c5a405224214e3594f30d8',
+    factoryAddress: '0x71539D09D3890195dDa87A6198B98B75211b72F3',
+    pairInitHash: '0xfa92cf9f91596341d1d4b5e0903226886fea1aebab892d11d3c2c1d14ae97534',
+    minimumLiquidity: '1000',
+    mintFeeNumerator: '2',
+    mintFeeDenominator: '3',
+    swapFeeNumerator: '3',
+    swapFeeDenominator: '1000',
+    getAmountOutMode: 'getAmountOut', // router.getAmountOut(uint amountIn, uint reserveIn, uint reserveOut)
+  },
 ];
