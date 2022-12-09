@@ -14,6 +14,7 @@ interface AddressBookTokenConfig {
   website?: string;
   description?: string;
   documentation?: string;
+  oracleId?: string;
 }
 
 export interface ChainAddressBook {
@@ -88,7 +89,7 @@ export const getChainAddressBook = memoize(
         agg[tokenId] = {
           id: tokenId,
           chainId: chain.id,
-          oracleId: tokenId,
+          oracleId: bookToken.oracleId ?? tokenId,
           address: bookToken.address,
           decimals: bookToken.decimals,
           symbol: bookToken.symbol,

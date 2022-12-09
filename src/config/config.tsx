@@ -183,6 +183,7 @@ export const config = {
       'agEUR',
       'jEUR',
       'TUSD',
+      'USX',
     ],
   },
   fantom: {
