@@ -27,7 +27,7 @@ import { EmeraldGasNotice } from '../EmeraldGasNotice';
 import { ConfirmNotice } from '../ConfirmNotice';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { selectGovVaultById, selectIsVaultGov } from '../../../../../data/selectors/vaults';
-import { ActionButtonProps, ActionConnect, ActionSwitch } from '../CommonActions/CommonActions';
+import { ActionButtonProps, ActionConnect, ActionSwitch } from '../CommonActions';
 import { selectGovVaultPendingRewardsInToken } from '../../../../../data/selectors/balance';
 import { VaultGov } from '../../../../../data/entities/vault';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
@@ -146,8 +146,6 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ({ option, quote, clas
   const handleClick = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
-
-  // TODO slippage setting (not gov vault? / only when zap)
 
   return (
     <>

@@ -112,17 +112,20 @@ export interface AmmConfigBase {
   routerAddress: string;
   factoryAddress: string;
   pairInitHash: string;
-  swapFee: number;
+  minimumLiquidity: string;
+  swapFeeNumerator: string;
+  swapFeeDenominator: string;
 }
 
 export interface AmmConfigUniswapV2 extends AmmConfigBase {
-  type: 'uniswapv2';
+  readonly type: 'uniswapv2';
+  mintFeeNumerator: string;
+  mintFeeDenominator: string;
   getAmountOutMode: 'getAmountOut' | 'getAmountsOut' | 'getAmountOutWithFee';
-  getAmountOutFee?: string;
 }
 
 export interface AmmConfigSolidly extends AmmConfigBase {
-  type: 'solidly';
+  readonly type: 'solidly';
   getAmountOutMode: 'getAmountOut';
 }
 

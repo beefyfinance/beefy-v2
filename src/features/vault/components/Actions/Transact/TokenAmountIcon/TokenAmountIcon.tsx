@@ -47,6 +47,7 @@ export const TokenAmountIcon = memo<TokenAmountIconProps>(function ({
           decimals={token.decimals}
           price={tokenPrice}
           className={classes.token}
+          minShortPlaces={4}
         />
       }
       value={formatBigUsd(valueInUsd)}

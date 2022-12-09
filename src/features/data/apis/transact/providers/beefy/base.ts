@@ -37,50 +37,65 @@ import { walletActions } from '../../../../actions/wallet-actions';
 import { Step } from '../../../../reducers/wallet/stepper';
 import {
   nativeToWNative,
-  tokensToZapWithdraw,
   tokensToLp,
   tokensToZapIn,
+  tokensToZapWithdraw,
   wnativeToNative,
 } from '../../helpers/tokens';
 import Web3 from 'web3';
 import { TransactMode } from '../../../../reducers/wallet/transact-types';
-import { oracleAmountToMooAmount } from '../../../../utils/ppfs';
 import { AmmEntity } from '../../../../entities/amm';
 import { selectBeefyZapByAmmId, selectBeefyZapsByChainId } from '../../../../selectors/zap';
 import { selectTransactSlippage } from '../../../../selectors/transact';
+import { ChainEntity } from '../../../../entities/chain';
+import { selectFeesByVaultId } from '../../../../selectors/fees';
+import { getVaultWithdrawn } from '../../helpers/vault';
 
-export type BeefyZapOption = {
+export type BeefyZapOption<AmmType extends AmmEntity = AmmEntity> = {
   zap: ZapEntityBeefy;
-  amm: AmmEntity;
+  amm: AmmType;
   lpTokens: TokenEntity[];
 } & ZapOption;
 
-export type CommonDepositQuoteOptions = {
+export type CommonDepositQuoteOptions<AmmType extends AmmEntity = AmmEntity> = {
   web3: Web3;
   multicall: MultiCall;
+  chain: ChainEntity;
   depositToken: TokenEntity;
   swapTokenIn: TokenEntity;
   swapTokenOut: TokenEntity;
   userAmountInWei: BigNumber;
-  option: BeefyZapOption;
+  option: BeefyZapOption<AmmType>;
   vault: VaultStandard;
   userInput: InputTokenAmount;
   amounts: InputTokenAmount[];
 };
 
-export type CommonWithdrawQuoteOptions = {
+export type CommonWithdrawQuoteOptions<AmmType extends AmmEntity = AmmEntity> = {
+  option: BeefyZapOption<AmmType>;
   web3: Web3;
   multicall: MultiCall;
-  mooToken: TokenErc20;
-  depositToken: TokenEntity;
-  wantedTokenOut: TokenEntity;
+  chain: ChainEntity;
+  vault: VaultStandard;
+  amounts: InputTokenAmount[];
+  withdrawnToken: TokenEntity;
+  shareToken: TokenErc20;
+  actualTokenOut: TokenEntity;
   swapTokenIn: TokenEntity;
   swapTokenOut: TokenEntity;
-  option: BeefyZapOption;
+  withdrawnTokenAmountWei: BigNumber;
+  shareAmountWei: BigNumber;
+  withdrawnTokenAmountAfterFeeWei: BigNumber;
+  native: TokenNative;
+  wnative: TokenErc20;
+};
+
+type CommonOptionsData<AmmType extends AmmEntity = AmmEntity> = {
   vault: VaultStandard;
-  userInput: InputTokenAmount;
-  amounts: InputTokenAmount[];
-  userAmountInMooToken: BigNumber;
+  zapTokens: TokenEntity[];
+  zap: ZapEntityBeefy;
+  amm: AmmType;
+  lpTokens: TokenErc20[];
   native: TokenNative;
   wnative: TokenErc20;
 };
@@ -88,11 +103,11 @@ export type CommonWithdrawQuoteOptions = {
 /**
  * Deposit/withdraw via Beefy Zap Contracts
  */
-export abstract class BeefyBaseZapProvider implements ITransactProvider {
-  private depositCache: Record<string, BeefyZapOption[]> = {};
-  private withdrawCache: Record<string, BeefyZapOption[]> = {};
+export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements ITransactProvider {
+  private depositCache: Record<string, BeefyZapOption<AmmType>[]> = {};
+  private withdrawCache: Record<string, BeefyZapOption<AmmType>[]> = {};
 
-  protected constructor(protected type: AmmEntity['type']) {}
+  protected constructor(protected type: AmmType['type']) {}
 
   getId(): string {
     return `beefy-zap-${this.type}`;
@@ -102,9 +117,12 @@ export abstract class BeefyBaseZapProvider implements ITransactProvider {
     amms: AmmEntity[],
     depositTokenAddress: TokenEntity['address'],
     lpTokens: TokenEntity[]
-  ): AmmEntity | null;
+  ): AmmType | null;
 
-  async getCommonOptionData(vaultId: VaultEntity['id'], state: BeefyState) {
+  async getCommonOptionData(
+    vaultId: VaultEntity['id'],
+    state: BeefyState
+  ): Promise<CommonOptionsData<AmmType>> {
     const vault = selectVaultById(state, vaultId);
 
     let zaps = selectBeefyZapsByChainId(state, vault.chainId);
@@ -254,6 +272,7 @@ export abstract class BeefyBaseZapProvider implements ITransactProvider {
     return this.getDepositQuoteForType({
       web3,
       depositToken,
+      chain,
       option,
       swapTokenIn,
       amounts,
@@ -309,7 +328,7 @@ export abstract class BeefyBaseZapProvider implements ITransactProvider {
     const withdrawTokens = tokensToZapWithdraw(lpTokens, wnative, native).map(
       token => token.address
     );
-    const withdrawOptions: BeefyZapOption[] = [
+    const withdrawOptions: BeefyZapOption<AmmType>[] = [
       {
         id: createOptionId(this.getId(), vaultId, vault.chainId, withdrawTokens),
         type: 'zap',
@@ -373,8 +392,9 @@ export abstract class BeefyBaseZapProvider implements ITransactProvider {
       throw new Error(`Quote called with 0 input`);
     }
 
-    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    if (!isTokenEqual(depositToken, userInput.token)) {
+    // User inputs how much LP they want to withdraw, not how many shares (which the contract needs)
+    const withdrawnToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    if (!isTokenEqual(withdrawnToken, userInput.token)) {
       throw new Error(`Invalid input token ${userInput.token.symbol}`);
     }
 
@@ -383,21 +403,19 @@ export abstract class BeefyBaseZapProvider implements ITransactProvider {
     const multicall = new MultiCall(web3, chain.multicallAddress);
     const wnative = selectChainWrappedNativeToken(state, vault.chainId);
     const native = selectChainNativeToken(state, vault.chainId);
-    const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+    const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
     const ppfs = selectVaultPricePerFullShare(state, vault.id);
-    const userAmountInMooToken = oracleAmountToMooAmount(
-      mooToken,
-      userInput.token,
-      ppfs,
-      userInput.amount
-    );
+    const vaultFees = selectFeesByVaultId(state, vault.id);
+
+    const { withdrawnTokenAmountWei, shareAmountWei, withdrawnTokenAmountAfterFeeWei } =
+      getVaultWithdrawn(userInput.amount, withdrawnToken, shareToken, ppfs, vaultFees.withdraw);
 
     let swapTokenIn = null;
     let swapTokenOut = null;
     let actualTokenOut = null;
 
     if (option.tokenAddresses.length === 1) {
-      if (option.tokenAddresses[0].toLowerCase() === depositToken.address.toLowerCase()) {
+      if (option.tokenAddresses[0].toLowerCase() === withdrawnToken.address.toLowerCase()) {
         throw new Error(`can not quote for deposit token on zap withdraw`);
       }
 
@@ -411,24 +429,28 @@ export abstract class BeefyBaseZapProvider implements ITransactProvider {
     }
 
     return this.getWithdrawQuoteForType({
-      web3,
-      depositToken,
-      mooToken,
       option,
-      swapTokenIn,
-      amounts,
+      web3,
       multicall,
-      swapTokenOut,
-      wantedTokenOut: actualTokenOut,
+      chain,
       vault,
-      userInput,
-      userAmountInMooToken,
+      amounts,
+      withdrawnToken,
+      shareToken,
+      withdrawnTokenAmountWei,
+      shareAmountWei,
+      withdrawnTokenAmountAfterFeeWei,
+      swapTokenIn,
+      swapTokenOut,
+      actualTokenOut,
       wnative,
       native,
     });
   }
 
-  abstract getWithdrawQuoteForType(options: CommonWithdrawQuoteOptions): Promise<ZapQuote | null>;
+  abstract getWithdrawQuoteForType(
+    options: CommonWithdrawQuoteOptions<AmmType>
+  ): Promise<ZapQuote | null>;
 
   async getWithdrawStep(
     quote: ZapQuote,
@@ -456,7 +478,7 @@ export abstract class BeefyBaseZapProvider implements ITransactProvider {
     };
   }
 
-  isBeefyZapOption(option: ZapOption): option is BeefyZapOption {
+  isBeefyZapOption(option: ZapOption): option is BeefyZapOption<AmmType> {
     return option.providerId === this.getId();
   }
 }

@@ -87,4 +87,14 @@ export const styles = (theme: Theme) => ({
     opacity: 0,
     pointerEvents: 'none' as const,
   },
+  tooltipTrigger: {
+    width: '16px',
+    height: '16px',
+    margin: 0,
+    verticalAlign: 'middle',
+    '& svg': {
+      width: '16px',
+      height: '16px',
+    },
+  },
 });

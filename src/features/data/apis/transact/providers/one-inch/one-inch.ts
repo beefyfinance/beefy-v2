@@ -29,7 +29,7 @@ import {
 import { isTokenEqual, isTokenErc20, TokenEntity, TokenErc20 } from '../../../../entities/token';
 import { selectOneInchZapByChainId } from '../../../../selectors/zap';
 import { ZapEntityOneInch } from '../../../../entities/zap';
-import { AmmEntity, isSolidlyAmm, isUniswapV2Amm } from '../../../../entities/amm';
+import { AmmEntity } from '../../../../entities/amm';
 import { createOptionId, createQuoteId, createTokensId } from '../../utils';
 import { TransactMode } from '../../../../reducers/wallet/transact-types';
 import { first, uniqBy } from 'lodash';
@@ -41,7 +41,7 @@ import {
   toWei,
   toWeiString,
 } from '../../../../../../helpers/big-number';
-import { getOneInchApi, getWeb3Instance } from '../../../instances';
+import { getOneInchApi } from '../../../instances';
 import { selectChainById } from '../../../../selectors/chains';
 import { walletActions } from '../../../../actions/wallet-actions';
 import {
@@ -53,27 +53,16 @@ import {
 } from '../../helpers/tokens';
 import { selectTokenAmountValue, selectTransactSlippage } from '../../../../selectors/transact';
 import BigNumber from 'bignumber.js';
-import {
-  computeSolidlyPairAddress,
-  isStablePair,
-  MetadataRaw,
-  metadataToObject,
-} from '../../helpers/solidly';
-import {
-  computeUniswapV2PairAddress,
-  getOptimalAddLiquidityAmounts,
-  quoteMint,
-} from '../../helpers/uniswapv2';
+import { computeSolidlyPairAddress } from '../../helpers/solidly';
+import { computeUniswapV2PairAddress } from '../../helpers/uniswapv2';
 import Web3 from 'web3';
-import {
-  BeefyZapOneInchAbi,
-  SolidlyPairAbi,
-  UniswapV2PairAbi,
-  VaultAbi,
-} from '../../../../../../config/abi';
+import { VaultAbi } from '../../../../../../config/abi';
 import { OneInchApi } from '../../../one-inch';
 import { MultiCall } from 'eth-multicall';
 import { selectFeesByVaultId } from '../../../../selectors/fees';
+import { getPool } from '../../../amm';
+import { IPool, WANT_TYPE } from '../../../amm/types';
+import { getVaultWithdrawn } from '../../helpers/vault';
 
 export type OneInchZapOptionBase = {
   zap: ZapEntityOneInch;
@@ -91,10 +80,8 @@ export type OneInchZapOptionSingle = OneInchZapOptionBase & {
 
 export type OneInchZapOption = OneInchZapOptionLP | OneInchZapOptionSingle;
 
-type PoolMetadata = {
-  reserves0: BigNumber;
-  reserves1: BigNumber;
-  totalSupply: BigNumber;
+export type OneInchZapQuote = ZapQuote & {
+  wantType: WANT_TYPE;
 };
 
 export class OneInchZapProvider implements ITransactProvider {
@@ -119,7 +106,7 @@ export class OneInchZapProvider implements ITransactProvider {
   async getDepositOptionsFor(
     vaultId: VaultEntity['id'],
     state: BeefyState
-  ): Promise<TransactOption[] | null> {
+  ): Promise<OneInchZapOption[] | null> {
     const vault = selectVaultById(state, vaultId);
 
     if (!isStandardVault(vault)) {
@@ -334,7 +321,7 @@ export class OneInchZapProvider implements ITransactProvider {
     option: TransactOption,
     amounts: InputTokenAmount[],
     state: BeefyState
-  ): Promise<TransactQuote | null> {
+  ): Promise<OneInchZapQuote | null> {
     if (isSingleOption(option)) {
       return this.getSingleDepositQuoteFor(option, amounts, state);
     } else if (isLPOption(option)) {
@@ -349,7 +336,7 @@ export class OneInchZapProvider implements ITransactProvider {
     option: OneInchZapOptionSingle,
     amounts: InputTokenAmount[],
     state: BeefyState
-  ): Promise<TransactQuote | null> {
+  ): Promise<OneInchZapQuote | null> {
     const userInput = first(amounts);
     if (!userInput || userInput.amount.lte(BIG_ZERO)) {
       throw new Error(`Quote called with 0 input`);
@@ -415,6 +402,7 @@ export class OneInchZapProvider implements ITransactProvider {
       id: createQuoteId(option.id),
       optionId: option.id,
       type: 'zap',
+      wantType: WANT_TYPE.SINGLE,
       allowances: amounts
         .filter(tokenAmount => isTokenErc20(tokenAmount.token))
         .map(tokenAmount => ({
@@ -452,7 +440,7 @@ export class OneInchZapProvider implements ITransactProvider {
     option: OneInchZapOptionLP,
     amounts: InputTokenAmount[],
     state: BeefyState
-  ): Promise<TransactQuote | null> {
+  ): Promise<OneInchZapQuote | null> {
     if (amounts.length !== 1) {
       throw new Error(`Only 1 input token supported`);
     }
@@ -469,15 +457,9 @@ export class OneInchZapProvider implements ITransactProvider {
     const userTokenIn = userInput.token;
     const userAmountIn = userInput.amount;
     const swapTokenIn = nativeToWNative(userTokenIn, wnative);
-    const [web3, api] = await Promise.all([getWeb3Instance(chain), getOneInchApi(chain)]);
-    const swapAmountsIn = await this.getSwapAmountsIn(
-      swapTokenIn,
-      userAmountIn,
-      depositToken,
-      option,
-      vault,
-      web3
-    );
+    const lp = getPool(depositToken.address, option.amm, chain);
+    const [api] = await Promise.all([getOneInchApi(chain), lp.updateAllData()]);
+    const swapAmountsIn = await this.getSwapAmountsIn(lp, userAmountIn, swapTokenIn.decimals);
     console.debug(
       this.getId(),
       swapAmountsIn.map(x => (x ? x.toString(10) : JSON.stringify(x)))
@@ -527,19 +509,13 @@ export class OneInchZapProvider implements ITransactProvider {
       };
     });
 
-    const multicall = new MultiCall(web3, chain.multicallAddress);
-    const liquidity = await this.getLiquidityEstimate(
-      option,
-      tokenAmountsToAdd,
-      depositToken,
-      web3,
-      multicall
-    );
+    const liquidity = this.addLiquidity(lp, tokenAmountsToAdd, depositToken);
 
     return {
       id: createQuoteId(option.id),
       optionId: option.id,
       type: 'zap',
+      wantType: lp.getWantType(),
       allowances: amounts
         .filter(tokenAmount => isTokenErc20(tokenAmount.token))
         .map(tokenAmount => ({
@@ -572,114 +548,14 @@ export class OneInchZapProvider implements ITransactProvider {
     };
   }
 
-  async getLiquidityEstimate(
-    option: OneInchZapOptionLP,
-    tokenAmounts: TokenAmount[],
-    depositToken: TokenErc20,
-    web3: Web3,
-    multicall: MultiCall
-  ): Promise<BigNumber> {
-    const { reserves0, reserves1, totalSupply } = await this.getPoolMetadata(
-      option.amm,
-      depositToken,
-      web3,
-      multicall
-    );
-    const [amount0, amount1] = tokenAmounts.map(tokenAmount =>
-      toWei(tokenAmount.amount, tokenAmount.token.decimals)
-    );
-    const { amount0: optimalAmount0, amount1: optimalAmount1 } = getOptimalAddLiquidityAmounts(
-      amount0,
-      amount1,
-      reserves0,
-      reserves1
-    );
-    const liquidity = quoteMint(optimalAmount0, optimalAmount1, reserves0, reserves1, totalSupply);
+  addLiquidity(lp: IPool, tokenAmounts: TokenAmount[], depositToken: TokenEntity): BigNumber {
+    const amountA = toWei(tokenAmounts[0].amount, tokenAmounts[0].token.decimals);
+    const tokenA = tokenAmounts[0].token.address;
+    const amountB = toWei(tokenAmounts[1].amount, tokenAmounts[1].token.decimals);
+
+    const { liquidity } = lp.addLiquidity(amountA, tokenA, amountB);
 
     return fromWei(liquidity, depositToken.decimals);
-  }
-
-  async getPoolMetadata(
-    amm: AmmEntity,
-    depositToken: TokenErc20,
-    web3: Web3,
-    multicall: MultiCall
-  ): Promise<PoolMetadata> {
-    if (isUniswapV2Amm(amm)) {
-      return this.getPoolMetadataUniswapV2(depositToken, web3, multicall);
-    } else if (isSolidlyAmm(amm)) {
-      return this.getPoolMetadataSolidly(depositToken, web3, multicall);
-    }
-  }
-
-  async getPoolMetadataUniswapV2(
-    depositToken: TokenErc20,
-    web3: Web3,
-    multicall: MultiCall
-  ): Promise<PoolMetadata> {
-    type MulticallReturnType = [
-      [
-        {
-          reserves: Record<number, string>;
-          totalSupply: string;
-        }
-      ]
-    ];
-
-    const pairContract = new web3.eth.Contract(UniswapV2PairAbi, depositToken.address);
-    const [[pair]]: MulticallReturnType = (await multicall.all([
-      [
-        {
-          reserves: pairContract.methods.getReserves(),
-          totalSupply: pairContract.methods.totalSupply(),
-        },
-      ],
-    ])) as MulticallReturnType;
-
-    const [reserves0, reserves1] = Object.values(pair.reserves)
-      .slice(0, 2)
-      .map(amount => new BigNumber(amount));
-    const totalSupply = new BigNumber(pair.totalSupply);
-
-    return {
-      reserves0,
-      reserves1,
-      totalSupply,
-    };
-  }
-
-  async getPoolMetadataSolidly(
-    depositToken: TokenErc20,
-    web3: Web3,
-    multicall: MultiCall
-  ): Promise<PoolMetadata> {
-    type MulticallReturnType = [
-      [
-        {
-          metadata: MetadataRaw;
-          totalSupply: string;
-        }
-      ]
-    ];
-
-    const pairContract = new web3.eth.Contract(SolidlyPairAbi, depositToken.address);
-    const [[pair]]: MulticallReturnType = (await multicall.all([
-      [
-        {
-          metadata: pairContract.methods.metadata(),
-          totalSupply: pairContract.methods.totalSupply(),
-        },
-      ],
-    ])) as MulticallReturnType;
-
-    const metadata = metadataToObject(pair.metadata);
-    const totalSupply = new BigNumber(pair.totalSupply);
-
-    return {
-      reserves0: metadata.reserves0,
-      reserves1: metadata.reserves1,
-      totalSupply,
-    };
   }
 
   getPriceImpact(
@@ -746,87 +622,25 @@ export class OneInchZapProvider implements ITransactProvider {
   }
 
   async getSwapAmountsIn(
-    inputToken: TokenErc20,
+    lp: IPool,
     inputAmount: BigNumber,
-    depositToken: TokenErc20,
-    option: OneInchZapOptionLP,
-    vault: VaultStandard,
-    web3: Web3
+    inputDecimals: number
   ): Promise<[BigNumber, BigNumber]> {
-    if (isUniswapV2Amm(option.amm)) {
-      return this.getSwapAmountsInUniswapV2(inputToken, inputAmount);
-    } else if (isSolidlyAmm(option.amm)) {
-      return this.getSwapAmountsInSolidly(
-        inputToken,
-        inputAmount,
-        depositToken,
-        option,
-        vault,
-        web3
-      );
-    }
-  }
-
-  async getSwapAmountsInUniswapV2(
-    inputToken: TokenErc20,
-    inputAmount: BigNumber
-  ): Promise<[BigNumber, BigNumber]> {
-    const amount0 = inputAmount
-      .dividedBy(2)
-      .decimalPlaces(inputToken.decimals, BigNumber.ROUND_FLOOR);
-    const amount1 = inputAmount
-      .minus(amount0)
-      .decimalPlaces(inputToken.decimals, BigNumber.ROUND_FLOOR);
-
-    return [amount0, amount1];
-  }
-
-  async getSwapAmountsInSolidly(
-    inputToken: TokenErc20,
-    inputAmount: BigNumber,
-    depositToken: TokenErc20,
-    option: OneInchZapOptionLP,
-    vault: VaultStandard,
-    web3: Web3
-  ): Promise<[BigNumber, BigNumber]> {
-    const isStable = isStablePair(
-      option.amm.factoryAddress,
-      option.amm.pairInitHash,
-      option.lpTokens[0].address,
-      option.lpTokens[1].address,
-      depositToken.address
+    const { amount0, amount1 } = lp.getAddLiquidityRatio(
+      toWei(inputAmount, inputDecimals),
+      inputDecimals
     );
 
-    console.log({
-      inputToken,
-      inputAmount: inputAmount.toString(10),
-      depositToken,
-      isStable,
-    });
-
-    let amount0 = inputAmount
-      .dividedBy(2)
-      .decimalPlaces(inputToken.decimals, BigNumber.ROUND_FLOOR);
-    if (isStable) {
-      const zapContract = new web3.eth.Contract(BeefyZapOneInchAbi, option.zap.zapAddress);
-      const ratioWei = await zapContract.methods
-        .quoteStableAddLiquidityRatio(vault.earnContractAddress)
-        .call();
-      const ratio = fromWeiString(ratioWei, 18);
-
-      amount0 = inputAmount
-        .multipliedBy(BIG_ONE.minus(ratio))
-        .decimalPlaces(inputToken.decimals, BigNumber.ROUND_FLOOR);
+    const min = new BigNumber(1000);
+    if (amount0.lt(min) || amount1.lt(min)) {
+      throw new Error('Amount too small');
     }
 
-    const amount1 = inputAmount
-      .minus(amount0)
-      .decimalPlaces(inputToken.decimals, BigNumber.ROUND_FLOOR);
-    return [amount0, amount1];
+    return [fromWei(amount0, inputDecimals), fromWei(amount1, inputDecimals)];
   }
 
   async getDepositStep(
-    quote: ZapQuote,
+    quote: OneInchZapQuote,
     option: ZapOption,
     state: BeefyState,
     t: TFunction<Namespace>
@@ -841,7 +655,7 @@ export class OneInchZapProvider implements ITransactProvider {
   }
 
   async getSingleDepositStep(
-    quote: ZapQuote,
+    quote: OneInchZapQuote,
     option: OneInchZapOptionSingle,
     state: BeefyState,
     t: TFunction<Namespace>
@@ -863,7 +677,7 @@ export class OneInchZapProvider implements ITransactProvider {
   }
 
   async getLPDepositStep(
-    quote: ZapQuote,
+    quote: OneInchZapQuote,
     option: OneInchZapOptionLP,
     state: BeefyState,
     t: TFunction<Namespace>
@@ -885,6 +699,7 @@ export class OneInchZapProvider implements ITransactProvider {
         swaps,
         option.zap,
         option.lpTokens,
+        quote.wantType,
         slippage
       ),
       pending: false,
@@ -1169,35 +984,25 @@ export class OneInchZapProvider implements ITransactProvider {
    */
   static async getWithdrawnAmounts(
     requestedWithdrawInDepositToken: BigNumber,
-    depositToken: TokenEntity,
-    mooToken: TokenErc20,
+    withdrawnToken: TokenEntity,
+    shareToken: TokenErc20,
     ppfs: BigNumber,
     vaultId: string,
     state: BeefyState
   ) {
-    const mooTokensToWithdraw = requestedWithdrawInDepositToken
-      .dividedBy(ppfs)
-      .decimalPlaces(mooToken.decimals);
-    const depositTokensToWithdraw = mooTokensToWithdraw
-      .multipliedBy(ppfs)
-      .decimalPlaces(depositToken.decimals);
-
     const vaultFees = selectFeesByVaultId(state, vaultId);
     const withdrawFee = vaultFees.withdraw || 0;
-    const feeInMooTokens = mooTokensToWithdraw
-      .multipliedBy(withdrawFee)
-      .decimalPlaces(mooToken.decimals);
-    const mooTokensWithdrawnAfterFee = mooTokensToWithdraw.minus(feeInMooTokens);
-    const depositTokensWithdrawnAfterFee = mooTokensWithdrawnAfterFee
-      .multipliedBy(ppfs)
-      .decimalPlaces(depositToken.decimals);
 
     return {
-      depositToken,
-      mooToken,
-      mooTokensToWithdraw,
-      depositTokensToWithdraw,
-      depositTokensWithdrawnAfterFee,
+      ...getVaultWithdrawn(
+        requestedWithdrawInDepositToken,
+        withdrawnToken,
+        shareToken,
+        ppfs,
+        withdrawFee
+      ),
+      withdrawnToken,
+      shareToken,
     };
   }
 
@@ -1205,17 +1010,17 @@ export class OneInchZapProvider implements ITransactProvider {
     option: OneInchZapOptionSingle,
     userInput: InputTokenAmount,
     state: BeefyState
-  ): Promise<TransactQuote | null> {
+  ): Promise<OneInchZapQuote | null> {
     const vault = selectStandardVaultById(state, option.vaultId);
     const {
-      depositToken,
-      mooToken,
-      mooTokensToWithdraw,
-      depositTokensToWithdraw,
-      depositTokensWithdrawnAfterFee,
+      withdrawnToken,
+      shareToken,
+      shareAmountWei,
+      withdrawnTokenAmountWei,
+      withdrawnTokenAmountAfterFeeWei,
     } = await OneInchZapProvider.getWithdrawnFromState(userInput, vault, state);
 
-    if (!isTokenEqual(depositToken, userInput.token)) {
+    if (!isTokenEqual(withdrawnToken, userInput.token)) {
       throw new Error(`Invalid input token ${userInput.token.symbol}`);
     }
 
@@ -1224,8 +1029,8 @@ export class OneInchZapProvider implements ITransactProvider {
 
     const swapTokenIn = nativeToWNative(userInput.token, wnative);
     const swapTokenInAddress = swapTokenIn.address;
-    const swapAmountIn = depositTokensWithdrawnAfterFee;
-    const swapAmountInWei = toWeiString(swapAmountIn, swapTokenIn.decimals);
+    const swapAmountIn = fromWei(withdrawnTokenAmountAfterFeeWei, swapTokenIn.decimals);
+    const swapAmountInWei = withdrawnTokenAmountAfterFeeWei.toString(10);
 
     const wantedTokenOut = selectTokenByAddress(state, option.chainId, option.tokenAddresses[0]);
     const actualTokenOut = wnativeToNative(wantedTokenOut, wnative, native); // zap always converts wnative to native
@@ -1282,17 +1087,18 @@ export class OneInchZapProvider implements ITransactProvider {
       id: createQuoteId(option.id),
       optionId: option.id,
       type: 'zap',
+      wantType: WANT_TYPE.SINGLE,
       allowances: [
         {
-          token: mooToken,
-          amount: mooTokensToWithdraw,
+          token: shareToken,
+          amount: fromWei(shareAmountWei, shareToken.decimals),
           spenderAddress: option.zap.zapAddress,
         },
       ],
       inputs: [
         {
-          token: depositToken,
-          amount: depositTokensToWithdraw,
+          token: withdrawnToken,
+          amount: fromWei(withdrawnTokenAmountWei, withdrawnToken.decimals),
           max: userInput.max,
         },
       ],
@@ -1320,17 +1126,17 @@ export class OneInchZapProvider implements ITransactProvider {
     option: OneInchZapOptionLP,
     userInput: InputTokenAmount,
     state: BeefyState
-  ): Promise<TransactQuote | null> {
+  ): Promise<OneInchZapQuote | null> {
     const vault = selectStandardVaultById(state, option.vaultId);
     const {
-      depositToken,
-      mooToken,
-      mooTokensToWithdraw,
-      depositTokensToWithdraw,
-      depositTokensWithdrawnAfterFee,
+      withdrawnToken,
+      shareToken,
+      withdrawnTokenAmountAfterFeeWei,
+      withdrawnTokenAmountWei,
+      shareAmountWei,
     } = await OneInchZapProvider.getWithdrawnFromState(userInput, vault, state);
 
-    if (!isTokenEqual(depositToken, userInput.token)) {
+    if (!isTokenEqual(withdrawnToken, userInput.token)) {
       throw new Error(`Invalid input token ${userInput.token.symbol}`);
     }
 
@@ -1340,16 +1146,15 @@ export class OneInchZapProvider implements ITransactProvider {
     const wantedTokenOut = selectTokenByAddress(state, option.chainId, option.tokenAddresses[0]);
     const actualTokenOut = wnativeToNative(wantedTokenOut, wnative, native); // zap always converts wnative to native
     const swapTokenOut = nativeToWNative(wantedTokenOut, wnative); // swaps are always between erc20
-    const mooTokensToWithdrawWei = toWeiString(mooTokensToWithdraw, mooToken.decimals);
-    const [web3, api] = await Promise.all([getWeb3Instance(chain), getOneInchApi(chain)]);
-    const zapContract = new web3.eth.Contract(BeefyZapOneInchAbi, option.zap.zapAddress);
+    const lp = getPool(withdrawnToken.address, option.amm, chain);
+    const [api] = await Promise.all([getOneInchApi(chain), lp.updateAllData()]);
     const swapTokensIn = option.lpTokens;
-    const swapAmountsIn = await OneInchZapProvider.quoteRemoveLiquidity(
-      zapContract,
-      vault.earnContractAddress,
-      mooTokensToWithdrawWei,
+    const swapAmountsIn = OneInchZapProvider.quoteRemoveLiquidity(
+      lp,
+      withdrawnTokenAmountAfterFeeWei,
       option.lpTokens
     );
+
     const swapAmountsOut = await Promise.all(
       swapAmountsIn.map((amountIn, i) =>
         this.getQuoteIfNeeded(api, amountIn, swapTokensIn[i], swapTokenOut)
@@ -1387,17 +1192,18 @@ export class OneInchZapProvider implements ITransactProvider {
       id: createQuoteId(option.id),
       optionId: option.id,
       type: 'zap',
+      wantType: lp.getWantType(),
       allowances: [
         {
-          token: mooToken,
-          amount: mooTokensToWithdraw,
+          token: shareToken,
+          amount: fromWei(shareAmountWei, shareToken.decimals),
           spenderAddress: option.zap.zapAddress,
         },
       ],
       inputs: [
         {
-          token: depositToken,
-          amount: depositTokensToWithdraw,
+          token: withdrawnToken,
+          amount: fromWei(withdrawnTokenAmountWei, withdrawnToken.decimals),
           max: userInput.max,
         },
       ],
@@ -1411,8 +1217,8 @@ export class OneInchZapProvider implements ITransactProvider {
       steps: [
         {
           type: 'split',
-          inputToken: depositToken,
-          inputAmount: depositTokensWithdrawnAfterFee,
+          inputToken: withdrawnToken,
+          inputAmount: fromWei(withdrawnTokenAmountAfterFeeWei, withdrawnToken.decimals),
           outputs: [
             {
               token: swapTokensIn[0],
@@ -1429,22 +1235,18 @@ export class OneInchZapProvider implements ITransactProvider {
     };
   }
 
-  static async quoteRemoveLiquidity(
-    zapContract: InstanceType<Web3['eth']['Contract']>,
-    vaultAddress: string,
-    mooTokensInWei: string,
+  static quoteRemoveLiquidity(
+    lp: IPool,
+    withdrawnTokenAmountAfterFeeWei: BigNumber,
     lpTokens: TokenErc20[]
-  ): Promise<[BigNumber, BigNumber]> {
-    const raw = await zapContract.methods.quoteRemoveLiquidity(vaultAddress, mooTokensInWei).call();
+  ): [BigNumber, BigNumber] {
+    const { amount0, amount1 } = lp.removeLiquidity(withdrawnTokenAmountAfterFeeWei);
 
-    return [
-      fromWeiString(raw.amt0, lpTokens[0].decimals),
-      fromWeiString(raw.amt1, lpTokens[1].decimals),
-    ];
+    return [fromWei(amount0, lpTokens[0].decimals), fromWei(amount1, lpTokens[1].decimals)];
   }
 
   async getWithdrawStep(
-    quote: ZapQuote,
+    quote: OneInchZapQuote,
     option: ZapOption,
     state: BeefyState,
     t: TFunction<Namespace>
@@ -1459,7 +1261,7 @@ export class OneInchZapProvider implements ITransactProvider {
   }
 
   async getSingleWithdrawStep(
-    quote: ZapQuote,
+    quote: OneInchZapQuote,
     option: OneInchZapOptionSingle,
     state: BeefyState,
     t: TFunction<Namespace>
@@ -1482,7 +1284,7 @@ export class OneInchZapProvider implements ITransactProvider {
   }
 
   async getLPWithdrawStep(
-    quote: ZapQuote,
+    quote: OneInchZapQuote,
     option: OneInchZapOptionLP,
     state: BeefyState,
     t: TFunction<Namespace>
@@ -1504,6 +1306,7 @@ export class OneInchZapProvider implements ITransactProvider {
         swaps,
         option.zap,
         option.lpTokens,
+        option.amm,
         slippage
       ),
       pending: false,

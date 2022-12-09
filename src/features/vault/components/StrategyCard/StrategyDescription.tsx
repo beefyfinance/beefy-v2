@@ -44,7 +44,7 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
   const options = useMemo(() => {
     const opts = {
       vaultPlatform: vaultPlatformName,
-      depositToken: depositTokenName,
+      withdrawnToken: depositTokenName,
       depositTokenProvider: depositTokenProviderName,
       chain: chainName,
       nativeToken: chainNativeToken,

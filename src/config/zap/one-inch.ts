@@ -2,7 +2,7 @@ import { OneInchZapConfig } from '../../features/data/apis/config-types';
 
 export const zaps: OneInchZapConfig[] = [
   {
-    zapAddress: '0x41e2F0104B7237CBFC0238d902Ef37a07Be068A5',
+    zapAddress: '0xd2154257Ec830610b609b13056340564f85F2f86',
     chainId: 'polygon',
     depositFromTokens: ['MATIC', 'WMATIC', 'USDC', 'USDT', 'DAI', 'ETH', 'WBTC'],
     blockedDepositToTokens: ['S*USDC', 'S*USDT', 'beQI'],

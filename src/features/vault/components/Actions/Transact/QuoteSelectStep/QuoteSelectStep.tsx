@@ -34,7 +34,7 @@ export const QuoteSelectStep = memo(function QuoteSelectStep() {
         <Scrollable className={classes.listContainer}>
           <div className={classes.list}>
             {quotes.map(quoteId => (
-              <ListItem quoteId={quoteId} onSelect={handleSelect} />
+              <ListItem key={quoteId} quoteId={quoteId} onSelect={handleSelect} />
             ))}
           </div>
         </Scrollable>

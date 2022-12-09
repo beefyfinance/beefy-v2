@@ -17,6 +17,8 @@ import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectTransactSlippage } from '../../../../../data/selectors/transact';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
+import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
+import { IconWithTooltip } from '../../../../../../components/Tooltip';
 
 const useStyles = makeStyles(styles);
 
@@ -206,7 +208,13 @@ export const ZapSlippage = memo<ZapSlippageProps>(function ({ className }) {
   return (
     <div className={clsx(classes.container, className)}>
       <button className={classes.titleToggle} onClick={handleToggle}>
-        <div className={classes.title}>{t('Transact-Slippage')}</div>
+        <div className={classes.title}>
+          {t('Transact-Slippage')}{' '}
+          <IconWithTooltip
+            triggerClass={classes.tooltipTrigger}
+            content={<BasicTooltipContent title={t('Transact-Slippage-Explainer')} />}
+          />
+        </div>
         <div className={classes.valueIcon}>
           <div className={classes.value}>{formatSmallPercent(slippage, 1)}</div>
           <Icon className={classes.icon} />

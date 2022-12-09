@@ -3,25 +3,21 @@ import {
   CommonDepositQuoteOptions,
   CommonWithdrawQuoteOptions,
 } from './base';
-import { AmmEntity } from '../../../../entities/amm';
+import { AmmEntity, AmmEntityUniswapV2 } from '../../../../entities/amm';
 import { isTokenErc20, TokenEntity, TokenErc20 } from '../../../../entities/token';
-import { ZapQuote } from '../../transact-types';
-import { UniswapV2PairAbi, UniswapV2RouterAbi, ZapAbi } from '../../../../../../config/abi';
+import { ZapQuote, ZapQuoteStepSplit } from '../../transact-types';
+import { ZapAbi } from '../../../../../../config/abi';
 import BigNumber from 'bignumber.js';
-import { calculatePriceImpact } from '../../../../utils/zap-utils';
-import {
-  computeUniswapV2PairAddress,
-  getOptimalAddLiquidityAmounts,
-  quoteMint,
-} from '../../helpers/uniswapv2';
+import { computeUniswapV2PairAddress } from '../../helpers/uniswapv2';
 import { createQuoteId } from '../../utils';
-import { fromWei, toWei } from '../../../../../../helpers/big-number';
+import { fromWei } from '../../../../../../helpers/big-number';
 import { wnativeToNative } from '../../helpers/tokens';
+import { getPool } from '../../../amm';
 
 /**
  * Deposit/withdraw to UniswapV2-type vaults via Beefy Zap Contracts
  */
-export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider {
+export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider<AmmEntityUniswapV2> {
   constructor() {
     super('uniswapv2');
   }
@@ -30,9 +26,9 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider {
     amms: AmmEntity[],
     depositTokenAddress: TokenEntity['address'],
     lpTokens: TokenEntity[]
-  ): AmmEntity | null {
+  ): AmmEntityUniswapV2 | null {
     const amm = amms.find(
-      amm =>
+      (amm): amm is AmmEntityUniswapV2 =>
         amm.type === this.type &&
         depositTokenAddress ===
           computeUniswapV2PairAddress(
@@ -49,6 +45,7 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider {
   async getDepositQuoteForType({
     web3,
     multicall,
+    chain,
     depositToken,
     swapTokenIn,
     swapTokenOut,
@@ -57,8 +54,8 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider {
     vault,
     userInput,
     amounts,
-  }: CommonDepositQuoteOptions): Promise<ZapQuote | null> {
-    const pairContract = new web3.eth.Contract(UniswapV2PairAbi, depositToken.address);
+  }: CommonDepositQuoteOptions<AmmEntityUniswapV2>): Promise<ZapQuote | null> {
+    const lp = getPool(depositToken.address, option.amm, chain);
     const zapContract = new web3.eth.Contract(ZapAbi, option.zap.zapAddress);
 
     console.debug(this.getId(), 'swapTokenIn', swapTokenIn);
@@ -67,14 +64,6 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider {
     console.debug(this.getId(), `user has ${userAmountInWei.toString(10)} of IN`);
 
     type MulticallReturnType = [
-      [
-        {
-          token0: string;
-          token1: string;
-          reserves: Record<number, string>;
-          totalSupply: string;
-        }
-      ],
       [
         {
           estimate: Record<number, string>;
@@ -89,15 +78,8 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider {
       swapTokenIn.address,
       userAmountInWei.toString(10)
     );
-    const [[pair], [zap]]: MulticallReturnType = (await multicall.all([
-      [
-        {
-          token0: pairContract.methods.token0(),
-          token1: pairContract.methods.token1(),
-          reserves: pairContract.methods.getReserves(),
-          totalSupply: pairContract.methods.totalSupply(),
-        },
-      ],
+
+    const [[zap]]: MulticallReturnType = (await lp.updateAllData([
       [
         {
           estimate: zapContract.methods.estimateSwap(
@@ -113,62 +95,18 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider {
       throw new Error(`Failed to estimate swap.`);
     }
 
-    // before swap
-    const token0 = pair.token0;
-    const totalSupply = new BigNumber(pair.totalSupply);
-    const inIsToken0 = swapTokenIn.address.toLowerCase() === token0.toLowerCase();
-    const [reserves0, reserves1] = Object.values(pair.reserves)
-      .slice(0, 2)
-      .map(amount => new BigNumber(amount));
-    const reservesIn = inIsToken0 ? reserves0 : reserves1;
-    const reservesOut = inIsToken0 ? reserves1 : reserves0;
-
-    // after swap
-    const [swapAmountIn, swapAmountOut] = Object.values(zap.estimate)
-      .slice(0, 2)
-      .map(amount => new BigNumber(amount));
-    const reservesInAfter = reservesIn.plus(swapAmountIn);
-    const reservesOutAfter = reservesOut.minus(swapAmountOut);
-    const balanceInAfter = userAmountInWei.minus(swapAmountIn);
-    const balanceOutAfter = swapAmountOut;
-    const priceImpact = calculatePriceImpact(swapAmountIn, reservesIn, option.amm.swapFee);
-    console.debug(
-      this.getId(),
-      `swap ${swapAmountIn.toString(10)} IN to ${swapAmountOut.toString(10)} OUT`
+    const swapAmountIn = new BigNumber(zap.estimate[0]);
+    const restAmountIn = userAmountInWei.minus(swapAmountIn);
+    const { amountOut: swapAmountOut, priceImpact } = lp.swap(
+      swapAmountIn,
+      swapTokenIn.address,
+      true
     );
-    console.debug(
-      this.getId(),
-      `user now has ${balanceInAfter.toString(10)} IN and ${balanceOutAfter.toString(10)} OUT`
-    );
-
-    // add liquidity
-    const { amount0: addInAmount, amount1: addOutAmount } = getOptimalAddLiquidityAmounts(
-      balanceInAfter,
-      balanceOutAfter,
-      reservesInAfter,
-      reservesOutAfter
-    );
-    console.debug(
-      this.getId(),
-      `add ${addInAmount.toString(10)} IN and ${addOutAmount.toString(10)} OUT liquidity`
-    );
-    const liquidity = quoteMint(
-      addInAmount,
-      addOutAmount,
-      reservesInAfter,
-      reservesOutAfter,
-      totalSupply
-    );
-    console.debug(this.getId(), `get ${liquidity.toString(10)} lp tokens`);
-
-    // after add liquidity
-    const dustIn = balanceInAfter.minus(addInAmount);
-    const dustOut = balanceOutAfter.minus(addOutAmount);
-
-    console.debug(
-      this.getId(),
-      `user now has ${dustIn.toString(10)} IN and ${dustOut.toString(10)} OUT dust`
-    );
+    const {
+      addAmountA: addInAmount,
+      addAmountB: addOutAmount,
+      liquidity,
+    } = lp.addLiquidity(restAmountIn, swapTokenIn.address, swapAmountOut);
 
     return {
       id: createQuoteId(option.id),
@@ -218,13 +156,6 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider {
           token: depositToken,
           amount: fromWei(liquidity, depositToken.decimals),
         },
-        // {
-        //   type: 'dust',
-        //   token0: swapTokenIn,
-        //   amount0: fromWei(dustIn, swapTokenIn.decimals),
-        //   token1: swapTokenOut,
-        //   amount1: fromWei(dustOut, swapTokenOut.decimals),
-        // },
       ],
     };
   }
@@ -232,59 +163,32 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider {
   async getWithdrawQuoteForType({
     web3,
     multicall,
-    mooToken,
-    depositToken,
-    wantedTokenOut,
+    chain,
+    shareToken,
+    withdrawnToken,
+    actualTokenOut,
     swapTokenIn,
     swapTokenOut,
     option,
     vault,
-    userInput,
     amounts,
-    userAmountInMooToken,
+    withdrawnTokenAmountWei,
+    shareAmountWei,
+    withdrawnTokenAmountAfterFeeWei,
     native,
     wnative,
-  }: CommonWithdrawQuoteOptions): Promise<ZapQuote | null> {
-    const pairContract = new web3.eth.Contract(UniswapV2PairAbi, depositToken.address);
-
-    type MulticallReturnType = [
-      [
-        {
-          totalSupply: string;
-          decimals: string;
-          token0: string;
-          token1: string;
-          reserves: Record<number, string>;
-        }
-      ]
-    ];
-
-    const [[pair]]: MulticallReturnType = (await multicall.all([
-      [
-        {
-          totalSupply: pairContract.methods.totalSupply(),
-          decimals: pairContract.methods.decimals(),
-          token0: pairContract.methods.token0(),
-          token1: pairContract.methods.token1(),
-          reserves: pairContract.methods.getReserves(),
-        },
-      ],
-    ])) as MulticallReturnType;
-
-    if (!pair || !pair.token0) {
-      throw new Error(`Failed to estimate swap.`);
-    }
+  }: CommonWithdrawQuoteOptions<AmmEntityUniswapV2>): Promise<ZapQuote | null> {
+    const lp = getPool(withdrawnToken.address, option.amm, chain);
+    await lp.updateAllData();
 
     // withdrawing and splitting lp
-    const token0 = pair.token0;
-    const token1 = pair.token1;
-    const totalSupply = new BigNumber(pair.totalSupply);
-    const equityRatio = toWei(userInput.amount, userInput.token.decimals).dividedBy(totalSupply);
-    const [reserves0, reserves1] = Object.values(pair.reserves)
-      .slice(0, 2)
-      .map(amount => new BigNumber(amount));
-    const withdrawn0 = reserves0.multipliedBy(equityRatio).decimalPlaces(0, BigNumber.ROUND_DOWN);
-    const withdrawn1 = reserves1.multipliedBy(equityRatio).decimalPlaces(0, BigNumber.ROUND_DOWN);
+    const {
+      amount0: withdrawn0,
+      amount1: withdrawn1,
+      token0,
+      token1,
+    } = lp.removeLiquidity(withdrawnTokenAmountAfterFeeWei, true);
+
     const withdrawnToken0 = option.lpTokens.find(
       token => token.address.toLowerCase() === token0.toLowerCase()
     );
@@ -298,11 +202,27 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider {
 
     const allowances = [
       {
-        token: mooToken,
-        amount: userAmountInMooToken,
+        token: shareToken,
+        amount: fromWei(shareAmountWei, shareToken.decimals),
         spenderAddress: option.zap.zapAddress,
       },
     ];
+
+    const splitStep: ZapQuoteStepSplit = {
+      type: 'split',
+      inputToken: withdrawnToken,
+      inputAmount: fromWei(withdrawnTokenAmountWei, withdrawnToken.decimals),
+      outputs: [
+        {
+          token: withdrawnToken0,
+          amount: fromWei(withdrawn0, withdrawnToken0.decimals),
+        },
+        {
+          token: withdrawnToken1,
+          amount: fromWei(withdrawn1, withdrawnToken1.decimals),
+        },
+      ],
+    };
 
     // split only
     if (swapTokenIn === null) {
@@ -323,87 +243,17 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider {
           },
         ],
         priceImpact: 0,
-        steps: [
-          {
-            type: 'split',
-            inputToken: userInput.token,
-            inputAmount: userInput.amount,
-            outputs: [
-              {
-                token: withdrawnToken0,
-                amount: fromWei(withdrawn0, withdrawnToken0.decimals),
-              },
-              {
-                token: withdrawnToken1,
-                amount: fromWei(withdrawn1, withdrawnToken1.decimals),
-              },
-            ],
-          },
-        ],
+        steps: [splitStep],
       };
     }
 
     // swap
     const inIsToken0 = swapTokenIn.address.toLowerCase() === token0.toLowerCase();
-    const reservesIn = inIsToken0 ? reserves0 : reserves1;
-    const reservesOut = inIsToken0 ? reserves1 : reserves0;
     const withdrawnIn = inIsToken0 ? withdrawn0 : withdrawn1;
     const withdrawnOut = inIsToken0 ? withdrawn1 : withdrawn0;
-    const routerContract = new web3.eth.Contract(UniswapV2RouterAbi, option.amm.routerAddress);
     const swapAmountIn = withdrawnIn;
-
-    // getAmountsOut vs getAmountOut
-    let swapAmountOut;
-    switch (option.amm.getAmountOutMode) {
-      // getAmountOut with static fee param
-      case 'getAmountOutWithFee': {
-        swapAmountOut = new BigNumber(
-          await routerContract.methods
-            .getAmountOut(
-              swapAmountIn.toString(10),
-              reservesIn.toString(10),
-              reservesOut.toString(10),
-              option.amm.getAmountOutFee
-            )
-            .call()
-        );
-        break;
-      }
-      // getAmountsOut: takes a path
-      case 'getAmountsOut': {
-        const amountsOut = await routerContract.methods
-          .getAmountsOut(swapAmountIn.toString(10), [swapTokenIn.address, swapTokenOut.address])
-          .call();
-        swapAmountOut = new BigNumber(amountsOut[1]);
-        break;
-      }
-      // getAmountOut: no fee param needed
-      default: {
-        swapAmountOut = new BigNumber(
-          await routerContract.methods
-            .getAmountOut(
-              swapAmountIn.toString(10),
-              reservesIn.toString(10),
-              reservesOut.toString(10)
-            )
-            .call()
-        );
-        break;
-      }
-    }
-
-    // after swap
-    const balanceInAfter = withdrawnIn.minus(swapAmountIn);
+    const { amountOut: swapAmountOut, priceImpact } = lp.swap(swapAmountIn, swapTokenIn.address);
     const balanceOutAfter = withdrawnOut.plus(swapAmountOut);
-    const priceImpact = calculatePriceImpact(swapAmountIn, reservesIn, option.amm.swapFee);
-    console.debug(
-      this.getId(),
-      `swap ${swapAmountIn.toString(10)} IN to ${swapAmountOut.toString(10)} OUT`
-    );
-    console.debug(
-      this.getId(),
-      `user now has ${balanceInAfter.toString(10)} IN and ${balanceOutAfter.toString(10)} OUT`
-    );
 
     return {
       id: createQuoteId(option.id),
@@ -413,27 +263,13 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider {
       inputs: amounts,
       outputs: [
         {
-          token: wnativeToNative(wantedTokenOut, wnative, native),
+          token: actualTokenOut,
           amount: fromWei(balanceOutAfter, swapTokenOut.decimals),
         },
       ],
       priceImpact,
       steps: [
-        {
-          type: 'split',
-          inputToken: userInput.token,
-          inputAmount: userInput.amount,
-          outputs: [
-            {
-              token: withdrawnToken0,
-              amount: fromWei(withdrawn0, withdrawnToken0.decimals),
-            },
-            {
-              token: withdrawnToken1,
-              amount: fromWei(withdrawn1, withdrawnToken1.decimals),
-            },
-          ],
-        },
+        splitStep,
         {
           type: 'swap',
           fromToken: swapTokenIn,

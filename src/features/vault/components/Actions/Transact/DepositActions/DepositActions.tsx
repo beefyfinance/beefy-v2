@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { Button } from '../../../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
@@ -89,12 +89,6 @@ const ActionDeposit = memo<ActionDepositProps>(function ({ option, quote, classN
   const handleClick = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
-
-  useEffect(() => {
-    console.log('new quote', quote);
-  }, [quote]);
-
-  // TODO slippage setting (not gov vault? / only when zap)
 
   return (
     <div className={clsx(classes.actions, className)}>

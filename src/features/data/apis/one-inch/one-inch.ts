@@ -14,7 +14,7 @@ export class OneInchApi implements IOneInchApi {
 
   constructor(protected chain: ChainEntity) {
     this.api = axios.create({
-      baseURL: `https://api.1inch.io/v4.0/${chain.networkChainId}/`,
+      baseURL: `https://api.1inch.io/v5.0/${chain.networkChainId}/`,
     });
   }
 

@@ -11,16 +11,18 @@ export type TokenAmountProps = {
   amount: BigNumber;
   decimals: number;
   price: BigNumber;
+  minShortPlaces?: number;
   className?: string;
 };
 export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({
   amount,
   decimals,
   price,
+  minShortPlaces = 2,
   className,
 }) {
   const fullAmount = formatFullBigNumber(amount, decimals);
-  const shortAmount = formatSignificantBigNumber(amount, decimals, price);
+  const shortAmount = formatSignificantBigNumber(amount, decimals, price, 0, minShortPlaces);
   const needTooltip = shortAmount.length < fullAmount.length;
 
   return needTooltip ? (
@@ -35,17 +37,25 @@ export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({
 export type TokenAmountFromEntityProps = {
   amount: BigNumber;
   token: TokenEntity;
+  minShortPlaces?: number;
   className?: string;
 };
 export const TokenAmountFromEntity = memo<TokenAmountFromEntityProps>(function ({
   amount,
   token,
+  minShortPlaces = 2,
   className,
 }) {
   const price = useAppSelector(state =>
     selectTokenPriceByAddress(state, token.chainId, token.address)
   );
   return (
-    <TokenAmount amount={amount} decimals={token.decimals} price={price} className={className} />
+    <TokenAmount
+      amount={amount}
+      decimals={token.decimals}
+      price={price}
+      className={className}
+      minShortPlaces={minShortPlaces}
+    />
   );
 });

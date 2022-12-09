@@ -41,7 +41,16 @@ const StepContentSwap = memo<StepContentProps<ZapQuoteStepSwap>>(function ({ ste
         toToken: step.toToken.symbol,
       }}
       components={{
-        fromAmount: <TokenAmountFromEntity amount={step.fromAmount} token={step.fromToken} />,
+        fromAmount: (
+          <TokenAmountFromEntity
+            amount={step.fromAmount}
+            token={step.fromToken}
+            minShortPlaces={4}
+          />
+        ),
+        toAmount: (
+          <TokenAmountFromEntity amount={step.toAmount} token={step.toToken} minShortPlaces={4} />
+        ),
       }}
     />
   );
@@ -53,7 +62,11 @@ const StepContentBuild = memo<StepContentProps<ZapQuoteStepBuild>>(function ({ s
   const tokenAmounts = useMemo(() => {
     return step.inputs.map(tokenAmount => (
       <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
-        <TokenAmountFromEntity amount={tokenAmount.amount} token={tokenAmount.token} />{' '}
+        <TokenAmountFromEntity
+          amount={tokenAmount.amount}
+          token={tokenAmount.token}
+          minShortPlaces={4}
+        />{' '}
         {tokenAmount.token.symbol}
       </Fragment>
     ));
@@ -85,7 +98,9 @@ const StepContentDeposit = memo<StepContentProps<ZapQuoteStepDeposit>>(function 
         token: step.token.symbol,
       }}
       components={{
-        amount: <TokenAmountFromEntity amount={step.amount} token={step.token} />,
+        amount: (
+          <TokenAmountFromEntity amount={step.amount} token={step.token} minShortPlaces={4} />
+        ),
       }}
     />
   );
@@ -97,7 +112,11 @@ const StepContentSplit = memo<StepContentProps<ZapQuoteStepSplit>>(function ({ s
   const tokenAmounts = useMemo(() => {
     return step.outputs.map(tokenAmount => (
       <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
-        <TokenAmountFromEntity amount={tokenAmount.amount} token={tokenAmount.token} />{' '}
+        <TokenAmountFromEntity
+          amount={tokenAmount.amount}
+          token={tokenAmount.token}
+          minShortPlaces={4}
+        />{' '}
         {tokenAmount.token.symbol}
       </Fragment>
     ));

@@ -11,9 +11,9 @@ import {
 import { VaultProvider } from './providers/vault';
 import { Step } from '../../reducers/wallet/stepper';
 import { Namespace, TFunction } from 'react-i18next';
-import { BeefySolidlyZapProvider } from './providers/beefy/solidly';
 import { GovVaultProvider } from './providers/gov-vault';
 import { OneInchZapProvider } from './providers/one-inch/one-inch';
+import { BeefySolidlyZapProvider } from './providers/beefy/solidly';
 
 export class TransactApi implements ITransactApi {
   private providers: ITransactProvider[] = [];
