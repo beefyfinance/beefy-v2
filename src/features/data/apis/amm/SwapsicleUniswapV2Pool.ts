@@ -9,6 +9,7 @@ import { createContract } from '../../../../helpers/web3';
 import { ZERO_ADDRESS } from '../../../../helpers/addresses';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import { AbiItem } from 'web3-utils';
+import BigNumber from 'bignumber.js';
 
 export type FactoryDataResponse = BaseFactoryDataResponse & {
   feeToStake: string;
@@ -82,8 +83,11 @@ export class SwapsicleUniswapV2Pool extends UniswapV2Pool {
     }
 
     // Normal mint fee calculation
-    const rootK = reserves0.multipliedBy(reserves1).squareRoot().decimalPlaces(0);
-    const rootKLast = kLast.squareRoot().decimalPlaces(0);
+    const rootK = reserves0
+      .multipliedBy(reserves1)
+      .squareRoot()
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR);
+    const rootKLast = kLast.squareRoot().decimalPlaces(0, BigNumber.ROUND_FLOOR);
     if (rootK <= rootKLast) {
       return {
         feeOn,
@@ -95,7 +99,7 @@ export class SwapsicleUniswapV2Pool extends UniswapV2Pool {
     const numerator = totalSupply.multipliedBy(rootK.minus(rootKLast)).multipliedBy(feeNumerator);
     let denominator = rootK
       .multipliedBy(feeDenominator)
-      .decimalPlaces(0) // Swapsicle has rooK*17/3
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR) // Swapsicle has rooK*17/3
       .plus(rootKLast.multipliedBy(feeNumerator));
     const mintFeeLiquidity = numerator.dividedToIntegerBy(denominator);
 

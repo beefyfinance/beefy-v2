@@ -34,11 +34,11 @@ export function truncateBigNumber(value: BigNumber, places: number): BigNumber {
     return value;
   }
 
-  return value.decimalPlaces(places);
+  return value.decimalPlaces(places, BigNumber.ROUND_FLOOR);
 }
 
 export function toWei(value: BigNumber, decimals: number): BigNumber {
-  return value.shiftedBy(decimals).decimalPlaces(0);
+  return value.shiftedBy(decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
 }
 
 export function toWeiString(value: BigNumber, decimals: number): string {

@@ -123,7 +123,9 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     const isNativeToken = depositToken.id === native.id;
     const contractAddr = mooToken.address;
     const contract = new web3.eth.Contract(vaultAbi as any, contractAddr);
-    const rawAmount = amount.shiftedBy(depositToken.decimals).decimalPlaces(0);
+    const rawAmount = amount
+      .shiftedBy(depositToken.decimals)
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const gasPrices = await getGasPriceOptions(web3);
 
     const transaction = (() => {
@@ -860,7 +862,9 @@ const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => 
     const contract = new web3.eth.Contract(vaultAbi as any, contractAddr);
 
     const mooAmount = oracleAmountToMooAmount(mooToken, depositToken, ppfs, oracleAmount);
-    const rawAmount = mooAmount.shiftedBy(mooToken.decimals).decimalPlaces(0);
+    const rawAmount = mooAmount
+      .shiftedBy(mooToken.decimals)
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const gasPrices = await getGasPriceOptions(web3);
 
     const transaction = (() => {
@@ -911,7 +915,7 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
 
     const contractAddr = vault.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
-    const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0);
+    const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const gasPrices = await getGasPriceOptions(web3);
     const transaction = contract.methods
       .stake(rawAmount.toString(10))
@@ -949,7 +953,9 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     // amount is in oracle token, we need it in moo token
     const mooAmount = oracleAmountToMooAmount(mooToken, depositToken, ppfs, amount);
 
-    const rawAmount = mooAmount.shiftedBy(mooToken.decimals).decimalPlaces(0);
+    const rawAmount = mooAmount
+      .shiftedBy(mooToken.decimals)
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR);
 
     const contractAddr = vault.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
@@ -1140,7 +1146,7 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
 
     const contractAddr = boost.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
-    const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0);
+    const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const gasPrices = await getGasPriceOptions(web3);
     const transaction = contract.methods
       .stake(rawAmount.toString(10))
@@ -1178,7 +1184,7 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
 
     const contractAddr = boost.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
-    const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0);
+    const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const gasPrices = await getGasPriceOptions(web3);
     const transaction = contract.methods
       .withdraw(rawAmount.toString(10))

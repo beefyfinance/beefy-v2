@@ -194,7 +194,7 @@ export class SolidlyPool implements IPool {
     }
 
     return {
-      liquidity: liquidity.decimalPlaces(0),
+      liquidity: liquidity.decimalPlaces(0, BigNumber.ROUND_FLOOR),
       addAmountA,
       addAmountB,
       returnedA,
@@ -487,7 +487,10 @@ export class SolidlyPool implements IPool {
       reservesOutNormalized
     );
 
-    return amountOutNormalized.shiftedBy(decimalsOut).shiftedBy(-18).decimalPlaces(0);
+    return amountOutNormalized
+      .shiftedBy(decimalsOut)
+      .shiftedBy(-18)
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR);
   }
 
   protected quoteAmountOutNormalized(
@@ -554,18 +557,18 @@ export class SolidlyPool implements IPool {
 
   protected getStableKNormalized(x: BigNumber, y: BigNumber): BigNumber {
     // x^3*y + y^3*x >= k
-    const a = x.multipliedBy(y).shiftedBy(-18).decimalPlaces(0); // (xy)
+    const a = x.multipliedBy(y).shiftedBy(-18).decimalPlaces(0, BigNumber.ROUND_FLOOR); // (xy)
     const b = x
       .multipliedBy(x)
       .shiftedBy(-18)
-      .decimalPlaces(0)
-      .plus(y.multipliedBy(y).shiftedBy(-18).decimalPlaces(0)); // (x^2 + y^2)
-    return a.multipliedBy(b).shiftedBy(-18).decimalPlaces(0); // (xy)(x^2 + y^2)
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR)
+      .plus(y.multipliedBy(y).shiftedBy(-18).decimalPlaces(0, BigNumber.ROUND_FLOOR)); // (x^2 + y^2)
+    return a.multipliedBy(b).shiftedBy(-18).decimalPlaces(0, BigNumber.ROUND_FLOOR); // (xy)(x^2 + y^2)
   }
 
   protected getVolatileK(reserves0: BigNumber, reserves1: BigNumber) {
     // xy >= k
-    return reserves0.multipliedBy(reserves1).decimalPlaces(0);
+    return reserves0.multipliedBy(reserves1).decimalPlaces(0, BigNumber.ROUND_FLOOR);
   }
 
   /**
@@ -610,24 +613,24 @@ export class SolidlyPool implements IPool {
         y
           .multipliedBy(y)
           .shiftedBy(-18)
-          .decimalPlaces(0)
+          .decimalPlaces(0, BigNumber.ROUND_FLOOR)
           .multipliedBy(y)
           .shiftedBy(-18)
-          .decimalPlaces(0)
+          .decimalPlaces(0, BigNumber.ROUND_FLOOR)
       )
       .shiftedBy(-18)
-      .decimalPlaces(0);
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR);
     // (x0*x0/1e18*x0/1e18)*y/1e18
     const yp = x0
       .multipliedBy(x0)
       .shiftedBy(-18)
-      .decimalPlaces(0)
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR)
       .multipliedBy(x0)
       .shiftedBy(-18)
-      .decimalPlaces(0)
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR)
       .multipliedBy(y)
       .shiftedBy(-18)
-      .decimalPlaces(0);
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR);
 
     return xp.plus(yp);
   }
@@ -639,17 +642,17 @@ export class SolidlyPool implements IPool {
     // 3*x0*(y*y/1e18)/1e18
     const xp = new BigNumber(3)
       .multipliedBy(x0)
-      .multipliedBy(y.multipliedBy(y).shiftedBy(-18).decimalPlaces(0))
+      .multipliedBy(y.multipliedBy(y).shiftedBy(-18).decimalPlaces(0, BigNumber.ROUND_FLOOR))
       .shiftedBy(-18)
-      .decimalPlaces(0);
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR);
     // (x0*x0/1e18*x0/1e18)
     const yp = x0
       .multipliedBy(x0)
       .shiftedBy(-18)
-      .decimalPlaces(0)
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR)
       .multipliedBy(x0)
       .shiftedBy(-18)
-      .decimalPlaces(0);
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR);
     return xp.plus(yp);
   }
 

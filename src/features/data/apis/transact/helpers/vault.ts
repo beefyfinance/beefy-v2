@@ -19,11 +19,11 @@ export function getVaultWithdrawn(
 
   const withdrawnTokenAmountWei = shareAmountWei
     .multipliedBy(pricePerFullShareDecimal)
-    .decimalPlaces(withdrawnToken.decimals, BigNumber.ROUND_FLOOR);
+    .decimalPlaces(0, BigNumber.ROUND_FLOOR);
 
   const withdrawnTokenFeeWei = withdrawnTokenAmountWei
     .multipliedBy(withdrawFeeDecimal)
-    .decimalPlaces(withdrawnToken.decimals, BigNumber.ROUND_FLOOR);
+    .decimalPlaces(0, BigNumber.ROUND_FLOOR);
 
   const withdrawnTokenAmountAfterFeeWei = withdrawnTokenAmountWei.minus(withdrawnTokenFeeWei);
 

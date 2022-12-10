@@ -111,7 +111,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     const input = val.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
 
     let max = false;
-    let value = new BigNumber(input).decimalPlaces(mintedToken.decimals, BigNumber.ROUND_DOWN);
+    let value = new BigNumber(input).decimalPlaces(mintedToken.decimals, BigNumber.ROUND_FLOOR);
 
     if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
       value = BIG_ZERO;

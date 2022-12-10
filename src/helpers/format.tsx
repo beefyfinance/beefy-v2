@@ -126,7 +126,7 @@ export const formatUsd = (tvl, oraclePrice = undefined) => {
 };
 
 export function getBigNumOrder(num: BigNumber): number {
-  const nEstr = num.abs().decimalPlaces(0).toExponential();
+  const nEstr = num.abs().decimalPlaces(0, BigNumber.ROUND_FLOOR).toExponential();
   const parts = nEstr.split('e');
   const exp = parseInt(parts[1] || '0');
   return Math.floor(exp / 3);
@@ -137,14 +137,14 @@ export function formatBigUsd(value: BigNumber) {
 }
 
 export function formatBigNumber(value: BigNumber) {
-  value = value.decimalPlaces(2);
+  value = value.decimalPlaces(2, BigNumber.ROUND_FLOOR);
 
   if (value.isZero()) {
     return '0';
   }
   const order = getBigNumOrder(value);
   if (value.abs().gte(100)) {
-    value = value.decimalPlaces(0);
+    value = value.decimalPlaces(0, BigNumber.ROUND_FLOOR);
   }
   if (order < 2 && value.abs().gte(100)) {
     return value.toNumber().toLocaleString('en-US', {
@@ -241,7 +241,9 @@ export const stripTrailingZeros = str => {
 
 export function byDecimals(number, tokenDecimals = 18) {
   const decimals = new BigNumber(10).exponentiatedBy(tokenDecimals);
-  return new BigNumber(number).dividedBy(decimals).decimalPlaces(tokenDecimals);
+  return new BigNumber(number)
+    .dividedBy(decimals)
+    .decimalPlaces(tokenDecimals, BigNumber.ROUND_FLOOR);
 }
 
 export const formatCountdown = deadline => {
@@ -266,7 +268,7 @@ export const formatCountdown = deadline => {
 export function convertAmountToRawNumber(value, decimals = 18) {
   return new BigNumber(value)
     .shiftedBy(decimals)
-    .decimalPlaces(0, BigNumber.ROUND_DOWN)
+    .decimalPlaces(0, BigNumber.ROUND_FLOOR)
     .toString(10);
 }
 

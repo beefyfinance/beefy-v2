@@ -218,7 +218,7 @@ export class UniswapV2Pool implements IPool {
     }
 
     return {
-      liquidity: liquidity.decimalPlaces(0),
+      liquidity: liquidity.decimalPlaces(0, BigNumber.ROUND_FLOOR),
       addAmountA,
       addAmountB,
       returnedA,
@@ -290,8 +290,11 @@ export class UniswapV2Pool implements IPool {
     feeNumerator: BigNumber,
     feeDenominator: BigNumber
   ): BigNumber {
-    const rootK = reserves0.multipliedBy(reserves1).squareRoot().decimalPlaces(0);
-    const rootKLast = kLast.squareRoot().decimalPlaces(0);
+    const rootK = reserves0
+      .multipliedBy(reserves1)
+      .squareRoot()
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR);
+    const rootKLast = kLast.squareRoot().decimalPlaces(0, BigNumber.ROUND_FLOOR);
 
     if (rootK <= rootKLast) {
       return BIG_ZERO;
@@ -300,7 +303,7 @@ export class UniswapV2Pool implements IPool {
     const numerator = totalSupply.multipliedBy(rootK.minus(rootKLast)).multipliedBy(feeNumerator);
     const denominator = rootK
       .multipliedBy(feeDenominator)
-      .decimalPlaces(0) // ApeSwap has rootK/3, Swapsicle has rooK*17/3
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR) // ApeSwap has rootK/3, Swapsicle has rooK*17/3
       .plus(rootKLast.multipliedBy(feeNumerator));
 
     return numerator.dividedToIntegerBy(denominator);

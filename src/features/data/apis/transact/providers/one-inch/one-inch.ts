@@ -964,7 +964,7 @@ export class OneInchZapProvider implements ITransactProvider {
     const userBalanceInMooTokens = fromWeiString(vaultData.userBalance, mooToken.decimals);
     const userBalanceInDepositToken = userBalanceInMooTokens
       .multipliedBy(ppfs)
-      .decimalPlaces(depositToken.decimals);
+      .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR);
     const requestedWithdrawInDepositToken = userInput.max
       ? userBalanceInDepositToken
       : userInput.amount;
@@ -1128,13 +1128,8 @@ export class OneInchZapProvider implements ITransactProvider {
     state: BeefyState
   ): Promise<OneInchZapQuote | null> {
     const vault = selectStandardVaultById(state, option.vaultId);
-    const {
-      withdrawnToken,
-      shareToken,
-      withdrawnTokenAmountAfterFeeWei,
-      withdrawnTokenAmountWei,
-      shareAmountWei,
-    } = await OneInchZapProvider.getWithdrawnFromState(userInput, vault, state);
+    const { withdrawnToken, shareToken, withdrawnTokenAmountAfterFeeWei, shareAmountWei } =
+      await OneInchZapProvider.getWithdrawnFromState(userInput, vault, state);
 
     if (!isTokenEqual(withdrawnToken, userInput.token)) {
       throw new Error(`Invalid input token ${userInput.token.symbol}`);
@@ -1200,13 +1195,7 @@ export class OneInchZapProvider implements ITransactProvider {
           spenderAddress: option.zap.zapAddress,
         },
       ],
-      inputs: [
-        {
-          token: withdrawnToken,
-          amount: fromWei(withdrawnTokenAmountWei, withdrawnToken.decimals),
-          max: userInput.max,
-        },
-      ],
+      inputs: [userInput],
       outputs: [
         {
           token: actualTokenOut,

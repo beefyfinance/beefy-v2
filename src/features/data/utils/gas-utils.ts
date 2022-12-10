@@ -64,7 +64,7 @@ export async function getGasPriceOptions(web3: Web3) {
 
     const baseFeePerGas = new BigNumber(latestBlock.baseFeePerGas)
       .multipliedBy(baseFeeSafetyMultiplier)
-      .decimalPlaces(0);
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR);
 
     return {
       baseFeePerGas: baseFeePerGas.toString(10),
