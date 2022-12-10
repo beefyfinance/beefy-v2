@@ -9,6 +9,9 @@ import { selectChainById } from '../selectors/chains';
 import { selectTokenByAddress } from '../selectors/tokens';
 import { selectAllGovVaultsByChainId } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
+import { TokenEntity } from '../entities/token';
+import { isGovVault, VaultEntity } from '../entities/vault';
+import { uniqueTokens } from '../../../helpers/tokens';
 
 interface ActionParams {
   chainId: ChainEntity['id'];
@@ -50,3 +53,54 @@ export const fetchAllBalanceAction = createAsyncThunk<
     state: getState(),
   };
 });
+
+export type FetchBalanceParams = {
+  chainId: ChainEntity['id'];
+  tokens?: TokenEntity[];
+  vaults?: VaultEntity[];
+};
+
+export const fetchBalanceAction = createAsyncThunk<
+  FetchAllBalanceFulfilledPayload,
+  FetchBalanceParams,
+  { state: BeefyState }
+>(
+  'balance/fetchBalanceAction',
+  async ({ chainId, tokens: requestedTokens = [], vaults = [] }, { getState }) => {
+    const state = getState();
+
+    const walletAddress = selectWalletAddress(state);
+    const chain = selectChainById(state, chainId);
+    const api = await getBalanceApi(chain);
+
+    const tokens = requestedTokens;
+    const govVaults = [];
+    const boosts = [];
+
+    if (vaults.length) {
+      for (const vault of vaults) {
+        if (isGovVault(vault)) {
+          govVaults.push(vault);
+        } else {
+          tokens.push(selectTokenByAddress(state, chain.id, vault.depositTokenAddress));
+          tokens.push(selectTokenByAddress(state, chain.id, vault.earnedTokenAddress));
+        }
+      }
+    }
+
+    const data = await api.fetchAllBalances(
+      getState(),
+      uniqueTokens(tokens),
+      govVaults,
+      boosts,
+      walletAddress
+    );
+
+    return {
+      chainId,
+      walletAddress,
+      data,
+      state: getState(),
+    };
+  }
+);

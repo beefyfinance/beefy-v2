@@ -3,7 +3,11 @@ import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
 import { uniq } from 'lodash';
 import { BeefyState } from '../../../../redux-types';
-import { fetchAllBalanceAction } from '../../actions/balance';
+import {
+  fetchAllBalanceAction,
+  FetchAllBalanceFulfilledPayload,
+  fetchBalanceAction,
+} from '../../actions/balance';
 import { initiateBoostForm } from '../../actions/boosts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
 import { BoostBalance, GovVaultPoolBalance, TokenBalance } from '../../apis/balance/balance-types';
@@ -93,14 +97,11 @@ export const balanceSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchAllBalanceAction.fulfilled, (sliceState, action) => {
-      const state = action.payload.state;
-      const chainId = action.payload.chainId;
-      const walletAddress = action.payload.walletAddress.toLowerCase();
-      const walletState = getWalletState(sliceState, walletAddress);
-      const balance = action.payload.data;
-      addTokenBalanceToState(state, walletState, chainId, balance.tokens);
-      addBoostBalanceToState(state, walletState, balance.boosts);
-      addGovVaultBalanceToState(walletState, balance.govVaults);
+      addBalancesToState(sliceState, action.payload);
+    });
+
+    builder.addCase(fetchBalanceAction.fulfilled, (sliceState, action) => {
+      addBalancesToState(sliceState, action.payload);
     });
 
     builder.addCase(initiateBoostForm.fulfilled, (sliceState, action) => {
@@ -177,6 +178,21 @@ function getWalletState(sliceState: WritableDraft<BalanceState>, walletAddress: 
   }
 
   return sliceState.byAddress[walletAddress];
+}
+
+function addBalancesToState(
+  sliceState: WritableDraft<BalanceState>,
+  payload: FetchAllBalanceFulfilledPayload
+) {
+  const state = payload.state;
+  const chainId = payload.chainId;
+  const walletAddress = payload.walletAddress.toLowerCase();
+  const walletState = getWalletState(sliceState, walletAddress);
+  const balance = payload.data;
+
+  addTokenBalanceToState(state, walletState, chainId, balance.tokens);
+  addBoostBalanceToState(state, walletState, balance.boosts);
+  addGovVaultBalanceToState(walletState, balance.govVaults);
 }
 
 function addTokenBalanceToState(

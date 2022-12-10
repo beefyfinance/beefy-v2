@@ -32,7 +32,7 @@ import {
 } from '../apis/transact/transact-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { ChainEntity } from '../entities/chain';
-import { isTokenEqual, isTokenErc20 } from '../entities/token';
+import { isTokenEqual, isTokenErc20, TokenEntity } from '../entities/token';
 import { BigNumber } from 'bignumber.js';
 import { Namespace, TFunction } from 'react-i18next';
 import { Step, stepperActions } from '../reducers/wallet/stepper';
@@ -47,6 +47,8 @@ import { first, groupBy, uniqBy } from 'lodash';
 import { fetchAllowanceAction } from './allowance';
 import { fetchAllAmmsAction } from './amm';
 import { fetchFees } from './fees';
+import { uniqueTokens } from '../../../helpers/tokens';
+import { fetchBalanceAction } from './balance';
 
 export type TransactInitArgs = {
   vaultId: VaultEntity['id'];
@@ -115,7 +117,7 @@ export const transactFetchOptions = createAsyncThunk<
   { state: BeefyState }
 >(
   'transact/fetchOptions',
-  async ({ vaultId, mode }, { getState }) => {
+  async ({ vaultId, mode }, { getState, dispatch }) => {
     const api = await getTransactApi();
     const state = getState();
     const method = optionsForByMode[mode];
@@ -125,7 +127,21 @@ export const transactFetchOptions = createAsyncThunk<
       throw new Error(`No transact options available.`);
     }
 
-    // TODO: balances
+    // update balances
+    const vault = selectVaultById(state, vaultId);
+    const tokens = getUniqueTokensForOptions(options, state);
+    const tokensByChain = groupBy(tokens, token => token.chainId);
+    await Promise.all(
+      Object.values(tokensByChain).map(tokens =>
+        dispatch(
+          fetchBalanceAction({
+            chainId: tokens[0].chainId,
+            tokens: tokens,
+            vaults: tokens[0].chainId === vault.chainId ? [vault] : [],
+          })
+        )
+      )
+    );
 
     return {
       options: options,
@@ -142,6 +158,16 @@ export const transactFetchOptions = createAsyncThunk<
     },
   }
 );
+
+function getUniqueTokensForOptions(options: TransactOption[], state: BeefyState): TokenEntity[] {
+  const tokens = options.flatMap(option => {
+    return option.tokenAddresses.map(tokenAddress => {
+      return selectTokenByAddress(state, option.chainId, tokenAddress);
+    });
+  });
+
+  return uniqueTokens(tokens);
+}
 
 export type TransactFetchDepositQuotesPayload = {
   tokensId: string;
