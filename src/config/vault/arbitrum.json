@@ -406,6 +406,26 @@
     "createdAt": 1670249514
   },
   {
+    "id": "swapfish-fish",
+    "name": "FISH",
+    "token": "FISH",
+    "tokenAddress": "0xb348B87b23D5977E2948E6f36ca07E1EC94d7328",
+    "tokenDecimals": 18,
+    "earnedToken": "mooFishFISH",
+    "earnedTokenAddress": "0xd319b477131c789857EA3a2CC5F04C9ddAa1F207",
+    "earnContractAddress": "0xd319b477131c789857EA3a2CC5F04C9ddAa1F207",
+    "oracle": "tokens",
+    "oracleId": "SWAPFISH",
+    "status": "active",
+    "platformId": "swapfish",
+    "assets": ["FISH"],
+    "strategyTypeId": "single",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&outputCurrency=0xb348B87b23D5977E2948E6f36ca07E1EC94d7328",
+    "network": "arbitrum",
+    "createdAt": 1670746949
+  },
+  {
     "id": "swapfish-fish-usdc",
     "name": "FISH-USDC LP",
     "token": "FISH-USDC LP",
@@ -421,14 +441,7 @@
     "platformId": "swapfish",
     "assets": ["FISH", "USDC"],
     "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://swapfish.fi/add/0xb348B87b23D5977E2948E6f36ca07E1EC94d7328/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xb348B87b23D5977E2948E6f36ca07E1EC94d7328&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
