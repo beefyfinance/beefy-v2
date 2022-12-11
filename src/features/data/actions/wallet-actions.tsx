@@ -30,7 +30,6 @@ import {
 } from '../selectors/balance';
 import {
   selectChainNativeToken,
-  selectChainWrappedNativeToken,
   selectErc20TokenByAddress,
   selectIsTokenLoaded,
   selectTokenByAddress,
@@ -39,7 +38,6 @@ import {
 import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 import { oracleAmountToMooAmount } from '../utils/ppfs';
-import { getZapAddress } from '../utils/zap-utils';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
 import { getGasPriceOptions } from '../utils/gas-utils';
 import { AbiItem } from 'web3-utils';
@@ -51,7 +49,6 @@ import { selectChainById } from '../selectors/chains';
 import {
   BIG_ZERO,
   bigNumberToStringDeep,
-  fromWei,
   fromWeiString,
   toWei,
   toWeiString,
@@ -60,12 +57,13 @@ import { updateSteps } from './stepper';
 import { StepContent, stepperActions } from '../reducers/wallet/stepper';
 import { InputTokenAmount, TokenAmount, ZapQuoteStepSwap } from '../apis/transact/transact-types';
 import { ZapEntityBeefy, ZapEntityOneInch } from '../entities/zap';
-import { BeefyZapOneInchAbi } from '../../../config/abi';
+import { BeefyZapOneInchAbi, ZapAbi } from '../../../config/abi';
 import { OneInchZapProvider } from '../apis/transact/providers/one-inch/one-inch';
 import { MultiCall } from 'eth-multicall';
 import { getPool } from '../apis/amm';
 import { AmmEntity } from '../entities/amm';
 import { WANT_TYPE } from '../apis/amm/types';
+import { getVaultWithdrawnFromContract } from '../apis/transact/helpers/vault';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -166,6 +164,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
 const beefIn = (
   vault: VaultEntity,
   fullAmount: BigNumber,
+  isNativeInput: boolean,
   swap: ZapQuoteStepSwap,
   zap: ZapEntityBeefy,
   slippageTolerance: number = 0.01
@@ -190,7 +189,7 @@ const beefIn = (
     const gasPrices = await getGasPriceOptions(web3);
 
     const transaction = (() => {
-      if (isTokenNative(swap.fromToken)) {
+      if (isNativeInput) {
         return contract.methods.beefInETH(vaultAddress, rawSwapAmountOutMin.toString(10)).send({
           from: address,
           value: rawAmount.toString(10),
@@ -227,7 +226,7 @@ const beefIn = (
   });
 };
 
-const beefOut = (vault: VaultEntity, depositTokenAmount: BigNumber, zap: ZapEntityBeefy) => {
+const beefOut = (vault: VaultStandard, input: InputTokenAmount, zap: ZapEntityBeefy) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
@@ -236,25 +235,25 @@ const beefOut = (vault: VaultEntity, depositTokenAmount: BigNumber, zap: ZapEnti
       return;
     }
 
-    if (!isStandardVault(vault)) {
-      return;
-    }
-
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
+    const chain = selectChainById(state, vault.chainId);
+    const multicall = new MultiCall(web3, chain.multicallAddress);
+    const { sharesToWithdrawWei } = await getVaultWithdrawnFromContract(
+      input,
+      vault,
+      state,
+      address,
+      web3,
+      multicall
+    );
 
-    const contract = new web3.eth.Contract(zapAbi as any, zap.zapAddress);
-
-    const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
-    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    const ppfs = selectVaultPricePerFullShare(state, vault.id);
-
-    const mooAmount = oracleAmountToMooAmount(mooToken, depositToken, ppfs, depositTokenAmount);
-    const rawAmount = toWei(mooAmount, mooToken.decimals);
+    const contract = new web3.eth.Contract(ZapAbi, zap.zapAddress);
     const gasPrices = await getGasPriceOptions(web3);
+    const sharesToWithdrawWeiString = sharesToWithdrawWei.toString(10);
 
     const transaction = (() => {
-      return contract.methods.beefOut(vault.earnContractAddress, rawAmount.toString(10)).send({
+      return contract.methods.beefOut(vault.earnContractAddress, sharesToWithdrawWeiString).send({
         from: address,
         ...gasPrices,
       });
@@ -265,9 +264,8 @@ const beefOut = (vault: VaultEntity, depositTokenAmount: BigNumber, zap: ZapEnti
       transaction,
       {
         spender: zap.zapAddress,
-        // TODO: this should contain 2 assets and 2 amounts
-        amount: depositTokenAmount,
-        token: depositToken,
+        amount: input.amount,
+        token: input.token,
       },
       {
         chainId: vault.chainId,
@@ -530,24 +528,21 @@ const oneInchBeefOutSingle = (
     const chain = selectChainById(state, vault.chainId);
     const web3 = await walletApi.getConnectedWeb3Instance();
     const multicall = new MultiCall(web3, chain.multicallAddress);
-    const {
-      withdrawnToken,
-      withdrawnTokenAmountWei,
-      withdrawnTokenAmountAfterFeeWei,
-      shareAmountWei,
-    } = await OneInchZapProvider.getWithdrawnFromContract(
+
+    const { withdrawnAmountAfterFeeWei, sharesToWithdrawWei } = await getVaultWithdrawnFromContract(
       input,
-      address,
       vault,
       state,
+      address,
       web3,
       multicall
     );
 
+    const mooTokensToWithdrawWei = sharesToWithdrawWei.toString(10);
     const oneInchApi = await getOneInchApi(chain);
     const swapTokenInAddress = swap.fromToken.address;
     const swapTokenOutAddress = swap.toToken.address;
-    const swapAmountInWei = withdrawnTokenAmountAfterFeeWei.toString(10);
+    const swapAmountInWei = withdrawnAmountAfterFeeWei.toString(10);
     const swapData = await oneInchApi.getSwap({
       disableEstimate: true, // otherwise will fail due to no allowance
       fromAddress: zap.zapAddress,
@@ -558,15 +553,6 @@ const oneInchBeefOutSingle = (
     });
     const swapAmountOut = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
     const vaultAddress = vault.earnedTokenAddress;
-    const mooTokensToWithdrawWei = shareAmountWei;
-
-    console.debug({
-      depositTokensUiWantedToWithdraw: input.amount.toString(10),
-      shareAmountWei: shareAmountWei.toString(10),
-      withdrawnTokenAmountWei: withdrawnTokenAmountWei.toString(10),
-      withdrawTokenAmountAfterFeeWei: withdrawnTokenAmountAfterFeeWei.toString(10),
-      swapAmountOut: swapAmountOut.toString(10),
-    });
 
     // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
     if (swapAmountOut.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
@@ -599,8 +585,8 @@ const oneInchBeefOutSingle = (
       transaction,
       {
         spender: zap.zapAddress,
-        amount: fromWei(withdrawnTokenAmountWei, withdrawnToken.decimals),
-        token: withdrawnToken,
+        amount: input.amount,
+        token: input.token,
       },
       {
         chainId: vault.chainId,
@@ -640,36 +626,20 @@ const oneInchBeefOutLP = (
     const lp = getPool(depositToken.address, amm, chain);
     await lp.updateAllData();
 
-    // use up to date ppfs to calc shares + equiv deposit token
-    const {
-      shareAmountWei,
-      withdrawnToken,
-      withdrawnTokenAmountWei,
-      withdrawnTokenAmountAfterFeeWei,
-    } = await OneInchZapProvider.getWithdrawnFromContract(
+    const { withdrawnAmountAfterFeeWei, sharesToWithdrawWei } = await getVaultWithdrawnFromContract(
       input,
-      address,
       vault,
       state,
+      address,
       web3,
       multicall
     );
 
-    console.debug(
-      'getWithdrawnFromContract',
-      bigNumberToStringDeep({
-        shareAmountWei,
-        withdrawnToken,
-        withdrawnTokenAmountWei,
-        withdrawnTokenAmountAfterFeeWei,
-      })
-    );
-
-    const mooTokensToWithdrawWei = shareAmountWei.toString(10);
+    const mooTokensToWithdrawWei = sharesToWithdrawWei.toString(10);
     const vaultAddress = vault.earnedTokenAddress;
     const swapAmountsIn = OneInchZapProvider.quoteRemoveLiquidity(
       lp,
-      withdrawnTokenAmountAfterFeeWei,
+      withdrawnAmountAfterFeeWei,
       lpTokens
     );
 
@@ -745,8 +715,8 @@ const oneInchBeefOutLP = (
       transaction,
       {
         spender: zap.zapAddress,
-        amount: fromWei(withdrawnTokenAmountWei, withdrawnToken.decimals),
-        token: withdrawnToken,
+        amount: input.amount,
+        token: input.token,
       },
       {
         chainId: vault.chainId,
@@ -763,8 +733,8 @@ const oneInchBeefOutLP = (
 };
 
 const beefOutAndSwap = (
-  vault: VaultEntity,
-  depositTokenAmount: BigNumber,
+  vault: VaultStandard,
+  input: InputTokenAmount,
   swap: ZapQuoteStepSwap,
   zap: ZapEntityBeefy,
   slippageTolerance: number = 0.01
@@ -777,42 +747,35 @@ const beefOutAndSwap = (
       return;
     }
 
-    const earnedToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
-    const wnative = selectChainWrappedNativeToken(state, vault.chainId);
-    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    const vaultAddress = earnedToken.address;
-    const tokenOutEntity = selectTokenByAddress(state, vault.chainId, swap.toToken.address);
-    const tokenOutAddress = getZapAddress(tokenOutEntity, wnative);
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(zapAbi as any, zap.zapAddress);
-    const ppfs = selectVaultPricePerFullShare(state, vault.id);
-    const earnedTokenAmount = oracleAmountToMooAmount(
-      earnedToken,
-      depositToken,
-      ppfs,
-      depositTokenAmount
+    const chain = selectChainById(state, vault.chainId);
+    const multicall = new MultiCall(web3, chain.multicallAddress);
+    const { sharesToWithdrawWei } = await getVaultWithdrawnFromContract(
+      input,
+      vault,
+      state,
+      address,
+      web3,
+      multicall
     );
-    const rawSwapAmountOutMin = toWei(
+    const swapAmountOutMinWei = toWei(
       swap.toAmount.times(1 - slippageTolerance),
       swap.toToken.decimals
     );
-    const rawAmount = toWei(earnedTokenAmount, earnedToken.decimals);
+    const contract = new web3.eth.Contract(ZapAbi, zap.zapAddress);
     const gasPrices = await getGasPriceOptions(web3);
-    console.log(
-      'beefOutAndSwap',
-      vaultAddress,
-      rawAmount.toString(10),
-      tokenOutAddress,
-      rawSwapAmountOutMin.toString(10)
-    );
+    const sharesToWithdrawWeiString = sharesToWithdrawWei.toString(10);
+    const swapAmountOutMinWeiString = swapAmountOutMinWei.toString(10);
+    const swapTokenOutAddress = swap.toToken.address;
+
     const transaction = (() => {
       return contract.methods
         .beefOutAndSwap(
-          vaultAddress,
-          rawAmount.toString(10),
-          tokenOutAddress,
-          rawSwapAmountOutMin.toString(10)
+          vault.earnContractAddress,
+          sharesToWithdrawWeiString,
+          swapTokenOutAddress,
+          swapAmountOutMinWeiString
         )
         .send({
           from: address,
@@ -823,16 +786,12 @@ const beefOutAndSwap = (
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: zap.zapAddress, amount: depositTokenAmount, token: depositToken },
+      { spender: zap.zapAddress, amount: input.amount, token: input.token },
       {
         chainId: vault.chainId,
         spenderAddress: zap.zapAddress,
         tokens: uniqBy(
-          getVaultTokensToRefresh(state, vault).concat([
-            swap.fromToken,
-            swap.toToken,
-            tokenOutEntity,
-          ]),
+          getVaultTokensToRefresh(state, vault).concat([swap.fromToken, swap.toToken, input.token]),
           'id'
         ),
       }

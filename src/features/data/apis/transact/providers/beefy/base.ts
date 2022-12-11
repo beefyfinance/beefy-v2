@@ -1,10 +1,9 @@
 import { isStandardVault, VaultEntity, VaultStandard } from '../../../../entities/vault';
 import { BeefyState } from '../../../../../../redux-types';
-import { selectVaultById, selectVaultPricePerFullShare } from '../../../../selectors/vaults';
+import { selectStandardVaultById, selectVaultById } from '../../../../selectors/vaults';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
-  selectErc20TokenByAddress,
   selectIsTokenLoaded,
   selectTokenByAddress,
   selectTokenById,
@@ -12,6 +11,7 @@ import {
 import {
   isTokenEqual,
   isTokenErc20,
+  isTokenNative,
   TokenEntity,
   TokenErc20,
   TokenNative,
@@ -48,8 +48,7 @@ import { AmmEntity } from '../../../../entities/amm';
 import { selectBeefyZapByAmmId, selectBeefyZapsByChainId } from '../../../../selectors/zap';
 import { selectTransactSlippage } from '../../../../selectors/transact';
 import { ChainEntity } from '../../../../entities/chain';
-import { selectFeesByVaultId } from '../../../../selectors/fees';
-import { getVaultWithdrawn } from '../../helpers/vault';
+import { getVaultWithdrawnFromState } from '../../helpers/vault';
 
 export type BeefyZapOption<AmmType extends AmmEntity = AmmEntity> = {
   zap: ZapEntityBeefy;
@@ -78,14 +77,13 @@ export type CommonWithdrawQuoteOptions<AmmType extends AmmEntity = AmmEntity> = 
   chain: ChainEntity;
   vault: VaultStandard;
   amounts: InputTokenAmount[];
-  withdrawnToken: TokenEntity;
-  shareToken: TokenErc20;
   actualTokenOut: TokenEntity;
   swapTokenIn: TokenEntity;
   swapTokenOut: TokenEntity;
-  withdrawnTokenAmountWei: BigNumber;
-  shareAmountWei: BigNumber;
-  withdrawnTokenAmountAfterFeeWei: BigNumber;
+  withdrawnToken: TokenEntity;
+  withdrawnAmountAfterFeeWei: BigNumber;
+  shareToken: TokenErc20;
+  sharesToWithdrawWei: BigNumber;
   native: TokenNative;
   wnative: TokenErc20;
 };
@@ -301,10 +299,13 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
       throw new Error(`No swap step in zap quote`);
     }
 
+    const input = quote.inputs[0];
+    const isNativeInput = isTokenNative(input.token);
+
     return {
       step: 'deposit',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-      action: walletActions.beefIn(vault, quote.inputs[0].amount, swap, option.zap, slippage),
+      action: walletActions.beefIn(vault, input.amount, isNativeInput, swap, option.zap, slippage),
       pending: false,
     };
   }
@@ -403,12 +404,9 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
     const multicall = new MultiCall(web3, chain.multicallAddress);
     const wnative = selectChainWrappedNativeToken(state, vault.chainId);
     const native = selectChainNativeToken(state, vault.chainId);
-    const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
-    const ppfs = selectVaultPricePerFullShare(state, vault.id);
-    const vaultFees = selectFeesByVaultId(state, vault.id);
 
-    const { withdrawnTokenAmountWei, shareAmountWei, withdrawnTokenAmountAfterFeeWei } =
-      getVaultWithdrawn(userInput.amount, withdrawnToken, shareToken, ppfs, vaultFees.withdraw);
+    const { shareToken, sharesToWithdrawWei, withdrawnAmountAfterFeeWei } =
+      getVaultWithdrawnFromState(userInput, vault, state);
 
     let swapTokenIn = null;
     let swapTokenOut = null;
@@ -435,11 +433,10 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
       chain,
       vault,
       amounts,
-      withdrawnToken,
       shareToken,
-      withdrawnTokenAmountWei,
-      shareAmountWei,
-      withdrawnTokenAmountAfterFeeWei,
+      sharesToWithdrawWei,
+      withdrawnToken,
+      withdrawnAmountAfterFeeWei,
       swapTokenIn,
       swapTokenOut,
       actualTokenOut,
@@ -462,7 +459,7 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
       throw new Error(`Wrong option type passed to ${this.getId()}`);
     }
 
-    const vault = selectVaultById(state, option.vaultId);
+    const vault = selectStandardVaultById(state, option.vaultId);
     const swap = quote.steps.find(step => isZapQuoteStepSwap(step));
     const isSwap = swap && isZapQuoteStepSwap(swap);
     const slippage = selectTransactSlippage(state);
@@ -471,8 +468,8 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
       step: 'withdraw',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
       action: isSwap
-        ? walletActions.beefOutAndSwap(vault, quote.inputs[0].amount, swap, option.zap, slippage)
-        : walletActions.beefOut(vault, quote.inputs[0].amount, option.zap),
+        ? walletActions.beefOutAndSwap(vault, quote.inputs[0], swap, option.zap, slippage)
+        : walletActions.beefOut(vault, quote.inputs[0], option.zap),
       pending: false,
       extraInfo: { zap: true },
     };

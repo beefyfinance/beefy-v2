@@ -164,17 +164,16 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider<AmmEntityUni
     web3,
     multicall,
     chain,
-    shareToken,
     withdrawnToken,
+    withdrawnAmountAfterFeeWei,
+    shareToken,
+    sharesToWithdrawWei,
     actualTokenOut,
     swapTokenIn,
     swapTokenOut,
     option,
     vault,
     amounts,
-    withdrawnTokenAmountWei,
-    shareAmountWei,
-    withdrawnTokenAmountAfterFeeWei,
     native,
     wnative,
   }: CommonWithdrawQuoteOptions<AmmEntityUniswapV2>): Promise<ZapQuote | null> {
@@ -187,7 +186,7 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider<AmmEntityUni
       amount1: withdrawn1,
       token0,
       token1,
-    } = lp.removeLiquidity(withdrawnTokenAmountAfterFeeWei, true);
+    } = lp.removeLiquidity(withdrawnAmountAfterFeeWei, true);
 
     const withdrawnToken0 = option.lpTokens.find(
       token => token.address.toLowerCase() === token0.toLowerCase()
@@ -203,7 +202,7 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider<AmmEntityUni
     const allowances = [
       {
         token: shareToken,
-        amount: fromWei(shareAmountWei, shareToken.decimals),
+        amount: fromWei(sharesToWithdrawWei, shareToken.decimals),
         spenderAddress: option.zap.zapAddress,
       },
     ];
@@ -211,7 +210,7 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider<AmmEntityUni
     const splitStep: ZapQuoteStepSplit = {
       type: 'split',
       inputToken: withdrawnToken,
-      inputAmount: fromWei(withdrawnTokenAmountWei, withdrawnToken.decimals),
+      inputAmount: fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals),
       outputs: [
         {
           token: withdrawnToken0,

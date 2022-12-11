@@ -13,11 +13,7 @@ import {
 } from '../../transact-types';
 import { Namespace, TFunction } from 'react-i18next';
 import { Step } from '../../../../reducers/wallet/stepper';
-import {
-  selectStandardVaultById,
-  selectVaultById,
-  selectVaultPricePerFullShare,
-} from '../../../../selectors/vaults';
+import { selectStandardVaultById, selectVaultById } from '../../../../selectors/vaults';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
@@ -25,6 +21,7 @@ import {
   selectIsTokenLoaded,
   selectTokenByAddress,
   selectTokenById,
+  selectTokenPriceByAddress,
 } from '../../../../selectors/tokens';
 import { isTokenEqual, isTokenErc20, TokenEntity, TokenErc20 } from '../../../../entities/token';
 import { selectOneInchZapByChainId } from '../../../../selectors/zap';
@@ -36,6 +33,7 @@ import { first, uniqBy } from 'lodash';
 import {
   BIG_ONE,
   BIG_ZERO,
+  bigNumberToStringDeep,
   fromWei,
   fromWeiString,
   toWei,
@@ -55,14 +53,10 @@ import { selectTokenAmountValue, selectTransactSlippage } from '../../../../sele
 import BigNumber from 'bignumber.js';
 import { computeSolidlyPairAddress } from '../../helpers/solidly';
 import { computeUniswapV2PairAddress } from '../../helpers/uniswapv2';
-import Web3 from 'web3';
-import { VaultAbi } from '../../../../../../config/abi';
 import { OneInchApi } from '../../../one-inch';
-import { MultiCall } from 'eth-multicall';
-import { selectFeesByVaultId } from '../../../../selectors/fees';
 import { getPool } from '../../../amm';
 import { IPool, WANT_TYPE } from '../../../amm/types';
-import { getVaultWithdrawn } from '../../helpers/vault';
+import { getVaultWithdrawnFromState } from '../../helpers/vault';
 
 export type OneInchZapOptionBase = {
   zap: ZapEntityOneInch;
@@ -574,6 +568,25 @@ export class OneInchZapProvider implements ITransactProvider {
       token: tokenOut,
     });
 
+    console.debug(
+      bigNumberToStringDeep({
+        input: {
+          amount: amountIn.toString(10),
+          token: tokenIn.symbol,
+          value: inputValue,
+          price: selectTokenPriceByAddress(state, tokenIn.chainId, tokenIn.address),
+        },
+        output: {
+          amount: amountOut.toString(10),
+          token: tokenOut.symbol,
+          value: outputValue,
+          price: selectTokenPriceByAddress(state, tokenOut.chainId, tokenOut.address),
+        },
+        impact:
+          BIG_ONE.minus(BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)).toNumber() * 100,
+      })
+    );
+
     return BIG_ONE.minus(BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)).toNumber();
   }
 
@@ -910,115 +923,14 @@ export class OneInchZapProvider implements ITransactProvider {
     }
   }
 
-  static async getWithdrawnFromState(
-    userInput: InputTokenAmount,
-    vault: VaultStandard,
-    state: BeefyState
-  ) {
-    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
-    const ppfs = selectVaultPricePerFullShare(state, vault.id);
-    const requestedWithdrawInDepositToken = userInput.amount;
-
-    return OneInchZapProvider.getWithdrawnAmounts(
-      requestedWithdrawInDepositToken,
-      depositToken,
-      mooToken,
-      ppfs,
-      vault.id,
-      state
-    );
-  }
-
-  static async getWithdrawnFromContract(
-    userInput: InputTokenAmount,
-    userAddress: string,
-    vault: VaultStandard,
-    state: BeefyState,
-    web3: Web3,
-    multicall: MultiCall
-  ) {
-    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
-    const vaultContract = new web3.eth.Contract(VaultAbi, vault.earnContractAddress);
-
-    type MulticallReturnType = [
-      [
-        {
-          ppfs: string;
-          userBalance: string;
-        }
-      ]
-    ];
-
-    const [[vaultData]]: MulticallReturnType = (await multicall.all([
-      [
-        {
-          ppfs: vaultContract.methods.getPricePerFullShare(),
-          userBalance: vaultContract.methods.balanceOf(userAddress),
-        },
-      ],
-    ])) as MulticallReturnType;
-
-    const ppfs = fromWeiString(vaultData.ppfs, mooToken.decimals);
-    const userBalanceInMooTokens = fromWeiString(vaultData.userBalance, mooToken.decimals);
-    const userBalanceInDepositToken = userBalanceInMooTokens
-      .multipliedBy(ppfs)
-      .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR);
-    const requestedWithdrawInDepositToken = userInput.max
-      ? userBalanceInDepositToken
-      : userInput.amount;
-
-    return OneInchZapProvider.getWithdrawnAmounts(
-      requestedWithdrawInDepositToken,
-      depositToken,
-      mooToken,
-      ppfs,
-      vault.id,
-      state
-    );
-  }
-
-  /**
-   * User inputs amount of want, but contract needs amount of mooTokens and 1inch needs want value of those mooTokens
-   */
-  static async getWithdrawnAmounts(
-    requestedWithdrawInDepositToken: BigNumber,
-    withdrawnToken: TokenEntity,
-    shareToken: TokenErc20,
-    ppfs: BigNumber,
-    vaultId: string,
-    state: BeefyState
-  ) {
-    const vaultFees = selectFeesByVaultId(state, vaultId);
-    const withdrawFee = vaultFees.withdraw || 0;
-
-    return {
-      ...getVaultWithdrawn(
-        requestedWithdrawInDepositToken,
-        withdrawnToken,
-        shareToken,
-        ppfs,
-        withdrawFee
-      ),
-      withdrawnToken,
-      shareToken,
-    };
-  }
-
   async getSingleWithdrawQuoteFor(
     option: OneInchZapOptionSingle,
     userInput: InputTokenAmount,
     state: BeefyState
   ): Promise<OneInchZapQuote | null> {
     const vault = selectStandardVaultById(state, option.vaultId);
-    const {
-      withdrawnToken,
-      shareToken,
-      shareAmountWei,
-      withdrawnTokenAmountWei,
-      withdrawnTokenAmountAfterFeeWei,
-    } = await OneInchZapProvider.getWithdrawnFromState(userInput, vault, state);
+    const { shareToken, sharesToWithdrawWei, withdrawnToken, withdrawnAmountAfterFeeWei } =
+      getVaultWithdrawnFromState(userInput, vault, state);
 
     if (!isTokenEqual(withdrawnToken, userInput.token)) {
       throw new Error(`Invalid input token ${userInput.token.symbol}`);
@@ -1029,8 +941,8 @@ export class OneInchZapProvider implements ITransactProvider {
 
     const swapTokenIn = nativeToWNative(userInput.token, wnative);
     const swapTokenInAddress = swapTokenIn.address;
-    const swapAmountIn = fromWei(withdrawnTokenAmountAfterFeeWei, swapTokenIn.decimals);
-    const swapAmountInWei = withdrawnTokenAmountAfterFeeWei.toString(10);
+    const swapAmountIn = fromWei(withdrawnAmountAfterFeeWei, swapTokenIn.decimals);
+    const swapAmountInWei = withdrawnAmountAfterFeeWei.toString(10);
 
     const wantedTokenOut = selectTokenByAddress(state, option.chainId, option.tokenAddresses[0]);
     const actualTokenOut = wnativeToNative(wantedTokenOut, wnative, native); // zap always converts wnative to native
@@ -1044,8 +956,6 @@ export class OneInchZapProvider implements ITransactProvider {
       fromTokenAddress: swapTokenInAddress,
       toTokenAddress: swapTokenOutAddress,
     });
-
-    console.warn(apiQuote);
 
     if (!apiQuote) {
       throw new Error(
@@ -1071,17 +981,13 @@ export class OneInchZapProvider implements ITransactProvider {
       throw new Error(`Quote returned zero ${swapTokenOut.symbol}`);
     }
 
-    const inputValue = selectTokenAmountValue(state, {
-      amount: swapAmountIn,
-      token: swapTokenIn,
-    });
-    const outputValue = selectTokenAmountValue(state, {
-      amount: swapAmountOut,
-      token: swapTokenOut,
-    });
-    const priceImpact = BIG_ONE.minus(
-      BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)
-    ).toNumber();
+    const priceImpact = this.getPriceImpact(
+      state,
+      swapAmountIn,
+      swapTokenIn,
+      swapAmountOut,
+      swapTokenOut
+    );
 
     return {
       id: createQuoteId(option.id),
@@ -1091,14 +997,14 @@ export class OneInchZapProvider implements ITransactProvider {
       allowances: [
         {
           token: shareToken,
-          amount: fromWei(shareAmountWei, shareToken.decimals),
+          amount: fromWei(sharesToWithdrawWei, shareToken.decimals),
           spenderAddress: option.zap.zapAddress,
         },
       ],
       inputs: [
         {
           token: withdrawnToken,
-          amount: fromWei(withdrawnTokenAmountWei, withdrawnToken.decimals),
+          amount: userInput.amount,
           max: userInput.max,
         },
       ],
@@ -1128,8 +1034,8 @@ export class OneInchZapProvider implements ITransactProvider {
     state: BeefyState
   ): Promise<OneInchZapQuote | null> {
     const vault = selectStandardVaultById(state, option.vaultId);
-    const { withdrawnToken, shareToken, withdrawnTokenAmountAfterFeeWei, shareAmountWei } =
-      await OneInchZapProvider.getWithdrawnFromState(userInput, vault, state);
+    const { shareToken, sharesToWithdrawWei, withdrawnToken, withdrawnAmountAfterFeeWei } =
+      getVaultWithdrawnFromState(userInput, vault, state);
 
     if (!isTokenEqual(withdrawnToken, userInput.token)) {
       throw new Error(`Invalid input token ${userInput.token.symbol}`);
@@ -1146,7 +1052,7 @@ export class OneInchZapProvider implements ITransactProvider {
     const swapTokensIn = option.lpTokens;
     const swapAmountsIn = OneInchZapProvider.quoteRemoveLiquidity(
       lp,
-      withdrawnTokenAmountAfterFeeWei,
+      withdrawnAmountAfterFeeWei,
       option.lpTokens
     );
 
@@ -1191,7 +1097,7 @@ export class OneInchZapProvider implements ITransactProvider {
       allowances: [
         {
           token: shareToken,
-          amount: fromWei(shareAmountWei, shareToken.decimals),
+          amount: fromWei(sharesToWithdrawWei, shareToken.decimals),
           spenderAddress: option.zap.zapAddress,
         },
       ],
@@ -1207,7 +1113,7 @@ export class OneInchZapProvider implements ITransactProvider {
         {
           type: 'split',
           inputToken: withdrawnToken,
-          inputAmount: fromWei(withdrawnTokenAmountAfterFeeWei, withdrawnToken.decimals),
+          inputAmount: fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals),
           outputs: [
             {
               token: swapTokensIn[0],
