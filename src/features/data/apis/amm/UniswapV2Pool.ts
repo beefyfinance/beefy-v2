@@ -338,7 +338,7 @@ export class UniswapV2Pool implements IPool {
     };
   }
 
-  getAddLiquidityRatio(amountIn: BigNumber, decimalsIn: number): AddLiquidityRatio {
+  getAddLiquidityRatio(amountIn: BigNumber): AddLiquidityRatio {
     const amount0 = amountIn.dividedToIntegerBy(2);
     const amount1 = amountIn.minus(amount0);
     return {

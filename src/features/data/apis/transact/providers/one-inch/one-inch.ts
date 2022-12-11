@@ -639,13 +639,20 @@ export class OneInchZapProvider implements ITransactProvider {
     inputAmount: BigNumber,
     inputDecimals: number
   ): Promise<[BigNumber, BigNumber]> {
-    const { amount0, amount1 } = lp.getAddLiquidityRatio(
-      toWei(inputAmount, inputDecimals),
-      inputDecimals
-    );
+    const { amount0, amount1 } = lp.getAddLiquidityRatio(toWei(inputAmount, inputDecimals));
 
     const min = new BigNumber(1000);
     if (amount0.lt(min) || amount1.lt(min)) {
+      console.debug(
+        bigNumberToStringDeep({
+          inputAmount,
+          inputAmountWei: toWei(inputAmount, inputDecimals),
+          amount0Wei: amount0,
+          amount0: fromWei(amount0, inputDecimals),
+          amount1Wei: amount1,
+          amount1: fromWei(amount1, inputDecimals),
+        })
+      );
       throw new Error('Amount too small');
     }
 

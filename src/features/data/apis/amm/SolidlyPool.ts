@@ -6,7 +6,13 @@ import { SolidlyPairAbi } from '../../../../config/abi';
 import { ChainEntity } from '../../entities/chain';
 import { createContract } from '../../../../helpers/web3';
 import { getWeb3Instance } from '../instances';
-import { BIG_ONE, BIG_ZERO, fromWei, toWei } from '../../../../helpers/big-number';
+import {
+  BIG_ONE,
+  BIG_ZERO,
+  bigNumberToStringDeep,
+  fromWei,
+  toWei,
+} from '../../../../helpers/big-number';
 import {
   AddLiquidityRatio,
   AddLiquidityResult,
@@ -276,27 +282,29 @@ export class SolidlyPool implements IPool {
     return BIG_ONE.minus(ratio).toNumber();
   }
 
-  getAddLiquidityRatio(amountIn: BigNumber, decimalsIn: number): AddLiquidityRatio {
+  getAddLiquidityRatio(amountIn: BigNumber): AddLiquidityRatio {
     if (!this.pairData) {
       throw new Error('Pair data is not loaded');
     }
 
     if (this.pairData.stable) {
-      return this.getAddLiquidityRatioStable(amountIn, decimalsIn);
+      return this.getAddLiquidityRatioStable(amountIn);
     }
 
     return this.getAddLiquidityRatioVolatile(amountIn);
   }
 
-  protected getAddLiquidityRatioStable(amountIn: BigNumber, decimalsIn: number): AddLiquidityRatio {
+  protected getAddLiquidityRatioStable(amountIn: BigNumber): AddLiquidityRatio {
     const { reserves0, reserves1, decimals0, decimals1 } = this.pairData;
     const reserves0Normalized = this.normalize(reserves0, decimals0);
     const reserves1Normalized = this.normalize(reserves1, decimals1);
 
     const swapAmountA = toWei(BIG_ONE.shiftedBy(-9), 18);
-    const swapAmountB = this.normalize(
-      this.quoteAmountOutNormalized(swapAmountA, reserves0Normalized, reserves1Normalized, true),
-      decimals1
+    const swapAmountB = this.quoteAmountOutNormalized(
+      swapAmountA,
+      reserves0Normalized,
+      reserves1Normalized,
+      true
     );
     const { amountA, amountB } = this.getOptimalAddLiquidityAmounts(
       swapAmountA,
@@ -314,9 +322,20 @@ export class SolidlyPool implements IPool {
     const ratioNumerator = new BigNumber('1e36');
     const ratio = ratioNumerator.dividedToIntegerBy(ratioDenominator);
 
+    console.debug(
+      'getAddLiquidityRatioStable',
+      bigNumberToStringDeep({
+        swapAmountA,
+        swapAmountB,
+        amountA,
+        amountB,
+        ratio,
+      })
+    );
+
     const amount0 = amountIn
       .multipliedBy(BIG_ONE.minus(fromWei(ratio, 18)))
-      .decimalPlaces(decimalsIn, BigNumber.ROUND_FLOOR);
+      .decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const amount1 = amountIn.minus(amount0);
 
     return {

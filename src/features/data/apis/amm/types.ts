@@ -49,7 +49,7 @@ export interface IPool {
   swap(amountIn: BigNumber, tokenIn: string, updateReserves?: boolean): SwapResult;
   addLiquidity(amountA: BigNumber, tokenA: string, amountB: BigNumber): AddLiquidityResult;
   removeLiquidity(amount: BigNumber, updateReserves?: boolean): RemoveLiquidityResult;
-  getAddLiquidityRatio(amountIn: BigNumber, decimalsIn: number): AddLiquidityRatio;
+  getAddLiquidityRatio(amountIn: BigNumber): AddLiquidityRatio;
   updateAllData(otherCalls?: ShapeWithLabel[][]): Promise<any[][]>;
   getWantType(): WANT_TYPE;
 }
