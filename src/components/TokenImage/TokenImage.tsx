@@ -21,11 +21,11 @@ export const TokenImage = memo<TokenImageProps>(function ({
 }) {
   const token = useAppSelector(state => selectTokenByAddressOrNull(state, chainId, tokenAddress));
   const haveAssetForToken = useMemo(() => {
-    return token && !!getSingleAssetSrc(token.symbol, token.chainId);
+    return token && !!getSingleAssetSrc(token.id, token.chainId);
   }, [token]);
 
   return haveAssetForToken ? (
-    <AssetsImage chainId={chainId} assetIds={[token.symbol]} className={className} size={size} />
+    <AssetsImage chainId={chainId} assetIds={[token.id]} className={className} size={size} />
   ) : token ? (
     <TokenWithoutAsset token={token} size={size} className={className} />
   ) : (
@@ -50,12 +50,7 @@ const TokenWithoutAsset = memo<TokenWithoutAssetProps>(function ({ token, size, 
       size={size}
     />
   ) : (
-    <AssetsImage
-      chainId={token.chainId}
-      assetIds={[token.symbol]}
-      className={className}
-      size={size}
-    />
+    <AssetsImage chainId={token.chainId} assetIds={[token.id]} className={className} size={size} />
   );
 });
 
@@ -79,7 +74,7 @@ export const TokensImage = memo<TokensImageProps>(function ({ tokens, size, clas
   return (
     <AssetsImage
       chainId={tokens[0].chainId}
-      assetIds={tokens.map(token => token.symbol)}
+      assetIds={tokens.map(token => token.id)}
       className={className}
       size={size}
     />

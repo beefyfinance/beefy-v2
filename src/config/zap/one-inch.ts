@@ -13,8 +13,8 @@ export const zaps: OneInchZapConfig[] = [
     zapAddress: '0x1F4846092FD8B5D0858F3737Ed22D3fc43f1969e',
     chainId: 'fantom',
     depositFromTokens: ['FTM', 'WFTM', 'USDC', 'fUSDT', 'DAI', 'WETH', 'WBTC'],
-    blockedDepositToTokens: ['S*USDC', 'beFTM', 'binSPIRIT'],
+    blockedDepositToTokens: ['S*USDC'],
     withdrawToTokens: ['FTM', 'BIFI', 'USDC', 'fUSDT', 'DAI', 'WETH', 'WBTC'],
-    blockedWithdrawFromTokens: ['S*USDC', 'beFTM', 'binSPIRIT'],
+    blockedWithdrawFromTokens: ['S*USDC'],
   },
 ];
