@@ -107,7 +107,7 @@ export const zaps: BeefyZapConfig[] = [
   },
   {
     chainId: 'fantom',
-    ammId: 'fantom-spiritv2',
+    ammId: 'fantom-spirit-v2',
     zapAddress: '0xcB0AFF1Bd4F6678c5de502B5f50e5dEff109cd29',
   },
   {
