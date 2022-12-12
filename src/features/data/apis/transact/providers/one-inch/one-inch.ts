@@ -453,32 +453,31 @@ export class OneInchZapProvider implements ITransactProvider {
     const swapTokenIn = nativeToWNative(userTokenIn, wnative);
     const lp = getPool(depositToken.address, option.amm, chain);
     const [api] = await Promise.all([getOneInchApi(chain), lp.updateAllData()]);
-    const swapAmountsIn = await this.getSwapAmountsIn(lp, userAmountIn, swapTokenIn.decimals);
-    console.debug(
-      this.getId(),
-      swapAmountsIn.map(x => (x ? x.toString(10) : JSON.stringify(x)))
+    const swapAmountsInWei = await this.getSwapAmountsIn(
+      lp,
+      toWei(userAmountIn, userTokenIn.decimals)
     );
     const swapTokensOut = option.lpTokens;
-    const swapAmountsOut = await Promise.all(
-      swapAmountsIn.map((amountIn, i) =>
+    const swapAmountsOutWei = await Promise.all(
+      swapAmountsInWei.map((amountIn, i) =>
         this.getQuoteIfNeeded(api, amountIn, swapTokenIn, swapTokensOut[i])
       )
     );
-    const swaps: ZapQuoteStepSwap[] = swapAmountsOut
-      .map((amountOut, i) => {
+    const swaps: ZapQuoteStepSwap[] = swapAmountsOutWei
+      .map((amountOutWei, i) => {
         // null amount out means no swap needed (input token is one of the lp tokens)
-        if (amountOut) {
+        if (amountOutWei) {
           return {
             type: 'swap' as const,
             fromToken: swapTokenIn,
-            fromAmount: swapAmountsIn[i],
+            fromAmount: fromWei(swapAmountsInWei[i], swapTokenIn.decimals),
             toToken: swapTokensOut[i],
-            toAmount: amountOut,
+            toAmount: fromWei(amountOutWei, swapTokensOut[i].decimals),
             priceImpact: this.getPriceImpact(
               state,
-              swapAmountsIn[i],
+              fromWei(swapAmountsInWei[i], swapTokenIn.decimals),
               swapTokenIn,
-              amountOut,
+              fromWei(amountOutWei, swapTokensOut[i].decimals),
               swapTokensOut[i]
             ),
           };
@@ -489,17 +488,17 @@ export class OneInchZapProvider implements ITransactProvider {
       .filter(swap => !!swap);
     const maxPriceImpact = Math.max(...swaps.map(swap => swap.priceImpact));
 
-    const tokenAmountsToAdd = swapAmountsOut.map((amountOut, i) => {
-      if (amountOut) {
+    const tokenAmountsToAdd = swapAmountsOutWei.map((amountOutWei, i) => {
+      if (amountOutWei) {
         return {
           token: swapTokensOut[i],
-          amount: amountOut,
+          amount: fromWei(amountOutWei, swapTokensOut[i].decimals),
         };
       }
 
       return {
         token: swapTokenIn,
-        amount: swapAmountsIn[i],
+        amount: fromWei(swapAmountsInWei[i], swapTokenIn.decimals),
       };
     });
 
@@ -592,12 +591,12 @@ export class OneInchZapProvider implements ITransactProvider {
 
   async getQuoteIfNeeded(
     api: OneInchApi,
-    amountIn: BigNumber,
+    amountInWei: BigNumber,
     tokenIn: TokenErc20,
     tokenOut: TokenErc20
   ): Promise<BigNumber | null> {
     if (!isTokenEqual(tokenIn, tokenOut)) {
-      const swapAmountInWei = toWeiString(amountIn, tokenIn.decimals);
+      const swapAmountInWei = amountInWei.toString(10);
       const apiQuote = await api.getQuote({
         amount: swapAmountInWei,
         fromTokenAddress: tokenIn.address,
@@ -623,40 +622,34 @@ export class OneInchZapProvider implements ITransactProvider {
         throw new Error(`Token mismatch`);
       }
 
-      const swapAmountOut = fromWeiString(apiQuote.toTokenAmount, tokenOut.decimals);
-      if (swapAmountOut.lte(BIG_ZERO)) {
+      const swapAmountOutWei = new BigNumber(apiQuote.toTokenAmount);
+      if (swapAmountOutWei.lte(BIG_ZERO)) {
         throw new Error(`Quote returned zero ${tokenOut.symbol}`);
       }
 
-      return swapAmountOut;
+      return swapAmountOutWei;
     }
 
     return null;
   }
 
-  async getSwapAmountsIn(
-    lp: IPool,
-    inputAmount: BigNumber,
-    inputDecimals: number
-  ): Promise<[BigNumber, BigNumber]> {
-    const { amount0, amount1 } = lp.getAddLiquidityRatio(toWei(inputAmount, inputDecimals));
+  async getSwapAmountsIn(lp: IPool, inputAmountWei: BigNumber): Promise<[BigNumber, BigNumber]> {
+    const { amount0, amount1 } = lp.getAddLiquidityRatio(inputAmountWei);
 
     const min = new BigNumber(1000);
+
     if (amount0.lt(min) || amount1.lt(min)) {
       console.debug(
         bigNumberToStringDeep({
-          inputAmount,
-          inputAmountWei: toWei(inputAmount, inputDecimals),
+          inputAmount: inputAmountWei,
           amount0Wei: amount0,
-          amount0: fromWei(amount0, inputDecimals),
           amount1Wei: amount1,
-          amount1: fromWei(amount1, inputDecimals),
         })
       );
       throw new Error('Amount too small');
     }
 
-    return [fromWei(amount0, inputDecimals), fromWei(amount1, inputDecimals)];
+    return [amount0, amount1];
   }
 
   async getDepositStep(
@@ -1057,40 +1050,39 @@ export class OneInchZapProvider implements ITransactProvider {
     const lp = getPool(withdrawnToken.address, option.amm, chain);
     const [api] = await Promise.all([getOneInchApi(chain), lp.updateAllData()]);
     const swapTokensIn = option.lpTokens;
-    const swapAmountsIn = OneInchZapProvider.quoteRemoveLiquidity(
+    const swapAmountsInWei = OneInchZapProvider.quoteRemoveLiquidity(
       lp,
-      withdrawnAmountAfterFeeWei,
-      option.lpTokens
+      withdrawnAmountAfterFeeWei
     );
 
-    const swapAmountsOut = await Promise.all(
-      swapAmountsIn.map((amountIn, i) =>
-        this.getQuoteIfNeeded(api, amountIn, swapTokensIn[i], swapTokenOut)
+    const swapAmountsOutWei = await Promise.all(
+      swapAmountsInWei.map((amountInWei, i) =>
+        this.getQuoteIfNeeded(api, amountInWei, swapTokensIn[i], swapTokenOut)
       )
     );
-    let totalOut = BIG_ZERO;
-    const swaps: ZapQuoteStepSwap[] = swapAmountsOut
-      .map((amountOut, i) => {
+    let totalOutWei = BIG_ZERO;
+    const swaps: ZapQuoteStepSwap[] = swapAmountsOutWei
+      .map((amountOutWei, i) => {
         // null amount out means no swap needed (swap in token is one of the lp tokens)
-        if (amountOut) {
-          totalOut = totalOut.plus(amountOut);
+        if (amountOutWei) {
+          totalOutWei = totalOutWei.plus(amountOutWei);
           return {
             type: 'swap' as const,
             fromToken: swapTokensIn[i],
-            fromAmount: swapAmountsIn[i],
+            fromAmount: fromWei(swapAmountsInWei[i], swapTokensIn[i].decimals),
             toToken: swapTokenOut,
-            toAmount: amountOut,
+            toAmount: fromWei(amountOutWei, swapTokenOut.decimals),
             priceImpact: this.getPriceImpact(
               state,
-              swapAmountsIn[i],
+              fromWei(swapAmountsInWei[i], swapTokensIn[i].decimals),
               swapTokensIn[i],
-              amountOut,
+              fromWei(amountOutWei, swapTokenOut.decimals),
               swapTokenOut
             ),
           };
         }
 
-        totalOut = totalOut.plus(swapAmountsIn[i]);
+        totalOutWei = totalOutWei.plus(swapAmountsInWei[i]);
         return null;
       })
       .filter(swap => !!swap);
@@ -1112,7 +1104,7 @@ export class OneInchZapProvider implements ITransactProvider {
       outputs: [
         {
           token: actualTokenOut,
-          amount: totalOut,
+          amount: fromWei(totalOutWei, actualTokenOut.decimals),
         },
       ],
       priceImpact: maxPriceImpact,
@@ -1124,11 +1116,11 @@ export class OneInchZapProvider implements ITransactProvider {
           outputs: [
             {
               token: swapTokensIn[0],
-              amount: swapAmountsIn[0],
+              amount: fromWei(swapAmountsInWei[0], swapTokensIn[0].decimals),
             },
             {
               token: swapTokensIn[1],
-              amount: swapAmountsIn[1],
+              amount: fromWei(swapAmountsInWei[1], swapTokensIn[1].decimals),
             },
           ],
         },
@@ -1139,12 +1131,11 @@ export class OneInchZapProvider implements ITransactProvider {
 
   static quoteRemoveLiquidity(
     lp: IPool,
-    withdrawnTokenAmountAfterFeeWei: BigNumber,
-    lpTokens: TokenErc20[]
+    withdrawnTokenAmountAfterFeeWei: BigNumber
   ): [BigNumber, BigNumber] {
     const { amount0, amount1 } = lp.removeLiquidity(withdrawnTokenAmountAfterFeeWei);
 
-    return [fromWei(amount0, lpTokens[0].decimals), fromWei(amount1, lpTokens[1].decimals)];
+    return [amount0, amount1];
   }
 
   async getWithdrawStep(

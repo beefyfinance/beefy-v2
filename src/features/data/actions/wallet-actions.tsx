@@ -551,11 +551,11 @@ const oneInchBeefOutSingle = (
       toTokenAddress: swapTokenOutAddress,
       slippage: slippageTolerance * 100,
     });
-    const swapAmountOut = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
+    const swapAmountOutDec = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
     const vaultAddress = vault.earnedTokenAddress;
 
     // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
-    if (swapAmountOut.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
+    if (swapAmountOutDec.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
       throw new Error(`Output is less than expected. Please try again.`);
     }
 
@@ -626,28 +626,14 @@ const oneInchBeefOutLP = (
     const lp = getPool(depositToken.address, amm, chain);
     await lp.updateAllData();
 
-    const { withdrawnAmountAfterFeeWei, sharesToWithdrawWei } = await getVaultWithdrawnFromContract(
-      input,
-      vault,
-      state,
-      address,
-      web3,
-      multicall
-    );
+    const { withdrawnAmountAfterFeeWei, sharesToWithdrawWei, withdrawnAmountWei } =
+      await getVaultWithdrawnFromContract(input, vault, state, address, web3, multicall);
 
     const mooTokensToWithdrawWei = sharesToWithdrawWei.toString(10);
     const vaultAddress = vault.earnedTokenAddress;
-    const swapAmountsIn = OneInchZapProvider.quoteRemoveLiquidity(
+    const swapAmountsInWei = OneInchZapProvider.quoteRemoveLiquidity(
       lp,
-      withdrawnAmountAfterFeeWei,
-      lpTokens
-    );
-
-    console.debug(
-      'quoteRemoveLiquidity',
-      bigNumberToStringDeep({
-        swapAmountsIn,
-      })
+      withdrawnAmountAfterFeeWei
     );
 
     const oneInchApi = await getOneInchApi(chain);
@@ -658,7 +644,7 @@ const oneInchBeefOutLP = (
         );
         const swapTokenInAddress = swap.fromToken.address;
         const swapTokenOutAddress = swap.toToken.address;
-        const swapAmountInWei = toWeiString(swapAmountsIn[tokenN], swap.fromToken.decimals);
+        const swapAmountInWei = swapAmountsInWei[tokenN].toString(10);
         const swapData = await oneInchApi.getSwap({
           disableEstimate: true, // otherwise will fail due to no allowance
           fromAddress: zap.zapAddress,
@@ -667,10 +653,10 @@ const oneInchBeefOutLP = (
           toTokenAddress: swapTokenOutAddress,
           slippage: slippageTolerance * 100,
         });
-        const swapAmountOut = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
+        const swapAmountOutDec = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
 
         // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
-        if (swapAmountOut.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
+        if (swapAmountOutDec.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
           throw new Error(`Output is less than expected. Please try again.`);
         }
 
@@ -692,6 +678,30 @@ const oneInchBeefOutLP = (
     const swapTokenOutAddress = swaps[0].toToken.address;
     const tx0 = swap0 ? swap0.tx.data : '0x0';
     const tx1 = swap1 ? swap1.tx.data : '0x0';
+
+    const debugObj = bigNumberToStringDeep({
+      input,
+      withdraw: {
+        sharesToWithdrawWei,
+        withdrawnAmountAfterFeeWei,
+        withdrawnAmountWei,
+      },
+      removeLiquidityAmounts: swapAmountsInWei,
+      swaps: {
+        swap0,
+        swap1,
+      },
+      beefOutAndSwap: [
+        vaultAddress,
+        mooTokensToWithdrawWei,
+        swapTokenOutAddress,
+        tx0,
+        tx1,
+        lp.getWantType(),
+      ],
+    });
+    console.debug('TX_DEBUG_VIEW', debugObj);
+    console.debug('TX_DEBUG_COPY', JSON.stringify(debugObj));
 
     const gasPrices = await getGasPriceOptions(web3);
     const transaction = (() => {
