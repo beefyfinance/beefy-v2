@@ -424,9 +424,20 @@ const override = pools => {
   return pools;
 };
 
-validatePools()
-  .then(exitCode => process.exit(exitCode))
-  .catch(err => {
-    console.error(err);
-    process.exit(-1);
-  });
+console.log('***********************************************');
+console.log('***********************************************');
+console.log('*                                             *');
+console.log('*                                             *');
+console.log('*             VALIDATION IS OFF               *');
+console.log('*            DO NOT PUSH TO PROD              *');
+console.log('*                                             *');
+console.log('*                                             *');
+console.log('***********************************************');
+console.log('***********************************************');
+
+// validatePools()
+//   .then(exitCode => process.exit(exitCode))
+//   .catch(err => {
+//     console.error(err);
+//     process.exit(-1);
+//   });
