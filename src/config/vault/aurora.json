@@ -739,7 +739,7 @@
     "oracle": "lps",
     "oracleId": "tri-3pool",
     "status": "eol",
-    "retireReason": "rewards",
+    "retireReason": "tvl",
     "platformId": "trisolaris",
     "assets": ["USN", "USDC", "USDT"],
     "strategyTypeId": "multi-lp",
