@@ -933,5 +933,10 @@
     "id": "opx",
     "name": "OPX",
     "filter": false
+  },
+  {
+    "id": "equalizer",
+    "name": "Equalizer",
+    "filter": true
   }
 ]

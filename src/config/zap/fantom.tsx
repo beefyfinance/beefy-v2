@@ -65,4 +65,13 @@ export const zaps = [
     ammPairInitHash: '0x5442fb448d86f32a7d2a9dc1a457e64bf5a6c77415d98802aac4fb5a9dc5ecd9',
     lpProviderFee: 0.0018,
   },
+  {
+    // equalizer
+    type: 'solidly',
+    zapAddress: '0xE82CAf86578AEBb5E43980375e91dA44355780C6',
+    ammRouter: '0x1A05EB736873485655F29a37DEf8a0AA87F5a447',
+    ammFactory: '0xc6366EFD0AF1d09171fe0EBF32c7943BB310832a',
+    ammPairInitHash: '0x02ada2a0163cd4f7e0f0c9805f5230716a95b174140e4c84c14883de216cc6a3',
+    lpProviderFee: 0.002,
+  },
 ];
