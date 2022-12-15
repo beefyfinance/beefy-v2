@@ -47,6 +47,7 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-snowfall": "^1.2.1",
     "recharts": "^2.1.15",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",

@@ -15,6 +15,7 @@ import { DefaultMeta } from './components/Meta';
 import { HelmetProvider } from 'react-helmet-async';
 import { Redirects } from './components/Redirects';
 import { Stepper } from './components/Stepper';
+import Snowfall from 'react-snowfall';
 
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
@@ -38,6 +39,17 @@ export const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Snowfall
+        style={{
+          position: 'fixed',
+          width: '100vw',
+          height: '100vh',
+          opacity: 0.3,
+        }}
+        speed={[0.5, 1.5]}
+        snowflakeCount={75}
+        wind={[-1, 0.5]}
+      />
       <CssBaseline />
       <HelmetProvider>
         <Router>
