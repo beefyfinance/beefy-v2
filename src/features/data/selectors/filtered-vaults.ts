@@ -62,7 +62,7 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.vaultType !== 'all' ? 1 : 0) +
     (filterOptions.vaultCategory !== 'all' ? 1 : 0) +
     (filterOptions.sort !== 'default' ? 1 : 0) +
-    (!!filterOptions.chainIds ? filterOptions.chainIds.length : 0)
+    filterOptions.chainIds.length
 );
 
 export const selectHasActiveFilter = createSelector(
@@ -77,7 +77,7 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.searchText !== '' ||
     filterOptions.platformId !== null ||
     filterOptions.sort !== 'default' ||
-    (!!filterOptions.chainIds ? filterOptions.chainIds.length > 0 : false)
+    filterOptions.chainIds.length > 0
 );
 
 export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
@@ -90,7 +90,7 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.onlyBoosted !== false ||
     filterOptions.searchText !== '' ||
     filterOptions.platformId !== null ||
-    (!!filterOptions.chainIds ? filterOptions.chainIds.length > 0 : false)
+    filterOptions.chainIds.length > 0
 );
 
 export const selectVaultCategory = createSelector(
@@ -195,7 +195,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
   const apyByVaultId = state.biz.apy.totalApy.byVaultId;
 
   // apply filtering
-  const chainIdMap = createIdMap(!!filterOptions.chainIds ? filterOptions.chainIds : []);
+  const chainIdMap = createIdMap(filterOptions.chainIds);
   const filteredVaults = vaults.filter(vault => {
     if (filterOptions.vaultCategory === 'featured' && !selectIsVaultFeatured(state, vault.id)) {
       return false;
@@ -210,7 +210,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
       return false;
     }
 
-    if (!filterOptions.chainIds || filterOptions.chainIds.length > 0 && !chainIdMap[vault.chainId]) {
+    if (filterOptions.chainIds.length > 0 && !chainIdMap[vault.chainId]) {
       return false;
     }
     if (

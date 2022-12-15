@@ -42,7 +42,7 @@ export const VaultsSearch = memo(function VaultsHeader() {
     }
   }, [searchText, setValue]);
 
-  const valueLength = value ? value.length : 0;
+  const valueLength = value.length;
   const iconClass = classes.icon;
   const icon = useMemo(() => {
     return valueLength === 0 ? (

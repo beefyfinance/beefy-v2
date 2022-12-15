@@ -83,7 +83,7 @@ export const ChainButtonSelector = memo<ChainButtonSelectorProps>(function Chain
         <ChainButton
           key={id}
           id={id}
-          selected={!!selected ? selected.length === 0 || selected.includes(id) : false}
+          selected={selected.length === 0 || selected.includes(id)}
           onChange={handleChange}
         />
       ))}

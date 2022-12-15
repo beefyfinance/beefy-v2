@@ -58,7 +58,7 @@ const SelectedChain = memo<SelectedItemProps>(function ({
       />
     );
   } else {
-    label = t(countSelectedLabel, { count: !!value ? value.length : 0 });
+    label = t(countSelectedLabel, { count: value.length });
   }
 
   return <>{label}</>;
