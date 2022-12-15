@@ -172,7 +172,7 @@ export const LabeledMultiSelect = memo<LabeledMultiSelectProps>(function Labeled
     ]
   );
   const allOptionEnabled = !!allLabel;
-  const allSelected = value.length === sortOptions.length || value.length === 0;
+  const allSelected = !!value ? value.length === sortOptions.length || value.length === 0 : false;
 
   const handleToggle = useCallback<MouseEventHandler<HTMLButtonElement>>(
     e => {
@@ -252,10 +252,10 @@ export const LabeledMultiSelect = memo<LabeledMultiSelectProps>(function Labeled
               onChange={handleChange}
               label={label}
               value={optionValue}
-              selected={value.includes(optionValue)}
+              selected={!!value ? value.includes(optionValue) : false}
               DropdownItemLabelComponent={DropdownItemLabelComponent}
               className={clsx(classes.dropdownItem, {
-                [classes.dropdownItemSelected]: value.includes(optionValue),
+                [classes.dropdownItemSelected]: !!value ? value.includes(optionValue) : false,
               })}
             />
           ))}

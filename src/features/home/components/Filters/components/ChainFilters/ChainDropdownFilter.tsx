@@ -48,7 +48,7 @@ const SelectedChain = memo<SelectedItemProps>(function ({
 
   if (allSelected) {
     label = t(allSelectedLabel);
-  } else if (value.length === 1) {
+  } else if (!!value && value.length === 1) {
     const chainId = value[0];
     label = (
       <IconWithChain
@@ -58,7 +58,7 @@ const SelectedChain = memo<SelectedItemProps>(function ({
       />
     );
   } else {
-    label = t(countSelectedLabel, { count: value.length });
+    label = t(countSelectedLabel, { count: !!value ? value.length : 0 });
   }
 
   return <>{label}</>;

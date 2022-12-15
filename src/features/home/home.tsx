@@ -8,12 +8,15 @@ import { styles } from './styles';
 import { Vaults } from './components/Vaults';
 import { useAppSelector } from '../../store';
 import { RenBannerHome } from '../../components/Banners/RenBanner';
+import { useSyncedVaultFilters } from '../../hooks';
 
 const useStyles = makeStyles(styles);
 
 export const Home = memo(function Home() {
   const classes = useStyles();
   const isVaultListAvailable = useAppSelector(selectIsVaultListAvailable);
+
+  useSyncedVaultFilters();
 
   if (!isVaultListAvailable) {
     return <Loading />;
