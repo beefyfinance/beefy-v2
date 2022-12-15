@@ -113,7 +113,7 @@ export function getBoostStatusFromContractState(
   contractState: BoostContractState,
   now = new Date()
 ) {
-  if (contractState === null || contractState.isPreStake) {
+  if (contractState === null || contractState.isPreStake || contractState.periodFinish === null) {
     return 'prestake';
   }
   const nowUTCTime = now.getTime();
