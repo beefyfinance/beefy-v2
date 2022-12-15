@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_banana-bnbx-wbnb-stader",
+    "poolId": "banana-bnbx-wbnb",
+    "name": "Stader",
+    "assets": ["BNBx", "BNB"],
+    "tokenAddress": "0xC46DcDe0d91f674C04a61Bb30A52C6B45b95F317",
+    "earnedToken": "SD",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x3BC5AC0dFdC871B365d159f728dd1B9A0B5481E8",
+    "earnContractAddress": "0x7123e669dfE1888686E80F3d744d441eA4236F25",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "SD",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["stader"]
+  },
+  {
     "id": "moo_ellipsis-bnb-bnbx-crypto-stader",
     "poolId": "ellipsis-bnb-bnbx-crypto",
     "name": "Stader",
