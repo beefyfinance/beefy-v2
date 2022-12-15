@@ -19,25 +19,6 @@ export function isEmpty(key) {
   }
 }
 
-/**
- * I am using this function: https://stackoverflow.com/a/16436975
- * It is important to only compare arrays of the same basic type. For example,
- * an array of numbers or an array of strings, but not an array of objects!
- * @param a Array<T>
- * @param b Array<T>
- * @returns a boolean indicating if those two arrays are equal or not
- */
-export function areArraysEqual<T>(a: Array<T>, b: Array<T>) {
-  if (a === b) return true;
-  if (a == null || b == null) return false;
-  if (a.length !== b.length) return false;
-
-  for (var i = 0; i < a.length; ++i) {
-    if (a[i] !== b[i]) return false;
-  }
-  return true;
-}
-
 export const bluechipTokens = [
   'WBTCe',
   'WETHe',

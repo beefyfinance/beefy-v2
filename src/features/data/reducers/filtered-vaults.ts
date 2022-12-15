@@ -27,7 +27,7 @@ export type FilteredVaultsState = {
 };
 export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
 
-const initialFilteredVaultsState: FilteredVaultsState = {
+export const initialFilteredVaultsState: FilteredVaultsState = {
   reseted: true,
   sort: 'default',
   sortDirection: 'desc',
