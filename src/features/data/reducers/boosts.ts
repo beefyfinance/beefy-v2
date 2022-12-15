@@ -113,8 +113,11 @@ export function getBoostStatusFromContractState(
   contractState: BoostContractState,
   now = new Date()
 ) {
-  if (contractState === null || contractState.isPreStake || contractState.periodFinish === null) {
+  if (contractState === null || contractState.isPreStake) {
     return 'prestake';
+  } else if (contractState.periodFinish === null) {
+    // latest boost contract allows to start without prestake so as to hide in app if deployed too early
+    return 'expired';
   }
   const nowUTCTime = now.getTime();
   const pfUTCTime = contractState.periodFinish.getTime();
