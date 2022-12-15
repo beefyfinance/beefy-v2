@@ -21,7 +21,6 @@ import { selectChainById } from '../data/selectors/chains';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { CowLoader } from '../../components/CowLoader';
 import { InfoCards } from './components/InfoCards/InfoCards';
-import { RetirePauseReason } from './components/RetirePauseReason';
 import { VaultMeta } from './components/VaultMeta';
 import { useAppSelector } from '../../store';
 import { VaultPlatform } from '../../components/VaultPlatform';

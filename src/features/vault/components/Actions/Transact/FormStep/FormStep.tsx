@@ -6,9 +6,9 @@ import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectTransactMode, selectTransactVaultId } from '../../../../../data/selectors/transact';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { CardsTabs } from '../../../Card/CardTabs';
-import { DepositForm, DepositFormLoader } from '../DepositForm';
+import { DepositFormLoader } from '../DepositForm';
 import { transactFetchOptions } from '../../../../../data/actions/transact';
-import { WithdrawForm, WithdrawFormLoader } from '../WithdrawForm';
+import { WithdrawFormLoader } from '../WithdrawForm';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types';
 
 const useStyles = makeStyles(styles);

@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useMemo } from 'react';
 import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
@@ -25,6 +25,8 @@ import { QuoteTitleRefresh } from '../QuoteTitleRefresh';
 import { AlertError } from '../../../../../../components/Alerts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { ZapSlippage } from '../ZapSlippage';
+import BigNumber from 'bignumber.js';
+import { debounce } from 'lodash';
 
 const useStyles = makeStyles(styles);
 
@@ -41,14 +43,25 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   const chainId = useAppSelector(selectTransactSelectedChainId);
   const tokensId = useAppSelector(selectTransactSelectedTokensId);
   const status = useAppSelector(selectTransactQuoteStatus);
+  const debouncedFetchQuotes = useMemo(
+    () =>
+      debounce(
+        (dispatch: ReturnType<typeof useAppDispatch>, inputAmount: BigNumber) => {
+          if (inputAmount.lte(BIG_ZERO)) {
+            dispatch(transactActions.clearQuotes());
+          } else {
+            dispatch(transactFetchQuotesIfNeeded());
+          }
+        },
+        200,
+        { leading: true, trailing: true, maxWait: 1000 }
+      ),
+    []
+  );
 
   useEffect(() => {
-    if (inputAmount.lte(BIG_ZERO)) {
-      dispatch(transactActions.clearQuotes());
-    } else {
-      dispatch(transactFetchQuotesIfNeeded()); // TODO? debounce
-    }
-  }, [dispatch, mode, chainId, tokensId, inputAmount, inputMax]);
+    debouncedFetchQuotes(dispatch, inputAmount);
+  }, [dispatch, mode, chainId, tokensId, inputAmount, inputMax, debouncedFetchQuotes]);
 
   if (status === TransactStatus.Idle) {
     return null;

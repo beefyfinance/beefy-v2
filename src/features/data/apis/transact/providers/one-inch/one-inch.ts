@@ -88,8 +88,7 @@ export class OneInchZapProvider implements ITransactProvider {
   }
 
   async isSingleAssetVault(vault: VaultStandard, state: BeefyState): Promise<boolean> {
-    // TODO how do we know its not lp with one token e.g. stargate
-    // pref without rpc call
+    // assume all vaults with 1 asset are 'single asset'; later we have a token block list to filter out false positives
     return vault.assetIds.length === 1;
   }
 
@@ -372,8 +371,6 @@ export class OneInchZapProvider implements ITransactProvider {
       toTokenAddress: swapTokenOutAddress,
     });
 
-    console.warn(apiQuote);
-
     if (!apiQuote) {
       throw new Error(
         `Failed to fetch quote for ${swapTokenIn.symbol}->${swapTokenOut.symbol} from 1inch`
@@ -397,18 +394,15 @@ export class OneInchZapProvider implements ITransactProvider {
     if (swapAmountOut.lte(BIG_ZERO)) {
       throw new Error(`Quote returned zero ${swapTokenOut.symbol}`);
     }
-
-    const inputValue = selectTokenAmountValue(state, {
-      amount: swapAmountIn,
-      token: swapTokenIn,
-    });
-    const outputValue = selectTokenAmountValue(state, {
-      amount: swapAmountOut,
-      token: swapTokenOut,
-    });
-    const priceImpact = BIG_ONE.minus(
-      BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)
-    ).toNumber();
+    const priceImpact = await this.getPriceImpactFromApi(
+      api,
+      state,
+      wnative,
+      swapAmountIn,
+      swapTokenIn,
+      swapAmountOut,
+      swapTokenOut
+    );
 
     return {
       id: createQuoteId(option.id),
@@ -481,29 +475,33 @@ export class OneInchZapProvider implements ITransactProvider {
         this.getQuoteIfNeeded(api, amountIn, swapTokenIn, swapTokensOut[i])
       )
     );
-    const swaps: ZapQuoteStepSwap[] = swapAmountsOutWei
-      .map((amountOutWei, i) => {
-        // null amount out means no swap needed (input token is one of the lp tokens)
-        if (amountOutWei) {
-          return {
-            type: 'swap' as const,
-            fromToken: swapTokenIn,
-            fromAmount: fromWei(swapAmountsInWei[i], swapTokenIn.decimals),
-            toToken: swapTokensOut[i],
-            toAmount: fromWei(amountOutWei, swapTokensOut[i].decimals),
-            priceImpact: this.getPriceImpact(
-              state,
-              fromWei(swapAmountsInWei[i], swapTokenIn.decimals),
-              swapTokenIn,
-              fromWei(amountOutWei, swapTokensOut[i].decimals),
-              swapTokensOut[i]
-            ),
-          };
-        }
+    const swaps: ZapQuoteStepSwap[] = (
+      await Promise.all(
+        swapAmountsOutWei.map(async (amountOutWei, i) => {
+          // null amount out means no swap needed (input token is one of the lp tokens)
+          if (amountOutWei) {
+            return {
+              type: 'swap' as const,
+              fromToken: swapTokenIn,
+              fromAmount: fromWei(swapAmountsInWei[i], swapTokenIn.decimals),
+              toToken: swapTokensOut[i],
+              toAmount: fromWei(amountOutWei, swapTokensOut[i].decimals),
+              priceImpact: await this.getPriceImpactFromApi(
+                api,
+                state,
+                wnative,
+                fromWei(swapAmountsInWei[i], swapTokenIn.decimals),
+                swapTokenIn,
+                fromWei(amountOutWei, swapTokensOut[i].decimals),
+                swapTokensOut[i]
+              ),
+            };
+          }
 
-        return null;
-      })
-      .filter(swap => !!swap);
+          return null;
+        })
+      )
+    ).filter(swap => !!swap);
     const maxPriceImpact = Math.max(...swaps.map(swap => swap.priceImpact));
 
     const tokenAmountsToAdd = swapAmountsOutWei.map((amountOutWei, i) => {
@@ -569,7 +567,7 @@ export class OneInchZapProvider implements ITransactProvider {
     return fromWei(liquidity, depositToken.decimals);
   }
 
-  getPriceImpact(
+  getPriceImpactFromState(
     state: BeefyState,
     amountIn: BigNumber,
     tokenIn: TokenEntity,
@@ -586,6 +584,7 @@ export class OneInchZapProvider implements ITransactProvider {
     });
 
     console.debug(
+      'getPriceImpactFromState',
       bigNumberToStringDeep({
         input: {
           amount: amountIn.toString(10),
@@ -605,6 +604,64 @@ export class OneInchZapProvider implements ITransactProvider {
     );
 
     return BIG_ONE.minus(BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)).toNumber();
+  }
+
+  async getPriceImpactFromApi(
+    api: OneInchApi,
+    state: BeefyState,
+    wnative: TokenErc20,
+    amountIn: BigNumber,
+    tokenIn: TokenEntity,
+    amountOut: BigNumber,
+    tokenOut: TokenEntity
+  ): Promise<number> {
+    const swaps: TokenAmount[] = [
+      { amount: amountIn, token: nativeToWNative(tokenIn, wnative) },
+      { amount: amountOut, token: nativeToWNative(tokenOut, wnative) },
+    ];
+
+    try {
+      const prices = await api.getPriceInNative({
+        tokenAddresses: swaps.map(swap => swap.token.address),
+      });
+
+      const [inputValue, outputValue] = swaps.map(swap => {
+        const price = fromWei(prices[swap.token.address], wnative.decimals)
+          .shiftedBy(swap.token.decimals)
+          .decimalPlaces(0, BigNumber.ROUND_FLOOR)
+          .shiftedBy(-wnative.decimals);
+        if (price.lte(BIG_ZERO)) {
+          throw new Error(`No price for ${swap.token.symbol} via 1inch off chain oracle`);
+        }
+
+        return price.multipliedBy(swap.amount);
+      });
+
+      console.debug(
+        'getPriceImpactFromApi',
+        bigNumberToStringDeep({
+          input: {
+            amount: amountIn.toString(10),
+            token: tokenIn.symbol,
+            value: inputValue,
+          },
+          output: {
+            amount: amountOut.toString(10),
+            token: tokenOut.symbol,
+            value: outputValue,
+          },
+          impact:
+            BIG_ONE.minus(BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)).toNumber() *
+            100,
+        })
+      );
+
+      return BIG_ONE.minus(BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)).toNumber();
+    } catch (e) {
+      console.warn(e);
+      // Fall back to using Beefy API prices
+      return this.getPriceImpactFromState(state, amountIn, tokenIn, amountOut, tokenOut);
+    }
   }
 
   async getQuoteIfNeeded(
@@ -1017,8 +1074,10 @@ export class OneInchZapProvider implements ITransactProvider {
       throw new Error(`Quote returned zero ${swapTokenOut.symbol}`);
     }
 
-    const priceImpact = this.getPriceImpact(
+    const priceImpact = await this.getPriceImpactFromApi(
+      api,
       state,
+      wnative,
       swapAmountIn,
       swapTokenIn,
       swapAmountOut,
@@ -1097,31 +1156,35 @@ export class OneInchZapProvider implements ITransactProvider {
       )
     );
     let totalOutWei = BIG_ZERO;
-    const swaps: ZapQuoteStepSwap[] = swapAmountsOutWei
-      .map((amountOutWei, i) => {
-        // null amount out means no swap needed (swap in token is one of the lp tokens)
-        if (amountOutWei) {
-          totalOutWei = totalOutWei.plus(amountOutWei);
-          return {
-            type: 'swap' as const,
-            fromToken: swapTokensIn[i],
-            fromAmount: fromWei(swapAmountsInWei[i], swapTokensIn[i].decimals),
-            toToken: swapTokenOut,
-            toAmount: fromWei(amountOutWei, swapTokenOut.decimals),
-            priceImpact: this.getPriceImpact(
-              state,
-              fromWei(swapAmountsInWei[i], swapTokensIn[i].decimals),
-              swapTokensIn[i],
-              fromWei(amountOutWei, swapTokenOut.decimals),
-              swapTokenOut
-            ),
-          };
-        }
+    const swaps: ZapQuoteStepSwap[] = (
+      await Promise.all(
+        swapAmountsOutWei.map(async (amountOutWei, i) => {
+          // null amount out means no swap needed (swap in token is one of the lp tokens)
+          if (amountOutWei) {
+            totalOutWei = totalOutWei.plus(amountOutWei);
+            return {
+              type: 'swap' as const,
+              fromToken: swapTokensIn[i],
+              fromAmount: fromWei(swapAmountsInWei[i], swapTokensIn[i].decimals),
+              toToken: swapTokenOut,
+              toAmount: fromWei(amountOutWei, swapTokenOut.decimals),
+              priceImpact: await this.getPriceImpactFromApi(
+                api,
+                state,
+                wnative,
+                fromWei(swapAmountsInWei[i], swapTokensIn[i].decimals),
+                swapTokensIn[i],
+                fromWei(amountOutWei, swapTokenOut.decimals),
+                swapTokenOut
+              ),
+            };
+          }
 
-        totalOutWei = totalOutWei.plus(swapAmountsInWei[i]);
-        return null;
-      })
-      .filter(swap => !!swap);
+          totalOutWei = totalOutWei.plus(swapAmountsInWei[i]);
+          return null;
+        })
+      )
+    ).filter(swap => !!swap);
     const maxPriceImpact = Math.max(...swaps.map(swap => swap.priceImpact));
 
     return {

@@ -14,7 +14,7 @@ import {
 } from '../../../../../data/selectors/transact';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
-import { errorToString, formatBigDecimals } from '../../../../../../helpers/format';
+import { errorToString } from '../../../../../../helpers/format';
 import { TextLoader } from '../../../../../../components/TextLoader';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
 import { DepositTokenAmountInput } from '../DepositTokenAmountInput';

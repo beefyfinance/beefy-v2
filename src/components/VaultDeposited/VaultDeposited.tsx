@@ -11,7 +11,7 @@ import {
 import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/selectors/wallet';
-import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
+import { formatBigUsd } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { useAppSelector } from '../../store';
