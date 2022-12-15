@@ -34,6 +34,7 @@ import { fetchPlatforms } from '../actions/platforms';
 import { fetchOnRampSupportedProviders } from '../actions/on-ramp';
 import { fetchFees } from '../actions/fees';
 import { DataLoaderState, LoaderState } from './data-loader-types';
+import { fetchTreasury } from '../actions/treasury';
 
 const dataLoaderStateInit: LoaderState = {
   alreadyLoadedOnce: false,
@@ -83,6 +84,7 @@ export const initialDataLoaderState: DataLoaderState = {
     bridge: dataLoaderStateInit,
     platforms: dataLoaderStateInit,
     onRamp: dataLoaderStateInit,
+    treasury: dataLoaderStateInit,
   },
   byChainId: {},
 };
@@ -202,6 +204,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
     addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms', true);
     addGlobalAsyncThunkActions(builder, fetchOnRampSupportedProviders, 'onRamp', true);
+    addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury', true);
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance']);
     addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, ['allowance']);

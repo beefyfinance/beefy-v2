@@ -249,6 +249,17 @@ export class BeefyAPI {
     return res.data;
   }
 
+  public async getTreasury(): Promise<any> {
+    if (featureFlag_simulateBeefyApiError('treasury')) {
+      throw new Error('Simulated beefy api error');
+    }
+
+    const res = await this.api.get<any>('/treasury', {
+      params: { _: this.getCacheBuster('long') },
+    });
+    return res.data;
+  }
+
   /**
    * @param mode short: minutely / long: hourly
    * @protected
