@@ -129,10 +129,10 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    if (!isTokenErc20(depositToken)) {
-      console.debug(this.getId(), `zap to non-erc20 not supported`);
-      return null;
-    }
+    // if (!isTokenErc20(depositToken)) {
+    //   console.debug(this.getId(), `zap to non-erc20 not supported`);
+    //   return null;
+    // }
 
     const zap = selectOneInchZapByChainId(state, vault.chainId);
     if (!zap) {
@@ -140,7 +140,16 @@ export class OneInchZapProvider implements ITransactProvider {
       return null;
     }
 
-    const blockedToken = zap.blockedDepositToTokens.find(id => depositToken.id === id);
+    const blockedVault = zap.blockedVaults.find(id => vault.id === id);
+    if (blockedVault !== undefined) {
+      console.debug(
+        this.getId(),
+        `1inch zap for ${vault.chainId} blocks zapping for vault ${vault.id}`
+      );
+      return null;
+    }
+
+    const blockedToken = zap.blockedTokens.find(id => depositToken.id === id);
     if (blockedToken !== undefined) {
       console.debug(
         this.getId(),
@@ -234,14 +243,23 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    if (!isTokenErc20(depositToken)) {
-      console.debug(this.getId(), `zap to non-erc20 not supported`);
-      return null;
-    }
+    // if (!isTokenErc20(depositToken)) {
+    //   console.debug(this.getId(), `zap to non-erc20 not supported`);
+    //   return null;
+    // }
 
     const zap = selectOneInchZapByChainId(state, vault.chainId);
     if (!zap) {
       console.debug(this.getId(), `no 1inch zap for ${vault.chainId}`);
+      return null;
+    }
+
+    const blockedVault = zap.blockedVaults.find(id => vault.id === id);
+    if (blockedVault !== undefined) {
+      console.debug(
+        this.getId(),
+        `1inch zap for ${vault.chainId} blocks zapping for vault ${vault.id}`
+      );
       return null;
     }
 
@@ -260,7 +278,7 @@ export class OneInchZapProvider implements ITransactProvider {
     const lpTokens = tokensToLp(tokens, wnative);
     const lpTokenIds = lpTokens.map(token => token.id);
 
-    const blockedToken = zap.blockedDepositToTokens.find(id => lpTokenIds.includes(id));
+    const blockedToken = zap.blockedTokens.find(id => lpTokenIds.includes(id));
     if (blockedToken !== undefined) {
       console.debug(
         this.getId(),
@@ -755,10 +773,10 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    if (!isTokenErc20(depositToken)) {
-      console.debug(this.getId(), `zap from non-erc20 not supported`);
-      return null;
-    }
+    // if (!isTokenErc20(depositToken)) {
+    //   console.debug(this.getId(), `zap from non-erc20 not supported`);
+    //   return null;
+    // }
 
     const zap = selectOneInchZapByChainId(state, vault.chainId);
     if (!zap) {
@@ -766,7 +784,16 @@ export class OneInchZapProvider implements ITransactProvider {
       return null;
     }
 
-    const blockedToken = zap.blockedWithdrawFromTokens.find(id => depositToken.id === id);
+    const blockedVault = zap.blockedVaults.find(id => vault.id === id);
+    if (blockedVault !== undefined) {
+      console.debug(
+        this.getId(),
+        `1inch zap for ${vault.chainId} blocks zapping for vault ${vault.id}`
+      );
+      return null;
+    }
+
+    const blockedToken = zap.blockedTokens.find(id => depositToken.id === id);
     if (blockedToken !== undefined) {
       console.debug(
         this.getId(),
@@ -823,14 +850,23 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    if (!isTokenErc20(depositToken)) {
-      console.debug(this.getId(), `zap to non-erc20 not supported`);
-      return null;
-    }
+    // if (!isTokenErc20(depositToken)) {
+    //   console.debug(this.getId(), `zap to non-erc20 not supported`);
+    //   return null;
+    // }
 
     const zap = selectOneInchZapByChainId(state, vault.chainId);
     if (!zap) {
       console.debug(this.getId(), `no 1inch zap for ${vault.chainId}`);
+      return null;
+    }
+
+    const blockedVault = zap.blockedVaults.find(id => vault.id === id);
+    if (blockedVault !== undefined) {
+      console.debug(
+        this.getId(),
+        `1inch zap for ${vault.chainId} blocks zapping for vault ${vault.id}`
+      );
       return null;
     }
 
@@ -849,7 +885,7 @@ export class OneInchZapProvider implements ITransactProvider {
     const lpTokens = tokensToLp(tokens, wnative);
     const lpTokenIds = lpTokens.map(token => token.id);
 
-    const blockedToken = zap.blockedWithdrawFromTokens.find(id => lpTokenIds.includes(id));
+    const blockedToken = zap.blockedTokens.find(id => lpTokenIds.includes(id));
     if (blockedToken !== undefined) {
       console.debug(
         this.getId(),

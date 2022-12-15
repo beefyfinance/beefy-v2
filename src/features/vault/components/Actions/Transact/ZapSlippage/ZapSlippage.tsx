@@ -15,15 +15,18 @@ import clsx from 'clsx';
 import { formatSmallPercent } from '../../../../../../helpers/format';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectTransactSlippage } from '../../../../../data/selectors/transact';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import { ErrorOutline, ExpandLess, ExpandMore, ReportProblemOutlined } from '@material-ui/icons';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { IconWithTooltip } from '../../../../../../components/Tooltip';
+import { IconWithBasicTooltip } from '../../../../../../components/Tooltip/IconWithBasicTooltip';
 
 const useStyles = makeStyles(styles);
 
 const SLIPPAGE_PRESETS = [0.1, 0.5, 1, 3].map(p => p / 100);
 const DEFAULT_SLIPPAGE = 1 / 100;
+const SLIPPAGE_WARNING = 5 / 100;
+const SLIPPAGE_DANGER = 10 / 100;
 
 function isValidNumberInputString(value: string): boolean {
   const regex = new RegExp(`^[0-9]*\\.?[0-9]*$`);
@@ -209,14 +212,35 @@ export const ZapSlippage = memo<ZapSlippageProps>(function ({ className }) {
     <div className={clsx(classes.container, className)}>
       <button className={classes.titleToggle} onClick={handleToggle}>
         <div className={classes.title}>
-          {t('Transact-Slippage')}{' '}
+          {t('Transact-Slippage')}
           <IconWithTooltip
             triggerClass={classes.tooltipTrigger}
             content={<BasicTooltipContent title={t('Transact-Slippage-Explainer')} />}
           />
         </div>
         <div className={classes.valueIcon}>
-          <div className={classes.value}>{formatSmallPercent(slippage, 1)}</div>
+          <div
+            className={clsx(classes.value, {
+              [classes.warning]: slippage >= SLIPPAGE_WARNING,
+              [classes.danger]: slippage >= SLIPPAGE_DANGER,
+            })}
+          >
+            {slippage >= SLIPPAGE_WARNING ? (
+              <IconWithBasicTooltip
+                triggerClass={classes.tooltipTrigger}
+                title={t(
+                  `Transact-Slippage-Explainer-${
+                    slippage >= SLIPPAGE_DANGER ? 'Danger' : 'Warning'
+                  }`,
+                  {
+                    slippage: formatSmallPercent(slippage, 1),
+                  }
+                )}
+                Icon={slippage >= SLIPPAGE_DANGER ? ReportProblemOutlined : ErrorOutline}
+              />
+            ) : null}
+            {formatSmallPercent(slippage, 1)}
+          </div>
           <Icon className={classes.icon} />
         </div>
       </button>

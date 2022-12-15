@@ -5,6 +5,7 @@ import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
 import { TokenSelectButton } from '../TokenSelectButton';
 import {
+  selectTransactNumTokens,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactVaultId,
@@ -22,6 +23,7 @@ import { WithdrawTokenAmountInput } from '../WithdrawTokenAmountInput';
 import { VaultFees } from '../VaultFees';
 import { WithdrawActions } from '../WithdrawActions';
 import { StakedInBoost } from '../StakedInboost';
+import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
 
 const useStyles = makeStyles(styles);
 
@@ -39,14 +41,10 @@ const DepositedInVault = memo(function () {
     return <TextLoader placeholder="0.0000000 BNB-BIFI" />;
   }
 
-  return (
-    <>
-      {formatBigDecimals(balance)} {token.symbol}
-    </>
-  );
+  return <TokenAmountFromEntity amount={balance} token={token} minShortPlaces={4} />;
 });
 
-export const WithdrawForm = memo(function () {
+export const WithdrawFormLoader = memo(function WithdrawFormLoader() {
   const { t } = useTranslation();
   const classes = useStyles();
   const status = useAppSelector(selectTransactOptionsStatus);
@@ -61,28 +59,40 @@ export const WithdrawForm = memo(function () {
       ) : isError ? (
         <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
       ) : (
-        <>
-          <StakedInBoost className={classes.stakedInBoost} />
-          <div className={classes.labels}>
-            <div className={classes.selectLabel}>{t('Transact-SelectToken')}</div>
-            <div className={classes.availableLabel}>
-              {t('Transact-Available')}{' '}
-              <span className={classes.availableLabelAmount}>
-                <DepositedInVault />
-              </span>
-            </div>
-          </div>
-          <div className={classes.inputs}>
-            <TokenSelectButton />
-            <WithdrawTokenAmountInput />
-          </div>
-          <TransactQuote title={t('Transact-YouWithdraw')} className={classes.quote} />
-          <div className={classes.actions}>
-            <WithdrawActions />
-          </div>
-          <VaultFees className={classes.fees} />
-        </>
+        <WithdrawForm />
       )}
     </div>
+  );
+});
+
+export const WithdrawForm = memo(function WithdrawForm() {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
+
+  return (
+    <>
+      <StakedInBoost className={classes.stakedInBoost} />
+      <div className={classes.labels}>
+        <div className={classes.selectLabel}>
+          {t(hasOptions ? 'Transact-SelectToken' : 'Transact-Withdraw')}
+        </div>
+        <div className={classes.availableLabel}>
+          {t('Transact-Available')}{' '}
+          <span className={classes.availableLabelAmount}>
+            <DepositedInVault />
+          </span>
+        </div>
+      </div>
+      <div className={classes.inputs}>
+        <TokenSelectButton />
+        <WithdrawTokenAmountInput />
+      </div>
+      <TransactQuote title={t('Transact-YouWithdraw')} className={classes.quote} />
+      <div className={classes.actions}>
+        <WithdrawActions />
+      </div>
+      <VaultFees className={classes.fees} />
+    </>
   );
 });

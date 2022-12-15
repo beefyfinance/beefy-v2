@@ -10,10 +10,10 @@ export const styles = (theme: Theme) => ({
   routeHolder: {
     borderRadius: '8px',
     border: 'solid 2px #2D3153',
+    overflow: 'hidden' as const,
   },
   routeHeader: {
     background: '#2D3153',
-    borderRadius: '8px 8px 0px 0px',
     padding: '8px 12px',
     display: 'flex',
     justifyContent: 'space-between',

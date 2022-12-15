@@ -3,15 +3,24 @@ import { Theme } from '@material-ui/core/styles';
 export const styles = (theme: Theme) => ({
   container: {
     ...theme.typography['body-lg-med'],
+    position: 'relative' as const,
     color: '#D0D0DA',
     background: '#111321',
-    padding: '24px',
+    padding: '16px 24px',
     borderTopLeftRadius: '12px',
     borderTopRightRadius: '12px',
-    borderBottom: 'solid 2px #363B63',
     display: 'flex',
     columnGap: '12px',
     alignItems: 'center',
+    '&::after': {
+      content: '""',
+      position: 'absolute' as const,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      height: '2px',
+      background: '#363B63',
+    },
   },
   backButton: {
     margin: 0,

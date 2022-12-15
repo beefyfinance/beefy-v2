@@ -109,9 +109,6 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
         <Container maxWidth="lg">
           <div className={classes.contentColumns}>
             <div className={classes.columnActions}>
-              <Hidden mdUp>
-                <RetirePauseReason vaultId={vaultId} className={classes.retirePauseReason} />
-              </Hidden>
               <Actions vaultId={vaultId} />
               <Hidden smDown>
                 <InsuranceCards vaultId={vaultId} />
@@ -119,9 +116,6 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               </Hidden>
             </div>
             <div className={classes.columnInfo}>
-              <Hidden smDown>
-                <RetirePauseReason vaultId={vaultId} className={classes.retirePauseReason} />
-              </Hidden>
               {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
               {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
               {!isGovVault(vault) ? <Graph vaultId={vaultId} /> : null}

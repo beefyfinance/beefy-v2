@@ -150,8 +150,8 @@ export interface OneInchZapConfig {
   chainId: ChainEntity['id'];
   depositFromTokens: TokenEntity['id'][];
   withdrawToTokens: TokenEntity['id'][];
-  blockedDepositToTokens: TokenEntity['id'][]; // these two block lists might end up being the same
-  blockedWithdrawFromTokens: TokenEntity['id'][]; // these two block lists might end up being the same
+  blockedTokens: TokenEntity['id'][];
+  blockedVaults: VaultEntity['id'][];
 }
 
 export interface MinterConfigTokenErc20 {

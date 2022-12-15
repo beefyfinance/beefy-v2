@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => ({
   labels: {
     display: 'flex',
     flexWrap: 'nowrap' as const,
-    alignItems: 'center',
+    alignItems: 'baseline',
     gap: '8px',
     marginBottom: '8px',
   },

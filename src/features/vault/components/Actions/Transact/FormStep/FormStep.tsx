@@ -6,16 +6,16 @@ import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectTransactMode, selectTransactVaultId } from '../../../../../data/selectors/transact';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { CardsTabs } from '../../../Card/CardTabs';
-import { DepositForm } from '../DepositForm';
+import { DepositForm, DepositFormLoader } from '../DepositForm';
 import { transactFetchOptions } from '../../../../../data/actions/transact';
-import { WithdrawForm } from '../WithdrawForm';
+import { WithdrawForm, WithdrawFormLoader } from '../WithdrawForm';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types';
 
 const useStyles = makeStyles(styles);
 
 const modeToComponent: Record<TransactMode, ComponentType> = {
-  [TransactMode.Deposit]: DepositForm,
-  [TransactMode.Withdraw]: WithdrawForm,
+  [TransactMode.Deposit]: DepositFormLoader,
+  [TransactMode.Withdraw]: WithdrawFormLoader,
 };
 
 export const FormStep = memo(function () {

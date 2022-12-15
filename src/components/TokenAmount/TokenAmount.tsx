@@ -6,6 +6,11 @@ import { BigNumber } from 'bignumber.js';
 import { TokenEntity } from '../../features/data/entities/token';
 import { useAppSelector } from '../../store';
 import { selectTokenPriceByAddress } from '../../features/data/selectors/tokens';
+import { styles } from './styles';
+import { makeStyles } from '@material-ui/core';
+import clsx from 'clsx';
+
+const useStyles = makeStyles(styles);
 
 export type TokenAmountProps = {
   amount: BigNumber;
@@ -21,12 +26,16 @@ export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({
   minShortPlaces = 2,
   className,
 }) {
+  const classes = useStyles();
   const fullAmount = formatFullBigNumber(amount, decimals);
   const shortAmount = formatSignificantBigNumber(amount, decimals, price, 0, minShortPlaces);
   const needTooltip = shortAmount.length < fullAmount.length;
 
   return needTooltip ? (
-    <Tooltip triggerClass={className} content={<BasicTooltipContent title={fullAmount} />}>
+    <Tooltip
+      triggerClass={clsx(classes.withTooltip, className)}
+      content={<BasicTooltipContent title={fullAmount} />}
+    >
       {shortAmount}
     </Tooltip>
   ) : (

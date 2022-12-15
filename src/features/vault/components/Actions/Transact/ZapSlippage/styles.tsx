@@ -22,13 +22,28 @@ export const styles = (theme: Theme) => ({
     outline: 'none',
     cursor: 'pointer' as const,
   },
-  title: {},
+  title: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+  },
   valueIcon: {
     marginLeft: 'auto',
     display: 'flex',
     alignItems: 'center',
   },
-  value: {},
+  value: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+  },
+  excessSlippage: {},
+  warning: {
+    color: '#D19847',
+  },
+  danger: {
+    color: '#D15347',
+  },
   icon: {},
   selector: {
     border: '2px solid #363B63',
@@ -36,6 +51,15 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     width: '100%',
+    overflow: 'hidden' as const,
+    '& > $option:first-child': {
+      borderTopLeftRadius: '0',
+      borderBottomLeftRadius: '0',
+    },
+    '& > $option:last-child': {
+      borderTopRightRadius: '0',
+      borderBottomRightRadius: '0',
+    },
   },
   option: {
     ...theme.typography['body-lg'],
@@ -67,6 +91,10 @@ export const styles = (theme: Theme) => ({
     flexShrink: 0,
     flexGrow: 2,
     position: 'relative' as const,
+    '& > $option': {
+      borderTopRightRadius: '0',
+      borderBottomRightRadius: '0',
+    },
   },
   customPlaceholder: {
     cursor: 'pointer' as const,
@@ -91,10 +119,11 @@ export const styles = (theme: Theme) => ({
     width: '16px',
     height: '16px',
     margin: 0,
-    verticalAlign: 'middle',
+    display: 'block',
     '& svg': {
       width: '16px',
       height: '16px',
+      display: 'block',
     },
   },
 });
