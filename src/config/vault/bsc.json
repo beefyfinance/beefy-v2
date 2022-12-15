@@ -3761,28 +3761,6 @@
     "createdAt": 1622808107
   },
   {
-    "id": "cakev2-mx-busd-eol",
-    "name": "MX-BUSD LP",
-    "token": "MX-BUSD LP",
-    "tokenAddress": "0x41F049D990D38305504631C9835f6F856Bf1BA67",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pancakeswap",
-    "earnedToken": "mooCakeV2MX-BUSD",
-    "earnedTokenAddress": "0x7e7CEbCC006c74a406138BF94CA3815CE04461e0",
-    "earnContractAddress": "0x7e7CEbCC006c74a406138BF94CA3815CE04461e0",
-    "oracle": "lps",
-    "oracleId": "cakev2-mx-busd",
-    "status": "eol",
-    "platformId": "pancakeswap",
-    "assets": ["MX", "BUSD"],
-    "strategyTypeId": "lp",
-    "retireReason": "rewards",
-    "addLiquidityUrl": "https://pancakeswap.finance/add/0x9f882567a62a5560d147d64871776eea72df41d3/0xe9e7cea3dedca5984780bafc599bd69add087d56",
-    "buyTokenUrl": "https://pancakeswap.finance/swap?inputCurrency=0xe9e7cea3dedca5984780bafc599bd69add087d56&outputCurrency=0x9f882567a62a5560d147d64871776eea72df41d3",
-    "network": "bsc",
-    "createdAt": 1622801174
-  },
-  {
     "id": "cakev2-ktn-bnb-eol",
     "name": "KTN-BNB LP",
     "token": "KTN-BNB LP2",
