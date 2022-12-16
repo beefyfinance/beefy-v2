@@ -276,9 +276,9 @@ export function getURLWithParams(params?: URLSearchParams): string {
     queryParamsString = `${params.toString()}`;
 
     if(routerMode === 'hash') {
-      newURL.hash = `/#${queryParamsString}`;
+      newURL.hash = `/?${queryParamsString}`;
     } else {
-      newURL.hash = `#${queryParamsString}`;
+      newURL.search = `?${queryParamsString}`;
     }
   } else {
     newURL.hash = ``;
@@ -288,6 +288,7 @@ export function getURLWithParams(params?: URLSearchParams): string {
 
   // If we are using BrowserRouter and we have no params
   // Remove the # at the end of the URL
+  // @ts-ignore
   if(routerMode === "browser" && queryParamsString === '') {
     _returningURL = _returningURL.slice(0,_returningURL.length-1);
   }
@@ -306,8 +307,8 @@ export function getURLWithParams(params?: URLSearchParams): string {
  * @returns A new instance of URLSearchParams.
  */
 export function getURLParams(): URLSearchParams {
-  const urlHash = routerMode === 'hash' ? window.location.hash.replace('#/#', '') :
-  window.location.hash.replace('#', '');
+  const urlHash = routerMode === 'hash' ? window.location.hash.replace('#/?', '') :
+  window.location.search.replace('?', '');
 
   return new URLSearchParams(urlHash);
 }
