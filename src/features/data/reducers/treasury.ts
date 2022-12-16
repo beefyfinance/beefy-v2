@@ -4,12 +4,12 @@ import { ChainEntity } from '../entities/chain';
 
 export interface TreasuryTokenHoldings {
   name: string;
-  symbol: string;
+  symbol?: string;
   address: string;
   decimals: number;
   oracleId: string;
   oracleType: string;
-  assetType: 'token' | 'vault';
+  assetType: 'token' | 'vault' | 'native';
   price: number;
   usdValue: string;
   balance: string;
@@ -49,7 +49,9 @@ export const treasurySlice = createSlice({
             balances: data.balances,
           };
         }
-        sliceState.byChainId[chainId === 'one' ? 'harmony' : chainId] = items;
+        if (chainId !== 'sys') {
+          sliceState.byChainId[chainId === 'one' ? 'harmony' : chainId] = items;
+        }
       }
     });
   },

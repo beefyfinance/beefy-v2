@@ -1,7 +1,9 @@
 import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
+import createCachedSelector from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { BeefyState } from '../../../redux-types';
+import { ChainEntity } from '../entities/chain';
 import { isInitialLoader } from '../reducers/data-loader-types';
 
 export const selectIsTreasuryLoaded = (state: BeefyState) =>
@@ -9,6 +11,42 @@ export const selectIsTreasuryLoaded = (state: BeefyState) =>
 
 export const selectShouldInitTreasury = (state: BeefyState) =>
   isInitialLoader(state.ui.dataLoader.global.treasury);
+
+export const selectTreasury = (state: BeefyState) => {
+  return state.ui.treasury.byChainId;
+};
+
+export const selectTreasuryHoldingsByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
+  return state.ui.treasury.byChainId[chainId];
+};
+
+export const selectTreasurySummaryByChainId = createCachedSelector(
+  (state: BeefyState, chainId: ChainEntity['id']) =>
+    selectTreasuryHoldingsByChainId(state, chainId),
+  treasuryByChainId => {
+    return Object.values(treasuryByChainId).reduce(
+      (totals, item) => {
+        for (const token of Object.values(item.balances)) {
+          if (!token.usdValue.includes('NaN')) {
+            totals.totalUsd = totals.totalUsd.plus(new BigNumber(token.usdValue));
+          }
+          if (token.assetType === ('token' || 'native')) {
+            totals.liquidAssets.push(token);
+          }
+          if (token.assetType === 'vault') {
+            totals.stackedAssets.push(token);
+          }
+        }
+        return totals;
+      },
+      { totalUsd: BIG_ZERO, stackedAssets: [], liquidAssets: [] } as {
+        totalUsd: BigNumber;
+        stackedAssets: any[];
+        liquidAssets: any[];
+      }
+    );
+  }
+)((state: BeefyState, chainId: ChainEntity['id']) => chainId);
 
 export const selectTreasuryStats = createSelector(
   (state: BeefyState) => state.ui.treasury.byChainId,
@@ -19,23 +57,21 @@ export const selectTreasuryStats = createSelector(
 
     for (const [, balances] of Object.entries(treasury)) {
       for (const balancePerChain of Object.values(balances)) {
-        for (const item of Object.values(balancePerChain?.balances)) {
-          if (item) {
-            const balanceInTokens = new BigNumber(item.balance).shiftedBy(-item.decimals);
-            if (item.symbol === 'BIFI') {
+        for (const token of Object.values(balancePerChain.balances)) {
+          if (token) {
+            const balanceInTokens = new BigNumber(token.balance).shiftedBy(-token.decimals);
+            if (token.symbol === 'BIFI') {
               beefyHeld = beefyHeld.plus(balanceInTokens);
             }
-            if (!item.usdValue.includes('e-') && !item.usdValue.includes('NaN')) {
-              holdings = holdings.plus(new BigNumber(item.usdValue));
+            if (!token.usdValue.includes('NaN')) {
+              holdings = holdings.plus(new BigNumber(token.usdValue));
             }
-            assets.push(item.symbol || item.name);
+            assets.push(token.symbol || token.name);
           }
         }
       }
     }
 
-    const totalAssets = new Set(assets);
-
-    return { holdings, assets: totalAssets.size, beefyHeld };
+    return { holdings, assets: new Set(assets).size, beefyHeld };
   }
 );

@@ -22,17 +22,15 @@ export const Treasury = memo(function () {
     }
   }, [dispatch, shouldInit]);
 
+  if (!isLoaded) {
+    return <div>Loading ...</div>;
+  }
+
   return (
     <div className={classes.treasury}>
-      {isLoaded ? (
-        <>
-          <DaoSummary />
-          <DaoExposure />
-          <DaoHoldings />
-        </>
-      ) : (
-        <div>Loading ...</div>
-      )}
+      <DaoSummary />
+      <DaoExposure />
+      <DaoHoldings />
     </div>
   );
 });

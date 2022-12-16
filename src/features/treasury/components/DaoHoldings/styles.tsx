@@ -1,15 +1,14 @@
 import { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   container: {
-    display: 'grid',
-    gridGap: '16px',
-    gridTemplateColumns: 'repeat(3,minmax(0,1fr))',
-    [theme.breakpoints.down('md')]: {
-      gridTemplateColumns: 'repeat(2,minmax(0,1fr))',
-    },
-    [theme.breakpoints.down('sm')]: {
-      gridTemplateColumns: 'minmax(0,1fr)',
-    },
+    display: 'flex',
+    marginLeft: '-16px',
     paddingBottom: '48px',
+    '& div:last-child': {
+      marginBottom: '0',
+    },
+  },
+  columnClassName: {
+    paddingLeft: '16px',
   },
 });
