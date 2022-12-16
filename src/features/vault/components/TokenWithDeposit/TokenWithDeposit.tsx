@@ -7,7 +7,7 @@ import { formatBigDecimals } from '../../../../helpers/format';
 import { TokenEntity } from '../../../data/entities/token';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import {
-  selectGovVaultUserStackedBalanceInDepositToken,
+  selectGovVaultUserStakedBalanceInDepositToken,
   selectStandardVaultUserBalanceInDepositTokenExcludingBoosts,
 } from '../../../data/selectors/balance';
 import {
@@ -42,7 +42,7 @@ export function TokenWithDeposit({
 
   const oracleAmount = useAppSelector(state => {
     const mooTokenBalance = isGovVault(vault)
-      ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+      ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
       : selectStandardVaultUserBalanceInDepositTokenExcludingBoosts(state, vault.id);
     return mooTokenBalance;
   });

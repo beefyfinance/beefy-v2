@@ -34,14 +34,14 @@ export const selectTreasurySummaryByChainId = createCachedSelector(
             totals.liquidAssets.push(token);
           }
           if (token.assetType === 'vault') {
-            totals.stackedAssets.push(token);
+            totals.stakedAssets.push(token);
           }
         }
         return totals;
       },
-      { totalUsd: BIG_ZERO, stackedAssets: [], liquidAssets: [] } as {
+      { totalUsd: BIG_ZERO, stakedAssets: [], liquidAssets: [] } as {
         totalUsd: BigNumber;
-        stackedAssets: any[];
+        stakedAssets: any[];
         liquidAssets: any[];
       }
     );

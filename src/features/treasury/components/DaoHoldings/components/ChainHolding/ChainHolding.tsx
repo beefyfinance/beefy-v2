@@ -20,7 +20,7 @@ interface ChainHoldingProps {
 export const ChainHolding = memo<ChainHoldingProps>(function ({ chainId }) {
   const { t } = useTranslation();
 
-  const { totalUsd, liquidAssets, stackedAssets } = useAppSelector(state =>
+  const { totalUsd, liquidAssets, stakedAssets } = useAppSelector(state =>
     selectTreasurySummaryByChainId(state, chainId)
   );
 
@@ -48,10 +48,10 @@ export const ChainHolding = memo<ChainHoldingProps>(function ({ chainId }) {
           })}
         </>
       )}
-      {stackedAssets.length > 0 && (
+      {stakedAssets.length > 0 && (
         <>
           <div className={classes.assetTypes}>{t('Staked Assets')}</div>
-          {stackedAssets.map(token => {
+          {stakedAssets.map(token => {
             return <AssetInfo chainId={chainId} token={token} />;
           })}
         </>

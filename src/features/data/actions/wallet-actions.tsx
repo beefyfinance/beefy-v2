@@ -26,7 +26,7 @@ import {
   selectBoostUserRewardsInToken,
   selectGovVaultPendingRewardsInToken,
   selectGovVaultRewardsTokenEntity,
-  selectGovVaultUserStackedBalanceInDepositToken,
+  selectGovVaultUserStakedBalanceInDepositToken,
 } from '../selectors/balance';
 import {
   selectChainNativeToken,
@@ -513,7 +513,7 @@ const exitGovVault = (vault: VaultGov) => {
       return;
     }
 
-    const balanceAmount = selectGovVaultUserStackedBalanceInDepositToken(state, vault.id);
+    const balanceAmount = selectGovVaultUserStakedBalanceInDepositToken(state, vault.id);
     const token = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     const walletApi = await getWalletConnectionApiInstance();

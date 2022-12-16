@@ -159,7 +159,7 @@ export const selectStandardVaultUserBalanceInDepositTokenIncludingBoosts = (
   return mooAmountToOracleAmount(mooToken, depositToken, ppfs, mooTokenBalance);
 };
 
-export const selectGovVaultUserStackedBalanceInDepositToken = (
+export const selectGovVaultUserStakedBalanceInDepositToken = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -175,7 +175,7 @@ export const selectUserVaultDepositInDepositToken = (
 ) => {
   const vault = selectVaultById(state, vaultId);
   if (isGovVault(vault)) {
-    return selectGovVaultUserStackedBalanceInDepositToken(state, vaultId, walletAddress);
+    return selectGovVaultUserStakedBalanceInDepositToken(state, vaultId, walletAddress);
   } else {
     return selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(
       state,
@@ -298,7 +298,7 @@ export const selectLpBreakdownBalance = (
 ) => {
   const lpTotalSupplyDecimal = new BigNumber(breakdown.totalSupply);
   const userBalanceDecimal = isGovVault(vault)
-    ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+    ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
     : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
 
   const userShareOfPool = lpTotalSupplyDecimal.gt(BIG_ZERO)
