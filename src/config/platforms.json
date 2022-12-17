@@ -927,7 +927,7 @@
   {
     "id": "swapfish",
     "name": "SwapFish",
-    "filter": false
+    "filter": true
   },
   {
     "id": "opx",
