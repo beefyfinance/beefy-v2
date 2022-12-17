@@ -130,7 +130,7 @@
     ],
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x5b3240b6be3e7487d61cd1afdfc7fe4fa1d81e6400000000000000000000037b",
     "network": "ethereum",
-    "createdAt": 1669662663
+    "createdAt": 1671240920
   },
   {
     "id": "aura-inv-dola",
@@ -144,7 +144,8 @@
     "earnContractAddress": "0xb546807794dEdfd196a5d230856190d78cF31d04",
     "oracle": "lps",
     "oracleId": "aura-inv-dola",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "aura",
     "assets": ["INV", "DOLA"],
     "strategyTypeId": "multi-lp",
@@ -179,7 +180,7 @@
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x8e85e97ed19c0fa13b2549309965291fbbc0048b0000000000000000000003ba",
     "network": "ethereum",
-    "createdAt": 1668704940
+    "createdAt": 1671240920
   },
   {
     "id": "aura-aurabal",
@@ -501,7 +502,8 @@
     "earnContractAddress": "0xe6cFc9d27f8bfC8ddcB86d75381cD21570A21B20",
     "oracle": "lps",
     "oracleId": "aura-reth-bbausd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "aura",
     "assets": ["rETH", "bbaUSD"],
     "strategyTypeId": "multi-lp",
@@ -616,7 +618,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://app.balancer.fi/#/pool/0x1e19cf2d73a72ef1332c882f20534b6519be0276000200000000000000000112",
     "network": "ethereum",
-    "createdAt": 1667575517
+    "createdAt": 1671240920
   },
   {
     "id": "aura-mai-usdc",
@@ -637,7 +639,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://app.balancer.fi/#/pool/0xf3aeb3abba741f0eece8a1b1d2f11b85899951cb000200000000000000000351",
     "network": "ethereum",
-    "createdAt": 1667575516
+    "createdAt": 1671240920
   },
   {
     "id": "aura-wsteth-eth",
@@ -658,7 +660,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://app.balancer.fi/#/pool/0x32296969ef14eb0c6d29669c550d4a0449130230000200000000000000000080",
     "network": "ethereum",
-    "createdAt": 1667575516
+    "createdAt": 1671240920
   },
   {
     "id": "aura-wsteth-bbausd",
@@ -672,7 +674,8 @@
     "earnContractAddress": "0x6E4b6E879B9280C20f4004C029D3abf13E6cb323",
     "oracle": "lps",
     "oracleId": "aura-wsteth-bbausd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "aura",
     "assets": ["wstETH", "bbaUSD"],
     "strategyTypeId": "multi-lp",
@@ -693,7 +696,8 @@
     "earnContractAddress": "0x64b3bc10e834905364178D6e23B296A5395EE111",
     "oracle": "lps",
     "oracleId": "aura-bbausd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "aura",
     "assets": ["bbaUSDT", "bbaUSDC", "bbaDAI"],
     "strategyTypeId": "multi-lp",
