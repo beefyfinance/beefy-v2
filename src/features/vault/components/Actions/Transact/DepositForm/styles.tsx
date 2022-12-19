@@ -9,7 +9,7 @@ export const styles = (theme: Theme) => ({
     flexWrap: 'nowrap' as const,
     alignItems: 'baseline',
     gap: '8px',
-    marginBottom: '8px',
+    marginBottom: '4px',
   },
   selectLabel: {
     ...theme.typography['body-lg'],

@@ -276,6 +276,36 @@ const beefOut = (vault: VaultStandard, input: InputTokenAmount, zap: ZapEntityBe
   });
 };
 
+class ErrorOneInchQuoteChanged extends Error {
+  private _originalAmount: BigNumber;
+  private _newAmount: BigNumber;
+  private _token: TokenEntity;
+
+  constructor(originalAmount: BigNumber, newAmount: BigNumber, token: TokenEntity) {
+    const originalAmountStr = originalAmount.toString(10);
+    const newAmountStr = newAmount.toString(10);
+    super(
+      `Swap amount out changed from ${originalAmountStr} ${token.symbol} to ${newAmountStr} ${token.symbol}. Please check and try again.`
+    );
+
+    this._originalAmount = originalAmount;
+    this._newAmount = newAmount;
+    this._token = token;
+  }
+
+  public get newAmount(): BigNumber {
+    return this._newAmount;
+  }
+
+  public get originalAmount(): BigNumber {
+    return this._originalAmount;
+  }
+
+  public get token(): TokenEntity {
+    return this._token;
+  }
+}
+
 const oneInchBeefInSingle = (
   vault: VaultEntity,
   inputToken: TokenEntity,
@@ -323,7 +353,7 @@ const oneInchBeefInSingle = (
 
     // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
     if (swapAmountOut.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
-      throw new Error(`Output is less than expected. Please try again.`);
+      throw new ErrorOneInchQuoteChanged(swap.toAmount, swapAmountOut, swap.toToken);
     }
 
     const walletApi = await getWalletConnectionApiInstance();
@@ -429,7 +459,7 @@ const oneInchBeefInLP = (
 
         // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
         if (swapAmountOut.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
-          throw new Error(`Output is less than expected. Please try again.`);
+          throw new ErrorOneInchQuoteChanged(swap.toAmount, swapAmountOut, swap.toToken);
         }
 
         console.debug(
@@ -556,7 +586,7 @@ const oneInchBeefOutSingle = (
 
     // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
     if (swapAmountOutDec.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
-      throw new Error(`Output is less than expected. Please try again.`);
+      throw new ErrorOneInchQuoteChanged(swap.toAmount, swapAmountOutDec, swap.toToken);
     }
 
     const contract = new web3.eth.Contract(BeefyZapOneInchAbi, zap.zapAddress);
@@ -657,7 +687,7 @@ const oneInchBeefOutLP = (
 
         // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
         if (swapAmountOutDec.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
-          throw new Error(`Output is less than expected. Please try again.`);
+          throw new ErrorOneInchQuoteChanged(swap.toAmount, swapAmountOutDec, swap.toToken);
         }
 
         return swapData;
