@@ -517,7 +517,7 @@
   "Transact-Fee-TotalFee": "Total Performance Fee",
   "Transact-Provider-vault": "Direct",
   "Transact-Provider-gov-vault": "Direct",
-  "Transact-Provider-one-inch": "1inch",
-  "Transact-Provider-beefy-zap-uniswapv2": "Beefy Zap",
-  "Transact-Provider-beefy-zap-solidly": "Beefy Zap"
+  "Transact-Provider-one-inch": "Beefy × 1inch",
+  "Transact-Provider-beefy-zap-uniswapv2": "Beefy",
+  "Transact-Provider-beefy-zap-solidly": "Beefy"
 }

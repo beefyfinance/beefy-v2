@@ -58,4 +58,12 @@ export const zaps: OneInchZapConfig[] = [
     blockedTokens: ['beltBTC', 'beltBNB', 'beltETH', 'S*USDT', 'S*BUSD'],
     blockedVaults: ['venus-bnb', 'venus-wbnb'],
   },
+  {
+    zapAddress: '0x19b7010d31c4612bB38498ad1dDe16E59a649Fd2',
+    chainId: 'aurora',
+    depositFromTokens: ['ETH', 'WETH', 'USDC', 'USDT', 'WBTC'],
+    withdrawToTokens: ['ETH', 'BIFI', 'USDC', 'USDT', 'WBTC'],
+    blockedTokens: [],
+    blockedVaults: [],
+  },
 ];
