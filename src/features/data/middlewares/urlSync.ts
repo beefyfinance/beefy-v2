@@ -49,7 +49,7 @@ export function vaultsFilteringActionsMiddleware(store: BeefyStore) {
     urlToFilters({
       url: getURLParams(),
       dispatcher: store.dispatch,
-      chainsById: store.getState().entities.chains.byId,
+      chainsById: store.getState().entities.chains.byId, // TODO: this is not available on first load
     });
 
     return next(action);

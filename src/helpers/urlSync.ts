@@ -1,7 +1,10 @@
-import { isEqual } from "lodash";
-import { routerMode } from "../components/Router";
-import { ChainEntity } from "../features/data/entities/chain";
-import { filteredVaultsActions, FilteredVaultsState, initialFilteredVaultsState } from "../features/data/reducers/filtered-vaults";
+import { isEqual } from 'lodash';
+import { ChainEntity } from '../features/data/entities/chain';
+import {
+  filteredVaultsActions,
+  FilteredVaultsState,
+  initialFilteredVaultsState,
+} from '../features/data/reducers/filtered-vaults';
 
 const URL_PARAM_FILTER_SORT = 'sort';
 const URL_PARAM_FILTER_SORT_DIRECTION = 'sortDirection';
@@ -21,9 +24,12 @@ const URL_PARAM_FILTER_ONLY_BOOSTED = 'onlyBoosted';
  * @param chainsById - { [id: string]: ChainEntity; }
  * @returns An Array of strings containing the equivalent chainID for each chain name
  */
-function stringToChainIDs(value: string, chainsById: {
-  [id: string]: ChainEntity;
-}) {
+function stringToChainIDs(
+  value: string,
+  chainsById: {
+    [id: string]: ChainEntity;
+  }
+) {
   const arrayChains = Object.values(chainsById);
 
   const paramItems: Array<string> = (value ?? '')
@@ -34,18 +40,14 @@ function stringToChainIDs(value: string, chainsById: {
   // chainID for each chain name
   return paramItems
     .filter(item => {
-      const _item = arrayChains.find(
-        element => element.id === cleanString(item)
-      );
+      const _item = arrayChains.find(element => element.id === cleanString(item));
 
       if (!_item) return false;
 
       return true;
     })
     .map(item => {
-      const _item = arrayChains.find(
-        element => element.id === cleanString(item)
-      );
+      const _item = arrayChains.find(element => element.id === cleanString(item));
       return _item.id;
     });
 }
@@ -57,9 +59,12 @@ function stringToChainIDs(value: string, chainsById: {
  * @param chainsById - { [id: string]: ChainEntity; }
  * @returns A string of the chainIDs that are in the chainsById object.
  */
-function chainIDsToString(chainIDs: Array<string>, chainsById: {
-  [id: string]: ChainEntity;
-}) {
+function chainIDsToString(
+  chainIDs: Array<string>,
+  chainsById: {
+    [id: string]: ChainEntity;
+  }
+) {
   return chainIDs
     .filter(chainID => {
       const _item = chainsById[chainID];
@@ -80,9 +85,15 @@ function chainIDsToString(chainIDs: Array<string>, chainsById: {
  * @param  - URL_PARAM_FILTER_SORT
  * @returns A string
  */
-export function filtersToUrl({ filterState, chainsById }: { filterState: FilteredVaultsState, chainsById: {
-  [id: string]: ChainEntity;
-} }): string {
+export function filtersToUrl({
+  filterState,
+  chainsById,
+}: {
+  filterState: FilteredVaultsState;
+  chainsById: {
+    [id: string]: ChainEntity;
+  };
+}): string {
   const currentURLParams = new URLSearchParams();
 
   // Filter Sort
@@ -116,8 +127,11 @@ export function filtersToUrl({ filterState, chainsById }: { filterState: Filtere
   }
 
   // Filter Chain IDs
-  if(isEqual(filterState.chainIds, initialFilteredVaultsState.chainIds) === false) {
-    currentURLParams.set(URL_PARAM_FILTER_CHAIN_IDS, chainIDsToString(filterState.chainIds, chainsById));
+  if (isEqual(filterState.chainIds, initialFilteredVaultsState.chainIds) === false) {
+    currentURLParams.set(
+      URL_PARAM_FILTER_CHAIN_IDS,
+      chainIDsToString(filterState.chainIds, chainsById)
+    );
   }
 
   // Filter Platform ID
@@ -157,9 +171,17 @@ function cleanString(str: string) {
  * It takes a URL and a dispatcher and it dispatches actions to the store based on the URL
  * @param  - URL_PARAM_FILTER_SORT
  */
-export function urlToFilters({ url, dispatcher, chainsById }: { url: URLSearchParams; dispatcher: Function, chainsById: {
-  [id: string]: ChainEntity;
-} }) {
+export function urlToFilters({
+  url,
+  dispatcher,
+  chainsById,
+}: {
+  url: URLSearchParams;
+  dispatcher: Function;
+  chainsById: {
+    [id: string]: ChainEntity;
+  };
+}) {
   // Let's parse every possible Search Param
   // Filter Sort
   const filterSort = url.get(URL_PARAM_FILTER_SORT);
@@ -238,9 +260,9 @@ export function urlToFilters({ url, dispatcher, chainsById }: { url: URLSearchPa
 
   // Filter Chain IDs
   const filterChainIDs = url.get(URL_PARAM_FILTER_CHAIN_IDS);
-  if(filterChainIDs)  {
+  if (filterChainIDs) {
     const arrayChainIDs = stringToChainIDs(filterChainIDs, chainsById);
-    if(arrayChainIDs.length>0) {
+    if (arrayChainIDs.length > 0) {
       dispatcher(filteredVaultsActions.setChainIds(arrayChainIDs));
     }
   }
@@ -263,42 +285,21 @@ export function urlToFilters({ url, dispatcher, chainsById }: { url: URLSearchPa
 }
 
 /**
- * It takes a URLSearchParams object and returns a string that is the current URL with the params
- * appended to the end.
- * @param {URLSearchParams} [params] - URLSearchParams - The parameters you want to add to the URL
- * @returns The URL with the hash and the params.
+ * It takes a URLSearchParams object and returns a string that is the current URL with the querystring
+ * updated to said params.
+ * @param {URLSearchParams} [params] - The parameters you want to set on the URL; or undefined to remove all.
+ * @returns The URL with updated querystring
  */
 export function getURLWithParams(params?: URLSearchParams): string {
-  const newURL = window.location;
-  let queryParamsString = '';
+  const newURL = new URL(window.location.href);
 
-  if (params && params.toString().length > 0) {
-    queryParamsString = `${params.toString()}`;
-
-    if(routerMode === 'hash') {
-      newURL.hash = `/?${queryParamsString}`;
-    } else {
-      newURL.search = `?${queryParamsString}`;
-    }
+  if (params) {
+    newURL.search = `?${params.toString()}`;
   } else {
-    newURL.hash = ``;
+    newURL.search = '';
   }
 
-  let _returningURL = newURL.toString();
-
-  // If we are using BrowserRouter and we have no params
-  // Remove the # at the end of the URL
-  // @ts-ignore
-  if(routerMode === "browser" && queryParamsString === '') {
-    _returningURL = _returningURL.slice(0,_returningURL.length-1);
-  }
-
-  if(routerMode === "hash" && queryParamsString === '') {
-    _returningURL = `${_returningURL}/`;
-  }
-  
-  
-  return _returningURL;
+  return newURL.toString();
 }
 
 /**
@@ -307,10 +308,9 @@ export function getURLWithParams(params?: URLSearchParams): string {
  * @returns A new instance of URLSearchParams.
  */
 export function getURLParams(): URLSearchParams {
-  const urlHash = routerMode === 'hash' ? window.location.hash.replace('#/?', '') :
-  window.location.search.replace('?', '');
-
-  return new URLSearchParams(urlHash);
+  return new URLSearchParams(
+    window.location.search[0] === '?' ? window.location.search.slice(1) : ''
+  );
 }
 
 /**
