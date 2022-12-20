@@ -5,10 +5,9 @@ import { selectChainById } from '../../../../../data/selectors/chains';
 import { makeStyles } from '@material-ui/core';
 import { formatBigUsd } from '../../../../../../helpers/format';
 import BigNumber from 'bignumber.js';
-import { useTranslation } from 'react-i18next';
 import { ChainEntity } from '../../../../../data/entities/chain';
 import { selectTreasurySummaryByChainId } from '../../../../../data/selectors/treasury';
-import { AssetInfo } from '../AssetInfo';
+
 import { Assets } from '../Assets';
 
 const useStyles = makeStyles(styles);
@@ -18,8 +17,6 @@ interface ChainHoldingProps {
 }
 
 export const ChainHolding = memo<ChainHoldingProps>(function ({ chainId }) {
-  const { t } = useTranslation();
-
   const { totalUsd, assets } = useAppSelector(state =>
     selectTreasurySummaryByChainId(state, chainId)
   );

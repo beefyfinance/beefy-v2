@@ -1,4 +1,3 @@
-import { makeStyles } from '@material-ui/core';
 import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { sortBy } from 'lodash';
