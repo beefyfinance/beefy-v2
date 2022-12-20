@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Masonry from 'react-masonry-css';
 import { Section } from '../../../../components/Section';
 import { useAppSelector } from '../../../../store';
-import { selectTreasury } from '../../../data/selectors/treasury';
+import { selectTreasurySorted } from '../../../data/selectors/treasury';
 import { ChainHolding } from './components/ChainHolding';
 import { styles } from './styles';
 
@@ -14,7 +14,7 @@ export const DaoHoldings = memo(function () {
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const treasury = useAppSelector(selectTreasury);
+  const sortedTreasury = useAppSelector(selectTreasurySorted);
 
   const breakpoints = { default: 3, 1296: 2, 960: 1 };
 
@@ -25,8 +25,8 @@ export const DaoHoldings = memo(function () {
         columnClassName={classes.columnClassName}
         breakpointCols={breakpoints}
       >
-        {Object.entries(treasury).map(([chainId]) => (
-          <ChainHolding key={chainId} chainId={chainId} />
+        {Object.values(sortedTreasury).map(chain => (
+          <ChainHolding key={chain.chainId} chainId={chain.chainId} />
         ))}
       </Masonry>
     </Section>

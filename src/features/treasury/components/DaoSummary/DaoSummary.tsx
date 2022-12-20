@@ -27,11 +27,6 @@ export const DaoSummary = memo(function () {
         Icon: WalletIcon,
       },
       {
-        title: t('Summary-Monthly-Inflow'),
-        value: formatUsd(2000),
-        Icon: DailyIcon,
-      },
-      {
         title: t('Summary-Held-BIFI'),
         value: daoSummary.beefyHeld.toFixed(0),
         Icon: BifiIcon,
@@ -40,6 +35,11 @@ export const DaoSummary = memo(function () {
         title: t('Summary-Asset-Diversity'),
         value: daoSummary.assets,
         Icon: VaultIcon,
+      },
+      {
+        title: t('Summary-Monthly-Inflow'),
+        value: formatUsd(2000),
+        Icon: DailyIcon,
       },
     ];
   }, [daoSummary.assets, daoSummary.beefyHeld, daoSummary.holdings, t]);

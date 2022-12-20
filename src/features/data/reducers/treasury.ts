@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchTreasury } from '../actions/treasury';
 import { ChainEntity } from '../entities/chain';
+import { VaultEntity } from '../entities/vault';
 
 export interface TreasuryTokenHoldings {
   name: string;
@@ -8,11 +9,12 @@ export interface TreasuryTokenHoldings {
   address: string;
   decimals: number;
   oracleId: string;
-  oracleType: string;
-  assetType: 'token' | 'vault' | 'native';
+  oracleType: 'lps' | 'tokens';
+  assetType: 'token' | 'vault' | 'native' | 'validator';
   price: number;
   usdValue: string;
   balance: string;
+  vaultId?: VaultEntity['id'];
 }
 
 interface AddressHolding {
