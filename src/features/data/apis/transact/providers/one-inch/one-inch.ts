@@ -179,6 +179,7 @@ export class OneInchZapProvider implements ITransactProvider {
         chainId: vault.chainId,
         tokensId: createTokensId(vault.chainId, tokenAddresses),
         tokenAddresses: tokenAddresses,
+        fee: zap.fee,
         zap,
       };
     });
@@ -317,6 +318,7 @@ export class OneInchZapProvider implements ITransactProvider {
         chainId: vault.chainId,
         tokensId: createTokensId(vault.chainId, tokenAddresses),
         tokenAddresses: tokenAddresses,
+        fee: zap.fee,
         zap,
         lpTokens,
         amm,
@@ -881,6 +883,7 @@ export class OneInchZapProvider implements ITransactProvider {
         chainId: vault.chainId,
         tokensId: createTokensId(vault.chainId, tokenAddresses),
         tokenAddresses: tokenAddresses,
+        fee: zap.fee,
         zap,
       };
     });
@@ -982,6 +985,7 @@ export class OneInchZapProvider implements ITransactProvider {
         chainId: vault.chainId,
         tokensId: createTokensId(vault.chainId, tokenAddresses),
         tokenAddresses: tokenAddresses,
+        fee: zap.fee,
         zap,
         lpTokens,
         amm,

@@ -4,6 +4,7 @@ import { TokenEntity } from '../entities/token';
 import { PlatformEntity } from '../entities/platform';
 import { StrategyTypeEntity } from '../entities/strategy-type';
 import { AmmEntity } from '../entities/amm';
+import { ZapFee } from './transact/transact-types';
 
 export interface VaultConfig {
   id: string;
@@ -153,6 +154,7 @@ export interface OneInchZapConfig {
   withdrawToTokens: TokenEntity['id'][];
   blockedTokens: TokenEntity['id'][];
   blockedVaults: VaultEntity['id'][];
+  fee: ZapFee;
 }
 
 export interface MinterConfigTokenErc20 {

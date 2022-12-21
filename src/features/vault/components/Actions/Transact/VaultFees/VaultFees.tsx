@@ -9,36 +9,13 @@ import { selectAreFeesLoaded, selectFeesByVaultId } from '../../../../../data/se
 import clsx from 'clsx';
 import { formatPercent } from '../../../../../../helpers/format';
 import { TextLoader } from '../../../../../../components/TextLoader';
-import { VaultFee } from '../../../../../data/reducers/fees';
-import { InterestTooltipContent } from '../../../../../home/components/Vault/components/InterestTooltipContent';
-import { IconWithTooltip } from '../../../../../../components/Tooltip';
-import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
+import { PerformanceFees } from './PerformanceFees';
+import { Label } from './Label';
+import { Value } from './Value';
+import { MaybeZapFees } from './ZapFees';
+import { LabelCustomTooltip, LabelTooltip } from './LabelTooltip';
 
 const useStyles = makeStyles(styles);
-
-type PerformanceFeesProps = { fees: VaultFee };
-const performanceFeeLabels = {
-  stakers: 'Transact-Fee-Holder',
-  treasury: 'Transact-Fee-Treasury',
-  strategist: 'Transact-Fee-Developers',
-  call: 'Transact-Fee-HarvestFee',
-};
-const PerformanceFees = memo<PerformanceFeesProps>(function ({ fees }) {
-  const { t } = useTranslation();
-  const rows = Object.entries(performanceFeeLabels)
-    .filter(([key]) => key in fees)
-    .map(([key, label]) => ({
-      label: t(label),
-      value: `${formatPercent(fees[key], 2, '0%')}`,
-    }));
-
-  rows.push({
-    label: t('Transact-Fee-TotalFee'),
-    value: `${formatPercent(fees.total, 2, '0%')}`,
-  });
-
-  return <InterestTooltipContent rows={rows} />;
-});
 
 export type VaultFeesProps = {
   className?: string;
@@ -58,14 +35,10 @@ export const VaultFees = memo<VaultFeesProps>(function VaultFees({ className }) 
   return (
     <div className={clsx(classes.container, className)}>
       <div className={classes.transactionFees}>
-        <div className={classes.label}>
-          {t('Transact-Fee-Deposit')}{' '}
-          <IconWithTooltip
-            triggerClass={classes.tooltipTrigger}
-            content={<BasicTooltipContent title={t('Transact-Fee-Deposit-Explainer')} />}
-          />
-        </div>
-        <div className={classes.value}>
+        <Label>
+          {t('Transact-Fee-Deposit')} <LabelTooltip title={t('Transact-Fee-Deposit-Explainer')} />
+        </Label>
+        <Value>
           {areFeesLoaded ? (
             fees ? (
               fees.deposit !== undefined ? (
@@ -79,15 +52,11 @@ export const VaultFees = memo<VaultFeesProps>(function VaultFees({ className }) 
           ) : (
             <TextLoader placeholder={'0.0%'} />
           )}
-        </div>
-        <div className={classes.label}>
-          {t('Transact-Fee-Withdraw')}{' '}
-          <IconWithTooltip
-            triggerClass={classes.tooltipTrigger}
-            content={<BasicTooltipContent title={t('Transact-Fee-Withdraw-Explainer')} />}
-          />
-        </div>
-        <div className={classes.value}>
+        </Value>
+        <Label>
+          {t('Transact-Fee-Withdraw')} <LabelTooltip title={t('Transact-Fee-Withdraw-Explainer')} />
+        </Label>
+        <Value>
           {areFeesLoaded ? (
             fees ? (
               formatPercent(fees.withdraw, 2, '0%')
@@ -97,7 +66,8 @@ export const VaultFees = memo<VaultFeesProps>(function VaultFees({ className }) 
           ) : (
             <TextLoader placeholder={'0.0%'} />
           )}
-        </div>
+        </Value>
+        <MaybeZapFees />
       </div>
       <div className={classes.performanceFees}>
         <Trans
@@ -105,10 +75,7 @@ export const VaultFees = memo<VaultFeesProps>(function VaultFees({ className }) 
           i18nKey={'Transact-Fee-Performance-Explainer'}
           components={{
             PerformanceTooltip: fees ? (
-              <IconWithTooltip
-                triggerClass={classes.tooltipTrigger}
-                content={<PerformanceFees fees={fees} />}
-              />
+              <LabelCustomTooltip content={<PerformanceFees fees={fees} />} />
             ) : undefined,
           }}
         />

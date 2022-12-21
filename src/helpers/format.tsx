@@ -69,13 +69,15 @@ export const formatPercent = (
  * @param percent 0..1
  * @param maxPlaces
  * @param minPlaces
+ * @param formatZero
  */
 export function formatSmallPercent(
   percent: number,
-  maxPlaces: number = 1,
-  minPlaces: number = 0
+  maxPlaces: number = 2,
+  minPlaces: number = 0,
+  formatZero: boolean = false
 ): string {
-  return percent === 0
+  return !formatZero && percent === 0
     ? '0%'
     : (percent * 100).toLocaleString('en-US', {
         maximumFractionDigits: maxPlaces,

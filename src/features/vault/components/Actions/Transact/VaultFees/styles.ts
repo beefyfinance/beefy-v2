@@ -11,15 +11,6 @@ export const styles = (theme: Theme) => ({
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
     gap: '4px',
   },
-  label: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
-  },
-  value: {
-    ...theme.typography['body-sm-med'],
-    color: theme.palette.text.middle,
-    textAlign: 'right' as const,
-  },
   performanceFees: {
     ...theme.typography['body-sm'],
     color: theme.palette.text.dark,

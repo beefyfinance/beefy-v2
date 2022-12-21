@@ -224,6 +224,7 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
         zap,
         amm,
         lpTokens,
+        fee: 0,
       };
     });
 
@@ -342,6 +343,7 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
         zap,
         amm,
         lpTokens,
+        fee: 0,
       },
     ];
 
@@ -362,6 +364,7 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
         zap,
         amm,
         lpTokens,
+        fee: 0,
       });
     });
 

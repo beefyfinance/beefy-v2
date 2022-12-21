@@ -152,7 +152,7 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
 export const selectTransactOptionById = createSelector(
   (state: BeefyState, optionId: string) => optionId,
   (state: BeefyState) => state.ui.transact.options.byOptionId,
-  (optionId, byOptionId) => byOptionId[optionId]
+  (optionId, byOptionId): TransactOption => byOptionId[optionId]
 );
 
 export const selectTransactOptionIdsForTokensId = createSelector(

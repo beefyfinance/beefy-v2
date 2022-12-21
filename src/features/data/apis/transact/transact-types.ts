@@ -75,6 +75,18 @@ export type GovVaultQuote = {
   outputs: QuoteOutputTokenAmount[];
 };
 
+export type ZapFeeSingle = number;
+export type ZapFeeDiscounted = { original: number; discounted: number };
+export type ZapFee = ZapFeeSingle | ZapFeeDiscounted;
+
+export function isZapFeeDiscounted(zapFee: ZapFee): zapFee is ZapFeeDiscounted {
+  return typeof zapFee === 'object';
+}
+
+export function isZapFeeSingle(zapFee: ZapFee): zapFee is ZapFeeSingle {
+  return typeof zapFee === 'number';
+}
+
 export type ZapOption = {
   id: string;
   providerId: string;
@@ -84,6 +96,7 @@ export type ZapOption = {
   tokenAddresses: TokenEntity['address'][];
   type: 'zap';
   mode: TransactMode;
+  fee: ZapFee;
 };
 
 export type ZapQuote = {
