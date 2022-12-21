@@ -1,13 +1,17 @@
 import { makeStyles } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { formatBigUsd } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
 import { ChainEntity } from '../../../../../data/entities/chain';
+import { TokenEntity } from '../../../../../data/entities/token';
 import { VaultEntity } from '../../../../../data/entities/vault';
 import { TreasuryTokenHoldings } from '../../../../../data/reducers/treasury';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
+import {
+  selectStandardVaultIdsByDepositTokenAddressAddress,
+  selectVaultById,
+} from '../../../../../data/selectors/vaults';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
@@ -22,6 +26,8 @@ export const AssetInfo = memo<AssetInfoProps>(function ({ chainId, token }) {
 
   const isVault = token.assetType === 'vault';
 
+  const isLP = token.assetType === 'token' && token.oracleType === 'lps';
+
   const usdValue = new BigNumber(token.usdValue);
 
   //HIDE: All tokens with less than 10 usd
@@ -34,9 +40,11 @@ export const AssetInfo = memo<AssetInfoProps>(function ({ chainId, token }) {
       <div className={classes.assetFlex}>
         {isVault ? (
           <VaultIdentity vaultId={token.vaultId} />
+        ) : isLP ? (
+          <LPdentity chainId={chainId} address={token.address} />
         ) : (
           <>
-            <AssetsImage size={32} chainId={chainId} assetIds={[token.oracleId]} />
+            <AssetsImage size={24} chainId={chainId} assetIds={[token.oracleId]} />
             <div>{token.oracleId || token.name}</div>
           </>
         )}
@@ -60,6 +68,30 @@ export const VaultIdentity = memo<VaultNameProps>(function ({ vaultId }) {
   return (
     <>
       <AssetsImage size={24} chainId={vault.chainId} assetIds={vault.assetIds} />
+      <div>{vault.name}</div>
+    </>
+  );
+});
+
+interface LPdentityProps {
+  address: TokenEntity['address'];
+  chainId: ChainEntity['id'];
+}
+
+export const LPdentity = memo<LPdentityProps>(function ({ address, chainId }) {
+  const vaultId = useAppSelector(
+    state => selectStandardVaultIdsByDepositTokenAddressAddress(state, chainId, address)[0]
+  );
+
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+
+  const assetIds = useMemo(() => {
+    return vault ? vault.assetIds : ['unknown'];
+  }, [vault]);
+
+  return (
+    <>
+      <AssetsImage size={24} chainId={chainId} assetIds={assetIds} />
       <div>{vault.name}</div>
     </>
   );
