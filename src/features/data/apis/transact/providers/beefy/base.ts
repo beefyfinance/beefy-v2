@@ -125,37 +125,24 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
 
     let zaps = selectBeefyZapsByChainId(state, vault.chainId);
     if (zaps === undefined || zaps.length === 0) {
-      console.debug(
-        this.getId(),
-        `no zaps for ${vault.chainId}`,
-        state.entities.zaps.beefy.byChainId[vault.chainId]
-      );
       return null;
     }
 
     let amms = state.entities.amms.byChainId[vault.chainId];
     if (amms === undefined || amms.length === 0) {
-      console.debug(
-        this.getId(),
-        `no amms for ${vault.chainId}`,
-        state.entities.amms.byChainId[vault.chainId]
-      );
       return null;
     }
 
     amms = amms.filter(amm => amm.type === this.type);
     if (amms === undefined || amms.length === 0) {
-      console.debug(this.getId(), `no ${this.type} amms for ${vault.chainId}`);
       return null;
     }
 
     if (!isStandardVault(vault)) {
-      console.debug(this.getId(), `${vaultId} only standard vaults supported`);
       return null;
     }
 
     if (vault.assetIds.length !== 2) {
-      console.debug(this.getId(), `only supports 2 asset lp vaults`);
       return null;
     }
 
@@ -168,7 +155,6 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     if (!isTokenErc20(depositToken)) {
-      console.debug(this.getId(), `zap to non-erc20 not supported`);
       return null;
     }
 
@@ -179,13 +165,11 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
 
     const amm = this.getAmm(amms, depositToken.address, lpTokens);
     if (!amm) {
-      console.debug(this.getId(), `no ${this.type} amm has lp ${depositToken.address}`);
       return null;
     }
 
     const zap = selectBeefyZapByAmmId(state, amm.id);
     if (!zap) {
-      console.debug(this.getId(), `no beefy ${this.type} zap for ${amm.id}`);
       return null;
     }
 

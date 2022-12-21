@@ -6,13 +6,7 @@ import { SolidlyPairAbi } from '../../../../config/abi';
 import { ChainEntity } from '../../entities/chain';
 import { createContract } from '../../../../helpers/web3';
 import { getWeb3Instance } from '../instances';
-import {
-  BIG_ONE,
-  BIG_ZERO,
-  bigNumberToStringDeep,
-  fromWei,
-  toWei,
-} from '../../../../helpers/big-number';
+import { BIG_ONE, BIG_ZERO, fromWei, toWei } from '../../../../helpers/big-number';
 import {
   AddLiquidityRatio,
   AddLiquidityResult,
@@ -321,17 +315,6 @@ export class SolidlyPool implements IPool {
       .plus(1e18);
     const ratioNumerator = new BigNumber('1e36');
     const ratio = ratioNumerator.dividedToIntegerBy(ratioDenominator);
-
-    console.debug(
-      'getAddLiquidityRatioStable',
-      bigNumberToStringDeep({
-        swapAmountA,
-        swapAmountB,
-        amountA,
-        amountB,
-        ratio,
-      })
-    );
 
     const amount0 = amountIn
       .multipliedBy(BIG_ONE.minus(fromWei(ratio, 18)))

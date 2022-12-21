@@ -46,13 +46,7 @@ import { FriendlyError } from '../utils/error-utils';
 import { MinterEntity } from '../entities/minter';
 import { reloadReserves } from './minters';
 import { selectChainById } from '../selectors/chains';
-import {
-  BIG_ZERO,
-  bigNumberToStringDeep,
-  fromWeiString,
-  toWei,
-  toWeiString,
-} from '../../../helpers/big-number';
+import { BIG_ZERO, fromWeiString, toWei, toWeiString } from '../../../helpers/big-number';
 import { updateSteps } from './stepper';
 import { StepContent, stepperActions } from '../reducers/wallet/stepper';
 import { InputTokenAmount, TokenAmount, ZapQuoteStepSwap } from '../apis/transact/transact-types';
@@ -337,20 +331,6 @@ const oneInchBeefInSingle = (
     });
     const swapAmountOut = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
 
-    console.debug(
-      'oneInchBeefInSingle',
-      'getSwap',
-      {
-        disableEstimate: true, // otherwise will fail due to no allowance
-        fromAddress: zap.zapAddress,
-        amount: swapAmountInWei,
-        fromTokenAddress: swapTokenInAddress,
-        toTokenAddress: swapTokenOutAddress,
-        slippage: slippageTolerance * 100,
-      },
-      swapData
-    );
-
     // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
     if (swapAmountOut.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
       throw new ErrorOneInchQuoteChanged(swap.toAmount, swapAmountOut, swap.toToken);
@@ -365,38 +345,12 @@ const oneInchBeefInSingle = (
 
     const transaction = (() => {
       if (isTokenNative(inputToken)) {
-        console.debug(
-          'oneInchBeefInSingle',
-          'beefInETH',
-          { vaultAddress, tx0, tx1, wantType: WANT_TYPE.SINGLE },
-          {
-            from: address,
-            value: swapAmountInWei,
-            ...gasPrices,
-          }
-        );
         return contract.methods.beefInETH(vaultAddress, tx0, tx1, WANT_TYPE.SINGLE).send({
           from: address,
           value: swapAmountInWei,
           ...gasPrices,
         });
       } else {
-        console.debug(
-          'oneInchBeefInSingle',
-          'beefIn',
-          {
-            vaultAddress,
-            tokenAddress: swap.fromToken.address,
-            swapAmountInWei,
-            tx0,
-            tx1,
-            wantType: WANT_TYPE.SINGLE,
-          },
-          {
-            from: address,
-            ...gasPrices,
-          }
-        );
         return contract.methods
           .beefIn(vaultAddress, swap.fromToken.address, swapAmountInWei, tx0, tx1, WANT_TYPE.SINGLE)
           .send({
@@ -462,16 +416,6 @@ const oneInchBeefInLP = (
           throw new ErrorOneInchQuoteChanged(swap.toAmount, swapAmountOut, swap.toToken);
         }
 
-        console.debug(
-          'swapData',
-          bigNumberToStringDeep({
-            from: swap.fromToken.symbol,
-            fromAmount: swap.fromAmount,
-            to: swap.toToken.symbol,
-            toAmount: swapAmountOut,
-          })
-        );
-
         return swapData;
       })
     );
@@ -497,21 +441,7 @@ const oneInchBeefInLP = (
 
     const transaction = (() => {
       if (isTokenNative(input.token)) {
-        console.debug('beefInETH', { vaultAddress, tx0, tx1, wantType, inputAmountWei });
-        return contract.methods.beefInETH(vaultAddress, tx0, tx1, wantType).send({
-          from: address,
-          value: inputAmountWei,
-          ...gasPrices,
-        });
       } else {
-        console.debug('beefIn', {
-          vaultAddress,
-          tokenAddress: input.token.address,
-          inputAmountWei,
-          tx0,
-          tx1,
-          wantType,
-        });
         return contract.methods
           .beefIn(vaultAddress, input.token.address, inputAmountWei, tx0, tx1, wantType)
           .send({
@@ -656,8 +586,14 @@ const oneInchBeefOutLP = (
     const lp = getPool(depositToken.address, amm, chain);
     await lp.updateAllData();
 
-    const { withdrawnAmountAfterFeeWei, sharesToWithdrawWei, withdrawnAmountWei } =
-      await getVaultWithdrawnFromContract(input, vault, state, address, web3, multicall);
+    const { withdrawnAmountAfterFeeWei, sharesToWithdrawWei } = await getVaultWithdrawnFromContract(
+      input,
+      vault,
+      state,
+      address,
+      web3,
+      multicall
+    );
 
     const mooTokensToWithdrawWei = sharesToWithdrawWei.toString(10);
     const vaultAddress = vault.earnedTokenAddress;
@@ -708,30 +644,6 @@ const oneInchBeefOutLP = (
     const swapTokenOutAddress = swaps[0].toToken.address;
     const tx0 = swap0 ? swap0.tx.data : '0x0';
     const tx1 = swap1 ? swap1.tx.data : '0x0';
-
-    const debugObj = bigNumberToStringDeep({
-      input,
-      withdraw: {
-        sharesToWithdrawWei,
-        withdrawnAmountAfterFeeWei,
-        withdrawnAmountWei,
-      },
-      removeLiquidityAmounts: swapAmountsInWei,
-      swaps: {
-        swap0,
-        swap1,
-      },
-      beefOutAndSwap: [
-        vaultAddress,
-        mooTokensToWithdrawWei,
-        swapTokenOutAddress,
-        tx0,
-        tx1,
-        lp.getWantType(),
-      ],
-    });
-    console.debug('TX_DEBUG_VIEW', debugObj);
-    console.debug('TX_DEBUG_COPY', JSON.stringify(debugObj));
 
     const gasPrices = await getGasPriceOptions(web3);
     const transaction = (() => {
@@ -1165,7 +1077,6 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
   });
 };
 
-//const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
 const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });

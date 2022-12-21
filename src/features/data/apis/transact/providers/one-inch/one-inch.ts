@@ -21,7 +21,6 @@ import {
   selectIsTokenLoaded,
   selectTokenByAddress,
   selectTokenById,
-  selectTokenPriceByAddress,
 } from '../../../../selectors/tokens';
 import { isTokenEqual, isTokenErc20, TokenEntity, TokenErc20 } from '../../../../entities/token';
 import { selectOneInchZapByChainId } from '../../../../selectors/zap';
@@ -33,7 +32,6 @@ import { first, uniqBy } from 'lodash';
 import {
   BIG_ONE,
   BIG_ZERO,
-  bigNumberToStringDeep,
   fromWei,
   fromWeiString,
   toWei,
@@ -103,7 +101,6 @@ export class OneInchZapProvider implements ITransactProvider {
     const vault = selectVaultById(state, vaultId);
 
     if (!isStandardVault(vault)) {
-      console.debug(this.getId(), `${vaultId} only standard vaults supported`);
       return null;
     }
 
@@ -128,32 +125,19 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    // if (!isTokenErc20(depositToken)) {
-    //   console.debug(this.getId(), `zap to non-erc20 not supported`);
-    //   return null;
-    // }
 
     const zap = selectOneInchZapByChainId(state, vault.chainId);
     if (!zap) {
-      console.debug(this.getId(), `no 1inch zap for ${vault.chainId}`);
       return null;
     }
 
     const blockedVault = zap.blockedVaults.find(id => vault.id === id);
     if (blockedVault !== undefined) {
-      console.debug(
-        this.getId(),
-        `1inch zap for ${vault.chainId} blocks zapping for vault ${vault.id}`
-      );
       return null;
     }
 
     const blockedToken = zap.blockedTokens.find(id => depositToken.id === id);
     if (blockedToken !== undefined) {
-      console.debug(
-        this.getId(),
-        `1inch zap for ${vault.chainId} blocks zapping to ${blockedToken}`
-      );
       return null;
     }
 
@@ -162,7 +146,6 @@ export class OneInchZapProvider implements ITransactProvider {
       .filter(token => !!token && !isTokenEqual(token, depositToken));
 
     if (!zapTokens || zapTokens.length === 0) {
-      console.debug(this.getId(), `no zap tokens for 1inch ${zap.chainId} zap`);
       return null;
     }
 
@@ -231,7 +214,6 @@ export class OneInchZapProvider implements ITransactProvider {
     state: BeefyState
   ): Promise<OneInchZapOptionLP[] | null> {
     if (vault.assetIds.length !== 2) {
-      console.debug(this.getId(), `only supports 2 asset lp vaults`);
       return null;
     }
 
@@ -243,33 +225,19 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    // if (!isTokenErc20(depositToken)) {
-    //   console.debug(this.getId(), `zap to non-erc20 not supported`);
-    //   return null;
-    // }
 
     const zap = selectOneInchZapByChainId(state, vault.chainId);
     if (!zap) {
-      console.debug(this.getId(), `no 1inch zap for ${vault.chainId}`);
       return null;
     }
 
     const blockedVault = zap.blockedVaults.find(id => vault.id === id);
     if (blockedVault !== undefined) {
-      console.debug(
-        this.getId(),
-        `1inch zap for ${vault.chainId} blocks zapping for vault ${vault.id}`
-      );
       return null;
     }
 
     let amms = state.entities.amms.byChainId[vault.chainId];
     if (amms === undefined || amms.length === 0) {
-      console.debug(
-        this.getId(),
-        `no amms for ${vault.chainId}`,
-        state.entities.amms.byChainId[vault.chainId]
-      );
       return null;
     }
 
@@ -280,16 +248,11 @@ export class OneInchZapProvider implements ITransactProvider {
 
     const blockedToken = zap.blockedTokens.find(id => lpTokenIds.includes(id));
     if (blockedToken !== undefined) {
-      console.debug(
-        this.getId(),
-        `1inch zap for ${vault.chainId} blocks zapping to ${blockedToken}`
-      );
       return null;
     }
 
     const amm = this.getAmm(amms, depositToken.address, lpTokens);
     if (!amm) {
-      console.debug(this.getId(), `no amm has lp ${depositToken.address}`);
       return null;
     }
 
@@ -301,7 +264,6 @@ export class OneInchZapProvider implements ITransactProvider {
     const zapTokens = uniqBy(lpZapTokens.concat(oneInchZapTokens), token => token.id);
 
     if (!zapTokens || zapTokens.length === 0) {
-      console.debug(this.getId(), `no zap tokens for 1inch ${zap.chainId} zap`);
       return null;
     }
 
@@ -585,26 +547,6 @@ export class OneInchZapProvider implements ITransactProvider {
       token: tokenOut,
     });
 
-    console.debug(
-      'getPriceImpactFromState',
-      bigNumberToStringDeep({
-        input: {
-          amount: amountIn.toString(10),
-          token: tokenIn.symbol,
-          value: inputValue,
-          price: selectTokenPriceByAddress(state, tokenIn.chainId, tokenIn.address),
-        },
-        output: {
-          amount: amountOut.toString(10),
-          token: tokenOut.symbol,
-          value: outputValue,
-          price: selectTokenPriceByAddress(state, tokenOut.chainId, tokenOut.address),
-        },
-        impact:
-          BIG_ONE.minus(BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)).toNumber() * 100,
-      })
-    );
-
     return BIG_ONE.minus(BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)).toNumber();
   }
 
@@ -638,25 +580,6 @@ export class OneInchZapProvider implements ITransactProvider {
 
         return price.multipliedBy(swap.amount);
       });
-
-      console.debug(
-        'getPriceImpactFromApi',
-        bigNumberToStringDeep({
-          input: {
-            amount: amountIn.toString(10),
-            token: tokenIn.symbol,
-            value: inputValue,
-          },
-          output: {
-            amount: amountOut.toString(10),
-            token: tokenOut.symbol,
-            value: outputValue,
-          },
-          impact:
-            BIG_ONE.minus(BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)).toNumber() *
-            100,
-        })
-      );
 
       return BIG_ONE.minus(BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)).toNumber();
     } catch (e) {
@@ -716,14 +639,7 @@ export class OneInchZapProvider implements ITransactProvider {
     const min = new BigNumber(1000);
 
     if (amount0.lt(min) || amount1.lt(min)) {
-      console.debug(
-        bigNumberToStringDeep({
-          inputAmount: inputAmountWei,
-          amount0Wei: amount0,
-          amount1Wei: amount1,
-        })
-      );
-      throw new Error('Amount too small');
+      throw new Error('Swap amount too small');
     }
 
     return [amount0, amount1];
@@ -803,7 +719,6 @@ export class OneInchZapProvider implements ITransactProvider {
     const vault = selectVaultById(state, vaultId);
 
     if (!isStandardVault(vault)) {
-      console.debug(this.getId(), `${vaultId} only standard vaults supported`);
       return null;
     }
 
@@ -832,32 +747,19 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    // if (!isTokenErc20(depositToken)) {
-    //   console.debug(this.getId(), `zap from non-erc20 not supported`);
-    //   return null;
-    // }
 
     const zap = selectOneInchZapByChainId(state, vault.chainId);
     if (!zap) {
-      console.debug(this.getId(), `no 1inch zap for ${vault.chainId}`);
       return null;
     }
 
     const blockedVault = zap.blockedVaults.find(id => vault.id === id);
     if (blockedVault !== undefined) {
-      console.debug(
-        this.getId(),
-        `1inch zap for ${vault.chainId} blocks zapping for vault ${vault.id}`
-      );
       return null;
     }
 
     const blockedToken = zap.blockedTokens.find(id => depositToken.id === id);
     if (blockedToken !== undefined) {
-      console.debug(
-        this.getId(),
-        `1inch zap for ${vault.chainId} blocks zapping from ${blockedToken}`
-      );
       return null;
     }
 
@@ -866,7 +768,6 @@ export class OneInchZapProvider implements ITransactProvider {
       .filter(token => !!token && !isTokenEqual(token, depositToken));
 
     if (!zapTokens || zapTokens.length === 0) {
-      console.debug(this.getId(), `no zap tokens for 1inch ${zap.chainId} zap`);
       return null;
     }
 
@@ -898,7 +799,6 @@ export class OneInchZapProvider implements ITransactProvider {
     state: BeefyState
   ): Promise<OneInchZapOptionLP[] | null> {
     if (vault.assetIds.length !== 2) {
-      console.debug(this.getId(), `only supports 2 asset lp vaults`);
       return null;
     }
 
@@ -910,33 +810,19 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    // if (!isTokenErc20(depositToken)) {
-    //   console.debug(this.getId(), `zap to non-erc20 not supported`);
-    //   return null;
-    // }
 
     const zap = selectOneInchZapByChainId(state, vault.chainId);
     if (!zap) {
-      console.debug(this.getId(), `no 1inch zap for ${vault.chainId}`);
       return null;
     }
 
     const blockedVault = zap.blockedVaults.find(id => vault.id === id);
     if (blockedVault !== undefined) {
-      console.debug(
-        this.getId(),
-        `1inch zap for ${vault.chainId} blocks zapping for vault ${vault.id}`
-      );
       return null;
     }
 
     let amms = state.entities.amms.byChainId[vault.chainId];
     if (amms === undefined || amms.length === 0) {
-      console.debug(
-        this.getId(),
-        `no amms for ${vault.chainId}`,
-        state.entities.amms.byChainId[vault.chainId]
-      );
       return null;
     }
 
@@ -947,16 +833,11 @@ export class OneInchZapProvider implements ITransactProvider {
 
     const blockedToken = zap.blockedTokens.find(id => lpTokenIds.includes(id));
     if (blockedToken !== undefined) {
-      console.debug(
-        this.getId(),
-        `1inch zap for ${vault.chainId} blocks zapping from ${blockedToken}`
-      );
       return null;
     }
 
     const amm = this.getAmm(amms, depositToken.address, lpTokens);
     if (!amm) {
-      console.debug(this.getId(), `no amm has lp ${depositToken.address}`);
       return null;
     }
 
@@ -968,7 +849,6 @@ export class OneInchZapProvider implements ITransactProvider {
     const zapTokens = uniqBy(lpWithdrawTokens.concat(oneInchZapTokens), token => token.id);
 
     if (!zapTokens || zapTokens.length === 0) {
-      console.debug(this.getId(), `no zap tokens for 1inch ${zap.chainId} zap`);
       return null;
     }
 

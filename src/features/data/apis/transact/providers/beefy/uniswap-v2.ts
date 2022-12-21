@@ -58,11 +58,6 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider<AmmEntityUni
     const lp = getPool(depositToken.address, option.amm, chain);
     const zapContract = new web3.eth.Contract(ZapAbi, option.zap.zapAddress);
 
-    console.debug(this.getId(), 'swapTokenIn', swapTokenIn);
-    console.debug(this.getId(), 'swapTokenOut', swapTokenOut);
-
-    console.debug(this.getId(), `user has ${userAmountInWei.toString(10)} of IN`);
-
     type MulticallReturnType = [
       [
         {
@@ -70,14 +65,6 @@ export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider<AmmEntityUni
         }
       ]
     ];
-
-    console.debug(
-      this.getId(),
-      `estimateSwap on ${option.zap.zapAddress}:`,
-      vault.earnContractAddress,
-      swapTokenIn.address,
-      userAmountInWei.toString(10)
-    );
 
     const [[zap]]: MulticallReturnType = (await lp.updateAllData([
       [
