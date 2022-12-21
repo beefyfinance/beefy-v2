@@ -7300,8 +7300,7 @@
     "earnContractAddress": "0x30E3154ce70660590FC8bBc1929Ce9236e66C50E",
     "oracle": "lps",
     "oracleId": "boo-wftm-sftmx",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "spookyswap",
     "assets": ["sFTMx", "FTM"],
     "strategyTypeId": "lp",
@@ -7315,7 +7314,7 @@
     ],
     "addLiquidityUrl": "https://spooky.fi/#/add/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83/0xd7028092c830b5C8FcE061Af2E593413EbbC1fc1",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xd7028092c830b5C8FcE061Af2E593413EbbC1fc1",
-    "createdAt": 1650967301,
+    "createdAt": 1671306348,
     "network": "fantom"
   },
   {
