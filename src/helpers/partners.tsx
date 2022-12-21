@@ -9,6 +9,7 @@ const QiDao = [
   'aavev3-op-wbtc',
   'aavev3-op-dai',
   'aavev3-op-eth',
+  'curve-op-f-wsteth',
 ];
 
 const Insurace = [
