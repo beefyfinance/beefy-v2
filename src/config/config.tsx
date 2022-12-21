@@ -183,6 +183,7 @@ export const config = {
       'agEUR',
       'jEUR',
       'TUSD',
+      'USX',
     ],
   },
   fantom: {
@@ -246,7 +247,7 @@ export const config = {
       rpcUrls: ['https://arb1.arbitrum.io/rpc'],
       blockExplorerUrls: ['https://arbiscan.io/'],
     },
-    stableCoins: ['USDC', 'USDT', 'MIM', 'VST', 'DAI', 'sarUSDC', 'sarUSDT', 'FRAX'],
+    stableCoins: ['USDC', 'USDT', 'MIM', 'VST', 'DAI', 'sarUSDC', 'sarUSDT', 'FRAX', 'USX', 'MAI'],
   },
   avax: {
     name: 'Avalanche',
