@@ -109,4 +109,16 @@ export const amms: AmmConfig[] = [
     swapFeeDenominator: '556', // DYNAMIC pair.fee() [currently 2500 for stable and 556 for volatile)
     getAmountOutMode: 'getAmountOut', // router.getAmountsOut(uint amountIn, route[] memory routes) public view returns (uint[] memory amounts) or pair.getAmountOut(uint256 amountIn, address tokenIn) view returns (uint256)
   },
+  {
+    id: 'fantom-equalizer',
+    name: 'Equalizer',
+    type: 'solidly',
+    routerAddress: '0x1A05EB736873485655F29a37DEf8a0AA87F5a447',
+    factoryAddress: '0xc6366EFD0AF1d09171fe0EBF32c7943BB310832a',
+    pairInitHash: '0x02ada2a0163cd4f7e0f0c9805f5230716a95b174140e4c84c14883de216cc6a3',
+    minimumLiquidity: '1000',
+    swapFeeNumerator: '2', // DYNAMIC factory.getFee(stable);
+    swapFeeDenominator: '10000',
+    getAmountOutMode: 'getAmountOut', // router.getAmountsOut(uint amountIn, route[] memory routes) public view returns (uint[] memory amounts) or pair.getAmountOut(uint256 amountIn, address tokenIn) view returns (uint256)
+  },
 ];

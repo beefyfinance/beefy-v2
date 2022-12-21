@@ -29,14 +29,15 @@ const mapUniswapV2: Record<string, typeof UniswapV2Pool> = {
   'metis-netswap': NetswapUniswapV2Pool,
   'moonbeam-stella': StellaUniswapV2Pool,
   default: UniswapV2Pool,
-};
+} as const;
 
 const mapSolidly: Record<string, typeof SolidlyPool> = {
   'bsc-cone': ConeSolidlyPool,
   'fantom-spirit-v2': SpiritSwapV2SolidlyPool,
   'optimism-velodrome': VelodromeSolidlyPool,
+  'fantom-equalizer': VelodromeSolidlyPool,
   default: SolidlyPool,
-};
+} as const;
 
 export function getPool(
   lpAddress: string,

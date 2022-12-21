@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_velodrome-wsteth-ldo-beefy",
+    "poolId": "velodrome-wsteth-ldo",
+    "name": "Beefy",
+    "assets": ["wstETH", "LDO"],
+    "tokenAddress": "0xdFd25571eC749cA396462222D3f4c5B3A79c1A81",
+    "earnedToken": "OP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
+    "earnContractAddress": "0x1A3E5557039763425B00a2e1B0eB767B01d64756",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OP",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["lido-eth"]
+  },
+  {
     "id": "moo_curve-op-f-seth-opx",
     "poolId": "curve-op-f-seth",
     "name": "OPX",

@@ -927,11 +927,16 @@
   {
     "id": "swapfish",
     "name": "SwapFish",
-    "filter": false
+    "filter": true
   },
   {
     "id": "opx",
     "name": "OPX",
     "filter": false
+  },
+  {
+    "id": "equalizer",
+    "name": "Equalizer",
+    "filter": true
   }
 ]

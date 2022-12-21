@@ -111,6 +111,11 @@ export const zaps: BeefyZapConfig[] = [
     zapAddress: '0xcB0AFF1Bd4F6678c5de502B5f50e5dEff109cd29',
   },
   {
+    chainId: 'fantom',
+    ammId: 'fantom-equalizer',
+    zapAddress: '0xE82CAf86578AEBb5E43980375e91dA44355780C6',
+  },
+  {
     chainId: 'fuse',
     ammId: 'fuse-fusefi',
     zapAddress: '0xb0F9c6FBcfE226EEAD3AE8b019ce4666cE223a78',
