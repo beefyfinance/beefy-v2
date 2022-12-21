@@ -41,10 +41,10 @@ export async function getBoostsForChain(chainId: string) {
   return boostsByChainId[id];
 }
 
-function appToAddressBookId(chainId: string) {
+export function appToAddressBookId(chainId: string) {
   return chainId === 'harmony' ? 'one' : chainId;
 }
 
-function addressBookToAppId(chainId: string) {
+export function addressBookToAppId(chainId: string) {
   return chainId === 'one' ? 'harmony' : chainId;
 }
