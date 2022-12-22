@@ -55,6 +55,7 @@
     "network": "optimism",
     "createdAt": 1671735523
   },
+  {
     "id": "velodrome-weth-kwenta",
     "name": "KWENTA-ETH vLP",
     "token": "KWENTA-ETH vLP",
