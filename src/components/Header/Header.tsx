@@ -49,8 +49,8 @@ export const Header = memo(function () {
                   alt="BIFI"
                   src={
                     isMobile
-                      ? require(`../../images/bifi-logos/header-logo-notext.svg`).default
-                      : require(`../../images/bifi-logos/header-logo.svg`).default
+                      ? require(`../../images/bifi-logos/xmas-logo-notext.png`).default
+                      : require(`../../images/bifi-logos/xmas-logo.png`).default
                   }
                 />
               </Link>
