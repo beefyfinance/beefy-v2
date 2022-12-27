@@ -64,4 +64,7 @@ export const styles = (theme: Theme) => ({
       marginLeft: '4px',
     },
   },
+  uppercase: {
+    textTransform: 'uppercase' as const,
+  },
 });

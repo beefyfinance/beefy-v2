@@ -7,6 +7,10 @@ import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { TreasuryTokenHoldings } from '../reducers/treasury';
+import { getTop6Array } from '../utils/array-utils';
+import { selectLpBreakdownBalance } from './balance';
+import { selectHasBreakdownData, selectIsTokenStable, selectLpBreakdownByAddress } from './tokens';
+import { selectIsVaultStable } from './vaults';
 
 export const selectIsTreasuryLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.treasury.alreadyLoadedOnce;
@@ -86,3 +90,63 @@ export const selectTreasuryStats = createSelector(selectTreasury, treasury => {
 
   return { holdings, assets: new Set(assets).size, beefyHeld };
 });
+
+export const selectTreasuryTokensExposure = (state: BeefyState) => {
+  const treasury = selectTreasury(state);
+  const exposure = Object.entries(treasury).reduce((totals, [chainId, wallets]) => {
+    for (const wallet of Object.values(wallets)) {
+      for (const token of Object.values(wallet.balances)) {
+        if (!token.usdValue.includes('NaN')) {
+          const tokenBalanceUsd = new BigNumber(token.usdValue);
+          if (token.oracleType === 'lps') {
+            if (token.assetType === 'vault' && selectIsVaultStable(state, token.vaultId)) {
+              totals['stables'] = (totals['stables'] || BIG_ZERO).plus(tokenBalanceUsd);
+            } else {
+              const haveBreakdownData = selectHasBreakdownData(state, token.address, chainId);
+              if (haveBreakdownData) {
+                let balance = new BigNumber(token.balance).shiftedBy(-token.decimals);
+                if (token.assetType === 'vault') {
+                  const ppfs = new BigNumber(token.pricePerFullShare).shiftedBy(-token.decimals);
+                  balance = balance.multipliedBy(ppfs);
+                }
+                const breakdown = selectLpBreakdownByAddress(state, chainId, token.address);
+                const { assets } = selectLpBreakdownBalance(state, breakdown, balance, chainId);
+                for (const asset of assets) {
+                  if (selectIsTokenStable(state, chainId, asset.id)) {
+                    totals['stables'] = (totals['stables'] || BIG_ZERO).plus(asset.userValue);
+                  } else {
+                    totals[asset.id] = (totals[asset.id] || BIG_ZERO).plus(asset.userValue);
+                  }
+                }
+              } else {
+                totals[token.oracleId] = tokenBalanceUsd;
+              }
+            }
+          } else {
+            if (selectIsTokenStable(state, chainId, token.oracleId)) {
+              totals['stables'] = (totals['stables'] || BIG_ZERO).plus(tokenBalanceUsd);
+            } else {
+              totals[token.oracleId] = (totals[token.oracleId] || BIG_ZERO).plus(tokenBalanceUsd);
+            }
+          }
+        }
+      }
+    }
+    return totals;
+  }, {} as Record<string, BigNumber>);
+
+  const treasuryValue = Object.keys(exposure).reduce(
+    (cur, tot) => exposure[tot].plus(cur),
+    BIG_ZERO
+  );
+
+  const treasuryExposure = Object.keys(exposure).map(key => {
+    return {
+      key,
+      value: exposure[key],
+      percentage: exposure[key].dividedBy(treasuryValue).toNumber(),
+    };
+  });
+
+  return getTop6Array(treasuryExposure, 'percentage');
+};

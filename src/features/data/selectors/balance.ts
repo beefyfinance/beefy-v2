@@ -293,6 +293,33 @@ export const selectGovVaultRewardsTokenEntity = (state: BeefyState, vaultId: Vau
 
 export const selectLpBreakdownBalance = (
   state: BeefyState,
+  breakdown: TokenLpBreakdown,
+  balance: BigNumber,
+  chainId: ChainEntity['id']
+) => {
+  const lpTotalSupplyDecimal = new BigNumber(breakdown.totalSupply);
+  const userShareOfPool = balance.dividedBy(lpTotalSupplyDecimal);
+  const assets = breakdown.tokens.map((tokenAddress, i) => {
+    const reserves = new BigNumber(breakdown.balances[i]);
+    const assetToken = selectTokenByAddress(state, chainId, tokenAddress);
+    const valuePerDecimal = selectTokenPriceByAddress(state, chainId, tokenAddress);
+    const totalValue = reserves.multipliedBy(valuePerDecimal);
+
+    return {
+      ...assetToken,
+      totalAmount: reserves,
+      userAmount: userShareOfPool.multipliedBy(reserves),
+      totalValue,
+      userValue: userShareOfPool.multipliedBy(totalValue),
+      price: valuePerDecimal,
+    };
+  });
+
+  return { assets, userShareOfPool, lpTotalSupplyDecimal };
+};
+
+export const selectUserLpBreakdownBalance = (
+  state: BeefyState,
   vault: VaultEntity,
   breakdown: TokenLpBreakdown
 ) => {
@@ -373,14 +400,18 @@ export const selectTokenExposure = (state: BeefyState) => {
         chainId: vault.chainId,
       };
     } else {
-      const haveBreakdownData = selectHasBreakdownData(state, vault);
+      const haveBreakdownData = selectHasBreakdownData(
+        state,
+        vault.depositTokenAddress,
+        vault.chainId
+      );
       if (haveBreakdownData) {
         const breakdown = selectLpBreakdownByAddress(
           state,
           vault.chainId,
           vault.depositTokenAddress
         );
-        const { assets } = selectLpBreakdownBalance(state, vault, breakdown);
+        const { assets } = selectUserLpBreakdownBalance(state, vault, breakdown);
         for (const asset of assets) {
           totals[asset.id] = {
             value: (totals[asset.id]?.value || BIG_ZERO).plus(asset.userValue),
@@ -429,14 +460,18 @@ export const selectStablecoinsExposure = (state: BeefyState) => {
           selectUserVaultDepositInUsd(state, vaultId)
         );
       } else {
-        const haveBreakdownData = selectHasBreakdownData(state, vault);
+        const haveBreakdownData = selectHasBreakdownData(
+          state,
+          vault.depositTokenAddress,
+          vault.chainId
+        );
         if (haveBreakdownData) {
           const breakdown = selectLpBreakdownByAddress(
             state,
             vault.chainId,
             vault.depositTokenAddress
           );
-          const { assets } = selectLpBreakdownBalance(state, vault, breakdown);
+          const { assets } = selectUserLpBreakdownBalance(state, vault, breakdown);
           for (const asset of assets) {
             if (selectIsTokenStable(state, asset.chainId, asset.id)) {
               totals['stable'] = (totals['stable'] || BIG_ZERO).plus(asset.userValue);

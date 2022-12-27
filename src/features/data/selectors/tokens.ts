@@ -164,11 +164,14 @@ export const selectLpBreakdownByAddress = (
   return selectLpBreakdownByOracleId(state, token.oracleId);
 };
 
-export const selectHasBreakdownData = (state: BeefyState, vault: VaultEntity) => {
-  const chainId = vault.chainId;
+export const selectHasBreakdownData = (
+  state: BeefyState,
+  depositTokenAddress: VaultEntity['depositTokenAddress'],
+  chainId: ChainEntity['id']
+) => {
   const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
   const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
-  const breakdown = selectLpBreakdownByAddress(state, chainId, vault.depositTokenAddress);
+  const breakdown = selectLpBreakdownByAddress(state, chainId, depositTokenAddress);
 
   if (
     !isPricesLoaded ||
@@ -184,7 +187,7 @@ export const selectHasBreakdownData = (state: BeefyState, vault: VaultEntity) =>
 
   // Must have tokens in state
   const tokens = breakdown.tokens.map(
-    address => state.entities.tokens.byChainId[vault.chainId].byAddress[address.toLowerCase()]
+    address => state.entities.tokens.byChainId[chainId].byAddress[address.toLowerCase()]
   );
   if (tokens.findIndex(token => !token) !== -1) {
     return false;

@@ -22,7 +22,7 @@ export const useSortedAssets = (
   };
 
   for (const token of sortedAssets) {
-    if (token.assetType === ('token' || 'native')) {
+    if (token.assetType === 'token' || token.assetType === 'native') {
       list.liquidAssets.push(token);
     }
     if (token.assetType === 'vault') {

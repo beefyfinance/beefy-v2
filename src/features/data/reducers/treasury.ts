@@ -9,12 +9,13 @@ export interface TreasuryTokenHoldings {
   address: string;
   decimals: number;
   oracleId: string;
-  oracleType: 'lps' | 'tokens';
+  oracleType: 'lps' | 'token';
   assetType: 'token' | 'vault' | 'native' | 'validator';
   price: number;
   usdValue: string;
   balance: string;
   vaultId?: VaultEntity['id'];
+  pricePerFullShare?: string;
 }
 
 interface AddressHolding {
