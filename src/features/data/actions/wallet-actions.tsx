@@ -441,6 +441,11 @@ const oneInchBeefInLP = (
 
     const transaction = (() => {
       if (isTokenNative(input.token)) {
+        return contract.methods.beefInETH(vaultAddress, tx0, tx1, wantType).send({
+          from: address,
+          value: inputAmountWei,
+          ...gasPrices,
+        });
       } else {
         return contract.methods
           .beefIn(vaultAddress, input.token.address, inputAmountWei, tx0, tx1, wantType)
