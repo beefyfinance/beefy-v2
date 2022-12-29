@@ -136,6 +136,28 @@
     "createdAt": 1670954581
   },
   {
+    "id": "equalizer-usdc-dai",
+    "name": "USDC-DAI sLP",
+    "token": "USDC-DAI sLP",
+    "tokenAddress": "0x6eB4Eb157C3e6f0576b8ba3C88e8C5D2e6E81D17",
+    "tokenDecimals": 18,
+    "tokenProviderId": "equalizer",
+    "earnedToken": "mooEqualizerUSDC-DAI",
+    "earnedTokenAddress": "0x0855598EA2a256BE3c180a5eF92139746Eb2965A",
+    "earnContractAddress": "0x0855598EA2a256BE3c180a5eF92139746Eb2965A",
+    "oracle": "lps",
+    "oracleId": "equalizer-usdc-dai",
+    "status": "active",
+    "platformId": "equalizer",
+    "assets": ["USDC", "DAI"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_HIGH", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://equalizer.exchange/liquidity/0x0f03efdce7A8cE08c238b1a0B5425Fb63Bd44b38",
+    "buyTokenUrl": "https://equalizer.exchange/swap",
+    "network": "fantom",
+    "createdAt": 1672282535
+  },
+  {
     "id": "equalizer-wftm-dai",
     "name": "DAI-FTM vLP",
     "token": "DAI-FTM vLP",
