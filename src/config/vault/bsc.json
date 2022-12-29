@@ -6,7 +6,7 @@
     "tokenAddress": "0x30Fc36ba48456c043d094dd7127f1cECe16A4016",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "earnedToken": "mooFishBNB-BNBx",
+    "earnedToken": "mooFishBIFI-BNB",
     "earnedTokenAddress": "0x81Ba466172cD36B5C39d7Cc54Fdaf549621bE25A",
     "earnContractAddress": "0x81Ba466172cD36B5C39d7Cc54Fdaf549621bE25A",
     "oracle": "lps",
