@@ -17,7 +17,6 @@ export const DaoNavItems = [
     title: 'Header-Treasury',
     Icon: TreasuryIcon,
     url: '/treasury',
-    badge: true,
   },
 ];
 

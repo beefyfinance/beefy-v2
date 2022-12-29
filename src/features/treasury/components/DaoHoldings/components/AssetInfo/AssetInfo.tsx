@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
-import { memo, useMemo } from 'react';
+import { memo, PropsWithChildren, useMemo } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { formatBigUsd } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
@@ -22,8 +22,6 @@ interface AssetInfoProps {
 }
 
 export const AssetInfo = memo<AssetInfoProps>(function ({ chainId, token }) {
-  const classes = useStyles();
-
   const isVault = token.assetType === 'vault';
 
   const isLP = token.assetType === 'token' && token.oracleType === 'lps';
@@ -35,20 +33,41 @@ export const AssetInfo = memo<AssetInfoProps>(function ({ chainId, token }) {
     return null;
   }
 
+  if (isVault) {
+    return (
+      <AssetContainer token={token}>
+        <VaultIdentity vaultId={token.vaultId} />
+      </AssetContainer>
+    );
+  }
+
+  if (isLP) {
+    return (
+      <AssetContainer token={token}>
+        <LPdentity chainId={chainId} address={token.address} />
+      </AssetContainer>
+    );
+  }
+
+  return (
+    <AssetContainer token={token}>
+      <>
+        <AssetsImage size={24} chainId={chainId} assetIds={[token.oracleId]} />
+        <div>{token.oracleId || token.name}</div>
+      </>
+    </AssetContainer>
+  );
+});
+
+type AssetContainerProps = PropsWithChildren<{
+  token: TreasuryTokenHoldings;
+}>;
+
+const AssetContainer = memo<AssetContainerProps>(function ({ token, children }) {
+  const classes = useStyles();
   return (
     <div className={classes.asset}>
-      <div className={classes.assetFlex}>
-        {isVault ? (
-          <VaultIdentity vaultId={token.vaultId} />
-        ) : isLP ? (
-          <LPdentity chainId={chainId} address={token.address} />
-        ) : (
-          <>
-            <AssetsImage size={24} chainId={chainId} assetIds={[token.oracleId]} />
-            <div>{token.oracleId || token.name}</div>
-          </>
-        )}
-      </div>
+      <div className={classes.assetFlex}>{children}</div>
       <div>
         <div className={classes.value}>
           {new BigNumber(token.balance).shiftedBy(-token.decimals).toFixed(2)}
