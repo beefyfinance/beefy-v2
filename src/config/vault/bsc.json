@@ -1,7 +1,7 @@
 [
   {
-    "id": "swapfish-wbnb-bifi",
-    "name": "BIFI-BNB",
+    "id": "swapfish-bsc-wbnb-bifi",
+    "name": "BIFI-BNB LP",
     "token": "BIFI-BNB LP",
     "tokenAddress": "0x30Fc36ba48456c043d094dd7127f1cECe16A4016",
     "tokenDecimals": 18,
@@ -10,7 +10,7 @@
     "earnedTokenAddress": "0x81Ba466172cD36B5C39d7Cc54Fdaf549621bE25A",
     "earnContractAddress": "0x81Ba466172cD36B5C39d7Cc54Fdaf549621bE25A",
     "oracle": "lps",
-    "oracleId": "swapfish-wbnb-bifi",
+    "oracleId": "swapfish-bsc-wbnb-bifi",
     "status": "active",
     "platformId": "swapfish",
     "assets": ["BIFI", "BNB"],
@@ -21,8 +21,8 @@
     "createdAt": 1672325033
   },
   {
-    "id": "swapfish-bnbx-wbnb",
-    "name": "BNBx-BNB",
+    "id": "swapfish-bsc-bnbx-wbnb",
+    "name": "BNBx-BNB LP",
     "token": "BNBx-BNB LP",
     "tokenAddress": "0xc5c929b9cbda49523634A80c7bFd67c0bce6C3ea",
     "tokenDecimals": 18,
@@ -31,7 +31,7 @@
     "earnedTokenAddress": "0xdB9C665826bf79A83f40A682BF24C6294Fe0e168",
     "earnContractAddress": "0xdB9C665826bf79A83f40A682BF24C6294Fe0e168",
     "oracle": "lps",
-    "oracleId": "swapfish-bnbx-wbnb",
+    "oracleId": "swapfish-bsc-bnbx-wbnb",
     "status": "active",
     "platformId": "swapfish",
     "assets": ["BNBx", "BNB"],
@@ -49,8 +49,8 @@
     "createdAt": 1672325032
   },
   {
-    "id": "swapfish-fish-busd",
-    "name": "FISH-BUSD",
+    "id": "swapfish-bsc-fish-busd",
+    "name": "FISH-BUSD LP",
     "token": "FISH-BUSD LP",
     "tokenAddress": "0xA4d762B97A79d2093e5DDA4a94049449B4e484b5",
     "tokenDecimals": 18,
@@ -59,7 +59,7 @@
     "earnedTokenAddress": "0x8e981160eCD65bCCe80A0ec3e55C9530B8DA26dc",
     "earnContractAddress": "0x8e981160eCD65bCCe80A0ec3e55C9530B8DA26dc",
     "oracle": "lps",
-    "oracleId": "swapfish-fish-busd",
+    "oracleId": "swapfish-bsc-fish-busd",
     "status": "active",
     "platformId": "swapfish",
     "assets": ["FISH", "BUSD"],
