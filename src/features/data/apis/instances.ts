@@ -6,6 +6,8 @@ import { ChainEntity } from '../entities/chain';
 import { IWalletConnectionApi, WalletConnectionOptions } from './wallet/wallet-connection-types';
 import { BridgeApi } from './bridge/bridge';
 import { IOnRampApi } from './on-ramp/on-ramp-types';
+import { createWeb3Instance } from '../../../helpers/web3';
+import { createGasPricer } from './gas-prices';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -28,15 +30,16 @@ export function getBridgeApi(): BridgeApi {
   return bridgeApi;
 }
 
-const Web3Promise = import('web3');
 export const getWeb3Instance = createFactoryWithCacheByChain(async chain => {
-  const Web3 = await Web3Promise;
-
   // pick one RPC endpoint at random
   // todo: not the smartest thing to do but good enough yet
   const rpc = sample(chain.rpc);
   console.debug(`Instanciating Web3 for chain ${chain.id}`);
-  return new Web3.default(rpc);
+  return createWeb3Instance(rpc);
+});
+
+export const getGasPricer = createFactoryWithCacheByChain(async chain => {
+  return createGasPricer(chain);
 });
 
 const ContractDataAPIPromise = import('./contract-data');

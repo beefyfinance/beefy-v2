@@ -4,6 +4,9 @@ export type BigNumberish = BigNumber.Value;
 
 export const BIG_ZERO = new BigNumber(0);
 export const BIG_ONE = new BigNumber(1);
+export const BIG_MAX_UINT256 = new BigNumber(
+  '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+);
 
 export function compound(
   rate: BigNumberish,
@@ -34,4 +37,8 @@ export function truncateBigNumber(value: BigNumber, places: number): BigNumber {
   }
 
   return value.decimalPlaces(places);
+}
+
+export function compareBigNumber(a: BigNumber, b: BigNumber): number {
+  return a.comparedTo(b);
 }

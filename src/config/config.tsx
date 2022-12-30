@@ -1,4 +1,6 @@
-export const config = {
+import { ChainConfig } from '../features/data/apis/config-types';
+
+export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   ethereum: {
     name: 'Ethereum',
     chainId: 1,
@@ -17,6 +19,12 @@ export const config = {
       },
       rpcUrls: ['https://rpc.ankr.com/eth'],
       blockExplorerUrls: ['https://etherscan.io/'],
+    },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 60,
+      priorityMinimum: '1000000000',
     },
     stableCoins: [
       'USDC',
@@ -60,6 +68,12 @@ export const config = {
       },
       rpcUrls: ['https://polygon-rpc.com'],
       blockExplorerUrls: ['https://polygonscan.com/'],
+    },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 60,
+      priorityMinimum: '1000000000',
     },
     stableCoins: [
       'USDC',
@@ -115,6 +129,10 @@ export const config = {
       rpcUrls: ['https://bsc-dataseed.binance.org'],
       blockExplorerUrls: ['https://bscscan.com/'],
     },
+    gas: {
+      type: 'standard',
+      minimum: '5000000000',
+    },
     stableCoins: [
       'BUSD',
       'USDT',
@@ -166,6 +184,10 @@ export const config = {
       rpcUrls: ['https://rpc.ankr.com/optimism'],
       blockExplorerUrls: ['https://optimistic.etherscan.io/'],
     },
+    gas: {
+      type: 'standard',
+      minimum: '1000000',
+    },
     stableCoins: [
       'USDC',
       'sUSD',
@@ -204,6 +226,12 @@ export const config = {
       },
       rpcUrls: ['https://rpc.ankr.com/fantom'],
       blockExplorerUrls: ['https://ftmscan.com/'],
+    },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 60,
+      priorityMinimum: '1000000000',
     },
     stableCoins: [
       'USDC',
@@ -247,6 +275,12 @@ export const config = {
       rpcUrls: ['https://arb1.arbitrum.io/rpc'],
       blockExplorerUrls: ['https://arbiscan.io/'],
     },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 60,
+      priorityMinimum: '100000000',
+    },
     stableCoins: ['USDC', 'USDT', 'MIM', 'VST', 'DAI', 'sarUSDC', 'sarUSDT', 'FRAX', 'USX', 'MAI'],
   },
   avax: {
@@ -267,6 +301,12 @@ export const config = {
       },
       rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
       blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
+    },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 60,
+      priorityMinimum: '1000000000',
     },
     stableCoins: [
       'USDT',
@@ -310,6 +350,11 @@ export const config = {
       rpcUrls: ['https://evm.cronos.org/'],
       blockExplorerUrls: ['https://cronoscan.com/'],
     },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 60,
+    },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD'],
   },
   moonbeam: {
@@ -330,6 +375,11 @@ export const config = {
       },
       rpcUrls: ['https://rpc.api.moonbeam.network'],
       blockExplorerUrls: ['https://moonscan.io/'],
+    },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 60,
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD', 'MAI', 'FRAX', 'USDTs', 'USDCs', 'DAIs'],
   },
@@ -352,6 +402,11 @@ export const config = {
       rpcUrls: ['https://rpc.api.moonriver.moonbeam.network/'],
       blockExplorerUrls: ['https://moonriver.moonscan.io/'],
     },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 60,
+    },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD', 'MAI', 'MIM', 'FRAX'],
   },
   metis: {
@@ -372,6 +427,9 @@ export const config = {
       },
       rpcUrls: ['https://andromeda.metis.io/?owner=1088'],
       blockExplorerUrls: ['https://andromeda-explorer.metis.io/'],
+    },
+    gas: {
+      type: 'standard',
     },
     stableCoins: ['mUSDT', 'mUSDC', 'mDAI'],
   },
@@ -394,6 +452,9 @@ export const config = {
       rpcUrls: ['https://rpc.fuse.io'],
       blockExplorerUrls: ['https://explorer.fuse.io/'],
     },
+    gas: {
+      type: 'standard',
+    },
     stableCoins: ['fUSD', 'BUSD', 'USDC', 'USDT'],
   },
   kava: {
@@ -414,6 +475,9 @@ export const config = {
       },
       rpcUrls: ['https://evm.kava.io'],
       blockExplorerUrls: ['https://explorer.kava.io/'],
+    },
+    gas: {
+      type: 'standard',
     },
     stableCoins: ['USDC', 'DAI', 'USDT'],
   },
@@ -436,6 +500,9 @@ export const config = {
       rpcUrls: ['https://mainnet.aurora.dev'],
       blockExplorerUrls: ['https://aurorascan.dev/'],
     },
+    gas: {
+      type: 'standard',
+    },
     stableCoins: ['USDC', 'USDT', 'MAI', 'DAI', 'UST', 'aUSDO', 'USN'],
   },
   emerald: {
@@ -456,6 +523,9 @@ export const config = {
       },
       rpcUrls: ['https://emerald.oasis.dev'],
       blockExplorerUrls: ['https://explorer.emerald.oasis.dev/'],
+    },
+    gas: {
+      type: 'standard',
     },
     stableCoins: ['ceUSDC', 'USDT'],
   },
@@ -478,6 +548,9 @@ export const config = {
       rpcUrls: ['https://forno.celo.org'],
       blockExplorerUrls: ['https://celoscan.io/'],
     },
+    gas: {
+      type: 'celo',
+    },
     stableCoins: ['cUSD', 'cEUR', 'DAI', 'USDC', 'USDT'],
   },
   heco: {
@@ -499,6 +572,11 @@ export const config = {
       rpcUrls: ['https://http-mainnet.hecochain.com'],
       blockExplorerUrls: ['https://scan.hecochain.com/'],
     },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 60,
+    },
     stableCoins: ['USDT', 'HUSD'],
   },
   harmony: {
@@ -519,6 +597,9 @@ export const config = {
       },
       rpcUrls: ['https://api.s0.t.hmny.io/'],
       blockExplorerUrls: ['https://explorer.harmony.one/'],
+    },
+    gas: {
+      type: 'standard',
     },
     stableCoins: ['BUSD', 'bscBUSD', 'USDC', 'USDT', 'UST', 'DAI', 'FRAX'],
   },

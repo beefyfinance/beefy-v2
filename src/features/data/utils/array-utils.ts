@@ -57,3 +57,13 @@ export function getTop6Array<T extends BaseEntry>(
   top.push(other);
   return top;
 }
+
+export function sortWith<T extends {}>(items: T[], compareFn: (a: T, b: T) => number): T[] {
+  return [...items].sort(compareFn);
+}
+
+export function itemAtPercentile<T>(sortedItems: T[], percentile: number): T {
+  const index =
+    percentile >= 1 ? sortedItems.length - 1 : Math.floor(sortedItems.length * percentile);
+  return sortedItems[index];
+}
