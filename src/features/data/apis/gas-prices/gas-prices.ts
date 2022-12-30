@@ -93,7 +93,7 @@ export class EIP1559GasPricer implements IGasPricer {
     const gas = chain.gas as EIP1559GasConfig;
 
     this.blockCount = gas.blocks;
-    this.percentile = gas.percentile / 100;
+    this.percentile = gas.percentile;
 
     this.baseMinimum =
       'minimum' in gas && gas.baseMinimum ? new BigNumber(gas.baseMinimum) : BIG_ZERO;

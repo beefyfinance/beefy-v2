@@ -23,7 +23,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 60,
+      percentile: 0.6,
       priorityMinimum: '1000000000',
     },
     stableCoins: [
@@ -72,7 +72,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 60,
+      percentile: 0.6,
       priorityMinimum: '1000000000',
     },
     stableCoins: [
@@ -230,7 +230,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 60,
+      percentile: 0.6,
       priorityMinimum: '1000000000',
     },
     stableCoins: [
@@ -278,7 +278,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 60,
+      percentile: 0.6,
       priorityMinimum: '100000000',
     },
     stableCoins: ['USDC', 'USDT', 'MIM', 'VST', 'DAI', 'sarUSDC', 'sarUSDT', 'FRAX', 'USX', 'MAI'],
@@ -305,7 +305,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 60,
+      percentile: 0.6,
       priorityMinimum: '1000000000',
     },
     stableCoins: [
@@ -353,7 +353,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 60,
+      percentile: 0.6,
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD'],
   },
@@ -379,7 +379,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 60,
+      percentile: 0.6,
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD', 'MAI', 'FRAX', 'USDTs', 'USDCs', 'DAIs'],
   },
@@ -405,7 +405,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 60,
+      percentile: 0.6,
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD', 'MAI', 'MIM', 'FRAX'],
   },
@@ -575,7 +575,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 60,
+      percentile: 0.6,
     },
     stableCoins: ['USDT', 'HUSD'],
   },
