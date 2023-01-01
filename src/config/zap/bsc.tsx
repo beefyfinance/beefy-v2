@@ -57,4 +57,12 @@ export const zaps = [
     ammPairInitHash: '0x2ce84ffd93a6f7c4c5a44224783ccdded4a321b6d3fc965308f25c466ce132dd',
     lpProviderFee: 0.0002,
   },
+  {
+    // SwapFish
+    zapAddress: '0x01D2c98233AED82bdf7B2738596eE3Ac7647F6B5',
+    ammRouter: '0x33141e87ad2DFae5FBd12Ed6e61Fa2374aAeD029',
+    ammFactory: '0x71539D09D3890195dDa87A6198B98B75211b72F3',
+    ammPairInitHash: '0xfa92cf9f91596341d1d4b5e0903226886fea1aebab892d11d3c2c1d14ae97534',
+    lpProviderFee: 0.0025,
+  },
 ];
