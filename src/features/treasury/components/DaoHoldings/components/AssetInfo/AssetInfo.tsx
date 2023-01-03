@@ -103,13 +103,13 @@ export const LPdentity = memo<LPdentityProps>(function ({ address, chainId, name
     state => selectStandardVaultIdsByDepositTokenAddressAddress(state, chainId, address)[0]
   );
 
-  console.log(vaultId);
+  const assets = name.replace(' LP', '').split('-');
 
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   const assetIds = useMemo(() => {
-    return vault ? vault.assetIds : ['unknown'];
-  }, [vault]);
+    return vault ? vault.assetIds : assets;
+  }, [assets, vault]);
 
   return (
     <>
