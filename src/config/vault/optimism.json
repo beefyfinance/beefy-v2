@@ -209,7 +209,7 @@
     "status": "active",
     "platformId": "opx",
     "assets": ["WETH", "WBTC", "USDC", "USDT", "DAI", "OP"],
-    "strategyTypeId": "single",
+    "strategyTypeId": "olp-opx",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
