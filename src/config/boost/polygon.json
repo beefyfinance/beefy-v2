@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_curve-poly-atricrypto3-metavault trade",
+    "poolId": "curve-poly-atricrypto3",
+    "name": "Metavault Trade",
+    "assets": ["DAI", "USDC", "USDT", "WBTC", "ETH"],
+    "tokenAddress": "0x5A0801BAd20B6c62d86C566ca90688A6b9ea1d3f",
+    "earnedToken": "MVX",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x2760E46d9BB43dafCbEcaad1F64b93207f9f0eD7",
+    "earnContractAddress": "0x76f6102305A1a1351f37fA42Aed0d95576050503",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "MVX",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["metavault"]
+  },
+  {
     "id": "moo_dystopia-usd+-stmatic-lido",
     "poolId": "dystopia-usd+-stmatic",
     "name": "Lido",

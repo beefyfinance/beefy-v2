@@ -1038,12 +1038,11 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://polygon.curve.fi/atricrypto3/deposit",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto3/deposit",
     "network": "polygon",
-    "createdAt": 1652662923
+    "createdAt": 1672734429
   },
   {
     "id": "polywise-usdc-wise-eol",
