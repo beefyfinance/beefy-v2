@@ -41,7 +41,7 @@
     "status": "active",
     "platformId": "mvx",
     "assets": ["MATIC", "ETH", "WBTC", "LINK", "UNI", "AAVE", "USDC", "USDT", "DAI", "BUSD"],
-    "strategyTypeId": "glp-gmx",
+    "strategyTypeId": "mvlp-mvx",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -69,7 +69,7 @@
     "status": "active",
     "platformId": "mvx",
     "assets": ["MVX"],
-    "strategyTypeId": "glp-gmx",
+    "strategyTypeId": "mvlp-mvx",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
