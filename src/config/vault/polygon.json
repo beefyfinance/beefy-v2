@@ -27,6 +27,62 @@
     "createdAt": 1621450869
   },
   {
+    "id": "mvx-mvlp",
+    "name": "MVLP",
+    "token": "MVLP",
+    "tokenAddress": "0x2ee50C34392E7e7a1D17B0A42328a8D1Ad6894e3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "mvx",
+    "earnedToken": "mooMvxMVLP",
+    "earnedTokenAddress": "0xa0FdCDDA62C4C6a0109A702a7Efe59B4E8807e3f",
+    "earnContractAddress": "0xa0FdCDDA62C4C6a0109A702a7Efe59B4E8807e3f",
+    "oracle": "lps",
+    "oracleId": "mvx-mvlp",
+    "status": "active",
+    "platformId": "mvx",
+    "assets": ["MATIC", "ETH", "WBTC", "LINK", "UNI", "AAVE", "USDC", "USDT", "DAI", "BUSD"],
+    "strategyTypeId": "mvlp-mvx",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.metavault.trade/#/buy_mvlp",
+    "network": "polygon",
+    "createdAt": 1672503161
+  },
+  {
+    "id": "mvx-mvx",
+    "name": "MVX",
+    "token": "MVX",
+    "tokenAddress": "0x2760E46d9BB43dafCbEcaad1F64b93207f9f0eD7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "mvx",
+    "earnedToken": "mooMvxMVX",
+    "earnedTokenAddress": "0x2ee96Db9E7f029F086E45466FcD761066148599E",
+    "earnContractAddress": "0x2ee96Db9E7f029F086E45466FcD761066148599E",
+    "oracle": "tokens",
+    "oracleId": "MVX",
+    "status": "active",
+    "platformId": "mvx",
+    "assets": ["MVX"],
+    "strategyTypeId": "mvlp-mvx",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://app.1inch.io/#/137/unified/swap/AVAX/0x2760E46d9BB43dafCbEcaad1F64b93207f9f0eD7",
+    "network": "polygon",
+    "createdAt": 1672503160
+  },
+  {
     "id": "dystopia-usd+-usdc",
     "name": "USD+-USDC sLP",
     "token": "USD+-USDC sLP",
@@ -416,6 +472,34 @@
     "addLiquidityUrl": "https://polygon.curve.fi/factory-crypto/13/deposit",
     "network": "polygon",
     "createdAt": 1657818272
+  },
+  {
+    "id": "balancer-bbamUSD",
+    "name": "Balancer Boosted USD (bb-am-USD)",
+    "token": "bbamUSD",
+    "tokenAddress": "0x48e6B98ef6329f8f0A30eBB8c7C960330d648085",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerbbamUSD",
+    "earnedTokenAddress": "0x68Ac25D2e7306037e1174b0D3405efd36701ca6b",
+    "earnContractAddress": "0x68Ac25D2e7306037e1174b0D3405efd36701ca6b",
+    "oracle": "lps",
+    "oracleId": "balancer-bbamUSD",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["bbamUSDC", "bbamDAI", "bbamUSDT"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x48e6b98ef6329f8f0a30ebb8c7c960330d64808500000000000000000000075b/invest",
+    "network": "polygon",
+    "createdAt": 1672282535
   },
   {
     "id": "balancer-matic-usdc-eth-bal",
@@ -883,8 +967,8 @@
     "earnContractAddress": "0x8c9d3Bc4425773BD2F00C4a2aC105c5Ad73c8141",
     "oracle": "lps",
     "oracleId": "curve-poly-ren",
-    "status": "paused",
-    "pauseReason": "ren-sunset",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "curve",
     "assets": ["WBTC", "renBTC"],
     "strategyTypeId": "lp",
@@ -954,12 +1038,11 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://polygon.curve.fi/atricrypto3/deposit",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto3/deposit",
     "network": "polygon",
-    "createdAt": 1652662923
+    "createdAt": 1672734429
   },
   {
     "id": "polywise-usdc-wise-eol",

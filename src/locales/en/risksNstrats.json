@@ -92,5 +92,6 @@
   "StrategyDescription-maxi": "The BIFI Maxi vault allows users to stake their BIFI much like in the RewardPool, but be rewarded instead in more BIFI. By staking BIFI, each participant compounds her share of Beefy’s revenue on the network into more BIFI token. Since BIFI token can no longer be minted, reward BIFI is purchased on the open market using the network's native token (e.g. {{nativeToken}} on {{chain}}).",
   "StrategyDescription-default": "No description for the current strategy added yet.",
   "StrategyDescription-glp-gmx": "{{depositToken}} is staked to earn {{nativeToken}} and esGMX. This {{nativeToken}} is compounded to more {{depositToken}}, and the esGMX is staked separately to earn still more {{nativeToken}} rewards which are then compounded back into more {{depositToken}} and multiplier points. All of this works to optimally boost APR. <details/>. ",
+  "StrategyDescription-mvlp-mvx": "{{depositToken}} is staked to earn {{nativeToken}} and esMVX. This {{nativeToken}} is compounded to more {{depositToken}}, and the esMVX is staked separately to earn still more {{nativeToken}} rewards which are then compounded back into more {{depositToken}} and multiplier points. All of this works to optimally boost APR.",
   "xyz": "last-line placeholder"
 }

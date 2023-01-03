@@ -938,5 +938,10 @@
     "id": "equalizer",
     "name": "Equalizer",
     "filter": true
+  },
+  {
+    "id": "mvx",
+    "name": "MVX",
+    "filter": false
   }
 ]
