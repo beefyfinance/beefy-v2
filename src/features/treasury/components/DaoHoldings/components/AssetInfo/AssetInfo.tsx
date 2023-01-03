@@ -44,7 +44,7 @@ export const AssetInfo = memo<AssetInfoProps>(function ({ chainId, token }) {
   if (isLP) {
     return (
       <AssetContainer token={token}>
-        <LPdentity chainId={chainId} address={token.address} />
+        <LPdentity chainId={chainId} address={token.address} name={token.name} />
       </AssetContainer>
     );
   }
@@ -95,12 +95,15 @@ export const VaultIdentity = memo<VaultNameProps>(function ({ vaultId }) {
 interface LPdentityProps {
   address: TokenEntity['address'];
   chainId: ChainEntity['id'];
+  name: TreasuryTokenHoldings['name'];
 }
 
-export const LPdentity = memo<LPdentityProps>(function ({ address, chainId }) {
+export const LPdentity = memo<LPdentityProps>(function ({ address, chainId, name }) {
   const vaultId = useAppSelector(
     state => selectStandardVaultIdsByDepositTokenAddressAddress(state, chainId, address)[0]
   );
+
+  console.log(vaultId);
 
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
@@ -111,7 +114,7 @@ export const LPdentity = memo<LPdentityProps>(function ({ address, chainId }) {
   return (
     <>
       <AssetsImage size={24} chainId={chainId} assetIds={assetIds} />
-      <div>{vault.name}</div>
+      <div>{name}</div>
     </>
   );
 });
