@@ -502,36 +502,6 @@
     "network": "moonbeam"
   },
   {
-    "id": "beamswap-3pool",
-    "name": "USDC.mad/USDT.mad/DAI.mad",
-    "token": "nomad-3pool",
-    "tokenAddress": "0x1e4ae1a91cb2477335260F49F8E9d55CB1AF406F",
-    "tokenDecimals": 18,
-    "tokenProviderId": "beamswap",
-    "earnedToken": "mooBeam3pool",
-    "earnedTokenAddress": "0x3B28EdEa7493353b8E6149A970b6AC598697D94e",
-    "earnContractAddress": "0x3B28EdEa7493353b8E6149A970b6AC598697D94e",
-    "oracle": "lps",
-    "oracleId": "beamswap-3pool",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "beamswap",
-    "assets": ["USDCs", "USDTs", "DAIs"],
-    "strategyTypeId": "multi-lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "buyTokenUrl": "https://app.beamswap.io/exchange/swap?outputCurrency=0x8f552a71EFE5eeFc207Bf75485b356A0b3f01eC9",
-    "addLiquidityUrl": "https://app.beamswap.io/exchange/add/multi/nomad3pool",
-    "createdAt": 1658326369,
-    "network": "moonbeam"
-  },
-  {
     "id": "stellaswap-well-wglmr",
     "name": "WELL-GLMR LP",
     "token": "WELL-GLMR LP",
