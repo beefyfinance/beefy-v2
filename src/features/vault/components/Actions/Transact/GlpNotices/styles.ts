@@ -1,5 +1,3 @@
 export const styles = () => ({
-  alert: {
-    marginBottom: '24px',
-  },
+  alert: {},
 });

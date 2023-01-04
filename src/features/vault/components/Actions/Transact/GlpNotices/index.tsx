@@ -2,8 +2,12 @@ import { memo } from 'react';
 import { VaultEntity } from '../../../../../data/entities/vault';
 import { GlpDepositNoticeImpl } from './GlpDepositNoticeImpl';
 import { GlpWithdrawNoticeImpl } from './GlpWithdrawNoticeImpl';
+import { GlpLikeConfig } from './types';
 
-export const enableForVaults: VaultEntity['id'][] = ['opx-olp', 'mvx-mvlp'];
+export const enableForVaults: Record<VaultEntity['id'], GlpLikeConfig> = {
+  'opx-olp': { managerMethod: 'glpManager' },
+  'mvx-mvlp': { managerMethod: 'mvlpManager' },
+};
 
 type GlpDepositNoticeProps = {
   vaultId: VaultEntity['id'];
@@ -13,8 +17,14 @@ export const GlpDepositNotice = memo<GlpDepositNoticeProps>(function GlpDepositN
   vaultId,
   onChange,
 }) {
-  if (enableForVaults.includes(vaultId)) {
-    return <GlpDepositNoticeImpl vaultId={vaultId} onChange={onChange} />;
+  if (vaultId in enableForVaults) {
+    return (
+      <GlpDepositNoticeImpl
+        vaultId={vaultId}
+        config={enableForVaults[vaultId]}
+        onChange={onChange}
+      />
+    );
   }
 
   return null;
@@ -28,8 +38,14 @@ export const GlpWithdrawNotice = memo<GlpWithdrawNoticeProps>(function GlpWithdr
   vaultId,
   onChange,
 }) {
-  if (enableForVaults.includes(vaultId)) {
-    return <GlpWithdrawNoticeImpl vaultId={vaultId} onChange={onChange} />;
+  if (vaultId in enableForVaults) {
+    return (
+      <GlpWithdrawNoticeImpl
+        vaultId={vaultId}
+        config={enableForVaults[vaultId]}
+        onChange={onChange}
+      />
+    );
   }
 
   return null;

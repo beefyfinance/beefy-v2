@@ -3,9 +3,10 @@ import { styles } from './styles';
 import { memo, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useAsync } from '../../../../../../helpers/useAsync';
-import { isAfter } from 'date-fns';
 import { AlertError, AlertWarning } from '../../../../../../components/Alerts';
 import { TimeUntil } from '../../../../../../components/TimeUntil';
+import { UnlockTimeResult } from './types';
+import { formatDistanceStrict } from 'date-fns';
 
 const useStyles = makeStyles(styles);
 
@@ -13,7 +14,7 @@ export type GlpNoticeProps = {
   noticeKey: string;
   noticeKeyUnlocks: string;
   onChange: (isLocked: boolean) => void;
-  fetchUnlockTime: () => Promise<Date>;
+  fetchUnlockTime: () => Promise<UnlockTimeResult>;
 };
 export const GlpNotice = memo<GlpNoticeProps>(function GlpNotice({
   noticeKey,
@@ -27,11 +28,12 @@ export const GlpNotice = memo<GlpNoticeProps>(function GlpNotice({
   const {
     execute: updateUnlockTime,
     status: updateStatus,
-    value: unlockTime,
-  } = useAsync(fetchUnlockTime, new Date(0));
+    value: unlockInfo,
+  } = useAsync(fetchUnlockTime, { unlocksAt: 0, cooldownDuration: 15 * 60 * 1000 });
 
   const [haveUpdatedOnce, setHaveUpdatedOnce] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
+  const [unlocksAt, setUnlocksAt] = useState(() => new Date());
 
   useEffect(() => {
     const handle = setInterval(updateUnlockTime, 30000);
@@ -46,14 +48,15 @@ export const GlpNotice = memo<GlpNoticeProps>(function GlpNotice({
 
   useEffect(() => {
     if (haveUpdatedOnce) {
+      setUnlocksAt(new Date(unlockInfo.unlocksAt));
+
       const handle = setInterval(() => {
-        const now = new Date();
-        setIsLocked(isAfter(unlockTime, now));
+        setIsLocked(unlockInfo.unlocksAt > Date.now());
       }, 1000);
 
       return () => clearInterval(handle);
     }
-  }, [unlockTime, haveUpdatedOnce, setIsLocked]);
+  }, [unlockInfo, haveUpdatedOnce, setIsLocked, setUnlocksAt]);
 
   useEffect(() => {
     onChange(isLocked);
@@ -63,14 +66,18 @@ export const GlpNotice = memo<GlpNoticeProps>(function GlpNotice({
 
   return (
     <AlertComponent className={classes.alert}>
-      <p>{t(noticeKey)}</p>
+      <p>
+        {t(noticeKey, {
+          cooldown: formatDistanceStrict(new Date(0), new Date(unlockInfo.cooldownDuration)),
+        })}
+      </p>
       {haveUpdatedOnce && isLocked ? (
         <p>
           <Trans
             t={t}
             i18nKey={noticeKeyUnlocks}
             components={{
-              countdown: <TimeUntil time={unlockTime} minParts={1} />,
+              countdown: <TimeUntil time={unlocksAt} minParts={1} />,
             }}
           />
         </p>
