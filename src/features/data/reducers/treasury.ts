@@ -1,27 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchTreasury } from '../actions/treasury';
 import { ChainEntity } from '../entities/chain';
-import { VaultEntity } from '../entities/vault';
+import { TreasuryHoldingsInterface } from '../entities/treasury';
 
-export interface TreasuryTokenHoldings {
-  name: string;
-  symbol?: string;
-  address: string;
-  decimals: number;
-  oracleId: string;
-  oracleType: 'lps' | 'token';
-  assetType: 'token' | 'vault' | 'native' | 'validator';
-  price: number;
-  usdValue: string;
-  balance: string;
-  vaultId?: VaultEntity['id'];
-  pricePerFullShare?: string;
-}
+
+
 
 interface AddressHolding {
   address: string;
   name: string;
-  balances: { [address: string]: TreasuryTokenHoldings };
+  balances: { [address: string]: TreasuryHoldingsInterface };
 }
 
 export interface TreasuryState {

@@ -5,8 +5,8 @@ import createCachedSelector from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
+import { isTreasuryHoldingVault, TreasuryHoldingsInterface } from '../entities/treasury';
 import { isInitialLoader } from '../reducers/data-loader-types';
-import { TreasuryTokenHoldings } from '../reducers/treasury';
 import { getTop6Array } from '../utils/array-utils';
 import { selectLpBreakdownBalance } from './balance';
 import { selectHasBreakdownData, selectIsTokenStable, selectLpBreakdownByAddress } from './tokens';
@@ -61,7 +61,7 @@ export const selectTreasurySummaryByChainId = createCachedSelector(
       },
       { totalUsd: BIG_ZERO, assets: [] } as {
         totalUsd: BigNumber;
-        assets: TreasuryTokenHoldings[];
+        assets: TreasuryHoldingsInterface[];
       }
     );
   }
@@ -82,7 +82,7 @@ export const selectTreasuryStats = createSelector(selectTreasury, treasury => {
           if (!token.usdValue.includes('NaN')) {
             holdings = holdings.plus(new BigNumber(token.usdValue));
           }
-          assets.push(token.symbol || token.name);
+          assets.push(token.name);
         }
       }
     }
@@ -99,14 +99,14 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
         if (!token.usdValue.includes('NaN')) {
           const tokenBalanceUsd = new BigNumber(token.usdValue);
           if (token.oracleType === 'lps') {
-            if (token.assetType === 'vault' && selectIsVaultStable(state, token.vaultId)) {
+            if (isTreasuryHoldingVault(token) && selectIsVaultStable(state, token.vaultId)) {
               totals['stables'] = (totals['stables'] || BIG_ZERO).plus(tokenBalanceUsd);
             } else {
               const haveBreakdownData = selectHasBreakdownData(state, token.address, chainId);
               if (haveBreakdownData) {
                 let balance = new BigNumber(token.balance).shiftedBy(-token.decimals);
-                if (token.assetType === 'vault') {
-                  const ppfs = new BigNumber(token.pricePerFullShare).shiftedBy(-token.decimals);
+                if (isTreasuryHoldingVault(token)) {
+                  const ppfs = new BigNumber(token.pricePerFullShare).shiftedBy(-18); // ppfs always need to be shifted by 18e
                   balance = balance.multipliedBy(ppfs);
                 }
                 const breakdown = selectLpBreakdownByAddress(state, chainId, token.address);

@@ -1,9 +1,9 @@
 import BigNumber from 'bignumber.js';
 import { sortBy } from 'lodash';
-import { TreasuryTokenHoldings } from '../../../../../data/reducers/treasury';
+import { TreasuryHoldingsInterface } from '../../../../../data/entities/treasury';
 
 export const useSortedAssets = (
-  assets: TreasuryTokenHoldings[],
+  assets: TreasuryHoldingsInterface[],
   sortDirection: 'desc' | 'asc' = 'asc'
 ) => {
   const sortDirMul = sortDirection === 'desc' ? 1 : -1;

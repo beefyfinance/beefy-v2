@@ -6,10 +6,10 @@ import { formatBigUsd } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
 import { ChainEntity } from '../../../../../data/entities/chain';
 import { TokenEntity } from '../../../../../data/entities/token';
+import { TreasuryHoldingsInterface } from '../../../../../data/entities/treasury';
 import { VaultEntity } from '../../../../../data/entities/vault';
-import { TreasuryTokenHoldings } from '../../../../../data/reducers/treasury';
 import {
-  selectStandardVaultIdsByDepositTokenAddressAddress,
+  selectStandardVaultIdsByDepositTokenAddress,
   selectVaultById,
 } from '../../../../../data/selectors/vaults';
 import { styles } from './styles';
@@ -18,7 +18,7 @@ const useStyles = makeStyles(styles);
 
 interface AssetInfoProps {
   chainId: ChainEntity['id'];
-  token: TreasuryTokenHoldings;
+  token: TreasuryHoldingsInterface;
 }
 
 export const AssetInfo = memo<AssetInfoProps>(function ({ chainId, token }) {
@@ -44,7 +44,7 @@ export const AssetInfo = memo<AssetInfoProps>(function ({ chainId, token }) {
   if (isLP) {
     return (
       <AssetContainer token={token}>
-        <LPdentity chainId={chainId} address={token.address} name={token.name} />
+        <LPidentity chainId={chainId} address={token.address} name={token.name} />
       </AssetContainer>
     );
   }
@@ -60,7 +60,7 @@ export const AssetInfo = memo<AssetInfoProps>(function ({ chainId, token }) {
 });
 
 type AssetContainerProps = PropsWithChildren<{
-  token: TreasuryTokenHoldings;
+  token: TreasuryHoldingsInterface;
 }>;
 
 const AssetContainer = memo<AssetContainerProps>(function ({ token, children }) {
@@ -92,15 +92,15 @@ export const VaultIdentity = memo<VaultNameProps>(function ({ vaultId }) {
   );
 });
 
-interface LPdentityProps {
+interface LPidentityProps {
   address: TokenEntity['address'];
   chainId: ChainEntity['id'];
-  name: TreasuryTokenHoldings['name'];
+  name: TreasuryHoldingsInterface['name'];
 }
 
-export const LPdentity = memo<LPdentityProps>(function ({ address, chainId, name }) {
+export const LPidentity = memo<LPidentityProps>(function ({ address, chainId, name }) {
   const vaultId = useAppSelector(
-    state => selectStandardVaultIdsByDepositTokenAddressAddress(state, chainId, address)[0]
+    state => selectStandardVaultIdsByDepositTokenAddress(state, chainId, address)[0]
   );
 
   const assets = name.replace(' LP', '').split('-');

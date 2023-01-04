@@ -3,7 +3,7 @@ import React, { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SortColumnHeader } from '../../../../../../components/SortColumnHeader';
 import { ChainEntity } from '../../../../../data/entities/chain';
-import { TreasuryTokenHoldings } from '../../../../../data/reducers/treasury';
+import { TreasuryHoldingsInterface } from '../../../../../data/entities/treasury';
 import { AssetInfo } from '../AssetInfo';
 import { useSortedAssets } from './hooks';
 import { styles } from './styles';
@@ -11,7 +11,7 @@ import { styles } from './styles';
 const useStyles = makeStyles(styles);
 
 interface AssetsProps {
-  assets: TreasuryTokenHoldings[];
+  assets: TreasuryHoldingsInterface[];
   chainId: ChainEntity['id'];
 }
 

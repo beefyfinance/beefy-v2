@@ -18,7 +18,7 @@ import {
   selectGovVaultVaultIdsByOracleAddress,
   selectIsStandardVaultEarnTokenAddress,
   selectStandardVaultByEarnTokenAddress,
-  selectStandardVaultIdsByDepositTokenAddressAddress,
+  selectStandardVaultIdsByDepositTokenAddress,
   selectVaultById,
 } from '../../selectors/vaults';
 import { initiateMinterForm } from '../../actions/minters';
@@ -262,7 +262,7 @@ function addTokenBalanceToState(
 
       // if the token is the oracleId of a vault
       // this means the user can deposit in a vault
-      const stdVaultIds = selectStandardVaultIdsByDepositTokenAddressAddress(
+      const stdVaultIds = selectStandardVaultIdsByDepositTokenAddress(
         state,
         chainId,
         tokenBalance.tokenAddress
