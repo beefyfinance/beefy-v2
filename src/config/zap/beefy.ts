@@ -51,6 +51,11 @@ export const zaps: BeefyZapConfig[] = [
   { chainId: 'bsc', ammId: 'bsc-biswap', zapAddress: '0x9A76a315109663d9f2e105Be7A6df18b4F7B16F0' },
   { chainId: 'bsc', ammId: 'bsc-cone', zapAddress: '0xd0A01e04EC25E98baFc6eA22eC655B51c5b8eF86' },
   {
+    chainId: 'bsc',
+    ammId: 'bsc-swapfish',
+    zapAddress: '0x01D2c98233AED82bdf7B2738596eE3Ac7647F6B5',
+  },
+  {
     chainId: 'cronos',
     ammId: 'cronos-vvs',
     zapAddress: '0xE8f59c05Ff92CF1584CBc404B4527b4F1eaF6620',

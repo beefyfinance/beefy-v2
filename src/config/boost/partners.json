@@ -1,4 +1,12 @@
 {
+  "metavault": {
+    "text": "Metavault.Trade is a next generation Decentralized Exchange, designed to provide a large range of trading features and very deep liquidity on many large cap crypto assets. Spot trading with swaps is offered on one side, while perpetual futures are offered on the other side including leverage trading. Whether visiting the platform as a trader or an investor, both are brought into a profitable symbiosis through a unique and rewarding trading experience.",
+    "website": "https://metavault.trade/",
+    "social": {
+      "telegram": "https://discord.gg/metavault",
+      "twitter": "https://twitter.com/MetavaultTRADE/"
+    }
+  },
   "opx": {
     "text": "OPX Finance is a Decentralized swap and perpetual Exchange built on Optimism. Inspired by GMX.IO, OPX Finance is designed to provide a wide range of trading features and very deep liquidity for many large-cap crypto assets. \nTraders can use it in two ways:\n- Spot trading: with swaps and limit orders.\n- Perpetual futures trading: with up to 30x leverage on short and long positions.\nTrading is supported by a unique multi-asset pool that earns liquidity providers fees from market making, swap fees and leverage trading. In addition, Dynamic pricing is supported by Chainlink Oracles and an aggregate of prices from leading volume exchanges, making OPX non-liquidation wicks and no slippage platform for every trading. This ensures fair trade and long-term benefits for both traders and liquidity providers.\n✅ Spot and Leverage  ✅ No Price Impact ✅ Extremely Low Transaction Fees",
     "website": "https://www.opx.finance/",
