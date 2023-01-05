@@ -16,7 +16,7 @@ interface AssetsProps {
 }
 
 export const Assets = memo<AssetsProps>(function ({ chainId }) {
-  const [sortDirection, setSortDirection] = React.useState<'desc' | 'asc'>('asc');
+  const [sortDirection, setSortDirection] = React.useState<'desc' | 'asc'>('desc');
   const { t } = useTranslation();
 
   const assets = useAppSelector(state => selectTreasuryAssetsByChainId(state, chainId));

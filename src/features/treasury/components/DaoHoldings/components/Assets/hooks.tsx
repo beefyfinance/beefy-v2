@@ -3,9 +3,9 @@ import { TreasuryHoldingsEntity } from '../../../../../data/entities/treasury';
 
 export const useSortedAssets = (
   assets: TreasuryHoldingsEntity[],
-  sortDirection: 'desc' | 'asc' = 'asc'
+  sortDirection: 'desc' | 'asc' = 'desc'
 ) => {
-  const sortDirMul = sortDirection === 'desc' ? 1 : -1;
+  const sortDirMul = sortDirection === 'desc' ? -1 : 1;
   const sortedAssets = sortBy(assets, token => {
     const balanceToken = token.usdValue;
     return sortDirMul * balanceToken.toNumber();
