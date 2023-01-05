@@ -1,4 +1,4 @@
-import { ClickAwayListener, makeStyles } from '@material-ui/core';
+import { Badge, ClickAwayListener, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import React, { memo, MouseEventHandler, useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,9 +13,10 @@ interface DropNavItemProps {
   title: string;
   Icon: React.FC;
   items: { url: string; title: string; Icon: React.FC; badge?: boolean }[];
+  withBadge?: boolean;
 }
 
-export const DropNavItem = memo<DropNavItemProps>(function ({ title, Icon, items }) {
+export const DropNavItem = memo<DropNavItemProps>(function ({ title, Icon, items, withBadge }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);
@@ -40,8 +41,17 @@ export const DropNavItem = memo<DropNavItemProps>(function ({ title, Icon, items
         className={clsx(classes.label, { [classes.active]: isOpen })}
         ref={anchorEl}
       >
-        <Icon />
-        {t(title)}
+        {withBadge ? (
+          <Badge badgeContent="New" color="primary">
+            <Icon />
+            {t(title)}
+          </Badge>
+        ) : (
+          <>
+            <Icon />
+            {t(title)}
+          </>
+        )}
         <ExpandMore className={classes.arrow} />
         <Floating
           open={isOpen}

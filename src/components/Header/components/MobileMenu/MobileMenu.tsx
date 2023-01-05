@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Divider, Drawer, makeStyles } from '@material-ui/core';
+import { Badge, Divider, Drawer, makeStyles } from '@material-ui/core';
 import { Close, Menu } from '@material-ui/icons';
 import { styles } from './styles';
 import { BifiPrice } from '../BifiPrice';
@@ -31,17 +31,24 @@ export const MobileMenu = memo(function () {
             <Close className={classes.cross} onClick={handleDrawerToggle} />
           </div>
           <Divider className={classes.divider} />
-          {MobileList.map(({ title, Icon, url, items }) => {
+          {MobileList.map(({ title, Icon, url, items, badge }) => {
             return (
               <div key={title}>
                 {url ? (
-                  <NavItemMobile onClick={handleDrawerToggle} title={title} url={url} Icon={Icon} />
+                  <NavItemMobile
+                    onClick={handleDrawerToggle}
+                    title={title}
+                    url={url}
+                    Icon={Icon}
+                    withBadge={badge}
+                  />
                 ) : (
                   <DropMobile
                     onClick={handleDrawerToggle}
                     title={title}
                     Icon={Icon}
                     items={items}
+                    withBadge={badge}
                   />
                 )}
                 <Divider className={classes.divider} />
@@ -59,16 +66,32 @@ interface DropMobileProps {
   Icon: React.FC;
   items: { url: string; title: string; Icon: React.FC; badge?: boolean }[];
   onClick: () => void;
+  withBadge?: boolean;
 }
 
-export const DropMobile = memo<DropMobileProps>(function ({ title, Icon, items, onClick }) {
+export const DropMobile = memo<DropMobileProps>(function ({
+  title,
+  Icon,
+  items,
+  onClick,
+  withBadge,
+}) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
     <div className={classes.itemsContainer}>
       <div className={classes.itemTitle}>
-        <Icon />
-        {t(title)}
+        {withBadge ? (
+          <Badge badgeContent="New" color="primary">
+            <Icon />
+            {t(title)}
+          </Badge>
+        ) : (
+          <>
+            <Icon />
+            {t(title)}
+          </>
+        )}
       </div>
       <div>
         {items.map(item => {
