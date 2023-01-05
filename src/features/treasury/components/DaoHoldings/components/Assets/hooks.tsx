@@ -9,9 +9,9 @@ type SortedAssetCategories = {
 
 export const useSortedAssets = (
   assets: TreasuryHoldingEntity[],
-  sortDirection: 'desc' | 'asc' = 'asc'
+  sortDirection: 'desc' | 'asc' = 'desc'
 ): SortedAssetCategories => {
-  const sortDirMul = sortDirection === 'desc' ? 1 : -1;
+  const sortDirMul = sortDirection === 'desc' ? -1 : 1;
   const sortedAssets = sortBy(assets, token => {
     const balanceToken = token.usdValue;
     return sortDirMul * balanceToken.toNumber();

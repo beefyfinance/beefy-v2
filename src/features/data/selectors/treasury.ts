@@ -7,7 +7,7 @@ import { isVaultHoldingEntity, TreasuryHoldingEntity } from '../entities/treasur
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { getTopNArray } from '../utils/array-utils';
 import { selectLpBreakdownBalance } from './balance';
-import { selectHasBreakdownData, selectIsTokenStable, selectLpBreakdownByAddress } from './tokens';
+import { selectHasBreakdownData, selectIsTokenStable, selectLpBreakdownByOracleId } from './tokens';
 import { selectIsVaultStable } from './vaults';
 
 export const selectIsTreasuryLoaded = (state: BeefyState) =>
@@ -96,9 +96,30 @@ export const selectTreasuryStats = (state: BeefyState) => {
     for (const balancePerChain of Object.values(balances)) {
       for (const token of Object.values(balancePerChain.balances)) {
         if (token) {
-          const balanceInTokens = token.balance.shiftedBy(-token.decimals);
+          let balanceInTokens = token.balance.shiftedBy(-token.decimals);
           if (token.oracleId === 'BIFI') {
             beefyHeld = beefyHeld.plus(balanceInTokens);
+          }
+          if (token.oracleType === 'lps') {
+            const haveBreakdownData = selectHasBreakdownData(state, token.address, chainId);
+            if (haveBreakdownData) {
+              if (isVaultHoldingEntity(token)) {
+                const ppfs = token.pricePerFullShare.shiftedBy(-18); // ppfs always need to be shifted by 18e
+                balanceInTokens = balanceInTokens.multipliedBy(ppfs);
+              }
+              const breakdown = selectLpBreakdownByOracleId(state, token.oracleId);
+              const { assets } = selectLpBreakdownBalance(
+                state,
+                breakdown,
+                balanceInTokens,
+                chainId
+              );
+              for (const asset of assets) {
+                if (asset.id === 'BIFI') {
+                  beefyHeld = beefyHeld.plus(asset.userAmount);
+                }
+              }
+            }
           }
           if (isReal(token.usdValue)) {
             const tokenUsdValue = token.usdValue;
@@ -136,7 +157,7 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
                   const ppfs = token.pricePerFullShare.shiftedBy(-18); // ppfs always need to be shifted by 18e
                   balance = balance.multipliedBy(ppfs);
                 }
-                const breakdown = selectLpBreakdownByAddress(state, chainId, token.address);
+                const breakdown = selectLpBreakdownByOracleId(state, token.oracleId);
                 const { assets } = selectLpBreakdownBalance(state, breakdown, balance, chainId);
                 for (const asset of assets) {
                   if (selectIsTokenStable(state, chainId, asset.id)) {

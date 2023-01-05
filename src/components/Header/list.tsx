@@ -30,7 +30,7 @@ export const ResourcesNavItems = [
 export const MobileList = [
   { title: 'Header-Vaults', Icon: VaultsIcon, url: '/' },
   { title: 'Header-Dashboard', Icon: DashboardIcon, url: '/dashboard' },
-  { title: 'Header-Dao', Icon: DaoIcon, items: DaoNavItems },
+  { title: 'Header-Dao', Icon: DaoIcon, items: DaoNavItems, badge: true },
   { title: 'Header-Resources', Icon: ResourcesIcon, items: ResourcesNavItems },
   { title: 'Header-BuyCrypto', Icon: BuyCryptoIcon, url: '/onramp' },
   { title: 'Header-BridgeBifi', Icon: BridgeIcon, url: '/bridge' },
