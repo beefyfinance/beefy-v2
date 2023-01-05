@@ -7,7 +7,7 @@ import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { isTreasuryHoldingVault, TreasuryHoldingsInterface } from '../entities/treasury';
 import { isInitialLoader } from '../reducers/data-loader-types';
-import { getTop6Array } from '../utils/array-utils';
+import { getTopNArray } from '../utils/array-utils';
 import { selectLpBreakdownBalance } from './balance';
 import { selectHasBreakdownData, selectIsTokenStable, selectLpBreakdownByAddress } from './tokens';
 import { selectIsVaultStable } from './vaults';
@@ -66,6 +66,7 @@ export const selectTreasurySummaryByChainId = createCachedSelector(
     );
   }
 )((state: BeefyState, chainId: ChainEntity['id']) => chainId);
+
 
 export const selectTreasuryStats = createSelector(selectTreasury, treasury => {
   let holdings = BIG_ZERO;
@@ -148,5 +149,5 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
     };
   });
 
-  return getTop6Array(treasuryExposure, 'percentage');
+  return getTopNArray(treasuryExposure, 'percentage');
 };

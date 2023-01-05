@@ -23,7 +23,7 @@ import { selectIsWalletKnown, selectWalletAddress } from './wallet';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
 import { KeysOfType } from '../utils/types-utils';
-import { getTop6Array } from '../utils/array-utils';
+import { getTopNArray } from '../utils/array-utils';
 import { sortBy } from 'lodash';
 import { createSelector } from '@reduxjs/toolkit';
 
@@ -382,7 +382,7 @@ export const selectUserExposureByKey = (
     };
   });
 
-  const sortedItems = getTop6Array(exposureByKey, 'percentage');
+  const sortedItems = getTopNArray(exposureByKey, 'percentage');
 
   return sortedItems;
 };
@@ -447,7 +447,7 @@ export const selectUserTokenExposure = (state: BeefyState) => {
       chainId: valuesByToken[token].chainId,
     };
   });
-  return getTop6Array(exposureByTokens, 'percentage');
+  return getTopNArray(exposureByTokens, 'percentage');
 };
 
 export const selectStablecoinsExposure = (state: BeefyState) => {
