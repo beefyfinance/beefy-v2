@@ -1,17 +1,23 @@
 import { sortBy } from 'lodash';
-import { TreasuryHoldingsEntity } from '../../../../../data/entities/treasury';
+import { TreasuryHoldingEntity } from '../../../../../data/entities/treasury';
+
+type SortedAssetCategories = {
+  stakedAssets: TreasuryHoldingEntity[];
+  liquidAssets: TreasuryHoldingEntity[];
+  lockedAssets: TreasuryHoldingEntity[];
+};
 
 export const useSortedAssets = (
-  assets: TreasuryHoldingsEntity[],
+  assets: TreasuryHoldingEntity[],
   sortDirection: 'desc' | 'asc' = 'asc'
-) => {
+): SortedAssetCategories => {
   const sortDirMul = sortDirection === 'desc' ? 1 : -1;
   const sortedAssets = sortBy(assets, token => {
     const balanceToken = token.usdValue;
     return sortDirMul * balanceToken.toNumber();
   });
 
-  const list = {
+  const list: SortedAssetCategories = {
     stakedAssets: [],
     liquidAssets: [],
     lockedAssets: [],

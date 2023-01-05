@@ -45,7 +45,7 @@ export const Assets = memo<AssetsProps>(function ({ chainId }) {
         <>
           <div className={classes.assetTypes}>{t('Liquid Assets')}</div>
           {liquidAssets.map(token => {
-            return <AssetInfo chainId={chainId} token={token} />;
+            return <AssetInfo key={token.address} chainId={chainId} token={token} />;
           })}
         </>
       )}
@@ -53,7 +53,7 @@ export const Assets = memo<AssetsProps>(function ({ chainId }) {
         <>
           <div className={classes.assetTypes}>{t('Staked Assets')}</div>
           {stakedAssets.map(token => {
-            return <AssetInfo chainId={chainId} token={token} />;
+            return <AssetInfo key={token.address} chainId={chainId} token={token} />;
           })}
         </>
       )}
@@ -61,7 +61,7 @@ export const Assets = memo<AssetsProps>(function ({ chainId }) {
         <>
           <div className={classes.assetTypes}>{t('Locked Assets')}</div>
           {lockedAssets.map(token => {
-            return <AssetInfo chainId={chainId} token={token} />;
+            return <AssetInfo key={token.address} chainId={chainId} token={token} />;
           })}
         </>
       )}

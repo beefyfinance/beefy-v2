@@ -5301,10 +5301,10 @@ blakejs@^1.1.0:
   resolved "https://registry.yarnpkg.com/blakejs/-/blakejs-1.2.1.tgz#5057e4206eadb4a97f7c0b6e197a505042fc3814"
   integrity sha512-QXUSXI3QVc/gJME0dBpXrag1kbzOqCjCX8/b54ntNyW6sjtoqxqRk3LTmXzaJoh71zMsDCjM+47jS7XiwN/+fQ==
 
-blockchain-addressbook@^0.40.25:
-  version "0.40.25"
-  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.40.25.tgz#123273240fa0a47725d8d1caf3e697de1be69e0f"
-  integrity sha512-MdvRIAxtmd3tCtgYXLc+75hheZSIEb8iE9lfLshQbEHUgq1WWCNWThjlHTcaATD1pf9pUjLqxmKxCFd9deDtYg==
+blockchain-addressbook@^0.40.26:
+  version "0.40.27"
+  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.40.27.tgz#0e4d46be41d291edac4ee22927060f71dd6889b7"
+  integrity sha512-NlW/USH42/YxyMU+o7IfdDDLCovWRaGFiIXebvTRPUwZal01RJ3fEHmfZZIqScyXSGO32S6WtOKe2z8DbZvRpQ==
 
 bluebird@^3.5.0, bluebird@^3.5.2, bluebird@^3.5.5:
   version "3.7.2"
@@ -14279,11 +14279,6 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
-
-react-masonry-css@^1.0.16:
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/react-masonry-css/-/react-masonry-css-1.0.16.tgz#72b28b4ae3484e250534700860597553a10f1a2c"
-  integrity sha512-KSW0hR2VQmltt/qAa3eXOctQDyOu7+ZBevtKgpNDSzT7k5LA/0XntNa9z9HKCdz3QlxmJHglTZ18e4sX4V8zZQ==
 
 react-redux@^8.0.2:
   version "8.0.2"

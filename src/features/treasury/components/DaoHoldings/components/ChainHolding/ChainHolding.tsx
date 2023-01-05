@@ -4,7 +4,6 @@ import { useAppSelector } from '../../../../../../store';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import { makeStyles } from '@material-ui/core';
 import { formatBigUsd } from '../../../../../../helpers/format';
-import BigNumber from 'bignumber.js';
 import { ChainEntity } from '../../../../../data/entities/chain';
 import { selectTreasuryBalanceByChainId } from '../../../../../data/selectors/treasury';
 
@@ -29,7 +28,7 @@ export const ChainHolding = memo<ChainHoldingProps>(function ({ chainId }) {
           alt={chainId}
         />
         <div>{chain.name}</div>
-        <span>{formatBigUsd(new BigNumber(totalUsd))}</span>
+        <span>{formatBigUsd(totalUsd)}</span>
       </div>
       <Assets chainId={chainId} />
     </div>
