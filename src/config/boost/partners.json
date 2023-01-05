@@ -1,4 +1,12 @@
 {
+  "kava": {
+    "text": "Kava is a decentralized blockchain that combines the speed and interoperability of Cosmos with the developer power of Ethereum.",
+    "website": "https://www.kava.io/",
+    "social": {
+      "telegram": "https://t.me/kavalabs",
+      "twitter": "https://twitter.com/kava_platform"
+    }
+  },
   "metavault": {
     "text": "Metavault.Trade is a next generation Decentralized Exchange, designed to provide a large range of trading features and very deep liquidity on many large cap crypto assets. Spot trading with swaps is offered on one side, while perpetual futures are offered on the other side including leverage trading. Whether visiting the platform as a trader or an investor, both are brought into a profitable symbiosis through a unique and rewarding trading experience.",
     "website": "https://metavault.trade/",

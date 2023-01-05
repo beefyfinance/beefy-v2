@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "id": "moo_curve-kava-3pool-kava",
+    "poolId": "curve-kava-3pool",
+    "name": "Beefy",
+    "assets": ["DAI", "USDC", "USDT"],
+    "tokenAddress": "0xC3821F0b56FA4F4794d5d760f94B812DE261361B",
+    "earnedToken": "WKAVA",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc86c7C0eFbd6A49B35E8714C5f59D99De09A225b",
+    "earnContractAddress": "0x405EE7F4f067604b787346bC22ACb66b06b15A4B",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "WKAVA",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["kava"]
+  }
+]
