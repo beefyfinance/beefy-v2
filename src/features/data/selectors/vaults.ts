@@ -98,7 +98,7 @@ export const selectAllGovVaultsByChainId = createSelector(
   }
 );
 
-export const selectStandardVaultIdsByOracleAddress = (
+export const selectStandardVaultIdsByDepositTokenAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
   tokenAddress: TokenEntity['address']

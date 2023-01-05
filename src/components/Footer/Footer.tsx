@@ -74,7 +74,8 @@ export const Footer = memo(function () {
   const { t } = useTranslation();
 
   const location = useLocation();
-  const isOnDashboard = location.pathname.includes('dashboard');
+  const isOnDashboard =
+    location.pathname.includes('dashboard') || location.pathname.includes('treasury');
 
   return (
     <div className={clsx(classes.footer, { [classes.userOnDashboard]: isOnDashboard })}>

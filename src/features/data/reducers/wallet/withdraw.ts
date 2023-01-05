@@ -8,7 +8,7 @@ import { fetchEstimateZapWithdraw } from '../../actions/zap';
 import { TokenEntity } from '../../entities/token';
 import { isGovVault, VaultEntity } from '../../entities/vault';
 import {
-  selectGovVaultUserStackedBalanceInDepositToken,
+  selectGovVaultUserStakedBalanceInDepositToken,
   selectStandardVaultUserBalanceInDepositTokenExcludingBoosts,
   selectUserBalanceOfToken,
 } from '../../selectors/balance';
@@ -111,7 +111,7 @@ export const withdrawSlice = createSlice({
 
       const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
       const oracleBalance = isGovVault(vault)
-        ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+        ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
         : selectStandardVaultUserBalanceInDepositTokenExcludingBoosts(state, vault.id);
 
       // we output the amount is oracle token amount
@@ -136,7 +136,7 @@ export const withdrawSlice = createSlice({
 
       const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
       const mooTokenBalance = isGovVault(vault)
-        ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+        ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
         : selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenAddress);
       const ppfs = selectVaultPricePerFullShare(state, vault.id);
       const amount = mooAmountToOracleAmount(mooToken, depositToken, ppfs, mooTokenBalance);

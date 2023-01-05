@@ -23,7 +23,7 @@ import { withdrawActions } from '../../../data/reducers/wallet/withdraw';
 import {
   selectGovVaultPendingRewardsInToken,
   selectGovVaultRewardsTokenEntity,
-  selectGovVaultUserStackedBalanceInDepositToken,
+  selectGovVaultUserStakedBalanceInDepositToken,
   selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
   selectUserBalanceOfToken,
 } from '../../../data/selectors/balance';
@@ -144,7 +144,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   // TODO: this could be a selector or hook
   const userHasBalanceInVault = useAppSelector(state => {
     const deposit = isGovVault(vault)
-      ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+      ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
       : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
     return deposit.isGreaterThan(0);
   });

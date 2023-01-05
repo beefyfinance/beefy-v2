@@ -5,7 +5,7 @@ import { BIG_ONE, BIG_ZERO } from '../../../../helpers/big-number';
 import { CalculatedBreakdownData } from './types';
 import { TokenLpBreakdown } from '../../../data/entities/token';
 import { VaultEntity } from '../../../data/entities/vault';
-import { selectLpBreakdownBalance } from '../../../data/selectors/balance';
+import { selectUserLpBreakdownBalance } from '../../../data/selectors/balance';
 
 export const chartColors = [
   '#D9E7F2',
@@ -26,7 +26,7 @@ export function useCalculatedBreakdown(
   );
 
   const { assets, userShareOfPool, lpTotalSupplyDecimal, userBalanceDecimal, oneLpShareOfPool } =
-    useAppSelector(state => selectLpBreakdownBalance(state, vault, breakdown));
+    useAppSelector(state => selectUserLpBreakdownBalance(state, vault, breakdown));
 
   const totalValue = useMemo(() => {
     return assets.reduce((total, asset) => total.plus(asset.totalValue), BIG_ZERO);

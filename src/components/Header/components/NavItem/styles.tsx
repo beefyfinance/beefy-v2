@@ -10,6 +10,7 @@ export const styles = (theme: Theme) => ({
     '& .MuiBadge-root': {
       padding: '0px 12px 0px 0px',
       verticalAlign: 'initial',
+      columnGap: '8px',
     },
     '&:hover': {
       color: theme.palette.text.primary,

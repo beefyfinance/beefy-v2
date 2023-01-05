@@ -5,7 +5,7 @@ import { Button, ButtonLink } from '../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { askForWalletConnection, doDisconnectWallet } from '../../../data/actions/wallet';
 import { selectWalletAddressIfKnown } from '../../../data/selectors/wallet';
-import { Section } from '../Section';
+import { Section } from '../../../../components/Section';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
