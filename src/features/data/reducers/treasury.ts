@@ -30,7 +30,8 @@ export const treasurySlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchTreasury.fulfilled, (sliceState, action) => {
-      for (const [chainId, balances] of Object.entries(action.payload)) {
+      const { data, allChainIds } = action.payload;
+      for (const [_chainId, balances] of Object.entries(data)) {
         const items = {};
 
         for (const [address, data] of Object.entries(balances)) {
@@ -48,8 +49,9 @@ export const treasurySlice = createSlice({
           };
         }
 
-        if (chainId !== 'sys') {
-          sliceState.byChainId[chainId === 'one' ? 'harmony' : chainId] = items;
+        const chainId = _chainId === 'one' ? 'harmony' : _chainId;
+        if (allChainIds.includes(chainId)) {
+          sliceState.byChainId[chainId] = items;
         }
       }
     });
