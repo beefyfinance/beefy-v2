@@ -47,13 +47,6 @@ export const selectTokenByAddress = createCachedSelector(
   (tokensByChainId, address) => tokensByChainId.byAddress[address.toLowerCase()]
 )((state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) => address);
 
-export const SelectTokenByAddressOrNull = createCachedSelector(
-  (state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) =>
-    selectTokensByChainId(state, chainId),
-  (state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) => address,
-  (tokensByChainId, address) => tokensByChainId.byAddress[address.toLowerCase()] ?? null
-)((state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) => address);
-
 export const selectTokensByChainId = createSelector(
   (state: BeefyState, chainId: ChainEntity['id']) => state.entities.tokens.byChainId[chainId],
   tokensByChainId => {
@@ -180,8 +173,8 @@ export const selectHasBreakdownData = (
 ) => {
   const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
   const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
-  const token = SelectTokenByAddressOrNull(state, chainId, depositTokenAddress);
-  if (token === null) return false;
+  const token = selectTokenByAddress(state, chainId, depositTokenAddress);
+  if (token === undefined) return false;
   const breakdown = selectLpBreakdownByOracleId(state, token.oracleId);
 
   if (
