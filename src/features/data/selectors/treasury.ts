@@ -9,11 +9,7 @@ import { isTreasuryHoldingVault, TreasuryHoldingsEntity } from '../entities/trea
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { getTopNArray } from '../utils/array-utils';
 import { selectLpBreakdownBalance } from './balance';
-import {
-  selectHasBreakdownData,
-  selectIsTokenStable,
-  selectLpBreakdownByOracleId,
-} from './tokens';
+import { selectHasBreakdownData, selectIsTokenStable, selectLpBreakdownByOracleId } from './tokens';
 import { selectIsVaultStable } from './vaults';
 
 export const selectIsTreasuryLoaded = (state: BeefyState) =>
