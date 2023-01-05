@@ -2,7 +2,7 @@ import { Container, makeStyles } from '@material-ui/core';
 import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SummaryStats } from '../../../../components/SummaryStats';
-import { formatBigUsd, formatUsd } from '../../../../helpers/format';
+import { formatBigUsd } from '../../../../helpers/format';
 import { styles } from './styles';
 import { ReactComponent as WalletIcon } from '../../../../images/icons/wallet.svg';
 import { ReactComponent as VaultIcon } from '../../../../images/icons/vault.svg';
@@ -17,32 +17,32 @@ export const DaoSummary = memo(function () {
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const daoSummary = useAppSelector(selectTreasuryStats);
+  const { holdings, beefyHeld, assets, stables } = useAppSelector(selectTreasuryStats);
 
   const DaoStats = useMemo(() => {
     return [
       {
         title: t('Summary-Holdings'),
-        value: formatBigUsd(daoSummary.holdings),
+        value: formatBigUsd(holdings),
         Icon: WalletIcon,
       },
       {
         title: t('Summary-Held-BIFI'),
-        value: daoSummary.beefyHeld.toFixed(0),
+        value: beefyHeld.toFixed(0),
         Icon: BifiIcon,
       },
       {
         title: t('Summary-Asset-Diversity'),
-        value: daoSummary.assets,
+        value: `${assets}`,
         Icon: VaultIcon,
       },
       {
-        title: t('Summary-Monthly-Inflow'),
-        value: formatUsd(2000),
+        title: t('Summary-Stables'),
+        value: formatBigUsd(stables),
         Icon: DailyIcon,
       },
     ];
-  }, [daoSummary.assets, daoSummary.beefyHeld, daoSummary.holdings, t]);
+  }, [assets, beefyHeld, holdings, stables, t]);
 
   return (
     <div className={classes.container}>

@@ -67,12 +67,13 @@ export const selectTreasurySummaryByChainId = createCachedSelector(
   }
 )((state: BeefyState, chainId: ChainEntity['id']) => chainId);
 
-
-export const selectTreasuryStats = createSelector(selectTreasury, treasury => {
+export const selectTreasuryStats = (state: BeefyState) => {
+  const treasury = selectTreasury(state);
   let holdings = BIG_ZERO;
   let assets = [];
   let beefyHeld = BIG_ZERO;
-  for (const [, balances] of Object.entries(treasury)) {
+  let stables = BIG_ZERO;
+  for (const [chainId, balances] of Object.entries(treasury)) {
     for (const balancePerChain of Object.values(balances)) {
       for (const token of Object.values(balancePerChain.balances)) {
         if (token) {
@@ -81,7 +82,13 @@ export const selectTreasuryStats = createSelector(selectTreasury, treasury => {
             beefyHeld = beefyHeld.plus(balanceInTokens);
           }
           if (!token.usdValue.includes('NaN')) {
-            holdings = holdings.plus(new BigNumber(token.usdValue));
+            const tokenUsdValue = new BigNumber(token.usdValue);
+            holdings = holdings.plus(tokenUsdValue);
+            if (isTreasuryHoldingVault(token) && selectIsVaultStable(state, token.vaultId)) {
+              stables = stables.plus(tokenUsdValue);
+            } else if (selectIsTokenStable(state, chainId,token.oracleId)) {
+              stables = stables.plus(tokenUsdValue);
+            }
           }
           assets.push(token.name);
         }
@@ -89,8 +96,8 @@ export const selectTreasuryStats = createSelector(selectTreasury, treasury => {
     }
   }
 
-  return { holdings, assets: new Set(assets).size, beefyHeld };
-});
+  return { holdings, assets: new Set(assets).size, beefyHeld, stables };
+};
 
 export const selectTreasuryTokensExposure = (state: BeefyState) => {
   const treasury = selectTreasury(state);
