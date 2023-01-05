@@ -2,8 +2,9 @@ import { makeStyles } from '@material-ui/core';
 import React, { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SortColumnHeader } from '../../../../../../components/SortColumnHeader';
+import { useAppSelector } from '../../../../../../store';
 import { ChainEntity } from '../../../../../data/entities/chain';
-import { TreasuryHoldingsInterface } from '../../../../../data/entities/treasury';
+import { selectTreasuryAssetsByChainId } from '../../../../../data/selectors/treasury';
 import { AssetInfo } from '../AssetInfo';
 import { useSortedAssets } from './hooks';
 import { styles } from './styles';
@@ -11,13 +12,15 @@ import { styles } from './styles';
 const useStyles = makeStyles(styles);
 
 interface AssetsProps {
-  assets: TreasuryHoldingsInterface[];
   chainId: ChainEntity['id'];
 }
 
-export const Assets = memo<AssetsProps>(function ({ assets, chainId }) {
+export const Assets = memo<AssetsProps>(function ({ chainId }) {
   const [sortDirection, setSortDirection] = React.useState<'desc' | 'asc'>('asc');
   const { t } = useTranslation();
+
+  const assets = useAppSelector(state => selectTreasuryAssetsByChainId(state, chainId));
+
   const { liquidAssets, lockedAssets, stakedAssets } = useSortedAssets(assets, sortDirection);
   const classes = useStyles();
 

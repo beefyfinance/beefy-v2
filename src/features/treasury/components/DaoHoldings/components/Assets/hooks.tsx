@@ -1,17 +1,13 @@
-import BigNumber from 'bignumber.js';
 import { sortBy } from 'lodash';
-import { TreasuryHoldingsInterface } from '../../../../../data/entities/treasury';
+import { TreasuryHoldingsEntity } from '../../../../../data/entities/treasury';
 
 export const useSortedAssets = (
-  assets: TreasuryHoldingsInterface[],
+  assets: TreasuryHoldingsEntity[],
   sortDirection: 'desc' | 'asc' = 'asc'
 ) => {
   const sortDirMul = sortDirection === 'desc' ? 1 : -1;
   const sortedAssets = sortBy(assets, token => {
-    if (token.usdValue.includes('NaN')) {
-      return -1;
-    }
-    const balanceToken = new BigNumber(token.usdValue);
+    const balanceToken = token.usdValue;
     return sortDirMul * balanceToken.toNumber();
   });
 

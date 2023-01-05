@@ -1,4 +1,5 @@
-import { VaultEntity } from "./vault";
+import BigNumber from 'bignumber.js';
+import { VaultEntity } from './vault';
 
 interface TokenHolding {
   name: string;
@@ -6,7 +7,7 @@ interface TokenHolding {
   decimals: number;
   oracleId: string;
   oracleType: 'lps' | 'token';
-  assetType:  'token' | 'native' | 'validator';
+  assetType: 'token' | 'native' | 'validator';
   price: number;
   usdValue: string;
   balance: string;
@@ -26,7 +27,6 @@ interface VaultHolding {
   pricePerFullShare: string;
 }
 
-
 export function isTreasuryHoldingVault(token: TreasuryHoldingsInterface): token is VaultHolding {
   return token.assetType === 'vault';
 }
@@ -35,5 +35,9 @@ export function isTreasuryHoldingToken(token: TreasuryHoldingsInterface): token 
   return token.assetType !== 'vault';
 }
 
-
 export type TreasuryHoldingsInterface = TokenHolding | VaultHolding;
+
+export type TreasuryHoldingsEntity = Omit<TreasuryHoldingsInterface, 'usdValue' | 'balance'> & {
+  usdValue: BigNumber;
+  balance: BigNumber;
+};
