@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
-import { memo, PropsWithChildren, useMemo } from 'react';
+import { memo, PropsWithChildren } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { formatBigUsd } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
@@ -8,10 +8,7 @@ import { ChainEntity } from '../../../../../data/entities/chain';
 import { TokenEntity } from '../../../../../data/entities/token';
 import { TreasuryHoldingsInterface } from '../../../../../data/entities/treasury';
 import { VaultEntity } from '../../../../../data/entities/vault';
-import {
-  selectStandardVaultIdsByDepositTokenAddress,
-  selectVaultById,
-} from '../../../../../data/selectors/vaults';
+import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
@@ -99,21 +96,12 @@ interface LPidentityProps {
 }
 
 export const LPidentity = memo<LPidentityProps>(function ({ address, chainId, name }) {
-  const vaultId = useAppSelector(
-    state => selectStandardVaultIdsByDepositTokenAddress(state, chainId, address)[0]
-  );
-
-  const assets = name.replace(' LP', '').split('-');
-
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
-  const assetIds = useMemo(() => {
-    return vault ? vault.assetIds : assets;
-  }, [assets, vault]);
+  const regex = / .*?LP/g; // THIS REGEX WILL MATCH space + any chars/nothing  + "LP", for example BIFI-ETH JLP will return BIFI-ETH
+  const assets = name.replace(regex, '').split('-');
 
   return (
     <>
-      <AssetsImage size={24} chainId={chainId} assetIds={assetIds} />
+      <AssetsImage size={24} chainId={chainId} assetIds={assets} />
       <div>{name}</div>
     </>
   );
