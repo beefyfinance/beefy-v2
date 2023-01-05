@@ -1,43 +1,20 @@
 import BigNumber from 'bignumber.js';
-import { VaultEntity } from './vault';
+import { TokenHoldingConfig, VaultHoldingConfig } from '../apis/config-types';
 
-interface TokenHolding {
-  name: string;
-  address: string;
-  decimals: number;
-  oracleId: string;
-  oracleType: 'lps' | 'token';
-  assetType: 'token' | 'native' | 'validator';
-  price: number;
-  usdValue: string;
-  balance: string;
-}
+type TreasuryHoldingConfigToEntity<T> = Omit<T, 'usdValue' | 'balance' | 'pricePerFullShare'> & {
+  usdValue: BigNumber;
+  balance: BigNumber;
+  pricePerFullShare: BigNumber;
+};
 
-interface VaultHolding {
-  name: string;
-  address: string;
-  decimals: number;
-  oracleId: string;
-  oracleType: 'lps';
-  assetType: 'vault';
-  price: number;
-  usdValue: string;
-  balance: string;
-  vaultId: VaultEntity['id'];
-  pricePerFullShare: string;
-}
+export type TokenHoldingEntity = TreasuryHoldingConfigToEntity<TokenHoldingConfig>;
+export type VaultHoldingEntity = TreasuryHoldingConfigToEntity<VaultHoldingConfig>;
+export type TreasuryHoldingEntity = TokenHoldingEntity | VaultHoldingEntity;
 
-export function isTreasuryHoldingVault(token: TreasuryHoldingsInterface): token is VaultHolding {
+export function isVaultHoldingEntity(token: TreasuryHoldingEntity): token is VaultHoldingEntity {
   return token.assetType === 'vault';
 }
 
-export function isTreasuryHoldingToken(token: TreasuryHoldingsInterface): token is TokenHolding {
+export function isTokenHoldingEntity(token: TreasuryHoldingEntity): token is TokenHoldingEntity {
   return token.assetType !== 'vault';
 }
-
-export type TreasuryHoldingsInterface = TokenHolding | VaultHolding;
-
-export type TreasuryHoldingsEntity = Omit<TreasuryHoldingsInterface, 'usdValue' | 'balance'> & {
-  usdValue: BigNumber;
-  balance: BigNumber;
-};

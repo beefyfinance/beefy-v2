@@ -35,3 +35,7 @@ export function truncateBigNumber(value: BigNumber, places: number): BigNumber {
 
   return value.decimalPlaces(places);
 }
+
+export function isReal(value: BigNumber): boolean {
+  return value.isFinite() && !value.isNaN();
+}

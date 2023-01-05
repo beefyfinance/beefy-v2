@@ -5,7 +5,6 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '2px',
-    marginBottom: '16px',
     '& div:last-child': {
       borderRadius: '0px 0px 8px 8px',
     },

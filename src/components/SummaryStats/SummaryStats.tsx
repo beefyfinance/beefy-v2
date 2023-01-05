@@ -35,7 +35,7 @@ export const SummaryStats = memo<SummaryStatsProps>(function ({ items }) {
   return (
     <div className={classes.summaryContainer}>
       {items.map(item => (
-        <SummaryStat title={item.title} value={item.value} Icon={item.Icon} />
+        <SummaryStat key={item.title} title={item.title} value={item.value} Icon={item.Icon} />
       ))}
     </div>
   );

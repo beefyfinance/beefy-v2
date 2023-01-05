@@ -1,12 +1,11 @@
 import { makeStyles } from '@material-ui/core';
-import BigNumber from 'bignumber.js';
 import { memo, PropsWithChildren } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { formatBigUsd } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
 import { ChainEntity } from '../../../../../data/entities/chain';
 import { TokenEntity } from '../../../../../data/entities/token';
-import { TreasuryHoldingsInterface } from '../../../../../data/entities/treasury';
+import { TreasuryHoldingEntity } from '../../../../../data/entities/treasury';
 import { VaultEntity } from '../../../../../data/entities/vault';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { styles } from './styles';
@@ -15,7 +14,7 @@ const useStyles = makeStyles(styles);
 
 interface AssetInfoProps {
   chainId: ChainEntity['id'];
-  token: TreasuryHoldingsInterface;
+  token: TreasuryHoldingEntity;
 }
 
 export const AssetInfo = memo<AssetInfoProps>(function ({ chainId, token }) {
@@ -23,7 +22,7 @@ export const AssetInfo = memo<AssetInfoProps>(function ({ chainId, token }) {
 
   const isLP = token.assetType === 'token' && token.oracleType === 'lps';
 
-  const usdValue = new BigNumber(token.usdValue);
+  const usdValue = token.usdValue;
 
   //HIDE: All tokens with less than 10 usd
   if (usdValue.lt(10)) {
@@ -57,7 +56,7 @@ export const AssetInfo = memo<AssetInfoProps>(function ({ chainId, token }) {
 });
 
 type AssetContainerProps = PropsWithChildren<{
-  token: TreasuryHoldingsInterface;
+  token: TreasuryHoldingEntity;
 }>;
 
 const AssetContainer = memo<AssetContainerProps>(function ({ token, children }) {
@@ -66,10 +65,8 @@ const AssetContainer = memo<AssetContainerProps>(function ({ token, children }) 
     <div className={classes.asset}>
       <div className={classes.assetFlex}>{children}</div>
       <div>
-        <div className={classes.value}>
-          {new BigNumber(token.balance).shiftedBy(-token.decimals).toFixed(2)}
-        </div>
-        <div className={classes.subValue}>{formatBigUsd(new BigNumber(token.usdValue))}</div>
+        <div className={classes.value}>{token.balance.shiftedBy(-token.decimals).toFixed(2)}</div>
+        <div className={classes.subValue}>{formatBigUsd(token.usdValue)}</div>
       </div>
     </div>
   );
@@ -92,7 +89,7 @@ export const VaultIdentity = memo<VaultNameProps>(function ({ vaultId }) {
 interface LPidentityProps {
   address: TokenEntity['address'];
   chainId: ChainEntity['id'];
-  name: TreasuryHoldingsInterface['name'];
+  name: TreasuryHoldingEntity['name'];
 }
 
 export const LPidentity = memo<LPidentityProps>(function ({ address, chainId, name }) {

@@ -3,10 +3,10 @@ import BigNumber from 'bignumber.js';
 import { isString } from 'lodash';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
-import { TreasuryHoldingsInterface } from '../entities/treasury';
 import { VaultEntity } from '../entities/vault';
 import { mapValuesDeep } from '../utils/array-utils';
 import { featureFlag_simulateBeefyApiError } from '../utils/feature-flags';
+import { TreasuryConfig } from './config-types';
 
 export type ApyPerformanceFeeData = {
   total: number;
@@ -94,17 +94,6 @@ type BeefyAPIVaultsResponse = {
   id: string;
   lastHarvest?: number | string;
 }[];
-
-export interface BeefyAPITreasuryResponse {
-  [chainId: ChainEntity['id']]: {
-    [address: string]: {
-      name: string;
-      balances: {
-        [address: string]: TreasuryHoldingsInterface
-      };
-    };
-  };
-}
 
 export class BeefyAPI {
   public api: AxiosInstance;
@@ -261,12 +250,12 @@ export class BeefyAPI {
     return res.data;
   }
 
-  public async getTreasury(): Promise<BeefyAPITreasuryResponse> {
+  public async getTreasury(): Promise<TreasuryConfig> {
     if (featureFlag_simulateBeefyApiError('treasury')) {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get<BeefyAPITreasuryResponse>('/treasury', {
+    const res = await this.api.get<TreasuryConfig>('/treasury', {
       params: { _: this.getCacheBuster('long') },
     });
     return res.data;

@@ -1,14 +1,20 @@
 import { Theme } from '@material-ui/core';
+
 export const styles = (theme: Theme) => ({
-  container: {
+  masonry: {
     display: 'flex',
-    marginLeft: '-16px',
     paddingBottom: '48px',
-    '& div:last-child': {
+    gap: '16px',
+    width: '100%',
+  },
+  column: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    flexBasis: '30%',
+    flexGrow: 1,
+    gap: '16px',
+    '& > :last-child': {
       marginBottom: '0',
     },
-  },
-  columnClassName: {
-    paddingLeft: '16px',
   },
 });
