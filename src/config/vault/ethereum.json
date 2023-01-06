@@ -221,7 +221,7 @@
     "earnContractAddress": "0x931997EC71C35A41Ba41bFE3f9c8921e285aea55",
     "oracle": "lps",
     "oracleId": "aura-dola-bbausd",
-    "status": "active",
+    "status": "paused",
     "platformId": "aura",
     "assets": ["DOLA", "bbaUSD"],
     "strategyTypeId": "multi-lp",
