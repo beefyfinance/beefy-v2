@@ -227,3 +227,50 @@ export type PlatformConfig = {
   name: string;
   filter: boolean;
 };
+
+export interface TokenHoldingConfig {
+  name: string;
+  address: string;
+  decimals: number;
+  oracleId: string;
+  oracleType: 'lps' | 'token';
+  assetType: 'token' | 'native' | 'validator';
+  price: number;
+  usdValue: string;
+  balance: string;
+}
+
+export interface VaultHoldingConfig {
+  name: string;
+  address: string;
+  decimals: number;
+  oracleId: string;
+  oracleType: 'lps';
+  assetType: 'vault';
+  price: number;
+  usdValue: string;
+  balance: string;
+  vaultId: VaultEntity['id'];
+  pricePerFullShare: string;
+}
+
+export type TreasuryHoldingConfig = TokenHoldingConfig | VaultHoldingConfig;
+
+export function isVaultHoldingConfig(token: TreasuryHoldingConfig): token is VaultHoldingConfig {
+  return token.assetType === 'vault';
+}
+
+export function isTokenHoldingConfig(token: TreasuryHoldingConfig): token is TokenHoldingConfig {
+  return token.assetType !== 'vault';
+}
+
+export type TreasuryConfig = {
+  [chainId: ChainEntity['id']]: {
+    [address: string]: {
+      name: string;
+      balances: {
+        [address: string]: TreasuryHoldingConfig;
+      };
+    };
+  };
+};

@@ -41,6 +41,11 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     columnGap: '8px',
     color: theme.palette.text.disabled,
+    '& .MuiBadge-root': {
+      padding: '0px 12px 0px 0px',
+      verticalAlign: 'initial',
+      columnGap: '8px',
+    },
   },
   itemsContainer: {
     padding: '16px 0px 16px 16px',

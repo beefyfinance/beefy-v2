@@ -96,7 +96,9 @@ export const LiquidityPoolBreakdownLoader = memo<LiquidityPoolBreakdownLoaderPro
     const breakdown = useAppSelector(state =>
       selectLpBreakdownByAddress(state, chainId, vault.depositTokenAddress)
     );
-    const haveBreakdownData = useAppSelector(state => selectHasBreakdownData(state, vault));
+    const haveBreakdownData = useAppSelector(state =>
+      selectHasBreakdownData(state, vault.depositTokenAddress, vault.chainId)
+    );
 
     // Load address book if needed
     useEffect(() => {

@@ -6,6 +6,7 @@ import { TokenEntity } from '../entities/token';
 import { VaultEntity } from '../entities/vault';
 import { mapValuesDeep } from '../utils/array-utils';
 import { featureFlag_simulateBeefyApiError } from '../utils/feature-flags';
+import { TreasuryConfig } from './config-types';
 
 export type ApyPerformanceFeeData = {
   total: number;
@@ -246,6 +247,17 @@ export class BeefyAPI {
   ) {
     const res = await this.data.get<BeefyChartDataResponse>(`/${stat}`, {
       params: { name, period, from, to, limit },
+    });
+    return res.data;
+  }
+
+  public async getTreasury(): Promise<TreasuryConfig> {
+    if (featureFlag_simulateBeefyApiError('treasury')) {
+      throw new Error('Simulated beefy api error');
+    }
+
+    const res = await this.api.get<TreasuryConfig>('/treasury', {
+      params: { _: this.getCacheBuster('long') },
     });
     return res.data;
   }

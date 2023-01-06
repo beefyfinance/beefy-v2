@@ -28,6 +28,7 @@ import { feesSlice } from './fees';
 import { transactReducer } from './wallet/transact';
 import { stepperSlice } from './wallet/stepper';
 import { ammsSlice } from './amms';
+import { treasurySlice } from './treasury';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -65,6 +66,7 @@ const uiReducer = combineReducers<BeefyState['ui']>({
   onRamp: onRamp.reducer,
   dataLoader: dataLoaderSlice.reducer,
   stepperState: stepperSlice.reducer,
+  treasury: treasurySlice.reducer,
 });
 
 export const rootReducer = combineReducers<BeefyState>({

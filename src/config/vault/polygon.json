@@ -1,5 +1,26 @@
 [
   {
+    "id": "curve-poly-crv3crypto",
+    "name": "CRV/TriCrypto",
+    "token": "CRVTRI-f",
+    "tokenAddress": "0xA73EdCf18421B56D9AF1cE08A34E102E23b2C4B6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveCrv3crypto",
+    "earnedTokenAddress": "0xc65E5b6084FAd2F20e289b0d4e64F450cf386E6c",
+    "earnContractAddress": "0xc65E5b6084FAd2F20e289b0d4e64F450cf386E6c",
+    "oracle": "lps",
+    "oracleId": "curve-poly-crv3crypto",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["CRV", "DAI", "USDC", "USDT", "WBTC", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-1/deposit",
+    "network": "polygon",
+    "createdAt": 1672904651
+  },
+  {
     "id": "polygon-bifi-maxi",
     "name": "BIFI Maxi",
     "token": "BIFI",

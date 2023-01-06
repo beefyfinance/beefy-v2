@@ -209,7 +209,7 @@
     "status": "active",
     "platformId": "opx",
     "assets": ["WETH", "WBTC", "USDC", "USDT", "DAI", "OP"],
-    "strategyTypeId": "single",
+    "strategyTypeId": "olp-opx",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -649,7 +649,7 @@
     "earnContractAddress": "0x31fdC28f477A8026d35ca53c8c014f7996c89501",
     "oracle": "lps",
     "oracleId": "beets-its-mai-life",
-    "status": "active",
+    "status": "paused",
     "platformId": "beethovenx",
     "assets": ["MAI", "bbrfaUSD"],
     "strategyTypeId": "multi-lp",

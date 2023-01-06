@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { isGovVault, VaultEntity } from '../../features/data/entities/vault';
 import {
-  selectGovVaultUserStackedBalanceInDepositToken,
+  selectGovVaultUserStakedBalanceInDepositToken,
   selectHasUserBalanceInActiveBoost,
   selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
   selectUserVaultDepositInUsd,
@@ -25,7 +25,7 @@ const _BoostedVaultDepositedLarge = connect(
     const vault = selectVaultById(state, vaultId);
     // deposit can be moo or oracle
     const deposit = isGovVault(vault)
-      ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+      ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
       : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const hasDeposit = deposit.gt(0);
@@ -80,7 +80,7 @@ const _NonBoostedVaultDeposited = connect(
     const vault = selectVaultById(state, vaultId);
     // deposit can be moo or oracle
     const deposit = isGovVault(vault)
-      ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+      ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
       : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const hasDeposit = deposit.gt(0);

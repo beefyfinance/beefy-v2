@@ -73,3 +73,7 @@ export function bigNumberToStringDeep(input: unknown) {
 
   return input;
 }
+
+export function isReal(value: BigNumber): boolean {
+  return value.isFinite() && !value.isNaN();
+}

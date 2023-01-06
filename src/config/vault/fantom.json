@@ -180,6 +180,28 @@
     "createdAt": 1670954581
   },
   {
+    "id": "equalizer-wftm-bifi",
+    "name": "BIFI-FTM vLP",
+    "token": "BIFI-FTM vLP",
+    "tokenAddress": "0x0b4b1e0325a7150468f724BCa3de2Deb92519846",
+    "tokenDecimals": 18,
+    "tokenProviderId": "equalizer",
+    "earnedToken": "mooEqualizerBIFI-FTM",
+    "earnedTokenAddress": "0xF633A4711D257C19589b6e6172FCEA45345CD7E7",
+    "earnContractAddress": "0xF633A4711D257C19589b6e6172FCEA45345CD7E7",
+    "oracle": "lps",
+    "oracleId": "equalizer-wftm-bifi",
+    "status": "active",
+    "platformId": "equalizer",
+    "assets": ["BIFI", "FTM"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://equalizer.exchange/liquidity/0x0b4b1e0325a7150468f724BCa3de2Deb92519846",
+    "buyTokenUrl": "https://equalizer.exchange/swap",
+    "network": "fantom",
+    "createdAt": 1672879653
+  },
+  {
     "id": "equalizer-wftm-eth",
     "name": "WETH-FTM vLP",
     "token": "WETH-FTM vLP",

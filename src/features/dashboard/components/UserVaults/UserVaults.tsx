@@ -6,7 +6,7 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { debounce } from 'lodash';
 import { useInView } from 'react-intersection-observer';
 import { ChainTable } from '../ChainTable';
-import { Section } from '../Section';
+import { Section } from '../../../../components/Section';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);

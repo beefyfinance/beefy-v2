@@ -3,13 +3,14 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
 import { Banner } from '../Banner';
-import snapshotLogo from '../../../images/partners/snapshot-logo.svg';
+import TreasuryIcon from '../../../images/icons/beefy-treasury.svg';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(styles);
 
 export const AnnouncementBanner = memo(function AnnouncementBanner() {
   const classes = useStyles();
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideBip58Banner', false);
+  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideTreasuryBanner', false);
 
   const closeBanner = useCallback(() => {
     setHideBanner(true);
@@ -21,29 +22,15 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
 
   return (
     <Banner
-      icon={<img className={classes.icon} src={snapshotLogo} alt="snapshot" />}
+      icon={<img className={classes.icon} src={TreasuryIcon} alt="treasury" />}
       text={
         <>
-          New proposal is live: [BIP:58] Adopt Governance Guidelines. Discuss on
-          <a
-            target="_blank"
-            rel="noreferrer"
-            className={classes.link}
-            href="https://discord.gg/yq8wfHd"
-          >
-            {' '}
-            Discord{' '}
-          </a>
-          and vote on
-          <a
-            target="_blank"
-            rel="noreferrer"
-            className={classes.link}
-            href="https://vote.beefy.finance/#/proposal/0x90e15a8ba3cfa8b9539b6a428130ae2987d77336ed6f9005f198b744552bc081"
-          >
-            {' '}
-            Snapshot.
-          </a>
+          Introducing{' '}
+          <Link to="/treasury" className={classes.link}>
+            Treasury dashboard.
+          </Link>{' '}
+          Explore our latest UI addition for trustworthy insights into Beefy’s treasury and
+          financials.
         </>
       }
       onClose={closeBanner}
