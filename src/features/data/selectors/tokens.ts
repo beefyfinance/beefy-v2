@@ -47,6 +47,12 @@ export const selectTokenByAddress = createCachedSelector(
   (tokensByChainId, address) => tokensByChainId.byAddress[address.toLowerCase()]
 )((state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) => address);
 
+export const selectTokenByAddressOrNull = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  address: TokenEntity['address']
+) => state.entities.tokens.byChainId[chainId]?.byAddress[address.toLowerCase()] || null;
+
 export const selectTokensByChainId = createSelector(
   (state: BeefyState, chainId: ChainEntity['id']) => state.entities.tokens.byChainId[chainId],
   tokensByChainId => {
@@ -173,8 +179,8 @@ export const selectHasBreakdownData = (
 ) => {
   const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
   const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
-  const token = selectTokenByAddress(state, chainId, depositTokenAddress);
-  if (token === undefined) return false;
+  const token = selectTokenByAddressOrNull(state, chainId, depositTokenAddress);
+  if (token === null) return false;
   const breakdown = selectLpBreakdownByOracleId(state, token.oracleId);
 
   if (
