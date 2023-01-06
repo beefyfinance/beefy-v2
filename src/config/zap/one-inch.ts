@@ -51,6 +51,7 @@ export const zaps: OneInchZapConfig[] = [
       'DAI-hDAI LP',
       'USDT-hUSDT LP',
       'beVELO',
+      'beOPX',
       'S*USDC',
       'S*ETH',
       'jEUR',
