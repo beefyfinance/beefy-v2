@@ -89,6 +89,9 @@ export const config = {
       'XSGD',
       'EURe',
       'USD+',
+      'bbamUSDC',
+      'bbamDAI',
+      'bbamUSDT',
     ],
   },
   bsc: {
