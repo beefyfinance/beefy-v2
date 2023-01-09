@@ -53,6 +53,12 @@ export const selectTokenByAddress = (
   return token;
 };
 
+export const selectTokenByAddressOrNull = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  address: TokenEntity['address']
+) => state.entities.tokens.byChainId[chainId]?.byAddress[address.toLowerCase()] || null;
+
 export const selectTokensByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
   const tokensByChainId = state.entities.tokens.byChainId[chainId];
   if (tokensByChainId === undefined) {
@@ -65,12 +71,6 @@ export const selectDepositTokenByVaultId = (state: BeefyState, vaultId: VaultEnt
   const vault = selectVaultById(state, vaultId);
   return selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 };
-
-export const selectTokenByAddressOrNull = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  address: TokenEntity['address']
-) => state.entities.tokens.byChainId[chainId]?.byAddress[address.toLowerCase()] || null;
 
 export const selectErc20TokenByAddress = (
   state: BeefyState,

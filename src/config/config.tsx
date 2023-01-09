@@ -93,6 +93,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'XSGD',
       'EURe',
       'USD+',
+      'bbamUSDC',
+      'bbamDAI',
+      'bbamUSDT',
     ],
   },
   bsc: {
