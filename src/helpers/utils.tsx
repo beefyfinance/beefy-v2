@@ -33,7 +33,6 @@ export const bluechipTokens = [
   'LINK',
   'AAVE',
   'SUSHI',
-  'SOL',
   'LTC',
   'MKR',
   'ATOM',
@@ -43,4 +42,6 @@ export const bluechipTokens = [
   'sarETH', //Stargate Arbitrum ETH
   'soETH', //Stargate Optimism ETH
   'sethETH', //Stargate Ethereum ETH
+  'multiBTC',
+  'sBTC',
 ];
