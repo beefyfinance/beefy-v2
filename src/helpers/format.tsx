@@ -4,7 +4,8 @@ import { hexToNumber, isHexStrict } from 'web3-utils';
 import { ReactNode } from 'react';
 import { AllValuesAsString } from '../features/data/utils/types-utils';
 import { BIG_ONE, BIG_ZERO, isBigNumber } from './big-number';
-import { padStart } from 'lodash';
+import { SerializedError } from '@reduxjs/toolkit';
+import { isString, padStart } from 'lodash';
 
 export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
   const number = num.toFormat({
@@ -64,6 +65,26 @@ export const formatPercent = (
       }) + '%';
 };
 
+/**
+ * @param percent 0..1
+ * @param maxPlaces
+ * @param minPlaces
+ * @param formatZero
+ */
+export function formatSmallPercent(
+  percent: number,
+  maxPlaces: number = 2,
+  minPlaces: number = 0,
+  formatZero: boolean = false
+): string {
+  return !formatZero && percent === 0
+    ? '0%'
+    : (percent * 100).toLocaleString('en-US', {
+        maximumFractionDigits: maxPlaces,
+        minimumFractionDigits: minPlaces,
+      }) + '%';
+}
+
 export const formattedTotalApy = (
   totalApy: TotalApy,
   placeholder: ReactNode = '?'
@@ -107,7 +128,7 @@ export const formatUsd = (tvl, oraclePrice = undefined) => {
 };
 
 export function getBigNumOrder(num: BigNumber): number {
-  const nEstr = num.abs().decimalPlaces(0).toExponential();
+  const nEstr = num.abs().decimalPlaces(0, BigNumber.ROUND_FLOOR).toExponential();
   const parts = nEstr.split('e');
   const exp = parseInt(parts[1] || '0');
   return Math.floor(exp / 3);
@@ -118,14 +139,14 @@ export function formatBigUsd(value: BigNumber) {
 }
 
 export function formatBigNumber(value: BigNumber) {
-  value = value.decimalPlaces(2);
+  value = value.decimalPlaces(2, BigNumber.ROUND_FLOOR);
 
   if (value.isZero()) {
     return '0';
   }
   const order = getBigNumOrder(value);
   if (value.abs().gte(100)) {
-    value = value.decimalPlaces(0);
+    value = value.decimalPlaces(0, BigNumber.ROUND_FLOOR);
   }
   if (order < 2 && value.abs().gte(100)) {
     return value.toNumber().toLocaleString('en-US', {
@@ -222,7 +243,9 @@ export const stripTrailingZeros = str => {
 
 export function byDecimals(number, tokenDecimals = 18) {
   const decimals = new BigNumber(10).exponentiatedBy(tokenDecimals);
-  return new BigNumber(number).dividedBy(decimals).decimalPlaces(tokenDecimals);
+  return new BigNumber(number)
+    .dividedBy(decimals)
+    .decimalPlaces(tokenDecimals, BigNumber.ROUND_FLOOR);
 }
 
 export const formatCountdown = deadline => {
@@ -247,7 +270,7 @@ export const formatCountdown = deadline => {
 export function convertAmountToRawNumber(value, decimals = 18) {
   return new BigNumber(value)
     .shiftedBy(decimals)
-    .decimalPlaces(0, BigNumber.ROUND_DOWN)
+    .decimalPlaces(0, BigNumber.ROUND_FLOOR)
     .toString(10);
 }
 
@@ -272,6 +295,10 @@ export function formatEns(ens: string): string {
     return ens.substring(0, 6) + '...' + ens.substring(ens.length - 3);
   }
   return ens;
+}
+
+export function errorToString(error: SerializedError | string) {
+  return isString(error) ? error : (error?.message || error?.name || error?.code) + '';
 }
 
 export function zeroPad(value: number | undefined): string {

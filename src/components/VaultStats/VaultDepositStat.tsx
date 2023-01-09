@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import {
-  selectGovVaultUserStackedBalanceInDepositToken,
+  selectGovVaultUserStakedBalanceInDepositToken,
   selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
   selectUserVaultDepositInUsd,
 } from '../../features/data/selectors/balance';
@@ -42,7 +42,7 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDeposit
 
   // deposit can be moo or oracle
   const deposit = isGovVault(vault)
-    ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+    ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
     : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
 
   if (!deposit.gt(0)) {

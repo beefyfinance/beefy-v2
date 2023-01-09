@@ -3,7 +3,7 @@ import { getWeb3Instance } from '../features/data/apis/instances';
 import { ChainEntity } from '../features/data/entities/chain';
 import SID, { getSidAddress } from '@siddomains/sidjs';
 
-const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const EEEE_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
 const NATIVE_ADDRESS_ALTERNATIVES = [ZERO_ADDRESS, EEEE_ADDRESS.toLowerCase()];
 

@@ -2,7 +2,7 @@ import { BeefyState } from '../../../redux-types';
 import { isGovVault, isVaultActive, VaultEntity } from '../entities/vault';
 import {
   selectAddressDepositedVaultIds,
-  selectGovVaultUserStackedBalanceInDepositToken,
+  selectGovVaultUserStakedBalanceInDepositToken,
   selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
   selectUserVaultDepositInDepositToken,
 } from './balance';
@@ -55,7 +55,7 @@ export const selectUserGlobalStats = (state: BeefyState) => {
 
   for (const vault of userVaults) {
     const tokenBalance = isGovVault(vault)
-      ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+      ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
       : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
 
     if (tokenBalance.lte(BIG_ZERO)) {

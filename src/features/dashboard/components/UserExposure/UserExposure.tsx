@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChainExposureLoader } from '../ChainExposure';
 import { PlatformExposureLoader } from '../PlatformExposure';
-import { Section } from '../Section';
+import { Section } from '../../../../components/Section';
 import { StablesExposure } from '../StablesExposure';
 import { TokenExposureLoader } from '../TokenExposure';
 import { styles } from './styles';

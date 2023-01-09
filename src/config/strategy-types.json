@@ -30,5 +30,13 @@
   {
     "id": "glp-gmx",
     "name": "GMX"
+  },
+  {
+    "id": "mvlp-mvx",
+    "name": "MVX"
+  },
+  {
+    "id": "olp-opx",
+    "name": "OPX"
   }
 ]

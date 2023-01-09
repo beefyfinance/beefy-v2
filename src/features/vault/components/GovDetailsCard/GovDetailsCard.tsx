@@ -36,6 +36,8 @@ export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
             ? t('beJOE-description')
             : vaultId === 'beefy-beqi-earnings'
             ? t('beQI-description')
+            : vaultId === 'beefy-beopx-earnings'
+            ? t('beOPX-description')
             : t('Gov-Info1') +
               earnedToken.symbol +
               t('Gov-Info2') +

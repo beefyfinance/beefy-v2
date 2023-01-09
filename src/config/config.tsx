@@ -8,6 +8,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     explorerUrl: 'https://etherscan.io',
     multicallAddress: '0x9dA9f3C6c45F1160b53D395b0A982aEEE1D212fE',
     appMulticallContractAddress: '0xce6ef394f61918c89bDFCC53Ef4b8fB74879C2B2',
+    oneInchPriceOracleAddress: '0x07D91f5fb9Bf7798734C3f606dB065549F6893bb',
     providerName: 'Ethereum',
     walletSettings: {
       chainId: `0x${parseInt('1', 10).toString(16)}`,
@@ -57,6 +58,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
     appMulticallContractAddress: '0x244908D9A21B143911D531cD1D37575D63da4D87',
+    oneInchPriceOracleAddress: '0x7F069df72b7A39bCE9806e3AfaF579E54D8CF2b9',
     providerName: 'polygon',
     walletSettings: {
       chainId: `0x${parseInt('137', 10).toString(16)}`,
@@ -103,6 +105,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'XSGD',
       'EURe',
       'USD+',
+      'bbamUSDC',
+      'bbamDAI',
+      'bbamUSDT',
     ],
   },
   bsc: {
@@ -117,6 +122,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     explorerUrl: 'https://bscscan.com',
     multicallAddress: '0xB94858b0bB5437498F5453A16039337e5Fdc269C',
     appMulticallContractAddress: '0x72580937d2B5563792793e72200fC8942a4045D6',
+    oneInchPriceOracleAddress: '0xfbD61B037C325b959c0F6A7e69D8f37770C2c550',
     providerName: 'binance',
     walletSettings: {
       chainId: `0x${parseInt('56', 10).toString(16)}`,
@@ -172,6 +178,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     explorerUrl: 'https://optimistic.etherscan.io',
     multicallAddress: '0x820ae7bf39792d7ce7befc70b0172f4d267f1938',
     appMulticallContractAddress: '0x88D537a86e09B753361D70448d60D3dC2D75883d',
+    oneInchPriceOracleAddress: '0x11DEE30E710B8d4a8630392781Cc3c0046365d4c',
     providerName: 'Optimism',
     walletSettings: {
       chainId: `0x${parseInt('10', 10).toString(16)}`,
@@ -215,6 +222,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     explorerUrl: 'https://ftmscan.com',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
     appMulticallContractAddress: '0xdd54c53d169aCFC53cAf08F1778A492Ff5Aea258',
+    oneInchPriceOracleAddress: '0xE8E598A1041b6fDB13999D275a202847D9b654ca',
     providerName: 'fantom',
     walletSettings: {
       chainId: `0x${parseInt('250', 10).toString(16)}`,
@@ -263,6 +271,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     explorerUrl: 'https://arbiscan.io',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
     appMulticallContractAddress: '0x332f4079E042A5764060E24C72DE765c8Ea1BC95',
+    oneInchPriceOracleAddress: '0x735247fb0a604c0adC6cab38ACE16D0DbA31295F',
     providerName: 'Arbitrum',
     walletSettings: {
       chainId: `0x${parseInt('42161', 10).toString(16)}`,
@@ -290,6 +299,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     explorerUrl: 'https://cchain.explorer.avax.network',
     multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
     appMulticallContractAddress: '0x911E556Afd49468429072A3677f895B3cE0AcCcB',
+    oneInchPriceOracleAddress: '0xBd0c7AaF0bF082712EbE919a9dD94b2d978f79A9',
     providerName: 'avalanche',
     walletSettings: {
       chainId: `0x${parseInt('43114', 10).toString(16)}`,
@@ -488,6 +498,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     explorerUrl: 'https://aurorascan.dev',
     multicallAddress: '0x55f46144bC62e9Af4bAdB71842B62162e2194E90',
     appMulticallContractAddress: '0x88D537a86e09B753361D70448d60D3dC2D75883d',
+    oneInchPriceOracleAddress: '0xE4E0552452e5cC1306A2bF5B2Fd9b1eA19418795',
     providerName: 'Aurora',
     walletSettings: {
       chainId: `0x${parseInt('1313161554', 10).toString(16)}`,

@@ -5301,10 +5301,10 @@ blakejs@^1.1.0:
   resolved "https://registry.yarnpkg.com/blakejs/-/blakejs-1.2.1.tgz#5057e4206eadb4a97f7c0b6e197a505042fc3814"
   integrity sha512-QXUSXI3QVc/gJME0dBpXrag1kbzOqCjCX8/b54ntNyW6sjtoqxqRk3LTmXzaJoh71zMsDCjM+47jS7XiwN/+fQ==
 
-blockchain-addressbook@^0.40.22:
-  version "0.40.22"
-  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.40.22.tgz#19afed90a5fe5e6595f7ae2fefd3a156c12eb255"
-  integrity sha512-k9eCJGQjiE6FXGq9K5IwxxC8SyOzDMr7Aa7Tvdb4FxO906QDE1L/wm0j2h6Tl03lUqb0bXtMD0ebJ7EF5VEQTg==
+blockchain-addressbook@^0.40.28:
+  version "0.40.28"
+  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.40.28.tgz#bc27c85fe0a1754eee10be8463144bc1f8726bcc"
+  integrity sha512-GbQyQEbbu+/4cJuNT7Zks8urPIza/2aI65SkLs4NCiGeKGspdYxcEuf6t55dqvWU6SLoE1do00EAK+zBmosBfw==
 
 bluebird@^3.5.0, bluebird@^3.5.2, bluebird@^3.5.5:
   version "3.7.2"
@@ -8365,7 +8365,7 @@ eventemitter3@4.0.4:
   resolved "https://registry.npmjs.org/eventemitter3/-/eventemitter3-4.0.4.tgz"
   integrity sha512-rlaVLnVxtxvoyLsQQFBx53YmXHDxRIzzTLbdfxqi4yocpSjAxXwkU0cScM5JgSKMqEhrZpnvQ2D9gjylR0AimQ==
 
-eventemitter3@4.0.7, eventemitter3@^4.0.0, eventemitter3@^4.0.1, eventemitter3@^4.0.7:
+eventemitter3@4.0.7, eventemitter3@^4.0.0, eventemitter3@^4.0.1, eventemitter3@^4.0.4, eventemitter3@^4.0.7:
   version "4.0.7"
   resolved "https://registry.npmjs.org/eventemitter3/-/eventemitter3-4.0.7.tgz"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
@@ -12726,6 +12726,14 @@ p-map@^4.0.0:
   dependencies:
     aggregate-error "^3.0.0"
 
+p-queue@^6.6.2:
+  version "6.6.2"
+  resolved "https://registry.yarnpkg.com/p-queue/-/p-queue-6.6.2.tgz#2068a9dcf8e67dd0ec3e7a2bcb76810faa85e426"
+  integrity sha512-RwFpb72c/BhQLEXIZ5K2e+AhgNVmIejGlTgiB9MzZ0e93GRvqZ7uSi0dvRF7/XIXDeNkra2fNHBxTyPDGySpjQ==
+  dependencies:
+    eventemitter3 "^4.0.4"
+    p-timeout "^3.2.0"
+
 p-retry@^3.0.1:
   version "3.0.1"
   resolved "https://registry.npmjs.org/p-retry/-/p-retry-3.0.1.tgz"
@@ -12737,6 +12745,13 @@ p-timeout@^1.1.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/p-timeout/-/p-timeout-1.2.1.tgz"
   integrity sha1-XrOzU7f86Z8QGhA4iAuwVOu+o4Y=
+  dependencies:
+    p-finally "^1.0.0"
+
+p-timeout@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/p-timeout/-/p-timeout-3.2.0.tgz#c7e17abc971d2a7962ef83626b35d635acf23dfe"
+  integrity sha512-rhIwUycgwwKcP9yTOOFK/AKsAopjjCakVqLHePO3CC6Mir1Z99xT+R63jZxAT5lFZLa2inS5h+ZS2GvR99/FBg==
   dependencies:
     p-finally "^1.0.0"
 

@@ -12,7 +12,7 @@ import {
 import { selectIsBeefyToken, selectIsTokenBluechip, selectIsTokenStable } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE } from '../../../helpers/big-number';
-import { differenceWith, isEqual } from 'lodash';
+import { differenceWith, first, isEqual } from 'lodash';
 import { selectChainById } from './chains';
 
 export const selectVaultById = createCachedSelector(
@@ -98,29 +98,42 @@ export const selectAllGovVaultsByChainId = createSelector(
   }
 );
 
-export const selectStandardVaultIdsByOracleAddress = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  tokenAddress: TokenEntity['address']
-) => {
-  const vaultIds =
-    state.entities.vaults.byChainId[chainId]?.standardVault.byDepositTokenAddress[
-      tokenAddress.toLowerCase()
-    ];
-  return vaultIds || [];
-};
+export const selectStandardVaultIdsByDepositTokenAddress = createCachedSelector(
+  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) => chainId,
+  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
+    tokenAddress.toLowerCase(),
+  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
+    state.entities.vaults.byChainId,
+  (chainId, tokenAddress, byChainId) =>
+    byChainId[chainId]?.standardVault.byDepositTokenAddress[tokenAddress] || []
+)(
+  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
+    `${chainId}-${tokenAddress.toLowerCase()}`
+);
 
-export const selectGovVaultVaultIdsByOracleAddress = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  tokenAddress: TokenEntity['address']
-) => {
-  const vaultIds =
-    state.entities.vaults.byChainId[chainId]?.govVault.byDepositTokenAddress[
-      tokenAddress.toLowerCase()
-    ];
-  return vaultIds || [];
-};
+export const selectFirstStandardVaultByDepositTokenAddress = createCachedSelector(
+  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
+    selectStandardVaultIdsByDepositTokenAddress(state, chainId, tokenAddress),
+  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
+    state.entities.vaults.byId,
+  (ids, byId) => (ids.length ? byId[first(ids)] : null)
+)(
+  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
+    `${chainId}-${tokenAddress.toLowerCase()}`
+);
+
+export const selectGovVaultVaultIdsByDepositTokenAddress = createCachedSelector(
+  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) => chainId,
+  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
+    tokenAddress.toLowerCase(),
+  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
+    state.entities.vaults.byChainId,
+  (chainId, tokenAddress, byChainId) =>
+    byChainId[chainId]?.govVault.byDepositTokenAddress[tokenAddress] || []
+)(
+  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
+    `${chainId}-${tokenAddress.toLowerCase()}`
+);
 
 export const selectIsStandardVaultEarnTokenAddress = (
   state: BeefyState,

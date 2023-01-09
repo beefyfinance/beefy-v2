@@ -108,6 +108,11 @@ export function featureFlag_logReduxActions() {
   return params.has('__log_redux_actions');
 }
 
+export function featureFlag_logging() {
+  const params = new URLSearchParams(window.location.search);
+  return params.has('__logging');
+}
+
 export function featureFlag_replayReduxActions() {
   const isAuthorizedDomain =
     window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
@@ -132,7 +137,7 @@ export function featureFlag_simulateRpcError(chainId: ChainEntity['id']) {
 }
 
 export function featureFlag_simulateBeefyApiError(
-  key: 'apy' | 'prices' | 'lps' | 'buyback' | 'lpsBreakdown' | 'fees'
+  key: 'apy' | 'prices' | 'lps' | 'buyback' | 'lpsBreakdown' | 'fees' | 'treasury'
 ) {
   const isAuthorizedDomain =
     window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');

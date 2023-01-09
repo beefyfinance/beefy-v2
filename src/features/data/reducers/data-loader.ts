@@ -1,17 +1,10 @@
-import {
-  ActionReducerMapBuilder,
-  AsyncThunk,
-  createSlice,
-  SerializedError,
-} from '@reduxjs/toolkit';
-import { isString } from 'lodash';
+import { ActionReducerMapBuilder, AsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchAllAllowanceAction } from '../actions/allowance';
 import { fetchApyAction } from '../actions/apy';
 import { fetchAllBalanceAction } from '../actions/balance';
 import { fetchAllBoosts, initiateBoostForm } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import { initiateDepositForm } from '../actions/deposit';
 import { fetchAllPricesAction } from '../actions/prices';
 import {
   fetchAddressBookAction,
@@ -25,7 +18,6 @@ import {
   doDisconnectWallet,
   initWallet,
 } from '../actions/wallet';
-import { initiateWithdrawForm } from '../actions/withdraw';
 import { fetchAllZapsAction } from '../actions/zap';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters';
 import { fetchAllInfoCards } from '../actions/info-cards';
@@ -34,6 +26,9 @@ import { fetchPlatforms } from '../actions/platforms';
 import { fetchOnRampSupportedProviders } from '../actions/on-ramp';
 import { fetchFees } from '../actions/fees';
 import { DataLoaderState, LoaderState } from './data-loader-types';
+import { errorToString } from '../../../helpers/format';
+import { fetchAllAmmsAction } from '../actions/amm';
+import { fetchTreasury } from '../actions/treasury';
 
 const dataLoaderStateInit: LoaderState = {
   alreadyLoadedOnce: false,
@@ -72,6 +67,7 @@ export const initialDataLoaderState: DataLoaderState = {
     vaults: dataLoaderStateInit,
     fees: dataLoaderStateInit,
     wallet: dataLoaderStateInit,
+    amms: dataLoaderStateInit,
     zaps: dataLoaderStateInit,
     depositForm: dataLoaderStateInit,
     withdrawForm: dataLoaderStateInit,
@@ -83,6 +79,7 @@ export const initialDataLoaderState: DataLoaderState = {
     bridge: dataLoaderStateInit,
     platforms: dataLoaderStateInit,
     onRamp: dataLoaderStateInit,
+    treasury: dataLoaderStateInit,
   },
   byChainId: {},
 };
@@ -104,7 +101,7 @@ function addGlobalAsyncThunkActions(
     };
   });
   builder.addCase(action.rejected, (sliceState, action) => {
-    const msg = getMessage(action.error);
+    const msg = errorToString(action.error);
     // here, maybe put an error message
     sliceState.global[stateKey] = {
       status: 'rejected',
@@ -145,7 +142,7 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
       sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }
 
-    const msg = getMessage(action.error);
+    const msg = errorToString(action.error);
     // here, maybe put an error message
     for (const stateKey of stateKeys) {
       sliceState.byChainId[chainId][stateKey] = {
@@ -193,15 +190,15 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchFees, 'fees', true);
     addGlobalAsyncThunkActions(builder, fetchAllMinters, 'minters', false);
     addGlobalAsyncThunkActions(builder, fetchAllInfoCards, 'infoCards', false);
-    addGlobalAsyncThunkActions(builder, initiateDepositForm, 'depositForm', true);
-    addGlobalAsyncThunkActions(builder, initiateWithdrawForm, 'withdrawForm', true);
     addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm', true);
     addGlobalAsyncThunkActions(builder, initiateMinterForm, 'minterForm', true);
     addGlobalAsyncThunkActions(builder, initiateBridgeForm, 'bridge', true);
     addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps', true);
+    addGlobalAsyncThunkActions(builder, fetchAllAmmsAction, 'amms', true);
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
     addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms', true);
     addGlobalAsyncThunkActions(builder, fetchOnRampSupportedProviders, 'onRamp', true);
+    addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury', true);
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance']);
     addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, ['allowance']);
@@ -212,9 +209,5 @@ export const dataLoaderSlice = createSlice({
     addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);
   },
 });
-
-function getMessage(error: SerializedError) {
-  return isString(error) ? error : (error?.message || error?.name || error?.code) + '';
-}
 
 export const dataLoaderActions = dataLoaderSlice.actions;

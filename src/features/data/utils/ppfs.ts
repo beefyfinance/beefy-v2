@@ -32,7 +32,7 @@ export function mooAmountToOracleAmount(
   // but we can't return a number with more precision than the oracle precision
   const oracleAmount = oracleChainAmount
     .shiftedBy(-depositToken.decimals)
-    .decimalPlaces(depositToken.decimals);
+    .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR);
 
   return oracleAmount;
 }
@@ -51,7 +51,9 @@ export function oracleAmountToMooAmount(
 
   // go to math representation
   // but we can't return a number with more precision than the oracle precision
-  const mooAmount = mooChainAmount.shiftedBy(-mooToken.decimals).decimalPlaces(mooToken.decimals);
+  const mooAmount = mooChainAmount
+    .shiftedBy(-mooToken.decimals)
+    .decimalPlaces(mooToken.decimals, BigNumber.ROUND_FLOOR);
 
   return mooAmount;
 }

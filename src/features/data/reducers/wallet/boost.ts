@@ -64,7 +64,7 @@ export const boostSlice = createSlice({
 
       const input = action.payload.amount.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
 
-      let value = new BigNumber(input).decimalPlaces(balanceToken.decimals, BigNumber.ROUND_DOWN);
+      let value = new BigNumber(input).decimalPlaces(balanceToken.decimals, BigNumber.ROUND_FLOOR);
 
       if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
         value = BIG_ZERO;

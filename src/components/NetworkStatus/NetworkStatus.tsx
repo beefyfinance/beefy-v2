@@ -6,7 +6,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import { ChainEntity } from '../../features/data/entities/chain';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader';
 import { selectBoostById } from '../../features/data/selectors/boosts';
-import { selectVaultById } from '../../features/data/selectors/vaults';
 import { BeefyState } from '../../redux-types';
 import { styles } from './styles';
 import { Floating } from '../Floating';
@@ -201,17 +200,10 @@ const findChainIdMatching = (state: BeefyState, matcher: (loader: LoaderState) =
       chainIds.push(chainId);
     }
   }
+
   if (matcher(state.ui.dataLoader.global.boostForm) && state.ui.boost.boostId) {
     const boost = selectBoostById(state, state.ui.boost.boostId);
     chainIds.push(boost.chainId);
-  }
-  if (matcher(state.ui.dataLoader.global.depositForm) && state.ui.deposit.vaultId) {
-    const vault = selectVaultById(state, state.ui.deposit.vaultId);
-    chainIds.push(vault.chainId);
-  }
-  if (matcher(state.ui.dataLoader.global.withdrawForm) && state.ui.withdraw.vaultId) {
-    const vault = selectVaultById(state, state.ui.withdraw.vaultId);
-    chainIds.push(vault.chainId);
   }
 
   return uniq(chainIds);

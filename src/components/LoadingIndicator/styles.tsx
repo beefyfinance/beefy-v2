@@ -8,6 +8,7 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     justifyContent: 'center',
     alignItems: 'center',
+    minHeight: 'inherit',
   },
   icon: {
     marginBottom: '24px',

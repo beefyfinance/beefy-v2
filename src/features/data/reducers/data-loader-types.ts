@@ -70,6 +70,7 @@ export interface DataLoaderState {
     fees: LoaderState;
     boosts: LoaderState;
     wallet: LoaderState;
+    amms: LoaderState;
     zaps: LoaderState;
     depositForm: LoaderState;
     withdrawForm: LoaderState;
@@ -81,6 +82,7 @@ export interface DataLoaderState {
     bridge: LoaderState;
     platforms: LoaderState;
     onRamp: LoaderState;
+    treasury: LoaderState;
   };
   byChainId: {
     [chainId: ChainEntity['id']]: {

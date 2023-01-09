@@ -7,6 +7,11 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     columnGap: '4px',
     color: theme.palette.text.disabled,
+    '& .MuiBadge-root': {
+      padding: '0px 12px 0px 0px',
+      verticalAlign: 'initial',
+      columnGap: '4px',
+    },
     '&:hover': {
       cursor: 'pointer',
       color: theme.palette.text.primary,

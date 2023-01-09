@@ -1,4 +1,6 @@
 import Web3 from 'web3';
+import ContractConstructor, { Contract } from 'web3-eth-contract';
+import { AbiItem } from 'web3-utils';
 import utils from 'web3-utils';
 import { formatters } from 'web3-core-helpers';
 import { Transaction, provider } from 'web3-core';
@@ -193,4 +195,8 @@ export function createWeb3Instance(rpc: provider): Web3 {
   });
 
   return instance;
+}
+
+export function createContract(jsonInterface: AbiItem[], address: string): Contract {
+  return new (ContractConstructor as unknown as typeof Contract)(jsonInterface, address);
 }

@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Divider, Drawer, makeStyles } from '@material-ui/core';
+import { Badge, Divider, Drawer, makeStyles } from '@material-ui/core';
 import { Close, Menu } from '@material-ui/icons';
 import { styles } from './styles';
 import { BifiPrice } from '../BifiPrice';
@@ -37,10 +37,10 @@ export const MobileMenu = memo(function () {
                 {url ? (
                   <NavItemMobile
                     onClick={handleDrawerToggle}
-                    withBadge={badge}
                     title={title}
                     url={url}
                     Icon={Icon}
+                    withBadge={badge}
                   />
                 ) : (
                   <DropMobile
@@ -48,6 +48,7 @@ export const MobileMenu = memo(function () {
                     title={title}
                     Icon={Icon}
                     items={items}
+                    withBadge={badge}
                   />
                 )}
                 <Divider className={classes.divider} />
@@ -63,18 +64,34 @@ export const MobileMenu = memo(function () {
 interface DropMobileProps {
   title: string;
   Icon: React.FC;
-  items: { url: string; title: string; Icon: React.FC }[];
+  items: { url: string; title: string; Icon: React.FC; badge?: boolean }[];
   onClick: () => void;
+  withBadge?: boolean;
 }
 
-export const DropMobile = memo<DropMobileProps>(function ({ title, Icon, items, onClick }) {
+export const DropMobile = memo<DropMobileProps>(function ({
+  title,
+  Icon,
+  items,
+  onClick,
+  withBadge,
+}) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
     <div className={classes.itemsContainer}>
       <div className={classes.itemTitle}>
-        <Icon />
-        {t(title)}
+        {withBadge ? (
+          <Badge badgeContent="New" color="primary">
+            <Icon />
+            {t(title)}
+          </Badge>
+        ) : (
+          <>
+            <Icon />
+            {t(title)}
+          </>
+        )}
       </div>
       <div>
         {items.map(item => {
@@ -85,6 +102,7 @@ export const DropMobile = memo<DropMobileProps>(function ({ title, Icon, items, 
               title={item.title}
               url={item.url}
               Icon={item.Icon}
+              withBadge={item.badge}
             />
           );
         })}

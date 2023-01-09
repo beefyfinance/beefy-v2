@@ -1,5 +1,26 @@
 [
   {
+    "id": "curve-poly-crv3crypto",
+    "name": "CRV/TriCrypto",
+    "token": "CRVTRI-f",
+    "tokenAddress": "0xA73EdCf18421B56D9AF1cE08A34E102E23b2C4B6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveCrv3crypto",
+    "earnedTokenAddress": "0xc65E5b6084FAd2F20e289b0d4e64F450cf386E6c",
+    "earnContractAddress": "0xc65E5b6084FAd2F20e289b0d4e64F450cf386E6c",
+    "oracle": "lps",
+    "oracleId": "curve-poly-crv3crypto",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["CRV", "DAI", "USDC", "USDT", "WBTC", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-1/deposit",
+    "network": "polygon",
+    "createdAt": 1672904651
+  },
+  {
     "id": "polygon-bifi-maxi",
     "name": "BIFI Maxi",
     "token": "BIFI",
@@ -25,6 +46,62 @@
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xfbdd194376de19a88118e84e279b977f165d01b8",
     "network": "polygon",
     "createdAt": 1621450869
+  },
+  {
+    "id": "mvx-mvlp",
+    "name": "MVLP",
+    "token": "MVLP",
+    "tokenAddress": "0x2ee50C34392E7e7a1D17B0A42328a8D1Ad6894e3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "mvx",
+    "earnedToken": "mooMvxMVLP",
+    "earnedTokenAddress": "0xa0FdCDDA62C4C6a0109A702a7Efe59B4E8807e3f",
+    "earnContractAddress": "0xa0FdCDDA62C4C6a0109A702a7Efe59B4E8807e3f",
+    "oracle": "lps",
+    "oracleId": "mvx-mvlp",
+    "status": "active",
+    "platformId": "mvx",
+    "assets": ["MATIC", "ETH", "WBTC", "LINK", "UNI", "AAVE", "USDC", "USDT", "DAI", "BUSD"],
+    "strategyTypeId": "mvlp-mvx",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.metavault.trade/#/buy_mvlp",
+    "network": "polygon",
+    "createdAt": 1672503161
+  },
+  {
+    "id": "mvx-mvx",
+    "name": "MVX",
+    "token": "MVX",
+    "tokenAddress": "0x2760E46d9BB43dafCbEcaad1F64b93207f9f0eD7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "mvx",
+    "earnedToken": "mooMvxMVX",
+    "earnedTokenAddress": "0x2ee96Db9E7f029F086E45466FcD761066148599E",
+    "earnContractAddress": "0x2ee96Db9E7f029F086E45466FcD761066148599E",
+    "oracle": "tokens",
+    "oracleId": "MVX",
+    "status": "active",
+    "platformId": "mvx",
+    "assets": ["MVX"],
+    "strategyTypeId": "mvlp-mvx",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://app.1inch.io/#/137/unified/swap/AVAX/0x2760E46d9BB43dafCbEcaad1F64b93207f9f0eD7",
+    "network": "polygon",
+    "createdAt": 1672503160
   },
   {
     "id": "dystopia-usd+-usdc",
@@ -911,8 +988,8 @@
     "earnContractAddress": "0x8c9d3Bc4425773BD2F00C4a2aC105c5Ad73c8141",
     "oracle": "lps",
     "oracleId": "curve-poly-ren",
-    "status": "paused",
-    "pauseReason": "ren-sunset",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "curve",
     "assets": ["WBTC", "renBTC"],
     "strategyTypeId": "lp",
@@ -982,12 +1059,11 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://polygon.curve.fi/atricrypto3/deposit",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto3/deposit",
     "network": "polygon",
-    "createdAt": 1652662923
+    "createdAt": 1672734429
   },
   {
     "id": "polywise-usdc-wise-eol",
