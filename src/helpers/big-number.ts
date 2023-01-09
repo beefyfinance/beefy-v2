@@ -1,4 +1,5 @@
 import { BigNumber } from 'bignumber.js';
+import { mapValues } from 'lodash';
 
 export type BigNumberish = BigNumber.Value;
 
@@ -33,7 +34,44 @@ export function truncateBigNumber(value: BigNumber, places: number): BigNumber {
     return value;
   }
 
-  return value.decimalPlaces(places);
+  return value.decimalPlaces(places, BigNumber.ROUND_FLOOR);
+}
+
+export function toWei(value: BigNumber, decimals: number): BigNumber {
+  return value.shiftedBy(decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
+}
+
+export function toWeiString(value: BigNumber, decimals: number): string {
+  return toWei(value, decimals).toString(10);
+}
+
+export function fromWei(value: BigNumber, decimals: number): BigNumber {
+  return value.shiftedBy(-decimals).decimalPlaces(decimals, BigNumber.ROUND_FLOOR);
+}
+
+export function fromWeiString(value: string, decimals: number): BigNumber {
+  return fromWei(new BigNumber(value), decimals);
+}
+
+/**
+ * Recursively maps over an object and replaces any BigNumber object with string value
+ * e.g. "BigNumber(123.567)"
+ * Use only for debugging
+ */
+export function bigNumberToStringDeep(input: unknown) {
+  if (input && typeof input === 'object') {
+    if (BigNumber.isBigNumber(input)) {
+      return `BigNumber(${input.toString(10)})`;
+    }
+
+    if (Array.isArray(input)) {
+      return input.map(bigNumberToStringDeep);
+    }
+
+    return mapValues(input, bigNumberToStringDeep);
+  }
+
+  return input;
 }
 
 export function isReal(value: BigNumber): boolean {

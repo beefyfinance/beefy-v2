@@ -1,4 +1,4 @@
-import React, { FC, memo, useEffect } from 'react';
+import React, { ComponentType, memo, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { NetworkStep } from './components/NetworkStep';
@@ -21,7 +21,7 @@ import { SelectProviderStep } from './components/SelectProviderStep';
 
 const useStyles = makeStyles(styles);
 
-const stepToComponent: Record<FormStep, FC> = {
+const stepToComponent: Record<FormStep, ComponentType> = {
   [FormStep.UnsupportedCountry]: UnsupportedCountryStep,
   [FormStep.SelectToken]: TokenStep,
   [FormStep.SelectNetwork]: NetworkStep,

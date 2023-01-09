@@ -2,44 +2,13 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { memo } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
-import {
-  formatBigUsd,
-  formatFullBigNumber,
-  formatSignificantBigNumber,
-} from '../../../../../../helpers/format';
+import { formatBigUsd } from '../../../../../../helpers/format';
 import { BreakdownMode, CalculatedBreakdownData } from '../../types';
 import clsx from 'clsx';
-import { BigNumber } from 'bignumber.js';
-import { Tooltip } from '../../../../../../components/Tooltip';
-import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { useTranslation } from 'react-i18next';
+import { TokenAmount } from '../../../../../../components/TokenAmount';
 
 const useStyles = makeStyles(styles);
-
-type TokenAmountProps = {
-  value: BigNumber;
-  decimals: number;
-  price: BigNumber;
-  className?: string;
-};
-const TokenAmount = memo<TokenAmountProps>(function TokenAmount({
-  value,
-  decimals,
-  price,
-  className,
-}) {
-  const fullValue = formatFullBigNumber(value, decimals);
-  const shortValue = formatSignificantBigNumber(value, decimals, price);
-  const needTooltip = shortValue.length < fullValue.length;
-
-  return needTooltip ? (
-    <Tooltip triggerClass={className} content={<BasicTooltipContent title={fullValue} />}>
-      {shortValue}
-    </Tooltip>
-  ) : (
-    <span className={className}>{fullValue}</span>
-  );
-});
 
 export type BreakdownTableProps = {
   mode: BreakdownMode;
@@ -72,7 +41,7 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
           </div>
           <div className={classes.cell}>
             <TokenAmount
-              value={asset[amountField]}
+              amount={asset[amountField]}
               decimals={asset.decimals}
               price={asset.price}
               className={classes.tokenAmount}
@@ -92,7 +61,7 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
         </div>
         <div className={classes.cell}>
           <TokenAmount
-            value={breakdown[amountField]}
+            amount={breakdown[amountField]}
             decimals={token.decimals}
             price={breakdown.oneValue}
             className={classes.tokenAmount}

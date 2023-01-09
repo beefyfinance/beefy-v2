@@ -24,6 +24,7 @@ export const styles = (theme: Theme) => ({
     flexGrow: 1,
     minWidth: 0,
     color: '#D0D0DA',
+    wordBreak: 'break-word' as const,
     '& p:first-child': {
       marginTop: 0,
     },

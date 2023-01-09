@@ -6,8 +6,8 @@ import { selectChainById } from './chains';
 import { BIG_ONE } from '../../../helpers/big-number';
 import { selectIsAddressBookLoaded } from './data-loader';
 import { VaultEntity } from '../entities/vault';
-import { createSelector } from '@reduxjs/toolkit';
-import createCachedSelector from 're-reselect';
+import { createCachedSelector } from 're-reselect';
+import { selectVaultById } from './vaults';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -40,12 +40,18 @@ export const selectTokenById = (
   return byChainId[chainId].byAddress[address];
 };
 
-export const selectTokenByAddress = createCachedSelector(
-  (state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) =>
-    selectTokensByChainId(state, chainId),
-  (state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) => address,
-  (tokensByChainId, address) => tokensByChainId.byAddress[address.toLowerCase()]
-)((state: BeefyState, chainId: ChainEntity['id'], address: TokenEntity['address']) => address);
+export const selectTokenByAddress = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  address: TokenEntity['address']
+) => {
+  const tokensByChainId = selectTokensByChainId(state, chainId);
+  const token = tokensByChainId.byAddress[address.toLowerCase()];
+  if (token === undefined) {
+    throw new Error(`selectTokenByAddress: Unknown token address`);
+  }
+  return token;
+};
 
 export const selectTokenByAddressOrNull = (
   state: BeefyState,
@@ -53,15 +59,18 @@ export const selectTokenByAddressOrNull = (
   address: TokenEntity['address']
 ) => state.entities.tokens.byChainId[chainId]?.byAddress[address.toLowerCase()] || null;
 
-export const selectTokensByChainId = createSelector(
-  (state: BeefyState, chainId: ChainEntity['id']) => state.entities.tokens.byChainId[chainId],
-  tokensByChainId => {
-    if (tokensByChainId === undefined) {
-      throw new Error(`selectTokenById: Unknown chain id`);
-    }
-    return tokensByChainId;
+export const selectTokensByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
+  const tokensByChainId = state.entities.tokens.byChainId[chainId];
+  if (tokensByChainId === undefined) {
+    throw new Error(`selectTokensByChainId: Unknown chain id`);
   }
-);
+  return tokensByChainId;
+};
+
+export const selectDepositTokenByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const vault = selectVaultById(state, vaultId);
+  return selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+};
 
 export const selectErc20TokenByAddress = (
   state: BeefyState,
@@ -157,11 +166,8 @@ export const selectTokenPriceByTokenOracleId = createCachedSelector(
   price => price || BIG_ONE
 )((state: BeefyState, oracleId: TokenEntity['oracleId']) => oracleId);
 
-export const selectLpBreakdownByOracleId = createSelector(
-  (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
-    state.entities.tokens.breakdown.byOracleId[oracleId],
-  price => price
-);
+export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
+  state.entities.tokens.breakdown.byOracleId[oracleId];
 
 export const selectLpBreakdownByAddress = (
   state: BeefyState,
@@ -180,7 +186,7 @@ export const selectHasBreakdownData = (
   const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
   const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
   const token = selectTokenByAddressOrNull(state, chainId, depositTokenAddress);
-  if (token === null) return false;
+  if (!token) return false;
   const breakdown = selectLpBreakdownByOracleId(state, token.oracleId);
 
   if (

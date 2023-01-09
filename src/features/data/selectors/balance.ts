@@ -5,6 +5,7 @@ import { ChainEntity } from '../entities/chain';
 import { TokenEntity, TokenLpBreakdown } from '../entities/token';
 import { isGovVault, VaultEntity, VaultGov } from '../entities/vault';
 import { selectActiveVaultBoostIds, selectAllVaultBoostIds, selectBoostById } from './boosts';
+import createCachedSelector from 're-reselect';
 import {
   selectHasBreakdownData,
   selectIsTokenStable,
@@ -19,7 +20,7 @@ import {
   selectVaultById,
   selectVaultPricePerFullShare,
 } from './vaults';
-import { selectIsWalletKnown, selectWalletAddress } from './wallet';
+import { selectIsWalletKnown, selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
 import { KeysOfType } from '../utils/types-utils';
@@ -83,6 +84,52 @@ export const selectHasUserBalanceInActiveBoost = (
     userBalance = userBalance.plus(selectBoostUserBalanceInToken(state, boostId) ?? BIG_ZERO);
   });
   return userBalance.isGreaterThan(0);
+};
+
+export const selectTotalWalletBalanceInBoosts = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], userAddress: string) =>
+    state.user.balance.byAddress[userAddress.toLowerCase()],
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectAllVaultBoostIds(state, vaultId),
+  (walletBalance, boostIds) => {
+    if (!boostIds.length || !walletBalance) {
+      return BIG_ZERO;
+    }
+
+    const balances = boostIds.map(
+      boostId => walletBalance.tokenAmount?.byBoostId[boostId]?.balance || BIG_ZERO
+    );
+
+    return BigNumber.sum(...balances);
+  }
+)(
+  (state: BeefyState, vaultId: VaultEntity['id'], userAddress: string) =>
+    `${vaultId}-${userAddress}`
+);
+
+/**
+ * @dev Does not truncate decimals (needs vault deposit tokens decimals)
+ */
+export const selectTotalWalletBalanceInBoostsInDepositToken = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], userAddress: string) =>
+    selectTotalWalletBalanceInBoosts(state, vaultId, userAddress),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultPricePerFullShare(state, vaultId),
+  (mooBalance, ppfs) => mooBalance.multipliedBy(ppfs)
+)(
+  (state: BeefyState, vaultId: VaultEntity['id'], userAddress: string) =>
+    `${vaultId}-${userAddress}`
+);
+
+export const selectTotalUserBalanceInBoostsInDepositToken = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => {
+  const walletAddress = selectWalletAddressIfKnown(state);
+
+  if (walletAddress) {
+    return selectTotalWalletBalanceInBoostsInDepositToken(state, vaultId, walletAddress);
+  }
+
+  return BIG_ZERO;
 };
 
 export const selectIsUserEligibleForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
@@ -178,6 +225,23 @@ export const selectUserVaultDepositInDepositToken = (
     return selectGovVaultUserStakedBalanceInDepositToken(state, vaultId, walletAddress);
   } else {
     return selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(
+      state,
+      vaultId,
+      walletAddress
+    );
+  }
+};
+
+export const selectUserVaultDepositInDepositTokenExcludingBoosts = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  const vault = selectVaultById(state, vaultId);
+  if (isGovVault(vault)) {
+    return selectGovVaultUserStakedBalanceInDepositToken(state, vaultId, walletAddress);
+  } else {
+    return selectStandardVaultUserBalanceInDepositTokenExcludingBoosts(
       state,
       vaultId,
       walletAddress

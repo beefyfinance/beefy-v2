@@ -6,6 +6,7 @@ import { ChainEntity } from '../entities/chain';
 import { IWalletConnectionApi, WalletConnectionOptions } from './wallet/wallet-connection-types';
 import { BridgeApi } from './bridge/bridge';
 import { IOnRampApi } from './on-ramp/on-ramp-types';
+import { ITransactApi } from './transact/transact-types';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -105,3 +106,22 @@ export async function getOnRampApi(): Promise<IOnRampApi> {
   onRampApiInstance = new OnRampApi();
   return onRampApiInstance;
 }
+
+let transactApiInstance: ITransactApi | null = null;
+
+export async function getTransactApi(): Promise<ITransactApi> {
+  if (transactApiInstance) {
+    return transactApiInstance;
+  }
+
+  const { TransactApi } = await import('./transact/transact');
+  transactApiInstance = new TransactApi();
+  return transactApiInstance;
+}
+
+const OneInchApiPromise = import('./one-inch');
+export const getOneInchApi = createFactoryWithCacheByChain(async chain => {
+  const { OneInchApi } = await OneInchApiPromise;
+  console.debug(`Instanciating OneInchApi for chain ${chain.id}`);
+  return new OneInchApi(chain);
+});
