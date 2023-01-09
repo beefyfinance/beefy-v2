@@ -1,4 +1,6 @@
-import { ZapConfig } from '../apis/config-types';
+import { BeefyZapConfig, OneInchZapConfig } from '../apis/config-types';
 
-// for now, both structures are the same
-export type ZapEntity = ZapConfig;
+export type ZapEntityBeefy = BeefyZapConfig & { type: 'beefy' };
+export type ZapEntityOneInch = OneInchZapConfig & { type: 'one-inch' };
+
+export type ZapEntity = ZapEntityBeefy | ZapEntityOneInch;

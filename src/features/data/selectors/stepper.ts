@@ -37,7 +37,7 @@ export const selectStepperStepContent = (state: BeefyState) => {
 export function selectMintResult(walletActionsState: WalletActionsState) {
   const result = {
     type: 'mint',
-    amount: formatBigDecimals(walletActionsState.data.amount, 2),
+    amount: formatBigDecimals(walletActionsState.data.amount, 4),
   };
 
   if (walletActionsState.result === 'success') {
@@ -66,7 +66,7 @@ export function selectMintResult(walletActionsState: WalletActionsState) {
           result.type = 'buy';
           result.amount = formatBigDecimals(
             new BigNumber(event.returnValues.value).shiftedBy(-mintToken.decimals),
-            2
+            4
           );
           break;
         }

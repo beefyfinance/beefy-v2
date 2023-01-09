@@ -3,6 +3,8 @@ import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { PlatformEntity } from '../entities/platform';
 import { StrategyTypeEntity } from '../entities/strategy-type';
+import { AmmEntity } from '../entities/amm';
+import { ZapFee } from './transact/transact-types';
 
 export interface VaultConfig {
   id: string;
@@ -90,6 +92,7 @@ export interface ChainConfig {
   explorerUrl: string;
   multicallAddress: string;
   appMulticallContractAddress: string;
+  oneInchPriceOracleAddress?: string;
   providerName: string;
   walletSettings: {
     chainId: string;
@@ -105,15 +108,53 @@ export interface ChainConfig {
   stableCoins: string[];
 }
 
-export interface ZapConfig {
+export interface AmmConfigBase {
+  id: string;
+  name: string;
+  routerAddress: string;
+  factoryAddress: string;
+  pairInitHash: string;
+  minimumLiquidity: string;
+  swapFeeNumerator: string;
+  swapFeeDenominator: string;
+}
+
+export interface AmmConfigUniswapV2 extends AmmConfigBase {
+  readonly type: 'uniswapv2';
+  mintFeeNumerator: string;
+  mintFeeDenominator: string;
+  getAmountOutMode: 'getAmountOut' | 'getAmountsOut' | 'getAmountOutWithFee';
+}
+
+export interface AmmConfigSolidly extends AmmConfigBase {
+  readonly type: 'solidly';
+  getAmountOutMode: 'getAmountOut';
+}
+
+export type AmmConfig = AmmConfigUniswapV2 | AmmConfigSolidly;
+
+export function isSolidlyAmmConfig(amm: AmmConfig): amm is AmmConfigSolidly {
+  return amm.type === 'solidly';
+}
+
+export function isUniswapV2AmmConfig(amm: AmmConfig): amm is AmmConfigUniswapV2 {
+  return amm.type === 'uniswapv2';
+}
+
+export interface BeefyZapConfig {
   zapAddress: string; // identifier
-  ammRouter: string;
-  ammFactory: string;
-  ammPairInitHash: string;
-  type?: 'uniswapv2' | 'solidly';
-  withdrawEstimateMode?: 'getAmountOut' | 'getAmountsOut' | 'getAmountOutWithFee';
-  withdrawEstimateFee?: string;
-  lpProviderFee: number;
+  ammId: AmmEntity['id'];
+  chainId: ChainEntity['id'];
+}
+
+export interface OneInchZapConfig {
+  zapAddress: string; // identifier
+  chainId: ChainEntity['id'];
+  depositFromTokens: TokenEntity['id'][];
+  withdrawToTokens: TokenEntity['id'][];
+  blockedTokens: TokenEntity['id'][];
+  blockedVaults: VaultEntity['id'][];
+  fee: ZapFee;
 }
 
 export interface MinterConfigTokenErc20 {

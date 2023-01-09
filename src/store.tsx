@@ -9,7 +9,6 @@ import {
   featureFlag_recordReduxActions,
   featureFlag_replayReduxActions,
 } from './features/data/utils/feature-flags';
-import { zapEstimateMiddleware } from './features/data/middlewares/zap-estimate';
 import { TypedUseSelectorHook, useDispatch, useSelector, useStore } from 'react-redux';
 import { BeefyState } from './redux-types';
 
@@ -25,7 +24,7 @@ if (featureFlag_recordReduxActions()) {
 
 if (!featureFlag_replayReduxActions()) {
   // don't want this to run actions when replaying
-  middlewares = [...middlewares, walletActionsMiddleware, zapEstimateMiddleware];
+  middlewares = [...middlewares, walletActionsMiddleware];
 }
 
 export const store = configureStore({

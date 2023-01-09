@@ -12,6 +12,7 @@ const GOV_FEES: Readonly<VaultFee> = {
   strategist: 0,
   total: 0,
   withdraw: 0,
+  deposit: 0,
   treasury: 0,
 };
 

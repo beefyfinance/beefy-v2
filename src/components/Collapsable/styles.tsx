@@ -20,13 +20,7 @@ export const styles = (theme: Theme) => ({
       borderColor: 'transparent' as const,
     },
   },
-  iconButton: {
-    padding: 0,
-    '& .MuiSvgIcon-root': {
-      fill: '#999CB3',
-    },
-    '&:hover': {
-      backgroundColor: 'transparent' as const,
-    },
+  titleIcon: {
+    fill: '#999CB3',
   },
 });

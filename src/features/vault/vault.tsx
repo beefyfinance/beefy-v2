@@ -1,11 +1,9 @@
-import { Button, Container, Hidden, makeStyles } from '@material-ui/core';
-import React, { lazy, memo, PropsWithChildren, useState } from 'react';
+import { Container, Hidden, makeStyles } from '@material-ui/core';
+import React, { lazy, memo, PropsWithChildren } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../components/AssetsImage';
 import { styles } from './styles';
-import { Deposit } from './components/Deposit';
-import { Withdraw } from './components/Withdraw';
 import { StrategyCard } from './components/StrategyCard';
 import { SafetyCard } from './components/SafetyCard';
 import { Graph } from './components/Graph';
@@ -22,9 +20,7 @@ import { isGovVault, VaultEntity } from '../data/entities/vault';
 import { selectChainById } from '../data/selectors/chains';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { CowLoader } from '../../components/CowLoader';
-import { MinterCards } from './components/MinterCards';
 import { InfoCards } from './components/InfoCards/InfoCards';
-import { RetirePauseReason } from './components/RetirePauseReason';
 import { VaultMeta } from './components/VaultMeta';
 import { useAppSelector } from '../../store';
 import { VaultPlatform } from '../../components/VaultPlatform';
@@ -32,7 +28,7 @@ import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdow
 import { AssetsCard } from './components/AssetsCard';
 import { InsuranceCards } from './components/InsuranceCards';
 import { LeverageCards } from './components/LeverageCards';
-import { BoostWidget } from './components/BoostWidget';
+import { Actions } from './components/Actions';
 import { RenBannerVault } from '../../components/Banners/RenBanner';
 
 const useStyles = makeStyles(styles);
@@ -79,7 +75,6 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
   const isBoostedOrPreStake = useAppSelector(state =>
     selectIsVaultPreStakedOrBoosted(state, vaultId)
   );
-  const [dw, setDw] = useState('deposit');
 
   return (
     <>
@@ -113,37 +108,13 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
         <Container maxWidth="lg">
           <div className={classes.contentColumns}>
             <div className={classes.columnActions}>
-              <Hidden mdUp>
-                <RetirePauseReason vaultId={vaultId} className={classes.retirePauseReason} />
-              </Hidden>
-              <div className={classes.dw}>
-                <div className={classes.tabs}>
-                  <Button
-                    onClick={() => setDw('deposit')}
-                    className={dw === 'deposit' ? classes.selected : ''}
-                  >
-                    {t('Deposit-Verb')}
-                  </Button>
-                  <Button
-                    onClick={() => setDw('withdraw')}
-                    className={dw === 'withdraw' ? classes.selected : ''}
-                  >
-                    {t('Withdraw-Verb')}
-                  </Button>
-                </div>
-                {dw === 'deposit' ? <Deposit vaultId={vaultId} /> : <Withdraw vaultId={vaultId} />}
-              </div>
-              <BoostWidget vaultId={vaultId} />
-              <MinterCards vaultId={vaultId} />
+              <Actions vaultId={vaultId} />
               <Hidden smDown>
                 <InsuranceCards vaultId={vaultId} />
                 <LeverageCards vaultId={vaultId} />
               </Hidden>
             </div>
             <div className={classes.columnInfo}>
-              <Hidden smDown>
-                <RetirePauseReason vaultId={vaultId} className={classes.retirePauseReason} />
-              </Hidden>
               {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
               {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
               {!isGovVault(vault) ? <Graph vaultId={vaultId} /> : null}

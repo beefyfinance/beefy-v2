@@ -131,10 +131,13 @@ export const SuccessContent = memo(function () {
   const isZapOutMessage = currentStepData.extraInfo?.zap && currentStepData.step === 'withdraw';
 
   const successMessage = useMemo(() => {
-    if (currentStepData.step === 'mint')
-      t(`${selectMintResult(walletActionsState).type}-Success-Content`, { ...textParams });
+    if (currentStepData.step === 'mint') {
+      return t(`${selectMintResult(walletActionsState).type}-Success-Content`, { ...textParams });
+    }
 
-    if (isZapOutMessage) t('withdraw-zapout-Success-Content', { ...textParams });
+    if (isZapOutMessage) {
+      return t('withdraw-zapout-Success-Content', { ...textParams });
+    }
 
     return t(`${currentStepData.step}-Success-Content`, { ...textParams });
   }, [currentStepData.step, isZapOutMessage, t, textParams, walletActionsState]);

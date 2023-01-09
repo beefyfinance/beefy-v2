@@ -61,4 +61,12 @@ export function isTokenNative(token: TokenEntity): token is TokenNative {
   return token.type === 'native';
 }
 
+export function isTokenEqual(tokenA: TokenEntity, tokenB: TokenEntity): boolean {
+  return (
+    tokenA.type === tokenB.type &&
+    tokenA.chainId === tokenB.chainId &&
+    tokenA.address === tokenB.address
+  );
+}
+
 export type TokenLpBreakdown = LpData;

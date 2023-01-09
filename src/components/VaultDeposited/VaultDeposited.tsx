@@ -11,10 +11,14 @@ import {
 import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/selectors/wallet';
-import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
+import { formatBigUsd } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { useAppSelector } from '../../store';
+import { selectTokenByAddress } from '../../features/data/selectors/tokens';
+import { TokenEntity } from '../../features/data/entities/token';
+import BigNumber from 'bignumber.js';
+import { TokenAmountFromEntity } from '../TokenAmount';
 
 const _BoostedVaultDepositedLarge = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
@@ -23,9 +27,9 @@ const _BoostedVaultDepositedLarge = connect(
     const deposit = isGovVault(vault)
       ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
       : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const hasDeposit = deposit.gt(0);
-    const totalDeposited = deposit.isZero() ? '0.00' : formatBigDecimals(deposit, 8, false);
-    const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vaultId));
+    const depositUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vaultId));
     const blurred = selectIsBalanceHidden(state);
     const isLoaded =
       state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
@@ -33,8 +37,9 @@ const _BoostedVaultDepositedLarge = connect(
         : true;
     return {
       hasDeposit,
-      totalDeposited,
-      totalDepositedUsd,
+      deposit,
+      depositUsd,
+      depositToken,
       blurred,
       loading: !isLoaded,
     };
@@ -42,14 +47,16 @@ const _BoostedVaultDepositedLarge = connect(
 )(
   ({
     hasDeposit,
-    totalDeposited,
-    totalDepositedUsd,
+    deposit,
+    depositUsd,
+    depositToken,
     blurred,
     loading,
   }: {
     hasDeposit: boolean;
-    totalDeposited: string;
-    totalDepositedUsd: string;
+    deposit: BigNumber;
+    depositUsd: string;
+    depositToken: TokenEntity;
     blurred: boolean;
     loading: boolean;
   }) => {
@@ -58,8 +65,8 @@ const _BoostedVaultDepositedLarge = connect(
     return (
       <ValueBlock
         label={t('Vault-deposited')}
-        value={totalDeposited}
-        usdValue={hasDeposit ? totalDepositedUsd : null}
+        value={<TokenAmountFromEntity amount={deposit} token={depositToken} minShortPlaces={4} />}
+        usdValue={hasDeposit ? depositUsd : null}
         blurred={blurred}
         loading={loading}
       />
@@ -75,9 +82,9 @@ const _NonBoostedVaultDeposited = connect(
     const deposit = isGovVault(vault)
       ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
       : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const hasDeposit = deposit.gt(0);
-    const totalDeposited = formatBigDecimals(deposit, 8, !hasDeposit);
-    const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vaultId));
+    const depositUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vaultId));
     const blurred = selectIsBalanceHidden(state);
     const isLoaded =
       state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
@@ -85,8 +92,9 @@ const _NonBoostedVaultDeposited = connect(
         : true;
     return {
       hasDeposit,
-      totalDeposited,
-      totalDepositedUsd,
+      deposit,
+      depositUsd,
+      depositToken,
       blurred,
       loading: !isLoaded,
     };
@@ -94,14 +102,16 @@ const _NonBoostedVaultDeposited = connect(
 )(
   ({
     hasDeposit,
-    totalDeposited,
-    totalDepositedUsd,
+    deposit,
+    depositUsd,
+    depositToken,
     blurred,
     loading,
   }: {
     hasDeposit: boolean;
-    totalDeposited: string;
-    totalDepositedUsd: string;
+    deposit: BigNumber;
+    depositUsd: string;
+    depositToken: TokenEntity;
     blurred: boolean;
     loading: boolean;
   }) => {
@@ -110,8 +120,8 @@ const _NonBoostedVaultDeposited = connect(
     return (
       <ValueBlock
         label={t('Vault-deposited')}
-        value={totalDeposited}
-        usdValue={hasDeposit ? totalDepositedUsd : null}
+        value={<TokenAmountFromEntity amount={deposit} token={depositToken} minShortPlaces={4} />}
+        usdValue={hasDeposit ? depositUsd : null}
         blurred={blurred}
         loading={loading}
       />
