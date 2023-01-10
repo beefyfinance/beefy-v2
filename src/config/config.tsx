@@ -616,25 +616,4 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   },
 };
 
-/*
- BOILERPLATE NEW CHAIN
-name: '',
-chainId:0 ,
-rpc: [''],
-explorerUrl: '',
-multicallAddress: '',
-providerName: '',
-walletSettings: {
-chainId: `0x${parseInt('', 10).toString(16)}`,
-chainName: '',
-nativeCurrency: {
-name: '',
-symbol: '',
-decimals: 0,
-},
-rpcUrls: [''],
-blockExplorerUrls: [''],
-},
-stableCoins: [''],
- */
 export const chains: string[] = Object.keys(config);
