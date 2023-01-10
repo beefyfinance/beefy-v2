@@ -2037,36 +2037,6 @@
     "createdAt": 1629305419
   },
   {
-    "id": "pangolin-png-usdt.e-eol",
-    "name": "USDT.e-PNG LP",
-    "token": "USDT.e-PNG LP",
-    "tokenAddress": "0x1fFB6ffC629f5D820DCf578409c2d26A2998a140",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pangolin",
-    "earnedToken": "mooPangolinUSDT.e-PNG",
-    "earnedTokenAddress": "0x97e860CE03ae3da20Ba9740b8dA90036EE891f81",
-    "earnContractAddress": "0x97e860CE03ae3da20Ba9740b8dA90036EE891f81",
-    "oracle": "lps",
-    "oracleId": "pangolin-png-usdt.e",
-    "status": "eol",
-    "platformId": "pangolin",
-    "retireReason": "rewards",
-    "assets": ["USDTe", "PNG"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x60781c2586d68229fde47564546784ab3faca982/0xc7198437980c041c805a1edcba50c1ce5db95118",
-    "buyTokenUrl": "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
-    "network": "avax",
-    "createdAt": 1629306156
-  },
-  {
     "id": "pangolin-weth.e-png-eol",
     "name": "WETH.e-PNG LP",
     "token": "WETH.e-PNG LP",

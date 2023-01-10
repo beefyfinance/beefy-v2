@@ -641,7 +641,7 @@
     "id": "beets-overnight-pulse",
     "name": "Overnight Pulse",
     "token": "Overnight Pulse",
-    "tokenAddress": "0xb1c9ac57594e9b1ec0f3787d9f6744ef4cb0a024",
+    "tokenAddress": "0xb1C9aC57594e9B1EC0f3787D9f6744EF4CB0A024",
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
     "earnedToken": "mooBeetsOvernightPulse",
