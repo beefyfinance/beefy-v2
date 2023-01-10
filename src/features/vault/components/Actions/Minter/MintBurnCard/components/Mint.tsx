@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { Button, InputBase, makeStyles, Paper } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { CardContent } from '../../../../Card';
@@ -65,6 +65,17 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       minter.contractAddress
     )
   );
+  const { canBurnReserves, hasEarningsPool } = minter;
+  const [contentKey, reminderKey] = useMemo(() => {
+    const liquidityType = canBurnReserves ? 'Burnable' : 'Liquid';
+    const earningsType = hasEarningsPool ? 'WithEarnings' : 'WithoutEarnings';
+
+    return ['Content', 'Reminder'].map(key => [
+      `Mint-${key}-${liquidityType}-${earningsType}`,
+      `Mint-${key}-${liquidityType}`,
+      `Mint-${key}`,
+    ]);
+  }, [canBurnReserves, hasEarningsPool]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const resetFormData = () => {
@@ -192,35 +203,20 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
 
   return (
     <CardContent className={classes.cardContent}>
-      {!minter.canBurnReserves ? (
+      <div className={classes.content}>
+        {t(contentKey, {
+          token1: minter.mintedToken.symbol,
+          token2: minter.depositToken.symbol,
+        })}
+      </div>
+      <div className={classes.boxReminder}>
         <div className={classes.content}>
-          {t('Mint-Content', {
+          {t(reminderKey, {
             token1: minter.mintedToken.symbol,
             token2: minter.depositToken.symbol,
           })}
         </div>
-      ) : (
-        <>
-          {' '}
-          <div className={classes.content}>
-            {t(
-              minter.hasEarningsPool ? 'Mint-Content-Burnable-Earnings' : 'Mint-Content-Burnable',
-              {
-                token1: minter.mintedToken.symbol,
-                token2: minter.depositToken.symbol,
-              }
-            )}
-          </div>
-          <div className={classes.boxReminder}>
-            <div className={classes.content}>
-              {t('Mint-Content', {
-                token1: minter.mintedToken.symbol,
-                token2: minter.depositToken.symbol,
-              })}
-            </div>
-          </div>
-        </>
-      )}
+      </div>
       <div className={classes.inputContainer}>
         <div className={classes.balances}>
           <div className={classes.label}>
