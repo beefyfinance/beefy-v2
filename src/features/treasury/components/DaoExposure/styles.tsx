@@ -18,6 +18,10 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     color: theme.palette.text.disabled,
     whiteSpace: 'nowrap' as const,
+    '&:hover': {
+      color: theme.palette.text.primary,
+      cursor: 'pointer',
+    },
   },
   active: {
     color: theme.palette.text.primary,
