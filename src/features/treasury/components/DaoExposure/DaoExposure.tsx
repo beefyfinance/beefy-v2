@@ -1,62 +1,67 @@
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import React, { memo } from 'react';
+import React, { FC, memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Section } from '../../../../components/Section';
-import { formatPercent } from '../../../../helpers/format';
-import { useAppSelector } from '../../../../store';
-import { selectTreasuryTokensExposure } from '../../../data/selectors/treasury';
+import { TreasuryAvailabilityExposure } from '../TreasuryAvailabilityExposure';
+import { TreasuryChainExposure } from '../TreasuryChainExposure';
+import { TreasuryTokensExposure } from '../TreasuryTokenExposure';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-const COLORS = ['#5C70D6', '#5C99D6', '#5CC2D6', '#5CD6AD', '#70D65C', '#1e9c05'];
+enum ChartEnum {
+  Token = 1,
+  Chain,
+  Availability,
+}
+
+const chartToComponent: Record<ChartEnum, FC> = {
+  [ChartEnum.Token]: TreasuryTokensExposure,
+  [ChartEnum.Chain]: TreasuryChainExposure,
+  [ChartEnum.Availability]: TreasuryAvailabilityExposure,
+};
 
 export const DaoExposure = memo(function () {
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const exposure = useAppSelector(selectTreasuryTokensExposure);
+  const items = useMemo(() => {
+    return [
+      { key: 'tokenExposure', value: ChartEnum.Token, text: t('Exposure-Tokens') },
+      { key: 'chainExposure', value: ChartEnum.Chain, text: t('Exposure-Chain') },
+      {
+        key: 'availabilityExposure',
+        value: ChartEnum.Availability,
+        text: t('Exposure-Availability'),
+      },
+    ];
+  }, [t]);
+
+  const [chart, setChart] = React.useState<ChartEnum>(ChartEnum.Token);
+
+  const Chart = chartToComponent[chart];
 
   return (
     <Section>
       <div className={classes.container}>
-        <div className={classes.title}>{t('Exposure-Tokens')}</div>
-        <div className={classes.bar}>
-          {Object.values(exposure).map((item, i) => (
-            <div
-              key={item.key}
-              style={{
-                backgroundColor: COLORS[i],
-                width: formatPercent(item.percentage, 2, '0%'),
-              }}
-              className={classes.barItem}
-            />
-          ))}
-        </div>
-        <div className={classes.legendContainer}>
-          {Object.values(exposure).map((item, i) => {
+        <div className={classes.optionsContainer}>
+          {items.map(item => {
             return (
-              <div key={item.key} className={classes.legendItem}>
-                <div className={classes.square} style={{ backgroundColor: COLORS[i] }} />
-                <div
-                  className={clsx(classes.label, {
-                    [classes.uppercase]: keyIsToken(item.key),
-                  })}
-                >
-                  {item.key} <span>{formatPercent(item.percentage, 2, '0%')}</span>
-                </div>
+              <div
+                key={item.key}
+                onClick={() => setChart(item.value)}
+                className={clsx(classes.option, {
+                  [classes.active]: item.value === chart,
+                })}
+              >
+                {item.text}
               </div>
             );
           })}
         </div>
+        <Chart />
       </div>
     </Section>
   );
 });
-
-function keyIsToken(key: string) {
-  if (key === 'others') return false;
-  if (key === 'stables') return false;
-  return true;
-}

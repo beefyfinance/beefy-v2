@@ -38,7 +38,6 @@ export const Assets = memo<AssetsProps>(function ({ chainId }) {
           sortKey={'holdings'}
           sorted={sortDirection}
           onChange={handleSort}
-          className={classes.sortColumn}
         />
       </div>
       {liquidAssets.length > 0 && (

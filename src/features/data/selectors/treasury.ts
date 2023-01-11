@@ -198,3 +198,65 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
 
   return getTopNArray(treasuryExposure, 'percentage');
 };
+
+export const selectTreasuryExposureByChain = (state: BeefyState) => {
+  const treasury = selectTreasury(state);
+
+  const chains: Record<string, BigNumber> = {};
+
+  for (const chainId of Object.keys(treasury)) {
+    const totalUsdPerChain = selectTreasuryBalanceByChainId(state, chainId);
+    chains[chainId] = totalUsdPerChain;
+  }
+
+  const totalTreasury = Object.keys(chains).reduce((cur, tot) => chains[tot].plus(cur), BIG_ZERO);
+
+  const treasuryExposureBychain = Object.keys(chains).map(chainId => {
+    return {
+      key: chainId,
+      value: chains[chainId],
+      percentage: chains[chainId].dividedBy(totalTreasury).toNumber(),
+    };
+  });
+
+  return getTopNArray(treasuryExposureBychain, 'percentage');
+};
+
+export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
+  const treasury = selectTreasury(state);
+
+  const exposure = Object.keys(treasury).reduce((totals, chainId) => {
+    const assetsByChainId = selectTreasuryAssetsByChainId(state, chainId);
+
+    for (const token of assetsByChainId) {
+      if (isReal(token.usdValue)) {
+        const usdValue = new BigNumber(token.usdValue);
+        if (token.assetType === 'token' || token.assetType === 'native') {
+          totals['liquidAssets'] = (totals['liquidAssets'] || BIG_ZERO).plus(usdValue);
+        }
+        if (token.assetType === 'vault') {
+          totals['stakedAssets'] = (totals['stakedAssets'] || BIG_ZERO).plus(usdValue);
+        }
+        if (token.assetType === 'validator') {
+          totals['lockedAssets'] = (totals['lockedAssets'] || BIG_ZERO).plus(usdValue);
+        }
+      }
+    }
+    return totals;
+  }, {} as Record<string, BigNumber>);
+
+  const totalTreasury = Object.keys(exposure).reduce(
+    (cur, tot) => exposure[tot].plus(cur),
+    BIG_ZERO
+  );
+
+  const treasuryExposureByAvailability = Object.keys(exposure).map(key => {
+    return {
+      key: key,
+      value: exposure[key],
+      percentage: exposure[key].dividedBy(totalTreasury).toNumber(),
+    };
+  });
+
+  return getTopNArray(treasuryExposureByAvailability, 'percentage');
+};

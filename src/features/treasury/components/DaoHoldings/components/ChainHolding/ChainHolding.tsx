@@ -23,12 +23,14 @@ export const ChainHolding = memo<ChainHoldingProps>(function ({ chainId }) {
   return (
     <div className={classes.container}>
       <div className={classes.title}>
-        <img
-          src={require(`../../../../../../images/networks/${chainId}.svg`).default}
-          alt={chainId}
-        />
-        <div>{chain.name}</div>
-        <span>{formatBigUsd(totalUsd)}</span>
+        <div className={classes.nameContainer}>
+          <img
+            src={require(`../../../../../../images/networks/${chainId}.svg`).default}
+            alt={chainId}
+          />
+          <div className={classes.chainName}>{chain.name}</div>
+        </div>
+        <div className={classes.usdValue}>{formatBigUsd(totalUsd)}</div>
       </div>
       <Assets chainId={chainId} />
     </div>

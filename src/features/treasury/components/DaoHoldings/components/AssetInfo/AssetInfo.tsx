@@ -1,6 +1,8 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { memo, PropsWithChildren } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
+import { Tooltip } from '../../../../../../components/Tooltip';
+import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { formatBigUsd } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
 import { ChainEntity } from '../../../../../data/entities/chain';
@@ -49,7 +51,7 @@ export const AssetInfo = memo<AssetInfoProps>(function ({ chainId, token }) {
     <AssetContainer token={token}>
       <>
         <AssetsImage size={24} chainId={chainId} assetIds={[token.oracleId]} />
-        <div>{token.oracleId || token.name}</div>
+        <AssetName name={token.oracleId} />
       </>
     </AssetContainer>
   );
@@ -78,10 +80,11 @@ interface VaultNameProps {
 
 export const VaultIdentity = memo<VaultNameProps>(function ({ vaultId }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+
   return (
     <>
       <AssetsImage size={24} chainId={vault.chainId} assetIds={vault.assetIds} />
-      <div>{vault.name}</div>
+      <AssetName name={vault.name} />
     </>
   );
 });
@@ -99,7 +102,24 @@ export const LPidentity = memo<LPidentityProps>(function ({ address, chainId, na
   return (
     <>
       <AssetsImage size={24} chainId={chainId} assetIds={assets} />
-      <div>{name}</div>
+      <AssetName name={name} />
     </>
   );
+});
+
+interface AssetNameProps {
+  name: string;
+}
+
+export const AssetName = memo<AssetNameProps>(function ({ name }) {
+  const isMobile = useMediaQuery('(max-width: 600px)');
+  const needTooltip = isMobile && name.length > 12;
+
+  if (needTooltip) {
+    return (
+      <Tooltip content={<BasicTooltipContent title={name} />}>{`${name.slice(0, 8)}...`}</Tooltip>
+    );
+  }
+
+  return <div>{name}</div>;
 });
