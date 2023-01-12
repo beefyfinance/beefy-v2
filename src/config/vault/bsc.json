@@ -1,5 +1,26 @@
 [
   {
+    "id": "ellipsis-ankrBNB",
+    "name": "ankrBNB/BNB",
+    "token": "epsankrBNB-BNB",
+    "tokenAddress": "0x53B07f1075cAbF87dC1329e44872F8fd8d7d84C9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ellipsis",
+    "earnedToken": "mooEllipsisAnkrBNB-BNB",
+    "earnedTokenAddress": "0xA8b0e31Fbc311Ef5904C6911E945fa232A6bc0Ad",
+    "earnContractAddress": "0xA8b0e31Fbc311Ef5904C6911E945fa232A6bc0Ad",
+    "oracle": "lps",
+    "oracleId": "ellipsis-ankrBNB",
+    "status": "active",
+    "platformId": "dotdot",
+    "assets": ["ankrBNB", "BNB"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://ellipsis.finance/pool/0x440bA409d402e25b95aC852E386445aF12E802a0",
+    "network": "bsc",
+    "createdAt": 1673508792
+  },
+  {
     "id": "swapfish-bsc-wbnb-bifi",
     "name": "BIFI-BNB LP",
     "token": "BIFI-BNB LP",
@@ -16437,7 +16458,7 @@
     "network": "bsc"
   },
   {
-    "id": "ellipsis-ankrBNB",
+    "id": "ellipsis-ankrBNB-old",
     "name": "aBNBb/BNB",
     "token": "aBNBb/BNB",
     "tokenAddress": "0xf71A0bCC3Ef8a8c5a28fc1BC245e394A8ce124ec",
@@ -16547,8 +16568,7 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "ALGO_STABLE"
+      "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://ellipsis.finance/pool/0x408A61e158D7BC0CD339BC76917b8Ea04739d473",
     "buyTokenUrl": "https://ellipsis.finance/pool/0x408A61e158D7BC0CD339BC76917b8Ea04739d473",
