@@ -142,7 +142,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://traderjoexyz.com/pool/0x9C9e5fD8bbc25984B178FdCE6117Defa39d2db39/AVAX",
+    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9C9e5fD8bbc25984B178FdCE6117Defa39d2db39/AVAX",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x9C9e5fD8bbc25984B178FdCE6117Defa39d2db39#/",
     "createdAt": 1664561347,
     "network": "avax"
@@ -379,7 +379,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://traderjoexyz.com/pool/0x152b9d0fdc40c096757f570a51e494bd4b943e50/AVAX",
+    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x152b9d0fdc40c096757f570a51e494bd4b943e50/AVAX",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x152b9d0fdc40c096757f570a51e494bd4b943e50#/",
     "createdAt": 1656366049,
     "network": "avax"
@@ -812,7 +812,7 @@
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
+    "addLiquidityUrl": "https://www.traderjoexyz.com/avalanche/pool/v1/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd/AVAX",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade",
     "network": "avax",
     "createdAt": 1631119335
@@ -932,7 +932,7 @@
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
+    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade",
     "network": "avax",
     "createdAt": 1630496791
@@ -1588,7 +1588,7 @@
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://traderjoexyz.com/pool/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664/0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "network": "avax",
     "createdAt": 1639756286
@@ -1617,7 +1617,7 @@
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://traderjoexyz.com/pool/AVAX/0x22d4002028f537599bE9f666d1c4Fa138522f9c8",
+    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x22d4002028f537599bE9f666d1c4Fa138522f9c8/AVAX",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x22d4002028f537599bE9f666d1c4Fa138522f9c8",
     "network": "avax",
     "createdAt": 1639751352
@@ -1853,7 +1853,7 @@
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://traderjoexyz.com/pool/0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7/0xc7198437980c041c805a1edcba50c1ce5db95118",
+    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7/0xc7198437980c041c805a1edcba50c1ce5db95118",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7#/",
     "network": "avax",
     "createdAt": 1643233920
@@ -2598,7 +2598,7 @@
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://traderjoexyz.com/pool/0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE/AVAX",
+    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE/AVAX",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE",
     "createdAt": 1645036500,
     "network": "avax"
@@ -3007,7 +3007,7 @@
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://traderjoexyz.com/pool/AVAX/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E/AVAX",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "createdAt": 1646426309,
     "network": "avax"
@@ -4016,7 +4016,7 @@
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://traderjoexyz.com/pool/0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7/AVAX",
+    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7/AVAX",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7#/",
     "createdAt": 1649966386,
     "network": "avax"
@@ -4076,7 +4076,7 @@
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://traderjoexyz.com/pool/0x77777777777d4554c39223C354A05825b2E8Faa3/AVAX",
+    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x77777777777d4554c39223C354A05825b2E8Faa3/AVAX",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x77777777777d4554c39223C354A05825b2E8Faa3#/",
     "createdAt": 1650288303,
     "network": "avax"
