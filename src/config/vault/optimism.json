@@ -617,6 +617,27 @@
     "createdAt": 1665023323
   },
   {
+    "id": "beets-shanghai-shakedown",
+    "name": "Shanghai Shakedown",
+    "token": "Shanghai Shakedown",
+    "tokenAddress": "0x7B50775383d3D6f0215A8F290f2C9e2eEBBEceb2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsShanghaiShakedown",
+    "earnedTokenAddress": "0x2793AF2c7db9f0A06d2727Dd392Ab4Bb1b82a98D",
+    "earnContractAddress": "0x2793AF2c7db9f0A06d2727Dd392Ab4Bb1b82a98D",
+    "oracle": "lps",
+    "oracleId": "beets-shanghai-shakedown",
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["wstETH", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://op.beets.fi/pool/0x7b50775383d3d6f0215a8f290f2c9e2eebbeceb200020000000000000000008b",
+    "network": "optimism",
+    "createdAt": 1673571557
+  },
+  {
     "id": "beets-helter-skelter",
     "name": "Helter Skelter",
     "token": "Helter Skelter",
@@ -2162,15 +2183,14 @@
     "earnContractAddress": "0x8e829cFC629fcb61c1508a54D232aF4612E48cC9",
     "oracle": "lps",
     "oracleId": "beets-happy-road",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "beethovenx",
     "assets": ["ETH", "OP", "USDC"],
     "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://op.beets.fi/#/pool/0x39965c9dab5448482cf7e002f583c812ceb53046000100000000000000000003/invest",
     "network": "optimism",
-    "createdAt": 1656341985
+    "createdAt": 1673571557
   },
   {
     "id": "beets-lennons-long",
@@ -2184,15 +2204,14 @@
     "earnContractAddress": "0xCCcEBC4551FF20acA4e0356DAD8875806CE8df10",
     "oracle": "lps",
     "oracleId": "beets-lennons-long",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "beethovenx",
     "assets": ["ETH", "WBTC", "USDC"],
     "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://op.beets.fi/#/pool/0x5028497af0c9a54ea8c6d42a054c0341b9fc6168000100000000000000000004/invest",
     "network": "optimism",
-    "createdAt": 1656341986
+    "createdAt": 1673571557
   },
   {
     "id": "beets-all-you-need-is-love",
@@ -2206,15 +2225,14 @@
     "earnContractAddress": "0x3DD36E64784FDAEe7BD202c78322a0d8EB1BB32b",
     "oracle": "lps",
     "oracleId": "beets-all-you-need-is-love",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "beethovenx",
     "assets": ["BEETS", "BAL", "OP"],
     "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://op.beets.fi/#/pool/0xd6e5824b54f64ce6f1161210bc17eebffc77e031000100000000000000000006",
     "network": "optimism",
-    "createdAt": 1656341987
+    "createdAt": 16735715567
   },
   {
     "id": "beets-optimistic-8-track",
