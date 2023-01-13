@@ -12,6 +12,7 @@ import createWalletConnectModule from '@web3-onboard/walletconnect';
 import { ConnectOptions } from '@web3-onboard/core/dist/types';
 import { createEIP1193Provider, WalletInit } from '@web3-onboard/common';
 import { customInjectedWallets } from './custom-injected-wallets';
+import { createWeb3Instance } from '../../../../helpers/web3';
 
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | null;
@@ -342,7 +343,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     }
 
     const wallet = this.onboard.state.get().wallets[0];
-    return _getWeb3FromProvider(wallet.provider);
+    return createWeb3Instance(wallet.provider as any);
   }
 
   /**
@@ -434,22 +435,4 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     // Raise events
     this.options.onWalletDisconnected();
   }
-}
-
-function _getWeb3FromProvider(provider) {
-  const web3 = new Web3(provider);
-
-  // Override web3.eth.getChainId to accept number strings "25" as well as hex strings "0x17"
-  // eth_chainId returns "25" via Chronos Wallet Extension
-  web3.eth.extend({
-    methods: [
-      {
-        name: 'getChainId',
-        call: 'eth_chainId',
-        outputFormatter: maybeHexToNumber as any,
-      },
-    ],
-  });
-
-  return web3;
 }

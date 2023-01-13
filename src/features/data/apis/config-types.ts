@@ -84,6 +84,42 @@ export interface BoostConfig {
   fixedStatus?: boolean | null;
 }
 
+export interface StandardGasConfig {
+  type: 'standard';
+  /** add this % on top of gas price from RPC (0-1) */
+  safetyMargin?: number;
+  /** set gas price to at least this (wei) */
+  minimum?: string;
+  /** set gas price to at most this (wei) */
+  maximum?: string;
+}
+
+export interface EIP1559GasConfig {
+  type: 'eip1559';
+  /** how many past blocks should we look at when calculating fee */
+  blocks: number;
+  /** what percentage of those blocks should we aim to be included in (0-1) */
+  percentile: number;
+  /** add this % on top of base gas price from RPC (0-1) */
+  baseSafetyMargin?: number;
+  /** set base gas price to at least this (wei) */
+  baseMinimum?: string;
+  /** set base gas price to at most this (wei) */
+  baseMaximum?: string;
+  /** add this % on top of priority gas price from RPC (0-1) */
+  prioritySafetyMargin?: number;
+  /** set priority gas price to at least this (wei) */
+  priorityMinimum?: string;
+  /** set priority gas price to at most this (wei) */
+  priorityMaximum?: string;
+}
+
+export interface CeloGasConfig {
+  type: 'celo';
+}
+
+export type GasConfig = StandardGasConfig | EIP1559GasConfig | CeloGasConfig;
+
 export interface ChainConfig {
   id: string;
   name: string;
@@ -105,6 +141,7 @@ export interface ChainConfig {
     rpcUrls: string[];
     blockExplorerUrls: string[];
   };
+  gas: GasConfig;
   stableCoins: string[];
 }
 
