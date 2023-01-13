@@ -1,5 +1,27 @@
 [
   {
+    "id": "thena-usdt-busd",
+    "name": "USDT-BUSD sLP",
+    "token": "USDT-BUSD sLP",
+    "tokenAddress": "0x6321B57b6fdc14924be480c54e93294617E672aB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenaUSDT-BUSD",
+    "earnedTokenAddress": "0xeDe45f9dC994a66F1aD1ac68974Abb28086f909d",
+    "earnContractAddress": "0xeDe45f9dC994a66F1aD1ac68974Abb28086f909d",
+    "oracle": "lps",
+    "oracleId": "thena-usdt-busd",
+    "status": "active",
+    "platformId": "thena",
+    "assets": ["USDT", "BUSD"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_HIGH", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://thena.fi/liquidity",
+    "buyTokenUrl": "https://thena.fi/swap",
+    "network": "bsc",
+    "createdAt": 1673571556
+  },
+  {
     "id": "ellipsis-ankrBNB",
     "name": "ankrBNB/BNB",
     "token": "epsankrBNB-BNB",
