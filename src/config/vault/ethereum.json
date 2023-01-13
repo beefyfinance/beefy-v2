@@ -400,7 +400,7 @@
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "PARTIAL_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-135/deposit",
     "network": "ethereum",
@@ -428,7 +428,7 @@
       "MCAP_SMALL",
       "AUDIT",
       "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "PARTIAL_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-176/deposit",
     "network": "ethereum",
@@ -456,7 +456,7 @@
       "MCAP_SMALL",
       "AUDIT",
       "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "PARTIAL_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-138/deposit",
     "network": "ethereum",
@@ -603,7 +603,7 @@
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "PARTIAL_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/fraxusdc/deposit",
     "network": "ethereum",
@@ -631,7 +631,7 @@
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "PARTIAL_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/frax/deposit",
     "network": "ethereum",

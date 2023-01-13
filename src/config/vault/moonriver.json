@@ -486,7 +486,7 @@
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_LARGE",
-      "ALGO_STABLE",
+      "PARTIAL_COLLAT_ALGO_STABLECOIN",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1355,7 +1355,7 @@
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_LARGE",
-      "ALGO_STABLE",
+      "PARTIAL_COLLAT_ALGO_STABLECOIN",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],

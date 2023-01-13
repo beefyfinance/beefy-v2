@@ -108,7 +108,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "PARTIAL_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
