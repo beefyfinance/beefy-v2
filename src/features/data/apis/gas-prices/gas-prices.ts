@@ -96,21 +96,25 @@ export class EIP1559GasPricer implements IGasPricer {
     this.percentile = gas.percentile;
 
     this.baseMinimum =
-      'minimum' in gas && gas.baseMinimum ? new BigNumber(gas.baseMinimum) : BIG_ZERO;
+      'baseMinimum' in gas && gas.baseMinimum ? new BigNumber(gas.baseMinimum) : BIG_ZERO;
     this.baseMaximum =
-      'maximum' in gas && gas.baseMaximum ? new BigNumber(gas.baseMaximum) : BIG_MAX_UINT256;
+      'baseMaximum' in gas && gas.baseMaximum ? new BigNumber(gas.baseMaximum) : BIG_MAX_UINT256;
     this.baseSafetyMultiplier = BIG_ONE.plus(
-      'safetyMargin' in gas && gas.baseSafetyMargin ? new BigNumber(gas.baseSafetyMargin) : BIG_ZERO
+      'baseSafetyMargin' in gas && gas.baseSafetyMargin
+        ? new BigNumber(gas.baseSafetyMargin)
+        : BIG_ZERO
     );
 
     this.priorityMinimum =
-      'minimum' in gas && gas.priorityMinimum ? new BigNumber(gas.priorityMinimum) : BIG_ZERO;
+      'priorityMinimum' in gas && gas.priorityMinimum
+        ? new BigNumber(gas.priorityMinimum)
+        : BIG_ZERO;
     this.priorityMaximum =
-      'maximum' in gas && gas.priorityMaximum
+      'priorityMaximum' in gas && gas.priorityMaximum
         ? new BigNumber(gas.priorityMaximum)
         : BIG_MAX_UINT256;
     this.prioritySafetyMultiplier = BIG_ONE.plus(
-      'safetyMargin' in gas && gas.prioritySafetyMargin
+      'prioritySafetyMargin' in gas && gas.prioritySafetyMargin
         ? new BigNumber(gas.prioritySafetyMargin)
         : BIG_ZERO
     );

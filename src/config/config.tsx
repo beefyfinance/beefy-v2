@@ -26,6 +26,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       blocks: 100,
       percentile: 0.6,
       priorityMinimum: '1000000000',
+      baseSafetyMargin: 0.1,
     },
     stableCoins: [
       'USDC',
@@ -76,6 +77,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       blocks: 100,
       percentile: 0.6,
       priorityMinimum: '1000000000',
+      baseSafetyMargin: 0.1,
     },
     stableCoins: [
       'USDC',
@@ -240,6 +242,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       blocks: 100,
       percentile: 0.6,
       priorityMinimum: '1000000000',
+      baseSafetyMargin: 0.1,
     },
     stableCoins: [
       'USDC',
@@ -288,7 +291,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       type: 'eip1559',
       blocks: 100,
       percentile: 0.6,
-      priorityMinimum: '100000000',
     },
     stableCoins: ['USDC', 'USDT', 'MIM', 'VST', 'DAI', 'sarUSDC', 'sarUSDT', 'FRAX', 'USX', 'MAI'],
   },
@@ -317,6 +319,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       blocks: 100,
       percentile: 0.6,
       priorityMinimum: '1000000000',
+      baseSafetyMargin: 0.1,
     },
     stableCoins: [
       'USDT',
@@ -364,6 +367,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       type: 'eip1559',
       blocks: 100,
       percentile: 0.6,
+      baseSafetyMargin: 0.1,
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD'],
   },
@@ -390,6 +394,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       type: 'eip1559',
       blocks: 100,
       percentile: 0.6,
+      baseSafetyMargin: 0.1,
     },
     stableCoins: [
       'USDC',
@@ -430,6 +435,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       type: 'eip1559',
       blocks: 100,
       percentile: 0.6,
+      baseSafetyMargin: 0.1,
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD', 'MAI', 'MIM', 'FRAX', 'USDCm'],
   },
@@ -601,6 +607,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       type: 'eip1559',
       blocks: 100,
       percentile: 0.6,
+      baseSafetyMargin: 0.1,
     },
     stableCoins: ['USDT', 'HUSD'],
   },
