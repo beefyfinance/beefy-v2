@@ -932,7 +932,7 @@
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
+    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB/AVAX",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade",
     "network": "avax",
     "createdAt": 1630496791
