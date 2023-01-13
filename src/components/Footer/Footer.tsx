@@ -17,10 +17,6 @@ const navLinks = [
     path: 'https://vote.beefy.finance',
   },
   {
-    title: ['Footer-Stats', 'Header-Stats'],
-    path: 'https://dashboard.beefy.com',
-  },
-  {
     title: ['Footer-News', 'Header-News'],
     path: 'https://beefy.com/articles/',
   },
