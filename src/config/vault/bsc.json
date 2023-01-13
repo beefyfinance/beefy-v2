@@ -1,5 +1,27 @@
 [
   {
+    "id": "thena-usdc-busd",
+    "name": "USDC-BUSD sLP",
+    "token": "USDC-BUSD sLP",
+    "tokenAddress": "0x7e61c053527A7Af0c700aD9D2C8207E386273222",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenaUSDC-BUSD",
+    "earnedTokenAddress": "0x1c94779aD700cd4a0681e516fFA3d5Ba6d8B3d3c",
+    "earnContractAddress": "0x1c94779aD700cd4a0681e516fFA3d5Ba6d8B3d3c",
+    "oracle": "lps",
+    "oracleId": "thena-usdc-busd",
+    "status": "active",
+    "platformId": "thena",
+    "assets": ["USDC", "BUSD"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_HIGH", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://thena.fi/liquidity",
+    "buyTokenUrl": "https://thena.fi/swap",
+    "network": "bsc",
+    "createdAt": 1673571556
+  },
+  {
     "id": "thena-usdt-busd",
     "name": "USDT-BUSD sLP",
     "token": "USDT-BUSD sLP",
