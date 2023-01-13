@@ -889,7 +889,7 @@
       "IL_HIGH",
       "MCAP_MEDIUM",
       "CONTRACTS_VERIFIED",
-      "ALGO_STABLE"
+      "PARTIAL_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
@@ -1666,7 +1666,7 @@
       "IL_HIGH",
       "MCAP_MEDIUM",
       "CONTRACTS_VERIFIED",
-      "ALGO_STABLE"
+      "PARTIAL_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
@@ -1848,7 +1848,7 @@
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_LARGE",
-      "ALGO_STABLE",
+      "PARTIAL_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",

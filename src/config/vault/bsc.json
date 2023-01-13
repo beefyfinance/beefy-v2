@@ -137,7 +137,7 @@
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_HIGH",
-      "OVER_COLLAT_ALGO_STABLECOIN",
+      "PARTIAL_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://thena.fi/liquidity",
@@ -11673,7 +11673,7 @@
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_LARGE",
-      "ALGO_STABLE",
+      "PARTIAL_COLLAT_ALGO_STABLECOIN",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],

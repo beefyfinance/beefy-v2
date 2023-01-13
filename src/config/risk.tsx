@@ -81,6 +81,14 @@ export const RISKS = {
     condition: 'IL-AlgoStable-Cond',
   },
 
+  PARTIAL_COLLAT_ALGO_STABLECOIN: {
+    category: 'Categry-Asset',
+    score: 0.21,
+    title: 'PartialCollatAlgoStable-Titl',
+    explanation: 'PartialCollatAlgoStable-Expl',
+    condition: 'PartialCollatAlgoStable-Cond',
+  },
+
   OVER_COLLAT_ALGO_STABLECOIN: {
     category: 'Categry-Asset',
     score: 0.15,
