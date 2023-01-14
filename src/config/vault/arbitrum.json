@@ -3,7 +3,7 @@
     "id": "balancer-wsteth-eth-v2",
     "name": "wstETH-ETH V2",
     "token": "wstETH-ETH V2",
-    "tokenAddress": "0x36bf227d6bac96e2ab1ebb5492ecec69c691943f",
+    "tokenAddress": "0x36bf227d6BaC96e2aB1EbB5492ECec69C691943f",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
     "earnedToken": "mooBalancerwstETH-ETH",
