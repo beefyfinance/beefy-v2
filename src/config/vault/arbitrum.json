@@ -6,7 +6,7 @@
     "tokenAddress": "0x36bf227d6BaC96e2aB1EbB5492ECec69C691943f",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
-    "earnedToken": "mooBalancerwstETH-ETH",
+    "earnedToken": "mooBalancerwstETH-ETHV2",
     "earnedTokenAddress": "0xB27c433C1cdb1B42E2601Af2d40dD442fbf1cdc3",
     "earnContractAddress": "0xB27c433C1cdb1B42E2601Af2d40dD442fbf1cdc3",
     "oracle": "lps",
