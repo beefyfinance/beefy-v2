@@ -617,6 +617,27 @@
     "createdAt": 1665023323
   },
   {
+    "id": "beets-optimism-steady-beets",
+    "name": "Optimistic Steady Beets",
+    "token": "Optimistic Steady Beets",
+    "tokenAddress": "0x373643B17Cd80e37675c8C98eF774efe6ca0b4De",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsOptimismSteadyBeets",
+    "earnedTokenAddress": "0x7AABF786Ef456a8AF93D544f030bB556848e9285",
+    "earnContractAddress": "0x7AABF786Ef456a8AF93D544f030bB556848e9285",
+    "oracle": "lps",
+    "oracleId": "beets-optimism-steady-beets",
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["USDC", "USDT", "DAI"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://op.beets.fi/pool/0x373643b17cd80e37675c8c98ef774efe6ca0b4de00000000000000000000001c",
+    "network": "optimism",
+    "createdAt": 1673731740
+  },
+  {
     "id": "beets-shanghai-shakedown",
     "name": "Shanghai Shakedown",
     "token": "Shanghai Shakedown",
@@ -2232,7 +2253,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://op.beets.fi/#/pool/0xd6e5824b54f64ce6f1161210bc17eebffc77e031000100000000000000000006",
     "network": "optimism",
-    "createdAt": 16735715567
+    "createdAt": 1673571557
   },
   {
     "id": "beets-optimistic-8-track",

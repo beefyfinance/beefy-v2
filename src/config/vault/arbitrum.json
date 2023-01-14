@@ -1,5 +1,33 @@
 [
   {
+    "id": "balancer-wsteth-eth-v2",
+    "name": "wstETH-ETH V2",
+    "token": "wstETH-ETH V2",
+    "tokenAddress": "0x36bf227d6bac96e2ab1ebb5492ecec69c691943f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerwstETH-ETH",
+    "earnedTokenAddress": "0xB27c433C1cdb1B42E2601Af2d40dD442fbf1cdc3",
+    "earnContractAddress": "0xB27c433C1cdb1B42E2601Af2d40dD442fbf1cdc3",
+    "oracle": "lps",
+    "oracleId": "balancer-wsteth-eth-v2",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["wstETH", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316",
+    "network": "arbitrum",
+    "createdAt": 1673731740
+  },
+  {
     "id": "curve-arb-f-fraxbp",
     "name": "FRAX/USDC",
     "token": "FRAXBP-f",
@@ -669,7 +697,8 @@
     "earnContractAddress": "0x225555F86f6b0fA4F418f41a4865c66096B7452e",
     "oracle": "lps",
     "oracleId": "balancer-wsteth-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["wstETH", "ETH"],
     "strategyTypeId": "multi-lp",
