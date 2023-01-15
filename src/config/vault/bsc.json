@@ -1,5 +1,27 @@
 [
   {
+    "id": "thena-wbnb-ankr",
+    "name": "ANKR-BNB vLP",
+    "token": "ANKR-BNB vLP",
+    "tokenAddress": "0xE934278276c0274aac95DADB9783F02A27c351Ff",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenaBNB-ANKR",
+    "earnedTokenAddress": "0x9F204aC611C9493b94043218537c43a595F46052",
+    "earnContractAddress": "0x9F204aC611C9493b94043218537c43a595F46052",
+    "oracle": "lps",
+    "oracleId": "thena-wbnb-ankr",
+    "status": "active",
+    "platformId": "thena",
+    "assets": ["ANKR", "BNB"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://thena.fi/liquidity",
+    "buyTokenUrl": "https://thena.fi/swap",
+    "network": "bsc",
+    "createdAt": 1673783905
+  },
+  {
     "id": "thena-bnbx-wbnb",
     "name": "BNBx-BNB vLP",
     "token": "BNBx-BNB vLP",
