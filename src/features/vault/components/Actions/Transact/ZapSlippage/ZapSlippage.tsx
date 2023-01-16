@@ -23,10 +23,15 @@ import { IconWithBasicTooltip } from '../../../../../../components/Tooltip/IconW
 
 const useStyles = makeStyles(styles);
 
+// Decimal space (0.1% = 0.001)
 const SLIPPAGE_PRESETS = [0.1, 0.5, 1, 3].map(p => p / 100);
 const DEFAULT_SLIPPAGE = 1 / 100;
 const SLIPPAGE_WARNING = 5 / 100;
 const SLIPPAGE_DANGER = 10 / 100;
+
+// % space (0.1% = 0.1)
+const INPUT_MIN = 0.1;
+const INPUT_MAX = 49;
 
 function isValidNumberInputString(value: string): boolean {
   const regex = new RegExp(`^[0-9]*\\.?[0-9]*$`);
@@ -112,8 +117,8 @@ const CustomSlippageInput = memo<CustomSlippageInputProps>(function ({
       }
 
       // 1inch will not quote over 49% slippage
-      if (parsedNumber > 49) {
-        setInput('49');
+      if (parsedNumber > INPUT_MAX) {
+        setInput(INPUT_MAX.toString());
         return;
       }
 
@@ -124,7 +129,7 @@ const CustomSlippageInput = memo<CustomSlippageInputProps>(function ({
 
   const handleBlur = useCallback<React.FocusEventHandler<HTMLInputElement>>(() => {
     setInputMode(false);
-    onChange(clampRangeDecimals(numberInputStringToNumber(input), 0.1, 49, 1));
+    onChange(clampRangeDecimals(numberInputStringToNumber(input), INPUT_MIN, INPUT_MAX, 1));
     onFocus(false);
   }, [onFocus, input, onChange, setInputMode]);
 
