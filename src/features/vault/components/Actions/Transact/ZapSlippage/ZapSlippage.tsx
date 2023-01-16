@@ -111,8 +111,9 @@ const CustomSlippageInput = memo<CustomSlippageInputProps>(function ({
         return;
       }
 
-      if (parsedNumber > 100) {
-        setInput('100');
+      // 1inch will not quote over 49% slippage
+      if (parsedNumber > 49) {
+        setInput('49');
         return;
       }
 
@@ -123,7 +124,7 @@ const CustomSlippageInput = memo<CustomSlippageInputProps>(function ({
 
   const handleBlur = useCallback<React.FocusEventHandler<HTMLInputElement>>(() => {
     setInputMode(false);
-    onChange(clampRangeDecimals(numberInputStringToNumber(input), 0.1, 100, 1));
+    onChange(clampRangeDecimals(numberInputStringToNumber(input), 0.1, 49, 1));
     onFocus(false);
   }, [onFocus, input, onChange, setInputMode]);
 
