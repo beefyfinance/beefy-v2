@@ -32,6 +32,7 @@ import { first, uniqBy } from 'lodash';
 import {
   BIG_ONE,
   BIG_ZERO,
+  bigNumberToStringDeep,
   fromWei,
   fromWeiString,
   toWei,
@@ -358,7 +359,7 @@ export class OneInchZapProvider implements ITransactProvider {
     if (swapAmountOut.lte(BIG_ZERO)) {
       throw new Error(`Quote returned zero ${swapTokenOut.symbol}`);
     }
-    const priceImpact = await this.getPriceImpactFromApi(
+    const priceImpact = await this.getPriceImpact(
       api,
       state,
       wnative,
@@ -450,7 +451,7 @@ export class OneInchZapProvider implements ITransactProvider {
               fromAmount: fromWei(swapAmountsInWei[i], swapTokenIn.decimals),
               toToken: swapTokensOut[i],
               toAmount: fromWei(amountOutWei, swapTokensOut[i].decimals),
-              priceImpact: await this.getPriceImpactFromApi(
+              priceImpact: await this.getPriceImpact(
                 api,
                 state,
                 wnative,
@@ -550,7 +551,50 @@ export class OneInchZapProvider implements ITransactProvider {
     return BIG_ONE.minus(BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)).toNumber();
   }
 
-  async getPriceImpactFromApi(
+  async getPriceImpact(
+    api: OneInchApi,
+    state: BeefyState,
+    wnative: TokenErc20,
+    amountIn: BigNumber,
+    tokenIn: TokenEntity,
+    amountOut: BigNumber,
+    tokenOut: TokenEntity
+  ): Promise<number> {
+    try {
+      return this.getPriceImpactFromSwapApi(
+        api,
+        state,
+        wnative,
+        amountIn,
+        tokenIn,
+        amountOut,
+        tokenOut
+      );
+    } catch (e) {
+      console.warn(e);
+      return this.getPriceImpactFromState(state, amountIn, tokenIn, amountOut, tokenOut);
+    }
+  }
+
+  async getPriceImpactFromSwapApi(
+    api: OneInchApi,
+    state: BeefyState,
+    wnative: TokenErc20,
+    amountIn: BigNumber,
+    tokenIn: TokenEntity,
+    amountOut: BigNumber,
+    tokenOut: TokenEntity
+  ): Promise<number> {
+    const reverseSwap = await api.getQuote({
+      amount: toWeiString(amountOut, tokenOut.decimals),
+      fromTokenAddress: tokenOut.address,
+      toTokenAddress: tokenIn.address,
+    });
+    const reverseAmountOut = fromWeiString(reverseSwap.toTokenAmount, reverseSwap.toToken.decimals);
+    return BIG_ONE.minus(reverseAmountOut.dividedBy(amountIn)).dividedBy(2).toNumber();
+  }
+
+  async getPriceImpactFromPriceApi(
     api: OneInchApi,
     state: BeefyState,
     wnative: TokenErc20,
@@ -958,7 +1002,7 @@ export class OneInchZapProvider implements ITransactProvider {
       throw new Error(`Quote returned zero ${swapTokenOut.symbol}`);
     }
 
-    const priceImpact = await this.getPriceImpactFromApi(
+    const priceImpact = await this.getPriceImpact(
       api,
       state,
       wnative,
@@ -1052,7 +1096,7 @@ export class OneInchZapProvider implements ITransactProvider {
               fromAmount: fromWei(swapAmountsInWei[i], swapTokensIn[i].decimals),
               toToken: swapTokenOut,
               toAmount: fromWei(amountOutWei, swapTokenOut.decimals),
-              priceImpact: await this.getPriceImpactFromApi(
+              priceImpact: await this.getPriceImpact(
                 api,
                 state,
                 wnative,

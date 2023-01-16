@@ -3,7 +3,7 @@ import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
 import { selectChainById } from './chains';
-import { BIG_ONE } from '../../../helpers/big-number';
+import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectIsAddressBookLoaded } from './data-loader';
 import { VaultEntity } from '../entities/vault';
 import { createCachedSelector } from 're-reselect';
@@ -163,7 +163,7 @@ export const selectTokenPriceByAddress = (
 export const selectTokenPriceByTokenOracleId = createCachedSelector(
   (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
     state.entities.tokens.prices.byOracleId[oracleId],
-  price => price || BIG_ONE
+  price => price || BIG_ZERO
 )((state: BeefyState, oracleId: TokenEntity['oracleId']) => oracleId);
 
 export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
