@@ -32,7 +32,6 @@ import { first, uniqBy } from 'lodash';
 import {
   BIG_ONE,
   BIG_ZERO,
-  bigNumberToStringDeep,
   fromWei,
   fromWeiString,
   toWei,
