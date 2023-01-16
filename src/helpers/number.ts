@@ -15,3 +15,7 @@ export function compound(
 ): number {
   return principal * Math.pow(1 + rate / periods, periods * times);
 }
+
+export function percentDifference(a: number, b: number): number {
+  return Math.abs((b - a) / a);
+}

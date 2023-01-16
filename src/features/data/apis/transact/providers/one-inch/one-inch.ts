@@ -55,6 +55,7 @@ import { OneInchApi } from '../../../one-inch';
 import { getPool } from '../../../amm';
 import { IPool, WANT_TYPE } from '../../../amm/types';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
+import { percentDifference } from '../../../../../../helpers/number';
 
 export type OneInchZapOptionBase = {
   zap: ZapEntityOneInch;
@@ -590,7 +591,25 @@ export class OneInchZapProvider implements ITransactProvider {
       toTokenAddress: tokenIn.address,
     });
     const reverseAmountOut = fromWeiString(reverseSwap.toTokenAmount, reverseSwap.toToken.decimals);
-    return BIG_ONE.minus(reverseAmountOut.dividedBy(amountIn)).dividedBy(2).toNumber();
+
+    const [priceImpact, reversePriceImpact] = await Promise.all([
+      this.getPriceImpactFromPriceApi(api, state, wnative, amountIn, tokenIn, amountOut, tokenOut),
+      this.getPriceImpactFromPriceApi(
+        api,
+        state,
+        wnative,
+        amountOut,
+        tokenOut,
+        reverseAmountOut,
+        tokenIn
+      ),
+    ]);
+
+    if (percentDifference(priceImpact, reversePriceImpact) >= 0.1) {
+      return Math.max(priceImpact, reversePriceImpact);
+    }
+
+    return priceImpact;
   }
 
   async getPriceImpactFromPriceApi(
