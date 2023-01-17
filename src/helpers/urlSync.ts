@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import _, { isEqual } from 'lodash';
 import { ChainEntity } from '../features/data/entities/chain';
 import {
   filteredVaultsActions,
@@ -88,13 +88,15 @@ function chainIDsToString(
 export function filtersToUrl({
   filterState,
   chainsById,
+  urlParams
 }: {
   filterState: FilteredVaultsState;
   chainsById: {
     [id: string]: ChainEntity;
   };
+  urlParams?: URLSearchParams;
 }): string {
-  const currentURLParams = new URLSearchParams();
+  const currentURLParams = urlParams ?? new URLSearchParams();
 
   // Filter Sort
   if (filterState.sort !== initialFilteredVaultsState.sort) {
@@ -132,6 +134,8 @@ export function filtersToUrl({
       URL_PARAM_FILTER_CHAIN_IDS,
       chainIDsToString(filterState.chainIds, chainsById)
     );
+  }else if(_.isEmpty(chainsById)===false){
+    currentURLParams.delete(URL_PARAM_FILTER_CHAIN_IDS)
   }
 
   // Filter Platform ID
@@ -260,6 +264,7 @@ export function urlToFilters({
 
   // Filter Chain IDs
   const filterChainIDs = url.get(URL_PARAM_FILTER_CHAIN_IDS);
+  console.warn("urlToFilters", chainsById, _.isEmpty(chainsById))
   if (filterChainIDs) {
     const arrayChainIDs = stringToChainIDs(filterChainIDs, chainsById);
     if (arrayChainIDs.length > 0) {

@@ -26,7 +26,7 @@ if (featureFlag_recordReduxActions()) {
 
 if (!featureFlag_replayReduxActions()) {
   // don't want this to run actions when replaying
-  middlewares = [...middlewares, walletActionsMiddleware, zapEstimateMiddleware, vaultsFilteringActionsMiddleware, urlUpdateActionsMiddleware];
+  middlewares = [...middlewares, walletActionsMiddleware, zapEstimateMiddleware, urlUpdateActionsMiddleware, vaultsFilteringActionsMiddleware];
 }
 
 export const store = configureStore({

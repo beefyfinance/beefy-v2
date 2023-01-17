@@ -18,6 +18,7 @@ export function urlUpdateActionsMiddleware(store: BeefyStore) {
     // If one action of that type reaches this middleware, we should bypass this middleware
     // Because if not, we will enter in an endless loop
     if (action.type.includes('filtered-vaults') === false) return next(action);
+    console.log("FILTER", action.type)
 
     // There is one special action: the reset one. If we got that one, we just reset the URL
     // We don't need to do anything else
@@ -36,6 +37,7 @@ export function urlUpdateActionsMiddleware(store: BeefyStore) {
       // and since the difference in time between those two states is minimal (a few milliseconds)
       // it won't affect to the user
       chainsById: store.getState().entities.chains.byId,
+      urlParams: getURLParams(),
     });
     updateURL(newURL);
     return _nextState;
