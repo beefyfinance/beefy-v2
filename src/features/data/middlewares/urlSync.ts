@@ -21,19 +21,24 @@ export function urlUpdateActionsMiddleware(store: BeefyStore) {
 
     // There is one special action: the reset one. If we got that one, we just reset the URL
     // We don't need to do anything else
-    if (action.type === 'filtered-vaults/reset') {
-      next(action);
+    if (action.type === 'filtered-vaults/reset') { 
       updateURL(getURLWithParams());
-      return;
+      return next(action);
     }
 
-    next(action);
-
+    const _nextState = next(action)
+    
     const newURL = filtersToUrl({
       filterState: store.getState().ui.filteredVaults,
+      // Note: store.getState().entities.chains.byId is not available on first load BUT
+      // since the middleware is triggered again on state changes, once the var is available it will
+      // trigger a state change, and that will trigger this middleware, rendering it right
+      // and since the difference in time between those two states is minimal (a few milliseconds)
+      // it won't affect to the user
       chainsById: store.getState().entities.chains.byId,
     });
     updateURL(newURL);
+    return _nextState;
   };
 }
 
@@ -44,12 +49,23 @@ export function urlUpdateActionsMiddleware(store: BeefyStore) {
  */
 export function vaultsFilteringActionsMiddleware(store: BeefyStore) {
   return next => async (action: { type: string; payload: any }) => {
-    if (action.type.includes('filtered-vaults') === true) return next(action);
+    // We want to trigger this middleware actions only in three cases:
+    // - When loading the page (PERSIST and REHYDRATE events)
+    // - When the chains info is loaded
+    // In any other case, we just go next
+    if(action.type !== "persist/PERSIST" && 
+    action.type !== "persist/REHYDRATE" &&
+    action.type !== "platforms/fetchPlatforms/fulfilled") return next(action);
 
     urlToFilters({
       url: getURLParams(),
       dispatcher: store.dispatch,
-      chainsById: store.getState().entities.chains.byId, // TODO: this is not available on first load
+      // Note: store.getState().entities.chains.byId is not available on first load BUT
+      // since the middleware is triggered again on state changes, once the var is available it will
+      // trigger a state change, and that will trigger this middleware, rendering it right
+      // and since the difference in time between those two states is minimal (a few milliseconds)
+      // it won't affect to the user
+      chainsById: store.getState().entities.chains.byId,
     });
 
     return next(action);
