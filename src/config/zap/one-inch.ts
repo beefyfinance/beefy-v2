@@ -122,4 +122,13 @@ export const zaps: OneInchZapConfig[] = [
     blockedTokens: [],
     blockedVaults: [],
   },
+  {
+    zapAddress: '0x46c7308567B527647853d3F94d40Ce82ed27f325',
+    chainId: 'ethereum',
+    fee,
+    depositFromTokens: ['ETH', 'WETH', 'USDC', 'USDT', 'DAI', 'WBTC', 'MAI', 'MIM'],
+    withdrawToTokens: ['ETH', 'USDC', 'USDT', 'WBTC', 'DAI', 'MAI', 'MIM'],
+    blockedTokens: [],
+    blockedVaults: [],
+  },
 ];
