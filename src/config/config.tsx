@@ -21,6 +21,13 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       rpcUrls: ['https://rpc.ankr.com/eth'],
       blockExplorerUrls: ['https://etherscan.io/'],
     },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.6,
+      priorityMinimum: '1000000000',
+      baseSafetyMargin: 0.1,
+    },
     stableCoins: [
       'USDC',
       'DAI',
@@ -64,6 +71,13 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       },
       rpcUrls: ['https://polygon-rpc.com'],
       blockExplorerUrls: ['https://polygonscan.com/'],
+    },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.6,
+      priorityMinimum: '1000000000',
+      baseSafetyMargin: 0.1,
     },
     stableCoins: [
       'USDC',
@@ -123,6 +137,10 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       rpcUrls: ['https://bsc-dataseed.binance.org'],
       blockExplorerUrls: ['https://bscscan.com/'],
     },
+    gas: {
+      type: 'standard',
+      minimum: '5000000000',
+    },
     stableCoins: [
       'BUSD',
       'USDT',
@@ -175,6 +193,10 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       rpcUrls: ['https://rpc.ankr.com/optimism'],
       blockExplorerUrls: ['https://optimistic.etherscan.io/'],
     },
+    gas: {
+      type: 'standard',
+      minimum: '1000000',
+    },
     stableCoins: [
       'USDC',
       'sUSD',
@@ -214,6 +236,13 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       },
       rpcUrls: ['https://rpc.ankr.com/fantom'],
       blockExplorerUrls: ['https://ftmscan.com/'],
+    },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.6,
+      priorityMinimum: '1000000000',
+      baseSafetyMargin: 0.1,
     },
     stableCoins: [
       'USDC',
@@ -258,6 +287,11 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       rpcUrls: ['https://arb1.arbitrum.io/rpc'],
       blockExplorerUrls: ['https://arbiscan.io/'],
     },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.6,
+    },
     stableCoins: ['USDC', 'USDT', 'MIM', 'VST', 'DAI', 'sarUSDC', 'sarUSDT', 'FRAX', 'USX', 'MAI'],
   },
   avax: {
@@ -279,6 +313,13 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       },
       rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
       blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
+    },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.6,
+      priorityMinimum: '1000000000',
+      baseSafetyMargin: 0.1,
     },
     stableCoins: [
       'USDT',
@@ -322,6 +363,12 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       rpcUrls: ['https://evm.cronos.org/'],
       blockExplorerUrls: ['https://cronoscan.com/'],
     },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.6,
+      baseSafetyMargin: 0.1,
+    },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD'],
   },
   moonbeam: {
@@ -342,6 +389,12 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       },
       rpcUrls: ['https://rpc.api.moonbeam.network'],
       blockExplorerUrls: ['https://moonscan.io/'],
+    },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.6,
+      baseSafetyMargin: 0.1,
     },
     stableCoins: [
       'USDC',
@@ -378,6 +431,12 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       rpcUrls: ['https://rpc.api.moonriver.moonbeam.network/'],
       blockExplorerUrls: ['https://moonriver.moonscan.io/'],
     },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.6,
+      baseSafetyMargin: 0.1,
+    },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD', 'MAI', 'MIM', 'FRAX', 'USDCm'],
   },
   metis: {
@@ -398,6 +457,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       },
       rpcUrls: ['https://andromeda.metis.io/?owner=1088'],
       blockExplorerUrls: ['https://andromeda-explorer.metis.io/'],
+    },
+    gas: {
+      type: 'standard',
     },
     stableCoins: ['mUSDT', 'mUSDC', 'mDAI'],
   },
@@ -420,6 +482,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       rpcUrls: ['https://rpc.fuse.io'],
       blockExplorerUrls: ['https://explorer.fuse.io/'],
     },
+    gas: {
+      type: 'standard',
+    },
     stableCoins: ['fUSD', 'BUSD', 'USDC', 'USDT'],
   },
   kava: {
@@ -440,6 +505,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       },
       rpcUrls: ['https://evm.kava.io'],
       blockExplorerUrls: ['https://explorer.kava.io/'],
+    },
+    gas: {
+      type: 'standard',
     },
     stableCoins: ['USDC', 'DAI', 'USDT'],
   },
@@ -463,6 +531,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       rpcUrls: ['https://mainnet.aurora.dev'],
       blockExplorerUrls: ['https://aurorascan.dev/'],
     },
+    gas: {
+      type: 'standard',
+    },
     stableCoins: ['USDC', 'USDT', 'MAI', 'DAI', 'UST', 'aUSDO', 'USN'],
   },
   emerald: {
@@ -483,6 +554,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       },
       rpcUrls: ['https://emerald.oasis.dev'],
       blockExplorerUrls: ['https://explorer.emerald.oasis.dev/'],
+    },
+    gas: {
+      type: 'standard',
     },
     stableCoins: ['ceUSDC', 'USDT'],
   },
@@ -505,6 +579,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       rpcUrls: ['https://forno.celo.org'],
       blockExplorerUrls: ['https://celoscan.io/'],
     },
+    gas: {
+      type: 'celo',
+    },
     stableCoins: ['cUSD', 'cEUR', 'DAI', 'USDC', 'USDT'],
   },
   heco: {
@@ -525,6 +602,12 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       },
       rpcUrls: ['https://http-mainnet.hecochain.com'],
       blockExplorerUrls: ['https://scan.hecochain.com/'],
+    },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.6,
+      baseSafetyMargin: 0.1,
     },
     stableCoins: ['USDT', 'HUSD'],
   },
@@ -547,29 +630,11 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       rpcUrls: ['https://api.s0.t.hmny.io/'],
       blockExplorerUrls: ['https://explorer.harmony.one/'],
     },
+    gas: {
+      type: 'standard',
+    },
     stableCoins: ['BUSD', 'bscBUSD', 'USDC', 'USDT', 'UST', 'DAI', 'FRAX'],
   },
 };
 
-/*
- BOILERPLATE NEW CHAIN
-name: '',
-chainId:0 ,
-rpc: [''],
-explorerUrl: '',
-multicallAddress: '',
-providerName: '',
-walletSettings: {
-chainId: `0x${parseInt('', 10).toString(16)}`,
-chainName: '',
-nativeCurrency: {
-name: '',
-symbol: '',
-decimals: 0,
-},
-rpcUrls: [''],
-blockExplorerUrls: [''],
-},
-stableCoins: [''],
- */
 export const chains: string[] = Object.keys(config);

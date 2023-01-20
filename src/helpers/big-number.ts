@@ -5,6 +5,9 @@ export type BigNumberish = BigNumber.Value;
 
 export const BIG_ZERO = new BigNumber(0);
 export const BIG_ONE = new BigNumber(1);
+export const BIG_MAX_UINT256 = new BigNumber(
+  '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+);
 
 export function compound(
   rate: BigNumberish,
@@ -76,4 +79,8 @@ export function bigNumberToStringDeep(input: unknown) {
 
 export function isReal(value: BigNumber): boolean {
   return value.isFinite() && !value.isNaN();
+}
+
+export function compareBigNumber(a: BigNumber, b: BigNumber): number {
+  return a.comparedTo(b);
 }

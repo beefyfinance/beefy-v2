@@ -56,6 +56,11 @@ export const zaps: BeefyZapConfig[] = [
     zapAddress: '0x01D2c98233AED82bdf7B2738596eE3Ac7647F6B5',
   },
   {
+    chainId: 'bsc',
+    ammId: 'bsc-thena',
+    zapAddress: '0xF0E5b891d054BB5B2E7357281050CCA00bE0d8d2',
+  },
+  {
     chainId: 'cronos',
     ammId: 'cronos-vvs',
     zapAddress: '0xE8f59c05Ff92CF1584CBc404B4527b4F1eaF6620',
@@ -74,6 +79,11 @@ export const zaps: BeefyZapConfig[] = [
     chainId: 'emerald',
     ammId: 'emerald-yuzuswap',
     zapAddress: '0xa1Dfd44c90B7cE937FC450Fe19B691e72EE3a7D2',
+  },
+  {
+    chainId: 'ethereum',
+    ammId: 'ethereum-sushi',
+    zapAddress: '0x333B767aB7f5CE17D51EdbCE57f422624aAE280F',
   },
   {
     chainId: 'fantom',

@@ -28,10 +28,6 @@ export const VaultFees = memo<VaultFeesProps>(function VaultFees({ className }) 
   const areFeesLoaded = useAppSelector(selectAreFeesLoaded);
   const deposit = useAppSelector(state => selectVaultDepositFee(state, vaultId));
 
-  if (!fees) {
-    return;
-  }
-
   return (
     <div className={clsx(classes.container, className)}>
       <div className={classes.transactionFees}>
@@ -76,7 +72,9 @@ export const VaultFees = memo<VaultFeesProps>(function VaultFees({ className }) 
           components={{
             PerformanceTooltip: fees ? (
               <LabelCustomTooltip content={<PerformanceFees fees={fees} />} />
-            ) : undefined,
+            ) : (
+              <span />
+            ),
           }}
         />
       </div>

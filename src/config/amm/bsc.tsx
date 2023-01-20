@@ -111,4 +111,16 @@ export const amms: AmmConfig[] = [
     swapFeeDenominator: '1000',
     getAmountOutMode: 'getAmountOut', // router.getAmountOut(uint amountIn, uint reserveIn, uint reserveOut)
   },
+  {
+    id: 'bsc-thena',
+    name: 'thena',
+    type: 'solidly',
+    routerAddress: '0x20a304a7d126758dfe6B243D0fc515F83bCA8431',
+    factoryAddress: '0xAFD89d21BdB66d00817d4153E055830B1c2B3970',
+    pairInitHash: '0x8d3d214c094a9889564f695c3e9fa516dd3b50bc3258207acd7f8b8e6b94fb65',
+    minimumLiquidity: '1000',
+    swapFeeNumerator: '4',
+    swapFeeDenominator: '10000', // DYNAMIC pair.swapFee() (default 2000 volatile, 10000 stable)
+    getAmountOutMode: 'getAmountOut', // router.getExactAmountOut(uint amountIn, address tokenIn, address tokenOut, bool stable) -> pair.getAmountOut(uint256 amountIn, address tokenIn) OR router.getAmountsOut(uint amountIn, Route[] memory routes)
+  },
 ];

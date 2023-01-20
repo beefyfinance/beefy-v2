@@ -77,7 +77,8 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
 
     const contract = new web3.eth.Contract(erc20Abi as any, token.address);
     const maxAmount = web3.utils.toWei('8000000000', 'ether');
-    const gasPrices = await getGasPriceOptions(web3);
+    const chain = selectChainById(state, token.chainId);
+    const gasPrices = await getGasPriceOptions(chain);
     const transaction = contract.methods
       .approve(spenderAddress, maxAmount)
       .send({ from: address, ...gasPrices });
@@ -118,7 +119,8 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     const rawAmount = amount
       .shiftedBy(depositToken.decimals)
       .decimalPlaces(0, BigNumber.ROUND_FLOOR);
-    const gasPrices = await getGasPriceOptions(web3);
+    const chain = selectChainById(state, vault.chainId);
+    const gasPrices = await getGasPriceOptions(chain);
 
     const transaction = (() => {
       if (isNativeToken) {
@@ -180,7 +182,8 @@ const beefIn = (
       swap.toToken.decimals
     );
     const rawAmount = toWei(fullAmount, swap.fromToken.decimals);
-    const gasPrices = await getGasPriceOptions(web3);
+    const chain = selectChainById(state, vault.chainId);
+    const gasPrices = await getGasPriceOptions(chain);
 
     const transaction = (() => {
       if (isNativeInput) {
@@ -243,7 +246,7 @@ const beefOut = (vault: VaultStandard, input: InputTokenAmount, zap: ZapEntityBe
     );
 
     const contract = new web3.eth.Contract(ZapAbi, zap.zapAddress);
-    const gasPrices = await getGasPriceOptions(web3);
+    const gasPrices = await getGasPriceOptions(chain);
     const sharesToWithdrawWeiString = sharesToWithdrawWei.toString(10);
 
     const transaction = (() => {
@@ -339,7 +342,7 @@ const oneInchBeefInSingle = (
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contract = new web3.eth.Contract(BeefyZapOneInchAbi, zap.zapAddress);
-    const gasPrices = await getGasPriceOptions(web3);
+    const gasPrices = await getGasPriceOptions(chain);
     const tx0 = swapData.tx.data;
     const tx1 = '0x0';
 
@@ -423,7 +426,7 @@ const oneInchBeefInLP = (
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contract = new web3.eth.Contract(BeefyZapOneInchAbi, zap.zapAddress);
-    const gasPrices = await getGasPriceOptions(web3);
+    const gasPrices = await getGasPriceOptions(chain);
     const swap0 = swapData.find(
       data => data.toToken.address.toLowerCase() === lpTokens[0].address.toLowerCase()
     );
@@ -525,7 +528,7 @@ const oneInchBeefOutSingle = (
     }
 
     const contract = new web3.eth.Contract(BeefyZapOneInchAbi, zap.zapAddress);
-    const gasPrices = await getGasPriceOptions(web3);
+    const gasPrices = await getGasPriceOptions(chain);
     const tx0 = swapData.tx.data;
     const tx1 = '0x0';
 
@@ -650,7 +653,7 @@ const oneInchBeefOutLP = (
     const tx0 = swap0 ? swap0.tx.data : '0x0';
     const tx1 = swap1 ? swap1.tx.data : '0x0';
 
-    const gasPrices = await getGasPriceOptions(web3);
+    const gasPrices = await getGasPriceOptions(chain);
     const transaction = (() => {
       return contract.methods
         .beefOutAndSwap(
@@ -721,7 +724,7 @@ const beefOutAndSwap = (
       swap.toToken.decimals
     );
     const contract = new web3.eth.Contract(ZapAbi, zap.zapAddress);
-    const gasPrices = await getGasPriceOptions(web3);
+    const gasPrices = await getGasPriceOptions(chain);
     const sharesToWithdrawWeiString = sharesToWithdrawWei.toString(10);
     const swapAmountOutMinWeiString = swapAmountOutMinWei.toString(10);
     const swapTokenOutAddress = swap.toToken.address;
@@ -781,7 +784,8 @@ const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => 
     const rawAmount = mooAmount
       .shiftedBy(mooToken.decimals)
       .decimalPlaces(0, BigNumber.ROUND_FLOOR);
-    const gasPrices = await getGasPriceOptions(web3);
+    const chain = selectChainById(state, vault.chainId);
+    const gasPrices = await getGasPriceOptions(chain);
 
     const transaction = (() => {
       if (isNativeToken) {
@@ -832,7 +836,8 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     const contractAddr = vault.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
-    const gasPrices = await getGasPriceOptions(web3);
+    const chain = selectChainById(state, vault.chainId);
+    const gasPrices = await getGasPriceOptions(chain);
     const transaction = contract.methods
       .stake(rawAmount.toString(10))
       .send({ from: address, ...gasPrices });
@@ -875,7 +880,8 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
 
     const contractAddr = vault.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
-    const gasPrices = await getGasPriceOptions(web3);
+    const chain = selectChainById(state, vault.chainId);
+    const gasPrices = await getGasPriceOptions(chain);
     const transaction = contract.methods
       .withdraw(rawAmount.toString(10))
       .send({ from: address, ...gasPrices });
@@ -911,7 +917,8 @@ const claimGovVault = (vault: VaultGov) => {
     const contractAddr = vault.earnContractAddress;
 
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
-    const gasPrices = await getGasPriceOptions(web3);
+    const chain = selectChainById(state, vault.chainId);
+    const gasPrices = await getGasPriceOptions(chain);
     const transaction = contract.methods.getReward().send({ from: address, ...gasPrices });
 
     bindTransactionEvents(
@@ -950,7 +957,8 @@ const exitGovVault = (vault: VaultGov) => {
      * withdraw() and by extension exit() will fail if already withdrawn (Cannot withdraw 0),
      * so if there is only rewards left getReward() should be called instead of exit()
      */
-    const gasPrices = await getGasPriceOptions(web3);
+    const chain = selectChainById(state, vault.chainId);
+    const gasPrices = await getGasPriceOptions(chain);
     const transaction = balanceAmount.gt(0)
       ? contract.methods.exit().send({ from: address, ...gasPrices })
       : contract.methods.getReward().send({ from: address, ...gasPrices });
@@ -986,7 +994,8 @@ const claimBoost = (boost: BoostEntity) => {
     const contractAddr = boost.earnContractAddress;
 
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
-    const gasPrices = await getGasPriceOptions(web3);
+    const chain = selectChainById(state, vault.chainId);
+    const gasPrices = await getGasPriceOptions(chain);
     const transaction = contract.methods.getReward().send({ from: address, ...gasPrices });
 
     bindTransactionEvents(
@@ -1026,7 +1035,8 @@ const exitBoost = (boost: BoostEntity) => {
      * withdraw() and by extension exit() will fail if already withdrawn (Cannot withdraw 0),
      * so if there is only rewards left getReward() should be called instead of exit()
      */
-    const gasPrices = await getGasPriceOptions(web3);
+    const chain = selectChainById(state, vault.chainId);
+    const gasPrices = await getGasPriceOptions(chain);
     const transaction = boostAmount.gt(0)
       ? contract.methods.exit().send({ from: address, ...gasPrices })
       : contract.methods.getReward().send({ from: address, ...gasPrices });
@@ -1063,7 +1073,8 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     const contractAddr = boost.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
-    const gasPrices = await getGasPriceOptions(web3);
+    const chain = selectChainById(state, vault.chainId);
+    const gasPrices = await getGasPriceOptions(chain);
     const transaction = contract.methods
       .stake(rawAmount.toString(10))
       .send({ from: address, ...gasPrices });
@@ -1100,7 +1111,8 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     const contractAddr = boost.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
-    const gasPrices = await getGasPriceOptions(web3);
+    const chain = selectChainById(state, vault.chainId);
+    const gasPrices = await getGasPriceOptions(chain);
     const transaction = contract.methods
       .withdraw(rawAmount.toString(10))
       .send({ from: address, ...gasPrices });
@@ -1140,7 +1152,8 @@ const mintDeposit = (
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contract = new web3.eth.Contract(minterAbi as AbiItem[], contractAddr);
-    const gasPrices = await getGasPriceOptions(web3);
+    const chain = selectChainById(state, chainId);
+    const gasPrices = await getGasPriceOptions(chain);
 
     const transaction = (() => {
       const rawAmount = convertAmountToRawNumber(amount, payToken.decimals);
@@ -1196,7 +1209,8 @@ const burnWithdraw = (
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contract = new web3.eth.Contract(minterAbi as AbiItem[], contractAddr);
-    const gasPrices = await getGasPriceOptions(web3);
+    const chain = selectChainById(state, chainId);
+    const gasPrices = await getGasPriceOptions(chain);
 
     const transaction = (() => {
       const rawAmount = convertAmountToRawNumber(amount, burnedToken.decimals);
@@ -1248,7 +1262,8 @@ const bridge = (
     const gasToken = selectChainNativeToken(state, chainId);
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const gasPrices = await getGasPriceOptions(web3);
+    const chain = selectChainById(state, chainId);
+    const gasPrices = await getGasPriceOptions(chain);
 
     const transaction = (() => {
       const rawAmount = convertAmountToRawNumber(amount, bridgeTokenData.decimals);

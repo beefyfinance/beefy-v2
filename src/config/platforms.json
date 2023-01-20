@@ -943,5 +943,10 @@
     "id": "mvx",
     "name": "MVX",
     "filter": false
+  },
+  {
+    "id": "thena",
+    "name": "Thena",
+    "filter": true
   }
 ]
