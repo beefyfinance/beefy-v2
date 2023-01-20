@@ -56,6 +56,28 @@
     "createdAt": 1671735523
   },
   {
+    "id": "velodrome-jeur-seur",
+    "name": "jEUR-sEUR sLP",
+    "token": "jEUR-sEUR sLP",
+    "tokenAddress": "0x9905f635c656208f4725f3EB51fb762D8041FD50",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelojEUR-sEUR",
+    "earnedTokenAddress": "0x7179262B6D65E649168108494345dEe743c8b751",
+    "earnContractAddress": "0x7179262B6D65E649168108494345dEe743c8b751",
+    "oracle": "lps",
+    "oracleId": "velodrome-jeur-seur",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["jEUR", "sEUR"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1674180481
+  },
+  {
     "id": "velodrome-unidx-dai",
     "name": "UNIDX-DAI vLP",
     "token": "UNIDX-DAI vLP",

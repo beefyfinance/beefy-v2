@@ -25,7 +25,7 @@
     "@web3-onboard/walletconnect": "^2.1.2",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
-    "blockchain-addressbook": "^0.40.35",
+    "blockchain-addressbook": "^0.40.36",
     "clsx": "^1.1.1",
     "date-fns": "^2.29.3",
     "escape-string-regexp": "^5.0.0",

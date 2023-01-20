@@ -1,5 +1,34 @@
 [
   {
+    "id": "thena-hay-usd+",
+    "name": "HAY-USD+ sLP",
+    "token": "HAY-USD+ sLP",
+    "tokenAddress": "0x1F3cA66c98d682fA1BeC31264692daD4f17340BC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenaHAY-USD+",
+    "earnedTokenAddress": "0x3A2047069549100322fACaaaA4647c22fa11b296",
+    "earnContractAddress": "0x3A2047069549100322fACaaaA4647c22fa11b296",
+    "oracle": "lps",
+    "oracleId": "thena-hay-usd+",
+    "status": "active",
+    "platformId": "thena",
+    "assets": ["HAY", "USD+"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://thena.fi/liquidity",
+    "buyTokenUrl": "https://thena.fi/swap",
+    "network": "bsc",
+    "createdAt": 1674180481
+  },
+  {
     "id": "thena-hay-busd",
     "name": "HAY-BUSD sLP",
     "token": "HAY-BUSD sLP",
