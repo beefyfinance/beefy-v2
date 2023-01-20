@@ -1,5 +1,64 @@
 [
   {
+    "id": "swapfish-bsc-wbnb-busd",
+    "name": "BUSD-BNB LP",
+    "token": "BUSD-BNB LP",
+    "tokenAddress": "0xdC8a61ED63671fD7FeFB392bA4b35935fB27cd77",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapfish",
+    "earnedToken": "mooSwapFishBNB-BUSD",
+    "earnedTokenAddress": "0x31732890A5b66E1888F2832A2816c9cA413a7eaa",
+    "earnContractAddress": "0x31732890A5b66E1888F2832A2816c9cA413a7eaa",
+    "oracle": "lps",
+    "oracleId": "swapfish-bsc-wbnb-busd",
+    "status": "active",
+    "platformId": "swapfish",
+    "assets": ["BUSD", "BNB"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_LARGE",
+      "IL_HIGH",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://bsc.swapfish.fi/add/BNB/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+    "buyTokenUrl": "https://bsc.swapfish.fi/swap?inputCurrency=BNB&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+    "network": "bsc",
+    "createdAt": 1674220397
+  },
+  {
+    "id": "swapfish-bsc-usdc-usdd",
+    "name": "USDD-USDC LP",
+    "token": "USDD-USDC LP",
+    "tokenAddress": "0x41217d72ca2A80Bb5C48cDbFAbBB7B74733c010F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapfish",
+    "earnedToken": "mooSwapFishUSDC-USDD",
+    "earnedTokenAddress": "0x8c32AF53a0136A18eABd80148FFA0D3c19A27a9b",
+    "earnContractAddress": "0x8c32AF53a0136A18eABd80148FFA0D3c19A27a9b",
+    "oracle": "lps",
+    "oracleId": "swapfish-bsc-usdc-usdd",
+    "status": "active",
+    "platformId": "swapfish",
+    "assets": ["USDD", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_LARGE",
+      "IL_NONE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "ALGO_STABLE"
+    ],
+    "addLiquidityUrl": "https://bsc.swapfish.fi/add/0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d/0xd17479997F34dd9156Deef8F95A52D81D265be9c",
+    "buyTokenUrl": "https://bsc.swapfish.fi/swap?inputCurrency=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d&outputCurrency=0xd17479997F34dd9156Deef8F95A52D81D265be9c",
+    "network": "bsc",
+    "createdAt": 1674220397
+  },
+  {
     "id": "thena-hay-usd+",
     "name": "HAY-USD+ sLP",
     "token": "HAY-USD+ sLP",
@@ -117,7 +176,7 @@
     "platformId": "thena",
     "assets": ["BNBx", "BNB"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "buyTokenUrl": "https://thena.fi/swap",
     "network": "bsc",
@@ -352,6 +411,7 @@
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://bsc.swapfish.fi/add/BNB/0xCa3F508B8e4Dd382eE878A314789373D80A5190A",
+    "buyTokenUrl": "https://bsc.swapfish.fi/swap?inputCurrency=BNB&outputCurrency=0xCa3F508B8e4Dd382eE878A314789373D80A5190A",
     "network": "bsc",
     "createdAt": 1672325033
   },
@@ -380,6 +440,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://bsc.swapfish.fi/add/BNB/0x1bdd3Cf7F79cfB8EdbB955f20ad99211551BA275",
+    "buyTokenUrl": "https://bsc.swapfish.fi/swap?inputCurrency=BNB&outputCurrency=0x1bdd3Cf7F79cfB8EdbB955f20ad99211551BA275",
     "network": "bsc",
     "createdAt": 1672325032
   },
@@ -408,6 +469,7 @@
       "MCAP_SMALL"
     ],
     "addLiquidityUrl": "https://bsc.swapfish.fi/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0xb348B87b23D5977E2948E6f36ca07E1EC94d7328",
+    "buyTokenUrl": "https://bsc.swapfish.fi/swap?inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&outputCurrency=0xb348B87b23D5977E2948E6f36ca07E1EC94d7328",
     "network": "bsc",
     "createdAt": 1672325031
   },
