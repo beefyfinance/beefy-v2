@@ -88,7 +88,7 @@
   },
   {
     "id": "stellaswap-4pool",
-    "name": "USDC/USDT/BUSD/FRAX LP",
+    "name": "USDC/USDT/BUSD/FRAX",
     "token": "stella4pool",
     "tokenAddress": "0xB326b5189AA42Acaa3C649B120f084Ed8F4dCaA6",
     "tokenDecimals": 18,
