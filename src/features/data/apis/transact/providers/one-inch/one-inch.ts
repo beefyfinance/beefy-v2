@@ -675,10 +675,11 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     return {
-      step: 'deposit',
+      step: 'zap-in',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
       action: walletActions.oneInchBeefInSingle(vault, inputToken, swap, option.zap, slippage),
       pending: false,
+      extraInfo: { zap: true },
     };
   }
 
@@ -697,7 +698,7 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     return {
-      step: 'deposit',
+      step: 'zap-in',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
       action: walletActions.oneInchBeefInLP(
         vault,
@@ -709,6 +710,7 @@ export class OneInchZapProvider implements ITransactProvider {
         slippage
       ),
       pending: false,
+      extraInfo: { zap: true },
     };
   }
 
@@ -1151,7 +1153,7 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     return {
-      step: 'withdraw',
+      step: 'zap-out',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
       action: walletActions.oneInchBeefOutSingle(vault, input, swap, option.zap, slippage),
       pending: false,
@@ -1174,7 +1176,7 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     return {
-      step: 'withdraw',
+      step: 'zap-out',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
       action: walletActions.oneInchBeefOutLP(
         vault,

@@ -26,7 +26,9 @@ export type Step = {
     | 'unstake'
     | 'mint'
     | 'burn'
-    | 'bridge';
+    | 'bridge'
+    | 'zap-in'
+    | 'zap-out';
   message: string;
   action: ThunkAction<any, any, any, any>;
   pending: boolean;

@@ -29,6 +29,9 @@ export const styles = (theme: Theme) => ({
   rememberContainer: {
     marginTop: theme.spacing(2),
   },
+  dustContainer: {
+    marginTop: theme.spacing(2),
+  },
   icon: {
     height: '20px',
     marginRight: theme.spacing(1),

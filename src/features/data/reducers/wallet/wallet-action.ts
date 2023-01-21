@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js';
 import { WALLET_ACTION, WALLET_ACTION_RESET } from '../../actions/wallet-actions';
 import { TokenEntity } from '../../entities/token';
 import { EventLog } from 'web3-core';
+import { VaultEntity } from '../../entities/vault';
 
 export type TrxHash = string;
 export type TrxReceipt = {
@@ -17,10 +18,14 @@ export type TrxError = {
   friendlyMessage?: string;
 };
 
-type MandatoryAdditionalData = {
+export type MandatoryAdditionalData = {
   amount: BigNumber;
   token: TokenEntity;
 };
+
+export type OptionalAdditionalData = Partial<{
+  vaultId: VaultEntity['id'];
+}>;
 
 export type WalletActionsState = {
   result: null | 'error' | 'success' | 'success_pending';
@@ -28,7 +33,8 @@ export type WalletActionsState = {
     error: TrxError;
     receipt: TrxReceipt;
     hash: TrxHash;
-  } & MandatoryAdditionalData;
+  } & MandatoryAdditionalData &
+    OptionalAdditionalData;
 };
 
 const initialWalletActionState: WalletActionsState = {
