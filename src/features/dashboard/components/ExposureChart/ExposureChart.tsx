@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
 import React, { memo } from 'react';
+import { PieChart } from '../../../../components/PieChart/PieChart';
 import { ChartDetails } from '../ChartDetails';
-import { Chart } from './Chart';
 import { styles } from './styles';
 
 interface ExposureChartProps {
@@ -21,7 +21,7 @@ export const ExposureChart = memo<ExposureChartProps>(function ({ title, data, t
       <div className={classes.title}>{title}</div>
       {data && (
         <div className={classes.infoContainer}>
-          <Chart data={data} type={type} />
+          <PieChart data={data} type={type} />
           <ChartDetails data={data} />
         </div>
       )}

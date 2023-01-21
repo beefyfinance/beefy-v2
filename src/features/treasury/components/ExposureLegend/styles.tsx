@@ -3,8 +3,8 @@ export const styles = (theme: Theme) => ({
   legendContainer: {
     display: 'flex',
     columnGap: '32px',
-    [theme.breakpoints.down('md')]: {
-      flexWrap: 'wrap',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column' as const,
       columnGap: '16px',
       rowGap: '8px',
     },

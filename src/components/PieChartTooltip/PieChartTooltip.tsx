@@ -1,20 +1,22 @@
 import { makeStyles } from '@material-ui/styles';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AssetsImage } from '../../../../components/AssetsImage';
-import { BIG_ZERO } from '../../../../helpers/big-number';
-import { formatBigUsd, formatPercent } from '../../../../helpers/format';
+import { AssetsImage } from '../AssetsImage';
+import { BIG_ZERO } from '../../helpers/big-number';
+import { formatBigUsd, formatPercent } from '../../helpers/format';
 import { styles } from './styles';
+import { TypeChart } from '../PieChart/PieChart';
 
 interface TooltipProps {
   payload?: any;
   active?: boolean;
-  type: 'chain' | 'platform' | 'token';
+  type?: TypeChart;
+  formatter?: (s: string) => string;
 }
 
 const useStyles = makeStyles(styles);
 
-export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type, active }) {
+export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type, active, formatter }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -23,6 +25,7 @@ export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type, act
     const usdValue = formatBigUsd(data.value ?? BIG_ZERO);
     const percent = formatPercent(data.percentage ?? 0);
     const title = data?.key ?? '';
+    const formmattedTitle = formatter && title ? formatter(title) : title;
     return (
       <div className={classes.container}>
         <div className={classes.titleContainer}>
@@ -31,7 +34,7 @@ export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type, act
               {type === 'chain' && (
                 <img
                   className={classes.icon}
-                  src={require(`../../../../images/networks/${data.key}.svg`).default}
+                  src={require(`../../images/networks/${data.key}.svg`).default}
                   alt={title}
                 />
               )}
@@ -40,7 +43,7 @@ export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type, act
               )}
             </>
           )}
-          <div className={classes.title}>{data.key}</div>
+          <div className={classes.title}>{formmattedTitle}</div>
         </div>
         <div className={classes.infoContainer}>
           <div className={classes.valueContainer}>

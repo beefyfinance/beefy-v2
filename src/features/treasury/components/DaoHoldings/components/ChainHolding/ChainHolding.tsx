@@ -8,6 +8,7 @@ import { ChainEntity } from '../../../../../data/entities/chain';
 import { selectTreasuryBalanceByChainId } from '../../../../../data/selectors/treasury';
 
 import { Assets } from '../Assets';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -22,7 +23,7 @@ export const ChainHolding = memo<ChainHoldingProps>(function ({ chainId }) {
   const chain = useAppSelector(state => selectChainById(state, chainId));
   return (
     <div className={classes.container}>
-      <div className={classes.title}>
+      <div className={clsx(classes.title, classes[`headerNetwork-${chainId}`])}>
         <div className={classes.nameContainer}>
           <img
             src={require(`../../../../../../images/networks/${chainId}.svg`).default}

@@ -28,8 +28,8 @@ export const DaoExposure = memo(function () {
 
   const items = useMemo(() => {
     return [
-      { key: 'tokenExposure', value: ChartEnum.Token, text: t('Exposure-Tokens') },
-      { key: 'chainExposure', value: ChartEnum.Chain, text: t('Exposure-Chain') },
+      { key: 'tokenExposure', value: ChartEnum.Token, text: t('Tokens') },
+      { key: 'chainExposure', value: ChartEnum.Chain, text: t('Chains') },
       {
         key: 'availabilityExposure',
         value: ChartEnum.Availability,

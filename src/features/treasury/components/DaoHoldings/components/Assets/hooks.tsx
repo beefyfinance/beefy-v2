@@ -7,14 +7,10 @@ type SortedAssetCategories = {
   lockedAssets: TreasuryHoldingEntity[];
 };
 
-export const useSortedAssets = (
-  assets: TreasuryHoldingEntity[],
-  sortDirection: 'desc' | 'asc' = 'desc'
-): SortedAssetCategories => {
-  const sortDirMul = sortDirection === 'desc' ? -1 : 1;
+export const useSortedAssets = (assets: TreasuryHoldingEntity[]): SortedAssetCategories => {
   const sortedAssets = sortBy(assets, token => {
     const balanceToken = token.usdValue;
-    return sortDirMul * balanceToken.toNumber();
+    return -1 * balanceToken.toNumber();
   });
 
   const list: SortedAssetCategories = {

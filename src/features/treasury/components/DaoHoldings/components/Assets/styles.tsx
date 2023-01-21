@@ -16,14 +16,11 @@ export const styles = (theme: Theme) => ({
     },
   },
   assetTypes: {
-    backgroundColor: 'rgba(92, 112, 214, 0.4)',
-    padding: '16px 24px',
+    backgroundColor: '#1B1E31',
+    padding: '8px 16px',
     ...theme.typography['subline-sm'],
-    color: '#ADB8EB',
+    color: theme.palette.text.disabled,
     fontWeight: 700,
-    [theme.breakpoints.down('md')]: {
-      padding: '16px',
-    },
   },
   sortColumn: {
     justifyContent: 'flex-start',

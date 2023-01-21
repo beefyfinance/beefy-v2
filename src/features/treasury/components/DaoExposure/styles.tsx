@@ -6,7 +6,6 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.dashboard.cardBg,
     borderRadius: '8px',
     display: 'grid',
-    rowGap: '16px',
     [theme.breakpoints.only('md')]: {
       height: '120px',
     },
@@ -29,8 +28,9 @@ export const styles = (theme: Theme) => ({
   optionsContainer: {
     display: 'flex',
     gap: '12px',
+    marginBottom: '16px',
     [theme.breakpoints.down('md')]: {
-      overflowX: 'scroll',
+      marginBottom: '24px',
     },
   },
 });

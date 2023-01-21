@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo, useCallback } from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SortColumnHeader } from '../../../../../../components/SortColumnHeader';
 import { useAppSelector } from '../../../../../../store';
 import { ChainEntity } from '../../../../../data/entities/chain';
 import { selectTreasuryAssetsByChainId } from '../../../../../data/selectors/treasury';
@@ -16,30 +15,15 @@ interface AssetsProps {
 }
 
 export const Assets = memo<AssetsProps>(function ({ chainId }) {
-  const [sortDirection, setSortDirection] = React.useState<'desc' | 'asc'>('desc');
   const { t } = useTranslation();
 
   const assets = useAppSelector(state => selectTreasuryAssetsByChainId(state, chainId));
 
-  const { liquidAssets, lockedAssets, stakedAssets } = useSortedAssets(assets, sortDirection);
+  const { liquidAssets, lockedAssets, stakedAssets } = useSortedAssets(assets);
   const classes = useStyles();
-
-  const handleSort = useCallback(() => {
-    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-  }, [sortDirection]);
 
   return (
     <>
-      <div className={classes.filter}>
-        <div>{t('Asset')}</div>
-        <SortColumnHeader
-          key={'Holdings'}
-          label={'Holdings'}
-          sortKey={'holdings'}
-          sorted={sortDirection}
-          onChange={handleSort}
-        />
-      </div>
       {liquidAssets.length > 0 && (
         <>
           <div className={classes.assetTypes}>{t('Liquid Assets')}</div>
