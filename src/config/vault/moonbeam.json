@@ -13,7 +13,10 @@
     "oracleId": "beamswap-wstdot-xcdot",
     "status": "active",
     "platformId": "beamswap",
-    "assets": ["wstDOT", "xcDOT"],
+    "assets": [
+      "wstDOT",
+      "xcDOT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -26,7 +29,8 @@
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?outputCurrency=0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0x191cf2602Ca2e534c5Ccae7BCBF4C46a704bb949/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
     "createdAt": 1669432695,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.beamswap.io/exchange/remove/0x191cf2602Ca2e534c5Ccae7BCBF4C46a704bb949/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080"
   },
   {
     "id": "stellaswap-mai4pool",
@@ -42,7 +46,10 @@
     "oracleId": "stellaswap-mai4pool",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["stella4pool", "MAI"],
+    "assets": [
+      "stella4pool",
+      "MAI"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -55,7 +62,8 @@
     ],
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
-    "createdAt": 1667586264
+    "createdAt": 1667586264,
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable"
   },
   {
     "id": "stellaswap-wstdot-xcdot",
@@ -71,7 +79,10 @@
     "oracleId": "stellaswap-wstdot-xcdot",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["wstDOT", "xcDOT"],
+    "assets": [
+      "wstDOT",
+      "xcDOT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -84,7 +95,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x191cf2602Ca2e534c5Ccae7BCBF4C46a704bb949/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1666809486
+    "createdAt": 1666809486,
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x191cf2602Ca2e534c5Ccae7BCBF4C46a704bb949/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080"
   },
   {
     "id": "stellaswap-4pool",
@@ -100,7 +112,12 @@
     "oracleId": "stellaswap-4pool",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["USDCwh", "USDTxc", "BUSDwh", "FRAX"],
+    "assets": [
+      "USDCwh",
+      "USDTxc",
+      "BUSDwh",
+      "FRAX"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -114,7 +131,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1666514304
+    "createdAt": 1666514304,
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable"
   },
   {
     "id": "stellaswap-wbtcwh-wglmr",
@@ -130,7 +148,10 @@
     "oracleId": "stellaswap-wbtcwh-wglmr",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["WBTCwh", "GLMR"],
+    "assets": [
+      "WBTCwh",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -143,7 +164,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xE57eBd2d67B462E9926e04a8e33f01cD0D64346D",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1666357714
+    "createdAt": 1666357714,
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/ETH/0xE57eBd2d67B462E9926e04a8e33f01cD0D64346D"
   },
   {
     "id": "stellaswap-ethwh-wglmr",
@@ -159,7 +181,10 @@
     "oracleId": "stellaswap-ethwh-wglmr",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["ETHwh", "GLMR"],
+    "assets": [
+      "ETHwh",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -172,7 +197,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xab3f0245B83feB11d15AAffeFD7AD465a59817eD",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1665843462
+    "createdAt": 1665843462,
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/ETH/0xab3f0245B83feB11d15AAffeFD7AD465a59817eD"
   },
   {
     "id": "stellaswap-usdcwh-wglmr",
@@ -188,7 +214,10 @@
     "oracleId": "stellaswap-usdcwh-wglmr",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["USDCwh", "GLMR"],
+    "assets": [
+      "USDCwh",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -201,7 +230,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0x931715FEE2d06333043d11F658C8CE934aC61D0c",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1665844674
+    "createdAt": 1665844674,
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/ETH/0x931715FEE2d06333043d11F658C8CE934aC61D0c"
   },
   {
     "id": "stellaswap-poop-wglmr",
@@ -218,7 +248,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["POOP", "GLMR"],
+    "assets": [
+      "POOP",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -231,7 +264,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xFFfffFFecB45aFD30a637967995394Cc88C0c194",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1662910200
+    "createdAt": 1662910200,
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/ETH/0xFFfffFFecB45aFD30a637967995394Cc88C0c194"
   },
   {
     "id": "stellaswap-wglmr-xcintr",
@@ -248,7 +282,10 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "stellaswap",
-    "assets": ["xcINTR", "GLMR"],
+    "assets": [
+      "xcINTR",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -261,7 +298,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xFffFFFFF4C1cbCd97597339702436d4F18a375Ab",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1662574638
+    "createdAt": 1662574638,
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/ETH/0xFffFFFFF4C1cbCd97597339702436d4F18a375Ab"
   },
   {
     "id": "stellaswap-wglmr-xcibtc",
@@ -277,7 +315,10 @@
     "oracleId": "stellaswap-wglmr-xcibtc",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["xciBTC", "GLMR"],
+    "assets": [
+      "xciBTC",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -291,7 +332,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xFFFFFfFf5AC1f9A51A93F5C527385edF7Fe98A52",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1662570612
+    "createdAt": 1662570612,
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/ETH/0xFFFFFfFf5AC1f9A51A93F5C527385edF7Fe98A52"
   },
   {
     "id": "stellaswap-wglmr-xcausd",
@@ -307,7 +349,10 @@
     "oracleId": "stellaswap-wglmr-xcausd",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["xcaUSD", "GLMR"],
+    "assets": [
+      "xcaUSD",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -321,7 +366,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xfFfFFFFF52C56A9257bB97f4B2b6F7B2D624ecda",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1662563208
+    "createdAt": 1662563208,
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/ETH/0xfFfFFFFF52C56A9257bB97f4B2b6F7B2D624ecda"
   },
   {
     "id": "moonbeam-bifi-gov",
@@ -339,7 +385,9 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": ["BIFI"],
+    "assets": [
+      "BIFI"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -368,7 +416,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["FRAX", "GLMR"],
+    "assets": [
+      "FRAX",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -382,7 +433,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x322E86852e492a7Ee17f28a78c663da38FB33bfb/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1661531660
+    "createdAt": 1661531660,
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x322E86852e492a7Ee17f28a78c663da38FB33bfb/ETH"
   },
   {
     "id": "stellaswap-wglmr-mai",
@@ -399,7 +451,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["MAI", "GLMR"],
+    "assets": [
+      "MAI",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -413,7 +468,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xdFA46478F9e5EA86d57387849598dbFB2e964b02/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1661531661
+    "createdAt": 1661531661,
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0xdFA46478F9e5EA86d57387849598dbFB2e964b02/ETH"
   },
   {
     "id": "curve-moonbeam-f-stdot",
@@ -429,7 +485,10 @@
     "oracleId": "curve-moonbeam-f-stdot",
     "status": "active",
     "platformId": "curve",
-    "assets": ["stDOT", "xcDOT"],
+    "assets": [
+      "stDOT",
+      "xcDOT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -441,7 +500,8 @@
     ],
     "addLiquidityUrl": "https://moonbeam.curve.fi/factory/14/deposit",
     "network": "moonbeam",
-    "createdAt": 1661243846
+    "createdAt": 1661243846,
+    "removeLiquidityUrl": "https://moonbeam.curve.fi/factory/14/withdraw"
   },
   {
     "id": "stellaswap-ldo-wglmr",
@@ -457,7 +517,10 @@
     "oracleId": "stellaswap-ldo-wglmr",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["LDO", "GLMR"],
+    "assets": [
+      "LDO",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -470,7 +533,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x9Fda7cEeC4c18008096C2fE2B85F05dc300F94d0/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1661191064
+    "createdAt": 1661191064,
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x9Fda7cEeC4c18008096C2fE2B85F05dc300F94d0/ETH"
   },
   {
     "id": "beamswap-4pool",
@@ -486,7 +550,12 @@
     "oracleId": "beamswap-4pool",
     "status": "active",
     "platformId": "beamswap",
-    "assets": ["USDC", "USDT", "DAI", "BUSD"],
+    "assets": [
+      "USDC",
+      "USDT",
+      "DAI",
+      "BUSD"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -500,7 +569,8 @@
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?outputCurrency=0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/multi/multichain3pool",
     "createdAt": 1658327431,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.beamswap.io/exchange/remove/multi/multichain3pool"
   },
   {
     "id": "stellaswap-well-wglmr",
@@ -516,7 +586,10 @@
     "oracleId": "stellaswap-well-wglmr",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["WELL", "GLMR"],
+    "assets": [
+      "WELL",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -528,7 +601,8 @@
     ],
     "network": "moonbeam",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xAcc15dC74880C9944775448304B263D191c6077F/0x511aB53F793683763E5a8829738301368a2411E3",
-    "createdAt": 1656516660
+    "createdAt": 1656516660,
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0xAcc15dC74880C9944775448304B263D191c6077F/0x511aB53F793683763E5a8829738301368a2411E3"
   },
   {
     "id": "stellaswap-mai4pool-eol",
@@ -545,7 +619,13 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["USDTs", "USDCs", "DAIs", "FRAX", "MAI"],
+    "assets": [
+      "USDTs",
+      "USDCs",
+      "DAIs",
+      "FRAX",
+      "MAI"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -558,7 +638,8 @@
     ],
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable/add/0x7FbE3126C03444D43fC403626ec81E3e809E6b46",
     "createdAt": 1655845404,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable/remove/0x7FbE3126C03444D43fC403626ec81E3e809E6b46"
   },
   {
     "id": "stellaswap-base4pool",
@@ -575,7 +656,12 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["USDTs", "USDCs", "DAIs", "FRAX"],
+    "assets": [
+      "USDTs",
+      "USDCs",
+      "DAIs",
+      "FRAX"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -587,7 +673,8 @@
     ],
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable/add/0x422b5b7A15FB12c518AA29f9def640b4773427f8",
     "createdAt": 1654860006,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable/remove/0x422b5b7A15FB12c518AA29f9def640b4773427f8"
   },
   {
     "id": "stellaswap-wbtc-wglmr",
@@ -604,7 +691,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["GLMR", "WBTC"],
+    "assets": [
+      "GLMR",
+      "WBTC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -616,7 +706,8 @@
     ],
     "network": "moonbeam",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xAcc15dC74880C9944775448304B263D191c6077F/0x1DC78Acda13a8BC4408B207c9E48CDBc096D95e0",
-    "createdAt": 1654276206
+    "createdAt": 1654276206,
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0xAcc15dC74880C9944775448304B263D191c6077F/0x1DC78Acda13a8BC4408B207c9E48CDBc096D95e0"
   },
   {
     "id": "beamswap-wglmr-xcdot",
@@ -633,7 +724,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beamswap",
-    "assets": ["xcDOT", "GLMR"],
+    "assets": [
+      "xcDOT",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -646,7 +740,8 @@
     "network": "moonbeam",
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0xAcc15dC74880C9944775448304B263D191c6077F/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xAcc15dC74880C9944775448304B263D191c6077F&outputCurrency=0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
-    "createdAt": 1654610256
+    "createdAt": 1654610256,
+    "removeLiquidityUrl": "https://app.beamswap.io/exchange/remove/0xAcc15dC74880C9944775448304B263D191c6077F/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080"
   },
   {
     "id": "beamswap-usdcmad-wglmr",
@@ -663,7 +758,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beamswap",
-    "assets": ["USDCs", "GLMR"],
+    "assets": [
+      "USDCs",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -676,7 +774,8 @@
     "network": "moonbeam",
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0xAcc15dC74880C9944775448304B263D191c6077F/0x8f552a71EFE5eeFc207Bf75485b356A0b3f01eC9",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xAcc15dC74880C9944775448304B263D191c6077F&outputCurrency=0x8f552a71EFE5eeFc207Bf75485b356A0b3f01eC9",
-    "createdAt": 1654610952
+    "createdAt": 1654610952,
+    "removeLiquidityUrl": "https://app.beamswap.io/exchange/remove/0xAcc15dC74880C9944775448304B263D191c6077F/0x8f552a71EFE5eeFc207Bf75485b356A0b3f01eC9"
   },
   {
     "id": "beamswap-usdc-wglmr",
@@ -692,7 +791,10 @@
     "oracleId": "beamswap-usdc-wglmr",
     "status": "active",
     "platformId": "beamswap",
-    "assets": ["USDC", "GLMR"],
+    "assets": [
+      "USDC",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -705,7 +807,8 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0xacc15dc74880c9944775448304b263d191c6077f3",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b&outputCurrency=0xacc15dc74880c9944775448304b263d191c6077f",
     "network": "moonbeam",
-    "createdAt": 1644598122
+    "createdAt": 1644598122,
+    "removeLiquidityUrl": "https://app.beamswap.io/exchange/remove/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0xacc15dc74880c9944775448304b263d191c6077f3"
   },
   {
     "id": "beamswap-dai-usdc",
@@ -722,7 +825,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beamswap",
-    "assets": ["USDC", "DAI"],
+    "assets": [
+      "USDC",
+      "DAI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -736,7 +842,8 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0x765277EebeCA2e31912C9946eAe1021199B39C61",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b&outputCurrency=0x765277EebeCA2e31912C9946eAe1021199B39C61",
     "network": "moonbeam",
-    "createdAt": 1644598824
+    "createdAt": 1644598824,
+    "removeLiquidityUrl": "https://app.beamswap.io/exchange/remove/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0x765277EebeCA2e31912C9946eAe1021199B39C61"
   },
   {
     "id": "beamswap-wglmr-glint",
@@ -752,7 +859,10 @@
     "oracleId": "beamswap-wglmr-glint",
     "status": "active",
     "platformId": "beamswap",
-    "assets": ["GLINT", "GLMR"],
+    "assets": [
+      "GLINT",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -765,7 +875,8 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0x765277EebeCA2e31912C9946eAe1021199B39C61",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b&outputCurrency=0x765277EebeCA2e31912C9946eAe1021199B39C61",
     "network": "moonbeam",
-    "createdAt": 1644599100
+    "createdAt": 1644599100,
+    "removeLiquidityUrl": "https://app.beamswap.io/exchange/remove/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0x765277EebeCA2e31912C9946eAe1021199B39C61"
   },
   {
     "id": "beamswap-busd-bnb",
@@ -781,7 +892,10 @@
     "oracleId": "beamswap-busd-bnb",
     "status": "active",
     "platformId": "beamswap",
-    "assets": ["BUSD", "BNB"],
+    "assets": [
+      "BUSD",
+      "BNB"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -794,7 +908,8 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055/0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055&outputCurrency=0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F",
     "network": "moonbeam",
-    "createdAt": 1644599646
+    "createdAt": 1644599646,
+    "removeLiquidityUrl": "https://app.beamswap.io/exchange/remove/0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055/0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F"
   },
   {
     "id": "beamswap-usdc-busd",
@@ -811,7 +926,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beamswap",
-    "assets": ["USDC", "BUSD"],
+    "assets": [
+      "USDC",
+      "BUSD"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -824,7 +942,8 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F&outputCurrency=0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "network": "moonbeam",
-    "createdAt": 1644599298
+    "createdAt": 1644599298,
+    "removeLiquidityUrl": "https://app.beamswap.io/exchange/remove/0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b"
   },
   {
     "id": "beamswap-usdc-eth",
@@ -840,7 +959,10 @@
     "oracleId": "beamswap-usdc-eth",
     "status": "active",
     "platformId": "beamswap",
-    "assets": ["USDC", "ETH"],
+    "assets": [
+      "USDC",
+      "ETH"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -853,7 +975,8 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xfA9343C3897324496A05fC75abeD6bAC29f8A40f&outputCurrency=0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "network": "moonbeam",
-    "createdAt": 1644599832
+    "createdAt": 1644599832,
+    "removeLiquidityUrl": "https://app.beamswap.io/exchange/remove/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b"
   },
   {
     "id": "beamswap-usdc-usdt",
@@ -870,7 +993,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beamswap",
-    "assets": ["USDC", "USDT"],
+    "assets": [
+      "USDC",
+      "USDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -883,7 +1009,8 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73&outputCurrency=0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "network": "moonbeam",
-    "createdAt": 1644600000
+    "createdAt": 1644600000,
+    "removeLiquidityUrl": "https://app.beamswap.io/exchange/remove/0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b"
   },
   {
     "id": "moonbeam-bifi-maxi",
@@ -898,7 +1025,9 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": ["BIFI"],
+    "assets": [
+      "BIFI"
+    ],
     "strategyTypeId": "maxi",
     "risks": [
       "COMPLEXITY_LOW",
@@ -927,7 +1056,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beamswap",
-    "assets": ["BIFI", "GLMR"],
+    "assets": [
+      "BIFI",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -940,7 +1072,8 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8/0xacc15dc74880c9944775448304b263d191c6077f3",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8&outputCurrency=0xacc15dc74880c9944775448304b263d191c6077f",
     "createdAt": 1644704004,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.beamswap.io/exchange/remove/0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8/0xacc15dc74880c9944775448304b263d191c6077f3"
   },
   {
     "id": "beamswap-usdc-ftm",
@@ -957,7 +1090,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beamswap",
-    "assets": ["FTM", "USDC"],
+    "assets": [
+      "FTM",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -970,7 +1106,8 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0xC19281F22A075E0F10351cd5D6Ea9f0AC63d4327",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b&outputCurrency=0xC19281F22A075E0F10351cd5D6Ea9f0AC63d4327",
     "createdAt": 1644703824,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.beamswap.io/exchange/remove/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0xC19281F22A075E0F10351cd5D6Ea9f0AC63d4327"
   },
   {
     "id": "solarflare-wglmr-flare",
@@ -986,7 +1123,10 @@
     "oracleId": "solarflare-wglmr-flare",
     "status": "active",
     "platformId": "solarflare",
-    "assets": ["FLARE", "GLMR"],
+    "assets": [
+      "FLARE",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -999,7 +1139,8 @@
     "addLiquidityUrl": "https://app.solarflare.io/exchange/add/0xE3e43888fa7803cDC7BEA478aB327cF1A0dc11a7/0xAcc15dC74880C9944775448304B263D191c6077F",
     "buyTokenUrl": "https://app.solarflare.io/exchange/swap?inputCurrency=0xAcc15dC74880C9944775448304B263D191c6077F&outputCurrency=0xE3e43888fa7803cDC7BEA478aB327cF1A0dc11a7",
     "createdAt": 1646421834,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.solarflare.io/exchange/remove/0xE3e43888fa7803cDC7BEA478aB327cF1A0dc11a7/0xAcc15dC74880C9944775448304B263D191c6077F"
   },
   {
     "id": "solarflare-usdc-wglmr",
@@ -1016,7 +1157,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "solarflare",
-    "assets": ["USDCs", "GLMR"],
+    "assets": [
+      "USDCs",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1029,7 +1173,8 @@
     "addLiquidityUrl": "https://app.solarflare.io/exchange/add/0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8/0xAcc15dC74880C9944775448304B263D191c6077F",
     "buyTokenUrl": "https://app.solarflare.io/exchange/swap?inputCurrency=0xAcc15dC74880C9944775448304B263D191c6077F&outputCurrency=0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8",
     "createdAt": 1646424684,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.solarflare.io/exchange/remove/0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8/0xAcc15dC74880C9944775448304B263D191c6077F"
   },
   {
     "id": "stellaswap-stella-wglmr",
@@ -1045,7 +1190,10 @@
     "oracleId": "stellaswap-stella-wglmr",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["STELLA", "GLMR"],
+    "assets": [
+      "STELLA",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1058,7 +1206,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x0E358838ce72d5e61E0018a2ffaC4bEC5F4c88d2/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647351540,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x0E358838ce72d5e61E0018a2ffaC4bEC5F4c88d2/ETH"
   },
   {
     "id": "stellaswap-stella-usdc",
@@ -1075,7 +1224,10 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": ["STELLA", "USDC"],
+    "assets": [
+      "STELLA",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1088,7 +1240,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x0E358838ce72d5e61E0018a2ffaC4bEC5F4c88d2/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647359160,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x0E358838ce72d5e61E0018a2ffaC4bEC5F4c88d2/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b"
   },
   {
     "id": "stellaswap-usdc-wglmr",
@@ -1105,7 +1258,10 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": ["USDC", "GLMR"],
+    "assets": [
+      "USDC",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1118,7 +1274,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647355452,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/ETH"
   },
   {
     "id": "stellaswap-usdc-usdt",
@@ -1135,7 +1292,10 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": ["USDC", "USDT"],
+    "assets": [
+      "USDC",
+      "USDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1148,7 +1308,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647522606,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73"
   },
   {
     "id": "stellaswap-usdc-bnb",
@@ -1165,7 +1326,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["USDC", "BNB"],
+    "assets": [
+      "USDC",
+      "BNB"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1178,7 +1342,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647524406,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055"
   },
   {
     "id": "stellaswap-busd-wglmr",
@@ -1195,7 +1360,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["BUSD", "GLMR"],
+    "assets": [
+      "BUSD",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1208,7 +1376,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F/0xAcc15dC74880C9944775448304B263D191c6077F",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647525054,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F/0xAcc15dC74880C9944775448304B263D191c6077F"
   },
   {
     "id": "stellaswap-dai-usdc",
@@ -1225,7 +1394,10 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": ["DAI", "USDC"],
+    "assets": [
+      "DAI",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1239,7 +1411,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x765277EebeCA2e31912C9946eAe1021199B39C61/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647958428,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x765277EebeCA2e31912C9946eAe1021199B39C61/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b"
   },
   {
     "id": "stellaswap-usdc-eth",
@@ -1256,7 +1429,10 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": ["USDC", "ETH"],
+    "assets": [
+      "USDC",
+      "ETH"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1269,7 +1445,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647958674,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f"
   },
   {
     "id": "stellaswap-wglmr-eth",
@@ -1286,7 +1463,10 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": ["GLMR", "ETH"],
+    "assets": [
+      "GLMR",
+      "ETH"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1299,7 +1479,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647958770,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/ETH/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f"
   },
   {
     "id": "stellaswap-usdc-ftm",
@@ -1316,7 +1497,10 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": ["USDC", "FTM"],
+    "assets": [
+      "USDC",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1329,7 +1513,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/0xC19281F22A075E0F10351cd5D6Ea9f0AC63d4327",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1648745802,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/0xC19281F22A075E0F10351cd5D6Ea9f0AC63d4327"
   },
   {
     "id": "stellaswap-wglmr-ftm",
@@ -1346,7 +1531,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["GLMR", "FTM"],
+    "assets": [
+      "GLMR",
+      "FTM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1359,7 +1547,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xC19281F22A075E0F10351cd5D6Ea9f0AC63d4327/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1648745970,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0xC19281F22A075E0F10351cd5D6Ea9f0AC63d4327/ETH"
   },
   {
     "id": "stellaswap-avax-wglmr",
@@ -1376,7 +1565,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["AVAX", "GLMR"],
+    "assets": [
+      "AVAX",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1389,7 +1581,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x4792C1EcB969B036eb51330c63bD27899A13D84e/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1648746066,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x4792C1EcB969B036eb51330c63bD27899A13D84e/ETH"
   },
   {
     "id": "stellaswap-matic-wglmr",
@@ -1406,7 +1599,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["MATIC", "GLMR"],
+    "assets": [
+      "MATIC",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1419,7 +1615,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x3405A1bd46B85c5C029483FbECf2F3E611026e45/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1648746150,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x3405A1bd46B85c5C029483FbECf2F3E611026e45/ETH"
   },
   {
     "id": "stellaswap-atom-wglmr",
@@ -1436,7 +1633,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["ATOM", "GLMR"],
+    "assets": [
+      "ATOM",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1449,7 +1649,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0x27292cf0016E5dF1d8b37306B2A98588aCbD6fCA",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1649857662,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/ETH/0x27292cf0016E5dF1d8b37306B2A98588aCbD6fCA"
   },
   {
     "id": "stellaswap-atom-usdc",
@@ -1466,7 +1667,10 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": ["ATOM", "USDC"],
+    "assets": [
+      "ATOM",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1479,7 +1683,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/0x27292cf0016E5dF1d8b37306B2A98588aCbD6fCA",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1649857842,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/0x27292cf0016E5dF1d8b37306B2A98588aCbD6fCA"
   },
   {
     "id": "stella-xstella",
@@ -1494,7 +1699,9 @@
     "oracleId": "STELLA",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["STELLA"],
+    "assets": [
+      "STELLA"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1522,7 +1729,10 @@
     "oracleId": "stellaswap-wglmr-xcdot",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": ["xcDOT", "GLMR"],
+    "assets": [
+      "xcDOT",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1535,7 +1745,8 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1651689624,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/ETH/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080"
   },
   {
     "id": "stellaswap-luna-wglmr-eol",
@@ -1551,7 +1762,10 @@
     "oracleId": "stellaswap-luna-wglmr",
     "status": "eol",
     "platformId": "stellaswap",
-    "assets": ["LUNA", "GLMR"],
+    "assets": [
+      "LUNA",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1565,7 +1779,8 @@
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1648746234,
     "network": "moonbeam",
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x31DAB3430f3081dfF3Ccd80F17AD98583437B213/ETH"
   },
   {
     "id": "stellaswap-axlust-wglmr-eol",
@@ -1581,7 +1796,10 @@
     "oracleId": "stellaswap-axlust-wglmr",
     "status": "eol",
     "platformId": "stellaswap",
-    "assets": ["UST", "GLMR"],
+    "assets": [
+      "UST",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1596,7 +1814,8 @@
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647958278,
     "network": "moonbeam",
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0x085416975fe14C2A731a97eC38B9bF8135231F62/ETH"
   },
   {
     "id": "solarflare-ust-wglmr-eol",
@@ -1612,7 +1831,10 @@
     "oracleId": "solarflare-ust-wglmr",
     "status": "eol",
     "platformId": "solarflare",
-    "assets": ["UST", "GLMR"],
+    "assets": [
+      "UST",
+      "GLMR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1627,7 +1849,8 @@
     "buyTokenUrl": "https://app.solarflare.io/exchange/swap?inputCurrency=0x085416975fe14C2A731a97eC38B9bF8135231F62&outputCurrency=0xAcc15dC74880C9944775448304B263D191c6077F",
     "createdAt": 1647958278,
     "network": "moonbeam",
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://app.solarflare.io/exchange/remove/0x085416975fe14C2A731a97eC38B9bF8135231F62/0xAcc15dC74880C9944775448304B263D191c6077F"
   },
   {
     "id": "solarflare-luna-flare-eol",
@@ -1643,7 +1866,10 @@
     "oracleId": "solarflare-luna-flare",
     "status": "eol",
     "platformId": "solarflare",
-    "assets": ["LUNA", "FLARE"],
+    "assets": [
+      "LUNA",
+      "FLARE"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1657,7 +1883,8 @@
     "buyTokenUrl": "https://app.solarflare.io/exchange/swap?inputCurrency=0x31DAB3430f3081dfF3Ccd80F17AD98583437B213&outputCurrency=0xE3e43888fa7803cDC7BEA478aB327cF1A0dc11a7",
     "createdAt": 1646426436,
     "network": "moonbeam",
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://app.solarflare.io/exchange/remove/0xE3e43888fa7803cDC7BEA478aB327cF1A0dc11a7/0x31DAB3430f3081dfF3Ccd80F17AD98583437B213"
   },
   {
     "id": "stellaswap-weth-wglmr",
@@ -1674,7 +1901,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["GLMR", "ETHs"],
+    "assets": [
+      "GLMR",
+      "ETHs"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1686,7 +1916,8 @@
     ],
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xAcc15dC74880C9944775448304B263D191c6077F/0x30D2a9F5FDf90ACe8c17952cbb4eE48a55D916A7",
     "createdAt": 1653485280,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0xAcc15dC74880C9944775448304B263D191c6077F/0x30D2a9F5FDf90ACe8c17952cbb4eE48a55D916A7"
   },
   {
     "id": "stellaswap-usdcmad-wglmr",
@@ -1703,7 +1934,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["GLMR", "USDCs"],
+    "assets": [
+      "GLMR",
+      "USDCs"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1715,7 +1949,8 @@
     ],
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xAcc15dC74880C9944775448304B263D191c6077F/0x8f552a71EFE5eeFc207Bf75485b356A0b3f01eC9",
     "createdAt": 1653477432,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/remove/0xAcc15dC74880C9944775448304B263D191c6077F/0x8f552a71EFE5eeFc207Bf75485b356A0b3f01eC9"
   },
   {
     "id": "stellaswap-dualETH",
@@ -1732,7 +1967,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["ETHs", "ETH"],
+    "assets": [
+      "ETHs",
+      "ETH"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1744,6 +1982,7 @@
     ],
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable/add/0xb86271571c90ad4E0C9776228437340b42623402",
     "createdAt": 1653747480,
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "removeLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable/remove/0xb86271571c90ad4E0C9776228437340b42623402"
   }
 ]

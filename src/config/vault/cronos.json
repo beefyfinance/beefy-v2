@@ -14,7 +14,9 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": ["BIFI"],
+    "assets": [
+      "BIFI"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -41,7 +43,9 @@
     "oracleId": "VVS",
     "status": "active",
     "platformId": "vvs",
-    "assets": ["VVS"],
+    "assets": [
+      "VVS"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -69,7 +73,10 @@
     "oracleId": "vvs-usdc-busd",
     "status": "active",
     "platformId": "vvs",
-    "assets": ["BUSD", "USDC"],
+    "assets": [
+      "BUSD",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -82,7 +89,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xC74D59A548ecf7fc1754bb7810D716E9Ac3e3AE5",
     "addLiquidityUrl": "https://vvs.finance/add/0xC74D59A548ecf7fc1754bb7810D716E9Ac3e3AE5/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1665023337
+    "createdAt": 1665023337,
+    "removeLiquidityUrl": "https://vvs.finance/remove/0xC74D59A548ecf7fc1754bb7810D716E9Ac3e3AE5/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59"
   },
   {
     "id": "vvs-vvs-usdc",
@@ -98,7 +106,10 @@
     "oracleId": "vvs-vvs-usdc",
     "status": "active",
     "platformId": "vvs",
-    "assets": ["VVS", "USDC"],
+    "assets": [
+      "VVS",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -111,7 +122,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     "addLiquidityUrl": "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     "network": "cronos",
-    "createdAt": 1637045279
+    "createdAt": 1637045279,
+    "removeLiquidityUrl": "https://vvs.finance/remove/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03"
   },
   {
     "id": "vvs-vvs-cro",
@@ -127,7 +139,10 @@
     "oracleId": "vvs-vvs-cro",
     "status": "active",
     "platformId": "vvs",
-    "assets": ["VVS", "CRO"],
+    "assets": [
+      "VVS",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -140,7 +155,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     "network": "cronos",
-    "createdAt": 1637045228
+    "createdAt": 1637045228,
+    "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03"
   },
   {
     "id": "vvs-cro-eth",
@@ -156,7 +172,10 @@
     "oracleId": "vvs-cro-eth",
     "status": "active",
     "platformId": "vvs",
-    "assets": ["CRO", "ETH"],
+    "assets": [
+      "CRO",
+      "ETH"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -169,7 +188,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "network": "cronos",
-    "createdAt": 1637043985
+    "createdAt": 1637043985,
+    "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a"
   },
   {
     "id": "vvs-cro-btc",
@@ -185,7 +205,10 @@
     "oracleId": "vvs-cro-btc",
     "status": "active",
     "platformId": "vvs",
-    "assets": ["CRO", "WBTC"],
+    "assets": [
+      "CRO",
+      "WBTC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -198,7 +221,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x062E66477Faf219F25D27dCED647BF57C3107d52",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52",
     "network": "cronos",
-    "createdAt": 1637045082
+    "createdAt": 1637045082,
+    "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52"
   },
   {
     "id": "vvs-cro-shib",
@@ -214,7 +238,10 @@
     "oracleId": "vvs-cro-shib",
     "status": "active",
     "platformId": "vvs",
-    "assets": ["SHIB", "CRO"],
+    "assets": [
+      "SHIB",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -227,7 +254,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xbED48612BC69fA1CaB67052b42a95FB30C1bcFee",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xbED48612BC69fA1CaB67052b42a95FB30C1bcFee",
     "network": "cronos",
-    "createdAt": 1637576058
+    "createdAt": 1637576058,
+    "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0xbED48612BC69fA1CaB67052b42a95FB30C1bcFee"
   },
   {
     "id": "vvs-vvs-usdt",
@@ -243,7 +271,10 @@
     "oracleId": "vvs-vvs-usdt",
     "status": "active",
     "platformId": "vvs",
-    "assets": ["VVS", "USDT"],
+    "assets": [
+      "VVS",
+      "USDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -256,7 +287,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770",
     "addLiquidityUrl": "https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "network": "cronos",
-    "createdAt": 1637322635
+    "createdAt": 1637322635,
+    "removeLiquidityUrl": "https://vvs.finance/remove/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x66e428c3f67a68878562e79A0234c1F83c208770"
   },
   {
     "id": "vvs-usdt-usdc",
@@ -272,7 +304,10 @@
     "oracleId": "vvs-usdt-usdc",
     "status": "active",
     "platformId": "vvs",
-    "assets": ["USDT", "USDC"],
+    "assets": [
+      "USDT",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -285,7 +320,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770",
     "addLiquidityUrl": "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "network": "cronos",
-    "createdAt": 1637151567
+    "createdAt": 1637151567,
+    "removeLiquidityUrl": "https://vvs.finance/remove/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0x66e428c3f67a68878562e79A0234c1F83c208770"
   },
   {
     "id": "crona-crona",
@@ -300,7 +336,9 @@
     "oracleId": "CRONA",
     "status": "active",
     "platformId": "cronaswap",
-    "assets": ["CRONA"],
+    "assets": [
+      "CRONA"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -329,7 +367,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": ["CRONA", "CRO"],
+    "assets": [
+      "CRONA",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -342,7 +383,8 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0xadbd1231fb360047525BEdF962581F3eee7b49fe",
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xadbd1231fb360047525BEdF962581F3eee7b49fe",
     "network": "cronos",
-    "createdAt": 1637138260
+    "createdAt": 1637138260,
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/CRO/0xadbd1231fb360047525BEdF962581F3eee7b49fe"
   },
   {
     "id": "crona-cro-usdc",
@@ -359,7 +401,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": ["USDC", "CRO"],
+    "assets": [
+      "USDC",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -372,7 +417,8 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1637146470
+    "createdAt": 1637146470,
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59"
   },
   {
     "id": "crona-cro-usdt",
@@ -389,7 +435,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": ["USDT", "CRO"],
+    "assets": [
+      "USDT",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -402,7 +451,8 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1637147878
+    "createdAt": 1637147878,
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59"
   },
   {
     "id": "crona-usdt-busd",
@@ -419,7 +469,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": ["BUSD", "USDT"],
+    "assets": [
+      "BUSD",
+      "USDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -432,7 +485,8 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?inputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770&outputCurrency=0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
     "addLiquidityUrl": "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
     "network": "cronos",
-    "createdAt": 1637153704
+    "createdAt": 1637153704,
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/0x66e428c3f67a68878562e79A0234c1F83c208770/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8"
   },
   {
     "id": "crona-usdt-usdc",
@@ -449,7 +503,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": ["USDC", "USDT"],
+    "assets": [
+      "USDC",
+      "USDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -462,7 +519,8 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?inputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770&outputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "addLiquidityUrl": "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1637164857
+    "createdAt": 1637164857,
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/0x66e428c3f67a68878562e79A0234c1F83c208770/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59"
   },
   {
     "id": "cronos-bifi-maxi",
@@ -477,7 +535,9 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": ["BIFI"],
+    "assets": [
+      "BIFI"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -505,7 +565,10 @@
     "oracleId": "vvs-cro-usdt",
     "status": "active",
     "platformId": "vvs",
-    "assets": ["CRO", "USDT"],
+    "assets": [
+      "CRO",
+      "USDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -518,7 +581,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "network": "cronos",
-    "createdAt": 1637834160
+    "createdAt": 1637834160,
+    "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0x66e428c3f67a68878562e79A0234c1F83c208770"
   },
   {
     "id": "vvs-cro-usdc",
@@ -534,7 +598,10 @@
     "oracleId": "vvs-cro-usdc",
     "status": "active",
     "platformId": "vvs",
-    "assets": ["CRO", "USDC"],
+    "assets": [
+      "CRO",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -547,7 +614,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1637656647
+    "createdAt": 1637656647,
+    "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59"
   },
   {
     "id": "crona-crona-usdc",
@@ -564,7 +632,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": ["CRONA", "USDC"],
+    "assets": [
+      "CRONA",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -577,7 +648,8 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0xadbd1231fb360047525BEdF962581F3eee7b49fe",
     "addLiquidityUrl": "https://app.cronaswap.org/add/0xadbd1231fb360047525BEdF962581F3eee7b49fe/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1638062854
+    "createdAt": 1638062854,
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/0xadbd1231fb360047525BEdF962581F3eee7b49fe/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59"
   },
   {
     "id": "crona-usdt-crona",
@@ -594,7 +666,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": ["CRONA", "USDT"],
+    "assets": [
+      "CRONA",
+      "USDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -607,7 +682,8 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770",
     "addLiquidityUrl": "https://app.cronaswap.org/add/0xadbd1231fb360047525BEdF962581F3eee7b49fe/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "network": "cronos",
-    "createdAt": 1638063529
+    "createdAt": 1638063529,
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/0xadbd1231fb360047525BEdF962581F3eee7b49fe/0x66e428c3f67a68878562e79A0234c1F83c208770"
   },
   {
     "id": "crona-usdc-dai",
@@ -624,7 +700,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": ["USDC", "DAI"],
+    "assets": [
+      "USDC",
+      "DAI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -638,7 +717,8 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     "addLiquidityUrl": "https://app.cronaswap.org/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     "network": "cronos",
-    "createdAt": 1638064120
+    "createdAt": 1638064120,
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xF2001B145b43032AAF5Ee2884e456CCd805F677D"
   },
   {
     "id": "vvs-cro-dai",
@@ -655,7 +735,10 @@
     "status": "eol",
     "platformId": "vvs",
     "retireReason": "rewards",
-    "assets": ["CRO", "DAI"],
+    "assets": [
+      "CRO",
+      "DAI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -669,7 +752,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     "network": "cronos",
-    "createdAt": 1638173103
+    "createdAt": 1638173103,
+    "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D"
   },
   {
     "id": "vvs-cro-doge",
@@ -685,7 +769,10 @@
     "oracleId": "vvs-cro-doge",
     "status": "active",
     "platformId": "vvs",
-    "assets": ["DOGE", "CRO"],
+    "assets": [
+      "DOGE",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -698,7 +785,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x1a8E39ae59e5556B56b76fCBA98d22c9ae557396",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x1a8E39ae59e5556B56b76fCBA98d22c9ae557396",
     "network": "cronos",
-    "createdAt": 1639476244
+    "createdAt": 1639476244,
+    "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0x1a8E39ae59e5556B56b76fCBA98d22c9ae557396"
   },
   {
     "id": "crona-wbtc-eth",
@@ -715,7 +803,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": ["WBTC", "ETH"],
+    "assets": [
+      "WBTC",
+      "ETH"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -728,7 +819,8 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0x062E66477Faf219F25D27dCED647BF57C3107d52",
     "addLiquidityUrl": "https://app.cronaswap.org/add/0x062E66477Faf219F25D27dCED647BF57C3107d52/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "network": "cronos",
-    "createdAt": 1639425411
+    "createdAt": 1639425411,
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/0x062E66477Faf219F25D27dCED647BF57C3107d52/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a"
   },
   {
     "id": "crona-usdc-eth",
@@ -745,7 +837,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": ["ETH", "USDC"],
+    "assets": [
+      "ETH",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -758,7 +853,8 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "addLiquidityUrl": "https://app.cronaswap.org/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "network": "cronos",
-    "createdAt": 1639129150
+    "createdAt": 1639129150,
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a"
   },
   {
     "id": "crona-usdt-matic-eol",
@@ -774,7 +870,10 @@
     "oracleId": "crona-usdt-matic",
     "status": "eol",
     "platformId": "cronaswap",
-    "assets": ["MATIC", "USDT"],
+    "assets": [
+      "MATIC",
+      "USDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -788,7 +887,8 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055",
     "network": "cronos",
     "retireReason": "rewards",
-    "createdAt": 1637155684
+    "createdAt": 1637155684,
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/0x66e428c3f67a68878562e79A0234c1F83c208770/0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055"
   },
   {
     "id": "vvs-cro-atom",
@@ -804,7 +904,10 @@
     "oracleId": "vvs-cro-atom",
     "status": "active",
     "platformId": "vvs",
-    "assets": ["ATOM", "CRO"],
+    "assets": [
+      "ATOM",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -817,7 +920,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xB888d8Dd1733d72681b30c00ee76BDE93ae7aa93",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xB888d8Dd1733d72681b30c00ee76BDE93ae7aa93",
     "network": "cronos",
-    "createdAt": 1639730963
+    "createdAt": 1639730963,
+    "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0xB888d8Dd1733d72681b30c00ee76BDE93ae7aa93"
   },
   {
     "id": "liq-liq-cro",
@@ -833,7 +937,10 @@
     "oracleId": "liq-liq-cro",
     "status": "active",
     "platformId": "liquidus",
-    "assets": ["LIQ", "CRO"],
+    "assets": [
+      "LIQ",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -846,7 +953,8 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0xABd380327Fe66724FFDa91A87c772FB8D00bE488",
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xABd380327Fe66724FFDa91A87c772FB8D00bE488",
     "network": "cronos",
-    "createdAt": 1640159132
+    "createdAt": 1640159132,
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/CRO/0xABd380327Fe66724FFDa91A87c772FB8D00bE488"
   },
   {
     "id": "crona-cro-dai-eol",
@@ -862,7 +970,10 @@
     "oracleId": "crona-cro-dai",
     "status": "eol",
     "platformId": "cronaswap",
-    "assets": ["DAI", "CRO"],
+    "assets": [
+      "DAI",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -877,7 +988,8 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     "network": "cronos",
     "retireReason": "rewards",
-    "createdAt": 1637152288
+    "createdAt": 1637152288,
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D"
   },
   {
     "id": "vvs-tonic-cro",
@@ -893,7 +1005,10 @@
     "oracleId": "vvs-tonic-cro",
     "status": "active",
     "platformId": "vvs",
-    "assets": ["TONIC", "CRO"],
+    "assets": [
+      "TONIC",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -906,7 +1021,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     "network": "cronos",
-    "createdAt": 1641552219
+    "createdAt": 1641552219,
+    "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2"
   },
   {
     "id": "crona-cro-eth-eol",
@@ -922,7 +1038,10 @@
     "oracleId": "crona-cro-eth",
     "status": "eol",
     "platformId": "cronaswap",
-    "assets": ["ETH", "CRO"],
+    "assets": [
+      "ETH",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -936,7 +1055,8 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "network": "cronos",
     "retireReason": "rewards",
-    "createdAt": 1637149838
+    "createdAt": 1637149838,
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/CRO/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a"
   },
   {
     "id": "crona-usdt-ftm-eol",
@@ -952,7 +1072,10 @@
     "oracleId": "crona-usdt-ftm",
     "status": "eol",
     "platformId": "cronaswap",
-    "assets": ["FTM", "USDT"],
+    "assets": [
+      "FTM",
+      "USDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -966,7 +1089,8 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
     "network": "cronos",
     "retireReason": "rewards",
-    "createdAt": 1637162500
+    "createdAt": 1637162500,
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/0x66e428c3f67a68878562e79A0234c1F83c208770/0xB44a9B6905aF7c801311e8F4E76932ee959c663C"
   },
   {
     "id": "vvs-cro-bifi-eol",
@@ -982,7 +1106,10 @@
     "oracleId": "vvs-cro-bifi",
     "status": "eol",
     "platformId": "vvs",
-    "assets": ["BIFI", "CRO"],
+    "assets": [
+      "BIFI",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -996,7 +1123,8 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
     "network": "cronos",
     "retireReason": "rewards",
-    "createdAt": 1638782855
+    "createdAt": 1638782855,
+    "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0xe6801928061CDbE32AC5AD0634427E140EFd05F9"
   },
   {
     "id": "dark-dark-cro",
@@ -1013,7 +1141,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "darkcrypto",
-    "assets": ["DARK", "CRO"],
+    "assets": [
+      "DARK",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1027,7 +1158,8 @@
     "buyTokenUrl": "https://mm.finance/swap?outputCurrency=0x83b2AC8642aE46FC2823Bc959fFEB3c1742c48B5",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0x83b2AC8642aE46FC2823Bc959fFEB3c1742c48B5",
     "createdAt": 1644921724,
-    "network": "cronos"
+    "network": "cronos",
+    "removeLiquidityUrl": "TBD"
   },
   {
     "id": "dark-sky-cro",
@@ -1044,7 +1176,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "darkcrypto",
-    "assets": ["SKY", "CRO"],
+    "assets": [
+      "SKY",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1057,7 +1192,8 @@
     "buyTokenUrl": "https://mm.finance/swap?outputCurrency=0x9D3BBb0e988D9Fb2d55d07Fe471Be2266AD9c81c",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0x9D3BBb0e988D9Fb2d55d07Fe471Be2266AD9c81c",
     "createdAt": 1644921724,
-    "network": "cronos"
+    "network": "cronos",
+    "removeLiquidityUrl": "TBD"
   },
   {
     "id": "crona-busd-bnb-eol",
@@ -1073,7 +1209,10 @@
     "oracleId": "crona-busd-bnb",
     "status": "eol",
     "platformId": "cronaswap",
-    "assets": ["BNB", "BUSD"],
+    "assets": [
+      "BNB",
+      "BUSD"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1087,7 +1226,8 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
     "createdAt": 1638061783,
     "network": "cronos",
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f"
   },
   {
     "id": "crona-wbtc-cro-eol",
@@ -1103,7 +1243,10 @@
     "oracleId": "crona-wbtc-cro",
     "status": "eol",
     "platformId": "cronaswap",
-    "assets": ["WBTC", "CRO"],
+    "assets": [
+      "WBTC",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1117,7 +1260,8 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52",
     "createdAt": 1637150470,
     "network": "cronos",
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52"
   },
   {
     "id": "vvs-tonic-usdc-eol",
@@ -1133,7 +1277,10 @@
     "oracleId": "vvs-tonic-usdc",
     "status": "eol",
     "platformId": "vvs",
-    "assets": ["TONIC", "USDC"],
+    "assets": [
+      "TONIC",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1147,7 +1294,8 @@
     "addLiquidityUrl": "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     "network": "cronos",
     "createdAt": 1640161565,
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://vvs.finance/remove/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2"
   },
   {
     "id": "crona-wbtc-usdc-eol",
@@ -1163,7 +1311,10 @@
     "oracleId": "crona-wbtc-usdc",
     "status": "eol",
     "platformId": "cronaswap",
-    "assets": ["WBTC", "USDC"],
+    "assets": [
+      "WBTC",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1177,7 +1328,8 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/0x062E66477Faf219F25D27dCED647BF57C3107d52/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
     "createdAt": 1639127958,
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://app.cronaswap.org/remove/0x062E66477Faf219F25D27dCED647BF57C3107d52/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59"
   },
   {
     "id": "vvs-ali-cro-eol",
@@ -1194,7 +1346,10 @@
     "status": "eol",
     "platformId": "vvs",
     "retireReason": "rewards",
-    "assets": ["ALI", "CRO"],
+    "assets": [
+      "ALI",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1207,7 +1362,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x45C135C1CDCE8d25A3B729A28659561385C52671",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x45C135C1CDCE8d25A3B729A28659561385C52671",
     "createdAt": 1649324095,
-    "network": "cronos"
+    "network": "cronos",
+    "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0x45C135C1CDCE8d25A3B729A28659561385C52671"
   },
   {
     "id": "vvs-vvs-versa",
@@ -1224,7 +1380,10 @@
     "status": "eol",
     "platformId": "vvs",
     "retireReason": "rewards",
-    "assets": ["VVS", "VERSA"],
+    "assets": [
+      "VVS",
+      "VERSA"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1237,7 +1396,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?inputCurrency=0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03&outputCurrency=0x00D7699b71290094CcB1a5884cD835bD65a78c17",
     "addLiquidityUrl": "https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x00D7699b71290094CcB1a5884cD835bD65a78c17",
     "createdAt": 1650020388,
-    "network": "cronos"
+    "network": "cronos",
+    "removeLiquidityUrl": "https://vvs.finance/remove/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x00D7699b71290094CcB1a5884cD835bD65a78c17"
   },
   {
     "id": "vvs-vvs-tonic",
@@ -1254,7 +1414,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "vvs",
-    "assets": ["VVS", "TONIC"],
+    "assets": [
+      "VVS",
+      "TONIC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1267,7 +1430,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?inputCurrency=0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03&outputCurrency=0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     "addLiquidityUrl": "https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     "createdAt": 1649959970,
-    "network": "cronos"
+    "network": "cronos",
+    "removeLiquidityUrl": "https://vvs.finance/remove/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2"
   },
   {
     "id": "vvs-fer-vvs",
@@ -1284,7 +1448,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "vvs",
-    "assets": ["VVS", "FER"],
+    "assets": [
+      "VVS",
+      "FER"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1297,7 +1464,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x39bC1e38c842C60775Ce37566D03B41A7A66C782",
     "addLiquidityUrl": "https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x39bC1e38c842C60775Ce37566D03B41A7A66C782",
     "createdAt": 1656705593,
-    "network": "cronos"
+    "network": "cronos",
+    "removeLiquidityUrl": "https://vvs.finance/remove/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x39bC1e38c842C60775Ce37566D03B41A7A66C782"
   },
   {
     "id": "ripae-pcro-cro",
@@ -1313,7 +1481,10 @@
     "oracleId": "ripae-pcro-cro",
     "status": "active",
     "platformId": "ripae",
-    "assets": ["pCRO", "CRO"],
+    "assets": [
+      "pCRO",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1327,7 +1498,8 @@
     "buyTokenUrl": " https://mm.finance/swap?outputCurrency=0xA5e6a847f79BA19AAF41b8e1B2e6C4741234C6b7",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0xA5e6a847f79BA19AAF41b8e1B2e6C4741234C6b7",
     "createdAt": 1657602778,
-    "network": "cronos"
+    "network": "cronos",
+    "removeLiquidityUrl": "TBD"
   },
   {
     "id": "ripae-scro-cro",
@@ -1344,7 +1516,10 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "ripae",
-    "assets": ["sCRO", "CRO"],
+    "assets": [
+      "sCRO",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1357,7 +1532,8 @@
     "buyTokenUrl": " https://mm.finance/swap?outputCurrency=0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
     "createdAt": 1657602778,
-    "network": "cronos"
+    "network": "cronos",
+    "removeLiquidityUrl": "TBD"
   },
   {
     "id": "vvs-cro-fira",
@@ -1374,7 +1550,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "vvs",
-    "assets": ["FIRA", "CRO"],
+    "assets": [
+      "FIRA",
+      "CRO"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1387,7 +1566,8 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x7ABa852082b6F763E13010CA33B5D9Ea4EeE2983",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x7ABa852082b6F763E13010CA33B5D9Ea4EeE2983",
     "createdAt": 1662489253,
-    "network": "cronos"
+    "network": "cronos",
+    "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0x7ABa852082b6F763E13010CA33B5D9Ea4EeE2983"
   },
   {
     "id": "ferro-2fer",
@@ -1403,7 +1583,10 @@
     "oracleId": "ferro-2fer",
     "status": "active",
     "platformId": "ferro",
-    "assets": ["USDC", "USDT"],
+    "assets": [
+      "USDC",
+      "USDT"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1415,7 +1598,8 @@
     ],
     "addLiquidityUrl": "https://ferroprotocol.com/#/pools/2fer/deposit",
     "network": "cronos",
-    "createdAt": 1666984099
+    "createdAt": 1666984099,
+    "removeLiquidityUrl": "https://ferroprotocol.com/#/pools/2fer/withdraw"
   },
   {
     "id": "ferro-3fer",
@@ -1431,7 +1615,11 @@
     "oracleId": "ferro-3fer",
     "status": "active",
     "platformId": "ferro",
-    "assets": ["DAI", "USDC", "USDT"],
+    "assets": [
+      "DAI",
+      "USDC",
+      "USDT"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1443,6 +1631,7 @@
     ],
     "addLiquidityUrl": "https://ferroprotocol.com/#/pools/3fer/deposit",
     "network": "cronos",
-    "createdAt": 1666984098
+    "createdAt": 1666984098,
+    "removeLiquidityUrl": "https://ferroprotocol.com/#/pools/3fer/withdraw"
   }
 ]

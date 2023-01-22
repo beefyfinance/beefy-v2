@@ -13,7 +13,10 @@
     "oracleId": "yuzu-wrose-wbtc",
     "status": "active",
     "platformId": "yuzuswap",
-    "assets": ["WBTC", "ROSE"],
+    "assets": [
+      "WBTC",
+      "ROSE"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -26,7 +29,8 @@
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "createdAt": 1662707497,
-    "network": "emerald"
+    "network": "emerald",
+    "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818"
   },
   {
     "id": "yuzu-ceusdc-yuzu",
@@ -42,7 +46,10 @@
     "oracleId": "yuzu-ceusdc-yuzu",
     "status": "active",
     "platformId": "yuzuswap",
-    "assets": ["ceUSDC", "YUZU"],
+    "assets": [
+      "ceUSDC",
+      "YUZU"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -55,7 +62,8 @@
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c/0xf02b3e437304892105992512539F769423a515Cb",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "createdAt": 1652382925,
-    "network": "emerald"
+    "network": "emerald",
+    "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c/0xf02b3e437304892105992512539F769423a515Cb"
   },
   {
     "id": "yuzu-wrose-weth",
@@ -71,7 +79,10 @@
     "oracleId": "yuzu-wrose-weth",
     "status": "active",
     "platformId": "yuzuswap",
-    "assets": ["WETH", "ROSE"],
+    "assets": [
+      "WETH",
+      "ROSE"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -84,7 +95,8 @@
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x3223f17957Ba502cbe71401D55A0DB26E5F7c68F/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "createdAt": 1652382924,
-    "network": "emerald"
+    "network": "emerald",
+    "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x3223f17957Ba502cbe71401D55A0DB26E5F7c68F/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733"
   },
   {
     "id": "yuzu-usdt-yuzu",
@@ -100,7 +112,10 @@
     "oracleId": "yuzu-usdt-yuzu",
     "status": "active",
     "platformId": "yuzuswap",
-    "assets": ["USDT", "YUZU"],
+    "assets": [
+      "USDT",
+      "YUZU"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -113,7 +128,8 @@
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0xdC19A122e268128B5eE20366299fc7b5b199C8e3/0xf02b3e437304892105992512539F769423a515Cb",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "createdAt": 1652382923,
-    "network": "emerald"
+    "network": "emerald",
+    "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0xdC19A122e268128B5eE20366299fc7b5b199C8e3/0xf02b3e437304892105992512539F769423a515Cb"
   },
   {
     "id": "yuzu-wrose-yuzu",
@@ -129,7 +145,10 @@
     "oracleId": "yuzu-wrose-yuzu",
     "status": "active",
     "platformId": "yuzuswap",
-    "assets": ["YUZU", "ROSE"],
+    "assets": [
+      "YUZU",
+      "ROSE"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -142,7 +161,8 @@
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xf02b3e437304892105992512539F769423a515Cb",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "createdAt": 1652382922,
-    "network": "emerald"
+    "network": "emerald",
+    "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xf02b3e437304892105992512539F769423a515Cb"
   },
   {
     "id": "yuzu-wrose-usdt",
@@ -158,7 +178,10 @@
     "oracleId": "yuzu-wrose-usdt",
     "status": "active",
     "platformId": "yuzuswap",
-    "assets": ["USDT", "ROSE"],
+    "assets": [
+      "USDT",
+      "ROSE"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -171,7 +194,8 @@
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xdC19A122e268128B5eE20366299fc7b5b199C8e3",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "createdAt": 1652382921,
-    "network": "emerald"
+    "network": "emerald",
+    "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xdC19A122e268128B5eE20366299fc7b5b199C8e3"
   },
   {
     "id": "yuzu-ceusdc-usdt",
@@ -187,7 +211,10 @@
     "oracleId": "yuzu-ceusdc-usdt",
     "status": "active",
     "platformId": "yuzuswap",
-    "assets": ["ceUSDC", "USDT"],
+    "assets": [
+      "ceUSDC",
+      "USDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -200,7 +227,8 @@
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c/0xdC19A122e268128B5eE20366299fc7b5b199C8e3",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "createdAt": 1653320563,
-    "network": "emerald"
+    "network": "emerald",
+    "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c/0xdC19A122e268128B5eE20366299fc7b5b199C8e3"
   },
   {
     "id": "valley-usdt-vs-pause",
@@ -217,7 +245,10 @@
     "status": "eol",
     "retireReason": "default",
     "platformId": "valleyswap",
-    "assets": ["VS", "evoUSDT"],
+    "assets": [
+      "VS",
+      "evoUSDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -230,7 +261,8 @@
     "addLiquidityUrl": "https://dex.valleyswap.com/#/add/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B/0xBC033203796CC2C8C543a5aAe93a9a643320433D",
     "buyTokenUrl": "https://dex.valleyswap.com/#/swap?outputCurrency=0xBC033203796CC2C8C543a5aAe93a9a643320433D",
     "createdAt": 1653356245,
-    "network": "emerald"
+    "network": "emerald",
+    "removeLiquidityUrl": "https://dex.valleyswap.com/#/remove/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B/0xBC033203796CC2C8C543a5aAe93a9a643320433D"
   },
   {
     "id": "valley-usdt-usdc-pause",
@@ -247,7 +279,10 @@
     "status": "eol",
     "retireReason": "default",
     "platformId": "valleyswap",
-    "assets": ["evoUSDC", "evoUSDT"],
+    "assets": [
+      "evoUSDC",
+      "evoUSDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -260,7 +295,8 @@
     "addLiquidityUrl": "https://dex.valleyswap.com/#/add/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B/0x94fbfFe5698DB6f54d6Ca524DbE673a7729014Be",
     "buyTokenUrl": "https://dex.valleyswap.com/#/swap?outputCurrency=0x94fbfFe5698DB6f54d6Ca524DbE673a7729014Be",
     "createdAt": 1653001065,
-    "network": "emerald"
+    "network": "emerald",
+    "removeLiquidityUrl": "https://dex.valleyswap.com/#/remove/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B/0x94fbfFe5698DB6f54d6Ca524DbE673a7729014Be"
   },
   {
     "id": "valley-btc-usdt-pause",
@@ -277,7 +313,10 @@
     "status": "eol",
     "retireReason": "default",
     "platformId": "valleyswap",
-    "assets": ["evoBTC", "evoUSDT"],
+    "assets": [
+      "evoBTC",
+      "evoUSDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -290,6 +329,7 @@
     "addLiquidityUrl": "https://dex.valleyswap.com/#/add/0x010CDf0Db2737f9407F8CFcb4dCaECA4dE54c815/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B",
     "buyTokenUrl": "https://dex.valleyswap.com/#/swap?outputCurrency=0x010CDf0Db2737f9407F8CFcb4dCaECA4dE54c815",
     "createdAt": 1653071210,
-    "network": "emerald"
+    "network": "emerald",
+    "removeLiquidityUrl": "https://dex.valleyswap.com/#/remove/0x010CDf0Db2737f9407F8CFcb4dCaECA4dE54c815/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B"
   }
 ]

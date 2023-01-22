@@ -14,7 +14,9 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": ["BIFI"],
+    "assets": [
+      "BIFI"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -42,7 +44,10 @@
     "oracleId": "solarbeam-wstksm-xcksm",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": ["wstKSM", "xcKSM"],
+    "assets": [
+      "wstKSM",
+      "xcKSM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -55,7 +60,8 @@
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080&outputCurrency=0x3bfd113ad0329a7994a681236323fb16E16790e3",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080/0x3bfd113ad0329a7994a681236323fb16E16790e3",
     "network": "moonriver",
-    "createdAt": 1659826225
+    "createdAt": 1659826225,
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080/0x3bfd113ad0329a7994a681236323fb16E16790e3"
   },
   {
     "id": "solarbeam-xckbtc-wbtc",
@@ -71,7 +77,10 @@
     "oracleId": "solarbeam-xckbtc-wbtc",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": ["xcKBTC", "WBTC"],
+    "assets": [
+      "xcKBTC",
+      "WBTC"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -84,7 +93,8 @@
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?outputCurrency=0xFFFfFfFfF6E528AD57184579beeE00c5d5e646F0",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/stable-pool/add/kbtc-btc",
     "createdAt": 1658316244,
-    "network": "moonriver"
+    "network": "moonriver",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/stable-pool/remove/kbtc-btc"
   },
   {
     "id": "solarbeam-solar-wmovr",
@@ -100,7 +110,10 @@
     "oracleId": "solarbeam-solar-wmovr",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": ["SOLAR", "MOVR"],
+    "assets": [
+      "SOLAR",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -113,7 +126,8 @@
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
     "network": "moonriver",
-    "createdAt": 1635785910
+    "createdAt": 1635785910,
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B"
   },
   {
     "id": "solarbeam-wmovr-usdc",
@@ -129,7 +143,10 @@
     "oracleId": "solarbeam-wmovr-usdc",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": ["MOVR", "USDC"],
+    "assets": [
+      "MOVR",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -142,7 +159,8 @@
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
     "network": "moonriver",
-    "createdAt": 1635789990
+    "createdAt": 1635789990,
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D"
   },
   {
     "id": "movr-bifi-maxi",
@@ -157,7 +175,9 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": ["BIFI"],
+    "assets": [
+      "BIFI"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -185,7 +205,10 @@
     "oracleId": "solarbeam-wbtc-wmovr",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": ["WBTC", "MOVR"],
+    "assets": [
+      "WBTC",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -198,7 +221,8 @@
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
     "network": "moonriver",
-    "createdAt": 1637354148
+    "createdAt": 1637354148,
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8"
   },
   {
     "id": "solarbeam-eth-wmovr",
@@ -214,7 +238,10 @@
     "oracleId": "solarbeam-eth-wmovr",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": ["ETH", "MOVR"],
+    "assets": [
+      "ETH",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -227,7 +254,8 @@
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C",
     "network": "moonriver",
-    "createdAt": 1637355312
+    "createdAt": 1637355312,
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C"
   },
   {
     "id": "finn-wmovr-finn",
@@ -243,7 +271,10 @@
     "oracleId": "finn-wmovr-finn",
     "status": "active",
     "platformId": "huckleberry",
-    "assets": ["FINN", "MOVR"],
+    "assets": [
+      "FINN",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -256,7 +287,8 @@
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/MOVR/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "network": "moonriver",
-    "createdAt": 1637696994
+    "createdAt": 1637696994,
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/MOVR/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756"
   },
   {
     "id": "finn-wmovr-usdt",
@@ -273,7 +305,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "huckleberry",
-    "assets": ["MOVR", "USDT"],
+    "assets": [
+      "MOVR",
+      "USDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -286,7 +321,8 @@
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/MOVR/0xE936CAA7f6d9F5C9e907111FCAf7c351c184CDA7",
     "network": "moonriver",
-    "createdAt": 1637927226
+    "createdAt": 1637927226,
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/MOVR/0xE936CAA7f6d9F5C9e907111FCAf7c351c184CDA7"
   },
   {
     "id": "finn-eth-wmovr",
@@ -303,7 +339,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "huckleberry",
-    "assets": ["ETH", "MOVR"],
+    "assets": [
+      "ETH",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -316,7 +355,8 @@
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/MOVR/0x576fDe3f61B7c97e381c94e7A03DBc2e08Af1111",
     "network": "moonriver",
-    "createdAt": 1637925168
+    "createdAt": 1637925168,
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/MOVR/0x576fDe3f61B7c97e381c94e7A03DBc2e08Af1111"
   },
   {
     "id": "finn-usdc-usdt",
@@ -332,7 +372,10 @@
     "oracleId": "finn-usdc-usdt",
     "status": "active",
     "platformId": "huckleberry",
-    "assets": ["USDC", "USDT"],
+    "assets": [
+      "USDC",
+      "USDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -345,7 +388,8 @@
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x748134b5F553F2bcBD78c6826De99a70274bDEb3/0xE936CAA7f6d9F5C9e907111FCAf7c351c184CDA7",
     "network": "moonriver",
-    "createdAt": 1637927952
+    "createdAt": 1637927952,
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/0x748134b5F553F2bcBD78c6826De99a70274bDEb3/0xE936CAA7f6d9F5C9e907111FCAf7c351c184CDA7"
   },
   {
     "id": "solarbeam-solar-rib-eol",
@@ -361,7 +405,10 @@
     "oracleId": "solarbeam-solar-rib",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["RIB", "SOLAR"],
+    "assets": [
+      "RIB",
+      "SOLAR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -375,7 +422,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0xbD90A6125a84E5C512129D622a75CDDE176aDE5E/0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
     "network": "moonriver",
     "retireReason": "rewards",
-    "createdAt": 1635787854
+    "createdAt": 1635787854,
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/0xbD90A6125a84E5C512129D622a75CDDE176aDE5E/0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B"
   },
   {
     "id": "finn-finn-eol",
@@ -390,7 +438,9 @@
     "oracleId": "FINN",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": ["FINN"],
+    "assets": [
+      "FINN"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -419,7 +469,10 @@
     "oracleId": "finn-eth-finn",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": ["ETH", "FINN"],
+    "assets": [
+      "ETH",
+      "FINN"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -433,7 +486,8 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x576fDe3f61B7c97e381c94e7A03DBc2e08Af1111/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "network": "moonriver",
     "retireReason": "rewards",
-    "createdAt": 1638051900
+    "createdAt": 1638051900,
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/0x576fDe3f61B7c97e381c94e7A03DBc2e08Af1111/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756"
   },
   {
     "id": "finn-wan-finn-eol",
@@ -449,7 +503,10 @@
     "oracleId": "finn-wan-finn",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": ["WAN", "FINN"],
+    "assets": [
+      "WAN",
+      "FINN"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -463,7 +520,8 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x41562ae242d194247389152aCAa7a9397136b09F/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "network": "moonriver",
     "retireReason": "rewards",
-    "createdAt": 1638052494
+    "createdAt": 1638052494,
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/0x41562ae242d194247389152aCAa7a9397136b09F/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756"
   },
   {
     "id": "sushi-mr-frax-usdc",
@@ -479,7 +537,10 @@
     "oracleId": "sushi-mr-frax-usdc",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["FRAX", "USDC"],
+    "assets": [
+      "FRAX",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -490,10 +551,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x1A93B23281CC1CDE4C4741353F3064709A16197d/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
+    "addLiquidityUrl": "https://www.sushi.com/earn/mriver:0x310c4d18640af4878567c4a31cb9cbde7cd234a3/add",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
     "network": "moonriver",
-    "createdAt": 1639688184
+    "createdAt": 1639688184,
+    "removeLiquidityUrl": "https://www.sushi.com/earn/mriver:0x310c4d18640af4878567c4a31cb9cbde7cd234a3/remove"
   },
   {
     "id": "sushi-mr-eth-wmovr",
@@ -509,7 +571,10 @@
     "oracleId": "sushi-mr-eth-wmovr",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["ETH", "WMOVR_SUSHI"],
+    "assets": [
+      "ETH",
+      "WMOVR_SUSHI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -519,10 +584,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x639a647fbe20b6c8ac19e48e2de44ea792c62c5c/0xf50225a84382c74CbdeA10b0c176f71fc3DE0C4d",
+    "addLiquidityUrl": "https://www.sushi.com/earn/mriver:0xd4ce5671b842573eda99164971afaa034245f4d8/add",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0xf50225a84382c74CbdeA10b0c176f71fc3DE0C4d",
     "network": "moonriver",
-    "createdAt": 1639689876
+    "createdAt": 1639689876,
+    "removeLiquidityUrl": "https://www.sushi.com/earn/mriver:0xd4ce5671b842573eda99164971afaa034245f4d8/remove"
   },
   {
     "id": "sushi-mr-usdt-usdc",
@@ -538,7 +604,10 @@
     "oracleId": "sushi-mr-usdt-usdc",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["USDT", "USDC"],
+    "assets": [
+      "USDT",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -548,10 +617,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0xB44a9B6905aF7c801311e8F4E76932ee959c663C/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
+    "addLiquidityUrl": "https://www.sushi.com/earn/mriver:0x930b0464411de2296e3fd3eee30ab989f635645e/add",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
     "network": "moonriver",
-    "createdAt": 1639690914
+    "createdAt": 1639690914,
+    "removeLiquidityUrl": "https://www.sushi.com/earn/mriver:0x930b0464411de2296e3fd3eee30ab989f635645e/remove"
   },
   {
     "id": "finn-finn-doge-eol",
@@ -567,7 +637,10 @@
     "oracleId": "finn-finn-doge",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": ["DOGE", "FINN"],
+    "assets": [
+      "DOGE",
+      "FINN"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -581,7 +654,8 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0xb668Cd490a4421F993f93be2819A922DBbB32804/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "network": "moonriver",
     "retireReason": "rewards",
-    "createdAt": 1638053202
+    "createdAt": 1638053202,
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/0xb668Cd490a4421F993f93be2819A922DBbB32804/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756"
   },
   {
     "id": "solarbeam-solar-eol",
@@ -596,7 +670,9 @@
     "oracleId": "SOLAR",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["SOLAR"],
+    "assets": [
+      "SOLAR"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -625,7 +701,10 @@
     "oracleId": "finn-usdc.m-usdc",
     "status": "active",
     "platformId": "huckleberry",
-    "assets": ["USDC", "USDCm"],
+    "assets": [
+      "USDC",
+      "USDCm"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -638,7 +717,8 @@
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x748134b5F553F2bcBD78c6826De99a70274bDEb3",
     "createdAt": 1645031166,
-    "network": "moonriver"
+    "network": "moonriver",
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x748134b5F553F2bcBD78c6826De99a70274bDEb3"
   },
   {
     "id": "sushi-mr-mim-wmovr-eol",
@@ -654,7 +734,10 @@
     "oracleId": "sushi-mr-mim-wmovr",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": ["MIM", "WMOVR_SUSHI"],
+    "assets": [
+      "MIM",
+      "WMOVR_SUSHI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -665,11 +748,12 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x0caE51e1032e8461f4806e26332c030E34De3aDb/0xf50225a84382c74CbdeA10b0c176f71fc3DE0C4d",
+    "addLiquidityUrl": "https://www.sushi.com/earn/mriver:0x6dc6d33331e9d5deef449c8cab9e34d687bea80e/add",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0xf50225a84382c74CbdeA10b0c176f71fc3DE0C4d",
     "createdAt": 1639683150,
     "network": "moonriver",
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/mriver:0x6dc6d33331e9d5deef449c8cab9e34d687bea80e/remove"
   },
   {
     "id": "sushi-mr-eth-bnb-eol",
@@ -685,7 +769,10 @@
     "oracleId": "sushi-mr-eth-bnb",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": ["ETH", "BNBbsc"],
+    "assets": [
+      "ETH",
+      "BNBbsc"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -695,11 +782,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C/0x868892CCcEdbfF0B028F3b3595205Ea91b99376B",
+    "addLiquidityUrl": "https://www.sushi.com/earn/mriver:0x69b4fbd8c8cf74720a62a5e92e2528c3f895ce10/add",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0x868892CCcEdbfF0B028F3b3595205Ea91b99376B",
     "createdAt": 1640141208,
     "network": "moonriver",
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/mriver:0x69b4fbd8c8cf74720a62a5e92e2528c3f895ce10/remove"
   },
   {
     "id": "solarbeam-frax-rome-eol",
@@ -715,7 +803,10 @@
     "oracleId": "solarbeam-frax-rome",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["ROME", "FRAX"],
+    "assets": [
+      "ROME",
+      "FRAX"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -729,7 +820,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0x1A93B23281CC1CDE4C4741353F3064709A16197d/0x4a436073552044D5f2f49B176853ad3Ad473d9d6",
     "createdAt": 1639145934,
     "network": "moonriver",
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/0x1A93B23281CC1CDE4C4741353F3064709A16197d/0x4a436073552044D5f2f49B176853ad3Ad473d9d6"
   },
   {
     "id": "finn-wbtc-wmovr-eol",
@@ -745,7 +837,10 @@
     "oracleId": "finn-wbtc-wmovr",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": ["WBTC", "MOVR"],
+    "assets": [
+      "WBTC",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -759,7 +854,8 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/MOVR/0x78F811A431D248c1EDcF6d95ec8551879B2897C3",
     "createdAt": 1638046680,
     "network": "moonriver",
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/MOVR/0x78F811A431D248c1EDcF6d95ec8551879B2897C3"
   },
   {
     "id": "finn-wan-wmovr-eol",
@@ -775,7 +871,10 @@
     "oracleId": "finn-wan-wmovr",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": ["WAN", "MOVR"],
+    "assets": [
+      "WAN",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -789,7 +888,8 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/MOVR/0x41562ae242d194247389152aCAa7a9397136b09F",
     "createdAt": 1637920962,
     "network": "moonriver",
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/MOVR/0x41562ae242d194247389152aCAa7a9397136b09F"
   },
   {
     "id": "finn-finn-usdt-eol",
@@ -805,7 +905,10 @@
     "oracleId": "finn-finn-usdt",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": ["FINN", "USDT"],
+    "assets": [
+      "FINN",
+      "USDT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -819,7 +922,8 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0xE936CAA7f6d9F5C9e907111FCAf7c351c184CDA7/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "createdAt": 1638049728,
     "network": "moonriver",
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/0xE936CAA7f6d9F5C9e907111FCAf7c351c184CDA7/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756"
   },
   {
     "id": "finn-finn-avax-eol",
@@ -835,7 +939,10 @@
     "oracleId": "finn-finn-avax",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": ["AVAX", "FINN"],
+    "assets": [
+      "AVAX",
+      "FINN"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -849,7 +956,8 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0xc005A7A1502c9DE16CCDaBA7CDA0cee4Ac304993/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "createdAt": 1638048906,
     "network": "moonriver",
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/0xc005A7A1502c9DE16CCDaBA7CDA0cee4Ac304993/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756"
   },
   {
     "id": "finn-finn-xrp-eol",
@@ -865,7 +973,10 @@
     "oracleId": "finn-finn-xrp",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": ["XRP", "FINN"],
+    "assets": [
+      "XRP",
+      "FINN"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -879,7 +990,8 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x9D5bc9B873AeD984e2B6A64d4792249D68BbA2Fe/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "createdAt": 1638048018,
     "network": "moonriver",
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/0x9D5bc9B873AeD984e2B6A64d4792249D68BbA2Fe/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756"
   },
   {
     "id": "solarbeam-matic-wmovr-eol",
@@ -895,7 +1007,10 @@
     "oracleId": "solarbeam-matic-wmovr",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["MATIC", "MOVR"],
+    "assets": [
+      "MATIC",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -909,7 +1024,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x682F81e57EAa716504090C3ECBa8595fB54561D8",
     "createdAt": 1635802614,
     "network": "moonriver",
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0x682F81e57EAa716504090C3ECBa8595fB54561D8"
   },
   {
     "id": "solarbeam-wmovr-rib-eol",
@@ -925,7 +1041,10 @@
     "oracleId": "solarbeam-wmovr-rib",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["RIB", "MOVR"],
+    "assets": [
+      "RIB",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -939,7 +1058,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0xbD90A6125a84E5C512129D622a75CDDE176aDE5E",
     "createdAt": 1635789006,
     "network": "moonriver",
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0xbD90A6125a84E5C512129D622a75CDDE176aDE5E"
   },
   {
     "id": "solarbeam-wmovr-relay-eol",
@@ -955,7 +1075,10 @@
     "oracleId": "solarbeam-wmovr-relay",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["RELAY", "MOVR"],
+    "assets": [
+      "RELAY",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -969,7 +1092,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0xAd7F1844696652ddA7959a49063BfFccafafEfe7",
     "createdAt": 1635803946,
     "network": "moonriver",
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0xAd7F1844696652ddA7959a49063BfFccafafEfe7"
   },
   {
     "id": "solarbeam-pets-wmovr-eol",
@@ -985,7 +1109,10 @@
     "oracleId": "solarbeam-pets-wmovr",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["PETS", "MOVR"],
+    "assets": [
+      "PETS",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -999,7 +1126,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x1e0F2A75Be02c025Bd84177765F89200c04337Da",
     "createdAt": 1635808950,
     "network": "moonriver",
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0x1e0F2A75Be02c025Bd84177765F89200c04337Da"
   },
   {
     "id": "solarbeam-busd-usdc-eol",
@@ -1015,7 +1143,10 @@
     "oracleId": "solarbeam-busd-usdc",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["BUSD", "USDC"],
+    "assets": [
+      "BUSD",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1029,7 +1160,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818",
     "network": "moonriver",
     "createdAt": 1635794010,
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818"
   },
   {
     "id": "finn-dot-finn-eol",
@@ -1045,7 +1177,10 @@
     "oracleId": "finn-dot-finn",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": ["FINN", "DOT"],
+    "assets": [
+      "FINN",
+      "DOT"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1059,7 +1194,8 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x15B9CA9659F5dfF2b7d35a98dd0790a3CBb3D445/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "network": "moonriver",
     "createdAt": 1637699676,
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/0x15B9CA9659F5dfF2b7d35a98dd0790a3CBb3D445/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756"
   },
   {
     "id": "solarbeam-mim-wmovr-eol",
@@ -1075,7 +1211,10 @@
     "oracleId": "solarbeam-mim-wmovr",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["MIM", "MOVR"],
+    "assets": [
+      "MIM",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1090,7 +1229,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x0caE51e1032e8461f4806e26332c030E34De3aDb",
     "network": "moonriver",
     "createdAt": 1639473600,
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0x0caE51e1032e8461f4806e26332c030E34De3aDb"
   },
   {
     "id": "solarbeam-wmovr-mai-eol",
@@ -1106,7 +1246,10 @@
     "oracleId": "solarbeam-wmovr-mai",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["MAI", "MOVR"],
+    "assets": [
+      "MAI",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1121,7 +1264,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0xFb2019DfD635a03cfFF624D210AEe6AF2B00fC2C",
     "network": "moonriver",
     "createdAt": 1639152684,
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0xFb2019DfD635a03cfFF624D210AEe6AF2B00fC2C"
   },
   {
     "id": "solarbeam-mim-usdc-eol",
@@ -1137,7 +1281,10 @@
     "oracleId": "solarbeam-mim-usdc",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["MIM", "USDC"],
+    "assets": [
+      "MIM",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1152,7 +1299,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x0caE51e1032e8461f4806e26332c030E34De3aDb",
     "network": "moonriver",
     "createdAt": 1635807474,
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x0caE51e1032e8461f4806e26332c030E34De3aDb"
   },
   {
     "id": "solarbeam-bnb-busd-eol",
@@ -1168,7 +1316,10 @@
     "oracleId": "solarbeam-bnb-busd",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["BNB", "BUSD"],
+    "assets": [
+      "BNB",
+      "BUSD"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1182,7 +1333,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c/0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818",
     "network": "moonriver",
     "createdAt": 1635799506,
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c/0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818"
   },
   {
     "id": "solarbeam-avax-wmovr-eol",
@@ -1198,7 +1350,10 @@
     "oracleId": "solarbeam-avax-wmovr",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["AVAX", "MOVR"],
+    "assets": [
+      "AVAX",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1212,7 +1367,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x14a0243C333A5b238143068dC3A7323Ba4C30ECB",
     "network": "moonriver",
     "createdAt": 1635803316,
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0x14a0243C333A5b238143068dC3A7323Ba4C30ECB"
   },
   {
     "id": "finn-finn-xcrmrk-eol",
@@ -1228,7 +1384,10 @@
     "oracleId": "finn-finn-xcrmrk",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": ["xcRMRK", "FINN"],
+    "assets": [
+      "xcRMRK",
+      "FINN"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1242,7 +1401,8 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756/0xffffffFF893264794d9d57E1E0E21E0042aF5A0A",
     "network": "moonriver",
     "createdAt": 1643391756,
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756/0xffffffFF893264794d9d57E1E0E21E0042aF5A0A"
   },
   {
     "id": "finn-finn-xcksm-eol",
@@ -1258,7 +1418,10 @@
     "oracleId": "finn-finn-xcksm",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": ["xcKSM", "FINN"],
+    "assets": [
+      "xcKSM",
+      "FINN"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1272,7 +1435,8 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
     "network": "moonriver",
     "createdAt": 1643391960,
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080"
   },
   {
     "id": "finn-usdc.m-wmovr-eol",
@@ -1288,7 +1452,10 @@
     "oracleId": "finn-usdc.m-wmovr",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": ["USDC", "MOVR"],
+    "assets": [
+      "USDC",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1302,7 +1469,8 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/MOVR/0x748134b5F553F2bcBD78c6826De99a70274bDEb3",
     "network": "moonriver",
     "createdAt": 1643392728,
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/MOVR/0x748134b5F553F2bcBD78c6826De99a70274bDEb3"
   },
   {
     "id": "finn-usdc-finn-eol",
@@ -1318,7 +1486,10 @@
     "oracleId": "finn-usdc-finn",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": ["FINN", "USDC"],
+    "assets": [
+      "FINN",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1332,7 +1503,8 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x748134b5F553F2bcBD78c6826De99a70274bDEb3/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "network": "moonriver",
     "createdAt": 1637698536,
-    "retireReason": "tvl"
+    "retireReason": "tvl",
+    "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/0x748134b5F553F2bcBD78c6826De99a70274bDEb3/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756"
   },
   {
     "id": "solarbeam-frax-3pool",
@@ -1348,7 +1520,12 @@
     "oracleId": "solarbeam-frax-3pool",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": ["FRAX", "USDC", "BUSD", "USDT"],
+    "assets": [
+      "FRAX",
+      "USDC",
+      "BUSD",
+      "USDT"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1362,7 +1539,8 @@
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/stable-pool/add/frax-3pool",
     "createdAt": 1651221200,
-    "network": "moonriver"
+    "network": "moonriver",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/stable-pool/remove/frax-3pool"
   },
   {
     "id": "solarbeam-xcksm-stksm",
@@ -1379,7 +1557,10 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "solarbeam",
-    "assets": ["xcKSM", "stKSM"],
+    "assets": [
+      "xcKSM",
+      "stKSM"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1392,7 +1573,8 @@
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?outputCurrency=0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/stable-pool/add/stksm",
     "createdAt": 1651221199,
-    "network": "moonriver"
+    "network": "moonriver",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/stable-pool/remove/stksm"
   },
   {
     "id": "solarbeam-wmovr-xcksm",
@@ -1408,7 +1590,10 @@
     "oracleId": "solarbeam-wmovr-xcksm",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": ["xcKSM", "MOVR"],
+    "assets": [
+      "xcKSM",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1421,7 +1606,8 @@
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?outputCurrency=0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
     "createdAt": 1651221198,
-    "network": "moonriver"
+    "network": "moonriver",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080"
   },
   {
     "id": "solarbeam-3pool",
@@ -1437,7 +1623,11 @@
     "oracleId": "solarbeam-3pool",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": ["USDC", "BUSD", "USDT"],
+    "assets": [
+      "USDC",
+      "BUSD",
+      "USDT"
+    ],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1450,7 +1640,8 @@
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/stable-pool/add/3pool",
     "createdAt": 1651221197,
-    "network": "moonriver"
+    "network": "moonriver",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/stable-pool/remove/3pool"
   },
   {
     "id": "solarbeam-frax-wmovr-2-eol",
@@ -1466,7 +1657,10 @@
     "oracleId": "solarbeam-frax-wmovr-2",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["FRAX", "MOVR"],
+    "assets": [
+      "FRAX",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1480,7 +1674,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x1A93B23281CC1CDE4C4741353F3064709A16197d",
     "network": "moonriver",
     "createdAt": 1637358282,
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0x1A93B23281CC1CDE4C4741353F3064709A16197d"
   },
   {
     "id": "solarbeam-bnb-wmovr-eol",
@@ -1496,7 +1691,10 @@
     "oracleId": "solarbeam-bnb-wmovr",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["BNB", "MOVR"],
+    "assets": [
+      "BNB",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1510,7 +1708,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c",
     "network": "moonriver",
     "createdAt": 1637701380,
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c"
   },
   {
     "id": "solarbeam-solar-usdc-eol",
@@ -1526,7 +1725,10 @@
     "oracleId": "solarbeam-solar-usdc",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["SOLAR", "USDC"],
+    "assets": [
+      "SOLAR",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1540,7 +1742,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
     "network": "moonriver",
     "createdAt": 1635791490,
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B"
   },
   {
     "id": "solarbeam-eth-usdc-eol",
@@ -1556,7 +1759,10 @@
     "oracleId": "solarbeam-eth-usdc",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["ETH", "USDC"],
+    "assets": [
+      "ETH",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1570,7 +1776,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C",
     "network": "moonriver",
     "createdAt": 1635794634,
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C"
   },
   {
     "id": "solarbeam-wbtc-usdc-eol",
@@ -1586,7 +1793,10 @@
     "oracleId": "solarbeam-wbtc-usdc",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["WBTC", "USDC"],
+    "assets": [
+      "WBTC",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1600,7 +1810,8 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
     "network": "moonriver",
     "createdAt": 1635800359,
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D"
   },
   {
     "id": "solarbeam-wmovr-ftm-eol",
@@ -1616,7 +1827,10 @@
     "oracleId": "solarbeam-wmovr-ftm",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": ["FTM", "MOVR"],
+    "assets": [
+      "FTM",
+      "MOVR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1630,6 +1844,7 @@
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0xaD12daB5959f30b9fF3c2d6709f53C335dC39908",
     "network": "moonriver",
     "createdAt": 1635806046,
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0xaD12daB5959f30b9fF3c2d6709f53C335dC39908"
   }
 ]

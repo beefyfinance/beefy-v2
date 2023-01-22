@@ -14,7 +14,9 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": ["BIFI"],
+    "assets": [
+      "BIFI"
+    ],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -41,7 +43,9 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": ["BIFI"],
+    "assets": [
+      "BIFI"
+    ],
     "strategyTypeId": "maxi",
     "risks": [
       "COMPLEXITY_LOW",
@@ -70,7 +74,10 @@
     "status": "eol",
     "platformId": "sushiswap",
     "retireReason": "rewards",
-    "assets": ["USDT", "WETH"],
+    "assets": [
+      "USDT",
+      "WETH"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -80,10 +87,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x122013fd7dF1C6F636a5bb8f03108E876548b455/0x88eeC49252c8cbc039DCdB394c0c2BA2f1637EA0",
+    "addLiquidityUrl": "https://www.sushi.com/earn/celo:0xc77398cfb7b0f7ab42bafc02abc20a69ce8cef7f/add",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x122013fd7dF1C6F636a5bb8f03108E876548b455a&outputCurrency=0x88eeC49252c8cbc039DCdB394c0c2BA2f1637EA0",
     "network": "celo",
-    "createdAt": 1641132354
+    "createdAt": 1641132354,
+    "removeLiquidityUrl": "https://www.sushi.com/earn/celo:0xc77398cfb7b0f7ab42bafc02abc20a69ce8cef7f/remove"
   },
   {
     "id": "sushi-celo-weth-daiv2",
@@ -100,7 +108,10 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "sushiswap",
-    "assets": ["DAI", "WETH"],
+    "assets": [
+      "DAI",
+      "WETH"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -111,10 +122,11 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x122013fd7dF1C6F636a5bb8f03108E876548b455/0xE4fE50cdD716522A56204352f00AA110F731932d",
+    "addLiquidityUrl": "https://www.sushi.com/earn/celo:0xccd9d850ef40f19566cd8df950765e9a1a0b9ef2/add",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x122013fd7dF1C6F636a5bb8f03108E876548b455a&outputCurrency=0xE4fE50cdD716522A56204352f00AA110F731932d",
     "network": "celo",
-    "createdAt": 1641132429
+    "createdAt": 1641132429,
+    "removeLiquidityUrl": "https://www.sushi.com/earn/celo:0xccd9d850ef40f19566cd8df950765e9a1a0b9ef2/remove"
   },
   {
     "id": "sushi-celo-cusd-usdc",
@@ -130,7 +142,10 @@
     "oracleId": "sushi-celo-cusd-usdc",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["cUSD", "USDC"],
+    "assets": [
+      "cUSD",
+      "USDC"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -140,10 +155,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x765DE816845861e75A25fCA122bb6898B8B1282a/0xef4229c8c3250C675F21BCefa42f58EfbfF6002a",
+    "addLiquidityUrl": "https://www.sushi.com/earn/celo:0xa364ede5590b46e618527d7535506743d978bbf2/add",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x765DE816845861e75A25fCA122bb6898B8B1282a&outputCurrency=0xef4229c8c3250C675F21BCefa42f58EfbfF6002a",
     "network": "celo",
-    "createdAt": 1641129424
+    "createdAt": 1641129424,
+    "removeLiquidityUrl": "https://www.sushi.com/earn/celo:0xa364ede5590b46e618527d7535506743d978bbf2/remove"
   },
   {
     "id": "sushi-celo-wethv2-celo",
@@ -159,7 +175,10 @@
     "oracleId": "sushi-celo-wethv2-celo",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["CELO", "WETH"],
+    "assets": [
+      "CELO",
+      "WETH"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -169,10 +188,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x471EcE3750Da237f93B8E339c536989b8978a438/0x122013fd7dF1C6F636a5bb8f03108E876548b455",
+    "addLiquidityUrl": "https://www.sushi.com/earn/celo:0x517f717f0ae11efc2af8943071b66d77dfafc9fc/add",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x471EcE3750Da237f93B8E339c536989b8978a438&outputCurrency=0x122013fd7dF1C6F636a5bb8f03108E876548b455",
     "network": "celo",
-    "createdAt": 1641132564
+    "createdAt": 1641132564,
+    "removeLiquidityUrl": "https://www.sushi.com/earn/celo:0x517f717f0ae11efc2af8943071b66d77dfafc9fc/remove"
   },
   {
     "id": "sushi-celo-wethv2-cusd",
@@ -188,7 +208,10 @@
     "oracleId": "sushi-celo-wethv2-cusd",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["cUSD", "WETH"],
+    "assets": [
+      "cUSD",
+      "WETH"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -198,10 +221,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x765DE816845861e75A25fCA122bb6898B8B1282a/0x122013fd7dF1C6F636a5bb8f03108E876548b455",
+    "addLiquidityUrl": "https://www.sushi.com/earn/celo:0x93887e0fa9f6c375b2765a6fe885593f16f077f9/add",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x765DE816845861e75A25fCA122bb6898B8B1282a&outputCurrency=0x122013fd7dF1C6F636a5bb8f03108E876548b455",
     "network": "celo",
-    "createdAt": 1641132539
+    "createdAt": 1641132539,
+    "removeLiquidityUrl": "https://www.sushi.com/earn/celo:0x93887e0fa9f6c375b2765a6fe885593f16f077f9/remove"
   },
   {
     "id": "sushi-celo-cusd-ceurv2",
@@ -217,7 +241,10 @@
     "oracleId": "sushi-celo-cusd-ceurv2",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": ["cUSD", "cEUR"],
+    "assets": [
+      "cUSD",
+      "cEUR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -227,10 +254,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x765DE816845861e75A25fCA122bb6898B8B1282a/0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+    "addLiquidityUrl": "https://www.sushi.com/earn/celo:0x0b655e7d966cb27998af94aa5719ab7bfe07d3b3/add",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x765DE816845861e75A25fCA122bb6898B8B1282a&outputCurrency=0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
     "network": "celo",
-    "createdAt": 1641132464
+    "createdAt": 1641132464,
+    "removeLiquidityUrl": "https://www.sushi.com/earn/celo:0x0b655e7d966cb27998af94aa5719ab7bfe07d3b3/remove"
   },
   {
     "id": "sushi-celo-celo-weth-eol",
@@ -246,7 +274,10 @@
     "oracleId": "sushi-celo-celo-weth",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": ["CELO", "WETH"],
+    "assets": [
+      "CELO",
+      "WETH"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -256,11 +287,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x471EcE3750Da237f93B8E339c536989b8978a438/0xE919F65739c26a42616b7b8eedC6b5524d1e3aC4",
+    "addLiquidityUrl": "https://www.sushi.com/earn/celo:0x38f3c44552a3f6e4d21c8c328ce4904da766d12f/add",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x471EcE3750Da237f93B8E339c536989b8978a438&outputCurrency=0xE919F65739c26a42616b7b8eedC6b5524d1e3aC4",
     "network": "celo",
     "retireReason": "rewards",
-    "createdAt": 1635168273
+    "createdAt": 1635168273,
+    "removeLiquidityUrl": "https://www.sushi.com/earn/celo:0x38f3c44552a3f6e4d21c8c328ce4904da766d12f/remove"
   },
   {
     "id": "sushi-celo-cusd-dai-eol",
@@ -276,7 +308,10 @@
     "oracleId": "sushi-celo-cusd-dai",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": ["cUSD", "DAI"],
+    "assets": [
+      "cUSD",
+      "DAI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -287,11 +322,12 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x765DE816845861e75A25fCA122bb6898B8B1282a/0xE4fE50cdD716522A56204352f00AA110F731932d",
+    "addLiquidityUrl": "https://www.sushi.com/earn/celo:0x850197dd5a4865324291d7b5745622a8cd732bcb/add",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x471EcE3750Da237f93B8E339c536989b8978a438&outputCurrency=0xE4fE50cdD716522A56204352f00AA110F731932d",
     "network": "celo",
     "retireReason": "rewards",
-    "createdAt": 1635168343
+    "createdAt": 1635168343,
+    "removeLiquidityUrl": "https://www.sushi.com/earn/celo:0x850197dd5a4865324291d7b5745622a8cd732bcb/remove"
   },
   {
     "id": "sushi-celo-ceur-weth-eol",
@@ -307,7 +343,10 @@
     "oracleId": "sushi-celo-ceur-weth",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": ["cEUR", "WETH"],
+    "assets": [
+      "cEUR",
+      "WETH"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -317,11 +356,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73/0xE919F65739c26a42616b7b8eedC6b5524d1e3aC4",
+    "addLiquidityUrl": "https://www.sushi.com/earn/celo:0xfed4f77af916b62cb073ad7ad2b2c1794c939023/add",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73&outputCurrency=0xE919F65739c26a42616b7b8eedC6b5524d1e3aC4",
     "network": "celo",
     "retireReason": "rewards",
-    "createdAt": 1635168398
+    "createdAt": 1635168398,
+    "removeLiquidityUrl": "https://www.sushi.com/earn/celo:0xfed4f77af916b62cb073ad7ad2b2c1794c939023/remove"
   },
   {
     "id": "sushi-celo-cusd-ceur-eol",
@@ -337,7 +377,10 @@
     "oracleId": "sushi-celo-cusd-ceur",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": ["cUSD", "cEUR"],
+    "assets": [
+      "cUSD",
+      "cEUR"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -347,11 +390,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x765DE816845861e75A25fCA122bb6898B8B1282a/0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+    "addLiquidityUrl": "https://www.sushi.com/earn/celo:0x0b655e7d966cb27998af94aa5719ab7bfe07d3b3/add",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x765DE816845861e75A25fCA122bb6898B8B1282a&outputCurrency=0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
     "network": "celo",
     "retireReason": "rewards",
-    "createdAt": 1635168488
+    "createdAt": 1635168488,
+    "removeLiquidityUrl": "https://www.sushi.com/earn/celo:0x0b655e7d966cb27998af94aa5719ab7bfe07d3b3/remove"
   },
   {
     "id": "sushi-celo-celo-mobi-eol",
@@ -367,7 +411,10 @@
     "oracleId": "sushi-celo-celo-mobi",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": ["CELO", "MOBI"],
+    "assets": [
+      "CELO",
+      "MOBI"
+    ],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -377,10 +424,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x471EcE3750Da237f93B8E339c536989b8978a438/0x73a210637f6F6B7005512677Ba6B3C96bb4AA44B",
+    "addLiquidityUrl": "https://www.sushi.com/earn/celo:0x8ecded81a2abf3b7e724978060739edbeb01b24f/add",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x471EcE3750Da237f93B8E339c536989b8978a438&outputCurrency=0x73a210637f6F6B7005512677Ba6B3C96bb4AA44B",
     "network": "celo",
     "createdAt": 1641132389,
-    "retireReason": "rewards"
+    "retireReason": "rewards",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/celo:0x8ecded81a2abf3b7e724978060739edbeb01b24f/remove"
   }
 ]
