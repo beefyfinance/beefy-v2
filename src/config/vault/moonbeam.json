@@ -13,10 +13,7 @@
     "oracleId": "beamswap-wstdot-xcdot",
     "status": "active",
     "platformId": "beamswap",
-    "assets": [
-      "wstDOT",
-      "xcDOT"
-    ],
+    "assets": ["wstDOT", "xcDOT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -46,10 +43,7 @@
     "oracleId": "stellaswap-mai4pool",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": [
-      "stella4pool",
-      "MAI"
-    ],
+    "assets": ["stella4pool", "MAI"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -79,10 +73,7 @@
     "oracleId": "stellaswap-wstdot-xcdot",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": [
-      "wstDOT",
-      "xcDOT"
-    ],
+    "assets": ["wstDOT", "xcDOT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -112,12 +103,7 @@
     "oracleId": "stellaswap-4pool",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": [
-      "USDCwh",
-      "USDTxc",
-      "BUSDwh",
-      "FRAX"
-    ],
+    "assets": ["USDCwh", "USDTxc", "BUSDwh", "FRAX"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -148,10 +134,7 @@
     "oracleId": "stellaswap-wbtcwh-wglmr",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": [
-      "WBTCwh",
-      "GLMR"
-    ],
+    "assets": ["WBTCwh", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -181,10 +164,7 @@
     "oracleId": "stellaswap-ethwh-wglmr",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": [
-      "ETHwh",
-      "GLMR"
-    ],
+    "assets": ["ETHwh", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -214,10 +194,7 @@
     "oracleId": "stellaswap-usdcwh-wglmr",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": [
-      "USDCwh",
-      "GLMR"
-    ],
+    "assets": ["USDCwh", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -248,10 +225,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": [
-      "POOP",
-      "GLMR"
-    ],
+    "assets": ["POOP", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -282,10 +256,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "stellaswap",
-    "assets": [
-      "xcINTR",
-      "GLMR"
-    ],
+    "assets": ["xcINTR", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -315,10 +286,7 @@
     "oracleId": "stellaswap-wglmr-xcibtc",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": [
-      "xciBTC",
-      "GLMR"
-    ],
+    "assets": ["xciBTC", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -349,10 +317,7 @@
     "oracleId": "stellaswap-wglmr-xcausd",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": [
-      "xcaUSD",
-      "GLMR"
-    ],
+    "assets": ["xcaUSD", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -385,9 +350,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -416,10 +379,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": [
-      "FRAX",
-      "GLMR"
-    ],
+    "assets": ["FRAX", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -451,10 +411,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": [
-      "MAI",
-      "GLMR"
-    ],
+    "assets": ["MAI", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -485,10 +442,7 @@
     "oracleId": "curve-moonbeam-f-stdot",
     "status": "active",
     "platformId": "curve",
-    "assets": [
-      "stDOT",
-      "xcDOT"
-    ],
+    "assets": ["stDOT", "xcDOT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -517,10 +471,7 @@
     "oracleId": "stellaswap-ldo-wglmr",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": [
-      "LDO",
-      "GLMR"
-    ],
+    "assets": ["LDO", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -550,12 +501,7 @@
     "oracleId": "beamswap-4pool",
     "status": "active",
     "platformId": "beamswap",
-    "assets": [
-      "USDC",
-      "USDT",
-      "DAI",
-      "BUSD"
-    ],
+    "assets": ["USDC", "USDT", "DAI", "BUSD"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -586,10 +532,7 @@
     "oracleId": "stellaswap-well-wglmr",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": [
-      "WELL",
-      "GLMR"
-    ],
+    "assets": ["WELL", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -619,13 +562,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": [
-      "USDTs",
-      "USDCs",
-      "DAIs",
-      "FRAX",
-      "MAI"
-    ],
+    "assets": ["USDTs", "USDCs", "DAIs", "FRAX", "MAI"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -656,12 +593,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": [
-      "USDTs",
-      "USDCs",
-      "DAIs",
-      "FRAX"
-    ],
+    "assets": ["USDTs", "USDCs", "DAIs", "FRAX"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -691,10 +623,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": [
-      "GLMR",
-      "WBTC"
-    ],
+    "assets": ["GLMR", "WBTC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -724,10 +653,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beamswap",
-    "assets": [
-      "xcDOT",
-      "GLMR"
-    ],
+    "assets": ["xcDOT", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -758,10 +684,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beamswap",
-    "assets": [
-      "USDCs",
-      "GLMR"
-    ],
+    "assets": ["USDCs", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -791,10 +714,7 @@
     "oracleId": "beamswap-usdc-wglmr",
     "status": "active",
     "platformId": "beamswap",
-    "assets": [
-      "USDC",
-      "GLMR"
-    ],
+    "assets": ["USDC", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -825,10 +745,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beamswap",
-    "assets": [
-      "USDC",
-      "DAI"
-    ],
+    "assets": ["USDC", "DAI"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -859,10 +776,7 @@
     "oracleId": "beamswap-wglmr-glint",
     "status": "active",
     "platformId": "beamswap",
-    "assets": [
-      "GLINT",
-      "GLMR"
-    ],
+    "assets": ["GLINT", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -892,10 +806,7 @@
     "oracleId": "beamswap-busd-bnb",
     "status": "active",
     "platformId": "beamswap",
-    "assets": [
-      "BUSD",
-      "BNB"
-    ],
+    "assets": ["BUSD", "BNB"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -926,10 +837,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beamswap",
-    "assets": [
-      "USDC",
-      "BUSD"
-    ],
+    "assets": ["USDC", "BUSD"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -959,10 +867,7 @@
     "oracleId": "beamswap-usdc-eth",
     "status": "active",
     "platformId": "beamswap",
-    "assets": [
-      "USDC",
-      "ETH"
-    ],
+    "assets": ["USDC", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -993,10 +898,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beamswap",
-    "assets": [
-      "USDC",
-      "USDT"
-    ],
+    "assets": ["USDC", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1025,9 +927,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "maxi",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1056,10 +956,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beamswap",
-    "assets": [
-      "BIFI",
-      "GLMR"
-    ],
+    "assets": ["BIFI", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1090,10 +987,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beamswap",
-    "assets": [
-      "FTM",
-      "USDC"
-    ],
+    "assets": ["FTM", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1123,10 +1017,7 @@
     "oracleId": "solarflare-wglmr-flare",
     "status": "active",
     "platformId": "solarflare",
-    "assets": [
-      "FLARE",
-      "GLMR"
-    ],
+    "assets": ["FLARE", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1157,10 +1048,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "solarflare",
-    "assets": [
-      "USDCs",
-      "GLMR"
-    ],
+    "assets": ["USDCs", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1190,10 +1078,7 @@
     "oracleId": "stellaswap-stella-wglmr",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": [
-      "STELLA",
-      "GLMR"
-    ],
+    "assets": ["STELLA", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1224,10 +1109,7 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": [
-      "STELLA",
-      "USDC"
-    ],
+    "assets": ["STELLA", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1258,10 +1140,7 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": [
-      "USDC",
-      "GLMR"
-    ],
+    "assets": ["USDC", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1292,10 +1171,7 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": [
-      "USDC",
-      "USDT"
-    ],
+    "assets": ["USDC", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1326,10 +1202,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": [
-      "USDC",
-      "BNB"
-    ],
+    "assets": ["USDC", "BNB"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1360,10 +1233,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": [
-      "BUSD",
-      "GLMR"
-    ],
+    "assets": ["BUSD", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1394,10 +1264,7 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": [
-      "DAI",
-      "USDC"
-    ],
+    "assets": ["DAI", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1429,10 +1296,7 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": [
-      "USDC",
-      "ETH"
-    ],
+    "assets": ["USDC", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1463,10 +1327,7 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": [
-      "GLMR",
-      "ETH"
-    ],
+    "assets": ["GLMR", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1497,10 +1358,7 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": [
-      "USDC",
-      "FTM"
-    ],
+    "assets": ["USDC", "FTM"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1531,10 +1389,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": [
-      "GLMR",
-      "FTM"
-    ],
+    "assets": ["GLMR", "FTM"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1565,10 +1420,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": [
-      "AVAX",
-      "GLMR"
-    ],
+    "assets": ["AVAX", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1599,10 +1451,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": [
-      "MATIC",
-      "GLMR"
-    ],
+    "assets": ["MATIC", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1633,10 +1482,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": [
-      "ATOM",
-      "GLMR"
-    ],
+    "assets": ["ATOM", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1667,10 +1513,7 @@
     "status": "eol",
     "platformId": "stellaswap",
     "retireReason": "rewards",
-    "assets": [
-      "ATOM",
-      "USDC"
-    ],
+    "assets": ["ATOM", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1699,9 +1542,7 @@
     "oracleId": "STELLA",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": [
-      "STELLA"
-    ],
+    "assets": ["STELLA"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1729,10 +1570,7 @@
     "oracleId": "stellaswap-wglmr-xcdot",
     "status": "active",
     "platformId": "stellaswap",
-    "assets": [
-      "xcDOT",
-      "GLMR"
-    ],
+    "assets": ["xcDOT", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1762,10 +1600,7 @@
     "oracleId": "stellaswap-luna-wglmr",
     "status": "eol",
     "platformId": "stellaswap",
-    "assets": [
-      "LUNA",
-      "GLMR"
-    ],
+    "assets": ["LUNA", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1796,10 +1631,7 @@
     "oracleId": "stellaswap-axlust-wglmr",
     "status": "eol",
     "platformId": "stellaswap",
-    "assets": [
-      "UST",
-      "GLMR"
-    ],
+    "assets": ["UST", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1831,10 +1663,7 @@
     "oracleId": "solarflare-ust-wglmr",
     "status": "eol",
     "platformId": "solarflare",
-    "assets": [
-      "UST",
-      "GLMR"
-    ],
+    "assets": ["UST", "GLMR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1866,10 +1695,7 @@
     "oracleId": "solarflare-luna-flare",
     "status": "eol",
     "platformId": "solarflare",
-    "assets": [
-      "LUNA",
-      "FLARE"
-    ],
+    "assets": ["LUNA", "FLARE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1901,10 +1727,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": [
-      "GLMR",
-      "ETHs"
-    ],
+    "assets": ["GLMR", "ETHs"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1934,10 +1757,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": [
-      "GLMR",
-      "USDCs"
-    ],
+    "assets": ["GLMR", "USDCs"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1967,10 +1787,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": [
-      "ETHs",
-      "ETH"
-    ],
+    "assets": ["ETHs", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",

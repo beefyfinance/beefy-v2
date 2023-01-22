@@ -15,9 +15,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -45,10 +43,7 @@
     "oracleId": "hermes-m.dai-m.usdc",
     "status": "active",
     "platformId": "hermes",
-    "assets": [
-      "mDAI",
-      "mUSDC"
-    ],
+    "assets": ["mDAI", "mUSDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -79,10 +74,7 @@
     "oracleId": "hermes-m.usdt-m.usdc",
     "status": "active",
     "platformId": "hermes",
-    "assets": [
-      "mUSDT",
-      "mUSDC"
-    ],
+    "assets": ["mUSDT", "mUSDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -112,10 +104,7 @@
     "oracleId": "hermes-hermes-metis",
     "status": "active",
     "platformId": "hermes",
-    "assets": [
-      "HERMES",
-      "METIS"
-    ],
+    "assets": ["HERMES", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -145,10 +134,7 @@
     "oracleId": "hermes-metis-m.usdc",
     "status": "active",
     "platformId": "hermes",
-    "assets": [
-      "METIS",
-      "mUSDC"
-    ],
+    "assets": ["METIS", "mUSDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -178,10 +164,7 @@
     "oracleId": "hermes-maia-m.usdc",
     "status": "active",
     "platformId": "hermes",
-    "assets": [
-      "MAIA",
-      "mUSDC"
-    ],
+    "assets": ["MAIA", "mUSDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -211,10 +194,7 @@
     "oracleId": "hermes-weth-metis",
     "status": "active",
     "platformId": "hermes",
-    "assets": [
-      "WETH",
-      "METIS"
-    ],
+    "assets": ["WETH", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -244,10 +224,7 @@
     "oracleId": "hermes-weth-m.usdc",
     "status": "active",
     "platformId": "hermes",
-    "assets": [
-      "WETH",
-      "mUSDC"
-    ],
+    "assets": ["WETH", "mUSDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -277,10 +254,7 @@
     "oracleId": "hermes-hum-metis",
     "status": "active",
     "platformId": "hermes",
-    "assets": [
-      "HUM",
-      "METIS"
-    ],
+    "assets": ["HUM", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -311,10 +285,7 @@
     "status": "eol",
     "platformId": "netswap",
     "retireReason": "rewards",
-    "assets": [
-      "mUSDT",
-      "NETT"
-    ],
+    "assets": ["mUSDT", "NETT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -344,10 +315,7 @@
     "oracleId": "netswap-nett-metis",
     "status": "active",
     "platformId": "netswap",
-    "assets": [
-      "METIS",
-      "NETT"
-    ],
+    "assets": ["METIS", "NETT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -378,10 +346,7 @@
     "status": "eol",
     "platformId": "netswap",
     "retireReason": "rewards",
-    "assets": [
-      "mUSDC",
-      "NETT"
-    ],
+    "assets": ["mUSDC", "NETT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -412,10 +377,7 @@
     "status": "eol",
     "platformId": "netswap",
     "retireReason": "rewards",
-    "assets": [
-      "WETH",
-      "NETT"
-    ],
+    "assets": ["WETH", "NETT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -445,10 +407,7 @@
     "oracleId": "netswap-weth-metis",
     "status": "active",
     "platformId": "netswap",
-    "assets": [
-      "WETH",
-      "METIS"
-    ],
+    "assets": ["WETH", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -478,10 +437,7 @@
     "oracleId": "netswap-metis-m.usdc",
     "status": "active",
     "platformId": "netswap",
-    "assets": [
-      "mUSDC",
-      "METIS"
-    ],
+    "assets": ["mUSDC", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -511,10 +467,7 @@
     "oracleId": "netswap-weth-m.usdc",
     "status": "active",
     "platformId": "netswap",
-    "assets": [
-      "mUSDC",
-      "WETH"
-    ],
+    "assets": ["mUSDC", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -544,10 +497,7 @@
     "oracleId": "netswap-m.usdt-m.usdc",
     "status": "active",
     "platformId": "netswap",
-    "assets": [
-      "mUSDC",
-      "mUSDT"
-    ],
+    "assets": ["mUSDC", "mUSDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -576,9 +526,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "maxi",
     "risks": [
       "COMPLEXITY_LOW",
@@ -607,10 +555,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tethys",
-    "assets": [
-      "TETHYS",
-      "METIS"
-    ],
+    "assets": ["TETHYS", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -641,10 +586,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tethys",
-    "assets": [
-      "mUSDT",
-      "METIS"
-    ],
+    "assets": ["mUSDT", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -675,10 +617,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tethys",
-    "assets": [
-      "mUSDC",
-      "METIS"
-    ],
+    "assets": ["mUSDC", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -709,10 +648,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tethys",
-    "assets": [
-      "WETH",
-      "METIS"
-    ],
+    "assets": ["WETH", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -743,10 +679,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tethys",
-    "assets": [
-      "mUSDC",
-      "mUSDT"
-    ],
+    "assets": ["mUSDC", "mUSDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -777,10 +710,7 @@
     "status": "eol",
     "platformId": "netswap",
     "retireReason": "rewards",
-    "assets": [
-      "WBTC",
-      "METIS"
-    ],
+    "assets": ["WBTC", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -811,10 +741,7 @@
     "status": "eol",
     "platformId": "netswap",
     "retireReason": "rewards",
-    "assets": [
-      "WBTC",
-      "mUSDT"
-    ],
+    "assets": ["WBTC", "mUSDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -845,10 +772,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tethys",
-    "assets": [
-      "WBTC",
-      "METIS"
-    ],
+    "assets": ["WBTC", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -878,10 +802,7 @@
     "oracleId": "netswap-byte-m.usdc",
     "status": "active",
     "platformId": "netswap",
-    "assets": [
-      "BYTE",
-      "mUSDC"
-    ],
+    "assets": ["BYTE", "mUSDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -912,10 +833,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tethys",
-    "assets": [
-      "FTM",
-      "METIS"
-    ],
+    "assets": ["FTM", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -946,10 +864,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tethys",
-    "assets": [
-      "AVAX",
-      "METIS"
-    ],
+    "assets": ["AVAX", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -980,10 +895,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "tethys",
-    "assets": [
-      "DAI",
-      "METIS"
-    ],
+    "assets": ["DAI", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1014,10 +926,7 @@
     "oracleId": "netswap-bnb-nett",
     "status": "eol",
     "platformId": "netswap",
-    "assets": [
-      "BNB",
-      "NETT"
-    ],
+    "assets": ["BNB", "NETT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1048,10 +957,7 @@
     "oracleId": "netswap-m.usdt-metis",
     "status": "eol",
     "platformId": "netswap",
-    "assets": [
-      "mUSDT",
-      "METIS"
-    ],
+    "assets": ["mUSDT", "METIS"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",

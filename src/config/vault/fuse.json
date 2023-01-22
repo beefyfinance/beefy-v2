@@ -14,9 +14,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -44,11 +42,7 @@
     "oracleId": "voltagev2-3pool",
     "status": "active",
     "platformId": "voltage",
-    "assets": [
-      "USDC",
-      "BUSD",
-      "USDT"
-    ],
+    "assets": ["USDC", "BUSD", "USDT"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -76,9 +70,7 @@
     "oracleId": "WFUSE",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "WFUSE"
-    ],
+    "assets": ["WFUSE"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -107,10 +99,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "sushiswap",
-    "assets": [
-      "WETH",
-      "FUSE"
-    ],
+    "assets": ["WETH", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -141,10 +130,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "sushiswap",
-    "assets": [
-      "FUSE",
-      "USDC"
-    ],
+    "assets": ["FUSE", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -173,9 +159,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "maxi",
     "risks": [
       "COMPLEXITY_LOW",
@@ -203,10 +187,7 @@
     "oracleId": "voltage-wfuse-g$",
     "status": "eol",
     "platformId": "voltage",
-    "assets": [
-      "G",
-      "FUSE"
-    ],
+    "assets": ["G", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -237,10 +218,7 @@
     "oracleId": "voltage-wfuse-usdc",
     "status": "eol",
     "platformId": "voltage",
-    "assets": [
-      "USDC",
-      "FUSE"
-    ],
+    "assets": ["USDC", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -271,10 +249,7 @@
     "oracleId": "voltage-wfuse-ust",
     "status": "eol",
     "platformId": "voltage",
-    "assets": [
-      "UST",
-      "FUSE"
-    ],
+    "assets": ["UST", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -306,10 +281,7 @@
     "oracleId": "voltage-wfuse-weth",
     "status": "eol",
     "platformId": "voltage",
-    "assets": [
-      "WETH",
-      "FUSE"
-    ],
+    "assets": ["WETH", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -340,10 +312,7 @@
     "oracleId": "voltage-fusd-bnb",
     "status": "eol",
     "platformId": "voltage",
-    "assets": [
-      "fUSD",
-      "BNB"
-    ],
+    "assets": ["fUSD", "BNB"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -374,10 +343,7 @@
     "oracleId": "voltage-wfuse-busd",
     "status": "eol",
     "platformId": "voltage",
-    "assets": [
-      "BUSD",
-      "FUSE"
-    ],
+    "assets": ["BUSD", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -408,10 +374,7 @@
     "oracleId": "voltage-wfuse-fusd",
     "status": "eol",
     "platformId": "voltage",
-    "assets": [
-      "fUSD",
-      "FUSE"
-    ],
+    "assets": ["fUSD", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -442,10 +405,7 @@
     "oracleId": "voltage-wbtc-weth",
     "status": "eol",
     "platformId": "voltage",
-    "assets": [
-      "WETH",
-      "WBTC"
-    ],
+    "assets": ["WETH", "WBTC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -476,10 +436,7 @@
     "oracleId": "voltagev2-fusd-bnb",
     "status": "active",
     "platformId": "voltage",
-    "assets": [
-      "fUSD",
-      "BNB"
-    ],
+    "assets": ["fUSD", "BNB"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -509,10 +466,7 @@
     "oracleId": "voltagev2-wbtc-weth",
     "status": "active",
     "platformId": "voltage",
-    "assets": [
-      "WBTC",
-      "WETH"
-    ],
+    "assets": ["WBTC", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -542,10 +496,7 @@
     "oracleId": "voltagev2-wfuse-weth",
     "status": "active",
     "platformId": "voltage",
-    "assets": [
-      "WETH",
-      "FUSE"
-    ],
+    "assets": ["WETH", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -575,10 +526,7 @@
     "oracleId": "voltagev2-wfuse-busd",
     "status": "active",
     "platformId": "voltage",
-    "assets": [
-      "BUSD",
-      "FUSE"
-    ],
+    "assets": ["BUSD", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -609,10 +557,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "voltage",
-    "assets": [
-      "USDC",
-      "FUSE"
-    ],
+    "assets": ["USDC", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -642,10 +587,7 @@
     "oracleId": "voltagev2-wfuse-fusd",
     "status": "active",
     "platformId": "voltage",
-    "assets": [
-      "fUSD",
-      "FUSE"
-    ],
+    "assets": ["fUSD", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -675,10 +617,7 @@
     "oracleId": "voltagev2-wfuse-volt",
     "status": "active",
     "platformId": "voltage",
-    "assets": [
-      "VOLT",
-      "FUSE"
-    ],
+    "assets": ["VOLT", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -709,10 +648,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "voltage",
-    "assets": [
-      "fUSD",
-      "VOLT"
-    ],
+    "assets": ["fUSD", "VOLT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -743,10 +679,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "voltage",
-    "assets": [
-      "VOLT",
-      "BNB"
-    ],
+    "assets": ["VOLT", "BNB"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -776,10 +709,7 @@
     "oracleId": "voltagev2-wfuse-gdollar",
     "status": "active",
     "platformId": "voltage",
-    "assets": [
-      "G",
-      "FUSE"
-    ],
+    "assets": ["G", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -808,9 +738,7 @@
     "oracleId": "xVOLT",
     "status": "active",
     "platformId": "voltage",
-    "assets": [
-      "xVOLT"
-    ],
+    "assets": ["xVOLT"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -841,10 +769,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "sushiswap",
-    "assets": [
-      "USDC",
-      "USDT"
-    ],
+    "assets": ["USDC", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -875,10 +800,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "voltage",
-    "assets": [
-      "agEUR",
-      "FUSE"
-    ],
+    "assets": ["agEUR", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -908,10 +830,7 @@
     "oracleId": "voltagev2-wfuse-atust",
     "status": "eol",
     "platformId": "voltage",
-    "assets": [
-      "UST",
-      "FUSE"
-    ],
+    "assets": ["UST", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -943,10 +862,7 @@
     "oracleId": "voltage-wfuse-elon",
     "status": "eol",
     "platformId": "voltage",
-    "assets": [
-      "ELON",
-      "FUSE"
-    ],
+    "assets": ["ELON", "FUSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",

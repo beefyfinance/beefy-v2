@@ -12,9 +12,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "maxi",
     "risks": [
       "COMPLEXITY_LOW",
@@ -44,9 +42,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -74,9 +70,7 @@
     "oracleId": "ETH",
     "status": "active",
     "platformId": "lendhub",
-    "assets": [
-      "ETH"
-    ],
+    "assets": ["ETH"],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f&outputCurrency=0x64FF637fB478863B7468bc97D30a5bF3A428a1fD",
     "network": "heco",
@@ -96,10 +90,7 @@
     "oracleId": "mdex-shib-usdt",
     "status": "active",
     "platformId": "mdex",
-    "assets": [
-      "SHIB",
-      "USDT"
-    ],
+    "assets": ["SHIB", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0xc38072aa3f8e049de541223a9c9772132bb48634",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71edc38d189767582c38a3145b5873052c3e47a/0xc38072aa3f8e049de541223a9c9772132bb48634",
@@ -122,10 +113,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "mdex",
-    "assets": [
-      "BIFI",
-      "USDT"
-    ],
+    "assets": ["BIFI", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0x765277EebeCA2e31912C9946eAe1021199B39C61",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0x765277EebeCA2e31912C9946eAe1021199B39C61/0xa71EdC38d189767582C38A3145b5873052c3e47a",
@@ -155,10 +143,7 @@
     "oracleId": "hfi-hfi-ht",
     "status": "eol",
     "platformId": "hfi",
-    "assets": [
-      "HFI",
-      "WHT"
-    ],
+    "assets": ["HFI", "WHT"],
     "strategyTypeId": "lp",
     "retireReason": "rewards",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f&outputCurrency=0x98fc3b60ed4a504f588342a53746405e355f9347",
@@ -181,10 +166,7 @@
     "oracleId": "hfi-hfi-husd",
     "status": "eol",
     "platformId": "hfi",
-    "assets": [
-      "HFI",
-      "HUSD"
-    ],
+    "assets": ["HFI", "HUSD"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0x0298c2b32eae4da002a15f36fdf7615bea3da047&outputCurrency=0x98fc3b60ed4a504f588342a53746405e355f9347",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0x0298c2b32eae4da002a15f36fdf7615bea3da047/0x98fc3b60ed4a504f588342a53746405e355f9347",
@@ -205,9 +187,7 @@
     "oracleId": "LAVA",
     "status": "eol",
     "platformId": "lavaswap",
-    "assets": [
-      "LAVA"
-    ],
+    "assets": ["LAVA"],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://exchange.lavaswap.com/#/swap?inputCurrency=0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f&outputCurrency=0x56f95662e71f30b333b456439248c6de589082a4",
     "network": "heco",
@@ -227,10 +207,7 @@
     "oracleId": "lava-lava-usdt",
     "status": "eol",
     "platformId": "lavaswap",
-    "assets": [
-      "LAVA",
-      "USDT"
-    ],
+    "assets": ["LAVA", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.lavaswap.com/#/swap?inputCurrency=0x56f95662e71f30b333b456439248c6de589082a4&outputCurrency=0xa71edc38d189767582c38a3145b5873052c3e47a",
     "addLiquidityUrl": "https://exchange.lavaswap.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0x56f95662E71f30b333b456439248c6dE589082a4",
@@ -252,10 +229,7 @@
     "oracleId": "lava-lava-wht",
     "status": "eol",
     "platformId": "lavaswap",
-    "assets": [
-      "LAVA",
-      "WHT"
-    ],
+    "assets": ["LAVA", "WHT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.lavaswap.com/#/swap?inputCurrency=0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f&outputCurrency=0x56f95662e71f30b333b456439248c6de589082a4",
     "addLiquidityUrl": "https://exchange.lavaswap.com/#/add/ETH/0x56f95662E71f30b333b456439248c6dE589082a4",
@@ -278,10 +252,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "mdex",
-    "assets": [
-      "HUSD",
-      "USDT"
-    ],
+    "assets": ["HUSD", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0x0298c2b32eaE4da002a15f36fdf7615BEa3DA047",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0x0298c2b32eaE4da002a15f36fdf7615BEa3DA047",
@@ -303,10 +274,7 @@
     "oracleId": "mdex-hdot-usdt",
     "status": "active",
     "platformId": "mdex",
-    "assets": [
-      "HDOT",
-      "USDT"
-    ],
+    "assets": ["HDOT", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0xA2c49cEe16a5E5bDEFDe931107dc1fae9f7773E3",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0xA2c49cEe16a5E5bDEFDe931107dc1fae9f7773E3",
@@ -328,10 +296,7 @@
     "oracleId": "mdex-hfil-usdt",
     "status": "active",
     "platformId": "mdex",
-    "assets": [
-      "HFIL",
-      "USDT"
-    ],
+    "assets": ["HFIL", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0xae3a768f9aB104c69A7CD6041fE16fFa235d1810",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0xae3a768f9aB104c69A7CD6041fE16fFa235d1810",
@@ -353,10 +318,7 @@
     "oracleId": "mdex-hpt-usdt",
     "status": "active",
     "platformId": "mdex",
-    "assets": [
-      "HPT",
-      "USDT"
-    ],
+    "assets": ["HPT", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0xE499Ef4616993730CEd0f31FA2703B92B50bB536",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0xE499Ef4616993730CEd0f31FA2703B92B50bB536",
@@ -379,10 +341,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "mdex",
-    "assets": [
-      "AAVE",
-      "USDT"
-    ],
+    "assets": ["AAVE", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0x202b4936fE1a82A4965220860aE46d7d3939Bb25",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0x202b4936fE1a82A4965220860aE46d7d3939Bb25",
@@ -405,10 +364,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "mdex",
-    "assets": [
-      "SNX",
-      "USDT"
-    ],
+    "assets": ["SNX", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0x777850281719d5a96C29812ab72f822E0e09F3Da",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0x777850281719d5a96C29812ab72f822E0e09F3Da",
@@ -430,10 +386,7 @@
     "oracleId": "mdex-link-usdt",
     "status": "active",
     "platformId": "mdex",
-    "assets": [
-      "LINK",
-      "USDT"
-    ],
+    "assets": ["LINK", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0x9e004545c59D359F6B7BFB06a26390b087717b42",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0x9e004545c59D359F6B7BFB06a26390b087717b42",
@@ -456,10 +409,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "mdex",
-    "assets": [
-      "BAL",
-      "USDT"
-    ],
+    "assets": ["BAL", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0x045De15Ca76e76426E8Fc7cba8392A3138078D0F",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0x045De15Ca76e76426E8Fc7cba8392A3138078D0F",
@@ -481,10 +431,7 @@
     "oracleId": "mdex-yfi-usdt",
     "status": "active",
     "platformId": "mdex",
-    "assets": [
-      "YFI",
-      "USDT"
-    ],
+    "assets": ["YFI", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0xB4F019bEAc758AbBEe2F906033AAa2f0F6Dacb35",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0xB4F019bEAc758AbBEe2F906033AAa2f0F6Dacb35",
@@ -506,10 +453,7 @@
     "oracleId": "mdex-mdx-usdt",
     "status": "active",
     "platformId": "mdex",
-    "assets": [
-      "MDX",
-      "USDT"
-    ],
+    "assets": ["MDX", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0x25D2e80cB6B86881Fd7e07dd263Fb79f4AbE033c",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0x25D2e80cB6B86881Fd7e07dd263Fb79f4AbE033c",
@@ -531,10 +475,7 @@
     "oracleId": "mdex-mdx-wht",
     "status": "active",
     "platformId": "mdex",
-    "assets": [
-      "MDX",
-      "WHT"
-    ],
+    "assets": ["MDX", "WHT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=HT&outputCurrency=0x25D2e80cB6B86881Fd7e07dd263Fb79f4AbE033c",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/HT/0x25D2e80cB6B86881Fd7e07dd263Fb79f4AbE033c",
@@ -556,10 +497,7 @@
     "oracleId": "mdex-wht-usdt",
     "status": "active",
     "platformId": "mdex",
-    "assets": [
-      "WHT",
-      "USDT"
-    ],
+    "assets": ["WHT", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=HT&outputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/HT/0xa71EdC38d189767582C38A3145b5873052c3e47a",
@@ -580,9 +518,7 @@
     "oracleId": "BTC",
     "status": "eol",
     "platformId": "lendhub",
-    "assets": [
-      "BTC"
-    ],
+    "assets": ["BTC"],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f&outputCurrency=0x66a79D23E58475D2738179Ca52cd0b41d73f0BEa",
     "network": "heco",
@@ -602,9 +538,7 @@
     "oracleId": "DOT",
     "status": "eol",
     "platformId": "lendhub",
-    "assets": [
-      "DOT"
-    ],
+    "assets": ["DOT"],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f&outputCurrency=0xA2c49cEe16a5E5bDEFDe931107dc1fae9f7773E3",
     "network": "heco",
@@ -625,10 +559,7 @@
     "oracleId": "lendhub-lhb-wht",
     "status": "eol",
     "platformId": "lendhub",
-    "assets": [
-      "LHB",
-      "WHT"
-    ],
+    "assets": ["LHB", "WHT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0x5545153CCFcA01fbd7Dd11C0b23ba694D9509A6F&outputCurrency=0x8F67854497218043E1f72908FFE38D0Ed7F24721",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0x5545153CCFcA01fbd7Dd11C0b23ba694D9509A6F/0x8F67854497218043E1f72908FFE38D0Ed7F24721",
@@ -651,10 +582,7 @@
     "oracleId": "lendhub-lhb-usdt",
     "status": "eol",
     "platformId": "lendhub",
-    "assets": [
-      "LHB",
-      "USDT"
-    ],
+    "assets": ["LHB", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0x8F67854497218043E1f72908FFE38D0Ed7F24721",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71edc38d189767582c38a3145b5873052c3e47a/0x8F67854497218043E1f72908FFE38D0Ed7F24721",
@@ -676,9 +604,7 @@
     "oracleId": "MDX",
     "status": "eol",
     "platformId": "mdex",
-    "assets": [
-      "MDX"
-    ],
+    "assets": ["MDX"],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f&outputCurrency=0x25d2e80cb6b86881fd7e07dd263fb79f4abe033c",
     "network": "heco",
@@ -699,10 +625,7 @@
     "oracleId": "mdex-hbtc-wht",
     "status": "eol",
     "platformId": "mdex",
-    "assets": [
-      "HBTC",
-      "WHT"
-    ],
+    "assets": ["HBTC", "WHT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=HT&outputCurrency=0x66a79d23e58475d2738179ca52cd0b41d73f0bea",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/HT/0x66a79d23e58475d2738179ca52cd0b41d73f0bea",
@@ -725,10 +648,7 @@
     "oracleId": "mdex-eth-wht",
     "status": "eol",
     "platformId": "mdex",
-    "assets": [
-      "ETH",
-      "WHT"
-    ],
+    "assets": ["ETH", "WHT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=HT&outputCurrency=0x64FF637fB478863B7468bc97D30a5bF3A428a1fD",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/HT/0x64FF637fB478863B7468bc97D30a5bF3A428a1fD",
@@ -751,10 +671,7 @@
     "oracleId": "mdex-hltc-usdt",
     "status": "eol",
     "platformId": "mdex",
-    "assets": [
-      "HLTC",
-      "USDT"
-    ],
+    "assets": ["HLTC", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0xecb56cf772B5c9A6907FB7d32387Da2fCbfB63b4",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0xecb56cf772B5c9A6907FB7d32387Da2fCbfB63b4",
@@ -777,10 +694,7 @@
     "oracleId": "mdex-hbch-usdt",
     "status": "eol",
     "platformId": "mdex",
-    "assets": [
-      "HBCH",
-      "USDT"
-    ],
+    "assets": ["HBCH", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0xeF3CEBD77E0C52cb6f60875d9306397B5Caca375",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0xeF3CEBD77E0C52cb6f60875d9306397B5Caca375",
@@ -803,10 +717,7 @@
     "oracleId": "mdex-lhb-usdt",
     "status": "eol",
     "platformId": "mdex",
-    "assets": [
-      "LHB",
-      "USDT"
-    ],
+    "assets": ["LHB", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0x8F67854497218043E1f72908FFE38D0Ed7F24721",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0x8F67854497218043E1f72908FFE38D0Ed7F24721",
@@ -829,10 +740,7 @@
     "oracleId": "mdex-uni-usdt",
     "status": "eol",
     "platformId": "mdex",
-    "assets": [
-      "UNI",
-      "USDT"
-    ],
+    "assets": ["UNI", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0x22C54cE8321A4015740eE1109D9cBc25815C46E6",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0x22C54cE8321A4015740eE1109D9cBc25815C46E6",
@@ -855,10 +763,7 @@
     "oracleId": "mdex-hbtc-usdt",
     "status": "eol",
     "platformId": "mdex",
-    "assets": [
-      "HBTC",
-      "USDT"
-    ],
+    "assets": ["HBTC", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0x66a79D23E58475D2738179Ca52cd0b41d73f0BEa",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0x66a79D23E58475D2738179Ca52cd0b41d73f0BEa",
@@ -881,10 +786,7 @@
     "oracleId": "mdex-eth-usdt",
     "status": "eol",
     "platformId": "mdex",
-    "assets": [
-      "ETH",
-      "USDT"
-    ],
+    "assets": ["ETH", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71EdC38d189767582C38A3145b5873052c3e47a&outputCurrency=0x64FF637fB478863B7468bc97D30a5bF3A428a1fD",
     "addLiquidityUrl": "https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0x64FF637fB478863B7468bc97D30a5bF3A428a1fD",

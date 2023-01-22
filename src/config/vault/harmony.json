@@ -15,9 +15,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -46,10 +44,7 @@
     "status": "eol",
     "platformId": "sushiswap",
     "retireReason": "rewards",
-    "assets": [
-      "AAVE",
-      "ETH"
-    ],
+    "assets": ["AAVE", "ETH"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x913de0f91169680c32c8f27212361272ef4fdfd9/add",
@@ -81,10 +76,7 @@
     "status": "eol",
     "platformId": "sushiswap",
     "retireReason": "rewards",
-    "assets": [
-      "FRAX",
-      "ETH"
-    ],
+    "assets": ["FRAX", "ETH"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xa46bba980512e328e344ce12bb969563f3429f05/add",
@@ -116,10 +108,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "sushiswap",
-    "assets": [
-      "WBTC",
-      "ETH"
-    ],
+    "assets": ["WBTC", "ETH"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x39be7c95276954a6f7070f9baa38db2123691ed0/add",
@@ -151,10 +140,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "sushiswap",
-    "assets": [
-      "USDT",
-      "USDC"
-    ],
+    "assets": ["USDT", "USDC"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x0c51171b913db10ade3fd625548e69c9c63afb96/add",
@@ -186,10 +172,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "sushiswap",
-    "assets": [
-      "USDT",
-      "ONE"
-    ],
+    "assets": ["USDT", "ONE"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x2c7862b408bb3dbff277110ffde1b4eaa45c692a/add",
@@ -221,10 +204,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "sushiswap",
-    "assets": [
-      "BUSD",
-      "ONE"
-    ],
+    "assets": ["BUSD", "ONE"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x8c36ede15c5e4b0e1f9764351a7a7a0037c5e103/add",
@@ -256,10 +236,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "sushiswap",
-    "assets": [
-      "ETH",
-      "ONE"
-    ],
+    "assets": ["ETH", "ONE"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xeb049f1ed546f8efc3ad57f6c7d22f081ccc7375/add",
@@ -291,10 +268,7 @@
     "status": "eol",
     "platformId": "sushiswap",
     "retireReason": "rewards",
-    "assets": [
-      "WBTC",
-      "ONE"
-    ],
+    "assets": ["WBTC", "ONE"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xc3670b927ef42eed252e483e2446352c238d9905/add",
@@ -326,10 +300,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "sushiswap",
-    "assets": [
-      "USDC",
-      "ONE"
-    ],
+    "assets": ["USDC", "ONE"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xbf255d8c30dbab84ea42110ea7dc870f01c0013a/add",
@@ -360,9 +331,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -391,13 +360,7 @@
     "status": "eol",
     "platformId": "curve",
     "retireReason": "rewards",
-    "assets": [
-      "DAI",
-      "USDC",
-      "USDT",
-      "WBTC",
-      "ETH"
-    ],
+    "assets": ["DAI", "USDC", "USDT", "WBTC", "ETH"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -429,11 +392,7 @@
     "status": "eol",
     "platformId": "curve",
     "retireReason": "rewards",
-    "assets": [
-      "DAI",
-      "USDC",
-      "USDT"
-    ],
+    "assets": ["DAI", "USDC", "USDT"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -465,10 +424,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "sushiswap",
-    "assets": [
-      "BTC",
-      "ONE"
-    ],
+    "assets": ["BTC", "ONE"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "risks": [
@@ -499,10 +455,7 @@
     "oracleId": "sushi-one-1eth-1dai",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "DAI",
-      "ETH"
-    ],
+    "assets": ["DAI", "ETH"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "risks": [
@@ -535,10 +488,7 @@
     "oracleId": "sushi-one-1usdt-1eth",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "USDT",
-      "ETH"
-    ],
+    "assets": ["USDT", "ETH"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "risks": [
@@ -570,10 +520,7 @@
     "oracleId": "sushi-one-sushi-one",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "SUSHI",
-      "ONE"
-    ],
+    "assets": ["SUSHI", "ONE"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "risks": [
@@ -605,10 +552,7 @@
     "oracleId": "sushi-one-1ygg-1eth",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "YGG",
-      "ETH"
-    ],
+    "assets": ["YGG", "ETH"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x40112850efd90e9e17b56de35d86bdff9f4d07fd/add",
@@ -640,10 +584,7 @@
     "oracleId": "sushi-one-1axs-1eth",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "AXS",
-      "ETH"
-    ],
+    "assets": ["AXS", "ETH"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xbb680ba75f7e3e404923d04d484af5ce96b4a4bf/add",
@@ -675,10 +616,7 @@
     "oracleId": "sushi-one-ust-1eth",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "UST",
-      "ETH"
-    ],
+    "assets": ["UST", "ETH"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x9293dfdd719ee2163f2e158e66ef75722ed712b4/add",
@@ -711,10 +649,7 @@
     "oracleId": "sushi-one-bifi-wone",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "BIFI",
-      "ONE"
-    ],
+    "assets": ["BIFI", "ONE"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "risks": [
@@ -746,10 +681,7 @@
     "oracleId": "sushi-one-bscbusd-busd",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "BUSD",
-      "bscBUSD"
-    ],
+    "assets": ["BUSD", "bscBUSD"],
     "strategyTypeId": "lp",
     "callFee": 0.25,
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xda64f9053a971531a75071a729a6432fb65ed60d/add",

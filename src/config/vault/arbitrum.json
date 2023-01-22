@@ -13,10 +13,7 @@
     "oracleId": "balancer-wsteth-eth-v2",
     "status": "active",
     "platformId": "balancer",
-    "assets": [
-      "wstETH",
-      "ETH"
-    ],
+    "assets": ["wstETH", "ETH"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -45,10 +42,7 @@
     "oracleId": "curve-arb-f-fraxbp",
     "status": "active",
     "platformId": "convex",
-    "assets": [
-      "FRAX",
-      "USDC"
-    ],
+    "assets": ["FRAX", "USDC"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -79,9 +73,7 @@
     "status": "active",
     "platformId": "beefy",
     "excluded": "arbi-bifi-maxi",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -109,10 +101,7 @@
     "oracleId": "swapfish-ageur-usdc",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "agEUR",
-      "USDC"
-    ],
+    "assets": ["agEUR", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -143,10 +132,7 @@
     "oracleId": "swapfish-tusd-usdc",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "TUSD",
-      "USDC"
-    ],
+    "assets": ["TUSD", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -176,10 +162,7 @@
     "oracleId": "swapfish-usdd-usdc",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "USDD",
-      "USDC"
-    ],
+    "assets": ["USDD", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -211,10 +194,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "swapfish",
-    "assets": [
-      "MAI",
-      "ETH"
-    ],
+    "assets": ["MAI", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -245,10 +225,7 @@
     "oracleId": "swapfish-mai-usdc",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "MAI",
-      "USDC"
-    ],
+    "assets": ["MAI", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -280,10 +257,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "swapfish",
-    "assets": [
-      "VST",
-      "ETH"
-    ],
+    "assets": ["VST", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -314,10 +288,7 @@
     "oracleId": "swapfish-vst-usdc",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "VST",
-      "USDC"
-    ],
+    "assets": ["VST", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -348,10 +319,7 @@
     "oracleId": "swapfish-usx-usdc",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "USX",
-      "USDC"
-    ],
+    "assets": ["USX", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -382,10 +350,7 @@
     "oracleId": "swapfish-fish-eth",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "FISH",
-      "ETH"
-    ],
+    "assets": ["FISH", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -415,10 +380,7 @@
     "oracleId": "swapfish-frax-usdc",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "FRAX",
-      "USDC"
-    ],
+    "assets": ["FRAX", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -448,10 +410,7 @@
     "oracleId": "swapfish-mim-usdc",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "MIM",
-      "USDC"
-    ],
+    "assets": ["MIM", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -481,10 +440,7 @@
     "oracleId": "swapfish-wbtc-weth",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "WBTC",
-      "ETH"
-    ],
+    "assets": ["WBTC", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -514,10 +470,7 @@
     "oracleId": "swapfish-weth-usdc",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "ETH",
-      "USDC"
-    ],
+    "assets": ["ETH", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -548,10 +501,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "swapfish",
-    "assets": [
-      "GMX",
-      "USDC"
-    ],
+    "assets": ["GMX", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -581,10 +531,7 @@
     "oracleId": "swapfish-bifi-eth",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "BIFI",
-      "ETH"
-    ],
+    "assets": ["BIFI", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -613,17 +560,9 @@
     "oracleId": "SWAPFISH",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "FISH"
-    ],
+    "assets": ["FISH"],
     "strategyTypeId": "single",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&outputCurrency=0xb348B87b23D5977E2948E6f36ca07E1EC94d7328",
     "network": "arbitrum",
     "createdAt": 1670746949
@@ -642,10 +581,7 @@
     "oracleId": "swapfish-fish-usdc",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "FISH",
-      "USDC"
-    ],
+    "assets": ["FISH", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -675,10 +611,7 @@
     "oracleId": "swapfish-wsteth-eth",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "wstETH",
-      "ETH"
-    ],
+    "assets": ["wstETH", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -708,10 +641,7 @@
     "oracleId": "swapfish-usdt-usdc",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "USDT",
-      "USDC"
-    ],
+    "assets": ["USDT", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -741,10 +671,7 @@
     "oracleId": "swapfish-dai-usdc",
     "status": "active",
     "platformId": "swapfish",
-    "assets": [
-      "DAI",
-      "USDC"
-    ],
+    "assets": ["DAI", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -774,10 +701,7 @@
     "oracleId": "curve-arb-f-wsteth",
     "status": "active",
     "platformId": "curve",
-    "assets": [
-      "wstETH",
-      "ETH"
-    ],
+    "assets": ["wstETH", "ETH"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -806,16 +730,7 @@
     "oracleId": "gmx-arb-glp",
     "status": "active",
     "platformId": "gmx",
-    "assets": [
-      "WETH",
-      "WBTC",
-      "LINK",
-      "UNI",
-      "USDC",
-      "USDT",
-      "DAI",
-      "FRAX"
-    ],
+    "assets": ["WETH", "WBTC", "LINK", "UNI", "USDC", "USDT", "DAI", "FRAX"],
     "strategyTypeId": "glp-gmx",
     "risks": [
       "COMPLEXITY_LOW",
@@ -844,9 +759,7 @@
     "oracleId": "GMX",
     "status": "active",
     "platformId": "gmx",
-    "assets": [
-      "GMX"
-    ],
+    "assets": ["GMX"],
     "strategyTypeId": "glp-gmx",
     "risks": [
       "COMPLEXITY_LOW",
@@ -874,9 +787,7 @@
     "oracleId": "sarETH",
     "status": "active",
     "platformId": "stargate",
-    "assets": [
-      "sarETH"
-    ],
+    "assets": ["sarETH"],
     "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -907,10 +818,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "balancer",
-    "assets": [
-      "wstETH",
-      "ETH"
-    ],
+    "assets": ["wstETH", "ETH"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -939,10 +847,7 @@
     "oracleId": "balancer-wsteth-usdc",
     "status": "active",
     "platformId": "balancer",
-    "assets": [
-      "wstETH",
-      "USDC"
-    ],
+    "assets": ["wstETH", "USDC"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -971,10 +876,7 @@
     "oracleId": "balancer-magic-usdc",
     "status": "active",
     "platformId": "balancer",
-    "assets": [
-      "MAGIC",
-      "USDC"
-    ],
+    "assets": ["MAGIC", "USDC"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1003,9 +905,7 @@
     "oracleId": "sarUSDC",
     "status": "active",
     "platformId": "stargate",
-    "assets": [
-      "sarUSDC"
-    ],
+    "assets": ["sarUSDC"],
     "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1035,9 +935,7 @@
     "oracleId": "sarUSDT",
     "status": "active",
     "platformId": "stargate",
-    "assets": [
-      "sarUSDT"
-    ],
+    "assets": ["sarUSDT"],
     "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1067,10 +965,7 @@
     "oracleId": "radiant-rdnt-weth",
     "status": "active",
     "platformId": "radiant",
-    "assets": [
-      "RDNT",
-      "ETH"
-    ],
+    "assets": ["RDNT", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1100,10 +995,7 @@
     "oracleId": "ripae-seth-weth",
     "status": "active",
     "platformId": "ripae",
-    "assets": [
-      "psETH",
-      "ETH"
-    ],
+    "assets": ["psETH", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1133,10 +1025,7 @@
     "oracleId": "ripae-peth-weth",
     "status": "active",
     "platformId": "ripae",
-    "assets": [
-      "pETH",
-      "ETH"
-    ],
+    "assets": ["pETH", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1167,11 +1056,7 @@
     "oracleId": "balancer-wbtc-eth-usdc",
     "status": "active",
     "platformId": "balancer",
-    "assets": [
-      "WBTC",
-      "ETH",
-      "USDC"
-    ],
+    "assets": ["WBTC", "ETH", "USDC"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1200,11 +1085,7 @@
     "oracleId": "curve-arb-mim",
     "status": "active",
     "platformId": "mim",
-    "assets": [
-      "MIM",
-      "USDC",
-      "USDT"
-    ],
+    "assets": ["MIM", "USDC", "USDT"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1234,10 +1115,7 @@
     "oracleId": "sushi-arb-spell-weth",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": [
-      "SPELL",
-      "ETH"
-    ],
+    "assets": ["SPELL", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1267,10 +1145,7 @@
     "oracleId": "sushi-arb-weth-mim",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": [
-      "MIM",
-      "ETH"
-    ],
+    "assets": ["MIM", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1301,10 +1176,7 @@
     "oracleId": "sushi-arb-eth-usdc",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": [
-      "USDC",
-      "ETH"
-    ],
+    "assets": ["USDC", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1334,11 +1206,7 @@
     "oracleId": "curve-arb-tricrypto",
     "status": "active",
     "platformId": "convex",
-    "assets": [
-      "USDT",
-      "WBTC",
-      "ETH"
-    ],
+    "assets": ["USDT", "WBTC", "ETH"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1367,10 +1235,7 @@
     "oracleId": "curve-arb-2pool",
     "status": "active",
     "platformId": "convex",
-    "assets": [
-      "USDT",
-      "USDC"
-    ],
+    "assets": ["USDT", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1400,10 +1265,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "curve",
-    "assets": [
-      "WBTC",
-      "renBTC"
-    ],
+    "assets": ["WBTC", "renBTC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1432,10 +1294,7 @@
     "oracleId": "sushi-arb-wbtc-weth",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": [
-      "WBTC",
-      "ETH"
-    ],
+    "assets": ["WBTC", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1465,10 +1324,7 @@
     "oracleId": "sushi-arb-sushi-eth",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": [
-      "SUSHI",
-      "ETH"
-    ],
+    "assets": ["SUSHI", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1498,10 +1354,7 @@
     "oracleId": "sushi-arb-weth-usdt",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": [
-      "USDT",
-      "ETH"
-    ],
+    "assets": ["USDT", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1530,9 +1383,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "maxi",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1560,10 +1411,7 @@
     "oracleId": "sushi-arb-magic-weth",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": [
-      "MAGIC",
-      "ETH"
-    ],
+    "assets": ["MAGIC", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1593,10 +1441,7 @@
     "oracleId": "sushi-arb-weth-gohm",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": [
-      "gOHM",
-      "ETH"
-    ],
+    "assets": ["gOHM", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1626,10 +1471,7 @@
     "oracleId": "sushi-arb-weth-link",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "LINK",
-      "ETH"
-    ],
+    "assets": ["LINK", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",

@@ -14,9 +14,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -45,10 +43,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "trisolaris",
-    "assets": [
-      "NEAR",
-      "TRI"
-    ],
+    "assets": ["NEAR", "TRI"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -78,10 +73,7 @@
     "oracleId": "trisolaris-near-wbtc",
     "status": "active",
     "platformId": "trisolaris",
-    "assets": [
-      "NEAR",
-      "WBTC"
-    ],
+    "assets": ["NEAR", "WBTC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -111,10 +103,7 @@
     "oracleId": "trisolaris-usdt-usdc",
     "status": "active",
     "platformId": "trisolaris",
-    "assets": [
-      "USDC",
-      "USDT"
-    ],
+    "assets": ["USDC", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -144,10 +133,7 @@
     "oracleId": "trisolaris-near-weth",
     "status": "active",
     "platformId": "trisolaris",
-    "assets": [
-      "NEAR",
-      "ETH"
-    ],
+    "assets": ["NEAR", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -177,10 +163,7 @@
     "oracleId": "tri-aurora-tri",
     "status": "active",
     "platformId": "trisolaris",
-    "assets": [
-      "AURORA",
-      "TRI"
-    ],
+    "assets": ["AURORA", "TRI"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -210,10 +193,7 @@
     "oracleId": "tri-aurora-weth",
     "status": "active",
     "platformId": "trisolaris",
-    "assets": [
-      "AURORA",
-      "ETH"
-    ],
+    "assets": ["AURORA", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -243,9 +223,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "solace",
-    "assets": [
-      "SOLACE"
-    ],
+    "assets": ["SOLACE"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -272,9 +250,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "maxi",
     "risks": [
       "COMPLEXITY_LOW",
@@ -302,10 +278,7 @@
     "oracleId": "tri-near-flx",
     "status": "active",
     "platformId": "trisolaris",
-    "assets": [
-      "FLX",
-      "NEAR"
-    ],
+    "assets": ["FLX", "NEAR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -336,10 +309,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "trisolaris",
-    "assets": [
-      "aUSDO",
-      "USDT"
-    ],
+    "assets": ["aUSDO", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -369,10 +339,7 @@
     "oracleId": "tri-mecha-near",
     "status": "eol",
     "platformId": "trisolaris",
-    "assets": [
-      "MECHA",
-      "NEAR"
-    ],
+    "assets": ["MECHA", "NEAR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -403,10 +370,7 @@
     "oracleId": "tri-avax-near",
     "status": "eol",
     "platformId": "trisolaris",
-    "assets": [
-      "AVAX",
-      "NEAR"
-    ],
+    "assets": ["AVAX", "NEAR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -438,12 +402,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "rose",
-    "assets": [
-      "MAI",
-      "USDT",
-      "USDC",
-      "DAI"
-    ],
+    "assets": ["MAI", "USDT", "USDC", "DAI"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -472,10 +431,7 @@
     "oracleId": "tri-atust-near",
     "status": "eol",
     "platformId": "trisolaris",
-    "assets": [
-      "UST",
-      "NEAR"
-    ],
+    "assets": ["UST", "NEAR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -507,10 +463,7 @@
     "oracleId": "tri-near-atluna",
     "status": "eol",
     "platformId": "trisolaris",
-    "assets": [
-      "LUNA",
-      "NEAR"
-    ],
+    "assets": ["LUNA", "NEAR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -542,10 +495,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "trisolaris",
-    "assets": [
-      "BSTN",
-      "NEAR"
-    ],
+    "assets": ["BSTN", "NEAR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -576,10 +526,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "trisolaris",
-    "assets": [
-      "LINEAR",
-      "NEAR"
-    ],
+    "assets": ["LINEAR", "NEAR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -609,10 +556,7 @@
     "oracleId": "tri-stnear-near",
     "status": "active",
     "platformId": "trisolaris",
-    "assets": [
-      "STNEAR",
-      "NEAR"
-    ],
+    "assets": ["STNEAR", "NEAR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -642,10 +586,7 @@
     "oracleId": "tri-aurora-near",
     "status": "active",
     "platformId": "trisolaris",
-    "assets": [
-      "AURORA",
-      "NEAR"
-    ],
+    "assets": ["AURORA", "NEAR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -676,10 +617,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "trisolaris",
-    "assets": [
-      "TRI",
-      "USDT"
-    ],
+    "assets": ["TRI", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -709,20 +647,9 @@
     "oracleId": "rose-ust-3pool",
     "status": "eol",
     "platformId": "rose",
-    "assets": [
-      "atUST",
-      "USDT",
-      "USDC",
-      "DAI"
-    ],
+    "assets": ["atUST", "USDT", "USDC", "DAI"],
     "strategyTypeId": "multi-lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "MCAP_LARGE",
-      "CONTRACTS_VERIFIED",
-      "ALGO_STABLE"
-    ],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED", "ALGO_STABLE"],
     "addLiquidityUrl": "https://app.rose.fi/#/farms/ust",
     "createdAt": 1649955343,
     "network": "aurora",
@@ -743,10 +670,7 @@
     "oracleId": "tri-solace-near",
     "status": "eol",
     "platformId": "trisolaris",
-    "assets": [
-      "SOLACE",
-      "NEAR"
-    ],
+    "assets": ["SOLACE", "NEAR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -777,10 +701,7 @@
     "oracleId": "trisolaris-usdt-near",
     "status": "eol",
     "platformId": "trisolaris",
-    "assets": [
-      "NEAR",
-      "USDT"
-    ],
+    "assets": ["NEAR", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -811,10 +732,7 @@
     "oracleId": "trisolaris-usdc-near",
     "status": "eol",
     "platformId": "trisolaris",
-    "assets": [
-      "NEAR",
-      "USDC"
-    ],
+    "assets": ["NEAR", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -846,11 +764,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "trisolaris",
-    "assets": [
-      "USN",
-      "USDC",
-      "USDT"
-    ],
+    "assets": ["USN", "USDC", "USDT"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",

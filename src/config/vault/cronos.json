@@ -14,9 +14,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -43,9 +41,7 @@
     "oracleId": "VVS",
     "status": "active",
     "platformId": "vvs",
-    "assets": [
-      "VVS"
-    ],
+    "assets": ["VVS"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -73,10 +69,7 @@
     "oracleId": "vvs-usdc-busd",
     "status": "active",
     "platformId": "vvs",
-    "assets": [
-      "BUSD",
-      "USDC"
-    ],
+    "assets": ["BUSD", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -106,10 +99,7 @@
     "oracleId": "vvs-vvs-usdc",
     "status": "active",
     "platformId": "vvs",
-    "assets": [
-      "VVS",
-      "USDC"
-    ],
+    "assets": ["VVS", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -139,10 +129,7 @@
     "oracleId": "vvs-vvs-cro",
     "status": "active",
     "platformId": "vvs",
-    "assets": [
-      "VVS",
-      "CRO"
-    ],
+    "assets": ["VVS", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -172,10 +159,7 @@
     "oracleId": "vvs-cro-eth",
     "status": "active",
     "platformId": "vvs",
-    "assets": [
-      "CRO",
-      "ETH"
-    ],
+    "assets": ["CRO", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -205,10 +189,7 @@
     "oracleId": "vvs-cro-btc",
     "status": "active",
     "platformId": "vvs",
-    "assets": [
-      "CRO",
-      "WBTC"
-    ],
+    "assets": ["CRO", "WBTC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -238,10 +219,7 @@
     "oracleId": "vvs-cro-shib",
     "status": "active",
     "platformId": "vvs",
-    "assets": [
-      "SHIB",
-      "CRO"
-    ],
+    "assets": ["SHIB", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -271,10 +249,7 @@
     "oracleId": "vvs-vvs-usdt",
     "status": "active",
     "platformId": "vvs",
-    "assets": [
-      "VVS",
-      "USDT"
-    ],
+    "assets": ["VVS", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -304,10 +279,7 @@
     "oracleId": "vvs-usdt-usdc",
     "status": "active",
     "platformId": "vvs",
-    "assets": [
-      "USDT",
-      "USDC"
-    ],
+    "assets": ["USDT", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -336,9 +308,7 @@
     "oracleId": "CRONA",
     "status": "active",
     "platformId": "cronaswap",
-    "assets": [
-      "CRONA"
-    ],
+    "assets": ["CRONA"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -367,10 +337,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": [
-      "CRONA",
-      "CRO"
-    ],
+    "assets": ["CRONA", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -401,10 +368,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": [
-      "USDC",
-      "CRO"
-    ],
+    "assets": ["USDC", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -435,10 +399,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": [
-      "USDT",
-      "CRO"
-    ],
+    "assets": ["USDT", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -469,10 +430,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": [
-      "BUSD",
-      "USDT"
-    ],
+    "assets": ["BUSD", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -503,10 +461,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": [
-      "USDC",
-      "USDT"
-    ],
+    "assets": ["USDC", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -535,9 +490,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -565,10 +518,7 @@
     "oracleId": "vvs-cro-usdt",
     "status": "active",
     "platformId": "vvs",
-    "assets": [
-      "CRO",
-      "USDT"
-    ],
+    "assets": ["CRO", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -598,10 +548,7 @@
     "oracleId": "vvs-cro-usdc",
     "status": "active",
     "platformId": "vvs",
-    "assets": [
-      "CRO",
-      "USDC"
-    ],
+    "assets": ["CRO", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -632,10 +579,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": [
-      "CRONA",
-      "USDC"
-    ],
+    "assets": ["CRONA", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -666,10 +610,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": [
-      "CRONA",
-      "USDT"
-    ],
+    "assets": ["CRONA", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -700,10 +641,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": [
-      "USDC",
-      "DAI"
-    ],
+    "assets": ["USDC", "DAI"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -735,10 +673,7 @@
     "status": "eol",
     "platformId": "vvs",
     "retireReason": "rewards",
-    "assets": [
-      "CRO",
-      "DAI"
-    ],
+    "assets": ["CRO", "DAI"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -769,10 +704,7 @@
     "oracleId": "vvs-cro-doge",
     "status": "active",
     "platformId": "vvs",
-    "assets": [
-      "DOGE",
-      "CRO"
-    ],
+    "assets": ["DOGE", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -803,10 +735,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": [
-      "WBTC",
-      "ETH"
-    ],
+    "assets": ["WBTC", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -837,10 +766,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "cronaswap",
-    "assets": [
-      "ETH",
-      "USDC"
-    ],
+    "assets": ["ETH", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -870,10 +796,7 @@
     "oracleId": "crona-usdt-matic",
     "status": "eol",
     "platformId": "cronaswap",
-    "assets": [
-      "MATIC",
-      "USDT"
-    ],
+    "assets": ["MATIC", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -904,10 +827,7 @@
     "oracleId": "vvs-cro-atom",
     "status": "active",
     "platformId": "vvs",
-    "assets": [
-      "ATOM",
-      "CRO"
-    ],
+    "assets": ["ATOM", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -937,10 +857,7 @@
     "oracleId": "liq-liq-cro",
     "status": "active",
     "platformId": "liquidus",
-    "assets": [
-      "LIQ",
-      "CRO"
-    ],
+    "assets": ["LIQ", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -970,10 +887,7 @@
     "oracleId": "crona-cro-dai",
     "status": "eol",
     "platformId": "cronaswap",
-    "assets": [
-      "DAI",
-      "CRO"
-    ],
+    "assets": ["DAI", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1005,10 +919,7 @@
     "oracleId": "vvs-tonic-cro",
     "status": "active",
     "platformId": "vvs",
-    "assets": [
-      "TONIC",
-      "CRO"
-    ],
+    "assets": ["TONIC", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1038,10 +949,7 @@
     "oracleId": "crona-cro-eth",
     "status": "eol",
     "platformId": "cronaswap",
-    "assets": [
-      "ETH",
-      "CRO"
-    ],
+    "assets": ["ETH", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1072,10 +980,7 @@
     "oracleId": "crona-usdt-ftm",
     "status": "eol",
     "platformId": "cronaswap",
-    "assets": [
-      "FTM",
-      "USDT"
-    ],
+    "assets": ["FTM", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1106,10 +1011,7 @@
     "oracleId": "vvs-cro-bifi",
     "status": "eol",
     "platformId": "vvs",
-    "assets": [
-      "BIFI",
-      "CRO"
-    ],
+    "assets": ["BIFI", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1141,10 +1043,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "darkcrypto",
-    "assets": [
-      "DARK",
-      "CRO"
-    ],
+    "assets": ["DARK", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1176,10 +1075,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "darkcrypto",
-    "assets": [
-      "SKY",
-      "CRO"
-    ],
+    "assets": ["SKY", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1209,10 +1105,7 @@
     "oracleId": "crona-busd-bnb",
     "status": "eol",
     "platformId": "cronaswap",
-    "assets": [
-      "BNB",
-      "BUSD"
-    ],
+    "assets": ["BNB", "BUSD"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1243,10 +1136,7 @@
     "oracleId": "crona-wbtc-cro",
     "status": "eol",
     "platformId": "cronaswap",
-    "assets": [
-      "WBTC",
-      "CRO"
-    ],
+    "assets": ["WBTC", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1277,10 +1167,7 @@
     "oracleId": "vvs-tonic-usdc",
     "status": "eol",
     "platformId": "vvs",
-    "assets": [
-      "TONIC",
-      "USDC"
-    ],
+    "assets": ["TONIC", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1311,10 +1198,7 @@
     "oracleId": "crona-wbtc-usdc",
     "status": "eol",
     "platformId": "cronaswap",
-    "assets": [
-      "WBTC",
-      "USDC"
-    ],
+    "assets": ["WBTC", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1346,10 +1230,7 @@
     "status": "eol",
     "platformId": "vvs",
     "retireReason": "rewards",
-    "assets": [
-      "ALI",
-      "CRO"
-    ],
+    "assets": ["ALI", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1380,10 +1261,7 @@
     "status": "eol",
     "platformId": "vvs",
     "retireReason": "rewards",
-    "assets": [
-      "VVS",
-      "VERSA"
-    ],
+    "assets": ["VVS", "VERSA"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1414,10 +1292,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "vvs",
-    "assets": [
-      "VVS",
-      "TONIC"
-    ],
+    "assets": ["VVS", "TONIC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1448,10 +1323,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "vvs",
-    "assets": [
-      "VVS",
-      "FER"
-    ],
+    "assets": ["VVS", "FER"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1481,10 +1353,7 @@
     "oracleId": "ripae-pcro-cro",
     "status": "active",
     "platformId": "ripae",
-    "assets": [
-      "pCRO",
-      "CRO"
-    ],
+    "assets": ["pCRO", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1516,10 +1385,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "ripae",
-    "assets": [
-      "sCRO",
-      "CRO"
-    ],
+    "assets": ["sCRO", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1550,10 +1416,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "vvs",
-    "assets": [
-      "FIRA",
-      "CRO"
-    ],
+    "assets": ["FIRA", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1583,10 +1446,7 @@
     "oracleId": "ferro-2fer",
     "status": "active",
     "platformId": "ferro",
-    "assets": [
-      "USDC",
-      "USDT"
-    ],
+    "assets": ["USDC", "USDT"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1615,11 +1475,7 @@
     "oracleId": "ferro-3fer",
     "status": "active",
     "platformId": "ferro",
-    "assets": [
-      "DAI",
-      "USDC",
-      "USDT"
-    ],
+    "assets": ["DAI", "USDC", "USDT"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",

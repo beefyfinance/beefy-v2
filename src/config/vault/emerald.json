@@ -13,10 +13,7 @@
     "oracleId": "yuzu-wrose-wbtc",
     "status": "active",
     "platformId": "yuzuswap",
-    "assets": [
-      "WBTC",
-      "ROSE"
-    ],
+    "assets": ["WBTC", "ROSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -46,10 +43,7 @@
     "oracleId": "yuzu-ceusdc-yuzu",
     "status": "active",
     "platformId": "yuzuswap",
-    "assets": [
-      "ceUSDC",
-      "YUZU"
-    ],
+    "assets": ["ceUSDC", "YUZU"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -79,10 +73,7 @@
     "oracleId": "yuzu-wrose-weth",
     "status": "active",
     "platformId": "yuzuswap",
-    "assets": [
-      "WETH",
-      "ROSE"
-    ],
+    "assets": ["WETH", "ROSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -112,10 +103,7 @@
     "oracleId": "yuzu-usdt-yuzu",
     "status": "active",
     "platformId": "yuzuswap",
-    "assets": [
-      "USDT",
-      "YUZU"
-    ],
+    "assets": ["USDT", "YUZU"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -145,10 +133,7 @@
     "oracleId": "yuzu-wrose-yuzu",
     "status": "active",
     "platformId": "yuzuswap",
-    "assets": [
-      "YUZU",
-      "ROSE"
-    ],
+    "assets": ["YUZU", "ROSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -178,10 +163,7 @@
     "oracleId": "yuzu-wrose-usdt",
     "status": "active",
     "platformId": "yuzuswap",
-    "assets": [
-      "USDT",
-      "ROSE"
-    ],
+    "assets": ["USDT", "ROSE"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -211,10 +193,7 @@
     "oracleId": "yuzu-ceusdc-usdt",
     "status": "active",
     "platformId": "yuzuswap",
-    "assets": [
-      "ceUSDC",
-      "USDT"
-    ],
+    "assets": ["ceUSDC", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -245,10 +224,7 @@
     "status": "eol",
     "retireReason": "default",
     "platformId": "valleyswap",
-    "assets": [
-      "VS",
-      "evoUSDT"
-    ],
+    "assets": ["VS", "evoUSDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -279,10 +255,7 @@
     "status": "eol",
     "retireReason": "default",
     "platformId": "valleyswap",
-    "assets": [
-      "evoUSDC",
-      "evoUSDT"
-    ],
+    "assets": ["evoUSDC", "evoUSDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -313,10 +286,7 @@
     "status": "eol",
     "retireReason": "default",
     "platformId": "valleyswap",
-    "assets": [
-      "evoBTC",
-      "evoUSDT"
-    ],
+    "assets": ["evoBTC", "evoUSDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",

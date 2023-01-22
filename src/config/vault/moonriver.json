@@ -14,9 +14,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -44,10 +42,7 @@
     "oracleId": "solarbeam-wstksm-xcksm",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": [
-      "wstKSM",
-      "xcKSM"
-    ],
+    "assets": ["wstKSM", "xcKSM"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -77,10 +72,7 @@
     "oracleId": "solarbeam-xckbtc-wbtc",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": [
-      "xcKBTC",
-      "WBTC"
-    ],
+    "assets": ["xcKBTC", "WBTC"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -110,10 +102,7 @@
     "oracleId": "solarbeam-solar-wmovr",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": [
-      "SOLAR",
-      "MOVR"
-    ],
+    "assets": ["SOLAR", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -143,10 +132,7 @@
     "oracleId": "solarbeam-wmovr-usdc",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": [
-      "MOVR",
-      "USDC"
-    ],
+    "assets": ["MOVR", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -175,9 +161,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -205,10 +189,7 @@
     "oracleId": "solarbeam-wbtc-wmovr",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": [
-      "WBTC",
-      "MOVR"
-    ],
+    "assets": ["WBTC", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -238,10 +219,7 @@
     "oracleId": "solarbeam-eth-wmovr",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": [
-      "ETH",
-      "MOVR"
-    ],
+    "assets": ["ETH", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -271,10 +249,7 @@
     "oracleId": "finn-wmovr-finn",
     "status": "active",
     "platformId": "huckleberry",
-    "assets": [
-      "FINN",
-      "MOVR"
-    ],
+    "assets": ["FINN", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -305,10 +280,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "huckleberry",
-    "assets": [
-      "MOVR",
-      "USDT"
-    ],
+    "assets": ["MOVR", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -339,10 +311,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "huckleberry",
-    "assets": [
-      "ETH",
-      "MOVR"
-    ],
+    "assets": ["ETH", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -372,10 +341,7 @@
     "oracleId": "finn-usdc-usdt",
     "status": "active",
     "platformId": "huckleberry",
-    "assets": [
-      "USDC",
-      "USDT"
-    ],
+    "assets": ["USDC", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -405,10 +371,7 @@
     "oracleId": "solarbeam-solar-rib",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "RIB",
-      "SOLAR"
-    ],
+    "assets": ["RIB", "SOLAR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -438,9 +401,7 @@
     "oracleId": "FINN",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": [
-      "FINN"
-    ],
+    "assets": ["FINN"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -469,10 +430,7 @@
     "oracleId": "finn-eth-finn",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": [
-      "ETH",
-      "FINN"
-    ],
+    "assets": ["ETH", "FINN"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -503,10 +461,7 @@
     "oracleId": "finn-wan-finn",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": [
-      "WAN",
-      "FINN"
-    ],
+    "assets": ["WAN", "FINN"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -537,10 +492,7 @@
     "oracleId": "sushi-mr-frax-usdc",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": [
-      "FRAX",
-      "USDC"
-    ],
+    "assets": ["FRAX", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -571,10 +523,7 @@
     "oracleId": "sushi-mr-eth-wmovr",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": [
-      "ETH",
-      "WMOVR_SUSHI"
-    ],
+    "assets": ["ETH", "WMOVR_SUSHI"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -604,10 +553,7 @@
     "oracleId": "sushi-mr-usdt-usdc",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": [
-      "USDT",
-      "USDC"
-    ],
+    "assets": ["USDT", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -637,10 +583,7 @@
     "oracleId": "finn-finn-doge",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": [
-      "DOGE",
-      "FINN"
-    ],
+    "assets": ["DOGE", "FINN"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -670,9 +613,7 @@
     "oracleId": "SOLAR",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "SOLAR"
-    ],
+    "assets": ["SOLAR"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -701,10 +642,7 @@
     "oracleId": "finn-usdc.m-usdc",
     "status": "active",
     "platformId": "huckleberry",
-    "assets": [
-      "USDC",
-      "USDCm"
-    ],
+    "assets": ["USDC", "USDCm"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -734,10 +672,7 @@
     "oracleId": "sushi-mr-mim-wmovr",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "MIM",
-      "WMOVR_SUSHI"
-    ],
+    "assets": ["MIM", "WMOVR_SUSHI"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -769,10 +704,7 @@
     "oracleId": "sushi-mr-eth-bnb",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "ETH",
-      "BNBbsc"
-    ],
+    "assets": ["ETH", "BNBbsc"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -803,10 +735,7 @@
     "oracleId": "solarbeam-frax-rome",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "ROME",
-      "FRAX"
-    ],
+    "assets": ["ROME", "FRAX"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -837,10 +766,7 @@
     "oracleId": "finn-wbtc-wmovr",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": [
-      "WBTC",
-      "MOVR"
-    ],
+    "assets": ["WBTC", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -871,10 +797,7 @@
     "oracleId": "finn-wan-wmovr",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": [
-      "WAN",
-      "MOVR"
-    ],
+    "assets": ["WAN", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -905,10 +828,7 @@
     "oracleId": "finn-finn-usdt",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": [
-      "FINN",
-      "USDT"
-    ],
+    "assets": ["FINN", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -939,10 +859,7 @@
     "oracleId": "finn-finn-avax",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": [
-      "AVAX",
-      "FINN"
-    ],
+    "assets": ["AVAX", "FINN"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -973,10 +890,7 @@
     "oracleId": "finn-finn-xrp",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": [
-      "XRP",
-      "FINN"
-    ],
+    "assets": ["XRP", "FINN"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1007,10 +921,7 @@
     "oracleId": "solarbeam-matic-wmovr",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "MATIC",
-      "MOVR"
-    ],
+    "assets": ["MATIC", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1041,10 +952,7 @@
     "oracleId": "solarbeam-wmovr-rib",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "RIB",
-      "MOVR"
-    ],
+    "assets": ["RIB", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1075,10 +983,7 @@
     "oracleId": "solarbeam-wmovr-relay",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "RELAY",
-      "MOVR"
-    ],
+    "assets": ["RELAY", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1109,10 +1014,7 @@
     "oracleId": "solarbeam-pets-wmovr",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "PETS",
-      "MOVR"
-    ],
+    "assets": ["PETS", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1143,10 +1045,7 @@
     "oracleId": "solarbeam-busd-usdc",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "BUSD",
-      "USDC"
-    ],
+    "assets": ["BUSD", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1177,10 +1076,7 @@
     "oracleId": "finn-dot-finn",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": [
-      "FINN",
-      "DOT"
-    ],
+    "assets": ["FINN", "DOT"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1211,10 +1107,7 @@
     "oracleId": "solarbeam-mim-wmovr",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "MIM",
-      "MOVR"
-    ],
+    "assets": ["MIM", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1246,10 +1139,7 @@
     "oracleId": "solarbeam-wmovr-mai",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "MAI",
-      "MOVR"
-    ],
+    "assets": ["MAI", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1281,10 +1171,7 @@
     "oracleId": "solarbeam-mim-usdc",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "MIM",
-      "USDC"
-    ],
+    "assets": ["MIM", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1316,10 +1203,7 @@
     "oracleId": "solarbeam-bnb-busd",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "BNB",
-      "BUSD"
-    ],
+    "assets": ["BNB", "BUSD"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1350,10 +1234,7 @@
     "oracleId": "solarbeam-avax-wmovr",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "AVAX",
-      "MOVR"
-    ],
+    "assets": ["AVAX", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1384,10 +1265,7 @@
     "oracleId": "finn-finn-xcrmrk",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": [
-      "xcRMRK",
-      "FINN"
-    ],
+    "assets": ["xcRMRK", "FINN"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1418,10 +1296,7 @@
     "oracleId": "finn-finn-xcksm",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": [
-      "xcKSM",
-      "FINN"
-    ],
+    "assets": ["xcKSM", "FINN"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1452,10 +1327,7 @@
     "oracleId": "finn-usdc.m-wmovr",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": [
-      "USDC",
-      "MOVR"
-    ],
+    "assets": ["USDC", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1486,10 +1358,7 @@
     "oracleId": "finn-usdc-finn",
     "status": "eol",
     "platformId": "huckleberry",
-    "assets": [
-      "FINN",
-      "USDC"
-    ],
+    "assets": ["FINN", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1520,12 +1389,7 @@
     "oracleId": "solarbeam-frax-3pool",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": [
-      "FRAX",
-      "USDC",
-      "BUSD",
-      "USDT"
-    ],
+    "assets": ["FRAX", "USDC", "BUSD", "USDT"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1557,10 +1421,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "solarbeam",
-    "assets": [
-      "xcKSM",
-      "stKSM"
-    ],
+    "assets": ["xcKSM", "stKSM"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1590,10 +1451,7 @@
     "oracleId": "solarbeam-wmovr-xcksm",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": [
-      "xcKSM",
-      "MOVR"
-    ],
+    "assets": ["xcKSM", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1623,11 +1481,7 @@
     "oracleId": "solarbeam-3pool",
     "status": "active",
     "platformId": "solarbeam",
-    "assets": [
-      "USDC",
-      "BUSD",
-      "USDT"
-    ],
+    "assets": ["USDC", "BUSD", "USDT"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1657,10 +1511,7 @@
     "oracleId": "solarbeam-frax-wmovr-2",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "FRAX",
-      "MOVR"
-    ],
+    "assets": ["FRAX", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1691,10 +1542,7 @@
     "oracleId": "solarbeam-bnb-wmovr",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "BNB",
-      "MOVR"
-    ],
+    "assets": ["BNB", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1725,10 +1573,7 @@
     "oracleId": "solarbeam-solar-usdc",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "SOLAR",
-      "USDC"
-    ],
+    "assets": ["SOLAR", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1759,10 +1604,7 @@
     "oracleId": "solarbeam-eth-usdc",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "ETH",
-      "USDC"
-    ],
+    "assets": ["ETH", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1793,10 +1635,7 @@
     "oracleId": "solarbeam-wbtc-usdc",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "WBTC",
-      "USDC"
-    ],
+    "assets": ["WBTC", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1827,10 +1666,7 @@
     "oracleId": "solarbeam-wmovr-ftm",
     "status": "eol",
     "platformId": "solarbeam",
-    "assets": [
-      "FTM",
-      "MOVR"
-    ],
+    "assets": ["FTM", "MOVR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",

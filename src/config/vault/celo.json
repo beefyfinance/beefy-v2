@@ -14,9 +14,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
@@ -43,9 +41,7 @@
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "assets": [
-      "BIFI"
-    ],
+    "assets": ["BIFI"],
     "strategyTypeId": "maxi",
     "risks": [
       "COMPLEXITY_LOW",
@@ -74,10 +70,7 @@
     "status": "eol",
     "platformId": "sushiswap",
     "retireReason": "rewards",
-    "assets": [
-      "USDT",
-      "WETH"
-    ],
+    "assets": ["USDT", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -108,10 +101,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "sushiswap",
-    "assets": [
-      "DAI",
-      "WETH"
-    ],
+    "assets": ["DAI", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -142,10 +132,7 @@
     "oracleId": "sushi-celo-cusd-usdc",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": [
-      "cUSD",
-      "USDC"
-    ],
+    "assets": ["cUSD", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -175,10 +162,7 @@
     "oracleId": "sushi-celo-wethv2-celo",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": [
-      "CELO",
-      "WETH"
-    ],
+    "assets": ["CELO", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -208,10 +192,7 @@
     "oracleId": "sushi-celo-wethv2-cusd",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": [
-      "cUSD",
-      "WETH"
-    ],
+    "assets": ["cUSD", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -241,10 +222,7 @@
     "oracleId": "sushi-celo-cusd-ceurv2",
     "status": "active",
     "platformId": "sushiswap",
-    "assets": [
-      "cUSD",
-      "cEUR"
-    ],
+    "assets": ["cUSD", "cEUR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -274,10 +252,7 @@
     "oracleId": "sushi-celo-celo-weth",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "CELO",
-      "WETH"
-    ],
+    "assets": ["CELO", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -308,10 +283,7 @@
     "oracleId": "sushi-celo-cusd-dai",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "cUSD",
-      "DAI"
-    ],
+    "assets": ["cUSD", "DAI"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -343,10 +315,7 @@
     "oracleId": "sushi-celo-ceur-weth",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "cEUR",
-      "WETH"
-    ],
+    "assets": ["cEUR", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -377,10 +346,7 @@
     "oracleId": "sushi-celo-cusd-ceur",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "cUSD",
-      "cEUR"
-    ],
+    "assets": ["cUSD", "cEUR"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -411,10 +377,7 @@
     "oracleId": "sushi-celo-celo-mobi",
     "status": "eol",
     "platformId": "sushiswap",
-    "assets": [
-      "CELO",
-      "MOBI"
-    ],
+    "assets": ["CELO", "MOBI"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
