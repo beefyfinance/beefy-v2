@@ -150,3 +150,8 @@ export function featureFlag_simulateBeefyApiError(
     return chainIds.includes(key);
   }
 }
+
+export function featureFlag_breakpoints() {
+  const params = new URLSearchParams(window.location.search);
+  return params.has('__breakpoints');
+}
