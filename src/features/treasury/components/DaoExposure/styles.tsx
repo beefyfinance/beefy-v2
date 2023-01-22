@@ -29,7 +29,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     gap: '12px',
     marginBottom: '16px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: '24px',
     },
   },

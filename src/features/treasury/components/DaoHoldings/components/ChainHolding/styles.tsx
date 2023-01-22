@@ -31,7 +31,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
   },
   chainName: { color: theme.palette.text.primary },
-  usdValue: { color: theme.palette.text.disabled },
+  usdValue: { color: theme.palette.text.primary },
   'headerNetwork-bsc': {
     backgroundColor: 'rgba(240, 185, 11, 0.2)',
   },
