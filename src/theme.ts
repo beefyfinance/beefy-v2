@@ -1,6 +1,5 @@
 import { createTheme, ThemeOptions } from '@material-ui/core/styles';
 import { TypographyStyleOptions } from '@material-ui/core/styles/createTypography';
-import { Theme } from '@material-ui/core';
 import { featureFlag_breakpoints } from './features/data/utils/feature-flags';
 
 const fontStack = [
