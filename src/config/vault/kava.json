@@ -14,7 +14,6 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["DAI", "USDC", "USDT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -24,10 +23,11 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
+    "strategyTypeId": "lp",
     "addLiquidityUrl": "https://kava.curve.fi/factory/0/deposit",
+    "removeLiquidityUrl": "https://kava.curve.fi/factory/0/withdraw",
     "network": "kava",
-    "createdAt": 1665750277,
-    "removeLiquidityUrl": "https://kava.curve.fi/factory/0/withdraw"
+    "createdAt": 1665750277
   },
   {
     "id": "sushi-kava-wkava-usdc",
@@ -44,13 +44,13 @@
     "status": "active",
     "platformId": "sushiswap",
     "assets": ["USDC", "KAVA"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MEDIUM", "AUDIT"],
-    "addLiquidityUrl": "https://www.sushi.com/earn/kava:0x88395b86cf9787e131d2fb5462a22b44056bf574/add",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap",
+    "addLiquidityUrl": "https://www.sushi.com/earn/kava:0x88395b86cf9787e131d2fb5462a22b44056bf574/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0x88395b86cf9787e131d2fb5462a22b44056bf574/remove",
     "network": "kava",
-    "createdAt": 1666033971,
-    "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0x88395b86cf9787e131d2fb5462a22b44056bf574/remove"
+    "createdAt": 1666033971
   },
   {
     "id": "sushi-kava-sushi-wkava",
@@ -67,13 +67,13 @@
     "status": "active",
     "platformId": "sushiswap",
     "assets": ["SUSHI", "KAVA"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "AUDIT"],
-    "addLiquidityUrl": "https://www.sushi.com/earn/kava:0x52089cd962a5665498aea8d57576e2d3f68eb47d/add",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap",
+    "addLiquidityUrl": "https://www.sushi.com/earn/kava:0x52089cd962a5665498aea8d57576e2d3f68eb47d/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0x52089cd962a5665498aea8d57576e2d3f68eb47d/remove",
     "network": "kava",
-    "createdAt": 1666033970,
-    "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0x52089cd962a5665498aea8d57576e2d3f68eb47d/remove"
+    "createdAt": 1666033970
   },
   {
     "id": "sushi-kava-wbtc-eth",
@@ -90,13 +90,13 @@
     "status": "active",
     "platformId": "sushiswap",
     "assets": ["WBTC", "ETH"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "AUDIT"],
-    "addLiquidityUrl": "https://www.sushi.com/earn/kava:0x8070cfc234c4b7f3ec2ae873885390973f5b15c0/add",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap",
+    "addLiquidityUrl": "https://www.sushi.com/earn/kava:0x8070cfc234c4b7f3ec2ae873885390973f5b15c0/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0x8070cfc234c4b7f3ec2ae873885390973f5b15c0/remove",
     "network": "kava",
-    "createdAt": 1666033969,
-    "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0x8070cfc234c4b7f3ec2ae873885390973f5b15c0/remove"
+    "createdAt": 1666033969
   },
   {
     "id": "sushi-kava-wkava-eth",
@@ -113,13 +113,13 @@
     "status": "active",
     "platformId": "sushiswap",
     "assets": ["ETH", "KAVA"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "AUDIT"],
-    "addLiquidityUrl": "https://www.sushi.com/earn/kava:0xe9c40af74fcfb85b38db2a74a7d5d22d731660f5/add",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap",
+    "addLiquidityUrl": "https://www.sushi.com/earn/kava:0xe9c40af74fcfb85b38db2a74a7d5d22d731660f5/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0xe9c40af74fcfb85b38db2a74a7d5d22d731660f5/remove",
     "network": "kava",
-    "createdAt": 1666033968,
-    "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0xe9c40af74fcfb85b38db2a74a7d5d22d731660f5/remove"
+    "createdAt": 1666033968
   },
   {
     "id": "sushi-kava-usdt-wkava",
@@ -137,12 +137,12 @@
     "retireReason": "rewards",
     "platformId": "sushiswap",
     "assets": ["USDT", "KAVA"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MEDIUM", "AUDIT"],
-    "addLiquidityUrl": "https://www.sushi.com/earn/kava:0x5b3b7e769ebb5f35262b1ce532f230ed4ebb9c51/add",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap",
+    "addLiquidityUrl": "https://www.sushi.com/earn/kava:0x5b3b7e769ebb5f35262b1ce532f230ed4ebb9c51/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0x5b3b7e769ebb5f35262b1ce532f230ed4ebb9c51/remove",
     "network": "kava",
-    "createdAt": 1666033967,
-    "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0x5b3b7e769ebb5f35262b1ce532f230ed4ebb9c51/remove"
+    "createdAt": 1666033967
   }
 ]
