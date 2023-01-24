@@ -3,7 +3,7 @@
   "homepage": "/",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "@babel/runtime": "^7.17.2",
     "@clover-network/clover-connector": "^1.0.0",
@@ -59,11 +59,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "echo 'DO NOT disable validation on build, fix underlying issue' && yarn validate && react-scripts build",
-    "validate": "node --es-module-specifier-resolution=node --loader ts-node/esm ./scripts/validatePools.ts",
-    "creationdate": "node --es-module-specifier-resolution=node --loader ts-node/esm ./scripts/getPoolCreationTimestamp.ts",
-    "launchpool": "node --es-module-specifier-resolution=node --loader ts-node/esm ./scripts/launchpool.ts",
-    "vault": "node --es-module-specifier-resolution=node --loader ts-node/esm ./scripts/addVault.ts",
-    "migratePlatform": "node --es-module-specifier-resolution=node --loader ts-node/esm ./scripts/migratePlatform.ts",
+    "validate": "ts-node ./scripts/validatePools.ts",
+    "creationdate": "ts-node ./scripts/getPoolCreationTimestamp.ts",
+    "launchpool": "ts-node ./scripts/launchpool.ts",
+    "vault": "ts-node ./scripts/addVault.ts",
+    "migratePlatform": "ts-node ./scripts/migratePlatform.ts",
     "checkOneInchLiquidity": "ts-node scripts/checkOneInchLiquidity.ts",
     "test": "TZ=UTC react-scripts test",
     "eject": "react-scripts eject",
@@ -130,7 +130,7 @@
     "p-queue": "^6.6.2",
     "prettier": "^2.3.2",
     "source-map-explorer": "^2.5.2",
-    "ts-node": "^10.4.0",
+    "ts-node": "^10.8.2",
     "typescript": "^4.4.4"
   },
   "lint-staged": {
