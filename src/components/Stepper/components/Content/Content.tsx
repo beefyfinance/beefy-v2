@@ -125,12 +125,9 @@ const ZapSuccessContent = memo<SuccessContentProps>(function ({ step }) {
   return (
     <SuccessContentDisplay
       title={t(`Stepper-${step.step}-Success-Title`)}
-      message={
-        <Trans
-          t={t}
-          i18nKey={`Stepper-${step.step}-Success-Content${dust ? '-Dust' : ''}`}
-          components={dust ? { dust } : undefined}
-        />
+      message={t(`Stepper-${step.step}-Success-Content`)}
+      messageHighlight={
+        dust ? <Trans t={t} i18nKey={`Stepper-Dust`} components={{ dust }} /> : undefined
       }
       rememberTitle={step.step === 'zap-in' ? t('Remember') : undefined}
       rememberMessage={step.step === 'zap-in' ? t('Remember-Msg') : undefined}
@@ -195,12 +192,14 @@ const FallbackSuccessContent = memo<SuccessContentProps>(function ({ step }) {
 type SuccessContentDisplayProps = {
   title: string;
   message: ReactNode;
+  messageHighlight?: ReactNode;
   rememberTitle?: string;
   rememberMessage?: ReactNode;
 };
 const SuccessContentDisplay = memo<SuccessContentDisplayProps>(function ({
   title,
   message,
+  messageHighlight,
   rememberTitle,
   rememberMessage,
 }) {
@@ -211,6 +210,9 @@ const SuccessContentDisplay = memo<SuccessContentDisplayProps>(function ({
       <Title text={title} />
       <div className={clsx(classes.content, classes.successContent)}>
         <div className={classes.message}>{message}</div>
+        {messageHighlight ? (
+          <div className={classes.messageHighlight}>{messageHighlight}</div>
+        ) : null}
         <TransactionLink />
       </div>
       {rememberTitle && rememberMessage ? (
