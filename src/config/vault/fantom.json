@@ -132,7 +132,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equalizer.exchange/swap",
     "addLiquidityUrl": "https://equalizer.exchange/liquidity/",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1670954581
   },
@@ -155,7 +155,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equalizer.exchange/swap",
     "addLiquidityUrl": "https://equalizer.exchange/liquidity/",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1672282535
   },
@@ -178,7 +178,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equalizer.exchange/swap",
     "addLiquidityUrl": "https://equalizer.exchange/liquidity/",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1670954581
   },
@@ -201,7 +201,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equalizer.exchange/swap",
     "addLiquidityUrl": "https://equalizer.exchange/liquidity/",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1672879653
   },
@@ -224,7 +224,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equalizer.exchange/swap",
     "addLiquidityUrl": "https://equalizer.exchange/liquidity/",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1670954581
   },
@@ -247,7 +247,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equalizer.exchange/swap",
     "addLiquidityUrl": "https://equalizer.exchange/liquidity/",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1670954581
   },
@@ -392,7 +392,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1663344351
   },
@@ -415,7 +415,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1663344351
   },
@@ -438,7 +438,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1661861505
   },
@@ -461,7 +461,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1663195422
   },
@@ -485,7 +485,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1661861505
   },
@@ -508,7 +508,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1661861505
   },
@@ -538,7 +538,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1661797856
   },
@@ -569,7 +569,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1661797856
   },
@@ -599,7 +599,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1661797856
   },
@@ -622,7 +622,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1661599179
   },
@@ -645,7 +645,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1661599179
   },
@@ -668,7 +668,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1661599179
   },
@@ -698,7 +698,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1661531654
   },
@@ -728,7 +728,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1661531655
   },
@@ -751,7 +751,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1661531656
   },
@@ -774,7 +774,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1661531657
   },
@@ -797,7 +797,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1661531658
   },
@@ -820,7 +820,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap/FTM/BIFI",
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1661531659
   },
@@ -2990,7 +2990,7 @@
     "depositFee": "0.5%",
     "buyTokenUrl": "https://spooky.fi/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xAd84341756Bf337f5a0164515b1f6F993D194E1f",
     "addLiquidityUrl": "https://stakesteak.app/",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
     "network": "fantom",
     "createdAt": 1631357355
   },

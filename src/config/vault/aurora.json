@@ -413,7 +413,7 @@
     ],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.rose.fi/#/farms/mai",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://app.rose.fi/#/pools/mai",
     "network": "aurora",
     "createdAt": 1650375700
   },
@@ -652,7 +652,7 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED", "ALGO_STABLE"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.rose.fi/#/farms/ust",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://app.rose.fi/#/pools/ust",
     "network": "aurora",
     "createdAt": 1649955343
   },

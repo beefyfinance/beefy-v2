@@ -741,7 +741,7 @@
     ],
     "strategyTypeId": "glp-gmx",
     "addLiquidityUrl": "https://app.gmx.io/#/buy_glp/?ref=beefy",
-    "removeLiquidityUrl": "TBD",
+    "removeLiquidityUrl": "https://app.gmx.io/#/buy_glp/#redeem",
     "network": "arbitrum",
     "createdAt": 1666793250
   },

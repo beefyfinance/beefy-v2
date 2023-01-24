@@ -24,6 +24,7 @@ import { VaultFees } from '../VaultFees';
 import { WithdrawActions } from '../WithdrawActions';
 import { StakedInBoost } from '../StakedInboost';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
+import { WithdrawLinks } from '../WithDrawLinks';
 
 const useStyles = makeStyles(styles);
 
@@ -89,6 +90,7 @@ export const WithdrawForm = memo(function WithdrawForm() {
         <WithdrawTokenAmountInput />
       </div>
       <TransactQuote title={t('Transact-YouWithdraw')} className={classes.quote} />
+      <WithdrawLinks className={classes.links} />
       <div className={classes.actions}>
         <WithdrawActions />
       </div>

@@ -234,6 +234,7 @@
   "Transact-Max": "Max",
   "Transact-BuyTkn": "Buy Token",
   "Transact-AddLiquidity": "Add Liquidity",
+  "Transact-RemoveLiquidity": "Remove Liquidity",
   "Transact-Bridge": "Bridge BIFI",
   "Transactn-EnRoute": "Funds are on the way",
   "Transactn-View": "View on Explorer",
