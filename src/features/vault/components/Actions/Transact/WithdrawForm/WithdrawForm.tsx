@@ -89,8 +89,8 @@ export const WithdrawForm = memo(function WithdrawForm() {
         <TokenSelectButton />
         <WithdrawTokenAmountInput />
       </div>
-      <TransactQuote title={t('Transact-YouWithdraw')} className={classes.quote} />
       <WithdrawLinks className={classes.links} />
+      <TransactQuote title={t('Transact-YouWithdraw')} className={classes.quote} />
       <div className={classes.actions}>
         <WithdrawActions />
       </div>
