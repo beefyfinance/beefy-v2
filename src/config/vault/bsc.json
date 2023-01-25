@@ -12869,8 +12869,8 @@
     "platformId": "ellipsis",
     "assets": ["pBTC", "renBTC", "BTCB"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://ellipsis.finance/pool",
-    "removeLiquidityUrl": "https://ellipsis.finance/pool",
+    "addLiquidityUrl": "https://ellipsis.finance/pool/0x60E4ED61C6f17972559E86F2125BF8A30f249088",
+    "removeLiquidityUrl": "https://ellipsis.finance/pool/0x60E4ED61C6f17972559E86F2125BF8A30f249088",
     "network": "bsc",
     "createdAt": 1625591426
   },
@@ -14602,8 +14602,8 @@
     "platformId": "ellipsis",
     "assets": ["USDN", "USDC", "USDT", "BUSD"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://ellipsis.finance/pool",
-    "removeLiquidityUrl": "https://ellipsis.finance/pool",
+    "addLiquidityUrl": "https://ellipsis.finance/pool/0x2f8E25C21A17BD9D0C337e1b409e73bc959B41BE",
+    "removeLiquidityUrl": "https://ellipsis.finance/pool/0x2f8E25C21A17BD9D0C337e1b409e73bc959B41BE",
     "network": "bsc",
     "createdAt": 1626784750
   },
@@ -16550,8 +16550,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://ellipsis.finance/pool/btceps",
-    "removeLiquidityUrl": "https://ellipsis.finance/pool/btceps",
+    "addLiquidityUrl": "https://ellipsis.finance/pool/0x2477fB288c5b4118315714ad3c7Fd7CC69b00bf9",
+    "removeLiquidityUrl": "https://ellipsis.finance/pool/0x2477fB288c5b4118315714ad3c7Fd7CC69b00bf9",
     "network": "bsc",
     "createdAt": 1618661786
   },
@@ -16572,8 +16572,8 @@
     "platformId": "ellipsis",
     "assets": ["fUSDT", "USDT", "BUSD", "USDC"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://ellipsis.finance/pool",
-    "removeLiquidityUrl": "https://ellipsis.finance/pool",
+    "addLiquidityUrl": "https://ellipsis.finance/pool/0x556ea0b4c06D043806859c9490072FaadC104b63",
+    "removeLiquidityUrl": "https://ellipsis.finance/pool/0x556ea0b4c06D043806859c9490072FaadC104b63",
     "network": "bsc",
     "createdAt": 1618658840
   },
@@ -16595,8 +16595,8 @@
     "assets": ["USDT", "BUSD", "USDC", "3EPS"],
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xe9e7cea3dedca5984780bafc599bd69add087d56",
-    "addLiquidityUrl": "https://ellipsis.finance/pool",
-    "removeLiquidityUrl": "https://ellipsis.finance/pool",
+    "addLiquidityUrl": "https://ellipsis.finance/pool/0x160caed03795365f3a589f10c379ffa7d75d4e76",
+    "removeLiquidityUrl": "https://ellipsis.finance/pool/0x160caed03795365f3a589f10c379ffa7d75d4e76",
     "network": "bsc",
     "createdAt": 1616851506
   },
