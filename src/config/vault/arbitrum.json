@@ -23,8 +23,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316",
-    "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316",
+    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/invest",
+    "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/withdraw",
     "network": "arbitrum",
     "createdAt": 1673731740
   },
@@ -798,8 +798,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/USDC/ETH",
-    "addLiquidityUrl": "https://stargate.finance/pool/eth-arbitrum",
-    "removeLiquidityUrl": "https://stargate.finance/pool/eth-arbitrum",
+    "addLiquidityUrl": "https://stargate.finance/pool/eth-arbitrum/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/eth-arbitrum/remove",
     "network": "arbitrum",
     "createdAt": 1663851113
   },
@@ -828,8 +828,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xfb5e6d0c1dfed2ba000fbc040ab8df3615ac329c000000000000000000000159",
-    "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xfb5e6d0c1dfed2ba000fbc040ab8df3615ac329c000000000000000000000159",
+    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xfb5e6d0c1dfed2ba000fbc040ab8df3615ac329c000000000000000000000159/invest",
+    "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xfb5e6d0c1dfed2ba000fbc040ab8df3615ac329c000000000000000000000159/withdraw",
     "network": "arbitrum",
     "createdAt": 1665023340
   },
@@ -857,8 +857,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x178e029173417b1f9c8bc16dcec6f697bc323746000200000000000000000158",
-    "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x178e029173417b1f9c8bc16dcec6f697bc323746000200000000000000000158",
+    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x178e029173417b1f9c8bc16dcec6f697bc323746000200000000000000000158/invest",
+    "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x178e029173417b1f9c8bc16dcec6f697bc323746000200000000000000000158/withdraw",
     "network": "arbitrum",
     "createdAt": 1665023340
   },
@@ -886,8 +886,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba",
-    "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba",
+    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/invest",
+    "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/withdraw",
     "network": "arbitrum",
     "createdAt": 1665023339
   },
@@ -916,8 +916,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/USDC",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDC-ARBITRUM",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDC-ARBITRUM",
+    "addLiquidityUrl": "https://stargate.finance/pool/USDC-ARBITRUM/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/USDC-ARBITRUM/remove",
     "network": "arbitrum",
     "createdAt": 1663851112
   },
@@ -946,8 +946,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/USDT",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDT-ARBITRUM",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDT-ARBITRUM",
+    "addLiquidityUrl": "https://stargate.finance/pool/USDT-ARBITRUM/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/USDT-ARBITRUM/remove",
     "network": "arbitrum",
     "createdAt": 1663851111
   },
@@ -1066,8 +1066,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x64541216bafffeec8ea535bb71fbc927831d0595000100000000000000000002",
-    "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x64541216bafffeec8ea535bb71fbc927831d0595000100000000000000000002",
+    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x64541216bafffeec8ea535bb71fbc927831d0595000100000000000000000002/invest",
+    "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x64541216bafffeec8ea535bb71fbc927831d0595000100000000000000000002/withdraw",
     "network": "arbitrum",
     "createdAt": 1656454475
   },

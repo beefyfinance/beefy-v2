@@ -130,8 +130,8 @@
     ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
-    "addLiquidityUrl": "undefined/0x421a018cc5839c4c0300afb21c725776dc389b1a",
-    "removeLiquidityUrl": "undefined/0x421a018cc5839c4c0300afb21c725776dc389b1a",
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x421a018cc5839c4c0300afb21c725776dc389b1a",
+    "removeLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x421a018cc5839c4c0300afb21c725776dc389b1a",
     "network": "polygon",
     "createdAt": 1664033343
   },
@@ -153,8 +153,8 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_MEDIUM", "IL_HIGH", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
-    "addLiquidityUrl": "undefined/0xc9e4a017ae5c2f89c085c534a38a3e6d3a183a43",
-    "removeLiquidityUrl": "undefined/0xc9e4a017ae5c2f89c085c534a38a3e6d3a183a43",
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity/0xc9e4a017ae5c2f89c085c534a38a3e6d3a183a43",
+    "removeLiquidityUrl": "https://www.dystopia.exchange/liquidity/0xc9e4a017ae5c2f89c085c534a38a3e6d3a183a43",
     "network": "polygon",
     "createdAt": 1663633681
   },
@@ -183,8 +183,8 @@
     ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
-    "addLiquidityUrl": "undefined/0x6f2fed287e47590b7702f9d331344c7dacbacfe5",
-    "removeLiquidityUrl": "undefined/0x6f2fed287e47590b7702f9d331344c7dacbacfe5",
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x6f2fed287e47590b7702f9d331344c7dacbacfe5",
+    "removeLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x6f2fed287e47590b7702f9d331344c7dacbacfe5",
     "network": "polygon",
     "createdAt": 1663633680
   },
@@ -214,8 +214,8 @@
     ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
-    "addLiquidityUrl": "undefined/0x1a5feba5d5846b3b840312bd04d76ddaa6220170",
-    "removeLiquidityUrl": "undefined/0x1a5feba5d5846b3b840312bd04d76ddaa6220170",
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x1a5feba5d5846b3b840312bd04d76ddaa6220170",
+    "removeLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x1a5feba5d5846b3b840312bd04d76ddaa6220170",
     "network": "polygon",
     "createdAt": 1663633679
   },
@@ -237,8 +237,8 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "IL_HIGH", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
-    "addLiquidityUrl": "undefined/0x60c088234180b36edcec7aa8aa23912bb6bed114",
-    "removeLiquidityUrl": "undefined/0x60c088234180b36edcec7aa8aa23912bb6bed114",
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x60c088234180b36edcec7aa8aa23912bb6bed114",
+    "removeLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x60c088234180b36edcec7aa8aa23912bb6bed114",
     "network": "polygon",
     "createdAt": 1662740322
   },
@@ -261,8 +261,8 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "IL_HIGH", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
-    "addLiquidityUrl": "undefined/0x62fc1e1fdabc0c9f2b096019e2d98204da049457",
-    "removeLiquidityUrl": "undefined/0x62fc1e1fdabc0c9f2b096019e2d98204da049457",
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x62fc1e1fdabc0c9f2b096019e2d98204da049457",
+    "removeLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x62fc1e1fdabc0c9f2b096019e2d98204da049457",
     "network": "polygon",
     "createdAt": 1662740322
   },
@@ -285,8 +285,8 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "IL_HIGH", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
-    "addLiquidityUrl": "undefined/0xce1923d2242bba540f1d56c8e23b1fbeae2596dc",
-    "removeLiquidityUrl": "undefined/0xce1923d2242bba540f1d56c8e23b1fbeae2596dc",
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity/0xce1923d2242bba540f1d56c8e23b1fbeae2596dc",
+    "removeLiquidityUrl": "https://www.dystopia.exchange/liquidity/0xce1923d2242bba540f1d56c8e23b1fbeae2596dc",
     "network": "polygon",
     "createdAt": 1662740322
   },
@@ -316,8 +316,8 @@
     ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
-    "addLiquidityUrl": "undefined/0x53227c83a98ba1035fed912da6ce26a0c11c7c66",
-    "removeLiquidityUrl": "undefined/0x53227c83a98ba1035fed912da6ce26a0c11c7c66",
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x53227c83a98ba1035fed912da6ce26a0c11c7c66",
+    "removeLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x53227c83a98ba1035fed912da6ce26a0c11c7c66",
     "network": "polygon",
     "createdAt": 1661967482
   },
@@ -345,8 +345,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDC-MATIC",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDC-MATIC",
+    "addLiquidityUrl": "https://stargate.finance/pool/USDC-MATIC/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/USDC-MATIC/remove",
     "network": "polygon",
     "createdAt": 1658491884
   },
@@ -374,8 +374,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDT-MATIC",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDT-MATIC",
+    "addLiquidityUrl": "https://stargate.finance/pool/USDT-MATIC/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/USDT-MATIC/remove",
     "network": "polygon",
     "createdAt": 1658491800
   },
@@ -397,8 +397,8 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "IL_NONE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
-    "addLiquidityUrl": "undefined/0x1237fea0b26f68191d50900bffd85e142697c423",
-    "removeLiquidityUrl": "undefined/0x1237fea0b26f68191d50900bffd85e142697c423",
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x1237fea0b26f68191d50900bffd85e142697c423",
+    "removeLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x1237fea0b26f68191d50900bffd85e142697c423",
     "network": "polygon",
     "createdAt": 1661140278
   },
@@ -421,8 +421,8 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_MEDIUM", "IL_NONE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
-    "addLiquidityUrl": "undefined/0xadb2395fec4d096b5086d3daf8b33f9f7568ba25",
-    "removeLiquidityUrl": "undefined/0xadb2395fec4d096b5086d3daf8b33f9f7568ba25",
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity/0xadb2395fec4d096b5086d3daf8b33f9f7568ba25",
+    "removeLiquidityUrl": "https://www.dystopia.exchange/liquidity/0xadb2395fec4d096b5086d3daf8b33f9f7568ba25",
     "network": "polygon",
     "createdAt": 1661140278
   },
@@ -445,8 +445,8 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
-    "addLiquidityUrl": "undefined/0x1e08a5b6a1694bc1a65395db6f4c506498daa349",
-    "removeLiquidityUrl": "undefined/0x1e08a5b6a1694bc1a65395db6f4c506498daa349",
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x1e08a5b6a1694bc1a65395db6f4c506498daa349",
+    "removeLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x1e08a5b6a1694bc1a65395db6f4c506498daa349",
     "network": "polygon",
     "createdAt": 1661039365
   },
@@ -476,8 +476,8 @@
     ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
-    "addLiquidityUrl": "undefined/0x3f54c58092e9735ad23cf296ee3af81f5a44a5bc",
-    "removeLiquidityUrl": "undefined/0x3f54c58092e9735ad23cf296ee3af81f5a44a5bc",
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x3f54c58092e9735ad23cf296ee3af81f5a44a5bc",
+    "removeLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x3f54c58092e9735ad23cf296ee3af81f5a44a5bc",
     "network": "polygon",
     "createdAt": 1661039366
   },
@@ -622,8 +622,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x0297e37f1873d2dab4487aa67cd56b58e2f27875000100000000000000000002",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x0297e37f1873d2dab4487aa67cd56b58e2f27875000100000000000000000002",
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x0297e37f1873d2dab4487aa67cd56b58e2f27875000100000000000000000002/invest",
+    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x0297e37f1873d2dab4487aa67cd56b58e2f27875000100000000000000000002/withdraw",
     "network": "polygon",
     "createdAt": 1657732482
   },
@@ -652,8 +652,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x36128d5436d2d70cab39c9af9cce146c38554ff0000100000000000000000008",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x36128d5436d2d70cab39c9af9cce146c38554ff0000100000000000000000008",
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x36128d5436d2d70cab39c9af9cce146c38554ff0000100000000000000000008/invest",
+    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x36128d5436d2d70cab39c9af9cce146c38554ff0000100000000000000000008/withdraw",
     "network": "polygon",
     "createdAt": 1657731764
   },
@@ -682,8 +682,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xce66904b68f1f070332cbc631de7ee98b650b499000100000000000000000009",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xce66904b68f1f070332cbc631de7ee98b650b499000100000000000000000009",
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xce66904b68f1f070332cbc631de7ee98b650b499000100000000000000000009/invest",
+    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xce66904b68f1f070332cbc631de7ee98b650b499000100000000000000000009/withdraw",
     "network": "polygon",
     "createdAt": 1657712890
   },
@@ -740,8 +740,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4",
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4/invest",
+    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4/withdraw",
     "network": "polygon",
     "createdAt": 1656705594
   },
@@ -769,8 +769,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xb20fc01d21a50d2c734c4a1262b4404d41fa7bf000000000000000000000075c",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xb20fc01d21a50d2c734c4a1262b4404d41fa7bf000000000000000000000075c",
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xb20fc01d21a50d2c734c4a1262b4404d41fa7bf000000000000000000000075c/invest",
+    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xb20fc01d21a50d2c734c4a1262b4404d41fa7bf000000000000000000000075c/withdraw",
     "network": "polygon",
     "createdAt": 1664553072
   },
@@ -798,8 +798,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x8159462d255c1d24915cb51ec361f700174cd99400000000000000000000075d",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x8159462d255c1d24915cb51ec361f700174cd99400000000000000000000075d",
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x8159462d255c1d24915cb51ec361f700174cd99400000000000000000000075d/invest",
+    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x8159462d255c1d24915cb51ec361f700174cd99400000000000000000000075d/withdraw",
     "network": "polygon",
     "createdAt": 1664553071
   },
@@ -828,8 +828,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366",
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366/invest",
+    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366/withdraw",
     "network": "polygon",
     "createdAt": 1656705592
   },
@@ -8658,8 +8658,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a",
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a/invest",
+    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a/withdraw",
     "network": "polygon",
     "createdAt": 1661772010
   },
