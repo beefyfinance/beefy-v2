@@ -110,9 +110,14 @@ function addContractDataToState(
 }
 
 export function getBoostStatusFromContractState(
+  boostId: BoostEntity['id'],
   contractState: BoostContractState,
   now = new Date()
 ) {
+  //Boost that got wrongly set to preStake after finished and won't be refilled
+  if (['moo_solarbeam-wstksm-xcksm-lido'].includes(boostId)) {
+    return 'expired';
+  }
   if (contractState === null || contractState.isPreStake) {
     return 'prestake';
   } else if (contractState.periodFinish === null) {
@@ -142,7 +147,7 @@ function updateBoostStatus(sliceState: WritableDraft<BoostsState>) {
         if (contractState === undefined) {
           continue;
         }
-        const status = getBoostStatusFromContractState(contractState, now);
+        const status = getBoostStatusFromContractState(boostId, contractState, now);
         if (status === 'expired') {
           expiredBoostsIds.push(boostId);
         } else if (status === 'prestake') {
