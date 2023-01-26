@@ -1,5 +1,25 @@
 [
   {
+    "id": "convex-staked-cvxCRV",
+    "name": "cvxCRV",
+    "token": "cvxCRV",
+    "tokenAddress": "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7",
+    "tokenDecimals": 18,
+    "earnedToken": "mooConvexCRV",
+    "earnedTokenAddress": "0x4115150523599D1F6C6Fa27F5A4C27D578Fd8ce5",
+    "earnContractAddress": "0x4115150523599D1F6C6Fa27F5A4C27D578Fd8ce5",
+    "oracle": "tokens",
+    "oracleId": "cvxCRV",
+    "status": "active",
+    "platformId": "convex",
+    "assets": ["cvxCRV"],
+    "strategyTypeId": "single",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.convexfinance.com/stake",
+    "network": "ethereum",
+    "createdAt": 1674713148
+  },
+  {
     "id": "sushi-mainnet-usdc-weth",
     "name": "ETH-USDC LP",
     "token": "ETH-USDC LP",
