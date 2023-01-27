@@ -49,8 +49,9 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.secondary,
   },
   mobileVersion: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       '&$container': {
+        columnGap: '8px',
         backgroundColor: 'transparent',
         padding: 0,
         alignItems: 'flex-start',

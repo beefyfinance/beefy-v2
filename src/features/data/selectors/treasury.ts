@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import createCachedSelector from 're-reselect';
 import { BIG_ZERO, isReal } from '../../../helpers/big-number';
@@ -260,3 +261,19 @@ export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
 
   return getTopNArray(treasuryExposureByAvailability, 'percentage');
 };
+
+export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
+  (state: BeefyState, chainId: ChainEntity['id']) =>
+    selectTreasuryHoldingsByChainId(state, chainId),
+  treasury => {
+    return Object.values(treasury).map(wallet => {
+      if (wallet.name === 'validator') {
+        return { name: wallet.name, address: wallet.balances['validator'].methodPath };
+      }
+      return {
+        address: wallet.address,
+        name: wallet.name,
+      };
+    });
+  }
+)((state: BeefyState, chainId: ChainEntity['id']) => chainId);

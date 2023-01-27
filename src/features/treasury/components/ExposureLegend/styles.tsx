@@ -3,10 +3,11 @@ export const styles = (theme: Theme) => ({
   legendContainer: {
     display: 'flex',
     columnGap: '32px',
-    [theme.breakpoints.down('sm')]: {
+    flexWrap: 'wrap' as const,
+    rowGap: '8px',
+    [theme.breakpoints.down('xs')]: {
       flexDirection: 'column' as const,
       columnGap: '16px',
-      rowGap: '8px',
     },
   },
   legendItem: {
@@ -18,6 +19,9 @@ export const styles = (theme: Theme) => ({
     height: '12px',
     width: '12px',
     borderRadius: '2px',
+    [theme.breakpoints.down('xs')]: {
+      width: '14px',
+    },
   },
   label: {
     ...theme.typography['body-sm-med'],
@@ -27,6 +31,15 @@ export const styles = (theme: Theme) => ({
       ...theme.typography['body-sm'],
       color: '#999CB3',
       marginLeft: '4px',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'space-between',
+      columnGap: '8px',
+      '& span': {
+        marginLeft: '0px',
+      },
     },
   },
   uppercase: {

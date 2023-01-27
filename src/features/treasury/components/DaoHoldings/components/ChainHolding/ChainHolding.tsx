@@ -9,6 +9,7 @@ import { selectTreasuryBalanceByChainId } from '../../../../../data/selectors/tr
 
 import { Assets } from '../Assets';
 import clsx from 'clsx';
+import { ExplorerLinks } from '../../../ExplorerLinks';
 
 const useStyles = makeStyles(styles);
 
@@ -21,6 +22,7 @@ export const ChainHolding = memo<ChainHoldingProps>(function ({ chainId }) {
 
   const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, chainId));
+
   return (
     <div className={classes.container}>
       <div className={clsx(classes.title, classes[`headerNetwork-${chainId}`])}>
@@ -30,6 +32,7 @@ export const ChainHolding = memo<ChainHoldingProps>(function ({ chainId }) {
             alt={chainId}
           />
           <div className={classes.chainName}>{chain.name}</div>
+          <ExplorerLinks chainId={chainId} />
         </div>
         <div className={classes.usdValue}>{formatBigUsd(totalUsd)}</div>
       </div>

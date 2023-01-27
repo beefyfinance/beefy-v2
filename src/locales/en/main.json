@@ -536,5 +536,8 @@
   "Transact-Provider-gov-vault": "Direct",
   "Transact-Provider-one-inch": "Beefy × 1inch",
   "Transact-Provider-beefy-zap-uniswapv2": "Beefy",
-  "Transact-Provider-beefy-zap-solidly": "Beefy"
+  "Transact-Provider-beefy-zap-solidly": "Beefy",
+  "Treasury-treasuryMultisig": "Multisig",
+  "Treasury-treasury": "Treasury",
+  "Treasury-validator": "Validator"
 }

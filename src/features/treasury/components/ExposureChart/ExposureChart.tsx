@@ -18,10 +18,10 @@ export const ExposureChart = memo<ExposureChartProps>(function ({ data, formatte
   const classes = useStyles();
   return (
     <div className={classes.container}>
-      <Hidden smDown>
+      <Hidden xsDown>
         <ExposureBar data={data} />
       </Hidden>
-      <Hidden mdUp>
+      <Hidden smUp>
         <PieChart data={data} type={type} formatter={formatter} />
       </Hidden>
       <ExposureLegend data={data} formatter={formatter} />

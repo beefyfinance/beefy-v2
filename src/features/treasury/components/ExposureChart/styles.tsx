@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     gap: '16px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       flexDirection: 'row' as const,
       justifyContent: 'space-between',
       alignItems: 'center',
