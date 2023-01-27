@@ -1,4 +1,4 @@
-import _, { isEqual } from 'lodash';
+import _, { isEmpty, isEqual } from 'lodash';
 import { ChainEntity } from '../features/data/entities/chain';
 import {
   filteredVaultsActions,
@@ -31,6 +31,8 @@ function stringToChainIDs(
   }
 ) {
   const arrayChains = Object.values(chainsById);
+
+  console.log("TRACKER", arrayChains)
 
   const paramItems: Array<string> = (value ?? '')
     .split(',')
@@ -126,6 +128,10 @@ export function filtersToUrl({
   // Filter Search Text
   if (filterState.searchText !== initialFilteredVaultsState.searchText) {
     currentURLParams.set(URL_PARAM_FILTER_SEARCH_TEXT, filterState.searchText);
+  }else{
+    if(isEmpty(filterState.searchText)) {
+      currentURLParams.delete(URL_PARAM_FILTER_SEARCH_TEXT)
+    }
   }
 
   // Filter Chain IDs
@@ -264,9 +270,10 @@ export function urlToFilters({
 
   // Filter Chain IDs
   const filterChainIDs = url.get(URL_PARAM_FILTER_CHAIN_IDS);
-  console.warn("urlToFilters", chainsById, _.isEmpty(chainsById))
-  if (filterChainIDs) {
+  console.warn("urlToFilters", chainsById, _.isEmpty(chainsById),filterChainIDs)
+  if ( _.isEmpty(chainsById) === false && filterChainIDs) {
     const arrayChainIDs = stringToChainIDs(filterChainIDs, chainsById);
+    console.warn("urlToFilters1", arrayChainIDs, filterChainIDs)
     if (arrayChainIDs.length > 0) {
       dispatcher(filteredVaultsActions.setChainIds(arrayChainIDs));
     }

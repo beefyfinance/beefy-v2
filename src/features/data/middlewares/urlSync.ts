@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   updateURL,
   getURLWithParams,
@@ -14,11 +15,14 @@ import { BeefyStore } from '../../../redux-types';
  */
 export function urlUpdateActionsMiddleware(store: BeefyStore) {
   return next => async (action: { type: string; payload: any }) => {
+    if(_.isEmpty(store.getState().entities.chains.byId)) return next(action)
     // Since inside this middleware we can dispatch actions in redux with this type
     // If one action of that type reaches this middleware, we should bypass this middleware
     // Because if not, we will enter in an endless loop
+    if(action.type === "persist/PERSIST" ||
+    action.type === "persist/REHYDRATE" ||
+    action.type === "platforms/fetchPlatforms/fulfilled") return next(action);
     if (action.type.includes('filtered-vaults') === false) return next(action);
-    console.log("FILTER", action.type)
 
     // There is one special action: the reset one. If we got that one, we just reset the URL
     // We don't need to do anything else
@@ -55,6 +59,7 @@ export function vaultsFilteringActionsMiddleware(store: BeefyStore) {
     // - When loading the page (PERSIST and REHYDRATE events)
     // - When the chains info is loaded
     // In any other case, we just go next
+    console.log(action.type)
     if(action.type !== "persist/PERSIST" && 
     action.type !== "persist/REHYDRATE" &&
     action.type !== "platforms/fetchPlatforms/fulfilled") return next(action);
