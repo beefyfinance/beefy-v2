@@ -1,4 +1,3 @@
-import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import createCachedSelector from 're-reselect';
 import { BIG_ZERO, isReal } from '../../../helpers/big-number';
