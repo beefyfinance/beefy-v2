@@ -948,5 +948,10 @@
     "id": "thena",
     "name": "Thena",
     "filter": true
+  },
+  {
+    "id": "monolith",
+    "name": "Monolith",
+    "filter": true
   }
 ]
