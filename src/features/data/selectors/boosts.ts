@@ -19,12 +19,12 @@ export const selectBoostById = createCachedSelector(
 )((state: BeefyState, boostId: BoostEntity['id']) => boostId);
 
 export const selectIsBoostActive = (state: BeefyState, boostId: BoostEntity['id']) => {
-  const status = getBoostStatusFromContractState(selectBoostContractState(state, boostId));
+  const status = getBoostStatusFromContractState(boostId, selectBoostContractState(state, boostId));
   return status === 'active';
 };
 
 export const selectIsBoostActiveOrPreStake = (state: BeefyState, boostId: BoostEntity['id']) => {
-  const status = getBoostStatusFromContractState(selectBoostContractState(state, boostId));
+  const status = getBoostStatusFromContractState(boostId, selectBoostContractState(state, boostId));
   return status === 'active' || status === 'prestake';
 };
 
