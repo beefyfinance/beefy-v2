@@ -38,7 +38,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674509092
+    "createdAt": 1674845014
   },
   {
     "id": "monolith-mosolid-weth",
@@ -59,7 +59,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674509092
+    "createdAt": 1674845014
   },
   {
     "id": "monolith-solid-weth",
@@ -80,7 +80,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674509092
+    "createdAt": 1674845014
   },
   {
     "id": "monolith-mim-usdc",
@@ -107,7 +107,7 @@
     ],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674509092
+    "createdAt": 1674845014
   },
   {
     "id": "monolith-frxeth-weth",
@@ -128,7 +128,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674509092
+    "createdAt": 1674845014
   },
   {
     "id": "monolith-frax-usdt",
@@ -155,7 +155,7 @@
     ],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674509092
+    "createdAt": 1674845014
   },
   {
     "id": "monolith-usdc-usdt",
@@ -176,7 +176,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674509092
+    "createdAt": 1674845014
   },
   {
     "id": "monolith-usdc-weth",
@@ -197,7 +197,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674509092
+    "createdAt": 1674845014
   },
   {
     "id": "sushi-mainnet-usdc-weth",
