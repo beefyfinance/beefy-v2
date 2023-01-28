@@ -315,7 +315,8 @@
     "earnContractAddress": "0xA3cC783A4a1A4cDFa0D62230EC47F9D36342b2Fb",
     "oracle": "lps",
     "oracleId": "stellaswap-wglmr-xcausd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["xcaUSD", "GLMR"],
     "risks": [
