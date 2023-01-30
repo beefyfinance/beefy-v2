@@ -129,19 +129,19 @@ export const zaps: OneInchZapConfig[] = [
     depositFromTokens: ['AVAX', 'WAVAX', 'USDC', 'USDT', 'DAI', 'MIM', 'MAI', 'WETH.e', 'WBTC.e'],
     withdrawToTokens: ['AVAX', 'BIFI', 'USDC', 'USDT', 'DAI', 'MIM', 'MAI', 'WETH.e', 'WBTC.e'],
     blockedTokens: [
-      'AVAXL', //no 1inch liquidity
-      'beJOE', //no 1inch liquidity
-      'COM', //beefy and 1inch prices are more than 10% different
-      'DAI', //beefy and 1inch prices are more than 10% different (old bridge, not DAI.e)
-      'DOMI', //beefy and 1inch prices are more than 10% different
-      'ETH', //beefy and 1inch prices are more than 10% different (old bridge, not WETH.e)
-      'FIEF', //no 1inch liquidity
-      'LINK', //beefy and 1inch prices are more than 10% different
-      'OLIVE', //beefy and 1inch prices are more than 10% different
-      'S*USDC', //no 1inch liquidity
-      'S*USDT', //no 1inch liquidity
-      'SUSHI', //beefy and 1inch prices are more than 10% different
-      'WINE', //no 1inch liquidity
+      'AVAXL', // no 1inch liquidity
+      'beJOE', // no 1inch liquidity
+      'COM', // beefy and 1inch prices are more than 10% different
+      'DAI', // beefy and 1inch prices are more than 10% different (old bridge, not DAI.e)
+      'DOMI', // beefy and 1inch prices are more than 10% different
+      'ETH', // beefy and 1inch prices are more than 10% different (old bridge, not WETH.e)
+      'FIEF', // no 1inch liquidity
+      'LINK', // beefy and 1inch prices are more than 10% different
+      'OLIVE', // beefy and 1inch prices are more than 10% different
+      'S*USDC', // no 1inch liquidity
+      'S*USDT', // no 1inch liquidity
+      'SUSHI', // beefy and 1inch prices are more than 10% different
+      'WINE', // no 1inch liquidity
     ],
     blockedVaults: ['aavev3-avax'],
   },

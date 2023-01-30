@@ -228,6 +228,13 @@ export class OneInchZapProvider implements ITransactProvider {
     return isFiniteBigNumber(price) && !price.isZero() && !price.isNegative();
   }
 
+  tokensHavePrices(tokens: TokenErc20[], state: BeefyState): boolean {
+    return tokens.every(token => {
+      const price = selectTokenPriceByTokenOracleId(state, token.oracleId);
+      return isFiniteBigNumber(price) && !price.isZero() && !price.isNegative();
+    });
+  }
+
   async getLPDepositOptionsFor(
     vault: VaultEntity,
     state: BeefyState
@@ -263,8 +270,11 @@ export class OneInchZapProvider implements ITransactProvider {
     const wnative = selectChainWrappedNativeToken(state, vault.chainId);
     const tokens = vault.assetIds.map(id => selectTokenById(state, vault.chainId, id));
     const lpTokens = tokensToLp(tokens, wnative);
-    const lpTokenIds = lpTokens.map(token => token.id);
+    if (!this.tokensHavePrices(lpTokens, state)) {
+      return null;
+    }
 
+    const lpTokenIds = lpTokens.map(token => token.id);
     const blockedToken = zap.blockedTokens.find(id => lpTokenIds.includes(id));
     if (blockedToken !== undefined) {
       return null;
@@ -892,8 +902,11 @@ export class OneInchZapProvider implements ITransactProvider {
     const wnative = selectChainWrappedNativeToken(state, vault.chainId);
     const tokens = vault.assetIds.map(id => selectTokenById(state, vault.chainId, id));
     const lpTokens = tokensToLp(tokens, wnative);
-    const lpTokenIds = lpTokens.map(token => token.id);
+    if (!this.tokensHavePrices(lpTokens, state)) {
+      return null;
+    }
 
+    const lpTokenIds = lpTokens.map(token => token.id);
     const blockedToken = zap.blockedTokens.find(id => lpTokenIds.includes(id));
     if (blockedToken !== undefined) {
       return null;
