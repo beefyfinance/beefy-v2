@@ -9,7 +9,7 @@ const fee: ZapFee = {
 
 export const zaps: OneInchZapConfig[] = [
   {
-    zapAddress: '0xd2154257Ec830610b609b13056340564f85F2f86',
+    zapAddress: '0xF815E5f5Ed70f8a88F5f17a5a3F4f1C9c829776B',
     chainId: 'polygon',
     fee,
     depositFromTokens: ['MATIC', 'WMATIC', 'USDC', 'USDT', 'DAI', 'MAI', 'ETH', 'WBTC'],
@@ -31,7 +31,7 @@ export const zaps: OneInchZapConfig[] = [
     blockedVaults: [],
   },
   {
-    zapAddress: '0x1F4846092FD8B5D0858F3737Ed22D3fc43f1969e',
+    zapAddress: '0xddcAF38D2Ae216f7B86af7A12A174CbE168B034b',
     chainId: 'fantom',
     fee,
     depositFromTokens: ['FTM', 'WFTM', 'USDC', 'fUSDT', 'DAI', 'MIM', 'MAI', 'WETH', 'WBTC'],
@@ -40,7 +40,7 @@ export const zaps: OneInchZapConfig[] = [
     blockedVaults: ['geist-ftm'],
   },
   {
-    zapAddress: '0x3983C50fF4CD25b43A335D63839B1E36C7930D41',
+    zapAddress: '0x7B4d6d79DE44Fe034f75BD4525a13aaEFAF4597F',
     chainId: 'optimism',
     fee,
     depositFromTokens: ['ETH', 'WETH', 'OP', 'USDC', 'USDT', 'DAI', 'MAI', 'sUSD', 'sETH', 'WBTC'],
@@ -60,7 +60,7 @@ export const zaps: OneInchZapConfig[] = [
     blockedVaults: ['aavev3-op-eth'],
   },
   {
-    zapAddress: '0xdFCC0FE31568cB3c75A20f41A8fD705BF951538c',
+    zapAddress: '0x4B0A66dEe9ff557f9b0c25c3e57086495f570e65',
     chainId: 'avax',
     fee,
     depositFromTokens: ['AVAX', 'WAVAX', 'USDC', 'USDT', 'DAI', 'MIM', 'MAI', 'ETH', 'WBTC'],
@@ -69,7 +69,7 @@ export const zaps: OneInchZapConfig[] = [
     blockedVaults: ['aavev3-avax'],
   },
   {
-    zapAddress: '0xef46Ea3e79C2D75A6BCB8BA7a3869d9a6E54258B',
+    zapAddress: '0xb80318Aab313D54274358EEC637f18aFfd03DF8b',
     chainId: 'arbitrum',
     fee,
     depositFromTokens: ['ETH', 'WETH', 'USDC', 'USDT', 'DAI', 'MIM', 'WBTC'],
@@ -78,7 +78,7 @@ export const zaps: OneInchZapConfig[] = [
     blockedVaults: [],
   },
   {
-    zapAddress: '0x60Fe376921e92F9560811Fc96893261a4F79AE5F',
+    zapAddress: '0xD586Fc2cD0075e272142B76192a17693c4662fc4',
     chainId: 'bsc',
     fee,
     depositFromTokens: ['BNB', 'WBNB', 'BUSD', 'USDC', 'USDT', 'DAI', 'ETH', 'BTCB'],
@@ -114,12 +114,21 @@ export const zaps: OneInchZapConfig[] = [
     blockedVaults: ['venus-bnb', 'venus-wbnb'],
   },
   {
-    zapAddress: '0x19b7010d31c4612bB38498ad1dDe16E59a649Fd2',
+    zapAddress: '0x6b7886D72436522CE9664b5d77B6745f1A726C96',
     chainId: 'aurora',
     fee,
     depositFromTokens: ['ETH', 'WETH', 'USDC', 'USDT', 'WBTC'],
     withdrawToTokens: ['ETH', 'BIFI', 'USDC', 'USDT', 'WBTC'],
     blockedTokens: [],
+    blockedVaults: [],
+  },
+  {
+    zapAddress: '0x46c7308567B527647853d3F94d40Ce82ed27f325',
+    chainId: 'ethereum',
+    fee,
+    depositFromTokens: ['ETH', 'WETH', 'USDC', 'USDT', 'DAI', 'WBTC', 'MIM'],
+    withdrawToTokens: ['ETH', 'USDC', 'USDT', 'WBTC', 'DAI', 'MIM'],
+    blockedTokens: ['S*ETH', 'S*USDC', 'S*USDT'],
     blockedVaults: [],
   },
 ];

@@ -11,7 +11,7 @@ yarn
 yarn validate
 yarn start
 ```
-If any error is noted during validation, fix before starting the server, which will serve the app at http://localhost:3000/
+If any error is noted during validation, fix before starting the server, which will serve the app at http://localhost:3000/ 
 
 
 ## Contribute

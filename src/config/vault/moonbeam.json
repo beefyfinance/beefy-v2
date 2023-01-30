@@ -88,7 +88,7 @@
   },
   {
     "id": "stellaswap-4pool",
-    "name": "USDC/USDT/BUSD/FRAX LP",
+    "name": "USDC/USDT/BUSD/FRAX",
     "token": "stella4pool",
     "tokenAddress": "0xB326b5189AA42Acaa3C649B120f084Ed8F4dCaA6",
     "tokenDecimals": 18,
@@ -305,7 +305,8 @@
     "earnContractAddress": "0xA3cC783A4a1A4cDFa0D62230EC47F9D36342b2Fb",
     "oracle": "lps",
     "oracleId": "stellaswap-wglmr-xcausd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["xcaUSD", "GLMR"],
     "strategyTypeId": "lp",

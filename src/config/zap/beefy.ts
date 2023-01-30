@@ -81,6 +81,16 @@ export const zaps: BeefyZapConfig[] = [
     zapAddress: '0xa1Dfd44c90B7cE937FC450Fe19B691e72EE3a7D2',
   },
   {
+    chainId: 'ethereum',
+    ammId: 'ethereum-soldily',
+    zapAddress: '0x6674f3961C5908B086A5551377806f4BA8F0Ac99',
+  },
+  {
+    chainId: 'ethereum',
+    ammId: 'ethereum-sushi',
+    zapAddress: '0x333B767aB7f5CE17D51EdbCE57f422624aAE280F',
+  },
+  {
     chainId: 'fantom',
     ammId: 'fantom-spookyswap',
     zapAddress: '0x8afc0f9BdC5DcA9f0408Df03A03520bFa98A15aF',
