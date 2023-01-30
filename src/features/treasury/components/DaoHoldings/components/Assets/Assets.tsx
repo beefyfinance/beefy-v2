@@ -23,7 +23,7 @@ export const Assets = memo<AssetsProps>(function ({ chainId }) {
   const classes = useStyles();
 
   return (
-    <>
+    <div className={classes.assetsContainer}>
       {liquidAssets.length > 0 && (
         <>
           <div className={classes.assetTypes}>{t('Liquid Assets')}</div>
@@ -48,6 +48,6 @@ export const Assets = memo<AssetsProps>(function ({ chainId }) {
           })}
         </>
       )}
-    </>
+    </div>
   );
 });

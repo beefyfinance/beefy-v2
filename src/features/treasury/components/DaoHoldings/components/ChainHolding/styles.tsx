@@ -4,10 +4,6 @@ export const styles = (theme: Theme) => ({
   container: {
     display: 'flex',
     flexDirection: 'column' as const,
-    rowGap: '2px',
-    '& div:last-child': {
-      borderRadius: '0px 0px 8px 8px',
-    },
   },
   title: {
     ...theme.typography.h3,
@@ -18,12 +14,13 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     backgroundColor: '#242842',
     borderRadius: '8px 8px 0px 0px',
-    '& img': {
-      height: '32px',
-    },
+
     [theme.breakpoints.down('md')]: {
       padding: '16px',
     },
+  },
+  icon: {
+    height: '32px',
   },
   nameContainer: {
     display: 'flex',

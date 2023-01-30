@@ -1,6 +1,15 @@
 import { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
+  assetsContainer: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    marginTop: '2px',
+    rowGap: '2px',
+    '& div:last-child': {
+      borderRadius: '0px 0px 8px 8px',
+    },
+  },
   filter: {
     display: 'grid',
     padding: '16px 24px',

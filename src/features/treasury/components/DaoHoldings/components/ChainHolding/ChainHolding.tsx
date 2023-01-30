@@ -28,6 +28,7 @@ export const ChainHolding = memo<ChainHoldingProps>(function ({ chainId }) {
       <div className={clsx(classes.title, classes[`headerNetwork-${chainId}`])}>
         <div className={classes.nameContainer}>
           <img
+            className={classes.icon}
             src={require(`../../../../../../images/networks/${chainId}.svg`).default}
             alt={chainId}
           />

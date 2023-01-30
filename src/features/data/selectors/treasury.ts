@@ -265,14 +265,13 @@ export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id']) =>
     selectTreasuryHoldingsByChainId(state, chainId),
   treasury => {
-    return Object.values(treasury).map(wallet => {
-      if (wallet.name === 'validator') {
-        return { name: wallet.name, address: wallet.balances['validator'].methodPath };
-      }
-      return {
-        address: wallet.address,
-        name: wallet.name,
-      };
-    });
+    return Object.values(treasury)
+      .filter(wallet => wallet.name !== 'validator')
+      .map(wallet => {
+        return {
+          address: wallet.address,
+          name: wallet.name,
+        };
+      });
   }
 )((state: BeefyState, chainId: ChainEntity['id']) => chainId);

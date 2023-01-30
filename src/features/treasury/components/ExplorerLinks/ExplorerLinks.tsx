@@ -53,11 +53,8 @@ export const ExplorerLinks = memo<ExplorerLinkProps>(function ({ chainId }) {
           {wallets.map(wallet => {
             return (
               <a
-                href={
-                  chainId === 'ethereum'
-                    ? wallet.address
-                    : `${chain.explorerUrl}/address/${wallet.address}`
-                }
+                key={wallet.address}
+                href={`${chain.explorerUrl}/address/${wallet.address}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={classes.item}

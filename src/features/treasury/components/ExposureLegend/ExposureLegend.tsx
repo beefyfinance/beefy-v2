@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import React, { memo } from 'react';
 import { formatPercent } from '../../../../helpers/format';
 import { BaseEntry } from '../../../data/utils/array-utils';
-import { keyIsToken } from '../../../data/utils/string-utils';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
@@ -40,11 +39,7 @@ const Label = memo<LabelProps>(function ({ item, formatter }) {
   const classes = useStyles();
   const keyFormatted = formatter ? formatter(item.key) : item.key;
   return (
-    <div
-      className={clsx(classes.label, {
-        [classes.uppercase]: keyIsToken(item.key),
-      })}
-    >
+    <div className={clsx(classes.label)}>
       {keyFormatted} <span>{formatPercent(item.percentage, 2, '0%')}</span>
     </div>
   );

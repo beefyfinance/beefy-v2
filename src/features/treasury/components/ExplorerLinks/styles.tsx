@@ -13,7 +13,7 @@ export const styles = (theme: Theme) => ({
     padding: `${8 - 2}px`,
     border: '2px solid #363A61',
     backgroundColor: '#373C63',
-    borderRadius: '4px !important',
+    borderRadius: '4px',
   },
   item: {
     ...theme.typography['body-lg'],
@@ -26,6 +26,10 @@ export const styles = (theme: Theme) => ({
     '& img': {
       height: '12px',
       width: '12px',
+    },
+    '&:hover': {
+      cursor: 'pointer',
+      color: theme.palette.text.primary,
     },
   },
 });
