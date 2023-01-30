@@ -64,7 +64,7 @@
     "launchpool": "ts-node ./scripts/launchpool.ts",
     "vault": "ts-node ./scripts/addVault.ts",
     "migratePlatform": "ts-node ./scripts/migratePlatform.ts",
-    "checkOneInchLiquidity": "ts-node scripts/checkOneInchLiquidity.ts",
+    "checkOneInchLiquidity": "ts-node -r dotenv/config ./scripts/checkOneInchLiquidity.ts",
     "test": "TZ=UTC react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
