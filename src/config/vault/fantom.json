@@ -127,7 +127,7 @@
     "oracleId": "beets-two-smoking-fantoms",
     "status": "active",
     "platformId": "beethovenx",
-    "assets": ["sFTMx", "FTM"],
+    "assets": ["sFTMx", "bb-yv-FTM"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_MID",
