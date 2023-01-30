@@ -1,7 +1,13 @@
 import { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
-  center: { display: 'flex', alingItems: 'center' },
+  center: {
+    display: 'flex',
+    alingItems: 'center',
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
   icon: {
     height: '16px',
     width: '16px',

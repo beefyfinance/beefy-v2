@@ -37,10 +37,11 @@ interface LabelProps {
 
 const Label = memo<LabelProps>(function ({ item, formatter }) {
   const classes = useStyles();
-  const keyFormatted = formatter ? formatter(item.key) : item.key;
+  const label = item.label ?? item.key;
+  const labelFormatted = formatter ? formatter(label) : label;
   return (
     <div className={clsx(classes.label)}>
-      {keyFormatted} <span>{formatPercent(item.percentage, 2, '0%')}</span>
+      {labelFormatted} <span>{formatPercent(item.percentage, 2, '0%')}</span>
     </div>
   );
 });

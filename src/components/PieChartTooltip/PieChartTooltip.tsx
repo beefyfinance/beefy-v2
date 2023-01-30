@@ -24,7 +24,7 @@ export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type, act
     const data = payload[0].payload;
     const usdValue = formatBigUsd(data.value ?? BIG_ZERO);
     const percent = formatPercent(data.percentage ?? 0);
-    const title = data?.key ?? '';
+    const title = data.label ?? data.key ?? '';
     const formmattedTitle = formatter && title ? formatter(title) : title;
     return (
       <div className={classes.container}>

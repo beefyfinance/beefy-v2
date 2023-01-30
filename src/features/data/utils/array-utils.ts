@@ -32,6 +32,7 @@ export type BaseEntry = {
   key: string;
   value: BigNumber;
   percentage: number;
+  label?: string;
 };
 
 export function getTopNArray<T extends BaseEntry>(

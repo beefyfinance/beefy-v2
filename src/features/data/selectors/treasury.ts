@@ -7,6 +7,7 @@ import { isVaultHoldingEntity, TreasuryHoldingEntity } from '../entities/treasur
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { getTopNArray } from '../utils/array-utils';
 import { selectLpBreakdownBalance } from './balance';
+import { selectChainById } from './chains';
 import { selectHasBreakdownData, selectIsTokenStable, selectLpBreakdownByOracleId } from './tokens';
 import { selectIsVaultStable } from './vaults';
 
@@ -212,10 +213,12 @@ export const selectTreasuryExposureByChain = (state: BeefyState) => {
   const totalTreasury = Object.keys(chains).reduce((cur, tot) => chains[tot].plus(cur), BIG_ZERO);
 
   const treasuryExposureBychain = Object.keys(chains).map(chainId => {
+    const chain = selectChainById(state,chainId)
     return {
       key: chainId,
       value: chains[chainId],
       percentage: chains[chainId].dividedBy(totalTreasury).toNumber(),
+      label:chain.name
     };
   });
 

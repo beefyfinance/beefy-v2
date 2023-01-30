@@ -4,7 +4,7 @@ import { Cell, Pie, PieChart as RechartsPieChart, Tooltip } from 'recharts';
 import { BaseEntry } from '../../features/data/utils/array-utils';
 import { PieChartTooltip } from '../PieChartTooltip';
 
-export type TypeChart = 'chain' | 'platform' | 'token';
+export type TypeChart = 'chain' | 'platform' | 'token' | 'assetAvailability';
 
 interface ChartProps {
   data: BaseEntry[];
