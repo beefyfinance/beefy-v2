@@ -288,10 +288,11 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
     const isNativeInput = isTokenNative(input.token);
 
     return {
-      step: 'deposit',
+      step: 'zap-in',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
       action: walletActions.beefIn(vault, input.amount, isNativeInput, swap, option.zap, slippage),
       pending: false,
+      extraInfo: { zap: true },
     };
   }
 
@@ -452,13 +453,13 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
     const slippage = selectTransactSlippage(state);
 
     return {
-      step: 'withdraw',
+      step: isSwap ? 'zap-out' : 'withdraw',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
       action: isSwap
         ? walletActions.beefOutAndSwap(vault, quote.inputs[0], swap, option.zap, slippage)
         : walletActions.beefOut(vault, quote.inputs[0], option.zap),
       pending: false,
-      extraInfo: { zap: true },
+      extraInfo: { zap: isSwap },
     };
   }
 

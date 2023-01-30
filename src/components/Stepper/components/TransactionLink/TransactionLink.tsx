@@ -23,6 +23,10 @@ export function TransactionLink() {
       ? walletActionsState.data.hash
       : '';
 
+  if (!hash) {
+    return null;
+  }
+
   return (
     <Button
       className={classes.redirectLinkSuccess}

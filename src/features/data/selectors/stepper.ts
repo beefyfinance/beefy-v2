@@ -4,6 +4,15 @@ import { formatBigDecimals } from '../../../helpers/format';
 import { isTokenErc20 } from '../entities/token';
 import { WalletActionsState } from '../reducers/wallet/wallet-action';
 import { StepContent } from '../reducers/wallet/stepper';
+import { TokenAmount } from '../apis/transact/transact-types';
+import {
+  selectChainNativeToken,
+  selectChainWrappedNativeToken,
+  selectTokenByAddress,
+} from './tokens';
+import { fromWeiString } from '../../../helpers/big-number';
+import { selectVaultById } from './vaults';
+import { wnativeToNative } from '../apis/transact/helpers/tokens';
 
 export const selectStepperState = (state: BeefyState) => {
   return state.ui.stepperState;
@@ -137,3 +146,38 @@ export const selectSuccessBar = (state: BeefyState) => {
 
   return stepContent === StepContent.SuccessTx || bridgeStatus === 'success';
 };
+
+export function selectZapReturned(state: BeefyState) {
+  const { receipt, vaultId } = state.user.walletActions.data;
+
+  if (!vaultId || !receipt || !('TokenReturned' in receipt.events)) {
+    return [];
+  }
+
+  const vault = selectVaultById(state, vaultId);
+  const zapAddress = receipt.to.toLowerCase();
+  const returnEvents = (
+    Array.isArray(receipt.events['TokenReturned'])
+      ? receipt.events['TokenReturned']
+      : [receipt.events['TokenReturned']]
+  ).filter(e => e.address.toLowerCase() === zapAddress);
+
+  if (!returnEvents.length) {
+    return [];
+  }
+
+  const minAmount = new BigNumber('0.00000001');
+  const wnative = selectChainWrappedNativeToken(state, vault.chainId);
+  const native = selectChainNativeToken(state, vault.chainId);
+  const tokenAmounts: TokenAmount[] = returnEvents
+    .map(e => {
+      const token = selectTokenByAddress(state, vault.chainId, e.returnValues.token);
+      return {
+        amount: fromWeiString(e.returnValues.amount, token.decimals),
+        token: wnativeToNative(token, wnative, native),
+      };
+    })
+    .filter(t => t.amount.gte(minAmount));
+
+  return tokenAmounts;
+}

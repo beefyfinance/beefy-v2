@@ -1,13 +1,14 @@
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
-import React, { memo, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
+import React, { memo, ReactNode, useMemo } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import { Step, stepperActions } from '../../../../features/data/reducers/wallet/stepper';
 import {
   selectMintResult,
   selectStepperCurrentStep,
   selectStepperCurrentStepData,
   selectStepperItems,
+  selectZapReturned,
 } from '../../../../features/data/selectors/stepper';
 import { formatBigDecimals } from '../../../../helpers/format';
 
@@ -17,6 +18,7 @@ import { TransactionLink } from '../TransactionLink';
 import { walletActions } from '../../../../features/data/actions/wallet-actions';
 import { styles } from './styles';
 import { Title } from '../Title';
+import { ListJoin } from '../../../ListJoin';
 
 const useStyles = makeStyles(styles);
 
@@ -97,41 +99,76 @@ export const CloseButton = memo(function () {
   );
 });
 
-export const SuccessContent = memo(function () {
+type SuccessContentProps = {
+  step: Step;
+};
+
+const ZapSuccessContent = memo<SuccessContentProps>(function ({ step }) {
   const { t } = useTranslation();
-  const classes = useStyles();
+  const returned = useAppSelector(selectZapReturned);
+  const dust = useMemo(() => {
+    if (returned.length) {
+      return (
+        <ListJoin
+          items={returned.map(
+            item =>
+              `${formatBigDecimals(item.amount, Math.min(item.token.decimals, 8))} ${
+                item.token.symbol
+              }`
+          )}
+        />
+      );
+    }
+    return undefined;
+  }, [returned]);
+
+  return (
+    <SuccessContentDisplay
+      title={t(`Stepper-${step.step}-Success-Title`)}
+      message={t(`Stepper-${step.step}-Success-Content`)}
+      messageHighlight={
+        dust ? <Trans t={t} i18nKey={`Stepper-Dust`} components={{ dust }} /> : undefined
+      }
+      rememberTitle={step.step === 'zap-in' ? t('Remember') : undefined}
+      rememberMessage={step.step === 'zap-in' ? t('Remember-Msg') : undefined}
+    />
+  );
+});
+
+const FallbackSuccessContent = memo<SuccessContentProps>(function ({ step }) {
+  const { t } = useTranslation();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
-  const currentStepData = useAppSelector(selectStepperCurrentStepData);
-  const hasRememberMsg = currentStepData.step === 'deposit' || currentStepData.step === 'stake';
+  const hasRememberMsg = step.step === 'deposit' || step.step === 'stake';
   const rememberMsg = useMemo(() => {
-    if (currentStepData.step === 'deposit') {
+    if (step.step === 'deposit') {
       return 'Remember-Msg';
     }
-    if (currentStepData.step === 'stake') {
+    if (step.step === 'stake') {
       return 'Remember-Msg-Bst';
     }
     return '';
-  }, [currentStepData.step]);
+  }, [step.step]);
 
   const textParams = useMemo(() => {
-    if (currentStepData.extraInfo?.rewards) {
+    if (step.extraInfo?.rewards) {
       return {
         amount: formatBigDecimals(walletActionsState?.data.amount, 4),
         token: walletActionsState?.data.token.symbol,
-        rewards: formatBigDecimals(currentStepData.extraInfo.rewards.amount),
-        rewardToken: currentStepData.extraInfo.rewards.token.symbol,
+        rewards: formatBigDecimals(step.extraInfo.rewards.amount),
+        rewardToken: step.extraInfo.rewards.token.symbol,
       };
     }
     return {
       amount: selectMintResult(walletActionsState).amount,
       token: walletActionsState.data.token.symbol,
     };
-  }, [currentStepData.extraInfo?.rewards, walletActionsState]);
+  }, [step.extraInfo?.rewards, walletActionsState]);
 
-  const isZapOutMessage = currentStepData.extraInfo?.zap && currentStepData.step === 'withdraw';
+  const isZap = step.extraInfo?.zap === true;
+  const isZapOutMessage = isZap && step.step === 'withdraw';
 
   const successMessage = useMemo(() => {
-    if (currentStepData.step === 'mint') {
+    if (step.step === 'mint') {
       return t(`${selectMintResult(walletActionsState).type}-Success-Content`, { ...textParams });
     }
 
@@ -139,24 +176,68 @@ export const SuccessContent = memo(function () {
       return t('withdraw-zapout-Success-Content', { ...textParams });
     }
 
-    return t(`${currentStepData.step}-Success-Content`, { ...textParams });
-  }, [currentStepData.step, isZapOutMessage, t, textParams, walletActionsState]);
+    return t(`${step.step}-Success-Content`, { ...textParams });
+  }, [step.step, isZapOutMessage, t, textParams, walletActionsState]);
+
+  return (
+    <SuccessContentDisplay
+      title={t(`${step.step}-Success-Title`)}
+      message={successMessage}
+      rememberTitle={hasRememberMsg ? t('Remember') : undefined}
+      rememberMessage={hasRememberMsg ? t(rememberMsg) : undefined}
+    />
+  );
+});
+
+type SuccessContentDisplayProps = {
+  title: string;
+  message: ReactNode;
+  messageHighlight?: ReactNode;
+  rememberTitle?: string;
+  rememberMessage?: ReactNode;
+};
+const SuccessContentDisplay = memo<SuccessContentDisplayProps>(function ({
+  title,
+  message,
+  messageHighlight,
+  rememberTitle,
+  rememberMessage,
+}) {
+  const classes = useStyles();
 
   return (
     <>
-      <Title text={t(`${currentStepData.step}-Success-Title`)} />
+      <Title text={title} />
       <div className={clsx(classes.content, classes.successContent)}>
-        <div className={classes.message}>{successMessage}</div>
+        <div className={classes.message}>{message}</div>
+        {messageHighlight ? (
+          <div className={classes.messageHighlight}>{messageHighlight}</div>
+        ) : null}
         <TransactionLink />
       </div>
-      {hasRememberMsg && (
+      {rememberTitle && rememberMessage ? (
         <div className={classes.rememberContainer}>
           <div className={classes.message}>
-            <span>{t('Remember')}</span> {t(rememberMsg)}
+            <span>{rememberTitle}</span> {rememberMessage}
           </div>
         </div>
-      )}
+      ) : null}
       <CloseButton />
     </>
   );
+});
+
+type StepToSuccessContent = {
+  [key in Step['step']]?: typeof FallbackSuccessContent;
+};
+
+const stepToSuccessContent: StepToSuccessContent = {
+  'zap-in': ZapSuccessContent,
+  'zap-out': ZapSuccessContent,
+};
+
+export const SuccessContent = memo(function () {
+  const step = useAppSelector(selectStepperCurrentStepData);
+  const Component = stepToSuccessContent[step.step] || FallbackSuccessContent;
+  return <Component step={step} />;
 });

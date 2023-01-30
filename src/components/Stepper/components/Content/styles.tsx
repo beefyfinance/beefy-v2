@@ -18,6 +18,13 @@ export const styles = (theme: Theme) => ({
       fontWeight: theme.typography['body-lg-med'].fontWeight,
     },
   },
+  messageHighlight: {
+    color: theme.palette.background.snackbars.text,
+    fontWeight: theme.typography['body-lg-med'].fontWeight,
+    '$message + &': {
+      marginTop: '16px',
+    },
+  },
   friendlyMessage: {
     ...theme.typography['body-lg-med'],
     color: theme.palette.background.snackbars.text,
@@ -27,6 +34,9 @@ export const styles = (theme: Theme) => ({
     marginTop: theme.spacing(3),
   },
   rememberContainer: {
+    marginTop: theme.spacing(2),
+  },
+  dustContainer: {
     marginTop: theme.spacing(2),
   },
   icon: {

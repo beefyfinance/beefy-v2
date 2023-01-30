@@ -17,6 +17,7 @@ import {
   createWalletActionErrorAction,
   createWalletActionPendingAction,
   createWalletActionSuccessAction,
+  MandatoryAdditionalData,
   TrxError,
   TrxHash,
   TrxReceipt,
@@ -366,7 +367,12 @@ const oneInchBeefInSingle = (
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: zap.zapAddress, amount: swap.fromAmount, token: swap.fromToken },
+      {
+        spender: zap.zapAddress,
+        amount: swap.fromAmount,
+        token: swap.fromToken,
+        vaultId: vault.id,
+      },
       {
         chainId: vault.chainId,
         spenderAddress: zap.zapAddress,
@@ -462,7 +468,7 @@ const oneInchBeefInLP = (
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: zap.zapAddress, amount: input.amount, token: input.token },
+      { spender: zap.zapAddress, amount: input.amount, token: input.token, vaultId: vault.id },
       {
         chainId: vault.chainId,
         spenderAddress: zap.zapAddress,
@@ -555,6 +561,7 @@ const oneInchBeefOutSingle = (
         spender: zap.zapAddress,
         amount: input.amount,
         token: input.token,
+        vaultId: vault.id,
       },
       {
         chainId: vault.chainId,
@@ -677,6 +684,7 @@ const oneInchBeefOutLP = (
         spender: zap.zapAddress,
         amount: input.amount,
         token: input.token,
+        vaultId: vault.id,
       },
       {
         chainId: vault.chainId,
@@ -1363,7 +1371,7 @@ function captureWalletErrors<ReturnType>(
   };
 }
 
-function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity }>(
+function bindTransactionEvents<T extends MandatoryAdditionalData>(
   dispatch: Dispatch<any>,
   transaction: any /* todo: find out what it is */,
   additionalData: T,
