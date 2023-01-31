@@ -1,5 +1,4 @@
 import { Hidden, makeStyles } from '@material-ui/core';
-import BigNumber from 'bignumber.js';
 import React, { memo, useMemo } from 'react';
 import { PieChart, TypeChart } from '../../../../components/PieChart/PieChart';
 import { BaseEntry, getTopNArray } from '../../../data/utils/array-utils';
