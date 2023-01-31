@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import createCachedSelector from 're-reselect';
-import { BIG_ZERO, isReal } from '../../../helpers/big-number';
+import { BIG_ZERO, isFiniteBigNumber } from '../../../helpers/big-number';
 import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { isVaultHoldingEntity, TreasuryHoldingEntity } from '../entities/treasury';
@@ -54,7 +54,7 @@ export const selectTreasuryBalanceByChainId = createCachedSelector(
   treasuryByChainId => {
     return Object.values(treasuryByChainId).reduce((totals, address) => {
       for (const token of Object.values(address.balances)) {
-        if (isReal(token.usdValue)) {
+        if (isFiniteBigNumber(token.usdValue)) {
           totals = totals.plus(token.usdValue);
         }
       }
@@ -72,7 +72,7 @@ export const selectTreasuryAssetsByChainId = createCachedSelector(
     const vaults: Record<string, TreasuryHoldingEntity> = {};
     for (const address of Object.values(treasuryByChainId)) {
       for (const token of Object.values(address.balances)) {
-        if (!isReal(token.usdValue)) continue;
+        if (!isFiniteBigNumber(token.usdValue)) continue;
 
         vaults[token.address] = {
           ...token,
@@ -121,7 +121,7 @@ export const selectTreasuryStats = (state: BeefyState) => {
               }
             }
           }
-          if (isReal(token.usdValue)) {
+          if (isFiniteBigNumber(token.usdValue)) {
             const tokenUsdValue = token.usdValue;
             holdings = holdings.plus(tokenUsdValue);
             if (isVaultHoldingEntity(token) && selectIsVaultStable(state, token.vaultId)) {
@@ -144,7 +144,7 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
   const exposure = Object.entries(treasury).reduce((totals, [chainId, wallets]) => {
     for (const wallet of Object.values(wallets)) {
       for (const token of Object.values(wallet.balances)) {
-        if (isReal(token.usdValue)) {
+        if (isFiniteBigNumber(token.usdValue)) {
           const tokenBalanceUsd = token.usdValue;
           if (token.oracleType === 'lps') {
             if (isVaultHoldingEntity(token) && selectIsVaultStable(state, token.vaultId)) {

@@ -17,6 +17,8 @@ import { OneInchPriceOracleAbi } from '../../../../config/abi';
 import BigNumber from 'bignumber.js';
 import { getWeb3Instance } from '../instances';
 
+const API_URL = process.env.REACT_APP_ONE_INCH_API || 'https://api.1inch.io';
+
 export class OneInchApi implements IOneInchApi {
   protected api: AxiosInstance;
   protected web3: Web3 | null = null;
@@ -24,7 +26,7 @@ export class OneInchApi implements IOneInchApi {
 
   constructor(protected chain: ChainEntity) {
     this.api = axios.create({
-      baseURL: `https://api.1inch.io/v5.0/${chain.networkChainId}/`,
+      baseURL: `${API_URL}/v5.0/${chain.networkChainId}/`,
     });
   }
 

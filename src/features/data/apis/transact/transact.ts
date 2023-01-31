@@ -14,6 +14,8 @@ import { Namespace, TFunction } from 'react-i18next';
 import { GovVaultProvider } from './providers/gov-vault';
 import { OneInchZapProvider } from './providers/one-inch/one-inch';
 import { BeefySolidlyZapProvider } from './providers/beefy/solidly';
+import { partition } from 'lodash';
+import { isFulfilledResult } from '../../../../helpers/promises';
 
 export class TransactApi implements ITransactApi {
   private providers: ITransactProvider[] = [];
@@ -59,14 +61,32 @@ export class TransactApi implements ITransactApi {
     amounts: InputTokenAmount[],
     state: BeefyState
   ) {
-    const quotes = await Promise.all(
+    const quotes = await Promise.allSettled(
       options.map(option => {
         const provider = this.providersById[option.providerId];
         return provider.getDepositQuoteFor(option, amounts, state);
       })
     );
 
-    return quotes.filter(quote => !!quote).flat();
+    const [fulfilled, rejected] = partition(quotes, isFulfilledResult);
+    const successfulQuotes = fulfilled
+      .map(result => result.value)
+      .filter(quote => !!quote)
+      .flat();
+
+    if (rejected.length > 0) {
+      console.warn('getDepositQuotesFor failed', rejected);
+    }
+
+    if (successfulQuotes.length > 0) {
+      return successfulQuotes;
+    }
+
+    if (rejected.length > 0) {
+      throw rejected[0].reason;
+    }
+
+    throw new Error('No quotes succeeded');
   }
 
   async getWithdrawQuotesFor(
@@ -74,14 +94,32 @@ export class TransactApi implements ITransactApi {
     amounts: InputTokenAmount[],
     state: BeefyState
   ) {
-    const quotes = await Promise.all(
+    const quotes = await Promise.allSettled(
       options.map(option => {
         const provider = this.providersById[option.providerId];
         return provider.getWithdrawQuoteFor(option, amounts, state);
       })
     );
 
-    return quotes.filter(quote => !!quote).flat();
+    const [fulfilled, rejected] = partition(quotes, isFulfilledResult);
+    const successfulQuotes = fulfilled
+      .map(result => result.value)
+      .filter(quote => !!quote)
+      .flat();
+
+    if (rejected.length > 0) {
+      console.warn('getWithdrawQuotesFor failed', rejected);
+    }
+
+    if (successfulQuotes.length > 0) {
+      return successfulQuotes;
+    }
+
+    if (rejected.length > 0) {
+      throw rejected[0].reason;
+    }
+
+    throw new Error('No quotes succeeded');
   }
 
   async getDepositStep(

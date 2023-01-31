@@ -82,7 +82,7 @@ export const zaps: BeefyZapConfig[] = [
   },
   {
     chainId: 'ethereum',
-    ammId: 'ethereum-soldily',
+    ammId: 'ethereum-solidly',
     zapAddress: '0x6674f3961C5908B086A5551377806f4BA8F0Ac99',
   },
   {
