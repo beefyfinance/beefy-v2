@@ -16,7 +16,12 @@ interface DropNavItemProps {
   withBadge?: boolean;
 }
 
-export const DropNavItem = memo<DropNavItemProps>(function ({ title, Icon, items, withBadge }) {
+export const DropNavItem = memo<DropNavItemProps>(function ({
+  title,
+  Icon,
+  items,
+  withBadge = false,
+}) {
   const { t } = useTranslation();
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);
