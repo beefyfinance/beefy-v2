@@ -30,8 +30,10 @@ export const ExposureLegend = memo<ExposureLegendProps>(function ({ data, format
   );
 });
 
+type ItemType = BaseEntry & { label?: string };
+
 interface LabelProps {
-  item: BaseEntry;
+  item: ItemType;
   formatter?: (s: string) => string;
 }
 

@@ -197,7 +197,7 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
     };
   });
 
-  return getTopNArray(treasuryExposure, 'percentage');
+  return treasuryExposure;
 };
 
 export const selectTreasuryExposureByChain = (state: BeefyState) => {
@@ -213,16 +213,16 @@ export const selectTreasuryExposureByChain = (state: BeefyState) => {
   const totalTreasury = Object.keys(chains).reduce((cur, tot) => chains[tot].plus(cur), BIG_ZERO);
 
   const treasuryExposureBychain = Object.keys(chains).map(chainId => {
-    const chain = selectChainById(state,chainId)
+    const chain = selectChainById(state, chainId);
     return {
       key: chainId,
       value: chains[chainId],
       percentage: chains[chainId].dividedBy(totalTreasury).toNumber(),
-      label:chain.name
+      label: chain.name,
     };
   });
 
-  return getTopNArray(treasuryExposureBychain, 'percentage');
+  return treasuryExposureBychain;
 };
 
 export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
@@ -261,7 +261,7 @@ export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
     };
   });
 
-  return getTopNArray(treasuryExposureByAvailability, 'percentage');
+  return treasuryExposureByAvailability;
 };
 
 export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
