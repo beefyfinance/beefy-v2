@@ -23,7 +23,7 @@ export const amms: AmmConfig[] = [
     factoryAddress: '0x777de5Fe8117cAAA7B44f396E93a401Cf5c9D4d6',
     pairInitHash: '0x413d36e4ab9e83cf39b8064a3b5c98253a9e46a6cf02c8efd185314c866d656b',
     minimumLiquidity: '1000',
-    swapFeeNumerator: '200', // DYNAMIC factory.getFee(stable);
+    swapFeeNumerator: '2000', // DYNAMIC pair.feeRatio();
     swapFeeDenominator: '1000000',
     getAmountOutMode: 'getAmountOut', // router.getAmountsOut(uint amountIn, route[] memory routes) public view returns (uint[] memory amounts) or pair.getAmountOut(uint256 amountIn, address tokenIn) view returns (uint256)
   },
