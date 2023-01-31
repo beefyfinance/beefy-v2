@@ -5,7 +5,6 @@ import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { isVaultHoldingEntity, TreasuryHoldingEntity } from '../entities/treasury';
 import { isInitialLoader } from '../reducers/data-loader-types';
-import { getTopNArray } from '../utils/array-utils';
 import { selectLpBreakdownBalance } from './balance';
 import { selectChainById } from './chains';
 import { selectHasBreakdownData, selectIsTokenStable, selectLpBreakdownByOracleId } from './tokens';
