@@ -58,12 +58,7 @@ export const Header = memo(function () {
               <Hidden mdDown>
                 <NavItem title={'Header-Vaults'} url="/" Icon={VaultsIcon} />
                 <NavItem title={'Header-Dashboard'} url="/dashboard" Icon={DashboardIcon} />
-                <DropNavItem
-                  withBadge={true}
-                  title={'Header-Dao'}
-                  Icon={DaoIcon}
-                  items={DaoNavItems}
-                />
+                <DropNavItem title={'Header-Dao'} Icon={DaoIcon} items={DaoNavItems} />
                 <DropNavItem
                   title={'Header-Resources'}
                   Icon={ResourcesIcon}
