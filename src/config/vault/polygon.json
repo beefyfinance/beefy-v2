@@ -1119,9 +1119,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.apeswap.finance/#/swap?outputCurrency=0x5d47bAbA0d66083C52009271faF3F50DCc01023C",
-    "addLiquidityUrl": "https://app.apeswap.finance/add/ETH/0x5d47bAbA0d66083C52009271faF3F50DCc01023C",
-    "removeLiquidityUrl": "https://app.apeswap.finance/remove/ETH/0x5d47bAbA0d66083C52009271faF3F50DCc01023C",
+    "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x5d47bAbA0d66083C52009271faF3F50DCc01023C",
+    "addLiquidityUrl": "https://apeswap.finance/add/ETH/0x5d47bAbA0d66083C52009271faF3F50DCc01023C",
+    "removeLiquidityUrl": "https://apeswap.finance/remove/ETH/0x5d47bAbA0d66083C52009271faF3F50DCc01023C",
     "network": "polygon",
     "createdAt": 1624340191
   },
@@ -1442,9 +1442,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.apeswap.finance/swap?outputCurrency=0x09211Dc67f9fe98Fb7bBB91Be0ef05f4a12FA2b2",
-    "addLiquidityUrl": "https://app.apeswap.finance/add/0x09211dc67f9fe98fb7bbb91be0ef05f4a12fa2b2/ETH",
-    "removeLiquidityUrl": "https://app.apeswap.finance/remove/0x09211dc67f9fe98fb7bbb91be0ef05f4a12fa2b2/ETH",
+    "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x09211Dc67f9fe98Fb7bBB91Be0ef05f4a12FA2b2",
+    "addLiquidityUrl": "https://apeswap.finance/add/0x09211dc67f9fe98fb7bbb91be0ef05f4a12fa2b2/ETH",
+    "removeLiquidityUrl": "https://apeswap.finance/remove/0x09211dc67f9fe98fb7bbb91be0ef05f4a12fa2b2/ETH",
     "network": "polygon",
     "createdAt": 1630476350
   },
@@ -1474,9 +1474,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.apeswap.finance/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
-    "addLiquidityUrl": "https://app.apeswap.finance/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
-    "removeLiquidityUrl": "https://app.apeswap.finance/remove/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+    "buyTokenUrl": "https://apeswap.finance/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+    "addLiquidityUrl": "https://apeswap.finance/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+    "removeLiquidityUrl": "https://apeswap.finance/remove/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
     "network": "polygon",
     "createdAt": 1630064594
   },
@@ -2529,9 +2529,9 @@
     "platformId": "boneswap",
     "assets": ["BONEswap", "MATIC"],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.apeswap.finance/#/swap?outputCurrency=0x80244C2441779361F35803b8C711C6c8fC6054a3",
-    "addLiquidityUrl": "https://app.apeswap.finance/add/ETH/0x80244C2441779361F35803b8C711C6c8fC6054a3",
-    "removeLiquidityUrl": "https://app.apeswap.finance/remove/ETH/0x80244C2441779361F35803b8C711C6c8fC6054a3",
+    "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x80244C2441779361F35803b8C711C6c8fC6054a3",
+    "addLiquidityUrl": "https://apeswap.finance/add/ETH/0x80244C2441779361F35803b8C711C6c8fC6054a3",
+    "removeLiquidityUrl": "https://apeswap.finance/remove/ETH/0x80244C2441779361F35803b8C711C6c8fC6054a3",
     "network": "polygon",
     "createdAt": 1625570159
   },
@@ -2827,9 +2827,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.apeswap.finance/#/swap?outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-    "addLiquidityUrl": "https://app.apeswap.finance/add/ETH/0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-    "removeLiquidityUrl": "https://app.apeswap.finance/remove/ETH/0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+    "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+    "addLiquidityUrl": "https://apeswap.finance/add/ETH/0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+    "removeLiquidityUrl": "https://apeswap.finance/remove/ETH/0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "network": "polygon",
     "createdAt": 1624811048
   },
@@ -2859,9 +2859,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.apeswap.finance/#/swap?outputCurrency=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
-    "addLiquidityUrl": "https://app.apeswap.finance/add/ETH/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
-    "removeLiquidityUrl": "https://app.apeswap.finance/remove/ETH/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+    "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+    "addLiquidityUrl": "https://apeswap.finance/add/ETH/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+    "removeLiquidityUrl": "https://apeswap.finance/remove/ETH/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
     "network": "polygon",
     "createdAt": 1624810792
   },
@@ -2926,9 +2926,9 @@
     "platformId": "polyyeld",
     "assets": ["YELD", "MATIC"],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.apeswap.finance/#/swap?inputCurrency=0xd0f3121A190d85dE0AB6131f2bCEcdbfcfB38891&outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
-    "addLiquidityUrl": "https://app.apeswap.finance/add/0xd0f3121A190d85dE0AB6131f2bCEcdbfcfB38891/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
-    "removeLiquidityUrl": "https://app.apeswap.finance/remove/0xd0f3121A190d85dE0AB6131f2bCEcdbfcfB38891/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+    "buyTokenUrl": "https://apeswap.finance/swap?inputCurrency=0xd0f3121A190d85dE0AB6131f2bCEcdbfcfB38891&outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+    "addLiquidityUrl": "https://apeswap.finance/add/0xd0f3121A190d85dE0AB6131f2bCEcdbfcfB38891/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+    "removeLiquidityUrl": "https://apeswap.finance/remove/0xd0f3121A190d85dE0AB6131f2bCEcdbfcfB38891/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
     "network": "polygon",
     "createdAt": 1624588799
   },
@@ -2989,9 +2989,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.apeswap.finance/#/swap?outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "addLiquidityUrl": "https://app.apeswap.finance/add/ETH/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "removeLiquidityUrl": "https://app.apeswap.finance/remove/ETH/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    "addLiquidityUrl": "https://apeswap.finance/add/ETH/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    "removeLiquidityUrl": "https://apeswap.finance/remove/ETH/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "network": "polygon",
     "createdAt": 1624378113
   },
@@ -3020,9 +3020,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.apeswap.finance/#/swap?outputCurrency=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
-    "addLiquidityUrl": "https://app.apeswap.finance/add/ETH/0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
-    "removeLiquidityUrl": "https://app.apeswap.finance/remove/ETH/0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+    "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+    "addLiquidityUrl": "https://apeswap.finance/add/ETH/0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+    "removeLiquidityUrl": "https://apeswap.finance/remove/ETH/0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
     "network": "polygon",
     "createdAt": 1624376861
   },
@@ -3051,9 +3051,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.apeswap.finance/#/swap?outputCurrency=0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F",
-    "addLiquidityUrl": "https://app.apeswap.finance/add/ETH/0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F",
-    "removeLiquidityUrl": "https://app.apeswap.finance/remove/ETH/0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F",
+    "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F",
+    "addLiquidityUrl": "https://apeswap.finance/add/ETH/0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F",
+    "removeLiquidityUrl": "https://apeswap.finance/remove/ETH/0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F",
     "network": "polygon",
     "createdAt": 1624375449
   },
@@ -6346,9 +6346,9 @@
     "platformId": "apeswap",
     "assets": ["CRYSTL", "MATIC"],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.apeswap.finance/swap",
-    "addLiquidityUrl": "https://app.apeswap.finance/add/ETH/0x76bF0C28e604CC3fE9967c83b3C3F31c213cfE64",
-    "removeLiquidityUrl": "https://app.apeswap.finance/remove/ETH/0x76bF0C28e604CC3fE9967c83b3C3F31c213cfE64",
+    "buyTokenUrl": "https://apeswap.finance/swap",
+    "addLiquidityUrl": "https://apeswap.finance/add/ETH/0x76bF0C28e604CC3fE9967c83b3C3F31c213cfE64",
+    "removeLiquidityUrl": "https://apeswap.finance/remove/ETH/0x76bF0C28e604CC3fE9967c83b3C3F31c213cfE64",
     "network": "polygon",
     "createdAt": 1634055850
   },
@@ -6415,9 +6415,9 @@
     "platformId": "singular",
     "assets": ["SING", "USDC"],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.apeswap.finance/#/swap?outputCurrency=0xCB898b0eFb084Df14dd8E018dA37B4d0f06aB26D",
-    "addLiquidityUrl": "https://app.apeswap.finance/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xCB898b0eFb084Df14dd8E018dA37B4d0f06aB26D",
-    "removeLiquidityUrl": "https://app.apeswap.finance/remove/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xCB898b0eFb084Df14dd8E018dA37B4d0f06aB26D",
+    "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0xCB898b0eFb084Df14dd8E018dA37B4d0f06aB26D",
+    "addLiquidityUrl": "https://apeswap.finance/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xCB898b0eFb084Df14dd8E018dA37B4d0f06aB26D",
+    "removeLiquidityUrl": "https://apeswap.finance/remove/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xCB898b0eFb084Df14dd8E018dA37B4d0f06aB26D",
     "network": "polygon",
     "createdAt": 1633615462
   },
