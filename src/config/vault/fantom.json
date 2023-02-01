@@ -277,7 +277,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap",
     "addLiquidityUrl": "https://spooky.fi/#/add/0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1667003277
   },
@@ -307,7 +307,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xde5ed76e7c05ec5e4572cfc88d1acea165109e44",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xde5ed76e7c05ec5e4572cfc88d1acea165109e44",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xde5ed76e7c05ec5e4572cfc88d1acea165109e44",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1665666444
   },
@@ -1572,7 +1572,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1633607188
   },
@@ -1602,7 +1602,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x468003B688943977e6130F4F68F23aad939a1040",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x468003B688943977e6130F4F68F23aad939a1040",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x468003B688943977e6130F4F68F23aad939a1040",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1634118092
   },
@@ -1755,7 +1755,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1623659891
   },
@@ -1785,7 +1785,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xc60D7067dfBc6f2caf30523a064f416A5Af52963",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xc60D7067dfBc6f2caf30523a064f416A5Af52963",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xc60D7067dfBc6f2caf30523a064f416A5Af52963",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1631897760
   },
@@ -1900,7 +1900,7 @@
     "depositFee": "0.5%",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1628881379
   },
@@ -2098,7 +2098,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?inputCurrency=0x29b0Da86e484E1C0029B56e817912d778aC0EC69&outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
     "addLiquidityUrl": "https://spooky.fi/#/add/0x29b0Da86e484E1C0029B56e817912d778aC0EC69/0x74b23882a30290451A17c44f4F05243b6b58C76d",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0x29b0Da86e484E1C0029B56e817912d778aC0EC69/0x74b23882a30290451A17c44f4F05243b6b58C76d",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1628168514
   },
@@ -2190,7 +2190,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x82f0B8B456c1A451378467398982d4834b6829c1",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x82f0B8B456c1A451378467398982d4834b6829c1",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1625679284
   },
@@ -2220,7 +2220,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1620386574
   },
@@ -2250,7 +2250,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xd6070ae98b8069de6B494332d1A1a81B6179D960",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xd6070ae98b8069de6B494332d1A1a81B6179D960",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xd6070ae98b8069de6B494332d1A1a81B6179D960",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1622569266
   },
@@ -2281,7 +2281,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xf16e81dce15B08F326220742020379B855B87DF9",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xf16e81dce15B08F326220742020379B855B87DF9",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xf16e81dce15B08F326220742020379B855B87DF9",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1622445591
   },
@@ -2311,7 +2311,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1622446524
   },
@@ -2341,7 +2341,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1620386549
   },
@@ -2372,7 +2372,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xdDcb3fFD12750B45d32E084887fdf1aABAb34239",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xdDcb3fFD12750B45d32E084887fdf1aABAb34239",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xdDcb3fFD12750B45d32E084887fdf1aABAb34239",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1622123539
   },
@@ -2403,7 +2403,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1622123567
   },
@@ -2433,7 +2433,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xD67de0e0a0Fd7b15dC8348Bb9BE742F3c5850454",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xD67de0e0a0Fd7b15dC8348Bb9BE742F3c5850454",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xD67de0e0a0Fd7b15dC8348Bb9BE742F3c5850454",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1620919260
   },
@@ -2463,7 +2463,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1620500758
   },
@@ -2486,7 +2486,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xB01E8419d842beebf1b70A7b5f7142abbaf7159D",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xB01E8419d842beebf1b70A7b5f7142abbaf7159D",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xB01E8419d842beebf1b70A7b5f7142abbaf7159D",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1620500733
   },
@@ -2516,7 +2516,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1620500483
   },
@@ -2546,7 +2546,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x321162Cd933E2Be498Cd2267a90534A804051b11",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x321162Cd933E2Be498Cd2267a90534A804051b11",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1620500455
   },
@@ -2576,7 +2576,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x74b23882a30290451A17c44f4F05243b6b58C76d",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x74b23882a30290451A17c44f4F05243b6b58C76d",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1620386666
   },
@@ -2606,7 +2606,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x1E4F97b9f9F913c46F1632781732927B9019C68b",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x1E4F97b9f9F913c46F1632781732927B9019C68b",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x1E4F97b9f9F913c46F1632781732927B9019C68b",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1620386607
   },
@@ -2637,7 +2637,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xfB98B335551a418cD0737375a2ea0ded62Ea213b",
     "addLiquidityUrl": "https://spooky.fi/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xfB98B335551a418cD0737375a2ea0ded62Ea213b",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xfB98B335551a418cD0737375a2ea0ded62Ea213b",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1636758731
   },
@@ -2668,7 +2668,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x9F47F313ACFd4bdC52F4373b493EaE7d5aC5b765",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x9F47F313ACFd4bdC52F4373b493EaE7d5aC5b765",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x9F47F313ACFd4bdC52F4373b493EaE7d5aC5b765",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1637587170
   },
@@ -2727,7 +2727,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0x9879aBDea01a879644185341F7aF7d8343556B7a",
     "addLiquidityUrl": "https://spooky.fi/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x9879aBDea01a879644185341F7aF7d8343556B7a",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x9879aBDea01a879644185341F7aF7d8343556B7a",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1637658328
   },
@@ -2810,7 +2810,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x9d8F97A3C2f9f397B6D46Cbe2d39CC1D8Cf19010",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x9d8F97A3C2f9f397B6D46Cbe2d39CC1D8Cf19010",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x9d8F97A3C2f9f397B6D46Cbe2d39CC1D8Cf19010",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1639423285
   },
@@ -2840,7 +2840,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x94CcF60f700146BeA8eF7832820800E2dFa92EdA",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x94CcF60f700146BeA8eF7832820800E2dFa92EdA",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x94CcF60f700146BeA8eF7832820800E2dFa92EdA",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1639423158
   },
@@ -2871,7 +2871,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x3dc57B391262e3aAe37a08D91241f9bA9d58b570",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x3dc57B391262e3aAe37a08D91241f9bA9d58b570",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x3dc57B391262e3aAe37a08D91241f9bA9d58b570",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1639422895
   },
@@ -2964,7 +2964,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x3A3841f5fa9f2c283EA567d5Aeea3Af022dD2262",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x3A3841f5fa9f2c283EA567d5Aeea3Af022dD2262",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x3A3841f5fa9f2c283EA567d5Aeea3Af022dD2262",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1631898051
   },
@@ -2995,8 +2995,8 @@
     "strategyTypeId": "lp",
     "depositFee": "0.5%",
     "buyTokenUrl": "https://spooky.fi/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xAd84341756Bf337f5a0164515b1f6F993D194E1f",
-    "addLiquidityUrl": "https://stakesteak.app/",
-    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/",
+    "addLiquidityUrl": "https://spooky.fi/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xAd84341756Bf337f5a0164515b1f6F993D194E1f",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1631357355
   },
@@ -3027,7 +3027,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x05848B832E872d9eDd84AC5718D58f21fD9c9649",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x05848B832E872d9eDd84AC5718D58f21fD9c9649",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x05848B832E872d9eDd84AC5718D58f21fD9c9649",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1631055499
   },
@@ -3089,7 +3089,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xD0660cD418a64a1d44E9214ad8e459324D8157f1",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xD0660cD418a64a1d44E9214ad8e459324D8157f1",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xD0660cD418a64a1d44E9214ad8e459324D8157f1",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1621266087
   },
@@ -3146,7 +3146,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x511D35c52a3C244E7b8bd92c0C297755FbD89212",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x511D35c52a3C244E7b8bd92c0C297755FbD89212",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x511D35c52a3C244E7b8bd92c0C297755FbD89212",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1639923705
   },
@@ -3176,7 +3176,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1639923811
   },
@@ -3404,7 +3404,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1630243343
   },
@@ -3435,7 +3435,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x56ee926bD8c72B2d5fa1aF4d9E4Cbb515a1E3Adc",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x56ee926bD8c72B2d5fa1aF4d9E4Cbb515a1E3Adc",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x56ee926bD8c72B2d5fa1aF4d9E4Cbb515a1E3Adc",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1620500694
   },
@@ -3526,7 +3526,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x40DF1Ae6074C35047BFF66675488Aa2f9f6384F3",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x40DF1Ae6074C35047BFF66675488Aa2f9f6384F3",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x40DF1Ae6074C35047BFF66675488Aa2f9f6384F3",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1640973310
   },
@@ -3896,7 +3896,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x85dec8c4B2680793661bCA91a8F129607571863d",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x85dec8c4B2680793661bCA91a8F129607571863d",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x85dec8c4B2680793661bCA91a8F129607571863d",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1642291662
   },
@@ -3926,7 +3926,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xF24Bcf4d1e507740041C9cFd2DddB29585aDCe1e",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xF24Bcf4d1e507740041C9cFd2DddB29585aDCe1e",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xF24Bcf4d1e507740041C9cFd2DddB29585aDCe1e",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1642634017
   },
@@ -3956,7 +3956,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?inputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d&outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11",
     "addLiquidityUrl": "https://spooky.fi/#/add/0x74b23882a30290451A17c44f4F05243b6b58C76d/0x321162Cd933E2Be498Cd2267a90534A804051b11",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0x74b23882a30290451A17c44f4F05243b6b58C76d/0x321162Cd933E2Be498Cd2267a90534A804051b11",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1642672280
   },
@@ -4738,7 +4738,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x112dF7E3b4B7Ab424F07319D4E92F41e6608c48B",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x112dF7E3b4B7Ab424F07319D4E92F41e6608c48B",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x112dF7E3b4B7Ab424F07319D4E92F41e6608c48B",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1644485111
   },
@@ -4768,7 +4768,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x8a41f13a4FaE75ca88B1ee726ee9D52B148b0498",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x8a41f13a4FaE75ca88B1ee726ee9D52B148b0498",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x8a41f13a4FaE75ca88B1ee726ee9D52B148b0498",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1644485584
   },
@@ -4916,7 +4916,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xc165d941481e68696f43EE6E99BFB2B23E0E3114",
     "addLiquidityUrl": "https://spooky.fi/#/add/0xc165d941481e68696f43EE6E99BFB2B23E0E3114/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0xc165d941481e68696f43EE6E99BFB2B23E0E3114/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1642811156
   },
@@ -4975,7 +4975,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1635338766
   },
@@ -5160,7 +5160,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x9fb9a33956351cf4fa040f65a13b835a3c8764e3",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x9fb9a33956351cf4fa040f65a13b835a3c8764e3",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x9fb9a33956351cf4fa040f65a13b835a3c8764e3",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1645049415
   },
@@ -5220,7 +5220,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x53D831e1db0947c74e8a52618f662209ec5dE0cE",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x53D831e1db0947c74e8a52618f662209ec5dE0cE",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x53D831e1db0947c74e8a52618f662209ec5dE0cE",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1634116608
   },
@@ -5371,7 +5371,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1630352068
   },
@@ -5523,7 +5523,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x65Def5029A0e7591e46B38742bFEdd1Fb7b24436",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x65Def5029A0e7591e46B38742bFEdd1Fb7b24436",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x65Def5029A0e7591e46B38742bFEdd1Fb7b24436",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1645886552
   },
@@ -5892,7 +5892,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae",
     "addLiquidityUrl": "https://spooky.fi/#/add/0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7/0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7/0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1646398565
   },
@@ -5923,7 +5923,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x49C290Ff692149A4E16611c694fdED42C954ab7a",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x49C290Ff692149A4E16611c694fdED42C954ab7a",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x49C290Ff692149A4E16611c694fdED42C954ab7a",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1646398565
   },
@@ -6389,7 +6389,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x627524d78B4fC840C887ffeC90563c7A42b671fD",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x627524d78B4fC840C887ffeC90563c7A42b671fD",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x627524d78B4fC840C887ffeC90563c7A42b671fD",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1642139577
   },
@@ -6420,7 +6420,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x248cb87dda803028dfead98101c9465a2fbda0d4",
     "addLiquidityUrl": "https://spooky.fi/#/add/0x04068da6c83afcfa0e13ba15a6696662335d5b75/0x248cb87dda803028dfead98101c9465a2fbda0d4",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0x04068da6c83afcfa0e13ba15a6696662335d5b75/0x248cb87dda803028dfead98101c9465a2fbda0d4",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1641550679
   },
@@ -6482,7 +6482,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xFbc3c04845162F067A0B6F8934383E63899c3524",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xFbc3c04845162F067A0B6F8934383E63899c3524",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xFbc3c04845162F067A0B6F8934383E63899c3524",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1631054248
   },
@@ -6601,7 +6601,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x2d72A97a31Dc920dB03330780d30074626e39C8A",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x2d72A97a31Dc920dB03330780d30074626e39C8A",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x2d72A97a31Dc920dB03330780d30074626e39C8A",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1648237084
   },
@@ -6631,7 +6631,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE",
     "addLiquidityUrl": "https://spooky.fi/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1648237004
   },
@@ -6664,7 +6664,7 @@
     "depositFee": "0.2%",
     "buyTokenUrl": "https://spooky.fi/#/swap?inputCurrency=0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae&outputCurrency=0x49C290Ff692149A4E16611c694fdED42C954ab7a",
     "addLiquidityUrl": "https://spooky.fi/#/add/0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae/0x49C290Ff692149A4E16611c694fdED42C954ab7a",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae/0x49C290Ff692149A4E16611c694fdED42C954ab7a",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1648136284
   },
@@ -6694,7 +6694,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x7381eD41F6dE418DdE5e84B55590422a57917886",
     "addLiquidityUrl": "https://spooky.fi/#/add/0x7381eD41F6dE418DdE5e84B55590422a57917886/FTM",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0x7381eD41F6dE418DdE5e84B55590422a57917886/FTM",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1648777474
   },
@@ -6784,7 +6784,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xbbc4A8d076F4B1888fec42581B6fc58d242CF2D5",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xbbc4a8d076f4b1888fec42581b6fc58d242cf2d5",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xbbc4a8d076f4b1888fec42581b6fc58d242cf2d5",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1644614666
   },
@@ -6906,7 +6906,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x10010078a54396F62c96dF8532dc2B4847d47ED3",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x10010078a54396F62c96dF8532dc2B4847d47ED3",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x10010078a54396F62c96dF8532dc2B4847d47ED3",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1641572631
   },
@@ -6960,7 +6960,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?inputCurrency=0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE&outputCurrency=0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca",
     "addLiquidityUrl": "https://spooky.fi/#/add/0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE/0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE/0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1644007618
   },
@@ -6992,7 +6992,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1642150805
   },
@@ -7023,7 +7023,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1642152342
   },
@@ -7178,7 +7178,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1635415386
   },
@@ -7270,7 +7270,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x6a07A792ab2965C72a5B8088d3a069A7aC3a993B",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x6a07A792ab2965C72a5B8088d3a069A7aC3a993B",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x6a07A792ab2965C72a5B8088d3a069A7aC3a993B",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1620386633
   },
@@ -7301,7 +7301,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xDE12c7959E1a72bbe8a5f7A1dc8f8EeF9Ab011B3",
     "addLiquidityUrl": "https://spooky.fi/#/add/0xDE12c7959E1a72bbe8a5f7A1dc8f8EeF9Ab011B3/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0xDE12c7959E1a72bbe8a5f7A1dc8f8EeF9Ab011B3/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1649955002
   },
@@ -7332,7 +7332,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xDE5ed76E7c05eC5e4572CfC88d1ACEA165109E44",
     "addLiquidityUrl": "https://spooky.fi/#/add/0xDE5ed76E7c05eC5e4572CfC88d1ACEA165109E44/FTM",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0xDE5ed76E7c05eC5e4572CfC88d1ACEA165109E44/FTM",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1649955001
   },
@@ -7598,7 +7598,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0xd7028092c830b5C8FcE061Af2E593413EbbC1fc1",
     "addLiquidityUrl": "https://spooky.fi/#/add/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83/0xd7028092c830b5C8FcE061Af2E593413EbbC1fc1",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83/0xd7028092c830b5C8FcE061Af2E593413EbbC1fc1",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1671306348
   },
@@ -7629,7 +7629,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x152888854378201e173490956085c711f1DeD565",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x152888854378201e173490956085c711f1DeD565",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x152888854378201e173490956085c711f1DeD565",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1644813183
   },
@@ -7816,7 +7816,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xC758295Cd1A564cdb020a78a681a838CF8e0627D",
     "addLiquidityUrl": "https://spooky.fi/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xC758295Cd1A564cdb020a78a681a838CF8e0627D",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xC758295Cd1A564cdb020a78a681a838CF8e0627D",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1644274576
   },
@@ -7878,7 +7878,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x89346B51A54263cF2e92dA79B1863759eFa68692",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x89346B51A54263cF2e92dA79B1863759eFa68692",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x89346B51A54263cF2e92dA79B1863759eFa68692",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1639423010
   },
@@ -8052,7 +8052,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x74E23dF9110Aa9eA0b6ff2fAEE01e740CA1c642e",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x74E23dF9110Aa9eA0b6ff2fAEE01e740CA1c642e",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x74E23dF9110Aa9eA0b6ff2fAEE01e740CA1c642e",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1651814013
   },
@@ -8417,7 +8417,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x593AE1d34c8BD7587C11D539E4F42BFf242c82Af",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x593AE1d34c8BD7587C11D539E4F42BFf242c82Af",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x593AE1d34c8BD7587C11D539E4F42BFf242c82Af",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1649436436
   },
@@ -8449,7 +8449,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x846e4D51d7E2043C1a87E0Ab7490B93FB940357b",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x846e4D51d7E2043C1a87E0Ab7490B93FB940357b",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x846e4D51d7E2043C1a87E0Ab7490B93FB940357b",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1649492747
   },
@@ -8480,7 +8480,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1623662472
   },
@@ -8644,7 +8644,7 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x70F9fd19f857411b089977E7916c05A0fc477Ac9",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x70F9fd19f857411b089977E7916c05A0fc477Ac9",
-    "removeLiquidityUrl": "https://spooky.fi/#/remove/FTM/0x70F9fd19f857411b089977E7916c05A0fc477Ac9",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
     "network": "fantom",
     "createdAt": 1657655782
   }
