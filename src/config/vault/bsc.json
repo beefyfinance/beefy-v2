@@ -987,9 +987,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x5774B2fc3e91aF89f89141EacF76545e74265982",
-    "addLiquidityUrl": "https://apeswap.finance/add/ETH/0x5774B2fc3e91aF89f89141EacF76545e74265982",
-    "removeLiquidityUrl": "https://apeswap.finance/remove/ETH/0x5774B2fc3e91aF89f89141EacF76545e74265982",
+    "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x1bdd3Cf7F79cfB8EdbB955f20ad99211551BA275",
+    "addLiquidityUrl": "https://apeswap.finance/add/ETH/0x1bdd3Cf7F79cfB8EdbB955f20ad99211551BA275",
+    "removeLiquidityUrl": "https://apeswap.finance/remove/ETH/0x1bdd3Cf7F79cfB8EdbB955f20ad99211551BA275",
     "network": "bsc",
     "createdAt": 1661140279
   },
