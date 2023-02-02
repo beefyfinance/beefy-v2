@@ -100,6 +100,28 @@
     "createdAt": 1674850871
   },
   {
+    "id": "velodrome-wsteth-seth",
+    "name": "wstETH-sETH sLP",
+    "token": "wstETH-sETH sLP",
+    "tokenAddress": "0xB343dae0E7fe28c16EC5dCa64cB0C1ac5F4690AC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelowstETH-sETH",
+    "earnedTokenAddress": "0x816aF3b6dc3E92ea0D95A20BEB1c8E989be8041c",
+    "earnContractAddress": "0x816aF3b6dc3E92ea0D95A20BEB1c8E989be8041c",
+    "oracle": "lps",
+    "oracleId": "velodrome-wsteth-seth",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["wstETH", "sETH"],
+    "strategyTypeId": "lp",
+    "risks": ["BATTLE_TESTED", "CONTRACTS_VERIFIED", "COMPLEXITY_LOW", "MCAP_MEDIUM", "IL_NONE"],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1675354581
+  },
+  {
     "id": "velodrome-jeur-seur",
     "name": "jEUR-sEUR sLP",
     "token": "jEUR-sEUR sLP",
