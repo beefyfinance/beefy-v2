@@ -27,6 +27,7 @@ import { KeysOfType } from '../utils/types-utils';
 import { getTopNArray } from '../utils/array-utils';
 import { sortBy } from 'lodash';
 import { createSelector } from '@reduxjs/toolkit';
+import { selectChainById } from './chains';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (selectIsWalletKnown(state)) {
@@ -438,11 +439,20 @@ export const selectUserExposureByKey = (
     BIG_ZERO
   );
 
-  const exposureByKey = Object.keys(valueByKey).map((token, i) => {
+  const exposureByKey = Object.keys(valueByKey).map(item => {
+    if (key === 'chainId') {
+      const chain = selectChainById(state, item);
+      return {
+        key: item,
+        value: valueByKey[item],
+        percentage: valueByKey[item].dividedBy(userBalance).toNumber(),
+        label: chain.name,
+      };
+    }
     return {
-      key: token,
-      value: valueByKey[token],
-      percentage: valueByKey[token].dividedBy(userBalance).toNumber(),
+      key: item,
+      value: valueByKey[item],
+      percentage: valueByKey[item].dividedBy(userBalance).toNumber(),
     };
   });
 

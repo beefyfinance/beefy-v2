@@ -465,6 +465,7 @@
   "Exposure-Chain": "Chain Exposure",
   "Exposure-Tokens": "Token Exposure",
   "Exposure-Stables": "Stablecoin Exposure",
+  "Exposure-Availability": "Asset Availability",
   "Dashboard-Deposited": "Deposited: ",
   "Dashboard-Percentage": "Percentage: ",
   "Dashboard-NoData": "No data available",
@@ -541,5 +542,8 @@
   "Transact-Provider-gov-vault": "Direct",
   "Transact-Provider-one-inch": "Beefy × 1inch",
   "Transact-Provider-beefy-zap-uniswapv2": "Beefy",
-  "Transact-Provider-beefy-zap-solidly": "Beefy"
+  "Transact-Provider-beefy-zap-solidly": "Beefy",
+  "Treasury-treasuryMultisig": "Multisig",
+  "Treasury-treasury": "Treasury",
+  "Treasury-validator": "Validator"
 }

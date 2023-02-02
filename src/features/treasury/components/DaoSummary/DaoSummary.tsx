@@ -48,7 +48,7 @@ export const DaoSummary = memo(function () {
     <div className={classes.container}>
       <Container maxWidth="lg">
         <div className={classes.title}>{t('Treasury-Title')}</div>
-        <SummaryStats items={DaoStats} />
+        <SummaryStats tinnyStyle={true} items={DaoStats} />
       </Container>
     </div>
   );

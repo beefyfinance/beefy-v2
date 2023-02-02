@@ -3,13 +3,17 @@ export const styles = (theme: Theme) => ({
   summaryContainer: {
     display: 'grid',
     gridTemplateColumns: 'repeat(4, 1fr)',
-    rowGap: '16px',
-    columnGap: '16px',
+    gap: '16px',
     [theme.breakpoints.down('md')]: {
       gridTemplateColumns: 'repeat(2, 1fr)',
     },
     [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: '1fr',
+    },
+  },
+  tinnyContainer: {
+    [theme.breakpoints.down('sm')]: {
+      gridTemplateColumns: 'repeat(2, 1fr)',
     },
   },
   container: {
@@ -43,5 +47,29 @@ export const styles = (theme: Theme) => ({
   value: {
     ...theme.typography.h1,
     color: theme.palette.text.secondary,
+  },
+  mobileVersion: {
+    [theme.breakpoints.down('xs')]: {
+      '&$container': {
+        columnGap: '8px',
+        backgroundColor: 'transparent',
+        padding: 0,
+        alignItems: 'flex-start',
+      },
+      '& $iconContainer': {
+        backgroundColor: 'transparent',
+        height: '24px',
+        width: '24px',
+      },
+      '& $title': {
+        ...theme.typography['body-sm'],
+        fontWeight: 700,
+        textTransform: 'uppercase' as const,
+        letterSpacing: '0.5px',
+      },
+      '& $value': {
+        ...theme.typography['body-lg-med'],
+      },
+    },
   },
 });

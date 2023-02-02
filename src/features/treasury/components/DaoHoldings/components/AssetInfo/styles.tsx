@@ -20,9 +20,13 @@ export const styles = (theme: Theme) => ({
   value: {
     ...theme.typography['body-lg-med'],
     color: theme.palette.text.secondary,
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
   subValue: {
     ...theme.typography['body-sm'],
     color: theme.palette.text.disabled,
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
 });

@@ -8,6 +8,8 @@ import { ChainEntity } from '../../../../../data/entities/chain';
 import { selectTreasuryBalanceByChainId } from '../../../../../data/selectors/treasury';
 
 import { Assets } from '../Assets';
+import clsx from 'clsx';
+import { ExplorerLinks } from '../../../ExplorerLinks';
 
 const useStyles = makeStyles(styles);
 
@@ -20,15 +22,20 @@ export const ChainHolding = memo<ChainHoldingProps>(function ({ chainId }) {
 
   const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, chainId));
+
   return (
     <div className={classes.container}>
-      <div className={classes.title}>
-        <img
-          src={require(`../../../../../../images/networks/${chainId}.svg`).default}
-          alt={chainId}
-        />
-        <div>{chain.name}</div>
-        <span>{formatBigUsd(totalUsd)}</span>
+      <div className={clsx(classes.title, classes[`headerNetwork-${chainId}`])}>
+        <div className={classes.nameContainer}>
+          <img
+            className={classes.icon}
+            src={require(`../../../../../../images/networks/${chainId}.svg`).default}
+            alt={chainId}
+          />
+          <div className={classes.chainName}>{chain.name}</div>
+          <ExplorerLinks chainId={chainId} />
+        </div>
+        <div className={classes.usdValue}>{formatBigUsd(totalUsd)}</div>
       </div>
       <Assets chainId={chainId} />
     </div>
