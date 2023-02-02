@@ -20,6 +20,15 @@ export const customInjectedWallets: InjectedWalletModule[] = [
     platforms: ['all'], // included in @web3-onboard/injected-wallets but only for desktop
   },
   {
+    label: 'Trust Wallet',
+    injectedNamespace: InjectedNameSpace.Ethereum,
+    checkProviderIdentity: ({ provider }) =>
+      !!provider && !!provider['isTrust'] && !!provider['isTrustWallet'],
+    getIcon: async () => (await import(`../../../../images/wallets/trust-wallet.svg`)).default,
+    getInterface: async () => ({ provider: (window as any).ethereum }),
+    platforms: ['all'],
+  },
+  {
     label: 'Core',
     injectedNamespace: InjectedNameSpace.Ethereum,
     checkProviderIdentity: ({ provider }) => !!provider && !!provider['isAvalanche'],
