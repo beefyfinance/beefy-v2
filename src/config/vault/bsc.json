@@ -474,7 +474,8 @@
     "earnContractAddress": "0x8e981160eCD65bCCe80A0ec3e55C9530B8DA26dc",
     "oracle": "lps",
     "oracleId": "swapfish-bsc-fish-busd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "swapfish",
     "assets": ["FISH", "BUSD"],
     "risks": [
