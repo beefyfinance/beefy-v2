@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import ContentLoader from 'react-content-loader';
 
 const _ContentLoading = ({ backgroundColor = '#313759', foregroundColor = '#8585A6' }) => {
