@@ -215,6 +215,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'jEUR',
       'TUSD',
       'USX',
+      'sEUR',
     ],
   },
   fantom: {
