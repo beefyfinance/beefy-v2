@@ -1763,15 +1763,6 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@clover-network/clover-connector@^1.0.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@clover-network/clover-connector/-/clover-connector-1.1.0.tgz#be63693eb8220b9e4639f1aad1ce02470ef6204a"
-  integrity sha512-a4U4016vTYcO3Fp2FThitO82j0J94rcE1t2cF38ePCWp/FxqY4AcPWDv9I+SguE+p/MMF4zoMELT1eDEDDGLqA==
-  dependencies:
-    "@web3-react/abstract-connector" "^6.0.7"
-    "@web3-react/types" "^6.0.7"
-    tiny-warning "^1.0.3"
-
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.npmjs.org/@cnakazawa/watch/-/watch-1.0.4.tgz"

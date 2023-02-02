@@ -6,7 +6,6 @@
   "type": "commonjs",
   "dependencies": {
     "@babel/runtime": "^7.17.2",
-    "@clover-network/clover-connector": "^1.0.0",
     "@coinbase/wallet-sdk": "^3.0.10",
     "@deficonnect/web3-connector": "^2.0.3",
     "@download/blockies": "^1.0.3",
