@@ -231,7 +231,7 @@ export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
     const assetsByChainId = selectTreasuryAssetsByChainId(state, chainId);
 
     for (const token of assetsByChainId) {
-      if (isReal(token.usdValue)) {
+      if (isFiniteBigNumber(token.usdValue)) {
         const usdValue = new BigNumber(token.usdValue);
         if (token.assetType === 'token' || token.assetType === 'native') {
           totals['liquidAssets'] = (totals['liquidAssets'] || BIG_ZERO).plus(usdValue);
