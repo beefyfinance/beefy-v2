@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     marginTop: '32px',
     display: 'grid',
     gridTemplateColumns: '100%',
-    rowGap: '48px',
+    rowGap: '16px',
     columnGap: '48px',
     [theme.breakpoints.up('lg')]: {
       display: 'grid',
