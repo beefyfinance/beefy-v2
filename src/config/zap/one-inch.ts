@@ -111,7 +111,9 @@ export const zaps: OneInchZapConfig[] = [
       'ETH-hETH LP', // no 1inch liquidity
       'jEUR', // no 1inch liquidity
       'MIM', // no 1inch price
+      'S*DAI', // no 1inch liquidity
       'S*ETH', // no 1inch liquidity
+      'S*FRAX', // no 1inch liquidity
       'S*USDC', // no 1inch liquidity
       'SNX-hSNX LP', // no 1inch liquidity
       'TUSD', // no 1inch price
