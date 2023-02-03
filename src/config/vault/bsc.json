@@ -15919,7 +15919,8 @@
     "earnContractAddress": "0xC78d2624745775c8Da178CF8AEc0e7B734c344a0",
     "oracle": "lps",
     "oracleId": "emp-emp-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "emp",
     "assets": ["EMP", "ETH"],
     "risks": [
