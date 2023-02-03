@@ -1,5 +1,32 @@
 [
   {
+    "id": "gns-arb-gns",
+    "name": "GNS",
+    "token": "GNS",
+    "tokenAddress": "0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gains",
+    "earnedToken": "mooGnsGNS",
+    "earnedTokenAddress": "0x88942cCd34cc4523e2F698DDCE9BB3eb908CC974",
+    "earnContractAddress": "0x88942cCd34cc4523e2F698DDCE9BB3eb908CC974",
+    "oracle": "tokens",
+    "oracleId": "GNS",
+    "status": "active",
+    "platformId": "gains",
+    "assets": ["GNS"],
+    "strategyTypeId": "single",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://app.1inch.io/#/42161/simple/swap/USDC/0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
+    "network": "arbitrum",
+    "createdAt": 1675436269
+  },
+  {
     "id": "balancer-wsteth-eth-v2",
     "name": "wstETH-ETH V2",
     "token": "wstETH-ETH V2",
