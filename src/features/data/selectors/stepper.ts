@@ -2,7 +2,6 @@ import { BigNumber } from 'bignumber.js';
 import { BeefyState } from '../../../redux-types';
 import { formatBigDecimals } from '../../../helpers/format';
 import { isTokenErc20 } from '../entities/token';
-import { WalletActionsState } from '../reducers/wallet/wallet-action';
 import { StepContent } from '../reducers/wallet/stepper';
 import { TokenAmount } from '../apis/transact/transact-types';
 import {
@@ -13,6 +12,7 @@ import {
 import { fromWeiString } from '../../../helpers/big-number';
 import { selectVaultById } from './vaults';
 import { wnativeToNative } from '../apis/transact/helpers/tokens';
+import { ZERO_ADDRESS } from '../../../helpers/addresses';
 
 export const selectStepperState = (state: BeefyState) => {
   return state.ui.stepperState;
@@ -43,44 +43,43 @@ export const selectStepperStepContent = (state: BeefyState) => {
   return state.ui.stepperState.stepContent;
 };
 
-export function selectMintResult(walletActionsState: WalletActionsState) {
+export function selectMintResult(state: BeefyState) {
+  const { receipt, token: mintToken, amount } = state.user.walletActions.data;
   const result = {
     type: 'mint',
-    amount: formatBigDecimals(walletActionsState.data.amount, 4),
+    amount: formatBigDecimals(amount, 4),
+    token: mintToken,
   };
 
-  if (walletActionsState.result === 'success') {
-    if (
-      walletActionsState.data.receipt.events &&
-      'Transfer' in walletActionsState.data.receipt.events &&
-      isTokenErc20(walletActionsState.data.token)
-    ) {
-      const userAddress = walletActionsState.data.receipt.from.toLowerCase();
-      const mintContractAddress = walletActionsState.data.receipt.to.toLowerCase();
-      const mintToken = walletActionsState.data.token;
-      const mintTokenAddress = mintToken.address.toLowerCase();
-      const transferEvents = Array.isArray(walletActionsState.data.receipt.events['Transfer'])
-        ? walletActionsState.data.receipt.events['Transfer']
-        : [walletActionsState.data.receipt.events['Transfer']];
-      for (const event of transferEvents) {
-        // 1. Transfer of the minted token (BeFTM or binSPIRIT)
-        // 2. Transfer to the user
-        // 3. Transfer is not from the zap contract (like it would be for a mint)
-        if (
-          event.address.toLowerCase() === mintTokenAddress &&
-          event.returnValues.to.toLowerCase() === userAddress &&
-          event.returnValues.from.toLowerCase() !== mintContractAddress &&
-          event.returnValues.from !== '0x0000000000000000000000000000000000000000'
-        ) {
-          result.type = 'buy';
-          result.amount = formatBigDecimals(
-            new BigNumber(event.returnValues.value).shiftedBy(-mintToken.decimals),
-            4
-          );
-          break;
-        }
-      }
-    }
+  if (!mintToken || !isTokenErc20(mintToken) || !receipt || !('Transfer' in receipt.events)) {
+    return result;
+  }
+
+  const userAddress = receipt.from.toLowerCase();
+  const mintContractAddress = receipt.to.toLowerCase();
+  const mintTokenAddress = mintToken.address.toLowerCase();
+  const transferEvents = Array.isArray(receipt.events['Transfer'])
+    ? receipt.events['Transfer']
+    : [receipt.events['Transfer']];
+  const mintTransferEvent = transferEvents.find(
+    e =>
+      e.address.toLowerCase() === mintTokenAddress &&
+      e.returnValues.to.toLowerCase() === mintContractAddress &&
+      e.returnValues.from.toLowerCase() === ZERO_ADDRESS
+  );
+  const userTransferEvent = transferEvents.find(
+    e =>
+      e.address.toLowerCase() === mintTokenAddress &&
+      e.returnValues.to.toLowerCase() === userAddress &&
+      e.returnValues.from.toLowerCase() === mintContractAddress
+  );
+
+  if (!mintTransferEvent && userTransferEvent) {
+    result.type = 'buy';
+    result.amount = formatBigDecimals(
+      new BigNumber(userTransferEvent.returnValues.value).shiftedBy(-mintToken.decimals),
+      4
+    );
   }
 
   return result;

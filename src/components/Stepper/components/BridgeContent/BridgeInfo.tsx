@@ -142,7 +142,7 @@ export const BridgeSuccesInfo = memo(function () {
   return (
     <div className={classes.successContainer}>
       <div className={classes.textSuccess}>
-        {t('bridge-Success-Content', {
+        {t('Stepper-bridge-Success-Content', {
           amount: formatBigNumberSignificant(bridgeState.amount, 4),
           chain: destChain.name,
         })}

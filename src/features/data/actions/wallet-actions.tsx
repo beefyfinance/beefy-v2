@@ -31,6 +31,7 @@ import {
 } from '../selectors/balance';
 import {
   selectChainNativeToken,
+  selectChainWrappedNativeToken,
   selectErc20TokenByAddress,
   selectIsTokenLoaded,
   selectTokenByAddress,
@@ -42,7 +43,7 @@ import { oracleAmountToMooAmount } from '../utils/ppfs';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
 import { getGasPriceOptions } from '../utils/gas-utils';
 import { AbiItem } from 'web3-utils';
-import { convertAmountToRawNumber } from '../../../helpers/format';
+import { convertAmountToRawNumber, errorToString } from '../../../helpers/format';
 import { FriendlyError } from '../utils/error-utils';
 import { MinterEntity } from '../entities/minter';
 import { reloadReserves } from './minters';
@@ -1140,13 +1141,12 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
 };
 
 const mintDeposit = (
-  chainId: ChainEntity['id'],
-  contractAddr: string,
+  minter: MinterEntity,
   payToken: TokenEntity,
   mintedToken: TokenEntity,
   amount: BigNumber,
   max: boolean,
-  minterId?: MinterEntity['id']
+  slippageTolerance: number = 0.01
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
@@ -1156,28 +1156,70 @@ const mintDeposit = (
       return;
     }
 
+    const { contractAddress, chainId, canZapInWithOneInch } = minter;
     const gasToken = selectChainNativeToken(state, chainId);
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(minterAbi as AbiItem[], contractAddr);
+    const contract = new web3.eth.Contract(minterAbi as AbiItem[], contractAddress);
     const chain = selectChainById(state, chainId);
     const gasPrices = await getGasPriceOptions(chain);
+    const amountInWei = toWei(amount, payToken.decimals);
+    const amountInWeiString = amountInWei.toString(10);
+    const isNative = isTokenNative(payToken);
 
-    const transaction = (() => {
-      const rawAmount = convertAmountToRawNumber(amount, payToken.decimals);
+    const buildCall = async () => {
+      if (canZapInWithOneInch) {
+        const swapInToken = isNative ? selectChainWrappedNativeToken(state, chainId) : payToken;
+        const oneInchApi = await getOneInchApi(chain);
+        const swapData = await oneInchApi.getSwap({
+          disableEstimate: true, // otherwise will fail due to no allowance
+          fromAddress: contractAddress,
+          amount: amountInWeiString,
+          fromTokenAddress: swapInToken.address,
+          toTokenAddress: mintedToken.address,
+          slippage: slippageTolerance * 100,
+        });
+        const amountOutWei = new BigNumber(swapData.toTokenAmount);
+        const amountOutWeiAfterSlippage = amountOutWei.multipliedBy(1 - slippageTolerance);
+        const shouldMint = amountOutWeiAfterSlippage.isLessThan(amountInWei);
 
-      if (isTokenNative(payToken)) {
-        return contract.methods
-          .depositNative()
-          .send({ from: address, value: rawAmount, ...gasPrices });
-      } else {
-        if (max) {
-          return contract.methods.depositAll().send({ from: address, ...gasPrices });
-        } else {
-          return contract.methods.deposit(rawAmount).send({ from: address, ...gasPrices });
+        // mint is better
+        if (shouldMint) {
+          return {
+            method: contract.methods.depositNative('', true),
+            options: isNative ? { value: amountInWeiString } : {},
+          };
         }
+
+        // swap after max slippage is better
+        return {
+          method: contract.methods.depositNative(swapData.tx.data, false),
+          options: isNative ? { value: amountInWeiString } : {},
+        };
       }
-    })();
+
+      // non-zap
+      if (isNative) {
+        return {
+          method: contract.methods.depositNative(),
+          options: { value: amountInWeiString },
+        };
+      }
+
+      if (max) {
+        return {
+          method: contract.methods.depositAll(),
+          options: {},
+        };
+      }
+
+      return {
+        method: contract.methods.deposit(amountInWeiString),
+        options: {},
+      };
+    };
+    const call = await buildCall();
+    const transaction = call.method.send({ from: address, ...gasPrices, ...call.options });
 
     bindTransactionEvents(
       dispatch,
@@ -1188,9 +1230,9 @@ const mintDeposit = (
       },
       {
         chainId: chainId,
-        spenderAddress: contractAddr,
+        spenderAddress: contractAddress,
         tokens: uniqBy([gasToken, payToken, mintedToken], 'id'),
-        minterId,
+        minterId: minter.id,
       }
     );
   });
@@ -1357,8 +1399,8 @@ function captureWalletErrors<ReturnType>(
     } catch (error) {
       const txError =
         error instanceof FriendlyError
-          ? { message: String(error.getInnerError()), friendlyMessage: error.message }
-          : { message: String(error) };
+          ? { message: errorToString(error.getInnerError()), friendlyMessage: error.message }
+          : { message: errorToString(error) };
 
       dispatch(
         createWalletActionErrorAction(txError, {
