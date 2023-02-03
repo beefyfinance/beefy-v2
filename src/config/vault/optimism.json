@@ -56,13 +56,43 @@
     "createdAt": 1671735523
   },
   {
+    "id": "velodrome-alusd-mai",
+    "name": "alUSD-MAI vLP",
+    "token": "alUSD-MAI vLP",
+    "tokenAddress": "0xa8FeDB4A8194E21Cf775ce868a865242e4e45151",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromealUSD-MAI",
+    "earnedTokenAddress": "0x53fA4D07c62EBcbBB043654480C7C0AB7b5876C4",
+    "earnContractAddress": "0x53fA4D07c62EBcbBB043654480C7C0AB7b5876C4",
+    "oracle": "lps",
+    "oracleId": "velodrome-alusd-mai",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["alUSD", "MAI"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1675436590
+  },
+  {
     "id": "velodrome-dai-mai",
     "name": "DAI-MAI sLP",
     "token": "DAI-MAI sLP",
     "tokenAddress": "0xFfb4fD14e840abD3EBd6Cd026332B2302948A3fc",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "earnedToken": "mooVeloDAI-MAI",
+    "earnedToken": "mooVelodromeDAI-MAI",
     "earnedTokenAddress": "0x0f21607f78Ee4bdd6895A7517851531B03C2c58a",
     "earnContractAddress": "0x0f21607f78Ee4bdd6895A7517851531B03C2c58a",
     "oracle": "lps",
@@ -80,6 +110,7 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
     "createdAt": 1675341832
@@ -91,7 +122,7 @@
     "tokenAddress": "0xa99817d2d286C894F8f3888096A5616d06F20d46",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "earnedToken": "mooVeloUSD+-DOLA",
+    "earnedToken": "mooVelodromeUSD+-DOLA",
     "earnedTokenAddress": "0x60bBDf88bd2DbAA645D6CF8Ae67d2F4aDA2658F1",
     "earnContractAddress": "0x60bBDf88bd2DbAA645D6CF8Ae67d2F4aDA2658F1",
     "oracle": "lps",
@@ -109,6 +140,7 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
     "createdAt": 1675341832
@@ -131,6 +163,7 @@
     "strategyTypeId": "lp",
     "risks": ["BATTLE_TESTED", "CONTRACTS_VERIFIED", "COMPLEXITY_LOW", "MCAP_LARGE", "IL_LOW"],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
     "createdAt": 1674847402
@@ -153,6 +186,7 @@
     "strategyTypeId": "lp",
     "risks": ["BATTLE_TESTED", "CONTRACTS_VERIFIED", "COMPLEXITY_LOW", "MCAP_MEDIUM", "IL_LOW"],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
     "createdAt": 1674850871
@@ -175,6 +209,7 @@
     "strategyTypeId": "lp",
     "risks": ["BATTLE_TESTED", "CONTRACTS_VERIFIED", "COMPLEXITY_LOW", "MCAP_MEDIUM", "IL_NONE"],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
     "createdAt": 1675354581
