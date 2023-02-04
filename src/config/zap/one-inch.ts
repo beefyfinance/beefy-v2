@@ -109,6 +109,7 @@ export const zaps: OneInchZapConfig[] = [
       'beVELO', // no 1inch liquidity
       'DAI-hDAI LP', // no 1inch liquidity
       'ETH-hETH LP', // no 1inch liquidity
+      'frxETH', // no 1inch price
       'jEUR', // no 1inch liquidity
       'MIM', // no 1inch price
       'S*DAI', // no 1inch liquidity
