@@ -354,6 +354,28 @@
     "createdAt": 1669805289
   },
   {
+    "id": "convex-geareth",
+    "name": "GEAR-ETH",
+    "token": "crvGEARETH",
+    "tokenAddress": "0x5Be6C45e2d074fAa20700C49aDA3E88a1cc0025d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooConvexGEAR-ETH",
+    "earnedTokenAddress": "0x8448758c3Cad93675eACe770847aA9507f8bDe0B",
+    "earnContractAddress": "0x8448758c3Cad93675eACe770847aA9507f8bDe0B",
+    "oracle": "lps",
+    "oracleId": "convex-geareth",
+    "status": "active",
+    "platformId": "convex",
+    "assets": ["GEAR", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-192/deposit/",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-192/withdraw/",
+    "network": "ethereum",
+    "createdAt": 1675457175
+  },
+  {
     "id": "convex-crveth",
     "name": "CRV-ETH",
     "token": "crvCRVETH",
