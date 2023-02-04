@@ -121,8 +121,8 @@
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
     "earnedToken": "mooBeetsSmokingFantoms",
-    "earnedTokenAddress": "0xFAfd5bb9a5a9c589C121B4B26dD7618Fc8AD01F3",
-    "earnContractAddress": "0xFAfd5bb9a5a9c589C121B4B26dD7618Fc8AD01F3",
+    "earnedTokenAddress": "0xb4a268a8992991886065A039a2B71c2fb182e1C9",
+    "earnContractAddress": "0xb4a268a8992991886065A039a2B71c2fb182e1C9",
     "oracle": "lps",
     "oracleId": "beets-two-smoking-fantoms",
     "status": "active",
@@ -139,7 +139,7 @@
     ],
     "addLiquidityUrl": "https://beets.fi/pool/0xc0064b291bd3d4ba0e44ccfc81bf8e7f7a579cd200000000000000000000042c",
     "removeLiquidityUrl": "https://beets.fi/pool/0xc0064b291bd3d4ba0e44ccfc81bf8e7f7a579cd200000000000000000000042c",
-    "createdAt": 1675523450,
+    "createdAt": 1675529227,
     "network": "fantom"
   },
   {
