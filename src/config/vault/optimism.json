@@ -2401,8 +2401,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://optimism.curve.fi/factory/10/deposit",
-    "removeLiquidityUrl": "https://optimism.curve.fi/factory/10/withdraw",
+    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-10/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-10/withdraw",
     "network": "optimism",
     "createdAt": 1670252930
   },
@@ -2430,8 +2430,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://optimism.curve.fi/factory/12/deposit",
-    "removeLiquidityUrl": "https://optimism.curve.fi/factory/12/withdraw",
+    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-12/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-12/withdraw",
     "network": "optimism",
     "createdAt": 1660288888
   },
@@ -2460,8 +2460,8 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://optimism.curve.fi/factory/0/deposit",
-    "removeLiquidityUrl": "https://optimism.curve.fi/factory/0/withdraw",
+    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-0/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-0/withdraw",
     "network": "optimism",
     "createdAt": 1667194759
   },
