@@ -210,6 +210,7 @@ export const zaps: OneInchZapConfig[] = [
       'CRUSH', // beefy and 1inch prices are more than 10% different
       'DFT', // beefy and 1inch prices are more than 10% different
       'FISH', // no 1inch liquidity
+      'frxETH', // no 1inch price
       'FROYO', // beefy and 1inch prices are more than 10% different
       'GOAL', // no 1inch liquidity
       'GOLD', // no 1inch liquidity
