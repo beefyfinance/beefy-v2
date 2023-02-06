@@ -1,5 +1,34 @@
 [
   {
+    "id": "stargate-metis-usdt",
+    "name": "USDT LP",
+    "token": "S*USDT",
+    "tokenAddress": "0x2b60473a7C41Deb80EDdaafD5560e963440eb632",
+    "tokenDecimals": 6,
+    "tokenProviderId": "stargate",
+    "earnedToken": "mooStargateUSDT",
+    "earnedTokenAddress": "0x0d281FF551351C8b88D019ecd23481723a1cC8E3",
+    "earnContractAddress": "0x0d281FF551351C8b88D019ecd23481723a1cC8E3",
+    "oracle": "lps",
+    "oracleId": "stargate-metis-usdt",
+    "status": "active",
+    "platformId": "stargate",
+    "assets": ["USDT"],
+    "strategyTypeId": "single-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://stargate.finance/pool/USDT-METIS",
+    "buyTokenUrl": "https://hermes.maiadao.io/#/swap?outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+    "network": "metis",
+    "createdAt": 1675694667
+  },
+  {
     "id": "metis-bifi-gov",
     "name": "BIFI Earnings Pool",
     "token": "BIFI",
