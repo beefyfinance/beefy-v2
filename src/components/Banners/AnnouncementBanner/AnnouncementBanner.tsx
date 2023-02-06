@@ -3,13 +3,13 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
 import { Banner } from '../Banner';
-import ZapIcon from '../../../images/bifi-logos/bifi-zap-v2.svg';
+import SnapshotIcon from '../../../images/partners/snapshot-logo.svg';
 
 const useStyles = makeStyles(styles);
 
 export const AnnouncementBanner = memo(function AnnouncementBanner() {
   const classes = useStyles();
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideZapBanner', false);
+  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideBip62Banner', false);
 
   const closeBanner = useCallback(() => {
     setHideBanner(true);
@@ -21,20 +21,27 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
 
   return (
     <Banner
-      icon={<img className={classes.icon} src={ZapIcon} alt="treasury" />}
+      icon={<img className={classes.icon} src={SnapshotIcon} alt="snapshot" />}
       text={
         <>
-          Zap into the future with the all-new{' '}
+          [BIP: 62] Request For Funds. Premium Placement on Coinbase. Discuss on{' '}
           <a
-            href="https://beefy.com/articles/revolutionizing-beefy-zap-in-partnership-with-1inch/"
+            href="https://discord.gg/beefyfinance"
             target="_blank"
             rel="noopener noreferrer"
             className={classes.link}
           >
-            Beefy Zap.
+            Discord
           </a>{' '}
-          From blue chips, natives and stables to Beefy vaults in just one transaction, powered by
-          1inch.
+          and vote on{' '}
+          <a
+            href="https://vote.beefy.finance/#/proposal/0x27c42e4677603cf9d546b3bc1a42a398444a9d664f0482594758680577a2e5a9/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={classes.link}
+          >
+            Snapshot.
+          </a>{' '}
         </>
       }
       onClose={closeBanner}
