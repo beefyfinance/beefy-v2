@@ -953,5 +953,10 @@
     "id": "monolith",
     "name": "Monolith",
     "filter": true
+  },
+  {
+    "id": "gains",
+    "name": "Gains",
+    "filter": true
   }
 ]

@@ -1163,7 +1163,7 @@
     }
   },
   "lido-eth": {
-    "text": "Lido is a secure liquid staking solution for proof-of-stake (PoS) cryptocurrencies that supports Ethereum staking and a growing ecosystem of other Layer 1 PoS blockchains. Users can stake their PoS tokens on Lido and receive a tokenized version of their staked assets at a 1:1 ratio. They can use this tokenized version of their staked assets to earn additional yield from other DeFi protocols while receiving staking rewards from their tokens deposited on Lido.",
+    "text": "Lido is a liquid staking solution for ETH backed by industry-leading staking providers. With Lido you can stake your ETH tokens in a decentralized and secure way and use your stETH on the secondary market to participate in DeFi.",
     "website": "https://lido.fi/",
     "social": {
       "discord": "https://discord.com/invite/lido",

@@ -235,6 +235,8 @@ const theme = createTheme(
             '--onboard-wallet-app-icon-background-transparent': '#fff',
             '--onboard-connect-sidebar-background': '#121212',
             '--onboard-connect-sidebar-color': '#F5F5FF',
+            '--onboard-connect-sidebar-progress-color': '#59A662',
+            '--onboard-connect-sidebar-progress-background': '#2e3151',
           },
         },
       },
