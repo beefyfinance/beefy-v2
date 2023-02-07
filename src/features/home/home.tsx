@@ -8,7 +8,6 @@ import { styles } from './styles';
 import { Vaults } from './components/Vaults';
 import { useAppSelector } from '../../store';
 import { RenBannerHome } from '../../components/Banners/RenBanner';
-import { AnnouncementBanner } from '../../components/Banners/AnnouncementBanner';
 
 const useStyles = makeStyles(styles);
 
@@ -24,7 +23,6 @@ export const Home = memo(function Home() {
     <>
       <div className={classes.top}>
         <RenBannerHome />
-        <AnnouncementBanner />
         <Portfolio />
       </div>
       <Container maxWidth="lg" className={classes.vaultContainer}>
