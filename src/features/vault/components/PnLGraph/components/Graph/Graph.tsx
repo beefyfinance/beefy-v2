@@ -35,7 +35,7 @@ const initialData = [
 export const Graph = memo(function () {
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <LineChart width={800} height={400} data={initialData}>
+      <LineChart width={400} height={200} data={initialData}>
         <CartesianGrid strokeDasharray="1 1" stroke="#363B63" />
         <XAxis stroke="#3F4474" allowDataOverflow dataKey="name" type="number" />
         <YAxis stroke="#3F4474" allowDataOverflow type="number" yAxisId="1" />
