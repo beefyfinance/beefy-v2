@@ -1020,7 +1020,8 @@
     "earnContractAddress": "0xB8ff233d024277b0E188A478C18e9263330A1B51",
     "oracle": "lps",
     "oracleId": "ripae-seth-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "ripae",
     "assets": ["psETH", "ETH"],
     "risks": [
@@ -1140,7 +1141,8 @@
     "earnContractAddress": "0x149f3dDeB5FF9bE7342D07C35D6dA19Df3F790af",
     "oracle": "lps",
     "oracleId": "sushi-arb-spell-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushiswap",
     "assets": ["SPELL", "ETH"],
     "risks": [
@@ -1170,7 +1172,8 @@
     "earnContractAddress": "0x80514CfB7cb438F1f997Ab62fFD1314c1a1c0f12",
     "oracle": "lps",
     "oracleId": "sushi-arb-weth-mim",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushiswap",
     "assets": ["MIM", "ETH"],
     "risks": [
