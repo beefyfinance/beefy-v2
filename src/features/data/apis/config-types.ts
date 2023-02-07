@@ -14,6 +14,7 @@ export interface VaultConfig {
   tokenAddress?: string | null;
   tokenDecimals: number;
   tokenProviderId?: PlatformEntity['id'];
+  tokenAmmId?: AmmEntity['id'];
   earnedToken: string;
   earnedTokenAddress: string;
   earnedTokenDecimals?: number | null;

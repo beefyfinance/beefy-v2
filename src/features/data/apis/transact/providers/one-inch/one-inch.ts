@@ -51,12 +51,11 @@ import {
 } from '../../helpers/tokens';
 import { selectTransactSlippage } from '../../../../selectors/transact';
 import BigNumber from 'bignumber.js';
-import { computeSolidlyPairAddress } from '../../helpers/solidly';
-import { computeUniswapV2PairAddress } from '../../helpers/uniswapv2';
 import { OneInchApi } from '../../../one-inch';
 import { getPool } from '../../../amm';
 import { IPool, WANT_TYPE } from '../../../amm/types';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
+import { selectAmmById } from '../../../../selectors/amm';
 
 export type OneInchZapOptionBase = {
   zap: ZapEntityOneInch;
@@ -174,41 +173,17 @@ export class OneInchZapProvider implements ITransactProvider {
     return options;
   }
 
-  getAmm(
-    amms: AmmEntity[],
-    depositTokenAddress: TokenEntity['address'],
-    lpTokens: TokenEntity[]
-  ): AmmEntity | null {
-    const amm = amms.find(
-      amm =>
-        (amm.type === 'uniswapv2' &&
-          depositTokenAddress ===
-            computeUniswapV2PairAddress(
-              amm.factoryAddress,
-              amm.pairInitHash,
-              lpTokens[0].address,
-              lpTokens[1].address
-            )) ||
-        (amm.type === 'solidly' &&
-          (depositTokenAddress ===
-            computeSolidlyPairAddress(
-              amm.factoryAddress,
-              amm.pairInitHash,
-              lpTokens[0].address,
-              lpTokens[1].address,
-              true
-            ) ||
-            depositTokenAddress ===
-              computeSolidlyPairAddress(
-                amm.factoryAddress,
-                amm.pairInitHash,
-                lpTokens[0].address,
-                lpTokens[1].address,
-                false
-              )))
-    );
+  selectAmmForToken(state: BeefyState, depositToken: TokenErc20): AmmEntity | null {
+    if (!depositToken.ammId) {
+      return null;
+    }
 
-    return amm || null;
+    const amm = selectAmmById(state, depositToken.ammId);
+    if (!amm) {
+      return null;
+    }
+
+    return amm;
   }
 
   isDifferentTokenWithPrice(
@@ -251,6 +226,9 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    if (!depositToken || !isTokenErc20(depositToken)) {
+      return null;
+    }
 
     const zap = selectOneInchZapByChainId(state, vault.chainId);
     if (!zap) {
@@ -280,7 +258,7 @@ export class OneInchZapProvider implements ITransactProvider {
       return null;
     }
 
-    const amm = this.getAmm(amms, depositToken.address, lpTokens);
+    const amm = this.selectAmmForToken(state, depositToken);
     if (!amm) {
       return null;
     }
@@ -885,6 +863,9 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    if (!depositToken || !isTokenErc20(depositToken)) {
+      return null;
+    }
 
     const zap = selectOneInchZapByChainId(state, vault.chainId);
     if (!zap) {
@@ -914,7 +895,7 @@ export class OneInchZapProvider implements ITransactProvider {
       return null;
     }
 
-    const amm = this.getAmm(amms, depositToken.address, lpTokens);
+    const amm = this.selectAmmForToken(state, depositToken);
     if (!amm) {
       return null;
     }
