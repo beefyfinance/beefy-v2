@@ -56,7 +56,7 @@ const ammsByChainId: {
   [chainId: ChainEntity['id']]: AmmConfig[];
 } = {};
 for (const chainId in chainConfigs) {
-  ammsByChainId[chainId] = require(`../../../config/amm/${chainId}`).amms;
+  ammsByChainId[chainId] = require(`../../../config/amm/${chainId}.json`);
 }
 
 const mintersByChainId: {

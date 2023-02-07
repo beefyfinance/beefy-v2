@@ -41,6 +41,17 @@ export async function getBoostsForChain(chainId: string) {
   return boostsByChainId[id];
 }
 
+const ammsByChainId = {};
+export async function getAmmsForChain(chainId: string) {
+  const id = addressBookToAppId(chainId);
+
+  if (!(id in ammsByChainId)) {
+    ammsByChainId[id] = (await import(`../src/config/amm/${id}.json`)).default;
+  }
+
+  return ammsByChainId[id];
+}
+
 export function appToAddressBookId(chainId: string) {
   return chainId === 'harmony' ? 'one' : chainId;
 }
