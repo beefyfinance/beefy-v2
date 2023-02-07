@@ -52,7 +52,6 @@
     "strategyTypeId": "single",
     "excluded": "fantom-bifi-maxi",
     "isGovVault": true,
-    "callFee": 0.5,
     "network": "fantom",
     "createdAt": 1623706144
   },
@@ -82,12 +81,10 @@
     "strategyTypeId": "single",
     "excluded": "beefy-beFTM",
     "isGovVault": true,
-    "callFee": 0.5,
     "network": "fantom",
     "createdAt": 1646240680
   },
   {
-    "mintTokenUrl": "https://beta.beefy.finance/#/fantom/vault/beefy-beFTM",
     "id": "beefy-beFTM",
     "name": "beFTM",
     "token": "beFTM",
@@ -111,6 +108,7 @@
     ],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x7381eD41F6dE418DdE5e84B55590422a57917886",
+    "network": "fantom",
     "createdAt": 1646162527
   },
   {
@@ -4373,7 +4371,6 @@
     "createdAt": 1637179993
   },
   {
-    "mintTokenUrl": "https://beta.beefy.finance/#/fantom/vault/beefy-binspirit",
     "id": "beefy-binspirit",
     "name": "binSPIRIT",
     "token": "binSPIRIT",

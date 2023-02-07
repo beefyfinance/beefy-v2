@@ -1,5 +1,12 @@
-import { config } from '../src/config/config';
+import { config } from '../../src/config/config';
 import lodash from 'lodash';
+import { getChainAddressBook } from '../../src/features/data/apis/addressbook';
+import {
+  AmmConfig,
+  BoostConfig,
+  MinterConfig,
+  VaultConfig,
+} from '../../src/features/data/apis/config-types';
 
 /** Harmony->One to match addressbook */
 const chainConfigs = Object.fromEntries(
@@ -20,36 +27,47 @@ export const chainRpcs: Record<string, string> = Object.fromEntries(
 );
 
 const vaultsByChainId = {};
-export async function getVaultsForChain(chainId: string) {
+export async function getVaultsForChain(chainId: string): Promise<VaultConfig[]> {
   const id = addressBookToAppId(chainId);
 
   if (!(id in vaultsByChainId)) {
-    vaultsByChainId[id] = (await import(`../src/config/vault/${id}.json`)).default;
+    vaultsByChainId[id] = (await import(`../../src/config/vault/${id}.json`)).default;
   }
 
   return vaultsByChainId[id];
 }
 
 const boostsByChainId = {};
-export async function getBoostsForChain(chainId: string) {
+export async function getBoostsForChain(chainId: string): Promise<BoostConfig[]> {
   const id = addressBookToAppId(chainId);
 
   if (!(id in boostsByChainId)) {
-    boostsByChainId[id] = (await import(`../src/config/boost/${id}.json`)).default;
+    boostsByChainId[id] = (await import(`../../src/config/boost/${id}.json`)).default;
   }
 
   return boostsByChainId[id];
 }
 
 const ammsByChainId = {};
-export async function getAmmsForChain(chainId: string) {
+export async function getAmmsForChain(chainId: string): Promise<AmmConfig[]> {
   const id = addressBookToAppId(chainId);
 
   if (!(id in ammsByChainId)) {
-    ammsByChainId[id] = (await import(`../src/config/amm/${id}.json`)).default;
+    ammsByChainId[id] = (await import(`../../src/config/amm/${id}.json`)).default;
   }
 
   return ammsByChainId[id];
+}
+
+const mintersByChainId = {};
+export async function getMintersForChain(chainId: string): Promise<MinterConfig[]> {
+  const id = addressBookToAppId(chainId);
+
+  if (!(id in mintersByChainId)) {
+    mintersByChainId[id] = (await import(`../../src/config/minters/${id}.tsx`)).minters;
+  }
+
+  return mintersByChainId[id];
 }
 
 export function appToAddressBookId(chainId: string) {

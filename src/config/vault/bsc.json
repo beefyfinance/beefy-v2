@@ -611,7 +611,6 @@
     "strategyTypeId": "single",
     "excluded": "bifi-maxi",
     "isGovVault": true,
-    "callFee": 0.5,
     "buyTokenUrl": "https://app.1inch.io/#/56/swap/BNB/BIFI",
     "network": "bsc",
     "createdAt": 1648475802
@@ -15844,7 +15843,6 @@
     ],
     "strategyTypeId": "single",
     "isGovVault": true,
-    "callFee": 0.5,
     "buyTokenUrl": "https://app.1inch.io/#/56/swap/BNB/BIFI",
     "network": "bsc",
     "createdAt": 1623706144

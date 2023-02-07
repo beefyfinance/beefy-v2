@@ -4,7 +4,7 @@ import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 import { promises as fs } from 'fs';
 
-import { chainRpcs, getVaultsForChain } from './config';
+import { chainRpcs, getVaultsForChain } from './common/config';
 import launchPoolABI from '../src/config/abi/boost.json';
 import erc20ABI from '../src/config/abi/erc20.json';
 import partners from '../src/config/boost/partners.json';

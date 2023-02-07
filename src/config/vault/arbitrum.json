@@ -83,7 +83,6 @@
     "strategyTypeId": "single",
     "excluded": "arbi-bifi-maxi",
     "isGovVault": true,
-    "callFee": 0.5,
     "network": "arbitrum",
     "createdAt": 1623706144
   },

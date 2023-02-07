@@ -103,3 +103,22 @@ export async function saveCsv<T extends Record<string, any>>(
   }
   stream.end();
 }
+
+export function splitMax(input: string, delim: string, max: number): string[] {
+  if (max < 2) {
+    throw new Error('max must be greater than 1');
+  }
+
+  const parts = input.split(delim);
+  if (parts.length <= max) {
+    return parts;
+  }
+  return [...parts.slice(0, max - 1), parts.slice(max - 1).join(delim)];
+}
+
+export function sortKeys<T>(
+  obj: Record<string, T>,
+  sortFn: (a: string, b: string) => number
+): Record<string, T> {
+  return Object.fromEntries(Object.entries(obj).sort((a, b) => sortFn(a[0], b[0])));
+}

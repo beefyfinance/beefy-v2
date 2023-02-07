@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Web3 from 'web3';
-import { chainRpcs, getVaultsForChain } from './config';
+import { chainRpcs, getVaultsForChain } from './common/config';
 
 const explorerApiUrls = {
   cronos: 'https://api.cronoscan.com/api',

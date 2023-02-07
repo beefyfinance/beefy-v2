@@ -52,7 +52,6 @@
     "strategyTypeId": "single",
     "excluded": "avax-bifi-maxi",
     "isGovVault": true,
-    "callFee": 0.5,
     "buyTokenUrl": "https://www.traderjoexyz.com/#/trade?outputCurrency=0xd6070ae98b8069de6b494332d1a1a81b6179d960",
     "network": "avax",
     "createdAt": 1623706144
@@ -176,7 +175,6 @@
     "strategyTypeId": "single",
     "excluded": "beefy-beJoe",
     "isGovVault": true,
-    "callFee": 0.5,
     "network": "avax",
     "createdAt": 1649422900
   },

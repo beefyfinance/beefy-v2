@@ -859,7 +859,6 @@
     "strategyTypeId": "single",
     "excluded": "polygon-bifi-maxi",
     "isGovVault": true,
-    "callFee": 0.5,
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xfbdd194376de19a88118e84e279b977f165d01b8",
     "network": "polygon",
     "createdAt": 1623706144
@@ -923,7 +922,6 @@
     "strategyTypeId": "single",
     "excluded": "beefy-beqi",
     "isGovVault": true,
-    "callFee": 0.5,
     "network": "polygon",
     "createdAt": 1650557675
   },

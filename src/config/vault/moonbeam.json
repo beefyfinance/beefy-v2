@@ -57,6 +57,7 @@
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable",
     "removeLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable",
+    "network": "moonbeam",
     "createdAt": 1667586264
   },
   {
@@ -361,7 +362,6 @@
     "strategyTypeId": "single",
     "excluded": "moonbeam-bifi-maxi",
     "isGovVault": true,
-    "callFee": 0.5,
     "network": "moonbeam",
     "createdAt": 1623706144
   },

@@ -1182,7 +1182,6 @@
     ],
     "strategyTypeId": "single",
     "isGovVault": true,
-    "callFee": 0,
     "network": "ethereum",
     "createdAt": 1667575514
   }

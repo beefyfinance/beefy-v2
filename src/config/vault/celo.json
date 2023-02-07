@@ -24,7 +24,6 @@
     ],
     "strategyTypeId": "single",
     "isGovVault": true,
-    "callFee": 0.5,
     "network": "celo",
     "createdAt": 1623706144
   },

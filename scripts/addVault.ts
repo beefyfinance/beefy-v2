@@ -4,7 +4,7 @@ import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 import { promises as fs } from 'fs';
 
-import { chainRpcs } from './config';
+import { chainRpcs } from './common/config';
 import vaultABI from '../src/config/abi/vault.json';
 import stratABI from '../src/config/abi/strategy.json';
 import erc20ABI from '../src/config/abi/erc20.json';

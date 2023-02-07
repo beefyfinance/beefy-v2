@@ -25,7 +25,6 @@
     "strategyTypeId": "single",
     "excluded": "metis-bifi-maxi",
     "isGovVault": true,
-    "callFee": 0.5,
     "network": "metis",
     "createdAt": 1623706144
   },

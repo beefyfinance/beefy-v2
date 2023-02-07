@@ -1,6 +1,5 @@
 [
   {
-    "mintTokenUrl": "https://beefy.finance/#/optimism/vault/beefy-beopx",
     "id": "beefy-beopx",
     "name": "beOPX",
     "token": "beOPX",
@@ -24,6 +23,7 @@
     ],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/OPX",
+    "network": "optimism",
     "createdAt": 1671735524
   },
   {
@@ -1194,7 +1194,6 @@
     ],
     "strategyTypeId": "single",
     "isGovVault": true,
-    "callFee": 0,
     "network": "optimism",
     "createdAt": 1658491885
   },

@@ -25,7 +25,6 @@
     ],
     "strategyTypeId": "single",
     "isGovVault": true,
-    "callFee": 0.5,
     "network": "harmony",
     "createdAt": 1623706144
   },
@@ -54,7 +53,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x63cf309500d8be0B9fDB8F1fb66C821236c0438c",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x913de0f91169680c32c8f27212361272ef4fdfd9/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x913de0f91169680c32c8f27212361272ef4fdfd9/remove",
@@ -86,7 +84,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0xeB6C08ccB4421b6088e581ce04fcFBed15893aC3",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xa46bba980512e328e344ce12bb969563f3429f05/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xa46bba980512e328e344ce12bb969563f3429f05/remove",
@@ -118,7 +115,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x3095c7557bCb296ccc6e363DE01b760bA031F2d9",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x39be7c95276954a6f7070f9baa38db2123691ed0/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x39be7c95276954a6f7070f9baa38db2123691ed0/remove",
@@ -150,7 +146,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x985458E523dB3d53125813eD68c274899e9DfAb4&outputCurrency=0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x0c51171b913db10ade3fd625548e69c9c63afb96/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x0c51171b913db10ade3fd625548e69c9c63afb96/remove",
@@ -182,7 +177,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x2c7862b408bb3dbff277110ffde1b4eaa45c692a/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x2c7862b408bb3dbff277110ffde1b4eaa45c692a/remove",
@@ -214,7 +208,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0xe176ebe47d621b984a73036b9da5d834411ef734",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x8c36ede15c5e4b0e1f9764351a7a7a0037c5e103/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x8c36ede15c5e4b0e1f9764351a7a7a0037c5e103/remove",
@@ -246,7 +239,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0x6983d1e6def3690c4d616b13597a09e6193ea013",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xeb049f1ed546f8efc3ad57f6c7d22f081ccc7375/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xeb049f1ed546f8efc3ad57f6c7d22f081ccc7375/remove",
@@ -278,7 +270,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0x3095c7557bcb296ccc6e363de01b760ba031f2d9",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xc3670b927ef42eed252e483e2446352c238d9905/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xc3670b927ef42eed252e483e2446352c238d9905/remove",
@@ -310,7 +301,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0x985458e523db3d53125813ed68c274899e9dfab4",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xbf255d8c30dbab84ea42110ea7dc870f01c0013a/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xbf255d8c30dbab84ea42110ea7dc870f01c0013a/remove",
@@ -434,7 +424,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0xdc54046c0451f9269FEe1840aeC808D36015697d",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x4f3d9ac088cdf31b1831db3aaf5803ab35c200c4/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x4f3d9ac088cdf31b1831db3aaf5803ab35c200c4/remove",
@@ -467,7 +456,6 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0xEf977d2f931C1978Db5F6747666fa1eACB0d0339",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xc5b8129b411ef5f5be22e74de6fe86c3b69e641d/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xc5b8129b411ef5f5be22e74de6fe86c3b69e641d/remove",
@@ -499,7 +487,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x02f4d0021e3cb8736108e11c8df02fbbd6eeedbf/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x02f4d0021e3cb8736108e11c8df02fbbd6eeedbf/remove",
@@ -531,7 +518,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0xBEC775Cb42AbFa4288dE81F387a9b1A3c4Bc552A",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x468dc50884962d6f81733ac0c23c04611ac219f9/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x468dc50884962d6f81733ac0c23c04611ac219f9/remove",
@@ -563,7 +549,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x63cf309500d8be0B9fDB8F1fb66C821236c0438c",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x40112850efd90e9e17b56de35d86bdff9f4d07fd/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x40112850efd90e9e17b56de35d86bdff9f4d07fd/remove",
@@ -595,7 +580,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x14A7B318fED66FfDcc80C1517C172c13852865De",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xbb680ba75f7e3e404923d04d484af5ce96b4a4bf/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xbb680ba75f7e3e404923d04d484af5ce96b4a4bf/remove",
@@ -628,7 +612,6 @@
       "ALGO_STABLE"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x224e64ec1BDce3870a6a6c777eDd450454068FEC",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x9293dfdd719ee2163f2e158e66ef75722ed712b4/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x9293dfdd719ee2163f2e158e66ef75722ed712b4/remove",
@@ -660,7 +643,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x27f3b2df4a81382202e87ee40429e0212ecc7d3f/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x27f3b2df4a81382202e87ee40429e0212ecc7d3f/remove",
@@ -692,7 +674,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "callFee": 0.25,
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0xe176ebe47d621b984a73036b9da5d834411ef734&outputCurrency=0x0ab43550a6915f9f67d0c454c2e90385e6497eaa",
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xda64f9053a971531a75071a729a6432fb65ed60d/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xda64f9053a971531a75071a729a6432fb65ed60d/remove",
