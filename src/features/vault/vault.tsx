@@ -30,6 +30,7 @@ import { InsuranceCards } from './components/InsuranceCards';
 import { LeverageCards } from './components/LeverageCards';
 import { Actions } from './components/Actions';
 import { RenBannerVault } from '../../components/Banners/RenBanner';
+import { PnLGraph } from './components/PnLGraph';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -117,6 +118,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
             <div className={classes.columnInfo}>
               {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
               {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
+              <PnLGraph />
               {!isGovVault(vault) ? <Graph vaultId={vaultId} /> : null}
               <LiquidityPoolBreakdownLoader vaultId={vaultId} />
               <SafetyCard vaultId={vaultId} />
