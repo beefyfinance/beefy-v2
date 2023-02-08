@@ -58,6 +58,36 @@
     "createdAt": 1623706144
   },
   {
+    "id": "kyber-avax-usdc-mai",
+    "name": "MAI-USDC LP",
+    "token": "MAI-USDC avaxkLP",
+    "tokenAddress": "0xC2995a065106b5c5c738B2320387460eBd12c12D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kyber",
+    "earnedToken": "mooKyberAvaxMAI-USDC",
+    "earnedTokenAddress": "0x38ae5c03C222D9020A0C3359544425748Ef30807",
+    "earnContractAddress": "0x38ae5c03C222D9020A0C3359544425748Ef30807",
+    "oracle": "lps",
+    "oracleId": "kyber-avax-usdc-mai",
+    "status": "active",
+    "platformId": "kyber",
+    "assets": ["MAI", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://kyberswap.com/swap/avalanche",
+    "addLiquidityUrl": "https://kyberswap.com/add/0x5c49b268c9841aff1cc3b0a418ff5c3442ee3f3b/0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e/0xc2995a065106b5c5c738b2320387460ebd12c12d?networkId=43114",
+    "removeLiquidityUrl": "https://kyberswap.com/remove/0x5c49b268c9841aff1cc3b0a418ff5c3442ee3f3b/0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e/0xc2995a065106b5c5c738b2320387460ebd12c12d?networkId=43114",
+    "network": "avalanche",
+    "createdAt": 1675790594
+  },
+  {
     "id": "sicle-wavax-usd+",
     "name": "USD+-AVAX LP",
     "token": "USD+-AVAX LP",
