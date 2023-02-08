@@ -1467,8 +1467,7 @@
     "earnContractAddress": "0x8e2cDf8c6477439B7C989e86B917D80871B92339",
     "oracle": "tokens",
     "oracleId": "WBTC",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "aave",
     "assets": ["WBTC"],
     "risks": [
@@ -1496,8 +1495,7 @@
     "earnContractAddress": "0x4D153F47F03c237F6360a6eccd185b4aE09c63D0",
     "oracle": "tokens",
     "oracleId": "DAI",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "aave",
     "assets": ["DAI"],
     "risks": [
@@ -1526,8 +1524,7 @@
     "earnContractAddress": "0x920ABfa9d1c99BE993e5399634C6D5e1bE55A3f4",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "aave",
     "assets": ["USDC"],
     "risks": [
@@ -1554,8 +1551,7 @@
     "earnContractAddress": "0x7eE71053102d54Fc843BaEBaf07277C2b6dB64f1",
     "oracle": "tokens",
     "oracleId": "WETH",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "aave",
     "assets": ["ETH"],
     "risks": [
