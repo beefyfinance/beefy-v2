@@ -1,5 +1,35 @@
 [
   {
+    "id": "kyber-optimism-usdc-mai",
+    "name": "MAI-USDC LP",
+    "token": "MAI-USDC opkLP",
+    "tokenAddress": "0xC2995a065106b5c5c738B2320387460eBd12c12D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kyber",
+    "earnedToken": "mooKyberOpMAI-USDC",
+    "earnedTokenAddress": "0xAbbEE54a77363d857b90F2a4618AD37fae42C5aD",
+    "earnContractAddress": "0xAbbEE54a77363d857b90F2a4618AD37fae42C5aD",
+    "oracle": "lps",
+    "oracleId": "kyber-optimism-usdc-mai",
+    "status": "active",
+    "platformId": "kyber",
+    "assets": ["MAI", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://kyberswap.com/swap/optimism",
+    "addLiquidityUrl": "https://kyberswap.com/add/0x7F5c764cBc14f9669B88837ca1490cCa17c31607/0xdFA46478F9e5EA86d57387849598dbFB2e964b02/0xc2995a065106b5c5c738b2320387460ebd12c12d",
+    "removeLiquidityUrl": "https://kyberswap.com/remove/0x7F5c764cBc14f9669B88837ca1490cCa17c31607/0xdFA46478F9e5EA86d57387849598dbFB2e964b02/0xc2995a065106b5c5c738b2320387460ebd12c12d",
+    "network": "optimism",
+    "createdAt": 1675790593
+  },
+  {
     "id": "stargate-op-dai",
     "name": "DAI LP",
     "token": "S*DAI",

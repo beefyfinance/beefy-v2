@@ -185,6 +185,36 @@
     "createdAt": 1672503160
   },
   {
+    "id": "kyber-usdc-mai",
+    "name": "MAI-USDC LP",
+    "token": "MAI-USDC kLP",
+    "tokenAddress": "0x8Eed28c5353987B9e679899c2A047434e600DCeD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kyber",
+    "earnedToken": "mooKyberMAI-USDC",
+    "earnedTokenAddress": "0x2eac840950F1FF53d03A55A0255ea787fE84a4b5",
+    "earnContractAddress": "0x2eac840950F1FF53d03A55A0255ea787fE84a4b5c",
+    "oracle": "lps",
+    "oracleId": "kyber-usdc-mai",
+    "status": "active",
+    "platformId": "kyber",
+    "assets": ["MAI", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://kyberswap.com/swap/polygon",
+    "addLiquidityUrl": "https://kyberswap.com/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1/0x8eed28c5353987b9e679899c2a047434e600dced",
+    "removeLiquidityUrl": "https://kyberswap.com/remove/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1/0x8eed28c5353987b9e679899c2a047434e600dced",
+    "network": "polygon",
+    "createdAt": 1675790593
+  },
+  {
     "id": "dystopia-usd+-usdc",
     "name": "USD+-USDC sLP",
     "token": "USD+-USDC sLP",

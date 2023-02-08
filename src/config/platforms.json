@@ -953,5 +953,10 @@
     "id": "gains",
     "name": "Gains",
     "filter": true
+  },
+  {
+    "id": "kyber",
+    "name": "Kyber",
+    "filter": true
   }
 ]
