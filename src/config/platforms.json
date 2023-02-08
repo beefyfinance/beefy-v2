@@ -555,11 +555,6 @@
     "filter": true
   },
   {
-    "id": "sushiswap",
-    "name": "SushiSwap",
-    "filter": true
-  },
-  {
     "id": "polywise",
     "name": "Polywise",
     "filter": false
