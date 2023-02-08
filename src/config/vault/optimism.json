@@ -759,7 +759,8 @@
     "earnContractAddress": "0xa0b33f5e893A95675d8D59A4abba3A16E2727f0f",
     "oracle": "lps",
     "oracleId": "velodrome-op-mai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["MAI", "OP"],
     "risks": [
@@ -1219,7 +1220,8 @@
     "earnContractAddress": "0x4EfF281247576EC156D7271C46d9EF0F43c6c265",
     "oracle": "lps",
     "oracleId": "velodrome-frax-op",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["FRAX", "OP"],
     "risks": [
@@ -1678,7 +1680,8 @@
     "earnContractAddress": "0x00aCFD3420CD652500F5bA1B90Ac7C19F694c5c3",
     "oracle": "lps",
     "oracleId": "velodrome-susd-dai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["sUSD", "DAI"],
     "risks": [
@@ -2382,7 +2385,8 @@
     "earnContractAddress": "0x3a847E91d632C72A8247727CC09C63a6847f70b4",
     "oracle": "lps",
     "oracleId": "velodrome-weth-setho",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "ripae",
     "assets": ["sETHo", "ETH"],
     "risks": [
