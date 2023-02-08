@@ -193,7 +193,7 @@
     "tokenProviderId": "kyber",
     "earnedToken": "mooKyberMAI-USDC",
     "earnedTokenAddress": "0x2eac840950F1FF53d03A55A0255ea787fE84a4b5",
-    "earnContractAddress": "0x2eac840950F1FF53d03A55A0255ea787fE84a4b5c",
+    "earnContractAddress": "0x2eac840950F1FF53d03A55A0255ea787fE84a4b5",
     "oracle": "lps",
     "oracleId": "kyber-usdc-mai",
     "status": "active",
