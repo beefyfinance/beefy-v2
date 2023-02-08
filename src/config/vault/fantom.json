@@ -114,6 +114,36 @@
     "createdAt": 1646162527
   },
   {
+    "id": "wigo-wftm-sftmx",
+    "name": "sFTMx-FTM LP",
+    "token": "sFTMx-FTM LP",
+    "tokenAddress": "0x43E1059c05D3153B5D74303DD6474a43BC87E73e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "wigoswap",
+    "earnedToken": "mooWigoSwapFTM-sFTMx",
+    "earnedTokenAddress": "0x69f03b79568287FA0c7357e60BdD409054e55fD4",
+    "earnContractAddress": "0x69f03b79568287FA0c7357e60BdD409054e55fD4",
+    "oracle": "lps",
+    "oracleId": "wigo-wftm-sftmx",
+    "status": "active",
+    "platformId": "wigoswap",
+    "assets": ["sFTMx", "FTM"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://wigoswap.io/swap?outputCurrency=0xd7028092c830b5C8FcE061Af2E593413EbbC1fc1",
+    "addLiquidityUrl": "https://wigoswap.io/add/FTM/0xd7028092c830b5C8FcE061Af2E593413EbbC1fc1",
+    "removeLiquidityUrl": "https://wigoswap.io/remove/FTM/0xd7028092c830b5C8FcE061Af2E593413EbbC1fc1",
+    "network": "fantom",
+    "createdAt": 1675770165
+  },
+  {
     "id": "beets-two-smoking-fantoms",
     "name": "Lock, staked and two smoking Fantoms",
     "token": "Lock, staked and two smoking Fantoms",
