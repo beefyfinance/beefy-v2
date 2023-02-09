@@ -185,13 +185,11 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           step: 'mint',
           message: t('Vault-TxnConfirm', { type: t('Mint-noun') }),
           action: walletActions.mintDeposit(
-            vault.chainId,
-            minter.contractAddress,
+            minter,
             depositToken,
             mintedToken,
             formData.deposit.amount,
-            formData.deposit.max,
-            minterId
+            formData.deposit.max
           ),
           pending: false,
         },
