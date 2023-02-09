@@ -2096,7 +2096,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.uniswap.org/#/swap?chain=optimism&inputCurrency=ETH&outputCurrency=0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
     "addLiquidityUrl": "https://stargate.finance/pool/usdc-optimism/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/usdc-optimism/remove",
@@ -2127,7 +2126,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.uniswap.org/#/swap?chain=optimism&inputCurrency=0x7F5c764cBc14f9669B88837ca1490cCa17c31607&outputCurrency=ETH",
     "addLiquidityUrl": "https://stargate.finance/pool/eth-optimism/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/eth-optimism/remove",
