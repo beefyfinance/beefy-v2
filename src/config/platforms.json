@@ -662,7 +662,7 @@
   {
     "id": "kyber",
     "name": "Kyber",
-    "filter": false
+    "filter": true
   },
   {
     "id": "beethovenx",
