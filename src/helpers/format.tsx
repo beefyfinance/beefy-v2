@@ -298,7 +298,9 @@ export function formatEns(ens: string): string {
 }
 
 export function errorToString(error: SerializedError | string) {
-  return isString(error) ? error : (error?.message || error?.name || error?.code) + '';
+  return isString(error)
+    ? error
+    : `${error?.message || error?.name || error?.code || String(error)}`;
 }
 
 export function zeroPad(value: number | undefined): string {
