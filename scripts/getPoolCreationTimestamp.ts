@@ -21,9 +21,10 @@ const explorerApiUrls = {
   optimism: 'https://api-optimistic.etherscan.io/api',
   kava: 'https://explorer.kava.io/',
   ethereum: 'https://api.etherscan.io/api',
+  canto: 'https://evm.explorer.canto.io/api',
 };
 
-const blockScoutChainsTimeout = new Set(['fuse', 'metis', 'celo', 'emerald', 'kava']);
+const blockScoutChainsTimeout = new Set(['fuse', 'metis', 'celo', 'emerald', 'kava', 'canto']);
 const harmonyRpcChains = new Set(['one']);
 
 const getCreationTimestamp = async (vaultAddress, explorerUrl) => {

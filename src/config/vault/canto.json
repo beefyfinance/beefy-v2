@@ -1,0 +1,32 @@
+[
+  {
+    "id": "canto-note-usdt",
+    "name": "NOTE-USDT sLP",
+    "token": "NOTE-USDT sLP",
+    "tokenAddress": "0x35DB1f3a6A6F07f82C76fCC415dB6cFB1a7df833",
+    "tokenDecimals": 18,
+    "tokenProviderId": "canto",
+    "earnedToken": "mooCantoNOTE-USDT",
+    "earnedTokenAddress": "0xe037B6C96cc9B339F9aD26adbF1e984bC37aB33f",
+    "earnContractAddress": "0xe037B6C96cc9B339F9aD26adbF1e984bC37aB33f",
+    "oracle": "lps",
+    "oracleId": "canto-note-usdt",
+    "status": "active",
+    "platformId": "canto",
+    "assets": ["NOTE", "USDT"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://canto.io/lp",
+    "removeLiquidityUrl": "https://canto.io/lp",
+    "buyTokenUrl": "https://app.slingshot.finance/swap/CANTO",
+    "network": "canto",
+    "createdAt": 1676041459
+  }
+]

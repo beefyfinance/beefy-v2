@@ -958,5 +958,10 @@
     "id": "kyber",
     "name": "Kyber",
     "filter": true
+  },
+  {
+    "id": "canto",
+    "name": "Canto DEX",
+    "filter": true
   }
 ]

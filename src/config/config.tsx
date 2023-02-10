@@ -526,6 +526,30 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     },
     stableCoins: ['USDC', 'DAI', 'USDT'],
   },
+  canto: {
+    name: 'Canto',
+    chainId: 7700,
+    rpc: ['https://canto.slingshot.finance'],
+    explorerUrl: 'https://evm.explorer.canto.io',
+    multicallAddress: '0xFE40f6eAD11099D91D51a945c145CFaD1DD15Bb8',
+    appMulticallContractAddress: '0x7c7B7FbccA5699175003ecbe1B41E79F40385469',
+    providerName: 'Canto',
+    walletSettings: {
+      chainId: `0x${parseInt('7700', 10).toString(16)}`,
+      chainName: 'canto',
+      nativeCurrency: {
+        name: 'CANTO',
+        symbol: 'CANTO',
+        decimals: 18,
+      },
+      rpcUrls: ['https://canto.slingshot.finance'],
+      blockExplorerUrls: ['https://evm.explorer.canto.io/'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['USDC', 'NOTE', 'USDT'],
+  },
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,
