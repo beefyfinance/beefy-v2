@@ -16,8 +16,10 @@ import {
 } from './balance';
 import {
   selectBoostById,
+  selectIsVaultPrestakedBoost,
   selectIsVaultPreStakedOrBoosted,
   selectPreStakeOrActiveBoostIds,
+  selectVaultsActiveBoostPeriodFinish,
 } from './boosts';
 import {
   selectIsVaultBeefy,
@@ -295,7 +297,13 @@ export const selectFilteredVaults = (state: BeefyState) => {
       );
     } else {
       // Surface boosted
-      sortedVaults = sortBy(sortedVaults, vault => (vaultIsBoosted[vault.id] ? -1 : 1));
+      sortedVaults = sortBy(sortedVaults, vault =>
+        vaultIsBoosted[vault.id]
+          ? selectIsVaultPrestakedBoost(state, vault.id)
+            ? -Number.MAX_SAFE_INTEGER
+            : -selectVaultsActiveBoostPeriodFinish(state, vault.id)
+          : 1
+      );
     }
   }
 
