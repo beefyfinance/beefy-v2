@@ -1684,7 +1684,8 @@
     "earnContractAddress": "0xc7024B02a3C3893C482F5DD03193CFD1DBEC604f",
     "oracle": "lps",
     "oracleId": "joe-ptp-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "traderjoe",
     "assets": ["PTP", "AVAX"],
     "risks": [
