@@ -8,6 +8,7 @@ import { styles } from './styles';
 const useStyles = makeStyles(styles);
 
 export const Footer = memo(function () {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useTranslation();
   const classes = useStyles();
 

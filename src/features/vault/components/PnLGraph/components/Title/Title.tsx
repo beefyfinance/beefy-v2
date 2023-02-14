@@ -2,14 +2,24 @@ import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { formatBigDecimals, formatBigUsd } from '../../../../../../helpers/format';
+import { useAppSelector } from '../../../../../../store';
+import { VaultEntity } from '../../../../../data/entities/vault';
+import { selectVaultPnl } from '../../../../../data/selectors/analytics';
 
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const Title = memo(function () {
+interface TitleProps {
+  vaultId: VaultEntity['id'];
+}
+
+export const Title = memo<TitleProps>(function ({ vaultId }) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useTranslation();
+
+  const vaultPnlStats = useAppSelector(state => selectVaultPnl(state, vaultId));
 
   const classes = useStyles();
 
@@ -17,27 +27,36 @@ export const Title = memo(function () {
     return [
       {
         label: 'At Deposit',
-        value: '15.01',
-        subValue: '$43,882.33',
+        value: formatBigDecimals(vaultPnlStats.balanceAtDeposit),
+        subValue: formatBigUsd(vaultPnlStats.usdBalanceAtDeposit),
         border: false,
       },
       {
         label: 'Now',
-        value: '15.05',
-        subValue: '$41,882.33',
+        value: formatBigDecimals(vaultPnlStats.deposit),
+        subValue: formatBigUsd(vaultPnlStats.depositUsd),
       },
       {
         label: 'Yield',
-        value: '+0.005',
-        subValue: '$184',
+        value: formatBigDecimals(vaultPnlStats.totalYield),
+        subValue: formatBigUsd(vaultPnlStats.totalYieldUsd),
         valueClassName: classes.greenValue,
       },
       {
         label: 'PNL',
-        value: '-15000',
+        value: formatBigUsd(vaultPnlStats.totalPnlUsd),
       },
     ];
-  }, [classes.greenValue]);
+  }, [
+    classes.greenValue,
+    vaultPnlStats.balanceAtDeposit,
+    vaultPnlStats.deposit,
+    vaultPnlStats.depositUsd,
+    vaultPnlStats.totalPnlUsd,
+    vaultPnlStats.totalYield,
+    vaultPnlStats.totalYieldUsd,
+    vaultPnlStats.usdBalanceAtDeposit,
+  ]);
 
   return (
     <div className={classes.title}>

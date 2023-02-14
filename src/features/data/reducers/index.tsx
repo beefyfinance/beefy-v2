@@ -29,6 +29,7 @@ import { transactReducer } from './wallet/transact';
 import { stepperSlice } from './wallet/stepper';
 import { ammsSlice } from './amms';
 import { treasurySlice } from './treasury';
+import { analyticsSlice } from './analytics';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -51,6 +52,7 @@ const bizReducer = combineReducers<BeefyState['biz']>({
 const userReducer = combineReducers<BeefyState['user']>({
   balance: balanceSlice.reducer,
   allowance: allowanceSlice.reducer,
+  analytics: analyticsSlice.reducer,
   wallet: persistReducer(
     { key: 'wallet', storage, whitelist: ['address', 'hideBalance', 'profilePictureUrl'] },
     walletSlice.reducer

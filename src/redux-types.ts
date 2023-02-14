@@ -28,6 +28,7 @@ import { StepperState } from './features/data/reducers/wallet/stepper';
 import { TransactState } from './features/data/reducers/wallet/transact-types';
 import { AmmsState } from './features/data/reducers/amms';
 import { TreasuryState } from './features/data/reducers/treasury';
+import { AnalyticsState } from './features/data/reducers/analytics';
 
 export interface BeefyState {
   entities: {
@@ -53,6 +54,7 @@ export interface BeefyState {
     walletActions: WalletActionsState;
     balance: BalanceState;
     allowance: AllowanceState;
+    analytics: AnalyticsState;
   };
   ui: {
     dataLoader: DataLoaderState;
