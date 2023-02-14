@@ -30,7 +30,7 @@ export const fetchAnalyticsVaults = createAsyncThunk<
 
     const parsedVault = {
       chain: vault.chain,
-      datetime: vault.datetime,
+      datetime: new Date(vault.datetime),
       displayName: vault.display_name,
       isEol: vault.is_eol,
       productKey: vault.product_key,

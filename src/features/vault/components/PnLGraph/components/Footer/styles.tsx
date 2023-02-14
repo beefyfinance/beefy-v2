@@ -26,4 +26,17 @@ export const styles = (theme: Theme) => ({
     columnGap: '8px',
     alignItems: 'center',
   },
+  tabsContainer: {
+    marginTop: 10,
+    '& .MuiTabs-root': {
+      minHeight: '38px',
+    },
+    '& .MuiTab-root': {
+      minHeight: '34px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      marginTop: 0,
+      marginLeft: 'auto',
+    },
+  },
 });

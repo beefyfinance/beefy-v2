@@ -51,7 +51,9 @@ export const selectVaultPnl = (state: BeefyState, vaultId: VaultEntity['id']) =>
   const totalYield = yieldPnL.getUnrealizedPnl(ppfs);
   const totalYieldUsd = usdPnL.getUnrealizedPnl(oraclePrice.times(ppfs));
 
-  const totalPnlUsd = usdPnL.getUnrealizedPnl(oraclePrice.times(ppfs));
+  const realizedPnl = usdPnL.getRealizedPnl();
+  const unrelizedPnl = usdPnL.getUnrealizedPnl(oraclePrice.times(ppfs));
+  const totalPnlUsd = unrelizedPnl.plus(realizedPnl);
 
   return {
     totalYield,

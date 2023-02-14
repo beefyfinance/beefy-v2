@@ -20,7 +20,9 @@ export const Footer = memo(function () {
         <LegendItem color="#59A662" text="WBTC amount" />
         <LegendItem color="#6A88C8" text="Deposit Value (USD)" />
       </div>
-      <Tabs labels={labels} value={0} onChange={() => console.log('hi')} />
+      <div className={classes.tabsContainer}>
+        <Tabs labels={labels} value={0} onChange={() => console.log('hi')} />
+      </div>
     </div>
   );
 });

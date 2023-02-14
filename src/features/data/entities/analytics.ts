@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import { TimelineAnalyticsConfig } from '../apis/analytics/analytics-types';
 import { ChangeTypeOfKeys, SnakeToCamelCase } from '../utils/types-utils';
 
-export type VaultTimelineAnalyticsEntity = ChangeTypeOfKeys<
+export type VaultTimelineAnalyticsWithBigNumber = ChangeTypeOfKeys<
   {
     [K in keyof TimelineAnalyticsConfig as SnakeToCamelCase<K>]: TimelineAnalyticsConfig[K];
   },
@@ -15,4 +15,10 @@ export type VaultTimelineAnalyticsEntity = ChangeTypeOfKeys<
   | 'usdBalance'
   | 'usdDiff',
   BigNumber
+>;
+
+export type VaultTimelineAnalyticsEntity = ChangeTypeOfKeys<
+  VaultTimelineAnalyticsWithBigNumber,
+  'datetime',
+  Date
 >;
