@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   AppBar,
@@ -24,6 +24,10 @@ import { ConnectionStatus } from './components/ConnectionStatus';
 import { DropNavItem } from './components/DropNavItem';
 import { MobileMenu } from './components/MobileMenu';
 import { BifiPrice } from './components/BifiPrice';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { selectShouldInitProposals } from '../../features/data/selectors/data-loader';
+import { fetchActiveProposals } from '../../features/data/actions/proposal';
+import { UnreadProposalsDot } from './components/Badges/UnreadProposalsDot';
 
 const useStyles = makeStyles(styles);
 
@@ -33,6 +37,14 @@ export const Header = memo(function () {
     location.pathname.includes('dashboard') || location.pathname.includes('treasury');
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width: 500px)');
+  const dispatch = useAppDispatch();
+  const shouldLoad = useAppSelector(selectShouldInitProposals);
+
+  useEffect(() => {
+    if (shouldLoad) {
+      dispatch(fetchActiveProposals());
+    }
+  }, [dispatch, shouldLoad]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -58,7 +70,12 @@ export const Header = memo(function () {
               <Hidden mdDown>
                 <NavItem title={'Header-Vaults'} url="/" Icon={VaultsIcon} />
                 <NavItem title={'Header-Dashboard'} url="/dashboard" Icon={DashboardIcon} />
-                <DropNavItem title={'Header-Dao'} Icon={DaoIcon} items={DaoNavItems} />
+                <DropNavItem
+                  title={'Header-Dao'}
+                  Icon={DaoIcon}
+                  items={DaoNavItems}
+                  Badge={UnreadProposalsDot}
+                />
                 <DropNavItem
                   title={'Header-Resources'}
                   Icon={ResourcesIcon}
