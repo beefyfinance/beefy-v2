@@ -9,13 +9,11 @@
     "earnedTokenAddress": "0x0BE9e53fd7EDaC9F859882AfdDa116645287C629",
     "earnedTokenDecimals": 18,
     "earnContractAddress": "0x60a4DedF7fC45F73d9ca46222B016c2d755C79A8",
-    "isGovVault": true,
     "oracle": "tokens",
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
     "assets": ["BIFI"],
-    "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -24,9 +22,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "single",
+    "isGovVault": true,
     "callFee": 0.5,
-    "createdAt": 1641686497,
-    "network": "fuse"
+    "network": "fuse",
+    "createdAt": 1641686497
   },
   {
     "id": "voltagev2-3pool",
@@ -43,7 +43,6 @@
     "status": "active",
     "platformId": "voltage",
     "assets": ["USDC", "BUSD", "USDT"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -52,10 +51,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://app.voltage.finance/#/swap?outputCurrency=0x620fd5fa44BE6af63715Ef4E65DDFA0387aD13F5",
     "addLiquidityUrl": "https://app.voltage.finance/#/stablepool/add/0x2a68D7C6Ea986fA06B2665d08b4D08F5e7aF960c",
-    "createdAt": 1658395264,
-    "network": "fuse"
+    "removeLiquidityUrl": "https://app.voltage.finance/#/stablepool/remove/0x2a68D7C6Ea986fA06B2665d08b4D08F5e7aF960c",
+    "network": "fuse",
+    "createdAt": 1658395264
   },
   {
     "id": "fuse-fuse",
@@ -70,7 +71,6 @@
     "status": "active",
     "platformId": "beefy",
     "assets": ["WFUSE"],
-    "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -79,6 +79,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "single",
     "buyTokenUrl": "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
     "network": "fuse",
     "createdAt": 1641908745
@@ -89,7 +90,7 @@
     "token": "WETH-FUSE SLP",
     "tokenAddress": "0x90c3bA00d2F7F15Cd9FDE087538be3A2865E7E2F",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "earnedToken": "mooSushiFUSE-WETH",
     "earnedTokenAddress": "0xd4E241053314254e62050aDC84B271F9d2164a16",
     "earnContractAddress": "0xd4E241053314254e62050aDC84B271F9d2164a16",
@@ -97,9 +98,8 @@
     "oracleId": "sushi-fuse-wfuse-weth",
     "status": "eol",
     "retireReason": "rewards",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["WETH", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -108,8 +108,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x0BE9e53fd7EDaC9F859882AfdDa116645287C629/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x0BE9e53fd7EDaC9F859882AfdDa116645287C629&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    "addLiquidityUrl": "https://www.sushi.com/earn/fuse:0x90c3ba00d2f7f15cd9fde087538be3a2865e7e2f/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/fuse:0x90c3ba00d2f7f15cd9fde087538be3a2865e7e2f/remove",
     "network": "fuse",
     "createdAt": 1643414500
   },
@@ -119,7 +121,7 @@
     "token": "FUSE-USDC LP",
     "tokenAddress": "0xba9CA720e314F42E17E80991c1d0AFfE47387108",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "earnedToken": "mooSushiFUSE-USDC",
     "earnedTokenAddress": "0x87FFA2E1D232d5B98fd4366C311b568c022aE650",
     "earnContractAddress": "0x87FFA2E1D232d5B98fd4366C311b568c022aE650",
@@ -127,9 +129,8 @@
     "oracleId": "sushi-fuse-wfuse-usdc",
     "status": "eol",
     "retireReason": "rewards",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["FUSE", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -138,8 +139,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x0BE9e53fd7EDaC9F859882AfdDa116645287C629/0x620fd5fa44BE6af63715Ef4E65DDFA0387aD13F5",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x0BE9e53fd7EDaC9F859882AfdDa116645287C629&outputCurrency=0x620fd5fa44BE6af63715Ef4E65DDFA0387aD13F5",
+    "addLiquidityUrl": "https://www.sushi.com/earn/fuse:0xba9ca720e314f42e17e80991c1d0affe47387108/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/fuse:0xba9ca720e314f42e17e80991c1d0affe47387108/remove",
     "network": "fuse",
     "createdAt": 1643485320
   },
@@ -157,7 +160,6 @@
     "status": "active",
     "platformId": "beefy",
     "assets": ["BIFI"],
-    "strategyTypeId": "maxi",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -166,9 +168,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "maxi",
     "buyTokenUrl": "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c",
-    "createdAt": 1644690600,
-    "network": "fuse"
+    "network": "fuse",
+    "createdAt": 1644690600
   },
   {
     "id": "voltage-wfuse-g$-eol",
@@ -183,9 +186,9 @@
     "oracle": "lps",
     "oracleId": "voltage-wfuse-g$",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["G", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -194,11 +197,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.fuse.fi/#/add/FUSE/0x495d133B938596C9984d462F007B676bDc57eCEC",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x495d133B938596C9984d462F007B676bDc57eCEC",
-    "createdAt": 1641411120,
+    "addLiquidityUrl": "https://app.fuse.fi/#/add/FUSE/0x495d133B938596C9984d462F007B676bDc57eCEC",
+    "removeLiquidityUrl": "https://app.fuse.fi/#/remove/FUSE/0x495d133B938596C9984d462F007B676bDc57eCEC",
     "network": "fuse",
-    "retireReason": "rewards"
+    "createdAt": 1641411120
   },
   {
     "id": "voltage-wfuse-usdc-eol",
@@ -213,9 +217,9 @@
     "oracle": "lps",
     "oracleId": "voltage-wfuse-usdc",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["USDC", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -224,11 +228,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.fuse.fi/#/add/FUSE/0x620fd5fa44be6af63715ef4e65ddfa0387ad13f5",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x620fd5fa44be6af63715ef4e65ddfa0387ad13f5",
+    "addLiquidityUrl": "https://app.fuse.fi/#/add/FUSE/0x620fd5fa44be6af63715ef4e65ddfa0387ad13f5",
+    "removeLiquidityUrl": "https://app.fuse.fi/#/remove/FUSE/0x620fd5fa44be6af63715ef4e65ddfa0387ad13f5",
     "network": "fuse",
-    "createdAt": 1641409265,
-    "retireReason": "rewards"
+    "createdAt": 1641409265
   },
   {
     "id": "voltage-wfuse-ust-eol",
@@ -243,9 +248,9 @@
     "oracle": "lps",
     "oracleId": "voltage-wfuse-ust",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["UST", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -255,11 +260,12 @@
       "CONTRACTS_VERIFIED",
       "ALGO_STABLE"
     ],
-    "addLiquidityUrl": "https://app.fuse.fi/#/add/FUSE/0x0D58a44be3dCA0aB449965dcc2c46932547Fea2f",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x0D58a44be3dCA0aB449965dcc2c46932547Fea2f",
+    "addLiquidityUrl": "https://app.fuse.fi/#/add/FUSE/0x0D58a44be3dCA0aB449965dcc2c46932547Fea2f",
+    "removeLiquidityUrl": "https://app.fuse.fi/#/remove/FUSE/0x0D58a44be3dCA0aB449965dcc2c46932547Fea2f",
     "network": "fuse",
-    "createdAt": 1643810650,
-    "retireReason": "rewards"
+    "createdAt": 1643810650
   },
   {
     "id": "voltage-wfuse-weth-eol",
@@ -274,9 +280,9 @@
     "oracle": "lps",
     "oracleId": "voltage-wfuse-weth",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["WETH", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -285,11 +291,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.fuse.fi/#/add/FUSE/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    "addLiquidityUrl": "https://app.fuse.fi/#/add/FUSE/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    "removeLiquidityUrl": "https://app.fuse.fi/#/remove/FUSE/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
     "network": "fuse",
-    "createdAt": 1641410065,
-    "retireReason": "rewards"
+    "createdAt": 1641410065
   },
   {
     "id": "voltage-fusd-bnb-eol",
@@ -304,9 +311,9 @@
     "oracle": "lps",
     "oracleId": "voltage-fusd-bnb",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["fUSD", "BNB"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -315,11 +322,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.fuse.fi/#/add/0x6acb34b1Df86E254b544189Ec32Cf737e2482058/0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.fuse.fi/#/swap?inputCurrency=0x6acb34b1Df86E254b544189Ec32Cf737e2482058&outputCurrency=0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
+    "addLiquidityUrl": "https://app.fuse.fi/#/add/0x6acb34b1Df86E254b544189Ec32Cf737e2482058/0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
+    "removeLiquidityUrl": "https://app.fuse.fi/#/remove/0x6acb34b1Df86E254b544189Ec32Cf737e2482058/0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
     "network": "fuse",
-    "createdAt": 1641410790,
-    "retireReason": "rewards"
+    "createdAt": 1641410790
   },
   {
     "id": "voltage-wfuse-busd-eol",
@@ -334,9 +342,9 @@
     "oracle": "lps",
     "oracleId": "voltage-wfuse-busd",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["BUSD", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -345,11 +353,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.fuse.fi/#/add/FUSE/0x6a5F6A8121592BeCd6747a38d67451B310F7f156",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x6a5F6A8121592BeCd6747a38d67451B310F7f156",
+    "addLiquidityUrl": "https://app.fuse.fi/#/add/FUSE/0x6a5F6A8121592BeCd6747a38d67451B310F7f156",
+    "removeLiquidityUrl": "https://app.fuse.fi/#/remove/FUSE/0x6a5F6A8121592BeCd6747a38d67451B310F7f156",
     "network": "fuse",
-    "createdAt": 1641410975,
-    "retireReason": "rewards"
+    "createdAt": 1641410975
   },
   {
     "id": "voltage-wfuse-fusd-eol",
@@ -364,9 +373,9 @@
     "oracle": "lps",
     "oracleId": "voltage-wfuse-fusd",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["fUSD", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -375,11 +384,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.fuse.fi/#/add/FUSE/0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
+    "addLiquidityUrl": "https://app.fuse.fi/#/add/FUSE/0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
+    "removeLiquidityUrl": "https://app.fuse.fi/#/remove/FUSE/0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
     "network": "fuse",
-    "createdAt": 1641410460,
-    "retireReason": "rewards"
+    "createdAt": 1641410460
   },
   {
     "id": "voltage-wbtc-weth-eol",
@@ -394,9 +404,9 @@
     "oracle": "lps",
     "oracleId": "voltage-wbtc-weth",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["WETH", "WBTC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -405,11 +415,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.fuse.fi/#/add/0x33284f95ccb7B948d9D352e1439561CF83d8d00d/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.fuse.fi/#/swap?inputCurrency=0x33284f95ccb7B948d9D352e1439561CF83d8d00d&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    "addLiquidityUrl": "https://app.fuse.fi/#/add/0x33284f95ccb7B948d9D352e1439561CF83d8d00d/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    "removeLiquidityUrl": "https://app.fuse.fi/#/remove/0x33284f95ccb7B948d9D352e1439561CF83d8d00d/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
     "network": "fuse",
-    "createdAt": 1641410240,
-    "retireReason": "rewards"
+    "createdAt": 1641410240
   },
   {
     "id": "voltagev2-fusd-bnb",
@@ -426,7 +437,6 @@
     "status": "active",
     "platformId": "voltage",
     "assets": ["fUSD", "BNB"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -435,10 +445,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/0x249BE57637D8B013Ad64785404b24aeBaE9B098B/0x6acb34b1Df86E254b544189Ec32Cf737e2482058",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.voltage.finance/index.html#/swap?inputCurrency=0x249BE57637D8B013Ad64785404b24aeBaE9B098B&outputCurrency=0x6acb34b1Df86E254b544189Ec32Cf737e2482058",
-    "createdAt": 1647451620,
-    "network": "fuse"
+    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/0x249BE57637D8B013Ad64785404b24aeBaE9B098B/0x6acb34b1Df86E254b544189Ec32Cf737e2482058",
+    "removeLiquidityUrl": "https://app.voltage.finance/index.html#/remove/0x249BE57637D8B013Ad64785404b24aeBaE9B098B/0x6acb34b1Df86E254b544189Ec32Cf737e2482058",
+    "network": "fuse",
+    "createdAt": 1647451620
   },
   {
     "id": "voltagev2-wbtc-weth",
@@ -455,7 +467,6 @@
     "status": "active",
     "platformId": "voltage",
     "assets": ["WBTC", "WETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -464,10 +475,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/0x33284f95ccb7B948d9D352e1439561CF83d8d00d/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.voltage.finance/index.html#/swap?inputCurrency=0x33284f95ccb7B948d9D352e1439561CF83d8d00d&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
-    "createdAt": 1647451320,
-    "network": "fuse"
+    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/0x33284f95ccb7B948d9D352e1439561CF83d8d00d/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    "removeLiquidityUrl": "https://app.voltage.finance/index.html#/remove/0x33284f95ccb7B948d9D352e1439561CF83d8d00d/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    "network": "fuse",
+    "createdAt": 1647451320
   },
   {
     "id": "voltagev2-wfuse-weth",
@@ -484,7 +497,6 @@
     "status": "active",
     "platformId": "voltage",
     "assets": ["WETH", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -493,10 +505,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.voltage.finance/index.html#/swap?outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
-    "createdAt": 1647458875,
-    "network": "fuse"
+    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    "removeLiquidityUrl": "https://app.voltage.finance/index.html#/remove/fuse/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    "network": "fuse",
+    "createdAt": 1647458875
   },
   {
     "id": "voltagev2-wfuse-busd",
@@ -513,7 +527,6 @@
     "status": "active",
     "platformId": "voltage",
     "assets": ["BUSD", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -522,10 +535,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0x6a5F6A8121592BeCd6747a38d67451B310F7f156",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.voltage.finance/index.html#/swap?outputCurrency=0x6a5F6A8121592BeCd6747a38d67451B310F7f156",
-    "createdAt": 1647505250,
-    "network": "fuse"
+    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0x6a5F6A8121592BeCd6747a38d67451B310F7f156",
+    "removeLiquidityUrl": "https://app.voltage.finance/index.html#/remove/fuse/0x6a5F6A8121592BeCd6747a38d67451B310F7f156",
+    "network": "fuse",
+    "createdAt": 1647505250
   },
   {
     "id": "voltagev2-wfuse-usdc",
@@ -543,7 +558,6 @@
     "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["USDC", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -552,10 +566,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0x620fd5fa44BE6af63715Ef4E65DDFA0387aD13F5",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.voltage.finance/index.html#/swap?outputCurrency=0x620fd5fa44BE6af63715Ef4E65DDFA0387aD13F5",
-    "createdAt": 1647505440,
-    "network": "fuse"
+    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0x620fd5fa44BE6af63715Ef4E65DDFA0387aD13F5",
+    "removeLiquidityUrl": "https://app.voltage.finance/index.html#/remove/fuse/0x620fd5fa44BE6af63715Ef4E65DDFA0387aD13F5",
+    "network": "fuse",
+    "createdAt": 1647505440
   },
   {
     "id": "voltagev2-wfuse-fusd",
@@ -572,7 +588,6 @@
     "status": "active",
     "platformId": "voltage",
     "assets": ["fUSD", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -581,10 +596,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.voltage.finance/index.html#/swap?outputCurrency=0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
-    "createdAt": 1647505595,
-    "network": "fuse"
+    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
+    "removeLiquidityUrl": "https://app.voltage.finance/index.html#/remove/fuse/0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
+    "network": "fuse",
+    "createdAt": 1647505595
   },
   {
     "id": "voltagev2-wfuse-volt",
@@ -601,7 +618,6 @@
     "status": "active",
     "platformId": "voltage",
     "assets": ["VOLT", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -610,10 +626,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.voltage.finance/index.html#/swap?outputCurrency=0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4",
-    "createdAt": 1647365195,
-    "network": "fuse"
+    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4",
+    "removeLiquidityUrl": "https://app.voltage.finance/index.html#/remove/fuse/0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4",
+    "network": "fuse",
+    "createdAt": 1647365195
   },
   {
     "id": "voltagev2-fusd-volt",
@@ -631,7 +649,6 @@
     "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["fUSD", "VOLT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -640,10 +657,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4/0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.voltage.finance/index.html#/swap?inputCurrency=0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4&outputCurrency=0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
-    "createdAt": 1647505730,
-    "network": "fuse"
+    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4/0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
+    "removeLiquidityUrl": "https://app.voltage.finance/index.html#/remove/0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4/0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
+    "network": "fuse",
+    "createdAt": 1647505730
   },
   {
     "id": "voltagev2-volt-bnb",
@@ -661,7 +680,6 @@
     "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["VOLT", "BNB"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -670,10 +688,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4/0x6acb34b1Df86E254b544189Ec32Cf737e2482058",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.voltage.finance/index.html#/swap?inputCurrency=0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4&outputCurrency=0x6acb34b1Df86E254b544189Ec32Cf737e2482058",
-    "createdAt": 1647180880,
-    "network": "fuse"
+    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4/0x6acb34b1Df86E254b544189Ec32Cf737e2482058",
+    "removeLiquidityUrl": "https://app.voltage.finance/index.html#/remove/0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4/0x6acb34b1Df86E254b544189Ec32Cf737e2482058",
+    "network": "fuse",
+    "createdAt": 1647180880
   },
   {
     "id": "voltagev2-wfuse-gdollar",
@@ -690,7 +710,6 @@
     "status": "active",
     "platformId": "voltage",
     "assets": ["G", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -699,10 +718,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0x495d133B938596C9984d462F007B676bDc57eCEC",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.voltage.finance/index.html#/swap?outputCurrency=0x495d133B938596C9984d462F007B676bDc57eCEC",
-    "createdAt": 1647365540,
-    "network": "fuse"
+    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0x495d133B938596C9984d462F007B676bDc57eCEC",
+    "removeLiquidityUrl": "https://app.voltage.finance/index.html#/remove/fuse/0x495d133B938596C9984d462F007B676bDc57eCEC",
+    "network": "fuse",
+    "createdAt": 1647365540
   },
   {
     "id": "voltagev2-xvolt",
@@ -718,7 +739,6 @@
     "status": "active",
     "platformId": "voltage",
     "assets": ["xVOLT"],
-    "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -727,10 +747,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.voltage.finance/#/stake",
+    "strategyTypeId": "single",
     "buyTokenUrl": "https://app.voltage.finance/index.html#/swap?outputCurrency=0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4",
-    "createdAt": 1649322250,
-    "network": "fuse"
+    "addLiquidityUrl": "https://app.voltage.finance/#/stake",
+    "removeLiquidityUrl": "https://app.voltage.finance/#/stake",
+    "network": "fuse",
+    "createdAt": 1649322250
   },
   {
     "id": "sushi-fuse-usdc-usdt",
@@ -738,7 +760,7 @@
     "token": "USDC-USDT LP",
     "tokenAddress": "0x00E485d833099679eD7D121CE46a9557ea8aDa1e",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "earnedToken": "mooSushiUSDC-USDT",
     "earnedTokenAddress": "0x4D3988B5dc8267fB5FE6dB87681aDA8AC6732113",
     "earnContractAddress": "0x4D3988B5dc8267fB5FE6dB87681aDA8AC6732113",
@@ -746,9 +768,8 @@
     "oracleId": "sushi-fuse-usdc-usdt",
     "status": "eol",
     "retireReason": "rewards",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["USDC", "USDT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -757,10 +778,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x620fd5fa44BE6af63715Ef4E65DDFA0387aD13F5/0xFaDbBF8Ce7D5b7041bE672561bbA99f79c532e10",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x620fd5fa44BE6af63715Ef4E65DDFA0387aD13F5&outputCurrency=0xFaDbBF8Ce7D5b7041bE672561bbA99f79c532e10",
-    "createdAt": 1649176980,
-    "network": "fuse"
+    "addLiquidityUrl": "https://www.sushi.com/earn/fuse:0x00e485d833099679ed7d121ce46a9557ea8ada1e/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/fuse:0x00e485d833099679ed7d121ce46a9557ea8ada1e/remove",
+    "network": "fuse",
+    "createdAt": 1649176980
   },
   {
     "id": "voltagev2-wfuse-ageur",
@@ -778,7 +801,6 @@
     "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["agEUR", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -787,10 +809,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73/",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.voltage.finance/index.html#/swap?outputCurrency=0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73",
-    "createdAt": 1649336945,
-    "network": "fuse"
+    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73/",
+    "removeLiquidityUrl": "https://app.voltage.finance/index.html#/remove/fuse/0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73/",
+    "network": "fuse",
+    "createdAt": 1649336945
   },
   {
     "id": "voltagev2-wfuse-atust-eol",
@@ -805,9 +829,9 @@
     "oracle": "lps",
     "oracleId": "voltagev2-wfuse-atust",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["UST", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -817,11 +841,12 @@
       "CONTRACTS_VERIFIED",
       "ALGO_STABLE"
     ],
-    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0x0D58a44be3dCA0aB449965dcc2c46932547Fea2f",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.voltage.finance/index.html#/swap?outputCurrency=0x0D58a44be3dCA0aB449965dcc2c46932547Fea2f",
-    "createdAt": 1647365195,
+    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/fuse/0x0D58a44be3dCA0aB449965dcc2c46932547Fea2f",
+    "removeLiquidityUrl": "https://app.voltage.finance/index.html#/remove/fuse/0x0D58a44be3dCA0aB449965dcc2c46932547Fea2f",
     "network": "fuse",
-    "retireReason": "rewards"
+    "createdAt": 1647365195
   },
   {
     "id": "voltage-wfuse-elon-eol",
@@ -836,9 +861,9 @@
     "oracle": "lps",
     "oracleId": "voltage-wfuse-elon",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["ELON", "FUSE"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -847,10 +872,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app-v1.voltage.finance/#/add/fuse/0x5DD8015cec49F4dB01fd228F688BF30337d3e0A9",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.fuse.fi/#/swap?outputCurrency=0x5DD8015cec49F4dB01fd228F688BF30337d3e0A9",
-    "createdAt": 1644603605,
+    "addLiquidityUrl": "https://app-v1.voltage.finance/#/add/fuse/0x5DD8015cec49F4dB01fd228F688BF30337d3e0A9",
+    "removeLiquidityUrl": "https://app-v1.voltage.finance/#/remove/fuse/0x5DD8015cec49F4dB01fd228F688BF30337d3e0A9",
     "network": "fuse",
-    "retireReason": "rewards"
+    "createdAt": 1644603605
   }
 ]

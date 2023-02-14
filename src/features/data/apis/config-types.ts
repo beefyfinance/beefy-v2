@@ -222,6 +222,7 @@ export interface MinterConfig {
   hasEarningsPool: boolean;
   reserveBalanceMethod?: string;
   vaultIds: string[];
+  canZapInWithOneInch?: boolean;
 }
 
 export interface InfoCardConfigContent {
@@ -270,11 +271,12 @@ export interface TokenHoldingConfig {
   address: string;
   decimals: number;
   oracleId: string;
-  oracleType: 'lps' | 'token';
+  oracleType: 'lps' | 'token' | 'validator';
   assetType: 'token' | 'native' | 'validator';
   price: number;
   usdValue: string;
   balance: string;
+  methodPath?: string;
 }
 
 export interface VaultHoldingConfig {
@@ -289,6 +291,7 @@ export interface VaultHoldingConfig {
   balance: string;
   vaultId: VaultEntity['id'];
   pricePerFullShare: string;
+  methodPath?: string;
 }
 
 export type TreasuryHoldingConfig = TokenHoldingConfig | VaultHoldingConfig;

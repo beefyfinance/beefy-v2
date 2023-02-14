@@ -1,4 +1,5 @@
 import { getAddress } from '@ethersproject/address';
+import { createWriteStream, promises as fsPromises } from 'fs';
 
 const trimReg = /(^\s*)|(\s*$)/g;
 
@@ -59,4 +60,46 @@ export function objectInsert<TValue>(
       return newEntries;
     }, [])
   );
+}
+
+export async function saveJson<DataType = any>(
+  path: string,
+  json: DataType,
+  pretty: boolean = false
+) {
+  return fsPromises.writeFile(path, JSON.stringify(json, null, pretty ? 2 : undefined));
+}
+
+export async function loadJson<ReturnType = any>(path: string): Promise<ReturnType> {
+  const json = await fsPromises.readFile(path, 'utf-8');
+  return JSON.parse(json);
+}
+
+function escapeCsvValue(input: string) {
+  const stringValue = typeof input === 'object' ? JSON.stringify(input) : String(input);
+  const escaped = stringValue.replace(/"/g, '""').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
+  return `"${escaped}"`;
+}
+
+export async function saveCsv<T extends Record<string, any>>(
+  path: string,
+  data: T[],
+  withHeader: boolean = true,
+  columns?: (keyof T)[]
+) {
+  if (!columns || columns.length === 0) {
+    if (data.length === 0) {
+      throw new Error('No columns or data');
+    }
+    columns = Object.keys(data[0]);
+  }
+
+  const stream = createWriteStream(path);
+  if (withHeader) {
+    stream.write(columns.map(escapeCsvValue).join(',') + '\n');
+  }
+  for (const row of data) {
+    stream.write(columns.map(column => escapeCsvValue(row[column])).join(',') + '\n');
+  }
+  stream.end();
 }

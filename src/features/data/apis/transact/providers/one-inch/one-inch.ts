@@ -21,6 +21,7 @@ import {
   selectIsTokenLoaded,
   selectTokenByAddress,
   selectTokenById,
+  selectTokenPriceByTokenOracleId,
 } from '../../../../selectors/tokens';
 import { isTokenEqual, isTokenErc20, TokenEntity, TokenErc20 } from '../../../../entities/token';
 import { selectOneInchZapByChainId } from '../../../../selectors/zap';
@@ -34,6 +35,7 @@ import {
   BIG_ZERO,
   fromWei,
   fromWeiString,
+  isFiniteBigNumber,
   toWei,
   toWeiString,
 } from '../../../../../../helpers/big-number';
@@ -47,7 +49,7 @@ import {
   tokensToZapWithdraw,
   wnativeToNative,
 } from '../../helpers/tokens';
-import { selectTokenAmountValue, selectTransactSlippage } from '../../../../selectors/transact';
+import { selectTransactSlippage } from '../../../../selectors/transact';
 import BigNumber from 'bignumber.js';
 import { computeSolidlyPairAddress } from '../../helpers/solidly';
 import { computeUniswapV2PairAddress } from '../../helpers/uniswapv2';
@@ -143,7 +145,7 @@ export class OneInchZapProvider implements ITransactProvider {
 
     const zapTokens = zap.depositFromTokens
       .map(tokenId => selectTokenById(state, vault.chainId, tokenId))
-      .filter(token => !!token && !isTokenEqual(token, depositToken));
+      .filter(token => this.isDifferentTokenWithPrice(token, depositToken, state));
 
     if (!zapTokens || zapTokens.length === 0) {
       return null;
@@ -209,6 +211,30 @@ export class OneInchZapProvider implements ITransactProvider {
     return amm || null;
   }
 
+  isDifferentTokenWithPrice(
+    token: TokenEntity | undefined,
+    depositToken: TokenEntity,
+    state: BeefyState
+  ): boolean {
+    if (!token) {
+      return false;
+    }
+
+    if (isTokenEqual(token, depositToken)) {
+      return false;
+    }
+
+    const price = selectTokenPriceByTokenOracleId(state, token.oracleId);
+    return isFiniteBigNumber(price) && !price.isZero() && !price.isNegative();
+  }
+
+  tokensHavePrices(tokens: TokenErc20[], state: BeefyState): boolean {
+    return tokens.every(token => {
+      const price = selectTokenPriceByTokenOracleId(state, token.oracleId);
+      return isFiniteBigNumber(price) && !price.isZero() && !price.isNegative();
+    });
+  }
+
   async getLPDepositOptionsFor(
     vault: VaultEntity,
     state: BeefyState
@@ -244,8 +270,11 @@ export class OneInchZapProvider implements ITransactProvider {
     const wnative = selectChainWrappedNativeToken(state, vault.chainId);
     const tokens = vault.assetIds.map(id => selectTokenById(state, vault.chainId, id));
     const lpTokens = tokensToLp(tokens, wnative);
-    const lpTokenIds = lpTokens.map(token => token.id);
+    if (!this.tokensHavePrices(lpTokens, state)) {
+      return null;
+    }
 
+    const lpTokenIds = lpTokens.map(token => token.id);
     const blockedToken = zap.blockedTokens.find(id => lpTokenIds.includes(id));
     if (blockedToken !== undefined) {
       return null;
@@ -260,7 +289,7 @@ export class OneInchZapProvider implements ITransactProvider {
     const lpZapTokens = tokensToZapIn(tokens, wnative, native);
     const oneInchZapTokens = zap.depositFromTokens
       .map(tokenId => selectTokenById(state, vault.chainId, tokenId))
-      .filter(token => !!token && !isTokenEqual(token, depositToken));
+      .filter(token => this.isDifferentTokenWithPrice(token, depositToken, state));
     const zapTokens = uniqBy(lpZapTokens.concat(oneInchZapTokens), token => token.id);
 
     if (!zapTokens || zapTokens.length === 0) {
@@ -358,7 +387,7 @@ export class OneInchZapProvider implements ITransactProvider {
     if (swapAmountOut.lte(BIG_ZERO)) {
       throw new Error(`Quote returned zero ${swapTokenOut.symbol}`);
     }
-    const priceImpact = await this.getPriceImpactFromApi(
+    const priceImpact = await this.getPriceImpact(
       api,
       state,
       wnative,
@@ -450,7 +479,7 @@ export class OneInchZapProvider implements ITransactProvider {
               fromAmount: fromWei(swapAmountsInWei[i], swapTokenIn.decimals),
               toToken: swapTokensOut[i],
               toAmount: fromWei(amountOutWei, swapTokensOut[i].decimals),
-              priceImpact: await this.getPriceImpactFromApi(
+              priceImpact: await this.getPriceImpact(
                 api,
                 state,
                 wnative,
@@ -531,26 +560,27 @@ export class OneInchZapProvider implements ITransactProvider {
     return fromWei(liquidity, depositToken.decimals);
   }
 
-  getPriceImpactFromState(
+  async getPriceImpact(
+    api: OneInchApi,
     state: BeefyState,
+    wnative: TokenErc20,
     amountIn: BigNumber,
     tokenIn: TokenEntity,
     amountOut: BigNumber,
     tokenOut: TokenEntity
-  ): number {
-    const inputValue = selectTokenAmountValue(state, {
-      amount: amountIn,
-      token: tokenIn,
-    });
-    const outputValue = selectTokenAmountValue(state, {
-      amount: amountOut,
-      token: tokenOut,
-    });
-
-    return BIG_ONE.minus(BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)).toNumber();
+  ): Promise<number> {
+    return this.getPriceImpactFromPriceApi(
+      api,
+      state,
+      wnative,
+      amountIn,
+      tokenIn,
+      amountOut,
+      tokenOut
+    );
   }
 
-  async getPriceImpactFromApi(
+  async getPriceImpactFromPriceApi(
     api: OneInchApi,
     state: BeefyState,
     wnative: TokenErc20,
@@ -564,29 +594,72 @@ export class OneInchZapProvider implements ITransactProvider {
       { amount: amountOut, token: nativeToWNative(tokenOut, wnative) },
     ];
 
-    try {
-      const prices = await api.getPriceInNative({
-        tokenAddresses: swaps.map(swap => swap.token.address),
-      });
+    const [beefyNativePriceInUsd, ...beefyPricesInUsd] = [
+      wnative,
+      ...swaps.map(swap => swap.token),
+    ].map(token => {
+      const beefyPrice = selectTokenPriceByTokenOracleId(state, token.oracleId);
+      if (!isFiniteBigNumber(beefyPrice) || beefyPrice.isZero() || beefyPrice.isNegative()) {
+        throw new Error(`No price for ${token.symbol} via Beefy price oracle "${token.oracleId}".`);
+      }
+      return beefyPrice;
+    });
 
-      const [inputValue, outputValue] = swaps.map(swap => {
-        const price = fromWei(prices[swap.token.address], wnative.decimals)
-          .shiftedBy(swap.token.decimals)
-          .decimalPlaces(0, BigNumber.ROUND_FLOOR)
-          .shiftedBy(-wnative.decimals);
-        if (price.lte(BIG_ZERO)) {
-          throw new Error(`No price for ${swap.token.symbol} via 1inch off chain oracle`);
-        }
+    const prices = await api.getPriceInNative({
+      tokenAddresses: swaps.map(swap => swap.token.address),
+    });
 
-        return price.multipliedBy(swap.amount);
-      });
+    const oneInchPricesInNative = swaps.map(swap => {
+      const price = fromWei(prices[swap.token.address], wnative.decimals)
+        .shiftedBy(swap.token.decimals)
+        .decimalPlaces(0, BigNumber.ROUND_FLOOR)
+        .shiftedBy(-wnative.decimals);
 
-      return BIG_ONE.minus(BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)).toNumber();
-    } catch (e) {
-      console.warn(e);
-      // Fall back to using Beefy API prices
-      return this.getPriceImpactFromState(state, amountIn, tokenIn, amountOut, tokenOut);
-    }
+      if (price.lte(BIG_ZERO)) {
+        throw new Error(`No price for ${swap.token.symbol} via 1inch off chain oracle`);
+      }
+
+      return price;
+    });
+
+    const oneInchPricesInUsd = oneInchPricesInNative.map(price =>
+      price.multipliedBy(beefyNativePriceInUsd)
+    );
+
+    beefyPricesInUsd.forEach((beefyPrice, i) => {
+      const isClose = oneInchPricesInUsd[i]
+        .minus(beefyPrice)
+        .dividedBy(beefyPrice)
+        .absoluteValue()
+        .isLessThan(0.1);
+      if (!isClose) {
+        throw new Error(
+          `Price for ${swaps[i].token.symbol} via 1inch off chain oracle is not close enough to Beefy price API`
+        );
+      }
+    });
+
+    console.debug(
+      'beefyPricesInUsd',
+      beefyPricesInUsd.map(p => p.toString(10))
+    );
+    console.debug(
+      'oneInchPricesInNative',
+      oneInchPricesInNative.map(p => p.toString(10))
+    );
+    console.debug(
+      'oneInchPricesInUsd',
+      oneInchPricesInUsd.map(p => p.toString(10))
+    );
+
+    const [inputValue, outputValue] = oneInchPricesInNative.map((price, i) =>
+      price.multipliedBy(swaps[i].amount)
+    );
+
+    console.debug('inputValue', inputValue.toString(10));
+    console.debug('outputValue', outputValue.toString(10));
+
+    return BIG_ONE.minus(BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)).toNumber();
   }
 
   async getQuoteIfNeeded(
@@ -767,7 +840,7 @@ export class OneInchZapProvider implements ITransactProvider {
 
     const zapTokens = zap.withdrawToTokens
       .map(tokenId => selectTokenById(state, vault.chainId, tokenId))
-      .filter(token => !!token && !isTokenEqual(token, depositToken));
+      .filter(token => this.isDifferentTokenWithPrice(token, depositToken, state));
 
     if (!zapTokens || zapTokens.length === 0) {
       return null;
@@ -831,8 +904,11 @@ export class OneInchZapProvider implements ITransactProvider {
     const wnative = selectChainWrappedNativeToken(state, vault.chainId);
     const tokens = vault.assetIds.map(id => selectTokenById(state, vault.chainId, id));
     const lpTokens = tokensToLp(tokens, wnative);
-    const lpTokenIds = lpTokens.map(token => token.id);
+    if (!this.tokensHavePrices(lpTokens, state)) {
+      return null;
+    }
 
+    const lpTokenIds = lpTokens.map(token => token.id);
     const blockedToken = zap.blockedTokens.find(id => lpTokenIds.includes(id));
     if (blockedToken !== undefined) {
       return null;
@@ -847,7 +923,7 @@ export class OneInchZapProvider implements ITransactProvider {
     const lpWithdrawTokens = tokensToZapWithdraw(lpTokens, wnative, native);
     const oneInchZapTokens = zap.withdrawToTokens
       .map(tokenId => selectTokenById(state, vault.chainId, tokenId))
-      .filter(token => !!token && !isTokenEqual(token, depositToken));
+      .filter(token => this.isDifferentTokenWithPrice(token, depositToken, state));
     const zapTokens = uniqBy(lpWithdrawTokens.concat(oneInchZapTokens), token => token.id);
 
     if (!zapTokens || zapTokens.length === 0) {
@@ -960,7 +1036,7 @@ export class OneInchZapProvider implements ITransactProvider {
       throw new Error(`Quote returned zero ${swapTokenOut.symbol}`);
     }
 
-    const priceImpact = await this.getPriceImpactFromApi(
+    const priceImpact = await this.getPriceImpact(
       api,
       state,
       wnative,
@@ -1054,7 +1130,7 @@ export class OneInchZapProvider implements ITransactProvider {
               fromAmount: fromWei(swapAmountsInWei[i], swapTokensIn[i].decimals),
               toToken: swapTokenOut,
               toAmount: fromWei(amountOutWei, swapTokenOut.decimals),
-              priceImpact: await this.getPriceImpactFromApi(
+              priceImpact: await this.getPriceImpact(
                 api,
                 state,
                 wnative,

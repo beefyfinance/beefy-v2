@@ -1,6 +1,15 @@
 import { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
+  assetsContainer: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    marginTop: '2px',
+    rowGap: '2px',
+    '& div:last-child': {
+      borderRadius: '0px 0px 8px 8px',
+    },
+  },
   filter: {
     display: 'grid',
     padding: '16px 24px',
@@ -16,14 +25,11 @@ export const styles = (theme: Theme) => ({
     },
   },
   assetTypes: {
-    backgroundColor: 'rgba(92, 112, 214, 0.4)',
-    padding: '16px 24px',
+    backgroundColor: '#1B1E31',
+    padding: '8px 16px',
     ...theme.typography['subline-sm'],
-    color: '#ADB8EB',
+    color: theme.palette.text.disabled,
     fontWeight: 700,
-    [theme.breakpoints.down('md')]: {
-      padding: '16px',
-    },
   },
   sortColumn: {
     justifyContent: 'flex-start',

@@ -3,7 +3,7 @@ import { ChainEntity } from '../../entities/chain';
 import { find, sample, uniq } from 'lodash';
 import { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types';
 import { maybeHexToNumber } from '../../../../helpers/format';
-import { hexToNumber, isHexStrict, numberToHex } from 'web3-utils';
+import { isHexStrict, numberToHex } from 'web3-utils';
 import Onboard, { OnboardAPI } from '@web3-onboard/core';
 import createInjectedWallets from '@web3-onboard/injected-wallets';
 import standardInjectedWallets from '@web3-onboard/injected-wallets/dist/wallets';
@@ -41,32 +41,12 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       createWalletConnectModule(),
       createCoinbaseWalletModule(),
       WalletConnectionApi.createCDCWalletModule(),
-      WalletConnectionApi.createCloverWalletModule(),
     ];
   }
 
   private static createInjectedWalletsModule() {
     return createInjectedWallets({
       custom: customInjectedWallets,
-    });
-  }
-
-  private static createCloverWalletModule(): WalletInit {
-    return () => ({
-      label: 'Clover',
-      getIcon: async () => (await import(`../../../../images/wallets/clover.png`)).default,
-      getInterface: async ({ chains }) => {
-        const { CloverConnector } = await import('@clover-network/clover-connector');
-
-        const connector = new CloverConnector({
-          supportedChainIds: chains.map(chain => hexToNumber(chain.id)),
-        });
-
-        const { provider } = await connector.activate();
-        return {
-          provider: provider,
-        };
-      },
     });
   }
 
@@ -132,6 +112,14 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   private createOnboard() {
     const onboard = Onboard({
       wallets: this.getOnboardWalletInitializers(),
+      theme: {
+        '--w3o-background-color': '#1A1D26',
+        '--w3o-foreground-color': '#242835',
+        '--w3o-text-color': '#EFF1FC',
+        '--w3o-border-color': 'transparent',
+        '--w3o-action-color': '#59A662',
+        '--w3o-border-radius': '8px',
+      },
       appMetadata: {
         name: 'Beefy Finance',
         icon: require(`../../../../images/bifi-logos/header-logo-notext.svg`).default,
@@ -150,11 +138,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       })),
       accountCenter: {
         desktop: {
-          containerElement: 'body',
           enabled: false,
         },
         mobile: {
-          containerElement: 'body',
           enabled: false,
         },
       },

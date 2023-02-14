@@ -1,5 +1,56 @@
 [
   {
+    "id": "kyber-arbitrum-usdc-mai",
+    "name": "MAI-USDC LP",
+    "token": "MAI-USDC arbkLP",
+    "tokenAddress": "0x6A4D5F8385Ff6E7fC4EBf6F726e12A958dAA1cba",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kyber",
+    "earnedToken": "mooKyberArbMAI-USDC",
+    "earnedTokenAddress": "0x6489b78bC1B33A0cC0f6411AcD3C98175a3A41d3",
+    "earnContractAddress": "0x6489b78bC1B33A0cC0f6411AcD3C98175a3A41d3",
+    "oracle": "lps",
+    "oracleId": "kyber-arbitrum-usdc-mai",
+    "status": "active",
+    "platformId": "kyber",
+    "assets": ["MAI", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://kyberswap.com/swap/arbitrum",
+    "addLiquidityUrl": "https://kyberswap.com/add/0x7F5c764cBc14f9669B88837ca1490cCa17c31607/0xdFA46478F9e5EA86d57387849598dbFB2e964b02/0xc2995a065106b5c5c738b2320387460ebd12c12d",
+    "removeLiquidityUrl": "https://kyberswap.com/remove/0x7F5c764cBc14f9669B88837ca1490cCa17c31607/0xdFA46478F9e5EA86d57387849598dbFB2e964b02/0xc2995a065106b5c5c738b2320387460ebd12c12d",
+    "network": "arbitrum",
+    "createdAt": 1675790593
+  },
+  {
+    "id": "gns-arb-gns",
+    "name": "GNS",
+    "token": "GNS",
+    "tokenAddress": "0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gains",
+    "earnedToken": "mooGnsGNS",
+    "earnedTokenAddress": "0x88942cCd34cc4523e2F698DDCE9BB3eb908CC974",
+    "earnContractAddress": "0x88942cCd34cc4523e2F698DDCE9BB3eb908CC974",
+    "oracle": "tokens",
+    "oracleId": "GNS",
+    "status": "active",
+    "platformId": "gains",
+    "assets": ["GNS"],
+    "strategyTypeId": "single",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "buyTokenUrl": "https://app.1inch.io/#/42161/simple/swap/USDC/0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
+    "network": "arbitrum",
+    "createdAt": 1675436269
+  },
+  {
     "id": "balancer-wsteth-eth-v2",
     "name": "wstETH-ETH V2",
     "token": "wstETH-ETH V2",
@@ -14,7 +65,6 @@
     "status": "active",
     "platformId": "balancer",
     "assets": ["wstETH", "ETH"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -23,7 +73,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316",
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/invest",
+    "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/withdraw",
     "network": "arbitrum",
     "createdAt": 1673731740
   },
@@ -42,7 +94,6 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["FRAX", "USDC"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -51,7 +102,9 @@
       "PARTIAL_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-41/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-41/withdraw",
     "network": "arbitrum",
     "createdAt": 1669279735
   },
@@ -65,14 +118,11 @@
     "earnedTokenAddress": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
     "earnedTokenDecimals": 18,
     "earnContractAddress": "0x48F4634c8383aF01BF71AefBC125eb582eb3C74D",
-    "isGovVault": true,
     "oracle": "tokens",
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
-    "excluded": "arbi-bifi-maxi",
     "assets": ["BIFI"],
-    "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -81,9 +131,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "single",
+    "excluded": "arbi-bifi-maxi",
+    "isGovVault": true,
     "callFee": 0.5,
-    "createdAt": 1623706144,
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "createdAt": 1623706144
   },
   {
     "id": "swapfish-ageur-usdc",
@@ -100,7 +153,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["agEUR", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -110,8 +162,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0xFA5Ed56A203466CbBC2430a43c66b9D8723528E7/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xFA5Ed56A203466CbBC2430a43c66b9D8723528E7&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "addLiquidityUrl": "https://swapfish.fi/add/0xFA5Ed56A203466CbBC2430a43c66b9D8723528E7/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0xFA5Ed56A203466CbBC2430a43c66b9D8723528E7/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "createdAt": 1674210748
   },
@@ -130,7 +184,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["TUSD", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -139,8 +192,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0x4D15a3A2286D883AF0AA1B3f21367843FAc63E07/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x4D15a3A2286D883AF0AA1B3f21367843FAc63E07&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "addLiquidityUrl": "https://swapfish.fi/add/0x4D15a3A2286D883AF0AA1B3f21367843FAc63E07/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0x4D15a3A2286D883AF0AA1B3f21367843FAc63E07/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "createdAt": 1674210748
   },
@@ -159,7 +214,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["USDD", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -169,8 +223,10 @@
       "CONTRACTS_VERIFIED",
       "ALGO_STABLE"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0x680447595e8b7b3Aa1B43beB9f6098C79ac2Ab3f/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x680447595e8b7b3Aa1B43beB9f6098C79ac2Ab3f&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "addLiquidityUrl": "https://swapfish.fi/add/0x680447595e8b7b3Aa1B43beB9f6098C79ac2Ab3f/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0x680447595e8b7b3Aa1B43beB9f6098C79ac2Ab3f/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "createdAt": 1674210748
   },
@@ -190,7 +246,6 @@
     "retireReason": "rewards",
     "platformId": "swapfish",
     "assets": ["MAI", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -200,8 +255,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0x3F56e0c36d275367b8C502090EDF38289b3dEa0d/ETH",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x3F56e0c36d275367b8C502090EDF38289b3dEa0d&outputCurrency=ETH",
+    "addLiquidityUrl": "https://swapfish.fi/add/0x3F56e0c36d275367b8C502090EDF38289b3dEa0d/ETH",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0x3F56e0c36d275367b8C502090EDF38289b3dEa0d/ETH",
     "network": "arbitrum",
     "createdAt": 1670618636
   },
@@ -220,7 +277,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["MAI", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -230,8 +286,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0x3F56e0c36d275367b8C502090EDF38289b3dEa0d/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x3F56e0c36d275367b8C502090EDF38289b3dEa0d&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "addLiquidityUrl": "https://swapfish.fi/add/0x3F56e0c36d275367b8C502090EDF38289b3dEa0d/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0x3F56e0c36d275367b8C502090EDF38289b3dEa0d/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "createdAt": 1670618636
   },
@@ -251,7 +309,6 @@
     "retireReason": "rewards",
     "platformId": "swapfish",
     "assets": ["VST", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -261,8 +318,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0x64343594Ab9b56e99087BfA6F2335Db24c2d1F17/ETH",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x64343594Ab9b56e99087BfA6F2335Db24c2d1F17&outputCurrency=ETH",
+    "addLiquidityUrl": "https://swapfish.fi/add/0x64343594Ab9b56e99087BfA6F2335Db24c2d1F17/ETH",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0x64343594Ab9b56e99087BfA6F2335Db24c2d1F17/ETH",
     "network": "arbitrum",
     "createdAt": 1670618636
   },
@@ -281,7 +340,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["VST", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -291,8 +349,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0x64343594Ab9b56e99087BfA6F2335Db24c2d1F17/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x64343594Ab9b56e99087BfA6F2335Db24c2d1F17&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "addLiquidityUrl": "https://swapfish.fi/add/0x64343594Ab9b56e99087BfA6F2335Db24c2d1F17/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0x64343594Ab9b56e99087BfA6F2335Db24c2d1F17/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "createdAt": 1670618636
   },
@@ -311,7 +371,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["USX", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -321,8 +380,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0x641441c631e2F909700d2f41FD87F0aA6A6b4EDb/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x641441c631e2F909700d2f41FD87F0aA6A6b4EDb&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "addLiquidityUrl": "https://swapfish.fi/add/0x641441c631e2F909700d2f41FD87F0aA6A6b4EDb/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0x641441c631e2F909700d2f41FD87F0aA6A6b4EDb/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "createdAt": 1670618636
   },
@@ -341,7 +402,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["FISH", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -350,8 +410,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/ETH/0xb348B87b23D5977E2948E6f36ca07E1EC94d7328",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=ETH&outputCurrency=0xb348B87b23D5977E2948E6f36ca07E1EC94d7328",
+    "addLiquidityUrl": "https://swapfish.fi/add/ETH/0xb348B87b23D5977E2948E6f36ca07E1EC94d7328",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/ETH/0xb348B87b23D5977E2948E6f36ca07E1EC94d7328",
     "network": "arbitrum",
     "createdAt": 1670457671
   },
@@ -370,7 +432,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["FRAX", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -379,8 +440,10 @@
       "CONTRACTS_VERIFIED",
       "PARTIAL_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "addLiquidityUrl": "https://swapfish.fi/add/0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "createdAt": 1670443644
   },
@@ -399,7 +462,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["MIM", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -408,8 +470,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "addLiquidityUrl": "https://swapfish.fi/add/0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "createdAt": 1670443644
   },
@@ -428,7 +492,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["WBTC", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -437,8 +500,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f/ETH",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f&outputCurrency=ETH",
+    "addLiquidityUrl": "https://swapfish.fi/add/0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f/ETH",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f/ETH",
     "network": "arbitrum",
     "createdAt": 1670443644
   },
@@ -457,7 +522,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["ETH", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -466,8 +530,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/ETH/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=ETH&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "addLiquidityUrl": "https://swapfish.fi/add/ETH/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/ETH/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "createdAt": 1670443644
   },
@@ -487,7 +553,6 @@
     "retireReason": "rewards",
     "platformId": "swapfish",
     "assets": ["GMX", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -496,8 +561,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "addLiquidityUrl": "https://swapfish.fi/add/0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "createdAt": 1670446708
   },
@@ -516,7 +583,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["BIFI", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -525,8 +591,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/ETH/0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=ETH&outputCurrency=0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
+    "addLiquidityUrl": "https://swapfish.fi/add/ETH/0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/ETH/0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
     "network": "arbitrum",
     "createdAt": 1670249514
   },
@@ -544,8 +612,8 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["FISH"],
-    "strategyTypeId": "single",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&outputCurrency=0xb348B87b23D5977E2948E6f36ca07E1EC94d7328",
     "network": "arbitrum",
     "createdAt": 1670746949
@@ -565,7 +633,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["FISH", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -574,8 +641,10 @@
       "CONTRACTS_VERIFIED",
       "MCAP_SMALL"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0xb348B87b23D5977E2948E6f36ca07E1EC94d7328/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xb348B87b23D5977E2948E6f36ca07E1EC94d7328&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "addLiquidityUrl": "https://swapfish.fi/add/0xb348B87b23D5977E2948E6f36ca07E1EC94d7328/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0xb348B87b23D5977E2948E6f36ca07E1EC94d7328/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "createdAt": 1670231942
   },
@@ -594,7 +663,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["wstETH", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -603,8 +671,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0x5979D7b546E38E414F7E9822514be443A4800529/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x5979D7b546E38E414F7E9822514be443A4800529&outputCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "addLiquidityUrl": "https://swapfish.fi/add/0x5979D7b546E38E414F7E9822514be443A4800529/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0x5979D7b546E38E414F7E9822514be443A4800529/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
     "network": "arbitrum",
     "createdAt": 1670231942
   },
@@ -623,7 +693,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["USDT", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -632,8 +701,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "addLiquidityUrl": "https://swapfish.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
     "network": "arbitrum",
     "createdAt": 1670231942
   },
@@ -652,7 +723,6 @@
     "status": "active",
     "platformId": "swapfish",
     "assets": ["DAI", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -661,8 +731,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://swapfish.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "addLiquidityUrl": "https://swapfish.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+    "removeLiquidityUrl": "https://swapfish.fi/remove/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
     "network": "arbitrum",
     "createdAt": 1670116603
   },
@@ -681,7 +753,6 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["wstETH", "ETH"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -690,7 +761,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/wsteth/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/wsteth/withdraw",
     "network": "arbitrum",
     "createdAt": 1668590265
   },
@@ -709,7 +782,6 @@
     "status": "active",
     "platformId": "gmx",
     "assets": ["WETH", "WBTC", "LINK", "UNI", "USDC", "USDT", "DAI", "FRAX"],
-    "strategyTypeId": "glp-gmx",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -718,7 +790,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "glp-gmx",
     "addLiquidityUrl": "https://app.gmx.io/#/buy_glp/?ref=beefy",
+    "removeLiquidityUrl": "https://app.gmx.io/#/buy_glp/#redeem",
     "network": "arbitrum",
     "createdAt": 1666793250
   },
@@ -737,7 +811,6 @@
     "status": "active",
     "platformId": "gmx",
     "assets": ["GMX"],
-    "strategyTypeId": "glp-gmx",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -746,6 +819,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "glp-gmx",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/GMX",
     "network": "arbitrum",
     "createdAt": 1666793248
@@ -760,11 +834,11 @@
     "earnedToken": "mooStargateETH",
     "earnedTokenAddress": "0x562Ae83d17590d9681D5445EcfC0F56517e49f24",
     "earnContractAddress": "0x562Ae83d17590d9681D5445EcfC0F56517e49f24",
-    "oracle": "tokens",
-    "oracleId": "sarETH",
+    "oracle": "lps",
+    "oracleId": "stargate-arb-eth",
     "status": "active",
     "platformId": "stargate",
-    "assets": ["sarETH"],
+    "assets": ["ETH"],
     "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -774,8 +848,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://stargate.finance/pool/eth-arbitrum",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/USDC/ETH",
+    "addLiquidityUrl": "https://stargate.finance/pool/eth-arbitrum/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/eth-arbitrum/remove",
     "network": "arbitrum",
     "createdAt": 1663851113
   },
@@ -795,7 +870,6 @@
     "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["wstETH", "ETH"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -804,7 +878,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xfb5e6d0c1dfed2ba000fbc040ab8df3615ac329c000000000000000000000159",
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xfb5e6d0c1dfed2ba000fbc040ab8df3615ac329c000000000000000000000159/invest",
+    "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xfb5e6d0c1dfed2ba000fbc040ab8df3615ac329c000000000000000000000159/withdraw",
     "network": "arbitrum",
     "createdAt": 1665023340
   },
@@ -823,7 +899,6 @@
     "status": "active",
     "platformId": "balancer",
     "assets": ["wstETH", "USDC"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -832,7 +907,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x178e029173417b1f9c8bc16dcec6f697bc323746000200000000000000000158",
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x178e029173417b1f9c8bc16dcec6f697bc323746000200000000000000000158/invest",
+    "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x178e029173417b1f9c8bc16dcec6f697bc323746000200000000000000000158/withdraw",
     "network": "arbitrum",
     "createdAt": 1665023340
   },
@@ -851,7 +928,6 @@
     "status": "active",
     "platformId": "balancer",
     "assets": ["MAGIC", "USDC"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -860,7 +936,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba",
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/invest",
+    "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/withdraw",
     "network": "arbitrum",
     "createdAt": 1665023339
   },
@@ -874,12 +952,11 @@
     "earnedToken": "mooStargateUSDC",
     "earnedTokenAddress": "0xD496eA90a454eA49e30A8fD9E053C186D4FC897D",
     "earnContractAddress": "0xD496eA90a454eA49e30A8fD9E053C186D4FC897D",
-    "oracle": "tokens",
-    "oracleId": "sarUSDC",
+    "oracle": "lps",
+    "oracleId": "stargate-arb-usdc",
     "status": "active",
     "platformId": "stargate",
-    "assets": ["sarUSDC"],
-    "strategyTypeId": "single-lp",
+    "assets": ["USDC"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -888,8 +965,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://stargate.finance/pool/USDC-ARBITRUM",
+    "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/USDC",
+    "addLiquidityUrl": "https://stargate.finance/pool/USDC-ARBITRUM/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/USDC-ARBITRUM/remove",
     "network": "arbitrum",
     "createdAt": 1663851112
   },
@@ -903,12 +982,11 @@
     "earnedToken": "mooStargateUSDT",
     "earnedTokenAddress": "0xc7024B02a3C3893C482F5DD03193CFD1DBEC604f",
     "earnContractAddress": "0xc7024B02a3C3893C482F5DD03193CFD1DBEC604f",
-    "oracle": "tokens",
-    "oracleId": "sarUSDT",
+    "oracle": "lps",
+    "oracleId": "stargate-arb-usdt",
     "status": "active",
     "platformId": "stargate",
-    "assets": ["sarUSDT"],
-    "strategyTypeId": "single-lp",
+    "assets": ["USDT"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -917,8 +995,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://stargate.finance/pool/USDT-ARBITRUM",
+    "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/USDT",
+    "addLiquidityUrl": "https://stargate.finance/pool/USDT-ARBITRUM/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/USDT-ARBITRUM/remove",
     "network": "arbitrum",
     "createdAt": 1663851111
   },
@@ -928,7 +1008,7 @@
     "token": "RDNT-ETH LP",
     "tokenAddress": "0x24704aFF49645D32655A76Df6d407E02d146dAfC",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "earnedToken": "mooRadiantRDNT-ETH",
     "earnedTokenAddress": "0xC14844Ac5C0e7e96f678c75308d3Fde1Fa36e22f",
     "earnContractAddress": "0xC14844Ac5C0e7e96f678c75308d3Fde1Fa36e22f",
@@ -937,7 +1017,6 @@
     "status": "active",
     "platformId": "radiant",
     "assets": ["RDNT", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -946,8 +1025,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/legacy/add/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1/0x0C4681e6C0235179ec3D4F4fc4DF3d14FDD96017?chainId=42161",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x0C4681e6C0235179ec3D4F4fc4DF3d14FDD96017&chainId=42161",
+    "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0x24704aff49645d32655a76df6d407e02d146dafc/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0x24704aff49645d32655a76df6d407e02d146dafc/remove",
     "network": "arbitrum",
     "createdAt": 1658991540
   },
@@ -957,16 +1038,16 @@
     "token": "sETH-ETH LP",
     "tokenAddress": "0x89A3A5b03f705A10443fB0A93f19F6cBB7ca191A",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "earnedToken": "mooPaeWETHsETH",
     "earnedTokenAddress": "0xB8ff233d024277b0E188A478C18e9263330A1B51",
     "earnContractAddress": "0xB8ff233d024277b0E188A478C18e9263330A1B51",
     "oracle": "lps",
     "oracleId": "ripae-seth-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "ripae",
     "assets": ["psETH", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -975,8 +1056,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/ETH/0x83EA9d8748A7AD9f2F12B2A2F7a45CE47A862ac9",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x83EA9d8748A7AD9f2F12B2A2F7a45CE47A862ac9&chainId=42161",
+    "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0x89a3a5b03f705a10443fb0a93f19f6cbb7ca191a/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0x89a3a5b03f705a10443fb0a93f19f6cbb7ca191a/remove",
     "network": "arbitrum",
     "createdAt": 1658444532
   },
@@ -986,7 +1069,7 @@
     "token": "pETH-ETH LP",
     "tokenAddress": "0xB54B196E9FeCcF364c2281da1E11BC498cB5c1C1",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "earnedToken": "mooPaeWETHpETH",
     "earnedTokenAddress": "0x0B7EA1b9fBC9860f4A508E9d0Dde04f2552d2ADE",
     "earnContractAddress": "0x0B7EA1b9fBC9860f4A508E9d0Dde04f2552d2ADE",
@@ -995,7 +1078,6 @@
     "status": "active",
     "platformId": "ripae",
     "assets": ["pETH", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1005,8 +1087,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/ETH/0xA0dF47432d9d88bcc040E9ee66dDC7E17A882715",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0xA0dF47432d9d88bcc040E9ee66dDC7E17A882715&chainId=42161",
+    "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0xb54b196e9feccf364c2281da1e11bc498cb5c1c1/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0xb54b196e9feccf364c2281da1e11bc498cb5c1c1/remove",
     "network": "arbitrum",
     "createdAt": 1658431125
   },
@@ -1025,7 +1109,6 @@
     "status": "active",
     "platformId": "balancer",
     "assets": ["WBTC", "ETH", "USDC"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1034,7 +1117,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x64541216bafffeec8ea535bb71fbc927831d0595000100000000000000000002",
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x64541216bafffeec8ea535bb71fbc927831d0595000100000000000000000002/invest",
+    "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x64541216bafffeec8ea535bb71fbc927831d0595000100000000000000000002/withdraw",
     "network": "arbitrum",
     "createdAt": 1656454475
   },
@@ -1053,7 +1138,6 @@
     "status": "active",
     "platformId": "mim",
     "assets": ["MIM", "USDC", "USDT"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1063,7 +1147,9 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-0/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-0/withdraw",
     "network": "arbitrum",
     "createdAt": 1633276273
   },
@@ -1073,16 +1159,16 @@
     "token": "SPELL-ETH LP",
     "tokenAddress": "0x8f93Eaae544e8f5EB077A1e09C1554067d9e2CA8",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "earnedToken": "mooSushiSPELL-WETH",
     "earnedTokenAddress": "0x149f3dDeB5FF9bE7342D07C35D6dA19Df3F790af",
     "earnContractAddress": "0x149f3dDeB5FF9bE7342D07C35D6dA19Df3F790af",
     "oracle": "lps",
     "oracleId": "sushi-arb-spell-weth",
-    "status": "active",
-    "platformId": "sushiswap",
+    "status": "eol",
+    "retireReason": "rewards",
+    "platformId": "sushi",
     "assets": ["SPELL", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1091,8 +1177,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x3E6648C5a70A150A88bCE65F4aD4d506Fe15d2AF/0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x3E6648C5a70A150A88bCE65F4aD4d506Fe15d2AF&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0x8f93eaae544e8f5eb077a1e09c1554067d9e2ca8/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0x8f93eaae544e8f5eb077a1e09c1554067d9e2ca8/remove",
     "network": "arbitrum",
     "createdAt": 1632254179
   },
@@ -1102,16 +1190,16 @@
     "token": "MIM-ETH LP",
     "tokenAddress": "0xb6DD51D5425861C808Fd60827Ab6CFBfFE604959",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "earnedToken": "mooSushiMIM-WETH",
     "earnedTokenAddress": "0x80514CfB7cb438F1f997Ab62fFD1314c1a1c0f12",
     "earnContractAddress": "0x80514CfB7cb438F1f997Ab62fFD1314c1a1c0f12",
     "oracle": "lps",
     "oracleId": "sushi-arb-weth-mim",
-    "status": "active",
-    "platformId": "sushiswap",
+    "status": "eol",
+    "retireReason": "rewards",
+    "platformId": "sushi",
     "assets": ["MIM", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1121,8 +1209,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A/0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0xb6dd51d5425861c808fd60827ab6cfbffe604959/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0xb6dd51d5425861c808fd60827ab6cfbffe604959/remove",
     "network": "arbitrum",
     "createdAt": 1632254301
   },
@@ -1132,16 +1222,15 @@
     "token": "USDC-ETH LP",
     "tokenAddress": "0x905dfCD5649217c42684f23958568e533C711Aa3",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "earnedToken": "mooSushiWETH-USDC",
     "earnedTokenAddress": "0x07Db98358D58Ba9bE90cd0A18cd86AF807ac3B4E",
     "earnContractAddress": "0x07Db98358D58Ba9bE90cd0A18cd86AF807ac3B4E",
     "oracle": "lps",
     "oracleId": "sushi-arb-eth-usdc",
     "status": "active",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["USDC", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1150,8 +1239,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0x905dfcd5649217c42684f23958568e533c711aa3/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0x905dfcd5649217c42684f23958568e533c711aa3/remove",
     "network": "arbitrum",
     "createdAt": 1632243592
   },
@@ -1170,7 +1261,6 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["USDT", "WBTC", "ETH"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1179,7 +1269,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/tricrypto/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/tricrypto/withdraw",
     "network": "arbitrum",
     "createdAt": 1669709222
   },
@@ -1198,7 +1290,6 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["USDT", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1207,7 +1298,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/2pool/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/2pool/withdraw",
     "network": "arbitrum",
     "createdAt": 1669709222
   },
@@ -1227,7 +1320,6 @@
     "retireReason": "rewards",
     "platformId": "curve",
     "assets": ["WBTC", "renBTC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1236,7 +1328,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "addLiquidityUrl": "https://arbitrum.curve.fi/ren/deposit",
+    "removeLiquidityUrl": "https://arbitrum.curve.fi/ren/withdraw",
     "network": "arbitrum",
     "createdAt": 1652662923
   },
@@ -1246,16 +1340,15 @@
     "token": "WBTC-ETH LP",
     "tokenAddress": "0x515e252b2b5c22b4b2b6Df66c2eBeeA871AA4d69",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "earnedToken": "mooSushiWBTC-WETH",
     "earnedTokenAddress": "0xfcDD5a02C611ba6Fe2802f885281500EC95805d7",
     "earnContractAddress": "0xfcDD5a02C611ba6Fe2802f885281500EC95805d7",
     "oracle": "lps",
     "oracleId": "sushi-arb-wbtc-weth",
     "status": "active",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["WBTC", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1264,8 +1357,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f/0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0x515e252b2b5c22b4b2b6df66c2ebeea871aa4d69/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0x515e252b2b5c22b4b2b6df66c2ebeea871aa4d69/remove",
     "network": "arbitrum",
     "createdAt": 1632169397
   },
@@ -1275,16 +1370,15 @@
     "token": "SUSHI-ETH LP",
     "tokenAddress": "0x3221022e37029923aCe4235D812273C5A42C322d",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "earnedToken": "mooSushiSUSHI-WETH",
     "earnedTokenAddress": "0xBa5041B1c06e8c9cFb5dDB4b82BdC52E41EA5FC5",
     "earnContractAddress": "0xBa5041B1c06e8c9cFb5dDB4b82BdC52E41EA5FC5",
     "oracle": "lps",
     "oracleId": "sushi-arb-sushi-eth",
     "status": "active",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["SUSHI", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1293,8 +1387,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0xd4d42f0b6def4ce0383636770ef773390d85c61a/0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0xd4d42f0b6def4ce0383636770ef773390d85c61af&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0x3221022e37029923ace4235d812273c5a42c322d/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0x3221022e37029923ace4235d812273c5a42c322d/remove",
     "network": "arbitrum",
     "createdAt": 1632173780
   },
@@ -1304,16 +1400,15 @@
     "token": "USDT-ETH LP",
     "tokenAddress": "0xCB0E5bFa72bBb4d16AB5aA0c60601c438F04b4ad",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "earnedToken": "mooSushiUSDT-WETH",
     "earnedTokenAddress": "0xE99c8A590c98c7Ae9FB3B7ecbC115D2eBD533B50",
     "earnContractAddress": "0xE99c8A590c98c7Ae9FB3B7ecbC115D2eBD533B50",
     "oracle": "lps",
     "oracleId": "sushi-arb-weth-usdt",
     "status": "active",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["USDT", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1322,8 +1417,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9/0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0xcb0e5bfa72bbb4d16ab5aa0c60601c438f04b4ad/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0xcb0e5bfa72bbb4d16ab5aa0c60601c438f04b4ad/remove",
     "network": "arbitrum",
     "createdAt": 1632173316
   },
@@ -1341,7 +1438,6 @@
     "status": "active",
     "platformId": "beefy",
     "assets": ["BIFI"],
-    "strategyTypeId": "maxi",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1350,6 +1446,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "maxi",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
     "network": "arbitrum",
     "createdAt": 1636764972
@@ -1360,16 +1457,15 @@
     "token": "MAGIC-ETH LP",
     "tokenAddress": "0xB7E50106A5bd3Cf21AF210A755F9C8740890A8c9",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "earnedToken": "mooSushiMAGIC-ETH",
     "earnedTokenAddress": "0x8cbaAC87FDD9Bb6C3FdB5b3C870b2443D0284fa6",
     "earnContractAddress": "0x8cbaAC87FDD9Bb6C3FdB5b3C870b2443D0284fa6",
     "oracle": "lps",
     "oracleId": "sushi-arb-magic-weth",
     "status": "active",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["MAGIC", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1378,8 +1474,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1/0x539bdE0d7Dbd336b79148AA742883198BBF60342",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&outputCurrency=0x539bdE0d7Dbd336b79148AA742883198BBF60342",
+    "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0xb7e50106a5bd3cf21af210a755f9c8740890a8c9/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0xb7e50106a5bd3cf21af210a755f9c8740890a8c9/remove",
     "network": "arbitrum",
     "createdAt": 1639146591
   },
@@ -1389,16 +1487,15 @@
     "token": "gOHM-ETH LP",
     "tokenAddress": "0xaa5bD49f2162ffdC15634c87A77AC67bD51C6a6D",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "earnedToken": "mooSushigOHM-ETH",
     "earnedTokenAddress": "0xD295d690b9BF17bd217B94BC50C12729762C1862",
     "earnContractAddress": "0xD295d690b9BF17bd217B94BC50C12729762C1862",
     "oracle": "lps",
     "oracleId": "sushi-arb-weth-gohm",
     "status": "active",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["gOHM", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1407,8 +1504,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1/0x8D9bA570D6cb60C7e3e0F31343Efe75AB8E65FB1",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&outputCurrency=0x8D9bA570D6cb60C7e3e0F31343Efe75AB8E65FB1",
+    "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0xaa5bd49f2162ffdc15634c87a77ac67bd51c6a6d/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0xaa5bd49f2162ffdc15634c87a77ac67bd51c6a6d/remove",
     "network": "arbitrum",
     "createdAt": 1639146342
   },
@@ -1418,16 +1517,16 @@
     "token": "LINK-ETH LP",
     "tokenAddress": "0x7050A8908E2a60899D8788015148241f0993a3FD",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "earnedToken": "mooSushiWETH-LINK",
     "earnedTokenAddress": "0xf785Ef43A082C85ABbe19CA888f91748AA604ac5",
     "earnContractAddress": "0xf785Ef43A082C85ABbe19CA888f91748AA604ac5",
     "oracle": "lps",
     "oracleId": "sushi-arb-weth-link",
     "status": "eol",
-    "platformId": "sushiswap",
+    "retireReason": "rewards",
+    "platformId": "sushi",
     "assets": ["LINK", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1436,10 +1535,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.sushi.com/add/0xf97f4df75117a78c1A5a0DBb814Af92458539FB4/0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0xf97f4df75117a78c1A5a0DBb814Af92458539FB4&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0x7050a8908e2a60899d8788015148241f0993a3fd/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0x7050a8908e2a60899d8788015148241f0993a3fd/remove",
     "network": "arbitrum",
-    "createdAt": 1632249714,
-    "retireReason": "rewards"
+    "createdAt": 1632249714
   }
 ]

@@ -3,19 +3,17 @@
     "id": "aurora-bifi-gov",
     "name": "BIFI Earnings Pool",
     "token": "BIFI",
-    "tokenDecimals": 18,
     "tokenAddress": "0x218c3c3D49d0E7B37aff0D8bB079de36Ae61A4c0",
+    "tokenDecimals": 18,
     "earnedToken": "WETH",
-    "earnedTokenDecimals": 18,
     "earnedTokenAddress": "0xc9bdeed33cd01541e1eed10f90519d2c06fe3feb",
+    "earnedTokenDecimals": 18,
     "earnContractAddress": "0xE6ab45f5e93FA377D0c4cC097187Ab7256c2AEBf",
-    "isGovVault": true,
     "oracle": "tokens",
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
     "assets": ["BIFI"],
-    "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -24,9 +22,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "single",
+    "isGovVault": true,
     "callFee": 0.5,
-    "createdAt": 1623706144,
-    "network": "aurora"
+    "network": "aurora",
+    "createdAt": 1623706144
   },
   {
     "id": "trisolaris-near-tri",
@@ -44,7 +44,6 @@
     "retireReason": "tvl",
     "platformId": "trisolaris",
     "assets": ["NEAR", "TRI"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -53,8 +52,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
     "network": "aurora",
     "createdAt": 1643742934
   },
@@ -73,7 +74,6 @@
     "status": "active",
     "platformId": "trisolaris",
     "assets": ["NEAR", "WBTC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -82,8 +82,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xF4eB217Ba2454613b15dBdea6e5f22276410e89e",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xF4eB217Ba2454613b15dBdea6e5f22276410e89e",
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xF4eB217Ba2454613b15dBdea6e5f22276410e89e",
     "network": "aurora",
     "createdAt": 1643739785
   },
@@ -102,7 +104,6 @@
     "status": "active",
     "platformId": "trisolaris",
     "assets": ["USDC", "USDT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -111,8 +112,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0x4988a896b1227218e4A686fdE5EabdcAbd91571f/0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0x4988a896b1227218e4A686fdE5EabdcAbd91571f/0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
     "network": "aurora",
     "createdAt": 1643737307
   },
@@ -131,7 +134,6 @@
     "status": "active",
     "platformId": "trisolaris",
     "assets": ["NEAR", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -140,8 +142,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB",
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB",
     "network": "aurora",
     "createdAt": 1643741153
   },
@@ -160,7 +164,6 @@
     "status": "active",
     "platformId": "trisolaris",
     "assets": ["AURORA", "TRI"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -169,8 +172,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
     "network": "aurora",
     "createdAt": 1643901440
   },
@@ -189,7 +194,6 @@
     "status": "active",
     "platformId": "trisolaris",
     "assets": ["AURORA", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -198,8 +202,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB",
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB",
     "network": "aurora",
     "createdAt": 1643890949
   },
@@ -218,7 +224,6 @@
     "retireReason": "rewards",
     "platformId": "solace",
     "assets": ["SOLACE"],
-    "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -227,6 +232,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "single",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40",
     "network": "aurora",
     "createdAt": 1644436457
@@ -245,7 +251,6 @@
     "status": "active",
     "platformId": "beefy",
     "assets": ["BIFI"],
-    "strategyTypeId": "maxi",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -254,9 +259,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "maxi",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x218c3c3D49d0E7B37aff0D8bB079de36Ae61A4c0",
-    "createdAt": 1644698869,
-    "network": "aurora"
+    "network": "aurora",
+    "createdAt": 1644698869
   },
   {
     "id": "tri-near-flx",
@@ -273,7 +279,6 @@
     "status": "active",
     "platformId": "trisolaris",
     "assets": ["FLX", "NEAR"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -282,10 +287,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xea62791aa682d455614eaA2A12Ba3d9A2fD197af",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xea62791aa682d455614eaA2A12Ba3d9A2fD197af",
-    "createdAt": 1644674036,
-    "network": "aurora"
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xea62791aa682d455614eaA2A12Ba3d9A2fD197af",
+    "network": "aurora",
+    "createdAt": 1644674036
   },
   {
     "id": "tri-ausdo-usdt",
@@ -303,7 +310,6 @@
     "retireReason": "rewards",
     "platformId": "trisolaris",
     "assets": ["aUSDO", "USDT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -312,10 +318,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x293074789b247cab05357b08052468B5d7A23c5a",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0x4988a896b1227218e4A686fdE5EabdcAbd91571f/0x293074789b247cab05357b08052468B5d7A23c5a",
-    "createdAt": 1647626968,
-    "network": "aurora"
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0x4988a896b1227218e4A686fdE5EabdcAbd91571f/0x293074789b247cab05357b08052468B5d7A23c5a",
+    "network": "aurora",
+    "createdAt": 1647626968
   },
   {
     "id": "tri-mecha-near-eol",
@@ -330,9 +338,9 @@
     "oracle": "lps",
     "oracleId": "tri-mecha-near",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "trisolaris",
     "assets": ["MECHA", "NEAR"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -341,11 +349,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xa33C3B53694419824722C10D99ad7cB16Ea62754",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xa33C3B53694419824722C10D99ad7cB16Ea62754",
-    "createdAt": 1644674242,
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xa33C3B53694419824722C10D99ad7cB16Ea62754",
     "network": "aurora",
-    "retireReason": "rewards"
+    "createdAt": 1644674242
   },
   {
     "id": "tri-avax-near-eol",
@@ -360,9 +369,9 @@
     "oracle": "lps",
     "oracleId": "tri-avax-near",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "trisolaris",
     "assets": ["AVAX", "NEAR"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -371,11 +380,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844",
-    "createdAt": 1644673733,
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844",
     "network": "aurora",
-    "retireReason": "rewards"
+    "createdAt": 1644673733
   },
   {
     "id": "rose-mai-3pool",
@@ -393,7 +403,6 @@
     "retireReason": "tvl",
     "platformId": "rose",
     "assets": ["MAI", "USDT", "USDC", "DAI"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -402,9 +411,11 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.rose.fi/#/farms/mai",
-    "createdAt": 1650375700,
-    "network": "aurora"
+    "removeLiquidityUrl": "https://app.rose.fi/#/pools/mai",
+    "network": "aurora",
+    "createdAt": 1650375700
   },
   {
     "id": "tri-atust-near-eol",
@@ -419,9 +430,9 @@
     "oracle": "lps",
     "oracleId": "tri-atust-near",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "trisolaris",
     "assets": ["UST", "NEAR"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -431,11 +442,12 @@
       "CONTRACTS_VERIFIED",
       "ALGO_STABLE"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x5ce9F0B6AFb36135b5ddBF11705cEB65E634A9dC",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x5ce9F0B6AFb36135b5ddBF11705cEB65E634A9dC",
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x5ce9F0B6AFb36135b5ddBF11705cEB65E634A9dC",
     "network": "aurora",
-    "createdAt": 1644000794,
-    "retireReason": "rewards"
+    "createdAt": 1644000794
   },
   {
     "id": "tri-near-atluna-eol",
@@ -450,9 +462,9 @@
     "oracle": "lps",
     "oracleId": "tri-near-atluna",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "trisolaris",
     "assets": ["LUNA", "NEAR"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -461,11 +473,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xC4bdd27c33ec7daa6fcfd8532ddB524Bf4038096",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xC4bdd27c33ec7daa6fcfd8532ddB524Bf4038096",
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xC4bdd27c33ec7daa6fcfd8532ddB524Bf4038096",
     "network": "aurora",
-    "createdAt": 1643993283,
-    "retireReason": "rewards"
+    "createdAt": 1643993283
   },
   {
     "id": "tri-bstn-near",
@@ -483,7 +496,6 @@
     "retireReason": "tvl",
     "platformId": "trisolaris",
     "assets": ["BSTN", "NEAR"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -492,10 +504,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x9f1F933C660a1DC856F0E0Fe058435879c5CCEf0",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0x9f1F933C660a1DC856F0E0Fe058435879c5CCEf0/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
-    "createdAt": 1650679529,
-    "network": "aurora"
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0x9f1F933C660a1DC856F0E0Fe058435879c5CCEf0/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
+    "network": "aurora",
+    "createdAt": 1650679529
   },
   {
     "id": "tri-linear-near",
@@ -513,7 +527,6 @@
     "retireReason": "rewards",
     "platformId": "trisolaris",
     "assets": ["LINEAR", "NEAR"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -522,10 +535,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x918dBe087040A41b786f0Da83190c293DAe24749",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0x918dBe087040A41b786f0Da83190c293DAe24749/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
-    "createdAt": 1651151106,
-    "network": "aurora"
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0x918dBe087040A41b786f0Da83190c293DAe24749/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
+    "network": "aurora",
+    "createdAt": 1651151106
   },
   {
     "id": "tri-stnear-near",
@@ -542,7 +557,6 @@
     "status": "active",
     "platformId": "trisolaris",
     "assets": ["STNEAR", "NEAR"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -551,10 +565,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x07F9F7f963C5cD2BBFFd30CcfB964Be114332E30",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0x07F9F7f963C5cD2BBFFd30CcfB964Be114332E30/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
-    "createdAt": 1645554735,
-    "network": "aurora"
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0x07F9F7f963C5cD2BBFFd30CcfB964Be114332E30/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
+    "network": "aurora",
+    "createdAt": 1645554735
   },
   {
     "id": "tri-aurora-near",
@@ -571,7 +587,6 @@
     "status": "active",
     "platformId": "trisolaris",
     "assets": ["AURORA", "NEAR"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -580,10 +595,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
-    "createdAt": 1651702395,
-    "network": "aurora"
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
+    "network": "aurora",
+    "createdAt": 1651702395
   },
   {
     "id": "tri-tri-usdt",
@@ -601,7 +618,6 @@
     "retireReason": "tvl",
     "platformId": "trisolaris",
     "assets": ["TRI", "USDT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -610,10 +626,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xFa94348467f64D5A457F75F8bc40495D33c65aBB/0x4988a896b1227218e4A686fdE5EabdcAbd91571f",
-    "createdAt": 1651846365,
-    "network": "aurora"
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xFa94348467f64D5A457F75F8bc40495D33c65aBB/0x4988a896b1227218e4A686fdE5EabdcAbd91571f",
+    "network": "aurora",
+    "createdAt": 1651846365
   },
   {
     "id": "rose-ust-3pool-eol",
@@ -628,14 +646,15 @@
     "oracle": "lps",
     "oracleId": "rose-ust-3pool",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "rose",
     "assets": ["atUST", "USDT", "USDC", "DAI"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED", "ALGO_STABLE"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.rose.fi/#/farms/ust",
-    "createdAt": 1649955343,
+    "removeLiquidityUrl": "https://app.rose.fi/#/pools/ust",
     "network": "aurora",
-    "retireReason": "rewards"
+    "createdAt": 1649955343
   },
   {
     "id": "tri-solace-near-eol",
@@ -650,9 +669,9 @@
     "oracle": "lps",
     "oracleId": "tri-solace-near",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "trisolaris",
     "assets": ["SOLACE", "NEAR"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -661,11 +680,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40",
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40",
     "network": "aurora",
-    "createdAt": 1644438518,
-    "retireReason": "rewards"
+    "createdAt": 1644438518
   },
   {
     "id": "trisolaris-usdt-near-eol",
@@ -680,9 +700,9 @@
     "oracle": "lps",
     "oracleId": "trisolaris-usdt-near",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "trisolaris",
     "assets": ["NEAR", "USDT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -691,11 +711,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x4988a896b1227218e4A686fdE5EabdcAbd91571f",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x4988a896b1227218e4A686fdE5EabdcAbd91571f",
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x4988a896b1227218e4A686fdE5EabdcAbd91571f",
     "network": "aurora",
-    "createdAt": 1643740691,
-    "retireReason": "rewards"
+    "createdAt": 1643740691
   },
   {
     "id": "trisolaris-usdc-near-eol",
@@ -710,9 +731,9 @@
     "oracle": "lps",
     "oracleId": "trisolaris-usdc-near",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "trisolaris",
     "assets": ["NEAR", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -721,11 +742,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
     "network": "aurora",
-    "createdAt": 1643740953,
-    "retireReason": "rewards"
+    "createdAt": 1643740953
   },
   {
     "id": "tri-3pool",
@@ -743,7 +765,6 @@
     "retireReason": "tvl",
     "platformId": "trisolaris",
     "assets": ["USN", "USDC", "USDT"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -753,8 +774,10 @@
       "CONTRACTS_VERIFIED",
       "ALGO_STABLE"
     ],
+    "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
     "addLiquidityUrl": "https://www.trisolaris.io/#/pool/stable/add/USDC_USDT_USN",
+    "removeLiquidityUrl": "https://www.trisolaris.io/#/pool/stable/remove/USDC_USDT_USN",
     "network": "aurora",
     "createdAt": 1658429801
   }

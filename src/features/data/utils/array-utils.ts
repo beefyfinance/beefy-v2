@@ -28,7 +28,7 @@ export const intersperse = <T>(arr: T[], separator: (n: number) => T): T[] =>
     return [...acc, currentElement, ...(isLast ? [] : [separator(currentIndex)])];
   }, []);
 
-type BaseEntry = {
+export type BaseEntry = {
   key: string;
   value: BigNumber;
   percentage: number;

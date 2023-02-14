@@ -171,6 +171,8 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'HAY',
       'jCHF',
       'TOR',
+      'ETSAlpha',
+      'DEI',
     ],
   },
   optimism: {
@@ -215,6 +217,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'jEUR',
       'TUSD',
       'USX',
+      'sEUR',
     ],
   },
   fantom: {
@@ -475,7 +478,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['mUSDT', 'mUSDC', 'mDAI'],
+    stableCoins: ['mUSDT', 'mUSDC', 'mDAI', 'USDT'],
   },
   fuse: {
     name: 'Fuse',

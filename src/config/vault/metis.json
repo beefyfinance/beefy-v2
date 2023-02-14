@@ -1,22 +1,48 @@
 [
   {
+    "id": "stargate-metis-usdt",
+    "name": "USDT LP",
+    "token": "S*USDT",
+    "tokenAddress": "0x2b60473a7C41Deb80EDdaafD5560e963440eb632",
+    "tokenDecimals": 6,
+    "tokenProviderId": "stargate",
+    "earnedToken": "mooStargateUSDT",
+    "earnedTokenAddress": "0x0d281FF551351C8b88D019ecd23481723a1cC8E3",
+    "earnContractAddress": "0x0d281FF551351C8b88D019ecd23481723a1cC8E3",
+    "oracle": "lps",
+    "oracleId": "stargate-metis-usdt",
+    "status": "active",
+    "platformId": "stargate",
+    "assets": ["USDT"],
+    "strategyTypeId": "single-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://stargate.finance/pool/USDT-METIS",
+    "buyTokenUrl": "https://hermes.maiadao.io/#/swap?outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+    "network": "metis",
+    "createdAt": 1675694667
+  },
+  {
     "id": "metis-bifi-gov",
     "name": "BIFI Earnings Pool",
     "token": "BIFI",
-    "tokenDecimals": 18,
     "tokenAddress": "0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
+    "tokenDecimals": 18,
     "earnedToken": "Metis",
-    "earnedTokenDecimals": 18,
     "earnedTokenAddress": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+    "earnedTokenDecimals": 18,
     "earnContractAddress": "0x2a30C5e0d577108F694d2A96179cd73611Ee069b",
-    "excluded": "metis-bifi-maxi",
-    "isGovVault": true,
     "oracle": "tokens",
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
     "assets": ["BIFI"],
-    "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -25,9 +51,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "single",
+    "excluded": "metis-bifi-maxi",
+    "isGovVault": true,
     "callFee": 0.5,
-    "createdAt": 1623706144,
-    "network": "metis"
+    "network": "metis",
+    "createdAt": 1623706144
   },
   {
     "id": "hermes-m.dai-m.usdc",
@@ -44,7 +73,6 @@
     "status": "active",
     "platformId": "hermes",
     "assets": ["mDAI", "mUSDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -54,8 +82,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x4c078361FC9BbB78DF910800A991C7c3DD2F6ce0/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0x4c078361FC9BbB78DF910800A991C7c3DD2F6ce0&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x4c078361FC9BbB78DF910800A991C7c3DD2F6ce0/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
+    "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0x4c078361FC9BbB78DF910800A991C7c3DD2F6ce0/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "network": "metis",
     "createdAt": 1664200373
   },
@@ -74,7 +104,6 @@
     "status": "active",
     "platformId": "hermes",
     "assets": ["mUSDT", "mUSDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -83,8 +112,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
+    "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "network": "metis",
     "createdAt": 1664200372
   },
@@ -103,7 +134,6 @@
     "status": "active",
     "platformId": "hermes",
     "assets": ["HERMES", "METIS"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -112,8 +142,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0xb27BbeaACA2C00d6258C3118BAB6b5B6975161c8/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&outputCurrency=0xb27BbeaACA2C00d6258C3118BAB6b5B6975161c8",
+    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0xb27BbeaACA2C00d6258C3118BAB6b5B6975161c8/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
+    "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0xb27BbeaACA2C00d6258C3118BAB6b5B6975161c8/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
     "network": "metis",
     "createdAt": 1664200371
   },
@@ -132,7 +164,6 @@
     "status": "active",
     "platformId": "hermes",
     "assets": ["METIS", "mUSDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -141,8 +172,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
+    "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "network": "metis",
     "createdAt": 1664200370
   },
@@ -161,7 +194,6 @@
     "status": "active",
     "platformId": "hermes",
     "assets": ["MAIA", "mUSDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -170,8 +202,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x72c232D56542Ba082592DEE7C77b1C6CFA758BCD/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21&outputCurrency=0x72c232D56542Ba082592DEE7C77b1C6CFA758BCD",
+    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x72c232D56542Ba082592DEE7C77b1C6CFA758BCD/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
+    "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0x72c232D56542Ba082592DEE7C77b1C6CFA758BCD/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "network": "metis",
     "createdAt": 1664200369
   },
@@ -190,7 +224,6 @@
     "status": "active",
     "platformId": "hermes",
     "assets": ["WETH", "METIS"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -199,8 +232,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x420000000000000000000000000000000000000A/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&outputCurrency=0x420000000000000000000000000000000000000A",
+    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x420000000000000000000000000000000000000A/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
+    "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0x420000000000000000000000000000000000000A/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
     "network": "metis",
     "createdAt": 1664200368
   },
@@ -219,7 +254,6 @@
     "status": "active",
     "platformId": "hermes",
     "assets": ["WETH", "mUSDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -228,8 +262,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21&outputCurrency=0x420000000000000000000000000000000000000A",
+    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
+    "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "network": "metis",
     "createdAt": 1664200367
   },
@@ -248,7 +284,6 @@
     "status": "active",
     "platformId": "hermes",
     "assets": ["HUM", "METIS"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -257,8 +292,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x4aAC94985cD83be30164DfE7e9AF7C054D7d2121/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&outputCurrency=0x4aAC94985cD83be30164DfE7e9AF7C054D7d2121",
+    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x4aAC94985cD83be30164DfE7e9AF7C054D7d2121/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
+    "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0x4aAC94985cD83be30164DfE7e9AF7C054D7d2121/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
     "network": "metis",
     "createdAt": 1664200366
   },
@@ -275,10 +312,9 @@
     "oracle": "lps",
     "oracleId": "netswap-nett-m.usdt",
     "status": "eol",
-    "platformId": "netswap",
     "retireReason": "rewards",
+    "platformId": "netswap",
     "assets": ["mUSDT", "NETT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -287,8 +323,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xbb06dca3ae6887fabf931640f67cab3e3a16f4dc",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278&outputCurrency=0xbb06dca3ae6887fabf931640f67cab3e3a16f4dc",
+    "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xbb06dca3ae6887fabf931640f67cab3e3a16f4dc",
+    "removeLiquidityUrl": "https://netswap.io/#/remove/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xbb06dca3ae6887fabf931640f67cab3e3a16f4dc",
     "network": "metis",
     "createdAt": 1642356425
   },
@@ -307,7 +345,6 @@
     "status": "active",
     "platformId": "netswap",
     "assets": ["METIS", "NETT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -316,8 +353,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278&outputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+    "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+    "removeLiquidityUrl": "https://netswap.io/#/remove/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
     "network": "metis",
     "createdAt": 1642362780
   },
@@ -334,10 +373,9 @@
     "oracle": "lps",
     "oracleId": "netswap-nett-m.usdc",
     "status": "eol",
-    "platformId": "netswap",
     "retireReason": "rewards",
+    "platformId": "netswap",
     "assets": ["mUSDC", "NETT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -346,8 +384,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "removeLiquidityUrl": "https://netswap.io/#/remove/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
     "createdAt": 1642363788
   },
@@ -364,10 +404,9 @@
     "oracle": "lps",
     "oracleId": "netswap-weth-nett",
     "status": "eol",
-    "platformId": "netswap",
     "retireReason": "rewards",
+    "platformId": "netswap",
     "assets": ["WETH", "NETT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -376,8 +415,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0x420000000000000000000000000000000000000A",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278&outputCurrency=0x420000000000000000000000000000000000000A",
+    "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0x420000000000000000000000000000000000000A",
+    "removeLiquidityUrl": "https://netswap.io/#/remove/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0x420000000000000000000000000000000000000A",
     "network": "metis",
     "createdAt": 1642363913
   },
@@ -396,7 +437,6 @@
     "status": "active",
     "platformId": "netswap",
     "assets": ["WETH", "METIS"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -405,8 +445,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://netswap.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0x420000000000000000000000000000000000000A",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&outputCurrency=0x420000000000000000000000000000000000000A",
+    "addLiquidityUrl": "https://netswap.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0x420000000000000000000000000000000000000A",
+    "removeLiquidityUrl": "https://netswap.io/#/remove/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0x420000000000000000000000000000000000000A",
     "network": "metis",
     "createdAt": 1642364450
   },
@@ -425,7 +467,6 @@
     "status": "active",
     "platformId": "netswap",
     "assets": ["mUSDC", "METIS"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -434,8 +475,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://netswap.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "addLiquidityUrl": "https://netswap.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "removeLiquidityUrl": "https://netswap.io/#/remove/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
     "createdAt": 1642365277
   },
@@ -454,7 +497,6 @@
     "status": "active",
     "platformId": "netswap",
     "assets": ["mUSDC", "WETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -463,8 +505,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://netswap.io/#/add/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0x420000000000000000000000000000000000000A&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "addLiquidityUrl": "https://netswap.io/#/add/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "removeLiquidityUrl": "https://netswap.io/#/remove/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
     "createdAt": 1642365777
   },
@@ -483,7 +527,6 @@
     "status": "active",
     "platformId": "netswap",
     "assets": ["mUSDC", "mUSDT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -492,8 +535,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://netswap.io/#/add/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "addLiquidityUrl": "https://netswap.io/#/add/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "removeLiquidityUrl": "https://netswap.io/#/remove/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
     "createdAt": 1642365937
   },
@@ -511,7 +556,6 @@
     "status": "active",
     "platformId": "beefy",
     "assets": ["BIFI"],
-    "strategyTypeId": "maxi",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -520,6 +564,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "maxi",
     "buyTokenUrl": "https://netswap.io/#/swap?outputCurrency=0xe6801928061cdbe32ac5ad0634427e140efd05f9",
     "network": "metis",
     "createdAt": 1642600646
@@ -540,7 +585,6 @@
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["TETHYS", "METIS"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -549,8 +593,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0x69fdb77064ec5c84FA2F21072973eB28441F43F3",
-    "buyTokenUrl": "https://tethys.finance/swap?inputCurrency=METIS&outputCurrency=0x69fdb77064ec5c84FA2F21072973eB28441F43F3",
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0x69fdb77064ec5c84FA2F21072973eB28441F43F3",
+    "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0x69fdb77064ec5c84FA2F21072973eB28441F43F3",
+    "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0x69fdb77064ec5c84FA2F21072973eB28441F43F3",
     "network": "metis",
     "createdAt": 1642623428
   },
@@ -570,7 +616,6 @@
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["mUSDT", "METIS"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -579,8 +624,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
-    "buyTokenUrl": "https://tethys.finance/swap?inputCurrency=METIS&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+    "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+    "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "network": "metis",
     "createdAt": 1642623639
   },
@@ -600,7 +647,6 @@
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["mUSDC", "METIS"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -609,8 +655,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
-    "buyTokenUrl": "https://tethys.finance/swap?inputCurrency=METIS&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
     "createdAt": 1642623846
   },
@@ -630,7 +678,6 @@
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["WETH", "METIS"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -639,8 +686,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0x420000000000000000000000000000000000000A",
-    "buyTokenUrl": "https://tethys.finance/swap?inputCurrency=METIS&outputCurrency=0x420000000000000000000000000000000000000A",
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0x420000000000000000000000000000000000000A",
+    "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0x420000000000000000000000000000000000000A",
+    "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0x420000000000000000000000000000000000000A",
     "network": "metis",
     "createdAt": 1642624056
   },
@@ -660,7 +709,6 @@
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["mUSDC", "mUSDT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -669,10 +717,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://tethys.finance/pool/add?inputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
-    "buyTokenUrl": "https://tethys.finance/swap?inputCurrency=METIS&outputCurrency=0x6c4768d4b3acD4a3fF01F179FaffDaEbe084D12D",
-    "createdAt": 1644871173,
-    "network": "metis"
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0x6c4768d4b3acD4a3fF01F179FaffDaEbe084D12D",
+    "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+    "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+    "network": "metis",
+    "createdAt": 1644871173
   },
   {
     "id": "netswap-wbtc-metis",
@@ -687,10 +737,9 @@
     "oracle": "lps",
     "oracleId": "netswap-wbtc-metis",
     "status": "eol",
-    "platformId": "netswap",
     "retireReason": "rewards",
+    "platformId": "netswap",
     "assets": ["WBTC", "METIS"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -699,10 +748,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://netswap.io/#/add/METIS/0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=METIS&outputCurrency=0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
-    "createdAt": 1645533903,
-    "network": "metis"
+    "addLiquidityUrl": "https://netswap.io/#/add/METIS/0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
+    "removeLiquidityUrl": "https://netswap.io/#/remove/METIS/0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
+    "network": "metis",
+    "createdAt": 1645533903
   },
   {
     "id": "netswap-wbtc-m.usdt",
@@ -717,10 +768,9 @@
     "oracle": "lps",
     "oracleId": "netswap-wbtc-m.usdt",
     "status": "eol",
-    "platformId": "netswap",
     "retireReason": "rewards",
+    "platformId": "netswap",
     "assets": ["WBTC", "mUSDT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -729,10 +779,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://netswap.io/#/add/0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC&outputCurrency=0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
-    "createdAt": 1645536038,
-    "network": "metis"
+    "addLiquidityUrl": "https://netswap.io/#/add/0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+    "removeLiquidityUrl": "https://netswap.io/#/remove/0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+    "network": "metis",
+    "createdAt": 1645536038
   },
   {
     "id": "tethys-wbtc-metis",
@@ -750,7 +802,6 @@
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["WBTC", "METIS"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -759,10 +810,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
-    "buyTokenUrl": "https://tethys.finance/swap?inputCurrency=METIS&outputCurrency=0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
-    "createdAt": 1645526396,
-    "network": "metis"
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
+    "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
+    "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
+    "network": "metis",
+    "createdAt": 1645526396
   },
   {
     "id": "netswap-byte-m.usdc",
@@ -779,7 +832,6 @@
     "status": "active",
     "platformId": "netswap",
     "assets": ["BYTE", "mUSDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -788,10 +840,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://netswap.io/#/add/0x721532bC0dA5ffaeB0a6A45fB24271E8098629A7/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0x721532bC0dA5ffaeB0a6A45fB24271E8098629A7&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
-    "createdAt": 1647532435,
-    "network": "metis"
+    "addLiquidityUrl": "https://netswap.io/#/add/0x721532bC0dA5ffaeB0a6A45fB24271E8098629A7/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "removeLiquidityUrl": "https://netswap.io/#/remove/0x721532bC0dA5ffaeB0a6A45fB24271E8098629A7/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    "network": "metis",
+    "createdAt": 1647532435
   },
   {
     "id": "tethys-rftm-metis",
@@ -809,7 +863,6 @@
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["FTM", "METIS"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -818,10 +871,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xa9109271abcf0C4106Ab7366B4eDB34405947eED",
-    "buyTokenUrl": "https://tethys.finance/swap?inputCurrency=METIS&outputCurrency=0xa9109271abcf0C4106Ab7366B4eDB34405947eED",
-    "createdAt": 1647625639,
-    "network": "metis"
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0xa9109271abcf0C4106Ab7366B4eDB34405947eED",
+    "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xa9109271abcf0C4106Ab7366B4eDB34405947eED",
+    "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xa9109271abcf0C4106Ab7366B4eDB34405947eED",
+    "network": "metis",
+    "createdAt": 1647625639
   },
   {
     "id": "tethys-metis-ravax",
@@ -839,7 +894,6 @@
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["AVAX", "METIS"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -848,10 +902,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xE253E0CeA0CDD43d9628567d097052B33F98D611",
-    "buyTokenUrl": "https://tethys.finance/swap?inputCurrency=METIS&outputCurrency=0xE253E0CeA0CDD43d9628567d097052B33F98D611",
-    "createdAt": 1647625860,
-    "network": "metis"
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0xE253E0CeA0CDD43d9628567d097052B33F98D611",
+    "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xE253E0CeA0CDD43d9628567d097052B33F98D611",
+    "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xE253E0CeA0CDD43d9628567d097052B33F98D611",
+    "network": "metis",
+    "createdAt": 1647625860
   },
   {
     "id": "tethys-dai-metis",
@@ -869,7 +925,6 @@
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["DAI", "METIS"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -879,10 +934,12 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0x4651B38e7ec14BB3db731369BFE5B08F2466Bd0A",
-    "buyTokenUrl": "https://tethys.finance/swap?inputCurrency=METIS&outputCurrency=0x4651B38e7ec14BB3db731369BFE5B08F2466Bd0A",
-    "createdAt": 1647626163,
-    "network": "metis"
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0x4651B38e7ec14BB3db731369BFE5B08F2466Bd0A",
+    "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0x4651B38e7ec14BB3db731369BFE5B08F2466Bd0A",
+    "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0x4651B38e7ec14BB3db731369BFE5B08F2466Bd0A",
+    "network": "metis",
+    "createdAt": 1647626163
   },
   {
     "id": "netswap-bnb-nett-eol",
@@ -897,9 +954,9 @@
     "oracle": "lps",
     "oracleId": "netswap-bnb-nett",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "netswap",
     "assets": ["BNB", "NETT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -908,11 +965,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0x2692BE44A6E38B698731fDDf417d060f0d20A0cB",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278&outputCurrency=0x2692BE44A6E38B698731fDDf417d060f0d20A0cB",
+    "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0x2692BE44A6E38B698731fDDf417d060f0d20A0cB",
+    "removeLiquidityUrl": "https://netswap.io/#/remove/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0x2692BE44A6E38B698731fDDf417d060f0d20A0cB",
     "network": "metis",
-    "createdAt": 1642364144,
-    "retireReason": "rewards"
+    "createdAt": 1642364144
   },
   {
     "id": "netswap-m.usdt-metis-eol",
@@ -927,9 +985,9 @@
     "oracle": "lps",
     "oracleId": "netswap-m.usdt-metis",
     "status": "eol",
+    "retireReason": "rewards",
     "platformId": "netswap",
     "assets": ["mUSDT", "METIS"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -938,10 +996,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://netswap.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+    "addLiquidityUrl": "https://netswap.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+    "removeLiquidityUrl": "https://netswap.io/#/remove/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "network": "metis",
-    "createdAt": 1642365041,
-    "retireReason": "rewards"
+    "createdAt": 1642365041
   }
 ]

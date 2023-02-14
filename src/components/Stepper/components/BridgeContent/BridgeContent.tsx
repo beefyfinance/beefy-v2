@@ -36,7 +36,7 @@ export const BridgeContent = memo(function () {
 
   const title = useMemo(() => {
     if (isBridgeSuccess) {
-      return 'bridge-Success-Title';
+      return 'Stepper-bridge-Success-Title';
     } else {
       return 'Transactn-ConfirmPending';
     }

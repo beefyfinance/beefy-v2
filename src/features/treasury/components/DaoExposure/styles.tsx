@@ -6,7 +6,6 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.dashboard.cardBg,
     borderRadius: '8px',
     display: 'grid',
-    rowGap: '16px',
     [theme.breakpoints.only('md')]: {
       height: '120px',
     },
@@ -14,57 +13,24 @@ export const styles = (theme: Theme) => ({
       padding: '16px',
     },
   },
-  title: {
+  option: {
     ...theme.typography['body-lg-med'],
+    color: theme.palette.text.disabled,
+    whiteSpace: 'nowrap' as const,
+    '&:hover': {
+      color: theme.palette.text.primary,
+      cursor: 'pointer',
+    },
+  },
+  active: {
     color: theme.palette.text.primary,
   },
-  bar: {
-    height: '12px',
-    width: '100%',
-    borderRadius: '80px',
+  optionsContainer: {
     display: 'flex',
-    '& $barItem:first-child': {
-      borderRadius: '80px 0px 0px 80px',
+    gap: '12px',
+    marginBottom: '16px',
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: '24px',
     },
-    '& $barItem:last-child': {
-      borderRadius: '0px 80px 80px 0px',
-      borderRight: 'none',
-    },
-  },
-  barItem: {
-    height: '100%',
-    borderRight: `2px solid ${theme.palette.background.dashboard.cardBg}`,
-  },
-  legendContainer: {
-    display: 'flex',
-    columnGap: '32px',
-    [theme.breakpoints.down('md')]: {
-      flexWrap: 'wrap',
-      columnGap: '16px',
-      rowGap: '8px',
-    },
-  },
-  legendItem: {
-    display: 'flex',
-    columnGap: '8px',
-    alignItems: 'center',
-  },
-  square: {
-    height: '12px',
-    width: '12px',
-    borderRadius: '2px',
-  },
-  label: {
-    ...theme.typography['body-sm-med'],
-    color: '#D0D0DA',
-    textTransform: 'capitalize' as const,
-    '& span': {
-      ...theme.typography['body-sm'],
-      color: '#999CB3',
-      marginLeft: '4px',
-    },
-  },
-  uppercase: {
-    textTransform: 'uppercase' as const,
   },
 });

@@ -1,5 +1,200 @@
 [
   {
+    "id": "velodrome-weth-wsteth",
+    "name": "wstETH-ETH vLP",
+    "token": "wstETH-ETH vLP",
+    "tokenAddress": "0xc6C1E8399C1c33a3f1959f2f77349D74a373345c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromewstETH-ETH",
+    "earnedTokenAddress": "0xca39e63E3b798D5A3f44CA56A123E3FCc29ad598",
+    "earnContractAddress": "0xca39e63E3b798D5A3f44CA56A123E3FCc29ad598",
+    "oracle": "lps",
+    "oracleId": "velodrome-weth-wsteth",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["wstETH", "ETH"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1675896222
+  },
+  {
+    "id": "velodrome-reth-weth",
+    "name": "rETH-ETH vLP",
+    "token": "rETH-ETH vLP",
+    "tokenAddress": "0x985612ff2C9409174FedcFf23d4F4761AF124F88",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromerETH-ETH",
+    "earnedTokenAddress": "0xef38118dEC20cf7c279F63bf3D9386a7886f1Fb8",
+    "earnContractAddress": "0xef38118dEC20cf7c279F63bf3D9386a7886f1Fb8",
+    "oracle": "lps",
+    "oracleId": "velodrome-reth-weth",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["rETH", "ETH"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1675896343
+  },
+  {
+    "id": "velodrome-usdt-mai",
+    "name": "USDT-MAI sLP",
+    "token": "USDT-MAI sLP",
+    "tokenAddress": "0x4AB66eED0b39F9d229A1281468a4482515dB0709",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromeUSDT-MAI",
+    "earnedTokenAddress": "0x92FdBDCEB0267DbeA576cB29322c2aF2352CDC7F",
+    "earnContractAddress": "0x92FdBDCEB0267DbeA576cB29322c2aF2352CDC7F",
+    "oracle": "lps",
+    "oracleId": "velodrome-usdt-mai",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["USDT", "MAI"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1675891871
+  },
+  {
+    "id": "velodrome-alusd-mai-samm",
+    "name": "alUSD-MAI sLP",
+    "token": "alUSD-MAI sLP",
+    "tokenAddress": "0x16E7e0960A74b0eA3E61118a0C0EaE8f83D43d7C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodrome-alUSD-MAI-sAMM",
+    "earnedTokenAddress": "0x13Fe3533ECD933CEaedB0092a7e3be55141f36c8",
+    "earnContractAddress": "0x13Fe3533ECD933CEaedB0092a7e3be55141f36c8",
+    "oracle": "lps",
+    "oracleId": "velodrome-alusd-mai-samm",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["alUSD", "MAI"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1675891871
+  },
+  {
+    "id": "kyber-optimism-usdc-mai",
+    "name": "MAI-USDC LP",
+    "token": "MAI-USDC opkLP",
+    "tokenAddress": "0xC2995a065106b5c5c738B2320387460eBd12c12D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kyber",
+    "earnedToken": "mooKyberOpMAI-USDC",
+    "earnedTokenAddress": "0xAbbEE54a77363d857b90F2a4618AD37fae42C5aD",
+    "earnContractAddress": "0xAbbEE54a77363d857b90F2a4618AD37fae42C5aD",
+    "oracle": "lps",
+    "oracleId": "kyber-optimism-usdc-mai",
+    "status": "active",
+    "platformId": "kyber",
+    "assets": ["MAI", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://kyberswap.com/swap/optimism",
+    "addLiquidityUrl": "https://kyberswap.com/add/0x7F5c764cBc14f9669B88837ca1490cCa17c31607/0xdFA46478F9e5EA86d57387849598dbFB2e964b02/0xc2995a065106b5c5c738b2320387460ebd12c12d",
+    "removeLiquidityUrl": "https://kyberswap.com/remove/0x7F5c764cBc14f9669B88837ca1490cCa17c31607/0xdFA46478F9e5EA86d57387849598dbFB2e964b02/0xc2995a065106b5c5c738b2320387460ebd12c12d",
+    "network": "optimism",
+    "createdAt": 1675790593
+  },
+  {
+    "id": "stargate-op-dai",
+    "name": "DAI LP",
+    "token": "S*DAI",
+    "tokenAddress": "0x165137624F1f692e69659f944BF69DE02874ee27",
+    "tokenDecimals": 6,
+    "tokenProviderId": "stargate",
+    "earnedToken": "mooStargateDAI",
+    "earnedTokenAddress": "0xC7Deff444145093f1B2054DBd3E68B2878D86552",
+    "earnContractAddress": "0xC7Deff444145093f1B2054DBd3E68B2878D86552",
+    "oracle": "lps",
+    "oracleId": "stargate-op-dai",
+    "status": "active",
+    "platformId": "stargate",
+    "assets": ["DAI"],
+    "strategyTypeId": "single-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://stargate.finance/pool/dai-optimism",
+    "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/DAI",
+    "createdAt": 1675440288,
+    "network": "optimism"
+  },
+  {
+    "id": "stargate-op-frax",
+    "name": "FRAX LP",
+    "token": "S*FRAX",
+    "tokenAddress": "0x368605D9C6243A80903b9e326f1Cddde088B8924",
+    "tokenDecimals": 6,
+    "tokenProviderId": "stargate",
+    "earnedToken": "mooStargateFRAX",
+    "earnedTokenAddress": "0xc86cc7C6b6E0Fd4d6aE24649521296Fe56dF8C28",
+    "earnContractAddress": "0xc86cc7C6b6E0Fd4d6aE24649521296Fe56dF8C28",
+    "oracle": "lps",
+    "oracleId": "stargate-op-frax",
+    "status": "active",
+    "platformId": "stargate",
+    "assets": ["FRAX"],
+    "strategyTypeId": "single-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://stargate.finance/pool/FRAX-OPTIMISM",
+    "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
+    "createdAt": 1675440289,
+    "network": "optimism"
+  },
+  {
+    "mintTokenUrl": "https://beefy.finance/#/optimism/vault/beefy-beopx",
     "id": "beefy-beopx",
     "name": "beOPX",
     "token": "beOPX",
@@ -13,7 +208,6 @@
     "status": "active",
     "platformId": "beefy",
     "assets": ["beOPX"],
-    "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -22,9 +216,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/OPX",
-    "createdAt": 1671735524,
-    "mintTokenUrl": "https://beefy.finance/#/optimism/vault/beefy-beopx"
+    "createdAt": 1671735524
   },
   {
     "id": "beefy-beopx-earnings",
@@ -36,14 +230,11 @@
     "earnedTokenAddress": "0x4200000000000000000000000000000000000006",
     "earnedTokenDecimals": 18,
     "earnContractAddress": "0x96f990d1aAF83B09a4BA3D22cAab0377a058C84f",
-    "excluded": "beefy-beopx",
-    "isGovVault": true,
     "oracle": "tokens",
     "oracleId": "beOPX",
     "status": "active",
     "platformId": "beefy",
     "assets": ["beOPX"],
-    "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -52,8 +243,124 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "single",
+    "excluded": "beefy-beopx",
+    "isGovVault": true,
     "network": "optimism",
     "createdAt": 1671735523
+  },
+  {
+    "id": "velodrome-weth-frxeth",
+    "name": "frxETH-ETH sLP",
+    "token": "frxETH-ETH sLP",
+    "tokenAddress": "0x63642a192BAb08B09A70a997bb35B36b9286B01e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromeETH-frxETH",
+    "earnedTokenAddress": "0x1b620BE62788e940b4c4ae6Df933c50981AcAB80",
+    "earnContractAddress": "0x1b620BE62788e940b4c4ae6Df933c50981AcAB80",
+    "oracle": "lps",
+    "oracleId": "velodrome-weth-frxeth",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["frxETH", "ETH"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1675525207
+  },
+  {
+    "id": "velodrome-alusd-mai",
+    "name": "alUSD-MAI vLP",
+    "token": "alUSD-MAI vLP",
+    "tokenAddress": "0xa8FeDB4A8194E21Cf775ce868a865242e4e45151",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromealUSD-MAI",
+    "earnedTokenAddress": "0x53fA4D07c62EBcbBB043654480C7C0AB7b5876C4",
+    "earnContractAddress": "0x53fA4D07c62EBcbBB043654480C7C0AB7b5876C4",
+    "oracle": "lps",
+    "oracleId": "velodrome-alusd-mai",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["alUSD", "MAI"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1675436590
+  },
+  {
+    "id": "velodrome-dai-mai",
+    "name": "DAI-MAI sLP",
+    "token": "DAI-MAI sLP",
+    "tokenAddress": "0xFfb4fD14e840abD3EBd6Cd026332B2302948A3fc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromeDAI-MAI",
+    "earnedTokenAddress": "0x0f21607f78Ee4bdd6895A7517851531B03C2c58a",
+    "earnContractAddress": "0x0f21607f78Ee4bdd6895A7517851531B03C2c58a",
+    "oracle": "lps",
+    "oracleId": "velodrome-dai-mai",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["DAI", "MAI"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1675341832
+  },
+  {
+    "id": "velodrome-usd+-dola",
+    "name": "USD+-DOLA sLP",
+    "token": "USD+-DOLA sLP",
+    "tokenAddress": "0xa99817d2d286C894F8f3888096A5616d06F20d46",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromeUSD+-DOLA",
+    "earnedTokenAddress": "0x60bBDf88bd2DbAA645D6CF8Ae67d2F4aDA2658F1",
+    "earnContractAddress": "0x60bBDf88bd2DbAA645D6CF8Ae67d2F4aDA2658F1",
+    "oracle": "lps",
+    "oracleId": "velodrome-usd+-dola",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["USD+", "DOLA"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1675341832
   },
   {
     "id": "velodrome-wsteth-usdc",
@@ -73,6 +380,7 @@
     "strategyTypeId": "lp",
     "risks": ["BATTLE_TESTED", "CONTRACTS_VERIFIED", "COMPLEXITY_LOW", "MCAP_LARGE", "IL_LOW"],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
     "createdAt": 1674847402
@@ -95,9 +403,33 @@
     "strategyTypeId": "lp",
     "risks": ["BATTLE_TESTED", "CONTRACTS_VERIFIED", "COMPLEXITY_LOW", "MCAP_MEDIUM", "IL_LOW"],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
     "createdAt": 1674850871
+  },
+  {
+    "id": "velodrome-wsteth-seth",
+    "name": "wstETH-sETH sLP",
+    "token": "wstETH-sETH sLP",
+    "tokenAddress": "0xB343dae0E7fe28c16EC5dCa64cB0C1ac5F4690AC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelowstETH-sETH",
+    "earnedTokenAddress": "0x816aF3b6dc3E92ea0D95A20BEB1c8E989be8041c",
+    "earnContractAddress": "0x816aF3b6dc3E92ea0D95A20BEB1c8E989be8041c",
+    "oracle": "lps",
+    "oracleId": "velodrome-wsteth-seth",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["wstETH", "sETH"],
+    "strategyTypeId": "lp",
+    "risks": ["BATTLE_TESTED", "CONTRACTS_VERIFIED", "COMPLEXITY_LOW", "MCAP_MEDIUM", "IL_NONE"],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1675354581
   },
   {
     "id": "velodrome-jeur-seur",
@@ -114,10 +446,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["jEUR", "sEUR"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1674180481
   },
@@ -136,10 +469,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["UNIDX", "DAI"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1672282535
   },
@@ -158,10 +492,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["LUSD", "ETH"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1672282535
   },
@@ -180,10 +515,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["KWENTA", "ETH"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1671717603
   },
@@ -202,10 +538,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["THALES", "ETH"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1671717603
   },
@@ -224,10 +561,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["USDT", "USDC"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1670479365
   },
@@ -246,7 +584,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["USX", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -255,8 +592,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1670479365
   },
@@ -275,7 +614,6 @@
     "status": "active",
     "platformId": "opx",
     "assets": ["WETH", "WBTC", "USDC", "USDT", "DAI", "OP"],
-    "strategyTypeId": "olp-opx",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -284,7 +622,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "olp-opx",
     "addLiquidityUrl": "https://www.opx.finance/#/buy_olp",
+    "removeLiquidityUrl": "https://www.opx.finance/#/buy_olp",
     "network": "optimism",
     "createdAt": 1670252431
   },
@@ -303,7 +643,6 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["wstETH", "ETH"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -312,7 +651,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/wsteth/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/wsteth/withdraw",
     "network": "optimism",
     "createdAt": 1668590265
   },
@@ -331,7 +672,6 @@
     "status": "active",
     "platformId": "hop",
     "assets": ["SNX"],
-    "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -340,10 +680,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=SNX&sourceNetwork=optimism",
+    "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/SNX",
-    "createdAt": 1667671412,
-    "network": "optimism"
+    "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=SNX&sourceNetwork=optimism",
+    "removeLiquidityUrl": "https://app.hop.exchange/#/pool/withdraw?token=SNX&sourceNetwork=optimism",
+    "network": "optimism",
+    "createdAt": 1667671412
   },
   {
     "id": "hop-op-eth",
@@ -360,7 +702,6 @@
     "status": "active",
     "platformId": "hop",
     "assets": ["ETH"],
-    "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -369,10 +710,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=ETH&sourceNetwork=optimism",
+    "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/USDC/ETH",
-    "createdAt": 1667671411,
-    "network": "optimism"
+    "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=ETH&sourceNetwork=optimism",
+    "removeLiquidityUrl": "https://app.hop.exchange/#/pool/withdraw?token=ETH&sourceNetwork=optimism",
+    "network": "optimism",
+    "createdAt": 1667671411
   },
   {
     "id": "hop-op-usdc",
@@ -389,7 +732,6 @@
     "status": "active",
     "platformId": "hop",
     "assets": ["USDC"],
-    "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -398,10 +740,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=USDC&sourceNetwork=optimism",
+    "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/USDC",
-    "createdAt": 1667671410,
-    "network": "optimism"
+    "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=USDC&sourceNetwork=optimism",
+    "removeLiquidityUrl": "https://app.hop.exchange/#/pool/withdraw?token=USDC&sourceNetwork=optimism",
+    "network": "optimism",
+    "createdAt": 1667671410
   },
   {
     "id": "hop-op-dai",
@@ -418,7 +762,6 @@
     "status": "active",
     "platformId": "hop",
     "assets": ["DAI"],
-    "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -427,10 +770,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=DAI&sourceNetwork=optimism",
+    "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/DAI",
-    "createdAt": 1667671409,
-    "network": "optimism"
+    "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=DAI&sourceNetwork=optimism",
+    "removeLiquidityUrl": "https://app.hop.exchange/#/pool/withdraw?token=DAI&sourceNetwork=optimism",
+    "network": "optimism",
+    "createdAt": 1667671409
   },
   {
     "id": "hop-op-usdt",
@@ -447,7 +792,6 @@
     "status": "active",
     "platformId": "hop",
     "assets": ["USDT"],
-    "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -456,10 +800,12 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=USDT&sourceNetwork=optimism",
+    "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/USDT",
-    "createdAt": 1667671408,
-    "network": "optimism"
+    "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=USDT&sourceNetwork=optimism",
+    "removeLiquidityUrl": "https://app.hop.exchange/#/pool/withdraw?token=USDT&sourceNetwork=optimism",
+    "network": "optimism",
+    "createdAt": 1667671408
   },
   {
     "id": "velodrome-weth-reth",
@@ -476,10 +822,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["rETH", "ETH"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1668704939
   },
@@ -498,10 +845,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["wstETH", "LDO"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1668704938
   },
@@ -520,7 +868,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["wstETH", "USD+"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -529,8 +876,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1668704937
   },
@@ -546,10 +895,10 @@
     "earnContractAddress": "0xa0b33f5e893A95675d8D59A4abba3A16E2727f0f",
     "oracle": "lps",
     "oracleId": "velodrome-op-mai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["MAI", "OP"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -558,8 +907,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1668704936
   },
@@ -578,10 +929,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["WETH", "HOP"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1666954558
   },
@@ -599,7 +951,6 @@
     "status": "active",
     "platformId": "beefy",
     "assets": ["BIFI"],
-    "strategyTypeId": "maxi",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -608,6 +959,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "maxi",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
     "createdAt": 1663091478
@@ -626,7 +978,6 @@
     "status": "active",
     "platformId": "beefy",
     "assets": ["beVELO"],
-    "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -635,9 +986,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "single",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
-    "createdAt": 1666200900,
-    "network": "optimism"
+    "network": "optimism",
+    "createdAt": 1666200900
   },
   {
     "id": "velodrome-wsteth-weth",
@@ -654,10 +1006,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["wstETH", "ETH"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1665617208
   },
@@ -677,9 +1030,10 @@
     "retireReason": "rewards",
     "platformId": "beethovenx",
     "assets": ["wstETH", "bbrfaWETH"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_MID", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0xde45f101250f2ca1c0f8adfc172576d10c12072d00000000000000000000003f",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0xde45f101250f2ca1c0f8adfc172576d10c12072d00000000000000000000003f",
     "network": "optimism",
     "createdAt": 1665023323
   },
@@ -698,9 +1052,10 @@
     "status": "active",
     "platformId": "beethovenx",
     "assets": ["USDC", "USDT", "DAI"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x373643b17cd80e37675c8c98ef774efe6ca0b4de00000000000000000000001c",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0x373643b17cd80e37675c8c98ef774efe6ca0b4de00000000000000000000001c",
     "network": "optimism",
     "createdAt": 1673731740
   },
@@ -719,9 +1074,10 @@
     "status": "active",
     "platformId": "beethovenx",
     "assets": ["wstETH", "ETH"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x7b50775383d3d6f0215a8f290f2c9e2eebbeceb200020000000000000000008b",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0x7b50775383d3d6f0215a8f290f2c9e2eebbeceb200020000000000000000008b",
     "network": "optimism",
     "createdAt": 1673571557
   },
@@ -740,9 +1096,10 @@
     "status": "active",
     "platformId": "beethovenx",
     "assets": ["wstETH", "USDC"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x899f737750db562b88c1e412ee1902980d3a4844000200000000000000000081",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0x899f737750db562b88c1e412ee1902980d3a4844000200000000000000000081",
     "network": "optimism",
     "createdAt": 1673373128
   },
@@ -761,7 +1118,6 @@
     "status": "active",
     "platformId": "beethovenx",
     "assets": ["bbUSD+", "bbDAI+"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_MID",
       "IL_NONE",
@@ -770,7 +1126,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0xb1c9ac57594e9b1ec0f3787d9f6744ef4cb0a02400000000000000000000006e",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0xb1c9ac57594e9b1ec0f3787d9f6744ef4cb0a02400000000000000000000006e",
     "network": "optimism",
     "createdAt": 1673373128
   },
@@ -790,9 +1148,10 @@
     "retireReason": "rewards",
     "platformId": "beethovenx",
     "assets": ["wstETH", "bbrfaUSD", "bbrfaWBTC"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_MID", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x981fb05b738e981ac532a99e77170ecb4bc27aef00010000000000000000004b",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0x981fb05b738e981ac532a99e77170ecb4bc27aef00010000000000000000004b",
     "network": "optimism",
     "createdAt": 1665023323
   },
@@ -812,7 +1171,6 @@
     "retireReason": "rewards",
     "platformId": "beethovenx",
     "assets": ["MAI", "bbrfaUSD"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_MID",
       "IL_NONE",
@@ -821,7 +1179,9 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x1f131ec1175f023ee1534b16fa8ab237c00e238100000000000000000000004a",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0x1f131ec1175f023ee1534b16fa8ab237c00e238100000000000000000000004a",
     "network": "optimism",
     "createdAt": 1665023323
   },
@@ -840,7 +1200,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["MIM", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -849,8 +1208,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1665023322
   },
@@ -869,10 +1230,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["BIFI", "ETH"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1665023322
   },
@@ -891,7 +1253,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["USD+", "LUSD"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -900,8 +1261,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1664540189
   },
@@ -920,10 +1283,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["SONNE", "USDC"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1664749297
   },
@@ -942,7 +1306,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["jEUR", "agEUR"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -951,8 +1314,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1663910717
   },
@@ -971,10 +1336,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["BIFI", "OP"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1663091479
   },
@@ -990,10 +1356,10 @@
     "earnContractAddress": "0x4EfF281247576EC156D7271C46d9EF0F43c6c265",
     "oracle": "lps",
     "oracleId": "velodrome-frax-op",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["FRAX", "OP"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1002,8 +1368,10 @@
       "CONTRACTS_VERIFIED",
       "PARTIAL_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1663344353
   },
@@ -1022,10 +1390,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["TUSD", "USDC"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1663811140
   },
@@ -1044,7 +1413,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["USD+", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1053,8 +1421,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1663344352
   },
@@ -1073,7 +1443,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["agEUR", "MAI"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1082,8 +1451,10 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1662659522
   },
@@ -1102,10 +1473,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["SNX", "USDC"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1662145826
   },
@@ -1119,13 +1491,11 @@
     "earnedTokenAddress": "0x4200000000000000000000000000000000000006",
     "earnedTokenDecimals": 18,
     "earnContractAddress": "0x61645aE7BB524C2ea11cF90D673079EE2AbbB961",
-    "isGovVault": true,
     "oracle": "tokens",
     "oracleId": "BIFI",
     "status": "active",
     "platformId": "beefy",
     "assets": ["BIFI"],
-    "strategyTypeId": "single",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1134,9 +1504,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "single",
+    "isGovVault": true,
     "callFee": 0,
-    "createdAt": 1658491885,
-    "network": "optimism"
+    "network": "optimism",
+    "createdAt": 1658491885
   },
   {
     "id": "beets-rocket-fuel",
@@ -1153,9 +1525,10 @@
     "status": "active",
     "platformId": "beethovenx",
     "assets": ["ETH", "rETH"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x4fd63966879300cafafbb35d157dc5229278ed2300020000000000000000002b",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0x4fd63966879300cafafbb35d157dc5229278ed2300020000000000000000002b",
     "network": "optimism",
     "createdAt": 1662062686
   },
@@ -1174,7 +1547,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["sUSD", "LUSD"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1183,8 +1555,10 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1661450076
   },
@@ -1203,7 +1577,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["MAI", "LUSD"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1212,8 +1585,10 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1661450077
   },
@@ -1231,7 +1606,6 @@
     "status": "active",
     "platformId": "aave",
     "assets": ["WBTC"],
-    "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_MID",
       "BATTLE_TESTED",
@@ -1241,9 +1615,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lending",
     "buyTokenUrl": "https://op.beets.fi/#/trade",
-    "createdAt": 1659634988,
-    "network": "optimism"
+    "network": "optimism",
+    "createdAt": 1659634988
   },
   {
     "id": "aavev3-op-dai",
@@ -1259,7 +1634,6 @@
     "status": "active",
     "platformId": "aave",
     "assets": ["DAI"],
-    "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_MID",
       "BATTLE_TESTED",
@@ -1270,9 +1644,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
+    "strategyTypeId": "lending",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
-    "createdAt": 1659634987,
-    "network": "optimism"
+    "network": "optimism",
+    "createdAt": 1659634987
   },
   {
     "id": "aavev3-op-usdc",
@@ -1288,7 +1663,6 @@
     "status": "active",
     "platformId": "aave",
     "assets": ["USDC"],
-    "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_MID",
       "BATTLE_TESTED",
@@ -1298,9 +1672,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lending",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
-    "createdAt": 1659634986,
-    "network": "optimism"
+    "network": "optimism",
+    "createdAt": 1659634986
   },
   {
     "id": "aavev3-op-eth",
@@ -1315,7 +1690,6 @@
     "status": "active",
     "platformId": "aave",
     "assets": ["ETH"],
-    "strategyTypeId": "lending",
     "risks": [
       "COMPLEXITY_MID",
       "BATTLE_TESTED",
@@ -1325,9 +1699,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "lending",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
-    "createdAt": 1659634985,
-    "network": "optimism"
+    "network": "optimism",
+    "createdAt": 1659634985
   },
   {
     "id": "velodrome-snx-susd",
@@ -1345,10 +1720,11 @@
     "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["SNX", "sUSD"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1659469378
   },
@@ -1367,10 +1743,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["L2DAO", "OP"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1659469377
   },
@@ -1389,7 +1766,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["agEUR", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1398,8 +1774,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1659469376
   },
@@ -1418,10 +1796,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["AELIN", "ETH"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1659469375
   },
@@ -1437,10 +1816,10 @@
     "earnContractAddress": "0x00aCFD3420CD652500F5bA1B90Ac7C19F694c5c3",
     "oracle": "lps",
     "oracleId": "velodrome-susd-dai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["sUSD", "DAI"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1449,8 +1828,10 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657897430
   },
@@ -1469,7 +1850,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["alETH", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1478,8 +1858,10 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657895221
   },
@@ -1498,7 +1880,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["DOLA", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1507,8 +1888,10 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657895221
   },
@@ -1527,7 +1910,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["alUSD", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1536,8 +1918,10 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657894234
   },
@@ -1556,10 +1940,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["VELO", "OP"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657893236
   },
@@ -1579,7 +1964,6 @@
     "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["DOLA", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1588,8 +1972,10 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657892646
   },
@@ -1608,7 +1994,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["OP", "DAI"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1617,8 +2002,10 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657891846
   },
@@ -1637,10 +2024,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["HND", "USDC"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657891042
   },
@@ -1659,10 +2047,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["SNX", "ETH"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657889921
   },
@@ -1682,10 +2071,11 @@
     "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["WBTC", "USDC"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657556188
   },
@@ -1704,10 +2094,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["PERP", "USDC"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657556187
   },
@@ -1726,10 +2117,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["LYRA", "USDC"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657556186
   },
@@ -1748,10 +2140,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["THALES", "USDC"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657556185
   },
@@ -1770,7 +2163,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["FXS", "FRAX"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1779,8 +2171,10 @@
       "CONTRACTS_VERIFIED",
       "PARTIAL_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657556184
   },
@@ -1794,12 +2188,11 @@
     "earnedToken": "mooStargateUSDC",
     "earnedTokenAddress": "0xe536F8141D8EB7B1f096934AF3329cB581bFe995",
     "earnContractAddress": "0xe536F8141D8EB7B1f096934AF3329cB581bFe995",
-    "oracle": "tokens",
-    "oracleId": "soUSDC",
+    "oracle": "lps",
+    "oracleId": "stargate-op-usdc",
     "status": "active",
-    "pauseReason": "upgrade",
     "platformId": "stargate",
-    "assets": ["soUSDC"],
+    "assets": ["USDC"],
     "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1809,10 +2202,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://stargate.finance/pool/usdc-optimism",
     "buyTokenUrl": "https://app.uniswap.org/#/swap?chain=optimism&inputCurrency=ETH&outputCurrency=0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
-    "createdAt": 1659634991,
-    "network": "optimism"
+    "addLiquidityUrl": "https://stargate.finance/pool/usdc-optimism/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/usdc-optimism/remove",
+    "network": "optimism",
+    "createdAt": 1659634991
   },
   {
     "id": "stargate-op-eth",
@@ -1824,12 +2218,11 @@
     "earnedToken": "mooStargateETH",
     "earnedTokenAddress": "0x79149B500f0d796aA7f85e0170d16C7e79BAd3C5",
     "earnContractAddress": "0x79149B500f0d796aA7f85e0170d16C7e79BAd3C5",
-    "oracle": "tokens",
-    "oracleId": "soETH",
+    "oracle": "lps",
+    "oracleId": "stargate-op-eth",
     "status": "active",
-    "pauseReason": "upgrade",
     "platformId": "stargate",
-    "assets": ["soETH"],
+    "assets": ["ETH"],
     "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1839,10 +2232,11 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://stargate.finance/pool/eth-optimism",
     "buyTokenUrl": "https://app.uniswap.org/#/swap?chain=optimism&inputCurrency=0x7F5c764cBc14f9669B88837ca1490cCa17c31607&outputCurrency=ETH",
-    "createdAt": 1659634992,
-    "network": "optimism"
+    "addLiquidityUrl": "https://stargate.finance/pool/eth-optimism/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/eth-optimism/remove",
+    "network": "optimism",
+    "createdAt": 1659634992
   },
   {
     "id": "velodrome-velo-weth",
@@ -1859,10 +2253,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["VELO", "ETH"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657018688
   },
@@ -1881,10 +2276,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["OP", "ETH"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657018687
   },
@@ -1903,10 +2299,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["ETH", "USDC"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657018686
   },
@@ -1925,7 +2322,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["LUSD", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -1933,8 +2329,10 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657018685
   },
@@ -1953,7 +2351,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["FRAX", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1962,8 +2359,10 @@
       "PARTIAL_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657018684
   },
@@ -1982,10 +2381,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["sETH", "ETH"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657018684
   },
@@ -2004,7 +2404,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["DAI", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -2012,8 +2411,10 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657018683
   },
@@ -2032,7 +2433,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["MAI", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -2040,8 +2440,10 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657018681
   },
@@ -2060,7 +2462,6 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["sUSD", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -2068,8 +2469,10 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1657018680
   },
@@ -2088,7 +2491,6 @@
     "status": "active",
     "platformId": "ripae",
     "assets": ["pETHo", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -2098,8 +2500,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1660565619
   },
@@ -2115,10 +2519,10 @@
     "earnContractAddress": "0x3a847E91d632C72A8247727CC09C63a6847f70b4",
     "oracle": "lps",
     "oracleId": "velodrome-weth-setho",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "ripae",
     "assets": ["sETHo", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -2127,8 +2531,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1660565619
   },
@@ -2147,7 +2553,6 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["sETH", "ETH"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -2156,7 +2561,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://optimism.curve.fi/factory/10/deposit",
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-10/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-10/withdraw",
     "network": "optimism",
     "createdAt": 1670252930
   },
@@ -2175,7 +2582,6 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["sBTC", "WBTC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -2184,7 +2590,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://optimism.curve.fi/factory/12/deposit",
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-12/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-12/withdraw",
     "network": "optimism",
     "createdAt": 1660288888
   },
@@ -2203,7 +2611,6 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["sUSD", "DAI", "USDC", "USDT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -2213,7 +2620,9 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "addLiquidityUrl": "https://optimism.curve.fi/factory/0/deposit",
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-0/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-0/withdraw",
     "network": "optimism",
     "createdAt": 1667194759
   },
@@ -2232,10 +2641,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["OP", "USDC"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1656705591
   },
@@ -2254,10 +2664,11 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["VELO", "USDC"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
     "createdAt": 1656705590
   },
@@ -2276,9 +2687,10 @@
     "status": "active",
     "platformId": "beethovenx",
     "assets": ["ETH", "OP", "USDC"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/#/pool/0x39965c9dab5448482cf7e002f583c812ceb53046000100000000000000000003/invest",
+    "removeLiquidityUrl": "https://op.beets.fi/#/pool/0x39965c9dab5448482cf7e002f583c812ceb53046000100000000000000000003/invest",
     "network": "optimism",
     "createdAt": 1673571557
   },
@@ -2297,9 +2709,10 @@
     "status": "active",
     "platformId": "beethovenx",
     "assets": ["ETH", "WBTC", "USDC"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/#/pool/0x5028497af0c9a54ea8c6d42a054c0341b9fc6168000100000000000000000004/invest",
+    "removeLiquidityUrl": "https://op.beets.fi/#/pool/0x5028497af0c9a54ea8c6d42a054c0341b9fc6168000100000000000000000004/invest",
     "network": "optimism",
     "createdAt": 1673571557
   },
@@ -2318,9 +2731,10 @@
     "status": "active",
     "platformId": "beethovenx",
     "assets": ["BEETS", "BAL", "OP"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/#/pool/0xd6e5824b54f64ce6f1161210bc17eebffc77e031000100000000000000000006",
+    "removeLiquidityUrl": "https://op.beets.fi/#/pool/0xd6e5824b54f64ce6f1161210bc17eebffc77e031000100000000000000000006",
     "network": "optimism",
     "createdAt": 1673571557
   },
@@ -2340,9 +2754,10 @@
     "retireReason": "rewards",
     "platformId": "beethovenx",
     "assets": ["OP", "LYRA", "USDC", "SNX", "sUSD", "BEETS", "PERP", "BAL"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/#/pool/0x7ef99013e446ddce2486b8e04735b7019a115e6f000100000000000000000005/invest",
+    "removeLiquidityUrl": "https://op.beets.fi/#/pool/0x7ef99013e446ddce2486b8e04735b7019a115e6f000100000000000000000005/invest",
     "network": "optimism",
     "createdAt": 1656341988
   }

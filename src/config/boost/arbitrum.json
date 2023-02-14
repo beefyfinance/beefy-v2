@@ -1,1 +1,36 @@
-[]
+[
+  {
+    "id": "moo_balancer-wsteth-eth-v2-lido",
+    "poolId": "balancer-wsteth-eth-v2",
+    "name": "Lido",
+    "assets": ["wstETH", "ETH"],
+    "tokenAddress": "0xB27c433C1cdb1B42E2601Af2d40dD442fbf1cdc3",
+    "earnedToken": "LDO",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x13Ad51ed4F1B7e9Dc168d8a00cB3f4dDD85EfA60",
+    "earnContractAddress": "0xfd30cEAD8E54568fe535747929775e95Fdb6d3f7",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "LDO",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["lido-eth"]
+  },
+  {
+    "id": "moo_curve-arb-f-wsteth-lido",
+    "poolId": "curve-arb-f-wsteth",
+    "name": "Lido",
+    "assets": ["wstETH", "ETH"],
+    "tokenAddress": "0x9E75f8298e458B76382870982788988A0799195b",
+    "earnedToken": "LDO",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x13Ad51ed4F1B7e9Dc168d8a00cB3f4dDD85EfA60",
+    "earnContractAddress": "0x81350D3b7eaCA4d4Afb66721A9b5bBE2a6301b35",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "LDO",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["lido-eth"]
+  }
+]

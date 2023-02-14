@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "id": "moo_convex-steth-lido",
+    "poolId": "convex-steth",
+    "name": "Lido",
+    "assets": ["stETH", "ETH"],
+    "tokenAddress": "0xa7739fd3d12ac7F16D8329AF3Ee407e19De10D8D",
+    "earnedToken": "LDO",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+    "earnContractAddress": "0xAe3F0C61F3Dc48767ccCeF3aD50b29437BE4b1a4",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "LDO",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["lido-eth"]
+  }
+]

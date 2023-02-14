@@ -19,6 +19,7 @@ import { SpiritSwapV2SolidlyPool } from './SpiritSwapV2SolidlyPool';
 import { NetswapUniswapV2Pool } from './NetswapUniswapV2Pool';
 import { StellaUniswapV2Pool } from './StellaUniswapV2Pool';
 import { VelodromeSolidlyPool } from './VelodromeSolidlyPool';
+import { EthereumSolidlyPool } from './EthereumSolidlyPool';
 
 const mapUniswapV2: Record<string, typeof UniswapV2Pool> = {
   'avax-swapsicle': SwapsicleUniswapV2Pool,
@@ -36,6 +37,7 @@ const mapSolidly: Record<string, typeof SolidlyPool> = {
   'fantom-spirit-v2': SpiritSwapV2SolidlyPool,
   'optimism-velodrome': VelodromeSolidlyPool,
   'fantom-equalizer': VelodromeSolidlyPool,
+  'ethereum-solidly': EthereumSolidlyPool,
   default: SolidlyPool,
 } as const;
 

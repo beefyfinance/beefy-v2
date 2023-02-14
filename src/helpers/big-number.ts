@@ -77,8 +77,8 @@ export function bigNumberToStringDeep(input: unknown) {
   return input;
 }
 
-export function isReal(value: BigNumber): boolean {
-  return value.isFinite() && !value.isNaN();
+export function isFiniteBigNumber(value: any): value is BigNumber {
+  return value !== null && isBigNumber(value) && !value.isNaN() && value.isFinite();
 }
 
 export function compareBigNumber(a: BigNumber, b: BigNumber): number {
