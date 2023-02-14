@@ -121,8 +121,8 @@
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
     "earnedToken": "mooBeetsFantomOfTheOperaAct2",
-    "earnedTokenAddress": "0x0E2cf6980442268f059410d1445Aa7E570a184e2",
-    "earnContractAddress": "0x0E2cf6980442268f059410d1445Aa7E570a184e2",
+    "earnedTokenAddress": "0x48aA189232d78f628D345Dba757888348b0D9144",
+    "earnContractAddress": "0x48aA189232d78f628D345Dba757888348b0D9144",
     "oracle": "lps",
     "oracleId": "beets-fantom-of-the-opera-act-2",
     "status": "active",
@@ -139,7 +139,7 @@
     ],
     "addLiquidityUrl": "https://beets.fi/pool/0x56ad84b777ff732de69e85813daee1393a9ffe1000020000000000000000060e",
     "removeLiquidityUrl": "https://beets.fi/pool/0x56ad84b777ff732de69e85813daee1393a9ffe1000020000000000000000060e",
-    "createdAt": 1676308827,
+    "createdAt": 1676336037,
     "network": "fantom"
   },
   {
