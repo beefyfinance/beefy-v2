@@ -32,13 +32,13 @@
     "oracle": "lps",
     "oracleId": "monolith-bifi-weth",
     "status": "active",
-    "platformId": "monolith",
+    "platformId": "solidly",
     "assets": ["BIFI", "ETH"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674845014
+    "createdAt": 1676382228
   },
   {
     "id": "monolith-mosolid-weth",
@@ -53,13 +53,13 @@
     "oracle": "lps",
     "oracleId": "monolith-mosolid-weth",
     "status": "active",
-    "platformId": "monolith",
+    "platformId": "solidly",
     "assets": ["moSOLID", "ETH"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674845014
+    "createdAt": 1676382228
   },
   {
     "id": "monolith-solid-weth",
@@ -74,13 +74,13 @@
     "oracle": "lps",
     "oracleId": "monolith-solid-weth",
     "status": "active",
-    "platformId": "monolith",
+    "platformId": "solidly",
     "assets": ["SOLID", "ETH"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674845014
+    "createdAt": 1676382228
   },
   {
     "id": "monolith-mim-usdc",
@@ -95,7 +95,7 @@
     "oracle": "lps",
     "oracleId": "monolith-mim-usdc",
     "status": "active",
-    "platformId": "monolith",
+    "platformId": "solidly",
     "assets": ["MIM", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
@@ -107,7 +107,7 @@
     ],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674845014
+    "createdAt": 1676382228
   },
   {
     "id": "monolith-frxeth-weth",
@@ -122,13 +122,13 @@
     "oracle": "lps",
     "oracleId": "monolith-frxeth-weth",
     "status": "active",
-    "platformId": "monolith",
+    "platformId": "solidly",
     "assets": ["frxETH", "ETH"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674845014
+    "createdAt": 1676382228
   },
   {
     "id": "monolith-frax-usdt",
@@ -143,7 +143,7 @@
     "oracle": "lps",
     "oracleId": "monolith-frax-usdt",
     "status": "active",
-    "platformId": "monolith",
+    "platformId": "solidly",
     "assets": ["FRAX", "USDT"],
     "strategyTypeId": "lp",
     "risks": [
@@ -155,7 +155,7 @@
     ],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674845014
+    "createdAt": 1676382228
   },
   {
     "id": "monolith-usdc-usdt",
@@ -170,13 +170,13 @@
     "oracle": "lps",
     "oracleId": "monolith-usdc-usdt",
     "status": "active",
-    "platformId": "monolith",
+    "platformId": "solidly",
     "assets": ["USDC", "USDT"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674845014
+    "createdAt": 1676382228
   },
   {
     "id": "monolith-usdc-weth",
@@ -191,13 +191,13 @@
     "oracle": "lps",
     "oracleId": "monolith-usdc-weth",
     "status": "active",
-    "platformId": "monolith",
+    "platformId": "solidly",
     "assets": ["USDC", "ETH"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1674845014
+    "createdAt": 1676382228
   },
   {
     "id": "sushi-mainnet-usdc-weth",
@@ -675,7 +675,7 @@
     "earnContractAddress": "0xeAa61217fbbaB972fEBFAEa8D62105139D0240E8",
     "oracle": "lps",
     "oracleId": "aura-wsteth-reth-sfrxeth",
-    "status": "active",
+    "status": "eol",
     "platformId": "aura",
     "assets": ["wstETH", "rETH", "sfrxETH"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
