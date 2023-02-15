@@ -200,6 +200,27 @@
     "createdAt": 1676382228
   },
   {
+    "id": "monolith-blur-weth",
+    "name": "BLUR-ETH vLP",
+    "token": "BLUR-ETH vLP",
+    "tokenAddress": "0x48187E512F5338F06222AC574576744129736eFD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "solidly",
+    "earnedToken": "mooSolidlyBLUR-ETH",
+    "earnedTokenAddress": "0x941E1dEAc6c58391b266AB849cB7368d6a60910E",
+    "earnContractAddress": "0x941E1dEAc6c58391b266AB849cB7368d6a60910E",
+    "oracle": "lps",
+    "oracleId": "monolith-blur-weth",
+    "status": "active",
+    "platformId": "solidly",
+    "assets": ["BLUR", "ETH"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://solidly.com/liquidity",
+    "network": "ethereum",
+    "createdAt": 1676461428
+  },
+  {
     "id": "sushi-mainnet-usdc-weth",
     "name": "ETH-USDC LP",
     "token": "ETH-USDC LP",
