@@ -16,16 +16,11 @@ export const fetchAnalyticsVaults = createAsyncThunk<
 >('analytics/fetchVaults', async ({ address }, { getState }) => {
   const api = await getAnalyticsApi();
 
-  const userVaults = selectUserDepositedVaultIds(getState());
   const userTimeline = await api.getUserVaults(address);
-
-  const vaults = userTimeline.filter(vaultTimeline =>
-    userVaults.includes(vaultTimeline.display_name)
-  );
 
   const totals: FetchAnalyticsVaultsFullfilled = {};
 
-  for (const vault of vaults) {
+  for (const vault of userTimeline) {
     const vaultHistory = totals[vault.display_name] || [];
 
     const parsedVault = {
