@@ -2,7 +2,7 @@ import { ProposalEntity } from '../entities/proposal';
 import { BeefyState } from '../../../redux-types';
 import { createSelector } from '@reduxjs/toolkit';
 
-const DELAY_NON_CORE_PROPOSALS = 30 * 60; // 30 minutes
+const DELAY_NON_CORE_PROPOSALS = 2 * 60 * 60; // 2 hours
 
 export function selectAllProposalIds(state: BeefyState): ProposalEntity['id'][] {
   return state.entities.proposals.allIds;
