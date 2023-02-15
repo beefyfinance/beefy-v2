@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
 import { getAnalyticsApi } from '../apis/instances';
-import { selectUserDepositedVaultIds } from '../selectors/balance';
 import { VaultTimelineAnalyticsEntity } from '../entities/analytics';
 import BigNumber from 'bignumber.js';
 
