@@ -9,6 +9,8 @@ import { VaultYearlyStat } from './VaultYearlyStat';
 import { VaultDailyStat } from './VaultDailyStat';
 import { VaultTvlStat } from './VaultTvlStat';
 import { VaultSafetyStat } from './VaultSafetyStat';
+import { featureFlag_capture } from '../../features/data/utils/feature-flags';
+import { VaultCaptureStat } from './VaultCaptureStat';
 
 const useStyles = makeStyles(styles);
 
@@ -17,6 +19,7 @@ export type VaultStatsProps = {
 };
 export const VaultStats = memo<VaultStatsProps>(function VaultStats({ vaultId }) {
   const classes = useStyles();
+  const capture = featureFlag_capture();
 
   return (
     <div className={classes.vaultStats}>
@@ -37,7 +40,7 @@ export const VaultStats = memo<VaultStatsProps>(function VaultStats({ vaultId })
           <VaultTvlStat vaultId={vaultId} />
         </div>
         <div className={classes.column}>
-          <VaultSafetyStat vaultId={vaultId} />
+          {capture ? <VaultCaptureStat vaultId={vaultId} /> : <VaultSafetyStat vaultId={vaultId} />}
         </div>
       </div>
     </div>

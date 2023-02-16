@@ -155,3 +155,8 @@ export function featureFlag_breakpoints() {
   const params = new URLSearchParams(window.location.search);
   return params.has('__breakpoints');
 }
+
+export function featureFlag_capture() {
+  const params = new URLSearchParams(window.location.search);
+  return params.has('__capture');
+}
