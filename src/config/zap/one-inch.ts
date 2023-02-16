@@ -96,7 +96,7 @@ export const zaps: OneInchZapConfig[] = [
     chainId: 'optimism',
     fee: {
       value: 0.05 / 100,
-      recipient: '0xbeEF1EFee5938C2bB2FD99F5fb7EE015C3D81c76',
+      recipient: '0x852C903e5Bc93F526AB254BFEe0c1DFF23CF82aB',
     },
     depositFromTokens: ['ETH', 'WETH', 'OP', 'USDC', 'USDT', 'DAI', 'MAI', 'sUSD', 'sETH', 'WBTC'],
     withdrawToTokens: ['ETH', 'OP', 'BIFI', 'USDC', 'USDT', 'DAI', 'MAI', 'sUSD', 'sETH', 'WBTC'],
