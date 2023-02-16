@@ -114,6 +114,35 @@
     "createdAt": 1646162527
   },
   {
+    "id": "beets-fantom-of-the-opera-act-2",
+    "name": "Fantom of the Opera, Act II",
+    "token": "Fantom of the Opera, Act II",
+    "tokenAddress": "0x56aD84b777ff732de69E85813DAEE1393a9FFE10",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsFantomOfTheOperaAct2",
+    "earnedTokenAddress": "0x48aA189232d78f628D345Dba757888348b0D9144",
+    "earnContractAddress": "0x48aA189232d78f628D345Dba757888348b0D9144",
+    "oracle": "lps",
+    "oracleId": "beets-fantom-of-the-opera-act-2",
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["FTM", "USDC"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://beets.fi/pool/0x56ad84b777ff732de69e85813daee1393a9ffe1000020000000000000000060e",
+    "removeLiquidityUrl": "https://beets.fi/pool/0x56ad84b777ff732de69e85813daee1393a9ffe1000020000000000000000060e",
+    "createdAt": 1676336037,
+    "network": "fantom"
+  },
+  {
     "id": "wigo-wftm-sftmx",
     "name": "sFTMx-FTM LP",
     "token": "sFTMx-FTM LP",
