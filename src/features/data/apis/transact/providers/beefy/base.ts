@@ -23,6 +23,7 @@ import {
   isZapQuoteStepSwap,
   ITransactProvider,
   TransactOption,
+  ZapFee,
   ZapOption,
   ZapQuote,
 } from '../../transact-types';
@@ -97,6 +98,8 @@ type CommonOptionsData<AmmType extends AmmEntity = AmmEntity> = {
   native: TokenNative;
   wnative: TokenErc20;
 };
+
+const ZERO_FEE: ZapFee = { value: 0 };
 
 /**
  * Deposit/withdraw via Beefy Zap Contracts
@@ -208,7 +211,7 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
         zap,
         amm,
         lpTokens,
-        fee: 0,
+        fee: ZERO_FEE,
       };
     });
 
@@ -328,7 +331,7 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
         zap,
         amm,
         lpTokens,
-        fee: 0,
+        fee: ZERO_FEE,
       },
     ];
 
@@ -349,7 +352,7 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
         zap,
         amm,
         lpTokens,
-        fee: 0,
+        fee: ZERO_FEE,
       });
     });
 
