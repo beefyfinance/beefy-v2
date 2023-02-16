@@ -1,5 +1,5 @@
 import { sortBy } from 'lodash';
-import { PnL } from '../../../helpers/pnl';
+import { PnL, PnLBreakdown } from '../../../helpers/pnl';
 import { BeefyState } from '../../../redux-types';
 import { VaultEntity } from '../entities/vault';
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
@@ -15,59 +15,56 @@ export const selectVaultPnl = (state: BeefyState, vaultId: VaultEntity['id']) =>
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
   const sortedTimeline = sortBy(vaultTimeline, 'datetime');
 
-  console.log(sortedTimeline);
+  const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
 
   //ppfs locally in app is stored as ppfs/1e18, we need to move it to same format as api
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const ppfs = selectVaultPricePerFullShare(state, vault.id).shiftedBy(18 - depositToken.decimals);
-  const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
 
-  const usdPnL = new PnL();
+  const pnl = new PnL();
   for (const row of sortedTimeline) {
     if (row.shareDiff && row.shareToUnderlyingPrice && row.underlyingToUsdPrice) {
-      usdPnL.addTransaction({
+      pnl.addTransaction({
         shares: row.shareDiff,
-        price: row.shareToUnderlyingPrice.times(row.underlyingToUsdPrice),
+        price: row.underlyingToUsdPrice,
+        ppfs: row.shareToUnderlyingPrice,
       });
+    } else {
+      console.log('ALERT CHAOS PABLO WILL KILL US ALL');
     }
   }
 
-  const yieldPnL = new PnL();
-  for (const row of sortedTimeline) {
-    if (row.shareDiff && row.shareToUnderlyingPrice) {
-      yieldPnL.addTransaction({
-        shares: row.shareDiff,
-        price: row.shareToUnderlyingPrice,
-      });
-    }
-  }
+  //Rewrite to new pnl class
+  const balanceAtDeposit = pnl.getRemainingShares().times(pnl.getRemainingSharesAvgEntryPpfs());
+  const usdBalanceAtDeposit = balanceAtDeposit.times(pnl.getRemainingSharesAvgEntryPrice());
 
-  console.log('price', oraclePrice.toFixed(6));
-  console.log('ppfs', ppfs.toFixed(6));
+  const depositNow = pnl.getRemainingShares().times(ppfs);
+  const depositUsd = depositNow.times(oraclePrice);
 
-  const balanceAtDeposit = yieldPnL.getRemainingShares();
-  const usdBalanceAtDeposit = usdPnL.getRemainingSharesAvgEntryPrice().times(balanceAtDeposit);
-
-  const deposit = yieldPnL.getRemainingShares().times(ppfs);
-  const depositUsd = deposit.times(oraclePrice);
-
-  const realizedYield = yieldPnL.getRealizedPnl();
-  const unrealizedYield = yieldPnL.getUnrealizedPnl(ppfs);
-  const totalYield = realizedYield.plus(unrealizedYield);
-
+  const totalYield = depositNow.minus(balanceAtDeposit);
   const totalYieldUsd = totalYield.times(oraclePrice);
 
-  const realizedPnl = usdPnL.getRealizedPnl();
-  const unrelizedPnl = usdPnL.getUnrealizedPnl(oraclePrice);
-  const totalPnlUsd = unrelizedPnl.plus(realizedPnl);
+  const realizedPnl = pnl.getRealizedPnl();
+  console.log('realized pnl');
+  printPnl(realizedPnl);
+  const unrealizedPnl = pnl.getUnrealizedPnl(oraclePrice, ppfs);
+  console.log('unrealized pnl');
+  printPnl(unrealizedPnl);
+
+  // const totalPnlUsd = realizedPnl.usd.plus(unrealizedPnl.usd);
+  const totalPnlUsd = unrealizedPnl.usd;
 
   return {
-    totalYield,
-    totalYieldUsd,
-    totalPnlUsd,
-    deposit,
+    totalYield: totalYield,
+    totalYieldUsd: totalYieldUsd,
+    totalPnlUsd: totalPnlUsd,
+    deposit: depositNow,
     depositUsd,
     usdBalanceAtDeposit,
     balanceAtDeposit,
   };
+};
+
+const printPnl = (pnl: PnLBreakdown) => {
+  console.log(`usd: ${pnl.usd.toString()} - shares: ${pnl.shares.toString()}`);
 };
