@@ -1,5 +1,10 @@
 import axios, { AxiosInstance } from 'axios';
-import { AnalyticsUserTimelineResponse } from './analytics-types';
+import {
+  AnalyticsPriceResponse,
+  AnalyticsUserTimelineResponse,
+  PriceType,
+  TimeBucketType,
+} from './analytics-types';
 
 export class AnalyticsApi {
   public api: AxiosInstance;
@@ -12,6 +17,18 @@ export class AnalyticsApi {
 
   public async getUserVaults(address: string): Promise<AnalyticsUserTimelineResponse> {
     const res = await this.api.get('/v0/beefy/timeline', { params: { address } });
+    return res.data;
+  }
+
+  public async getVaultPrices(
+    productKey: string,
+    priceType: PriceType,
+    timeBucket: TimeBucketType
+  ): Promise<AnalyticsPriceResponse> {
+    const res = await this.api.get('/v0/price', {
+      params: { product_key: productKey, price_type: priceType, time_bucket: timeBucket },
+    });
+
     return res.data;
   }
 }
