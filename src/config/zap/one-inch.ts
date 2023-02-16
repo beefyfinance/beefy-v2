@@ -61,6 +61,7 @@ export const zaps: OneInchZapConfig[] = [
     withdrawToTokens: ['FTM', 'BIFI', 'USDC', 'fUSDT', 'DAI', 'MIM', 'MAI', 'WETH', 'WBTC'],
     blockedTokens: [
       'alUSD', // no 1inch price
+      'ANKR', // no 1inch price
       'asUSDC', // no 1inch price
       'ATLAS', // no 1inch liquidity
       'BASED', // no 1inch liquidity
@@ -70,6 +71,7 @@ export const zaps: OneInchZapConfig[] = [
       'DOLA', // no 1inch liquidity
       'FTML', // no 1inch liquidity
       'fWINGS', // beefy and 1inch prices are more than 10% different
+      'FXS', // no 1inch price
       'LUNA', // beefy and 1inch prices are more than 10% different
       'LUNAw', // no 1inch liquidity
       'PEAR', // beefy and 1inch prices are more than 10% different
