@@ -4972,7 +4972,8 @@
     "earnContractAddress": "0xb97C963834319e1E07d4F241F1F42f6a41CAEB85",
     "oracle": "lps",
     "oracleId": "ripae-pftm-ftm",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "ripae",
     "assets": ["pFTM", "FTM"],
     "risks": [
@@ -5003,7 +5004,8 @@
     "earnContractAddress": "0x1f01078af0b8a4e7E2BA6211Bda7e92F89393284",
     "oracle": "lps",
     "oracleId": "ripae-pae-ftm",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "ripae",
     "assets": ["PAE", "FTM"],
     "risks": [
