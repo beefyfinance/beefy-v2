@@ -1,5 +1,7 @@
 import { isTokenNative, TokenEntity } from '../../../entities/token';
 import { AxiosError } from 'axios';
+import { isZapFeeNonZero, ZapFee } from '../transact-types';
+import { QuoteRequest, SwapRequest } from '../../one-inch/one-inch-types';
 
 export const ONE_INCH_NATIVE_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
 
@@ -20,4 +22,27 @@ export function errorToString(error: AxiosError): string {
   } catch {}
 
   return error.message;
+}
+
+export function swapWithFee(request: SwapRequest, fee: ZapFee): SwapRequest {
+  if (isZapFeeNonZero(fee)) {
+    return {
+      ...request,
+      fee: (fee.value * 100).toString(),
+      referrerAddress: fee.recipient,
+    };
+  }
+
+  return request;
+}
+
+export function quoteWithFee(request: QuoteRequest, fee: ZapFee): QuoteRequest {
+  if (isZapFeeNonZero(fee)) {
+    return {
+      ...request,
+      fee: (fee.value * 100).toString(),
+    };
+  }
+
+  return request;
 }
