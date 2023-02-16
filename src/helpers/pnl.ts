@@ -4,6 +4,15 @@ import { BIG_ZERO } from './big-number';
 interface PnlTransaction {
   shares: BigNumber;
   price: BigNumber;
+  ppfs: BigNumber;
+}
+
+//FIFO => First in First Out
+//LIFO => Last in first out
+
+export interface PnLBreakdown {
+  shares: BigNumber;
+  usd: BigNumber;
 }
 
 type PnLState = {
@@ -11,8 +20,9 @@ type PnLState = {
     boughtShares: BigNumber;
     remainingShares: BigNumber;
     entryPrice: BigNumber;
+    entryPpfs: BigNumber;
   }[];
-  realizedPnl: BigNumber;
+  realizedPnl: PnLBreakdown;
 };
 
 // this one is a FIFO pnl calculator:
@@ -23,7 +33,10 @@ export class PnL {
   constructor() {
     this.state = {
       sharesFifo: [],
-      realizedPnl: BIG_ZERO,
+      realizedPnl: {
+        shares: BIG_ZERO,
+        usd: BIG_ZERO,
+      },
     };
   }
 
@@ -37,22 +50,32 @@ export class PnL {
         boughtShares: transaction.shares,
         remainingShares: transaction.shares,
         entryPrice: transaction.price,
+        entryPpfs: transaction.ppfs,
       });
       return;
     }
 
     let remainingSharesToSell = transaction.shares.negated();
     let trxPnl = BIG_ZERO;
+    let trxPnlUsd = BIG_ZERO;
     let idx = 0;
     for (; idx < this.state.sharesFifo.length; idx++) {
-      const { remainingShares, entryPrice } = this.state.sharesFifo[idx];
+      const { remainingShares, entryPpfs: ppfs, entryPrice } = this.state.sharesFifo[idx];
       if (remainingShares.isZero()) {
         continue;
       }
 
       const sharesToSell = BigNumber.min(remainingSharesToSell, remainingShares);
-      const priceDiff = transaction.price.minus(entryPrice);
-      trxPnl = trxPnl.plus(sharesToSell.times(priceDiff));
+
+      const entryShareAmount = remainingShares.times(ppfs);
+      const entryUsdAmount = entryShareAmount.times(entryPrice);
+
+      const withdrawShareAmount = sharesToSell.times(transaction.ppfs);
+      const withdrawUsdAmount = withdrawShareAmount.times(transaction.price);
+
+      trxPnl = trxPnl.plus(withdrawShareAmount.minus(entryShareAmount));
+      trxPnlUsd = trxPnlUsd.plus(withdrawUsdAmount.minus(entryUsdAmount));
+
       remainingSharesToSell = remainingSharesToSell.minus(sharesToSell);
       this.state.sharesFifo[idx].remainingShares = remainingShares.minus(sharesToSell);
 
@@ -61,24 +84,34 @@ export class PnL {
       }
     }
 
-    this.state.realizedPnl = this.state.realizedPnl.plus(trxPnl);
+    this.state.realizedPnl.usd = this.state.realizedPnl.usd.plus(trxPnlUsd);
+    this.state.realizedPnl.shares = this.state.realizedPnl.usd.plus(trxPnl);
     return;
   }
 
-  getUnrealizedPnl(currentPrice: BigNumber): BigNumber {
-    let unrealizedPnl = BIG_ZERO;
-    for (const { remainingShares, entryPrice } of this.state.sharesFifo) {
+  getUnrealizedPnl(currentPrice: BigNumber, ppfs: BigNumber): PnLBreakdown {
+    const unrealizedPnl = {
+      usd: BIG_ZERO,
+      shares: BIG_ZERO,
+    };
+
+    for (const { remainingShares, entryPpfs, entryPrice } of this.state.sharesFifo) {
       if (remainingShares.isZero()) {
         continue;
       }
+      const currentShareAmount = remainingShares.times(ppfs);
+      const currentUsdAmount = currentShareAmount.times(currentPrice);
 
-      const priceDiff = currentPrice.minus(entryPrice);
-      unrealizedPnl = unrealizedPnl.plus(remainingShares.times(priceDiff));
+      const entryShareAmount = remainingShares.times(entryPpfs);
+      const entryUsdAmount = entryShareAmount.times(entryPrice);
+
+      unrealizedPnl.shares = unrealizedPnl.shares.plus(currentShareAmount.minus(entryShareAmount));
+      unrealizedPnl.usd = unrealizedPnl.usd.plus(currentUsdAmount.minus(entryUsdAmount));
     }
     return unrealizedPnl;
   }
 
-  getRealizedPnl(): BigNumber {
+  getRealizedPnl(): PnLBreakdown {
     return this.state.realizedPnl;
   }
 
@@ -101,5 +134,18 @@ export class PnL {
       return BIG_ZERO;
     }
     return totalCost.div(totalShares);
+  }
+
+  getRemainingSharesAvgEntryPpfs(): BigNumber {
+    let totalShares = BIG_ZERO;
+    let totalPpfs = BIG_ZERO;
+    for (const { remainingShares, entryPpfs } of this.state.sharesFifo) {
+      totalShares = totalShares.plus(remainingShares);
+      totalPpfs = totalPpfs.plus(remainingShares.times(entryPpfs));
+    }
+    if (totalShares.isZero()) {
+      return BIG_ZERO;
+    }
+    return totalPpfs.div(totalShares);
   }
 }
