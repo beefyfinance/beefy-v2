@@ -672,7 +672,8 @@
       "IL_NONE",
       "MCAP_SMALL",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0xe22483774bd8611be2ad2f4194078dac9159f4ba0000000000000000000008f0/invest",
