@@ -9,7 +9,6 @@ import { OneInchApi } from '../src/features/data/apis/one-inch';
 import PQueue from 'p-queue';
 import { zaps as oneInchZaps } from '../src/config/zap/one-inch';
 import { createWriteStream } from 'fs';
-import { createFactoryWithCacheByChain } from '../src/features/data/utils/factory-utils';
 import { BeefyAPITokenPricesResponse } from '../src/features/data/apis/beefy';
 import { BIG_ONE, BIG_ZERO, fromWei, fromWeiString, toWeiString } from '../src/helpers/big-number';
 import { saveCsv, saveJson } from './common/utils';
@@ -214,8 +213,8 @@ function groupByMap<T extends Record<PropertyKey, any>, K extends keyof T, R>(
 }
 
 class RateLimitedOneInchApi extends OneInchApi {
-  constructor(chain: ChainEntity, protected readonly queue: PQueue) {
-    super(chain);
+  constructor(chain: ChainEntity, oracleAddress: string, protected readonly queue: PQueue) {
+    super(chain, oracleAddress);
   }
 
   protected async get<ResponseType extends {}, RequestType extends {}>(
@@ -268,9 +267,19 @@ function getOneInchQueue() {
   return oneInchQueue;
 }
 
-const getOneInchApi = createFactoryWithCacheByChain(async chain => {
-  return new RateLimitedOneInchApi(chain, getOneInchQueue());
-});
+const oneInchApiCache: { [chainId: string]: RateLimitedOneInchApi } = {};
+
+export async function getOneInchApi(
+  chain: ChainEntity,
+  oracleAddress: string
+): Promise<RateLimitedOneInchApi> {
+  if (!oneInchApiCache[chain.id]) {
+    console.debug(`Instanciating OneInchApi for chain ${chain.id}`);
+    return new RateLimitedOneInchApi(chain, oracleAddress, getOneInchQueue());
+  }
+
+  return oneInchApiCache[chain.id];
+}
 
 async function fetchPricesByType(type: 'prices' | 'lps'): Promise<BeefyAPITokenPricesResponse> {
   const response = await fetch(
@@ -481,7 +490,8 @@ async function checkLiquidityForChain(
   appChainId: AppChainId,
   prices: BeefyAPITokenPricesResponse
 ): Promise<SimpleTokenWithLiquidity[]> {
-  const api = await getOneInchApi(chainsByAppId[appChainId]);
+  const zap = oneInchZaps.find(z => z.chainId === appChainId);
+  const api = await getOneInchApi(chainsByAppId[appChainId], zap.priceOracleAddress);
   const { token: wnative, beefyPriceUsd: beefyNativeUsdPrice } = getChainNative(appChainId, prices);
 
   if (!wnative) {
@@ -548,7 +558,8 @@ async function checkPricesForChain(
   appChainId: AppChainId,
   prices: BeefyAPITokenPricesResponse
 ): Promise<TokenPrice[]> {
-  const api = await getOneInchApi(chainsByAppId[appChainId]);
+  const zap = oneInchZaps.find(z => z.chainId === appChainId);
+  const api = await getOneInchApi(chainsByAppId[appChainId], zap.priceOracleAddress);
   const { token: wnative, beefyPriceUsd: beefyNativePriceUsd } = getChainNative(appChainId, prices);
 
   if (!wnative) {

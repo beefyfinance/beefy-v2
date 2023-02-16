@@ -24,7 +24,7 @@ export class OneInchApi implements IOneInchApi {
   protected web3: Web3 | null = null;
   protected multicall: MultiCall | null = null;
 
-  constructor(protected chain: ChainEntity) {
+  constructor(protected chain: ChainEntity, protected oracleAddress: string) {
     this.api = axios.create({
       baseURL: `${API_URL}/v5.0/${chain.networkChainId}/`,
     });
@@ -77,7 +77,7 @@ export class OneInchApi implements IOneInchApi {
   }
 
   async getPriceInNative(request: PriceRequest): Promise<PriceResponse> {
-    if (!this.chain.oneInchPriceOracleAddress) {
+    if (!this.oracleAddress) {
       throw new Error(`No 1inch price oracle address for ${this.chain.id}`);
     }
 

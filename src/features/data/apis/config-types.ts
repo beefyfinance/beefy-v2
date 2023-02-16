@@ -8,7 +8,6 @@ import { ZapFee } from './transact/transact-types';
 
 export interface VaultConfig {
   id: string;
-  logo?: string | null;
   name: string;
   token: string;
   tokenAddress?: string | null;
@@ -19,7 +18,7 @@ export interface VaultConfig {
   earnedTokenAddress: string;
   earnedTokenDecimals?: number | null;
   earnContractAddress: string;
-  oracle: string; // 'tokens' | 'lp';
+  oracle: string; // 'tokens' | 'lps';
   oracleId: TokenEntity['id'];
   status: string; // 'active' | 'eol' | 'paused';
   platformId: PlatformEntity['id'];
@@ -187,6 +186,7 @@ export interface BeefyZapConfig {
 
 export interface OneInchZapConfig {
   zapAddress: string; // identifier
+  priceOracleAddress: string;
   chainId: ChainEntity['id'];
   depositFromTokens: TokenEntity['id'][];
   withdrawToTokens: TokenEntity['id'][];

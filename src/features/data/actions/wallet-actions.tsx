@@ -321,7 +321,7 @@ const oneInchBeefInSingle = (
 
     const vaultAddress = vault.earnedTokenAddress;
     const chain = selectChainById(state, vault.chainId);
-    const oneInchApi = await getOneInchApi(chain);
+    const oneInchApi = await getOneInchApi(chain, zap.priceOracleAddress);
     const swapTokenInAddress = swap.fromToken.address;
     const swapTokenOutAddress = swap.toToken.address;
     const swapAmountInWei = toWeiString(swap.fromAmount, swap.fromToken.decimals);
@@ -404,7 +404,7 @@ const oneInchBeefInLP = (
 
     const vaultAddress = vault.earnedTokenAddress;
     const chain = selectChainById(state, vault.chainId);
-    const oneInchApi = await getOneInchApi(chain);
+    const oneInchApi = await getOneInchApi(chain, zap.priceOracleAddress);
     const swapData = await Promise.all(
       swaps.map(async swap => {
         const swapTokenInAddress = swap.fromToken.address;
@@ -513,7 +513,7 @@ const oneInchBeefOutSingle = (
     );
 
     const mooTokensToWithdrawWei = sharesToWithdrawWei.toString(10);
-    const oneInchApi = await getOneInchApi(chain);
+    const oneInchApi = await getOneInchApi(chain, zap.priceOracleAddress);
     const swapTokenInAddress = swap.fromToken.address;
     const swapTokenOutAddress = swap.toToken.address;
     const swapAmountInWei = withdrawnAmountAfterFeeWei.toString(10);
@@ -617,7 +617,7 @@ const oneInchBeefOutLP = (
       withdrawnAmountAfterFeeWei
     );
 
-    const oneInchApi = await getOneInchApi(chain);
+    const oneInchApi = await getOneInchApi(chain, zap.priceOracleAddress);
     const swapData = await Promise.all(
       swaps.map(async swap => {
         const tokenN = lpTokens.findIndex(

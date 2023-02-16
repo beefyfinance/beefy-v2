@@ -13,7 +13,7 @@ const explorerApiUrls = {
   celo: 'https://explorer.celo.org/',
   moonriver: 'https://api-moonriver.moonscan.io/api',
   arbitrum: 'https://api.arbiscan.io/api',
-  aurora: 'https://api.aurorascan.dev/api',
+  aurora: 'https://explorer.mainnet.aurora.dev/api',
   metis: 'https://andromeda-explorer.metis.io/',
   one: 'https://explorer.harmony.one/',
   fuse: 'https://explorer.fuse.io/',
@@ -107,30 +107,38 @@ const getTimestamp = async (vaultAddress, chain) => {
   }
 };
 
-const getPoolDate = async () => {
-  const poolId = process.argv[2];
-  const chain = process.argv[3];
-
-  let pool;
-  try {
-    const pools = await getVaultsForChain(chain);
-    pool = pools.filter(p => p.id === poolId)[0];
-  } catch (err) {
-    return console.log(`${poolId} not found in pools for chain ${chain}`);
-  }
-  const address = pool.earnContractAddress;
-
+async function getContractDate(chain: string, address: string) {
   const explorer = explorerApiUrls[chain];
   if (!explorer) return console.log(`No explorer api url found for chain ${chain}`);
 
   const ts = await getTimestamp(address, chain);
   console.log(ts);
+}
+
+const getPoolDate = async () => {
+  const poolId = process.argv[2];
+  const chain = process.argv[3];
+
+  let address = poolId;
+
+  if (!address.startsWith('0x')) {
+    let pool;
+    try {
+      const pools = await getVaultsForChain(chain);
+      pool = pools.filter(p => p.id === poolId)[0];
+    } catch (err) {
+      return console.log(`${poolId} not found in pools for chain ${chain}`);
+    }
+    address = pool.earnContractAddress;
+  }
+
+  await getContractDate(chain, address);
 };
 
 if (process.argv.length === 4) {
   getPoolDate().catch(console.error);
 } else {
   console.error(
-    'Usage: yarn creationdate <vaultId> <chain>\ne.g. yarn creationdate one-bifi-maxi one'
+    'Usage: yarn creationdate <vaultId|address> <chain>\ne.g. yarn creationdate one-bifi-maxi one'
   );
 }
