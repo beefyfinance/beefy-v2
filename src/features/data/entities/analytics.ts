@@ -17,8 +17,12 @@ export type VaultTimelineAnalyticsWithBigNumber = ChangeTypeOfKeys<
   BigNumber
 >;
 
-export type VaultTimelineAnalyticsEntity = ChangeTypeOfKeys<
+export type VaultTimelineAnalyticsWithDateTime = ChangeTypeOfKeys<
   VaultTimelineAnalyticsWithBigNumber,
   'datetime',
   Date
 >;
+
+export type VaultTimelineAnalyticsEntity = VaultTimelineAnalyticsWithDateTime & {
+  internal?: boolean;
+};

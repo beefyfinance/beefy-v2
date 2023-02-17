@@ -6,9 +6,7 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.primary,
     alignItems: 'center',
   },
-  container: {
-    marginTop: 24,
-  },
+  container: {},
   cards: {
     marginTop: 24,
     display: 'flex',

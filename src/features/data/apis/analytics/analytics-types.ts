@@ -9,9 +9,9 @@ export interface TimelineAnalyticsConfig {
   share_to_underlying_price: number;
   underlying_balance: number;
   underlying_diff: number;
-  underlying_to_usd_price: number;
-  usd_balance: number;
-  usd_diff: number;
+  underlying_to_usd_price: number | null;
+  usd_balance: number | null;
+  usd_diff: number | null;
 }
 
 export type AnalyticsUserTimelineResponse = TimelineAnalyticsConfig[];

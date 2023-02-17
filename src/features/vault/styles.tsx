@@ -38,6 +38,9 @@ export const styles = (theme: Theme) => ({
   },
   columnActions: {
     width: '100%',
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '24px',
     '& > :first-child': {
       marginTop: 0,
     },
@@ -48,6 +51,9 @@ export const styles = (theme: Theme) => ({
   columnInfo: {
     width: '100%',
     marginTop: '-24px',
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '24px',
     '& > :first-child': {
       marginTop: 0,
     },
