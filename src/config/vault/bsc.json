@@ -17477,7 +17477,8 @@
     "earnContractAddress": "0x1592550E083286C35282E53732FDE11800A187E1",
     "oracle": "lps",
     "oracleId": "ripae-pae-bnb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "ripae",
     "assets": ["PAE", "BNB"],
     "risks": [
@@ -18362,7 +18363,8 @@
     "earnContractAddress": "0xc1beA7B6b749D1f3A812F39afeB8795a97402dfF",
     "oracle": "lps",
     "oracleId": "ellipsis-mai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "dotdot",
     "assets": ["MAI", "BUSD", "USDC", "USDT"],
     "risks": [
