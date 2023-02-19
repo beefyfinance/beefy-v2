@@ -211,37 +211,6 @@
     "createdAt": 1649422900
   },
   {
-    "id": "joe-cai-wavax",
-    "name": "CAI-AVAX LP",
-    "token": "CAI-AVAX LP",
-    "tokenAddress": "0xE5e9d67e93aD363a50cABCB9E931279251bBEFd0",
-    "tokenDecimals": 18,
-    "tokenProviderId": "traderjoe",
-    "earnedToken": "mooJoeCAI-AVAX",
-    "earnedTokenAddress": "0x6827e2196E46400767B20C52fE105a28D1547AAD",
-    "earnContractAddress": "0x6827e2196E46400767B20C52fE105a28D1547AAD",
-    "oracle": "lps",
-    "oracleId": "joe-cai-wavax",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "traderjoe",
-    "assets": ["CAI", "AVAX"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_SMALL",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x48f88A3fE843ccb0b5003e70B4192c1d7448bEf0#/",
-    "addLiquidityUrl": "https://v1.traderjoexyz.com/farm/0xE5e9d67e93aD363a50cABCB9E931279251bBEFd0-0x188bED1968b795d5c9022F6a0bb5931Ac4c18F00",
-    "removeLiquidityUrl": "https://v1.traderjoexyz.com/farm/0xE5e9d67e93aD363a50cABCB9E931279251bBEFd0-0x188bED1968b795d5c9022F6a0bb5931Ac4c18F00",
-    "network": "avax",
-    "createdAt": 1663195421
-  },
-  {
     "id": "sicle-grape-mim",
     "name": "GRAPE-MIM LP",
     "token": "GRAPE-MIM SLP",
