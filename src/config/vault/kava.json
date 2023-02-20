@@ -1,5 +1,28 @@
 [
   {
+    "id": "sushi-kava-wkava-usdcaxl",
+    "name": "axlUSDC-KAVA LP",
+    "token": "axlUSDC-KAVA LP",
+    "tokenAddress": "0xb379Eb428A28a927a16ee7f95100Ac6A5117AaA1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnedToken": "mooSushiKAVA-axlUSDC",
+    "earnedTokenAddress": "0x67626718777795cD11940358E56e89b316315eE3",
+    "earnContractAddress": "0x67626718777795cD11940358E56e89b316315eE3",
+    "oracle": "lps",
+    "oracleId": "sushi-kava-wkava-usdcaxl",
+    "status": "active",
+    "platformId": "sushi",
+    "assets": ["USDCaxl", "KAVA"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MEDIUM", "AUDIT"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://www.sushi.com/swap",
+    "addLiquidityUrl": "https://www.sushi.com/earn/kava:0xb379Eb428A28a927a16ee7f95100Ac6A5117AaA1/add",
+    "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0xb379Eb428A28a927a16ee7f95100Ac6A5117AaA1/remove",
+    "network": "kava",
+    "createdAt": 1676912731
+  },
+  {
     "id": "curve-kava-3pool",
     "name": "DAI/USDC/USDT",
     "token": "kava-3Pool-f",
