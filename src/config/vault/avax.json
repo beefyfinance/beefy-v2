@@ -115,7 +115,7 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
     "network": "avax",
-    "createdAt": 1676565010
+    "createdAt": 1676748216
   },
   {
     "id": "sicle-wavax-usd+",
