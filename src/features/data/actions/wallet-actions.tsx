@@ -51,7 +51,12 @@ import { selectChainById } from '../selectors/chains';
 import { BIG_ZERO, fromWeiString, toWei, toWeiString } from '../../../helpers/big-number';
 import { updateSteps } from './stepper';
 import { StepContent, stepperActions } from '../reducers/wallet/stepper';
-import { InputTokenAmount, TokenAmount, ZapQuoteStepSwap } from '../apis/transact/transact-types';
+import {
+  InputTokenAmount,
+  TokenAmount,
+  ZapFee,
+  ZapQuoteStepSwap,
+} from '../apis/transact/transact-types';
 import { ZapEntityBeefy, ZapEntityOneInch } from '../entities/zap';
 import { BeefyZapOneInchAbi, ZapAbi } from '../../../config/abi';
 import { OneInchZapProvider } from '../apis/transact/providers/one-inch/one-inch';
@@ -60,6 +65,7 @@ import { getPool } from '../apis/amm';
 import { AmmEntity } from '../entities/amm';
 import { WANT_TYPE } from '../apis/amm/types';
 import { getVaultWithdrawnFromContract } from '../apis/transact/helpers/vault';
+import { swapWithFee } from '../apis/transact/helpers/one-inch';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -310,6 +316,7 @@ const oneInchBeefInSingle = (
   inputToken: TokenEntity,
   swap: ZapQuoteStepSwap,
   zap: ZapEntityOneInch,
+  fee: ZapFee,
   slippageTolerance: number = 0.01
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -326,14 +333,19 @@ const oneInchBeefInSingle = (
     const swapTokenInAddress = swap.fromToken.address;
     const swapTokenOutAddress = swap.toToken.address;
     const swapAmountInWei = toWeiString(swap.fromAmount, swap.fromToken.decimals);
-    const swapData = await oneInchApi.getSwap({
-      disableEstimate: true, // otherwise will fail due to no allowance
-      fromAddress: zap.zapAddress,
-      amount: swapAmountInWei,
-      fromTokenAddress: swapTokenInAddress,
-      toTokenAddress: swapTokenOutAddress,
-      slippage: slippageTolerance * 100,
-    });
+    const swapData = await oneInchApi.getSwap(
+      swapWithFee(
+        {
+          disableEstimate: true, // otherwise will fail due to no allowance
+          fromAddress: zap.zapAddress,
+          amount: swapAmountInWei,
+          fromTokenAddress: swapTokenInAddress,
+          toTokenAddress: swapTokenOutAddress,
+          slippage: slippageTolerance * 100,
+        },
+        fee
+      )
+    );
     const swapAmountOut = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
 
     // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
@@ -391,6 +403,7 @@ const oneInchBeefInLP = (
   input: TokenAmount,
   swaps: ZapQuoteStepSwap[],
   zap: ZapEntityOneInch,
+  fee: ZapFee,
   lpTokens: TokenErc20[],
   wantType: Omit<WANT_TYPE, WANT_TYPE.SINGLE>,
   slippageTolerance: number = 0.01
@@ -411,14 +424,19 @@ const oneInchBeefInLP = (
         const swapTokenInAddress = swap.fromToken.address;
         const swapTokenOutAddress = swap.toToken.address;
         const swapAmountInWei = toWeiString(swap.fromAmount, swap.fromToken.decimals);
-        const swapData = await oneInchApi.getSwap({
-          disableEstimate: true, // otherwise will fail due to no allowance
-          fromAddress: zap.zapAddress,
-          amount: swapAmountInWei,
-          fromTokenAddress: swapTokenInAddress,
-          toTokenAddress: swapTokenOutAddress,
-          slippage: slippageTolerance * 100,
-        });
+        const swapData = await oneInchApi.getSwap(
+          swapWithFee(
+            {
+              disableEstimate: true, // otherwise will fail due to no allowance
+              fromAddress: zap.zapAddress,
+              amount: swapAmountInWei,
+              fromTokenAddress: swapTokenInAddress,
+              toTokenAddress: swapTokenOutAddress,
+              slippage: slippageTolerance * 100,
+            },
+            fee
+          )
+        );
         const swapAmountOut = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
 
         // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
@@ -489,6 +507,7 @@ const oneInchBeefOutSingle = (
   input: InputTokenAmount,
   swap: ZapQuoteStepSwap,
   zap: ZapEntityOneInch,
+  fee: ZapFee,
   slippageTolerance: number = 0.01
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -518,14 +537,19 @@ const oneInchBeefOutSingle = (
     const swapTokenInAddress = swap.fromToken.address;
     const swapTokenOutAddress = swap.toToken.address;
     const swapAmountInWei = withdrawnAmountAfterFeeWei.toString(10);
-    const swapData = await oneInchApi.getSwap({
-      disableEstimate: true, // otherwise will fail due to no allowance
-      fromAddress: zap.zapAddress,
-      amount: swapAmountInWei,
-      fromTokenAddress: swapTokenInAddress,
-      toTokenAddress: swapTokenOutAddress,
-      slippage: slippageTolerance * 100,
-    });
+    const swapData = await oneInchApi.getSwap(
+      swapWithFee(
+        {
+          disableEstimate: true, // otherwise will fail due to no allowance
+          fromAddress: zap.zapAddress,
+          amount: swapAmountInWei,
+          fromTokenAddress: swapTokenInAddress,
+          toTokenAddress: swapTokenOutAddress,
+          slippage: slippageTolerance * 100,
+        },
+        fee
+      )
+    );
     const swapAmountOutDec = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
     const vaultAddress = vault.earnedTokenAddress;
 
@@ -581,6 +605,7 @@ const oneInchBeefOutLP = (
   input: InputTokenAmount,
   swaps: ZapQuoteStepSwap[],
   zap: ZapEntityOneInch,
+  fee: ZapFee,
   lpTokens: TokenErc20[],
   amm: AmmEntity,
   slippageTolerance: number = 0.01
@@ -627,14 +652,19 @@ const oneInchBeefOutLP = (
         const swapTokenInAddress = swap.fromToken.address;
         const swapTokenOutAddress = swap.toToken.address;
         const swapAmountInWei = swapAmountsInWei[tokenN].toString(10);
-        const swapData = await oneInchApi.getSwap({
-          disableEstimate: true, // otherwise will fail due to no allowance
-          fromAddress: zap.zapAddress,
-          amount: swapAmountInWei,
-          fromTokenAddress: swapTokenInAddress,
-          toTokenAddress: swapTokenOutAddress,
-          slippage: slippageTolerance * 100,
-        });
+        const swapData = await oneInchApi.getSwap(
+          swapWithFee(
+            {
+              disableEstimate: true, // otherwise will fail due to no allowance
+              fromAddress: zap.zapAddress,
+              amount: swapAmountInWei,
+              fromTokenAddress: swapTokenInAddress,
+              toTokenAddress: swapTokenOutAddress,
+              slippage: slippageTolerance * 100,
+            },
+            fee
+          )
+        );
         const swapAmountOutDec = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
 
         // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)

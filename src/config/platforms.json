@@ -958,5 +958,10 @@
     "id": "solidly",
     "name": "Solidly",
     "filter": true
+  },
+  {
+    "id": "moonwell",
+    "name": "Moonwell",
+    "filter": true
   }
 ]

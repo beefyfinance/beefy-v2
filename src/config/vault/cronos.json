@@ -67,7 +67,8 @@
     "earnContractAddress": "0xb8792531D7B6416987A375Bd5945Bb9d6295A809",
     "oracle": "lps",
     "oracleId": "vvs-usdc-busd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "vvs",
     "assets": ["BUSD", "USDC"],
     "risks": [

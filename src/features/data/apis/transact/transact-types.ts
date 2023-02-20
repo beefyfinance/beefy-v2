@@ -75,16 +75,19 @@ export type GovVaultQuote = {
   outputs: QuoteOutputTokenAmount[];
 };
 
-export type ZapFeeSingle = number;
-export type ZapFeeDiscounted = { original: number; discounted: number };
-export type ZapFee = ZapFeeSingle | ZapFeeDiscounted;
+export type ZapFeeSingle = { value: number; recipient: string };
+export type ZapFeeSingleZero = { value: 0 };
+export type ZapFeeDiscounted = { value: number; recipient: string; original: number };
+export type ZapFeeDiscountedZero = { value: 0; original: number };
+export type ZapFee = ZapFeeSingle | ZapFeeSingleZero | ZapFeeDiscounted | ZapFeeDiscountedZero;
+export type ZapFeeNonZero = ZapFeeSingle | ZapFeeDiscounted;
 
 export function isZapFeeDiscounted(zapFee: ZapFee): zapFee is ZapFeeDiscounted {
-  return typeof zapFee === 'object';
+  return 'original' in zapFee;
 }
 
-export function isZapFeeSingle(zapFee: ZapFee): zapFee is ZapFeeSingle {
-  return typeof zapFee === 'number';
+export function isZapFeeNonZero(zapFee: ZapFee): zapFee is ZapFeeNonZero {
+  return zapFee.value > 0;
 }
 
 export type ZapOption = {
