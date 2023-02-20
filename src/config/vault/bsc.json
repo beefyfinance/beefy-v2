@@ -1,5 +1,28 @@
 [
   {
+    "id": "thena-sfrxeth-frxeth",
+    "name": "sfrxETH-frxETH sLP",
+    "token": "sfrxETH-frxETH sLP",
+    "tokenAddress": "0xc2D245919dB52eA4D5d269b0C710056639176eaD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenasfrxETH-frxETH",
+    "earnedTokenAddress": "0x6a259f454CAbF8b25E0264dD5938B55e44bd004C",
+    "earnContractAddress": "0x6a259f454CAbF8b25E0264dD5938B55e44bd004C",
+    "oracle": "lps",
+    "oracleId": "thena-sfrxeth-frxeth",
+    "status": "active",
+    "platformId": "thena",
+    "assets": ["sfrxETH", "frxETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://thena.fi/swap",
+    "addLiquidityUrl": "https://thena.fi/liquidity",
+    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
+    "network": "bsc",
+    "createdAt": 1676926172
+  },
+  {
     "id": "thena-multi-busd",
     "name": "MULTI-BUSD vLP",
     "token": "MULTI-BUSD vLP",

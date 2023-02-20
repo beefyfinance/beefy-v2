@@ -114,6 +114,7 @@ export const zaps: OneInchZapConfig[] = [
       'DAI-hDAI LP', // no 1inch liquidity
       'ETH-hETH LP', // no 1inch liquidity
       'frxETH', // no 1inch price
+      'sfrxETH', // no 1inch price
       'jEUR', // no 1inch liquidity
       'MIM', // no 1inch price
       'S*DAI', // no 1inch liquidity
@@ -225,6 +226,7 @@ export const zaps: OneInchZapConfig[] = [
       'DFT', // beefy and 1inch prices are more than 10% different
       'FISH', // no 1inch liquidity
       'frxETH', // no 1inch price
+      'sfrxETH', // no 1inch price
       'FROYO', // beefy and 1inch prices are more than 10% different
       'GOAL', // no 1inch liquidity
       'GOLD', // no 1inch liquidity
