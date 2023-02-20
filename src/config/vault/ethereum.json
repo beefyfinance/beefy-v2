@@ -1,5 +1,27 @@
 [
   {
+    "id": "aura-wsteth-reth-sfrxeth-v2",
+    "name": "wstETH/rETH/sfrxETH V2",
+    "token": "wstETH/rETH/sfrxETH V2",
+    "tokenAddress": "0x5aEe1e99fE86960377DE9f88689616916D5DcaBe",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAurasfrxETH-wstETH-rETH V2",
+    "earnedTokenAddress": "0x8affC4591DE6eAEc6836c243b00b80F4339f99f5",
+    "earnContractAddress": "0x8affC4591DE6eAEc6836c243b00b80F4339f99f5",
+    "oracle": "lps",
+    "oracleId": "aura-wsteth-reth-sfrxeth-v2",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["wstETH", "rETH", "sfrxETH"],
+    "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x5aee1e99fe86960377de9f88689616916d5dcabe000000000000000000000467/invest",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x5aee1e99fe86960377de9f88689616916d5dcabe000000000000000000000467/withdraw",
+    "network": "ethereum",
+    "createdAt": 1676899352
+  },
+  {
     "id": "convex-staked-cvxCRV",
     "name": "cvxCRV",
     "token": "cvxCRV",
