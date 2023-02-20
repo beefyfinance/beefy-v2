@@ -17,17 +17,11 @@ interface PnLGraphProps {
 export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
   const classes = useStyles();
 
-  // const data = usePnLChartData(
-  //   1,
-  //   'beefy:vault:optimism:0xe200cd5ef01b52bb968402f63e3933897cff367b',
-  //   vaultId
-  // );
-
   return (
     <div className={classes.pnlContainer}>
       <Title vaultId={vaultId} />
       <div className={classes.graphContainer}>
-        <Graph />
+        <Graph vaultId={vaultId} />
       </div>
       <Footer />
     </div>

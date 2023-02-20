@@ -1,3 +1,5 @@
+import BigNumber from 'bignumber.js';
+
 export interface TimelineAnalyticsConfig {
   chain: string;
   datetime: string;
@@ -24,8 +26,10 @@ export interface PriceAnalyticsConfig {
   close: string;
 }
 
+export type ApiProductPriceRow = [Date, BigNumber];
+
 export type PriceType = 'share_to_underlying' | 'underlying_to_usd' | 'pending_rewards_to_usd';
 
 export type TimeBucketType = '1h_1d' | '1h_1w' | '1d_1M' | '1d_1Y';
 
-export type AnalyticsPriceResponse = PriceAnalyticsConfig[];
+export type AnalyticsPriceResponse = ApiProductPriceRow[];

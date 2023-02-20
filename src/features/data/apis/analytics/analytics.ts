@@ -1,7 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
+import BigNumber from 'bignumber.js';
 import {
   AnalyticsPriceResponse,
   AnalyticsUserTimelineResponse,
+  ApiProductPriceRow,
   PriceType,
   TimeBucketType,
 } from './analytics-types';
@@ -29,6 +31,12 @@ export class AnalyticsApi {
       params: { product_key: productKey, price_type: priceType, time_bucket: timeBucket },
     });
 
-    return res.data;
+    // [datetime, open, high, low, close]
+    const datetimeIdx = 0;
+    const openIdx = 1;
+
+    return res.data.map(
+      (row): ApiProductPriceRow => [new Date(row[datetimeIdx]), new BigNumber(row[openIdx])]
+    );
   }
 }
