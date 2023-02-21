@@ -102,14 +102,7 @@
     "status": "active",
     "platformId": "pangolin",
     "assets": ["USDT", "AVAX"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.pangolin.exchange/#/swap?outputCurrency=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",

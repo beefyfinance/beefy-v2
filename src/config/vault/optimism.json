@@ -1,5 +1,28 @@
 [
   {
+    "id": "velodrome-sfrxeth-frxeth",
+    "name": "sfrxETH-frxETH sLP",
+    "token": "sfrxETH-frxETH sLP",
+    "tokenAddress": "0xeB676aE691df237aC09a0f7410123A714D84afb3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromesfrxETH-frxETH",
+    "earnedTokenAddress": "0xFb806C7D711f6F48b23F682cB73eE2e020a84425",
+    "earnContractAddress": "0xFb806C7D711f6F48b23F682cB73eE2e020a84425",
+    "oracle": "lps",
+    "oracleId": "velodrome-sfrxeth-frxeth",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["sfrxETH", "frxETH"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1676926172
+  },
+  {
     "id": "velodrome-weth-wsteth",
     "name": "wstETH-ETH vLP",
     "token": "wstETH-ETH vLP",
@@ -2169,7 +2192,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_MEDIUM",
+      "MCAP_LARGE",
       "CONTRACTS_VERIFIED",
       "PARTIAL_COLLAT_ALGO_STABLECOIN"
     ],
