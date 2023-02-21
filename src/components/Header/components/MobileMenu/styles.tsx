@@ -47,6 +47,12 @@ export const styles = (theme: Theme) => ({
       columnGap: '8px',
     },
   },
+  title: {},
+  titleWithBadge: {
+    position: 'relative' as const,
+    display: 'flex',
+    alignItems: 'center',
+  },
   itemsContainer: {
     padding: '16px 0px 16px 16px',
   },

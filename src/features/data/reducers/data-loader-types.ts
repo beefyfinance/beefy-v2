@@ -83,6 +83,7 @@ export interface DataLoaderState {
     platforms: LoaderState;
     onRamp: LoaderState;
     treasury: LoaderState;
+    proposals: LoaderState;
   };
   byChainId: {
     [chainId: ChainEntity['id']]: {
