@@ -39,7 +39,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     );
 
     // if we send too much in a single call, we get "execution reversed"
-    const CHUNK_SIZE = featureFlag_getContractDataApiChunkSize();
+    const CHUNK_SIZE = featureFlag_getContractDataApiChunkSize(this.chain.id);
 
     const boostBatches = chunk(boosts, CHUNK_SIZE);
     const govVaultBatches = chunk(govVaults, CHUNK_SIZE);
