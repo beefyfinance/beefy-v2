@@ -1,5 +1,35 @@
 [
   {
+    "id": "curve-kava-axl3pool",
+    "name": "axlDAI/axlUSDC/axlUSDT",
+    "token": "kava-axl3Pool-f",
+    "tokenAddress": "0x29C623E1Cc593864bB3E41E31a8f72ed262F38e5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveaxl3POOL-f",
+    "earnedTokenAddress": "0xE1dD8FfC39A01022Cbd1Bd3Db6FEb89F9b2f7cee",
+    "earnContractAddress": "0xE1dD8FfC39A01022Cbd1Bd3Db6FEb89F9b2f7cee",
+    "oracle": "lps",
+    "oracleId": "curve-kava-axl3pool",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["axlDAI", "axlUSDC", "axlUSDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-2/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-2/withdraw",
+    "network": "kava",
+    "createdAt": 1677007992
+  },
+  {
     "id": "curve-kava-3pool",
     "name": "DAI/USDC/USDT",
     "token": "kava-3Pool-f",
