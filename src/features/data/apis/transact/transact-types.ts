@@ -115,9 +115,9 @@ export type ZapQuote = {
 
 export type ZapQuoteStepSwap = {
   type: 'swap';
-  fromToken: TokenEntity;
+  fromToken: TokenErc20;
   fromAmount: BigNumber;
-  toToken: TokenEntity;
+  toToken: TokenErc20;
   toAmount: BigNumber;
   priceImpact: number;
 };

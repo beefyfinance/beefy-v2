@@ -54,7 +54,7 @@ import { getVaultWithdrawnFromState } from '../../helpers/vault';
 export type BeefyZapOption<AmmType extends AmmEntity = AmmEntity> = {
   zap: ZapEntityBeefy;
   amm: AmmType;
-  lpTokens: TokenEntity[];
+  lpTokens: TokenErc20[];
 } & ZapOption;
 
 export type CommonDepositQuoteOptions<AmmType extends AmmEntity = AmmEntity> = {
@@ -62,8 +62,8 @@ export type CommonDepositQuoteOptions<AmmType extends AmmEntity = AmmEntity> = {
   multicall: MultiCall;
   chain: ChainEntity;
   depositToken: TokenEntity;
-  swapTokenIn: TokenEntity;
-  swapTokenOut: TokenEntity;
+  swapTokenIn: TokenErc20;
+  swapTokenOut: TokenErc20;
   userAmountInWei: BigNumber;
   option: BeefyZapOption<AmmType>;
   vault: VaultStandard;
@@ -79,8 +79,8 @@ export type CommonWithdrawQuoteOptions<AmmType extends AmmEntity = AmmEntity> = 
   vault: VaultStandard;
   amounts: InputTokenAmount[];
   actualTokenOut: TokenEntity;
-  swapTokenIn: TokenEntity;
-  swapTokenOut: TokenEntity;
+  swapTokenIn: TokenErc20;
+  swapTokenOut: TokenErc20;
   withdrawnToken: TokenEntity;
   withdrawnAmountAfterFeeWei: BigNumber;
   shareToken: TokenErc20;
