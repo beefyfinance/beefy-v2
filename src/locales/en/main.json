@@ -545,5 +545,7 @@
   "Transact-Provider-beefy-zap-solidly": "Beefy",
   "Treasury-treasuryMultisig": "Multisig",
   "Treasury-treasury": "Treasury",
-  "Treasury-validator": "Validator"
+  "Treasury-validator": "Validator",
+  "pnl-graph-legend-amount": "{{vaultName}} Amount",
+  "pnl-graph-legend-usd": "Deposit Value (USD)"
 }

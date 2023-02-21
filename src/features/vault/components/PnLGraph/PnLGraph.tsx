@@ -30,7 +30,7 @@ export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
       <div className={classes.graphContainer}>
         <Graph stat={stat} vaultId={vaultId} />
       </div>
-      <Footer stat={stat} handleStat={handleStat} />
+      <Footer vaultId={vaultId} stat={stat} handleStat={handleStat} />
     </div>
   );
 });

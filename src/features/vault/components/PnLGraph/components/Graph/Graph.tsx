@@ -1,8 +1,9 @@
 import React, { memo, useMemo } from 'react';
-import { CartesianGrid, Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import { useAppSelector } from '../../../../../../store';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { usePnLChartData } from '../../hooks';
+import { format } from 'date-fns';
 
 export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: number }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -21,8 +22,9 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
     <ResponsiveContainer width="100%" height={200}>
       <LineChart width={450} height={200} data={data}>
         <CartesianGrid strokeDasharray="1 1" stroke="#363B63" />
-        <YAxis stroke="#3F4474" allowDataOverflow type="number" yAxisId="1" />
-        <YAxis stroke="#3F4474" orientation="right" allowDataOverflow type="number" yAxisId="2" />
+        <XAxis scale="time" tickFormatter={formatXAxis} dataKey="datetime" />
+        <YAxis stroke="#3F4474" type="number" yAxisId="1" />
+        <YAxis stroke="#3F4474" orientation="right" type="number" yAxisId="2" />
         <Line
           yAxisId="1"
           strokeWidth={1.5}
@@ -45,3 +47,7 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
     </ResponsiveContainer>
   );
 });
+
+function formatXAxis(tickItem: Date) {
+  return format(tickItem, 'dd/M');
+}
