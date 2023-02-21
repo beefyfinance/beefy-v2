@@ -4,14 +4,14 @@ import { useAppSelector } from '../../../../../../store';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { usePnLChartData } from '../../hooks';
 
-export const Graph = memo(function ({ vaultId }: { vaultId: string }) {
+export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: number }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   const productKey = useMemo(() => {
     return `beefy:vault:${vault.chainId}:${vault.earnContractAddress.toLowerCase()}`;
   }, [vault.chainId, vault.earnContractAddress]);
 
-  const data = usePnLChartData(1, productKey, vaultId);
+  const data = usePnLChartData(stat, productKey, vaultId);
 
   if (!data) {
     return <div>Loading</div>;

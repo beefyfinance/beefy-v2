@@ -7,7 +7,12 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const Footer = memo(function () {
+interface FooterProps {
+  stat: number;
+  handleStat: (stat: number) => any;
+}
+
+export const Footer = memo<FooterProps>(function ({ stat, handleStat }) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useTranslation();
   const classes = useStyles();
@@ -21,7 +26,7 @@ export const Footer = memo(function () {
         <LegendItem color="#6A88C8" text="Deposit Value (USD)" />
       </div>
       <div className={classes.tabsContainer}>
-        <Tabs labels={labels} value={0} onChange={() => console.log('hi')} />
+        <Tabs labels={labels} value={stat} onChange={newValue => handleStat(newValue)} />
       </div>
     </div>
   );
