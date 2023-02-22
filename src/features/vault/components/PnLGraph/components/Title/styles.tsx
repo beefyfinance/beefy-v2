@@ -38,4 +38,8 @@ export const styles = (theme: Theme) => ({
     borderRadius: '8px',
     backgroundColor: theme.palette.background.content,
   },
+  withTooltip: {
+    textDecoration: 'underline 1px dotted',
+    cursor: 'default' as const,
+  },
 });

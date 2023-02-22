@@ -1,8 +1,15 @@
 import { makeStyles } from '@material-ui/core';
+import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatBigDecimals, formatBigUsd } from '../../../../../../helpers/format';
+import { Tooltip } from '../../../../../../components/Tooltip';
+import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
+import {
+  formatBigDecimals,
+  formatBigUsd,
+  formatFullBigNumber,
+} from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
 import { VaultEntity } from '../../../../../data/entities/vault';
 import { selectVaultPnl } from '../../../../../data/selectors/analytics';
@@ -16,7 +23,6 @@ interface TitleProps {
 }
 
 export const Title = memo<TitleProps>(function ({ vaultId }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useTranslation();
 
   const vaultPnlStats = useAppSelector(state => selectVaultPnl(state, vaultId));
@@ -26,29 +32,31 @@ export const Title = memo<TitleProps>(function ({ vaultId }) {
   const items: TitleItemProps[] = useMemo(() => {
     return [
       {
-        label: 'At Deposit',
-        value: formatBigDecimals(vaultPnlStats.balanceAtDeposit),
+        label: t('At Deposit'),
+        value: vaultPnlStats.balanceAtDeposit,
         subValue: formatBigUsd(vaultPnlStats.usdBalanceAtDeposit),
         border: false,
       },
       {
-        label: 'Now',
-        value: formatBigDecimals(vaultPnlStats.deposit),
+        label: t('Now'),
+        value: vaultPnlStats.deposit,
         subValue: formatBigUsd(vaultPnlStats.depositUsd),
       },
       {
-        label: 'Yield',
-        value: formatBigDecimals(vaultPnlStats.totalYield),
+        label: t('Yield'),
+        value: vaultPnlStats.totalYield,
         subValue: formatBigUsd(vaultPnlStats.totalYieldUsd),
         valueClassName: classes.greenValue,
       },
       {
-        label: 'PNL',
-        value: formatBigUsd(vaultPnlStats.totalPnlUsd),
+        label: t('PNL'),
+        value: vaultPnlStats.totalPnlUsd,
+        sharesValueComponent: false,
       },
     ];
   }, [
     classes.greenValue,
+    t,
     vaultPnlStats.balanceAtDeposit,
     vaultPnlStats.deposit,
     vaultPnlStats.depositUsd,
@@ -62,11 +70,13 @@ export const Title = memo<TitleProps>(function ({ vaultId }) {
     <div className={classes.title}>
       {items.map(item => (
         <TitleItem
+          key={item.label}
           label={item.label}
           value={item.value}
           subValue={item.subValue}
           valueClassName={item.valueClassName}
           border={item.border}
+          sharesValueComponent={item.sharesValueComponent}
         />
       ))}
     </div>
@@ -75,10 +85,11 @@ export const Title = memo<TitleProps>(function ({ vaultId }) {
 
 interface TitleItemProps {
   label: string;
-  value: string;
+  value: BigNumber;
   subValue?: string;
   valueClassName?: string;
   border?: boolean;
+  sharesValueComponent?: boolean;
 }
 
 const TitleItem = memo<TitleItemProps>(function ({
@@ -87,16 +98,51 @@ const TitleItem = memo<TitleItemProps>(function ({
   subValue,
   valueClassName,
   border = true,
+  sharesValueComponent = true,
 }) {
   const classes = useStyles();
+
+  if (!value) {
+    return <>aaaaaaa</>;
+  }
+
   return (
     <div className={classes.itemContainer}>
       {border && <div className={classes.border} />}
       <div className={classes.textContainer}>
         <div className={classes.label}>{label}</div>
-        <div className={clsx(classes.value, valueClassName)}>{value}</div>
+        {sharesValueComponent ? (
+          <SharesValue value={value} className={valueClassName} />
+        ) : (
+          <UsdValue value={value} className={valueClassName} />
+        )}
         {subValue && <div className={classes.subValue}>{subValue}</div>}
       </div>
     </div>
+  );
+});
+
+interface ValueItemProps {
+  value: BigNumber;
+  className?: string;
+}
+
+const UsdValue = memo<ValueItemProps>(function ({ value, className }) {
+  const classes = useStyles();
+  return <div className={clsx(classes.value, className)}>{formatBigUsd(value)}</div>;
+});
+
+const SharesValue = memo<ValueItemProps>(function ({ value, className }) {
+  const classes = useStyles();
+
+  const shortAmount = formatBigDecimals(value, 4);
+  const fullAmount = formatFullBigNumber(value, 18);
+  return (
+    <Tooltip
+      triggerClass={clsx(classes.withTooltip, classes.value, className)}
+      content={<BasicTooltipContent title={fullAmount} />}
+    >
+      {shortAmount}
+    </Tooltip>
   );
 });
