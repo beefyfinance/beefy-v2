@@ -11,6 +11,9 @@ export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   timeline => timeline || []
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
+export const selectIsAnalyticsLoaded = (state: BeefyState) =>
+  state.ui.dataLoader.global.analytics.alreadyLoadedOnce;
+
 export const selectVaultPnl = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
 

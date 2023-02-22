@@ -18,18 +18,18 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-interface TitleProps {
+interface HeaderProps {
   vaultId: VaultEntity['id'];
 }
 
-export const Title = memo<TitleProps>(function ({ vaultId }) {
+export const Header = memo<HeaderProps>(function ({ vaultId }) {
   const { t } = useTranslation();
 
   const vaultPnlStats = useAppSelector(state => selectVaultPnl(state, vaultId));
 
   const classes = useStyles();
 
-  const items: TitleItemProps[] = useMemo(() => {
+  const items: HeaderItemProps[] = useMemo(() => {
     return [
       {
         label: t('At Deposit'),
@@ -69,7 +69,7 @@ export const Title = memo<TitleProps>(function ({ vaultId }) {
   return (
     <div className={classes.title}>
       {items.map(item => (
-        <TitleItem
+        <HeaderItem
           key={item.label}
           label={item.label}
           value={item.value}
@@ -83,7 +83,7 @@ export const Title = memo<TitleProps>(function ({ vaultId }) {
   );
 });
 
-interface TitleItemProps {
+interface HeaderItemProps {
   label: string;
   value: BigNumber;
   subValue?: string;
@@ -92,7 +92,7 @@ interface TitleItemProps {
   sharesValueComponent?: boolean;
 }
 
-const TitleItem = memo<TitleItemProps>(function ({
+const HeaderItem = memo<HeaderItemProps>(function ({
   label,
   value,
   subValue,

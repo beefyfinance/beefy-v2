@@ -29,10 +29,6 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
   const { data, minUnderlying, maxUnderlying, minUsd, maxUsd, firstDate, lastDate } =
     usePnLChartData(TIME_BUCKET[stat], productKey, vaultId);
 
-  if (!data) {
-    return <div>Loading</div>;
-  }
-
   const underlyingDiff = domainOffSet(minUnderlying, maxUnderlying, 0.88);
   const usdDiff = domainOffSet(minUsd, maxUsd, 0.88);
 
