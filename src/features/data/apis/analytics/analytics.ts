@@ -36,7 +36,10 @@ export class AnalyticsApi {
     const openIdx = 1;
 
     return res.data.map(
-      (row): ApiProductPriceRow => [new Date(row[datetimeIdx]), new BigNumber(row[openIdx])]
+      (row): ApiProductPriceRow => ({
+        date: new Date(row[datetimeIdx]),
+        value: new BigNumber(row[openIdx]),
+      })
     );
   }
 }

@@ -547,5 +547,7 @@
   "Treasury-treasury": "Treasury",
   "Treasury-validator": "Validator",
   "pnl-graph-legend-amount": "{{vaultName}} Amount",
-  "pnl-graph-legend-usd": "Deposit Value (USD)"
+  "pnl-graph-legend-usd": "Deposit Value (USD)",
+  "mooshares": "MooShares:",
+  "usd-balance": "USD balance:"
 }

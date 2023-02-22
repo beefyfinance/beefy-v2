@@ -1,4 +1,6 @@
 import BigNumber from 'bignumber.js';
+import { max } from 'date-fns';
+import { sortBy } from 'lodash';
 import { ApiProductPriceRow } from '../features/data/apis/analytics/analytics-types';
 import { VaultTimelineAnalyticsEntity } from '../features/data/entities/analytics';
 import { BIG_ZERO } from './big-number';
@@ -6,7 +8,7 @@ import { samplingPeriodMs } from './sampling-period';
 import { TimeBucket, timeBucketToSamplingPeriod } from './time-bucket';
 
 // simulate a join between the 3 price series locally
-interface PriceTsRow {
+export interface PriceTsRow {
   datetime: Date;
   shareBalance: BigNumber | null;
   underlyingBalance: BigNumber | null;
@@ -16,8 +18,9 @@ interface PriceTsRow {
 export function getInvestorTimeserie(
   timeBucket: TimeBucket,
   timeline: VaultTimelineAnalyticsEntity[],
-  price1: ApiProductPriceRow[],
-  price2: ApiProductPriceRow[]
+  shares: ApiProductPriceRow[],
+  underlying: ApiProductPriceRow[],
+  firstDate: Date
 ): PriceTsRow[] {
   // so, first we need to generate datetime keys for each row
   const { bucketSize: bucketSizeStr, timeRange: timeRangeStr } =
@@ -26,51 +29,46 @@ export function getInvestorTimeserie(
   const timeRange = samplingPeriodMs[timeRangeStr];
 
   const lastDate = new Date(Math.floor(new Date().getTime() / bucketSize) * bucketSize);
-  const firstDate = new Date(lastDate.getTime() - timeRange);
+  const firstDate1 = new Date(lastDate.getTime() - timeRange);
 
-  // now we need to generate the rows in order
-  const sortTsAsc = (a: Date, b: Date) => a.getTime() - b.getTime();
-  const sortedPrice1 = price1.sort((a, b) => sortTsAsc(a[0], b[0]));
-  const sortedPrice2 = price2.sort((a, b) => sortTsAsc(a[0], b[0]));
+  const fixedDate = max([firstDate, firstDate1]);
+
+  const sortedShares = sortBy(shares, 'timeline');
+  const sortedUnderlying = sortBy(underlying, 'timeline');
 
   let balanceIdx = 0;
-  let price1Idx = 0;
-  let price2Idx = 0;
+  let sharesIdx = 0;
+  let underlyingIdx = 0;
 
   const pricesTs: PriceTsRow[] = [];
 
-  let currentDate = firstDate;
+  let currentDate = fixedDate;
   while (currentDate <= lastDate) {
     // add a row for each date
     // find the corresponding balance row
-    while (
-      balanceIdx < timeline.length - 1 &&
-      timeline[balanceIdx + 1].datetime.getTime() <= currentDate.getTime()
-    ) {
+    while (balanceIdx < timeline.length - 1 && timeline[balanceIdx + 1].datetime <= currentDate) {
       balanceIdx++;
     }
-    // find the corresponding price1 row
-    while (
-      price1Idx < sortedPrice1.length - 1 &&
-      sortedPrice1[price1Idx + 1][0].getTime() <= currentDate.getTime()
-    ) {
-      price1Idx++;
+    // find the corresponding shares row
+    while (sharesIdx < sortedShares.length - 1 && sortedShares[sharesIdx + 1].date <= currentDate) {
+      sharesIdx++;
     }
-    // find the corresponding price2 row
+    // find the corresponding underlying row
     while (
-      price2Idx < sortedPrice2.length - 1 &&
-      sortedPrice2[price2Idx + 1][0].getTime() <= currentDate.getTime()
+      underlyingIdx < sortedUnderlying.length - 1 &&
+      sortedUnderlying[underlyingIdx + 1].date <= currentDate
     ) {
-      price2Idx++;
+      underlyingIdx++;
     }
 
     // now we have the correct rows for this date
     const balance = timeline[balanceIdx]?.shareBalance || null;
     const isInternal = timeline[balanceIdx]?.internal || false;
-    const price1 = sortedPrice1[price1Idx];
-    const price2 = sortedPrice2[price2Idx];
-    const underlyingBalance = price1 && balance ? price1[1].times(balance) : null;
-    const usdBalance = underlyingBalance && price2 ? underlyingBalance.times(price2[1]) : null;
+    const shares = sortedShares[sharesIdx];
+    const underlying = sortedUnderlying[underlyingIdx];
+    const underlyingBalance = shares && balance ? shares.value.times(balance) : null;
+    const usdBalance =
+      underlyingBalance && underlying ? underlyingBalance.times(underlying.value) : null;
 
     if (balance && !balance.isEqualTo(BIG_ZERO) && !isInternal) {
       pricesTs.push({

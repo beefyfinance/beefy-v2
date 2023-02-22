@@ -18,7 +18,7 @@ interface PnLGraphProps {
 export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
   const classes = useStyles();
 
-  const [stat, setStat] = React.useState<number>(0);
+  const [stat, setStat] = React.useState<number>(1);
 
   const handleStat = useCallback((newStat: number) => {
     setStat(newStat);

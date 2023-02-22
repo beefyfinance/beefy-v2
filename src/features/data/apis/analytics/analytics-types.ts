@@ -26,7 +26,10 @@ export interface PriceAnalyticsConfig {
   close: string;
 }
 
-export type ApiProductPriceRow = [Date, BigNumber];
+export interface ApiProductPriceRow {
+  date: Date;
+  value: BigNumber;
+}
 
 export type PriceType = 'share_to_underlying' | 'underlying_to_usd' | 'pending_rewards_to_usd';
 
