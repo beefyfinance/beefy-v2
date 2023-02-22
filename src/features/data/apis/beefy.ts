@@ -96,6 +96,16 @@ type BeefyAPIVaultsResponse = {
   lastHarvest?: number | string;
 }[];
 
+export type BeefySnapshotProposal = {
+  id: string;
+  title: string;
+  start: number;
+  end: number;
+  author: string;
+  coreProposal: boolean;
+};
+export type BeefySnapshotActiveResponse = BeefySnapshotProposal[];
+
 export class BeefyAPI {
   public api: AxiosInstance;
   public data: AxiosInstance;
@@ -257,6 +267,17 @@ export class BeefyAPI {
     }
 
     const res = await this.api.get<TreasuryConfig>('/treasury', {
+      params: { _: this.getCacheBuster('long') },
+    });
+    return res.data;
+  }
+
+  public async getActiveProposals(): Promise<BeefySnapshotActiveResponse> {
+    if (featureFlag_simulateBeefyApiError('snapshot')) {
+      throw new Error('Simulated beefy api error');
+    }
+
+    const res = await this.api.get<BeefySnapshotActiveResponse>('/snapshot/active', {
       params: { _: this.getCacheBuster('long') },
     });
     return res.data;

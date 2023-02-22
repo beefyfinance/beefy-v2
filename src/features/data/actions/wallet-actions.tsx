@@ -587,6 +587,7 @@ const oneInchBeefOutSingle = (
         amount: input.amount,
         token: input.token,
         vaultId: vault.id,
+        expectedTokens: [swap.toToken],
       },
       {
         chainId: vault.chainId,
@@ -644,6 +645,7 @@ const oneInchBeefOutLP = (
     );
 
     const oneInchApi = await getOneInchApi(chain);
+    const expectedTokens: TokenErc20[] = [];
     const swapData = await Promise.all(
       swaps.map(async swap => {
         const tokenN = lpTokens.findIndex(
@@ -671,6 +673,9 @@ const oneInchBeefOutLP = (
         if (swapAmountOutDec.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
           throw new ErrorOneInchQuoteChanged(swap.toAmount, swapAmountOutDec, swap.toToken);
         }
+
+        // Track expected return tokens
+        expectedTokens.push(swap.toToken);
 
         return swapData;
       })
@@ -716,6 +721,7 @@ const oneInchBeefOutLP = (
         amount: input.amount,
         token: input.token,
         vaultId: vault.id,
+        expectedTokens: uniqBy(expectedTokens, 'address'),
       },
       {
         chainId: vault.chainId,

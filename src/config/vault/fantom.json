@@ -197,7 +197,14 @@
     "status": "active",
     "platformId": "equalizer",
     "assets": ["FXS", "FRAX"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "CONTRACTS_VERIFIED",
+      "PARTIAL_COLLAT_ALGO_STABLECOIN"
+    ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equalizer.exchange/swap",
     "addLiquidityUrl": "https://equalizer.exchange/liquidity/",
@@ -2992,7 +2999,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_MEDIUM",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],

@@ -1,5 +1,5 @@
-import React, { memo, useState } from 'react';
-import { Badge, Divider, Drawer, makeStyles } from '@material-ui/core';
+import React, { Fragment, memo, useState } from 'react';
+import { Divider, Drawer, makeStyles } from '@material-ui/core';
 import { Close, Menu } from '@material-ui/icons';
 import { styles } from './styles';
 import { BifiPrice } from '../BifiPrice';
@@ -7,6 +7,8 @@ import { LanguageDropdown } from '../../../LanguageDropdown';
 import { NavItemMobile } from '../NavItem';
 import { useTranslation } from 'react-i18next';
 import { MobileList } from '../../list';
+import { isNavDropdownConfig, NavConfig, NavDropdownConfig } from '../DropNavItem/types';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -31,21 +33,12 @@ export const MobileMenu = memo(function () {
             <Close className={classes.cross} onClick={handleDrawerToggle} />
           </div>
           <Divider className={classes.divider} />
-          {MobileList.map(({ title, Icon, url, items }) => {
+          {MobileList.map(item => {
             return (
-              <div key={title}>
-                {url ? (
-                  <NavItemMobile onClick={handleDrawerToggle} title={title} url={url} Icon={Icon} />
-                ) : (
-                  <DropMobile
-                    onClick={handleDrawerToggle}
-                    title={title}
-                    Icon={Icon}
-                    items={items}
-                  />
-                )}
+              <Fragment key={item.title}>
+                <MobileItem item={item} onClick={handleDrawerToggle} />
                 <Divider className={classes.divider} />
-              </div>
+              </Fragment>
             );
           })}
         </div>
@@ -54,48 +47,59 @@ export const MobileMenu = memo(function () {
   );
 });
 
-interface DropMobileProps {
-  title: string;
-  Icon: React.FC;
-  items: { url: string; title: string; Icon: React.FC; badge?: boolean }[];
-  onClick: () => void;
-  withBadge?: boolean;
-}
+type MobileItemProps = { item: NavConfig; onClick: () => void };
+const MobileItem = memo<MobileItemProps>(function ({ item, onClick }) {
+  if (isNavDropdownConfig(item)) {
+    const NavComponent = item.MobileComponent ?? DropMobile;
+    return (
+      <NavComponent
+        onClick={onClick}
+        title={item.title}
+        Icon={item.Icon}
+        Badge={item.Badge}
+        items={item.items}
+      />
+    );
+  }
 
-export const DropMobile = memo<DropMobileProps>(function ({
-  title,
-  Icon,
-  items,
-  onClick,
-  withBadge,
-}) {
+  const NavComponent = item.MobileComponent ?? NavItemMobile;
+  return (
+    <NavComponent
+      onClick={onClick}
+      title={item.title}
+      url={item.url}
+      Badge={item.Badge}
+      Icon={item.Icon}
+    />
+  );
+});
+
+type DropMobileProps = NavDropdownConfig;
+
+export const DropMobile = memo<DropMobileProps>(function ({ title, Icon, items, onClick, Badge }) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
     <div className={classes.itemsContainer}>
       <div className={classes.itemTitle}>
-        {withBadge ? (
-          <Badge badgeContent="New" color="primary">
-            <Icon />
-            {t(title)}
-          </Badge>
-        ) : (
-          <>
-            <Icon />
-            {t(title)}
-          </>
-        )}
+        <Icon />
+        <div className={clsx(classes.title, { [classes.titleWithBadge]: !!Badge })}>
+          {t(title)}
+          {Badge ? <Badge /> : null}
+        </div>
       </div>
       <div>
         {items.map(item => {
+          const NavComponent = item.MobileComponent ?? NavItemMobile;
           return (
-            <NavItemMobile
+            <NavComponent
+              key={item.title}
               onClick={onClick}
               className={classes.customPadding}
               title={item.title}
               url={item.url}
               Icon={item.Icon}
-              withBadge={item.badge}
+              Badge={item.Badge}
             />
           );
         })}
