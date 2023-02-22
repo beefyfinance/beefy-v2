@@ -33,6 +33,9 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
     return <div>Loading</div>;
   }
 
+  const underlyingDiff = domainOffSet(minUnderlying, maxUnderlying, 0.88);
+  const usdDiff = domainOffSet(minUsd, maxUsd, 0.88);
+
   return (
     <ResponsiveContainer width="100%" height={200}>
       <LineChart
@@ -56,14 +59,14 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
             formatFullBigNumber(new BigNumber(tickItem), tickItem > 9999 ? 0 : 3)
           }
           yAxisId="underliying"
-          domain={[minUnderlying * 0.995, maxUnderlying * 1.05]}
+          domain={[minUnderlying - underlyingDiff, maxUnderlying + underlyingDiff]}
         />
         <YAxis
           stroke="#3F4474"
           orientation="right"
           tickFormatter={tickItem => formatBigUsd(new BigNumber(tickItem))}
           yAxisId="usd"
-          domain={[minUsd * 0.9, maxUsd * 1.1]}
+          domain={[minUsd - usdDiff, maxUsd + usdDiff]}
         />
         <Line
           yAxisId="underliying"
@@ -93,3 +96,7 @@ function formatXAxis(tickItem: Date, timebucket: TimeBucketType) {
   }
   return format(tickItem, 'dd/M');
 }
+
+const domainOffSet = (min: number, max: number, heightPercentageUsedByChart: number) => {
+  return ((max - min) * (1 - heightPercentageUsedByChart)) / (2 * heightPercentageUsedByChart);
+};
