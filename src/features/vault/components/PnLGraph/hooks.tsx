@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getAnalyticsApi } from '../../../data/apis/instances';
 import { useTranslation } from 'react-i18next';
-import { TimeBucketType } from '../../../data/apis/analytics/analytics-types';
 import { VaultEntity } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
 import {
@@ -11,8 +10,7 @@ import {
 import { getInvestorTimeserie, PriceTsRow } from '../../../../helpers/timeserie';
 import { isAfter } from 'date-fns';
 import { maxBy, minBy } from 'lodash';
-
-const TIME_BUCKET: TimeBucketType[] = ['1h_1d', '1h_1w', '1d_1M', '1d_1Y'];
+import { TimeBucketType } from '../../../data/apis/analytics/analytics-types';
 
 interface ChardataType {
   data: PriceTsRow[];
@@ -20,15 +18,23 @@ interface ChardataType {
   maxUsd: number;
   minUnderlying: number;
   maxUnderlying: number;
+  firstDate: Date;
+  lastDate: Date;
 }
 
-export const usePnLChartData = (stat, productKey: string, vaultId: VaultEntity['id']) => {
+export const usePnLChartData = (
+  timebucket: TimeBucketType,
+  productKey: string,
+  vaultId: VaultEntity['id']
+) => {
   const [chartData, setChartData] = useState<ChardataType>({
     data: [],
     minUsd: 0,
     maxUsd: 0,
     minUnderlying: 0,
     maxUnderlying: 0,
+    firstDate: new Date(),
+    lastDate: new Date(),
   });
   const { t } = useTranslation();
 
@@ -43,8 +49,8 @@ export const usePnLChartData = (stat, productKey: string, vaultId: VaultEntity['
       const api = getAnalyticsApi();
 
       const [shares, underlying] = await Promise.all([
-        api.getVaultPrices(productKey, 'share_to_underlying', TIME_BUCKET[stat]),
-        api.getVaultPrices(productKey, 'underlying_to_usd', TIME_BUCKET[stat]),
+        api.getVaultPrices(productKey, 'share_to_underlying', timebucket),
+        api.getVaultPrices(productKey, 'underlying_to_usd', timebucket),
       ]);
 
       const filteredShares = shares.filter(price => isAfter(price.date, vaultLastDeposit));
@@ -52,7 +58,7 @@ export const usePnLChartData = (stat, productKey: string, vaultId: VaultEntity['
       const filteredUnderlying = underlying.filter(price => isAfter(price.date, vaultLastDeposit));
 
       const chartData = getInvestorTimeserie(
-        TIME_BUCKET[stat],
+        timebucket,
         vaultTimeline,
         filteredShares,
         filteredUnderlying,
@@ -104,11 +110,22 @@ export const usePnLChartData = (stat, productKey: string, vaultId: VaultEntity['
         row.underlyingBalance.toNumber()
       ).underlyingBalance.toNumber();
 
-      setChartData({ data: chartData, minUnderlying, maxUnderlying, minUsd, maxUsd });
+      const firstDate = chartData[0].datetime;
+      const lastDate = chartData[chartData.length - 1].datetime;
+
+      setChartData({
+        data: chartData,
+        minUnderlying,
+        maxUnderlying,
+        minUsd,
+        maxUsd,
+        firstDate,
+        lastDate,
+      });
     };
 
     fetchData();
-  }, [stat, t, productKey, vaultTimeline, vaultLastDeposit]);
+  }, [t, productKey, vaultTimeline, vaultLastDeposit, timebucket]);
 
   return chartData;
 };

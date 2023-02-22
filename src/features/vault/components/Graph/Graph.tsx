@@ -88,6 +88,7 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
               tickCount={4}
             />
             <Tooltip
+              wrapperStyle={{ outline: 'none' }}
               content={
                 <CustomTooltip
                   stat={stat}

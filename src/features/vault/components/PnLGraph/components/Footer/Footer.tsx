@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Tabs } from '../../../../../../components/Tabs';
+import { BasicTabs } from '../../../../../../components/Tabs/BasicTabs';
 import { useAppSelector } from '../../../../../../store';
 import { VaultEntity } from '../../../../../data/entities/vault';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
@@ -34,7 +34,7 @@ export const Footer = memo<FooterProps>(function ({ stat, handleStat, vaultId })
         <LegendItem color="#6A88C8" text={t('pnl-graph-legend-usd')} />
       </div>
       <div className={classes.tabsContainer}>
-        <Tabs labels={labels} value={stat} onChange={newValue => handleStat(newValue)} />
+        <BasicTabs labels={labels} value={stat} onChange={newValue => handleStat(newValue)} />
       </div>
     </div>
   );

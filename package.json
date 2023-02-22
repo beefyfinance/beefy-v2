@@ -46,7 +46,7 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "recharts": "^2.1.15",
+    "recharts": "^2.4.3",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "web3": "^1.7.0"

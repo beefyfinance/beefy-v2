@@ -1,11 +1,14 @@
 import BigNumber from 'bignumber.js';
 import { max } from 'date-fns';
 import { sortBy } from 'lodash';
-import { ApiProductPriceRow } from '../features/data/apis/analytics/analytics-types';
+import {
+  ApiProductPriceRow,
+  TimeBucketType,
+} from '../features/data/apis/analytics/analytics-types';
 import { VaultTimelineAnalyticsEntity } from '../features/data/entities/analytics';
 import { BIG_ZERO } from './big-number';
 import { samplingPeriodMs } from './sampling-period';
-import { TimeBucket, timeBucketToSamplingPeriod } from './time-bucket';
+import { timeBucketToSamplingPeriod } from './time-bucket';
 
 // simulate a join between the 3 price series locally
 export interface PriceTsRow {
@@ -16,7 +19,7 @@ export interface PriceTsRow {
 }
 
 export function getInvestorTimeserie(
-  timeBucket: TimeBucket,
+  timeBucket: TimeBucketType,
   timeline: VaultTimelineAnalyticsEntity[],
   shares: ApiProductPriceRow[],
   underlying: ApiProductPriceRow[],

@@ -1,12 +1,9 @@
+import { TimeBucketType } from '../features/data/apis/analytics/analytics-types';
 import { SamplingPeriod } from './sampling-period';
 
-// <bucket_size>_<time_range>
-export type TimeBucket = '1h_1d' | '1h_1w' | '1d_1M' | '1d_1Y';
-export const timeBucketValues: TimeBucket[] = ['1h_1d', '1h_1w', '1d_1M', '1d_1Y'];
-
-export function timeBucketToSamplingPeriod(timeBucket: TimeBucket) {
+export function timeBucketToSamplingPeriod(timeBucket: TimeBucketType) {
   const bucketParamMap: {
-    [key in TimeBucket]: {
+    [key in TimeBucketType]: {
       bucketSize: SamplingPeriod;
       timeRange: SamplingPeriod;
     };

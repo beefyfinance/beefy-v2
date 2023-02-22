@@ -8,11 +8,17 @@ export const styles = (theme: Theme) => ({
     borderTop: '2px solid #363B63',
     padding: '24px',
     borderRadius: '0px 0px 12px 12px',
+    [theme.breakpoints.down('md')]: {
+      padding: '16px',
+    },
   },
   items: {
     display: 'flex',
     columnGap: '24px',
     alignItems: 'center',
+    [theme.breakpoints.down('md')]: {
+      display: 'block',
+    },
   },
   colorReference: {
     height: '2px',
@@ -22,9 +28,10 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['subline-lg'],
     fontWeight: 700,
     color: theme.palette.text.disabled,
-    display: 'flex',
+    display: 'grid',
     columnGap: '8px',
     alignItems: 'center',
+    gridTemplateColumns: 'minmax(0,5%) minmax(0,95%)',
   },
   tabsContainer: {
     marginTop: 10,
@@ -33,6 +40,10 @@ export const styles = (theme: Theme) => ({
     },
     '& .MuiTab-root': {
       minHeight: '34px',
+    },
+    [theme.breakpoints.down('md')]: {
+      display: 'flex',
+      alignItems: 'flex-end',
     },
     [theme.breakpoints.up('sm')]: {
       marginTop: 0,

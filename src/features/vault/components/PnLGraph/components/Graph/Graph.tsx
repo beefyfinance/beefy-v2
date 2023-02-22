@@ -12,9 +12,12 @@ import { useAppSelector } from '../../../../../../store';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { usePnLChartData } from '../../hooks';
 import { format } from 'date-fns';
-import { formatBigDecimals, formatBigUsd } from '../../../../../../helpers/format';
+import { formatBigUsd, formatFullBigNumber } from '../../../../../../helpers/format';
 import BigNumber from 'bignumber.js';
 import { PnLTooltip } from '../PnLTooltip';
+import { TimeBucketType } from '../../../../../data/apis/analytics/analytics-types';
+
+const TIME_BUCKET: TimeBucketType[] = ['1h_1d', '1h_1w', '1d_1M', '1d_1Y'];
 
 export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: number }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -23,29 +26,35 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
     return `beefy:vault:${vault.chainId}:${vault.earnContractAddress.toLowerCase()}`;
   }, [vault.chainId, vault.earnContractAddress]);
 
-  const { data, minUnderlying, maxUnderlying, minUsd, maxUsd } = usePnLChartData(
-    stat,
-    productKey,
-    vaultId
-  );
+  const { data, minUnderlying, maxUnderlying, minUsd, maxUsd, firstDate, lastDate } =
+    usePnLChartData(TIME_BUCKET[stat], productKey, vaultId);
 
   if (!data) {
     return <div>Loading</div>;
   }
 
   return (
-    <ResponsiveContainer width="100%" height={250}>
+    <ResponsiveContainer width="100%" height={200}>
       <LineChart
         width={450}
         height={200}
         data={data}
-        margin={{ top: 0, right: 24, bottom: 0, left: 24 }}
+        margin={{ top: 0, right: 32, bottom: 0, left: 32 }}
       >
         <CartesianGrid strokeDasharray="1 1" stroke="#363B63" />
-        <XAxis scale="time" tickFormatter={formatXAxis} dataKey="datetime" interval="preserveEnd" />
+        <XAxis
+          allowDataOverflow={true}
+          type="number"
+          tickFormatter={tickitem => formatXAxis(tickitem, TIME_BUCKET[stat])}
+          dataKey="datetime"
+          domain={[firstDate.getTime(), lastDate.getTime()]}
+          padding={{ left: 2, right: 2 }}
+        />
         <YAxis
           stroke="#3F4474"
-          tickFormatter={tickItem => formatBigDecimals(new BigNumber(tickItem), 4)}
+          tickFormatter={tickItem =>
+            formatFullBigNumber(new BigNumber(tickItem), tickItem > 9999 ? 0 : 3)
+          }
           yAxisId="underliying"
           domain={[minUnderlying * 0.995, maxUnderlying * 1.05]}
         />
@@ -62,22 +71,25 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
           dataKey="underlyingBalance"
           stroke="#59A662"
           dot={false}
-          type="natural"
+          type="basis"
         />
         <Line
-          type="natural"
+          type="basis"
           yAxisId="usd"
           strokeWidth={1}
           dataKey="usdBalance"
           stroke="#6A88C8"
           dot={false}
         />
-        <Tooltip content={<PnLTooltip />} />
+        <Tooltip wrapperStyle={{ outline: 'none' }} content={<PnLTooltip />} />
       </LineChart>
     </ResponsiveContainer>
   );
 });
 
-function formatXAxis(tickItem: Date) {
+function formatXAxis(tickItem: Date, timebucket: TimeBucketType) {
+  if (timebucket === '1h_1d') {
+    return format(tickItem, 'H:m');
+  }
   return format(tickItem, 'dd/M');
 }

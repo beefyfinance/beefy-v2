@@ -44,7 +44,7 @@ export const PnLTooltip = memo<TooltipProps>(function ({ active, payload }) {
       <div className={classes.container}>
         <div>{formattedDate}</div>
         <div className={classes.item}>
-          <div>{t('mooshares')}</div>
+          <div>{t('underlying-balance')}</div>
           <div className={classes.value}>{formatBigNumberSignificant(shares)}</div>
         </div>
         <div className={classes.item}>
