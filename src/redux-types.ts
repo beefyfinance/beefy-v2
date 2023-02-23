@@ -29,6 +29,7 @@ import { TransactState } from './features/data/reducers/wallet/transact-types';
 import { AmmsState } from './features/data/reducers/amms';
 import { TreasuryState } from './features/data/reducers/treasury';
 import { AnalyticsState } from './features/data/reducers/analytics';
+import { ProposalsState } from './features/data/reducers/proposals';
 
 export interface BeefyState {
   entities: {
@@ -42,6 +43,7 @@ export interface BeefyState {
     amms: AmmsState;
     minters: MintersState;
     infoCards: InfoCardsState;
+    proposals: ProposalsState;
   };
   biz: {
     tvl: TvlState;

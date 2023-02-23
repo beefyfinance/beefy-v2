@@ -187,7 +187,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "MCAP_MEDIUM",
+      "MCAP_LARGE",
       "IL_NONE",
       "AUDIT",
       "CONTRACTS_VERIFIED"

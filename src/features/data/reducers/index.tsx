@@ -30,6 +30,7 @@ import { stepperSlice } from './wallet/stepper';
 import { ammsSlice } from './amms';
 import { treasurySlice } from './treasury';
 import { analyticsSlice } from './analytics';
+import { proposalsSlice } from './proposals';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -42,6 +43,7 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
   amms: ammsSlice.reducer,
   minters: mintersSlice.reducer,
   infoCards: infoCardsSlice.reducer,
+  proposals: proposalsSlice.reducer,
 });
 const bizReducer = combineReducers<BeefyState['biz']>({
   tvl: tvlSlice.reducer,

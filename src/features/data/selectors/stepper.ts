@@ -1,13 +1,13 @@
 import { BigNumber } from 'bignumber.js';
 import { BeefyState } from '../../../redux-types';
 import { formatBigDecimals } from '../../../helpers/format';
-import { isTokenErc20 } from '../entities/token';
-import { StepContent } from '../reducers/wallet/stepper';
+import { isTokenErc20, TokenErc20 } from '../entities/token';
+import { Step, StepContent } from '../reducers/wallet/stepper';
 import { TokenAmount } from '../apis/transact/transact-types';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
-  selectTokenByAddress,
+  selectTokenByAddressOrNull,
 } from './tokens';
 import { fromWeiString } from '../../../helpers/big-number';
 import { selectVaultById } from './vaults';
@@ -146,11 +146,21 @@ export const selectSuccessBar = (state: BeefyState) => {
   return stepContent === StepContent.SuccessTx || bridgeStatus === 'success';
 };
 
-export function selectZapReturned(state: BeefyState) {
-  const { receipt, vaultId } = state.user.walletActions.data;
+export function selectZapReturned(state: BeefyState, type: Step['step']) {
+  const { receipt, vaultId, expectedTokens } = state.user.walletActions.data;
 
   if (!vaultId || !receipt || !('TokenReturned' in receipt.events)) {
     return [];
+  }
+
+  // We need to know what normal tokens to expect when zap out, so we don't show them as dust
+  let excludeTokens: TokenErc20['address'][] = [];
+  if (type === 'zap-out') {
+    if (!expectedTokens || !expectedTokens.length) {
+      return [];
+    } else {
+      excludeTokens = expectedTokens.map(t => t.address.toLowerCase());
+    }
   }
 
   const vault = selectVaultById(state, vaultId);
@@ -170,13 +180,28 @@ export function selectZapReturned(state: BeefyState) {
   const native = selectChainNativeToken(state, vault.chainId);
   const tokenAmounts: TokenAmount[] = returnEvents
     .map(e => {
-      const token = selectTokenByAddress(state, vault.chainId, e.returnValues.token);
+      const token = selectTokenByAddressOrNull(state, vault.chainId, e.returnValues.token);
       return {
         amount: fromWeiString(e.returnValues.amount, token.decimals),
-        token: wnativeToNative(token, wnative, native),
+        token,
       };
     })
+    .filter(isTokenErc20Amount)
+    .filter(t => !excludeTokens.includes(t.token.address.toLowerCase()))
+    .map(t => ({
+      ...t,
+      token: wnativeToNative(t.token, wnative, native),
+    }))
     .filter(t => t.amount.gte(minAmount));
 
   return tokenAmounts;
+}
+
+type TokenErc20Amount = {
+  amount: BigNumber;
+  token: TokenErc20;
+};
+
+function isTokenErc20Amount(tokenAmount: TokenAmount): tokenAmount is TokenErc20Amount {
+  return tokenAmount && isTokenErc20(tokenAmount.token);
 }

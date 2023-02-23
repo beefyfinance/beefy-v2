@@ -110,6 +110,10 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'bbamUSDC',
       'bbamDAI',
       'bbamUSDT',
+      'BRZ',
+      'jBRL',
+      '2BRZ',
+      'bbamUSD',
     ],
   },
   bsc: {
@@ -218,6 +222,8 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'TUSD',
       'USX',
       'sEUR',
+      'bbUSD+',
+      'bbDAI+',
     ],
   },
   fantom: {
@@ -526,7 +532,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['USDC', 'DAI', 'USDT'],
+    stableCoins: ['USDC', 'DAI', 'USDT', 'axlDAI', 'axlUSDC', 'axlUSDT'],
   },
   aurora: {
     name: 'Aurora',

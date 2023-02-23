@@ -84,6 +84,7 @@ export interface DataLoaderState {
     onRamp: LoaderState;
     treasury: LoaderState;
     analytics: LoaderState;
+    proposals: LoaderState;
   };
   byChainId: {
     [chainId: ChainEntity['id']]: {

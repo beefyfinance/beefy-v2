@@ -137,7 +137,7 @@ export function featureFlag_simulateRpcError(chainId: ChainEntity['id']) {
 }
 
 export function featureFlag_simulateBeefyApiError(
-  key: 'apy' | 'prices' | 'lps' | 'buyback' | 'lpsBreakdown' | 'fees' | 'treasury'
+  key: 'apy' | 'prices' | 'lps' | 'buyback' | 'lpsBreakdown' | 'fees' | 'treasury' | 'snapshot'
 ) {
   const isAuthorizedDomain =
     window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
