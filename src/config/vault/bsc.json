@@ -17,9 +17,9 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_NONE",
       "MCAP_MICRO",
-      "PARTIAL_COLLAT_ALGO_STABLECOIN",
+      "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
