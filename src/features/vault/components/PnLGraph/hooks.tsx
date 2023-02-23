@@ -65,7 +65,7 @@ export const usePnLChartData = (
         vaultLastDeposit
       );
 
-      if (chartData) {
+      if (chartData.length > 0) {
         const minUsd = chartData
           ? minBy(chartData, row => row.usdBalance.toNumber()).usdBalance?.toNumber()
           : 0;
