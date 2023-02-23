@@ -41,7 +41,9 @@ export const selectTreasurySorted = function (state: BeefyState) {
       );
   });
 
-  return treasuryPerChain.sort((a, b) => b.usdTotal.comparedTo(a.usdTotal));
+  return treasuryPerChain
+    .filter(chain => chain.liquid + chain.staked + chain.locked > 0)
+    .sort((a, b) => b.usdTotal.comparedTo(a.usdTotal));
 };
 
 export const selectTreasuryHoldingsByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
