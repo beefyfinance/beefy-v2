@@ -1,5 +1,35 @@
 [
   {
+    "id": "velodrome-op-ageur",
+    "name": "agEUR-OP vLP",
+    "token": "agEUR-OP vLP",
+    "tokenAddress": "0xBda45a58BAC8B327d02798a9184A850CEEd9a477",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromeOP-agEUR",
+    "earnedTokenAddress": "0xd6EbA4BeB9F4225238b31a04384ddFdc2e55A58D",
+    "earnContractAddress": "0xd6EbA4BeB9F4225238b31a04384ddFdc2e55A58D",
+    "oracle": "lps",
+    "oracleId": "velodrome-op-ageur",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["agEUR", "OP"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1677168573
+  },
+  {
     "id": "velodrome-bevelo-velo",
     "name": "beVELO-VELO sLP",
     "token": "beVELO-VELO sLP",
