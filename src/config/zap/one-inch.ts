@@ -213,6 +213,7 @@ export const zaps: OneInchZapConfig[] = [
     withdrawToTokens: ['BNB', 'BIFI', 'BUSD', 'USDC', 'USDT', 'DAI', 'ETH', 'BTCB'],
     blockedTokens: [
       'aBNBc', // beefy and 1inch prices are more than 10% different
+      'ankrETH', // no 1inch liquidity
       'AURO', // no 1inch liquidity
       'bDIGG', // beefy and 1inch prices are more than 10% different
       'beltBNB', // beefy and 1inch prices are more than 10% different
@@ -224,8 +225,10 @@ export const zaps: OneInchZapConfig[] = [
       'CONE', // beefy and 1inch prices are more than 10% different
       'CRUSH', // beefy and 1inch prices are more than 10% different
       'DFT', // beefy and 1inch prices are more than 10% different
+      'DOLA', // no 1inch price
       'FISH', // no 1inch liquidity
       'frxETH', // no 1inch price
+      'FS', // no 1inch liquidity
       'sfrxETH', // no 1inch price
       'FROYO', // beefy and 1inch prices are more than 10% different
       'GOAL', // no 1inch liquidity
@@ -253,6 +256,7 @@ export const zaps: OneInchZapConfig[] = [
       'TEN', // no 1inch liquidity
       'TOFY', // no 1inch liquidity
       'XMARK', // no 1inch liquidity
+      'wUSDR', // no 1inch liquidity
       'ZBTC', // no 1inch liquidity
     ],
     blockedVaults: ['venus-bnb', 'venus-wbnb'],
