@@ -61,6 +61,7 @@ export const zaps: OneInchZapConfig[] = [
     blockedTokens: [
       'alUSD', // no 1inch price
       'ANKR', // no 1inch price
+      'ankrFTM', // no 1inch price
       'asUSDC', // no 1inch price
       'ATLAS', // no 1inch liquidity
       'BASED', // no 1inch liquidity
