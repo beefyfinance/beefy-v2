@@ -67,7 +67,7 @@ export const Header = memo<HeaderProps>(function ({ vaultId }) {
   ]);
 
   return (
-    <div className={classes.title}>
+    <div className={classes.header}>
       {items.map(item => (
         <HeaderItem
           key={item.label}

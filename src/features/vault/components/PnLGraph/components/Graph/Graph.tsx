@@ -16,6 +16,7 @@ import { formatBigUsd, formatFullBigNumber } from '../../../../../../helpers/for
 import BigNumber from 'bignumber.js';
 import { PnLTooltip } from '../PnLTooltip';
 import { TimeBucketType } from '../../../../../data/apis/analytics/analytics-types';
+import { Theme, useMediaQuery } from '@material-ui/core';
 
 const TIME_BUCKET: TimeBucketType[] = ['1h_1d', '1h_1w', '1d_1M', '1d_1Y'];
 
@@ -32,13 +33,19 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
   const underlyingDiff = domainOffSet(minUnderlying, maxUnderlying, 0.88);
   const usdDiff = domainOffSet(minUsd, maxUsd, 0.88);
 
+  const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+
+  const padding = useMemo(() => {
+    return mdDown ? 16 : 24;
+  }, [mdDown]);
+
   return (
     <ResponsiveContainer width="100%" height={200}>
       <LineChart
         width={450}
         height={200}
         data={data}
-        margin={{ top: 0, right: 32, bottom: 0, left: 32 }}
+        margin={{ top: 0, right: padding, bottom: 0, left: padding }}
       >
         <CartesianGrid strokeDasharray="1 1" stroke="#363B63" />
         <XAxis

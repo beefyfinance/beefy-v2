@@ -1,12 +1,17 @@
 import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
-  title: {
+  header: {
     display: 'grid',
     gridTemplateColumns: 'repeat(4,minmax(0,1fr))',
     padding: '24px',
     borderRadius: '12px 12px 0px 0px',
     backgroundColor: '#232743',
+    [theme.breakpoints.down('md')]: {
+      gridTemplateColumns: 'repeat(2,minmax(0,1fr))',
+      rowGap: '16px',
+      padding: '16px',
+    },
   },
   itemContainer: { display: 'flex', columnGap: '24px' },
   textContainer: {
@@ -37,6 +42,9 @@ export const styles = (theme: Theme) => ({
     width: '2px',
     borderRadius: '8px',
     backgroundColor: theme.palette.background.content,
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
   },
   withTooltip: {
     textDecoration: 'underline 1px dotted',
