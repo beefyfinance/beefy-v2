@@ -184,7 +184,8 @@
     "earnContractAddress": "0x78527f8155c74d8BFb71f1363d476433e39B4f14",
     "oracle": "lps",
     "oracleId": "joe-busd-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "traderjoe",
     "assets": ["BUSD", "AVAX"],
     "risks": [
