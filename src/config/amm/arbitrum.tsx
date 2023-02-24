@@ -29,4 +29,16 @@ export const amms: AmmConfig[] = [
     swapFeeDenominator: '1000',
     getAmountOutMode: 'getAmountOut', // router.getAmountOut(uint amountIn, uint reserveIn, uint reserveOut)
   },
+  {
+    id: 'arbitrum-solidlizard',
+    name: 'solidlizard',
+    type: 'solidly',
+    routerAddress: '0xF26515D5482e2C2FD237149bF6A653dA4794b3D0',
+    factoryAddress: '0x734d84631f00dC0d3FCD18b04b6cf42BFd407074',
+    pairInitHash: '0x5a71f9c54b8a1161b0f764fc94d3f3c5b009571b465043902043d38666436859',
+    minimumLiquidity: '1000',
+    swapFeeNumerator: '1',
+    swapFeeDenominator: '250', // DYNAMIC pair.swapFee() (default 2000 volatile, 10000 stable)
+    getAmountOutMode: 'getAmountOut', // router.getExactAmountOut(uint amountIn, address tokenIn, address tokenOut, bool stable) -> pair.getAmountOut(uint256 amountIn, address tokenIn) OR router.getAmountsOut(uint amountIn, Route[] memory routes)
+  },
 ];

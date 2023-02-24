@@ -968,5 +968,10 @@
     "id": "cantoDex",
     "name": "CantoDex",
     "filter": true
+  },
+  {
+    "id": "solidlizard",
+    "name": "SolidLizard",
+    "filter": true
   }
 ]

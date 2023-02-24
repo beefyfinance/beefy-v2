@@ -1,5 +1,28 @@
 [
   {
+    "id": "solidlizard-usdt-usdc",
+    "name": "USDT-USDC sLP",
+    "token": "USDT-USDC sLP",
+    "tokenAddress": "0xC9dF93497B1852552F2200701cE58C236cC0378C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "solidlizard",
+    "earnedToken": "mooSolidLizardUSDC-USDT",
+    "earnedTokenAddress": "0x6d944C69A38f1caB3CfaC6FaD09e26aDD6F53864",
+    "earnContractAddress": "0x6d944C69A38f1caB3CfaC6FaD09e26aDD6F53864",
+    "oracle": "lps",
+    "oracleId": "solidlizard-usdt-usdc",
+    "status": "active",
+    "platformId": "solidlizard",
+    "assets": ["USDT", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://solidlizard.finance/swap?from=0xff970a61a04b1ca14834a43f5de4533ebddb5cc8&to=0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
+    "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0xC9dF93497B1852552F2200701cE58C236cC0378C",
+    "network": "arbitrum",
+    "createdAt": 1677270359
+  },
+  {
     "id": "kyber-arbitrum-usdc-mai",
     "name": "MAI-USDC LP",
     "token": "MAI-USDC arbkLP",

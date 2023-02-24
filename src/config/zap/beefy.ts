@@ -3,6 +3,11 @@ import { BeefyZapConfig } from '../../features/data/apis/config-types';
 export const zaps: BeefyZapConfig[] = [
   {
     chainId: 'arbitrum',
+    ammId: 'arbitrum-solidlizard',
+    zapAddress: '0x545bcA2369c2B8EaE15D0b237905429f5E737Ae5',
+  },
+  {
+    chainId: 'arbitrum',
     ammId: 'arbitrum-sushi',
     zapAddress: '0x6D973E33af0801Af13b7939956745c72bB17aa1E',
   },
