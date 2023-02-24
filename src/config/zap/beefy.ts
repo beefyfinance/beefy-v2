@@ -61,6 +61,11 @@ export const zaps: BeefyZapConfig[] = [
     zapAddress: '0xF0E5b891d054BB5B2E7357281050CCA00bE0d8d2',
   },
   {
+    chainId: 'canto',
+    ammId: 'canto-canto',
+    zapAddress: '0x28A12F017d0D843d43C71235F4F58535B8BE8563',
+  },
+  {
     chainId: 'cronos',
     ammId: 'cronos-vvs',
     zapAddress: '0xE8f59c05Ff92CF1584CBc404B4527b4F1eaF6620',

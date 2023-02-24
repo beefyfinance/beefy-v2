@@ -534,6 +534,30 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     },
     stableCoins: ['USDC', 'DAI', 'USDT', 'axlDAI', 'axlUSDC', 'axlUSDT'],
   },
+  canto: {
+    name: 'Canto',
+    chainId: 7700,
+    rpc: ['https://jsonrpc.canto.nodestake.top'],
+    explorerUrl: 'https://evm.explorer.canto.io',
+    multicallAddress: '0xc34b9c9DBB39Be0Ef850170127A7b4283484f804',
+    appMulticallContractAddress: '0x7c7B7FbccA5699175003ecbe1B41E79F40385469',
+    providerName: 'Canto',
+    walletSettings: {
+      chainId: `0x${parseInt('7700', 10).toString(16)}`,
+      chainName: 'canto',
+      nativeCurrency: {
+        name: 'CANTO',
+        symbol: 'CANTO',
+        decimals: 18,
+      },
+      rpcUrls: ['https://jsonrpc.canto.nodestake.top'],
+      blockExplorerUrls: ['https://evm.explorer.canto.io/'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['USDC', 'NOTE', 'USDT'],
+  },
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,

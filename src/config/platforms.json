@@ -963,5 +963,10 @@
     "id": "moonwell",
     "name": "Moonwell",
     "filter": true
+  },
+  {
+    "id": "cantoDex",
+    "name": "CantoDex",
+    "filter": true
   }
 ]
