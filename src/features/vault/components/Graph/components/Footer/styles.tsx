@@ -34,7 +34,7 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.disabled,
     display: 'grid',
     columnGap: '8px',
-    alignItems: 'center',
+    alingItems: 'center',
     gridTemplateColumns: 'minmax(0,5%) minmax(0,95%)',
   },
   tabsContainer: {
@@ -52,5 +52,8 @@ export const styles = (theme: Theme) => ({
       marginTop: 0,
       marginLeft: 'auto',
     },
+  },
+  checkbox: {
+    color: theme.palette.text.disabled,
   },
 });

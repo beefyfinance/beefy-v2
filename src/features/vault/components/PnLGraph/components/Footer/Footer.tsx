@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BasicTabs } from '../../../../../../components/Tabs/BasicTabs';
+import { Tabs } from '../../../../../../components/Tabs';
 import { useAppSelector } from '../../../../../../store';
 import { VaultEntity } from '../../../../../data/entities/vault';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
@@ -14,15 +14,14 @@ interface FooterProps {
   stat: number;
   handleStat: (stat: number) => any;
   vaultId: VaultEntity['id'];
+  labels: string[];
 }
 
-export const Footer = memo<FooterProps>(function ({ stat, handleStat, vaultId }) {
+export const Footer = memo<FooterProps>(function ({ stat, handleStat, vaultId, labels }) {
   const { t } = useTranslation();
   const classes = useStyles();
 
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
-  const labels = ['1D', '1W', '1M', '1Y'];
 
   return (
     <div className={classes.footer}>
@@ -31,10 +30,10 @@ export const Footer = memo<FooterProps>(function ({ stat, handleStat, vaultId })
           color="#59A662"
           text={t('pnl-graph-legend-amount', { vaultName: vault.name })}
         />
-        <LegendItem color="#6A88C8" text={t('pnl-graph-legend-usd')} />
+        <LegendItem color="#5C99D6" text={t('pnl-graph-legend-usd')} />
       </div>
       <div className={classes.tabsContainer}>
-        <BasicTabs labels={labels} value={stat} onChange={newValue => handleStat(newValue)} />
+        <Tabs labels={labels} value={stat} onChange={newValue => handleStat(newValue)} />
       </div>
     </div>
   );

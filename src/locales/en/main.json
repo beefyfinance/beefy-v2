@@ -549,6 +549,7 @@
   "Treasury-validator": "Validator",
   "pnl-graph-legend-amount": "{{vaultName}} Amount",
   "pnl-graph-legend-usd": "Deposit Value (USD)",
-  "underlying-balance": "Underlying balance:",
-  "usd-balance": "USD balance:"
+  "pnl-tooltip-deposit": "Your Deposit:",
+  "pnl-tooltip-deposit-usd": "Deposit Value(USD):",
+  "pnl-graph-no-data": "No DATA available for this period of time"
 }

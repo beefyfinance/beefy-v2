@@ -10,7 +10,6 @@ export const styles = (theme: Theme) => ({
     [theme.breakpoints.down('md')]: {
       gridTemplateColumns: 'repeat(2,minmax(0,1fr))',
       rowGap: '16px',
-      padding: '16px',
     },
   },
   itemContainer: { display: 'flex', columnGap: '24px' },

@@ -2,7 +2,7 @@ import { Box, makeStyles } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import { formatPercent, formatUsd } from '../../../../../helpers/format';
+import { formatPercent, formatUsd } from '../../../../../../helpers/format';
 import { CustomTooltipProps } from './CustomTooltipProps';
 import { format } from 'date-fns';
 

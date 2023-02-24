@@ -9,6 +9,7 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import { Footer } from './components/Footer';
 import { Graph } from './components/Graph';
 import { Header } from './components/Header';
+import { useVaultPeriods } from './hooks';
 
 import { styles } from './styles';
 
@@ -27,13 +28,15 @@ export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
 
   const isLoaded = useAppSelector(selectIsAnalyticsLoaded);
 
-  const [stat, setStat] = React.useState<number>(1);
+  const labels = useVaultPeriods(vaultId);
+
+  const [stat, setStat] = React.useState<number>(labels.length - 1);
 
   const handleStat = useCallback((newStat: number) => {
     setStat(newStat);
   }, []);
 
-  if (!isLoaded || !userVaults.includes(vaultId) || vault.status !== 'active') {
+  if (!isLoaded || !userVaults.includes(vaultId) || vault.status !== 'active' || !labels) {
     return null;
   }
 
@@ -43,7 +46,7 @@ export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
       <div className={classes.graphContainer}>
         <Graph stat={stat} vaultId={vaultId} />
       </div>
-      <Footer vaultId={vaultId} stat={stat} handleStat={handleStat} />
+      <Footer labels={labels} vaultId={vaultId} stat={stat} handleStat={handleStat} />
     </div>
   );
 });

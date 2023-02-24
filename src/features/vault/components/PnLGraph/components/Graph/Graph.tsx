@@ -17,6 +17,8 @@ import BigNumber from 'bignumber.js';
 import { PnLTooltip } from '../PnLTooltip';
 import { TimeBucketType } from '../../../../../data/apis/analytics/analytics-types';
 import { Theme, useMediaQuery } from '@material-ui/core';
+import { Loader } from '../Loader';
+import { NoData } from '../NoData';
 
 const TIME_BUCKET: TimeBucketType[] = ['1h_1d', '1h_1w', '1d_1M', '1d_1Y'];
 
@@ -27,8 +29,11 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
     return `beefy:vault:${vault.chainId}:${vault.earnContractAddress.toLowerCase()}`;
   }, [vault.chainId, vault.earnContractAddress]);
 
-  const { data, minUnderlying, maxUnderlying, minUsd, maxUsd, firstDate, lastDate } =
-    usePnLChartData(TIME_BUCKET[stat], productKey, vaultId);
+  const { data, minUnderlying, maxUnderlying, minUsd, maxUsd, loading } = usePnLChartData(
+    TIME_BUCKET[stat],
+    productKey,
+    vaultId
+  );
 
   const underlyingDiff = domainOffSet(minUnderlying, maxUnderlying, 0.88);
   const usdDiff = domainOffSet(minUsd, maxUsd, 0.88);
@@ -38,6 +43,21 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
   const padding = useMemo(() => {
     return mdDown ? 16 : 24;
   }, [mdDown]);
+
+  const ticksXAxis = useMemo(() => {
+    if (TIME_BUCKET[stat] === '1h_1d') {
+      return data.map(row => row.datetime.getTime()).filter((row, i) => i % 2 === 0);
+    }
+    return data.map(row => row.datetime.getTime()).filter((row, i) => i % 7 === 0);
+  }, [data, stat]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (!loading && data.length === 0) {
+    return <NoData />;
+  }
 
   return (
     <ResponsiveContainer width="100%" height={200}>
@@ -53,27 +73,32 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
           type="number"
           tickFormatter={tickitem => formatXAxis(tickitem, TIME_BUCKET[stat])}
           dataKey="datetime"
-          domain={[firstDate.getTime(), lastDate.getTime()]}
+          allowDuplicatedCategory={false}
+          ticks={ticksXAxis}
+          domain={[ticksXAxis[0], ticksXAxis[ticksXAxis.length - 1]]}
           padding={{ left: 2, right: 2 }}
+          dy={6}
         />
         <YAxis
-          stroke="#3F4474"
+          stroke="#59A662"
+          strokeWidth={1.5}
           tickFormatter={tickItem =>
-            formatFullBigNumber(new BigNumber(tickItem), tickItem > 9999 ? 0 : 3)
+            formatFullBigNumber(new BigNumber(tickItem), tickItem > 999 ? 0 : 3)
           }
           yAxisId="underliying"
           domain={[minUnderlying - underlyingDiff, maxUnderlying + underlyingDiff]}
         />
         <YAxis
-          stroke="#3F4474"
+          stroke="#5C99D6"
           orientation="right"
+          strokeWidth={1.5}
           tickFormatter={tickItem => formatBigUsd(new BigNumber(tickItem))}
           yAxisId="usd"
           domain={[minUsd - usdDiff, maxUsd + usdDiff]}
         />
         <Line
           yAxisId="underliying"
-          strokeWidth={1}
+          strokeWidth={1.5}
           dataKey="underlyingBalance"
           stroke="#59A662"
           dot={false}
@@ -82,9 +107,9 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
         <Line
           type="basis"
           yAxisId="usd"
-          strokeWidth={1}
+          strokeWidth={1.5}
           dataKey="usdBalance"
-          stroke="#6A88C8"
+          stroke="#5C99D6"
           dot={false}
         />
         <Tooltip wrapperStyle={{ outline: 'none' }} content={<PnLTooltip />} />
@@ -93,11 +118,11 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
   );
 });
 
-function formatXAxis(tickItem: Date, timebucket: TimeBucketType) {
+function formatXAxis(tickItem: number, timebucket: TimeBucketType) {
   if (timebucket === '1h_1d') {
-    return format(tickItem, 'H:m');
+    return format(tickItem * 1000, 'HH:mm');
   }
-  return format(tickItem, 'dd/M');
+  return format(tickItem * 1000, 'dd/MM');
 }
 
 const domainOffSet = (min: number, max: number, heightPercentageUsedByChart: number) => {

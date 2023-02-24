@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   item: {
     display: 'flex',
     justifyContent: 'space-between',
+    columnGap: '4px',
   },
   value: {
     fontWeight: 500,
@@ -44,11 +45,11 @@ export const PnLTooltip = memo<TooltipProps>(function ({ active, payload }) {
       <div className={classes.container}>
         <div>{formattedDate}</div>
         <div className={classes.item}>
-          <div>{t('underlying-balance')}</div>
+          <div>{t('pnl-tooltip-deposit')}</div>
           <div className={classes.value}>{formatBigNumberSignificant(shares)}</div>
         </div>
         <div className={classes.item}>
-          <div>{t('usd-balance')}</div>
+          <div>{t('pnl-tooltip-deposit-usd')}</div>
           <div className={classes.value}>{formatBigUsd(usdBalance)}</div>
         </div>
       </div>
