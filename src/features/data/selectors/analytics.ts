@@ -57,6 +57,10 @@ export const selectVaultPnl = (state: BeefyState, vaultId: VaultEntity['id']) =>
   // const totalPnlUsd = realizedPnl.usd.plus(unrealizedPnl.usd);
   const totalPnlUsd = unrealizedPnl.usd;
 
+  const yieldPercentage = totalYield.dividedBy(depositNow);
+
+  const pnlPercentage = totalPnlUsd.dividedBy(usdBalanceAtDeposit);
+
   return {
     totalYield,
     totalYieldUsd,
@@ -65,6 +69,8 @@ export const selectVaultPnl = (state: BeefyState, vaultId: VaultEntity['id']) =>
     depositUsd,
     usdBalanceAtDeposit,
     balanceAtDeposit,
+    yieldPercentage,
+    pnlPercentage,
   };
 };
 

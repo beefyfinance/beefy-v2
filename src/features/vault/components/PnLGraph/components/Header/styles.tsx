@@ -25,9 +25,18 @@ export const styles = (theme: Theme) => ({
     fontWeight: 700,
   },
   value: {
+    display: 'flex',
+    alignItems: 'center',
+    columnGap: '4px',
     ...theme.typography.h3,
     color: theme.palette.text.secondary,
     fontWeight: 500,
+    '& span': {
+      textDecoration: 'none',
+      ...theme.typography['subline-sm'],
+      color: theme.palette.text.disabled,
+      fontWeight: 700,
+    },
   },
   greenValue: {
     color: theme.palette.primary.main,

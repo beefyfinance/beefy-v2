@@ -9,6 +9,7 @@ import {
   formatBigDecimals,
   formatBigUsd,
   formatFullBigNumber,
+  formatPercent,
 } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
 import { VaultEntity } from '../../../../../data/entities/vault';
@@ -46,11 +47,13 @@ export const Header = memo<HeaderProps>(function ({ vaultId }) {
         label: t('Yield'),
         value: vaultPnlStats.totalYield,
         subValue: formatBigUsd(vaultPnlStats.totalYieldUsd),
+        percentage: formatPercent(vaultPnlStats.yieldPercentage),
         valueClassName: classes.greenValue,
       },
       {
         label: t('PNL'),
         value: vaultPnlStats.totalPnlUsd,
+        percentage: formatPercent(vaultPnlStats.pnlPercentage),
         sharesValueComponent: false,
       },
     ];
@@ -60,10 +63,12 @@ export const Header = memo<HeaderProps>(function ({ vaultId }) {
     vaultPnlStats.balanceAtDeposit,
     vaultPnlStats.deposit,
     vaultPnlStats.depositUsd,
+    vaultPnlStats.pnlPercentage,
     vaultPnlStats.totalPnlUsd,
     vaultPnlStats.totalYield,
     vaultPnlStats.totalYieldUsd,
     vaultPnlStats.usdBalanceAtDeposit,
+    vaultPnlStats.yieldPercentage,
   ]);
 
   return (
@@ -77,6 +82,7 @@ export const Header = memo<HeaderProps>(function ({ vaultId }) {
           valueClassName={item.valueClassName}
           border={item.border}
           sharesValueComponent={item.sharesValueComponent}
+          percentage={item.percentage}
         />
       ))}
     </div>
@@ -90,6 +96,7 @@ interface HeaderItemProps {
   valueClassName?: string;
   border?: boolean;
   sharesValueComponent?: boolean;
+  percentage?: string;
 }
 
 const HeaderItem = memo<HeaderItemProps>(function ({
@@ -99,12 +106,9 @@ const HeaderItem = memo<HeaderItemProps>(function ({
   valueClassName,
   border = true,
   sharesValueComponent = true,
+  percentage,
 }) {
   const classes = useStyles();
-
-  if (!value) {
-    return <>aaaaaaa</>;
-  }
 
   return (
     <div className={classes.itemContainer}>
@@ -112,9 +116,9 @@ const HeaderItem = memo<HeaderItemProps>(function ({
       <div className={classes.textContainer}>
         <div className={classes.label}>{label}</div>
         {sharesValueComponent ? (
-          <SharesValue value={value} className={valueClassName} />
+          <SharesValue value={value} percentage={percentage} className={valueClassName} />
         ) : (
-          <UsdValue value={value} className={valueClassName} />
+          <UsdValue value={value} percentage={percentage} className={valueClassName} />
         )}
         {subValue && <div className={classes.subValue}>{subValue}</div>}
       </div>
@@ -125,24 +129,31 @@ const HeaderItem = memo<HeaderItemProps>(function ({
 interface ValueItemProps {
   value: BigNumber;
   className?: string;
+  percentage?: string;
 }
 
-const UsdValue = memo<ValueItemProps>(function ({ value, className }) {
+const UsdValue = memo<ValueItemProps>(function ({ value, className, percentage }) {
   const classes = useStyles();
-  return <div className={clsx(classes.value, className)}>{formatBigUsd(value)}</div>;
+  return (
+    <div className={clsx(classes.value, className)}>
+      <div>{formatBigUsd(value)}</div>
+      {percentage && <span>({percentage})</span>}
+    </div>
+  );
 });
 
-const SharesValue = memo<ValueItemProps>(function ({ value, className }) {
+const SharesValue = memo<ValueItemProps>(function ({ value, className, percentage }) {
   const classes = useStyles();
 
   const shortAmount = formatBigDecimals(value, 4);
   const fullAmount = formatFullBigNumber(value, 18);
   return (
     <Tooltip
-      triggerClass={clsx(classes.withTooltip, classes.value, className)}
+      triggerClass={clsx(classes.value, className)}
       content={<BasicTooltipContent title={fullAmount} />}
     >
-      {shortAmount}
+      <div className={classes.withTooltip}>{shortAmount}</div>
+      {percentage && <span>({percentage})</span>}
     </Tooltip>
   );
 });
