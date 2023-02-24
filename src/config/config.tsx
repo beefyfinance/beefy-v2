@@ -177,6 +177,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'TOR',
       'ETSAlpha',
       'DEI',
+      'wUSDR',
     ],
   },
   optimism: {
