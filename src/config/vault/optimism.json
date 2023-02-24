@@ -1,5 +1,35 @@
 [
   {
+    "id": "velodrome-wusdr-usdc",
+    "name": "wUSDR-USDC vLP",
+    "token": "wUSDR-USDC vLP",
+    "tokenAddress": "0x48dce63BacF1C7C839cFa7d4F871ad17c0D30D38",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromewUSDR-USDC",
+    "earnedTokenAddress": "0xfb2DA05f62Ad4e7074813C12fdd62380c6D8c199",
+    "earnContractAddress": "0xfb2DA05f62Ad4e7074813C12fdd62380c6D8c199",
+    "oracle": "lps",
+    "oracleId": "velodrome-wusdr-usdc",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["wUSDR", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1677179159
+  },
+  {
     "id": "velodrome-op-ageur",
     "name": "agEUR-OP vLP",
     "token": "agEUR-OP vLP",
