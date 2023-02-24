@@ -128,6 +128,7 @@ export const zaps: OneInchZapConfig[] = [
       'USDC-hUSDC LP', // beefy and 1inch prices are more than 10% different
       'USDT-hUSDT LP', // no 1inch price
       'USX', // no 1inch price
+      'wUSDR', // no 1inch price
     ],
     blockedVaults: ['aavev3-op-eth'],
   },
