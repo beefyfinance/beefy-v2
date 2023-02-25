@@ -47,8 +47,8 @@
     ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://kyberswap.com/swap/arbitrum",
-    "addLiquidityUrl": "https://kyberswap.com/add/0x7F5c764cBc14f9669B88837ca1490cCa17c31607/0xdFA46478F9e5EA86d57387849598dbFB2e964b02/0xc2995a065106b5c5c738b2320387460ebd12c12d",
-    "removeLiquidityUrl": "https://kyberswap.com/remove/0x7F5c764cBc14f9669B88837ca1490cCa17c31607/0xdFA46478F9e5EA86d57387849598dbFB2e964b02/0xc2995a065106b5c5c738b2320387460ebd12c12d",
+    "addLiquidityUrl": "https://kyberswap.com/add/0x3F56e0c36d275367b8C502090EDF38289b3dEa0d/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0x6a4d5f8385ff6e7fc4ebf6f726e12a958daa1cba",
+    "removeLiquidityUrl": "https://kyberswap.com/remove/0x3F56e0c36d275367b8C502090EDF38289b3dEa0d/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0x6a4d5f8385ff6e7fc4ebf6f726e12a958daa1cba",
     "network": "arbitrum",
     "createdAt": 1675790593
   },
