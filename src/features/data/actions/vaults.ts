@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
-import { getConfigApi } from '../apis/instances';
+import { getBeefyApi, getConfigApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
+import { BeefyVaultZapSupportResponse } from '../apis/beefy';
 
 // given the list of vaults is pulled from some api at some point
 // we use the api to create an action
@@ -33,5 +34,18 @@ export const fetchFeaturedVaults = createAsyncThunk<FulfilledFeaturedVaultsPaylo
     const api = getConfigApi();
     const featuredVaults = await api.fetchFeaturedVaults();
     return { byVaultId: featuredVaults };
+  }
+);
+
+export type FulfilledFetchVaultsZapSupportPayload = {
+  byVaultId: BeefyVaultZapSupportResponse;
+};
+
+export const fetchVaultsZapSupport = createAsyncThunk<FulfilledFetchVaultsZapSupportPayload>(
+  'vaults/fetchVaultsZapSupport',
+  async () => {
+    const api = getBeefyApi();
+    const vaultsZapSupport = await api.getVaultZapSupport();
+    return { byVaultId: vaultsZapSupport };
   }
 );

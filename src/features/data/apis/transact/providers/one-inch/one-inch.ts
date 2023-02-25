@@ -14,7 +14,11 @@ import {
 } from '../../transact-types';
 import { Namespace, TFunction } from 'react-i18next';
 import { Step } from '../../../../reducers/wallet/stepper';
-import { selectStandardVaultById, selectVaultById } from '../../../../selectors/vaults';
+import {
+  selectStandardVaultById,
+  selectVaultById,
+  selectVaultSupportsOneInchZap,
+} from '../../../../selectors/vaults';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
@@ -102,6 +106,10 @@ export class OneInchZapProvider implements ITransactProvider {
     state: BeefyState
   ): Promise<OneInchZapOption[] | null> {
     const vault = selectVaultById(state, vaultId);
+
+    if (!selectVaultSupportsOneInchZap(state, vaultId)) {
+      return null;
+    }
 
     if (!isStandardVault(vault)) {
       return null;
@@ -805,6 +813,10 @@ export class OneInchZapProvider implements ITransactProvider {
     state: BeefyState
   ): Promise<TransactOption[] | null> {
     const vault = selectVaultById(state, vaultId);
+
+    if (!selectVaultSupportsOneInchZap(state, vaultId)) {
+      return null;
+    }
 
     if (!isStandardVault(vault)) {
       return null;

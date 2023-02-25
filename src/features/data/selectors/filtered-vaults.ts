@@ -27,6 +27,7 @@ import {
   selectIsVaultFeatured,
   selectIsVaultStable,
   selectVaultById,
+  selectVaultSupportsAnyZap,
 } from './vaults';
 import escapeStringRegexp from 'escape-string-regexp';
 import { selectTokenByAddress } from './tokens';
@@ -227,6 +228,10 @@ export const selectFilteredVaults = (state: BeefyState) => {
     }
 
     if (filterOptions.onlyPaused && !isVaultPaused(vault)) {
+      return false;
+    }
+
+    if (filterOptions.onlyZapable && !selectVaultSupportsAnyZap(state, vault.id)) {
       return false;
     }
 

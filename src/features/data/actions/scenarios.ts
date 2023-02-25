@@ -6,7 +6,7 @@ import { fetchApyAction } from './apy';
 import { fetchAllBoosts, initiateBoostForm } from './boosts';
 import { fetchChainConfigs } from './chains';
 import { fetchAllPricesAction, fetchBeefyBuybackAction } from './prices';
-import { fetchAllVaults, fetchFeaturedVaults } from './vaults';
+import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsZapSupport } from './vaults';
 import { fetchAllBalanceAction } from './balance';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_noDataPolling } from '../utils/feature-flags';
@@ -65,6 +65,8 @@ export async function initHomeDataV4(store: BeefyStore) {
     store.dispatch(fetchBeefyBuybackAction());
 
     store.dispatch(fetchFeaturedVaults());
+
+    store.dispatch(fetchVaultsZapSupport());
 
     store.dispatch(fetchPartnersConfig());
 

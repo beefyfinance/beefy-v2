@@ -1,6 +1,10 @@
 import { isStandardVault, VaultEntity, VaultStandard } from '../../../../entities/vault';
 import { BeefyState } from '../../../../../../redux-types';
-import { selectStandardVaultById, selectVaultById } from '../../../../selectors/vaults';
+import {
+  selectStandardVaultById,
+  selectVaultById,
+  selectVaultSupportsBeefyZap,
+} from '../../../../selectors/vaults';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
@@ -192,6 +196,10 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
       return this.depositCache[vaultId];
     }
 
+    if (!selectVaultSupportsBeefyZap(state, vaultId)) {
+      return null;
+    }
+
     const commonOptionData = await this.getCommonOptionData(vaultId, state);
     if (!commonOptionData) {
       return null;
@@ -308,6 +316,10 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
   ): Promise<TransactOption[] | null> {
     if (vaultId in this.withdrawCache) {
       return this.withdrawCache[vaultId];
+    }
+
+    if (!selectVaultSupportsBeefyZap(state, vaultId)) {
+      return null;
     }
 
     const commonOptionData = await this.getCommonOptionData(vaultId, state);
