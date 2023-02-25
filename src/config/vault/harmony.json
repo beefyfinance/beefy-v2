@@ -26,8 +26,7 @@
     "strategyTypeId": "single",
     "isGovVault": true,
     "network": "harmony",
-    "createdAt": 1623706144,
-    "callFee": 0.5
+    "createdAt": 1623706144
   },
   {
     "id": "sushi-one-1eth-1aave-eol",
@@ -59,8 +58,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x913de0f91169680c32c8f27212361272ef4fdfd9/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x913de0f91169680c32c8f27212361272ef4fdfd9/remove",
     "network": "harmony",
-    "createdAt": 1631279357,
-    "callFee": 0.25
+    "createdAt": 1631279357
   },
   {
     "id": "sushi-one-1eth-1frax-eol",
@@ -92,8 +90,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xa46bba980512e328e344ce12bb969563f3429f05/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xa46bba980512e328e344ce12bb969563f3429f05/remove",
     "network": "harmony",
-    "createdAt": 1631282533,
-    "callFee": 0.25
+    "createdAt": 1631282533
   },
   {
     "id": "sushi-one-1wbtc-1eth",
@@ -125,8 +122,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x39be7c95276954a6f7070f9baa38db2123691ed0/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x39be7c95276954a6f7070f9baa38db2123691ed0/remove",
     "network": "harmony",
-    "createdAt": 1631283021,
-    "callFee": 0.25
+    "createdAt": 1631283021
   },
   {
     "id": "sushi-one-1usdt-1usdc",
@@ -158,8 +154,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x0c51171b913db10ade3fd625548e69c9c63afb96/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x0c51171b913db10ade3fd625548e69c9c63afb96/remove",
     "network": "harmony",
-    "createdAt": 1631283436,
-    "callFee": 0.25
+    "createdAt": 1631283436
   },
   {
     "id": "sushi-one-1usdt-wone",
@@ -191,8 +186,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x2c7862b408bb3dbff277110ffde1b4eaa45c692a/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x2c7862b408bb3dbff277110ffde1b4eaa45c692a/remove",
     "network": "harmony",
-    "createdAt": 1631283673,
-    "callFee": 0.25
+    "createdAt": 1631283673
   },
   {
     "id": "sushi-one-busd-one",
@@ -224,8 +218,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x8c36ede15c5e4b0e1f9764351a7a7a0037c5e103/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x8c36ede15c5e4b0e1f9764351a7a7a0037c5e103/remove",
     "network": "harmony",
-    "createdAt": 1631201665,
-    "callFee": 0.25
+    "createdAt": 1631201665
   },
   {
     "id": "sushi-one-eth-one",
@@ -257,8 +250,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xeb049f1ed546f8efc3ad57f6c7d22f081ccc7375/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xeb049f1ed546f8efc3ad57f6c7d22f081ccc7375/remove",
     "network": "harmony",
-    "createdAt": 1631205117,
-    "callFee": 0.25
+    "createdAt": 1631205117
   },
   {
     "id": "sushi-one-btc-one",
@@ -290,8 +282,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xc3670b927ef42eed252e483e2446352c238d9905/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xc3670b927ef42eed252e483e2446352c238d9905/remove",
     "network": "harmony",
-    "createdAt": 1631205541,
-    "callFee": 0.25
+    "createdAt": 1631205541
   },
   {
     "id": "sushi-one-usdc-one",
@@ -323,8 +314,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xbf255d8c30dbab84ea42110ea7dc870f01c0013a/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xbf255d8c30dbab84ea42110ea7dc870f01c0013a/remove",
     "network": "harmony",
-    "createdAt": 1631205683,
-    "callFee": 0.25
+    "createdAt": 1631205683
   },
   {
     "id": "one-bifi-maxi",
@@ -448,8 +438,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x4f3d9ac088cdf31b1831db3aaf5803ab35c200c4/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x4f3d9ac088cdf31b1831db3aaf5803ab35c200c4/remove",
     "network": "harmony",
-    "createdAt": 1641218490,
-    "callFee": 0.25
+    "createdAt": 1641218490
   },
   {
     "id": "sushi-one-1eth-1dai-eol",
@@ -482,8 +471,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xc5b8129b411ef5f5be22e74de6fe86c3b69e641d/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xc5b8129b411ef5f5be22e74de6fe86c3b69e641d/remove",
     "network": "harmony",
-    "createdAt": 1631282246,
-    "callFee": 0.25
+    "createdAt": 1631282246
   },
   {
     "id": "sushi-one-1usdt-1eth-eol",
@@ -515,8 +503,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x02f4d0021e3cb8736108e11c8df02fbbd6eeedbf/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x02f4d0021e3cb8736108e11c8df02fbbd6eeedbf/remove",
     "network": "harmony",
-    "createdAt": 1631282425,
-    "callFee": 0.25
+    "createdAt": 1631282425
   },
   {
     "id": "sushi-one-sushi-one-eol",
@@ -548,8 +535,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x468dc50884962d6f81733ac0c23c04611ac219f9/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x468dc50884962d6f81733ac0c23c04611ac219f9/remove",
     "network": "harmony",
-    "createdAt": 1631197145,
-    "callFee": 0.25
+    "createdAt": 1631197145
   },
   {
     "id": "sushi-one-1ygg-1eth-eol",
@@ -581,8 +567,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x40112850efd90e9e17b56de35d86bdff9f4d07fd/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x40112850efd90e9e17b56de35d86bdff9f4d07fd/remove",
     "network": "harmony",
-    "createdAt": 1631279238,
-    "callFee": 0.25
+    "createdAt": 1631279238
   },
   {
     "id": "sushi-one-1axs-1eth-eol",
@@ -614,8 +599,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xbb680ba75f7e3e404923d04d484af5ce96b4a4bf/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xbb680ba75f7e3e404923d04d484af5ce96b4a4bf/remove",
     "network": "harmony",
-    "createdAt": 1631279474,
-    "callFee": 0.25
+    "createdAt": 1631279474
   },
   {
     "id": "sushi-one-ust-1eth-eol",
@@ -648,8 +632,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x9293dfdd719ee2163f2e158e66ef75722ed712b4/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x9293dfdd719ee2163f2e158e66ef75722ed712b4/remove",
     "network": "harmony",
-    "createdAt": 1631282733,
-    "callFee": 0.25
+    "createdAt": 1631282733
   },
   {
     "id": "sushi-one-bifi-wone-eol",
@@ -681,8 +664,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x27f3b2df4a81382202e87ee40429e0212ecc7d3f/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x27f3b2df4a81382202e87ee40429e0212ecc7d3f/remove",
     "network": "harmony",
-    "createdAt": 1641218645,
-    "callFee": 0.25
+    "createdAt": 1641218645
   },
   {
     "id": "sushi-one-bscbusd-busd-eol",
@@ -714,7 +696,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xda64f9053a971531a75071a729a6432fb65ed60d/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xda64f9053a971531a75071a729a6432fb65ed60d/remove",
     "network": "harmony",
-    "createdAt": 1631204933,
-    "callFee": 0.25
+    "createdAt": 1631204933
   }
 ]

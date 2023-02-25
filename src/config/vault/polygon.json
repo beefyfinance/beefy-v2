@@ -985,8 +985,7 @@
     "excluded": "polygon-bifi-maxi",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xfbdd194376de19a88118e84e279b977f165d01b8",
     "network": "polygon",
-    "createdAt": 1623706144,
-    "callFee": 0.5
+    "createdAt": 1623706144
   },
   {
     "id": "mai-curve-mai-3pool",
@@ -1048,8 +1047,7 @@
     "isGovVault": true,
     "excluded": "beefy-beqi",
     "network": "polygon",
-    "createdAt": 1650557675,
-    "callFee": 0.5
+    "createdAt": 1650557675
   },
   {
     "id": "giddy-giddy",

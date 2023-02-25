@@ -159,8 +159,7 @@
     "isGovVault": true,
     "excluded": "arbi-bifi-maxi",
     "network": "arbitrum",
-    "createdAt": 1623706144,
-    "callFee": 0.5
+    "createdAt": 1623706144
   },
   {
     "id": "swapfish-ageur-usdc",

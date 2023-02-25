@@ -54,8 +54,7 @@
     "excluded": "avax-bifi-maxi",
     "buyTokenUrl": "https://www.traderjoexyz.com/#/trade?outputCurrency=0xd6070ae98b8069de6b494332d1a1a81b6179d960",
     "network": "avax",
-    "createdAt": 1623706144,
-    "callFee": 0.5
+    "createdAt": 1623706144
   },
   {
     "id": "kyber-avax-usdc-mai",
@@ -235,8 +234,7 @@
     "isGovVault": true,
     "excluded": "beefy-beJoe",
     "network": "avax",
-    "createdAt": 1649422900,
-    "callFee": 0.5
+    "createdAt": 1649422900
   },
   {
     "id": "sicle-grape-mim",
