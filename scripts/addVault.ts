@@ -79,6 +79,7 @@ async function generateVault() {
     strategyTypeId: 'multi-lp',
     risks: ['COMPLEXITY_LOW', 'IL_NONE', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
     addLiquidityUrl: 'XXX',
+    removeLiquidityUrl: 'XXX',
     network: chain,
     createdAt: Math.floor(Date.now() / 1000),
   };

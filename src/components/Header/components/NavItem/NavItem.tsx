@@ -1,17 +1,11 @@
-import { Badge, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, NavLinkProps } from 'react-router-dom';
 import { styles } from './styles';
 import { ArrowForwardIosRounded as RightArrow } from '@material-ui/icons';
-
-interface NavItemProps {
-  url: string;
-  title: string;
-  Icon: React.FC;
-  withBadge?: boolean;
-}
+import { NavItemProps } from '../DropNavItem/types';
 
 const useStyles = makeStyles(styles);
 
@@ -23,17 +17,32 @@ type AutoNavLinkProps = {
   children: NavLinkProps['children'];
   className: HTMLAnchorElement['className'];
 };
-const AutoNavLink = memo<AutoNavLinkProps>(function ({ to, className, children, ...rest }) {
+const AutoNavLink = memo<AutoNavLinkProps>(function ({
+  to,
+  className,
+  children,
+  onClick,
+  ...rest
+}) {
   const isExternal = typeof to === 'string' && to[0] !== '/';
 
   if (isExternal) {
-    return <a className={className} href={to} target="_blank" rel="noopener" children={children} />;
+    return (
+      <a
+        className={className}
+        href={to}
+        target="_blank"
+        rel="noopener"
+        children={children}
+        onClick={onClick}
+      />
+    );
   }
 
-  return <NavLink className={className} to={to} children={children} {...rest} />;
+  return <NavLink className={className} to={to} children={children} onClick={onClick} {...rest} />;
 });
 
-export const NavItem = memo<NavItemProps>(function ({ url, title, Icon, withBadge = false }) {
+export const NavItem = memo<NavItemProps>(function ({ url, title, Icon, Badge, onClick }) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
@@ -43,23 +52,18 @@ export const NavItem = memo<NavItemProps>(function ({ url, title, Icon, withBadg
       className={classes.navLink}
       key={url}
       to={url}
+      onClick={onClick}
     >
-      {withBadge ? (
-        <Badge badgeContent="New" color="primary">
-          <Icon />
-          {t(title)}
-        </Badge>
-      ) : (
-        <>
-          <Icon />
-          {t(title)}
-        </>
-      )}
+      <Icon />
+      <div className={clsx(classes.title, { [classes.titleWithBadge]: !!Badge })}>
+        {t(title)}
+        {Badge ? <Badge /> : null}
+      </div>
     </AutoNavLink>
   );
 });
 
-type NavItemPropsMobile = NavItemProps & { className?: string; onClick: () => void };
+type NavItemPropsMobile = NavItemProps;
 
 export const NavItemMobile = memo<NavItemPropsMobile>(function ({
   url,
@@ -67,7 +71,7 @@ export const NavItemMobile = memo<NavItemPropsMobile>(function ({
   Icon,
   className,
   onClick,
-  withBadge = false,
+  Badge,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -81,17 +85,11 @@ export const NavItemMobile = memo<NavItemPropsMobile>(function ({
       to={url}
     >
       <div className={classes.flex}>
-        {withBadge ? (
-          <Badge badgeContent="New" color="primary">
-            <Icon />
-            {t(title)}
-          </Badge>
-        ) : (
-          <>
-            <Icon />
-            {t(title)}
-          </>
-        )}
+        <Icon />
+        <div className={clsx(classes.title, { [classes.titleWithBadge]: !!Badge })}>
+          {t(title)}
+          {Badge ? <Badge /> : null}
+        </div>
       </div>
       <RightArrow className={classes.arrow} />
     </AutoNavLink>

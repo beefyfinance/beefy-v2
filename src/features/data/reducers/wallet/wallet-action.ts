@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { WALLET_ACTION, WALLET_ACTION_RESET } from '../../actions/wallet-actions';
-import { TokenEntity } from '../../entities/token';
+import { TokenEntity, TokenErc20 } from '../../entities/token';
 import { EventLog } from 'web3-core';
 import { VaultEntity } from '../../entities/vault';
 
@@ -24,7 +24,10 @@ export type MandatoryAdditionalData = {
 };
 
 export type OptionalAdditionalData = Partial<{
+  /** Vault zap is on */
   vaultId: VaultEntity['id'];
+  /** Expected tokens returned to user */
+  expectedTokens: TokenErc20[];
 }>;
 
 export type WalletActionsState = {

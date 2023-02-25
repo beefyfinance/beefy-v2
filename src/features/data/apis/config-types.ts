@@ -223,6 +223,7 @@ export interface MinterConfig {
   hasEarningsPool: boolean;
   reserveBalanceMethod?: string;
   vaultIds: string[];
+  canZapInWithOneInch?: boolean;
 }
 
 export interface InfoCardConfigContent {

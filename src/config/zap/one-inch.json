@@ -5,7 +5,7 @@
     "chainId": "polygon",
     "fee": {
       "original": 0.0005,
-      "discounted": 0
+      "value": 0
     },
     "depositFromTokens": ["MATIC", "WMATIC", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
     "withdrawToTokens": ["MATIC", "BIFI", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
@@ -54,12 +54,14 @@
     "chainId": "fantom",
     "fee": {
       "original": 0.0005,
-      "discounted": 0
+      "value": 0
     },
     "depositFromTokens": ["FTM", "WFTM", "USDC", "fUSDT", "DAI", "MIM", "MAI", "WETH", "WBTC"],
     "withdrawToTokens": ["FTM", "BIFI", "USDC", "fUSDT", "DAI", "MIM", "MAI", "WETH", "WBTC"],
     "blockedTokens": [
       "alUSD",
+      "ANKR",
+      "ankrFTM",
       "asUSDC",
       "ATLAS",
       "BASED",
@@ -69,6 +71,7 @@
       "DOLA",
       "FTML",
       "fWINGS",
+      "FXS",
       "LUNA",
       "LUNAw",
       "PEAR",
@@ -96,8 +99,8 @@
     "priceOracleAddress": "0x11DEE30E710B8d4a8630392781Cc3c0046365d4c",
     "chainId": "optimism",
     "fee": {
-      "original": 0.0005,
-      "discounted": 0
+      "value": 0.0005,
+      "recipient": "0x852C903e5Bc93F526AB254BFEe0c1DFF23CF82aB"
     },
     "depositFromTokens": [
       "ETH",
@@ -124,6 +127,7 @@
       "DAI-hDAI LP",
       "ETH-hETH LP",
       "frxETH",
+      "sfrxETH",
       "jEUR",
       "MIM",
       "S*DAI",
@@ -135,7 +139,8 @@
       "USD+",
       "USDC-hUSDC LP",
       "USDT-hUSDT LP",
-      "USX"
+      "USX",
+      "wUSDR"
     ],
     "blockedVaults": ["aavev3-op-eth"]
   },
@@ -145,7 +150,7 @@
     "chainId": "avax",
     "fee": {
       "original": 0.0005,
-      "discounted": 0
+      "value": 0
     },
     "depositFromTokens": [
       "AVAX",
@@ -196,7 +201,7 @@
     "chainId": "arbitrum",
     "fee": {
       "original": 0.0005,
-      "discounted": 0
+      "value": 0
     },
     "depositFromTokens": ["ETH", "WETH", "USDC", "USDT", "DAI", "MIM", "WBTC"],
     "withdrawToTokens": ["ETH", "BIFI", "USDC", "USDT", "DAI", "MIM", "WBTC"],
@@ -209,12 +214,13 @@
     "chainId": "bsc",
     "fee": {
       "original": 0.0005,
-      "discounted": 0
+      "value": 0
     },
     "depositFromTokens": ["BNB", "WBNB", "BUSD", "USDC", "USDT", "DAI", "ETH", "BTCB"],
     "withdrawToTokens": ["BNB", "BIFI", "BUSD", "USDC", "USDT", "DAI", "ETH", "BTCB"],
     "blockedTokens": [
       "aBNBc",
+      "ankrETH",
       "AURO",
       "bDIGG",
       "beltBNB",
@@ -226,8 +232,11 @@
       "CONE",
       "CRUSH",
       "DFT",
+      "DOLA",
       "FISH",
       "frxETH",
+      "FS",
+      "sfrxETH",
       "FROYO",
       "GOAL",
       "GOLD",
@@ -254,6 +263,7 @@
       "TEN",
       "TOFY",
       "XMARK",
+      "wUSDR",
       "ZBTC"
     ],
     "blockedVaults": ["venus-bnb", "venus-wbnb"]
@@ -264,7 +274,7 @@
     "chainId": "aurora",
     "fee": {
       "original": 0.0005,
-      "discounted": 0
+      "value": 0
     },
     "depositFromTokens": ["ETH", "WETH", "USDC", "USDT", "WBTC"],
     "withdrawToTokens": ["ETH", "BIFI", "USDC", "USDT", "WBTC"],
@@ -277,7 +287,7 @@
     "chainId": "ethereum",
     "fee": {
       "original": 0.0005,
-      "discounted": 0
+      "value": 0
     },
     "depositFromTokens": ["ETH", "WETH", "USDC", "USDT", "DAI", "WBTC", "MIM"],
     "withdrawToTokens": ["ETH", "USDC", "USDT", "WBTC", "DAI", "MIM"],

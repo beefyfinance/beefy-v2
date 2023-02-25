@@ -1,4 +1,4 @@
-import { Badge, ClickAwayListener, makeStyles } from '@material-ui/core';
+import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import React, { memo, MouseEventHandler, useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -6,22 +6,19 @@ import { ExpandMore } from '@material-ui/icons';
 import { Floating } from '../../../Floating';
 import { styles } from './styles';
 import { NavItem } from '../NavItem';
+import { BadgeComponent } from '../Badges/types';
+import { NavItemConfig } from './types';
 
 const useStyles = makeStyles(styles);
 
 interface DropNavItemProps {
   title: string;
   Icon: React.FC;
-  items: { url: string; title: string; Icon: React.FC; badge?: boolean }[];
-  withBadge?: boolean;
+  items: NavItemConfig[];
+  Badge?: BadgeComponent;
 }
 
-export const DropNavItem = memo<DropNavItemProps>(function ({
-  title,
-  Icon,
-  items,
-  withBadge = false,
-}) {
+export const DropNavItem = memo<DropNavItemProps>(function ({ title, Icon, items, Badge }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);
@@ -46,17 +43,11 @@ export const DropNavItem = memo<DropNavItemProps>(function ({
         className={clsx(classes.label, { [classes.active]: isOpen })}
         ref={anchorEl}
       >
-        {withBadge ? (
-          <Badge badgeContent="New" color="primary">
-            <Icon />
-            {t(title)}
-          </Badge>
-        ) : (
-          <>
-            <Icon />
-            {t(title)}
-          </>
-        )}
+        <Icon />
+        <div className={clsx(classes.title, { [classes.titleWithBadge]: !!Badge })}>
+          {t(title)}
+          {Badge ? <Badge /> : null}
+        </div>
         <ExpandMore className={classes.arrow} />
         <Floating
           open={isOpen}
@@ -67,13 +58,14 @@ export const DropNavItem = memo<DropNavItemProps>(function ({
           autoWidth={false}
         >
           {items.map(item => {
+            const NavItemComponent = item.Component ?? NavItem;
             return (
-              <NavItem
+              <NavItemComponent
                 key={item.title}
                 title={item.title}
                 url={item.url}
                 Icon={item.Icon}
-                withBadge={item.badge}
+                Badge={item.Badge}
               />
             );
           })}

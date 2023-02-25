@@ -555,11 +555,6 @@
     "filter": true
   },
   {
-    "id": "sushiswap",
-    "name": "SushiSwap",
-    "filter": true
-  },
-  {
     "id": "polywise",
     "name": "Polywise",
     "filter": false
@@ -667,7 +662,7 @@
   {
     "id": "kyber",
     "name": "Kyber",
-    "filter": false
+    "filter": true
   },
   {
     "id": "beethovenx",
@@ -880,11 +875,6 @@
     "filter": true
   },
   {
-    "id": "solidly",
-    "name": "Solidly",
-    "filter": false
-  },
-  {
     "id": "dystopia",
     "name": "Dystopia",
     "filter": true
@@ -957,6 +947,31 @@
   {
     "id": "gains",
     "name": "Gains",
+    "filter": true
+  },
+  {
+    "id": "kyber",
+    "name": "Kyber",
+    "filter": true
+  },
+  {
+    "id": "solidly",
+    "name": "Solidly",
+    "filter": true
+  },
+  {
+    "id": "moonwell",
+    "name": "Moonwell",
+    "filter": true
+  },
+  {
+    "id": "cantoDex",
+    "name": "CantoDex",
+    "filter": true
+  },
+  {
+    "id": "solidlizard",
+    "name": "SolidLizard",
     "filter": true
   }
 ]

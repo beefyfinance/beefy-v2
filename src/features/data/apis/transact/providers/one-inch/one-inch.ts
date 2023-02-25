@@ -7,6 +7,7 @@ import {
   TokenAmount,
   TransactOption,
   TransactQuote,
+  ZapFee,
   ZapOption,
   ZapQuote,
   ZapQuoteStepSwap,
@@ -54,6 +55,7 @@ import BigNumber from 'bignumber.js';
 import { getPool } from '../../../amm';
 import { IPool, WANT_TYPE } from '../../../amm/types';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
+import { quoteWithFee } from '../../helpers/one-inch';
 import { selectAmmById } from '../../../../selectors/amm';
 import { IOneInchApi } from '../../../one-inch/one-inch-types';
 
@@ -341,11 +343,16 @@ export class OneInchZapProvider implements ITransactProvider {
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const swapTokenOut = nativeToWNative(depositToken, wnative);
     const swapTokenOutAddress = swapTokenOut.address;
-    const apiQuote = await api.getQuote({
-      amount: swapAmountInWei,
-      fromTokenAddress: swapTokenInAddress,
-      toTokenAddress: swapTokenOutAddress,
-    });
+    const apiQuote = await api.getQuote(
+      quoteWithFee(
+        {
+          amount: swapAmountInWei,
+          fromTokenAddress: swapTokenInAddress,
+          toTokenAddress: swapTokenOutAddress,
+        },
+        option.fee
+      )
+    );
 
     if (!apiQuote) {
       throw new Error(
@@ -456,7 +463,7 @@ export class OneInchZapProvider implements ITransactProvider {
     const swapTokensOut = option.lpTokens;
     const swapAmountsOutWei = await Promise.all(
       swapAmountsInWei.map((amountIn, i) =>
-        this.getQuoteIfNeeded(api, amountIn, swapTokenIn, swapTokensOut[i])
+        this.getQuoteIfNeeded(api, amountIn, swapTokenIn, swapTokensOut[i], option.fee)
       )
     );
     const swaps: ZapQuoteStepSwap[] = (
@@ -657,15 +664,22 @@ export class OneInchZapProvider implements ITransactProvider {
     api: IOneInchApi,
     amountInWei: BigNumber,
     tokenIn: TokenErc20,
-    tokenOut: TokenErc20
+    tokenOut: TokenErc20,
+    fee: ZapFee
   ): Promise<BigNumber | null> {
     if (!isTokenEqual(tokenIn, tokenOut)) {
       const swapAmountInWei = amountInWei.toString(10);
-      const apiQuote = await api.getQuote({
-        amount: swapAmountInWei,
-        fromTokenAddress: tokenIn.address,
-        toTokenAddress: tokenOut.address,
-      });
+
+      const apiQuote = await api.getQuote(
+        quoteWithFee(
+          {
+            amount: swapAmountInWei,
+            fromTokenAddress: tokenIn.address,
+            toTokenAddress: tokenOut.address,
+          },
+          fee
+        )
+      );
 
       if (!apiQuote) {
         throw new Error(
@@ -741,7 +755,14 @@ export class OneInchZapProvider implements ITransactProvider {
     return {
       step: 'zap-in',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-      action: walletActions.oneInchBeefInSingle(vault, inputToken, swap, option.zap, slippage),
+      action: walletActions.oneInchBeefInSingle(
+        vault,
+        inputToken,
+        swap,
+        option.zap,
+        option.fee,
+        slippage
+      ),
       pending: false,
       extraInfo: { zap: true },
     };
@@ -769,6 +790,7 @@ export class OneInchZapProvider implements ITransactProvider {
         input,
         swaps,
         option.zap,
+        option.fee,
         option.lpTokens,
         quote.wantType,
         slippage
@@ -1005,11 +1027,16 @@ export class OneInchZapProvider implements ITransactProvider {
 
     const chain = selectChainById(state, option.chainId);
     const api = await getOneInchApi(chain, zap.priceOracleAddress);
-    const apiQuote = await api.getQuote({
-      amount: swapAmountInWei,
-      fromTokenAddress: swapTokenInAddress,
-      toTokenAddress: swapTokenOutAddress,
-    });
+    const apiQuote = await api.getQuote(
+      quoteWithFee(
+        {
+          amount: swapAmountInWei,
+          fromTokenAddress: swapTokenInAddress,
+          toTokenAddress: swapTokenOutAddress,
+        },
+        option.fee
+      )
+    );
 
     if (!apiQuote) {
       throw new Error(
@@ -1121,7 +1148,7 @@ export class OneInchZapProvider implements ITransactProvider {
 
     const swapAmountsOutWei = await Promise.all(
       swapAmountsInWei.map((amountInWei, i) =>
-        this.getQuoteIfNeeded(api, amountInWei, swapTokensIn[i], swapTokenOut)
+        this.getQuoteIfNeeded(api, amountInWei, swapTokensIn[i], swapTokenOut, option.fee)
       )
     );
     let totalOutWei = BIG_ZERO;
@@ -1238,7 +1265,14 @@ export class OneInchZapProvider implements ITransactProvider {
     return {
       step: 'zap-out',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-      action: walletActions.oneInchBeefOutSingle(vault, input, swap, option.zap, slippage),
+      action: walletActions.oneInchBeefOutSingle(
+        vault,
+        input,
+        swap,
+        option.zap,
+        option.fee,
+        slippage
+      ),
       pending: false,
       extraInfo: { zap: true },
     };
@@ -1266,6 +1300,7 @@ export class OneInchZapProvider implements ITransactProvider {
         input,
         swaps,
         option.zap,
+        option.fee,
         option.lpTokens,
         option.amm,
         slippage

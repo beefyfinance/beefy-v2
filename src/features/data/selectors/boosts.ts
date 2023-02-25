@@ -138,6 +138,14 @@ export const selectShouldDisplayVaultBoost = (state: BeefyState, vaultId: VaultE
   return false;
 };
 
+export const selectVaultsActiveBoostPeriodFinish = (
+  state: BeefyState,
+  vaultId: BoostEntity['id']
+) => {
+  const activeBoost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
+  return activeBoost ? selectBoostPeriodFinish(state, activeBoost.id) : null;
+};
+
 export const selectBoostPeriodFinish = (state: BeefyState, boostId: BoostEntity['id']) => {
   return state.entities.boosts.contractState[boostId]?.periodFinish || null;
 };

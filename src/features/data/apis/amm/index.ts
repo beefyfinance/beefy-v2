@@ -34,6 +34,7 @@ const mapUniswapV2: Record<string, typeof UniswapV2Pool> = {
 
 const mapSolidly: Record<string, typeof SolidlyPool> = {
   'bsc-cone': ConeSolidlyPool,
+  'arbitrum-solidlizard': ConeSolidlyPool,
   'fantom-spirit-v2': SpiritSwapV2SolidlyPool,
   'optimism-velodrome': VelodromeSolidlyPool,
   'fantom-equalizer': VelodromeSolidlyPool,

@@ -105,7 +105,8 @@ type SuccessContentProps = {
 
 const ZapSuccessContent = memo<SuccessContentProps>(function ({ step }) {
   const { t } = useTranslation();
-  const returned = useAppSelector(selectZapReturned);
+  const returned = useAppSelector(state => selectZapReturned(state, step.step));
+
   const dust = useMemo(() => {
     if (returned.length) {
       return (
@@ -135,6 +136,18 @@ const ZapSuccessContent = memo<SuccessContentProps>(function ({ step }) {
   );
 });
 
+const MintSuccessContent = memo<SuccessContentProps>(function ({ step }) {
+  const { t } = useTranslation();
+  const { type, amount, token } = useAppSelector(selectMintResult);
+
+  return (
+    <SuccessContentDisplay
+      title={t(`Stepper-${step.step}-Success-Title`)}
+      message={t(`Stepper-${step.step}-${type}-Success-Content`, { amount, token: token.symbol })}
+    />
+  );
+});
+
 const FallbackSuccessContent = memo<SuccessContentProps>(function ({ step }) {
   const { t } = useTranslation();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
@@ -159,29 +172,18 @@ const FallbackSuccessContent = memo<SuccessContentProps>(function ({ step }) {
       };
     }
     return {
-      amount: selectMintResult(walletActionsState).amount,
+      amount: formatBigDecimals(walletActionsState.data.amount, 4),
       token: walletActionsState.data.token.symbol,
     };
   }, [step.extraInfo?.rewards, walletActionsState]);
 
-  const isZap = step.extraInfo?.zap === true;
-  const isZapOutMessage = isZap && step.step === 'withdraw';
-
   const successMessage = useMemo(() => {
-    if (step.step === 'mint') {
-      return t(`${selectMintResult(walletActionsState).type}-Success-Content`, { ...textParams });
-    }
-
-    if (isZapOutMessage) {
-      return t('withdraw-zapout-Success-Content', { ...textParams });
-    }
-
-    return t(`${step.step}-Success-Content`, { ...textParams });
-  }, [step.step, isZapOutMessage, t, textParams, walletActionsState]);
+    return t(`Stepper-${step.step}-Success-Content`, { ...textParams });
+  }, [step.step, t, textParams]);
 
   return (
     <SuccessContentDisplay
-      title={t(`${step.step}-Success-Title`)}
+      title={t(`Stepper-${step.step}-Success-Title`)}
       message={successMessage}
       rememberTitle={hasRememberMsg ? t('Remember') : undefined}
       rememberMessage={hasRememberMsg ? t(rememberMsg) : undefined}
@@ -234,6 +236,7 @@ type StepToSuccessContent = {
 const stepToSuccessContent: StepToSuccessContent = {
   'zap-in': ZapSuccessContent,
   'zap-out': ZapSuccessContent,
+  mint: MintSuccessContent,
 };
 
 export const SuccessContent = memo(function () {

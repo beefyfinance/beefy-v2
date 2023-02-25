@@ -25,7 +25,8 @@
     "strategyTypeId": "single",
     "isGovVault": true,
     "network": "moonriver",
-    "createdAt": 1623706144
+    "createdAt": 1623706144,
+    "callFee": 0.5
   },
   {
     "id": "solarbeam-wstksm-xcksm",
@@ -77,9 +78,10 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_LARGE",
+      "MCAP_MEDIUM",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?outputCurrency=0xFFFfFfFfF6E528AD57184579beeE00c5d5e646F0",
@@ -489,7 +491,7 @@
     "token": "FRAX-USDC SLP",
     "tokenAddress": "0x310C4d18640aF4878567c4A31cB9cBde7Cd234A3",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "tokenAmmId": "moonriver-sushi",
     "earnedToken": "mooSushiFRAX-USDC",
     "earnedTokenAddress": "0x27d99A6B13cC4f5F55f3Fb9Bd6F7a02F9EFCD820",
@@ -497,7 +499,7 @@
     "oracle": "lps",
     "oracleId": "sushi-mr-frax-usdc",
     "status": "active",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["FRAX", "USDC"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -521,7 +523,7 @@
     "token": "ETH-WMOVR SLP",
     "tokenAddress": "0xD4Ce5671b842573EDA99164971AFaA034245f4D8",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "tokenAmmId": "moonriver-sushi",
     "earnedToken": "mooSushiETH-WMOVR",
     "earnedTokenAddress": "0x65bb8496DDfE7470516C0Ed014C0eDc7C7973676",
@@ -529,7 +531,7 @@
     "oracle": "lps",
     "oracleId": "sushi-mr-eth-wmovr",
     "status": "active",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["ETH", "WMOVR_SUSHI"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -552,7 +554,7 @@
     "token": "USDT-USDC SLP",
     "tokenAddress": "0x930B0464411DE2296E3FD3eeE30ab989F635645E",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "tokenAmmId": "moonriver-sushi",
     "earnedToken": "mooSushiUSDT-USDC",
     "earnedTokenAddress": "0x1f1FAfB086C6e1e900f18fccbeD5BA727d09F193",
@@ -560,7 +562,7 @@
     "oracle": "lps",
     "oracleId": "sushi-mr-usdt-usdc",
     "status": "active",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["USDT", "USDC"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -672,7 +674,7 @@
     "token": "MIM-WMOVR SLP",
     "tokenAddress": "0x6dC6D33331e9d5DeEf449C8CAb9e34D687BEA80E",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "tokenAmmId": "moonriver-sushi",
     "earnedToken": "mooSushiMIM-WMOVR",
     "earnedTokenAddress": "0x9f3371AA6F7b48485Cb9eb3D6A79ea9298565410",
@@ -681,7 +683,7 @@
     "oracleId": "sushi-mr-mim-wmovr",
     "status": "eol",
     "retireReason": "tvl",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["MIM", "WMOVR_SUSHI"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -705,7 +707,7 @@
     "token": "ETH-BNB.bsc SLP",
     "tokenAddress": "0x69B4FbD8c8Cf74720A62A5e92e2528c3f895cE10",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "tokenAmmId": "moonriver-sushi",
     "earnedToken": "mooSushiETH-BNB",
     "earnedTokenAddress": "0x391db851d684b1D1D8b034d678Db4C5701AFfe2e",
@@ -714,7 +716,7 @@
     "oracleId": "sushi-mr-eth-bnb",
     "status": "eol",
     "retireReason": "tvl",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["ETH", "BNBbsc"],
     "risks": [
       "COMPLEXITY_LOW",

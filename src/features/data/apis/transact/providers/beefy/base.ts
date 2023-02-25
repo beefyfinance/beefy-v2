@@ -23,6 +23,7 @@ import {
   isZapQuoteStepSwap,
   ITransactProvider,
   TransactOption,
+  ZapFee,
   ZapOption,
   ZapQuote,
 } from '../../transact-types';
@@ -54,7 +55,7 @@ import { selectAmmById } from '../../../../selectors/amm';
 export type BeefyZapOption<AmmType extends AmmEntity = AmmEntity> = {
   zap: ZapEntityBeefy;
   amm: AmmType;
-  lpTokens: TokenEntity[];
+  lpTokens: TokenErc20[];
 } & ZapOption;
 
 export type CommonDepositQuoteOptions<AmmType extends AmmEntity = AmmEntity> = {
@@ -62,8 +63,8 @@ export type CommonDepositQuoteOptions<AmmType extends AmmEntity = AmmEntity> = {
   multicall: MultiCall;
   chain: ChainEntity;
   depositToken: TokenEntity;
-  swapTokenIn: TokenEntity;
-  swapTokenOut: TokenEntity;
+  swapTokenIn: TokenErc20;
+  swapTokenOut: TokenErc20;
   userAmountInWei: BigNumber;
   option: BeefyZapOption<AmmType>;
   vault: VaultStandard;
@@ -79,8 +80,8 @@ export type CommonWithdrawQuoteOptions<AmmType extends AmmEntity = AmmEntity> = 
   vault: VaultStandard;
   amounts: InputTokenAmount[];
   actualTokenOut: TokenEntity;
-  swapTokenIn: TokenEntity;
-  swapTokenOut: TokenEntity;
+  swapTokenIn: TokenErc20;
+  swapTokenOut: TokenErc20;
   withdrawnToken: TokenEntity;
   withdrawnAmountAfterFeeWei: BigNumber;
   shareToken: TokenErc20;
@@ -98,6 +99,8 @@ type CommonOptionsData<AmmType extends AmmEntity = AmmEntity> = {
   native: TokenNative;
   wnative: TokenErc20;
 };
+
+const ZERO_FEE: ZapFee = { value: 0 };
 
 /**
  * Deposit/withdraw via Beefy Zap Contracts
@@ -211,7 +214,7 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
         zap,
         amm,
         lpTokens,
-        fee: 0,
+        fee: ZERO_FEE,
       };
     });
 
@@ -331,7 +334,7 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
         zap,
         amm,
         lpTokens,
-        fee: 0,
+        fee: ZERO_FEE,
       },
     ];
 
@@ -352,7 +355,7 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
         zap,
         amm,
         lpTokens,
-        fee: 0,
+        fee: ZERO_FEE,
       });
     });
 

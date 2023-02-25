@@ -46,4 +46,12 @@ export const styles = (theme: Theme) => ({
   arrow: {
     height: '12px',
   },
+  title: {},
+  titleWithBadge: {
+    position: 'relative' as const,
+    lineHeight: '1',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  badge: {},
 });

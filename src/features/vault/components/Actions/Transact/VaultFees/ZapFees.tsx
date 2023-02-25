@@ -74,13 +74,11 @@ const ZapFees = memo<ZapFeesProps>(function ZapFees({ optionId }) {
       <Value>
         {hasDiscountFee ? (
           <>
-            <span className={classes.discounted}>
-              {formatSmallPercent(fee.discounted, 2, 2, true)}
-            </span>
+            <span className={classes.discounted}>{formatSmallPercent(fee.value, 2, 2, true)}</span>
             <span className={classes.original}>{formatSmallPercent(fee.original, 2, 2, true)}</span>
           </>
         ) : (
-          formatSmallPercent(fee)
+          formatSmallPercent(fee.value)
         )}
       </Value>
     </>

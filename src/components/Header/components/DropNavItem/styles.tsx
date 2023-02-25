@@ -37,4 +37,10 @@ export const styles = (theme: Theme) => ({
     borderRadius: '4px',
     marginLeft: '-8px',
   },
+  title: {},
+  titleWithBadge: {
+    position: 'relative' as const,
+    display: 'flex',
+    alignItems: 'center',
+  },
 });

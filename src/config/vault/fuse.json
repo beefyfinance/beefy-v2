@@ -25,7 +25,8 @@
     "strategyTypeId": "single",
     "isGovVault": true,
     "network": "fuse",
-    "createdAt": 1641686497
+    "createdAt": 1641686497,
+    "callFee": 0.5
   },
   {
     "id": "voltagev2-3pool",
@@ -89,7 +90,7 @@
     "token": "WETH-FUSE SLP",
     "tokenAddress": "0x90c3bA00d2F7F15Cd9FDE087538be3A2865E7E2F",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "tokenAmmId": "fuse-sushi",
     "earnedToken": "mooSushiFUSE-WETH",
     "earnedTokenAddress": "0xd4E241053314254e62050aDC84B271F9d2164a16",
@@ -98,7 +99,7 @@
     "oracleId": "sushi-fuse-wfuse-weth",
     "status": "eol",
     "retireReason": "rewards",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["WETH", "FUSE"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -121,7 +122,7 @@
     "token": "FUSE-USDC LP",
     "tokenAddress": "0xba9CA720e314F42E17E80991c1d0AFfE47387108",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "tokenAmmId": "fuse-sushi",
     "earnedToken": "mooSushiFUSE-USDC",
     "earnedTokenAddress": "0x87FFA2E1D232d5B98fd4366C311b568c022aE650",
@@ -130,7 +131,7 @@
     "oracleId": "sushi-fuse-wfuse-usdc",
     "status": "eol",
     "retireReason": "rewards",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["FUSE", "USDC"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -681,38 +682,6 @@
     "createdAt": 1647505730
   },
   {
-    "id": "voltagev2-volt-bnb",
-    "name": "VOLT-BNB LP",
-    "token": "VOLT-BNB LP",
-    "tokenAddress": "0x4Eb876bd1e8e4cd4594557890D52EE327BF1B7b2",
-    "tokenDecimals": 18,
-    "tokenProviderId": "voltage",
-    "tokenAmmId": "fuse-voltage",
-    "earnedToken": "mooVoltageVOLT-BNB",
-    "earnedTokenAddress": "0xbF56396EBc9F2Ad01e80a00642A4b80D0dcea27A",
-    "earnContractAddress": "0xbF56396EBc9F2Ad01e80a00642A4b80D0dcea27A",
-    "oracle": "lps",
-    "oracleId": "voltagev2-volt-bnb",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "voltage",
-    "assets": ["VOLT", "BNB"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.voltage.finance/index.html#/swap?inputCurrency=0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4&outputCurrency=0x6acb34b1Df86E254b544189Ec32Cf737e2482058",
-    "addLiquidityUrl": "https://app.voltage.finance/index.html#/add/0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4/0x6acb34b1Df86E254b544189Ec32Cf737e2482058",
-    "removeLiquidityUrl": "https://app.voltage.finance/index.html#/remove/0x34Ef2Cc892a88415e9f02b91BfA9c91fC0bE6bD4/0x6acb34b1Df86E254b544189Ec32Cf737e2482058",
-    "network": "fuse",
-    "createdAt": 1647180880
-  },
-  {
     "id": "voltagev2-wfuse-gdollar",
     "name": "G$-FUSE LP",
     "token": "G$-FUSE LP",
@@ -778,7 +747,7 @@
     "token": "USDC-USDT LP",
     "tokenAddress": "0x00E485d833099679eD7D121CE46a9557ea8aDa1e",
     "tokenDecimals": 18,
-    "tokenProviderId": "sushiswap",
+    "tokenProviderId": "sushi",
     "tokenAmmId": "fuse-sushi",
     "earnedToken": "mooSushiUSDC-USDT",
     "earnedTokenAddress": "0x4D3988B5dc8267fB5FE6dB87681aDA8AC6732113",
@@ -787,7 +756,7 @@
     "oracleId": "sushi-fuse-usdc-usdt",
     "status": "eol",
     "retireReason": "rewards",
-    "platformId": "sushiswap",
+    "platformId": "sushi",
     "assets": ["USDC", "USDT"],
     "risks": [
       "COMPLEXITY_LOW",

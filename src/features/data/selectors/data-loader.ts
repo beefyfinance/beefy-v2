@@ -73,3 +73,7 @@ export const selectShouldInitAddressBook = (state: BeefyState, chainId: ChainEnt
 export const selectIsAddressBookLoaded = (state: BeefyState, chainId: ChainEntity['id']) =>
   state.ui.dataLoader.global.addressBook.alreadyLoadedOnce ||
   state.ui.dataLoader.byChainId[chainId]?.addressBook.alreadyLoadedOnce;
+
+export const selectShouldInitProposals = (state: BeefyState) => {
+  return isInitialLoader(state.ui.dataLoader.global.proposals);
+};

@@ -108,6 +108,10 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'bbamUSDC',
       'bbamDAI',
       'bbamUSDT',
+      'BRZ',
+      'jBRL',
+      '2BRZ',
+      'bbamUSD',
     ],
   },
   bsc: {
@@ -168,6 +172,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'HAY',
       'jCHF',
       'TOR',
+      'ETSAlpha',
+      'DEI',
+      'wUSDR',
     ],
   },
   optimism: {
@@ -212,6 +219,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'TUSD',
       'USX',
       'sEUR',
+      'bbUSD+',
+      'bbDAI+',
+      'wUSDR',
     ],
   },
   fantom: {
@@ -469,7 +479,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['mUSDT', 'mUSDC', 'mDAI'],
+    stableCoins: ['mUSDT', 'mUSDC', 'mDAI', 'USDT'],
   },
   fuse: {
     name: 'Fuse',
@@ -498,7 +508,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   kava: {
     name: 'Kava',
     chainId: 2222,
-    rpc: ['https://evm.kava.io'],
+    rpc: ['https://evm2.kava.io'],
     explorerUrl: 'https://explorer.kava.io',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
     appMulticallContractAddress: '0x41D44B276904561Ac51855159516FD4cB2c90968',
@@ -511,13 +521,37 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'KAVA',
         decimals: 18,
       },
-      rpcUrls: ['https://evm.kava.io'],
+      rpcUrls: ['https://evm2.kava.io'],
       blockExplorerUrls: ['https://explorer.kava.io/'],
     },
     gas: {
       type: 'standard',
     },
-    stableCoins: ['USDC', 'DAI', 'USDT'],
+    stableCoins: ['USDC', 'DAI', 'USDT', 'axlDAI', 'axlUSDC', 'axlUSDT'],
+  },
+  canto: {
+    name: 'Canto',
+    chainId: 7700,
+    rpc: ['https://mainnode.plexnode.org:8545'],
+    explorerUrl: 'https://evm.explorer.canto.io',
+    multicallAddress: '0xc34b9c9DBB39Be0Ef850170127A7b4283484f804',
+    appMulticallContractAddress: '0x7c7B7FbccA5699175003ecbe1B41E79F40385469',
+    providerName: 'Canto',
+    walletSettings: {
+      chainId: `0x${parseInt('7700', 10).toString(16)}`,
+      chainName: 'canto',
+      nativeCurrency: {
+        name: 'CANTO',
+        symbol: 'CANTO',
+        decimals: 18,
+      },
+      rpcUrls: ['https://mainnode.plexnode.org:8545'],
+      blockExplorerUrls: ['https://evm.explorer.canto.io/'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['USDC', 'NOTE', 'USDT'],
   },
   aurora: {
     name: 'Aurora',
