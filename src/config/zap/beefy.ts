@@ -3,6 +3,11 @@ import { BeefyZapConfig } from '../../features/data/apis/config-types';
 export const zaps: BeefyZapConfig[] = [
   {
     chainId: 'arbitrum',
+    ammId: 'arbitrum-solidlizard',
+    zapAddress: '0x545bcA2369c2B8EaE15D0b237905429f5E737Ae5',
+  },
+  {
+    chainId: 'arbitrum',
     ammId: 'arbitrum-sushi',
     zapAddress: '0x6D973E33af0801Af13b7939956745c72bB17aa1E',
   },
@@ -59,6 +64,16 @@ export const zaps: BeefyZapConfig[] = [
     chainId: 'bsc',
     ammId: 'bsc-thena',
     zapAddress: '0xF0E5b891d054BB5B2E7357281050CCA00bE0d8d2',
+  },
+  {
+    chainId: 'canto',
+    ammId: 'canto-canto',
+    zapAddress: '0x28A12F017d0D843d43C71235F4F58535B8BE8563',
+  },
+  {
+    chainId: 'canto',
+    ammId: 'canto-velocimeter',
+    zapAddress: '0xCBAB6076b4B0c482e7127a201b79a13D117E2B53',
   },
   {
     chainId: 'cronos',

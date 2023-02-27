@@ -83,4 +83,7 @@ export const styles = (theme: Theme) => ({
   'headerNetwork-ethereum': {
     backgroundColor: 'rgba(98, 126, 233, 0.2)',
   },
+  'headerNetwork-canto': {
+    backgroundColor: 'rgba(6, 252, 153, 0.2)',
+  },
 });

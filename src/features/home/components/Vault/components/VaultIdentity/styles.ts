@@ -86,4 +86,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-ethereum': {
     backgroundColor: '#627ee9',
   },
+  'vaultNetwork-canto': {
+    backgroundColor: '#06fc99',
+  },
 });

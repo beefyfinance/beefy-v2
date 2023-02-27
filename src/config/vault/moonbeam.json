@@ -1,5 +1,34 @@
 [
   {
+    "id": "moonwell-xcusdt",
+    "name": "xcUSDT",
+    "token": "xcUSDT",
+    "tokenAddress": "0xFFFFFFfFea09FB06d082fd1275CD48b191cbCD1d",
+    "tokenDecimals": 6,
+    "tokenProviderId": "moonwell",
+    "earnedToken": "mooMoonwellxcUSDT",
+    "earnedTokenAddress": "0x7fc2554a069eb7aCE92396eDFd3acb5aE160ed5A",
+    "earnContractAddress": "0x7fc2554a069eb7aCE92396eDFd3acb5aE160ed5A",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "platformId": "moonwell",
+    "assets": ["USDTxc"],
+    "risks": [
+      "COMPLEXITY_MID",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lending",
+    "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
+    "network": "moonbeam",
+    "createdAt": 1677251242
+  },
+  {
     "id": "moonwell-usdc.wh",
     "name": "USDC.wh",
     "token": "USDC.wh",

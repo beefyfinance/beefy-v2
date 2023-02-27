@@ -37,7 +37,7 @@ export const minters: MinterConfig[] = [
     },
     mintedToken: {
       symbol: 'beVELO',
-      oracleId: 'beVELO',
+      oracleId: 'BeVELO',
       type: 'erc20',
       contractAddress: '0xfDeFFc7Ad816BF7867C642dF7eBC2CC5554ec265',
       decimals: 18,

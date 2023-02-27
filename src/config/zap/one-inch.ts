@@ -61,6 +61,7 @@ export const zaps: OneInchZapConfig[] = [
     blockedTokens: [
       'alUSD', // no 1inch price
       'ANKR', // no 1inch price
+      'ankrFTM', // no 1inch price
       'asUSDC', // no 1inch price
       'ATLAS', // no 1inch liquidity
       'BASED', // no 1inch liquidity
@@ -127,6 +128,7 @@ export const zaps: OneInchZapConfig[] = [
       'USDC-hUSDC LP', // beefy and 1inch prices are more than 10% different
       'USDT-hUSDT LP', // no 1inch price
       'USX', // no 1inch price
+      'wUSDR', // no 1inch price
     ],
     blockedVaults: ['aavev3-op-eth'],
   },
@@ -213,6 +215,7 @@ export const zaps: OneInchZapConfig[] = [
     withdrawToTokens: ['BNB', 'BIFI', 'BUSD', 'USDC', 'USDT', 'DAI', 'ETH', 'BTCB'],
     blockedTokens: [
       'aBNBc', // beefy and 1inch prices are more than 10% different
+      'ankrETH', // no 1inch liquidity
       'AURO', // no 1inch liquidity
       'bDIGG', // beefy and 1inch prices are more than 10% different
       'beltBNB', // beefy and 1inch prices are more than 10% different
@@ -224,8 +227,10 @@ export const zaps: OneInchZapConfig[] = [
       'CONE', // beefy and 1inch prices are more than 10% different
       'CRUSH', // beefy and 1inch prices are more than 10% different
       'DFT', // beefy and 1inch prices are more than 10% different
+      'DOLA', // no 1inch price
       'FISH', // no 1inch liquidity
       'frxETH', // no 1inch price
+      'FS', // no 1inch liquidity
       'sfrxETH', // no 1inch price
       'FROYO', // beefy and 1inch prices are more than 10% different
       'GOAL', // no 1inch liquidity
@@ -253,6 +258,7 @@ export const zaps: OneInchZapConfig[] = [
       'TEN', // no 1inch liquidity
       'TOFY', // no 1inch liquidity
       'XMARK', // no 1inch liquidity
+      'wUSDR', // no 1inch liquidity
       'ZBTC', // no 1inch liquidity
     ],
     blockedVaults: ['venus-bnb', 'venus-wbnb'],

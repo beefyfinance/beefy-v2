@@ -23,7 +23,7 @@ const explorerApiUrls = {
   ethereum: 'https://api.etherscan.io/api',
 };
 
-const blockScoutChainsTimeout = new Set(['fuse', 'metis', 'celo', 'emerald', 'kava']);
+const blockScoutChainsTimeout = new Set(['fuse', 'metis', 'celo', 'emerald', 'kava', 'canto']);
 const harmonyRpcChains = new Set(['one']);
 
 const getCreationTimestamp = async (vaultAddress, explorerUrl) => {
