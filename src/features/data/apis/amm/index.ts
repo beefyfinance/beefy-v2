@@ -38,6 +38,7 @@ const mapSolidly: Record<string, typeof SolidlyPool> = {
   'fantom-spirit-v2': SpiritSwapV2SolidlyPool,
   'optimism-velodrome': VelodromeSolidlyPool,
   'fantom-equalizer': VelodromeSolidlyPool,
+  'canto-velocimeter': VelodromeSolidlyPool,
   'ethereum-solidly': EthereumSolidlyPool,
   default: SolidlyPool,
 } as const;
