@@ -18,7 +18,7 @@ export class AnalyticsApi {
   }
 
   public async getUserVaults(address: string): Promise<AnalyticsUserTimelineResponse> {
-    const res = await this.api.get('/v0/beefy/timeline', { params: { address } });
+    const res = await this.api.get('/v1/beefy/timeline', { params: { address } });
     return res.data;
   }
 
@@ -27,7 +27,7 @@ export class AnalyticsApi {
     priceType: PriceType,
     timeBucket: TimeBucketType
   ): Promise<AnalyticsPriceResponse> {
-    const res = await this.api.get('/v0/price', {
+    const res = await this.api.get('/v1/price', {
       params: { product_key: productKey, price_type: priceType, time_bucket: timeBucket },
     });
 
