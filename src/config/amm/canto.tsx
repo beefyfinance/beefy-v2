@@ -13,4 +13,16 @@ export const amms: AmmConfig[] = [
     swapFeeDenominator: '1',
     getAmountOutMode: 'getAmountOut', // router.getAmountsOut(uint amountIn, route[] memory routes) public view returns (uint[] memory amounts) or pair.getAmountOut(uint256 amountIn, address tokenIn) view returns (uint256)
   },
+  {
+    id: 'canto-velocimeter',
+    name: 'Velocimeter',
+    type: 'solidly',
+    routerAddress: '0x9B2920e72dF6E1A7053bEa7235c65079F5104398',
+    factoryAddress: '0xb12aF64E128A1D4489D13314eB4Df81cBCE126aC',
+    pairInitHash: '0x75c20cfd874bd4a16cbb1ed7160d44fd79b9f428a6dcebc43211efda0084b849',
+    minimumLiquidity: '1000',
+    swapFeeNumerator: '3', // DYNAMIC factory.getFee(stable);
+    swapFeeDenominator: '10000',
+    getAmountOutMode: 'getAmountOut', // router.getAmountsOut(uint amountIn, route[] memory routes) public view returns (uint[] memory amounts) or pair.getAmountOut(uint256 amountIn, address tokenIn) view returns (uint256)
+  },
 ];
