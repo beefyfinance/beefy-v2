@@ -587,7 +587,7 @@
     "earnContractAddress": "0xAAbFF5Bc0B3Dd6D8819CdBc76bBdb65F161A2B54",
     "oracle": "lps",
     "oracleId": "stellaswap-ldo-wglmr",
-    "status": "eol",
+    "status": "eol", 
     "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["LDO", "GLMR"],
