@@ -52,13 +52,12 @@ import {
 } from '../../helpers/tokens';
 import { selectTransactSlippage } from '../../../../selectors/transact';
 import BigNumber from 'bignumber.js';
-import { computeSolidlyPairAddress } from '../../helpers/solidly';
-import { computeUniswapV2PairAddress } from '../../helpers/uniswapv2';
-import { OneInchApi } from '../../../one-inch';
 import { getPool } from '../../../amm';
 import { IPool, WANT_TYPE } from '../../../amm/types';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import { quoteWithFee } from '../../helpers/one-inch';
+import { selectAmmById } from '../../../../selectors/amm';
+import { IOneInchApi } from '../../../one-inch/one-inch-types';
 
 export type OneInchZapOptionBase = {
   zap: ZapEntityOneInch;
@@ -176,41 +175,17 @@ export class OneInchZapProvider implements ITransactProvider {
     return options;
   }
 
-  getAmm(
-    amms: AmmEntity[],
-    depositTokenAddress: TokenEntity['address'],
-    lpTokens: TokenEntity[]
-  ): AmmEntity | null {
-    const amm = amms.find(
-      amm =>
-        (amm.type === 'uniswapv2' &&
-          depositTokenAddress ===
-            computeUniswapV2PairAddress(
-              amm.factoryAddress,
-              amm.pairInitHash,
-              lpTokens[0].address,
-              lpTokens[1].address
-            )) ||
-        (amm.type === 'solidly' &&
-          (depositTokenAddress ===
-            computeSolidlyPairAddress(
-              amm.factoryAddress,
-              amm.pairInitHash,
-              lpTokens[0].address,
-              lpTokens[1].address,
-              true
-            ) ||
-            depositTokenAddress ===
-              computeSolidlyPairAddress(
-                amm.factoryAddress,
-                amm.pairInitHash,
-                lpTokens[0].address,
-                lpTokens[1].address,
-                false
-              )))
-    );
+  selectAmmForToken(state: BeefyState, depositToken: TokenErc20): AmmEntity | null {
+    if (!depositToken.ammId) {
+      return null;
+    }
 
-    return amm || null;
+    const amm = selectAmmById(state, depositToken.ammId);
+    if (!amm) {
+      return null;
+    }
+
+    return amm;
   }
 
   isDifferentTokenWithPrice(
@@ -253,6 +228,9 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    if (!depositToken || !isTokenErc20(depositToken)) {
+      return null;
+    }
 
     const zap = selectOneInchZapByChainId(state, vault.chainId);
     if (!zap) {
@@ -282,7 +260,7 @@ export class OneInchZapProvider implements ITransactProvider {
       return null;
     }
 
-    const amm = this.getAmm(amms, depositToken.address, lpTokens);
+    const amm = this.selectAmmForToken(state, depositToken);
     if (!amm) {
       return null;
     }
@@ -349,9 +327,14 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     const vault = selectStandardVaultById(state, option.vaultId);
+    const zap = selectOneInchZapByChainId(state, vault.chainId);
+    if (!zap) {
+      throw new Error(`No zap found for chain ${vault.chainId}`);
+    }
+
     const chain = selectChainById(state, option.chainId);
     const wnative = selectChainWrappedNativeToken(state, chain.id);
-    const api = await getOneInchApi(chain);
+    const api = await getOneInchApi(chain, zap.priceOracleAddress);
     const userTokenIn = userInput.token;
     const swapTokenIn = nativeToWNative(userTokenIn, wnative);
     const swapTokenInAddress = swapTokenIn.address;
@@ -457,6 +440,11 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     const vault = selectStandardVaultById(state, option.vaultId);
+    const zap = selectOneInchZapByChainId(state, vault.chainId);
+    if (!zap) {
+      throw new Error(`No zap found for chain ${vault.chainId}`);
+    }
+
     const chain = selectChainById(state, option.chainId);
     const wnative = selectChainWrappedNativeToken(state, chain.id);
     const depositToken = selectErc20TokenByAddress(state, vault.chainId, vault.depositTokenAddress);
@@ -464,7 +452,10 @@ export class OneInchZapProvider implements ITransactProvider {
     const userAmountIn = userInput.amount;
     const swapTokenIn = nativeToWNative(userTokenIn, wnative);
     const lp = getPool(depositToken.address, option.amm, chain);
-    const [api] = await Promise.all([getOneInchApi(chain), lp.updateAllData()]);
+    const [api] = await Promise.all([
+      getOneInchApi(chain, zap.priceOracleAddress),
+      lp.updateAllData(),
+    ]);
     const swapAmountsInWei = await this.getSwapAmountsIn(
       lp,
       toWei(userAmountIn, userTokenIn.decimals)
@@ -568,7 +559,7 @@ export class OneInchZapProvider implements ITransactProvider {
   }
 
   async getPriceImpact(
-    api: OneInchApi,
+    api: IOneInchApi,
     state: BeefyState,
     wnative: TokenErc20,
     amountIn: BigNumber,
@@ -588,7 +579,7 @@ export class OneInchZapProvider implements ITransactProvider {
   }
 
   async getPriceImpactFromPriceApi(
-    api: OneInchApi,
+    api: IOneInchApi,
     state: BeefyState,
     wnative: TokenErc20,
     amountIn: BigNumber,
@@ -670,7 +661,7 @@ export class OneInchZapProvider implements ITransactProvider {
   }
 
   async getQuoteIfNeeded(
-    api: OneInchApi,
+    api: IOneInchApi,
     amountInWei: BigNumber,
     tokenIn: TokenErc20,
     tokenOut: TokenErc20,
@@ -907,6 +898,9 @@ export class OneInchZapProvider implements ITransactProvider {
     }
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    if (!depositToken || !isTokenErc20(depositToken)) {
+      return null;
+    }
 
     const zap = selectOneInchZapByChainId(state, vault.chainId);
     if (!zap) {
@@ -936,7 +930,7 @@ export class OneInchZapProvider implements ITransactProvider {
       return null;
     }
 
-    const amm = this.getAmm(amms, depositToken.address, lpTokens);
+    const amm = this.selectAmmForToken(state, depositToken);
     if (!amm) {
       return null;
     }
@@ -1013,6 +1007,11 @@ export class OneInchZapProvider implements ITransactProvider {
       throw new Error(`Invalid input token ${userInput.token.symbol}`);
     }
 
+    const zap = selectOneInchZapByChainId(state, vault.chainId);
+    if (!zap) {
+      throw new Error(`No zap found for chain ${vault.chainId}`);
+    }
+
     const wnative = selectChainWrappedNativeToken(state, vault.chainId);
     const native = selectChainNativeToken(state, vault.chainId);
 
@@ -1027,7 +1026,7 @@ export class OneInchZapProvider implements ITransactProvider {
     const swapTokenOutAddress = swapTokenOut.address;
 
     const chain = selectChainById(state, option.chainId);
-    const api = await getOneInchApi(chain);
+    const api = await getOneInchApi(chain, zap.priceOracleAddress);
     const apiQuote = await api.getQuote(
       quoteWithFee(
         {
@@ -1125,6 +1124,11 @@ export class OneInchZapProvider implements ITransactProvider {
       throw new Error(`Invalid input token ${userInput.token.symbol}`);
     }
 
+    const zap = selectOneInchZapByChainId(state, vault.chainId);
+    if (!zap) {
+      throw new Error(`No zap found for chain ${vault.chainId}`);
+    }
+
     const wnative = selectChainWrappedNativeToken(state, vault.chainId);
     const native = selectChainNativeToken(state, vault.chainId);
     const chain = selectChainById(state, vault.chainId);
@@ -1132,7 +1136,10 @@ export class OneInchZapProvider implements ITransactProvider {
     const actualTokenOut = wnativeToNative(wantedTokenOut, wnative, native); // zap always converts wnative to native
     const swapTokenOut = nativeToWNative(wantedTokenOut, wnative); // swaps are always between erc20
     const lp = getPool(withdrawnToken.address, option.amm, chain);
-    const [api] = await Promise.all([getOneInchApi(chain), lp.updateAllData()]);
+    const [api] = await Promise.all([
+      getOneInchApi(chain, zap.priceOracleAddress),
+      lp.updateAllData(),
+    ]);
     const swapTokensIn = option.lpTokens;
     const swapAmountsInWei = OneInchZapProvider.quoteRemoveLiquidity(
       lp,

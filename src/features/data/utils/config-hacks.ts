@@ -50,6 +50,7 @@ export function getDepositTokenFromLegacyVaultConfig(chain: ChainEntity, apiVaul
       decimals: apiVault.tokenDecimals,
       symbol: apiVault.token,
       providerId: apiVault.tokenProviderId,
+      ammId: apiVault.tokenAmmId,
       buyUrl: null,
       description: null,
       website: null,

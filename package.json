@@ -64,6 +64,7 @@
     "vault": "ts-node ./scripts/addVault.ts",
     "migratePlatform": "ts-node ./scripts/migratePlatform.ts",
     "checkOneInchLiquidity": "ts-node -r dotenv/config ./scripts/checkOneInchLiquidity.ts",
+    "addAmmsToVaults": "ts-node -r dotenv/config ./scripts/addAmmsToVaults.ts && prettier --write ./src/config/vault/*.json",
     "test": "TZ=UTC react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",

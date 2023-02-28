@@ -9,6 +9,7 @@ import { IOnRampApi } from './on-ramp/on-ramp-types';
 import { ITransactApi } from './transact/transact-types';
 import { createWeb3Instance } from '../../../helpers/web3';
 import { createGasPricer } from './gas-prices';
+import { IOneInchApi } from './one-inch/one-inch-types';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -123,8 +124,16 @@ export async function getTransactApi(): Promise<ITransactApi> {
 }
 
 const OneInchApiPromise = import('./one-inch');
-export const getOneInchApi = createFactoryWithCacheByChain(async chain => {
-  const { OneInchApi } = await OneInchApiPromise;
-  console.debug(`Instanciating OneInchApi for chain ${chain.id}`);
-  return new OneInchApi(chain);
-});
+const oneInchApiCache: { [chainId: string]: IOneInchApi } = {};
+export async function getOneInchApi(
+  chain: ChainEntity,
+  oracleAddress: string
+): Promise<IOneInchApi> {
+  if (!oneInchApiCache[chain.id]) {
+    const { OneInchApi } = await OneInchApiPromise;
+    console.debug(`Instanciating OneInchApi for chain ${chain.id}`);
+    oneInchApiCache[chain.id] = new OneInchApi(chain, oracleAddress);
+  }
+
+  return oneInchApiCache[chain.id];
+}

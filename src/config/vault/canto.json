@@ -112,6 +112,7 @@
     "tokenAddress": "0x35DB1f3a6A6F07f82C76fCC415dB6cFB1a7df833",
     "tokenDecimals": 18,
     "tokenProviderId": "cantoDex",
+    "tokenAmmId": "canto-canto",
     "earnedToken": "mooCantoNOTE-USDT",
     "earnedTokenAddress": "0x09cB6F84E7074860B21E36cD92EE2338e4b75071",
     "earnContractAddress": "0x09cB6F84E7074860B21E36cD92EE2338e4b75071",
@@ -120,7 +121,6 @@
     "status": "active",
     "platformId": "cantoDex",
     "assets": ["NOTE", "USDT"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -129,9 +129,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://app.slingshot.finance/swap/CANTO",
     "addLiquidityUrl": "https://canto.io/lp",
     "removeLiquidityUrl": "https://canto.io/lp",
-    "buyTokenUrl": "https://app.slingshot.finance/swap/CANTO",
     "network": "canto",
     "createdAt": 1677184771
   },
@@ -142,6 +143,7 @@
     "tokenAddress": "0x9571997a66D63958e1B3De9647C22bD6b9e7228c",
     "tokenDecimals": 18,
     "tokenProviderId": "cantoDex",
+    "tokenAmmId": "canto-canto",
     "earnedToken": "mooCantoNOTE-USDC",
     "earnedTokenAddress": "0x36cB35a61437ab76970982Ace2EE77b9442f2F26",
     "earnContractAddress": "0x36cB35a61437ab76970982Ace2EE77b9442f2F26",
@@ -150,7 +152,6 @@
     "status": "active",
     "platformId": "cantoDex",
     "assets": ["NOTE", "USDC"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -159,9 +160,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://app.slingshot.finance/swap/CANTO",
     "addLiquidityUrl": "https://canto.io/lp",
     "removeLiquidityUrl": "https://canto.io/lp",
-    "buyTokenUrl": "https://app.slingshot.finance/swap/CANTO",
     "network": "canto",
     "createdAt": 1677184771
   },
@@ -172,6 +174,7 @@
     "tokenAddress": "0x1D20635535307208919f0b67c3B2065965A85aA9",
     "tokenDecimals": 18,
     "tokenProviderId": "cantoDex",
+    "tokenAmmId": "canto-canto",
     "earnedToken": "mooCantoNOTE-CANTO",
     "earnedTokenAddress": "0x733d8dc2AeB904d7385eD84a2d629d8Ec255960D",
     "earnContractAddress": "0x733d8dc2AeB904d7385eD84a2d629d8Ec255960D",
@@ -180,7 +183,6 @@
     "status": "active",
     "platformId": "cantoDex",
     "assets": ["NOTE", "CANTO"],
-    "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -189,9 +191,10 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://app.slingshot.finance/swap/CANTO",
     "addLiquidityUrl": "https://canto.io/lp",
     "removeLiquidityUrl": "https://canto.io/lp",
-    "buyTokenUrl": "https://app.slingshot.finance/swap/CANTO",
     "network": "canto",
     "createdAt": 1677184771
   },
@@ -202,6 +205,7 @@
     "tokenAddress": "0x216400ba362d8FCE640085755e47075109718C8B",
     "tokenDecimals": 18,
     "tokenProviderId": "cantoDex",
+    "tokenAmmId": "canto-canto",
     "earnedToken": "mooCantoETH-CANTO",
     "earnedTokenAddress": "0xB690a29A9Ded200698AB4A35B1A4C81F55d7a83c",
     "earnContractAddress": "0xB690a29A9Ded200698AB4A35B1A4C81F55d7a83c",
@@ -210,11 +214,11 @@
     "status": "active",
     "platformId": "cantoDex",
     "assets": ["ETH", "CANTO"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://app.slingshot.finance/swap/CANTO",
     "addLiquidityUrl": "https://canto.io/lp",
     "removeLiquidityUrl": "https://canto.io/lp",
-    "buyTokenUrl": "https://app.slingshot.finance/swap/CANTO",
     "network": "canto",
     "createdAt": 1677184771
   },
@@ -225,6 +229,7 @@
     "tokenAddress": "0x30838619C55B787BafC3A4cD9aEa851C1cfB7b19",
     "tokenDecimals": 18,
     "tokenProviderId": "cantoDex",
+    "tokenAmmId": "canto-canto",
     "earnedToken": "mooCantoATOM-CANTO",
     "earnedTokenAddress": "0xE3FA2f50D3A4d924A77190db770A0178A313fa8F",
     "earnContractAddress": "0xE3FA2f50D3A4d924A77190db770A0178A313fa8F",
@@ -233,11 +238,11 @@
     "status": "active",
     "platformId": "cantoDex",
     "assets": ["ATOM", "CANTO"],
-    "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://app.slingshot.finance/swap/CANTO",
     "addLiquidityUrl": "https://canto.io/lp",
     "removeLiquidityUrl": "https://canto.io/lp",
-    "buyTokenUrl": "https://app.slingshot.finance/swap/CANTO",
     "network": "canto",
     "createdAt": 1677184771
   }

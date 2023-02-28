@@ -3,15 +3,14 @@ import {
   CommonDepositQuoteOptions,
   CommonWithdrawQuoteOptions,
 } from './base';
-import { isTokenErc20, TokenEntity, TokenErc20 } from '../../../../entities/token';
-import { computeSolidlyPairAddress } from '../../helpers/solidly';
+import { isTokenErc20, TokenErc20 } from '../../../../entities/token';
 import { ZapQuote, ZapQuoteStepSplit } from '../../transact-types';
 import { ZapAbi } from '../../../../../../config/abi';
 import BigNumber from 'bignumber.js';
 import { createQuoteId } from '../../utils';
 import { fromWei } from '../../../../../../helpers/big-number';
 import { wnativeToNative } from '../../helpers/tokens';
-import { AmmEntity, AmmEntitySolidly } from '../../../../entities/amm';
+import { AmmEntitySolidly } from '../../../../entities/amm';
 import { getPool } from '../../../amm';
 
 /**
@@ -20,35 +19,6 @@ import { getPool } from '../../../amm';
 export class BeefySolidlyZapProvider extends BeefyBaseZapProvider<AmmEntitySolidly> {
   constructor() {
     super('solidly');
-  }
-
-  getAmm(
-    amms: AmmEntity[],
-    depositTokenAddress: TokenEntity['address'],
-    lpTokens: TokenEntity[]
-  ): AmmEntitySolidly | null {
-    const amm = amms.find(
-      (amm): amm is AmmEntitySolidly =>
-        amm.type === this.type &&
-        (depositTokenAddress ===
-          computeSolidlyPairAddress(
-            amm.factoryAddress,
-            amm.pairInitHash,
-            lpTokens[0].address,
-            lpTokens[1].address,
-            true
-          ) ||
-          depositTokenAddress ===
-            computeSolidlyPairAddress(
-              amm.factoryAddress,
-              amm.pairInitHash,
-              lpTokens[0].address,
-              lpTokens[1].address,
-              false
-            ))
-    );
-
-    return amm || null;
   }
 
   async getDepositQuoteForType({

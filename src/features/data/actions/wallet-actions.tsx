@@ -66,6 +66,7 @@ import { AmmEntity } from '../entities/amm';
 import { WANT_TYPE } from '../apis/amm/types';
 import { getVaultWithdrawnFromContract } from '../apis/transact/helpers/vault';
 import { swapWithFee } from '../apis/transact/helpers/one-inch';
+import { selectOneInchZapByChainId } from '../selectors/zap';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -329,7 +330,7 @@ const oneInchBeefInSingle = (
 
     const vaultAddress = vault.earnedTokenAddress;
     const chain = selectChainById(state, vault.chainId);
-    const oneInchApi = await getOneInchApi(chain);
+    const oneInchApi = await getOneInchApi(chain, zap.priceOracleAddress);
     const swapTokenInAddress = swap.fromToken.address;
     const swapTokenOutAddress = swap.toToken.address;
     const swapAmountInWei = toWeiString(swap.fromAmount, swap.fromToken.decimals);
@@ -418,7 +419,7 @@ const oneInchBeefInLP = (
 
     const vaultAddress = vault.earnedTokenAddress;
     const chain = selectChainById(state, vault.chainId);
-    const oneInchApi = await getOneInchApi(chain);
+    const oneInchApi = await getOneInchApi(chain, zap.priceOracleAddress);
     const swapData = await Promise.all(
       swaps.map(async swap => {
         const swapTokenInAddress = swap.fromToken.address;
@@ -533,7 +534,7 @@ const oneInchBeefOutSingle = (
     );
 
     const mooTokensToWithdrawWei = sharesToWithdrawWei.toString(10);
-    const oneInchApi = await getOneInchApi(chain);
+    const oneInchApi = await getOneInchApi(chain, zap.priceOracleAddress);
     const swapTokenInAddress = swap.fromToken.address;
     const swapTokenOutAddress = swap.toToken.address;
     const swapAmountInWei = withdrawnAmountAfterFeeWei.toString(10);
@@ -644,7 +645,7 @@ const oneInchBeefOutLP = (
       withdrawnAmountAfterFeeWei
     );
 
-    const oneInchApi = await getOneInchApi(chain);
+    const oneInchApi = await getOneInchApi(chain, zap.priceOracleAddress);
     const expectedTokens: TokenErc20[] = [];
     const swapData = await Promise.all(
       swaps.map(async swap => {
@@ -1206,7 +1207,8 @@ const mintDeposit = (
     const buildCall = async () => {
       if (canZapInWithOneInch) {
         const swapInToken = isNative ? selectChainWrappedNativeToken(state, chainId) : payToken;
-        const oneInchApi = await getOneInchApi(chain);
+        const zap = selectOneInchZapByChainId(state, chain.chainId);
+        const oneInchApi = await getOneInchApi(chain, zap.priceOracleAddress);
         const swapData = await oneInchApi.getSwap({
           disableEstimate: true, // otherwise will fail due to no allowance
           fromAddress: contractAddress,

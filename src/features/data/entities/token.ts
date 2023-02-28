@@ -1,6 +1,7 @@
 import { ChainEntity } from './chain';
 import { PlatformEntity } from './platform';
 import { LpData } from '../apis/beefy';
+import { AmmEntity } from './amm';
 
 /**
  * A token can be anything erc20-like
@@ -19,6 +20,7 @@ export interface TokenErc20 {
   id: string;
   symbol: string;
   providerId?: PlatformEntity['id'];
+  ammId?: AmmEntity['id'];
   chainId: ChainEntity['id'];
   oracleId: string;
   address: string;
