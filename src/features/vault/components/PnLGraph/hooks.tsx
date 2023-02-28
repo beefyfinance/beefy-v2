@@ -15,7 +15,7 @@ import {
   selectDepositTokenByVaultId,
   selectTokenPriceByAddress,
 } from '../../../data/selectors/tokens';
-import { selectUserBalanceOfToken } from '../../../data/selectors/balance';
+import { selectStandardVaultUserBalanceInDepositTokenIncludingBoosts } from '../../../data/selectors/balance';
 
 interface ChardataType {
   data: PriceTsRow[];
@@ -57,7 +57,7 @@ export const usePnLChartData = (
     selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const currentMooTokenBalance = useAppSelector(state =>
-    selectUserBalanceOfToken(state, vault.chainId, vault.earnContractAddress)
+    selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id)
   );
 
   const vaultLastDeposit = useAppSelector(state => selectLastVaultDepositStart(state, vaultId));

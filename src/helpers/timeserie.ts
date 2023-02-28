@@ -12,7 +12,7 @@ import { timeBucketToSamplingPeriod } from './time-bucket';
 
 // simulate a join between the 3 price series locally
 export interface PriceTsRow {
-  datetime: Date;
+  datetime: number;
   shareBalance: number | null;
   underlyingBalance: number | null;
   usdBalance: number | null;
@@ -85,7 +85,8 @@ export function getInvestorTimeserie(
 
     if (balance && !balance.isEqualTo(BIG_ZERO) && !isInternal) {
       pricesTs.push({
-        datetime: currentDate,
+        //return date on seconds
+        datetime: currentDate.getTime(),
         shareBalance: balance.toNumber(),
         underlyingBalance: underlyingBalance.toNumber(),
         usdBalance: usdBalance.toNumber(),
@@ -94,8 +95,10 @@ export function getInvestorTimeserie(
 
     currentDate = new Date(currentDate.getTime() + bucketSize);
   }
+
   pricesTs.push({
-    datetime: new Date(),
+    //return date on seconds
+    datetime: new Date().getTime(),
     shareBalance: currentShareBalance.toNumber(),
     underlyingBalance: currentShareBalance.times(currentPpfs).toNumber(),
     usdBalance: currentShareBalance.times(currentPpfs).times(currentPrice).toNumber(),

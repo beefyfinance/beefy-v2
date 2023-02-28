@@ -18,10 +18,12 @@ import { PnLTooltip } from '../PnLTooltip';
 import { TimeBucketType } from '../../../../../data/apis/analytics/analytics-types';
 import { Theme, useMediaQuery } from '@material-ui/core';
 import { Loader } from '../Loader';
-import { NoData } from '../NoData';
 import { max } from 'lodash';
 
-const TIME_BUCKET: TimeBucketType[] = ['1h_1d', '1h_1w', '1d_1M', '1d_1Y'];
+const TIME_BUCKET: TimeBucketType[] = ['1h_1d', '1h_1w', '1d_1M', '1d_all'];
+
+// 2 HOURS - 1 DAY - 1 WEEK- 1WEEK
+const DAYS_TO_SECONDS = [7200, 86400, 604800, 604800];
 
 export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: number }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -30,14 +32,21 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
     return `beefy:vault:${vault.chainId}:${vault.earnContractAddress.toLowerCase()}`;
   }, [vault.chainId, vault.earnContractAddress]);
 
-  const { data, minUnderlying, maxUnderlying, minUsd, maxUsd, loading, error } = usePnLChartData(
+  const { data, minUnderlying, maxUnderlying, minUsd, maxUsd, loading } = usePnLChartData(
     TIME_BUCKET[stat],
     productKey,
     vaultId
   );
 
-  const underlyingDiff = domainOffSet(minUnderlying, maxUnderlying, 0.88);
-  const usdDiff = domainOffSet(minUsd, maxUsd, 0.88);
+  console.log(data);
+
+  const underlyingDiff = useMemo(() => {
+    return domainOffSet(minUnderlying, maxUnderlying, 0.88);
+  }, [maxUnderlying, minUnderlying]);
+
+  const usdDiff = useMemo(() => {
+    return domainOffSet(minUsd, maxUsd, 0.88);
+  }, [maxUsd, minUsd]);
 
   const startUnderlyingDomain = useMemo(() => {
     return max([0, minUnderlying - underlyingDiff]);
@@ -47,8 +56,13 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
     return max([0, minUsd - usdDiff]);
   }, [minUsd, usdDiff]);
 
-  const underlyingTicks = mapRangeToTicks(startUnderlyingDomain, maxUnderlying + underlyingDiff);
-  const usdTicks = mapRangeToTicks(startUsdDomain, maxUsd + usdDiff);
+  const underlyingTicks = useMemo(() => {
+    return mapRangeToTicks(startUnderlyingDomain, maxUnderlying + underlyingDiff);
+  }, [maxUnderlying, startUnderlyingDomain, underlyingDiff]);
+
+  const usdTicks = useMemo(() => {
+    return mapRangeToTicks(startUsdDomain, maxUsd + usdDiff);
+  }, [maxUsd, startUsdDomain, usdDiff]);
 
   const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
@@ -56,12 +70,22 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
     return mdDown ? 16 : 24;
   }, [mdDown]);
 
+  const dateTicks = useMemo(() => {
+    if (data.length > 0) {
+      let ticks: number[] = [];
+      ticks = data.map(row => row.datetime).filter(date => date % DAYS_TO_SECONDS[stat] === 0);
+
+      return ticks;
+    }
+    return [0];
+  }, [data, stat]);
+
   if (loading) {
     return <Loader />;
   }
 
-  if (error.error) {
-    return <NoData status={error.status} message={error.message} />;
+  if (data.length === 0) {
+    return <div>avoidcrash</div>;
   }
 
   return (
@@ -79,6 +103,8 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
           allowDuplicatedCategory={false}
           padding={{ left: 2, right: 2 }}
           tickMargin={8}
+          scale="time"
+          ticks={dateTicks}
         />
         <YAxis
           stroke="#59A662"

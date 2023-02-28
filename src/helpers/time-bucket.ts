@@ -12,6 +12,7 @@ export function timeBucketToSamplingPeriod(timeBucket: TimeBucketType) {
     '1h_1w': { bucketSize: '1hour', timeRange: '1week' },
     '1d_1M': { bucketSize: '1day', timeRange: '1month' },
     '1d_1Y': { bucketSize: '1day', timeRange: '1year' },
+    '1d_all': { bucketSize: '1day', timeRange: '100year' },
   };
   return bucketParamMap[timeBucket];
 }
@@ -21,7 +22,8 @@ export function assertIsValidTimeBucket(bucketSize: SamplingPeriod, timeRange: S
     (bucketSize === '1hour' && timeRange === '1day') ||
     (bucketSize === '1hour' && timeRange === '1week') ||
     (bucketSize === '1day' && timeRange === '1month') ||
-    (bucketSize === '1day' && timeRange === '1year');
+    (bucketSize === '1day' && timeRange === '1year') ||
+    (bucketSize === '1day' && timeRange === '100year');
   if (!isValidCombination) {
     throw new Error('Invalid bucketSize and timeRange combination');
   }
