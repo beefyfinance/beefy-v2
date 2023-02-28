@@ -10,6 +10,12 @@ import { getInvestorTimeserie, PriceTsRow } from '../../../../helpers/timeserie'
 import { eachDayOfInterval, isAfter } from 'date-fns';
 import { maxBy, minBy } from 'lodash';
 import { TimeBucketType } from '../../../data/apis/analytics/analytics-types';
+import { selectVaultById, selectVaultPricePerFullShare } from '../../../data/selectors/vaults';
+import {
+  selectDepositTokenByVaultId,
+  selectTokenPriceByAddress,
+} from '../../../data/selectors/tokens';
+import { selectUserBalanceOfToken } from '../../../data/selectors/balance';
 
 interface ChardataType {
   data: PriceTsRow[];
@@ -42,6 +48,18 @@ export const usePnLChartData = (
     selectUserDepositedTimelineByVaultId(state, vaultId)
   );
 
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const depositToken = useAppSelector(state => selectDepositTokenByVaultId(state, vaultId));
+  const currentPpfs = useAppSelector(state =>
+    selectVaultPricePerFullShare(state, vaultId)
+  ).shiftedBy(18 - depositToken.decimals);
+  const currentOraclePrice = useAppSelector(state =>
+    selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
+  );
+  const currentMooTokenBalance = useAppSelector(state =>
+    selectUserBalanceOfToken(state, vault.chainId, vault.earnContractAddress)
+  );
+
   const vaultLastDeposit = useAppSelector(state => selectLastVaultDepositStart(state, vaultId));
 
   useEffect(() => {
@@ -64,7 +82,10 @@ export const usePnLChartData = (
           vaultTimeline,
           filteredShares,
           filteredUnderlying,
-          vaultLastDeposit
+          vaultLastDeposit,
+          currentPpfs,
+          currentOraclePrice.toNumber(),
+          currentMooTokenBalance
         );
 
         if (chartData.length > 0) {
