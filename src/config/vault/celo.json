@@ -130,7 +130,8 @@
     "earnContractAddress": "0xc8Acba0068B0F80F5176B6e14b9c7D1aF9B0F9A2",
     "oracle": "lps",
     "oracleId": "sushi-celo-cusd-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["cUSD", "USDC"],
     "risks": [
@@ -220,7 +221,8 @@
     "earnContractAddress": "0x6ad6c1f5c2Fb80e1240D7B8242496B3A4e021c68",
     "oracle": "lps",
     "oracleId": "sushi-celo-cusd-ceurv2",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["cUSD", "cEUR"],
     "risks": [

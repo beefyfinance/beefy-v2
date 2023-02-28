@@ -1350,7 +1350,8 @@
     "earnContractAddress": "0xa252f912646566df76Dfac6Efe5f69bd771Eb497",
     "oracle": "lps",
     "oracleId": "ripae-pcro-cro",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "ripae",
     "assets": ["pCRO", "CRO"],
     "risks": [
