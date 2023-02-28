@@ -22,7 +22,7 @@ export const ExtendedFilters = memo<ExtendedFiltersProps>(function ({ desktopVie
       <CheckboxFilter className={classes.checkbox} filter="onlyBoosted" label={t('Filter-Boost')} />
       <CheckboxFilter
         className={classes.checkbox}
-        filter="onlyZapable"
+        filter="onlyZappable"
         label={t('Filter-Zapable')}
       />
       <CheckboxFilter

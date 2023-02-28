@@ -231,7 +231,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
       return false;
     }
 
-    if (filterOptions.onlyZapable && !selectVaultSupportsAnyZap(state, vault.id)) {
+    if (filterOptions.onlyZappable && !selectVaultSupportsAnyZap(state, vault.id)) {
       return false;
     }
 
