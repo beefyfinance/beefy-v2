@@ -1,5 +1,4 @@
 import { makeStyles, Theme } from '@material-ui/core';
-import { isNumber } from 'lodash';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
