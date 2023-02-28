@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import { isAfter, max } from 'date-fns';
 import { sortBy } from 'lodash';
 import {
@@ -22,7 +23,10 @@ export function getInvestorTimeserie(
   timeline: VaultTimelineAnalyticsEntity[],
   shares: ApiProductPriceRow[],
   underlying: ApiProductPriceRow[],
-  firstDate: Date
+  firstDate: Date,
+  currentPpfs: BigNumber,
+  currentPrice: number,
+  currentShareBalance: BigNumber
 ): PriceTsRow[] {
   // so, first we need to generate datetime keys for each row
   const { bucketSize: bucketSizeStr, timeRange: timeRangeStr } =
@@ -90,6 +94,12 @@ export function getInvestorTimeserie(
 
     currentDate = new Date(currentDate.getTime() + bucketSize);
   }
+  pricesTs.push({
+    datetime: new Date(),
+    shareBalance: currentShareBalance.toNumber(),
+    underlyingBalance: currentShareBalance.times(currentPpfs).toNumber(),
+    usdBalance: currentShareBalance.times(currentPpfs).times(currentPrice).toNumber(),
+  });
 
   return pricesTs;
 }
