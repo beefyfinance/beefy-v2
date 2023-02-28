@@ -39,13 +39,16 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
   const underlyingDiff = domainOffSet(minUnderlying, maxUnderlying, 0.88);
   const usdDiff = domainOffSet(minUsd, maxUsd, 0.88);
 
-  const startUnderliyingDomain = useMemo(() => {
+  const startUnderlyingDomain = useMemo(() => {
     return max([0, minUnderlying - underlyingDiff]);
   }, [minUnderlying, underlyingDiff]);
 
   const startUsdDomain = useMemo(() => {
     return max([0, minUsd - usdDiff]);
   }, [minUsd, usdDiff]);
+
+  const underlyingTicks = mapRangeToTicks(startUnderlyingDomain, maxUnderlying + underlyingDiff);
+  const usdTicks = mapRangeToTicks(startUsdDomain, maxUsd + usdDiff);
 
   const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
@@ -67,7 +70,7 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
         width={450}
         height={200}
         data={data}
-        margin={{ top: 0, right: padding, bottom: 0, left: padding }}
+        margin={{ top: 12, right: padding, bottom: 0, left: padding }}
       >
         <CartesianGrid strokeDasharray="1 1" stroke="#363B63" />
         <XAxis
@@ -84,7 +87,8 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
             formatFullBigNumber(new BigNumber(tickItem), tickItem > 999 ? 0 : 3)
           }
           yAxisId="underliying"
-          domain={[startUnderliyingDomain, maxUnderlying + underlyingDiff]}
+          domain={[startUnderlyingDomain, maxUnderlying + underlyingDiff]}
+          ticks={underlyingTicks}
         />
         <YAxis
           stroke="#5C99D6"
@@ -93,6 +97,7 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
           tickFormatter={tickItem => formatBigUsd(new BigNumber(tickItem))}
           yAxisId="usd"
           domain={[startUsdDomain, maxUsd + usdDiff]}
+          ticks={usdTicks}
         />
         <Line
           yAxisId="underliying"
@@ -125,4 +130,9 @@ function formatXAxis(tickItem: number, timebucket: TimeBucketType) {
 
 const domainOffSet = (min: number, max: number, heightPercentageUsedByChart: number) => {
   return ((max - min) * (1 - heightPercentageUsedByChart)) / (2 * heightPercentageUsedByChart);
+};
+
+const mapRangeToTicks = (min: number, max: number) => {
+  const factors = [0, 0.25, 0.5, 0.75, 1];
+  return factors.map(f => min + f * (max - min));
 };
