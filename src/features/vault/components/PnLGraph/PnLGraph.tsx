@@ -3,7 +3,10 @@ import React, { useCallback } from 'react';
 import { memo } from 'react';
 import { useAppSelector } from '../../../../store';
 import { VaultEntity } from '../../../data/entities/vault';
-import { selectIsAnalyticsLoaded } from '../../../data/selectors/analytics';
+import {
+  selectIsAnalyticsLoaded,
+  selectUserDepositedTimelineByVaultId,
+} from '../../../data/selectors/analytics';
 import { selectUserDepositedVaultIds } from '../../../data/selectors/balance';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { Footer } from './components/Footer';
@@ -26,6 +29,10 @@ export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
 
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
+  const vaultTimeline = useAppSelector(state =>
+    selectUserDepositedTimelineByVaultId(state, vaultId)
+  );
+
   const isLoaded = useAppSelector(selectIsAnalyticsLoaded);
 
   const labels = useVaultPeriods(vaultId);
@@ -36,7 +43,13 @@ export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
     setStat(newStat);
   }, []);
 
-  if (!isLoaded || !userVaults.includes(vaultId) || vault.status !== 'active' || !labels) {
+  if (
+    !isLoaded ||
+    !userVaults.includes(vaultId) ||
+    vaultTimeline.length === 0 ||
+    vault.status !== 'active' ||
+    !labels
+  ) {
     return null;
   }
 

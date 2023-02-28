@@ -1,4 +1,5 @@
 import { makeStyles, Theme } from '@material-ui/core';
+import { isNumber } from 'lodash';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -18,7 +19,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const NoData = memo(function () {
+export interface NoDataProps {
+  message?: string;
+  status: number;
+}
+
+export const NoData = memo<NoDataProps>(function ({ message, status }) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
@@ -28,7 +34,11 @@ export const NoData = memo(function () {
         src={require('../../../../../../images/empty-state.svg').default}
         alt="loader"
       />
-      <div className={classes.text}>{t('pnl-graph-no-data')}</div>
+      <div className={classes.text}>
+        {status === 429 && t('pnl-graph-rate-limit')}
+
+        {message === 'nodata' && t('pnl-graph-no-data')}
+      </div>
     </div>
   );
 });

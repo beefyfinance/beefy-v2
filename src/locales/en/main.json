@@ -551,5 +551,6 @@
   "pnl-graph-legend-usd": "Deposit Value (USD)",
   "pnl-tooltip-deposit": "Your Deposit:",
   "pnl-tooltip-deposit-usd": "Deposit Value(USD):",
-  "pnl-graph-no-data": "No DATA available for this period of time"
+  "pnl-graph-no-data": "No Data available for this period of time",
+  "pnl-graph-rate-limit": "Rate limit exceeded, retry in 5 seconds"
 }

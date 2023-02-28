@@ -48,9 +48,5 @@ export const styles = (theme: Theme) => ({
       display: 'flex',
       alignItems: 'flex-end',
     },
-    [theme.breakpoints.up('sm')]: {
-      marginTop: 0,
-      marginLeft: 'auto',
-    },
   },
 });

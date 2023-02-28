@@ -18,6 +18,7 @@ interface ChardataType {
   minUnderlying: number;
   maxUnderlying: number;
   loading: boolean;
+  error: { error; status?: number; message?: string };
 }
 
 export const initialChartDataValue = {
@@ -27,6 +28,7 @@ export const initialChartDataValue = {
   minUnderlying: 0,
   maxUnderlying: 0,
   loading: true,
+  error: { error: false },
 };
 
 export const usePnLChartData = (
@@ -66,19 +68,11 @@ export const usePnLChartData = (
         );
 
         if (chartData.length > 0) {
-          const minUsd = chartData
-            ? minBy(chartData, row => row.usdBalance.toNumber()).usdBalance?.toNumber()
-            : 0;
-          const maxUsd = chartData
-            ? maxBy(chartData, row => row.usdBalance.toNumber()).usdBalance?.toNumber()
-            : 0;
+          const minUsd = chartData ? minBy(chartData, row => row.usdBalance).usdBalance : 0;
+          const maxUsd = chartData ? maxBy(chartData, row => row.usdBalance).usdBalance : 0;
 
-          const minUnderlying = minBy(chartData, row =>
-            row.underlyingBalance.toNumber()
-          ).underlyingBalance.toNumber();
-          const maxUnderlying = maxBy(chartData, row =>
-            row.underlyingBalance.toNumber()
-          ).underlyingBalance.toNumber();
+          const minUnderlying = minBy(chartData, row => row.underlyingBalance).underlyingBalance;
+          const maxUnderlying = maxBy(chartData, row => row.underlyingBalance).underlyingBalance;
 
           setChartData({
             data: chartData,
@@ -87,9 +81,20 @@ export const usePnLChartData = (
             minUsd,
             maxUsd,
             loading: false,
+            error: { error: false },
+          });
+        } else {
+          setChartData({
+            data: [],
+            minUnderlying: 0,
+            maxUnderlying: 0,
+            minUsd: 0,
+            maxUsd: 0,
+            loading: false,
+            error: { error: true, message: 'nodata', status: 204 },
           });
         }
-      } catch {
+      } catch (error) {
         setChartData({
           data: [],
           minUnderlying: 0,
@@ -97,6 +102,7 @@ export const usePnLChartData = (
           minUsd: 0,
           maxUsd: 0,
           loading: false,
+          error: { error: true, status: error.response.status, message: error.message },
         });
       }
     };

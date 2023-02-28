@@ -1,5 +1,4 @@
-import BigNumber from 'bignumber.js';
-import { max } from 'date-fns';
+import { isAfter, max } from 'date-fns';
 import { sortBy } from 'lodash';
 import {
   ApiProductPriceRow,
@@ -13,9 +12,9 @@ import { timeBucketToSamplingPeriod } from './time-bucket';
 // simulate a join between the 3 price series locally
 export interface PriceTsRow {
   datetime: Date;
-  shareBalance: BigNumber | null;
-  underlyingBalance: BigNumber | null;
-  usdBalance: BigNumber | null;
+  shareBalance: number | null;
+  underlyingBalance: number | null;
+  usdBalance: number | null;
 }
 
 export function getInvestorTimeserie(
@@ -49,17 +48,24 @@ export function getInvestorTimeserie(
   while (currentDate <= lastDate) {
     // add a row for each date
     // find the corresponding balance row
-    while (balanceIdx < timeline.length - 1 && timeline[balanceIdx + 1].datetime <= currentDate) {
+    while (
+      balanceIdx < timeline.length - 1 &&
+      isAfter(currentDate, timeline[balanceIdx + 1].datetime) &&
+      !timeline[balanceIdx + 1].internal
+    ) {
       balanceIdx++;
     }
     // find the corresponding shares row
-    while (sharesIdx < sortedShares.length - 1 && sortedShares[sharesIdx + 1].date <= currentDate) {
+    while (
+      sharesIdx < sortedShares.length - 1 &&
+      isAfter(currentDate, sortedShares[sharesIdx + 1].date)
+    ) {
       sharesIdx++;
     }
     // find the corresponding underlying row
     while (
       underlyingIdx < sortedUnderlying.length - 1 &&
-      sortedUnderlying[underlyingIdx + 1].date <= currentDate
+      isAfter(currentDate, sortedUnderlying[underlyingIdx + 1].date)
     ) {
       underlyingIdx++;
     }
@@ -76,9 +82,9 @@ export function getInvestorTimeserie(
     if (balance && !balance.isEqualTo(BIG_ZERO) && !isInternal) {
       pricesTs.push({
         datetime: currentDate,
-        shareBalance: balance,
-        underlyingBalance: underlyingBalance,
-        usdBalance: usdBalance,
+        shareBalance: balance.toNumber(),
+        underlyingBalance: underlyingBalance.toNumber(),
+        usdBalance: usdBalance.toNumber(),
       });
     }
 

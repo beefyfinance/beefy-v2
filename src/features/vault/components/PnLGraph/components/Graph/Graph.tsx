@@ -19,6 +19,7 @@ import { TimeBucketType } from '../../../../../data/apis/analytics/analytics-typ
 import { Theme, useMediaQuery } from '@material-ui/core';
 import { Loader } from '../Loader';
 import { NoData } from '../NoData';
+import { max } from 'lodash';
 
 const TIME_BUCKET: TimeBucketType[] = ['1h_1d', '1h_1w', '1d_1M', '1d_1Y'];
 
@@ -29,7 +30,7 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
     return `beefy:vault:${vault.chainId}:${vault.earnContractAddress.toLowerCase()}`;
   }, [vault.chainId, vault.earnContractAddress]);
 
-  const { data, minUnderlying, maxUnderlying, minUsd, maxUsd, loading } = usePnLChartData(
+  const { data, minUnderlying, maxUnderlying, minUsd, maxUsd, loading, error } = usePnLChartData(
     TIME_BUCKET[stat],
     productKey,
     vaultId
@@ -38,25 +39,26 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
   const underlyingDiff = domainOffSet(minUnderlying, maxUnderlying, 0.88);
   const usdDiff = domainOffSet(minUsd, maxUsd, 0.88);
 
+  const startUnderliyingDomain = useMemo(() => {
+    return max([0, minUnderlying - underlyingDiff]);
+  }, [minUnderlying, underlyingDiff]);
+
+  const startUsdDomain = useMemo(() => {
+    return max([0, minUsd - usdDiff]);
+  }, [minUsd, usdDiff]);
+
   const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   const padding = useMemo(() => {
     return mdDown ? 16 : 24;
   }, [mdDown]);
 
-  const ticksXAxis = useMemo(() => {
-    if (TIME_BUCKET[stat] === '1h_1d') {
-      return data.map(row => row.datetime.getTime()).filter((row, i) => i % 2 === 0);
-    }
-    return data.map(row => row.datetime.getTime()).filter((row, i) => i % 7 === 0);
-  }, [data, stat]);
-
   if (loading) {
     return <Loader />;
   }
 
-  if (!loading && data.length === 0) {
-    return <NoData />;
+  if (error.error) {
+    return <NoData status={error.status} message={error.message} />;
   }
 
   return (
@@ -69,15 +71,11 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
       >
         <CartesianGrid strokeDasharray="1 1" stroke="#363B63" />
         <XAxis
-          allowDataOverflow={true}
-          type="number"
           tickFormatter={tickitem => formatXAxis(tickitem, TIME_BUCKET[stat])}
           dataKey="datetime"
           allowDuplicatedCategory={false}
-          ticks={ticksXAxis}
-          domain={[ticksXAxis[0], ticksXAxis[ticksXAxis.length - 1]]}
           padding={{ left: 2, right: 2 }}
-          dy={6}
+          tickMargin={8}
         />
         <YAxis
           stroke="#59A662"
@@ -86,7 +84,7 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
             formatFullBigNumber(new BigNumber(tickItem), tickItem > 999 ? 0 : 3)
           }
           yAxisId="underliying"
-          domain={[minUnderlying - underlyingDiff, maxUnderlying + underlyingDiff]}
+          domain={[startUnderliyingDomain, maxUnderlying + underlyingDiff]}
         />
         <YAxis
           stroke="#5C99D6"
@@ -94,7 +92,7 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
           strokeWidth={1.5}
           tickFormatter={tickItem => formatBigUsd(new BigNumber(tickItem))}
           yAxisId="usd"
-          domain={[minUsd - usdDiff, maxUsd + usdDiff]}
+          domain={[startUsdDomain, maxUsd + usdDiff]}
         />
         <Line
           yAxisId="underliying"
@@ -120,9 +118,9 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
 
 function formatXAxis(tickItem: number, timebucket: TimeBucketType) {
   if (timebucket === '1h_1d') {
-    return format(tickItem * 1000, 'HH:mm');
+    return format(tickItem, 'HH:mm');
   }
-  return format(tickItem * 1000, 'dd/MM');
+  return format(tickItem, 'dd/MM');
 }
 
 const domainOffSet = (min: number, max: number, heightPercentageUsedByChart: number) => {
