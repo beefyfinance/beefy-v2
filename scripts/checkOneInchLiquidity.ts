@@ -225,12 +225,12 @@ class RateLimitedOneInchApi extends OneInchApi {
   }
 
   async getPriceInNative2(request: PriceRequest): Promise<PriceResponse> {
-    if (!this.chain.oneInchPriceOracleAddress) {
+    if (!this.oracleAddress) {
       throw new Error(`No 1inch price oracle address for ${this.chain.id}`);
     }
 
     const multicall = await this.getMulticall();
-    const contract = createContract(OneInchPriceOracleAbi, this.chain.oneInchPriceOracleAddress);
+    const contract = createContract(OneInchPriceOracleAbi, this.oracleAddress);
     const calls = request.tokenAddresses.map(address => ({
       address,
       price: contract.methods.getRateToEth(address, true),
