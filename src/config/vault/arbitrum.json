@@ -78,6 +78,7 @@
     "tokenAddress": "0x751F3B8ca139bC1F3482b193297485f14208826a",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
+    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardSLIZ-WETH",
     "earnedTokenAddress": "0x5b65FB9f2C095A2EC311c4e13ef478D4BE0EC492",
     "earnContractAddress": "0x5b65FB9f2C095A2EC311c4e13ef478D4BE0EC492",
@@ -92,7 +93,7 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0x751F3B8ca139bC1F3482b193297485f14208826a",
     "network": "arbitrum",
-    "createdAt": 1677323003
+    "createdAt": 1677686779
   },
   {
     "id": "solidlizard-ageur-usdc",
