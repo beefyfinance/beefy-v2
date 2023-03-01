@@ -568,7 +568,8 @@
     "earnContractAddress": "0x4d5bBce91D9bf7434Bf358C1199C8a9c33303787",
     "oracle": "lps",
     "oracleId": "curve-moonbeam-f-stdot",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "curve",
     "assets": ["stDOT", "xcDOT"],
     "risks": [
@@ -598,7 +599,8 @@
     "earnContractAddress": "0xAAbFF5Bc0B3Dd6D8819CdBc76bBdb65F161A2B54",
     "oracle": "lps",
     "oracleId": "stellaswap-ldo-wglmr",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["LDO", "GLMR"],
     "risks": [

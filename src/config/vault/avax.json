@@ -2933,7 +2933,8 @@
     "earnContractAddress": "0xD78d5464690544F5D838dAEF0D7650fA03c64598",
     "oracle": "lps",
     "oracleId": "ripae-pavax-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "ripae",
     "assets": ["pAVAX", "AVAX"],
     "risks": [
@@ -2965,7 +2966,8 @@
     "earnContractAddress": "0x2c0E2Ec5C2C84346497cc82F5afF72f8A29dA835",
     "oracle": "lps",
     "oracleId": "ripae-pae-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "ripae",
     "assets": ["PAE", "AVAX"],
     "risks": [
