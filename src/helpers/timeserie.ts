@@ -55,8 +55,7 @@ export function getInvestorTimeserie(
     // find the corresponding balance row
     while (
       balanceIdx < timeline.length - 1 &&
-      isAfter(currentDate, timeline[balanceIdx + 1].datetime) &&
-      !timeline[balanceIdx + 1].internal
+      isAfter(currentDate, timeline[balanceIdx + 1].datetime)
     ) {
       balanceIdx++;
     }
