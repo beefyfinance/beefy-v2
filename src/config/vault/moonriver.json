@@ -497,7 +497,8 @@
     "earnContractAddress": "0x27d99A6B13cC4f5F55f3Fb9Bd6F7a02F9EFCD820",
     "oracle": "lps",
     "oracleId": "sushi-mr-frax-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["FRAX", "USDC"],
     "risks": [
@@ -560,7 +561,8 @@
     "earnContractAddress": "0x1f1FAfB086C6e1e900f18fccbeD5BA727d09F193",
     "oracle": "lps",
     "oracleId": "sushi-mr-usdt-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["USDT", "USDC"],
     "risks": [
