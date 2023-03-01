@@ -133,15 +133,15 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
           dataKey="underlyingBalance"
           stroke="#59A662"
           dot={false}
-          type="basis"
+          type="linear"
         />
         <Line
-          type="basis"
           yAxisId="usd"
           strokeWidth={1.5}
           dataKey="usdBalance"
           stroke="#5C99D6"
           dot={false}
+          type="linear"
         />
         <Tooltip wrapperStyle={{ outline: 'none' }} content={<PnLTooltip />} />
       </LineChart>
