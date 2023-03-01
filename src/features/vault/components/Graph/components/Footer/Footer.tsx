@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox';
-import { Tabs } from '../../../../../../components/Tabs';
+import { BasicTabs } from '../../../../../../components/Tabs/BasicTabs';
 import { AverageState } from '../../Graph';
 
 import { styles } from './styles';
@@ -44,7 +44,7 @@ export const Footer = memo<FooterProps>(function ({
         />
       </div>
       <div className={classes.tabsContainer}>
-        <Tabs
+        <BasicTabs
           labels={[t('Graph-1Day'), t('Graph-1Week'), t('Graph-1Month'), t('Graph-1Year')]}
           value={period}
           onChange={newValue => handlePeriod(newValue)}

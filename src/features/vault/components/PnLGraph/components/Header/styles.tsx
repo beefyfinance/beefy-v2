@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   header: {
     display: 'grid',
     gridTemplateColumns: 'repeat(4,minmax(0,1fr))',
-    padding: '24px',
+    padding: '16px 24px',
     borderRadius: '12px 12px 0px 0px',
     backgroundColor: '#232743',
     [theme.breakpoints.down('md')]: {

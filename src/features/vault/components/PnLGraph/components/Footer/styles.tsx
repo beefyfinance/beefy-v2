@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'space-between',
     alingItems: 'center',
     borderTop: '2px solid #363B63',
-    padding: '24px',
+    padding: '16px 24px',
     borderRadius: '0px 0px 12px 12px',
     [theme.breakpoints.down('sm')]: {
       display: 'grid',
@@ -30,19 +30,19 @@ export const styles = (theme: Theme) => ({
   },
   legendItem: {
     ...theme.typography['subline-lg'],
-    fontWeight: 700,
     color: theme.palette.text.disabled,
-    display: 'grid',
+    fontWeight: 700,
+    display: 'flex',
     columnGap: '8px',
     alignItems: 'center',
-    gridTemplateColumns: 'minmax(0,5%) minmax(0,95%)',
   },
   tabsContainer: {
     '& .MuiTabs-root': {
-      minHeight: '38px',
+      minHeight: '24px',
     },
     '& .MuiTab-root': {
-      minHeight: '34px',
+      ...theme.typography['subline-lg'],
+      minHeight: '22px',
     },
     [theme.breakpoints.down('md')]: {
       display: 'flex',
