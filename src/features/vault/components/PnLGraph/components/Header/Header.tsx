@@ -145,7 +145,7 @@ const UsdValue = memo<ValueItemProps>(function ({ value, className, percentage }
 const SharesValue = memo<ValueItemProps>(function ({ value, className, percentage }) {
   const classes = useStyles();
 
-  const shortAmount = formatBigDecimals(value, 4);
+  const shortAmount = formatBigDecimals(value, value.gt(999) ? 0 : 3);
   const fullAmount = formatFullBigNumber(value, 18);
   return (
     <Tooltip

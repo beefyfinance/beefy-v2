@@ -7,6 +7,7 @@ import {
 } from '../features/data/apis/analytics/analytics-types';
 import { VaultTimelineAnalyticsEntity } from '../features/data/entities/analytics';
 import { BIG_ZERO } from './big-number';
+import { roundDownMinutes } from './date';
 import { samplingPeriodMs } from './sampling-period';
 import { timeBucketToSamplingPeriod } from './time-bucket';
 
@@ -97,8 +98,8 @@ export function getInvestorTimeserie(
   }
 
   pricesTs.push({
-    //return date on seconds
-    datetime: new Date().getTime(),
+    //round down our to the last hours, since first item of the api do the same
+    datetime: roundDownMinutes(new Date()).getTime(),
     shareBalance: currentShareBalance.toNumber(),
     underlyingBalance: currentShareBalance.times(currentPpfs).toNumber(),
     usdBalance: currentShareBalance.times(currentPpfs).times(currentPrice).toNumber(),

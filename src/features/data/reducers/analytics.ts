@@ -40,8 +40,6 @@ export const analyticsSlice = createSlice({
         totalsKey[row.displayName] = history;
       }
 
-      console.log('1', totals);
-
       for (const vaultId of Object.keys(totals.byVaultId)) {
         const boostIds = selectAllVaultBoostIds(state, vaultId);
 
@@ -69,8 +67,6 @@ export const analyticsSlice = createSlice({
           }
         }
       }
-
-      console.log('2', totals);
 
       sliceState.byBoostId = totals.byBoostId;
       sliceState.byVaultId = totals.byVaultId;

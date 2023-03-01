@@ -15,7 +15,7 @@ import {
   selectDepositTokenByVaultId,
   selectTokenPriceByAddress,
 } from '../../../data/selectors/tokens';
-import { selectStandardVaultUserBalanceInDepositTokenIncludingBoosts } from '../../../data/selectors/balance';
+import { selectUserBalanceOfTokensIncludingBoosts } from '../../../data/selectors/balance';
 
 interface ChardataType {
   data: PriceTsRow[];
@@ -24,7 +24,6 @@ interface ChardataType {
   minUnderlying: number;
   maxUnderlying: number;
   loading: boolean;
-  error: { error; status?: number; message?: string };
 }
 
 export const initialChartDataValue = {
@@ -34,7 +33,6 @@ export const initialChartDataValue = {
   minUnderlying: 0,
   maxUnderlying: 0,
   loading: true,
-  error: { error: false },
 };
 
 export const usePnLChartData = (
@@ -57,7 +55,12 @@ export const usePnLChartData = (
     selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const currentMooTokenBalance = useAppSelector(state =>
-    selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id)
+    selectUserBalanceOfTokensIncludingBoosts(
+      state,
+      vault.id,
+      vault.chainId,
+      vault.earnContractAddress
+    )
   );
 
   const vaultLastDeposit = useAppSelector(state => selectLastVaultDepositStart(state, vaultId));
@@ -102,7 +105,6 @@ export const usePnLChartData = (
             minUsd,
             maxUsd,
             loading: false,
-            error: { error: false },
           });
         } else {
           setChartData({
@@ -111,8 +113,7 @@ export const usePnLChartData = (
             maxUnderlying: 0,
             minUsd: 0,
             maxUsd: 0,
-            loading: false,
-            error: { error: true, message: 'nodata', status: 204 },
+            loading: true,
           });
         }
       } catch (error) {
@@ -122,8 +123,7 @@ export const usePnLChartData = (
           maxUnderlying: 0,
           minUsd: 0,
           maxUsd: 0,
-          loading: false,
-          error: { error: true, status: error.response.status, message: error.message },
+          loading: true,
         });
       }
     };

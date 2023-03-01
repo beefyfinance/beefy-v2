@@ -22,8 +22,8 @@ import { max } from 'lodash';
 
 const TIME_BUCKET: TimeBucketType[] = ['1h_1d', '1h_1w', '1d_1M', '1d_all'];
 
-// 2 HOURS - 1 DAY - 1 WEEK- 1WEEK
-const DAYS_TO_SECONDS = [7200, 86400, 604800, 604800];
+// 2 HOURS - 1 DAY - 1 WEEK- 2 WEEK
+const X_DOMAIN_SECONDS = [7200, 86400, 604800, 604800 * 2];
 
 export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: number }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -37,8 +37,6 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
     productKey,
     vaultId
   );
-
-  console.log(data);
 
   const underlyingDiff = useMemo(() => {
     return domainOffSet(minUnderlying, maxUnderlying, 0.88);
@@ -72,9 +70,15 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
 
   const dateTicks = useMemo(() => {
     if (data.length > 0) {
-      let ticks: number[] = [];
-      ticks = data.map(row => row.datetime).filter(date => date % DAYS_TO_SECONDS[stat] === 0);
-
+      let ticks = [];
+      let lastDate = null;
+      for (const row of data) {
+        const date = new Date(row.datetime);
+        if (lastDate === null || date.getTime() - lastDate.getTime() >= X_DOMAIN_SECONDS[stat]) {
+          ticks.push(row.datetime);
+          lastDate = date;
+        }
+      }
       return ticks;
     }
     return [0];
@@ -82,10 +86,6 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
 
   if (loading) {
     return <Loader />;
-  }
-
-  if (data.length === 0) {
-    return <div>avoidcrash</div>;
   }
 
   return (
@@ -103,8 +103,10 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
           allowDuplicatedCategory={false}
           padding={{ left: 2, right: 2 }}
           tickMargin={8}
-          scale="time"
           ticks={dateTicks}
+          scale="time"
+          type="number"
+          domain={[data[0].datetime, data[data.length - 1].datetime]}
         />
         <YAxis
           stroke="#59A662"

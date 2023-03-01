@@ -34,3 +34,8 @@ export function formatTimeUntil(when: Date, maxParts = 3, minParts = 3): string 
     .map(part => `${zeroPad(duration[part] || 0)}${part[0]}`)
     .join(' ');
 }
+
+export function roundDownMinutes(date: Date) {
+  date.setMinutes(0, 0, 0); // Resets also seconds and milliseconds
+  return date;
+}
