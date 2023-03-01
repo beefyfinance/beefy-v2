@@ -194,7 +194,6 @@ export const zaps: OneInchZapConfig[] = [
     blockedTokens: [
       'agEUR', // no 1inch price
       'FISH', // no 1inch price
-      'JRT', // no 1inch price
       'MAI', // no 1inch price
       'S*ETH', // no 1inch liquidity
       'S*USDC', // no 1inch liquidity
