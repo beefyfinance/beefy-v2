@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_thena-wbnb-busd-carbon",
+    "poolId": "thena-wbnb-busd",
+    "name": "Carbon",
+    "assets": ["BUSD", "BNB"],
+    "tokenAddress": "0x684d86518e6E7d622d24854cBb1C179d6C0E3f75",
+    "earnedToken": "CSIX",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x04756126F044634C9a0f0E985e60c88a51ACC206",
+    "earnContractAddress": "0x1Dc21D2E55dF49fb9A26Ea151835aeeec556CF8D",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "CSIX",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["carbon"]
+  },
+  {
     "id": "moo_cake-stable-usdt-busd-carbon",
     "poolId": "cake-stable-usdt-busd",
     "name": "Carbon",
