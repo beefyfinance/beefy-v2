@@ -1,5 +1,36 @@
 [
   {
+    "id": "cakev2-csix-cake",
+    "name": "CSIX-CAKE LP",
+    "token": "CSIX-CAKE LP",
+    "tokenAddress": "0x43C2aBe5e3bceC619072D8668Ac83Ad825da707f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "tokenAmmId": "bsc-pancakeswap-v2",
+    "earnedToken": "mooCakeCSIX-CAKE",
+    "earnedTokenAddress": "0xBA6fcc357B7Ce91dC45a3ff11b8B95E6ee4425e0",
+    "earnContractAddress": "0xBA6fcc357B7Ce91dC45a3ff11b8B95E6ee4425e0",
+    "oracle": "lps",
+    "oracleId": "cakev2-csix-cake",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["CSIX", "CAKE"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x04756126F044634C9a0f0E985e60c88a51ACC206",
+    "addLiquidityUrl": "https://pancakeswap.finance/add/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82/0x04756126F044634C9a0f0E985e60c88a51ACC206",
+    "removeLiquidityUrl": "https://pancakeswap.finance/remove/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82/0x04756126F044634C9a0f0E985e60c88a51ACC206",
+    "network": "bsc",
+    "createdAt": 1677743543
+  },
+  {
     "id": "thena-wusdr-usdc",
     "name": "wUSDR-USDC vLP",
     "token": "wUSDR-USDC vLP",
