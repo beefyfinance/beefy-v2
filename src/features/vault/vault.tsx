@@ -116,9 +116,9 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               </Hidden>
             </div>
             <div className={classes.columnInfo}>
+              {!isGovVault(vault) && <PnLGraph vaultId={vaultId} />}
               {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
               {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
-              {!isGovVault(vault) && <PnLGraph vaultId={vaultId} />}
               {!isGovVault(vault) ? <Graph vaultId={vaultId} /> : null}
               <LiquidityPoolBreakdownLoader vaultId={vaultId} />
               <SafetyCard vaultId={vaultId} />

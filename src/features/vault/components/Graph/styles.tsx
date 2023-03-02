@@ -32,38 +32,6 @@ export const styles = (theme: Theme) => ({
       marginLeft: 'auto',
     },
   },
-  footerTabs: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alingItems: 'center',
-    borderTop: '2px solid #363B63',
-    padding: '8px 24px',
-    borderRadius: '0px 0px 12px 12px',
-    [theme.breakpoints.down('md')]: {
-      padding: '8px 16px',
-    },
-    '& .MuiTabs-root': {
-      minHeight: '38px',
-    },
-    '& .MuiTab-root': {
-      minHeight: '34px',
-    },
-    [theme.breakpoints.down('xs')]: {
-      flexWrap: 'wrap',
-      justifyContent: 'flex-end',
-      rowGap: theme.spacing(1),
-    },
-  },
-  checkboxContainer: {
-    display: 'flex',
-    columnGap: '24px',
-    [theme.breakpoints.down('xs')]: {
-      order: 2,
-      width: '100%',
-      justifyContent: 'flex-end',
-    },
-  },
-
   label: {
     ...theme.typography['subline-lg'],
     fontWeight: 700,

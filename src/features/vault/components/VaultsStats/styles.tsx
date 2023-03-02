@@ -21,7 +21,7 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'flex-start',
     backgroundColor: theme.palette.background.default,
     borderRadius: '8px',
-    padding: '16px 16px',
+    padding: '16px 24px',
   },
   depositStats: {
     width: '100%',

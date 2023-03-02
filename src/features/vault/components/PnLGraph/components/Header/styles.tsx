@@ -58,4 +58,33 @@ export const styles = (theme: Theme) => ({
     textDecoration: 'underline 1px dotted',
     cursor: 'default' as const,
   },
+  textOverflow: {
+    maxWidth: '90px',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap' as const,
+    textOverflow: 'ellipsis',
+    [theme.breakpoints.only('md')]: {
+      maxWidth: '100%',
+    },
+    [theme.breakpoints.only('sm')]: {
+      maxWidth: '100%',
+    },
+  },
+  labelContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    columnGap: '4px',
+    '& svg': {
+      color: theme.palette.text.disabled,
+      height: '16px',
+      width: '16px',
+      '&:hover': {
+        cursor: 'pointer',
+      },
+    },
+  },
+  center: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 });
