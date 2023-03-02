@@ -1168,7 +1168,8 @@
     "earnContractAddress": "0x03F69AAF4c8512f533Da46cC9eFd49C4969e3CB8",
     "oracle": "lps",
     "oracleId": "sushi-poly-usdc-bifi",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["USDC", "BIFI"],
     "risks": [
@@ -3676,7 +3677,8 @@
     "earnContractAddress": "0x8efCf419813F9E018cCaCda36151e5079c274fa4",
     "oracle": "lps",
     "oracleId": "sushi-poly-grt-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["GRT", "ETH"],
     "risks": [
@@ -4085,7 +4087,8 @@
     "earnContractAddress": "0xE695fCeD8fD93eeE54204a7fC33323a60d41865A",
     "oracle": "lps",
     "oracleId": "sushi-poly-crv-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["CRV", "ETH"],
     "risks": [
@@ -4150,7 +4153,8 @@
     "earnContractAddress": "0xaE65a66B3c7f8cc1ba71cEA740C953aBa0F3Ce8b",
     "oracle": "lps",
     "oracleId": "sushi-poly-link-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["LINK", "ETH"],
     "risks": [
@@ -4250,7 +4254,8 @@
     "earnContractAddress": "0x866a910F3375d0dEBDdD904A36B3940aFcD29900",
     "oracle": "lps",
     "oracleId": "sushi-poly-aave-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["AAVE", "ETH"],
     "risks": [
@@ -4282,7 +4287,8 @@
     "earnContractAddress": "0xE8417099971151CD5CfAE264e25634Fac05cA2b3",
     "oracle": "lps",
     "oracleId": "sushi-poly-eth-usdt",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["ETH", "USDT"],
     "risks": [
@@ -4314,7 +4320,8 @@
     "earnContractAddress": "0xE4DB97A2AAFbfef40D1a4AE8B709f61d6756F8e1",
     "oracle": "lps",
     "oracleId": "sushi-poly-usdc-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["USDC", "ETH"],
     "risks": [
@@ -4346,7 +4353,8 @@
     "earnContractAddress": "0xC8e809a9180d637Cc23dAf60b41B70CA1ad5Fc08",
     "oracle": "lps",
     "oracleId": "sushi-poly-matic-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["MATIC", "ETH"],
     "risks": [
@@ -5658,7 +5666,8 @@
     "earnContractAddress": "0x90A7289A3aAb4b070A2646DCa757025Ee84cF580",
     "oracle": "lps",
     "oracleId": "sushi-poly-usdc-bct",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["BCT", "USDC"],
     "risks": [
@@ -7331,7 +7340,8 @@
     "earnContractAddress": "0x6b6ca47520dDC9333B8bD09a1e64204648B63274",
     "oracle": "lps",
     "oracleId": "sushi-poly-eth-dai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["ETH", "DAI"],
     "risks": [
@@ -7364,7 +7374,8 @@
     "earnContractAddress": "0x6530E351074f1f9fdf254dC7d7d8A44324E158a4",
     "oracle": "lps",
     "oracleId": "sushi-poly-btc-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["WBTC", "ETH"],
     "risks": [

@@ -318,7 +318,8 @@
     "earnContractAddress": "0xf17B12CC054675387f06d4DF78F30C0AF317Cd04",
     "oracle": "lps",
     "oracleId": "swapfish-ageur-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "swapfish",
     "assets": ["agEUR", "USDC"],
     "risks": [

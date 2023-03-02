@@ -1711,7 +1711,8 @@
     "earnContractAddress": "0xAe0AB718971bb2BAd88AE6Bdc4D0eA63F3CD53Ee",
     "oracle": "lps",
     "oracleId": "beets-fidelio-duetto",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beethovenx",
     "assets": ["FTM", "BEETS"],
     "risks": [
