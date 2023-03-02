@@ -24,6 +24,7 @@ export const LeverageCards = memo<LeverageCardsProps>(function ({ vaultId }) {
     <div className={classes.container}>
       <Collapsable openByDefault={true} titleClassName={classes.title} title={t('Leverage')}>
         <QiDao />
+        {/* Please add a leverage card for Olive's GLP vault. Link: https://oliveapp.finance/earn/vaults/glp-high-yield-arbitrum  */}
       </Collapsable>
     </div>
   ) : null;
