@@ -1,8 +1,8 @@
-import { makeStyles } from '@material-ui/core';
-import { HelpOutline } from '@material-ui/icons';
+import { Collapse, Hidden, makeStyles } from '@material-ui/core';
+import { ExpandMore, HelpOutline } from '@material-ui/icons';
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
-import React, { memo, ReactNode } from 'react';
+import React, { memo, ReactNode, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
@@ -27,6 +27,12 @@ interface HeaderProps {
 export const Header = memo<HeaderProps>(function ({ vaultId }) {
   const { t } = useTranslation();
 
+  const [open, setOpen] = useState<boolean>(false);
+
+  const handleCollapse = useCallback(() => {
+    setOpen(prevStatus => !prevStatus);
+  }, []);
+
   const {
     usdBalanceAtDeposit,
     balanceAtDeposit,
@@ -46,44 +52,85 @@ export const Header = memo<HeaderProps>(function ({ vaultId }) {
 
   return (
     <div className={classes.header}>
-      <HeaderItem
-        label={t('At Deposit')}
-        subValue={formatBigUsd(usdBalanceAtDeposit)}
-        border={false}
-      >
-        <SharesValue
-          amount={balanceAtDeposit}
-          price={oraclePriceAtDeposit}
-          decimals={tokenDecimals}
-        />
-      </HeaderItem>
-      <HeaderItem label={t('Now')} subValue={formatBigUsd(depositUsd)}>
-        <SharesValue amount={deposit} price={oraclePrice} decimals={tokenDecimals} />
-      </HeaderItem>
-      <HeaderItem label={t('Yield')} subValue={formatBigUsd(totalYieldUsd)}>
-        <SharesValue
-          amount={totalYield}
-          price={oraclePrice}
-          decimals={tokenDecimals}
-          className={classes.greenValue}
-          percentage={yieldPercentage}
-        />
-      </HeaderItem>
+      <Hidden mdDown>
+        <HeaderItem label={t('At Deposit')} border={false}>
+          <SharesValue
+            amount={balanceAtDeposit}
+            price={oraclePriceAtDeposit}
+            decimals={tokenDecimals}
+            subValue={formatBigUsd(usdBalanceAtDeposit)}
+          />
+        </HeaderItem>
+        <HeaderItem label={t('Now')}>
+          <SharesValue
+            amount={deposit}
+            price={oraclePrice}
+            decimals={tokenDecimals}
+            subValue={formatBigUsd(depositUsd)}
+          />
+        </HeaderItem>
+
+        <HeaderItem label={t('Yield')}>
+          <SharesValue
+            amount={totalYield}
+            price={oraclePrice}
+            decimals={tokenDecimals}
+            className={classes.greenValue}
+            percentage={yieldPercentage}
+            subValue={formatBigUsd(totalYieldUsd)}
+          />
+        </HeaderItem>
+      </Hidden>
       <HeaderItem label={t('PNL')}>
         <UsdValue value={totalPnlUsd} percentage={pnlPercentage} />
       </HeaderItem>
+      <Hidden lgUp>
+        <Collapse className={classes.hideCollapse} in={open} timeout="auto">
+          <div className={classes.listMobile}>
+            <HeaderItem label={t('At Deposit')}>
+              <SharesValue
+                amount={balanceAtDeposit}
+                price={oraclePriceAtDeposit}
+                decimals={tokenDecimals}
+                subValue={formatBigUsd(usdBalanceAtDeposit)}
+              />
+            </HeaderItem>
+            <HeaderItem label={t('Now')}>
+              <SharesValue
+                amount={deposit}
+                price={oraclePrice}
+                decimals={tokenDecimals}
+                subValue={formatBigUsd(depositUsd)}
+              />
+            </HeaderItem>
+            <HeaderItem label={t('Yield')}>
+              <SharesValue
+                amount={totalYield}
+                price={oraclePrice}
+                decimals={tokenDecimals}
+                className={classes.greenValue}
+                percentage={yieldPercentage}
+                subValue={formatBigUsd(totalYieldUsd)}
+              />
+            </HeaderItem>
+          </div>
+        </Collapse>
+        <div className={classes.handleButton} onClick={handleCollapse}>
+          {open ? t('Less Info') : t('More Info')}
+          <ExpandMore className={clsx(classes.arrow, { [classes.active]: open })} />
+        </div>
+      </Hidden>
     </div>
   );
 });
 
 interface HeaderItemProps {
   label: string;
-  subValue?: string;
   border?: boolean;
   children: ReactNode;
 }
 
-const HeaderItem = memo<HeaderItemProps>(function ({ label, subValue, border = true, children }) {
+const HeaderItem = memo<HeaderItemProps>(function ({ label, border = true, children }) {
   const classes = useStyles();
 
   return (
@@ -97,7 +144,6 @@ const HeaderItem = memo<HeaderItemProps>(function ({ label, subValue, border = t
           </Tooltip>
         </div>
         {children}
-        {subValue && <div className={classes.subValue}>{subValue}</div>}
       </div>
     </div>
   );
@@ -126,6 +172,7 @@ interface SharesValueProps {
   amount?: BigNumber;
   decimals?: number;
   price: BigNumber;
+  subValue?: string;
 }
 
 const SharesValue = memo<SharesValueProps>(function ({
@@ -135,6 +182,7 @@ const SharesValue = memo<SharesValueProps>(function ({
   decimals,
   minShortPlaces = 2,
   price,
+  subValue,
 }) {
   const classes = useStyles();
 
@@ -142,14 +190,18 @@ const SharesValue = memo<SharesValueProps>(function ({
   const shortAmount = formatSignificantBigNumber(amount, decimals, price, 0, minShortPlaces);
 
   return (
-    <Tooltip
-      triggerClass={clsx(classes.value, className)}
-      content={<BasicTooltipContent title={fullAmount} />}
-    >
-      <div className={clsx(classes.withTooltip, { [classes.textOverflow]: Boolean(percentage) })}>
-        {shortAmount}
+    <Tooltip content={<BasicTooltipContent title={fullAmount} />}>
+      <div>
+        <div className={clsx(classes.value, className)}>
+          <div
+            className={clsx(classes.withTooltip, { [classes.textOverflow]: Boolean(percentage) })}
+          >
+            {shortAmount}
+          </div>
+          {percentage && <span>({formatPercent(percentage)})</span>}
+        </div>
+        {subValue && <div className={classes.subValue}>{subValue}</div>}
       </div>
-      {percentage && <span>({formatPercent(percentage)})</span>}
     </Tooltip>
   );
 });
