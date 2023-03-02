@@ -1,4 +1,12 @@
 {
+  "mimo": {
+    "text": "Mimo offers a suite of applications designed to allow business and retail investors to use their digital assets or enter the Blockchain space, bridging the existing chasm between the DeFi world and the world of regulated traditional finance.",
+    "website": "https://app.mimo.capital/",
+    "social": {
+      "telegram": "https://t.me/mimo_labs",
+      "twitter": "https://twitter.com/mimo_dao"
+    }
+  },
   "kava": {
     "text": "Kava is a decentralized blockchain that combines the speed and interoperability of Cosmos with the developer power of Ethereum.",
     "website": "https://www.kava.io/",
