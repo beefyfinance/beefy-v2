@@ -1,10 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { memo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { BasicTabs } from '../../../../../../components/Tabs/BasicTabs';
-import { useAppSelector } from '../../../../../../store';
 import { VaultEntity } from '../../../../../data/entities/vault';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
 
 import { styles } from './styles';
 
@@ -18,39 +15,13 @@ interface FooterProps {
 }
 
 export const Footer = memo<FooterProps>(function ({ stat, handleStat, vaultId, labels }) {
-  const { t } = useTranslation();
   const classes = useStyles();
-
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   return (
     <div className={classes.footer}>
-      <div className={classes.items}>
-        <LegendItem
-          color="#59A662"
-          text={t('pnl-graph-legend-amount', { vaultName: vault.name })}
-        />
-        <LegendItem color="#5C99D6" text={t('pnl-graph-legend-usd')} />
-      </div>
       <div className={classes.tabsContainer}>
         <BasicTabs labels={labels} value={stat} onChange={newValue => handleStat(newValue)} />
       </div>
-    </div>
-  );
-});
-
-interface LegendItemProps {
-  color: string;
-  text: string;
-}
-
-const LegendItem = memo<LegendItemProps>(function ({ color, text }) {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.legendItem}>
-      <div className={classes.colorReference} style={{ backgroundColor: color }} />
-      <div>{text}</div>
     </div>
   );
 });

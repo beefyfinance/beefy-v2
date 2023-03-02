@@ -62,11 +62,15 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
     return mapRangeToTicks(startUsdDomain, maxUsd + usdDiff);
   }, [maxUsd, startUsdDomain, usdDiff]);
 
-  const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'));
 
   const padding = useMemo(() => {
-    return mdDown ? 16 : 24;
-  }, [mdDown]);
+    return smDown ? 16 : 24;
+  }, [smDown]);
+
+  const yMirror = useMemo(() => {
+    return smDown ? true : false;
+  }, [smDown]);
 
   const dateTicks = useMemo(() => {
     if (data.length > 0) {
@@ -94,39 +98,9 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
         width={450}
         height={200}
         data={data}
-        margin={{ top: 12, right: padding, bottom: 0, left: padding }}
+        margin={{ top: 14, right: padding, bottom: 0, left: padding }}
       >
         <CartesianGrid strokeDasharray="1 1" stroke="#363B63" />
-        <XAxis
-          tickFormatter={tickitem => formatXAxis(tickitem, TIME_BUCKET[stat])}
-          dataKey="datetime"
-          allowDuplicatedCategory={false}
-          padding={{ left: 2, right: 2 }}
-          tickMargin={8}
-          ticks={dateTicks}
-          scale="time"
-          type="number"
-          domain={[data[0].datetime, data[data.length - 1].datetime]}
-        />
-        <YAxis
-          stroke="#59A662"
-          strokeWidth={1.5}
-          tickFormatter={tickItem =>
-            formatFullBigNumber(new BigNumber(tickItem), tickItem > 999 ? 0 : 3)
-          }
-          yAxisId="underliying"
-          domain={[startUnderlyingDomain, maxUnderlying + underlyingDiff]}
-          ticks={underlyingTicks}
-        />
-        <YAxis
-          stroke="#5C99D6"
-          orientation="right"
-          strokeWidth={1.5}
-          tickFormatter={tickItem => formatBigUsd(new BigNumber(tickItem))}
-          yAxisId="usd"
-          domain={[startUsdDomain, maxUsd + usdDiff]}
-          ticks={usdTicks}
-        />
         <Line
           yAxisId="underliying"
           strokeWidth={1.5}
@@ -143,6 +117,40 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
           dot={false}
           type="linear"
         />
+        <XAxis
+          tickFormatter={tickitem => formatXAxis(tickitem, TIME_BUCKET[stat])}
+          dataKey="datetime"
+          allowDuplicatedCategory={false}
+          padding={{ left: 2, right: 2 }}
+          tickMargin={10}
+          ticks={dateTicks}
+          scale="time"
+          type="number"
+          stroke="#363B63"
+          domain={[data[0].datetime, data[data.length - 1].datetime]}
+        />
+        <YAxis
+          stroke="#59A662"
+          strokeWidth={1.5}
+          tickFormatter={tickItem =>
+            formatFullBigNumber(new BigNumber(tickItem), tickItem > 999 ? 0 : 3)
+          }
+          yAxisId="underliying"
+          domain={[startUnderlyingDomain, maxUnderlying + underlyingDiff]}
+          ticks={underlyingTicks}
+          mirror={yMirror}
+        />
+        <YAxis
+          stroke="#5C99D6"
+          orientation="right"
+          strokeWidth={1.5}
+          tickFormatter={tickItem => formatBigUsd(new BigNumber(tickItem))}
+          yAxisId="usd"
+          domain={[startUsdDomain, maxUsd + usdDiff]}
+          ticks={usdTicks}
+          mirror={yMirror}
+        />
+
         <Tooltip wrapperStyle={{ outline: 'none' }} content={<PnLTooltip />} />
       </LineChart>
     </ResponsiveContainer>

@@ -12,6 +12,7 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import { Footer } from './components/Footer';
 import { Graph } from './components/Graph';
 import { Header } from './components/Header';
+import { Legend } from './components/Legend';
 import { useVaultPeriods } from './hooks';
 
 import { styles } from './styles';
@@ -57,6 +58,7 @@ export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
     <div className={classes.pnlContainer}>
       <Header vaultId={vaultId} />
       <div className={classes.graphContainer}>
+        <Legend vaultId={vaultId} />
         <Graph stat={stat} vaultId={vaultId} />
       </div>
       <Footer labels={labels} vaultId={vaultId} stat={stat} handleStat={handleStat} />

@@ -6,9 +6,12 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#2D3153',
   },
   graphContainer: {
-    padding: '18px 0px',
+    padding: '8px 0px',
     '& text': {
       fill: theme.palette.text.disabled,
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '12px',
+      },
     },
   },
 });
