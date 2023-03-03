@@ -68,10 +68,6 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
     return smDown ? 16 : 24;
   }, [smDown]);
 
-  const yMirror = useMemo(() => {
-    return smDown ? true : false;
-  }, [smDown]);
-
   const dateTicks = useMemo(() => {
     if (data.length > 0) {
       let ticks = [];
@@ -100,7 +96,7 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
         data={data}
         margin={{ top: 14, right: padding, bottom: 0, left: padding }}
       >
-        <CartesianGrid strokeDasharray="1 1" stroke="#363B63" />
+        <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />
         <Line
           yAxisId="underliying"
           strokeWidth={1.5}
@@ -121,7 +117,7 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
           tickFormatter={tickitem => formatXAxis(tickitem, TIME_BUCKET[stat])}
           dataKey="datetime"
           allowDuplicatedCategory={false}
-          padding={{ left: 2, right: 2 }}
+          padding={{ left: 4, right: 4 }}
           tickMargin={10}
           ticks={dateTicks}
           scale="time"
@@ -138,7 +134,7 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
           yAxisId="underliying"
           domain={[startUnderlyingDomain, maxUnderlying + underlyingDiff]}
           ticks={underlyingTicks}
-          mirror={yMirror}
+          mirror={true}
         />
         <YAxis
           stroke="#5C99D6"
@@ -148,7 +144,7 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
           yAxisId="usd"
           domain={[startUsdDomain, maxUsd + usdDiff]}
           ticks={usdTicks}
-          mirror={yMirror}
+          mirror={true}
         />
 
         <Tooltip wrapperStyle={{ outline: 'none' }} content={<PnLTooltip />} />

@@ -1,7 +1,9 @@
 import { makeStyles, Theme } from '@material-ui/core';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '../../../../../../store';
 import { VaultEntity } from '../../../../../data/entities/vault';
+import { selectVaultById } from '../../../../../data/selectors/vaults';
 
 const useStyles = makeStyles((theme: Theme) => ({
   items: {
@@ -36,9 +38,23 @@ export const Legend = memo<LegendProps>(function ({ vaultId }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+
+  const isSingleAssetVault = useMemo(() => {
+    return vault.assetIds.length === 1;
+  }, [vault.assetIds.length]);
+
   return (
     <div className={classes.items}>
-      <LegendItem color="#59A662" text={t('pnl-graph-legend-amount')} />
+      <LegendItem
+        color="#59A662"
+        text={t(
+          isSingleAssetVault ? 'pnl-graph-legend-amount-single' : 'pnl-graph-legend-amount-lp',
+          {
+            token: vault.assetIds[0],
+          }
+        )}
+      />
       <LegendItem color="#5C99D6" text={t('pnl-graph-legend-usd')} />
     </div>
   );
