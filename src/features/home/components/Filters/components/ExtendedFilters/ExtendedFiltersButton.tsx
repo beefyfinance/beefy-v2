@@ -2,8 +2,9 @@ import { memo, useCallback, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Button } from '../../../../../../components/Button';
 import { useTranslation } from 'react-i18next';
-import { Dropdown } from './Dropdown';
 import { Sidebar } from './Sidebar';
+import { ExtendedFilters } from './ExtendedFilters';
+import { Dropdown } from '../../../../../../components/Dropdown';
 
 export type ExtendedFiltersButtonProps = {
   desktopView: boolean;
@@ -36,12 +37,9 @@ export const ExtendedFiltersButton = memo<ExtendedFiltersButtonProps>(
           {t('Filter-Btn')}
         </Button>
         {desktopView ? (
-          <Dropdown
-            anchorEl={anchorEl}
-            open={isOpen}
-            onClose={handleClose}
-            placement="bottom-end"
-          />
+          <Dropdown anchorEl={anchorEl} open={isOpen} onClose={handleClose} placement="bottom-end">
+            <ExtendedFilters desktopView={true} />
+          </Dropdown>
         ) : (
           <Sidebar open={isOpen} onClose={handleClose} />
         )}

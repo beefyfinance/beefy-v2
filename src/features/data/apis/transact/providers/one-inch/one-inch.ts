@@ -756,7 +756,7 @@ export class OneInchZapProvider implements ITransactProvider {
         slippage
       ),
       pending: false,
-      extraInfo: { zap: true },
+      extraInfo: { zap: true, vaultId: vault.id },
     };
   }
 
@@ -788,7 +788,7 @@ export class OneInchZapProvider implements ITransactProvider {
         slippage
       ),
       pending: false,
-      extraInfo: { zap: true },
+      extraInfo: { zap: true, vaultId: vault.id },
     };
   }
 
@@ -1270,7 +1270,7 @@ export class OneInchZapProvider implements ITransactProvider {
         slippage
       ),
       pending: false,
-      extraInfo: { zap: true },
+      extraInfo: { zap: true, vaultId: vault.id },
     };
   }
 
@@ -1302,7 +1302,7 @@ export class OneInchZapProvider implements ITransactProvider {
         slippage
       ),
       pending: false,
-      extraInfo: { zap: true },
+      extraInfo: { zap: true, vaultId: vault.id },
     };
   }
 }
