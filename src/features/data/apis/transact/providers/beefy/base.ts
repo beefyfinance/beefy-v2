@@ -298,7 +298,7 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
       action: walletActions.beefIn(vault, input.amount, isNativeInput, swap, option.zap, slippage),
       pending: false,
-      extraInfo: { zap: true },
+      extraInfo: { zap: true, vaultId: vault.id },
     };
   }
 
@@ -465,7 +465,7 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
         ? walletActions.beefOutAndSwap(vault, quote.inputs[0], swap, option.zap, slippage)
         : walletActions.beefOut(vault, quote.inputs[0], option.zap),
       pending: false,
-      extraInfo: { zap: isSwap },
+      extraInfo: { zap: isSwap, vaultId: vault.id },
     };
   }
 
