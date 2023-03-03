@@ -1,5 +1,36 @@
 [
   {
+    "id": "velodrome-velo-dola",
+    "name": "VELO-DOLA vLP",
+    "token": "VELO-DOLA vLP",
+    "tokenAddress": "0x1eBE6427f037385dDcB95aa688c18272415e3F46",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "tokenAmmId": "optimism-velodrome",
+    "earnedToken": "mooVelodromeVELO-DOLA",
+    "earnedTokenAddress": "0xc48137d21faae3527df771525e6870Ab183AAADe",
+    "earnContractAddress": "0xc48137d21faae3527df771525e6870Ab183AAADe",
+    "oracle": "lps",
+    "oracleId": "velodrome-velo-dola",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["VELO", "DOLA"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "network": "optimism",
+    "createdAt": 1677797447
+  },
+  {
     "id": "velodrome-wusdr-usdc",
     "name": "wUSDR-USDC vLP",
     "token": "wUSDR-USDC vLP",
