@@ -4,6 +4,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "commonjs",
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "@babel/runtime": "^7.17.2",
     "@coinbase/wallet-sdk": "^3.0.10",
