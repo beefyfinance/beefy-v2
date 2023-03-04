@@ -101,7 +101,7 @@
     "status": "active",
     "platformId": "thena",
     "assets": ["ankrETH", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://thena.fi/swap",
     "addLiquidityUrl": "https://thena.fi/liquidity",

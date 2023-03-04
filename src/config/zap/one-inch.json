@@ -205,7 +205,18 @@
     },
     "depositFromTokens": ["ETH", "WETH", "USDC", "USDT", "DAI", "MIM", "WBTC"],
     "withdrawToTokens": ["ETH", "BIFI", "USDC", "USDT", "DAI", "MIM", "WBTC"],
-    "blockedTokens": ["agEUR", "FISH", "MAI", "S*ETH", "S*USDC", "S*USDT", "USDD", "USX", "VST"],
+    "blockedTokens": [
+      "agEUR",
+      "FISH",
+      "JRT",
+      "MAI",
+      "S*ETH",
+      "S*USDC",
+      "S*USDT",
+      "USDD",
+      "USX",
+      "VST"
+    ],
     "blockedVaults": []
   },
   {
