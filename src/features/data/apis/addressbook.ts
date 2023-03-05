@@ -3,6 +3,7 @@
 import { memoize } from 'lodash';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
+import { addressBook } from 'blockchain-addressbook';
 
 interface AddressBookTokenConfig {
   name: string;
@@ -24,14 +25,13 @@ export interface ChainAddressBook {
 export const getChainAddressBook = memoize(
   async (chain: ChainEntity): Promise<ChainAddressBook> => {
     const addressbookChain = chain.id === 'harmony' ? 'one' : chain.id;
-    const addressBook = (await import(
-      `blockchain-addressbook/build/address-book/${addressbookChain}/tokens/tokens`
-    )) as { tokens: { [tokenId: TokenEntity['id']]: AddressBookTokenConfig } };
-
-    const wnative = addressBook.tokens['WNATIVE'];
+    const addressBookTokens = addressBook[addressbookChain].tokens as {
+      [tokenId: TokenEntity['id']]: AddressBookTokenConfig;
+    };
+    const wnative = addressBookTokens['WNATIVE'];
     const nativeSymbol = chain.walletSettings.nativeCurrency.symbol;
 
-    const addrBookEntries = Object.entries(addressBook.tokens);
+    const addrBookEntries = Object.entries(addressBookTokens);
     if (addrBookEntries.length <= 0) {
       throw new Error(
         `Addressbook empty for chain ${chain.id}. You may need to run "yarn install"`

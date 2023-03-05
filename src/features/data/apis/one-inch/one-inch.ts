@@ -17,7 +17,7 @@ import { OneInchPriceOracleAbi } from '../../../../config/abi';
 import BigNumber from 'bignumber.js';
 import { getWeb3Instance } from '../instances';
 
-const API_URL = process.env.REACT_APP_ONE_INCH_API || 'https://api.1inch.io';
+const API_URL = import.meta.env.VITE_ONE_INCH_API || 'https://api.1inch.io';
 
 export class OneInchApi implements IOneInchApi {
   protected api: AxiosInstance;

@@ -19,6 +19,7 @@ import { walletActions } from '../../../../features/data/actions/wallet-actions'
 import { styles } from './styles';
 import { Title } from '../Title';
 import { ListJoin } from '../../../ListJoin';
+import iconError from '../../../../images/icons/error.svg';
 
 const useStyles = makeStyles(styles);
 
@@ -48,7 +49,6 @@ export const WaitingContent = memo(function () {
     </>
   );
 });
-
 export const ErrorContent = memo(function () {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -59,11 +59,7 @@ export const ErrorContent = memo(function () {
       <Title
         text={
           <>
-            <img
-              className={classes.icon}
-              src={require('../../../../images/icons/error.svg').default}
-              alt="error"
-            />
+            <img className={classes.icon} src={iconError} alt="error" />
             {t('Transactn-Error')}
           </>
         }

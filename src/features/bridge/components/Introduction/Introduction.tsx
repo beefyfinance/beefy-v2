@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../store';
 import { selectAllChains } from '../../../data/selectors/chains';
 import { Link } from 'react-router-dom';
+import logoMultichain from '../../../../images/partners/multichain.png';
 
 const useStyles = makeStyles(styles);
-
 export const Introduction = memo(function () {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -30,11 +30,7 @@ export const Introduction = memo(function () {
       <div className={classes.poweredBy}>
         <div className={classes.poweredByLabel}>{t('OnRamp-Intro-PoweredBy')}</div>
         <div className={classes.poweredByLogos}>
-          <img
-            src={require(`../../../../images/partners/multichain.png`).default}
-            alt={'multichain'}
-            height="32"
-          />
+          <img src={logoMultichain} alt={'multichain'} height="32" />
         </div>
       </div>
     </div>

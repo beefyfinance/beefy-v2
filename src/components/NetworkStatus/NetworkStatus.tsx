@@ -22,9 +22,10 @@ import {
   selectIsWalletConnected,
 } from '../../features/data/selectors/wallet';
 import { selectChainById } from '../../features/data/selectors/chains';
+import { getNetworkSrc } from '../../helpers/networkSrc';
+import iconUnsupportedChain from '../../images/icons/navigation/unsuported-chain.svg';
 
 const useStyles = makeStyles(styles);
-
 const ActiveChain = ({ chainId }: { chainId: string | null }) => {
   const classes = useStyles();
 
@@ -32,14 +33,7 @@ const ActiveChain = ({ chainId }: { chainId: string | null }) => {
     <>
       <div className={classes.line} />
       <div className={classes.chain} style={{ textDecoration: 'none' }}>
-        <img
-          alt={chainId}
-          src={
-            chainId
-              ? require(`../../images/networks/${chainId}.svg`).default
-              : require('../../images/icons/navigation/unsuported-chain.svg').default
-          }
-        />
+        <img alt={chainId} src={chainId ? getNetworkSrc(chainId) : iconUnsupportedChain} />
       </div>
     </>
   );
@@ -165,7 +159,7 @@ const ConnectedChain = memo(function ({ chainId }: { chainId: ChainEntity['id'] 
   const chain = useAppSelector(state => selectChainById(state, chainId));
   return (
     <>
-      <img alt={chainId} src={require(`../../images/networks/${chainId}.svg`).default} />
+      <img alt={chainId} src={getNetworkSrc(chainId)} />
       {chain.name}
     </>
   );

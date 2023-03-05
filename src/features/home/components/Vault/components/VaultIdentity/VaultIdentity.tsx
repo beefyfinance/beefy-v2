@@ -10,6 +10,7 @@ import { VaultIcon } from '../VaultIcon';
 import { VaultTags } from '../VaultTags';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
+import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 
 const useStyles = makeStyles(styles);
 
@@ -44,12 +45,7 @@ export const VaultNetwork = memo<VaultNetworkProps>(function VaultNetwork({ chai
 
   return (
     <div className={clsx(classes.vaultNetwork, classes[`vaultNetwork-${chainId}`])}>
-      <img
-        alt={chain.name}
-        src={require(`../../../../../../images/networks/${chainId}.svg`).default}
-        width={24}
-        height={24}
-      />
+      <img alt={chain.name} src={getNetworkSrc(chainId)} width={24} height={24} />
     </div>
   );
 });

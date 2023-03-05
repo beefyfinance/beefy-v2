@@ -17,14 +17,22 @@ import {
   AmmConfig,
   OneInchZapConfig,
 } from './config-types';
-const featuredVaults = require('../../../config/vault/featured');
-const boostPartners = require('../../../config/boost/partners');
+import featuredVaults from '../../../config/vault/featured.json';
+import boostPartners from '../../../config/boost/partners.json';
+import { createGlobLoader } from '../../../helpers/globLoader';
+
+const vaultsLoader = createGlobLoader(
+  import.meta.glob<VaultConfig[]>('../../../config/vault/*.json', {
+    eager: true,
+    import: 'default',
+  })
+);
 
 const vaultsByChainId: {
   [chainId: ChainEntity['id']]: VaultConfig[];
 } = {};
 for (const chainId in chainConfigs) {
-  let pools = require(`../../../config/vault/${chainId}`);
+  let pools = vaultsLoader(chainId);
   /**
    * venus-bnb and venus-wbnb are in fact the same vault
    * this is legacy config and we fix it here
@@ -40,11 +48,18 @@ for (const chainId in chainConfigs) {
   vaultsByChainId[chainId] = pools;
 }
 
+const boostsLoader = createGlobLoader(
+  import.meta.glob<BoostConfig[]>('../../../config/boost/*.json', {
+    eager: true,
+    import: 'default',
+  })
+);
+
 const boostsByChainId: {
   [chainId: ChainEntity['id']]: BoostConfig[];
 } = {};
 for (const chainId in chainConfigs) {
-  boostsByChainId[chainId] = require(`../../../config/boost/${chainId}`);
+  boostsByChainId[chainId] = boostsLoader(chainId);
   boostsByChainId[chainId].forEach(boost => {
     for (let i = 0; i < boost.partners.length; i++) {
       boost.partners[i] = boostPartners[boost.partners[i] as unknown as string];
@@ -52,18 +67,32 @@ for (const chainId in chainConfigs) {
   });
 }
 
+const ammsLoader = createGlobLoader(
+  import.meta.glob<AmmConfig[]>('../../../config/amm/*.json', {
+    eager: true,
+    import: 'default',
+  })
+);
+
 const ammsByChainId: {
   [chainId: ChainEntity['id']]: AmmConfig[];
 } = {};
 for (const chainId in chainConfigs) {
-  ammsByChainId[chainId] = require(`../../../config/amm/${chainId}.json`);
+  ammsByChainId[chainId] = ammsLoader(chainId);
 }
+
+const mintersLoader = createGlobLoader(
+  import.meta.glob<MinterConfig[]>('../../../config/minters/*.tsx', {
+    eager: true,
+    import: 'minters',
+  })
+);
 
 const mintersByChainId: {
   [chainId: ChainEntity['id']]: MinterConfig[];
 } = {};
 for (const chainId in chainConfigs) {
-  mintersByChainId[chainId] = require(`../../../config/minters/${chainId}`).minters;
+  mintersByChainId[chainId] = mintersLoader(chainId);
 }
 
 /**

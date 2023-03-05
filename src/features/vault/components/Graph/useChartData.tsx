@@ -10,7 +10,7 @@ const PERIODS = ['hour', 'hour', 'day', 'day'];
 const LIMITS = [24, 168, 30, 365];
 const DAYS_IN_PERIOD = [1, 7, 30, 365];
 const MOVING_AVERAGE_POINTS = [6, 48, 10, 30];
-const SNAPSHOT_INTERVAL = parseInt(process.env.SNAPSHOT_INTERVAL) || 15 * 60;
+const SNAPSHOT_INTERVAL = parseInt(import.meta.env.VITE_SNAPSHOT_INTERVAL) || 15 * 60;
 
 export const useChartData = (stat, period, oracleId, vaultId, network) => {
   const [chartData, setChartData] = useState(null);

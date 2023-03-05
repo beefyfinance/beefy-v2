@@ -8,13 +8,13 @@ import { ChainEntity } from '../../../data/entities/chain';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectTreasuryWalletAddressesByChainId } from '../../../data/selectors/treasury';
 import { styles } from './styles';
+import iconExternalLink from '../../../../images/icons/external-link.svg';
 
 const useStyles = makeStyles(styles);
 
 interface ExplorerLinkProps {
   chainId: ChainEntity['id'];
 }
-
 export const ExplorerLinks = memo<ExplorerLinkProps>(function ({ chainId }) {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -37,11 +37,7 @@ export const ExplorerLinks = memo<ExplorerLinkProps>(function ({ chainId }) {
   return (
     <ClickAwayListener onClickAway={handleClose} mouseEvent="onMouseDown" touchEvent="onTouchStart">
       <div className={classes.center} onClick={handleToggle} ref={anchorEl}>
-        <img
-          className={classes.icon}
-          src={require('../../../../images/icons/external-link.svg').default}
-          alt="external link"
-        />
+        <img className={classes.icon} src={iconExternalLink} alt="external link" />
         <Floating
           open={isOpen}
           anchorEl={anchorEl}
@@ -60,10 +56,7 @@ export const ExplorerLinks = memo<ExplorerLinkProps>(function ({ chainId }) {
                 className={classes.item}
               >
                 {t(`Treasury-${wallet.name}`)}
-                <img
-                  src={require('../../../../images/icons/external-link.svg').default}
-                  alt="external link"
-                />
+                <img src={iconExternalLink} alt="external link" />
               </a>
             );
           })}

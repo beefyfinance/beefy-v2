@@ -30,23 +30,20 @@ export const WalletContainer = connect((state: BeefyState) => {
   const isWalletKnown = selectIsWalletKnown(state);
   const walletAddress = isWalletKnown ? selectWalletAddress(state) : null;
   const walletPending = selectIsWalletPending(state);
-  const walletProfileUrl = state.user.wallet.profilePictureUrl;
   const blurred = selectIsBalanceHidden(state);
   const ens = selectEns(state);
-  return { isWalletConnected, walletAddress, walletPending, walletProfileUrl, blurred, ens };
+  return { isWalletConnected, walletAddress, walletPending, blurred, ens };
 })(
   ({
     isWalletConnected,
     walletAddress,
     walletPending,
-    walletProfileUrl,
     blurred,
     ens,
   }: {
     isWalletConnected: boolean;
     walletAddress: null | string;
     walletPending: boolean;
-    walletProfileUrl: null | string;
     blurred: boolean;
     ens: string | null;
   }) => {

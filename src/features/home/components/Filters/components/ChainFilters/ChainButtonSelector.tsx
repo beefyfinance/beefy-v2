@@ -7,10 +7,12 @@ import clsx from 'clsx';
 import { useAppSelector } from '../../../../../../store';
 
 const useStyles = makeStyles(styles);
-const networkIcons = require.context(
-  '!@svgr/webpack?svgo=false!../../../../../../images/networks/',
-  false,
-  /\.svg$/
+const networkIcons = import.meta.glob<FC<SVGProps<SVGSVGElement>>>(
+  '../../../../../../images/networks/*.svg',
+  {
+    eager: true,
+    import: 'ReactComponent',
+  }
 );
 
 type ChainButtonProps = {
@@ -24,7 +26,8 @@ const ChainButton = memo<ChainButtonProps>(function ({ id, selected, onChange })
   const handleChange = useCallback(() => {
     onChange(!selected, id);
   }, [id, selected, onChange]);
-  const Icon: FC<SVGProps<SVGSVGElement>> = networkIcons(`./${id}.svg`).default;
+  const Icon: FC<SVGProps<SVGSVGElement>> =
+    networkIcons[`../../../../../../images/networks/${id}.svg`];
 
   return (
     <Tooltip

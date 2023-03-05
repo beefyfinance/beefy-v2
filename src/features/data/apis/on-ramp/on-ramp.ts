@@ -13,7 +13,7 @@ export class OnRampApi implements IOnRampApi {
 
   constructor() {
     this.api = axios.create({
-      baseURL: process.env.REACT_APP_ONRAMP_URL || 'https://onramp.beefy.finance',
+      baseURL: import.meta.env.VITE_ONRAMP_URL || 'https://onramp.beefy.finance',
     });
   }
 

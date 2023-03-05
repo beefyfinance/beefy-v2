@@ -30,7 +30,7 @@ export async function getSpaceIdAddress(address: string, bscChain: ChainEntity):
   const sidProvider = web3.currentProvider;
   try {
     const id = new SID({
-      provider: sidProvider,
+      provider: sidProvider as unknown as ExternalProvider,
       sidAddress: getSidAddress(`${bscChain.networkChainId}`),
     });
     const sidName = await id.getName(address);

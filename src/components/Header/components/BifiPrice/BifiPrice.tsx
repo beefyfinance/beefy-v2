@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import { formatBigUsd } from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
+import bifiToken from '../../../../images/bifi-logos/BIFI-TOKEN.svg';
+
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
-
 export const _BifiPrice = connect((state: BeefyState) => {
   const beefyPrice = state.entities.tokens.prices.byOracleId['BIFI'] || BIG_ZERO;
   return { beefyPrice };
@@ -21,7 +22,7 @@ export const _BifiPrice = connect((state: BeefyState) => {
       target="_blank"
       rel="noreferrer"
     >
-      <img alt="BIFI" src={require(`../../../../images/bifi-logos/BIFI-TOKEN.svg`).default} />
+      <img alt="BIFI" src={bifiToken} />
       {formatBigUsd(beefyPrice)}
     </a>
   );

@@ -72,7 +72,6 @@ declare module '@material-ui/core/styles/createTypography' {
     | 'body-sm-med'
     | 'subline-lg'
     | 'subline-sm';
-  export type Variant = CustomVariant;
 
   export interface TypographyOptions
     extends Partial<Record<CustomVariant, TypographyStyleOptions> & FontStyleOptions> {}

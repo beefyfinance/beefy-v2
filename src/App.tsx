@@ -42,38 +42,40 @@ export const App = () => {
       <CssBaseline />
       <HelmetProvider>
         <Router>
-          <ScrollToTop />
-          <DefaultMeta />
-          <Redirects />
-          <WrappedFooter>
-            <Header />
+          <React.Suspense fallback={<CowLoader text="Loading" />}>
+            <ScrollToTop />
+            <DefaultMeta />
+            <Redirects />
             <React.Suspense fallback={<CowLoader text="Loading" />}>
-              <Switch>
-                <Route exact path="/">
-                  <Home />
-                </Route>
-                <Route strict sensitive exact path={['/:network/vault/:id', '/vault/:id']}>
-                  <Vault />
-                </Route>
-                <Route exact path="/onramp">
-                  <OnRamp />
-                </Route>
-                <Route exact path="/bridge">
-                  <Bridge />
-                </Route>
-                <Route exact path="/dashboard">
-                  <Dashboard />
-                </Route>
-                <Route exact path="/treasury">
-                  <Treasury />
-                </Route>
-                <Route>
-                  <PageNotFound />
-                </Route>
-              </Switch>
-              <Stepper />
+              <WrappedFooter>
+                <Header />
+                <Switch>
+                  <Route exact path="/">
+                    <Home />
+                  </Route>
+                  <Route strict sensitive exact path={['/:network/vault/:id', '/vault/:id']}>
+                    <Vault />
+                  </Route>
+                  <Route exact path="/onramp">
+                    <OnRamp />
+                  </Route>
+                  <Route exact path="/bridge">
+                    <Bridge />
+                  </Route>
+                  <Route exact path="/dashboard">
+                    <Dashboard />
+                  </Route>
+                  <Route exact path="/treasury">
+                    <Treasury />
+                  </Route>
+                  <Route>
+                    <PageNotFound />
+                  </Route>
+                </Switch>
+                <Stepper />
+              </WrappedFooter>
             </React.Suspense>
-          </WrappedFooter>
+          </React.Suspense>
         </Router>
       </HelmetProvider>
     </ThemeProvider>

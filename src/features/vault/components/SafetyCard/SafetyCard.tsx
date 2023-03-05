@@ -42,13 +42,15 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
                     )}
                     <div>
                       <div className={classes.moreInfoContainer}>
-                        <div className={classes.risk}>{t(RISKS[risk].title)}</div>
+                        <div className={classes.risk}>{t(RISKS[risk].title, { ns: 'risks' })}</div>
                         <Popover
-                          title={t(RISKS[risk].title)}
-                          content={t(RISKS[risk].explanation)}
+                          title={t(RISKS[risk].title, { ns: 'risks' })}
+                          content={t(RISKS[risk].explanation, { ns: 'risks' })}
                         />
                       </div>
-                      <div className={classes.riskCategory}>{t(RISKS[risk].category)}</div>
+                      <div className={classes.riskCategory}>
+                        {t(RISKS[risk].category, { ns: 'risks' })}
+                      </div>
                     </div>
                   </div>
                 </div>

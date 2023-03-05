@@ -10,9 +10,9 @@ import { selectTotalBuybackUsdAmount } from '../../../../data/selectors/buyback'
 import { ModalTvl } from '../ModalTvl';
 import { useAppSelector } from '../../../../../store';
 import { Modal } from '../../../../../components/Modal';
+import infoIcon from '../../../../../images/icons/i.svg';
 
 const useStyles = makeStyles(styles);
-
 export const VaultsStats = () => {
   const [isTvlModalOpen, setIsTvlModalOpen] = useState<boolean>(false);
   const classes = useStyles();
@@ -36,11 +36,7 @@ export const VaultsStats = () => {
         <Box className={classes.labelWithIcon}>
           <div className={classes.label}>{t('TVL')}</div>
           <div onClick={handleTvlModalOpen}>
-            <img
-              className={classes.icon}
-              src={require('../../../../../images/icons/i.svg').default}
-              alt="i"
-            />
+            <img className={classes.icon} src={infoIcon} alt="i" />
           </div>
         </Box>
         <div className={classes.value}>
