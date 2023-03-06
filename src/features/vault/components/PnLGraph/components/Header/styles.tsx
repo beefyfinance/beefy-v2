@@ -7,17 +7,18 @@ export const styles = (theme: Theme) => ({
     padding: '16px 24px',
     borderRadius: '12px 12px 0px 0px',
     backgroundColor: '#232743',
+    gap: '8px',
     [theme.breakpoints.down('md')]: {
       padding: '16px',
-      gap: '8px',
       gridTemplateColumns: 'repeat(2,minmax(0,1fr))',
     },
   },
-  itemContainer: { display: 'flex', columnGap: '24px' },
+  itemContainer: { display: 'flex', width: '100%', columnGap: '24px' },
   textContainer: {
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '4px',
+    width: '85%',
   },
   label: {
     ...theme.typography['subline-sm'],
@@ -29,7 +30,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     columnGap: '4px',
-    ...theme.typography['body-lg-med'],
+    ...theme.typography.h3,
     color: theme.palette.text.secondary,
     fontWeight: 500,
     '& span': {
@@ -60,16 +61,9 @@ export const styles = (theme: Theme) => ({
     cursor: 'default' as const,
   },
   textOverflow: {
-    maxWidth: '90px',
     overflow: 'hidden',
     whiteSpace: 'nowrap' as const,
     textOverflow: 'ellipsis',
-    [theme.breakpoints.only('md')]: {
-      maxWidth: '100%',
-    },
-    [theme.breakpoints.only('sm')]: {
-      maxWidth: '100%',
-    },
   },
   labelContainer: {
     display: 'flex',
@@ -92,6 +86,9 @@ export const styles = (theme: Theme) => ({
     [theme.breakpoints.down('md')]: {
       display: 'flex',
       justifyContent: 'flex-end',
+      '& $value': {
+        justifyContent: 'flex-end',
+      },
       '& $labelContainer': {
         justifyContent: 'flex-end',
       },

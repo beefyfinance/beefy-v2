@@ -11,22 +11,42 @@ import {
 import { useAppSelector } from '../../../../../../store';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { usePnLChartData } from '../../hooks';
-import { format } from 'date-fns';
 import { formatBigUsd, formatFullBigNumber } from '../../../../../../helpers/format';
 import BigNumber from 'bignumber.js';
 import { PnLTooltip } from '../PnLTooltip';
-import { TimeBucketType } from '../../../../../data/apis/analytics/analytics-types';
-import { Theme, useMediaQuery } from '@material-ui/core';
+import { makeStyles, Theme, useMediaQuery } from '@material-ui/core';
 import { Loader } from '../Loader';
 import { max } from 'lodash';
+import {
+  domainOffSet,
+  formatXAxis,
+  mapRangeToTicks,
+  TIME_BUCKET,
+  X_DOMAIN_SECONDS,
+} from './helpers';
 
-const TIME_BUCKET: TimeBucketType[] = ['1h_1d', '1h_1w', '1d_1M', '1d_all'];
-
-// 2 HOURS - 1 DAY - 1 WEEK- 2 WEEK
-const X_DOMAIN_SECONDS = [7200, 86400, 604800, 604800 * 2];
+const useStyles = makeStyles((theme: Theme) => ({
+  graph: {
+    '& .recharts-line': {
+      opacity: 0.5,
+    },
+    '&:hover': {
+      '& .recharts-cartesian-axis-tick': {
+        opacity: 0.5,
+        transition: '0.5s',
+      },
+      '& .recharts-line': {
+        opacity: 1,
+        transition: '0.5s',
+      },
+    },
+  },
+}));
 
 export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: number }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+
+  const classes = useStyles();
 
   const productKey = useMemo(() => {
     return `beefy:vault:${vault.chainId}:${vault.earnContractAddress.toLowerCase()}`;
@@ -95,6 +115,7 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
         height={200}
         data={data}
         margin={{ top: 14, right: padding, bottom: 0, left: padding }}
+        className={classes.graph}
       >
         <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />
         <Line
@@ -152,19 +173,3 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
     </ResponsiveContainer>
   );
 });
-
-function formatXAxis(tickItem: number, timebucket: TimeBucketType) {
-  if (timebucket === '1h_1d') {
-    return format(tickItem, 'HH:mm');
-  }
-  return format(tickItem, 'dd/MM');
-}
-
-const domainOffSet = (min: number, max: number, heightPercentageUsedByChart: number) => {
-  return ((max - min) * (1 - heightPercentageUsedByChart)) / (2 * heightPercentageUsedByChart);
-};
-
-const mapRangeToTicks = (min: number, max: number) => {
-  const factors = [0, 0.25, 0.5, 0.75, 1];
-  return factors.map(f => min + f * (max - min));
-};

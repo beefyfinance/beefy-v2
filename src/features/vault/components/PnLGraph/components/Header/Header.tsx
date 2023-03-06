@@ -54,7 +54,7 @@ export const Header = memo<HeaderProps>(function ({ vaultId }) {
           subValue={formatBigUsd(usdBalanceAtDeposit)}
         />
       </HeaderItem>
-      <HeaderItem className={classes.alignMobileRight} label={t('Now')}>
+      <HeaderItem label={t('Now')}>
         <SharesValue
           amount={deposit}
           price={oraclePrice}
@@ -72,7 +72,7 @@ export const Header = memo<HeaderProps>(function ({ vaultId }) {
           subValue={formatBigUsd(totalYieldUsd)}
         />
       </HeaderItem>
-      <HeaderItem className={classes.alignMobileRight} label={t('PNL')}>
+      <HeaderItem label={t('PNL')}>
         <UsdValue value={totalPnlUsd} percentage={pnlPercentage} />
       </HeaderItem>
     </div>
