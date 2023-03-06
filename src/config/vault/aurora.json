@@ -282,7 +282,8 @@
     "earnContractAddress": "0x356b3a363f80eded902f718C494d7Cd118a777bb",
     "oracle": "lps",
     "oracleId": "tri-near-flx",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "trisolaris",
     "assets": ["FLX", "NEAR"],
     "risks": [

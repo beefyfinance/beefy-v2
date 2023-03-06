@@ -352,7 +352,8 @@
     "earnContractAddress": "0x63934e5aBA120f2BAE2418711Ef0f20F7DB26CD2",
     "oracle": "lps",
     "oracleId": "curve-arb-f-fraxbp",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["FRAX", "USDC"],
     "risks": [
@@ -444,7 +445,8 @@
     "earnContractAddress": "0xFDe0773E2a685f3Ec3CCa4E67Bdc95d07d2e9c8E",
     "oracle": "lps",
     "oracleId": "swapfish-tusd-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "swapfish",
     "assets": ["TUSD", "USDC"],
     "risks": [
@@ -541,7 +543,8 @@
     "earnContractAddress": "0x965637E84B451baDc3E7d90989F9639D1c1A3242",
     "oracle": "lps",
     "oracleId": "swapfish-mai-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "swapfish",
     "assets": ["MAI", "USDC"],
     "risks": [
