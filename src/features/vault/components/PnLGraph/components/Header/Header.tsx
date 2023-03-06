@@ -52,6 +52,7 @@ export const Header = memo<HeaderProps>(function ({ vaultId }) {
           price={oraclePriceAtDeposit}
           decimals={tokenDecimals}
           subValue={formatBigUsd(usdBalanceAtDeposit)}
+          minShortPlaces={4}
         />
       </HeaderItem>
       <HeaderItem label={t('Now')}>
@@ -60,6 +61,7 @@ export const Header = memo<HeaderProps>(function ({ vaultId }) {
           price={oraclePrice}
           decimals={tokenDecimals}
           subValue={formatBigUsd(depositUsd)}
+          minShortPlaces={4}
         />
       </HeaderItem>
       <HeaderItem label={t('Yield')}>
@@ -70,6 +72,7 @@ export const Header = memo<HeaderProps>(function ({ vaultId }) {
           className={classes.greenValue}
           percentage={yieldPercentage}
           subValue={formatBigUsd(totalYieldUsd)}
+          minShortPlaces={4}
         />
       </HeaderItem>
       <HeaderItem label={t('PNL')}>
