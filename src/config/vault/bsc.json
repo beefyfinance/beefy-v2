@@ -12337,7 +12337,7 @@
     "earnedTokenAddress": "0x6BE4741AB0aD233e4315a10bc783a7B923386b71",
     "earnContractAddress": "0x6BE4741AB0aD233e4315a10bc783a7B923386b71",
     "oracle": "tokens",
-    "oracleId": "WBNB",
+    "oracleId": "BNB",
     "status": "active",
     "platformId": "venus",
     "assets": ["BNB"],
@@ -12366,7 +12366,7 @@
     "oracleId": "WBNB",
     "status": "active",
     "platformId": "venus",
-    "assets": ["BNB"],
+    "assets": ["WBNB"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
