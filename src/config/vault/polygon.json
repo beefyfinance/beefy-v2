@@ -1,5 +1,35 @@
 [
   {
+    "id": "balancer-usdc-wusdr",
+    "name": "USDC-wUSDR",
+    "token": "USDC-wUSDR",
+    "tokenAddress": "0x34A81e8956BF20b7448b31990A2c06F96830a6e4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerUSDC-wUSDR",
+    "earnedTokenAddress": "0x67E6E5D769194Fd4421b514380526CD7bDae92E6",
+    "earnContractAddress": "0x67E6E5D769194Fd4421b514380526CD7bDae92E6",
+    "oracle": "lps",
+    "oracleId": "balancer-usdc-wusdr",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["USDC", "wUSDR"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/invest",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/withdraw",
+    "network": "polygon",
+    "createdAt": 1678119805
+  },
+  {
     "id": "balancer-jeur-par",
     "name": "jEUR-PAR",
     "token": "jEUR-PAR",
