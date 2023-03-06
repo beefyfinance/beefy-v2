@@ -27,17 +27,26 @@ import {
 
 const useStyles = makeStyles((theme: Theme) => ({
   graph: {
+    '& .recharts-yAxis': {
+      '& .recharts-cartesian-axis-tick': {
+        opacity: 1,
+        transition: 'ease-in-out 0.5s',
+      },
+    },
     '& .recharts-line': {
       opacity: 0.5,
+      transition: 'ease-in-out 0.5s',
     },
     '&:hover': {
-      '& .recharts-cartesian-axis-tick': {
-        opacity: 0.5,
-        transition: '0.5s',
+      '& .recharts-yAxis': {
+        '& .recharts-cartesian-axis-tick': {
+          opacity: 0.5,
+          transition: 'ease-in-out 0.5s',
+        },
       },
       '& .recharts-line': {
         opacity: 1,
-        transition: '0.5s',
+        transition: 'ease-in-out 0.5s',
       },
     },
   },

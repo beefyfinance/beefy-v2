@@ -35,8 +35,6 @@ export const selectVaultPnl = (state: BeefyState, vaultId: VaultEntity['id']) =>
           ppfs: row.shareToUnderlyingPrice,
         });
       }
-    } else {
-      console.log('ALERT CHAOS PABLO WILL KILL US ALL');
     }
   }
 
@@ -58,7 +56,7 @@ export const selectVaultPnl = (state: BeefyState, vaultId: VaultEntity['id']) =>
   // const totalPnlUsd = realizedPnl.usd.plus(unrealizedPnl.usd);
   const totalPnlUsd = unrealizedPnl.usd;
 
-  const yieldPercentage = totalYield.dividedBy(depositNow);
+  const yieldPercentage = totalYield.dividedBy(balanceAtDeposit);
 
   const pnlPercentage = totalPnlUsd.dividedBy(usdBalanceAtDeposit);
 
