@@ -2,12 +2,19 @@ import { MultiCall } from 'eth-multicall';
 import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 import BigNumber from 'bignumber.js';
-import { isEmpty, isValidChecksumAddress, maybeChecksumAddress } from './utils';
-import { chainIds, chainRpcs, getBoostsForChain, getVaultsForChain } from './config';
+import { isEmpty, isValidChecksumAddress, maybeChecksumAddress } from './common/utils';
+import {
+  chainIds,
+  chainRpcs,
+  excludeChains,
+  getBoostsForChain,
+  getVaultsForChain,
+} from './common/config';
 import strategyABI from '../src/config/abi/strategy.json';
 import vaultABI from '../src/config/abi/vault.json';
 import platforms from '../src/config/platforms.json';
 import strategyTypes from '../src/config/strategy-types.json';
+import { VaultConfig } from '../src/features/data/apis/config-types';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
@@ -55,6 +62,8 @@ const oldFields = [
   'depositsPaused',
   'withdrawalFee',
   'updatedFees',
+  'mintTokenUrl',
+  'callFee',
 ];
 
 const validatePools = async () => {
@@ -78,6 +87,10 @@ const validatePools = async () => {
   });
   // Helpful data structures to correct addresses.
   console.log('Required updates.', JSON.stringify(updates));
+
+  if (excludeChains.length > 0) {
+    console.warn(`*** Excluded chains: ${excludeChains.join(', ')} ***`);
+  }
 
   return exitCode;
 };
@@ -109,11 +122,12 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
 
   // Populate some extra data.
   const web3 = new Web3(chainRpcs[chainId]);
-  pools = await populateVaultsData(chainId, pools, web3);
-  pools = await populateStrategyData(chainId, pools, web3);
+  const poolsWithVaultData = await populateVaultsData(chainId, pools, web3);
+  const poolsWithStrategyData = override(
+    await populateStrategyData(chainId, poolsWithVaultData, web3)
+  );
 
-  pools = override(pools);
-  pools.forEach(pool => {
+  poolsWithStrategyData.forEach(pool => {
     // Errors, should not proceed with build
     if (uniquePoolId.has(pool.id)) {
       console.error(`Error: ${pool.id} : Pool id duplicated: ${pool.id}`);
@@ -185,6 +199,14 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       exitCode = 1;
     } else if (isNaN(pool.createdAt)) {
       console.error(`Error: ${pool.id} : Pool createdAt timestamp wrong type, should be a number`);
+      exitCode = 1;
+    }
+
+    if (!pool.network) {
+      console.error(`Error: ${pool.id} : Missing network`);
+      exitCode = 1;
+    } else if (pool.network !== chainId) {
+      console.error(`Error: ${pool.id} : Network mismatch ${pool.network} != ${chainId}`);
       exitCode = 1;
     }
 
@@ -360,7 +382,16 @@ const isBeefyFeeConfigCorrect = (pool, chain, feeConfig, updates) => {
 
 // Helpers to populate required addresses.
 
-const populateVaultsData = async (chain, pools, web3) => {
+type VaultConfigWithVaultData = VaultConfig & {
+  strategy: string | undefined;
+  vaultOwner: string | undefined;
+  totalSupply: string | undefined;
+};
+const populateVaultsData = async (
+  chain,
+  pools: VaultConfig[],
+  web3
+): Promise<VaultConfigWithVaultData[]> => {
   const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
 
   const calls = pools.map(pool => {
@@ -384,7 +415,17 @@ const populateVaultsData = async (chain, pools, web3) => {
   });
 };
 
-const populateStrategyData = async (chain, pools, web3) => {
+type VaultConfigWithStrategyData = VaultConfigWithVaultData & {
+  keeper: string | undefined;
+  beefyFeeRecipient: string | undefined;
+  beefyFeeConfig: string | undefined;
+  stratOwner: string | undefined;
+};
+const populateStrategyData = async (
+  chain,
+  pools: VaultConfigWithVaultData[],
+  web3
+): Promise<VaultConfigWithStrategyData[]> => {
   const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
 
   const calls = pools.map(pool => {

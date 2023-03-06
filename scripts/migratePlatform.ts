@@ -1,6 +1,6 @@
 import { config } from '../src/config/config';
 import { readFile, writeFile } from 'fs/promises';
-import { objectInsert } from './utils';
+import { objectInsert } from './common/utils';
 
 const providerWithFarmRegex = /(.+) \(([^)]+)\)/;
 

@@ -3,12 +3,11 @@ import {
   CommonDepositQuoteOptions,
   CommonWithdrawQuoteOptions,
 } from './base';
-import { AmmEntity, AmmEntityUniswapV2 } from '../../../../entities/amm';
-import { isTokenErc20, TokenEntity, TokenErc20 } from '../../../../entities/token';
+import { AmmEntityUniswapV2 } from '../../../../entities/amm';
+import { isTokenErc20, TokenErc20 } from '../../../../entities/token';
 import { ZapQuote, ZapQuoteStepSplit } from '../../transact-types';
 import { ZapAbi } from '../../../../../../config/abi';
 import BigNumber from 'bignumber.js';
-import { computeUniswapV2PairAddress } from '../../helpers/uniswapv2';
 import { createQuoteId } from '../../utils';
 import { fromWei } from '../../../../../../helpers/big-number';
 import { wnativeToNative } from '../../helpers/tokens';
@@ -20,26 +19,6 @@ import { getPool } from '../../../amm';
 export class BeefyUniswapV2ZapProvider extends BeefyBaseZapProvider<AmmEntityUniswapV2> {
   constructor() {
     super('uniswapv2');
-  }
-
-  getAmm(
-    amms: AmmEntity[],
-    depositTokenAddress: TokenEntity['address'],
-    lpTokens: TokenEntity[]
-  ): AmmEntityUniswapV2 | null {
-    const amm = amms.find(
-      (amm): amm is AmmEntityUniswapV2 =>
-        amm.type === this.type &&
-        depositTokenAddress ===
-          computeUniswapV2PairAddress(
-            amm.factoryAddress,
-            amm.pairInitHash,
-            lpTokens[0].address,
-            lpTokens[1].address
-          )
-    );
-
-    return amm || null;
   }
 
   async getDepositQuoteForType({

@@ -50,6 +50,7 @@ import { selectBeefyZapByAmmId, selectBeefyZapsByChainId } from '../../../../sel
 import { selectTransactSlippage } from '../../../../selectors/transact';
 import { ChainEntity } from '../../../../entities/chain';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
+import { selectAmmById } from '../../../../selectors/amm';
 
 export type BeefyZapOption<AmmType extends AmmEntity = AmmEntity> = {
   zap: ZapEntityBeefy;
@@ -114,11 +115,9 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
     return `beefy-zap-${this.type}`;
   }
 
-  abstract getAmm(
-    amms: AmmEntity[],
-    depositTokenAddress: TokenEntity['address'],
-    lpTokens: TokenEntity[]
-  ): AmmType | null;
+  isCorrectAmmType(amm: AmmEntity): amm is AmmType {
+    return amm.type === this.type;
+  }
 
   async getCommonOptionData(
     vaultId: VaultEntity['id'],
@@ -161,15 +160,19 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
       return null;
     }
 
+    if (!depositToken.ammId) {
+      return null;
+    }
+
+    const amm = selectAmmById(state, depositToken.ammId);
+    if (!amm || !this.isCorrectAmmType(amm)) {
+      return null;
+    }
+
     const wnative = selectChainWrappedNativeToken(state, vault.chainId);
     const native = selectChainNativeToken(state, vault.chainId);
     const tokens = vault.assetIds.map(id => selectTokenById(state, vault.chainId, id));
     const lpTokens = tokensToLp(tokens, wnative);
-
-    const amm = this.getAmm(amms, depositToken.address, lpTokens);
-    if (!amm) {
-      return null;
-    }
 
     const zap = selectBeefyZapByAmmId(state, amm.id);
     if (!zap) {

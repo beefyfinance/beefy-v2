@@ -1,0 +1,52 @@
+[
+  {
+    "zapAddress": "0x7B4d6d79DE44Fe034f75BD4525a13aaEFAF4597F",
+    "priceOracleAddress": "0x11DEE30E710B8d4a8630392781Cc3c0046365d4c",
+    "chainId": "optimism",
+    "fee": {
+      "value": 0.0005,
+      "recipient": "0x852C903e5Bc93F526AB254BFEe0c1DFF23CF82aB"
+    },
+    "depositFromTokens": [
+      "ETH",
+      "WETH",
+      "OP",
+      "USDC",
+      "USDT",
+      "DAI",
+      "MAI",
+      "sUSD",
+      "sETH",
+      "WBTC"
+    ],
+    "withdrawToTokens": ["ETH", "OP", "BIFI", "USDC", "USDT", "DAI", "MAI", "sUSD", "sETH", "WBTC"],
+    "blockedTokens": [
+      "alUSD",
+      "bbDAI+",
+      "bbrfaUSD",
+      "bbrfaWBTC",
+      "bbrfaWETH",
+      "bbUSD+",
+      "beOPX",
+      "beVELO",
+      "DAI-hDAI LP",
+      "ETH-hETH LP",
+      "frxETH",
+      "sfrxETH",
+      "jEUR",
+      "MIM",
+      "S*DAI",
+      "S*ETH",
+      "S*FRAX",
+      "S*USDC",
+      "SNX-hSNX LP",
+      "TUSD",
+      "USD+",
+      "USDC-hUSDC LP",
+      "USDT-hUSDT LP",
+      "USX",
+      "wUSDR"
+    ],
+    "blockedVaults": ["aavev3-op-eth"]
+  }
+]

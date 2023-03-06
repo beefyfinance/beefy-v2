@@ -4,7 +4,7 @@ import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 import { promises as fs } from 'fs';
 
-import { chainRpcs, getVaultsForChain } from './config';
+import { chainRpcs, getVaultsForChain } from './common/config';
 import launchPoolABI from '../src/config/abi/boost.json';
 import erc20ABI from '../src/config/abi/erc20.json';
 import partners from '../src/config/boost/partners.json';
@@ -55,7 +55,6 @@ async function generateLaunchpool() {
     id: `moo_${pool.oracleId}-${partnerId}`,
     poolId: pool.id,
     name: `${partner}`,
-    logo: pool.logo,
     assets: pool.assets,
     tokenAddress: boost.staked,
     earnedToken: boost.earnedToken,
@@ -69,12 +68,6 @@ async function generateLaunchpool() {
     isMooStaked: true,
     partners: [`${partnerId}`],
   };
-
-  if (newBoost.logo) {
-    delete newBoost.assets;
-  } else {
-    delete newBoost.logo;
-  }
 
   const boosts = JSON.parse(await fs.readFile(boostsFile, 'utf8'));
   const newBoosts = [newBoost, ...boosts];

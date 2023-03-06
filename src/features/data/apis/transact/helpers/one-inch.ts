@@ -26,6 +26,10 @@ export function errorToString(error: AxiosError): string {
 
 export function swapWithFee(request: SwapRequest, fee: ZapFee): SwapRequest {
   if (isZapFeeNonZero(fee)) {
+    if (!fee.recipient) {
+      throw new Error('Fee recipient is not set');
+    }
+
     return {
       ...request,
       fee: (fee.value * 100).toString(),
@@ -38,6 +42,10 @@ export function swapWithFee(request: SwapRequest, fee: ZapFee): SwapRequest {
 
 export function quoteWithFee(request: QuoteRequest, fee: ZapFee): QuoteRequest {
   if (isZapFeeNonZero(fee)) {
+    if (!fee.recipient) {
+      throw new Error('Fee recipient is not set');
+    }
+
     return {
       ...request,
       fee: (fee.value * 100).toString(),
