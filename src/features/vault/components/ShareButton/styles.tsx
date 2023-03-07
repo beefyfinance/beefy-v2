@@ -30,6 +30,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     gap: '16px',
+    padding: '16px',
   },
   shareItem: {
     ...theme.typography['body-lg-med'],
