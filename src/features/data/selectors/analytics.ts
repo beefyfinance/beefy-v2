@@ -1,5 +1,5 @@
 import createCachedSelector from 're-reselect';
-import { ALMOST_ZERO, BIG_ZERO } from '../../../helpers/big-number';
+import { BIG_ZERO } from '../../../helpers/big-number';
 import { PnL } from '../../../helpers/pnl';
 import { BeefyState } from '../../../redux-types';
 import { VaultEntity } from '../entities/vault';
@@ -79,18 +79,16 @@ export const selectVaultPnl = (state: BeefyState, vaultId: VaultEntity['id']) =>
 export const selectLastVaultDepositStart = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
 
-  let firstDeposit = new Date();
+  let firstDepositDate = new Date();
 
-  let remainingShares = BIG_ZERO;
+  let previousBalance = BIG_ZERO;
 
   for (const tx of vaultTimeline) {
-    if (!tx.internal) {
-      if (remainingShares.isLessThanOrEqualTo(ALMOST_ZERO)) {
-        firstDeposit = tx.datetime;
-      }
-      remainingShares = remainingShares.plus(tx.shareDiff);
+    if (previousBalance.isEqualTo(BIG_ZERO)) {
+      firstDepositDate = tx.datetime;
     }
+    previousBalance = tx.shareBalance;
   }
 
-  return firstDeposit;
+  return firstDepositDate;
 };

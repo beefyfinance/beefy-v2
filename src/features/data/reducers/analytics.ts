@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import BigNumber from 'bignumber.js';
+import { BIG_ZERO } from '../../../helpers/big-number';
 import { fetchAnalyticsVaults } from '../actions/analytics';
 import { VaultTimelineAnalyticsEntity } from '../entities/analytics';
 import { BoostEntity } from '../entities/boost';
@@ -44,20 +46,34 @@ export const analyticsSlice = createSlice({
         const boostIds = selectAllVaultBoostIds(state, vaultId);
 
         const boostTxHashes = new Set();
+        const boostKeys: Set<string> = new Set();
+        const boostTransactionsByDate: Record<number, VaultTimelineAnalyticsEntity> = {};
 
         for (const boostId of boostIds) {
           const boostTimeline: VaultTimelineAnalyticsEntity[] = totals.byBoostId[boostId];
-          if (boostTimeline)
+          if (boostTimeline) {
             for (const itemTimeline of boostTimeline) {
+              boostKeys.add(itemTimeline.productKey);
               boostTxHashes.add(
                 `${itemTimeline.datetime.toString()}-${itemTimeline.shareDiff.abs().toString()}`
               );
+              boostTransactionsByDate[itemTimeline.datetime.getTime()] = itemTimeline;
             }
+          }
         }
 
         const vaultTimeline = totals.byVaultId[vaultId];
 
+        const partialBoostBalances: Record<string, BigNumber> = Array.from(boostKeys).reduce(
+          (accum, cur) => ({ ...accum, [cur]: BIG_ZERO }),
+          {}
+        );
         for (const itemTimeline of vaultTimeline) {
+          const boostData = boostTransactionsByDate[itemTimeline.datetime.getTime()];
+          if (boostData) {
+            partialBoostBalances[boostData.productKey] = boostData.shareBalance;
+          }
+
           const txHash = `${itemTimeline.datetime.toString()}-${itemTimeline.shareDiff
             .abs()
             .toString()}`;
@@ -65,6 +81,10 @@ export const analyticsSlice = createSlice({
           if (boostTxHashes.has(txHash)) {
             itemTimeline.internal = true;
           }
+
+          itemTimeline.shareBalance = itemTimeline.shareBalance.plus(
+            Object.values(partialBoostBalances).reduce((tot, cur) => tot.plus(cur), BIG_ZERO)
+          );
         }
       }
 
