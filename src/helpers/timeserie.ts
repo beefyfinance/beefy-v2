@@ -51,8 +51,6 @@ export function getInvestorTimeserie(
 
   let currentDate = fixedDate;
 
-  const balances = [timeline[balanceIdx].shareBalance];
-  let balance = timeline[balanceIdx].shareBalance;
   while (currentDate <= lastDate) {
     // add a row for each date
     // find the corresponding balance row
@@ -61,13 +59,6 @@ export function getInvestorTimeserie(
       isAfter(currentDate, timeline[balanceIdx + 1].datetime)
     ) {
       balanceIdx++;
-      if (!(timeline[balanceIdx].internal ?? false)) {
-        console.log('inside ' + !(timeline[balanceIdx].internal ?? false));
-
-        //Due to precision errors we might end up with negative dust, prevent that from happening
-        balance = BigNumber.maximum(balance.plus(timeline[balanceIdx].shareDiff), BIG_ZERO);
-        balances.push(balance);
-      }
     }
     // find the corresponding shares row
     while (
@@ -85,6 +76,7 @@ export function getInvestorTimeserie(
     }
 
     // now we have the correct rows for this date
+    const balance = timeline[balanceIdx].shareBalance;
     const shares = sortedShares[sharesIdx];
     const underlying = sortedUnderlying[underlyingIdx];
     const underlyingBalance = shares && balance ? shares.value.times(balance) : null;
@@ -104,8 +96,8 @@ export function getInvestorTimeserie(
     currentDate = new Date(currentDate.getTime() + bucketSize);
   }
   console.log(timeline.map(t => t.shareDiff.toString()));
+  console.log(timeline.map(t => t.shareBalance.toString()));
   console.log(timeline.map(t => t.internal ?? false));
-  console.log(balances.map(b => b.toString()));
 
   pricesTs.push({
     //round down our to the last hours, since first item of the api do the same

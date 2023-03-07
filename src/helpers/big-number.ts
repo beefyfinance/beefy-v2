@@ -4,7 +4,6 @@ import { mapValues } from 'lodash';
 export type BigNumberish = BigNumber.Value;
 
 export const BIG_ZERO = new BigNumber(0);
-export const ALMOST_ZERO = new BigNumber('0.00000000000000001');
 export const BIG_ONE = new BigNumber(1);
 export const BIG_MAX_UINT256 = new BigNumber(
   '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
