@@ -8,7 +8,7 @@
     "tokenProviderId": "balancer",
     "earnedToken": "mooBalancerPolywstETH-ETH",
     "earnedTokenAddress": "0x1d81c50d5aB5f095894c41B41BA49B9873033399",
-    "earnContractAddress": "0x1d81c50d5aB5f095894c41B41BA49B9873033399c",
+    "earnContractAddress": "0x1d81c50d5aB5f095894c41B41BA49B9873033399",
     "oracle": "lps",
     "oracleId": "balancer-poly-wsteth-eth",
     "status": "active",
