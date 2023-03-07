@@ -158,8 +158,7 @@ const TwitterItem = memo<ShareServiceItemProps>(function TwitterItem({ details }
 
     // https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
     const params = new URLSearchParams({
-      text: message,
-      url: url,
+      text: message + '\n👉 ' + url,
     });
 
     window.open(`https://twitter.com/intent/tweet?${params}`, '_blank');
