@@ -151,15 +151,15 @@ const TwitterItem = memo<ShareServiceItemProps>(function TwitterItem({ details }
   const { t } = useTranslation();
   const onClick = useCallback(() => {
     const message = t(`Vault-Share-Message-${details.kind}`, omit(details, ['utm']));
-    const url = `${details.vaultUrl}?${new URLSearchParams({
-      ...details.utm,
-      utm_source: 'twitter',
-    }).toString()}`;
+    // const url = `${details.vaultUrl}?${new URLSearchParams({
+    //   ...details.utm,
+    //   utm_source: 'twitter',
+    // }).toString()}`;
 
     // https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
     const params = new URLSearchParams({
       text: message,
-      url,
+      url: details.vaultUrl,
     });
 
     window.open(`https://twitter.com/intent/tweet?${params}`, '_blank');
@@ -172,15 +172,15 @@ const LensterItem = memo<ShareServiceItemProps>(function LensterItem({ details }
   const { t } = useTranslation();
   const onClick = useCallback(() => {
     const message = t(`Vault-Share-Message-${details.kind as string}`, omit(details, ['utm']));
-    const url = `${details.vaultUrl}?${new URLSearchParams({
-      ...details.utm,
-      utm_source: 'lenster',
-    }).toString()}`;
+    // const url = `${details.vaultUrl}?${new URLSearchParams({
+    //   ...details.utm,
+    //   utm_source: 'lenster',
+    // }).toString()}`;
 
     // https://docs.lens.xyz/docs/integrating-lens
     const params = new URLSearchParams({
       text: message,
-      url: url,
+      url: details.vaultUrl,
     });
 
     window.open(`https://lenster.xyz/?${params}`, '_blank');
@@ -193,15 +193,15 @@ const TelegramItem = memo<ShareServiceItemProps>(function TelegramItem({ details
   const { t } = useTranslation();
   const onClick = useCallback(() => {
     const message = t(`Vault-Share-Message-${details.kind as string}`, omit(details, ['utm']));
-    const url = `${details.vaultUrl}?${new URLSearchParams({
-      ...details.utm,
-      utm_source: 'telegram',
-    }).toString()}`;
+    // const url = `${details.vaultUrl}?${new URLSearchParams({
+    //   ...details.utm,
+    //   utm_source: 'telegram',
+    // }).toString()}`;
 
     // https://core.telegram.org/widgets/share
     const params = new URLSearchParams({
       text: message,
-      url: url,
+      url: details.vaultUrl,
     });
 
     window.open(`https://t.me/share/url?${params}`, '_blank');
