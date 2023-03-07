@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { getAnalyticsApi } from '../../../data/apis/instances';
 import { VaultEntity } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
@@ -35,8 +35,6 @@ export const initialChartDataValue = {
   loading: true,
 };
 
-const delay = ms => new Promise(res => setTimeout(res, ms));
-
 export const usePnLChartData = (
   timebucket: TimeBucketType,
   productKey: string,
@@ -44,13 +42,7 @@ export const usePnLChartData = (
 ) => {
   const [chartData, setChartData] = useState<ChardataType>(initialChartDataValue);
   const [counter, setCounter] = useState(0);
-
-  // sometimes server return 429:Timeout and we force to update the counter to re-run the useEffect
-  // counter is only updated when we get an error
-  const handleCounter = useCallback(async () => {
-    await delay(5000);
-    setCounter(counter + 1);
-  }, [counter]);
+  const intervalRef = useRef(null);
 
   const vaultTimeline = useAppSelector(state =>
     selectUserDepositedTimelineByVaultId(state, vaultId)
@@ -119,12 +111,20 @@ export const usePnLChartData = (
         }
       } catch (error) {
         setChartData({ ...chartData, loading: true });
-        await handleCounter();
+        // sometimes server return 429:Timeout and we force to update the counter to re-run the useEffect
+        // counter is only updated when we get an error
+        intervalRef.current = setTimeout(() => {
+          setCounter(counter + 1);
+        }, 5000);
       }
     };
     setChartData({ ...chartData, loading: true });
 
     fetchData();
+
+    return () => {
+      clearTimeout(intervalRef.current);
+    };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timebucket, counter]);

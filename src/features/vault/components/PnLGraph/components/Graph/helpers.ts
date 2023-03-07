@@ -10,7 +10,8 @@ export const formatXAxis = (tickItem: number, timebucket: TimeBucketType) => {
   if (timebucket === '1h_1d') {
     return format(tickItem, 'HH:mm');
   }
-  return format(tickItem, 'dd/MM');
+  const date = new Date(tickItem);
+  return date.toLocaleDateString(undefined, { month: 'numeric', day: 'numeric' });
 };
 
 export const domainOffSet = (min: number, max: number, heightPercentageUsedByChart: number) => {

@@ -6,8 +6,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: '16px 0px',
   },
-  loader: { height: '200px' },
+  loader: { height: '220px' },
 }));
 
 export const Loader = memo(function () {

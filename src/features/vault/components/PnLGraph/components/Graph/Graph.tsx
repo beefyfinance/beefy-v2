@@ -30,10 +30,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   graphContainer: {
     padding: '16px 0px',
     '& text': {
+      ...theme.typography['subline-sm'],
       fill: theme.palette.text.disabled,
-      [theme.breakpoints.down('xs')]: {
-        fontSize: '12px',
-      },
     },
   },
   graph: {
