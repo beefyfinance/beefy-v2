@@ -12,12 +12,16 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import { Footer } from './components/Footer';
 import { Graph } from './components/Graph';
 import { Header } from './components/Header';
-import { Legend } from './components/Legend';
 import { useVaultPeriods } from './hooks';
 
-import { styles } from './styles';
+import { Theme } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(styles);
+export const useStyles = makeStyles((theme: Theme) => ({
+  pnlContainer: {
+    borderRadius: '12px',
+    backgroundColor: '#2D3153',
+  },
+}));
 
 interface PnLGraphProps {
   vaultId: VaultEntity['id'];
@@ -57,10 +61,7 @@ export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
   return (
     <div className={classes.pnlContainer}>
       <Header vaultId={vaultId} />
-      <div className={classes.graphContainer}>
-        <Legend vaultId={vaultId} />
-        <Graph stat={stat} vaultId={vaultId} />
-      </div>
+      <Graph stat={stat} vaultId={vaultId} />
       <Footer labels={labels} vaultId={vaultId} stat={stat} handleStat={handleStat} />
     </div>
   );

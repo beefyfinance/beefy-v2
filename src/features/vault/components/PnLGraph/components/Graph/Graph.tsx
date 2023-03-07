@@ -24,8 +24,18 @@ import {
   TIME_BUCKET,
   X_DOMAIN_SECONDS,
 } from './helpers';
+import { Legend } from '../Legend';
 
 const useStyles = makeStyles((theme: Theme) => ({
+  graphContainer: {
+    padding: '16px 0px',
+    '& text': {
+      fill: theme.palette.text.disabled,
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '12px',
+      },
+    },
+  },
   graph: {
     '& .recharts-yAxis': {
       '& .recharts-cartesian-axis-tick': {
@@ -33,20 +43,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         transition: 'ease-in-out 0.5s',
       },
     },
-    '& .recharts-line': {
-      opacity: 0.5,
-      transition: 'ease-in-out 0.5s',
-    },
     '&:hover': {
       '& .recharts-yAxis': {
         '& .recharts-cartesian-axis-tick': {
           opacity: 0.5,
           transition: 'ease-in-out 0.5s',
         },
-      },
-      '& .recharts-line': {
-        opacity: 1,
-        transition: 'ease-in-out 0.5s',
       },
     },
   },
@@ -118,67 +120,70 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
   }
 
   return (
-    <ResponsiveContainer width="100%" height={200}>
-      <LineChart
-        width={450}
-        height={200}
-        data={data}
-        margin={{ top: 14, right: padding, bottom: 0, left: padding }}
-        className={classes.graph}
-      >
-        <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />
-        <Line
-          yAxisId="underliying"
-          strokeWidth={1.5}
-          dataKey="underlyingBalance"
-          stroke="#59A662"
-          dot={false}
-          type="linear"
-        />
-        <Line
-          yAxisId="usd"
-          strokeWidth={1.5}
-          dataKey="usdBalance"
-          stroke="#5C99D6"
-          dot={false}
-          type="linear"
-        />
-        <XAxis
-          tickFormatter={tickitem => formatXAxis(tickitem, TIME_BUCKET[stat])}
-          dataKey="datetime"
-          allowDuplicatedCategory={false}
-          padding={{ left: 4, right: 4 }}
-          tickMargin={10}
-          ticks={dateTicks}
-          scale="time"
-          type="number"
-          stroke="#363B63"
-          domain={[data[0].datetime, data[data.length - 1].datetime]}
-        />
-        <YAxis
-          stroke="#59A662"
-          strokeWidth={1.5}
-          tickFormatter={tickItem =>
-            formatFullBigNumber(new BigNumber(tickItem), tickItem > 999 ? 0 : 3)
-          }
-          yAxisId="underliying"
-          domain={[startUnderlyingDomain, maxUnderlying + underlyingDiff]}
-          ticks={underlyingTicks}
-          mirror={true}
-        />
-        <YAxis
-          stroke="#5C99D6"
-          orientation="right"
-          strokeWidth={1.5}
-          tickFormatter={tickItem => formatBigUsd(new BigNumber(tickItem))}
-          yAxisId="usd"
-          domain={[startUsdDomain, maxUsd + usdDiff]}
-          ticks={usdTicks}
-          mirror={true}
-        />
+    <div className={classes.graphContainer}>
+      <Legend vaultId={vaultId} />
+      <ResponsiveContainer width="100%" height={200}>
+        <LineChart
+          width={450}
+          height={200}
+          data={data}
+          margin={{ top: 14, right: padding, bottom: 0, left: padding }}
+          className={classes.graph}
+        >
+          <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />
+          <Line
+            yAxisId="underliying"
+            strokeWidth={1.5}
+            dataKey="underlyingBalance"
+            stroke="#59A662"
+            dot={false}
+            type="linear"
+          />
+          <Line
+            yAxisId="usd"
+            strokeWidth={1.5}
+            dataKey="usdBalance"
+            stroke="#5C99D6"
+            dot={false}
+            type="linear"
+          />
+          <XAxis
+            tickFormatter={tickitem => formatXAxis(tickitem, TIME_BUCKET[stat])}
+            dataKey="datetime"
+            allowDuplicatedCategory={false}
+            padding={{ left: 4, right: 4 }}
+            tickMargin={10}
+            ticks={dateTicks}
+            scale="time"
+            type="number"
+            stroke="#363B63"
+            domain={[data[0].datetime, data[data.length - 1].datetime]}
+          />
+          <YAxis
+            stroke="#59A662"
+            strokeWidth={1.5}
+            tickFormatter={tickItem =>
+              formatFullBigNumber(new BigNumber(tickItem), tickItem > 999 ? 0 : 3)
+            }
+            yAxisId="underliying"
+            domain={[startUnderlyingDomain, maxUnderlying + underlyingDiff]}
+            ticks={underlyingTicks}
+            mirror={true}
+          />
+          <YAxis
+            stroke="#5C99D6"
+            orientation="right"
+            strokeWidth={1.5}
+            tickFormatter={tickItem => formatBigUsd(new BigNumber(tickItem))}
+            yAxisId="usd"
+            domain={[startUsdDomain, maxUsd + usdDiff]}
+            ticks={usdTicks}
+            mirror={true}
+          />
 
-        <Tooltip wrapperStyle={{ outline: 'none' }} content={<PnLTooltip />} />
-      </LineChart>
-    </ResponsiveContainer>
+          <Tooltip wrapperStyle={{ outline: 'none' }} content={<PnLTooltip />} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 });

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { getAnalyticsApi } from '../../../data/apis/instances';
 import { VaultEntity } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
@@ -35,12 +35,22 @@ export const initialChartDataValue = {
   loading: true,
 };
 
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
 export const usePnLChartData = (
   timebucket: TimeBucketType,
   productKey: string,
   vaultId: VaultEntity['id']
 ) => {
   const [chartData, setChartData] = useState<ChardataType>(initialChartDataValue);
+  const [counter, setCounter] = useState(0);
+
+  // sometimes server return 429:Timeout and we force to update the counter to re-run the useEffect
+  // counter is only updated when we get an error
+  const handleCounter = useCallback(async () => {
+    await delay(5000);
+    setCounter(counter + 1);
+  }, [counter]);
 
   const vaultTimeline = useAppSelector(state =>
     selectUserDepositedTimelineByVaultId(state, vaultId)
@@ -106,32 +116,18 @@ export const usePnLChartData = (
             maxUsd,
             loading: false,
           });
-        } else {
-          setChartData({
-            data: [],
-            minUnderlying: 0,
-            maxUnderlying: 0,
-            minUsd: 0,
-            maxUsd: 0,
-            loading: true,
-          });
         }
       } catch (error) {
-        setChartData({
-          data: [],
-          minUnderlying: 0,
-          maxUnderlying: 0,
-          minUsd: 0,
-          maxUsd: 0,
-          loading: true,
-        });
+        setChartData({ ...chartData, loading: true });
+        await handleCounter();
       }
     };
     setChartData({ ...chartData, loading: true });
+
     fetchData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timebucket]);
+  }, [timebucket, counter]);
 
   return chartData;
 };
@@ -149,7 +145,8 @@ export const useVaultPeriods = (vaultId: VaultEntity['id']) => {
     if (result.length > 30) return ['1D', '1W', '1M', 'ALL'];
     if (result.length > 7) return ['1D', '1W', 'ALL'];
     if (result.length > 1) return ['1D', 'ALL'];
-    return ['1D'];
+    if (result.length === 1) return ['1D'];
+    return [];
   }, [result.length]);
 
   return dates;
