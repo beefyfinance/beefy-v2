@@ -462,7 +462,8 @@
     "earnContractAddress": "0x53fA4D07c62EBcbBB043654480C7C0AB7b5876C4",
     "oracle": "lps",
     "oracleId": "velodrome-alusd-mai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["alUSD", "MAI"],
     "risks": [
