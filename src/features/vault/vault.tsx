@@ -19,7 +19,7 @@ import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
 import { isGovVault, VaultEntity } from '../data/entities/vault';
 import { selectChainById } from '../data/selectors/chains';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
-import { CowLoader } from '../../components/CowLoader';
+import { TechLoader } from '../../components/TechLoader';
 import { InfoCards } from './components/InfoCards/InfoCards';
 import { VaultMeta } from './components/VaultMeta';
 import { useAppSelector } from '../../store';
@@ -43,7 +43,7 @@ export const Vault = memo(function Vault() {
   const vaultExists = useAppSelector(state => selectVaultExistsById(state, id));
 
   if (!isLoaded) {
-    return <CowLoader text="Loading..." />;
+    return <TechLoader text="Loading..." />;
   }
 
   if (!vaultExists) {

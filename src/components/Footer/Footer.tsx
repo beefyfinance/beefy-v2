@@ -64,7 +64,6 @@ const socialLinks = [
 
 const useStyles = makeStyles(styles);
 
-// Memo: Static footer, no need to re-render when parent does
 export const Footer = memo(function () {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -99,18 +98,6 @@ export const Footer = memo(function () {
           </li>
         ))}
       </ul>
-    </div>
-  );
-});
-
-// This keeps the footer at the bottom of the page when the page is under 100vh
-export const WrappedFooter = memo(function WrappedFooter({ children }) {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.wrapper}>
-      <div className={classes.wrapperTop}>{children}</div>
-      <Footer />
     </div>
   );
 });
