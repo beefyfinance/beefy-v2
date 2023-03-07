@@ -10,20 +10,29 @@ import twitterIcon from '../../../../images/icons/share/twitter.svg';
 import lensterIcon from '../../../../images/icons/share/lenster.svg';
 import telegramIcon from '../../../../images/icons/share/telegram.svg';
 import linkIcon from '../../../../images/icons/share/link.svg';
-import { isGovVault, VaultEntity } from '../../../data/entities/vault';
+import { isGovVault } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
-import { Placement } from '@floating-ui/react-dom';
+import { selectVaultTotalApy } from '../../../data/selectors/apy';
+import { formatPercent } from '../../../../helpers/format';
+import { BeefyState } from '../../../../redux-types';
+import { selectBoostById, selectPreStakeOrActiveBoostIds } from '../../../data/selectors/boosts';
+import { selectPartnerById } from '../../../data/selectors/partners';
+import {
+  BoostedVaultExtraDetails,
+  CommonVaultDetails,
+  GovVaultExtraDetails,
+  Types,
+  ShareButtonProps,
+  ShareItemProps,
+  ShareServiceItemProps,
+  VaultDetails,
+} from './types';
+import { omit } from 'lodash';
 
 const useStyles = makeStyles(styles);
-
-export type ShareButtonProps = {
-  vaultId: VaultEntity['id'];
-  campaign: string;
-  placement?: Placement;
-};
 
 export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   vaultId,
@@ -36,15 +45,8 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   const [isOpen, setIsOpen] = useState(false);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
-  const depositToken = useAppSelector(state =>
-    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
-  );
-  const earnToken = useAppSelector(state =>
-    selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
-  );
-
-  const vaultDetails = useMemo<VaultDetails>(() => {
-    const isGov = isGovVault(vault);
+  const apys = useAppSelector(state => selectVaultTotalApy(state, vault.id));
+  const commonVaultDetails = useMemo<CommonVaultDetails>(() => {
     const utm = {
       utm_campaign: campaign,
       utm_medium: 'social',
@@ -52,13 +54,67 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
     };
 
     return {
-      vault: vault.name + (isGov ? '' : ' ' + t('Vault-vault')),
-      chain: chain.name,
-      url: `${window.location.origin}/vault/${vault.id}`,
-      token: isGov ? earnToken.symbol : depositToken.symbol,
+      vaultName: vault.name,
+      vaultApy: formatPercent(apys.totalApy, 2),
+      vaultUrl: `https://app.beefy.com/vault/${vault.id}`,
+      chainName: chain.name,
+      chainTag: '#' + chain.name.toLowerCase().replace(/[^a-z0-9-_]/gi, ''),
+      beefyHandle: '@beefyfinance',
       utm,
     };
-  }, [vault, chain, depositToken, earnToken, campaign, t]);
+  }, [vault, chain, campaign, apys]);
+  const additionalSelector = useMemo(
+    () =>
+      (state: BeefyState): Types | BoostedVaultExtraDetails | GovVaultExtraDetails => {
+        if (isGovVault(vault)) {
+          const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+          return {
+            kind: 'gov',
+            earnToken: token.symbol,
+            earnTokenTag: '$' + token.symbol.replace(/[^a-z0-9-_]/gi, ''),
+          };
+        }
+
+        const boostIds = selectPreStakeOrActiveBoostIds(state, vault.id);
+        if (boostIds.length && apys.boostApr && apys.boostApr > 0) {
+          const boost = selectBoostById(state, boostIds[0]);
+          const mainPartner = selectPartnerById(state, boost.partnerIds[0]);
+          const boostToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
+          const partnerTag = '#' + boost.name.toLowerCase().replace(' ', '');
+          let partnerHandle;
+          if (mainPartner.social?.twitter) {
+            partnerHandle =
+              '@' +
+              mainPartner.social.twitter
+                .replace(/https?:\/\/(www\.)?twitter\.com/gi, '')
+                .replace('@', '')
+                .replace('/', '');
+          }
+          const partnerHandleOrTag = partnerHandle || partnerTag;
+
+          return {
+            kind: 'boosted',
+            vaultApy: formatPercent(apys.boostedTotalApy, 2),
+            boostToken: boostToken.symbol,
+            boostTokenTag: '$' + boostToken.symbol.replace(/[^a-z0-9-_]/gi, ''),
+            partnerName: boost.name,
+            partnerHandle,
+            partnerTag,
+            partnerHandleOrTag,
+          };
+        }
+
+        return {
+          kind: 'normal',
+        };
+      },
+    [vault, apys]
+  );
+  const additionalVaultDetails = useAppSelector(additionalSelector);
+  const vaultDetails: VaultDetails = useMemo(
+    () => ({ ...commonVaultDetails, ...additionalVaultDetails }),
+    [commonVaultDetails, additionalVaultDetails]
+  );
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
@@ -91,34 +147,18 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   );
 });
 
-type VaultDetails = {
-  vault: string;
-  chain: string;
-  token: string;
-  url: string;
-  utm: {
-    utm_medium: string;
-    utm_campaign: string;
-    utm_term: string;
-  };
-};
-
-type ShareServiceItemProps = {
-  details: VaultDetails;
-};
-
 const TwitterItem = memo<ShareServiceItemProps>(function TwitterItem({ details }) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
-    const message = t('Vault-Share-Twitter-Message', details);
-    const url = `${details.url}?${new URLSearchParams({
+    const message = t(`Vault-Share-Message-${details.kind}`, omit(details, ['utm']));
+    const url = `${details.vaultUrl}?${new URLSearchParams({
       ...details.utm,
       utm_source: 'twitter',
     }).toString()}`;
+
     // https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
     const params = new URLSearchParams({
       text: message,
-      via: 'beefyfinance',
       url: url,
     });
 
@@ -131,15 +171,15 @@ const TwitterItem = memo<ShareServiceItemProps>(function TwitterItem({ details }
 const LensterItem = memo<ShareServiceItemProps>(function LensterItem({ details }) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
-    const message = t('Vault-Share-Lenster-Message', details);
-    const url = `${details.url}?${new URLSearchParams({
+    const message = t(`Vault-Share-Message-${details.kind as string}`, omit(details, ['utm']));
+    const url = `${details.vaultUrl}?${new URLSearchParams({
       ...details.utm,
       utm_source: 'lenster',
     }).toString()}`;
+
     // https://docs.lens.xyz/docs/integrating-lens
     const params = new URLSearchParams({
       text: message,
-      via: 'beefyfinance',
       url: url,
     });
 
@@ -152,11 +192,12 @@ const LensterItem = memo<ShareServiceItemProps>(function LensterItem({ details }
 const TelegramItem = memo<ShareServiceItemProps>(function TelegramItem({ details }) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
-    const message = t('Vault-Share-Telegram-Message', details);
-    const url = `${details.url}?${new URLSearchParams({
+    const message = t(`Vault-Share-Message-${details.kind as string}`, omit(details, ['utm']));
+    const url = `${details.vaultUrl}?${new URLSearchParams({
       ...details.utm,
       utm_source: 'telegram',
     }).toString()}`;
+
     // https://core.telegram.org/widgets/share
     const params = new URLSearchParams({
       text: message,
@@ -173,7 +214,7 @@ const CopyLinkItem = memo<ShareServiceItemProps>(function CopyLinkItem({ details
   const { t } = useTranslation();
   const onClick = useCallback(() => {
     try {
-      const url = `${details.url}?${new URLSearchParams({
+      const url = `${details.vaultUrl}?${new URLSearchParams({
         ...details.utm,
         utm_source: 'clipboard',
       }).toString()}`;
@@ -186,11 +227,6 @@ const CopyLinkItem = memo<ShareServiceItemProps>(function CopyLinkItem({ details
   return <ShareItem text={t('Vault-Share-CopyLink')} onClick={onClick} icon={linkIcon} />;
 });
 
-type ShareItemProps = {
-  text: string;
-  icon: string;
-  onClick: () => void;
-};
 const ShareItem = memo<ShareItemProps>(function ShareItem({ text, icon, onClick }) {
   const classes = useStyles();
 

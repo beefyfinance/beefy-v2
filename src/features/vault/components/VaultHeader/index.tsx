@@ -40,9 +40,11 @@ export const VaultHeader = memo<VaultHeaderProps>(function ({ vaultId }) {
             <VaultPlatform vaultId={vaultId} />
           </span>
         </div>
-        <div className={classes.shareHolder}>
-          <ShareButton vaultId={vaultId} campaign="share-vault-page" />
-        </div>
+        {vault.status === 'active' ? (
+          <div className={classes.shareHolder}>
+            <ShareButton vaultId={vaultId} campaign="share-vault-page" />
+          </div>
+        ) : null}
       </div>
     </div>
   );
