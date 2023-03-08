@@ -257,7 +257,7 @@
   "Graph-1Day": "1D",
   "Graph-1Week": "1W",
   "Graph-1Month": "1M",
-  "Graph-1Year": "1Y",
+  "Graph-All": "ALL",
   "Graph-PriceTkn": "Token Price",
   "Safety-Score": "SAFETY SCORE",
   "Safety-Score1": "Safety Score: ",

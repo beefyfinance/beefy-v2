@@ -15,16 +15,11 @@ import { formatBigUsd, formatFullBigNumber } from '../../../../../../helpers/for
 import BigNumber from 'bignumber.js';
 import { PnLTooltip } from '../PnLTooltip';
 import { makeStyles, Theme, useMediaQuery } from '@material-ui/core';
-import { Loader } from '../Loader';
+import { GraphLoader } from '../../../GraphLoader';
 import { max } from 'lodash';
-import {
-  domainOffSet,
-  formatXAxis,
-  mapRangeToTicks,
-  TIME_BUCKET,
-  X_DOMAIN_SECONDS,
-} from './helpers';
+import { formatXAxis, TIME_BUCKET } from './helpers';
 import { Legend } from '../Legend';
+import { domainOffSet, mapRangeToTicks, X_AXIS_INTERVAL } from '../../../../../../helpers/graph';
 
 const useStyles = makeStyles((theme: Theme) => ({
   graphContainer: {
@@ -52,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: number }) {
+export const Graph = memo(function ({ vaultId, period }: { vaultId: string; period: number }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   const classes = useStyles();
@@ -62,7 +57,7 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
   }, [vault.chainId, vault.earnContractAddress]);
 
   const { data, minUnderlying, maxUnderlying, minUsd, maxUsd, loading } = usePnLChartData(
-    TIME_BUCKET[stat],
+    TIME_BUCKET[period],
     productKey,
     vaultId
   );
@@ -93,28 +88,16 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
 
   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'));
 
+  const xInterval = useMemo(() => {
+    return X_AXIS_INTERVAL[period];
+  }, [period]);
+
   const padding = useMemo(() => {
     return smDown ? 16 : 24;
   }, [smDown]);
 
-  const dateTicks = useMemo(() => {
-    if (data.length > 0) {
-      let ticks = [];
-      let lastDate = null;
-      for (const row of data) {
-        const date = new Date(row.datetime);
-        if (lastDate === null || date.getTime() - lastDate.getTime() >= X_DOMAIN_SECONDS[stat]) {
-          ticks.push(row.datetime);
-          lastDate = date;
-        }
-      }
-      return ticks;
-    }
-    return [0];
-  }, [data, stat]);
-
   if (loading) {
-    return <Loader />;
+    return <GraphLoader />;
   }
 
   return (
@@ -128,7 +111,15 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
           margin={{ top: 14, right: padding, bottom: 0, left: padding }}
           className={classes.graph}
         >
-          <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />
+          <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />\{' '}
+          <XAxis
+            tickFormatter={tickitem => formatXAxis(tickitem, TIME_BUCKET[period])}
+            dataKey="datetime"
+            padding={{ left: 4, right: 4 }}
+            tickMargin={10}
+            stroke="#363B63"
+            interval={xInterval}
+          />
           <Line
             yAxisId="underliying"
             strokeWidth={1.5}
@@ -144,18 +135,6 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
             stroke="#5C99D6"
             dot={false}
             type="linear"
-          />
-          <XAxis
-            tickFormatter={tickitem => formatXAxis(tickitem, TIME_BUCKET[stat])}
-            dataKey="datetime"
-            allowDuplicatedCategory={false}
-            padding={{ left: 4, right: 4 }}
-            tickMargin={10}
-            ticks={dateTicks}
-            scale="time"
-            type="number"
-            stroke="#363B63"
-            domain={[data[0].datetime, data[data.length - 1].datetime]}
           />
           <YAxis
             stroke="#59A662"
@@ -178,7 +157,6 @@ export const Graph = memo(function ({ vaultId, stat }: { vaultId: string; stat: 
             ticks={usdTicks}
             mirror={true}
           />
-
           <Tooltip wrapperStyle={{ outline: 'none' }} content={<PnLTooltip />} />
         </LineChart>
       </ResponsiveContainer>

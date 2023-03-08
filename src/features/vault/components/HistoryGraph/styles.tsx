@@ -39,13 +39,6 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['subline-lg'],
     fontWeight: 700,
   },
-  graphContainer: {
-    padding: '24px',
-    '& text': {
-      ...theme.typography['subline-sm'],
-      fill: theme.palette.text.disabled,
-    },
-  },
   averageLine: {
     height: '2px',
     width: '12px',

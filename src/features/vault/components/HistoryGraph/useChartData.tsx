@@ -12,19 +12,21 @@ const DAYS_IN_PERIOD = [1, 7, 30, 365];
 const MOVING_AVERAGE_POINTS = [6, 48, 10, 30];
 const SNAPSHOT_INTERVAL = parseInt(process.env.SNAPSHOT_INTERVAL) || 15 * 60;
 
-interface ChartDataState {
-  data: ChartData;
+export interface HistoryChartDataState {
+  data: ChartData[];
   averageValue: number;
   minValue: number;
   maxValue: number;
+  loading: boolean;
 }
 
 export const useChartData = (stat, period, oracleId, vaultId, network) => {
-  const [chartData, setChartData] = useState<ChartDataState>({
+  const [chartData, setChartData] = useState<HistoryChartDataState>({
     data: [],
     averageValue: 0,
     minValue: 0,
     maxValue: 0,
+    loading: false,
   });
 
   const [movingAverageDetail, setMovingAverageDetail] = useState('');
@@ -69,11 +71,19 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
       const minValue = data ? minBy(data, row => row.v).v : 0;
       const maxValue = data ? maxBy(data, row => row.v).v : 0;
 
-      setChartData({ data: chartableData, averageValue: average, minValue, maxValue });
+      setChartData({
+        data: chartableData,
+        averageValue: average,
+        minValue,
+        maxValue,
+        loading: false,
+      });
     };
 
+    setChartData({ ...chartData, loading: true });
     fetchData();
-  }, [stat, period, network, oracleId, vaultId, t, chartData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stat, period]);
 
   return { chartData, movingAverageDetail };
 };
@@ -86,7 +96,12 @@ const addItems = (data, start, stop) => {
   return sum;
 };
 
-type ChartData = BeefyChartDataResponse & { moveAverageValue: number }[];
+interface ChartData {
+  name: string;
+  value: number;
+  datetime: string;
+  moveAverageValue: number;
+}
 
 const getChartableData = (
   data: BeefyChartDataResponse,
@@ -94,7 +109,7 @@ const getChartableData = (
   chartDisplayPoints: number
 ) => {
   const startIndex = data.length > chartDisplayPoints ? data.length - chartDisplayPoints : 0;
-  const chartableData: ChartData = [];
+  const chartableData: ChartData[] = [];
   let acum = 0;
 
   for (let i = startIndex; i < data.length; i++) {
@@ -102,7 +117,12 @@ const getChartableData = (
     const movingAverageForPoint =
       addItems(data, safeStartingIndex, i) / (i - safeStartingIndex + 1);
     acum += data[i].v;
-    chartableData.push({ ...data[i], moveAverageValue: movingAverageForPoint });
+    chartableData.push({
+      name: data[i].name,
+      value: data[i].v,
+      datetime: data[i].ts,
+      moveAverageValue: movingAverageForPoint,
+    });
   }
 
   const average = acum / (data.length - startIndex);

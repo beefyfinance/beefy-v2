@@ -42,10 +42,10 @@ export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
 
   const labels = useVaultPeriods(vaultId);
 
-  const [stat, setStat] = React.useState<number>(labels.length - 1);
+  const [period, setPeriod] = React.useState<number>(labels.length - 1);
 
-  const handleStat = useCallback((newStat: number) => {
-    setStat(newStat);
+  const handlePeriod = useCallback((newPeriod: number) => {
+    setPeriod(newPeriod);
   }, []);
 
   if (
@@ -61,8 +61,8 @@ export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
   return (
     <div className={classes.pnlContainer}>
       <Header vaultId={vaultId} />
-      <Graph stat={stat} vaultId={vaultId} />
-      <Footer labels={labels} vaultId={vaultId} stat={stat} handleStat={handleStat} />
+      <Graph period={period} vaultId={vaultId} />
+      <Footer labels={labels} vaultId={vaultId} period={period} handlePeriod={handlePeriod} />
     </div>
   );
 });

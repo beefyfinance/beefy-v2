@@ -11,13 +11,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   loader: { height: '220px' },
 }));
 
-export const Loader = memo(function () {
+export const GraphLoader = memo(function () {
   const classes = useStyles();
   return (
     <div className={classes.container}>
       <img
         className={classes.loader}
-        src={require('../../../../../../images/tech-loader.gif').default}
+        src={require('../../../../images/tech-loader.gif').default}
         alt="loader"
       />
     </div>

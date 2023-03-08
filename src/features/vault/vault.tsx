@@ -6,7 +6,7 @@ import { AssetsImage } from '../../components/AssetsImage';
 import { styles } from './styles';
 import { StrategyCard } from './components/StrategyCard';
 import { SafetyCard } from './components/SafetyCard';
-import { Graph } from './components/Graph';
+import { HistoryGraph } from './components/HistoryGraph';
 import { VaultsStats } from './components/VaultsStats';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
@@ -116,10 +116,10 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               </Hidden>
             </div>
             <div className={classes.columnInfo}>
-              {!isGovVault(vault) && <PnLGraph vaultId={vaultId} />}
               {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
+              {!isGovVault(vault) && <PnLGraph vaultId={vaultId} />}
               {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
-              {!isGovVault(vault) ? <Graph vaultId={vaultId} /> : null}
+              {!isGovVault(vault) ? <HistoryGraph vaultId={vaultId} /> : null}
               <LiquidityPoolBreakdownLoader vaultId={vaultId} />
               <SafetyCard vaultId={vaultId} />
               {!isGovVault(vault) ? <StrategyCard vaultId={vaultId} /> : null}

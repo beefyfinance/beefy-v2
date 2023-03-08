@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox';
 import { BasicTabs } from '../../../../../../components/Tabs/BasicTabs';
-import { AverageState } from '../../Graph';
+import { AverageState } from '../../HistoryGraph';
 
 import { styles } from './styles';
 
@@ -45,7 +45,7 @@ export const Footer = memo<FooterProps>(function ({
       </div>
       <div className={classes.tabsContainer}>
         <BasicTabs
-          labels={[t('Graph-1Day'), t('Graph-1Week'), t('Graph-1Month'), t('Graph-1Year')]}
+          labels={[t('Graph-1Day'), t('Graph-1Week'), t('Graph-1Month'), t('Graph-All')]}
           value={period}
           onChange={newValue => handlePeriod(newValue)}
         />

@@ -7,10 +7,10 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     color: '#D0D0DA',
     cursor: 'pointer',
+    columnGap: '5px',
   },
   icon: {
     color: '#848BAD',
-    marginRight: `${8 - 3}px`,
   },
   label: {
     display: 'flex',

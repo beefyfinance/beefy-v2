@@ -8,19 +8,19 @@ import { styles } from './styles';
 const useStyles = makeStyles(styles);
 
 interface FooterProps {
-  stat: number;
-  handleStat: (stat: number) => any;
+  period: number;
+  handlePeriod: (period: number) => any;
   vaultId: VaultEntity['id'];
   labels: string[];
 }
 
-export const Footer = memo<FooterProps>(function ({ stat, handleStat, vaultId, labels }) {
+export const Footer = memo<FooterProps>(function ({ period, handlePeriod, vaultId, labels }) {
   const classes = useStyles();
 
   return (
     <div className={classes.footer}>
       <div className={classes.tabsContainer}>
-        <BasicTabs labels={labels} value={stat} onChange={newValue => handleStat(newValue)} />
+        <BasicTabs labels={labels} value={period} onChange={newValue => handlePeriod(newValue)} />
       </div>
     </div>
   );

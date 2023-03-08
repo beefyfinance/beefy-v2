@@ -33,11 +33,10 @@ export const styles = (theme: Theme) => ({
     width: '12px',
   },
   legendItem: {
-    ...theme.typography['subline-lg'],
-    fontWeight: 700,
+    ...theme.typography['subline-sm'],
     color: theme.palette.text.disabled,
     display: 'flex',
-    columnGap: '8px',
+    columnGap: '4px',
     alingItems: 'center',
   },
   tabsContainer: {
@@ -61,5 +60,9 @@ export const styles = (theme: Theme) => ({
   },
   checkbox: {
     color: theme.palette.text.disabled,
+    '& .MuiSvgIcon-root': {
+      height: '20px',
+    },
   },
+  checkBoxActive: {},
 });
