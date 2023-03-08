@@ -1,6 +1,6 @@
 [
   {
-    "zapAddress": "0xF815E5f5Ed70f8a88F5f17a5a3F4f1C9c829776B",
+    "zapAddress": "0xdc2EB6BBbCce7c9690138fC1c68E9b760948A9fd",
     "priceOracleAddress": "0x7F069df72b7A39bCE9806e3AfaF579E54D8CF2b9",
     "chainId": "polygon",
     "fee": {
@@ -49,7 +49,7 @@
     "blockedVaults": []
   },
   {
-    "zapAddress": "0xddcAF38D2Ae216f7B86af7A12A174CbE168B034b",
+    "zapAddress": "0xCe3870506C57bd6A891aDc8d35D51557A5B55769",
     "priceOracleAddress": "0xE8E598A1041b6fDB13999D275a202847D9b654ca",
     "chainId": "fantom",
     "fee": {
@@ -95,7 +95,7 @@
     "blockedVaults": ["geist-ftm"]
   },
   {
-    "zapAddress": "0x7B4d6d79DE44Fe034f75BD4525a13aaEFAF4597F",
+    "zapAddress": "0xa0A4BD251ccEf8211C2d4700C81451f5a38ff983",
     "priceOracleAddress": "0x11DEE30E710B8d4a8630392781Cc3c0046365d4c",
     "chainId": "optimism",
     "fee": {
@@ -145,7 +145,7 @@
     "blockedVaults": ["aavev3-op-eth"]
   },
   {
-    "zapAddress": "0x4B0A66dEe9ff557f9b0c25c3e57086495f570e65",
+    "zapAddress": "0xc0A1865b4B32B1e343EE515f6a092B45F1628b5D",
     "priceOracleAddress": "0xBd0c7AaF0bF082712EbE919a9dD94b2d978f79A9",
     "chainId": "avax",
     "fee": {
@@ -196,7 +196,7 @@
     "blockedVaults": ["aavev3-avax"]
   },
   {
-    "zapAddress": "0xb80318Aab313D54274358EEC637f18aFfd03DF8b",
+    "zapAddress": "0x852eDc9f0a07B01CF4c267aFFeF2f4F89671C301",
     "priceOracleAddress": "0x735247fb0a604c0adC6cab38ACE16D0DbA31295F",
     "chainId": "arbitrum",
     "fee": {
@@ -220,7 +220,7 @@
     "blockedVaults": []
   },
   {
-    "zapAddress": "0xD586Fc2cD0075e272142B76192a17693c4662fc4",
+    "zapAddress": "0x9Ddf69B3195f6D6074bb4fE9fd4ebE1446ac5B43",
     "priceOracleAddress": "0xfbD61B037C325b959c0F6A7e69D8f37770C2c550",
     "chainId": "bsc",
     "fee": {
@@ -280,7 +280,7 @@
     "blockedVaults": ["venus-bnb", "venus-wbnb"]
   },
   {
-    "zapAddress": "0x6b7886D72436522CE9664b5d77B6745f1A726C96",
+    "zapAddress": "0x0EC0e1242547a73C6A165d3D484e384902aa33d8",
     "priceOracleAddress": "0xE4E0552452e5cC1306A2bF5B2Fd9b1eA19418795",
     "chainId": "aurora",
     "fee": {
@@ -293,7 +293,7 @@
     "blockedVaults": []
   },
   {
-    "zapAddress": "0x46c7308567B527647853d3F94d40Ce82ed27f325",
+    "zapAddress": "0xcC0e75A98987BD2592DB39B203F3dC99B75d5Ce9",
     "priceOracleAddress": "0x07D91f5fb9Bf7798734C3f606dB065549F6893bb",
     "chainId": "ethereum",
     "fee": {
