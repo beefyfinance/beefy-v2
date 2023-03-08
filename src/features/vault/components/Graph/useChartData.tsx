@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getBeefyApi } from '../../../data/apis/instances';
 import { config } from '../../../../config/config';
-import { max } from 'lodash';
+import { max, maxBy, minBy } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { BeefyChartDataResponse } from '../../../data/apis/beefy';
 
@@ -12,9 +12,21 @@ const DAYS_IN_PERIOD = [1, 7, 30, 365];
 const MOVING_AVERAGE_POINTS = [6, 48, 10, 30];
 const SNAPSHOT_INTERVAL = parseInt(process.env.SNAPSHOT_INTERVAL) || 15 * 60;
 
+interface ChartDataState {
+  data: ChartData;
+  averageValue: number;
+  minValue: number;
+  maxValue: number;
+}
+
 export const useChartData = (stat, period, oracleId, vaultId, network) => {
-  const [chartData, setChartData] = useState(null);
-  const [averageValue, setAverageValue] = useState(0);
+  const [chartData, setChartData] = useState<ChartDataState>({
+    data: [],
+    averageValue: 0,
+    minValue: 0,
+    maxValue: 0,
+  });
+
   const [movingAverageDetail, setMovingAverageDetail] = useState('');
   const { t } = useTranslation();
 
@@ -54,15 +66,16 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
         LIMITS[period] // we need to get at most this amount of data charted
       );
 
-      setAverageValue(average);
+      const minValue = data ? minBy(data, row => row.v).v : 0;
+      const maxValue = data ? maxBy(data, row => row.v).v : 0;
 
-      setChartData(chartableData);
+      setChartData({ data: chartableData, averageValue: average, minValue, maxValue });
     };
 
     fetchData();
-  }, [stat, period, network, oracleId, vaultId, t]);
+  }, [stat, period, network, oracleId, vaultId, t, chartData]);
 
-  return [chartData, averageValue, movingAverageDetail];
+  return { chartData, movingAverageDetail };
 };
 
 const addItems = (data, start, stop) => {
@@ -73,13 +86,15 @@ const addItems = (data, start, stop) => {
   return sum;
 };
 
+type ChartData = BeefyChartDataResponse & { moveAverageValue: number }[];
+
 const getChartableData = (
   data: BeefyChartDataResponse,
   movingAveragePoints: number,
   chartDisplayPoints: number
 ) => {
   const startIndex = data.length > chartDisplayPoints ? data.length - chartDisplayPoints : 0;
-  const chartableData = [];
+  const chartableData: ChartData = [];
   let acum = 0;
 
   for (let i = startIndex; i < data.length; i++) {

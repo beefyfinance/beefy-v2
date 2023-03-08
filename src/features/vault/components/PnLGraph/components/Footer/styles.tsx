@@ -19,11 +19,10 @@ export const styles = (theme: Theme) => ({
     '& .MuiTab-root': {
       ...theme.typography['subline-lg'],
       minHeight: '22px',
-      paddingLeft: '12px',
-      paddingRight: '0px',
+      padding: '6px 0px',
     },
     '& .MuiTabs-flexContainer': {
-      gap: '8px',
+      gap: '12px',
     },
   },
 });

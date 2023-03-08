@@ -6,11 +6,13 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'space-between',
     alingItems: 'center',
     borderTop: '2px solid #363B63',
-    padding: '16px 24px',
+    padding: '8px 24px',
     borderRadius: '0px 0px 12px 12px',
     [theme.breakpoints.down('sm')]: {
+      padding: '8px 16px',
+    },
+    [theme.breakpoints.down('xs')]: {
       display: 'grid',
-      rowGap: '16px',
     },
   },
   items: {
@@ -20,8 +22,10 @@ export const styles = (theme: Theme) => ({
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column' as const,
       rowGap: '8px',
-      order: 1,
       alignItems: 'flex-start',
+    },
+    [theme.breakpoints.down('xs')]: {
+      order: 1,
     },
   },
   colorReference: {
@@ -37,16 +41,22 @@ export const styles = (theme: Theme) => ({
     alingItems: 'center',
   },
   tabsContainer: {
+    display: 'flex',
+    alignItems: 'center',
     '& .MuiTabs-root': {
       minHeight: '24px',
     },
     '& .MuiTab-root': {
       ...theme.typography['subline-lg'],
       minHeight: '22px',
+      padding: '6px 0px',
+      [theme.breakpoints.down('md')]: {
+        display: 'flex',
+        alignItems: 'flex-end',
+      },
     },
-    [theme.breakpoints.down('md')]: {
-      display: 'flex',
-      alignItems: 'flex-end',
+    '& .MuiTabs-flexContainer': {
+      gap: '12px',
     },
   },
   checkbox: {

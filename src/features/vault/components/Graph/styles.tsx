@@ -9,6 +9,9 @@ export const styles = (theme: Theme) => ({
     padding: '24px',
     borderRadius: '12px 12px 0px 0px',
     backgroundColor: '#232743',
+    [theme.breakpoints.down('md')]: {
+      padding: '16px',
+    },
   },
   titleBox: {
     display: 'flex',
@@ -37,7 +40,11 @@ export const styles = (theme: Theme) => ({
     fontWeight: 700,
   },
   graphContainer: {
-    padding: '24px 24px',
+    padding: '24px',
+    '& text': {
+      ...theme.typography['subline-sm'],
+      fill: theme.palette.text.disabled,
+    },
   },
   averageLine: {
     height: '2px',

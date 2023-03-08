@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme, useMediaQuery } from '@material-ui/core';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -22,6 +22,7 @@ import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { useAppSelector } from '../../../../store';
 import { useMemo } from 'react';
 import { Footer } from './components/Footer';
+import { max } from 'lodash';
 
 const useStyles = makeStyles(styles);
 
@@ -43,13 +44,15 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const tokenOracleId = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   ).oracleId;
-  const [chartData, averageValue, movingAverageDetail] = useChartData(
+  const { chartData, movingAverageDetail } = useChartData(
     stat,
     period,
     tokenOracleId,
     vaultId,
     vault.chainId
   );
+
+  const { data, averageValue, minValue, maxValue } = chartData;
   const { t } = useTranslation();
   const tabs = useMemo(() => {
     const labels = [t('TVL'), t('Graph-Price')];
@@ -67,9 +70,27 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
     [showAverages]
   );
 
+  const valueDiff = useMemo(() => {
+    return domainOffSet(minValue, maxValue, 0.88);
+  }, [maxValue, minValue]);
+
+  const startValueDomain = useMemo(() => {
+    return max([0, minValue - valueDiff]);
+  }, [minValue, valueDiff]);
+
+  const ticks = useMemo(() => {
+    return mapRangeToTicks(startValueDomain, maxValue + valueDiff);
+  }, [maxValue, startValueDomain, valueDiff]);
+
   const handlePeriod = useCallback((newPeriod: number) => {
     setPeriod(newPeriod);
   }, []);
+
+  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'));
+
+  const padding = useMemo(() => {
+    return smDown ? 16 : 24;
+  }, [smDown]);
 
   return (
     <div className={classes.container}>
@@ -82,21 +103,16 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         </div>
       </div>
       <div className={classes.graphContainer}>
-        <ResponsiveContainer height={250}>
-          <AreaChart data={chartData} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+        <ResponsiveContainer height={200}>
+          <AreaChart data={data} margin={{ top: 0, right: 0, bottom: 0, left: padding }}>
             <CartesianGrid vertical={false} stroke="#484D73" />
             <YAxis
               dataKey="v"
-              tick={{
-                fill: 'white',
-                fontSize: 12,
-              }}
-              axisLine={false}
-              tickLine={false}
               tickFormatter={label => {
                 return (stat === 2 ? formatPercent(label) : formatUsd(label)) as any;
               }}
-              tickCount={4}
+              domain={[startValueDomain, maxValue + valueDiff]}
+              ticks={ticks}
             />
             <Tooltip
               wrapperStyle={{ outline: 'none' }}
@@ -137,3 +153,12 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
 }
 
 export const Graph = React.memo(GraphComponent);
+
+export const domainOffSet = (min: number, max: number, heightPercentageUsedByChart: number) => {
+  return ((max - min) * (1 - heightPercentageUsedByChart)) / (2 * heightPercentageUsedByChart);
+};
+
+export const mapRangeToTicks = (min: number, max: number) => {
+  const factors = [0, 0.25, 0.5, 0.75, 1];
+  return factors.map(f => min + f * (max - min));
+};
