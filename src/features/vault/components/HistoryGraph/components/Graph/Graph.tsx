@@ -87,6 +87,7 @@ export const Graph = memo<GraphProps>(function _Graph({
             tickMargin={10}
             tickFormatter={tickItem => formatXAxis(tickItem, period)}
             interval={xInterval}
+            stroke="#363B63"
           />
           <Tooltip
             wrapperStyle={{ outline: 'none' }}
