@@ -30,6 +30,7 @@ import {
   Types,
   VaultDetails,
 } from './types';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -115,7 +116,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({ vaultId
   return (
     <>
       <Button
-        className={classes.shareButton}
+        className={clsx(classes.shareButton, { active: isOpen })}
         ref={anchorEl}
         onClick={handleOpen}
         active={isOpen}

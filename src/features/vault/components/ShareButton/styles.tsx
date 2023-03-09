@@ -8,7 +8,8 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'center',
     gap: '8px',
     color: theme.palette.text.light,
-    backgroundColor: '#363B63',
+    backgroundColor: '#2D3153',
+    outline: 'none',
     [theme.breakpoints.down('md')]: {
       borderRadius: '50%',
       padding: '10px',
@@ -16,13 +17,19 @@ export const styles = (theme: Theme) => ({
         display: 'none',
       },
     },
+    '&:hover, &:focus-visible, &.active': {
+      outline: 'none',
+      backgroundColor: '#363B63',
+    },
   },
   shareText: {},
   shareIcon: {
+    flexShrink: 0,
+    flexGrow: 0,
     fontSize: '16px',
   },
   dropdown: {
-    width: '200px',
+    width: 'auto',
     zIndex: 10000,
   },
   dropdownInner: {
@@ -34,6 +41,7 @@ export const styles = (theme: Theme) => ({
   },
   shareItem: {
     ...theme.typography['body-lg-med'],
+    whiteSpace: 'nowrap' as const,
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
