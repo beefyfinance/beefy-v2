@@ -1,5 +1,36 @@
 [
   {
+    "id": "thena-usdt-usd+",
+    "name": "USDT-USD+ sLP",
+    "token": "USDT-USD+ sLP",
+    "tokenAddress": "0xea9abc7AD420bDA7dD42FEa3C4ACd058902A5845",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "tokenAmmId": "bsc-thena",
+    "earnedToken": "mooThenaUSDT-USD+",
+    "earnedTokenAddress": "0x48aE3F2f6421b8DA1E2664aAE92D23C461167eBC",
+    "earnContractAddress": "0x48aE3F2f6421b8DA1E2664aAE92D23C461167eBC",
+    "oracle": "lps",
+    "oracleId": "thena-usdt-usd+",
+    "status": "active",
+    "platformId": "thena",
+    "assets": ["USDT", "USD+"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://thena.fi/swap",
+    "addLiquidityUrl": "https://thena.fi/liquidity",
+    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
+    "network": "bsc",
+    "createdAt": 1678363816
+  },
+  {
     "id": "thena-bnbx-usdt",
     "name": "BNBx-USDT vLP",
     "token": "BNBx-USDT vLP",
