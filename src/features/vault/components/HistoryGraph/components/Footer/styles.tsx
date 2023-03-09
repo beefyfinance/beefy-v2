@@ -11,9 +11,6 @@ export const styles = (theme: Theme) => ({
     [theme.breakpoints.down('sm')]: {
       padding: '8px 16px',
     },
-    [theme.breakpoints.down('xs')]: {
-      display: 'grid',
-    },
   },
   items: {
     display: 'flex',
@@ -23,9 +20,6 @@ export const styles = (theme: Theme) => ({
       flexDirection: 'column' as const,
       rowGap: '8px',
       alignItems: 'flex-start',
-    },
-    [theme.breakpoints.down('xs')]: {
-      order: 1,
     },
   },
   colorReference: {

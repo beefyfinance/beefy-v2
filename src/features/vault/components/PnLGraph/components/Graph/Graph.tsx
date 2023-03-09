@@ -86,15 +86,15 @@ export const Graph = memo(function ({ vaultId, period }: { vaultId: string; peri
     return mapRangeToTicks(startUsdDomain, maxUsd + usdDiff);
   }, [maxUsd, startUsdDomain, usdDiff]);
 
-  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'));
+  const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'));
 
   const xInterval = useMemo(() => {
     return X_AXIS_INTERVAL[period];
   }, [period]);
 
-  const padding = useMemo(() => {
-    return smDown ? 16 : 24;
-  }, [smDown]);
+  const xMargin = useMemo(() => {
+    return xsDown ? 16 : 24;
+  }, [xsDown]);
 
   if (loading) {
     return <GraphLoader />;
@@ -108,7 +108,7 @@ export const Graph = memo(function ({ vaultId, period }: { vaultId: string; peri
           width={450}
           height={200}
           data={data}
-          margin={{ top: 14, right: padding, bottom: 0, left: padding }}
+          margin={{ top: 14, right: xMargin, bottom: 0, left: xMargin }}
           className={classes.graph}
         >
           <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />\{' '}
