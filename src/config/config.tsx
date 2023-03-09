@@ -112,6 +112,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'jBRL',
       '2BRZ',
       'bbamUSD',
+      'wUSDR',
     ],
   },
   bsc: {
@@ -311,6 +312,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'USDD',
       'TUSD',
       'agEUR',
+      'LUSD',
     ],
   },
   avax: {
@@ -533,7 +535,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     name: 'Canto',
     chainId: 7700,
     rpc: ['https://mainnode.plexnode.org:8545'],
-    explorerUrl: 'https://evm.explorer.canto.io',
+    explorerUrl: 'https://tuber.build',
     multicallAddress: '0xc34b9c9DBB39Be0Ef850170127A7b4283484f804',
     appMulticallContractAddress: '0x7c7B7FbccA5699175003ecbe1B41E79F40385469',
     providerName: 'Canto',
@@ -546,7 +548,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         decimals: 18,
       },
       rpcUrls: ['https://mainnode.plexnode.org:8545'],
-      blockExplorerUrls: ['https://evm.explorer.canto.io/'],
+      blockExplorerUrls: ['https://tuber.build/'],
     },
     gas: {
       type: 'standard',

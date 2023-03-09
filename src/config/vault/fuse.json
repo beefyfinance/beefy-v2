@@ -25,8 +25,7 @@
     "strategyTypeId": "single",
     "isGovVault": true,
     "network": "fuse",
-    "createdAt": 1641686497,
-    "callFee": 0.5
+    "createdAt": 1641686497
   },
   {
     "id": "voltagev2-3pool",
@@ -444,7 +443,8 @@
     "earnContractAddress": "0x511Aa76E55D9DD024C799ea05149809147eF14dD",
     "oracle": "lps",
     "oracleId": "voltagev2-fusd-bnb",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "voltage",
     "assets": ["fUSD", "BNB"],
     "risks": [
@@ -600,7 +600,8 @@
     "earnContractAddress": "0x20624135bDde2e871d2e0A7A57D83B423501f691",
     "oracle": "lps",
     "oracleId": "voltagev2-wfuse-fusd",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "voltage",
     "assets": ["fUSD", "FUSE"],
     "risks": [

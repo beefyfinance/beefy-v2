@@ -3,11 +3,26 @@ import { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   holder: {
     position: 'absolute' as const,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    minWidth: '400px',
     outline: 'none',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '24px',
+    [theme.breakpoints.down('xs')]: {
+      padding: '0',
+    },
+  },
+  card: {
+    margin: 0,
+    maxHeight: '100%',
+    display: 'flex',
+    flexDirection: 'column' as const,
+    width: '1272px',
+    maxWidth: '100%',
   },
   header: {
     display: 'flex',
@@ -21,19 +36,41 @@ export const styles = (theme: Theme) => ({
   title: {
     color: theme.palette.text.primary,
   },
-  removeHover: {
+  closeIcon: {
     '&:hover': {
       background: 'none',
     },
   },
-  container: {
-    display: 'flex',
-    flexDirection: 'column' as const,
+  content: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: '0 0 12px 12px',
     padding: '24px',
+    minHeight: '200px',
+    flexShrink: 1,
+    display: 'flex',
+    flexDirection: 'column' as const,
   },
-  btn: {
+  gridScroller: {
+    flexShrink: 1,
+    maxHeight: '100%',
+    minHeight: '100px',
+    overflowY: 'auto' as const,
+  },
+  grid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    gap: '16px',
+    [theme.breakpoints.up('sm')]: {
+      gridTemplateColumns: 'repeat(3, 1fr)',
+    },
+    [theme.breakpoints.up('md')]: {
+      gridTemplateColumns: 'repeat(4, 1fr)',
+    },
+    [theme.breakpoints.up('lg')]: {
+      gridTemplateColumns: 'repeat(5, 1fr)',
+    },
+  },
+  closeButton: {
     marginTop: theme.spacing(4),
   },
   chain: {

@@ -82,7 +82,7 @@ export class OneInchApi implements IOneInchApi {
     }
 
     const multicall = await this.getMulticall();
-    const contract = createContract(OneInchPriceOracleAbi, this.chain.oneInchPriceOracleAddress);
+    const contract = createContract(OneInchPriceOracleAbi, this.oracleAddress);
     const calls = request.tokenAddresses.map(address => ({
       address,
       price: contract.methods.getRateToEth(address, true),

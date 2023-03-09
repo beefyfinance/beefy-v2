@@ -132,7 +132,7 @@ export async function getOneInchApi(
   if (!oneInchApiCache[chain.id]) {
     const { OneInchApi } = await OneInchApiPromise;
     console.debug(`Instanciating OneInchApi for chain ${chain.id}`);
-    return new OneInchApi(chain, oracleAddress);
+    oneInchApiCache[chain.id] = new OneInchApi(chain, oracleAddress);
   }
 
   return oneInchApiCache[chain.id];

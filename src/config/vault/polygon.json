@@ -1,5 +1,64 @@
 [
   {
+    "id": "balancer-poly-wsteth-eth",
+    "name": "wstETH-ETH",
+    "token": "wstETH-ETH Poly",
+    "tokenAddress": "0x65Fe9314bE50890Fb01457be076fAFD05Ff32B9A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerPolywstETH-ETH",
+    "earnedTokenAddress": "0x1d81c50d5aB5f095894c41B41BA49B9873033399",
+    "earnContractAddress": "0x1d81c50d5aB5f095894c41B41BA49B9873033399",
+    "oracle": "lps",
+    "oracleId": "balancer-poly-wsteth-eth",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["wstETH", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x65fe9314be50890fb01457be076fafd05ff32b9a000000000000000000000a96/invest",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x65fe9314be50890fb01457be076fafd05ff32b9a000000000000000000000a96/withdraw",
+    "network": "polygon",
+    "createdAt": 1678222093
+  },
+  {
+    "id": "balancer-usdc-wusdr",
+    "name": "USDC-wUSDR",
+    "token": "USDC-wUSDR",
+    "tokenAddress": "0x34A81e8956BF20b7448b31990A2c06F96830a6e4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerUSDC-wUSDR",
+    "earnedTokenAddress": "0x67E6E5D769194Fd4421b514380526CD7bDae92E6",
+    "earnContractAddress": "0x67E6E5D769194Fd4421b514380526CD7bDae92E6",
+    "oracle": "lps",
+    "oracleId": "balancer-usdc-wusdr",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["USDC", "wUSDR"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/invest",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/withdraw",
+    "network": "polygon",
+    "createdAt": 1678119805
+  },
+  {
     "id": "balancer-jeur-par",
     "name": "jEUR-PAR",
     "token": "jEUR-PAR",
@@ -183,6 +242,29 @@
     "buyTokenUrl": "https://app.1inch.io/#/137/unified/swap/AVAX/0x2760E46d9BB43dafCbEcaad1F64b93207f9f0eD7",
     "network": "polygon",
     "createdAt": 1672503160
+  },
+  {
+    "id": "kyber-wsteth-eth",
+    "name": "wstETH-ETH LP",
+    "token": "wstETH-ETH kLP",
+    "tokenAddress": "0xAb08b0C9DADC343d3795dAE5973925c3b6e39977",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kyber",
+    "earnedToken": "mooKyberwstETH-ETH",
+    "earnedTokenAddress": "0xEC209bCdEf8798772aC1456ea9d93C940187363C",
+    "earnContractAddress": "0xEC209bCdEf8798772aC1456ea9d93C940187363C",
+    "oracle": "lps",
+    "oracleId": "kyber-wsteth-eth",
+    "status": "active",
+    "platformId": "kyber",
+    "assets": ["wstETH", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://kyberswap.com/swap/polygon",
+    "addLiquidityUrl": "https://kyberswap.com/add/0x03b54a6e9a984069379fae1a4fc4dbae93b3bccd/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619/0xab08b0c9dadc343d3795dae5973925c3b6e39977?networkId=137",
+    "removeLiquidityUrl": "https://kyberswap.com/remove/0x03b54a6e9a984069379fae1a4fc4dbae93b3bccd/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619/0xab08b0c9dadc343d3795dae5973925c3b6e39977?networkId=137",
+    "network": "polygon",
+    "createdAt": 1678282162
   },
   {
     "id": "kyber-usdc-mai",
@@ -985,8 +1067,7 @@
     "excluded": "polygon-bifi-maxi",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xfbdd194376de19a88118e84e279b977f165d01b8",
     "network": "polygon",
-    "createdAt": 1623706144,
-    "callFee": 0.5
+    "createdAt": 1623706144
   },
   {
     "id": "mai-curve-mai-3pool",
@@ -1048,8 +1129,7 @@
     "isGovVault": true,
     "excluded": "beefy-beqi",
     "network": "polygon",
-    "createdAt": 1650557675,
-    "callFee": 0.5
+    "createdAt": 1650557675
   },
   {
     "id": "giddy-giddy",
@@ -1170,7 +1250,8 @@
     "earnContractAddress": "0x03F69AAF4c8512f533Da46cC9eFd49C4969e3CB8",
     "oracle": "lps",
     "oracleId": "sushi-poly-usdc-bifi",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["USDC", "BIFI"],
     "risks": [
@@ -3678,7 +3759,8 @@
     "earnContractAddress": "0x8efCf419813F9E018cCaCda36151e5079c274fa4",
     "oracle": "lps",
     "oracleId": "sushi-poly-grt-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["GRT", "ETH"],
     "risks": [
@@ -4087,7 +4169,8 @@
     "earnContractAddress": "0xE695fCeD8fD93eeE54204a7fC33323a60d41865A",
     "oracle": "lps",
     "oracleId": "sushi-poly-crv-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["CRV", "ETH"],
     "risks": [
@@ -4152,7 +4235,8 @@
     "earnContractAddress": "0xaE65a66B3c7f8cc1ba71cEA740C953aBa0F3Ce8b",
     "oracle": "lps",
     "oracleId": "sushi-poly-link-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["LINK", "ETH"],
     "risks": [
@@ -4252,7 +4336,8 @@
     "earnContractAddress": "0x866a910F3375d0dEBDdD904A36B3940aFcD29900",
     "oracle": "lps",
     "oracleId": "sushi-poly-aave-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["AAVE", "ETH"],
     "risks": [
@@ -4284,7 +4369,8 @@
     "earnContractAddress": "0xE8417099971151CD5CfAE264e25634Fac05cA2b3",
     "oracle": "lps",
     "oracleId": "sushi-poly-eth-usdt",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["ETH", "USDT"],
     "risks": [
@@ -4316,7 +4402,8 @@
     "earnContractAddress": "0xE4DB97A2AAFbfef40D1a4AE8B709f61d6756F8e1",
     "oracle": "lps",
     "oracleId": "sushi-poly-usdc-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["USDC", "ETH"],
     "risks": [
@@ -4348,7 +4435,8 @@
     "earnContractAddress": "0xC8e809a9180d637Cc23dAf60b41B70CA1ad5Fc08",
     "oracle": "lps",
     "oracleId": "sushi-poly-matic-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["MATIC", "ETH"],
     "risks": [
@@ -5660,7 +5748,8 @@
     "earnContractAddress": "0x90A7289A3aAb4b070A2646DCa757025Ee84cF580",
     "oracle": "lps",
     "oracleId": "sushi-poly-usdc-bct",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["BCT", "USDC"],
     "risks": [
@@ -6234,39 +6323,6 @@
     "removeLiquidityUrl": "https://quickswap.exchange/#/add/0xB382C1cfA622795a534e5bd56Fac93d59BAc8B0D/ETH",
     "network": "polygon",
     "createdAt": 1642000487
-  },
-  {
-    "id": "quick-bico-eth-eol",
-    "name": "BICO-ETH LP",
-    "token": "BICO-ETH LP",
-    "tokenAddress": "0x7E02A82a9F2b96eE2836c5C64c44e0aB13020f4b",
-    "tokenDecimals": 18,
-    "tokenProviderId": "quickswap",
-    "tokenAmmId": "polygon-quickswap",
-    "earnedToken": "mooQuickSwapBICO-ETH",
-    "earnedTokenAddress": "0xEaa2Ce6351d803456235809D82357ED8D23E8502",
-    "earnContractAddress": "0xEaa2Ce6351d803456235809D82357ED8D23E8502",
-    "oracle": "lps",
-    "oracleId": "quick-bico-eth",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "quickswap",
-    "assets": ["BICO", "ETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "MCAP_MICRO",
-      "IL_HIGH",
-      "PLATFORM_ESTABLISHED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x91c89A94567980f0e9723b487b0beD586eE96aa7",
-    "addLiquidityUrl": "https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x91c89A94567980f0e9723b487b0beD586eE96aa7",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x91c89A94567980f0e9723b487b0beD586eE96aa7",
-    "network": "polygon",
-    "createdAt": 1645091761
   },
   {
     "id": "quick-sand-matic-eol",
@@ -7366,7 +7422,8 @@
     "earnContractAddress": "0x6b6ca47520dDC9333B8bD09a1e64204648B63274",
     "oracle": "lps",
     "oracleId": "sushi-poly-eth-dai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["ETH", "DAI"],
     "risks": [
@@ -7399,7 +7456,8 @@
     "earnContractAddress": "0x6530E351074f1f9fdf254dC7d7d8A44324E158a4",
     "oracle": "lps",
     "oracleId": "sushi-poly-btc-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["WBTC", "ETH"],
     "risks": [

@@ -54,8 +54,7 @@
     "excluded": "avax-bifi-maxi",
     "buyTokenUrl": "https://www.traderjoexyz.com/#/trade?outputCurrency=0xd6070ae98b8069de6b494332d1a1a81b6179d960",
     "network": "avax",
-    "createdAt": 1623706144,
-    "callFee": 0.5
+    "createdAt": 1623706144
   },
   {
     "id": "kyber-avax-usdc-mai",
@@ -235,8 +234,7 @@
     "isGovVault": true,
     "excluded": "beefy-beJoe",
     "network": "avax",
-    "createdAt": 1649422900,
-    "callFee": 0.5
+    "createdAt": 1649422900
   },
   {
     "id": "sicle-grape-mim",
@@ -2935,7 +2933,8 @@
     "earnContractAddress": "0xD78d5464690544F5D838dAEF0D7650fA03c64598",
     "oracle": "lps",
     "oracleId": "ripae-pavax-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "ripae",
     "assets": ["pAVAX", "AVAX"],
     "risks": [
@@ -2967,7 +2966,8 @@
     "earnContractAddress": "0x2c0E2Ec5C2C84346497cc82F5afF72f8A29dA835",
     "oracle": "lps",
     "oracleId": "ripae-pae-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "ripae",
     "assets": ["PAE", "AVAX"],
     "risks": [

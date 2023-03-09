@@ -1,5 +1,10 @@
 import { ChainEntity } from '../entities/chain';
 
+const DEFAULT_CHUNK_SIZE = 468;
+const DEFAULT_CHUNK_SIZE_BY_CHAIN: Record<string, number> = {
+  fantom: 200,
+};
+
 export function featureFlag_getContractDataApiImplem():
   | 'eth-multicall'
   | 'new-multicall'
@@ -20,13 +25,19 @@ export function featureFlag_getContractDataApiImplem():
   // default is new-multicall
   return 'new-multicall';
 }
-export function featureFlag_getContractDataApiChunkSize(): number {
+
+export function featureFlag_getContractDataApiChunkSize(chain: ChainEntity['id']): number {
   const params = new URLSearchParams(window.location.search);
-  // default is eth-multicall
+  if (params.has(`__contract_data_api_chunk_size_${chain}`)) {
+    return parseInt(params.get(`__contract_data_api_chunk_size_${chain}`));
+  }
   if (params.has('__contract_data_api_chunk_size')) {
     return parseInt(params.get('__contract_data_api_chunk_size'));
   }
-  return 468;
+  if (chain in DEFAULT_CHUNK_SIZE_BY_CHAIN) {
+    return DEFAULT_CHUNK_SIZE_BY_CHAIN[chain];
+  }
+  return DEFAULT_CHUNK_SIZE;
 }
 
 export function featureFlag_getBalanceApiImplem(): 'eth-multicall' | 'new-multicall' {

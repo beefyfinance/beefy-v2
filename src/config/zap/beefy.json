@@ -85,6 +85,11 @@
     "zapAddress": "0x28A12F017d0D843d43C71235F4F58535B8BE8563"
   },
   {
+    "chainId": "canto",
+    "ammId": "canto-velocimeter",
+    "zapAddress": "0xCBAB6076b4B0c482e7127a201b79a13D117E2B53"
+  },
+  {
     "chainId": "cronos",
     "ammId": "cronos-vvs",
     "zapAddress": "0xE8f59c05Ff92CF1584CBc404B4527b4F1eaF6620"

@@ -55,7 +55,6 @@ async function generateLaunchpool() {
     id: `moo_${pool.oracleId}-${partnerId}`,
     poolId: pool.id,
     name: `${partner}`,
-    logo: pool.logo,
     assets: pool.assets,
     tokenAddress: boost.staked,
     earnedToken: boost.earnedToken,
@@ -69,12 +68,6 @@ async function generateLaunchpool() {
     isMooStaked: true,
     partners: [`${partnerId}`],
   };
-
-  if (newBoost.logo) {
-    delete newBoost.assets;
-  } else {
-    delete newBoost.logo;
-  }
 
   const boosts = JSON.parse(await fs.readFile(boostsFile, 'utf8'));
   const newBoosts = [newBoost, ...boosts];

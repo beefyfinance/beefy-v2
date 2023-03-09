@@ -128,7 +128,6 @@ export interface ChainConfig {
   explorerUrl: string;
   multicallAddress: string;
   appMulticallContractAddress: string;
-  oneInchPriceOracleAddress?: string;
   providerName: string;
   walletSettings: {
     chainId: string;
