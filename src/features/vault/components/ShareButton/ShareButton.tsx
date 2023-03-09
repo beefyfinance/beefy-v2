@@ -24,21 +24,16 @@ import {
   BoostedVaultExtraDetails,
   CommonVaultDetails,
   GovVaultExtraDetails,
-  Types,
   ShareButtonProps,
   ShareItemProps,
   ShareServiceItemProps,
+  Types,
   VaultDetails,
 } from './types';
-import { omit } from 'lodash';
 
 const useStyles = makeStyles(styles);
 
-export const ShareButton = memo<ShareButtonProps>(function ShareButton({
-  vaultId,
-  placement,
-  campaign,
-}) {
+export const ShareButton = memo<ShareButtonProps>(function ShareButton({ vaultId, placement }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const anchorEl = useRef();
@@ -47,12 +42,6 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const apys = useAppSelector(state => selectVaultTotalApy(state, vault.id));
   const commonVaultDetails = useMemo<CommonVaultDetails>(() => {
-    const utm = {
-      utm_campaign: campaign,
-      utm_medium: 'social',
-      utm_term: vault.id,
-    };
-
     return {
       vaultName: vault.name,
       vaultApy: formatPercent(apys.totalApy, 2),
@@ -60,9 +49,8 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
       chainName: chain.name,
       chainTag: '#' + chain.name.toLowerCase().replace(/[^a-z0-9-_]/gi, ''),
       beefyHandle: '@beefyfinance',
-      utm,
     };
-  }, [vault, chain, campaign, apys]);
+  }, [vault, chain, apys]);
   const additionalSelector = useMemo(
     () =>
       (state: BeefyState): Types | BoostedVaultExtraDetails | GovVaultExtraDetails => {
@@ -126,7 +114,13 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
 
   return (
     <>
-      <Button className={classes.shareButton} ref={anchorEl} onClick={handleOpen} active={isOpen}>
+      <Button
+        className={classes.shareButton}
+        ref={anchorEl}
+        onClick={handleOpen}
+        active={isOpen}
+        borderless={true}
+      >
         <span className={classes.shareText}>{t('Vault-Share')}</span>
         <ShareIcon className={classes.shareIcon} />
       </Button>
@@ -150,11 +144,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
 const TwitterItem = memo<ShareServiceItemProps>(function TwitterItem({ details }) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
-    const message = t(`Vault-Share-Message-${details.kind}`, omit(details, ['utm']));
-    // const url = `${details.vaultUrl}?${new URLSearchParams({
-    //   ...details.utm,
-    //   utm_source: 'twitter',
-    // }).toString()}`;
+    const message = t(`Vault-Share-Message-${details.kind}`, details);
 
     // https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
     const params = new URLSearchParams({
@@ -171,11 +161,7 @@ const TwitterItem = memo<ShareServiceItemProps>(function TwitterItem({ details }
 const LensterItem = memo<ShareServiceItemProps>(function LensterItem({ details }) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
-    const message = t(`Vault-Share-Message-${details.kind as string}`, omit(details, ['utm']));
-    // const url = `${details.vaultUrl}?${new URLSearchParams({
-    //   ...details.utm,
-    //   utm_source: 'lenster',
-    // }).toString()}`;
+    const message = t(`Vault-Share-Message-${details.kind as string}`, details);
 
     // https://docs.lens.xyz/docs/integrating-lens
     const params = new URLSearchParams({
@@ -192,11 +178,7 @@ const LensterItem = memo<ShareServiceItemProps>(function LensterItem({ details }
 const TelegramItem = memo<ShareServiceItemProps>(function TelegramItem({ details }) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
-    const message = t(`Vault-Share-Message-${details.kind as string}`, omit(details, ['utm']));
-    // const url = `${details.vaultUrl}?${new URLSearchParams({
-    //   ...details.utm,
-    //   utm_source: 'telegram',
-    // }).toString()}`;
+    const message = t(`Vault-Share-Message-${details.kind as string}`, details);
 
     // https://core.telegram.org/widgets/share
     const params = new URLSearchParams({
@@ -214,11 +196,7 @@ const CopyLinkItem = memo<ShareServiceItemProps>(function CopyLinkItem({ details
   const { t } = useTranslation();
   const onClick = useCallback(() => {
     try {
-      const url = `${details.vaultUrl}?${new URLSearchParams({
-        ...details.utm,
-        utm_source: 'clipboard',
-      }).toString()}`;
-      navigator.clipboard.writeText(url);
+      navigator.clipboard.writeText(details.vaultUrl);
     } catch (e) {
       console.error('Failed to copy to clipboard', e);
     }

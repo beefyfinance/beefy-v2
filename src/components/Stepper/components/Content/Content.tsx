@@ -233,9 +233,7 @@ const SuccessContentDisplay = memo<SuccessContentDisplayProps>(function ({
         </div>
       ) : null}
       <div className={classes.buttons}>
-        {shareVaultId ? (
-          <ShareButton vaultId={shareVaultId} campaign="share-vault-tx" placement="bottom-start" />
-        ) : null}
+        {shareVaultId ? <ShareButton vaultId={shareVaultId} placement="bottom-start" /> : null}
         <CloseButton />
       </div>
     </>
