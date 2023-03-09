@@ -1,9 +1,9 @@
 import { VaultEntity } from '../../../data/entities/vault';
 import { Placement } from '@floating-ui/react-dom';
+import { AllValuesAsString } from '../../../data/utils/types-utils';
 
 export type ShareButtonProps = {
   vaultId: VaultEntity['id'];
-  campaign: string;
   placement?: Placement;
 };
 
@@ -14,11 +14,6 @@ export type CommonVaultDetails = {
   chainName: string;
   chainTag: string;
   beefyHandle: string;
-  utm: {
-    utm_medium: string;
-    utm_campaign: string;
-    utm_term: string;
-  };
 };
 export type Types = { kind: 'normal' };
 export type NormalVaultDetails = CommonVaultDetails & Types;
@@ -45,7 +40,7 @@ export type GovVaultDetails = CommonVaultDetails & GovVaultExtraDetails;
 export type VaultDetails = NormalVaultDetails | BoostedVaultDetails | GovVaultDetails;
 
 export type ShareServiceItemProps = {
-  details: VaultDetails;
+  details: AllValuesAsString<VaultDetails>;
 };
 
 export type ShareItemProps = {
