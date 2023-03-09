@@ -21,7 +21,6 @@ export const Banners = memo<BannersProps>(function () {
 
   return (
     <Container maxWidth="lg" className={classes.banners}>
-      <AnnouncementBanner />
       <RenBannerHome />
     </Container>
   );
