@@ -645,25 +645,9 @@ export class OneInchZapProvider implements ITransactProvider {
       }
     });
 
-    console.debug(
-      'beefyPricesInUsd',
-      beefyPricesInUsd.map(p => p.toString(10))
-    );
-    console.debug(
-      'oneInchPricesInNative',
-      oneInchPricesInNative.map(p => p.toString(10))
-    );
-    console.debug(
-      'oneInchPricesInUsd',
-      oneInchPricesInUsd.map(p => p.toString(10))
-    );
-
     const [inputValue, outputValue] = oneInchPricesInNative.map((price, i) =>
       price.multipliedBy(swaps[i].amount)
     );
-
-    console.debug('inputValue', inputValue.toString(10));
-    console.debug('outputValue', outputValue.toString(10));
 
     return BIG_ONE.minus(BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)).toNumber();
   }
