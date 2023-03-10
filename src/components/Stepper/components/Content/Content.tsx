@@ -95,7 +95,13 @@ export const CloseButton = memo(function () {
   }, [dispatch]);
 
   return (
-    <Button borderless={true} fullWidth={true} className={classes.closeBtn} onClick={handleClose}>
+    <Button
+      borderless={true}
+      fullWidth={true}
+      variant="middle"
+      className={classes.closeBtn}
+      onClick={handleClose}
+    >
       {t('Transactn-Close')}
     </Button>
   );

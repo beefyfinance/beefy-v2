@@ -34,7 +34,11 @@ import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
-export const ShareButton = memo<ShareButtonProps>(function ShareButton({ vaultId, placement }) {
+export const ShareButton = memo<ShareButtonProps>(function ShareButton({
+  vaultId,
+  placement,
+  mobileAlternative = false,
+}) {
   const { t } = useTranslation();
   const classes = useStyles();
   const anchorEl = useRef();
@@ -116,7 +120,11 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({ vaultId
   return (
     <>
       <Button
-        className={clsx(classes.shareButton, { active: isOpen })}
+        className={clsx(classes.shareButton, {
+          active: isOpen,
+          [classes.mobileAlternative]: mobileAlternative,
+        })}
+        variant="middle"
         ref={anchorEl}
         onClick={handleOpen}
         active={isOpen}

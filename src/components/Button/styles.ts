@@ -33,6 +33,10 @@ export const styles = (theme: Theme) => ({
     boxShadow: 'none',
     textAlign: 'center' as const,
     textDecoration: 'none',
+    outline: 'none',
+    '&:focus': {
+      outline: 'none',
+    },
     '&:disabled': {
       color: 'rgba(255, 255, 255, 0.38)',
       backgroundColor: 'rgba(255, 255, 255, 0.12)',
@@ -62,6 +66,16 @@ export const styles = (theme: Theme) => ({
       color: '#F5F5FF',
       backgroundColor: '#2C3154',
       borderColor: '#2C3154',
+    },
+  },
+  middle: {
+    color: '#F5F5FF',
+    backgroundColor: '#2D3153',
+    borderColor: '#2D3153',
+    '&:hover': {
+      color: '#FFFFFF',
+      backgroundColor: '#363B63',
+      borderColor: '#363B63',
     },
   },
   light: {

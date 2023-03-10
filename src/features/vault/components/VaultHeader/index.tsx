@@ -42,7 +42,7 @@ export const VaultHeader = memo<VaultHeaderProps>(function ({ vaultId }) {
         </div>
         {vault.status === 'active' ? (
           <div className={classes.shareHolder}>
-            <ShareButton vaultId={vaultId} />
+            <ShareButton vaultId={vaultId} mobileAlternative={true} />
           </div>
         ) : null}
       </div>

@@ -5,6 +5,7 @@ import { AllValuesAsString } from '../../../data/utils/types-utils';
 export type ShareButtonProps = {
   vaultId: VaultEntity['id'];
   placement?: Placement;
+  mobileAlternative?: boolean;
 };
 
 export type CommonVaultDetails = {
