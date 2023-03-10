@@ -7,19 +7,19 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     gap: '8px',
-    color: theme.palette.text.light,
-    backgroundColor: '#2D3153',
     outline: 'none',
+    '&:focus-visible, &.active': {
+      outline: 'none',
+      backgroundColor: '#363B63',
+    },
+  },
+  mobileAlternative: {
     [theme.breakpoints.down('md')]: {
       borderRadius: '50%',
       padding: '10px',
       '& $shareText': {
         display: 'none',
       },
-    },
-    '&:hover, &:focus-visible, &.active': {
-      outline: 'none',
-      backgroundColor: '#363B63',
     },
   },
   shareText: {},
