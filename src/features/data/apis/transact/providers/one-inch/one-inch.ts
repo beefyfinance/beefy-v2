@@ -14,7 +14,11 @@ import {
 } from '../../transact-types';
 import { Namespace, TFunction } from 'react-i18next';
 import { Step } from '../../../../reducers/wallet/stepper';
-import { selectStandardVaultById, selectVaultById } from '../../../../selectors/vaults';
+import {
+  selectStandardVaultById,
+  selectVaultById,
+  selectVaultSupportsOneInchZap,
+} from '../../../../selectors/vaults';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
@@ -102,6 +106,10 @@ export class OneInchZapProvider implements ITransactProvider {
     state: BeefyState
   ): Promise<OneInchZapOption[] | null> {
     const vault = selectVaultById(state, vaultId);
+
+    if (!selectVaultSupportsOneInchZap(state, vaultId)) {
+      return null;
+    }
 
     if (!isStandardVault(vault)) {
       return null;
@@ -637,25 +645,9 @@ export class OneInchZapProvider implements ITransactProvider {
       }
     });
 
-    console.debug(
-      'beefyPricesInUsd',
-      beefyPricesInUsd.map(p => p.toString(10))
-    );
-    console.debug(
-      'oneInchPricesInNative',
-      oneInchPricesInNative.map(p => p.toString(10))
-    );
-    console.debug(
-      'oneInchPricesInUsd',
-      oneInchPricesInUsd.map(p => p.toString(10))
-    );
-
     const [inputValue, outputValue] = oneInchPricesInNative.map((price, i) =>
       price.multipliedBy(swaps[i].amount)
     );
-
-    console.debug('inputValue', inputValue.toString(10));
-    console.debug('outputValue', outputValue.toString(10));
 
     return BIG_ONE.minus(BigNumber.min(outputValue.dividedBy(inputValue), BIG_ONE)).toNumber();
   }
@@ -805,6 +797,10 @@ export class OneInchZapProvider implements ITransactProvider {
     state: BeefyState
   ): Promise<TransactOption[] | null> {
     const vault = selectVaultById(state, vaultId);
+
+    if (!selectVaultSupportsOneInchZap(state, vaultId)) {
+      return null;
+    }
 
     if (!isStandardVault(vault)) {
       return null;
