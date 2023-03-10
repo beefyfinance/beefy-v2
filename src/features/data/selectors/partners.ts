@@ -30,3 +30,7 @@ export const selectBoostedVaultMainPartner = (state: BeefyState, vaultId: VaultE
   const partner = state.biz.partners.byId[boost.partnerIds[0]];
   return partner;
 };
+
+export const selectPartnerById = (state: BeefyState, partnerId: string) => {
+  return state.biz.partners.byId[partnerId];
+};
