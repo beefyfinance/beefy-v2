@@ -41,9 +41,7 @@ const oldValidOwners = [
   addressBook.arbitrum.platforms.beefyfinance.devMultisig,
 ];
 
-const oldValidFeeRecipients = {
-  canto: '0xF09d213EE8a8B159C884b276b86E08E26B3bfF75',
-};
+const oldValidFeeRecipients = {};
 
 const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddress'];
 
