@@ -175,3 +175,28 @@ export function featureFlag_breakpoints() {
   const params = new URLSearchParams(window.location.search);
   return params.has('__breakpoints');
 }
+
+type ZapOverrides = {
+  beefy: 'all' | string[];
+  oneInch: 'all' | string[];
+};
+export function featureFlag_zapSupportOverrides(): ZapOverrides {
+  const params = new URLSearchParams(window.location.search);
+  const overrides: ZapOverrides = {
+    beefy: [],
+    oneInch: [],
+  };
+  for (const kind of ['beefy', 'oneInch'] as const) {
+    const key = `__${kind}_zap_support`;
+    if (params.has(key)) {
+      const enabled = params.get(key);
+      if (enabled === 'all') {
+        overrides[kind] = 'all';
+      } else {
+        overrides[kind] = enabled.split(',');
+      }
+    }
+  }
+
+  return overrides;
+}
