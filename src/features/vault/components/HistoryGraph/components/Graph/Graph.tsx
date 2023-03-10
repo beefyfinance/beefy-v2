@@ -98,6 +98,7 @@ export const Graph = memo<GraphProps>(function _Graph({
         <AreaChart
           data={chartData.data}
           className={classes.graph}
+          height={200}
           margin={{ top: 14, right: xMargin, bottom: 0, left: xMargin }}
         >
           <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />

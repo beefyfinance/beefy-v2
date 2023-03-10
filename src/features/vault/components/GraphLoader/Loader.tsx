@@ -8,15 +8,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     padding: '16px 0px',
   },
-  loader: { height: '220px' },
 }));
 
-export const GraphLoader = memo(function () {
+export const GraphLoader = memo(function _GraphLoader({ imgHeight = 200 }: { imgHeight?: number }) {
   const classes = useStyles();
   return (
     <div className={classes.container}>
       <img
-        className={classes.loader}
+        style={{ height: imgHeight }}
         src={require('../../../../images/tech-loader.gif').default}
         alt="loader"
       />

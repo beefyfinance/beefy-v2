@@ -97,7 +97,7 @@ export const Graph = memo(function ({ vaultId, period }: { vaultId: string; peri
   }, [xsDown]);
 
   if (loading) {
-    return <GraphLoader />;
+    return <GraphLoader imgHeight={220} />;
   }
 
   return (

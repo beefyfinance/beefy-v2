@@ -68,8 +68,8 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
         LIMITS[period] // we need to get at most this amount of data charted
       );
 
-      const minValue = data ? minBy(data, row => row.v).v : 0;
-      const maxValue = data ? maxBy(data, row => row.v).v : 0;
+      const minValue = minBy(chartableData, row => row.value).value;
+      const maxValue = maxBy(chartableData, row => row.value).value;
 
       setChartData({
         data: chartableData,
