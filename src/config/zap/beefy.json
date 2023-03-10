@@ -120,6 +120,11 @@
     "zapAddress": "0x333B767aB7f5CE17D51EdbCE57f422624aAE280F"
   },
   {
+    "chainId": "ethereum",
+    "ammId": "ethereum-verse",
+    "zapAddress": "0x2429c300BE41c3de2CBB894a7939ff3B49166001"
+  },
+  {
     "chainId": "fantom",
     "ammId": "fantom-spookyswap",
     "zapAddress": "0x8afc0f9BdC5DcA9f0408Df03A03520bFa98A15aF"

@@ -1,5 +1,27 @@
 [
   {
+    "id": "verse-usdc-weth",
+    "name": "USDC-ETH LP",
+    "token": "USDC-ETH LP",
+    "tokenAddress": "0x6E1fbeeABA87BAe1100d95f8340dc27aD7C8427b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "verse",
+    "tokenAmmId": "ethereum-verse",
+    "earnedToken": "mooVerseUSDC-ETH",
+    "earnedTokenAddress": "0x8785e892e6C7f1BcE907680cE35B580EEA7Fb24c",
+    "earnContractAddress": "0x8785e892e6C7f1BcE907680cE35B580EEA7Fb24c",
+    "oracle": "lps",
+    "oracleId": "verse-usdc-weth",
+    "status": "active",
+    "platformId": "verse",
+    "assets": ["USDC", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_HIGH", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://verse.bitcoin.com/pools/",
+    "network": "ethereum",
+    "createdAt": 1678475051
+  },
+  {
     "id": "convex-ldo",
     "name": "LDO/ETH",
     "token": "LDOETH-f",
