@@ -1,5 +1,36 @@
 [
   {
+    "id": "velodrome-dola-mai",
+    "name": "DOLA-MAI sLP",
+    "token": "DOLA-MAI sLP",
+    "tokenAddress": "0x21950a0cA249A0ef3d182338c86c8C066B24D801",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "tokenAmmId": "optimism-velodrome",
+    "earnedToken": "mooVelodromeDOLA-MAI",
+    "earnedTokenAddress": "0xa9913D2DA71768CD13eA75B05D9E91A3120E2f08",
+    "earnContractAddress": "0xa9913D2DA71768CD13eA75B05D9E91A3120E2f08",
+    "oracle": "lps",
+    "oracleId": "velodrome-dola-mai",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["DOLA", "MAI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "network": "optimism",
+    "createdAt": 1678382699
+  },
+  {
     "id": "velodrome-velo-dola",
     "name": "VELO-DOLA vLP",
     "token": "VELO-DOLA vLP",
@@ -19,7 +50,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-       "MCAP_MICRO",
+      "MCAP_MICRO",
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
@@ -462,7 +493,8 @@
     "earnContractAddress": "0x53fA4D07c62EBcbBB043654480C7C0AB7b5876C4",
     "oracle": "lps",
     "oracleId": "velodrome-alusd-mai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["alUSD", "MAI"],
     "risks": [
