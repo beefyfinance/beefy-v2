@@ -1,6 +1,10 @@
 import { isStandardVault, VaultEntity, VaultStandard } from '../../../../entities/vault';
 import { BeefyState } from '../../../../../../redux-types';
-import { selectStandardVaultById, selectVaultById } from '../../../../selectors/vaults';
+import {
+  selectStandardVaultById,
+  selectVaultById,
+  selectVaultSupportsBeefyZap,
+} from '../../../../selectors/vaults';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
@@ -192,6 +196,10 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
       return this.depositCache[vaultId];
     }
 
+    if (!selectVaultSupportsBeefyZap(state, vaultId)) {
+      return null;
+    }
+
     const commonOptionData = await this.getCommonOptionData(vaultId, state);
     if (!commonOptionData) {
       return null;
@@ -298,7 +306,7 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
       action: walletActions.beefIn(vault, input.amount, isNativeInput, swap, option.zap, slippage),
       pending: false,
-      extraInfo: { zap: true },
+      extraInfo: { zap: true, vaultId: vault.id },
     };
   }
 
@@ -308,6 +316,10 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
   ): Promise<TransactOption[] | null> {
     if (vaultId in this.withdrawCache) {
       return this.withdrawCache[vaultId];
+    }
+
+    if (!selectVaultSupportsBeefyZap(state, vaultId)) {
+      return null;
     }
 
     const commonOptionData = await this.getCommonOptionData(vaultId, state);
@@ -465,7 +477,7 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
         ? walletActions.beefOutAndSwap(vault, quote.inputs[0], swap, option.zap, slippage)
         : walletActions.beefOut(vault, quote.inputs[0], option.zap),
       pending: false,
-      extraInfo: { zap: isSwap },
+      extraInfo: { zap: isSwap, vaultId: vault.id },
     };
   }
 

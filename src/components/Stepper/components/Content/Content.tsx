@@ -20,6 +20,8 @@ import { styles } from './styles';
 import { Title } from '../Title';
 import { ListJoin } from '../../../ListJoin';
 import iconError from '../../../../images/icons/error.svg';
+import { ShareButton } from '../../../../features/vault/components/ShareButton';
+import { VaultEntity } from '../../../../features/data/entities/vault';
 
 const useStyles = makeStyles(styles);
 
@@ -49,6 +51,7 @@ export const WaitingContent = memo(function () {
     </>
   );
 });
+
 export const ErrorContent = memo(function () {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -89,7 +92,13 @@ export const CloseButton = memo(function () {
   }, [dispatch]);
 
   return (
-    <Button borderless={true} fullWidth={true} className={classes.closeBtn} onClick={handleClose}>
+    <Button
+      borderless={true}
+      fullWidth={true}
+      variant="middle"
+      className={classes.closeBtn}
+      onClick={handleClose}
+    >
       {t('Transactn-Close')}
     </Button>
   );
@@ -128,6 +137,7 @@ const ZapSuccessContent = memo<SuccessContentProps>(function ({ step }) {
       }
       rememberTitle={step.step === 'zap-in' ? t('Remember') : undefined}
       rememberMessage={step.step === 'zap-in' ? t('Remember-Msg') : undefined}
+      shareVaultId={step.step === 'zap-in' ? step.extraInfo.vaultId : undefined}
     />
   );
 });
@@ -183,6 +193,9 @@ const FallbackSuccessContent = memo<SuccessContentProps>(function ({ step }) {
       message={successMessage}
       rememberTitle={hasRememberMsg ? t('Remember') : undefined}
       rememberMessage={hasRememberMsg ? t(rememberMsg) : undefined}
+      shareVaultId={
+        step.step === 'deposit' || step.step === 'deposit-gov' ? step.extraInfo?.vaultId : undefined
+      }
     />
   );
 });
@@ -193,6 +206,7 @@ type SuccessContentDisplayProps = {
   messageHighlight?: ReactNode;
   rememberTitle?: string;
   rememberMessage?: ReactNode;
+  shareVaultId?: VaultEntity['id'];
 };
 const SuccessContentDisplay = memo<SuccessContentDisplayProps>(function ({
   title,
@@ -200,6 +214,7 @@ const SuccessContentDisplay = memo<SuccessContentDisplayProps>(function ({
   messageHighlight,
   rememberTitle,
   rememberMessage,
+  shareVaultId,
 }) {
   const classes = useStyles();
 
@@ -220,7 +235,10 @@ const SuccessContentDisplay = memo<SuccessContentDisplayProps>(function ({
           </div>
         </div>
       ) : null}
-      <CloseButton />
+      <div className={classes.buttons}>
+        {shareVaultId ? <ShareButton vaultId={shareVaultId} placement="bottom-start" /> : null}
+        <CloseButton />
+      </div>
     </>
   );
 });

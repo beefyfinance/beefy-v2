@@ -4,6 +4,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "commonjs",
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "@coinbase/wallet-sdk": "^3.0.10",
     "@deficonnect/web3-connector": "^2.0.3",

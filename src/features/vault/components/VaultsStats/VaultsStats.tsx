@@ -22,7 +22,7 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   return (
-    <div className={classes.container}>
+    <div className={classes.stats}>
       <div className={classes.interestStats}>
         <Box className={classes.interestStatsBox}>
           <Box width={'33%'} className={classes.stat3}>
