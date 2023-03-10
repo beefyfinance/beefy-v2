@@ -36,7 +36,7 @@ export class BeefySolidlyZapProvider extends BeefyBaseZapProvider<AmmEntitySolid
   }: CommonDepositQuoteOptions<AmmEntitySolidly>): Promise<ZapQuote | null> {
     const lp = getPool(depositToken.address, option.amm, chain);
     const zapContract = new web3.eth.Contract(ZapAbi, option.zap.zapAddress);
-
+    console.log(depositToken.address, option.amm, chain);
     type MulticallReturnType = [
       [
         {

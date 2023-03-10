@@ -185,6 +185,11 @@
     "zapAddress": "0x41D44B276904561Ac51855159516FD4cB2c90968"
   },
   {
+    "chainId": "kava",
+    "ammId": "kava-equilibre",
+    "zapAddress": "0x445d3D1E75824197bd6A7F46434F67D754FA25C3"
+  },
+  {
     "chainId": "metis",
     "ammId": "metis-netswap",
     "zapAddress": "0xF439B695bB28c9E9865170C1b3e98F5EB4cE9b48"

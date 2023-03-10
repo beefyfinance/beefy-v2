@@ -6,6 +6,7 @@
     "tokenAddress": "0xf96b58442cCb7D1f0889efb5120B428e3DD56C6f",
     "tokenDecimals": 18,
     "tokenProviderId": "equilibre",
+    "tokenAmmId": "kava-equilibre",
     "earnedToken": "mooEquilibreBIFI-KAVA",
     "earnedTokenAddress": "0xB5d4049c2f7cf590F10e3fD0D6E0444F3a109E01",
     "earnContractAddress": "0xB5d4049c2f7cf590F10e3fD0D6E0444F3a109E01",
@@ -20,7 +21,7 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0xf96b58442ccb7d1f0889efb5120b428e3dd56c6f",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0xf96b58442ccb7d1f0889efb5120b428e3dd56c6f",
     "network": "kava",
-    "createdAt": 1678318505
+    "createdAt": 1678458801
   },
   {
     "id": "equilibre-wkava-usdc",
@@ -29,6 +30,7 @@
     "tokenAddress": "0x5C27a0D0e6d045b5113D728081268642060f7499",
     "tokenDecimals": 18,
     "tokenProviderId": "equilibre",
+    "tokenAmmId": "kava-equilibre",
     "earnedToken": "mooEquilibreKAVA-USDC",
     "earnedTokenAddress": "0x9C91730de8Df9eAc0D40AedA285Bfe052B32Cc77",
     "earnContractAddress": "0x9C91730de8Df9eAc0D40AedA285Bfe052B32Cc77",
@@ -43,7 +45,7 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0x5C27a0D0e6d045b5113D728081268642060f7499",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0x5C27a0D0e6d045b5113D728081268642060f7499",
     "network": "kava",
-    "createdAt": 1678320004
+    "createdAt": 1678458801
   },
   {
     "id": "equilibre-vara-usdc",
@@ -52,6 +54,7 @@
     "tokenAddress": "0x9bf1E3ee61cBe5C61E520c8BEFf45Ed4D8212a9A",
     "tokenDecimals": 18,
     "tokenProviderId": "equilibre",
+    "tokenAmmId": "kava-equilibre",
     "earnedToken": "mooEquilibreVARA-USDC",
     "earnedTokenAddress": "0x46a12c2Ce339a93d92a7A7Ade25B92CaB606a8c5",
     "earnContractAddress": "0x46a12c2Ce339a93d92a7A7Ade25B92CaB606a8c5",
@@ -66,7 +69,7 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0x9bf1E3ee61cBe5C61E520c8BEFf45Ed4D8212a9A",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0x9bf1E3ee61cBe5C61E520c8BEFf45Ed4D8212a9A",
     "network": "kava",
-    "createdAt": 1678320385
+    "createdAt": 1678458801
   },
   {
     "id": "equilibre-dai-usdc",
@@ -97,7 +100,7 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "network": "kava",
-    "createdAt": 1678319794
+    "createdAt": 1678458801
   },
   {
     "id": "equilibre-mai-usdc",
@@ -128,7 +131,7 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "network": "kava",
-    "createdAt": 1678319794
+    "createdAt": 1678458801
   },
   {
     "id": "equilibre-wkava-eth",
@@ -152,7 +155,7 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "network": "kava",
-    "createdAt": 1678319794
+    "createdAt": 1678458801
   },
   {
     "id": "equilibre-wkava-vara",
@@ -176,7 +179,7 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "network": "kava",
-    "createdAt": 1678319794
+    "createdAt": 1678458801
   },
   {
     "id": "sushi-kava-wkava-usdcaxl",
@@ -185,7 +188,7 @@
     "tokenAddress": "0xb379Eb428A28a927a16ee7f95100Ac6A5117AaA1",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "earnedToken": "mooEquilibreBIFI-KAVA",
+    "earnedToken": "mooSushiKAVA-axlUSDC",
     "earnedTokenAddress": "0x67626718777795cD11940358E56e89b316315eE3",
     "earnContractAddress": "0x67626718777795cD11940358E56e89b316315eE3",
     "oracle": "lps",
