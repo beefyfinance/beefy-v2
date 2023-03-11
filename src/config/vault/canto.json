@@ -182,7 +182,7 @@
     "earnedTokenAddress": "0x36cB35a61437ab76970982Ace2EE77b9442f2F26",
     "earnContractAddress": "0x36cB35a61437ab76970982Ace2EE77b9442f2F26",
     "oracle": "lps",
-    "oracleId": "canto-note-usdt",
+    "oracleId": "canto-note-usdc",
     "status": "active",
     "platformId": "cantoDex",
     "assets": ["NOTE", "USDC"],
