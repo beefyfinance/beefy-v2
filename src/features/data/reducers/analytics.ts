@@ -2,19 +2,56 @@ import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { fetchAnalyticsVaults } from '../actions/analytics';
+import { ApiProductPriceRow } from '../apis/analytics/analytics-types';
 import { VaultTimelineAnalyticsEntity } from '../entities/analytics';
 import { BoostEntity } from '../entities/boost';
 import { VaultEntity } from '../entities/vault';
 import { selectAllVaultBoostIds } from '../selectors/boosts';
 
 export interface AnalyticsState {
-  byVaultId: { [vaultId: VaultEntity['id']]: VaultTimelineAnalyticsEntity[] };
-  byBoostId: { [boostId: BoostEntity['id']]: VaultTimelineAnalyticsEntity[] };
+  timeline: {
+    byVaultId: { [vaultId: VaultEntity['id']]: VaultTimelineAnalyticsEntity[] };
+    byBoostId: { [boostId: BoostEntity['id']]: VaultTimelineAnalyticsEntity[] };
+  };
+  shareToUnderlying: {
+    byVaultId: {
+      [vaultId: VaultEntity['id']]: {
+        byTimebucket: {
+          [timebucket: string]: {
+            status: 'idle' | 'pending' | 'fulfilled' | 'rejected';
+            failedTimestamp: number | null;
+            data: ApiProductPriceRow[];
+          };
+        };
+      };
+    };
+  };
+  underlyingToUsd: {
+    byVaultId: {
+      [vaultId: VaultEntity['id']]: {
+        byTimebucket: {
+          [timebucket: string]: {
+            status: 'idle' | 'pending' | 'fulfilled' | 'rejected';
+            failedTimestamp: number | null;
+            data: ApiProductPriceRow[];
+          };
+        };
+      };
+    };
+  };
 }
 
 const initialState: AnalyticsState = {
-  byVaultId: {},
-  byBoostId: {},
+  timeline: {
+    byVaultId: {},
+    byBoostId: {},
+  },
+  shareToUnderlying: {
+    byVaultId: {},
+  },
+  underlyingToUsd: {
+    byVaultId: {},
+  },
 };
 
 export const analyticsSlice = createSlice({
@@ -25,7 +62,7 @@ export const analyticsSlice = createSlice({
     builder.addCase(fetchAnalyticsVaults.fulfilled, (sliceState, action) => {
       const { timeline, state } = action.payload;
 
-      const totals: AnalyticsState = {
+      const totals = {
         byBoostId: {},
         byVaultId: {},
       };
@@ -88,8 +125,8 @@ export const analyticsSlice = createSlice({
         }
       }
 
-      sliceState.byBoostId = totals.byBoostId;
-      sliceState.byVaultId = totals.byVaultId;
+      sliceState.timeline.byBoostId = totals.byBoostId;
+      sliceState.timeline.byVaultId = totals.byVaultId;
     });
   },
 });

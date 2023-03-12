@@ -7,7 +7,8 @@ import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 
 export const selectUserDepositedTimelineByVaultId = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => state.user.analytics.byVaultId[vaultId],
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    state.user.analytics.timeline.byVaultId[vaultId],
   timeline => timeline || []
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
