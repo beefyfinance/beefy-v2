@@ -3,6 +3,9 @@ import { BeefyState } from '../../../redux-types';
 import { getAnalyticsApi } from '../apis/instances';
 import { VaultTimelineAnalyticsEntity } from '../entities/analytics';
 import BigNumber from 'bignumber.js';
+import { TimeBucketType } from '../apis/analytics/analytics-types';
+import { AnalyticsPriceResponse } from '../apis/analytics/analytics-types';
+import { VaultEntity } from '../entities/vault';
 
 export interface FetchAnalyticsVaultsFullfilled {
   timeline: VaultTimelineAnalyticsEntity[];
@@ -37,4 +40,49 @@ export const fetchAnalyticsVaults = createAsyncThunk<
   });
 
   return { timeline, state: getState() };
+});
+
+export type ResponseStatusType = 'idle' | 'pending' | 'fulfilled' | 'rejected';
+interface DataMartPricesFullfilled {
+  data: AnalyticsPriceResponse;
+  vaultId: VaultEntity['id'];
+  timebucket: TimeBucketType;
+  status: ResponseStatusType;
+  state: BeefyState;
+}
+
+interface DataMartPricesProps {
+  productKey: string;
+  timebucket: TimeBucketType;
+  vaultId: VaultEntity['id'];
+}
+
+export const fetchShareToUndelying = createAsyncThunk<
+  DataMartPricesFullfilled,
+  DataMartPricesProps,
+  { state: BeefyState }
+>('analytics/fetchShareToUndelying', async ({ productKey, timebucket, vaultId }, { getState }) => {
+  try {
+    const api = await getAnalyticsApi();
+    const data = await api.getVaultPrices(productKey, 'share_to_underlying', timebucket);
+    return { data, vaultId, timebucket, status: 'fulfilled', state: getState() };
+  } catch (error) {
+    const empty: AnalyticsPriceResponse = [];
+    return { data: empty, vaultId, timebucket, status: 'rejected', state: getState() };
+  }
+});
+
+export const fetchUnderlyingToUsd = createAsyncThunk<
+  DataMartPricesFullfilled,
+  DataMartPricesProps,
+  { state: BeefyState }
+>('analytics/fetchUnderlyingToUsd', async ({ productKey, timebucket, vaultId }, { getState }) => {
+  try {
+    const api = await getAnalyticsApi();
+    const data = await api.getVaultPrices(productKey, 'underlying_to_usd', timebucket);
+    return { data, vaultId, timebucket, status: 'fulfilled', state: getState() };
+  } catch (error) {
+    const empty: AnalyticsPriceResponse = [];
+    return { data: empty, vaultId, timebucket, status: 'rejected', state: getState() };
+  }
 });

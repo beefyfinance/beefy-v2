@@ -2,6 +2,7 @@ import createCachedSelector from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { PnL } from '../../../helpers/pnl';
 import { BeefyState } from '../../../redux-types';
+import { TimeBucketType } from '../apis/analytics/analytics-types';
 import { VaultEntity } from '../entities/vault';
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
@@ -92,4 +93,30 @@ export const selectLastVaultDepositStart = (state: BeefyState, vaultId: VaultEnt
   }
 
   return firstDepositDate;
+};
+
+export const selectShareToUnderlyingTimebucketByVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  timebucket: TimeBucketType
+) => {
+  return (
+    state.user.analytics.shareToUnderlying.byVaultId[vaultId]?.byTimebucket[timebucket] || {
+      data: [],
+      status: 'idle',
+    }
+  );
+};
+
+export const selectUnderlyingToUsdTimebucketByVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  timebucket: TimeBucketType
+) => {
+  return (
+    state.user.analytics.underlyingToUsd.byVaultId[vaultId]?.byTimebucket[timebucket] || {
+      data: [],
+      status: 'idle',
+    }
+  );
 };

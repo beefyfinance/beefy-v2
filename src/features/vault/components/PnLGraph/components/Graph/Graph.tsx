@@ -56,11 +56,9 @@ export const Graph = memo(function ({ vaultId, period }: { vaultId: string; peri
     return `beefy:vault:${vault.chainId}:${vault.earnContractAddress.toLowerCase()}`;
   }, [vault.chainId, vault.earnContractAddress]);
 
-  const { data, minUnderlying, maxUnderlying, minUsd, maxUsd, loading } = usePnLChartData(
-    TIME_BUCKET[period],
-    productKey,
-    vaultId
-  );
+  const { chartData, isLoading } = usePnLChartData(TIME_BUCKET[period], productKey, vaultId);
+
+  const { data, minUnderlying, maxUnderlying, minUsd, maxUsd } = chartData;
 
   const underlyingDiff = useMemo(() => {
     return domainOffSet(minUnderlying, maxUnderlying, 0.88);
@@ -96,7 +94,7 @@ export const Graph = memo(function ({ vaultId, period }: { vaultId: string; peri
     return xsDown ? 16 : 24;
   }, [xsDown]);
 
-  if (loading) {
+  if (isLoading) {
     return <GraphLoader imgHeight={220} />;
   }
 

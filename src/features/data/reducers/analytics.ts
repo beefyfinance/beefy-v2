@@ -1,7 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { fetchAnalyticsVaults } from '../actions/analytics';
+import {
+  fetchAnalyticsVaults,
+  fetchShareToUndelying,
+  fetchUnderlyingToUsd,
+} from '../actions/analytics';
 import { ApiProductPriceRow } from '../apis/analytics/analytics-types';
 import { VaultTimelineAnalyticsEntity } from '../entities/analytics';
 import { BoostEntity } from '../entities/boost';
@@ -19,7 +23,6 @@ export interface AnalyticsState {
         byTimebucket: {
           [timebucket: string]: {
             status: 'idle' | 'pending' | 'fulfilled' | 'rejected';
-            failedTimestamp: number | null;
             data: ApiProductPriceRow[];
           };
         };
@@ -32,7 +35,6 @@ export interface AnalyticsState {
         byTimebucket: {
           [timebucket: string]: {
             status: 'idle' | 'pending' | 'fulfilled' | 'rejected';
-            failedTimestamp: number | null;
             data: ApiProductPriceRow[];
           };
         };
@@ -127,6 +129,26 @@ export const analyticsSlice = createSlice({
 
       sliceState.timeline.byBoostId = totals.byBoostId;
       sliceState.timeline.byVaultId = totals.byVaultId;
+    });
+
+    builder.addCase(fetchShareToUndelying.fulfilled, (sliceState, action) => {
+      const { data, vaultId, timebucket, status } = action.payload;
+
+      if (!sliceState.shareToUnderlying.byVaultId[vaultId]) {
+        sliceState.shareToUnderlying.byVaultId[vaultId] = { byTimebucket: {} };
+      }
+
+      sliceState.shareToUnderlying.byVaultId[vaultId].byTimebucket[timebucket] = { data, status };
+    });
+
+    builder.addCase(fetchUnderlyingToUsd.fulfilled, (sliceState, action) => {
+      const { data, vaultId, timebucket, status } = action.payload;
+
+      if (!sliceState.underlyingToUsd.byVaultId[vaultId]) {
+        sliceState.underlyingToUsd.byVaultId[vaultId] = { byTimebucket: {} };
+      }
+
+      sliceState.underlyingToUsd.byVaultId[vaultId].byTimebucket[timebucket] = { data, status };
     });
   },
 });

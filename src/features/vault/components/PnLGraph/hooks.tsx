@@ -1,12 +1,14 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
-import { getAnalyticsApi } from '../../../data/apis/instances';
+import { useCallback, useEffect, useMemo } from 'react';
+
 import { VaultEntity } from '../../../data/entities/vault';
-import { useAppSelector } from '../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../store';
 import {
   selectLastVaultDepositStart,
+  selectShareToUnderlyingTimebucketByVaultId,
+  selectUnderlyingToUsdTimebucketByVaultId,
   selectUserDepositedTimelineByVaultId,
 } from '../../../data/selectors/analytics';
-import { getInvestorTimeserie, PriceTsRow } from '../../../../helpers/timeserie';
+import { getInvestorTimeserie } from '../../../../helpers/timeserie';
 import { eachDayOfInterval, isAfter } from 'date-fns';
 import { maxBy, minBy } from 'lodash';
 import { TimeBucketType } from '../../../data/apis/analytics/analytics-types';
@@ -16,38 +18,17 @@ import {
   selectTokenPriceByAddress,
 } from '../../../data/selectors/tokens';
 import { selectUserBalanceOfTokensIncludingBoosts } from '../../../data/selectors/balance';
-
-interface ChardataType {
-  data: PriceTsRow[];
-  minUsd: number;
-  maxUsd: number;
-  minUnderlying: number;
-  maxUnderlying: number;
-  loading: boolean;
-}
-
-export const initialChartDataValue = {
-  data: [],
-  minUsd: 0,
-  maxUsd: 0,
-  minUnderlying: 0,
-  maxUnderlying: 0,
-  loading: true,
-};
+import { fetchShareToUndelying, fetchUnderlyingToUsd } from '../../../data/actions/analytics';
 
 export const usePnLChartData = (
   timebucket: TimeBucketType,
   productKey: string,
   vaultId: VaultEntity['id']
 ) => {
-  const [chartData, setChartData] = useState<ChardataType>(initialChartDataValue);
-  const [counter, setCounter] = useState(0);
-  const intervalRef = useRef(null);
-
+  const dispatch = useAppDispatch();
   const vaultTimeline = useAppSelector(state =>
     selectUserDepositedTimelineByVaultId(state, vaultId)
   );
-
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const depositToken = useAppSelector(state => selectDepositTokenByVaultId(state, vaultId));
   const currentPpfs = useAppSelector(state =>
@@ -64,72 +45,78 @@ export const usePnLChartData = (
       vault.earnContractAddress
     )
   );
-
   const vaultLastDeposit = useAppSelector(state => selectLastVaultDepositStart(state, vaultId));
 
+  const { data: shares, status: sharesStatus } = useAppSelector(state =>
+    selectShareToUnderlyingTimebucketByVaultId(state, vaultId, timebucket)
+  );
+
+  const { data: underlying, status: underlyingStatus } = useAppSelector(state =>
+    selectUnderlyingToUsdTimebucketByVaultId(state, vaultId, timebucket)
+  );
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const api = getAnalyticsApi();
-        const [shares, underlying] = await Promise.all([
-          api.getVaultPrices(productKey, 'share_to_underlying', timebucket),
-          api.getVaultPrices(productKey, 'underlying_to_usd', timebucket),
-        ]);
+    if (sharesStatus === 'idle') {
+      dispatch(fetchShareToUndelying({ productKey, vaultId, timebucket }));
+    }
+    if (underlyingStatus === 'idle') {
+      dispatch(fetchUnderlyingToUsd({ productKey, vaultId, timebucket }));
+    }
 
-        const filteredShares = shares.filter(price => isAfter(price.date, vaultLastDeposit));
+    if (sharesStatus === 'rejected') {
+      const handleShareToUnderlying = setTimeout(
+        () => dispatch(fetchShareToUndelying({ productKey, vaultId, timebucket })),
+        5000
+      );
+      return () => clearTimeout(handleShareToUnderlying);
+    }
 
-        const filteredUnderlying = underlying.filter(price =>
-          isAfter(price.date, vaultLastDeposit)
-        );
-
-        const chartData = getInvestorTimeserie(
-          timebucket,
-          vaultTimeline,
-          filteredShares,
-          filteredUnderlying,
-          vaultLastDeposit,
-          currentPpfs,
-          currentOraclePrice.toNumber(),
-          currentMooTokenBalance
-        );
-
-        if (chartData.length > 0) {
-          const minUsd = chartData ? minBy(chartData, row => row.usdBalance).usdBalance : 0;
-          const maxUsd = chartData ? maxBy(chartData, row => row.usdBalance).usdBalance : 0;
-
-          const minUnderlying = minBy(chartData, row => row.underlyingBalance).underlyingBalance;
-          const maxUnderlying = maxBy(chartData, row => row.underlyingBalance).underlyingBalance;
-
-          setChartData({
-            data: chartData,
-            minUnderlying,
-            maxUnderlying,
-            minUsd,
-            maxUsd,
-            loading: false,
-          });
-        }
-      } catch (error) {
-        setChartData({ ...chartData, loading: true });
-        // sometimes server return 429:Timeout and we force to update the counter to re-run the useEffect
-        // counter is only updated when we get an error
-        intervalRef.current = setTimeout(() => {
-          setCounter(counter + 1);
-        }, 5000);
-      }
-    };
-    setChartData({ ...chartData, loading: true });
-
-    fetchData();
-
-    return () => {
-      clearTimeout(intervalRef.current);
-    };
-
+    if (underlyingStatus === 'rejected') {
+      const handleUnderlyingToUsd = setTimeout(
+        () => dispatch(fetchUnderlyingToUsd({ productKey, vaultId, timebucket })),
+        5000
+      );
+      return () => clearTimeout(handleUnderlyingToUsd);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timebucket, counter]);
+  }, [sharesStatus, underlyingStatus]);
 
-  return chartData;
+  const isLoading = useMemo(() => {
+    return underlyingStatus !== 'fulfilled' || sharesStatus !== 'fulfilled';
+  }, [sharesStatus, underlyingStatus]);
+
+  const chartData = useMemo(() => {
+    if (sharesStatus === 'fulfilled' && underlyingStatus === 'fulfilled') {
+      const filteredShares = shares.filter(price => isAfter(price.date, vaultLastDeposit));
+      const filteredUnderlying = underlying.filter(price => isAfter(price.date, vaultLastDeposit));
+
+      const data = getInvestorTimeserie(
+        timebucket,
+        vaultTimeline,
+        filteredShares,
+        filteredUnderlying,
+        vaultLastDeposit,
+        currentPpfs,
+        currentOraclePrice.toNumber(),
+        currentMooTokenBalance
+      );
+
+      if (data.length > 0) {
+        const minUsd = data ? minBy(data, row => row.usdBalance).usdBalance : 0;
+        const maxUsd = data ? maxBy(data, row => row.usdBalance).usdBalance : 0;
+
+        const minUnderlying = minBy(data, row => row.underlyingBalance).underlyingBalance;
+        const maxUnderlying = maxBy(data, row => row.underlyingBalance).underlyingBalance;
+
+        return { data, minUnderlying, maxUnderlying, minUsd, maxUsd };
+      }
+    }
+
+    return { data: [], minUnderlying: 0, maxUnderlying: 0, minUsd: 0, maxUsd: 0 };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shares, underlying]);
+
+  return { chartData, isLoading };
 };
 
 export const useVaultPeriods = (vaultId: VaultEntity['id']) => {
