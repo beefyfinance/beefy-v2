@@ -172,7 +172,7 @@
     "oracle": "lps",
     "oracleId": "curve-poly-crv3crypto",
     "status": "active",
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["CRV", "DAI", "USDC", "USDT", "WBTC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
@@ -1368,7 +1368,7 @@
     "oracle": "lps",
     "oracleId": "curve-poly-atricrypto3",
     "status": "active",
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["DAI", "USDC", "USDT", "WBTC", "ETH"],
     "risks": [
       "COMPLEXITY_LOW",
