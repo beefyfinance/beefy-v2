@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { isAfter, max } from 'date-fns';
+import { isAfter, isEqual, max } from 'date-fns';
 import { sortBy } from 'lodash';
 import {
   ApiProductPriceRow,
@@ -46,10 +46,24 @@ export function getInvestorTimeserie(
   let balanceIdx = 0;
   let sharesIdx = 0;
   let underlyingIdx = 0;
+  let currentDate = fixedDate;
 
   const pricesTs: PriceTsRow[] = [];
 
-  let currentDate = fixedDate;
+  //We should be adding precise initial ppfs and price as first data point
+  if (isEqual(timeline[0].datetime, fixedDate)) {
+    pricesTs.push({
+      datetime: roundDownMinutes(timeline[0].datetime).getTime(),
+      shareBalance: timeline[0].shareBalance.toNumber(),
+      underlyingBalance: timeline[0].shareBalance
+        .times(timeline[0].shareToUnderlyingPrice)
+        .toNumber(),
+      usdBalance: timeline[0].shareBalance
+        .times(timeline[0].shareToUnderlyingPrice.times(timeline[0].underlyingToUsdPrice))
+        .toNumber(),
+    });
+    currentDate = new Date(currentDate.getTime() + bucketSize);
+  }
 
   while (currentDate <= lastDate) {
     // add a row for each date
