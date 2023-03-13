@@ -179,7 +179,7 @@
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-1/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-1/withdraw",
     "network": "polygon",
-    "createdAt": 1672904651
+    "createdAt": 1678690832
   },
   {
     "id": "polygon-bifi-maxi",
@@ -1383,7 +1383,7 @@
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto3/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto3/withdraw",
     "network": "polygon",
-    "createdAt": 1672734429
+    "createdAt": 1678690832
   },
   {
     "id": "polywise-usdc-wise-eol",
@@ -5445,7 +5445,7 @@
     "oracle": "lps",
     "oracleId": "curve-poly-eurt",
     "status": "active",
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["EURt", "DAI", "USDC", "USDT"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -5461,7 +5461,7 @@
     "addLiquidityUrl": "https://polygon.curve.fi/eurtusd/deposit",
     "removeLiquidityUrl": "https://polygon.curve.fi/eurtusd/withdraw",
     "network": "polygon",
-    "createdAt": 1652662923
+    "createdAt": 1678690832
   },
   {
     "id": "jarvis-4eur",
