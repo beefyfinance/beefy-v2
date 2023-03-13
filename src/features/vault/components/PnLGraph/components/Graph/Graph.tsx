@@ -11,13 +11,11 @@ import {
 import { useAppSelector } from '../../../../../../store';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { usePnLChartData } from '../../hooks';
-import { formatBigUsd, formatFullBigNumber } from '../../../../../../helpers/format';
-import BigNumber from 'bignumber.js';
 import { PnLTooltip } from '../PnLTooltip';
 import { makeStyles, Theme, useMediaQuery } from '@material-ui/core';
 import { GraphLoader } from '../../../GraphLoader';
 import { max } from 'lodash';
-import { formatXAxis, TIME_BUCKET } from './helpers';
+import { formatUnderlyingTick, formatUsdTick, formatXAxis, TIME_BUCKET } from './helpers';
 import { Legend } from '../Legend';
 import { domainOffSet, mapRangeToTicks, X_AXIS_INTERVAL } from '../../../../../../helpers/graph';
 
@@ -27,6 +25,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     '& text': {
       ...theme.typography['subline-sm'],
       fill: theme.palette.text.disabled,
+      '&.recharts-cartesian-axis-tick-value': {
+        textTransform: 'initial',
+      },
     },
   },
   graph: {
@@ -76,6 +77,14 @@ export const Graph = memo(function ({ vaultId, period }: { vaultId: string; peri
     return max([0, minUsd - usdDiff]);
   }, [minUsd, usdDiff]);
 
+  const underlyingAxisDomain = useMemo<[number, number]>(() => {
+    return [startUnderlyingDomain, maxUnderlying + underlyingDiff];
+  }, [maxUnderlying, startUnderlyingDomain, underlyingDiff]);
+
+  const usdAxisDomain = useMemo<[number, number]>(() => {
+    return [startUsdDomain, maxUsd + usdDiff];
+  }, [maxUsd, startUsdDomain, usdDiff]);
+
   const underlyingTicks = useMemo(() => {
     return mapRangeToTicks(startUnderlyingDomain, maxUnderlying + underlyingDiff);
   }, [maxUnderlying, startUnderlyingDomain, underlyingDiff]);
@@ -83,6 +92,10 @@ export const Graph = memo(function ({ vaultId, period }: { vaultId: string; peri
   const usdTicks = useMemo(() => {
     return mapRangeToTicks(startUsdDomain, maxUsd + usdDiff);
   }, [maxUsd, startUsdDomain, usdDiff]);
+
+  const underlyingTickFormatter = useMemo(() => {
+    return (value: number) => formatUnderlyingTick(value, underlyingAxisDomain);
+  }, [underlyingAxisDomain]);
 
   const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'));
 
@@ -137,11 +150,9 @@ export const Graph = memo(function ({ vaultId, period }: { vaultId: string; peri
           <YAxis
             stroke="#59A662"
             strokeWidth={1.5}
-            tickFormatter={tickItem =>
-              formatFullBigNumber(new BigNumber(tickItem), tickItem > 999 ? 0 : 3)
-            }
+            tickFormatter={underlyingTickFormatter}
             yAxisId="underliying"
-            domain={[startUnderlyingDomain, maxUnderlying + underlyingDiff]}
+            domain={underlyingAxisDomain}
             ticks={underlyingTicks}
             mirror={true}
           />
@@ -149,9 +160,9 @@ export const Graph = memo(function ({ vaultId, period }: { vaultId: string; peri
             stroke="#5C99D6"
             orientation="right"
             strokeWidth={1.5}
-            tickFormatter={tickItem => formatBigUsd(new BigNumber(tickItem))}
+            tickFormatter={formatUsdTick}
             yAxisId="usd"
-            domain={[startUsdDomain, maxUsd + usdDiff]}
+            domain={usdAxisDomain}
             ticks={usdTicks}
             mirror={true}
           />
