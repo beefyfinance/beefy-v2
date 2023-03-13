@@ -27,9 +27,7 @@ interface PnLGraphProps {
   vaultId: VaultEntity['id'];
 }
 
-export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
-  const classes = useStyles();
-
+export const PnLGraphLoader = memo<PnLGraphProps>(function ({ vaultId }) {
   const userVaults = useAppSelector(selectUserDepositedVaultIds);
 
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -40,6 +38,20 @@ export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
 
   const isLoaded = useAppSelector(selectIsAnalyticsLoaded);
 
+  if (
+    isLoaded &&
+    userVaults.includes(vaultId) &&
+    vaultTimeline.length !== 0 &&
+    vault.status === 'active'
+  ) {
+    return <PnLGraph vaultId={vaultId} />;
+  }
+  return null;
+});
+
+export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
+  const classes = useStyles();
+
   const labels = useVaultPeriods(vaultId);
 
   const [period, setPeriod] = React.useState<number>(labels.length - 1);
@@ -47,16 +59,6 @@ export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
   const handlePeriod = useCallback((newPeriod: number) => {
     setPeriod(newPeriod);
   }, []);
-
-  if (
-    !isLoaded ||
-    !userVaults.includes(vaultId) ||
-    vaultTimeline.length === 0 ||
-    vault.status !== 'active' ||
-    !labels
-  ) {
-    return null;
-  }
 
   return (
     <div className={classes.pnlContainer}>

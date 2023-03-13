@@ -26,7 +26,7 @@ import { LeverageCards } from './components/LeverageCards';
 import { Actions } from './components/Actions';
 import { VaultHeader } from './components/VaultHeader';
 import { RenBannerVault } from '../../components/Banners/RenBanner';
-import { PnLGraph } from './components/PnLGraph';
+import { PnLGraphLoader } from './components/PnLGraph';
 import { VaultsStats } from './components/VaultsStats';
 
 const useStyles = makeStyles(styles);
@@ -90,7 +90,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
           <div className={classes.columnInfo}>
             {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
             {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
-            {!isGovVault(vault) ? <PnLGraph vaultId={vaultId} /> : null}
+            {!isGovVault(vault) ? <PnLGraphLoader vaultId={vaultId} /> : null}
             {!isGovVault(vault) ? <HistoryGraph vaultId={vaultId} /> : null}
             <LiquidityPoolBreakdownLoader vaultId={vaultId} />
             <SafetyCard vaultId={vaultId} />
