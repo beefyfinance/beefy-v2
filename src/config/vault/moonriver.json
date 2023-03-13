@@ -344,7 +344,8 @@
     "earnContractAddress": "0x0a2289a7eE8A1f2A6B0E2320f47D8d0ff143f436",
     "oracle": "lps",
     "oracleId": "finn-usdc-usdt",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "huckleberry",
     "assets": ["USDC", "USDT"],
     "risks": [

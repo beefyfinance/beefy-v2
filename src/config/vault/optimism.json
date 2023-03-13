@@ -2190,7 +2190,8 @@
     "earnContractAddress": "0xE9831AEfCf8c35ba3f99239391B19eba05336c10",
     "oracle": "lps",
     "oracleId": "velodrome-op-dai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["OP", "DAI"],
     "risks": [

@@ -12,7 +12,8 @@
     "earnContractAddress": "0xC1bfe1b2cFbFc97e3f6bdb3162132dDfbAe4927F",
     "oracle": "lps",
     "oracleId": "solidlizard-lusd-usdt",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solidlizard",
     "assets": ["LUSD", "USDC"],
     "risks": [
@@ -98,7 +99,8 @@
     "earnContractAddress": "0x138BB1ffbae2Cc1970873E4404452Cf6FAEcA12f",
     "oracle": "lps",
     "oracleId": "solidlizard-lusd-dai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solidlizard",
     "assets": ["LUSD", "DAI"],
     "risks": [
@@ -672,7 +674,8 @@
     "earnContractAddress": "0xE2fC3CB368C6Cde774C1f42eE543513AD104Db13",
     "oracle": "lps",
     "oracleId": "swapfish-usx-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "swapfish",
     "assets": ["USX", "USDC"],
     "risks": [
@@ -1453,7 +1456,8 @@
     "earnContractAddress": "0xDa2307A45D298e855415675bF388e2bd64351D5b",
     "oracle": "lps",
     "oracleId": "curve-arb-mim",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "mim",
     "assets": ["MIM", "USDC", "USDT"],
     "risks": [
