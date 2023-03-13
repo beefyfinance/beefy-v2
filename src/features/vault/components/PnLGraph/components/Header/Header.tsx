@@ -46,7 +46,11 @@ export const Header = memo<HeaderProps>(function ({ vaultId }) {
 
   return (
     <div className={classes.header}>
-      <HeaderItem label={t('At Deposit')} border={false}>
+      <HeaderItem
+        tooltipText={t('pnl-graph-tooltip-deposit')}
+        label={t('At Deposit')}
+        border={false}
+      >
         <SharesValue
           amount={balanceAtDeposit}
           price={oraclePriceAtDeposit}
@@ -55,7 +59,7 @@ export const Header = memo<HeaderProps>(function ({ vaultId }) {
           minShortPlaces={4}
         />
       </HeaderItem>
-      <HeaderItem label={t('Now')}>
+      <HeaderItem tooltipText={t('pnl-graph-tooltip-now')} label={t('Now')}>
         <SharesValue
           amount={deposit}
           price={oraclePrice}
@@ -64,7 +68,7 @@ export const Header = memo<HeaderProps>(function ({ vaultId }) {
           minShortPlaces={4}
         />
       </HeaderItem>
-      <HeaderItem label={t('Yield')}>
+      <HeaderItem tooltipText={t('pnl-graph-tooltip-yield')} label={t('Yield')}>
         <SharesValue
           amount={totalYield}
           price={oraclePrice}
@@ -75,7 +79,7 @@ export const Header = memo<HeaderProps>(function ({ vaultId }) {
           minShortPlaces={4}
         />
       </HeaderItem>
-      <HeaderItem label={t('PNL')}>
+      <HeaderItem tooltipText={t('pnl-graph-tooltip-pnl')} label={t('PNL')}>
         <UsdValue value={totalPnlUsd} percentage={pnlPercentage} />
       </HeaderItem>
     </div>
@@ -87,9 +91,16 @@ interface HeaderItemProps {
   border?: boolean;
   className?: string;
   children: ReactNode;
+  tooltipText: string;
 }
 
-const HeaderItem = memo<HeaderItemProps>(function ({ label, border = true, className, children }) {
+const HeaderItem = memo<HeaderItemProps>(function ({
+  label,
+  border = true,
+  className,
+  tooltipText,
+  children,
+}) {
   const classes = useStyles();
 
   return (
@@ -98,7 +109,7 @@ const HeaderItem = memo<HeaderItemProps>(function ({ label, border = true, class
       <div className={classes.textContainer}>
         <div className={classes.labelContainer}>
           <div className={classes.label}>{label}</div>
-          <Tooltip triggerClass={classes.center} content="pablo S2 u">
+          <Tooltip triggerClass={classes.center} content={tooltipText}>
             <HelpOutline />
           </Tooltip>
         </div>

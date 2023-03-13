@@ -561,6 +561,8 @@
   "pnl-graph-legend-usd": "Deposit Value (USD)",
   "pnl-tooltip-deposit": "Your Deposit:",
   "pnl-tooltip-deposit-usd": "Deposit Value (USD):",
-  "pnl-graph-no-data": "No Data available for this period of time",
-  "pnl-graph-rate-limit": "Rate limit exceeded, retry in 5 seconds"
+  "pnl-graph-tooltip-deposit": "Shows deposit and withdrawal information for the vault's base token, with base tokens added or subtracted for all transactions and $USD values measured at the deposit market price, while withdrawals follow a 'first in first out' method.",
+  "pnl-graph-tooltip-now": "Shows the current net quantity and $USD value of base tokens, reflecting market price which includes Yield quantity.",
+  "pnl-graph-tooltip-yield": "Shows autocompounding generated yield quantity and its $USD value reflecting the current market price, and a percentage indicating yield as a proportion of At Deposit quantity.",
+  "pnl-graph-tooltip-pnl": "Shows profit/loss, measured by the difference between Now and At Deposit $USD values, including Yield but not price appreciation alone, and expressed as a percentage of At Deposit quantity like Yield."
 }
