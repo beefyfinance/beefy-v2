@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
-
+import { useEffect, useMemo } from 'react';
 import { VaultEntity } from '../../../data/entities/vault';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import {
