@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
-import { isEmpty, sortBy } from 'lodash';
+import { isEmpty, mapValues, sortBy } from 'lodash';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
 import { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { fetchAllVaults, fetchFeaturedVaults } from '../actions/vaults';
+import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsZapSupport } from '../actions/vaults';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
@@ -64,6 +64,16 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
    * We want to know if the vault is featured or not
    */
   featuredVaults: FeaturedVaultConfig;
+
+  /**
+   * Which zaps are enabled for each vault
+   */
+  zapSupportById: {
+    [vaultId: VaultEntity['id']]: {
+      beefy: boolean;
+      oneInch: boolean;
+    };
+  };
 };
 export const initialVaultsState: VaultsState = {
   byId: {},
@@ -71,6 +81,7 @@ export const initialVaultsState: VaultsState = {
   byChainId: {},
   contractData: { byVaultId: {} },
   featuredVaults: {},
+  zapSupportById: {},
 };
 
 export const vaultsSlice = createSlice({
@@ -103,12 +114,22 @@ export const vaultsSlice = createSlice({
     builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
       addContractDataToState(sliceState, action.payload.data);
     });
+
     builder.addCase(
       reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
       (sliceState, action) => {
         addContractDataToState(sliceState, action.payload.contractData);
       }
     );
+
+    builder.addCase(fetchVaultsZapSupport.fulfilled, (sliceState, action) => {
+      sliceState.zapSupportById = mapValues(action.payload.byVaultId, support => {
+        return {
+          beefy: support.includes('beefy'),
+          oneInch: support.includes('oneInch'),
+        };
+      });
+    });
   },
 });
 

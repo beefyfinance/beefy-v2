@@ -1,5 +1,27 @@
 [
   {
+    "id": "curve-poly-matic3crypto",
+    "name": "MATIC/TriCrypto",
+    "token": "WMATICTRI-f",
+    "tokenAddress": "0xb0658482b405496C4EE9453cD0a463b134aEf9d0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooConvexMatic3crypto",
+    "earnedTokenAddress": "0x23c65213458A2dcc1321f84Ab42dCaECD79C2215",
+    "earnContractAddress": "0x23c65213458A2dcc1321f84Ab42dCaECD79C2215",
+    "oracle": "lps",
+    "oracleId": "curve-poly-matic3crypto",
+    "status": "active",
+    "platformId": "convex",
+    "assets": ["MATIC", "DAI", "USDC", "USDT", "WBTC", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-83/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-83/withdraw",
+    "network": "polygon",
+    "createdAt": 1678427112
+  },
+  {
     "id": "balancer-poly-wsteth-eth",
     "name": "wstETH-ETH",
     "token": "wstETH-ETH Poly",
@@ -150,14 +172,14 @@
     "oracle": "lps",
     "oracleId": "curve-poly-crv3crypto",
     "status": "active",
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["CRV", "DAI", "USDC", "USDT", "WBTC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-1/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-1/withdraw",
     "network": "polygon",
-    "createdAt": 1672904651
+    "createdAt": 1678690832
   },
   {
     "id": "polygon-bifi-maxi",
@@ -1346,7 +1368,7 @@
     "oracle": "lps",
     "oracleId": "curve-poly-atricrypto3",
     "status": "active",
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["DAI", "USDC", "USDT", "WBTC", "ETH"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -1361,7 +1383,7 @@
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto3/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto3/withdraw",
     "network": "polygon",
-    "createdAt": 1672734429
+    "createdAt": 1678690832
   },
   {
     "id": "polywise-usdc-wise-eol",
@@ -5423,7 +5445,7 @@
     "oracle": "lps",
     "oracleId": "curve-poly-eurt",
     "status": "active",
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["EURt", "DAI", "USDC", "USDT"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -5439,7 +5461,7 @@
     "addLiquidityUrl": "https://polygon.curve.fi/eurtusd/deposit",
     "removeLiquidityUrl": "https://polygon.curve.fi/eurtusd/withdraw",
     "network": "polygon",
-    "createdAt": 1652662923
+    "createdAt": 1678690832
   },
   {
     "id": "jarvis-4eur",

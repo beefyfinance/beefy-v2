@@ -1,5 +1,36 @@
 [
   {
+    "id": "solidlizard-lusd-usdc",
+    "name": "LUSD-USDC sLP",
+    "token": "LUSD-USDC sLP",
+    "tokenAddress": "0xB1E9b823295B3C69ac651C05D987B67189ff20AD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "solidlizard",
+    "tokenAmmId": "arbitrum-solidlizard",
+    "earnedToken": "mooSolidLizardLUSD-USDC",
+    "earnedTokenAddress": "0xC1bfe1b2cFbFc97e3f6bdb3162132dDfbAe4927F",
+    "earnContractAddress": "0xC1bfe1b2cFbFc97e3f6bdb3162132dDfbAe4927F",
+    "oracle": "lps",
+    "oracleId": "solidlizard-lusd-usdt",
+    "status": "active",
+    "platformId": "solidlizard",
+    "assets": ["LUSD", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://solidlizard.finance/swap?from=0x93b346b6BC2548dA6A1E7d98E9a421B42541425b&to=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
+    "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "network": "arbitrum",
+    "createdAt": 1677861237
+  },
+  {
     "id": "solidlizard-jrt-weth",
     "name": "JRT-ETH vLP",
     "token": "JRT-ETH vLP",

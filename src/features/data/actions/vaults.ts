@@ -1,8 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
-import { getConfigApi } from '../apis/instances';
+import { getBeefyApi, getConfigApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
+import { BeefyVaultZapSupportResponse } from '../apis/beefy';
+import { featureFlag_zapSupportOverrides } from '../utils/feature-flags';
 
 // given the list of vaults is pulled from some api at some point
 // we use the api to create an action
@@ -35,3 +37,32 @@ export const fetchFeaturedVaults = createAsyncThunk<FulfilledFeaturedVaultsPaylo
     return { byVaultId: featuredVaults };
   }
 );
+
+export type FulfilledFetchVaultsZapSupportPayload = {
+  byVaultId: BeefyVaultZapSupportResponse;
+};
+
+export const fetchVaultsZapSupport = createAsyncThunk<
+  FulfilledFetchVaultsZapSupportPayload,
+  void,
+  { state: BeefyState }
+>('vaults/fetchVaultsZapSupport', async (_, { getState }) => {
+  const api = getBeefyApi();
+  const vaultsZapSupport = await api.getVaultZapSupport();
+  const overrides = featureFlag_zapSupportOverrides();
+
+  for (const kind of ['beefy', 'oneInch'] as const) {
+    const value = overrides[kind];
+    let ids = [];
+    if (value === 'all') {
+      ids = getState().entities.vaults.allIds;
+    } else if (Array.isArray(value) && value.length > 0) {
+      ids = value;
+    }
+    for (const id of ids) {
+      vaultsZapSupport[id] = [...(vaultsZapSupport[id] || []), kind];
+    }
+  }
+
+  return { byVaultId: vaultsZapSupport };
+});

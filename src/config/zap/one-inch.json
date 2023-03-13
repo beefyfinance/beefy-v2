@@ -320,7 +320,8 @@
       "S*ETH",
       "S*USDC",
       "S*USDT",
-      "sfrxETH"
+      "sfrxETH",
+      "VERSE"
     ],
     "blockedVaults": []
   }

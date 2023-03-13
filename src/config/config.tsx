@@ -512,7 +512,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     chainId: 2222,
     rpc: ['https://evm2.kava.io'],
     explorerUrl: 'https://explorer.kava.io',
-    multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
+    multicallAddress: '0x13C6bCC2411861A31dcDC2f990ddbe2325482222',
     appMulticallContractAddress: '0x41D44B276904561Ac51855159516FD4cB2c90968',
     providerName: 'Kava',
     walletSettings: {
@@ -529,7 +529,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['USDC', 'DAI', 'USDT', 'axlDAI', 'axlUSDC', 'axlUSDT'],
+    stableCoins: ['USDC', 'DAI', 'USDT', 'axlDAI', 'axlUSDC', 'axlUSDT', 'MAI'],
   },
   canto: {
     name: 'Canto',
