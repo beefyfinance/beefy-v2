@@ -17,7 +17,7 @@ import { GraphLoader } from '../../../GraphLoader';
 import { max } from 'lodash';
 import { formatUnderlyingTick, formatUsdTick, formatXAxis, TIME_BUCKET } from './helpers';
 import { Legend } from '../Legend';
-import { domainOffSet, mapRangeToTicks, X_AXIS_INTERVAL } from '../../../../../../helpers/graph';
+import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../../helpers/graph';
 
 const useStyles = makeStyles((theme: Theme) => ({
   graphContainer: {
@@ -100,8 +100,8 @@ export const Graph = memo(function ({ vaultId, period }: { vaultId: string; peri
   const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'));
 
   const xInterval = useMemo(() => {
-    return X_AXIS_INTERVAL[period];
-  }, [period]);
+    return getXInterval(data.length, xsDown);
+  }, [data.length, xsDown]);
 
   const xMargin = useMemo(() => {
     return xsDown ? 16 : 24;
@@ -130,6 +130,7 @@ export const Graph = memo(function ({ vaultId, period }: { vaultId: string; peri
             tickMargin={10}
             stroke="#363B63"
             interval={xInterval}
+            dx={10}
           />
           <Line
             yAxisId="underliying"

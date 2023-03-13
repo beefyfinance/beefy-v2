@@ -7,9 +7,9 @@ export const mapRangeToTicks = (min: number, max: number) => {
   return factors.map(f => min + f * (max - min));
 };
 
-//Interval
-// 1h_1d = results 24 in hours = 2 hours
-// 1h_1w = resuls 168 in hours =  24 hours
-// 1d_1M = results 30 days = 2 days
-// 1d_all = result Max 180 days = 14 days
-export const X_AXIS_INTERVAL = [2, 24, 2, 14];
+export const getXInterval = (dataLenght: number, xsDown: boolean) => {
+  const interval = xsDown ? 8 : 10;
+  const elementsPerResult = Math.ceil(dataLenght / interval);
+  const numResults = Math.ceil(dataLenght / elementsPerResult);
+  return Math.ceil(dataLenght / numResults);
+};

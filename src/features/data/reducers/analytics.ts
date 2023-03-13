@@ -132,23 +132,69 @@ export const analyticsSlice = createSlice({
     });
 
     builder.addCase(fetchShareToUndelying.fulfilled, (sliceState, action) => {
-      const { data, vaultId, timebucket, status } = action.payload;
+      const { data, vaultId, timebucket } = action.payload;
 
       if (!sliceState.shareToUnderlying.byVaultId[vaultId]) {
         sliceState.shareToUnderlying.byVaultId[vaultId] = { byTimebucket: {} };
       }
 
-      sliceState.shareToUnderlying.byVaultId[vaultId].byTimebucket[timebucket] = { data, status };
+      sliceState.shareToUnderlying.byVaultId[vaultId].byTimebucket[timebucket] = {
+        data,
+        status: 'fulfilled',
+      };
+    });
+
+    builder.addCase(fetchShareToUndelying.pending, (sliceState, action) => {
+      const { timebucket, vaultId } = action.meta.arg;
+
+      if (!sliceState.shareToUnderlying.byVaultId[vaultId]) {
+        sliceState.shareToUnderlying.byVaultId[vaultId] = { byTimebucket: {} };
+      }
+
+      sliceState.shareToUnderlying.byVaultId[vaultId].byTimebucket[timebucket] = {
+        data: [],
+        status: 'pending',
+      };
+    });
+
+    builder.addCase(fetchShareToUndelying.rejected, (sliceState, action) => {
+      const { timebucket, vaultId } = action.meta.arg;
+
+      sliceState.shareToUnderlying.byVaultId[vaultId].byTimebucket[timebucket] = {
+        data: [],
+        status: 'rejected',
+      };
     });
 
     builder.addCase(fetchUnderlyingToUsd.fulfilled, (sliceState, action) => {
-      const { data, vaultId, timebucket, status } = action.payload;
+      const { data, vaultId, timebucket } = action.payload;
+
+      sliceState.underlyingToUsd.byVaultId[vaultId].byTimebucket[timebucket] = {
+        data,
+        status: 'fulfilled',
+      };
+    });
+
+    builder.addCase(fetchUnderlyingToUsd.pending, (sliceState, action) => {
+      const { timebucket, vaultId } = action.meta.arg;
 
       if (!sliceState.underlyingToUsd.byVaultId[vaultId]) {
         sliceState.underlyingToUsd.byVaultId[vaultId] = { byTimebucket: {} };
       }
 
-      sliceState.underlyingToUsd.byVaultId[vaultId].byTimebucket[timebucket] = { data, status };
+      sliceState.underlyingToUsd.byVaultId[vaultId].byTimebucket[timebucket] = {
+        data: [],
+        status: 'pending',
+      };
+    });
+
+    builder.addCase(fetchUnderlyingToUsd.rejected, (sliceState, action) => {
+      const { timebucket, vaultId } = action.meta.arg;
+
+      sliceState.underlyingToUsd.byVaultId[vaultId].byTimebucket[timebucket] = {
+        data: [],
+        status: 'rejected',
+      };
     });
   },
 });

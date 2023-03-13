@@ -13,7 +13,7 @@ import {
   YAxis,
 } from 'recharts';
 import { formatPercent, formatUsd } from '../../../../../../helpers/format';
-import { domainOffSet, mapRangeToTicks, X_AXIS_INTERVAL } from '../../../../../../helpers/graph';
+import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../../helpers/graph';
 import { GraphLoader } from '../../../GraphLoader';
 import { AverageState } from '../../HistoryGraph';
 import { HistoryChartDataState } from '../../useChartData';
@@ -84,9 +84,8 @@ export const Graph = memo<GraphProps>(function _Graph({
   }, [xsDown]);
 
   const xInterval = useMemo(() => {
-    if (period === 0 && xsDown) return 4;
-    return X_AXIS_INTERVAL[period];
-  }, [period, xsDown]);
+    return getXInterval(chartData.data.length, xsDown);
+  }, [chartData.data.length, xsDown]);
 
   if (chartData.loading) {
     return <GraphLoader />;
@@ -108,7 +107,7 @@ export const Graph = memo<GraphProps>(function _Graph({
             tickFormatter={tickItem => formatXAxis(tickItem, period)}
             interval={xInterval}
             stroke="#363B63"
-            dx={12}
+            dx={10}
           />
           <Area
             dataKey="value"

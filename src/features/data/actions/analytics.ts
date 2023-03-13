@@ -42,12 +42,10 @@ export const fetchAnalyticsVaults = createAsyncThunk<
   return { timeline, state: getState() };
 });
 
-export type ResponseStatusType = 'idle' | 'pending' | 'fulfilled' | 'rejected';
 interface DataMartPricesFullfilled {
   data: AnalyticsPriceResponse;
   vaultId: VaultEntity['id'];
   timebucket: TimeBucketType;
-  status: ResponseStatusType;
   state: BeefyState;
 }
 
@@ -62,14 +60,9 @@ export const fetchShareToUndelying = createAsyncThunk<
   DataMartPricesProps,
   { state: BeefyState }
 >('analytics/fetchShareToUndelying', async ({ productKey, timebucket, vaultId }, { getState }) => {
-  try {
-    const api = await getAnalyticsApi();
-    const data = await api.getVaultPrices(productKey, 'share_to_underlying', timebucket);
-    return { data, vaultId, timebucket, status: 'fulfilled', state: getState() };
-  } catch (error) {
-    const empty: AnalyticsPriceResponse = [];
-    return { data: empty, vaultId, timebucket, status: 'rejected', state: getState() };
-  }
+  const api = await getAnalyticsApi();
+  const data = await api.getVaultPrices(productKey, 'share_to_underlying', timebucket);
+  return { data, vaultId, timebucket, state: getState() };
 });
 
 export const fetchUnderlyingToUsd = createAsyncThunk<
@@ -77,12 +70,7 @@ export const fetchUnderlyingToUsd = createAsyncThunk<
   DataMartPricesProps,
   { state: BeefyState }
 >('analytics/fetchUnderlyingToUsd', async ({ productKey, timebucket, vaultId }, { getState }) => {
-  try {
-    const api = await getAnalyticsApi();
-    const data = await api.getVaultPrices(productKey, 'underlying_to_usd', timebucket);
-    return { data, vaultId, timebucket, status: 'fulfilled', state: getState() };
-  } catch (error) {
-    const empty: AnalyticsPriceResponse = [];
-    return { data: empty, vaultId, timebucket, status: 'rejected', state: getState() };
-  }
+  const api = await getAnalyticsApi();
+  const data = await api.getVaultPrices(productKey, 'underlying_to_usd', timebucket);
+  return { data, vaultId, timebucket, state: getState() };
 });
