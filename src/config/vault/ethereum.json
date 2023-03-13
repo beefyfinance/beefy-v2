@@ -329,34 +329,6 @@
     "createdAt": 1676382228
   },
   {
-    "id": "monolith-mim-usdc",
-    "name": "MIM-USDC sLP",
-    "token": "MIM-USDC sLP",
-    "tokenAddress": "0xEb9dC7087607be7D7C3Ccbb4544347dE1354720c",
-    "tokenDecimals": 18,
-    "tokenProviderId": "solidly",
-    "tokenAmmId": "ethereum-solidly",
-    "earnedToken": "mooMonolithMIM-USDC",
-    "earnedTokenAddress": "0x8f371Dc270548c9B8F7DB12C9F73dF19D76A6687",
-    "earnContractAddress": "0x8f371Dc270548c9B8F7DB12C9F73dF19D76A6687",
-    "oracle": "lps",
-    "oracleId": "monolith-mim-usdc",
-    "status": "active",
-    "platformId": "solidly",
-    "assets": ["MIM", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "OVER_COLLAT_ALGO_STABLECOIN",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://solidly.com/liquidity",
-    "network": "ethereum",
-    "createdAt": 1676382228
-  },
-  {
     "id": "monolith-frxeth-weth",
     "name": "frxETH-ETH sLP",
     "token": "frxETH-ETH sLP",
