@@ -1,5 +1,6 @@
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import React, { memo } from 'react';
+import { Link } from 'react-router-dom';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
@@ -20,15 +21,20 @@ interface VaultProps {
 
 export const Vault = memo<VaultProps>(function ({ vaultId }) {
   const classes = useStyles();
-
   return (
-    <div className={classes.vault}>
+    <Link
+      to={`/vault/${vaultId}`}
+      style={{
+        textDecoration: 'none',
+      }}
+      className={classes.vault}
+    >
       <VaultName vaultId={vaultId} />
       <VaultPlatformStat className={classes.itemSmall} showLabel={false} vaultId={vaultId} />
       <VaultDepositStat className={classes.itemBig} showLabel={false} vaultId={vaultId} />
       <VaultYearlyStat className={classes.itemSmall} showLabel={false} vaultId={vaultId} />
       <VaultDailyUsdStat className={classes.itemBig} showLabel={false} vaultId={vaultId} />
-    </div>
+    </Link>
   );
 });
 
