@@ -15,7 +15,7 @@ import { PnLTooltip } from '../PnLTooltip';
 import { makeStyles, Theme, useMediaQuery } from '@material-ui/core';
 import { GraphLoader } from '../../../GraphLoader';
 import { max } from 'lodash';
-import { formatUnderlyingTick, formatUsdTick, formatXAxis, TIME_BUCKET } from './helpers';
+import { formatUnderlyingTick, formatUsdTick, formatDateTimeTick, TIME_BUCKET } from './helpers';
 import { Legend } from '../Legend';
 import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../../helpers/graph';
 
@@ -97,6 +97,10 @@ export const Graph = memo(function ({ vaultId, period }: { vaultId: string; peri
     return (value: number) => formatUnderlyingTick(value, underlyingAxisDomain);
   }, [underlyingAxisDomain]);
 
+  const dateTimeTickFormatter = useMemo(() => {
+    return (value: number) => formatDateTimeTick(value, TIME_BUCKET[period]);
+  }, [period]);
+
   const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'));
 
   const xInterval = useMemo(() => {
@@ -122,9 +126,9 @@ export const Graph = memo(function ({ vaultId, period }: { vaultId: string; peri
           margin={{ top: 14, right: xMargin, bottom: 0, left: xMargin }}
           className={classes.graph}
         >
-          <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />\{' '}
+          <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />
           <XAxis
-            tickFormatter={tickitem => formatXAxis(tickitem, TIME_BUCKET[period])}
+            tickFormatter={dateTimeTickFormatter}
             dataKey="datetime"
             padding={{ left: 4, right: 4 }}
             tickMargin={10}

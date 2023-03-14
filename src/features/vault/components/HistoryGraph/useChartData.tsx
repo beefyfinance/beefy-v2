@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getBeefyApi } from '../../../data/apis/instances';
 import { config } from '../../../../config/config';
 import { max, maxBy, minBy } from 'lodash';
@@ -26,7 +26,7 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
     averageValue: 0,
     minValue: 0,
     maxValue: 0,
-    loading: false,
+    loading: true,
   });
 
   const [movingAverageDetail, setMovingAverageDetail] = useState('');

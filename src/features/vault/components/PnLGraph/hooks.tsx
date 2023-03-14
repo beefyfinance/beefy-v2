@@ -20,7 +20,7 @@ import { selectUserBalanceOfTokensIncludingBoosts } from '../../../data/selector
 import { fetchShareToUndelying, fetchUnderlyingToUsd } from '../../../data/actions/analytics';
 
 // Same object reference for empty chart data
-const NO_CHART_DATA = { data: [], minUnderlying: 0, maxUnderlying: 0, minUsd: 0, maxUsd: 0 };
+export const NO_CHART_DATA = { data: [], minUnderlying: 0, maxUnderlying: 0, minUsd: 0, maxUsd: 0 };
 
 export const usePnLChartData = (
   timebucket: TimeBucketType,
