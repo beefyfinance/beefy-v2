@@ -49,6 +49,7 @@ const oldValidOwners = [
 
 const oldValidFeeRecipients = {
   canto: '0xF09d213EE8a8B159C884b276b86E08E26B3bfF75',
+  kava: '0x07F29FE11FbC17876D9376E3CD6F2112e81feA6F',
 };
 
 const nonHarvestOnDepositChains = ['ethereum', 'avax'];
