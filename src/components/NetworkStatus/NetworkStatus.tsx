@@ -211,7 +211,7 @@ const findChainIdMatching = (state: BeefyState, matcher: (loader: LoaderState) =
 
 const findBeefyApiMatching = (state: BeefyState, matcher: (loader: LoaderState) => boolean) => {
   const matchingKeys: (keyof DataLoaderState['global'])[] = [];
-  const beefyKeys: (keyof DataLoaderState['global'])[] = ['apy', 'prices'];
+  const beefyKeys: (keyof DataLoaderState['global'])[] = ['apy', 'prices', 'analytics'];
   for (const key of beefyKeys) {
     if (matcher(state.ui.dataLoader.global[key])) {
       matchingKeys.push(key);
