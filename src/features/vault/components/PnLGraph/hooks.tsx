@@ -19,6 +19,9 @@ import {
 import { selectUserBalanceOfTokensIncludingBoosts } from '../../../data/selectors/balance';
 import { fetchShareToUndelying, fetchUnderlyingToUsd } from '../../../data/actions/analytics';
 
+// Same object reference for empty chart data
+const NO_CHART_DATA = { data: [], minUnderlying: 0, maxUnderlying: 0, minUsd: 0, maxUsd: 0 };
+
 export const usePnLChartData = (
   timebucket: TimeBucketType,
   productKey: string,
@@ -77,8 +80,7 @@ export const usePnLChartData = (
       );
       return () => clearTimeout(handleUnderlyingToUsd);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sharesStatus, underlyingStatus]);
+  }, [dispatch, sharesStatus, underlyingStatus, timebucket, productKey, vaultId]);
 
   const isLoading = useMemo(() => {
     return underlyingStatus !== 'fulfilled' || sharesStatus !== 'fulfilled';
@@ -111,9 +113,21 @@ export const usePnLChartData = (
       }
     }
 
-    return { data: [], minUnderlying: 0, maxUnderlying: 0, minUsd: 0, maxUsd: 0 };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shares, underlying]);
+    // This save us from re-rendering when data is loading
+    // We need to make sure this object is not modified elsewhere
+    return NO_CHART_DATA;
+  }, [
+    shares,
+    underlying,
+    currentMooTokenBalance,
+    currentOraclePrice,
+    currentPpfs,
+    vaultLastDeposit,
+    vaultTimeline,
+    sharesStatus,
+    underlyingStatus,
+    timebucket,
+  ]);
 
   return { chartData, isLoading };
 };
@@ -127,13 +141,11 @@ export const useVaultPeriods = (vaultId: VaultEntity['id']) => {
     end: currentDate,
   });
 
-  const dates = useMemo(() => {
+  return useMemo(() => {
     if (result.length > 30) return ['1D', '1W', '1M', 'ALL'];
     if (result.length > 7) return ['1D', '1W', 'ALL'];
     if (result.length > 1) return ['1D', 'ALL'];
     if (result.length === 1) return ['1D'];
     return [];
   }, [result.length]);
-
-  return dates;
 };
