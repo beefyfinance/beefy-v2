@@ -13,7 +13,7 @@ export class AnalyticsApi {
 
   constructor() {
     this.api = axios.create({
-      baseURL: 'https://datamart.beefy.com/api',
+      baseURL: 'https://databarn.beefy.com/api',
     });
   }
 
