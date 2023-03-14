@@ -77,6 +77,10 @@ export const Graph = memo<GraphProps>(function _Graph({
     return mapRangeToTicks(startValueDomain, chartData.maxValue + valueDiff);
   }, [chartData.maxValue, startValueDomain, valueDiff]);
 
+  const dateTimeTickFormatter = useMemo(() => {
+    return (value: number) => formatDateTimeTick(value, period);
+  }, [period]);
+
   const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'));
 
   const xMargin = useMemo(() => {
@@ -104,7 +108,7 @@ export const Graph = memo<GraphProps>(function _Graph({
           <XAxis
             dataKey="datetime"
             tickMargin={10}
-            tickFormatter={tickItem => formatXAxis(tickItem, period)}
+            tickFormatter={dateTimeTickFormatter}
             interval={xInterval}
             stroke="#363B63"
             dx={10}
@@ -155,7 +159,7 @@ export const Graph = memo<GraphProps>(function _Graph({
   );
 });
 
-export const formatXAxis = (tickItem: number, period: number) => {
+export const formatDateTimeTick = (tickItem: number, period: number) => {
   const date = new Date(tickItem);
   if (period === 0) {
     return format(date, 'HH:mm');

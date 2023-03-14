@@ -3,8 +3,7 @@ import { BeefyState } from '../../../redux-types';
 import { getAnalyticsApi } from '../apis/instances';
 import { VaultTimelineAnalyticsEntity } from '../entities/analytics';
 import BigNumber from 'bignumber.js';
-import { TimeBucketType } from '../apis/analytics/analytics-types';
-import { AnalyticsPriceResponse } from '../apis/analytics/analytics-types';
+import { AnalyticsPriceResponse, TimeBucketType } from '../apis/analytics/analytics-types';
 import { VaultEntity } from '../entities/vault';
 
 export interface fetchWalletTimelineFullfilled {
