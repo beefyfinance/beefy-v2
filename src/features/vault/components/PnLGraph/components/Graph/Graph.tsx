@@ -108,7 +108,6 @@ export const Graph = memo(function ({ vaultId, period }: { vaultId: string; peri
             tickMargin={10}
             stroke="#363B63"
             interval={xInterval}
-            dx={10}
           />
           <Line
             yAxisId="underliying"
