@@ -25,7 +25,7 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const showApy = shouldVaultShowInterest(vault);
   const classes = useStyles();
   const [stat, setStat] = useState(showApy ? 2 : 0);
-  const [period, setPeriod] = useState(3);
+  const [period, setPeriod] = useState(1);
   const [showAverages, setShowAverages] = useState<AverageState>({
     simpleAverage: true,
     movingAverage: true,
@@ -91,4 +91,4 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   );
 }
 
-export const HistoryGraph = React.memo(GraphComponent);
+export const HistoricGraph = React.memo(GraphComponent);

@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox';
 import { BasicTabs } from '../../../../../../components/Tabs/BasicTabs';
-import { AverageState } from '../../HistoryGraph';
+import { AverageState } from '../../HistoricGraph';
 
 import { styles } from './styles';
 

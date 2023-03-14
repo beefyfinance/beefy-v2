@@ -4,7 +4,7 @@ import { Redirect, useParams } from 'react-router';
 import { styles } from './styles';
 import { StrategyCard } from './components/StrategyCard';
 import { SafetyCard } from './components/SafetyCard';
-import { HistoryGraph } from './components/HistoryGraph';
+import { HistoricGraph } from './components/HistoricGraph';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
 import {
@@ -91,7 +91,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
             {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
             {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
             {!isGovVault(vault) ? <PnLGraphLoader vaultId={vaultId} /> : null}
-            {!isGovVault(vault) ? <HistoryGraph vaultId={vaultId} /> : null}
+            {!isGovVault(vault) ? <HistoricGraph vaultId={vaultId} /> : null}
             <LiquidityPoolBreakdownLoader vaultId={vaultId} />
             <SafetyCard vaultId={vaultId} />
             {!isGovVault(vault) ? <StrategyCard vaultId={vaultId} /> : null}

@@ -15,7 +15,7 @@ import {
 import { formatPercent, formatUsd } from '../../../../../../helpers/format';
 import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../../helpers/graph';
 import { GraphLoader } from '../../../GraphLoader';
-import { AverageState } from '../../HistoryGraph';
+import { AverageState } from '../../HistoricGraph';
 import { HistoryChartDataState } from '../../useChartData';
 import { CustomTooltip } from '../CustomTooltip';
 
