@@ -37,7 +37,7 @@ export const formatPercent = (
   dp = 2,
   placeholder: any = '?'
 ) => {
-  if (!percent) return placeholder;
+  if (!percent && percent !== 0) return placeholder;
 
   // Convert to number
   const numberPercent: number = (isBigNumber(percent) ? percent.toNumber() : percent) * 100;
