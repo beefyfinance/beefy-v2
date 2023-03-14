@@ -22,7 +22,7 @@ import { selectIsWalletPending } from '../../../../features/data/selectors/data-
 import clsx from 'clsx';
 import { useAppDispatch } from '../../../../store';
 import { formatAddressShort, formatEns } from '../../../../helpers/format';
-import { fetchAnalyticsVaults } from '../../../../features/data/actions/analytics';
+import { fetchWalletTimeline } from '../../../../features/data/actions/analytics';
 
 const useStyles = makeStyles(styles);
 
@@ -73,7 +73,7 @@ export const WalletContainer = connect((state: BeefyState) => {
     React.useEffect(() => {
       if (walletAddress) {
         dispatch(getEns({ address: walletAddress }));
-        dispatch(fetchAnalyticsVaults({ address: walletAddress }));
+        dispatch(fetchWalletTimeline({ address: walletAddress }));
       }
     }, [dispatch, walletAddress]);
 

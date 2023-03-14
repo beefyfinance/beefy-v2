@@ -17,7 +17,7 @@ import {
   selectTokenPriceByAddress,
 } from '../../../data/selectors/tokens';
 import { selectUserBalanceOfTokensIncludingBoosts } from '../../../data/selectors/balance';
-import { fetchShareToUndelying, fetchUnderlyingToUsd } from '../../../data/actions/analytics';
+import { fetchShareToUnderlying, fetchUnderlyingToUsd } from '../../../data/actions/analytics';
 
 export const usePnLChartData = (
   timebucket: TimeBucketType,
@@ -56,7 +56,7 @@ export const usePnLChartData = (
 
   useEffect(() => {
     if (sharesStatus === 'idle') {
-      dispatch(fetchShareToUndelying({ productKey, vaultId, timebucket }));
+      dispatch(fetchShareToUnderlying({ productKey, vaultId, timebucket }));
     }
     if (underlyingStatus === 'idle') {
       dispatch(fetchUnderlyingToUsd({ productKey, vaultId, timebucket }));
@@ -64,7 +64,7 @@ export const usePnLChartData = (
 
     if (sharesStatus === 'rejected') {
       const handleShareToUnderlying = setTimeout(
-        () => dispatch(fetchShareToUndelying({ productKey, vaultId, timebucket })),
+        () => dispatch(fetchShareToUnderlying({ productKey, vaultId, timebucket })),
         5000
       );
       return () => clearTimeout(handleShareToUnderlying);
@@ -77,8 +77,7 @@ export const usePnLChartData = (
       );
       return () => clearTimeout(handleUnderlyingToUsd);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sharesStatus, underlyingStatus]);
+  }, [dispatch, productKey, sharesStatus, timebucket, underlyingStatus, vaultId]);
 
   const isLoading = useMemo(() => {
     return underlyingStatus !== 'fulfilled' || sharesStatus !== 'fulfilled';
@@ -112,8 +111,18 @@ export const usePnLChartData = (
     }
 
     return { data: [], minUnderlying: 0, maxUnderlying: 0, minUsd: 0, maxUsd: 0 };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shares, underlying]);
+  }, [
+    currentMooTokenBalance,
+    currentOraclePrice,
+    currentPpfs,
+    shares,
+    sharesStatus,
+    timebucket,
+    underlying,
+    underlyingStatus,
+    vaultLastDeposit,
+    vaultTimeline,
+  ]);
 
   return { chartData, isLoading };
 };

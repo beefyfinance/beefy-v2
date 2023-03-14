@@ -17,7 +17,7 @@ export class AnalyticsApi {
     });
   }
 
-  public async getUserVaults(address: string): Promise<AnalyticsUserTimelineResponse> {
+  public async getWalletTimeline(address: string): Promise<AnalyticsUserTimelineResponse> {
     const res = await this.api.get('/v1/beefy/timeline', { params: { address } });
     return res.data;
   }

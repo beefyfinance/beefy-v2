@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import {
-  fetchAnalyticsVaults,
-  fetchShareToUndelying,
+  fetchWalletTimeline,
+  fetchShareToUnderlying,
   fetchUnderlyingToUsd,
 } from '../actions/analytics';
 import { ApiProductPriceRow } from '../apis/analytics/analytics-types';
@@ -61,7 +61,7 @@ export const analyticsSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(fetchAnalyticsVaults.fulfilled, (sliceState, action) => {
+    builder.addCase(fetchWalletTimeline.fulfilled, (sliceState, action) => {
       const { timeline, state } = action.payload;
 
       const totals = {
@@ -131,7 +131,7 @@ export const analyticsSlice = createSlice({
       sliceState.timeline.byVaultId = totals.byVaultId;
     });
 
-    builder.addCase(fetchShareToUndelying.fulfilled, (sliceState, action) => {
+    builder.addCase(fetchShareToUnderlying.fulfilled, (sliceState, action) => {
       const { data, vaultId, timebucket } = action.payload;
 
       if (!sliceState.shareToUnderlying.byVaultId[vaultId]) {
@@ -144,7 +144,7 @@ export const analyticsSlice = createSlice({
       };
     });
 
-    builder.addCase(fetchShareToUndelying.pending, (sliceState, action) => {
+    builder.addCase(fetchShareToUnderlying.pending, (sliceState, action) => {
       const { timebucket, vaultId } = action.meta.arg;
 
       if (!sliceState.shareToUnderlying.byVaultId[vaultId]) {
@@ -157,7 +157,7 @@ export const analyticsSlice = createSlice({
       };
     });
 
-    builder.addCase(fetchShareToUndelying.rejected, (sliceState, action) => {
+    builder.addCase(fetchShareToUnderlying.rejected, (sliceState, action) => {
       const { timebucket, vaultId } = action.meta.arg;
 
       sliceState.shareToUnderlying.byVaultId[vaultId].byTimebucket[timebucket] = {

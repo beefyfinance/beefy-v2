@@ -109,9 +109,6 @@ export function getInvestorTimeserie(
 
     currentDate = new Date(currentDate.getTime() + bucketSize);
   }
-  console.log(timeline.map(t => t.shareDiff.toString()));
-  console.log(timeline.map(t => t.shareBalance.toString()));
-  console.log(timeline.map(t => t.internal ?? false));
 
   pricesTs.push({
     //round down our to the last hours, since first item of the api do the same

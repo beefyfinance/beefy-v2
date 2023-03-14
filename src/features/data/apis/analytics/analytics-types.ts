@@ -33,6 +33,6 @@ export interface ApiProductPriceRow {
 
 export type PriceType = 'share_to_underlying' | 'underlying_to_usd' | 'pending_rewards_to_usd';
 
-export type TimeBucketType = '1h_1d' | '1h_1w' | '1d_1M' | '1d_1Y' | '1d_all';
+export type TimeBucketType = '1h_1d' | '1h_1w' | '1h_1M' | '4h_3M' | '1d_1M' | '1d_1Y' | '1d_all';
 
 export type AnalyticsPriceResponse = ApiProductPriceRow[];
