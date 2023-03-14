@@ -50,6 +50,7 @@ export interface PartnersConfig {
   QiDao: VaultEntity['id'][];
   Insurace: ChainEntity['id'][];
   Nexus: ChainEntity['id'][];
+  Olive: VaultEntity['id'][];
 }
 
 interface BoostPartnerConfig {

@@ -30,6 +30,7 @@ import { InsuranceCards } from './components/InsuranceCards';
 import { LeverageCards } from './components/LeverageCards';
 import { Actions } from './components/Actions';
 import { RenBannerVault } from '../../components/Banners/RenBanner';
+import { AmplifyCards } from './components/AmplifyCards';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -112,6 +113,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               <Hidden smDown>
                 <InsuranceCards vaultId={vaultId} />
                 <LeverageCards vaultId={vaultId} />
+                <AmplifyCards vaultId={vaultId} />
               </Hidden>
             </div>
             <div className={classes.columnInfo}>

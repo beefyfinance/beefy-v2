@@ -28,6 +28,12 @@ export type PartnersState = {
       [chainId: ChainEntity['id']]: boolean;
     };
   };
+
+  olive: {
+    byVaultId: {
+      [vaultId: VaultEntity['id']]: boolean;
+    };
+  };
 };
 export const initialPartnersState: PartnersState = {
   byId: {},
@@ -40,6 +46,10 @@ export const initialPartnersState: PartnersState = {
 
   nexus: {
     byChainId: {},
+  },
+
+  olive: {
+    byVaultId: {},
   },
 };
 
@@ -64,6 +74,11 @@ export const partnersSlice = createSlice({
       for (const chainId of action.payload.Nexus) {
         if (!sliceState.nexus.byChainId[chainId]) {
           sliceState.nexus.byChainId[chainId] = true;
+        }
+      }
+      for (const vaultId of action.payload.Olive) {
+        if (!sliceState.olive.byVaultId[vaultId]) {
+          sliceState.olive.byVaultId[vaultId] = true;
         }
       }
     });

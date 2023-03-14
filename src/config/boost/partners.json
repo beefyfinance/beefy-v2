@@ -1185,5 +1185,15 @@
       "discord": "https://discord.com/invite/lido",
       "twitter": "https://twitter.com/lidofinance"
     }
+  },
+  "olive": {
+    "logo": "stake/qidao/logo.png",
+    "background": "stake/qidao/background.png",
+    "text": "Olive Amplifies DeFi Yields By Up To 1.5X Without Principal Or Credit Risk.",
+    "website": "https://oliveapp.finance",
+    "social": {
+      "telegram": "https://t.me/OxOlive",
+      "twitter": "https://twitter.com/0xOlive"
+    }
   }
 }

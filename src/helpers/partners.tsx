@@ -43,4 +43,6 @@ const Nexus = [
   'ethereum',
 ];
 
-export { QiDao, Insurace, Nexus };
+const Olive = ['mvx-mvlp', 'gmx-arb-glp'];
+
+export { QiDao, Insurace, Nexus, Olive };

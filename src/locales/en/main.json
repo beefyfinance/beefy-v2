@@ -546,5 +546,8 @@
   "Transact-Provider-beefy-zap-solidly": "Beefy",
   "Treasury-treasuryMultisig": "Multisig",
   "Treasury-treasury": "Treasury",
-  "Treasury-validator": "Validator"
+  "Treasury-validator": "Validator",
+  "Olive-Title": "Olive",
+  "Olive-Content": "Yesss ssfdf dfgdf sdgdg xfgvdf dxfg dfg sdgdfg sdfg",
+  "Olive-Btn": "Lend {{mooToken}}"
 }
