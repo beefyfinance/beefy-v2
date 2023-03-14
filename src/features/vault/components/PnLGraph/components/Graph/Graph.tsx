@@ -18,35 +18,9 @@ import { max } from 'lodash';
 import { formatUnderlyingTick, formatUsdTick, formatDateTimeTick, TIME_BUCKET } from './helpers';
 import { Legend } from '../Legend';
 import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../../helpers/graph';
+import { styles } from './styles';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  graphContainer: {
-    padding: '16px 0px',
-    '& text': {
-      ...theme.typography['subline-sm'],
-      fill: theme.palette.text.disabled,
-      '&.recharts-cartesian-axis-tick-value': {
-        textTransform: 'initial',
-      },
-    },
-  },
-  graph: {
-    '& .recharts-yAxis': {
-      '& .recharts-cartesian-axis-tick': {
-        opacity: 1,
-        transition: 'ease-in-out 0.5s',
-      },
-    },
-    '&:hover': {
-      '& .recharts-yAxis': {
-        '& .recharts-cartesian-axis-tick': {
-          opacity: 0.5,
-          transition: 'ease-in-out 0.5s',
-        },
-      },
-    },
-  },
-}));
+const useStyles = makeStyles(styles);
 
 export const Graph = memo(function ({ vaultId, period }: { vaultId: string; period: number }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
