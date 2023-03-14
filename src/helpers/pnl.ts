@@ -7,9 +7,6 @@ interface PnlTransaction {
   ppfs: BigNumber;
 }
 
-//FIFO => First in First Out
-//LIFO => Last in first out
-
 export interface PnLBreakdown {
   shares: BigNumber;
   usd: BigNumber;

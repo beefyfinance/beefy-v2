@@ -17,7 +17,7 @@ import {
   selectTokenPriceByAddress,
 } from '../../../data/selectors/tokens';
 import { selectUserBalanceOfTokensIncludingBoosts } from '../../../data/selectors/balance';
-import { fetchShareToUndelying, fetchUnderlyingToUsd } from '../../../data/actions/analytics';
+import { fetchShareToUnderlying, fetchUnderlyingToUsd } from '../../../data/actions/analytics';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], minUnderlying: 0, maxUnderlying: 0, minUsd: 0, maxUsd: 0 };
@@ -59,7 +59,7 @@ export const usePnLChartData = (
 
   useEffect(() => {
     if (sharesStatus === 'idle') {
-      dispatch(fetchShareToUndelying({ productKey, vaultId, timebucket }));
+      dispatch(fetchShareToUnderlying({ productKey, vaultId, timebucket }));
     }
     if (underlyingStatus === 'idle') {
       dispatch(fetchUnderlyingToUsd({ productKey, vaultId, timebucket }));
@@ -67,7 +67,7 @@ export const usePnLChartData = (
 
     if (sharesStatus === 'rejected') {
       const handleShareToUnderlying = setTimeout(
-        () => dispatch(fetchShareToUndelying({ productKey, vaultId, timebucket })),
+        () => dispatch(fetchShareToUnderlying({ productKey, vaultId, timebucket })),
         5000
       );
       return () => clearTimeout(handleShareToUnderlying);
@@ -80,7 +80,9 @@ export const usePnLChartData = (
       );
       return () => clearTimeout(handleUnderlyingToUsd);
     }
+
   }, [dispatch, sharesStatus, underlyingStatus, timebucket, productKey, vaultId]);
+
 
   const isLoading = useMemo(() => {
     return underlyingStatus !== 'fulfilled' || sharesStatus !== 'fulfilled';
@@ -113,6 +115,7 @@ export const usePnLChartData = (
       }
     }
 
+
     // This save us from re-rendering when data is loading
     // We need to make sure this object is not modified elsewhere
     return NO_CHART_DATA;
@@ -127,6 +130,7 @@ export const usePnLChartData = (
     sharesStatus,
     underlyingStatus,
     timebucket,
+
   ]);
 
   return { chartData, isLoading };

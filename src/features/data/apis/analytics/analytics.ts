@@ -13,11 +13,11 @@ export class AnalyticsApi {
 
   constructor() {
     this.api = axios.create({
-      baseURL: 'https://datamart.beefy.com/api',
+      baseURL: 'https://databarn.beefy.com/api',
     });
   }
 
-  public async getUserVaults(address: string): Promise<AnalyticsUserTimelineResponse> {
+  public async getWalletTimeline(address: string): Promise<AnalyticsUserTimelineResponse> {
     const res = await this.api.get('/v1/beefy/timeline', { params: { address } });
     return res.data;
   }

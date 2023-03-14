@@ -6,19 +6,19 @@ import BigNumber from 'bignumber.js';
 import { AnalyticsPriceResponse, TimeBucketType } from '../apis/analytics/analytics-types';
 import { VaultEntity } from '../entities/vault';
 
-export interface FetchAnalyticsVaultsFullfilled {
+export interface fetchWalletTimelineFullfilled {
   timeline: VaultTimelineAnalyticsEntity[];
   state: BeefyState;
 }
 
-export const fetchAnalyticsVaults = createAsyncThunk<
-  FetchAnalyticsVaultsFullfilled,
+export const fetchWalletTimeline = createAsyncThunk<
+  fetchWalletTimelineFullfilled,
   { address: string },
   { state: BeefyState }
->('analytics/fetchVaults', async ({ address }, { getState }) => {
+>('analytics/fetchWalletTimeline', async ({ address }, { getState }) => {
   const api = await getAnalyticsApi();
 
-  const userTimeline = await api.getUserVaults(address);
+  const userTimeline = await api.getWalletTimeline(address);
 
   const timeline = userTimeline.map(row => {
     return {
@@ -32,9 +32,11 @@ export const fetchAnalyticsVaults = createAsyncThunk<
       shareToUnderlyingPrice: new BigNumber(row.share_to_underlying_price),
       underlyingBalance: new BigNumber(row.underlying_balance),
       underlyingDiff: new BigNumber(row.underlying_diff),
-      underlyingToUsdPrice: new BigNumber(row.underlying_to_usd_price),
-      usdBalance: new BigNumber(row.usd_balance),
-      usdDiff: new BigNumber(row.usd_diff),
+      underlyingToUsdPrice: row.underlying_to_usd_price
+        ? new BigNumber(row.underlying_to_usd_price)
+        : null,
+      usdBalance: row.usd_balance ? new BigNumber(row.usd_balance) : null,
+      usdDiff: row.usd_diff ? new BigNumber(row.usd_diff) : null,
     };
   });
 
@@ -54,11 +56,11 @@ interface DataMartPricesProps {
   vaultId: VaultEntity['id'];
 }
 
-export const fetchShareToUndelying = createAsyncThunk<
+export const fetchShareToUnderlying = createAsyncThunk<
   DataMartPricesFullfilled,
   DataMartPricesProps,
   { state: BeefyState }
->('analytics/fetchShareToUndelying', async ({ productKey, timebucket, vaultId }, { getState }) => {
+>('analytics/fetchShareToUnderlying', async ({ productKey, timebucket, vaultId }, { getState }) => {
   const api = await getAnalyticsApi();
   const data = await api.getVaultPrices(productKey, 'share_to_underlying', timebucket);
   return { data, vaultId, timebucket, state: getState() };

@@ -40,7 +40,6 @@ export const selectVaultPnl = (state: BeefyState, vaultId: VaultEntity['id']) =>
     }
   }
 
-  //Rewrite to new pnl class
   const oraclePriceAtDeposit = pnl.getRemainingSharesAvgEntryPrice();
   const balanceAtDeposit = pnl.getRemainingShares().times(pnl.getRemainingSharesAvgEntryPpfs());
   const usdBalanceAtDeposit = balanceAtDeposit.times(oraclePriceAtDeposit);
@@ -51,11 +50,8 @@ export const selectVaultPnl = (state: BeefyState, vaultId: VaultEntity['id']) =>
   const totalYield = depositNow.minus(balanceAtDeposit);
   const totalYieldUsd = totalYield.times(oraclePrice);
 
-  // const realizedPnl = pnl.getRealizedPnl();
-
   const unrealizedPnl = pnl.getUnrealizedPnl(oraclePrice, ppfs);
 
-  // const totalPnlUsd = realizedPnl.usd.plus(unrealizedPnl.usd);
   const totalPnlUsd = unrealizedPnl.usd;
 
   const yieldPercentage = totalYield.dividedBy(balanceAtDeposit);
