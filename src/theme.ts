@@ -237,6 +237,7 @@ const theme = createTheme(
             '--onboard-connect-sidebar-color': '#F5F5FF',
             '--onboard-connect-sidebar-progress-color': '#59A662',
             '--onboard-connect-sidebar-progress-background': '#2e3151',
+            '--onboard-link-color': '#999CB3',
           },
         },
       },
