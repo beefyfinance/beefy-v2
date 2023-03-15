@@ -45,7 +45,7 @@ export const selectIsUserBalanceAvailable = createSelector(
     (state: BeefyState) => state.ui.dataLoader.byChainId,
   ],
   (configAvailable, pricesAvailable, apyAvailable, byChainId) => {
-    if (!configAvailable || !pricesAvailable || apyAvailable) {
+    if (!configAvailable || !pricesAvailable || !apyAvailable) {
       return false;
     }
     for (const chainId in byChainId) {
