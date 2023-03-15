@@ -4,7 +4,7 @@ import { Redirect, useParams } from 'react-router';
 import { styles } from './styles';
 import { StrategyCard } from './components/StrategyCard';
 import { SafetyCard } from './components/SafetyCard';
-import { Graph } from './components/Graph';
+import { HistoricGraph } from './components/HistoricGraph';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
 import {
@@ -26,6 +26,7 @@ import { LeverageCards } from './components/LeverageCards';
 import { Actions } from './components/Actions';
 import { VaultHeader } from './components/VaultHeader';
 import { RenBannerVault } from '../../components/Banners/RenBanner';
+import { PnLGraphLoader } from './components/PnLGraph';
 import { VaultsStats } from './components/VaultsStats';
 
 const useStyles = makeStyles(styles);
@@ -89,7 +90,8 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
           <div className={classes.columnInfo}>
             {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
             {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
-            {!isGovVault(vault) ? <Graph vaultId={vaultId} /> : null}
+            {!isGovVault(vault) ? <PnLGraphLoader vaultId={vaultId} /> : null}
+            {!isGovVault(vault) ? <HistoricGraph vaultId={vaultId} /> : null}
             <LiquidityPoolBreakdownLoader vaultId={vaultId} />
             <SafetyCard vaultId={vaultId} />
             {!isGovVault(vault) ? <StrategyCard vaultId={vaultId} /> : null}

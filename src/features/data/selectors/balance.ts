@@ -151,6 +151,26 @@ export const selectUserBalanceOfToken = (
   );
 };
 
+export const selectUserBalanceOfTokensIncludingBoosts = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  chainId: ChainEntity['id'],
+  tokenAddress: TokenEntity['address'],
+  walletAddress?: string
+) => {
+  //first we get mootokens
+  let mooTokenBalance = selectUserBalanceOfToken(state, chainId, tokenAddress);
+
+  // we also need to account for deposits in boost (even those expired)
+  const boostIds = selectAllVaultBoostIds(state, vaultId);
+  for (const boostId of boostIds) {
+    const boostMooToken = selectBoostUserBalanceInToken(state, boostId, walletAddress);
+    mooTokenBalance = mooTokenBalance.plus(boostMooToken);
+  }
+
+  return mooTokenBalance;
+};
+
 /**
  * "User" balance refers to the balance displayed to the user
  * so we have to do the translation from earnedToken (mooToken) to depositToken

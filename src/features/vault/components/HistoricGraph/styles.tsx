@@ -1,6 +1,18 @@
 import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
+  container: {
+    borderRadius: '12px',
+    backgroundColor: '#2D3153',
+  },
+  header: {
+    padding: '24px',
+    borderRadius: '12px 12px 0px 0px',
+    backgroundColor: '#232743',
+    [theme.breakpoints.down('md')]: {
+      padding: '16px',
+    },
+  },
   titleBox: {
     display: 'flex',
     flexDirection: 'column' as const,
@@ -23,53 +35,20 @@ export const styles = (theme: Theme) => ({
       marginLeft: 'auto',
     },
   },
-  footerTabs: {
-    marginTop: '12px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    '& .MuiTabs-root': {
-      minHeight: 0,
-    },
-    '& .MuiTabs-flexContainer': {
-      columnGap: '24px',
-    },
-    '& .MuiTab-root': {
-      ...theme.typography['subline-lg'],
-      padding: 0,
-      height: 'auto',
-      minHeight: 0,
-    },
-    [theme.breakpoints.down('xs')]: {
-      flexWrap: 'wrap',
-      justifyContent: 'flex-end',
-      rowGap: theme.spacing(1),
-    },
-  },
-  checkboxContainer: {
-    display: 'flex',
-    columnGap: theme.spacing(2),
-    [theme.breakpoints.down('xs')]: {
-      order: 2,
-      width: '100%',
-      justifyContent: 'flex-end',
-    },
-  },
-  checkbox: {
-    color: '#848BAD',
-  },
   label: {
     ...theme.typography['subline-lg'],
+    fontWeight: 700,
   },
   averageLine: {
-    height: '15px',
-    width: '2px',
+    height: '2px',
+    width: '12px',
     backgroundColor: '#59A662',
     borderRadius: '2px',
     marginRight: theme.spacing(0.5),
   },
   movingAverageLine: {
-    height: '15px',
-    width: '2px',
+    height: '2px',
+    width: '12px',
     backgroundColor: '#4F93C4',
     borderRadius: '2px',
     marginRight: theme.spacing(0.5),
