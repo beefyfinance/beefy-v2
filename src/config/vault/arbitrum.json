@@ -1456,8 +1456,7 @@
     "earnContractAddress": "0xDa2307A45D298e855415675bF388e2bd64351D5b",
     "oracle": "lps",
     "oracleId": "curve-arb-mim",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "mim",
     "assets": ["MIM", "USDC", "USDT"],
     "risks": [
