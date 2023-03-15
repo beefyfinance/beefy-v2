@@ -12,8 +12,7 @@
     "earnContractAddress": "0xC1bfe1b2cFbFc97e3f6bdb3162132dDfbAe4927F",
     "oracle": "lps",
     "oracleId": "solidlizard-lusd-usdt",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "solidlizard",
     "assets": ["LUSD", "USDC"],
     "risks": [
@@ -68,7 +67,8 @@
     "earnContractAddress": "0x69952AC1415deeE04eFD14e3A9Ca6d657635Ff37",
     "oracle": "lps",
     "oracleId": "solidlizard-lusd-usdt",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solidlizard",
     "assets": ["LUSD", "USDT"],
     "risks": [
