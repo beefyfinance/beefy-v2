@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import QiDaoLogo from '../../../../images/partners/qidao.svg';
+import OliveLogo from '../../../../images/partners/olive.png';
 
 import { PartnerCard } from '../PartnerCard';
 
@@ -10,7 +10,7 @@ const OliveCard = () => {
 
   return (
     <PartnerCard
-      logo={QiDaoLogo}
+      logo={OliveLogo}
       title={t('Olive-Title')}
       content={t('Olive-Content')}
       url="https://oliveapp.finance/earn/vaults"

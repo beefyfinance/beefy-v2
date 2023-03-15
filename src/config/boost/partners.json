@@ -1187,8 +1187,8 @@
     }
   },
   "olive": {
-    "logo": "stake/qidao/logo.png",
-    "background": "stake/qidao/background.png",
+    "logo": "stake/olive/logo.png",
+    "background": "stake/olive/background.png",
     "text": "Olive Amplifies DeFi Yields By Up To 1.5X Without Principal Or Credit Risk.",
     "website": "https://oliveapp.finance",
     "social": {

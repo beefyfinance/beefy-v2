@@ -111,9 +111,9 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
             <div className={classes.columnActions}>
               <Actions vaultId={vaultId} />
               <Hidden smDown>
+                <AmplifyCards vaultId={vaultId} />
                 <InsuranceCards vaultId={vaultId} />
                 <LeverageCards vaultId={vaultId} />
-                <AmplifyCards vaultId={vaultId} />
               </Hidden>
             </div>
             <div className={classes.columnInfo}>
@@ -126,6 +126,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               <InfoCards chainId={vault.chainId} vaultId={vault.id} />
               <AssetsCard vaultId={vault.id} />
               <Hidden mdUp>
+                <AmplifyCards vaultId={vaultId} />
                 <InsuranceCards vaultId={vaultId} />
                 <LeverageCards vaultId={vaultId} />
               </Hidden>
