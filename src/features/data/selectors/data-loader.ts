@@ -9,6 +9,9 @@ import { isInitialLoader, isPending } from '../reducers/data-loader-types';
 const selectIsPriceAvailable = (state: BeefyState) =>
   state.ui.dataLoader.global.prices.alreadyLoadedOnce;
 
+const selectIsApyAvailable = (state: BeefyState) =>
+  state.ui.dataLoader.global.apy.alreadyLoadedOnce;
+
 export const selectIsConfigAvailable = (state: BeefyState) =>
   state.ui.dataLoader.global.chainConfig.alreadyLoadedOnce &&
   state.ui.dataLoader.global.vaults.alreadyLoadedOnce &&
@@ -38,10 +41,11 @@ export const selectIsUserBalanceAvailable = createSelector(
   [
     selectIsConfigAvailable,
     selectIsPriceAvailable,
+    selectIsApyAvailable,
     (state: BeefyState) => state.ui.dataLoader.byChainId,
   ],
-  (configAvailable, pricesAvailable, byChainId) => {
-    if (!configAvailable || !pricesAvailable) {
+  (configAvailable, pricesAvailable, apyAvailable, byChainId) => {
+    if (!configAvailable || !pricesAvailable || apyAvailable) {
       return false;
     }
     for (const chainId in byChainId) {
