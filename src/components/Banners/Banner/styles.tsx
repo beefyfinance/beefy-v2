@@ -1,9 +1,8 @@
 import { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
-  container: {
+  banner: {
     ...theme.typography['body-lg-med'],
-    paddingBottom: theme.spacing(3),
   },
   box: {
     backgroundColor: 'rgba(140, 147, 191, 0.1)',

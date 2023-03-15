@@ -1,12 +1,11 @@
 import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
-  container: {
-    marginTop: '32px',
+  stats: {
     display: 'grid',
     gridTemplateColumns: '100%',
-    rowGap: '16px',
-    columnGap: '48px',
+    rowGap: '24px',
+    columnGap: '24px',
     [theme.breakpoints.up('lg')]: {
       display: 'grid',
       gridTemplateColumns: 'minmax(0,666fr) minmax(0,333fr)',

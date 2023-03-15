@@ -106,6 +106,8 @@ export type BeefySnapshotProposal = {
 };
 export type BeefySnapshotActiveResponse = BeefySnapshotProposal[];
 
+export type BeefyVaultZapSupportResponse = Record<string, ('beefy' | 'oneInch')[]>;
+
 export class BeefyAPI {
   public api: AxiosInstance;
   public data: AxiosInstance;
@@ -242,6 +244,17 @@ export class BeefyAPI {
     }
 
     const res = await this.api.get<ApyFeeData>('/fees', {
+      params: { _: this.getCacheBuster('long') },
+    });
+    return res.data;
+  }
+
+  public async getVaultZapSupport(): Promise<BeefyVaultZapSupportResponse> {
+    if (featureFlag_simulateBeefyApiError('zap-support')) {
+      throw new Error('Simulated beefy api error');
+    }
+
+    const res = await this.api.get<BeefyVaultZapSupportResponse>('/vaults/zap-support', {
       params: { _: this.getCacheBuster('long') },
     });
     return res.data;

@@ -27,7 +27,7 @@ export function getVaultWithdrawnFromState(
   );
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
   const vaultFees = selectFeesByVaultId(state, vault.id);
-  const withdrawFee = vaultFees.withdraw;
+  const withdrawFee = vaultFees?.withdraw || 0;
 
   let sharesToWithdrawWei = totalSharesWei; // max
   if (!withdrawAll) {
@@ -71,7 +71,7 @@ export async function getVaultWithdrawnFromContract(
   const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
   const vaultContract = new web3.eth.Contract(VaultAbi, vault.earnContractAddress);
   const vaultFees = selectFeesByVaultId(state, vault.id);
-  const withdrawFee = vaultFees.withdraw;
+  const withdrawFee = vaultFees?.withdraw || 0;
 
   type MulticallReturnType = [
     [

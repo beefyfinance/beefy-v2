@@ -30,9 +30,7 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.background.snackbars.text,
     marginBottom: theme.spacing(2),
   },
-  closeBtn: {
-    marginTop: theme.spacing(3),
-  },
+  closeBtn: {},
   rememberContainer: {
     marginTop: theme.spacing(2),
   },
@@ -42,5 +40,14 @@ export const styles = (theme: Theme) => ({
   icon: {
     height: '20px',
     marginRight: theme.spacing(1),
+  },
+  buttons: {
+    display: 'grid',
+    gridAutoFlow: 'column',
+    gridAutoColumns: '1fr',
+    width: '100%',
+    alignItems: 'center',
+    gap: '8px',
+    marginTop: theme.spacing(3),
   },
 });

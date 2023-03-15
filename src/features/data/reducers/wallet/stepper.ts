@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js';
 import { startStepper } from '../../actions/stepper';
 import { ChainEntity } from '../../entities/chain';
 import { TokenEntity } from '../../entities/token';
+import { VaultEntity } from '../../entities/vault';
 
 export enum StepContent {
   StartTx = 1,
@@ -33,6 +34,7 @@ export type Step = {
   action: ThunkAction<any, any, any, any>;
   pending: boolean;
   extraInfo?: {
+    vaultId?: VaultEntity['id'];
     zap?: boolean;
     rewards?: { token: TokenEntity; amount: BigNumber };
   };

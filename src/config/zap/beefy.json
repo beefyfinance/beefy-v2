@@ -120,6 +120,11 @@
     "zapAddress": "0x333B767aB7f5CE17D51EdbCE57f422624aAE280F"
   },
   {
+    "chainId": "ethereum",
+    "ammId": "ethereum-verse",
+    "zapAddress": "0x2429c300BE41c3de2CBB894a7939ff3B49166001"
+  },
+  {
     "chainId": "fantom",
     "ammId": "fantom-spookyswap",
     "zapAddress": "0x8afc0f9BdC5DcA9f0408Df03A03520bFa98A15aF"
@@ -183,6 +188,11 @@
     "chainId": "harmony",
     "ammId": "harmony-sushi",
     "zapAddress": "0x41D44B276904561Ac51855159516FD4cB2c90968"
+  },
+  {
+    "chainId": "kava",
+    "ammId": "kava-equilibre",
+    "zapAddress": "0x445d3D1E75824197bd6A7F46434F67D754FA25C3"
   },
   {
     "chainId": "metis",

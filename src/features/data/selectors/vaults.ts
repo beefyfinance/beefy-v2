@@ -218,3 +218,42 @@ export const selectVaultDepositFee = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.byId[vaultId].depositFee,
   (fee: string) => fee || '0%'
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectVaultSupportsAnyZap = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.zapSupportById,
+  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (zapSupportById, vaultId) => {
+    const zapSupport = zapSupportById[vaultId];
+    if (zapSupport === undefined) {
+      return false;
+    }
+
+    return zapSupport.beefy || zapSupport.oneInch;
+  }
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectVaultSupportsBeefyZap = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.zapSupportById,
+  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (zapSupportById, vaultId) => {
+    const zapSupport = zapSupportById[vaultId];
+    if (zapSupport === undefined) {
+      return false;
+    }
+
+    return zapSupport.beefy;
+  }
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectVaultSupportsOneInchZap = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.zapSupportById,
+  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (zapSupportById, vaultId) => {
+    const zapSupport = zapSupportById[vaultId];
+    if (zapSupport === undefined) {
+      return false;
+    }
+
+    return zapSupport.oneInch;
+  }
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);

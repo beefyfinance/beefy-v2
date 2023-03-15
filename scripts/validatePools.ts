@@ -33,6 +33,12 @@ const overrides = {
   'scream-frax': { vaultOwner: undefined }, // Rescue
   'baby-sol-bnb': { beefyFeeRecipient: undefined }, // 0x0
   'sicle-grape-mim': { beefyFeeRecipient: undefined },
+  'geist-crv': { harvestOnDeposit: undefined },
+  'geist-ftm': { harvestOnDeposit: undefined },
+  'geist-wbtc': { harvestOnDeposit: undefined },
+  'geist-eth': { harvestOnDeposit: undefined },
+  'geist-usdc': { harvestOnDeposit: undefined },
+  'geist-mim': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
@@ -41,7 +47,12 @@ const oldValidOwners = [
   addressBook.arbitrum.platforms.beefyfinance.devMultisig,
 ];
 
-const oldValidFeeRecipients = {};
+const oldValidFeeRecipients = {
+  canto: '0xF09d213EE8a8B159C884b276b86E08E26B3bfF75',
+  kava: '0x07F29FE11FbC17876D9376E3CD6F2112e81feA6F',
+};
+
+const nonHarvestOnDepositChains = ['ethereum', 'avax'];
 
 const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddress'];
 
@@ -259,6 +270,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     updates = isVaultOwnerCorrect(pool, chainId, vaultOwner, updates);
     updates = isBeefyFeeRecipientCorrect(pool, chainId, beefyFeeRecipient, updates);
     updates = isBeefyFeeConfigCorrect(pool, chainId, beefyFeeConfig, updates);
+    updates = isHarvestOnDepositCorrect(pool, chainId, updates);
   });
 
   // Boosts
@@ -380,6 +392,30 @@ const isBeefyFeeConfigCorrect = (pool, chain, feeConfig, updates) => {
   return updates;
 };
 
+const isHarvestOnDepositCorrect = (pool, chain, updates) => {
+  if (
+    pool.status === 'active' &&
+    pool.harvestOnDeposit !== undefined &&
+    !nonHarvestOnDepositChains.includes(chain) &&
+    pool.harvestOnDeposit !== true
+  ) {
+    console.log(
+      `Pool ${pool.id} should update to harvest on deposit. From: ${pool.harvestOnDeposit} To: true`
+    );
+
+    if (!('harvestOnDeposit' in updates)) updates['harvestOnDeposit'] = {};
+    if (!(chain in updates.harvestOnDeposit)) updates.harvestOnDeposit[chain] = {};
+
+    if (pool.harvestOnDeposit in updates.harvestOnDeposit[chain]) {
+      updates.harvestOnDeposit[chain][pool.harvestOnDeposit].push(pool.harvestOnDeposit);
+    } else {
+      updates.harvestOnDeposit[chain][pool.harvestOnDeposit] = [pool.harvestOnDeposit];
+    }
+  }
+
+  return updates;
+};
+
 // Helpers to populate required addresses.
 
 type VaultConfigWithVaultData = VaultConfig & {
@@ -420,6 +456,7 @@ type VaultConfigWithStrategyData = VaultConfigWithVaultData & {
   beefyFeeRecipient: string | undefined;
   beefyFeeConfig: string | undefined;
   stratOwner: string | undefined;
+  harvestOnDeposit: boolean | undefined;
 };
 const populateStrategyData = async (
   chain,
@@ -435,6 +472,7 @@ const populateStrategyData = async (
       beefyFeeRecipient: stratContract.methods.beefyFeeRecipient(),
       beefyFeeConfig: stratContract.methods.beefyFeeConfig(),
       owner: stratContract.methods.owner(),
+      harvestOnDeposit: stratContract.methods.harvestOnDeposit(),
     };
   });
 
@@ -447,6 +485,7 @@ const populateStrategyData = async (
       beefyFeeRecipient: results[i].beefyFeeRecipient,
       beefyFeeConfig: results[i].beefyFeeConfig,
       stratOwner: results[i].owner,
+      harvestOnDeposit: results[i].harvestOnDeposit,
     };
   });
 };

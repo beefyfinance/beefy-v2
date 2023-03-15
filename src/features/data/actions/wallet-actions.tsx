@@ -1208,6 +1208,10 @@ const mintDeposit = (
       if (canZapInWithOneInch) {
         const swapInToken = isNative ? selectChainWrappedNativeToken(state, chainId) : payToken;
         const zap = selectOneInchZapByChainId(state, chain.chainId);
+        if (!zap) {
+          throw new Error(`No 1inch zap found for ${chain.chainId}`);
+        }
+
         const oneInchApi = await getOneInchApi(chain, zap.priceOracleAddress);
         const swapData = await oneInchApi.getSwap({
           disableEstimate: true, // otherwise will fail due to no allowance

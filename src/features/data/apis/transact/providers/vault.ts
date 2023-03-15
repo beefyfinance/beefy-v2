@@ -96,6 +96,7 @@ export class VaultProvider implements ITransactProvider {
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
       action: walletActions.deposit(vault, quote.inputs[0].amount, quote.inputs[0].max),
       pending: false,
+      extraInfo: { vaultId: vault.id },
     };
   }
 
@@ -139,6 +140,7 @@ export class VaultProvider implements ITransactProvider {
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
       action: walletActions.withdraw(vault, depositTokenAmount.amount, depositTokenAmount.max),
       pending: false,
+      extraInfo: { vaultId: vault.id },
     };
   }
 }

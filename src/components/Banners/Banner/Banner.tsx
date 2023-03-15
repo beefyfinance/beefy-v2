@@ -1,7 +1,8 @@
 import React, { memo, ReactNode } from 'react';
-import { Container, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { Clear } from '@material-ui/icons';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -15,16 +16,14 @@ export const Banner = memo<BannerProps>(function Banner({ icon, text, onClose, c
   const classes = useStyles();
 
   return (
-    <div className={classes.container}>
-      <Container maxWidth="lg">
-        <div className={classes.box}>
-          <div className={classes.content}>
-            {icon}
-            <div className={classes.text}>{text}</div>
-          </div>
-          <Clear onClick={onClose} className={classes.cross} />
+    <div className={clsx(classes.banner, className)}>
+      <div className={classes.box}>
+        <div className={classes.content}>
+          {icon}
+          <div className={classes.text}>{text}</div>
         </div>
-      </Container>
+        <Clear onClick={onClose} className={classes.cross} />
+      </div>
     </div>
   );
 });

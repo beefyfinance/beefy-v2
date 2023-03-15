@@ -65,7 +65,7 @@
     "minimumLiquidity": "1000",
     "mintFeeNumerator": "1",
     "mintFeeDenominator": "18",
-    "swapFeeNumerator": "9981",
+    "swapFeeNumerator": "19",
     "swapFeeDenominator": "10000",
     "getAmountOutMode": "getAmountOut"
   },

@@ -100,6 +100,9 @@ export class GovVaultProvider implements ITransactProvider {
       message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
       action: walletActions.stakeGovVault(vault, quote.inputs[0].amount),
       pending: false,
+      extraInfo: {
+        vaultId: vault.id,
+      },
     };
   }
 
@@ -175,6 +178,7 @@ export class GovVaultProvider implements ITransactProvider {
             token: rewardTokenAmount.token,
             amount: rewardTokenAmount.amount,
           },
+          vaultId: vault.id,
         },
       };
     }
@@ -184,6 +188,9 @@ export class GovVaultProvider implements ITransactProvider {
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
       action: walletActions.unstakeGovVault(vault, depositTokenAmount.amount),
       pending: false,
+      extraInfo: {
+        vaultId: vault.id,
+      },
     };
   }
 }

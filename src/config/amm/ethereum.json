@@ -24,5 +24,19 @@
     "swapFeeNumerator": "2000",
     "swapFeeDenominator": "1000000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "ethereum-verse",
+    "name": "Verse",
+    "type": "uniswapv2",
+    "routerAddress": "0xB4B0ea46Fe0E9e8EAB4aFb765b527739F2718671",
+    "factoryAddress": "0xee3E9E46E34a27dC755a63e2849C9913Ee1A06E2",
+    "pairInitHash": "0x0a50f77f76135087ca96e2f94d9220fd6c435aa345a8de958603cb89c476cc02",
+    "minimumLiquidity": "1000",
+    "mintFeeNumerator": "1",
+    "mintFeeDenominator": "5",
+    "swapFeeNumerator": "3",
+    "swapFeeDenominator": "1000",
+    "getAmountOutMode": "getAmountOut"
   }
 ]
