@@ -24,9 +24,17 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
       icon={<img className={classes.icon} src={GraphIcon} alt="graph" />}
       text={
         <>
-          Introducing the <span className={classes.link}> Beefy Yield Module: </span> a new
-          analytics tool that provides deeper insights into your investment's evolution. Visit any
-          of your active vaults and check it out!
+          Introducing the{' '}
+          <a
+            href="https://beefy.com/articles/insights-that-inspire-introducing-the-beefy-yield-module/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={classes.link}
+          >
+            Beefy Yield Module:
+          </a>{' '}
+          a new analytics tool that provides deeper insights into your investment's evolution. Visit
+          any of your active vaults and check it out!
         </>
       }
       onClose={closeBanner}
