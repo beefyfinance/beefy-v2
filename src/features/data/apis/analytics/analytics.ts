@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import BigNumber from 'bignumber.js';
 import {
   AnalyticsPriceResponse,
