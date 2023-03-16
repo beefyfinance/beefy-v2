@@ -534,7 +534,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   canto: {
     name: 'Canto',
     chainId: 7700,
-    rpc: ['https://mainnode.plexnode.org:8545'],
+    rpc: ['https://canto.slingshot.finance'],
     explorerUrl: 'https://tuber.build',
     multicallAddress: '0xc34b9c9DBB39Be0Ef850170127A7b4283484f804',
     appMulticallContractAddress: '0x7c7B7FbccA5699175003ecbe1B41E79F40385469',
@@ -547,7 +547,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'CANTO',
         decimals: 18,
       },
-      rpcUrls: ['https://mainnode.plexnode.org:8545'],
+      rpcUrls: ['https://canto.slingshot.finance'],
       blockExplorerUrls: ['https://tuber.build/'],
     },
     gas: {
