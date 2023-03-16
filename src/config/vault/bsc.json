@@ -463,7 +463,7 @@
     "assets": ["jBRL", "BRZ"],
     "risks": [
       "COMPLEXITY_LOW",
-      "IL_LOW",
+      "IL_NONE",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
