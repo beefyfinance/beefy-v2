@@ -1,5 +1,34 @@
 [
   {
+    "id": "balancer-poly-eth-frxeth",
+    "name": "frxETH-ETH",
+    "token": "frxETH-ETH Poly",
+    "tokenAddress": "0x5DEe84FfA2DC27419Ba7b3419d7146E53e4F7dEd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerETH-frxETH",
+    "earnedTokenAddress": "0x1a96eF3b72a2fC7d5724a66a040Dc5D856f4A00c",
+    "earnContractAddress": "0x1a96eF3b72a2fC7d5724a66a040Dc5D856f4A00c",
+    "oracle": "lps",
+    "oracleId": "balancer-poly-eth-frxeth",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["frxETH", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x5dee84ffa2dc27419ba7b3419d7146e53e4f7ded000200000000000000000a4e/invest",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x5dee84ffa2dc27419ba7b3419d7146e53e4f7ded000200000000000000000a4e/withdraw",
+    "network": "polygon",
+    "createdAt": 1678984815
+  },
+  {
     "id": "curve-poly-matic3crypto",
     "name": "MATIC/TriCrypto",
     "token": "WMATICTRI-f",
@@ -52,8 +81,8 @@
   },
   {
     "id": "balancer-usdc-wusdr",
-    "name": "USDC-wUSDR",
-    "token": "USDC-wUSDR",
+    "name": "wUSDR-USDC",
+    "token": "wUSDR-USDC Poly",
     "tokenAddress": "0x34A81e8956BF20b7448b31990A2c06F96830a6e4",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
@@ -64,7 +93,7 @@
     "oracleId": "balancer-usdc-wusdr",
     "status": "active",
     "platformId": "balancer",
-    "assets": ["USDC", "wUSDR"],
+    "assets": ["wUSDR", "USDC"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -99,9 +128,10 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_SMALL",
+      "MCAP_MICRO",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x7d60a4cb5ca92e2da965637025122296ea6854f900000000000000000000085e/invest",
@@ -128,9 +158,10 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_SMALL",
+      "MCAP_MICRO",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0xa48d164f6eb0edc68bd03b56fa59e12f24499ad10000000000000000000007c4/invest",
