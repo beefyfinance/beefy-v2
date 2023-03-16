@@ -8,7 +8,7 @@ Official frontend repo of [beefy.finance](https://app.beefy.finance). Multichain
 ## To Run to test against a local development server 
 ```
 yarn
-yarn validate
+yarn validate 
 yarn start
 ```
 
