@@ -24,13 +24,6 @@ export const AssetInfo = memo<AssetInfoProps>(function ({ chainId, token }) {
 
   const isLP = token.assetType === 'token' && token.oracleType === 'lps';
 
-  const usdValue = token.usdValue;
-
-  //HIDE: All tokens with less than 10 usd
-  if (usdValue.lt(10)) {
-    return null;
-  }
-
   if (isVault) {
     return (
       <AssetContainer token={token}>
