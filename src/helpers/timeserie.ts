@@ -93,9 +93,9 @@ export function getInvestorTimeserie(
     const balance = timeline[balanceIdx].shareBalance;
     const shares = sortedShares[sharesIdx];
     const underlying = sortedUnderlying[underlyingIdx];
-    const underlyingBalance = shares && balance ? shares.value.times(balance) : null;
+    const underlyingBalance = shares && balance ? shares.value.times(balance) : BIG_ZERO;
     const usdBalance =
-      underlyingBalance && underlying ? underlyingBalance.times(underlying.value) : null;
+      underlyingBalance && underlying ? underlyingBalance.times(underlying.value) : BIG_ZERO;
 
     if (balance && !balance.isEqualTo(BIG_ZERO)) {
       pricesTs.push({
