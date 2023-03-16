@@ -111,6 +111,10 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    */
   private createOnboard() {
     const onboard = Onboard({
+      connect: {
+        showSidebar: true,
+        disableUDResolution: true,
+      },
       wallets: this.getOnboardWalletInitializers(),
       theme: {
         '--w3o-background-color': '#1A1D26',
