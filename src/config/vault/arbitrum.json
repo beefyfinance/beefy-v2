@@ -67,8 +67,7 @@
     "earnContractAddress": "0x69952AC1415deeE04eFD14e3A9Ca6d657635Ff37",
     "oracle": "lps",
     "oracleId": "solidlizard-lusd-usdt",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "solidlizard",
     "assets": ["LUSD", "USDT"],
     "risks": [
