@@ -11,6 +11,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  Text,
 } from 'recharts';
 import { formatPercent, formatUsd } from '../../../../../../helpers/format';
 import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../../helpers/graph';
@@ -85,7 +86,8 @@ export const Graph = memo<GraphProps>(function _Graph({
             tickFormatter={dateTimeTickFormatter}
             interval={xInterval}
             stroke="#363B63"
-            dx={10}
+            tick={Tick}
+            padding="no-gap"
           />
           <Area
             dataKey="value"
@@ -140,3 +142,20 @@ export const formatDateTimeTick = (tickItem: number, period: number) => {
   }
   return date.toLocaleDateString(undefined, { month: 'numeric', day: 'numeric' });
 };
+
+function Tick({ payload, tickFormatter, visibleTicksCount, index, ...rest }: any) {
+  const { value } = payload;
+  const halfMaxTickTextWidth = 15;
+  let textAnchor =
+    index === 0
+      ? 'start'
+      : index === visibleTicksCount - 1 && rest.x > rest.width + halfMaxTickTextWidth
+      ? 'end'
+      : 'middle';
+
+  return (
+    <Text {...rest} textAnchor={textAnchor} className="recharts-cartesian-axis-tick-value">
+      {tickFormatter ? tickFormatter(value) : value}
+    </Text>
+  );
+}
