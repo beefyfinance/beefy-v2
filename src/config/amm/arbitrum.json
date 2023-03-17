@@ -38,5 +38,17 @@
     "swapFeeNumerator": "1",
     "swapFeeDenominator": "250",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "arbitrum-ramses",
+    "name": "Ramses",
+    "type": "solidly",
+    "routerAddress": "0xAAA87963EFeB6f7E0a2711F397663105Acb1805e",
+    "factoryAddress": "0xAAA20D08e59F6561f242b08513D36266C5A29415",
+    "pairInitHash": "0x915fb916d8f48e09e22ab9a09f127a3419f9abc6d51730324f003b3c53f578cb",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "2",
+    "swapFeeDenominator": "1000",
+    "getAmountOutMode": "getAmountOut"
   }
 ]

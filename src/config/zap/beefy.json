@@ -1,6 +1,11 @@
 [
   {
     "chainId": "arbitrum",
+    "ammId": "arbitrum-ramses",
+    "zapAddress": "0xE2f035f59De6a952FF699b4EDD0f99c466f25fEc"
+  },
+  {
+    "chainId": "arbitrum",
     "ammId": "arbitrum-solidlizard",
     "zapAddress": "0x545bcA2369c2B8EaE15D0b237905429f5E737Ae5"
   },
