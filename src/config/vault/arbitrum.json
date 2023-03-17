@@ -232,7 +232,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_NONE",
+      "IL_LOW",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"

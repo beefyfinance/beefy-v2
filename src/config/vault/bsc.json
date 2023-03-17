@@ -461,7 +461,13 @@
     "status": "active",
     "platformId": "thena",
     "assets": ["jBRL", "BRZ"],
-    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://thena.fi/swap",
     "addLiquidityUrl": "https://thena.fi/liquidity",
@@ -19409,7 +19415,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_SMALL",
+      "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
@@ -19440,7 +19446,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_SMALL",
+      "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
