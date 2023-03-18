@@ -1456,37 +1456,6 @@
     "createdAt": 1637589059
   },
   {
-    "id": "joe-frax-wavax-eol",
-    "name": "FRAX-AVAX LP",
-    "token": "FRAX-AVAX JLP",
-    "tokenAddress": "0x0d84595e8638dBc631076c51000B2d31120D8aa1",
-    "tokenDecimals": 18,
-    "tokenProviderId": "traderjoe",
-    "earnedToken": "mooJoeFRAX-WAVAX",
-    "earnedTokenAddress": "0xdAfD1803956c0eb7D85d475eb10D69Baa207C72d",
-    "earnContractAddress": "0xdAfD1803956c0eb7D85d475eb10D69Baa207C72d",
-    "oracle": "lps",
-    "oracleId": "joe-frax-wavax",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "traderjoe",
-    "assets": ["FRAX", "AVAX"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_MEDIUM",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.traderjoexyz.com/trade",
-    "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xDC42728B0eA910349ed3c6e1c9Dc06b5FB591f98",
-    "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xDC42728B0eA910349ed3c6e1c9Dc06b5FB591f98",
-    "network": "avax",
-    "createdAt": 1631635903
-  },
-  {
     "id": "joe-gohm-wavax",
     "name": "gOHM-AVAX LP",
     "token": "gOHM-AVAX JLP",
