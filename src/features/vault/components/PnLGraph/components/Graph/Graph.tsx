@@ -19,6 +19,7 @@ import { formatUnderlyingTick, formatUsdTick, formatDateTimeTick, TIME_BUCKET } 
 import { Legend } from '../Legend';
 import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../../helpers/graph';
 import { styles } from './styles';
+import { XAxisTick } from '../../../../../../components/XAxisTick';
 
 const useStyles = makeStyles(styles);
 
@@ -104,10 +105,11 @@ export const Graph = memo(function ({ vaultId, period }: { vaultId: string; peri
           <XAxis
             tickFormatter={dateTimeTickFormatter}
             dataKey="datetime"
-            padding={{ left: 4, right: 4 }}
+            padding="no-gap"
             tickMargin={10}
             stroke="#363B63"
             interval={xInterval}
+            tick={XAxisTick}
           />
           <Line
             yAxisId="underliying"
