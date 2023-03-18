@@ -88,6 +88,28 @@
     "createdAt": 1678783526
   },
   {
+    "id": "verse-weth-usdt",
+    "name": "ETH-USDT LP",
+    "token": "ETH-USDT LP",
+    "tokenAddress": "0x362DdD14F69924ebBF9066dDD2AE7C171cF6d098",
+    "tokenDecimals": 18,
+    "tokenProviderId": "verse",
+    "tokenAmmId": "ethereum-verse",
+    "earnedToken": "mooVerseETH-USDT",
+    "earnedTokenAddress": "0x9d7b626cb1c07f63A46a8337111b65D6Cb4B8a58",
+    "earnContractAddress": "0x9d7b626cb1c07f63A46a8337111b65D6Cb4B8a58",
+    "oracle": "lps",
+    "oracleId": "verse-weth-usdt",
+    "status": "active",
+    "platformId": "verse",
+    "assets": ["ETH", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://verse.bitcoin.com/pools/",
+    "network": "ethereum",
+    "createdAt": 1679145308
+  },
+  {
     "id": "verse-wbtc-usdc",
     "name": "WBTC-USDC LP",
     "token": "WBTC-USDC LP",
