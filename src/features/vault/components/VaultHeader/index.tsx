@@ -11,6 +11,8 @@ import { VaultPlatform } from '../../../../components/VaultPlatform';
 import { styles } from './styles';
 import { ShareButton } from '../ShareButton';
 
+const PUNCTUATION = new RegExp(/([/,-])/g);
+
 const useStyles = makeStyles(styles);
 
 export type VaultHeaderProps = {
@@ -27,7 +29,7 @@ export const VaultHeader = memo<VaultHeaderProps>(function ({ vaultId }) {
       <div className={classes.titleHolder}>
         <AssetsImage assetIds={vault.assetIds} size={48} chainId={vault.chainId} />
         <h1 className={classes.title}>
-          {vault.name} {!isGovVault(vault) ? t('Vault-vault') : ''}
+          {vault.name.replace(PUNCTUATION, '$1\u200B')} {!isGovVault(vault) ? t('Vault-vault') : ''}
         </h1>
       </div>
       <div className={classes.labelsHolder}>
