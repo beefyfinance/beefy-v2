@@ -609,7 +609,8 @@
     "earnContractAddress": "0x79A44dc13e5863Cf4AB36ab13e038A5F16861Abc",
     "oracle": "lps",
     "oracleId": "curve-avax-av3crv",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "curve",
     "assets": ["DAIe", "USDCe", "USDTe"],
     "risks": [

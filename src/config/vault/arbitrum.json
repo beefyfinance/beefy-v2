@@ -1332,7 +1332,8 @@
     "earnContractAddress": "0xC14844Ac5C0e7e96f678c75308d3Fde1Fa36e22f",
     "oracle": "lps",
     "oracleId": "radiant-rdnt-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "radiant",
     "assets": ["RDNT", "ETH"],
     "risks": [
