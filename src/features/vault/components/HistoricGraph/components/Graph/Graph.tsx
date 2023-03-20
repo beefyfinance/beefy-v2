@@ -12,6 +12,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import { XAxisTick } from '../../../../../../components/XAxisTick';
 import { formatPercent, formatUsd } from '../../../../../../helpers/format';
 import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../../helpers/graph';
 import { GraphLoader } from '../../../GraphLoader';
@@ -85,7 +86,8 @@ export const Graph = memo<GraphProps>(function _Graph({
             tickFormatter={dateTimeTickFormatter}
             interval={xInterval}
             stroke="#363B63"
-            dx={10}
+            tick={XAxisTick}
+            padding="no-gap"
           />
           <Area
             dataKey="value"
