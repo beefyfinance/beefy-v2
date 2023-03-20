@@ -39,6 +39,10 @@ export const formatPercent = (
 ) => {
   if (!percent && percent !== 0) return placeholder;
 
+  if (percent === 0) {
+    return '0%';
+  }
+
   // Convert to number
   const numberPercent: number = (isBigNumber(percent) ? percent.toNumber() : percent) * 100;
 
@@ -104,6 +108,11 @@ export const formatUsd = (tvl, oraclePrice = undefined) => {
   if (oraclePrice) {
     tvl *= oraclePrice;
   }
+
+  if (tvl === 0) {
+    return '$0';
+  }
+
   const order = Math.floor(Math.log10(tvl) / 3);
 
   const units = ['', 'k', 'M', 'B', 'T'];
