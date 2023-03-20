@@ -60,7 +60,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: 'rgba(18, 25, 38, 1)',
   },
   'headerNetwork-fuse': {
-    backgroundColor: 'rgba(227, 246, 139, 0.2)',
+    backgroundColor: 'rgba(180, 249, 186, 0.2)',
   },
   'headerNetwork-metis': {
     backgroundColor: 'rgba(0, 218, 204, 0.2)',
