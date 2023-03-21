@@ -1,5 +1,35 @@
 [
   {
+    "id": "balancer-jeur-par-v2",
+    "name": "jEUR-PAR",
+    "token": "jEUR-PAR BPT",
+    "tokenAddress": "0x513CdEE00251F39DE280d9E5f771A6eaFebCc88E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerjEUR-PAR",
+    "earnedTokenAddress": "0xB476B7A027da3D9fB5A5c9CB6078A34f7289B476",
+    "earnContractAddress": "0xB476B7A027da3D9fB5A5c9CB6078A34f7289B476",
+    "oracle": "lps",
+    "oracleId": "balancer-jeur-par-v2",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["jEUR", "PAR"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b/invest",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b/withdraw",
+    "network": "polygon",
+    "createdAt": 1679420279
+  },
+  {
     "id": "balancer-poly-eth-frxeth",
     "name": "frxETH-ETH",
     "token": "frxETH-ETH Poly",
@@ -121,7 +151,8 @@
     "earnContractAddress": "0x0593E77cBFA4Ca5472d8070E19E2b92E9e95A33C",
     "oracle": "lps",
     "oracleId": "balancer-jeur-par",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["jEUR", "PAR"],
     "risks": [
