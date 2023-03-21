@@ -1,5 +1,32 @@
 [
   {
+    "id": "canto-bifi-maxi",
+    "name": "BIFI Maxi",
+    "token": "BIFI",
+    "tokenAddress": "0x765277EebeCA2e31912C9946eAe1021199B39C61",
+    "tokenDecimals": 18,
+    "earnedToken": "mooCantoBIFI",
+    "earnedTokenAddress": "0x3D817096e66De9b1bc3800735C597B0e47Ef8A0b",
+    "earnContractAddress": "0x3D817096e66De9b1bc3800735C597B0e47Ef8A0b",
+    "oracle": "tokens",
+    "oracleId": "BIFI",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["BIFI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "maxi",
+    "buyTokenUrl": "https://www.velocimeter.xyz/swap",
+    "network": "canto",
+    "createdAt": 1679403789
+  },
+  {
     "id": "velocimeterv2-usdc-flow",
     "name": "FLOW-USDC V2 vLP",
     "token": "FLOW-USDC V2 vvLP",

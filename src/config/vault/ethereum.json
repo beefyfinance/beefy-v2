@@ -1,5 +1,32 @@
 [
   {
+    "id": "ethereum-bifi-maxi",
+    "name": "BIFI Maxi",
+    "token": "BIFI",
+    "tokenAddress": "0x5870700f1272a1AdbB87C3140bD770880a95e55D",
+    "tokenDecimals": 18,
+    "earnedToken": "mooEthereumBIFI",
+    "earnedTokenAddress": "0xe703ccDE82b2B40AdBdD9E5C674e521468159177",
+    "earnContractAddress": "0xe703ccDE82b2B40AdBdD9E5C674e521468159177",
+    "oracle": "tokens",
+    "oracleId": "BIFI",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["BIFI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "maxi",
+    "buyTokenUrl": "https://app.1inch.io/#/1/simple/swap/WETH/BIFI_2",
+    "network": "ethereum",
+    "createdAt": 1679403789
+  },
+  {
     "id": "convex-cnc",
     "name": "CNC/ETH",
     "token": "CNCETH-f",
