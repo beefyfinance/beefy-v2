@@ -35,7 +35,7 @@
     "tokenDecimals": 18,
     "tokenProviderId": "equilibre",
     "tokenAmmId": "kava-equilibre",
-    "earnedToken": "mooEquilibreKAVA-ETH",
+    "earnedToken": "mooEquilibreKAVA-WBTC",
     "earnedTokenAddress": "0x00d7364BF070959F6564351FAE03C65773DB40f1",
     "earnContractAddress": "0x00d7364BF070959F6564351FAE03C65773DB40f1",
     "oracle": "lps",
