@@ -6,7 +6,7 @@
     "tokenAddress": "0x513CdEE00251F39DE280d9E5f771A6eaFebCc88E",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
-    "earnedToken": "mooBalancerjEUR-PAR",
+    "earnedToken": "mooBalancerjEUR-PARv2",
     "earnedTokenAddress": "0xB476B7A027da3D9fB5A5c9CB6078A34f7289B476",
     "earnContractAddress": "0xB476B7A027da3D9fB5A5c9CB6078A34f7289B476",
     "oracle": "lps",
