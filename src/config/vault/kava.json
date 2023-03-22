@@ -1,5 +1,32 @@
 [
   {
+    "id": "kava-bifi-maxi",
+    "name": "BIFI Maxi",
+    "token": "BIFI",
+    "tokenAddress": "0xC19281F22A075E0F10351cd5D6Ea9f0AC63d4327",
+    "tokenDecimals": 18,
+    "earnedToken": "mooKavaBIFI",
+    "earnedTokenAddress": "0xB9093BB8c4C22F91DF0A34caE8Fc687047c5A151",
+    "earnContractAddress": "0xB9093BB8c4C22F91DF0A34caE8Fc687047c5A151",
+    "oracle": "tokens",
+    "oracleId": "BIFI",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["BIFI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "maxi",
+    "buyTokenUrl": "https://equilibrefinance.com/swap",
+    "network": "kava",
+    "createdAt": 1679403789
+  },
+  {
     "id": "kava-bifi-gov",
     "name": "BIFI Earnings Pool",
     "token": "BIFI",
