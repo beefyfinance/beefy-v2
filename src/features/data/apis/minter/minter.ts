@@ -10,8 +10,8 @@ import { BIG_ZERO } from '../../../../helpers/big-number';
 export class MinterApi implements IMinterApi {
   constructor(protected web3: Web3, protected chain: ChainEntity) {}
   public async fetchMinterReserves(minter: MinterEntity): Promise<FetchMinterReservesResult> {
-    if (minter.canBurnReserves) {
-      const contract = getContract(minter.contractAddress, this.web3, MinterAbi);
+    if (minter.canBurnReserves && minter.burnerAddress) {
+      const contract = getContract(minter.burnerAddress, this.web3, MinterAbi);
       const data: BigNumber = await contract?.methods[minter.reserveBalanceMethod]().call();
       return new BigNumber(data);
     } else {

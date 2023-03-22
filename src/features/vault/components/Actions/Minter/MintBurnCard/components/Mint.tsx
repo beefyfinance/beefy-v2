@@ -58,12 +58,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     selectUserBalanceOfToken(state, vault.chainId, mintedToken.address)
   );
   const depositTokenAllowance = useAppSelector(state =>
-    selectAllowanceByTokenAddress(
-      state,
-      vault.chainId,
-      depositToken.address,
-      minter.contractAddress
-    )
+    selectAllowanceByTokenAddress(state, vault.chainId, depositToken.address, minter.minterAddress)
   );
   const { canBurnReserves, hasEarningsPool } = minter;
   const [contentKey, reminderKey] = useMemo(() => {
@@ -172,7 +167,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           step: {
             step: 'approve',
             message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(depositToken, minter.contractAddress),
+            action: walletActions.approval(depositToken, minter.minterAddress),
             pending: false,
           },
         })

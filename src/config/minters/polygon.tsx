@@ -4,7 +4,8 @@ export const minters: MinterConfig[] = [
   {
     id: 'beqi',
     name: 'beQI',
-    contractAddress: '0x97bfa4b212A153E15dCafb799e733bc7d1b70E72',
+    minterAddress: '0x97bfa4b212A153E15dCafb799e733bc7d1b70E72',
+    burnerAddress: '0x97bfa4b212A153E15dCafb799e733bc7d1b70E72',
     depositToken: {
       symbol: 'QI',
       oracleId: 'QI',
