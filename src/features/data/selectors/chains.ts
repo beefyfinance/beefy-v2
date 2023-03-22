@@ -1,11 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
 import createCachedSelector from 're-reselect';
 import { BeefyState } from '../../../redux-types';
+import { ChainEntity } from '../entities/chain';
 
 export const selectChainById = createCachedSelector(
   (state, chainId) => chainId,
   state => state.entities.chains.byId,
-  (chainId, byId) => byId[chainId]
+  (chainId, byId): ChainEntity | undefined => byId[chainId]
 )((state, chainId) => chainId);
 
 export const selectAllChains = createSelector(

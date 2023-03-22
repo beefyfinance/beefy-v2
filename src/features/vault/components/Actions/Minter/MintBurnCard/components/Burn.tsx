@@ -52,28 +52,10 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   const mintedTokenBalance = useAppSelector(state =>
     selectUserBalanceOfToken(state, vault.chainId, mintedToken.address)
   );
-  const depositedTokenAllowance = useAppSelector(state =>
-    selectAllowanceByTokenAddress(
-      state,
-      vault.chainId,
-      depositToken.address,
-      minter.contractAddress
-    )
+  const mintedTokenAllowance = useAppSelector(state =>
+    selectAllowanceByTokenAddress(state, vault.chainId, mintedToken.address, minter.burnerAddress)
   );
   const reserves = useAppSelector(state => selectMinterReserves(state, minter.id));
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const resetFormData = () => {
-    setFormData({
-      ...formData,
-      withdraw: {
-        ...formData.withdraw,
-        input: '',
-        amount: BIG_ZERO,
-        max: false,
-      },
-    });
-  };
 
   const isStepping = useAppSelector(selectIsStepperStepping);
 
@@ -148,13 +130,17 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
       return dispatch(askForNetworkChange({ chainId: vault.chainId }));
     }
 
-    if (depositedTokenAllowance.isLessThan(formData.withdraw.amount)) {
+    // minted token does not need allowance to burn itself
+    if (
+      minter.burnerAddress !== mintedToken.address &&
+      mintedTokenAllowance.isLessThan(formData.withdraw.amount)
+    ) {
       dispatch(
         stepperActions.addStep({
           step: {
             step: 'approve',
             message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(mintedToken, minter.contractAddress),
+            action: walletActions.approval(mintedToken, minter.burnerAddress),
             pending: false,
           },
         })
@@ -167,7 +153,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           message: t('Vault-TxnConfirm', { type: t('Burn') }),
           action: walletActions.burnWithdraw(
             vault.chainId,
-            minter.contractAddress,
+            minter.burnerAddress,
             depositToken,
             mintedToken,
             formData.withdraw.amount,
