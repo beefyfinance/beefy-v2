@@ -1207,7 +1207,6 @@ const mintDeposit = (
     const buildCall = async () => {
       if (canZapInWithOneInch) {
         const swapInToken = isNative ? selectChainWrappedNativeToken(state, chainId) : payToken;
-        console.log(chain);
         const zap = selectOneInchZapByChainId(state, chain.id);
         if (!zap) {
           throw new Error(`No 1inch zap found for ${chain.id}`);
