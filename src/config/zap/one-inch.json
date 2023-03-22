@@ -54,7 +54,7 @@
     "chainId": "fantom",
     "fee": {
       "value": 0.0005,
-      "recipient": "0xCA2D9d7E28D4eeDA954074314d44a1a20c74DcbD"
+      "recipient": "0xf2EeC1baC39306C0761c816d1D33cF7C9Ad6C0Fe"
     },
     "depositFromTokens": ["FTM", "WFTM", "USDC", "fUSDT", "DAI", "MIM", "MAI", "WETH", "WBTC"],
     "withdrawToTokens": ["FTM", "BIFI", "USDC", "fUSDT", "DAI", "MIM", "MAI", "WETH", "WBTC"],
@@ -225,7 +225,7 @@
     "chainId": "bsc",
     "fee": {
       "value": 0.0005,
-      "recipient": "0xc11986544b98697e45c9F05E0a98b3643D51aF2D"
+      "recipient": "0xf2EeC1baC39306C0761c816d1D33cF7C9Ad6C0Fe"
     },
     "depositFromTokens": ["BNB", "WBNB", "BUSD", "USDC", "USDT", "DAI", "ETH", "BTCB"],
     "withdrawToTokens": ["BNB", "BIFI", "BUSD", "USDC", "USDT", "DAI", "ETH", "BTCB"],
