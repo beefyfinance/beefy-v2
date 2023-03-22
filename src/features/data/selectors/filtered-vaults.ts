@@ -286,10 +286,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
   // Vaults are already presorted by date on the reducer
   if (filterOptions.sort === 'default') {
     const vaultIsBoosted = Object.fromEntries(
-      sortedVaults.map(vault => [
-        vault.id,
-        selectIsVaultPreStakedOrBoosted(state, vault.id) && vault.platformId !== 'valleyswap',
-      ])
+      sortedVaults.map(vault => [vault.id, selectIsVaultPreStakedOrBoosted(state, vault.id)])
     );
 
     if (filterOptions.userCategory === 'deposited') {
