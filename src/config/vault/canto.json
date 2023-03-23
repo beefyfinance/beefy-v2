@@ -48,7 +48,7 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1679532194
+    "createdAt": 1679594788
   },
   {
     "id": "velocimeterv2-multibtc-usdt",
@@ -72,7 +72,7 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1679532271
+    "createdAt": 1679594788
   },
   {
     "id": "velocimeterv2-eth-multibtc",
@@ -96,7 +96,7 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1679526322
+    "createdAt": 1679594788
   },
   {
     "id": "velocimeterv2-usdc-flow",
