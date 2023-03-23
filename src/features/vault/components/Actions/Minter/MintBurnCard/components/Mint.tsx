@@ -60,30 +60,19 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   const depositTokenAllowance = useAppSelector(state =>
     selectAllowanceByTokenAddress(state, vault.chainId, depositToken.address, minter.minterAddress)
   );
-  const { canBurnReserves, hasEarningsPool } = minter;
+  const { canBurnReserves, hasEarningsPool, canZapInWithOneInch } = minter;
   const [contentKey, reminderKey] = useMemo(() => {
     const liquidityType = canBurnReserves ? 'Burnable' : 'Liquid';
     const earningsType = hasEarningsPool ? 'WithEarnings' : 'WithoutEarnings';
+    const zapType = canZapInWithOneInch ? 'WithZap' : 'WithoutZap';
 
     return ['Content', 'Reminder'].map(key => [
+      `Mint-${key}-${liquidityType}-${earningsType}-${zapType}`,
       `Mint-${key}-${liquidityType}-${earningsType}`,
       `Mint-${key}-${liquidityType}`,
       `Mint-${key}`,
     ]);
-  }, [canBurnReserves, hasEarningsPool]);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const resetFormData = () => {
-    setFormData({
-      ...formData,
-      deposit: {
-        ...formData.deposit,
-        input: '',
-        amount: BIG_ZERO,
-        max: false,
-      },
-    });
-  };
+  }, [canBurnReserves, hasEarningsPool, canZapInWithOneInch]);
 
   const isStepping = useAppSelector(selectIsStepperStepping);
 
