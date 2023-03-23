@@ -28,7 +28,7 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0xb2E5Cbe39C92AfB14Cb8DBAdCC138Ea4A8614BAe",
     "network": "arbitrum",
-    "createdAt": 1679132848
+    "createdAt": 1679559921
   },
   {
     "id": "solidlizard-usd+-usdc",
@@ -59,7 +59,7 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0x219fbc3ed20152a9501dDAA47F2a8C193E32D0C6",
     "network": "arbitrum",
-    "createdAt": 1679132941
+    "createdAt": 1679559921
   },
   {
     "id": "solidlizard-sliz-usdc",
@@ -83,7 +83,7 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0x9E7fB82fdF08a6aAba760A81F0A64602Af045d2a",
     "network": "arbitrum",
-    "createdAt": 1679322167
+    "createdAt": 1679559921
   },
   {
     "id": "solidlizard-lusd-usdc",
@@ -97,7 +97,7 @@
     "earnedTokenAddress": "0xC1bfe1b2cFbFc97e3f6bdb3162132dDfbAe4927F",
     "earnContractAddress": "0xC1bfe1b2cFbFc97e3f6bdb3162132dDfbAe4927F",
     "oracle": "lps",
-    "oracleId": "solidlizard-lusd-usdt",
+    "oracleId": "solidlizard-lusd-usdc",
     "status": "active",
     "platformId": "solidlizard",
     "assets": ["LUSD", "USDC"],
