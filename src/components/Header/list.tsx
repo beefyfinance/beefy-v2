@@ -12,7 +12,6 @@ import { ReactComponent as TreasuryIcon } from '../../images/icons/navigation/tr
 import { ReactComponent as DaoIcon } from '../../images/icons/navigation/dao.svg';
 import { ProposalsNavItem } from './components/NavItem/ProposalsNavItem';
 import { NavConfig, NavItemConfig } from './components/DropNavItem/types';
-import { NewBadge } from './components/Badges/NewBadge';
 import { ProposalsMobileNavItem } from './components/NavItem/ProposalsMobileNavItem';
 
 export const DaoNavItems: NavItemConfig[] = [
