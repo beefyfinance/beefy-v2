@@ -182,7 +182,8 @@
     "earnContractAddress": "0xAcB4F57973A9B3274fb9ff5CE7c582Ab35ef8fc8",
     "oracle": "lps",
     "oracleId": "balancer-jeur-ageur",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["jEUR", "agEUR"],
     "risks": [
