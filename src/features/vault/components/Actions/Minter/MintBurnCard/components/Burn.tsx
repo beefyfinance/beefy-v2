@@ -172,8 +172,8 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     <CardContent className={classes.cardContent}>
       <div className={classes.content}>
         {t('Burn-Content', {
-          token1: minter.mintedToken.symbol,
-          token2: minter.depositToken.symbol,
+          mintedToken: minter.mintedToken.symbol,
+          depositToken: minter.depositToken.symbol,
         })}
       </div>
       <div className={classes.boxReserves}>
