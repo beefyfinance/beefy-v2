@@ -118,7 +118,14 @@
     "status": "active",
     "platformId": "equilibre",
     "assets": ["MAI", "VARA"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
