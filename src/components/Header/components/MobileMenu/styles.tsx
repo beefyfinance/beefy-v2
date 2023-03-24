@@ -13,9 +13,15 @@ export const styles = (theme: Theme) => ({
     boxShadow: 'none',
     color: theme.palette.text.primary,
     fontSize: '30px',
+    position: 'relative' as const,
   },
   toggleDrawerIcon: {
     display: 'block',
+  },
+  toggleDrawNotification: {
+    position: 'absolute' as const,
+    top: '8px',
+    right: '8px',
   },
   menuContainer: {
     height: '100%',

@@ -41,7 +41,7 @@ export const MobileList: NavConfig[] = [
   { title: 'Header-Vaults', Icon: VaultsIcon, url: '/' },
   { title: 'Header-Dashboard', Icon: DashboardIcon, url: '/dashboard' },
   { title: 'Header-Dao', Icon: DaoIcon, items: DaoNavItems },
-  { title: 'Header-Resources', Icon: ResourcesIcon, items: ResourcesNavItems, Badge: NewBadge },
+  { title: 'Header-Resources', Icon: ResourcesIcon, items: ResourcesNavItems },
   { title: 'Header-BuyCrypto', Icon: BuyCryptoIcon, url: '/onramp' },
   { title: 'Header-BridgeBifi', Icon: BridgeIcon, url: '/bridge' },
 ];

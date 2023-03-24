@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { MobileList } from '../../list';
 import { isNavDropdownConfig, NavConfig, NavDropdownConfig } from '../DropNavItem/types';
 import clsx from 'clsx';
+import { UnreadProposalsDot } from '../Badges/UnreadProposalsDot';
 
 const useStyles = makeStyles(styles);
 
@@ -22,6 +23,7 @@ export const MobileMenu = memo(function () {
     <div>
       <button aria-label="menu" onClick={handleDrawerToggle} className={classes.toggleDrawer}>
         <Menu fontSize="inherit" className={classes.toggleDrawerIcon} />
+        <UnreadProposalsDot className={classes.toggleDrawNotification} />
       </button>
       <Drawer className={classes.bg} anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
         <div className={classes.menuContainer}>
