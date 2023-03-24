@@ -27,6 +27,37 @@
     "createdAt": 1679403789
   },
   {
+    "id": "velocimeterv2-note-multibtc",
+    "name": "NOTE-multiBTC V2 vLP",
+    "token": "NOTE-multiBTC V2 vvLP",
+    "tokenAddress": "0xe86F5A4634966e434f54Af4B598417dB0BA524E7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velocimeter",
+    "tokenAmmId": "canto-velocimeter",
+    "earnedToken": "mooVelocimeterV2NOTE-multiBTC",
+    "earnedTokenAddress": "0x8F7E7e3c52FE407006333be9a9d038db86119bF0",
+    "earnContractAddress": "0x8F7E7e3c52FE407006333be9a9d038db86119bF0",
+    "oracle": "lps",
+    "oracleId": "velocimeterv2-note-multibtc",
+    "status": "active",
+    "platformId": "velocimeter",
+    "assets": ["NOTE", "multiBTC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MEDIUM",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://www.velocimeter.xyz/swap",
+    "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
+    "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
+    "network": "canto",
+    "createdAt": 1679594788
+  },
+  {
     "id": "velocimeterv2-multibtc-wcanto",
     "name": "multiBTC-CANTO V2 vLP",
     "token": "multiBTC-CANTO V2 vvLP",
