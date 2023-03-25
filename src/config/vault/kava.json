@@ -55,6 +55,37 @@
     "createdAt": 1678801905
   },
   {
+    "id": "equilibre-usx-usdc",
+    "name": "USX-USDC sLP",
+    "token": "USX-USDC sLP",
+    "tokenAddress": "0xcc35FD8B11e66aB413dc520c920F396c2c1096Eb",
+    "tokenDecimals": 18,
+    "tokenProviderId": "equilibre",
+    "tokenAmmId": "kava-equilibre",
+    "earnedToken": "mooEquilibreUSX-USDC",
+    "earnedTokenAddress": "0x50E46ecE1c267C9ca6713060614c49C30f124338",
+    "earnContractAddress": "0x50E46ecE1c267C9ca6713060614c49C30f124338",
+    "oracle": "lps",
+    "oracleId": "equilibre-usx-usdc",
+    "status": "active",
+    "platformId": "equilibre",
+    "assets": ["USX", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://equilibrefinance.com/swap",
+    "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
+    "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
+    "network": "kava",
+    "createdAt": 1677261849
+  },
+  {
     "id": "equilibre-axlusdc-usdc",
     "name": "axlUSDC-USDC sLP",
     "token": "axlUSDC-USDC sLP",
