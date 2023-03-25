@@ -83,7 +83,7 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "network": "kava",
-    "createdAt": 1677261849
+    "createdAt": 1679711622
   },
   {
     "id": "equilibre-axlusdc-usdc",
