@@ -112,6 +112,35 @@
     "createdAt": 1646162527
   },
   {
+    "id": "beets-ankr-fantom-liquid-ocean",
+    "name": "Ankr Fantom Liquid Ocean",
+    "token": "Ankr Fantom Liquid Ocean",
+    "tokenAddress": "0x8FDa1835D346CF3d22C01742D2EdBB0831402a3A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsAnkrFantomLiquidOcean",
+    "earnedTokenAddress": "0x70491A6A6eaF93B4f254d7299E167A8dA462096D",
+    "earnContractAddress": "0x70491A6A6eaF93B4f254d7299E167A8dA462096D",
+    "oracle": "lps",
+    "oracleId": "beets-ankr-fantom-liquid-ocean",
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["ankrFTM", "FTM"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://beets.fi/pool/0x8fda1835d346cf3d22c01742d2edbb0831402a3a000200000000000000000700",
+    "removeLiquidityUrl": "https://beets.fi/pool/0x8fda1835d346cf3d22c01742d2edbb0831402a3a000200000000000000000700",
+    "network": "fantom",
+    "createdAt": 1679693823
+  },
+  {
     "id": "equalizer-ankr-ankrftm",
     "name": "ankrFTM-ANKR vLP",
     "token": "ankrFTM-ANKR vLP",
