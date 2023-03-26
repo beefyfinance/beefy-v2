@@ -333,6 +333,7 @@
   "Mint-Btn": "Get {{token}}",
   "Mint-Content": "Lock your {{depositToken}} to mint {{mintedToken}}. Each {{mintedToken}} is backed by 1 {{depositToken}}.",
   "Mint-Reminder": "{{mintedToken}} can be staked into a Beefy Vault. If {{mintedToken}}'s price is under peg when a user attempts to mint, {{mintedToken}} will instead be purchased at the better market rate.",
+  "Mint-Reminder-Liquid-WithEarnings": "{{mintedToken}} can be staked into a Beefy Vault or Earnings Pool. If {{mintedToken}}'s price is under peg when a user attempts to mint, {{mintedToken}} will instead be purchased at the better market rate.",
   "Mint-Reminder-Burnable": "{{mintedToken}} can be staked into a Beefy Vault. {{mintedToken}} can be exchanged back to {{depositToken}} when there is a supply in our reserves",
   "Mint-Reminder-Burnable-WithEarnings": "{{mintedToken}} can be staked into a Beefy Vault or Earnings Pool. {{mintedToken}} can be exchanged back to {{depositToken}} when there is a supply in our reserves.",
   "Mint-Reminder-Burnable-WithoutEarnings-WithZap": "If {{mintedToken}}'s price is under peg when a user attempts to mint, {{mintedToken}} will instead be purchased at the better market rate. {{mintedToken}} can be exchanged back to {{depositToken}} when there is a supply in our reserves.",
