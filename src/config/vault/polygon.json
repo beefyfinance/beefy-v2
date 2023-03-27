@@ -341,7 +341,7 @@
     "oracleId": "mvx-mvlp",
     "status": "active",
     "platformId": "mvx",
-    "assets": ["MATIC", "ETH", "WBTC", "LINK", "UNI", "AAVE", "USDC", "USDT", "DAI", "BUSD"],
+    "assets": ["MATIC", "stMATIC", "ETH", "WBTC", "LINK", "UNI", "AAVE", "USDC", "USDT", "DAI", "BUSD"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
