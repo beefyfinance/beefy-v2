@@ -989,7 +989,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "balancer",
-    "assets": ["USDC", "LINK", "ETH", "BAL", "AAVE"],
+    "assets": ["USDC", "oldLINK", "ETH", "BAL", "AAVE"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1019,7 +1019,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "balancer",
-    "assets": ["LINK", "ETH", "BAL", "AAVE"],
+    "assets": ["oldLINK", "ETH", "BAL", "AAVE"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -3678,7 +3678,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "quickswap",
-    "assets": ["LINK", "QUICK"],
+    "assets": ["oldLINK", "QUICK"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39&outputCurrency=0x831753DD7087CaC61aB5644b308642cc1c33Dc13",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39/0x831753DD7087CaC61aB5644b308642cc1c33Dc13",
@@ -4379,7 +4379,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "sushi",
-    "assets": ["LINK", "ETH"],
+    "assets": ["oldLINK", "ETH"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -5245,7 +5245,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "waultfinance",
-    "assets": ["LINK", "ETH"],
+    "assets": ["oldLINK", "ETH"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -7533,7 +7533,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "quickswap",
-    "assets": ["LINK", "ETH"],
+    "assets": ["oldLINK", "ETH"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
