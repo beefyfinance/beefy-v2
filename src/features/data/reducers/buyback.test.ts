@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { BeefyState } from '../../../redux-types';
 import { fetchBeefyBuybackAction } from '../actions/prices';
-import { BeefyAPIBuybackResponse } from '../apis/beefy';
+import { BeefyAPIBuybackResponse } from '../apis/beefy/beefy-api';
 import { selectTotalBuybackTokenAmount, selectTotalBuybackUsdAmount } from '../selectors/buyback';
 import { buybackSlice, initialBuybackState } from './buyback';
 

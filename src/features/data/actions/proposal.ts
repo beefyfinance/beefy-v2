@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
 import { getBeefyApi } from '../apis/instances';
-import { BeefySnapshotActiveResponse, BeefySnapshotProposal } from '../apis/beefy';
+import { BeefySnapshotActiveResponse, BeefySnapshotProposal } from '../apis/beefy/beefy-api';
 import { ProposalEntity } from '../entities/proposal';
 import { uniq } from 'lodash';
 import { selectAllProposalIds } from '../selectors/proposals';

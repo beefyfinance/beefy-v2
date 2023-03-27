@@ -1,14 +1,11 @@
 import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
-  header: {
+  tabs: {
+    marginTop: '16px',
+    backgroundColor: theme.palette.background.default,
     [theme.breakpoints.up('sm')]: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+      marginTop: 0,
     },
-  },
-  content: {
-    padding: 0,
   },
 });
