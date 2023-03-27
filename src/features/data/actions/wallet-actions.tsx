@@ -1193,11 +1193,11 @@ const mintDeposit = (
       return;
     }
 
-    const { contractAddress, chainId, canZapInWithOneInch } = minter;
+    const { minterAddress, chainId, canZapInWithOneInch } = minter;
     const gasToken = selectChainNativeToken(state, chainId);
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(minterAbi as AbiItem[], contractAddress);
+    const contract = new web3.eth.Contract(minterAbi as AbiItem[], minterAddress);
     const chain = selectChainById(state, chainId);
     const gasPrices = await getGasPriceOptions(chain);
     const amountInWei = toWei(amount, payToken.decimals);
@@ -1207,35 +1207,41 @@ const mintDeposit = (
     const buildCall = async () => {
       if (canZapInWithOneInch) {
         const swapInToken = isNative ? selectChainWrappedNativeToken(state, chainId) : payToken;
-        const zap = selectOneInchZapByChainId(state, chain.chainId);
+        const zap = selectOneInchZapByChainId(state, chain.id);
         if (!zap) {
-          throw new Error(`No 1inch zap found for ${chain.chainId}`);
+          throw new Error(`No 1inch zap found for ${chain.id}`);
         }
 
         const oneInchApi = await getOneInchApi(chain, zap.priceOracleAddress);
         const swapData = await oneInchApi.getSwap({
           disableEstimate: true, // otherwise will fail due to no allowance
-          fromAddress: contractAddress,
+          fromAddress: minterAddress,
           amount: amountInWeiString,
           fromTokenAddress: swapInToken.address,
           toTokenAddress: mintedToken.address,
           slippage: slippageTolerance * 100,
         });
         const amountOutWei = new BigNumber(swapData.toTokenAmount);
-        const amountOutWeiAfterSlippage = amountOutWei.multipliedBy(1 - slippageTolerance);
+        const amountOutWeiAfterSlippage = amountOutWei
+          .multipliedBy(1 - slippageTolerance)
+          .decimalPlaces(0);
         const shouldMint = amountOutWeiAfterSlippage.isLessThan(amountInWei);
 
         // mint is better
         if (shouldMint) {
           return {
-            method: contract.methods.depositNative('', true),
+            method: isNative
+              ? contract.methods.depositNative('', true)
+              : contract.methods.deposit(amountInWeiString, '', true),
             options: isNative ? { value: amountInWeiString } : {},
           };
         }
 
         // swap after max slippage is better
         return {
-          method: contract.methods.depositNative(swapData.tx.data, false),
+          method: isNative
+            ? contract.methods.depositNative(swapData.tx.data, false)
+            : contract.methods.deposit(amountInWeiString, swapData.tx.data, false),
           options: isNative ? { value: amountInWeiString } : {},
         };
       }
@@ -1272,7 +1278,7 @@ const mintDeposit = (
       },
       {
         chainId: chainId,
-        spenderAddress: contractAddress,
+        spenderAddress: minterAddress,
         tokens: uniqBy([gasToken, payToken, mintedToken], 'id'),
         minterId: minter.id,
       }

@@ -14,6 +14,7 @@ import { selectUserActiveBoostBalanceInToken } from './boosts';
 import { selectWalletAddressIfKnown } from './wallet';
 import { TotalApy } from '../reducers/apy';
 import { compoundInterest } from '../../../helpers/number';
+import { isEmpty } from '../../../helpers/utils';
 
 export const selectVaultTotalApy = (state: BeefyState, vaultId: VaultEntity['id']) => {
   return state.biz.apy.totalApy.byVaultId[vaultId] || {};
@@ -74,6 +75,10 @@ export const selectUserGlobalStats = (state: BeefyState) => {
 
     // Collect yield for each vault
     const apyData = selectVaultTotalApy(state, vault.id);
+
+    if (isEmpty(apyData)) {
+      continue;
+    }
 
     if (isGovVault(vault)) {
       newGlobalStats.daily += vaultUsdBalance * apyData.totalDaily;

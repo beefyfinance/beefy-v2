@@ -72,21 +72,4 @@ export const DaoHoldings = memo(function () {
       </div>
     </Section>
   );
-
-  // const breakpoints = { default: 3, 1296: 2, 960: 1 };
-  //
-  //
-  // return (
-  //   <Section title={t('Treasury-Title-Holdings')}>
-  //     <Masonry
-  //       className={classes.container}
-  //       columnClassName={classes.columnClassName}
-  //       breakpointCols={breakpoints}
-  //     >
-  //       {Object.values(sortedTreasury).map(chain => (
-  //         <ChainHolding key={chain.chainId} chainId={chain.chainId} />
-  //       ))}
-  //     </Masonry>
-  //   </Section>
-  // );
 });

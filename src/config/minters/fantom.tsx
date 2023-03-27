@@ -4,7 +4,7 @@ export const minters: MinterConfig[] = [
   {
     id: 'beftm',
     name: 'beFTM',
-    contractAddress: '0xD42Db865A8e78ebF9F7C081Bc0A4fDD4314b5fEf',
+    minterAddress: '0xD42Db865A8e78ebF9F7C081Bc0A4fDD4314b5fEf',
     depositToken: {
       symbol: 'FTM',
       oracleId: 'FTM',
@@ -33,7 +33,7 @@ export const minters: MinterConfig[] = [
   {
     id: 'binspirit',
     name: 'binSPIRIT',
-    contractAddress: '0x8b32B01C740df5bd1fDa081BD3b12FB9200cb4Bc',
+    minterAddress: '0x8b32B01C740df5bd1fDa081BD3b12FB9200cb4Bc',
     depositToken: {
       symbol: 'SPIRIT',
       oracleId: 'SPIRIT',

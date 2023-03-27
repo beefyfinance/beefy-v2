@@ -58,37 +58,21 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     selectUserBalanceOfToken(state, vault.chainId, mintedToken.address)
   );
   const depositTokenAllowance = useAppSelector(state =>
-    selectAllowanceByTokenAddress(
-      state,
-      vault.chainId,
-      depositToken.address,
-      minter.contractAddress
-    )
+    selectAllowanceByTokenAddress(state, vault.chainId, depositToken.address, minter.minterAddress)
   );
-  const { canBurnReserves, hasEarningsPool } = minter;
+  const { canBurnReserves, hasEarningsPool, canZapInWithOneInch } = minter;
   const [contentKey, reminderKey] = useMemo(() => {
     const liquidityType = canBurnReserves ? 'Burnable' : 'Liquid';
     const earningsType = hasEarningsPool ? 'WithEarnings' : 'WithoutEarnings';
+    const zapType = canZapInWithOneInch ? 'WithZap' : 'WithoutZap';
 
     return ['Content', 'Reminder'].map(key => [
+      `Mint-${key}-${liquidityType}-${earningsType}-${zapType}`,
       `Mint-${key}-${liquidityType}-${earningsType}`,
       `Mint-${key}-${liquidityType}`,
       `Mint-${key}`,
     ]);
-  }, [canBurnReserves, hasEarningsPool]);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const resetFormData = () => {
-    setFormData({
-      ...formData,
-      deposit: {
-        ...formData.deposit,
-        input: '',
-        amount: BIG_ZERO,
-        max: false,
-      },
-    });
-  };
+  }, [canBurnReserves, hasEarningsPool, canZapInWithOneInch]);
 
   const isStepping = useAppSelector(selectIsStepperStepping);
 
@@ -172,7 +156,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           step: {
             step: 'approve',
             message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(depositToken, minter.contractAddress),
+            action: walletActions.approval(depositToken, minter.minterAddress),
             pending: false,
           },
         })
@@ -203,15 +187,15 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     <CardContent className={classes.cardContent}>
       <div className={classes.content}>
         {t(contentKey, {
-          token1: minter.mintedToken.symbol,
-          token2: minter.depositToken.symbol,
+          mintedToken: minter.mintedToken.symbol,
+          depositToken: minter.depositToken.symbol,
         })}
       </div>
       <div className={classes.boxReminder}>
         <div className={classes.content}>
           {t(reminderKey, {
-            token1: minter.mintedToken.symbol,
-            token2: minter.depositToken.symbol,
+            mintedToken: minter.mintedToken.symbol,
+            depositToken: minter.depositToken.symbol,
           })}
         </div>
       </div>

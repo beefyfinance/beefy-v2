@@ -7,46 +7,10 @@ import { getNativeToken, getTokenById, getWrappedNativeToken } from './common/to
 import { TokenEntity } from '../src/features/data/entities/token';
 import { computeUniswapV2PairAddress } from '../src/features/data/apis/transact/helpers/uniswapv2';
 import { computeSolidlyPairAddress } from '../src/features/data/apis/transact/helpers/solidly';
-import { saveJson, sortKeys } from './common/utils';
+import { saveJson } from './common/utils';
+import { sortVaultKeys } from './common/vault-fields';
 
 const WARN_MISSING_ASSET_ON_ACTIVE_VAULTS_ONLY: boolean = true;
-const FIELD_ORDER = [
-  'id',
-  'name',
-  'token',
-  'tokenAddress',
-  'tokenDecimals',
-  'tokenProviderId',
-  'tokenAmmId',
-  'earnedToken',
-  'earnedTokenAddress',
-  'earnedTokenDecimals',
-  'earnContractAddress',
-  'oracle',
-  'oracleId',
-  'status',
-  'retireReason',
-  'pauseReason',
-  'platformId',
-  'assets',
-  'risks',
-  'strategyTypeId',
-  'isGovVault',
-  'excluded',
-  'depositFee',
-  'buyTokenUrl',
-  'addLiquidityUrl',
-  'removeLiquidityUrl',
-  'refund',
-  'refundContractAddress',
-  'showWarning',
-  'warning',
-  'network',
-  'createdAt',
-].reduce((fields: {}, field, i) => {
-  fields[field] = i + 1;
-  return fields;
-}, {});
 
 type AppChainId = keyof typeof config;
 const chainsById: Record<AppChainId, ChainEntity> = Object.entries(config).reduce(
@@ -135,16 +99,6 @@ async function getAmmIdForAddress(
   }
 
   return null;
-}
-
-function compareFieldKey(a: string, b: string) {
-  const aOrder = FIELD_ORDER[a] || Number.MAX_SAFE_INTEGER;
-  const bOrder = FIELD_ORDER[b] || Number.MAX_SAFE_INTEGER;
-  return aOrder - bOrder;
-}
-
-function sortVaultKeys(vault: VaultConfig & { tokenAmmId?: string }) {
-  return sortKeys(vault as any, compareFieldKey);
 }
 
 async function getModifiedConfig(chainId: AppChainId) {
