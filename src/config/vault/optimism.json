@@ -1475,7 +1475,8 @@
     "earnContractAddress": "0x42f2ab8885595b5b7f60a0B678B3d8d4Bf9DE113",
     "oracle": "lps",
     "oracleId": "beets-overnight-pulse",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beethovenx",
     "assets": ["bbUSD+", "bbDAI+"],
     "risks": [

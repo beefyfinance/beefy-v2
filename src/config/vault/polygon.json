@@ -8874,7 +8874,8 @@
     "earnContractAddress": "0x9F4316c10D5c3f148F072F6fa7E81413b7Da11a7",
     "oracle": "lps",
     "oracleId": "ripae-pae-matic",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "ripae",
     "assets": ["PAE", "MATIC"],
     "risks": [

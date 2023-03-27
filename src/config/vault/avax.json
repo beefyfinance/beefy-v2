@@ -1049,7 +1049,8 @@
     "earnContractAddress": "0x2913966e88490B5a65D67298801c0c51f377BB9C",
     "oracle": "lps",
     "oracleId": "olive-busd.e-usdt.e",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "oliveswap",
     "assets": ["BUSDe", "USDTe"],
     "risks": [
