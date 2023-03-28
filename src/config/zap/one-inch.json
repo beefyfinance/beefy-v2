@@ -203,8 +203,8 @@
       "value": 0.0005,
       "recipient": "0x8Ccf8606ccf0Aff9937B68e0297967e257eB148b"
     },
-    "depositFromTokens": ["ETH", "WETH", "USDC", "USDT", "DAI", "MIM", "WBTC"],
-    "withdrawToTokens": ["ETH", "BIFI", "USDC", "USDT", "DAI", "MIM", "WBTC"],
+    "depositFromTokens": ["ETH", "ARB", "WETH", "USDC", "USDT", "DAI", "MIM", "WBTC"],
+    "withdrawToTokens": ["ETH", "ARB", "BIFI", "USDC", "USDT", "DAI", "MIM", "WBTC"],
     "blockedTokens": [
       "agEUR",
       "FISH",
