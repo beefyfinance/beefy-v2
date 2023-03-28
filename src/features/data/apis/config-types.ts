@@ -215,7 +215,8 @@ export type MinterConfigToken = MinterConfigTokenErc20 | MinterConfigTokenNative
 export interface MinterConfig {
   id: string;
   name: string;
-  contractAddress: string;
+  minterAddress: string;
+  burnerAddress?: string;
   depositToken: MinterConfigToken;
   mintedToken: MinterConfigToken;
   canBurnReserves: boolean;

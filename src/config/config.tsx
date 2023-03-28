@@ -313,6 +313,8 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'TUSD',
       'agEUR',
       'LUSD',
+      'DOLA',
+      'USD+',
     ],
   },
   avax: {

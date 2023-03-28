@@ -11,6 +11,7 @@ import { styles } from './styles';
 import { VaultIcon } from './components/VaultIcon';
 import { VaultTags } from './components/VaultTags';
 import { Link } from 'react-router-dom';
+import { punctuationWrap } from '../../helpers/string';
 
 const useStyles = makeStyles(styles);
 
@@ -20,9 +21,7 @@ export type VaultNameProps = {
 export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const isBoosted =
-    useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId)) &&
-    vault.platformId !== 'valleyswap';
+  const isBoosted = useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId));
 
   return (
     <div
@@ -31,7 +30,7 @@ export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId }) {
         [classes.vaultNameBoosted]: isBoosted,
       })}
     >
-      {vault.name}
+      {punctuationWrap(vault.name)}
     </div>
   );
 });

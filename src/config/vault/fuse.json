@@ -39,7 +39,8 @@
     "earnContractAddress": "0x8e4E18Fd60C584945Beb6BA08771520455DfcAE4",
     "oracle": "lps",
     "oracleId": "voltagev2-3pool",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["USDC", "BUSD", "USDT"],
     "risks": [
