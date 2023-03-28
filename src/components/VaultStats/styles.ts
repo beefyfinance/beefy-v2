@@ -26,4 +26,36 @@ export const styles = (theme: Theme) => ({
       textAlign: 'right' as const,
     },
   },
+  hideMd: {
+    display: 'none',
+    [theme.breakpoints.up('lg')]: {
+      display: 'block',
+    },
+  },
+  hideSm: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'block',
+    },
+  },
+  green: {
+    color: theme.palette.primary.main,
+  },
+  rowDashboard: {
+    display: 'grid',
+    width: '100%',
+    columnGap: '24px',
+    rowGap: '24px',
+    gridTemplateColumns: 'minmax(0, 1fr)',
+    '& $column': {
+      marginLeft: 'auto',
+      textAlign: 'right' as const,
+    },
+    [theme.breakpoints.up('md')]: {
+      gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+    },
+    [theme.breakpoints.up('lg')]: {
+      gridTemplateColumns: 'repeat(6, minmax(0, 1fr))',
+    },
+  },
 });

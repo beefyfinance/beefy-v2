@@ -1,8 +1,8 @@
 import React, { memo, ReactNode } from 'react';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
-import { IconWithTooltip, Tooltip } from '../../../../../../components/Tooltip';
 import { Theme } from '@material-ui/core/styles';
+import { IconWithTooltip, Tooltip } from '../../../Tooltip';
 
 const useStyles = makeStyles(styles);
 

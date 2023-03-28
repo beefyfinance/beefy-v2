@@ -6,7 +6,7 @@ import { selectVaultById } from '../../features/data/selectors/vaults';
 import { selectUserBalanceOfToken } from '../../features/data/selectors/balance';
 import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
 import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/selectors/wallet';
-import { VaultValueStat } from '../../features/home/components/Vault/components/VaultValueStat';
+import { VaultValueStat } from '../VaultValueStat';
 import { selectTokenPriceByAddress } from '../../features/data/selectors/tokens';
 
 export type VaultWalletStatProps = {

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { VaultLabelledStat } from '../VaultLabelledStat';
+import { VaultLabelledStat } from '../VaultIdentity/components/VaultLabelledStat';
 
 const useStyles = makeStyles(styles);
 

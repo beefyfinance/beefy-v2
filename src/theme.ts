@@ -147,7 +147,7 @@ const theme = createTheme(
           text: '#2D3153',
           error: '#DC2C10',
         },
-        dashboard: {
+        v2: {
           summaryCard: '#121421',
           iconBg: 'rgba(92, 112, 214, 0.2)',
           cardBg: '#242842',

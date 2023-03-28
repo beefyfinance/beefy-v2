@@ -2,7 +2,7 @@ import { VaultFee } from '../../../../../data/reducers/fees';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatPercent } from '../../../../../../helpers/format';
-import { InterestTooltipContent } from '../../../../../home/components/Vault/components/InterestTooltipContent';
+import { InterestTooltipContent } from '../../../../../../components/InterestTooltipContent';
 
 export type PerformanceFeesProps = { fees: VaultFee };
 

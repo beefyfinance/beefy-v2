@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { VaultEntity } from '../../features/data/entities/vault';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { selectIsWalletKnown } from '../../features/data/selectors/wallet';
-import { VaultValueStat } from '../../features/home/components/Vault/components/VaultValueStat';
+import { VaultValueStat } from '../VaultValueStat';
 import { BeefyState } from '../../redux-types';
 
 interface VaultPlatformProps {

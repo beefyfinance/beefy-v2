@@ -1,13 +1,14 @@
 import { makeStyles } from '@material-ui/styles';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../store';
-import { selectUserVaultBalances } from '../../../data/selectors/balance';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { debounce } from 'lodash';
 import { useInView } from 'react-intersection-observer';
-import { ChainTable } from '../ChainTable';
 import { Section } from '../../../../components/Section';
 import { styles } from './styles';
+import { Filter } from './components/Filter';
+import { selectUserDepositedVaultIds } from '../../../data/selectors/balance';
+import { Vault } from './components/Vault';
 
 const useStyles = makeStyles(styles);
 
@@ -15,7 +16,11 @@ export const UserVaults = memo(function () {
   const { t } = useTranslation();
 
   return (
-    <Section title={t('Your Vaults')}>
+    <Section
+      title={t('Dashboard-Your-Vaults-Title')}
+      subTitle={t('Dashboard-Your-Vaults-Subtitle')}
+    >
+      <Filter />
       <VirtualList />
     </Section>
   );
@@ -23,7 +28,7 @@ export const UserVaults = memo(function () {
 
 export const VirtualList = function () {
   const classes = useStyles();
-  const vaults = useAppSelector(selectUserVaultBalances);
+  const vaults = useAppSelector(selectUserDepositedVaultIds);
   const totalVaults = vaults.length;
   const minBatchSize = 3;
   const [renderCount, setRenderCount] = useState(minBatchSize);
@@ -94,9 +99,9 @@ export const VirtualList = function () {
 
   return (
     <>
-      <div className={classes.tablesContainer} ref={containerRef}>
-        {renderVaultIds.map(data => {
-          return <ChainTable key={data.chainId} data={data} />;
+      <div className={classes.container} ref={containerRef}>
+        {renderVaultIds.map(vaultId => {
+          return <Vault vaultId={vaultId} />;
         })}
       </div>
       <div ref={bottomRef} />

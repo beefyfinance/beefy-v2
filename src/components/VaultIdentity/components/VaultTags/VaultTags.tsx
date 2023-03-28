@@ -1,27 +1,27 @@
 import React, { memo } from 'react';
-import { BoostEntity } from '../../../../../data/entities/boost';
-import { useAppSelector } from '../../../../../../store';
+import { makeStyles } from '@material-ui/core';
+import { styles } from './styles';
+import { VaultTag, VaultTagWithTooltip } from './VaultTag';
+import { useTranslation } from 'react-i18next';
+import { BoostEntity } from '../../../../features/data/entities/boost';
+import { useAppSelector } from '../../../../store';
 import {
   selectBoostById,
   selectPreStakeOrActiveBoostIds,
-} from '../../../../../data/selectors/boosts';
+} from '../../../../features/data/selectors/boosts';
+import { useIsOverflowingHorizontally } from '../../../../helpers/overflow';
+import { BasicTooltipContent } from '../../../Tooltip/BasicTooltipContent';
+import { ChainEntity } from '../../../../features/data/entities/chain';
+import { TokenEntity } from '../../../../features/data/entities/token';
+import { selectTokenByAddress } from '../../../../features/data/selectors/tokens';
 import {
   isGovVault,
   isVaultPaused,
   isVaultRetired,
   VaultEntity,
-} from '../../../../../data/entities/vault';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { VaultTag, VaultTagWithTooltip } from './VaultTag';
-import { useTranslation } from 'react-i18next';
-import { ChainEntity } from '../../../../../data/entities/chain';
-import { TokenEntity } from '../../../../../data/entities/token';
-import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
-import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
-import { useIsOverflowingHorizontally } from '../../../../../../helpers/overflow';
-import { VaultPlatform } from '../../../../../../components/VaultPlatform';
+} from '../../../../features/data/entities/vault';
+import { VaultPlatform } from '../../../VaultPlatform';
+import { selectVaultById } from '../../../../features/data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 

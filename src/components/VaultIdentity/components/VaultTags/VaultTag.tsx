@@ -2,7 +2,7 @@ import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
 import { forwardRef, memo, ReactNode } from 'react';
 import clsx from 'clsx';
-import { Tooltip, TooltipProps } from '../../../../../../components/Tooltip';
+import { Tooltip, TooltipProps } from '../../../Tooltip';
 
 const useStyles = makeStyles(styles);
 

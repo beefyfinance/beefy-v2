@@ -7,7 +7,7 @@ import {
   selectUserVaultDepositInDepositToken,
 } from './balance';
 import { selectIsUserBalanceAvailable } from './data-loader';
-import { selectTokenPriceByAddress } from './tokens';
+import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById } from './vaults';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectUserActiveBoostBalanceInToken } from './boosts';
@@ -134,6 +134,7 @@ export const selectUserGlobalStats = (state: BeefyState) => {
 export const selectVaultDailyYieldStats = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
   const tokenBalance = selectUserVaultDepositInDepositToken(state, vault.id);
   const vaultUsdBalance = tokenBalance.times(oraclePrice);
   const apyData = selectVaultTotalApy(state, vault.id);
@@ -158,5 +159,5 @@ export const selectVaultDailyYieldStats = (state: BeefyState, vaultId: VaultEnti
     }
   }
 
-  return { dailyUsd, dailyTokens };
+  return { dailyUsd, dailyTokens, oraclePrice, tokenDecimals: token.decimals };
 };

@@ -17,8 +17,8 @@ import { selectVaultApyAvailable } from '../../features/data/selectors/data-load
 import { TotalApy } from '../../features/data/reducers/apy';
 import { AllValuesAsString } from '../../features/data/utils/types-utils';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
-import { InterestTooltipContent } from '../../features/home/components/Vault/components/InterestTooltipContent';
 import { useAppSelector } from '../../store';
+import { InterestTooltipContent } from '../InterestTooltipContent';
 
 const _YearlyBreakdownTooltip = ({
   isGovVault,

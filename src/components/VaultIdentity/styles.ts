@@ -8,6 +8,7 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'row' as const,
     columnGap: '16px',
     minWidth: 0,
+    textDecoration: 'none',
   },
   vaultNameTags: {
     minWidth: 0, // needed for overflowing tags
