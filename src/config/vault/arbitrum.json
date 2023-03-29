@@ -2265,7 +2265,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "radiant",
-    "assets": ["RDNT", "ETH"],
+    "assets": ["oldRDNT", "ETH"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
