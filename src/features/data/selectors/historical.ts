@@ -1,6 +1,6 @@
 import { BeefyState } from '../../../redux-types';
 import { VaultEntity } from '../entities/vault';
-import { TimeBucket } from '../apis/beefy/beefy-data-api-types';
+import { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import { TokenEntity } from '../entities/token';
 import { createSelector } from '@reduxjs/toolkit';
 import { ChartStat } from '../reducers/historical-types';
@@ -65,7 +65,7 @@ export const selectHistoricalAvailableCharts = createSelector(
 export function selectHistoricalApyBucketStatus(
   state: BeefyState,
   vaultId: VaultEntity['id'],
-  bucket: TimeBucket
+  bucket: ApiTimeBucket
 ) {
   return state.biz.historical.apys.byVaultId[vaultId]?.byTimebucket[bucket]?.status || 'idle';
 }
@@ -73,7 +73,7 @@ export function selectHistoricalApyBucketStatus(
 export function selectHistoricalTvlBucketStatus(
   state: BeefyState,
   vaultId: VaultEntity['id'],
-  bucket: TimeBucket
+  bucket: ApiTimeBucket
 ) {
   return state.biz.historical.tvls.byVaultId[vaultId]?.byTimebucket[bucket]?.status || 'idle';
 }
@@ -81,7 +81,7 @@ export function selectHistoricalTvlBucketStatus(
 export function selectHistoricalPriceBucketStatus(
   state: BeefyState,
   oracleId: TokenEntity['oracleId'],
-  bucket: TimeBucket
+  bucket: ApiTimeBucket
 ) {
   return state.biz.historical.prices.byOracleId[oracleId]?.byTimebucket[bucket]?.status || 'idle';
 }
@@ -89,7 +89,7 @@ export function selectHistoricalPriceBucketStatus(
 export function selectHistoricalApyBucketData(
   state: BeefyState,
   vaultId: VaultEntity['id'],
-  bucket: TimeBucket
+  bucket: ApiTimeBucket
 ) {
   return state.biz.historical.apys.byVaultId[vaultId]?.byTimebucket[bucket]?.data || [];
 }
@@ -97,7 +97,7 @@ export function selectHistoricalApyBucketData(
 export function selectHistoricalTvlBucketData(
   state: BeefyState,
   vaultId: VaultEntity['id'],
-  bucket: TimeBucket
+  bucket: ApiTimeBucket
 ) {
   return state.biz.historical.tvls.byVaultId[vaultId]?.byTimebucket[bucket]?.data || [];
 }
@@ -105,7 +105,7 @@ export function selectHistoricalTvlBucketData(
 export function selectHistoricalPriceBucketData(
   state: BeefyState,
   oracleId: TokenEntity['oracleId'],
-  bucket: TimeBucket
+  bucket: ApiTimeBucket
 ) {
   return state.biz.historical.prices.byOracleId[oracleId]?.byTimebucket[bucket]?.data || [];
 }
@@ -147,7 +147,7 @@ export function selectHistoricalTvlLoadedBuckets(state: BeefyState, vaultId: Vau
 export function selectHistoricalPriceBucketIsLoaded(
   state: BeefyState,
   oracleId: TokenEntity['oracleId'],
-  bucket: TimeBucket
+  bucket: ApiTimeBucket
 ) {
   return selectHistoricalPriceLoadedBuckets(state, oracleId)[bucket];
 }
@@ -155,7 +155,7 @@ export function selectHistoricalPriceBucketIsLoaded(
 export function selectHistoricalApyBucketIsLoaded(
   state: BeefyState,
   vaultId: VaultEntity['id'],
-  bucket: TimeBucket
+  bucket: ApiTimeBucket
 ) {
   return selectHistoricalApyLoadedBuckets(state, vaultId)[bucket];
 }
@@ -163,7 +163,7 @@ export function selectHistoricalApyBucketIsLoaded(
 export function selectHistoricalTvlBucketIsLoaded(
   state: BeefyState,
   vaultId: VaultEntity['id'],
-  bucket: TimeBucket
+  bucket: ApiTimeBucket
 ) {
   return selectHistoricalTvlLoadedBuckets(state, vaultId)[bucket];
 }
@@ -173,7 +173,7 @@ export function selectHistoricalBucketStatus(
   stat: ChartStat,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
-  bucket: TimeBucket
+  bucket: ApiTimeBucket
 ) {
   switch (stat) {
     case 'apy':
@@ -210,7 +210,7 @@ export function selectHistoricalBucketIsLoaded(
   stat: ChartStat,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
-  bucket: TimeBucket
+  bucket: ApiTimeBucket
 ) {
   switch (stat) {
     case 'apy':
@@ -229,7 +229,7 @@ export function selectHistoricalBucketData(
   stat: ChartStat,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
-  bucket: TimeBucket
+  bucket: ApiTimeBucket
 ) {
   switch (stat) {
     case 'apy':

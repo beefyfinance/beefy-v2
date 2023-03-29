@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
 import { getBeefyDataApi } from '../apis/instances';
 import { VaultEntity } from '../entities/vault';
-import { ChartData, Ranges, TimeBucket } from '../apis/beefy/beefy-data-api-types';
+import { ApiChartData, ApiRanges, ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import { selectVaultById } from '../selectors/vaults';
 import { selectTokenByAddress } from '../selectors/tokens';
 import { TokenEntity } from '../entities/token';
@@ -13,7 +13,7 @@ import { ChartStat } from '../reducers/historical-types';
 export interface HistoricalRangesPayload {
   vaultId: VaultEntity['id'];
   oracleId: TokenEntity['oracleId'];
-  ranges: Ranges;
+  ranges: ApiRanges;
 }
 
 export interface HistoricalRangesParams {
@@ -35,12 +35,12 @@ export const fetchHistoricalRanges = createAsyncThunk<
 });
 
 export interface HistoricalApysPayload {
-  data: ChartData;
+  data: ApiChartData;
 }
 
 export interface HistoricalApysParams {
   vaultId: VaultEntity['id'];
-  bucket: TimeBucket;
+  bucket: ApiTimeBucket;
 }
 
 export const fetchHistoricalApys = createAsyncThunk<
@@ -55,12 +55,12 @@ export const fetchHistoricalApys = createAsyncThunk<
 });
 
 export interface HistoricalTvlsPayload {
-  data: ChartData;
+  data: ApiChartData;
 }
 
 export interface HistoricalTvlsParams {
   vaultId: VaultEntity['id'];
-  bucket: TimeBucket;
+  bucket: ApiTimeBucket;
 }
 
 export const fetchHistoricalTvls = createAsyncThunk<
@@ -75,12 +75,12 @@ export const fetchHistoricalTvls = createAsyncThunk<
 });
 
 export interface HistoricalPricesPayload {
-  data: ChartData;
+  data: ApiChartData;
 }
 
 export interface HistoricalPricesParams {
   oracleId: TokenEntity['oracleId'];
-  bucket: TimeBucket;
+  bucket: ApiTimeBucket;
 }
 
 export const fetchHistoricalPrices = createAsyncThunk<
@@ -98,7 +98,7 @@ export function fetchHistoricalStat(
   stat: ChartStat,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
-  bucket: TimeBucket
+  bucket: ApiTimeBucket
 ): ThunkAction<unknown, unknown, unknown, Action<unknown>> {
   switch (stat) {
     case 'apy':

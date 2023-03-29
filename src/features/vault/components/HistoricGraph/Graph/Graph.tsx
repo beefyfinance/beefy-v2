@@ -13,7 +13,7 @@ import {
 import { VaultEntity } from '../../../../data/entities/vault';
 import { TokenEntity } from '../../../../data/entities/token';
 import { ChartStat } from '../../../../data/reducers/historical-types';
-import { TimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
+import { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { Theme } from '@material-ui/core/styles';
 import { format, fromUnixTime } from 'date-fns';
@@ -31,7 +31,7 @@ export type ChartProp = {
   vaultId: VaultEntity['id'];
   oracleId: TokenEntity['oracleId'];
   stat: ChartStat;
-  bucket: TimeBucket;
+  bucket: ApiTimeBucket;
   toggles: LineTogglesState;
 };
 export const Graph = memo<ChartProp>(function ({ vaultId, oracleId, stat, bucket, toggles }) {
@@ -88,7 +88,7 @@ export const Graph = memo<ChartProp>(function ({ vaultId, oracleId, stat, bucket
             padding="no-gap"
           />
           <Area
-            dataKey="h"
+            dataKey="v"
             stroke="#F5F5FF"
             strokeWidth={1.5}
             fill="rgba(255, 255, 255, 0.05)"
@@ -102,7 +102,7 @@ export const Graph = memo<ChartProp>(function ({ vaultId, oracleId, stat, bucket
             <ReferenceLine y={avg} stroke="#59A662" strokeWidth={1.5} strokeDasharray="3 3" />
           ) : null}
           <YAxis
-            dataKey="h"
+            dataKey="v"
             tickFormatter={yTickFormatter}
             domain={yDomain}
             mirror={true}
@@ -115,7 +115,7 @@ export const Graph = memo<ChartProp>(function ({ vaultId, oracleId, stat, bucket
   );
 });
 
-const formatDateTimeTick = (timestamp: number, bucket: TimeBucket) => {
+const formatDateTimeTick = (timestamp: number, bucket: ApiTimeBucket) => {
   const date = fromUnixTime(timestamp);
   if (bucket === '1h_1d') {
     return format(date, 'HH:mm');

@@ -1,4 +1,4 @@
-import { Range, TimeBucket } from '../apis/beefy/beefy-data-api-types';
+import { ApiRange, ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import { createSlice, SerializedError } from '@reduxjs/toolkit';
 import {
   fetchHistoricalApys,
@@ -100,7 +100,7 @@ export const historicalSlice = createSlice({
   },
 });
 
-function setTimebucketPending(state: Draft<TimeBucketsState>, bucket: TimeBucket) {
+function setTimebucketPending(state: Draft<TimeBucketsState>, bucket: ApiTimeBucket) {
   if (bucket in state.byTimebucket) {
     state.byTimebucket[bucket].status = 'pending';
     state.byTimebucket[bucket].error = undefined;
@@ -113,7 +113,7 @@ function setTimebucketPending(state: Draft<TimeBucketsState>, bucket: TimeBucket
 
 function setTimebucketRejected(
   state: Draft<TimeBucketsState>,
-  bucket: TimeBucket,
+  bucket: ApiTimeBucket,
   error: SerializedError
 ) {
   state.byTimebucket[bucket].status = 'rejected';
@@ -122,7 +122,7 @@ function setTimebucketRejected(
 
 function setTimebucketFulfilled(
   state: Draft<TimeBucketsState>,
-  bucket: TimeBucket,
+  bucket: ApiTimeBucket,
   data: TimeBucketState['data']
 ) {
   state.byTimebucket[bucket].status = 'fulfilled';
@@ -159,7 +159,7 @@ function initTimeBuckets(state: Draft<HistoricalState>, oracleId: string, vaultI
   }
 }
 
-function getBucketsFromRange(range: Range): Record<TimeBucket, boolean> {
+function getBucketsFromRange(range: ApiRange): Record<ApiTimeBucket, boolean> {
   if (range.min === 0) {
     return mapValues(TIME_BUCKETS, () => false);
   }

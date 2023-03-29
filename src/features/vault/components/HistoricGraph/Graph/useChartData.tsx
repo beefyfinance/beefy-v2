@@ -1,14 +1,14 @@
 import { ChartStat } from '../../../../data/reducers/historical-types';
 import { VaultEntity } from '../../../../data/entities/vault';
 import { TokenEntity } from '../../../../data/entities/token';
-import { HLOC, TimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
+import { ApiPoint, ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
 import { useMemo } from 'react';
 import { getBucketParams } from '../utils';
 import { useAppSelector } from '../../../../../store';
 import { selectHistoricalBucketData } from '../../../../data/selectors/historical';
 import { MovingAverage } from '../../../../../helpers/number';
 
-export type ChartDataPoint = HLOC & { ma: number };
+export type ChartDataPoint = ApiPoint & { ma: number };
 
 export type ChartData = {
   data: ChartDataPoint[];
@@ -21,7 +21,7 @@ export function useChartData(
   stat: ChartStat,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
-  bucket: TimeBucket
+  bucket: ApiTimeBucket
 ): ChartData {
   const { startEpoch, maPeriods } = useMemo(() => getBucketParams(bucket), [bucket]);
   const data = useAppSelector(state =>
@@ -31,14 +31,14 @@ export function useChartData(
   // Add Moving Average
   const chartData: ChartData = useMemo(() => {
     if (data && data.length) {
-      const highs = data.map(d => d.h);
-      const min = Math.min(...highs);
-      const max = Math.max(...highs);
-      const avg = highs.reduce((a, b) => a + b, 0) / highs.length;
+      const values = data.map(d => d.v);
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const avg = values.reduce((a, b) => a + b, 0) / values.length;
       const ma = new MovingAverage(maPeriods);
 
       return {
-        data: data.map(point => ({ ...point, ma: ma.next(point.h) })),
+        data: data.map(point => ({ ...point, ma: ma.next(point.v) })),
         min,
         max,
         avg,

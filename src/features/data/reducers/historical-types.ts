@@ -1,4 +1,4 @@
-import { ChartData, Ranges, TimeBucket } from '../apis/beefy/beefy-data-api-types';
+import { ApiChartData, ApiRanges, ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import { VaultEntity } from '../entities/vault';
 import { TokenEntity } from '../entities/token';
 import { SerializedError } from '@reduxjs/toolkit';
@@ -12,18 +12,18 @@ type WithStatus<T extends {}> = {
 } & Partial<T>;
 
 export type RangeState = WithStatus<{
-  ranges: Ranges;
+  ranges: ApiRanges;
 }>;
 
 export type TimeBucketState = WithStatus<{
-  data: ChartData;
+  data: ApiChartData;
 }>;
 
 export type TimeBucketsState = {
-  availableTimebuckets: Record<TimeBucket, boolean>;
-  loadedTimebuckets: Record<TimeBucket, boolean>;
+  availableTimebuckets: Record<ApiTimeBucket, boolean>;
+  loadedTimebuckets: Record<ApiTimeBucket, boolean>;
   byTimebucket: {
-    [K in TimeBucket]?: TimeBucketState;
+    [K in ApiTimeBucket]?: TimeBucketState;
   };
 };
 

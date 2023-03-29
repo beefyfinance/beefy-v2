@@ -2,7 +2,7 @@ import React, { memo, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { TooltipProps } from 'recharts';
 import { ChartStat } from '../../../../data/reducers/historical-types';
-import { TimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
+import { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
 import { LineTogglesState } from '../LineToggles';
 import { format, fromUnixTime } from 'date-fns';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,7 @@ const useStyles = makeStyles(styles);
 
 export type TooltipContentProps = TooltipProps<number, string> & {
   stat: ChartStat;
-  bucket: TimeBucket;
+  bucket: ApiTimeBucket;
   toggles: LineTogglesState;
   valueFormatter: (value: number) => string;
   avg: number;

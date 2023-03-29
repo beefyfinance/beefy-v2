@@ -1,5 +1,11 @@
 import axios, { AxiosInstance } from 'axios';
-import { ChartData, IBeefyDataApi, Ranges, Stat, TimeBucket } from './beefy-data-api-types';
+import {
+  ApiChartData,
+  IBeefyDataApi,
+  ApiRanges,
+  ApiStat,
+  ApiTimeBucket,
+} from './beefy-data-api-types';
 import { VaultEntity } from '../../entities/vault';
 import { TokenEntity } from '../../entities/token';
 
@@ -19,8 +25,8 @@ export class BeefyDataApi implements IBeefyDataApi {
   async getAvailableRanges(
     vaultId: VaultEntity['id'],
     oracleId: TokenEntity['oracleId']
-  ): Promise<Ranges> {
-    const res = await this.data.get<Ranges>(`ranges/`, {
+  ): Promise<ApiRanges> {
+    const res = await this.data.get<ApiRanges>(`ranges/`, {
       params: {
         vault: vaultId,
         oracle: oracleId,
@@ -30,28 +36,28 @@ export class BeefyDataApi implements IBeefyDataApi {
     return res.data;
   }
 
-  async getApyChartData(vaultId: VaultEntity['id'], bucket: TimeBucket): Promise<ChartData> {
+  async getApyChartData(vaultId: VaultEntity['id'], bucket: ApiTimeBucket): Promise<ApiChartData> {
     return this.getChartData('apys', 'vault', vaultId, bucket);
   }
 
   async getPriceChartData(
     oracleId: TokenEntity['oracleId'],
-    bucket: TimeBucket
-  ): Promise<ChartData> {
+    bucket: ApiTimeBucket
+  ): Promise<ApiChartData> {
     return this.getChartData('prices', 'oracle', oracleId, bucket);
   }
 
-  async getTvlChartData(vaultId: VaultEntity['id'], bucket: TimeBucket): Promise<ChartData> {
+  async getTvlChartData(vaultId: VaultEntity['id'], bucket: ApiTimeBucket): Promise<ApiChartData> {
     return this.getChartData('tvls', 'vault', vaultId, bucket);
   }
 
   private async getChartData(
-    stat: Stat,
+    stat: ApiStat,
     key: 'vault' | 'oracle',
     value: string,
-    bucket: TimeBucket
-  ): Promise<ChartData> {
-    const res = await this.data.get<ChartData>(`${stat}/`, {
+    bucket: ApiTimeBucket
+  ): Promise<ApiChartData> {
+    const res = await this.data.get<ApiChartData>(`${stat}/`, {
       params: {
         [key]: value,
         bucket,

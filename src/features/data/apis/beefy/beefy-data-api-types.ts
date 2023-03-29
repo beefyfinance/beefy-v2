@@ -1,38 +1,38 @@
 import { VaultEntity } from '../../entities/vault';
 import { TokenEntity } from '../../entities/token';
 
-export type TimeBucket = '1h_1d' | '1h_1w' | '1d_1M' | '1d_1Y';
+export type ApiTimeBucket = '1h_1d' | '1h_1w' | '1d_1M' | '1d_1Y';
 
-export type Stat = 'prices' | 'apys' | 'tvls';
+export type ApiStat = 'prices' | 'apys' | 'tvls';
 
-export type Range = {
+export type ApiRange = {
   min: number;
   max: number;
 };
 
-export type Ranges = {
-  [key in Stat]: Range;
+export type ApiRanges = {
+  [key in ApiStat]: ApiRange;
 };
 
-export type HLOC = {
+export type ApiPoint = {
   t: number;
-  h: number;
-  l: number;
-  o: number;
-  c: number;
+  v: number;
 };
 
-export type ChartData = HLOC[];
+export type ApiChartData = ApiPoint[];
 
 export interface IBeefyDataApi {
   getAvailableRanges(
     vaultId: VaultEntity['id'],
     oracleId: TokenEntity['oracleId']
-  ): Promise<Ranges>;
+  ): Promise<ApiRanges>;
 
-  getTvlChartData(vaultId: VaultEntity['id'], bucket: TimeBucket): Promise<ChartData>;
+  getTvlChartData(vaultId: VaultEntity['id'], bucket: ApiTimeBucket): Promise<ApiChartData>;
 
-  getApyChartData(vaultId: VaultEntity['id'], bucket: TimeBucket): Promise<ChartData>;
+  getApyChartData(vaultId: VaultEntity['id'], bucket: ApiTimeBucket): Promise<ApiChartData>;
 
-  getPriceChartData(oracleId: TokenEntity['oracleId'], bucket: TimeBucket): Promise<ChartData>;
+  getPriceChartData(
+    oracleId: TokenEntity['oracleId'],
+    bucket: ApiTimeBucket
+  ): Promise<ApiChartData>;
 }
