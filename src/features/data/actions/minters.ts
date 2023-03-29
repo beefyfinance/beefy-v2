@@ -65,7 +65,7 @@ export const initiateMinterForm = createAsyncThunk<
     minter.chainId,
     minter.mintedToken.contractAddress
   );
-  const spenderAddress = minter.contractAddress;
+  const spenderAddress = minter.minterAddress;
   const balanceApi = await getBalanceApi(chain);
   const allowanceApi = await getAllowanceApi(chain);
   const mintersApi = await getMintersApi(chain);

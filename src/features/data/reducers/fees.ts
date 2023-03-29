@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NormalizedEntity } from '../utils/normalized-entity';
-import { ApyPerformanceFeeData, ApyVaultFeeData } from '../apis/beefy';
+import { ApyPerformanceFeeData, ApyVaultFeeData } from '../apis/beefy/beefy-api';
 import { fetchFees } from '../actions/fees';
 import { VaultEntity } from '../entities/vault';
 

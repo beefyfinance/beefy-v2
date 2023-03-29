@@ -18,8 +18,17 @@ export class AnalyticsApi {
   }
 
   public async getWalletTimeline(address: string): Promise<AnalyticsUserTimelineResponse> {
-    const res = await this.api.get('/v1/beefy/timeline', { params: { address } });
-    return res.data;
+    try {
+      const res = await this.api.get('/v1/beefy/timeline', { params: { address } });
+      return res.data;
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        if (err.response.status === 404) {
+          return [];
+        }
+      }
+      throw err;
+    }
   }
 
   public async getVaultPrices(

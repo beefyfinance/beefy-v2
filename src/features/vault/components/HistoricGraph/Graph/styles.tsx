@@ -1,17 +1,17 @@
-import { Theme } from '@material-ui/core';
+import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
-  graphContainer: {
+  chartContainer: {
     padding: '16px 0px',
-    '& text': {
-      ...theme.typography['subline-sm'],
-      fill: theme.palette.text.disabled,
-    },
     [theme.breakpoints.down('md')]: {
       padding: '16px 0px',
     },
   },
   graph: {
+    '& text': {
+      ...theme.typography['subline-sm'],
+      fill: theme.palette.text.disabled,
+    },
     '& .recharts-yAxis': {
       '& .recharts-cartesian-axis-tick': {
         opacity: 1,

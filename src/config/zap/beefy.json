@@ -91,8 +91,13 @@
   },
   {
     "chainId": "canto",
-    "ammId": "canto-velocimeter",
+    "ammId": "canto-velocimeter-v1",
     "zapAddress": "0xCBAB6076b4B0c482e7127a201b79a13D117E2B53"
+  },
+  {
+    "chainId": "canto",
+    "ammId": "canto-velocimeter",
+    "zapAddress": "0x405f1a085594b6C95F18f9eED6ebD09180cC6Bc8"
   },
   {
     "chainId": "cronos",
