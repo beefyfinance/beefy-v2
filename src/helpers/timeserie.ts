@@ -98,7 +98,7 @@ export function getInvestorTimeserie(
       underlyingBalance && underlying ? underlyingBalance.times(underlying.value) : null;
 
     if (!underlyingBalance || !usdBalance) {
-      continue;
+      break;
     }
 
     if (balance && !balance.isEqualTo(BIG_ZERO)) {
