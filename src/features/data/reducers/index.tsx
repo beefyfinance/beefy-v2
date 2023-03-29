@@ -31,6 +31,7 @@ import { ammsSlice } from './amms';
 import { treasurySlice } from './treasury';
 import { analyticsSlice } from './analytics';
 import { proposalsSlice } from './proposals';
+import { historicalSlice } from './historical';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -50,6 +51,7 @@ const bizReducer = combineReducers<BeefyState['biz']>({
   apy: apySlice.reducer,
   buyback: buybackSlice.reducer,
   partners: partnersSlice.reducer,
+  historical: historicalSlice.reducer,
 });
 const userReducer = combineReducers<BeefyState['user']>({
   balance: balanceSlice.reducer,

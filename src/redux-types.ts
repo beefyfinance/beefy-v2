@@ -30,6 +30,7 @@ import { AmmsState } from './features/data/reducers/amms';
 import { TreasuryState } from './features/data/reducers/treasury';
 import { AnalyticsState } from './features/data/reducers/analytics';
 import { ProposalsState } from './features/data/reducers/proposals';
+import { HistoricalState } from './features/data/reducers/historical-types';
 
 export interface BeefyState {
   entities: {
@@ -50,6 +51,7 @@ export interface BeefyState {
     apy: ApyState;
     buyback: BuybackState;
     partners: PartnersState;
+    historical: HistoricalState;
   };
   user: {
     wallet: WalletState;

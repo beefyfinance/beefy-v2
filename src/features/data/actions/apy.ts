@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
-import { BeefyAPIApyBreakdownResponse } from '../apis/beefy';
+import { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api';
 import { getBeefyApi } from '../apis/instances';
 
 export interface FetchAllApyFulfilledPayload {
