@@ -232,7 +232,9 @@
       "DOLA",
       "frxETH",
       "MAI",
-      "DEI"
+      "DEI",
+      "USD+",
+      "DAI+"
     ],
     "blockedVaults": []
   },
