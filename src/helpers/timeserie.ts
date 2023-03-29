@@ -97,6 +97,10 @@ export function getInvestorTimeserie(
     const usdBalance =
       underlyingBalance && underlying ? underlyingBalance.times(underlying.value) : null;
 
+    if (!underlyingBalance || !usdBalance) {
+      continue;
+    }
+
     if (balance && !balance.isEqualTo(BIG_ZERO)) {
       pricesTs.push({
         //return date on seconds
