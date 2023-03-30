@@ -3,7 +3,7 @@ import {
   BeefyAPIBuybackResponse,
   BeefyAPILpBreakdownResponse,
   BeefyAPITokenPricesResponse,
-} from '../apis/beefy';
+} from '../apis/beefy/beefy-api';
 import { getBeefyApi } from '../apis/instances';
 
 export type fetchAllPricesPayload = {

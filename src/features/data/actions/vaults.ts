@@ -3,7 +3,7 @@ import { BeefyState } from '../../../redux-types';
 import { getBeefyApi, getConfigApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
-import { BeefyVaultZapSupportResponse } from '../apis/beefy';
+import { BeefyVaultZapSupportResponse } from '../apis/beefy/beefy-api';
 import { featureFlag_zapSupportOverrides } from '../utils/feature-flags';
 
 // given the list of vaults is pulled from some api at some point
