@@ -1,5 +1,36 @@
 [
   {
+    "id": "cakev2-id-usdt",
+    "name": "ID-USDT LP",
+    "token": "ID-USDT LP",
+    "tokenAddress": "0x9Ed9E9aA51670A3210fD6078024c21ec6c1d61d9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "tokenAmmId": "bsc-pancakeswap-v2",
+    "earnedToken": "mooCakeV2ID-BNB",
+    "earnedTokenAddress": "0xbaB51cDB3Cfb2a043797a3Ba4F872B7dC47cB40e",
+    "earnContractAddress": "0xbaB51cDB3Cfb2a043797a3Ba4F872B7dC47cB40e",
+    "oracle": "lps",
+    "oracleId": "cakev2-id-usdt",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["ID", "USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x2dfF88A56767223A5529eA5960Da7A3F5f766406",
+    "addLiquidityUrl": "https://pancakeswap.finance/add/0x2dfF88A56767223A5529eA5960Da7A3F5f766406/0x55d398326f99059fF775485246999027B3197955",
+    "removeLiquidityUrl": "https://pancakeswap.finance/remove/0x2dfF88A56767223A5529eA5960Da7A3F5f766406/0x55d398326f99059fF775485246999027B3197955",
+    "network": "bsc",
+    "createdAt": 1680213826
+  },
+  {
     "id": "thena-id-wbnb",
     "name": "ID-BNB vLP",
     "token": "ID-BNB vLP",
