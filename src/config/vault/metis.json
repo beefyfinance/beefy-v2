@@ -777,38 +777,6 @@
     "createdAt": 1645533903
   },
   {
-    "id": "netswap-wbtc-m.usdt",
-    "name": "WBTC-m.USDT",
-    "token": "WBTC-m.USDT LP",
-    "tokenAddress": "0xAd9b903451dfdc3D79d2021289F9d864fd8c8119",
-    "tokenDecimals": 18,
-    "tokenProviderId": "netswap",
-    "tokenAmmId": "metis-netswap",
-    "earnedToken": "mooNetswapWBTC-m.USDT",
-    "earnedTokenAddress": "0x23343d47111AbC4b1699fED61276c06Ff8a0D081",
-    "earnContractAddress": "0x23343d47111AbC4b1699fED61276c06Ff8a0D081",
-    "oracle": "lps",
-    "oracleId": "netswap-wbtc-m.usdt",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "netswap",
-    "assets": ["WBTC", "mUSDT"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC&outputCurrency=0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
-    "addLiquidityUrl": "https://netswap.io/#/add/0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
-    "removeLiquidityUrl": "https://netswap.io/#/remove/0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
-    "network": "metis",
-    "createdAt": 1645536038
-  },
-  {
     "id": "tethys-wbtc-metis",
     "name": "WBTC-METIS",
     "token": "WBTC-METIS TLP",

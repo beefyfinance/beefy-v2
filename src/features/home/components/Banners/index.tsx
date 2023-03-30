@@ -2,6 +2,7 @@ import * as React from 'react';
 import { memo } from 'react';
 import { RenBannerHome } from '../../../../components/Banners/RenBanner';
 import { Container, makeStyles, Theme } from '@material-ui/core';
+import { AnnouncementBanner } from '../../../../components/Banners/AnnouncementBanner';
 
 const useStyles = makeStyles((theme: Theme) => ({
   banners: {
@@ -21,6 +22,7 @@ export const Banners = memo<BannersProps>(function () {
   return (
     <Container maxWidth="lg" className={classes.banners}>
       <RenBannerHome />
+      <AnnouncementBanner />
     </Container>
   );
 });

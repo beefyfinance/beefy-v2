@@ -20,14 +20,17 @@ export const useSortedAssets = (assets: TreasuryHoldingEntity[]): SortedAssetCat
   };
 
   for (const token of sortedAssets) {
-    if (token.assetType === 'token' || token.assetType === 'native') {
-      list.liquidAssets.push(token);
-    }
-    if (token.assetType === 'vault') {
-      list.stakedAssets.push(token);
-    }
-    if (token.assetType === 'validator') {
-      list.lockedAssets.push(token);
+    //HIDE: All tokens with less than 10 usd
+    if (token.usdValue.gt(10)) {
+      if (token.assetType === 'token' || token.assetType === 'native') {
+        list.liquidAssets.push(token);
+      }
+      if (token.assetType === 'vault') {
+        list.stakedAssets.push(token);
+      }
+      if (token.assetType === 'validator') {
+        list.lockedAssets.push(token);
+      }
     }
   }
 

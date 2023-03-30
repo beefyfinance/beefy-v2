@@ -29,6 +29,7 @@ import { DataLoaderState, LoaderState } from './data-loader-types';
 import { errorToString } from '../../../helpers/format';
 import { fetchAllAmmsAction } from '../actions/amm';
 import { fetchTreasury } from '../actions/treasury';
+import { fetchWalletTimeline } from '../actions/analytics';
 import { fetchActiveProposals } from '../actions/proposal';
 
 const dataLoaderStateInit: LoaderState = {
@@ -81,6 +82,7 @@ export const initialDataLoaderState: DataLoaderState = {
     platforms: dataLoaderStateInit,
     onRamp: dataLoaderStateInit,
     treasury: dataLoaderStateInit,
+    analytics: dataLoaderStateInit,
     proposals: dataLoaderStateInit,
   },
   byChainId: {},
@@ -201,6 +203,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms', true);
     addGlobalAsyncThunkActions(builder, fetchOnRampSupportedProviders, 'onRamp', true);
     addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury', true);
+    addGlobalAsyncThunkActions(builder, fetchWalletTimeline, 'analytics', true);
     addGlobalAsyncThunkActions(builder, fetchActiveProposals, 'proposals', false);
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance']);

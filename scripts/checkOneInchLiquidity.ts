@@ -9,7 +9,7 @@ import { OneInchApi } from '../src/features/data/apis/one-inch';
 import PQueue from 'p-queue';
 import { zaps as oneInchZaps } from '../src/config/zap/one-inch';
 import { createWriteStream } from 'fs';
-import { BeefyAPITokenPricesResponse } from '../src/features/data/apis/beefy';
+import { BeefyAPITokenPricesResponse } from '../src/features/data/apis/beefy/beefy-api';
 import { BIG_ONE, BIG_ZERO, fromWei, fromWeiString, toWeiString } from '../src/helpers/big-number';
 import { saveCsv, saveJson } from './common/utils';
 import fetch from 'node-fetch';

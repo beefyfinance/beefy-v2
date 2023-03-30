@@ -11,6 +11,7 @@ import { VaultTags } from '../VaultTags';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
+import { punctuationWrap } from '../../../../../../helpers/string';
 
 const useStyles = makeStyles(styles);
 
@@ -20,9 +21,7 @@ export type VaultNameProps = {
 export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const isBoosted =
-    useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId)) &&
-    vault.platformId !== 'valleyswap';
+  const isBoosted = useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId));
 
   return (
     <div
@@ -31,7 +30,7 @@ export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId }) {
         [classes.vaultNameBoosted]: isBoosted,
       })}
     >
-      {vault.name}
+      {punctuationWrap(vault.name)}
     </div>
   );
 });

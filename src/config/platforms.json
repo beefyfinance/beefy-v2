@@ -983,5 +983,15 @@
     "id": "equilibre",
     "name": "Equilibre",
     "filter": true
+  },
+  {
+    "id": "verse",
+    "name": "Verse",
+    "filter": true
+  },
+  {
+    "id": "ramses",
+    "name": "Ramses",
+    "filter": true
   }
 ]

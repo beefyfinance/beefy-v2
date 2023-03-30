@@ -12,12 +12,24 @@
     "getAmountOutMode": "getAmountOut"
   },
   {
-    "id": "canto-velocimeter",
-    "name": "Velocimeter",
+    "id": "canto-velocimeter-v1",
+    "name": "VelocimeterV1",
     "type": "solidly",
     "routerAddress": "0x9B2920e72dF6E1A7053bEa7235c65079F5104398",
     "factoryAddress": "0xb12aF64E128A1D4489D13314eB4Df81cBCE126aC",
     "pairInitHash": "0x75c20cfd874bd4a16cbb1ed7160d44fd79b9f428a6dcebc43211efda0084b849",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "3",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "canto-velocimeter",
+    "name": "Velocimeter",
+    "type": "solidly",
+    "routerAddress": "0x8e2e2f70B4bD86F82539187A634FB832398cc771",
+    "factoryAddress": "0xF80909DF0A01ff18e4D37BF682E40519B21Def46",
+    "pairInitHash": "0xccd05873bc36fc9d38cc3a46781ecfa3bcbc4bad8dc816795dd897c5313ccdee",
     "minimumLiquidity": "1000",
     "swapFeeNumerator": "3",
     "swapFeeDenominator": "10000",

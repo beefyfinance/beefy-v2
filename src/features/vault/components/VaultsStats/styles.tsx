@@ -20,7 +20,10 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'flex-start',
     backgroundColor: theme.palette.background.default,
     borderRadius: '8px',
-    padding: '16px 16px',
+    padding: '16px 24px',
+    [theme.breakpoints.down('md')]: {
+      padding: '16px',
+    },
   },
   depositStats: {
     width: '100%',
@@ -37,6 +40,7 @@ export const styles = (theme: Theme) => ({
     [theme.breakpoints.down('md')]: {
       justifyContent: 'flex-start',
       textAlign: 'start' as const,
+      padding: '16px',
     },
   },
   stat: {
@@ -78,14 +82,14 @@ export const styles = (theme: Theme) => ({
   divider: {
     marginRight: theme.spacing(3),
     width: 2,
-    color: theme.palette.background.vaults.defaultOutline,
+    backgroundColor: theme.palette.background.content,
     [theme.breakpoints.down('sm')]: {
       marginRight: theme.spacing(2.5),
     },
   },
   divider1: {
     width: 2,
-    color: theme.palette.background.vaults.defaultOutline,
+    backgroundColor: theme.palette.background.content,
     marginLeft: theme.spacing(3),
     [theme.breakpoints.down('md')]: {
       marginLeft: 0,

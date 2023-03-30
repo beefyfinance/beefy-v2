@@ -63,7 +63,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#121926',
   },
   'vaultNetwork-fuse': {
-    backgroundColor: '#071927',
+    backgroundColor: '#B4F9BA',
   },
   'vaultNetwork-metis': {
     backgroundColor: '#00dacc',

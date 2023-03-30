@@ -7,7 +7,6 @@ export const styles = (theme: Theme) => ({
     borderRadius: '12px',
   },
   containerBoost: {
-    marginTop: theme.spacing(3),
     padding: theme.spacing(3),
     borderRadius: '12px',
     backgroundColor: theme.palette.background.default,

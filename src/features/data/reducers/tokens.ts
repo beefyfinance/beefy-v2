@@ -26,7 +26,7 @@ import {
 } from '../utils/config-hacks';
 import { fetchAllMinters } from '../actions/minters';
 import { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
-import { LpData } from '../apis/beefy';
+import { LpData } from '../apis/beefy/beefy-api';
 import { isNativeAlternativeAddress } from '../../../helpers/addresses';
 
 /**

@@ -1,4 +1,4 @@
-import { BeefyAPI } from './beefy';
+import { BeefyAPI } from './beefy/beefy-api';
 import { ConfigAPI } from './config';
 import { sample } from 'lodash';
 import { createFactoryWithCacheByChain } from '../utils/factory-utils';
@@ -9,12 +9,15 @@ import { IOnRampApi } from './on-ramp/on-ramp-types';
 import { ITransactApi } from './transact/transact-types';
 import { createWeb3Instance } from '../../../helpers/web3';
 import { createGasPricer } from './gas-prices';
+import { AnalyticsApi } from './analytics/analytics';
 import { IOneInchApi } from './one-inch/one-inch-types';
+import { IBeefyDataApi } from './beefy/beefy-data-api-types';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
 const configApi = new ConfigAPI();
 const bridgeApi = new BridgeApi();
+const analyticsApi = new AnalyticsApi();
 
 /**
  * These are basically factories so user code don't have to worry
@@ -30,6 +33,10 @@ export function getConfigApi(): ConfigAPI {
 
 export function getBridgeApi(): BridgeApi {
   return bridgeApi;
+}
+
+export function getAnalyticsApi(): AnalyticsApi {
+  return analyticsApi;
 }
 
 export const getWeb3Instance = createFactoryWithCacheByChain(async chain => {
@@ -136,4 +143,16 @@ export async function getOneInchApi(
   }
 
   return oneInchApiCache[chain.id];
+}
+
+let beefyDataApiInstance: IBeefyDataApi | null = null;
+
+export async function getBeefyDataApi(): Promise<IBeefyDataApi> {
+  if (beefyDataApiInstance) {
+    return beefyDataApiInstance;
+  }
+
+  const { BeefyDataApi } = await import('./beefy/beefy-data-api');
+  beefyDataApiInstance = new BeefyDataApi();
+  return beefyDataApiInstance;
 }

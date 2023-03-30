@@ -29,7 +29,9 @@ import { transactReducer } from './wallet/transact';
 import { stepperSlice } from './wallet/stepper';
 import { ammsSlice } from './amms';
 import { treasurySlice } from './treasury';
+import { analyticsSlice } from './analytics';
 import { proposalsSlice } from './proposals';
+import { historicalSlice } from './historical';
 import { Reducer } from 'react';
 import { AnyAction } from '@reduxjs/toolkit';
 
@@ -51,10 +53,12 @@ const bizReducer = combineReducers<BeefyState['biz']>({
   apy: apySlice.reducer,
   buyback: buybackSlice.reducer,
   partners: partnersSlice.reducer,
+  historical: historicalSlice.reducer,
 });
 const userReducer = combineReducers<BeefyState['user']>({
   balance: balanceSlice.reducer,
   allowance: allowanceSlice.reducer,
+  analytics: analyticsSlice.reducer,
   wallet: persistReducer(
     { key: 'wallet', storage, whitelist: ['address', 'hideBalance'] },
     walletSlice.reducer

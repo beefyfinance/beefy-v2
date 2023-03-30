@@ -4,7 +4,8 @@ export const minters: MinterConfig[] = [
   {
     id: 'beOPX',
     name: 'beOPX',
-    contractAddress: '0xEDFBeC807304951785b581dB401fDf76b4bAd1b0',
+    minterAddress: '0xEDFBeC807304951785b581dB401fDf76b4bAd1b0',
+    burnerAddress: '0xEDFBeC807304951785b581dB401fDf76b4bAd1b0',
     depositToken: {
       symbol: 'OPX',
       oracleId: 'OPX',
@@ -27,7 +28,8 @@ export const minters: MinterConfig[] = [
   {
     id: 'beVELO',
     name: 'beVELO',
-    contractAddress: '0xfDeFFc7Ad816BF7867C642dF7eBC2CC5554ec265',
+    minterAddress: '0x4Fc9D78613b20c8C91121de91A35887f7139da68',
+    burnerAddress: '0xfDeFFc7Ad816BF7867C642dF7eBC2CC5554ec265',
     depositToken: {
       symbol: 'VELO',
       oracleId: 'VELO',
@@ -42,6 +44,7 @@ export const minters: MinterConfig[] = [
       contractAddress: '0xfDeFFc7Ad816BF7867C642dF7eBC2CC5554ec265',
       decimals: 18,
     },
+    canZapInWithOneInch: true,
     canBurnReserves: true,
     hasEarningsPool: false,
     reserveBalanceMethod: 'withdrawableBalance',
