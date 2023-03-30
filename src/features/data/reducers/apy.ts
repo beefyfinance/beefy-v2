@@ -4,7 +4,7 @@ import { BeefyState } from '../../../redux-types';
 import { fetchApyAction } from '../actions/apy';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { ApyData } from '../apis/beefy';
+import { ApyData } from '../apis/beefy/beefy-api';
 import {
   BoostContractData,
   FetchAllContractDataResult,

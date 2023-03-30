@@ -19,3 +19,26 @@ export function compound(
 export function percentDifference(a: number, b: number): number {
   return Math.abs((b - a) / a);
 }
+
+export class MovingAverage {
+  private values: number[] = [];
+
+  constructor(private period: number) {}
+
+  add(value: number) {
+    this.values.push(value);
+    if (this.values.length > this.period) {
+      this.values.shift();
+    }
+
+    return this;
+  }
+
+  get average(): number {
+    return this.values.reduce((a, b) => a + b, 0) / this.values.length;
+  }
+
+  next(value: number): number {
+    return this.add(value).average;
+  }
+}

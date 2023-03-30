@@ -2,7 +2,7 @@ import { fetchAllBoosts, FulfilledAllBoostsPayload } from '../actions/boosts';
 import { fetchAllPricesAction } from '../actions/prices';
 import { fetchAddressBookAction } from '../actions/tokens';
 import { fetchAllVaults, FulfilledAllVaultsPayload } from '../actions/vaults';
-import { BeefyAPITokenPricesResponse } from '../apis/beefy';
+import { BeefyAPITokenPricesResponse } from '../apis/beefy/beefy-api';
 import { selectChainNativeToken } from '../selectors/tokens';
 import { getBeefyTestingStore } from '../utils/test-utils';
 import { initialTokensState, tokensSlice } from './tokens';

@@ -26,11 +26,11 @@ export function XAxisTick({
   ...rest
 }: xAxisTickProps) {
   const { value } = payload;
-  const halfMaxTickTextWidth = 15;
+  const halfMaxTickTextWidth = 16;
   const textAnchor =
     index === 0
       ? 'start'
-      : index === visibleTicksCount - 1 && rest.x > rest.width + halfMaxTickTextWidth
+      : index === visibleTicksCount - 1 && rest.x > rest.width - halfMaxTickTextWidth
       ? 'end'
       : 'middle';
 

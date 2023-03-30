@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
 import { getBeefyApi } from '../apis/instances';
-import { ApyFeeData } from '../apis/beefy';
+import { ApyFeeData } from '../apis/beefy/beefy-api';
 
 export type FetchFeesFulfilledPayload = ApyFeeData;
 

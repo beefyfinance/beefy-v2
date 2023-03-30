@@ -1,12 +1,12 @@
 import axios, { AxiosInstance } from 'axios';
 import BigNumber from 'bignumber.js';
 import { isString } from 'lodash';
-import { ChainEntity } from '../entities/chain';
-import { TokenEntity } from '../entities/token';
-import { VaultEntity } from '../entities/vault';
-import { mapValuesDeep } from '../utils/array-utils';
-import { featureFlag_simulateBeefyApiError } from '../utils/feature-flags';
-import { TreasuryConfig } from './config-types';
+import { ChainEntity } from '../../entities/chain';
+import { TokenEntity } from '../../entities/token';
+import { VaultEntity } from '../../entities/vault';
+import { mapValuesDeep } from '../../utils/array-utils';
+import { featureFlag_simulateBeefyApiError } from '../../utils/feature-flags';
+import { TreasuryConfig } from '../config-types';
 
 export type ApyPerformanceFeeData = {
   total: number;
@@ -110,16 +110,11 @@ export type BeefyVaultZapSupportResponse = Record<string, ('beefy' | 'oneInch')[
 
 export class BeefyAPI {
   public api: AxiosInstance;
-  public data: AxiosInstance;
 
   constructor() {
     // this could be mocked by passing mock axios to the constructor
     this.api = axios.create({
       baseURL: process.env.REACT_APP_API_URL || 'https://api.beefy.finance',
-      timeout: 30 * 1000,
-    });
-    this.data = axios.create({
-      baseURL: process.env.REACT_APP_DATA_URL || 'https://data.beefy.finance',
       timeout: 30 * 1000,
     });
   }
@@ -256,20 +251,6 @@ export class BeefyAPI {
 
     const res = await this.api.get<BeefyVaultZapSupportResponse>('/vaults/zap-support', {
       params: { _: this.getCacheBuster('long') },
-    });
-    return res.data;
-  }
-
-  public async getChartData(
-    stat: string,
-    name: string,
-    period: string,
-    from: number,
-    to: number,
-    limit: number
-  ) {
-    const res = await this.data.get<BeefyChartDataResponse>(`/${stat}`, {
-      params: { name, period, from, to, limit },
     });
     return res.data;
   }

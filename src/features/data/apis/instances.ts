@@ -1,4 +1,4 @@
-import { BeefyAPI } from './beefy';
+import { BeefyAPI } from './beefy/beefy-api';
 import { ConfigAPI } from './config';
 import { sample } from 'lodash';
 import { createFactoryWithCacheByChain } from '../utils/factory-utils';
@@ -11,6 +11,7 @@ import { createWeb3Instance } from '../../../helpers/web3';
 import { createGasPricer } from './gas-prices';
 import { AnalyticsApi } from './analytics/analytics';
 import { IOneInchApi } from './one-inch/one-inch-types';
+import { IBeefyDataApi } from './beefy/beefy-data-api-types';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -142,4 +143,16 @@ export async function getOneInchApi(
   }
 
   return oneInchApiCache[chain.id];
+}
+
+let beefyDataApiInstance: IBeefyDataApi | null = null;
+
+export async function getBeefyDataApi(): Promise<IBeefyDataApi> {
+  if (beefyDataApiInstance) {
+    return beefyDataApiInstance;
+  }
+
+  const { BeefyDataApi } = await import('./beefy/beefy-data-api');
+  beefyDataApiInstance = new BeefyDataApi();
+  return beefyDataApiInstance;
 }
