@@ -3,6 +3,7 @@ import { memo } from 'react';
 import { SortColumnHeader } from '../../../../../../../../components/SortColumnHeader';
 import { InfoGrid } from '../InfoGrid';
 import { Row } from '../Row/Row';
+import { SortedOptions } from '../../hook';
 
 const SORT_COLUMNS: {
   label: string;
@@ -24,15 +25,26 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const TransactionsFilter = memo(function SortColumns() {
+interface TransactionsFilterProps {
+  sortOptions: SortedOptions;
+  handleSort: (field: string) => void;
+}
+
+export const TransactionsFilter = memo<TransactionsFilterProps>(function SortColumns({
+  handleSort,
+  sortOptions,
+}) {
   const classes = useStyles();
+
+  const { sort, sortDirection } = sortOptions;
+
   return (
     <Row className={classes.filter}>
       <SortColumnHeader
         label={'Dashboard-Filter-Date'}
         sortKey={'datetime'}
-        sorted={'none'}
-        onChange={() => console.log('a')}
+        sorted={sort === 'datetime' ? sortDirection : 'none'}
+        onChange={handleSort}
         className={classes.justifyStart}
       />
       <InfoGrid>
@@ -41,8 +53,8 @@ export const TransactionsFilter = memo(function SortColumns() {
             key={label}
             label={label}
             sortKey={sortKey}
-            sorted={'none'}
-            onChange={() => console.log('a')}
+            sorted={sort === sortKey ? sortDirection : 'none'}
+            onChange={handleSort}
           />
         ))}
       </InfoGrid>

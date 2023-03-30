@@ -6,12 +6,17 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const Filter = memo(() => {
+interface FilterProps {
+  sortOptions: any;
+  handleSort: (field: string) => void;
+}
+
+export const Filter = memo<FilterProps>(({ sortOptions, handleSort }) => {
   const classes = useStyles();
   return (
     <div className={classes.container}>
       <Search />
-      <SortColumns />
+      <SortColumns sortOptions={sortOptions} handleSort={handleSort} />
     </div>
   );
 });
@@ -49,8 +54,10 @@ const SORT_COLUMNS: {
   { label: 'Dashboard-Filter-DailyYield', sortKey: 'dailyYield', className: 'hideMd' },
 ];
 
-const SortColumns = memo(function SortColumns() {
+const SortColumns = memo<FilterProps>(function SortColumns({ sortOptions, handleSort }) {
   const classes = useStyles();
+
+  const { sort, sortDirection } = sortOptions;
   return (
     <div className={classes.sortColumns}>
       {SORT_COLUMNS.map(({ label, sortKey, className }) => (
@@ -58,8 +65,8 @@ const SortColumns = memo(function SortColumns() {
           key={label}
           label={label}
           sortKey={sortKey}
-          sorted={'none'}
-          onChange={() => console.log('a')}
+          sorted={sort === 'datetime' ? sortDirection : 'none'}
+          onChange={handleSort}
           className={className ? classes[className] : ''}
         />
       ))}

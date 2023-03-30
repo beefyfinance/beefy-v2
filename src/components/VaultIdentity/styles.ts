@@ -16,6 +16,7 @@ export const styles = (theme: Theme) => ({
   vaultName: {
     ...theme.typography['h3'],
     color: '#F5F5FF',
+    textDecoration: 'none' as const,
   },
   vaultNameBoosted: {
     color: '#DB8332',

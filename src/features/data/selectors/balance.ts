@@ -28,6 +28,7 @@ import { getTopNArray } from '../utils/array-utils';
 import { sortBy } from 'lodash';
 import { createSelector } from '@reduxjs/toolkit';
 import { selectChainById } from './chains';
+import { selectVaultPnl } from './analytics';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (selectIsWalletKnown(state)) {
@@ -625,14 +626,11 @@ export const selectUserVaultBalances = (state: BeefyState) => {
   });
 };
 
-export const selectVaultsWithBalanceByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
+export const selectUserVaultsPnl = (state: BeefyState) => {
   const userVaults = selectUserDepositedVaultIds(state);
   const vaults = {};
   for (const vaultId of userVaults) {
-    const vault = selectVaultById(state, vaultId);
-    if (vault.chainId === chainId) {
-      vaults[vaultId] = selectUserVaultDepositInUsd(state, vaultId);
-    }
+    vaults[vaultId] = selectVaultPnl(state, vaultId);
   }
   return vaults;
 };

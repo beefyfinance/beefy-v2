@@ -16,7 +16,6 @@ export const styles = (theme: Theme) => ({
   sortColumns: {
     display: 'grid',
     width: '100%',
-    columnGap: '24px',
     gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
     [theme.breakpoints.up('md')]: {
       gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',

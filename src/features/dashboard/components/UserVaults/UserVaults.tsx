@@ -1,34 +1,36 @@
 import { makeStyles } from '@material-ui/styles';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../store';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { debounce } from 'lodash';
 import { useInView } from 'react-intersection-observer';
 import { Section } from '../../../../components/Section';
 import { styles } from './styles';
 import { Filter } from './components/Filter';
-import { selectUserDepositedVaultIds } from '../../../data/selectors/balance';
+
 import { Vault } from './components/Vault';
+import { useSortedDashboardVaults } from './hook';
+import { VaultEntity } from '../../../data/entities/vault';
 
 const useStyles = makeStyles(styles);
 
 export const UserVaults = memo(function () {
   const { t } = useTranslation();
 
+  const { sortedVaults, sortedOptions, handleSort } = useSortedDashboardVaults();
+
   return (
     <Section
       title={t('Dashboard-Your-Vaults-Title')}
       subTitle={t('Dashboard-Your-Vaults-Subtitle')}
     >
-      <Filter />
-      <VirtualList />
+      <Filter sortOptions={sortedOptions} handleSort={handleSort} />
+      <VirtualList vaults={sortedVaults} />
     </Section>
   );
 });
 
-export const VirtualList = function () {
+export const VirtualList = function ({ vaults }: { vaults: VaultEntity['id'][] }) {
   const classes = useStyles();
-  const vaults = useAppSelector(selectUserDepositedVaultIds);
   const totalVaults = vaults.length;
   const minBatchSize = 3;
   const [renderCount, setRenderCount] = useState(minBatchSize);
@@ -101,7 +103,7 @@ export const VirtualList = function () {
     <>
       <div className={classes.container} ref={containerRef}>
         {renderVaultIds.map(vaultId => {
-          return <Vault vaultId={vaultId} />;
+          return <Vault key={vaultId} vaultId={vaultId} />;
         })}
       </div>
       <div ref={bottomRef} />

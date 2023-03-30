@@ -17,11 +17,26 @@ const useStyles = makeStyles(styles);
 
 export type VaultNameProps = {
   vaultId: VaultEntity['id'];
+  isLink?: boolean;
 };
-export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId }) {
+export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, isLink }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isBoosted = useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId));
+
+  if (isLink) {
+    return (
+      <Link
+        to={`/vault/${vaultId}`}
+        className={clsx({
+          [classes.vaultName]: true,
+          [classes.vaultNameBoosted]: isBoosted,
+        })}
+      >
+        {punctuationWrap(vault.name)}
+      </Link>
+    );
+  }
 
   return (
     <div
@@ -67,17 +82,9 @@ export const VaultIdentity = memo<VaultIdentityProps>(function VaultIdentity({
 }) {
   const classes = useStyles();
 
-  if (isLink) {
-    return (
-      <Link to={`/vault/${vaultId}`} className={classes.vaultIdentity}>
-        <VaultIdentityContent vaultId={vaultId} networkClassName={networkClassName} />
-      </Link>
-    );
-  }
-
   return (
     <div className={classes.vaultIdentity}>
-      <VaultIdentityContent vaultId={vaultId} networkClassName={networkClassName} />
+      <VaultIdentityContent isLink={isLink} vaultId={vaultId} networkClassName={networkClassName} />
     </div>
   );
 });
@@ -85,6 +92,7 @@ export const VaultIdentity = memo<VaultIdentityProps>(function VaultIdentity({
 export const VaultIdentityContent = memo<VaultIdentityProps>(function VaultIdentityContent({
   vaultId,
   networkClassName,
+  isLink,
 }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -94,7 +102,7 @@ export const VaultIdentityContent = memo<VaultIdentityProps>(function VaultIdent
       <VaultNetwork className={networkClassName} chainId={vault.chainId} />
       <VaultIcon vaultId={vaultId} />
       <div className={classes.vaultNameTags}>
-        <VaultName vaultId={vaultId} />
+        <VaultName isLink={isLink} vaultId={vaultId} />
         <VaultTags vaultId={vaultId} />
       </div>
     </>

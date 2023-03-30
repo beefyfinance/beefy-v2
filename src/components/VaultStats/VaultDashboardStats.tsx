@@ -3,12 +3,12 @@ import { styles } from './styles';
 import React, { memo } from 'react';
 import { VaultEntity } from '../../features/data/entities/vault';
 import clsx from 'clsx';
-import { VaultDailyStat } from './VaultDailyStat';
 import { VaultDailyUsdStat } from './VaultDailyUsdStat';
 import { VaultPnlStat } from './VaultPnlStat';
 import { VaultYieledStat } from './VaultYieledStat';
 import { VaultAtDepositStat } from './VaultAtDepositStat';
 import { VaultNowStat } from './VaultNowStat';
+import { VaultYearlyStat } from './VaultYearlyStat';
 
 const useStyles = makeStyles(styles);
 
@@ -34,7 +34,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
           <VaultPnlStat showLabel={false} vaultId={vaultId} />
         </div>
         <div className={clsx(classes.column, classes.hideMd)}>
-          <VaultDailyStat showLabel={false} vaultId={vaultId} />
+          <VaultYearlyStat showLabel={false} vaultId={vaultId} />
         </div>
         <div className={clsx(classes.column, classes.hideMd)}>
           <VaultDailyUsdStat showLabel={false} vaultId={vaultId} />

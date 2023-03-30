@@ -20,8 +20,6 @@ export const Transaction = memo<TransactionProps>(function ({ data, tokenDecimal
   const { internal, datetime, shareBalance, usdBalance, underlyingDiff, shareToUnderlyingPrice } =
     data;
 
-  console.log(shareToUnderlyingPrice.toFixed(8));
-
   const isDepositTx = useMemo(() => {
     return underlyingDiff.gt(BIG_ZERO);
   }, [underlyingDiff]);

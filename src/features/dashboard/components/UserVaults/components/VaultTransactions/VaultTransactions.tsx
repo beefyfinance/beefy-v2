@@ -7,6 +7,7 @@ import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { Transaction } from './components/Transaction';
 import { TransactionsFilter } from './components/TransactionsFilter';
+import { useSortedTimeline } from './hook';
 
 interface VaultTransactionsProps {
   vaultId: VaultEntity['id'];
@@ -35,10 +36,12 @@ export const VaultTransactions = memo<VaultTransactionsProps>(function ({ vaultI
     selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
   );
 
+  const { sortedTimeline, sortedOptions, handleSort } = useSortedTimeline(vaultTimeline);
+
   return (
     <div className={classes.transactionsGrid}>
-      <TransactionsFilter />
-      {vaultTimeline.map(tx => {
+      <TransactionsFilter sortOptions={sortedOptions} handleSort={handleSort} />
+      {sortedTimeline.map(tx => {
         return <Transaction key={tx.datetime.getTime()} tokenDecimals={token.decimals} data={tx} />;
       })}
     </div>
