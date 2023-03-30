@@ -90,7 +90,8 @@
       "USTaxl",
       "WOOFY",
       "xSCREAM",
-      "ZOO"
+      "ZOO",
+      "MLP"
     ],
     "blockedVaults": ["geist-ftm"]
   },
@@ -112,7 +113,8 @@
       "MAI",
       "sUSD",
       "sETH",
-      "WBTC"
+      "WBTC",
+      "MLP"
     ],
     "withdrawToTokens": ["ETH", "OP", "BIFI", "USDC", "USDT", "DAI", "MAI", "sUSD", "sETH", "WBTC"],
     "blockedTokens": [

@@ -988,5 +988,10 @@
     "id": "verse",
     "name": "Verse",
     "filter": true
+  },
+  {
+    "id": "mummy",
+    "name": "Mummy",
+    "filter": true
   }
 ]
