@@ -16,6 +16,7 @@ import type {
   StrategyTypeConfig,
   VaultConfig,
 } from './config-types';
+import { mapValues } from 'lodash';
 
 /**
  * A class to access beefy configuration
@@ -65,13 +66,21 @@ export class ConfigAPI {
   }
 
   public async fetchAllBoosts(): Promise<{ [chainId: ChainEntity['id']]: BoostConfig[] }> {
-    return Object.fromEntries(
+    const partnersById = (await import(`../../../config/boost/partners.json`)).default;
+    const boosts = Object.fromEntries(
       await Promise.all(
         Object.keys(chainConfigs).map(async chainId => [
           chainId,
           (await import(`../../../config/boost/${chainId}.json`)).default,
         ])
       )
+    );
+
+    return mapValues(boosts, boosts =>
+      boosts.map(boost => ({
+        ...boost,
+        partners: (boost.partners || []).map(partnerId => partnersById[partnerId]),
+      }))
     );
   }
 
