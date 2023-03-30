@@ -564,7 +564,8 @@
     "earnContractAddress": "0xeb5A443d4b4deF6f81C0Ef0B66Af5168a34A7f38",
     "oracle": "lps",
     "oracleId": "monolith-frax-usdt",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "solidly",
     "assets": ["FRAX", "USDT"],
     "risks": [

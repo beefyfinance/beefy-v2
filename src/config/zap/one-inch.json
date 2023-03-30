@@ -114,9 +114,21 @@
       "sUSD",
       "sETH",
       "WBTC",
-      "MLP"
+      "wstETH"
     ],
-    "withdrawToTokens": ["ETH", "OP", "BIFI", "USDC", "USDT", "DAI", "MAI", "sUSD", "sETH", "WBTC"],
+    "withdrawToTokens": [
+      "ETH",
+      "OP",
+      "BIFI",
+      "USDC",
+      "USDT",
+      "DAI",
+      "MAI",
+      "sUSD",
+      "sETH",
+      "WBTC",
+      "wstETH"
+    ],
     "blockedTokens": [
       "alUSD",
       "bbDAI+",
@@ -142,7 +154,8 @@
       "USDC-hUSDC LP",
       "USDT-hUSDT LP",
       "USX",
-      "wUSDR"
+      "wUSDR",
+      "MLP"
     ],
     "blockedVaults": ["aavev3-op-eth"]
   },
@@ -205,8 +218,8 @@
       "value": 0.0005,
       "recipient": "0x8Ccf8606ccf0Aff9937B68e0297967e257eB148b"
     },
-    "depositFromTokens": ["ETH", "WETH", "USDC", "USDT", "DAI", "MIM", "WBTC"],
-    "withdrawToTokens": ["ETH", "BIFI", "USDC", "USDT", "DAI", "MIM", "WBTC"],
+    "depositFromTokens": ["ETH", "ARB", "WETH", "USDC", "USDT", "DAI", "MIM", "WBTC", "wstETH"],
+    "withdrawToTokens": ["ETH", "ARB", "BIFI", "USDC", "USDT", "DAI", "MIM", "WBTC", "wstETH"],
     "blockedTokens": [
       "agEUR",
       "FISH",
@@ -303,8 +316,8 @@
       "value": 0.0005,
       "recipient": "0x0921E4fA2F85B6461fa83961d28DC7e1f9A32B40"
     },
-    "depositFromTokens": ["ETH", "WETH", "USDC", "USDT", "DAI", "WBTC", "MIM"],
-    "withdrawToTokens": ["ETH", "USDC", "USDT", "WBTC", "DAI", "MIM"],
+    "depositFromTokens": ["ETH", "WETH", "USDC", "USDT", "DAI", "WBTC", "MIM", "wstETH"],
+    "withdrawToTokens": ["ETH", "USDC", "USDT", "WBTC", "DAI", "MIM", "wstETH"],
     "blockedTokens": [
       "alETH",
       "ApeUSD",

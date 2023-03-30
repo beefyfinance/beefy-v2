@@ -5,7 +5,7 @@ import {
   FetchAllContractDataFulfilledPayload,
 } from '../actions/contract-data';
 import { fetchAllPricesAction } from '../actions/prices';
-import { BeefyAPITokenPricesResponse } from '../apis/beefy';
+import { BeefyAPITokenPricesResponse } from '../apis/beefy/beefy-api';
 import { getBeefyTestingStore } from '../utils/test-utils';
 import { apySlice, initialApyState } from './apy';
 

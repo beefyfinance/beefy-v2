@@ -1,6 +1,6 @@
 import { ChainEntity } from './chain';
 import { PlatformEntity } from './platform';
-import { LpData } from '../apis/beefy';
+import { LpData } from '../apis/beefy/beefy-api';
 import { AmmEntity } from './amm';
 
 /**
