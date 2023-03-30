@@ -31,7 +31,7 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
           ) : null}
         </div>
       ) : null}
-      {lgUp && tooltip ? (
+      {tooltip ? (
         <Tooltip content={tooltip}>
           <div>{children}</div>
         </Tooltip>

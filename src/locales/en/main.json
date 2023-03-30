@@ -573,5 +573,10 @@
   "Dashboard-Filter-Apy": "APY",
   "Dashboard-Filter-DailyYield": "EST. DAILY YIELD",
   "Dashboard-Your-Vaults-Title": "Your Vaults",
-  "Dashboard-Your-Vaults-Subtitle": "Select a row to view your transaction history for that vault"
+  "Dashboard-Your-Vaults-Subtitle": "Select a row to view your transaction history for that vault",
+  "Dashboard-Filter-Date": "Date",
+  "Dashboard-Filter-Amount": "Amount",
+  "Dashboard-Filter-Balance": "Balance",
+  "Dashboard-Filter-UsdBalance": "USD Balance",
+  "Dashboard-Filter-MooTokenBal": "MooToken Bal"
 }

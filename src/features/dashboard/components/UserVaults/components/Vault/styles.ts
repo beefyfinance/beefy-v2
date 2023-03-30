@@ -2,7 +2,7 @@ import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
   vault: {
-    display: 'block',
+    display: 'grid',
     position: 'relative' as const,
     color: '#9595B2',
     background: theme.palette.background.v2.cardBg,
@@ -31,5 +31,15 @@ export const styles = (theme: Theme) => ({
     left: 0,
     width: '26px',
     height: '26px',
+  },
+  collapseInner: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    backgroundColor: theme.palette.background.appBG,
+    padding: '16px 24px',
+    marginTop: '2px',
+    [theme.breakpoints.down('md')]: {
+      padding: '16px',
+    },
   },
 });
