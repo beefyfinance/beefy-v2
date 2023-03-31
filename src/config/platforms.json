@@ -993,5 +993,10 @@
     "id": "ramses",
     "name": "Ramses",
     "filter": true
+  },
+  {
+    "id": "mummy",
+    "name": "Mummy",
+    "filter": true
   }
 ]

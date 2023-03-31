@@ -90,7 +90,8 @@
       "USTaxl",
       "WOOFY",
       "xSCREAM",
-      "ZOO"
+      "ZOO",
+      "MLP"
     ],
     "blockedVaults": ["geist-ftm"]
   },
@@ -153,7 +154,8 @@
       "USDC-hUSDC LP",
       "USDT-hUSDT LP",
       "USX",
-      "wUSDR"
+      "wUSDR",
+      "MLP"
     ],
     "blockedVaults": ["aavev3-op-eth"]
   },

@@ -1,5 +1,34 @@
 [
   {
+  "id": "mmy-op-mlp",
+    "name": "MLP",
+    "token": "MLP",
+    "tokenAddress": "0xB280D03909Cc18640621955Cb3bC30948DF2Fa9a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "mummy",
+    "earnedToken": "mooMmyMLP",
+    "earnedTokenAddress": "0x011028aB93B355308E4350D109F42aeCfA075604",
+    "earnContractAddress": "0x011028aB93B355308E4350D109F42aeCfA075604",
+    "oracle": "lps",
+    "oracleId": "mmy-op-mlp",
+    "status": "active",
+    "platformId": "mummy",
+    "assets": ["WBTC", "WETH", "USDC", "USDT", "DAI", "OP", "LINK", "SNX"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "mmy-mlp",
+    "addLiquidityUrl": "https://app.mummy.finance/#/buy_mlp?ref=beef",
+    "removeLiquidityUrl": "https://app.mummy.finance/#/buy_mlp?ref=beef",
+    "network": "optimism",
+    "createdAt": 1680196017
+  },
+  {
     "id": "curve-op-f-mim",
     "name": "MIM/DAI/USDC/USDT",
     "token": "mim3CRV-f",

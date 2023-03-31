@@ -112,6 +112,35 @@
     "createdAt": 1646162527
   },
   {
+    "id": "mmy-ftm-mlp",
+    "name": "MLP",
+    "token": "MLP",
+    "tokenAddress": "0xfDC9B5be032216315bBe8c06b1c4F563D1689b85",
+    "tokenDecimals": 18,
+    "tokenProviderId": "mummy",
+    "earnedToken": "mooMmyMLP",
+    "earnedTokenAddress": "0xD71E88EE3AE93F35084bd1aCC0b9b5B9F68FB9d1",
+    "earnContractAddress": "0xD71E88EE3AE93F35084bd1aCC0b9b5B9F68FB9d1",
+    "oracle": "lps",
+    "oracleId": "mmy-ftm-mlp",
+    "status": "active",
+    "platformId": "mummy",
+    "assets": ["WFTM", "ETH", "BTC", "USDC", "fUSDT", "DAI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "mmy-mlp",
+    "addLiquidityUrl": "https://app.mummy.finance/#/buy_mlp?ref=beef",
+    "removeLiquidityUrl": "https://app.mummy.finance/#/buy_mlp?ref=beef",
+    "network": "fantom",
+    "createdAt": 1680196017
+  },
+  {
     "id": "beets-ankr-fantom-liquid-ocean",
     "name": "Ankr Fantom Liquid Ocean",
     "token": "Ankr Fantom Liquid Ocean",
