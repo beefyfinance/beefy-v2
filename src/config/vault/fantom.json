@@ -278,7 +278,8 @@
     "earnContractAddress": "0x718D77aDeA6CBc9204db6c102293E7BED890617F",
     "oracle": "lps",
     "oracleId": "equalizer-fxs-frax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "equalizer",
     "assets": ["FXS", "FRAX"],
     "risks": [

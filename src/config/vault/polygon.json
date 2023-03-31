@@ -9013,7 +9013,8 @@
     "earnContractAddress": "0x8c9dE3b735a154d8fC1e94183eA9b021913AC88B",
     "oracle": "lps",
     "oracleId": "quick-lcd-matic",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "quickswap",
     "assets": ["LCD", "MATIC"],
     "risks": [
