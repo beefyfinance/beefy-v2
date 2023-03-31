@@ -27,6 +27,30 @@
     "createdAt": 1679403789
   },
   {
+    "id": "velocimeterv2-multibtc-flow",
+    "name": "FLOW-multiBTC V2 vLP",
+    "token": "FLOW-multiBTC V2 vvLP",
+    "tokenAddress": "0x4eDBd1606Ab49e22846dd1EE2529E5FdA48FE062",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velocimeter",
+    "tokenAmmId": "canto-velocimeter",
+    "earnedToken": "mooVelocimeterV2FLOW-multiBTC",
+    "earnedTokenAddress": "0x53be90f5684a5CF0fFe901A4320e6E41C4a6a584",
+    "earnContractAddress": "0x53be90f5684a5CF0fFe901A4320e6E41C4a6a584",
+    "oracle": "lps",
+    "oracleId": "velocimeterv2-multibtc-flow",
+    "status": "active",
+    "platformId": "velocimeter",
+    "assets": ["FLOW", "multiBTC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://www.velocimeter.xyz/swap",
+    "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
+    "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
+    "network": "canto",
+    "createdAt": 1680247395
+  },
+  {
     "id": "velocimeterv2-flow-somm",
     "name": "FLOW-SOMM V2 vLP",
     "token": "FLOW-SOMM V2 vvLP",
@@ -35,8 +59,8 @@
     "tokenProviderId": "velocimeter",
     "tokenAmmId": "canto-velocimeter",
     "earnedToken": "mooVelocimeterV2FLOW-SOMM",
-    "earnedTokenAddress": "0x771a9cfeCBfacf58A4DC89D343e79c8d0537ae7D",
-    "earnContractAddress": "0x771a9cfeCBfacf58A4DC89D343e79c8d0537ae7D",
+    "earnedTokenAddress": "0x46551912335360453a2AB7fa35E4f5E3C14F53Ef",
+    "earnContractAddress": "0x46551912335360453a2AB7fa35E4f5E3C14F53Ef",
     "oracle": "lps",
     "oracleId": "velocimeterv2-flow-somm",
     "status": "active",
@@ -48,7 +72,7 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1680122089
+    "createdAt": 1680247395
   },
   {
     "id": "velocimeterv2-note-multibtc",
