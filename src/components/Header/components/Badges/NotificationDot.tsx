@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { makeStyles, Theme } from '@material-ui/core';
 import { BadgeComponentProps } from './types';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
   badge: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const NotificationDot = memo<BadgeComponentProps>(function NewBadge() {
+export const NotificationDot = memo<BadgeComponentProps>(function NewBadge({ className }) {
   const classes = useStyles();
-  return <div className={classes.badge} />;
+  return <div className={clsx(classes.badge, className)} />;
 });
