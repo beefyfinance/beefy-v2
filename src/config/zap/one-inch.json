@@ -236,7 +236,9 @@
       "MAI",
       "DEI",
       "USD+",
-      "DAI+"
+      "DAI+",
+      "LQTY",
+      "gDAI"
     ],
     "blockedVaults": []
   },
