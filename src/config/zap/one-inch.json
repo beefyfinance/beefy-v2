@@ -229,7 +229,12 @@
       "USDD",
       "USX",
       "VST",
-      "DOLA"
+      "DOLA",
+      "frxETH",
+      "MAI",
+      "DEI",
+      "USD+",
+      "DAI+"
     ],
     "blockedVaults": []
   },
