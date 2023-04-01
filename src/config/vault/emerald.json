@@ -43,7 +43,8 @@
     "earnContractAddress": "0xD5824cED886cA03B8914589146161F2474B75a24",
     "oracle": "lps",
     "oracleId": "yuzu-ceusdc-yuzu",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "yuzuswap",
     "assets": ["ceUSDC", "YUZU"],
     "risks": [

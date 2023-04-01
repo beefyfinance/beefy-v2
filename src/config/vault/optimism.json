@@ -520,8 +520,7 @@
     "earnContractAddress": "0xAbbEE54a77363d857b90F2a4618AD37fae42C5aD",
     "oracle": "lps",
     "oracleId": "kyber-optimism-usdc-mai",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "kyber",
     "assets": ["MAI", "USDC"],
     "risks": [
