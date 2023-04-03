@@ -42,8 +42,9 @@ export const styles = (theme: Theme) => ({
     },
   },
   hideSm: {
-    [theme.breakpoints.down('md')]: {
-      display: 'none',
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'block',
     },
   },
   green: {
