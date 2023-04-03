@@ -12,7 +12,7 @@
     "@deficonnect/web3-connector": "^2.0.3",
     "@download/blockies": "^1.0.3",
     "@ethersproject/address": "^5.4.0",
-    "@ethersproject/providers": "^5.6.8",
+    "@ethersproject/providers": "^5.7.2",
     "@ethersproject/solidity": "^5.4.0",
     "@floating-ui/react-dom": "^0.7.0",
     "@material-ui/lab": "^4.0.0-alpha.57",
@@ -57,7 +57,8 @@
     "web3": "^1.7.5"
   },
   "resolutions": {
-    "web3": "^1.7.5"
+    "web3": "^1.7.5",
+    "@ethersproject/providers": "5.7.2"
   },
   "scripts": {
     "start": "vite",
