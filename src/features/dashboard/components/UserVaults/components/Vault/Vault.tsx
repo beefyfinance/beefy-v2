@@ -12,6 +12,7 @@ import {
   selectIsVaultRetired,
 } from '../../../../../data/selectors/vaults';
 import clsx from 'clsx';
+import { TabletStats } from '../TabletStats';
 
 const useStyles = makeStyles(styles);
 
@@ -48,6 +49,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
       </div>
       <Collapse in={open} timeout="auto">
         <div className={classes.collapseInner}>
+          <TabletStats vaultId={vaultId} />
           <VaultTransactions vaultId={vaultId} />
         </div>
       </Collapse>

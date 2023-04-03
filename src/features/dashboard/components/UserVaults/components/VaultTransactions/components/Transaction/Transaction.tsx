@@ -4,10 +4,11 @@ import { styles } from './styles';
 import { VaultTimelineAnalyticsEntity } from '../../../../../../../data/entities/analytics';
 import clsx from 'clsx';
 import { formatISO9075 } from 'date-fns';
-import { formatBigUsd, formatSignificantBigNumber } from '../../../../../../../../helpers/format';
+import { formatBigUsd } from '../../../../../../../../helpers/format';
 import { BIG_ZERO } from '../../../../../../../../helpers/big-number';
 import { Row } from '../Row/Row';
 import { InfoGrid } from '../InfoGrid';
+import { TokenAmount } from '../../../../../../../../components/TokenAmount';
 
 const useStyles = makeStyles(styles);
 
@@ -17,55 +18,51 @@ interface TransactionProps {
 }
 export const Transaction = memo<TransactionProps>(function ({ data, tokenDecimals }) {
   const classes = useStyles();
-  const { internal, datetime, shareBalance, usdBalance, underlyingDiff, shareToUnderlyingPrice } =
-    data;
-
-  const isDepositTx = useMemo(() => {
-    return underlyingDiff.gt(BIG_ZERO);
-  }, [underlyingDiff]);
+  const {
+    internal,
+    datetime,
+    shareBalance,
+    usdBalance,
+    underlyingDiff,
+    shareToUnderlyingPrice,
+    underlyingToUsdPrice,
+  } = data;
 
   const amountClassName = useMemo(() => {
-    return isDepositTx ? classes.textGreen : classes.textRed;
-  }, [classes.textGreen, classes.textRed, isDepositTx]);
-
-  const mooBalance = useMemo(() => {
-    return formatSignificantBigNumber(shareBalance, tokenDecimals, shareToUnderlyingPrice, 0, 2);
-  }, [shareBalance, shareToUnderlyingPrice, tokenDecimals]);
-
-  const balance = useMemo(() => {
-    return formatSignificantBigNumber(
-      shareBalance.times(shareToUnderlyingPrice),
-      tokenDecimals,
-      shareToUnderlyingPrice,
-      0,
-      2
-    );
-  }, [shareBalance, shareToUnderlyingPrice, tokenDecimals]);
-
-  const diff = useMemo(() => {
-    return formatSignificantBigNumber(underlyingDiff, tokenDecimals, shareToUnderlyingPrice, 0, 2);
-  }, [shareToUnderlyingPrice, tokenDecimals, underlyingDiff]);
+    return underlyingDiff.gt(BIG_ZERO) ? classes.textGreen : classes.textRed;
+  }, [classes.textGreen, classes.textRed, underlyingDiff]);
 
   if (internal) return null;
 
   return (
     <Row>
-      <Stat className={classes.textLeft} value={formatISO9075(datetime)} />
+      {/* Date */}
+      <div className={clsx(classes.stat, classes.textFlexStart)}>{formatISO9075(datetime)}</div>
       <InfoGrid>
-        <Stat className={amountClassName} value={`${isDepositTx ? '+' : ''} ${diff} `} />
-        <Stat value={balance} />
-        <Stat value={mooBalance} />
-        <Stat value={formatBigUsd(usdBalance ?? BIG_ZERO)} />
+        {/*Amount */}
+        <TokenAmount
+          className={clsx(amountClassName, classes.stat)}
+          amount={underlyingDiff}
+          decimals={tokenDecimals}
+          price={underlyingToUsdPrice}
+        />
+        {/*Balance */}
+        <TokenAmount
+          amount={shareBalance.times(shareToUnderlyingPrice)}
+          decimals={tokenDecimals}
+          price={underlyingToUsdPrice}
+          className={classes.stat}
+        />
+        {/*MooTokenBal */}
+        <TokenAmount
+          amount={shareBalance}
+          decimals={18}
+          price={shareToUnderlyingPrice}
+          className={classes.stat}
+        />
+        {/*Usd Balance */}
+        <div className={classes.stat}>{formatBigUsd(usdBalance ?? BIG_ZERO)}</div>
       </InfoGrid>
     </Row>
   );
-});
-
-interface StatProps {
-  value: string;
-  className?: string;
-}
-export const Stat = memo<StatProps>(({ value, className }) => {
-  const classes = useStyles();
-  return <div className={clsx(classes.stat, className)}>{value}</div>;
 });

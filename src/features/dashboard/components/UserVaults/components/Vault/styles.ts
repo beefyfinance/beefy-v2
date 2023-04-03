@@ -35,6 +35,7 @@ export const styles = (theme: Theme) => ({
   collapseInner: {
     display: 'flex',
     flexDirection: 'column' as const,
+    rowGap: '16px',
     backgroundColor: theme.palette.background.appBG,
     padding: '16px 24px',
     marginTop: '2px',
@@ -43,7 +44,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   vaultRetired: {
-    backgroundColor: 'rgba(209, 83, 71, 0.05)',
+    backgroundColor: 'rgba(209,83,71,0.05)',
   },
   vaultPaused: {
     backgroundColor: 'rgba(209, 83, 71, 0.05)',

@@ -29,7 +29,7 @@ export const VaultTransactions = memo<VaultTransactionsProps>(function ({ vaultI
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   const token = useAppSelector(state =>
-    selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
+    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
 
   const { sortedTimeline, sortedOptions, handleSort } = useSortedTimeline(vaultId);

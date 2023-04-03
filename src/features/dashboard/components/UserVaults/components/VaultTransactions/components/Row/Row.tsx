@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '16px',
     gridTemplateColumns: 'minmax(0, 30fr) minmax(0, 70fr)',
     columnGap: '16px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: 'repeat(2,minmax(0, 50fr))',
     },
   },
