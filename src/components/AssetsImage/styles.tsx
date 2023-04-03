@@ -241,16 +241,9 @@ export const styles = () => ({
     objectFit: 'contain' as const,
     display: 'block',
   },
-  placeholder: {
-    backgroundColor: '#262A40',
-    border: 'solid 2px #303550',
-    borderRadius: '100%',
-    width: '100%',
-    height: '100%',
-  },
-  placeholderError: {
+  iconImgPlaceholder: {
     backgroundColor: 'magenta',
-    borderColor: 'black',
+    border: 'solid 2px black',
+    borderRadius: '100%',
   },
-  placeholderLoading: {},
 });
