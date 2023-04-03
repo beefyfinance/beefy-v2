@@ -3,7 +3,6 @@ import { BeefyState } from '../../../redux-types';
 import { InputMode } from '../reducers/on-ramp-types';
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { orderBy } from 'lodash';
-import { singleAssetExists } from '../../../helpers/singleAssetSrc';
 
 export const selectIsOnRampLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.onRamp.alreadyLoadedOnce;
@@ -39,8 +38,7 @@ export const selectSupportedTokensForFiat = createSelector(
     allTokens.filter(
       token =>
         byToken[token].allNetworks.find(network => appChainIds.includes(network)) !== undefined &&
-        appChainIds.find(chainId => token in appTokensByChainId[chainId].byId) !== undefined &&
-        singleAssetExists(token)
+        appChainIds.find(chainId => token in appTokensByChainId[chainId].byId) !== undefined
     )
 );
 
