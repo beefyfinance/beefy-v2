@@ -1,6 +1,6 @@
 import Web3 from 'web3';
 import { ChainEntity } from '../../entities/chain';
-import { find, sample, uniq } from 'lodash';
+import { find, sample, uniq } from 'lodash-es';
 import { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types';
 import { maybeHexToNumber } from '../../../../helpers/format';
 import { isHexStrict, numberToHex } from 'web3-utils';

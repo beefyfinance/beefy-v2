@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
-import { uniq } from 'lodash';
+import { uniq } from 'lodash-es';
 import { BeefyState } from '../../../../redux-types';
 import {
   fetchAllBalanceAction,

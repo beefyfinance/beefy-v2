@@ -9,7 +9,7 @@ import {
 } from '../../../data/selectors/analytics';
 import { getInvestorTimeserie } from '../../../../helpers/timeserie';
 import { eachDayOfInterval, isAfter } from 'date-fns';
-import { maxBy, minBy } from 'lodash';
+import { maxBy, minBy } from 'lodash-es';
 import { TimeBucketType } from '../../../data/apis/analytics/analytics-types';
 import { selectVaultById, selectVaultPricePerFullShare } from '../../../data/selectors/vaults';
 import {

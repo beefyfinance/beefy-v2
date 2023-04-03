@@ -1,4 +1,4 @@
-import { isArray, isPlainObject, mapValues, sortBy } from 'lodash';
+import { isArray, isPlainObject, mapValues, sortBy } from 'lodash-es';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
 import { KeysOfType } from './types-utils';

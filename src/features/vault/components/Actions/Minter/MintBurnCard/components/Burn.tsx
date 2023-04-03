@@ -13,7 +13,7 @@ import {
   selectIsWalletConnected,
 } from '../../../../../../data/selectors/wallet';
 import { selectErc20TokenByAddress } from '../../../../../../data/selectors/tokens';
-import { isString } from 'lodash';
+import { isString } from 'lodash-es';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../../data/actions/wallet';
 import { walletActions } from '../../../../../../data/actions/wallet-actions';
 import { MinterCardParams } from '../../MinterCard';

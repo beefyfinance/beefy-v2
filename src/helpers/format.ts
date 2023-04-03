@@ -5,7 +5,7 @@ import { ReactNode } from 'react';
 import { AllValuesAsString } from '../features/data/utils/types-utils';
 import { BIG_ONE, BIG_ZERO, isBigNumber } from './big-number';
 import { SerializedError } from '@reduxjs/toolkit';
-import { isString, padStart } from 'lodash';
+import { isString, padStart } from 'lodash-es';
 
 export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
   const number = num.toFormat({

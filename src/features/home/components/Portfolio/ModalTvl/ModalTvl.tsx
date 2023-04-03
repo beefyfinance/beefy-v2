@@ -12,7 +12,7 @@ import { formatBigUsd } from '../../../../../helpers/format';
 import { ContentLoading } from '../../../../../components/ContentLoading';
 import { Button } from '../../../../../components/Button';
 import { useAppSelector } from '../../../../../store';
-import { orderBy } from 'lodash';
+import { orderBy } from 'lodash-es';
 import { getNetworkSrc } from '../../../../../helpers/networkSrc';
 
 const useStyles = makeStyles(styles);

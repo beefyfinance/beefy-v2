@@ -1,7 +1,7 @@
 import { renderIcon } from '@download/blockies';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ChainEntity } from '../../entities/chain';
-import { memoize } from 'lodash';
+import { memoize } from 'lodash-es';
 import { getEns, initWallet } from '../../actions/wallet';
 
 /**

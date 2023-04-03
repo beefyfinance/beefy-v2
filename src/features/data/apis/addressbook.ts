@@ -1,9 +1,6 @@
-// these are expensive to fetch so we do this at the last moment and memoize result
-
-import { memoize } from 'lodash';
+import { memoize } from 'lodash-es';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
-import { addressBook } from 'blockchain-addressbook';
 
 interface AddressBookTokenConfig {
   name: string;
@@ -22,8 +19,11 @@ export interface ChainAddressBook {
   [tokenId: TokenEntity['id']]: TokenEntity;
 }
 
+const addressbookImporter = import('blockchain-addressbook');
+
 export const getChainAddressBook = memoize(
   async (chain: ChainEntity): Promise<ChainAddressBook> => {
+    const { addressBook } = await addressbookImporter;
     const addressbookChain = chain.id === 'harmony' ? 'one' : chain.id;
     const addressBookTokens = addressBook[addressbookChain].tokens as {
       [tokenId: TokenEntity['id']]: AddressBookTokenConfig;

@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import BigNumber from 'bignumber.js';
-import { isString } from 'lodash';
+import { isString } from 'lodash-es';
 import { ChainEntity } from '../../entities/chain';
 import { TokenEntity } from '../../entities/token';
 import { VaultEntity } from '../../entities/vault';

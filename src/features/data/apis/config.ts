@@ -16,7 +16,7 @@ import type {
   StrategyTypeConfig,
   VaultConfig,
 } from './config-types';
-import { mapValues } from 'lodash';
+import { mapValues } from 'lodash-es';
 
 /**
  * A class to access beefy configuration

@@ -1,4 +1,4 @@
-import { orderBy, sortBy } from 'lodash';
+import { orderBy, sortBy } from 'lodash-es';
 import { useState, useEffect, useCallback } from 'react';
 import { useAppSelector } from '../../../../store';
 import { ChainEntity } from '../../../data/entities/chain';

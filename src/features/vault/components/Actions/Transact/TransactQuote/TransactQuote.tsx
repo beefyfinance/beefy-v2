@@ -26,7 +26,7 @@ import { AlertError } from '../../../../../../components/Alerts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { ZapSlippage } from '../ZapSlippage';
 import BigNumber from 'bignumber.js';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 
 const useStyles = makeStyles(styles);
 

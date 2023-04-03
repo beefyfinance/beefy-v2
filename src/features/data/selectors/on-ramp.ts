@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
 import { InputMode } from '../reducers/on-ramp-types';
 import { isInitialLoader } from '../reducers/data-loader-types';
-import { orderBy } from 'lodash';
+import { orderBy } from 'lodash-es';
 
 export const selectIsOnRampLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.onRamp.alreadyLoadedOnce;

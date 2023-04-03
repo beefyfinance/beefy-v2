@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import { isEqual, sortedUniq, uniq } from 'lodash';
+import { isEqual, sortedUniq, uniq } from 'lodash-es';
 import React, { memo, useCallback, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { ChainEntity } from '../../features/data/entities/chain';

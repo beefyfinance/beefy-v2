@@ -16,7 +16,7 @@ import {
   selectErc20TokenByAddress,
   selectTokenByAddress,
 } from '../../../../../../data/selectors/tokens';
-import { isString } from 'lodash';
+import { isString } from 'lodash-es';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../../data/actions/wallet';
 import { walletActions } from '../../../../../../data/actions/wallet-actions';
 

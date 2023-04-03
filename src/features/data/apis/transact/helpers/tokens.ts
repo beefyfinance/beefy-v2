@@ -5,7 +5,7 @@ import {
   TokenErc20,
   TokenNative,
 } from '../../../entities/token';
-import { sortBy } from 'lodash';
+import { sortBy } from 'lodash-es';
 
 /**
  * Returns wnative if token is native with an address of 'native'

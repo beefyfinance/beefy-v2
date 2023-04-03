@@ -7,7 +7,7 @@ import {
 } from '../../../data/selectors/info-cards';
 import { fetchAllInfoCards } from '../../../data/actions/info-cards';
 import { ChainEntity } from '../../../data/entities/chain';
-import { uniq } from 'lodash';
+import { uniq } from 'lodash-es';
 import { InfoCard } from './InfoCard';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 

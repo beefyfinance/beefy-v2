@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
-import { sortBy } from 'lodash';
+import { sortBy } from 'lodash-es';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ContentLoading } from '../../../../components/ContentLoading';

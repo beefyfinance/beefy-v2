@@ -1,5 +1,5 @@
 import { BigNumber } from 'bignumber.js';
-import { first } from 'lodash';
+import { first } from 'lodash-es';
 import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit';
 import { transactFetchOptions, transactFetchQuotes, transactInit } from '../../actions/transact';
 import {

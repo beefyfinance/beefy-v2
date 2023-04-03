@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { selectFilterSearchText } from '../../../../../data/selectors/filtered-vaults';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 import { useTranslation } from 'react-i18next';
 import { CloseRounded, Search } from '@material-ui/icons';
 

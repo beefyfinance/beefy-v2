@@ -1,6 +1,6 @@
 import { Box, makeStyles } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
-import { isArray } from 'lodash';
+import { isArray } from 'lodash-es';
 import React from 'react';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { formatBigDecimals } from '../../../../helpers/format';
