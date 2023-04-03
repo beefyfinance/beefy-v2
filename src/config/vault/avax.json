@@ -4412,38 +4412,6 @@
     "createdAt": 1643382032
   },
   {
-    "id": "png-wavax-frax-eol",
-    "name": "FRAX-AVAX LP",
-    "token": "FRAX-AVAX LP",
-    "tokenAddress": "0x0CE543c0f81ac9AAa665cCaAe5EeC70861a6b559",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
-    "earnedToken": "mooPangolinV2AVAX-FRAX",
-    "earnedTokenAddress": "0x405e20D81E659382e2bcaE6D6Cb6581203Fcd95D",
-    "earnContractAddress": "0x405e20D81E659382e2bcaE6D6Cb6581203Fcd95D",
-    "oracle": "lps",
-    "oracleId": "png-wavax-frax",
-    "status": "eol",
-    "retireReason": "tvl",
-    "platformId": "pangolin",
-    "assets": ["FRAX", "AVAX"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_MEDIUM",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.pangolin.exchange/#/swap?outputCurrency=0xD24C2Ad096400B6FBcd2ad8B24E7acBc21A1da64",
-    "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0xD24C2Ad096400B6FBcd2ad8B24E7acBc21A1da64/AVAX",
-    "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0xD24C2Ad096400B6FBcd2ad8B24E7acBc21A1da64/AVAX",
-    "network": "avax",
-    "createdAt": 1643443063
-  },
-  {
     "id": "joe-melt-wavax-eol",
     "name": "MELT-AVAX LP",
     "token": "MELT-AVAX JLP",
