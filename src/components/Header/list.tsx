@@ -12,7 +12,6 @@ import { ReactComponent as TreasuryIcon } from '../../images/icons/navigation/tr
 import { ReactComponent as DaoIcon } from '../../images/icons/navigation/dao.svg';
 import { ProposalsNavItem } from './components/NavItem/ProposalsNavItem';
 import { NavConfig, NavItemConfig } from './components/DropNavItem/types';
-import { NewBadge } from './components/Badges/NewBadge';
 import { ProposalsMobileNavItem } from './components/NavItem/ProposalsMobileNavItem';
 
 export const DaoNavItems: NavItemConfig[] = [
@@ -41,7 +40,7 @@ export const MobileList: NavConfig[] = [
   { title: 'Header-Vaults', Icon: VaultsIcon, url: '/' },
   { title: 'Header-Dashboard', Icon: DashboardIcon, url: '/dashboard' },
   { title: 'Header-Dao', Icon: DaoIcon, items: DaoNavItems },
-  { title: 'Header-Resources', Icon: ResourcesIcon, items: ResourcesNavItems, Badge: NewBadge },
+  { title: 'Header-Resources', Icon: ResourcesIcon, items: ResourcesNavItems },
   { title: 'Header-BuyCrypto', Icon: BuyCryptoIcon, url: '/onramp' },
   { title: 'Header-BridgeBifi', Icon: BridgeIcon, url: '/bridge' },
 ];

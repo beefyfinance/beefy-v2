@@ -4,7 +4,7 @@ import { useAppSelector } from '../../../../store';
 import { selectUnreadActiveProposals } from '../../../../features/data/selectors/proposals';
 import { NotificationDot } from './NotificationDot';
 
-export const UnreadProposalsDot = memo<BadgeComponentProps>(function UnreadProposalsDot() {
+export const UnreadProposalsDot = memo<BadgeComponentProps>(function UnreadProposalsDot(props) {
   const proposals = useAppSelector(selectUnreadActiveProposals);
   const unreadCount = proposals.length;
 
@@ -12,5 +12,5 @@ export const UnreadProposalsDot = memo<BadgeComponentProps>(function UnreadPropo
     return null;
   }
 
-  return <NotificationDot />;
+  return <NotificationDot {...props} />;
 });
