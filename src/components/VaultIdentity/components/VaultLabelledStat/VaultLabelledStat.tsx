@@ -11,12 +11,14 @@ export type VaultLabelledStatProps = {
   showLabel?: boolean;
   tooltip?: ReactNode;
   children: ReactNode;
+  triggerClassName?: string;
 };
 export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabelledStat({
   label,
   children,
   tooltip,
   showLabel = true,
+  triggerClassName,
 }) {
   const classes = useStyles();
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
@@ -32,7 +34,7 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
         </div>
       ) : null}
       {tooltip ? (
-        <Tooltip content={tooltip}>
+        <Tooltip triggerClass={triggerClassName} content={tooltip}>
           <div>{children}</div>
         </Tooltip>
       ) : (

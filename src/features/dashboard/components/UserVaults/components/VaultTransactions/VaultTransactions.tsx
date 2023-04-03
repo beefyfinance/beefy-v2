@@ -2,7 +2,6 @@ import { makeStyles, Theme } from '@material-ui/core';
 import React, { memo } from 'react';
 import { useAppSelector } from '../../../../../../store';
 import { VaultEntity } from '../../../../../data/entities/vault';
-import { selectUserDepositedTimelineByVaultId } from '../../../../../data/selectors/analytics';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { Transaction } from './components/Transaction';
@@ -26,9 +25,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const VaultTransactions = memo<VaultTransactionsProps>(function ({ vaultId }) {
   const classes = useStyles();
-  const vaultTimeline = useAppSelector(state =>
-    selectUserDepositedTimelineByVaultId(state, vaultId)
-  );
 
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
@@ -36,7 +32,7 @@ export const VaultTransactions = memo<VaultTransactionsProps>(function ({ vaultI
     selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
   );
 
-  const { sortedTimeline, sortedOptions, handleSort } = useSortedTimeline(vaultTimeline);
+  const { sortedTimeline, sortedOptions, handleSort } = useSortedTimeline(vaultId);
 
   return (
     <div className={classes.transactionsGrid}>

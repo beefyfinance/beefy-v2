@@ -6,30 +6,37 @@ import { useInView } from 'react-intersection-observer';
 import { Section } from '../../../../components/Section';
 import { styles } from './styles';
 import { Filter } from './components/Filter';
-
 import { Vault } from './components/Vault';
 import { useSortedDashboardVaults } from './hook';
 import { VaultEntity } from '../../../data/entities/vault';
+import { NoResults } from '../NoResults';
 
 const useStyles = makeStyles(styles);
 
 export const UserVaults = memo(function () {
   const { t } = useTranslation();
 
-  const { sortedVaults, sortedOptions, handleSort } = useSortedDashboardVaults();
+  const { sortedFilteredVaults, sortedOptions, handleSort, handleSearchText, searchText } =
+    useSortedDashboardVaults();
 
   return (
     <Section
       title={t('Dashboard-Your-Vaults-Title')}
       subTitle={t('Dashboard-Your-Vaults-Subtitle')}
     >
-      <Filter sortOptions={sortedOptions} handleSort={handleSort} />
-      <VirtualList vaults={sortedVaults} />
+      <Filter
+        sortOptions={sortedOptions}
+        handleSort={handleSort}
+        handleSearchText={handleSearchText}
+        searchText={searchText}
+      />
+      {sortedFilteredVaults.length === 0 ? <NoResults /> : null}
+      <VirtualList vaults={sortedFilteredVaults} />
     </Section>
   );
 });
 
-export const VirtualList = function ({ vaults }: { vaults: VaultEntity['id'][] }) {
+export const VirtualList = memo(function ({ vaults }: { vaults: VaultEntity[] }) {
   const classes = useStyles();
   const totalVaults = vaults.length;
   const minBatchSize = 3;
@@ -102,12 +109,12 @@ export const VirtualList = function ({ vaults }: { vaults: VaultEntity['id'][] }
   return (
     <>
       <div className={classes.container} ref={containerRef}>
-        {renderVaultIds.map(vaultId => {
-          return <Vault key={vaultId} vaultId={vaultId} />;
+        {renderVaultIds.map(vault => {
+          return <Vault key={vault.id} vaultId={vault.id} />;
         })}
       </div>
       <div ref={bottomRef} />
       <div ref={placeholderRef} />
     </>
   );
-};
+});

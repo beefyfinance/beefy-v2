@@ -27,8 +27,13 @@ export const DepositSummary = memo(function () {
         Icon: WalletIcon,
       },
       {
-        title: t('Summary-Monthly'),
-        value: formatUsd(stats.monthly),
+        title: t('Summary-Vaults'),
+        value: `${stats.depositedVaults}`,
+        Icon: VaultIcon,
+      },
+      {
+        title: t('Summary-Yieled'),
+        value: formatUsd(stats.yieledUsd),
         Icon: MonthlyIcon,
       },
       {
@@ -36,13 +41,8 @@ export const DepositSummary = memo(function () {
         value: formatUsd(stats.daily),
         Icon: DailyIcon,
       },
-      {
-        title: t('Summary-Vaults'),
-        value: `${stats.depositedVaults}`,
-        Icon: VaultIcon,
-      },
     ];
-  }, [stats.daily, stats.deposited, stats.depositedVaults, stats.monthly, t]);
+  }, [stats.daily, stats.deposited, stats.depositedVaults, stats.yieledUsd, t]);
 
   return (
     <div className={classes.container}>

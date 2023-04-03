@@ -1,5 +1,5 @@
 import { InputBase, makeStyles } from '@material-ui/core';
-import React, { memo, useCallback, useState } from 'react';
+import React, { ChangeEvent, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SortColumnHeader } from '../../../../../../components/SortColumnHeader';
 import { styles } from './styles';
@@ -9,32 +9,36 @@ const useStyles = makeStyles(styles);
 interface FilterProps {
   sortOptions: any;
   handleSort: (field: string) => void;
+  handleSearchText: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  searchText: string;
 }
 
-export const Filter = memo<FilterProps>(({ sortOptions, handleSort }) => {
-  const classes = useStyles();
-  return (
-    <div className={classes.container}>
-      <Search />
-      <SortColumns sortOptions={sortOptions} handleSort={handleSort} />
-    </div>
-  );
-});
+export const Filter = memo<FilterProps>(
+  ({ sortOptions, handleSort, handleSearchText, searchText }) => {
+    const classes = useStyles();
+    return (
+      <div className={classes.container}>
+        <Search handleSearchText={handleSearchText} searchText={searchText} />
+        <SortColumns sortOptions={sortOptions} handleSort={handleSort} />
+      </div>
+    );
+  }
+);
 
-const Search = memo(function Search() {
+interface SearchProps {
+  handleSearchText: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  searchText: string;
+}
+
+const Search = memo<SearchProps>(function Search({ handleSearchText, searchText }) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const [value, setValue] = useState('');
-
-  const handleValue = useCallback(e => {
-    setValue(e.target.value);
-  }, []);
 
   return (
     <InputBase
       className={classes.search}
-      value={value}
-      onChange={handleValue}
+      value={searchText}
+      onChange={handleSearchText}
       fullWidth={true}
       placeholder={t('Filter-Search')}
     />
@@ -54,7 +58,12 @@ const SORT_COLUMNS: {
   { label: 'Dashboard-Filter-DailyYield', sortKey: 'dailyYield', className: 'hideMd' },
 ];
 
-const SortColumns = memo<FilterProps>(function SortColumns({ sortOptions, handleSort }) {
+interface SortColumnsProps {
+  sortOptions: any;
+  handleSort: (field: string) => void;
+}
+
+const SortColumns = memo<SortColumnsProps>(function SortColumns({ sortOptions, handleSort }) {
   const classes = useStyles();
 
   const { sort, sortDirection } = sortOptions;
@@ -65,7 +74,7 @@ const SortColumns = memo<FilterProps>(function SortColumns({ sortOptions, handle
           key={label}
           label={label}
           sortKey={sortKey}
-          sorted={sort === 'datetime' ? sortDirection : 'none'}
+          sorted={sort === sortKey ? sortDirection : 'none'}
           onChange={handleSort}
           className={className ? classes[className] : ''}
         />

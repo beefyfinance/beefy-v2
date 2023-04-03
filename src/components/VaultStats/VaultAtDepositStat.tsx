@@ -15,14 +15,18 @@ import {
 } from '../../features/data/selectors/analytics';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
 
-export type VaultDailyStatProps = {
+export type VaultAtDepositStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
+  triggerClassName?: string;
 };
 
 export const VaultAtDepositStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailyStatProps) {
+function mapStateToProps(
+  state: BeefyState,
+  { vaultId, className, triggerClassName }: VaultAtDepositStatProps
+) {
   const label = '-';
 
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
@@ -62,5 +66,6 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailySt
     boosted: false,
     tooltip: <BasicTooltipContent title={formatFullBigNumber(balanceAtDeposit, tokenDecimals)} />,
     className: className ?? '',
+    triggerClassName: triggerClassName ?? '',
   };
 }

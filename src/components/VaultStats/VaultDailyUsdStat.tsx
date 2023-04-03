@@ -18,14 +18,18 @@ import {
 import { VaultValueStat } from '../VaultValueStat';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
 
-export type VaultDailyStatProps = {
+export type VaultDailyUsdStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
+  triggerClassName?: string;
 };
 
 export const VaultDailyUsdStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailyStatProps) {
+function mapStateToProps(
+  state: BeefyState,
+  { vaultId, className, triggerClassName }: VaultDailyUsdStatProps
+) {
   const label = 'VaultStat-DAILY';
 
   const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
@@ -78,5 +82,6 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailySt
     boosted: false,
     tooltip: <BasicTooltipContent title={formatFullBigNumber(dailyTokens, tokenDecimals)} />,
     className: className ?? '',
+    triggerClassName: triggerClassName ?? '',
   };
 }

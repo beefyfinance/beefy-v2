@@ -12,6 +12,7 @@ import {
   selectLpBreakdownByAddress,
   selectTokenByAddress,
   selectTokenPriceByAddress,
+  selectTokenPriceByTokenOracleId,
   selectTokensByChainId,
 } from './tokens';
 import {
@@ -633,4 +634,34 @@ export const selectUserVaultsPnl = (state: BeefyState) => {
     vaults[vaultId] = selectVaultPnl(state, vaultId);
   }
   return vaults;
+};
+
+export const selectUserRewardsByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const boosts = selectAllVaultBoostIds(state, vaultId);
+
+  const boostsWithRewards = boosts.reduce((totals, boostId) => {
+    const rewardToken = selectBoostRewardsTokenEntity(state, boostId);
+    const boostPendingRewards = selectBoostUserRewardsInToken(state, boostId);
+    const oraclePrice = selectTokenPriceByTokenOracleId(state, rewardToken.oracleId);
+
+    if (boostPendingRewards.isGreaterThan(BIG_ZERO)) {
+      totals[boostId] = {
+        rewardToken: rewardToken.oracleId,
+        rewards: boostPendingRewards,
+        rewardsUsd: boostPendingRewards.times(oraclePrice),
+      };
+    }
+
+    return totals;
+  }, {} as Record<string, { rewardToken: TokenEntity['oracleId']; rewards: BigNumber; rewardsUsd: BigNumber }>);
+
+  let rewardsTokens = [];
+  let totalRewardsUsd = BIG_ZERO;
+
+  const rewards = Object.values(boostsWithRewards).map(item => {
+    rewardsTokens.push(item.rewardToken);
+    totalRewardsUsd = totalRewardsUsd.plus(item.rewardsUsd);
+    return { ...item };
+  });
+  return { rewards, rewardsTokens, totalRewardsUsd };
 };

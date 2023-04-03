@@ -22,6 +22,15 @@ export const styles = (theme: Theme) => ({
     },
   },
   column: {
+    width: '100%',
+    [theme.breakpoints.up('lg')]: {
+      textAlign: 'right' as const,
+    },
+  },
+  columnFlex: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    columnGap: '4px',
     [theme.breakpoints.up('lg')]: {
       textAlign: 'right' as const,
     },
@@ -33,9 +42,8 @@ export const styles = (theme: Theme) => ({
     },
   },
   hideSm: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'block',
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
     },
   },
   green: {
@@ -57,5 +65,14 @@ export const styles = (theme: Theme) => ({
     [theme.breakpoints.up('lg')]: {
       gridTemplateColumns: 'repeat(6, minmax(0, 1fr))',
     },
+  },
+  textOverflow: {
+    marginLeft: 'auto',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap' as const,
+    textOverflow: 'ellipsis',
+  },
+  triggerContainer: {
+    maxWidth: '80%',
   },
 });

@@ -15,6 +15,7 @@ import { selectWalletAddressIfKnown } from './wallet';
 import { TotalApy } from '../reducers/apy';
 import { compoundInterest } from '../../../helpers/number';
 import { isEmpty } from '../../../helpers/utils';
+import { selectVaultPnl } from './analytics';
 
 export const selectVaultTotalApy = (state: BeefyState, vaultId: VaultEntity['id']) => {
   return state.biz.apy.totalApy.byVaultId[vaultId] || {};
@@ -31,6 +32,7 @@ const EMPTY_GLOBAL_STATS = {
   yearly: 0,
   apy: 0,
   depositedVaults: 0,
+  yieledUsd: 0,
 };
 export const selectUserGlobalStats = (state: BeefyState) => {
   const walletAddress = selectWalletAddressIfKnown(state);
@@ -63,11 +65,14 @@ export const selectUserGlobalStats = (state: BeefyState) => {
       continue;
     }
 
+    const pnl = selectVaultPnl(state, vault.id);
     const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
     const vaultUsdBalance = tokenBalance.times(oraclePrice).toNumber();
 
     // Add vault balance to total
     newGlobalStats.deposited += vaultUsdBalance;
+
+    newGlobalStats.yieledUsd += pnl.totalYieldUsd.toNumber();
 
     if (!isVaultActive(vault) || vaultUsdBalance <= 0) {
       continue;

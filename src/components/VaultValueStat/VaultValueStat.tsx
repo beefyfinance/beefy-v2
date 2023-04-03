@@ -18,6 +18,7 @@ export type VaultValueStatProps = {
   boosted?: boolean;
   showLabel?: boolean;
   shouldTranslate?: boolean;
+  triggerClassName?: string;
 };
 export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat({
   label,
@@ -30,12 +31,18 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
   showLabel = true,
   shouldTranslate = false,
   className,
+  triggerClassName,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
   return (
-    <VaultLabelledStat showLabel={showLabel} label={t(label)} tooltip={loading ? null : tooltip}>
+    <VaultLabelledStat
+      triggerClassName={triggerClassName}
+      showLabel={showLabel}
+      label={t(label)}
+      tooltip={loading ? null : tooltip}
+    >
       {loading ? (
         '...'
       ) : (

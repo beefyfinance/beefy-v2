@@ -1,52 +1,55 @@
 import { sortBy } from 'lodash';
-import { useState, useEffect, useCallback } from 'react';
-import { VaultTimelineAnalyticsEntity } from '../../../../../data/entities/analytics';
+import { useState, useCallback, useMemo } from 'react';
+import { useAppSelector } from '../../../../../../store';
+import { VaultEntity } from '../../../../../data/entities/vault';
+import { selectUserDepositedTimelineByVaultId } from '../../../../../data/selectors/analytics';
 
 export type SortedOptions = {
   sort: 'datetime' | 'amount' | 'balance' | 'mooTokenBal' | 'usdBalance' | 'default';
   sortDirection: 'asc' | 'desc' | 'none';
 };
 
-export function useSortedTimeline(timeline: VaultTimelineAnalyticsEntity[]) {
-  const [sortedTimeline, setSortedTimeline] = useState<VaultTimelineAnalyticsEntity[]>(timeline);
+export function useSortedTimeline(vaultId: VaultEntity['id']) {
+  const vaultTimeline = useAppSelector(state =>
+    selectUserDepositedTimelineByVaultId(state, vaultId)
+  );
 
   const [sortedOptions, setSortedOptions] = useState<SortedOptions>({
     sortDirection: 'none',
     sort: 'default',
   });
 
-  useEffect(() => {
+  const sortedTimeline = useMemo(() => {
     const sortDirMul = sortedOptions.sortDirection === 'desc' ? -1 : 1;
-    let sortedResult = sortedTimeline;
+    let sortedResult = vaultTimeline;
     if (sortedOptions.sort === 'datetime') {
-      sortedResult = sortBy(sortedTimeline, tx => {
+      sortedResult = sortBy(vaultTimeline, tx => {
         return tx.datetime.getTime() * sortDirMul;
       });
     }
     if (sortedOptions.sort === 'amount') {
-      sortedResult = sortBy(sortedTimeline, tx => {
+      sortedResult = sortBy(vaultTimeline, tx => {
         return tx.shareDiff.toNumber() * sortDirMul;
       });
     }
     if (sortedOptions.sort === 'balance') {
-      sortedResult = sortBy(sortedTimeline, tx => {
+      sortedResult = sortBy(vaultTimeline, tx => {
         return tx.shareBalance.times(tx.shareToUnderlyingPrice).toNumber() * sortDirMul;
       });
     }
     if (sortedOptions.sort === 'mooTokenBal') {
-      sortedResult = sortBy(sortedTimeline, tx => {
+      sortedResult = sortBy(vaultTimeline, tx => {
         return tx.shareBalance.toNumber() * sortDirMul;
       });
     }
     if (sortedOptions.sort === 'usdBalance') {
-      sortedResult = sortBy(sortedTimeline, tx => {
+      sortedResult = sortBy(vaultTimeline, tx => {
         return tx.usdBalance?.toNumber() * sortDirMul;
       });
     }
 
-    setSortedTimeline(sortedResult);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortedOptions.sort, sortedOptions.sortDirection]);
+    return sortedResult;
+  }, [sortedOptions.sort, sortedOptions.sortDirection, vaultTimeline]);
 
   const handleSort = useCallback(
     field => {

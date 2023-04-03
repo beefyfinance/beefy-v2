@@ -9,6 +9,7 @@ import { VaultYieledStat } from './VaultYieledStat';
 import { VaultAtDepositStat } from './VaultAtDepositStat';
 import { VaultNowStat } from './VaultNowStat';
 import { VaultYearlyStat } from './VaultYearlyStat';
+import { BoostTooltipRewards } from '../BoostTooltipRewards/BoostTooltipRewards';
 
 const useStyles = makeStyles(styles);
 
@@ -22,13 +23,28 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
     <div className={classes.vaultStats}>
       <div className={clsx(classes.rowDashboard)}>
         <div className={clsx(classes.column, classes.hideSm)}>
-          <VaultAtDepositStat showLabel={false} vaultId={vaultId} />
+          <VaultAtDepositStat
+            className={classes.textOverflow}
+            showLabel={false}
+            vaultId={vaultId}
+            triggerClassName={classes.triggerContainer}
+          />
         </div>
         <div className={clsx(classes.column, classes.hideSm)}>
-          <VaultNowStat showLabel={false} vaultId={vaultId} />
+          <VaultNowStat
+            className={classes.textOverflow}
+            showLabel={false}
+            vaultId={vaultId}
+            triggerClassName={classes.triggerContainer}
+          />
         </div>
-        <div className={clsx(classes.column, classes.hideSm)}>
-          <VaultYieledStat showLabel={false} vaultId={vaultId} className={classes.green} />
+        <div className={clsx(classes.columnFlex, classes.hideSm)}>
+          <VaultYieledStat
+            className={clsx(classes.textOverflow, classes.green)}
+            showLabel={false}
+            vaultId={vaultId}
+          />
+          <BoostTooltipRewards vaultId={vaultId} />
         </div>
         <div className={classes.column}>
           <VaultPnlStat showLabel={false} vaultId={vaultId} />
@@ -37,7 +53,12 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
           <VaultYearlyStat showLabel={false} vaultId={vaultId} />
         </div>
         <div className={clsx(classes.column, classes.hideMd)}>
-          <VaultDailyUsdStat showLabel={false} vaultId={vaultId} />
+          <VaultDailyUsdStat
+            className={classes.textOverflow}
+            triggerClassName={classes.triggerContainer}
+            showLabel={false}
+            vaultId={vaultId}
+          />
         </div>
       </div>
     </div>

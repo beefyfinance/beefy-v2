@@ -4,6 +4,7 @@ import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import {
   isGovVault,
+  isVaultPaused,
   isVaultPausedOrRetired,
   isVaultRetired,
   VaultEntity,
@@ -29,6 +30,11 @@ export const selectVaultById = createCachedSelector(
 export const selectIsVaultPausedOrRetired = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   vault => isVaultPausedOrRetired(vault)
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectIsVaultPaused = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  vault => isVaultPaused(vault)
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectIsVaultRetired = createCachedSelector(

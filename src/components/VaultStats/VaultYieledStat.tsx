@@ -15,14 +15,14 @@ import {
 } from '../../features/data/selectors/analytics';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
 
-export type VaultDailyStatProps = {
+export type VaultYieledStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
 };
 
 export const VaultYieledStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailyStatProps) {
+function mapStateToProps(state: BeefyState, { vaultId, className }: VaultYieledStatProps) {
   const label = '-';
 
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
