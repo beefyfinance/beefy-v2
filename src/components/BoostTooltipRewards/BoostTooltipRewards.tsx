@@ -32,7 +32,7 @@ export const BoostTooltipRewards = memo<BoostTooltipRewardsProps>(({ vaultId }) 
     <Tooltip content={<BoostTooltipcontent rewards={rewards} />}>
       <div className={classes.container}>
         <div className={classes.plus}>+</div>
-        <AssetsImage chainId={vaultId} size={24} assetIds={rewardsTokens} />
+        <AssetsImage chainId={vaultId} size={20} assetIds={rewardsTokens} />
       </div>
     </Tooltip>
   );

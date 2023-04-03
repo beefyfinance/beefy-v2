@@ -19,6 +19,10 @@ export function useSortedDashboardVaults() {
 
   const handleSearchText = useCallback(e => setSearchText(e.target.value), []);
 
+  const handleClearText = useCallback(() => {
+    setSearchText('');
+  }, []);
+
   const filteredVaults = useAppSelector(state => SelectUserFilteredVaults(state, searchText));
 
   const apyByVaultId = useAppSelector(state => state.biz.apy.totalApy.byVaultId);
@@ -102,5 +106,12 @@ export function useSortedDashboardVaults() {
     [sortedOptions]
   );
 
-  return { sortedFilteredVaults, sortedOptions, handleSort, handleSearchText, searchText };
+  return {
+    sortedFilteredVaults,
+    sortedOptions,
+    handleSort,
+    handleSearchText,
+    searchText,
+    handleClearText,
+  };
 }

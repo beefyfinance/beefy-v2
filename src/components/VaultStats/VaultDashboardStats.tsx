@@ -9,7 +9,6 @@ import { VaultYieledStat } from './VaultYieledStat';
 import { VaultAtDepositStat } from './VaultAtDepositStat';
 import { VaultNowStat } from './VaultNowStat';
 import { VaultYearlyStat } from './VaultYearlyStat';
-import { BoostTooltipRewards } from '../BoostTooltipRewards/BoostTooltipRewards';
 
 const useStyles = makeStyles(styles);
 
@@ -38,13 +37,12 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
             triggerClassName={classes.triggerContainer}
           />
         </div>
-        <div className={clsx(classes.columnFlex, classes.hideSm)}>
+        <div className={clsx(classes.column, classes.hideSm)}>
           <VaultYieledStat
-            className={clsx(classes.textOverflow, classes.green)}
+            className={clsx(classes.textOverflow, classes.green, classes.columnFlex)}
             showLabel={false}
             vaultId={vaultId}
           />
-          <BoostTooltipRewards vaultId={vaultId} />
         </div>
         <div className={classes.column}>
           <VaultPnlStat showLabel={false} vaultId={vaultId} />

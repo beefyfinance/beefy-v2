@@ -1,6 +1,7 @@
 import { InputBase, makeStyles } from '@material-ui/core';
-import React, { ChangeEvent, memo } from 'react';
+import React, { ChangeEvent, memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CloseRounded, Search as SearchIcon } from '@material-ui/icons';
 import { SortColumnHeader } from '../../../../../../components/SortColumnHeader';
 import { styles } from './styles';
 
@@ -10,15 +11,20 @@ interface FilterProps {
   sortOptions: any;
   handleSort: (field: string) => void;
   handleSearchText: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  handleClearText: () => void;
   searchText: string;
 }
 
 export const Filter = memo<FilterProps>(
-  ({ sortOptions, handleSort, handleSearchText, searchText }) => {
+  ({ sortOptions, handleSort, handleSearchText, searchText, handleClearText }) => {
     const classes = useStyles();
     return (
       <div className={classes.container}>
-        <Search handleSearchText={handleSearchText} searchText={searchText} />
+        <Search
+          handleSearchText={handleSearchText}
+          searchText={searchText}
+          handleClearText={handleClearText}
+        />
         <SortColumns sortOptions={sortOptions} handleSort={handleSort} />
       </div>
     );
@@ -27,12 +33,31 @@ export const Filter = memo<FilterProps>(
 
 interface SearchProps {
   handleSearchText: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  handleClearText: () => void;
   searchText: string;
 }
 
-const Search = memo<SearchProps>(function Search({ handleSearchText, searchText }) {
+const Search = memo<SearchProps>(function Search({
+  handleSearchText,
+  searchText,
+  handleClearText,
+}) {
   const { t } = useTranslation();
   const classes = useStyles();
+
+  const valueLength = searchText.length;
+  const iconClass = classes.icon;
+  const icon = useMemo(() => {
+    return valueLength === 0 ? (
+      <div className={iconClass}>
+        <SearchIcon />
+      </div>
+    ) : (
+      <button onClick={handleClearText} className={iconClass}>
+        <CloseRounded />
+      </button>
+    );
+  }, [valueLength, iconClass, handleClearText]);
 
   return (
     <InputBase
@@ -40,6 +65,7 @@ const Search = memo<SearchProps>(function Search({ handleSearchText, searchText 
       value={searchText}
       onChange={handleSearchText}
       fullWidth={true}
+      endAdornment={icon}
       placeholder={t('Filter-Search')}
     />
   );

@@ -9,15 +9,21 @@ import { Filter } from './components/Filter';
 import { Vault } from './components/Vault';
 import { useSortedDashboardVaults } from './hook';
 import { VaultEntity } from '../../../data/entities/vault';
-import { NoResults } from '../NoResults';
+import { NoVaults } from './components/NoVaults';
 
 const useStyles = makeStyles(styles);
 
 export const UserVaults = memo(function () {
   const { t } = useTranslation();
 
-  const { sortedFilteredVaults, sortedOptions, handleSort, handleSearchText, searchText } =
-    useSortedDashboardVaults();
+  const {
+    sortedFilteredVaults,
+    sortedOptions,
+    handleSort,
+    handleSearchText,
+    searchText,
+    handleClearText,
+  } = useSortedDashboardVaults();
 
   return (
     <Section
@@ -29,8 +35,9 @@ export const UserVaults = memo(function () {
         handleSort={handleSort}
         handleSearchText={handleSearchText}
         searchText={searchText}
+        handleClearText={handleClearText}
       />
-      {sortedFilteredVaults.length === 0 ? <NoResults /> : null}
+      {sortedFilteredVaults.length === 0 ? <NoVaults /> : null}
       <VirtualList vaults={sortedFilteredVaults} />
     </Section>
   );

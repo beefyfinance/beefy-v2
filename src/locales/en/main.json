@@ -92,6 +92,7 @@
   "Select-CountSelected": "{{count}} selected",
   "NoResults-NoResultsFound": "No results found.",
   "NoResults-TryClearFilters": "Try clearing your filters or changing your search term.",
+  "NoResults-TryClearSearch": "Try clearing your search term.",
   "NoResults-NotConnected": "You haven't connected your wallet.",
   "NoResults-ConnectToViewMyVaults": "Connect to view your vaults.",
   "NoResults-ConnectToViewEligibleVaults": "Connect to view eligible vaults.",
