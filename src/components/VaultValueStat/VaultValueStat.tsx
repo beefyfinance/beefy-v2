@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { VaultLabelledStat } from '../VaultIdentity/components/VaultLabelledStat';
+import { VaultLabelledStat } from '../VaultLabelledStat';
 
 const useStyles = makeStyles(styles);
 
@@ -18,7 +18,9 @@ export type VaultValueStatProps = {
   boosted?: boolean;
   showLabel?: boolean;
   shouldTranslate?: boolean;
+  contentClassName?: string;
   triggerClassName?: string;
+  labelClassName?: string;
 };
 export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat({
   label,
@@ -31,7 +33,9 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
   showLabel = true,
   shouldTranslate = false,
   className,
+  contentClassName,
   triggerClassName,
+  labelClassName,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -42,6 +46,8 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
       showLabel={showLabel}
       label={t(label)}
       tooltip={loading ? null : tooltip}
+      className={contentClassName}
+      labelClassName={labelClassName}
     >
       {loading ? (
         '...'

@@ -3,11 +3,11 @@ import { Theme } from '@material-ui/core/styles';
 export const styles = (theme: Theme) => ({
   value: {
     ...theme.typography['body-lg-med'],
-    color: '#D0D0DA',
+    color: theme.palette.text.middle,
   },
   subValue: {
     ...theme.typography['body-sm'],
-    color: '#8A8EA8',
+    color: theme.palette.text.dark,
   },
   blurValue: {
     filter: 'blur(.5rem)',

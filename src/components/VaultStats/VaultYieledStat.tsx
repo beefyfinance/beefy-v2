@@ -14,7 +14,6 @@ import {
   selectVaultPnl,
 } from '../../features/data/selectors/analytics';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
-import { BoostTooltipRewards } from '../BoostTooltipRewards/BoostTooltipRewards';
 
 export type VaultYieledStatProps = {
   vaultId: VaultEntity['id'];
@@ -24,7 +23,7 @@ export type VaultYieledStatProps = {
 export const VaultYieledStat = memo(connect(mapStateToProps)(VaultValueStat));
 
 function mapStateToProps(state: BeefyState, { vaultId, className }: VaultYieledStatProps) {
-  const label = '-';
+  const label = 'Yield';
 
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
 
@@ -55,19 +54,8 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultYieledS
 
   return {
     label,
-    value: (
-      <>
-        <VaultValueStat
-          className={className ?? ''}
-          label="-"
-          loading={!isLoaded}
-          showLabel={false}
-          value={formatSignificantBigNumber(totalYield, tokenDecimals, oraclePrice, 0, 2)}
-          tooltip={<BasicTooltipContent title={formatFullBigNumber(totalYield, tokenDecimals)} />}
-        />
-        <BoostTooltipRewards vaultId={vaultId} />
-      </>
-    ),
+    value: formatSignificantBigNumber(totalYield, tokenDecimals, oraclePrice, 0, 2),
+    tooltip: <BasicTooltipContent title={formatFullBigNumber(totalYield, tokenDecimals)} />,
     subValue: formatBigUsd(totalYieldUsd),
     blur: false,
     loading: !isLoaded,

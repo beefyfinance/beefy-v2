@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { connect } from 'react-redux';
 import { BeefyState } from '../../redux-types';
 import {
-  formatBigNumber,
+  formatBigUsd,
   formatFullBigNumber,
   formatSignificantBigNumber,
 } from '../../helpers/format';
@@ -18,15 +18,11 @@ import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
 export type VaultAtDepositStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
-  triggerClassName?: string;
 };
 
 export const VaultAtDepositStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(
-  state: BeefyState,
-  { vaultId, className, triggerClassName }: VaultAtDepositStatProps
-) {
+function mapStateToProps(state: BeefyState, { vaultId, className }: VaultAtDepositStatProps) {
   const label = 'At Deposit';
 
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
@@ -60,12 +56,11 @@ function mapStateToProps(
   return {
     label,
     value: formatSignificantBigNumber(balanceAtDeposit, tokenDecimals, oraclePriceAtDeposit, 0, 2),
-    subValue: formatBigNumber(usdBalanceAtDeposit),
+    subValue: formatBigUsd(usdBalanceAtDeposit),
     blur: false,
     loading: !isLoaded,
     boosted: false,
     tooltip: <BasicTooltipContent title={formatFullBigNumber(balanceAtDeposit, tokenDecimals)} />,
     className: className ?? '',
-    triggerClassName: triggerClassName ?? '',
   };
 }

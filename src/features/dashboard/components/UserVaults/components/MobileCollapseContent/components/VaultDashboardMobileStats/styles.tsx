@@ -6,4 +6,21 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     rowGap: '12px',
   },
+  statMobile: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  triggerContainer: {
+    display: 'flex',
+    columnGap: '8px',
+    alignItems: 'center',
+  },
+  value: {
+    ...theme.typography['body-sm'],
+    color: theme.palette.text.middle,
+  },
+  label: {
+    ...theme.typography['body-sm'],
+    color: theme.palette.text.dark,
+  },
 });

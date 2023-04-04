@@ -5,6 +5,9 @@ import { VaultEntity } from '../../../../../../../data/entities/vault';
 import { VaultAtDepositStat } from '../../../../../../../../components/VaultStats/VaultAtDepositStat';
 import { VaultNowStat } from '../../../../../../../../components/VaultStats/VaultNowStat';
 import { RowMobile } from '../../../Row';
+import { VaultYieledStat } from '../../../../../../../../components/VaultStats/VaultYieledStat';
+import { VaultYearlyStat } from '../../../../../../../../components/VaultStats/VaultYearlyStat';
+import { VaultDailyUsdStat } from '../../../../../../../../components/VaultStats/VaultDailyUsdStat';
 
 const useStyles = makeStyles(styles);
 
@@ -18,10 +21,41 @@ export const VaultDashboardMobileStats = memo(function ({
   return (
     <RowMobile>
       <div className={classes.inner}>
-        <VaultAtDepositStat vaultId={vaultId} />
-        <VaultNowStat vaultId={vaultId} />
-        <div>3</div>
-        <div>4</div>
+        <VaultAtDepositStat
+          contentClassName={classes.statMobile}
+          triggerClassName={classes.triggerContainer}
+          className={classes.value}
+          labelClassName={classes.label}
+          vaultId={vaultId}
+        />
+        <VaultNowStat
+          contentClassName={classes.statMobile}
+          triggerClassName={classes.triggerContainer}
+          className={classes.value}
+          labelClassName={classes.label}
+          vaultId={vaultId}
+        />
+        <VaultYieledStat
+          contentClassName={classes.statMobile}
+          triggerClassName={classes.triggerContainer}
+          className={classes.value}
+          labelClassName={classes.label}
+          vaultId={vaultId}
+        />
+        <VaultYearlyStat
+          contentClassName={classes.statMobile}
+          triggerClassName={classes.triggerContainer}
+          className={classes.value}
+          labelClassName={classes.label}
+          vaultId={vaultId}
+        />
+        <VaultDailyUsdStat
+          contentClassName={classes.statMobile}
+          triggerClassName={classes.triggerContainer}
+          className={classes.value}
+          labelClassName={classes.label}
+          vaultId={vaultId}
+        />
       </div>
     </RowMobile>
   );
