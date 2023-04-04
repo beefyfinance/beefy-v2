@@ -583,5 +583,7 @@
   "Dashboard-Filter-Amount": "Amount",
   "Dashboard-Filter-Balance": "Balance",
   "Dashboard-Filter-UsdBalance": "USD Balance",
-  "Dashboard-Filter-MooTokenBal": "MooToken Bal"
+  "Dashboard-Filter-MooTokens": "MooTokens",
+  "Dashboard-VaultData": "Vault Data",
+  "Dashboard-TransactionHistory": "Transaction History"
 }

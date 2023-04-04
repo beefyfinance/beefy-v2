@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import React, { memo, PropsWithChildren } from 'react';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  row: {
+  rowContainer: {
     display: 'grid',
     backgroundColor: theme.palette.background.v2.cardBg,
     padding: '16px',
@@ -13,6 +13,10 @@ const useStyles = makeStyles((theme: Theme) => ({
       gridTemplateColumns: 'repeat(2,minmax(0, 50fr))',
     },
   },
+  rowMobileContainer: {
+    padding: '16px',
+    backgroundColor: theme.palette.background.appBG,
+  },
 }));
 
 type RowGapProps = PropsWithChildren<{
@@ -21,5 +25,10 @@ type RowGapProps = PropsWithChildren<{
 
 export const Row = memo<RowGapProps>(function ({ children, className }) {
   const classes = useStyles();
-  return <div className={clsx(classes.row, className)}>{children}</div>;
+  return <div className={clsx(classes.rowContainer, className)}>{children}</div>;
+});
+
+export const RowMobile = memo<RowGapProps>(function ({ children, className }) {
+  const classes = useStyles();
+  return <div className={clsx(classes.rowMobileContainer, className)}>{children}</div>;
 });

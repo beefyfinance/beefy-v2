@@ -28,7 +28,7 @@ function mapStateToProps(
   state: BeefyState,
   { vaultId, className, triggerClassName }: VaultNowStatProps
 ) {
-  const label = '-';
+  const label = 'Now';
 
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
 

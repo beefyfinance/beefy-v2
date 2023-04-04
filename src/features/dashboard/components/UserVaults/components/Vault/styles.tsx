@@ -22,7 +22,7 @@ export const styles = (theme: Theme) => ({
     rowGap: '24px',
     width: '100%',
     [theme.breakpoints.down('sm')]: {
-      gridTemplateColumns: 'minmax(0, 50fr) minmax(0, 50fr)',
+      gridTemplateColumns: 'minmax(0, 80fr) minmax(0, 20fr)',
     },
   },
   network: {

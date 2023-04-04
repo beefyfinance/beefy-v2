@@ -7,7 +7,7 @@ import { formatBigUsd, formattedTotalApy } from '../../../../../../helpers/forma
 import { useTranslation } from 'react-i18next';
 import { selectIsVaultBoosted } from '../../../../../data/selectors/boosts';
 import { styles } from './styles';
-import clsx from 'clsx';
+import { MobileStat } from '../MobileStat';
 
 const useStyles = makeStyles(styles);
 
@@ -27,27 +27,12 @@ export const TabletStats = memo<TableStatsInterface>(function ({ vaultId }) {
 
   return (
     <div className={classes.container}>
-      <TableStat
+      <MobileStat
         label={t('APY')}
         value={isBoosted ? formatted.boostedTotalApy : formatted.totalApy}
-        className={isBoosted ? classes.boostText : ''}
+        valueClassName={isBoosted ? classes.boostText : ''}
       />
-      <TableStat label={t('Dashboard-Filter-DailyYield')} value={formatBigUsd(dailyUsd)} />
-    </div>
-  );
-});
-
-interface TableStatsProps {
-  label: string;
-  value: string;
-  className?: string;
-}
-
-const TableStat = memo<TableStatsProps>(function ({ label, value, className }) {
-  const classes = useStyles();
-  return (
-    <div className={clsx(classes.stat, className)}>
-      {label} <span>{value}</span>
+      <MobileStat label={t('Dashboard-Filter-DailyYield')} value={formatBigUsd(dailyUsd)} />
     </div>
   );
 });

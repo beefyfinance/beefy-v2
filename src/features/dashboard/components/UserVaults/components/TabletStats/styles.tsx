@@ -10,19 +10,7 @@ export const styles = (theme: Theme) => ({
       columnGap: '32px',
     },
   },
-  stat: {
-    display: 'flex',
-    alignItems: 'center',
-    columnGap: '8px',
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.disabled,
-    '& span': {
-      color: theme.palette.text.secondary,
-    },
-  },
   boostText: {
-    '& span': {
-      color: '#DB8332',
-    },
+    color: '#DB8332',
   },
 });

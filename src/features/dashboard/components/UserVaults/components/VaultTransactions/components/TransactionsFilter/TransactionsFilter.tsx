@@ -2,7 +2,7 @@ import { makeStyles, Theme } from '@material-ui/core';
 import { memo } from 'react';
 import { SortColumnHeader } from '../../../../../../../../components/SortColumnHeader';
 import { InfoGrid } from '../InfoGrid';
-import { Row } from '../Row/Row';
+import { Row } from '../../../Row/Row';
 import { SortedOptions } from '../../hook';
 
 const SORT_COLUMNS: {
@@ -12,13 +12,16 @@ const SORT_COLUMNS: {
 }[] = [
   { label: 'Dashboard-Filter-Amount', sortKey: 'amount' },
   { label: 'Dashboard-Filter-Balance', sortKey: 'balance' },
-  { label: 'Dashboard-Filter-MooTokenBal', sortKey: 'mooTokenBal' },
+  { label: 'Dashboard-Filter-MooTokens', sortKey: 'mooTokenBal' },
   { label: 'Dashboard-Filter-UsdBalance', sortKey: 'usdBalance' },
 ];
 
 const useStyles = makeStyles((theme: Theme) => ({
   filter: {
     borderRadius: '8px 8px 0px 0px',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   justifyStart: {
     justifyContent: 'start',
@@ -48,7 +51,7 @@ export const TransactionsFilter = memo<TransactionsFilterProps>(function SortCol
         className={classes.justifyStart}
       />
       <InfoGrid>
-        {SORT_COLUMNS.map(({ label, sortKey, className }) => (
+        {SORT_COLUMNS.map(({ label, sortKey }) => (
           <SortColumnHeader
             key={label}
             label={label}

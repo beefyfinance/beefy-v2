@@ -9,6 +9,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     '& $stat': {
       textAlign: 'right',
     },
+    [theme.breakpoints.down('sm')]: {
+      gridTemplateColumns: 'minmax(0, 1fr)',
+      rowGap: '4px',
+    },
   },
 }));
 

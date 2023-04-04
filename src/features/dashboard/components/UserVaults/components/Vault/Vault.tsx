@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useState } from 'react';
-import { Collapse, makeStyles } from '@material-ui/core';
+import { Collapse, Theme, makeStyles, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
 import { VaultEntity } from '../../../../../data/entities/vault';
 import { VaultIdentity } from '../../../../../../components/VaultIdentity';
@@ -13,6 +13,7 @@ import {
 } from '../../../../../data/selectors/vaults';
 import clsx from 'clsx';
 import { TabletStats } from '../TabletStats';
+import { MobileCollapseContent } from '../MobileCollapseContent/MobileCollapseContent';
 
 const useStyles = makeStyles(styles);
 
@@ -29,6 +30,8 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
   const handleOpen = useCallback(() => {
     setOpen(!open);
   }, [open]);
+
+  const mobileView = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
 
   return (
     <div>
@@ -48,10 +51,14 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
         </div>
       </div>
       <Collapse in={open} timeout="auto">
-        <div className={classes.collapseInner}>
-          <TabletStats vaultId={vaultId} />
-          <VaultTransactions vaultId={vaultId} />
-        </div>
+        {mobileView ? (
+          <MobileCollapseContent vaultId={vaultId} />
+        ) : (
+          <div className={classes.collapseInner}>
+            <TabletStats vaultId={vaultId} />
+            <VaultTransactions vaultId={vaultId} />
+          </div>
+        )}
       </Collapse>
     </div>
   );
