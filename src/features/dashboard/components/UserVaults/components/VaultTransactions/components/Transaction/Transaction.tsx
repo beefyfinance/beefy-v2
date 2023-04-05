@@ -42,28 +42,36 @@ export const Transaction = memo<TransactionProps>(function ({ data, tokenDecimal
       <div className={clsx(classes.stat, classes.textFlexStart)}>{formatISO9075(datetime)}</div>
       <InfoGrid>
         {/*Amount */}
-        <TokenAmount
-          className={clsx(amountClassName, classes.stat)}
-          amount={underlyingDiff}
-          decimals={tokenDecimals}
-          price={underlyingToUsdPrice}
-        />
-        {/*Balance */}
-        <TokenAmount
-          amount={shareBalance.times(shareToUnderlyingPrice)}
-          decimals={tokenDecimals}
-          price={underlyingToUsdPrice}
-          className={classes.stat}
-        />
+        <div className={classes.column}>
+          <TokenAmount
+            className={clsx(amountClassName, classes.stat)}
+            amount={underlyingDiff}
+            decimals={tokenDecimals}
+            price={underlyingToUsdPrice}
+          />
+        </div>
+        <div className={classes.column}>
+          {/*Balance */}
+          <TokenAmount
+            amount={shareBalance.times(shareToUnderlyingPrice)}
+            decimals={tokenDecimals}
+            price={underlyingToUsdPrice}
+            className={classes.stat}
+          />
+        </div>
         {/*MooTokenBal */}
-        <TokenAmount
-          amount={shareBalance}
-          decimals={18}
-          price={shareToUnderlyingPrice}
-          className={classes.stat}
-        />
+        <div className={classes.column}>
+          <TokenAmount
+            amount={shareBalance}
+            decimals={18}
+            price={shareToUnderlyingPrice}
+            className={classes.stat}
+          />
+        </div>
         {/*Usd Balance */}
-        <div className={classes.stat}>{formatBigUsd(usdBalance ?? BIG_ZERO)}</div>
+        <div className={classes.column}>
+          <div className={classes.stat}>{formatBigUsd(usdBalance ?? BIG_ZERO)}</div>
+        </div>
       </InfoGrid>
     </Row>
   );

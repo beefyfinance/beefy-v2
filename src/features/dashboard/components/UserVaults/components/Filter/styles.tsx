@@ -7,15 +7,17 @@ export const styles = (theme: Theme) => ({
     padding: '16px',
     display: 'grid',
     width: '100%',
+    columnGap: '8px',
     backgroundClip: 'padding-box',
     gridTemplateColumns: 'minmax(0, 30fr) minmax(0, 70fr)',
     [theme.breakpoints.down('sm')]: {
-      gridTemplateColumns: 'repeat(2,minmax(0, 50fr))',
+      gridTemplateColumns: 'minmax(0, 70fr) minmax(0, 30fr)',
     },
   },
   sortColumns: {
     display: 'grid',
     width: '100%',
+    columnGap: '8px',
     gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
     [theme.breakpoints.up('md')]: {
       gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',

@@ -61,6 +61,7 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     width: '100%',
     gridTemplateColumns: 'minmax(0, 1fr)',
+    columnGap: '12px',
     '& $column': {
       marginLeft: 'auto',
       textAlign: 'right' as const,
@@ -80,5 +81,11 @@ export const styles = (theme: Theme) => ({
   },
   maxWidth80: {
     maxWidth: '80%',
+  },
+  maxWidth60: {
+    maxWidth: '80%',
+  },
+  displayBlock: {
+    display: 'block',
   },
 });

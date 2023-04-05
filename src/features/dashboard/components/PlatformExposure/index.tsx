@@ -1,27 +1,23 @@
 import React, { memo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../store';
 import { selectUserExposureByKey } from '../../../data/selectors/balance';
 import { selectIsUserBalanceAvailable } from '../../../data/selectors/data-loader';
 import { ExposureChart } from '../ExposureChart';
+import { ExposureDashboardChartLoaderProps } from '../ExposureChart/types';
 
-const PlatformExposure = memo(function () {
-  const { t } = useTranslation();
-
+const PlatformExposure = memo<ExposureDashboardChartLoaderProps>(function ({ title }) {
   const platformExposureData = useAppSelector(state =>
     selectUserExposureByKey(state, 'platformId')
   );
 
-  return (
-    <ExposureChart title={t('Exposure-Platform')} type="platform" data={platformExposureData} />
-  );
+  return <ExposureChart title={title} type="platform" data={platformExposureData} />;
 });
 
-export const PlatformExposureLoader = memo(function () {
+export const PlatformExposureLoader = memo<ExposureDashboardChartLoaderProps>(function ({ title }) {
   const isUserDataAvailable = useAppSelector(selectIsUserBalanceAvailable);
 
   if (isUserDataAvailable) {
-    return <PlatformExposure />;
+    return <PlatformExposure title={title} />;
   }
 
   return null;

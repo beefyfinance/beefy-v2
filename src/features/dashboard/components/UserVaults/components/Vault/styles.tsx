@@ -18,8 +18,7 @@ export const styles = (theme: Theme) => ({
   vaultInner: {
     display: 'grid',
     gridTemplateColumns: 'minmax(0, 30fr) minmax(0, 70fr)',
-    columnGap: '24px',
-    rowGap: '24px',
+    columnGap: '8px',
     width: '100%',
     [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: 'minmax(0, 80fr) minmax(0, 20fr)',

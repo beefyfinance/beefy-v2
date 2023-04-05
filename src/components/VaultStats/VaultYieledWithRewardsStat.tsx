@@ -56,15 +56,11 @@ export const VaultYieledWithRewardsStat = memo<VaultYieledStatProps>(function ({
         <div className={classes.flexEnd}>
           <Tooltip
             content={<BasicTooltipContent title={formatFullBigNumber(totalYield, tokenDecimals)} />}
-            triggerClass={classes.maxWidth80}
+            triggerClass={clsx(classes.textGreen, classes.textOverflow, classes.maxWidth80, {
+              [classes.maxWidth60]: hasRewards,
+            })}
           >
-            <div
-              className={clsx(classes.textGreen, classes.textOverflow, {
-                [classes.maxWidth80]: hasRewards,
-              })}
-            >
-              {formatSignificantBigNumber(totalYield, tokenDecimals, oraclePrice, 0, 2)}
-            </div>
+            {formatSignificantBigNumber(totalYield, tokenDecimals, oraclePrice, 0, 2)}
           </Tooltip>
           {hasRewards && (
             <>

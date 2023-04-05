@@ -7,7 +7,12 @@ export const styles = (theme: Theme) => ({
     overflow: 'hidden',
     whiteSpace: 'nowrap' as const,
     textOverflow: 'ellipsis',
-    textAlign: 'right' as const,
+    maxWidth: '80%',
+  },
+  column: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   textFlexStart: {
     textAlign: 'left' as const,

@@ -1,23 +1,24 @@
 import React, { memo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../store';
 import { selectUserTokenExposure } from '../../../data/selectors/balance';
 import { selectIsUserBalanceAvailable } from '../../../data/selectors/data-loader';
 import { ExposureChart } from '../ExposureChart';
 
-const TokenExposure = memo(function () {
-  const { t } = useTranslation();
+interface TokenExposureProps {
+  title?: string;
+}
 
+const TokenExposure = memo<TokenExposureProps>(function ({ title }) {
   const tokensExposureData = useAppSelector(state => selectUserTokenExposure(state));
 
-  return <ExposureChart title={t('Exposure-Tokens')} type="token" data={tokensExposureData} />;
+  return <ExposureChart title={title} type="token" data={tokensExposureData} />;
 });
 
-export const TokenExposureLoader = memo(function () {
+export const TokenExposureLoader = memo<TokenExposureProps>(function ({ title }) {
   const isUserDataAvailable = useAppSelector(selectIsUserBalanceAvailable);
 
   if (isUserDataAvailable) {
-    return <TokenExposure />;
+    return <TokenExposure title={title} />;
   }
 
   return null;
