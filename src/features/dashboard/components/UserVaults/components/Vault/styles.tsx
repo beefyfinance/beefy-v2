@@ -43,13 +43,13 @@ export const styles = (theme: Theme) => ({
       padding: '16px',
     },
   },
-  vaultRetired: {
-    backgroundColor: 'rgba(209,83,71,0.05)',
+  vaultEarnings: {
+    backgroundColor: '#322460',
   },
   vaultPaused: {
     backgroundColor: 'rgba(209, 83, 71, 0.05)',
   },
-  vaultEarnings: {
-    backgroundColor: '#322460',
+  vaultRetired: {
+    backgroundColor: 'rgba(209,83,71,0.05)',
   },
 });

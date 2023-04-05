@@ -13,11 +13,12 @@ import { formatBigNumber, formatBigUsd } from '../../helpers/format';
 
 const useStyles = makeStyles(styles);
 
-interface BoostTooltipRewardsProps {
+interface RewardsTooltipProps {
   vaultId: VaultEntity['id'];
+  size?: number;
 }
 
-export const BoostTooltipRewards = memo<BoostTooltipRewardsProps>(({ vaultId }) => {
+export const RewardsTooltip = memo<RewardsTooltipProps>(({ vaultId, size = 20 }) => {
   const classes = useStyles();
 
   const { rewards, rewardsTokens } = useAppSelector(state =>
@@ -29,10 +30,9 @@ export const BoostTooltipRewards = memo<BoostTooltipRewardsProps>(({ vaultId }) 
   }
 
   return (
-    <Tooltip content={<BoostTooltipcontent rewards={rewards} />}>
+    <Tooltip content={<RewardsTooltipcontent rewards={rewards} />}>
       <div className={classes.container}>
-        <div className={classes.plus}>+</div>
-        <AssetsImage chainId={vaultId} size={20} assetIds={rewardsTokens} />
+        <AssetsImage chainId={vaultId} size={size} assetIds={rewardsTokens} />
       </div>
     </Tooltip>
   );
@@ -44,11 +44,11 @@ interface RewardsType {
   rewardsUsd: BigNumber;
 }
 
-interface BoostTooltipContentProps {
+interface RewardsTooltipContentProps {
   rewards: RewardsType[];
 }
 
-export const BoostTooltipcontent = memo<BoostTooltipContentProps>(function ({ rewards }) {
+export const RewardsTooltipcontent = memo<RewardsTooltipContentProps>(function ({ rewards }) {
   const { t } = useTranslation();
   const classes = useStyles();
   return (

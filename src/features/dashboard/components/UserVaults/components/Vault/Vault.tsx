@@ -39,9 +39,9 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
         onClick={handleOpen}
         className={clsx({
           [classes.vault]: true,
-          [classes.vaultRetired]: isRetired,
-          [classes.vaultPaused]: isPaused,
           [classes.vaultEarnings]: isGov,
+          [classes.vaultPaused]: isPaused,
+          [classes.vaultRetired]: isRetired,
           lastBorderRadius: true,
         })}
       >

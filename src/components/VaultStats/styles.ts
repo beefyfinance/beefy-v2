@@ -27,6 +27,13 @@ export const styles = (theme: Theme) => ({
       textAlign: 'right' as const,
     },
   },
+  flexEnd: {
+    display: 'flex',
+    alignItems: 'center',
+    columnGap: '4px',
+    justifyContent: 'flex-end',
+    width: '100%',
+  },
   columnFlex: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -47,14 +54,12 @@ export const styles = (theme: Theme) => ({
       display: 'block',
     },
   },
-  green: {
+  textGreen: {
     color: theme.palette.primary.main,
   },
   rowDashboard: {
     display: 'grid',
     width: '100%',
-    columnGap: '24px',
-    rowGap: '24px',
     gridTemplateColumns: 'minmax(0, 1fr)',
     '& $column': {
       marginLeft: 'auto',
@@ -73,7 +78,7 @@ export const styles = (theme: Theme) => ({
     whiteSpace: 'nowrap' as const,
     textOverflow: 'ellipsis',
   },
-  triggerContainer: {
+  maxWidth80: {
     maxWidth: '80%',
   },
 });

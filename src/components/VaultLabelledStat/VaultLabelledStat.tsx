@@ -43,7 +43,7 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
           {children}
         </Tooltip>
       ) : (
-        <div>{children}</div>
+        <div className={triggerClassName}>{children}</div>
       )}
     </div>
   );

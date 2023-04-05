@@ -637,31 +637,48 @@ export const selectUserVaultsPnl = (state: BeefyState) => {
 };
 
 export const selectUserRewardsByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const boosts = selectAllVaultBoostIds(state, vaultId);
+  let totals: Record<
+    string,
+    { rewardToken: TokenEntity['oracleId']; rewards: BigNumber; rewardsUsd: BigNumber }
+  > = {};
 
-  const boostsWithRewards = boosts.reduce((totals, boostId) => {
-    const rewardToken = selectBoostRewardsTokenEntity(state, boostId);
-    const boostPendingRewards = selectBoostUserRewardsInToken(state, boostId);
-    const oraclePrice = selectTokenPriceByTokenOracleId(state, rewardToken.oracleId);
+  const vault = selectVaultById(state, vaultId);
 
-    if (boostPendingRewards.isGreaterThan(BIG_ZERO)) {
-      totals[boostId] = {
-        rewardToken: rewardToken.oracleId,
-        rewards: boostPendingRewards,
-        rewardsUsd: boostPendingRewards.times(oraclePrice),
-      };
-    }
+  if (isGovVault(vault)) {
+    const earnedToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+    const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(state, vault.id);
+    const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id);
 
-    return totals;
-  }, {} as Record<string, { rewardToken: TokenEntity['oracleId']; rewards: BigNumber; rewardsUsd: BigNumber }>);
+    totals[vaultId] = {
+      rewardToken: earnedToken.oracleId,
+      rewards: rewardsEarnedToken,
+      rewardsUsd: rewardsEarnedUsd,
+    };
+  } else {
+    const boosts = selectAllVaultBoostIds(state, vaultId);
+    totals = boosts.reduce((totals, boostId) => {
+      const rewardToken = selectBoostRewardsTokenEntity(state, boostId);
+      const boostPendingRewards = selectBoostUserRewardsInToken(state, boostId);
+      const oraclePrice = selectTokenPriceByTokenOracleId(state, rewardToken.oracleId);
+      if (boostPendingRewards.isGreaterThan(BIG_ZERO)) {
+        totals[boostId] = {
+          rewardToken: rewardToken.oracleId,
+          rewards: boostPendingRewards,
+          rewardsUsd: boostPendingRewards.times(oraclePrice),
+        };
+      }
+      return totals;
+    }, {} as Record<string, { rewardToken: TokenEntity['oracleId']; rewards: BigNumber; rewardsUsd: BigNumber }>);
+  }
 
   let rewardsTokens = [];
   let totalRewardsUsd = BIG_ZERO;
 
-  const rewards = Object.values(boostsWithRewards).map(item => {
+  const rewards = Object.values(totals).map(item => {
     rewardsTokens.push(item.rewardToken);
     totalRewardsUsd = totalRewardsUsd.plus(item.rewardsUsd);
     return { ...item };
   });
+
   return { rewards, rewardsTokens, totalRewardsUsd };
 };

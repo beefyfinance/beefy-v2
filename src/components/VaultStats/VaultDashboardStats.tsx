@@ -1,14 +1,17 @@
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import React, { memo } from 'react';
-import { VaultEntity } from '../../features/data/entities/vault';
+import { VaultEntity, isGovVault } from '../../features/data/entities/vault';
 import clsx from 'clsx';
 import { VaultDailyUsdStat } from './VaultDailyUsdStat';
 import { VaultPnlStat } from './VaultPnlStat';
-import { VaultYieledStat } from './VaultYieledStat';
 import { VaultAtDepositStat } from './VaultAtDepositStat';
 import { VaultNowStat } from './VaultNowStat';
 import { VaultYearlyStat } from './VaultYearlyStat';
+import { useAppSelector } from '../../store';
+import { selectVaultById } from '../../features/data/selectors/vaults';
+import { VaultRewardsStat } from './VaultRewardsStat';
+import { VaultYieledWithRewardsStat } from './VaultYieledWithRewardsStat';
 
 const useStyles = makeStyles(styles);
 
@@ -17,6 +20,7 @@ export type VaultStatsProps = {
 };
 export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ vaultId }) {
   const classes = useStyles();
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   return (
     <div className={classes.vaultStats}>
@@ -26,7 +30,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
             className={classes.textOverflow}
             showLabel={false}
             vaultId={vaultId}
-            triggerClassName={classes.triggerContainer}
+            triggerClassName={classes.maxWidth80}
           />
         </div>
         <div className={clsx(classes.column, classes.hideSm)}>
@@ -34,15 +38,15 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
             className={classes.textOverflow}
             showLabel={false}
             vaultId={vaultId}
-            triggerClassName={classes.triggerContainer}
+            triggerClassName={classes.maxWidth80}
           />
         </div>
         <div className={clsx(classes.column, classes.hideSm)}>
-          <VaultYieledStat
-            className={clsx(classes.textOverflow, classes.green, classes.columnFlex)}
-            showLabel={false}
-            vaultId={vaultId}
-          />
+          {isGovVault(vault) ? (
+            <VaultRewardsStat showLabel={false} vaultId={vaultId} />
+          ) : (
+            <VaultYieledWithRewardsStat vaultId={vaultId} />
+          )}
         </div>
         <div className={classes.column}>
           <VaultPnlStat showLabel={false} vaultId={vaultId} />
@@ -53,7 +57,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
         <div className={clsx(classes.column, classes.hideMd)}>
           <VaultDailyUsdStat
             className={classes.textOverflow}
-            triggerClassName={classes.triggerContainer}
+            triggerClassName={classes.maxWidth80}
             showLabel={false}
             vaultId={vaultId}
           />

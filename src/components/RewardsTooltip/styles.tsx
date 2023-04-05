@@ -27,8 +27,4 @@ export const styles = (theme: Theme) => ({
     fontWeight: 700,
     color: '#73768C',
   },
-  plus: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.secondary,
-  },
 });

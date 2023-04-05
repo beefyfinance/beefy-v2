@@ -30,7 +30,7 @@ function mapStateToProps(
   state: BeefyState,
   { vaultId, className, triggerClassName }: VaultDailyUsdStatProps
 ) {
-  const label = 'VaultStat-DAILY';
+  const label = 'Dashboard-Filter-DailyYield';
 
   const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
   if (!shouldShowInterest) {
