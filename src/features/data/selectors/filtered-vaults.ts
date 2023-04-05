@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { sortBy } from 'lodash';
+import { sortBy } from 'lodash-es';
 import { BeefyState } from '../../../redux-types';
 import {
   isGovVault,

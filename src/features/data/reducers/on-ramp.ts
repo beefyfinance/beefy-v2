@@ -8,7 +8,7 @@ import {
 } from '../actions/on-ramp';
 import { WritableDraft } from 'immer/dist/internal';
 import { ApiQuote, ApiQuoteRequest } from '../apis/on-ramp/on-ramp-types';
-import { first, orderBy } from 'lodash';
+import { first, orderBy } from 'lodash-es';
 import { CountryError, FormStep, InputMode, OnRampTypes, Quote } from './on-ramp-types';
 
 const initialState: OnRampTypes = {

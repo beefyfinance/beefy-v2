@@ -1,20 +1,12 @@
 import { ChainEntity } from '../features/data/entities/chain';
+import { createGlobLoader } from './globLoader';
 
-const requireContext = require.context('../images/networks', false, /\.svg$/);
-const networkToPath = Object.fromEntries(
-  requireContext.keys().map(path => [path.substring(2, path.lastIndexOf('.')).toUpperCase(), path])
-);
-const networkCache = {};
+const pathToUrl = import.meta.glob<string>('../images/networks/*.svg', {
+  as: 'url',
+  eager: true,
+});
+const keyToUrl = createGlobLoader(pathToUrl);
 
-export function getNetworkSrc(chainId: ChainEntity['id'] | string) {
-  const id = chainId.toUpperCase();
-
-  if (id in networkCache) {
-    return networkCache[id];
-  }
-
-  if (id in networkToPath) {
-    const asset = requireContext(networkToPath[id]).default;
-    return (networkCache[id] = asset);
-  }
+export function getNetworkSrc(chainId: ChainEntity['id']) {
+  return keyToUrl([chainId]);
 }

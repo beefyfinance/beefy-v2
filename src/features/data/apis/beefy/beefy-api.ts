@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import BigNumber from 'bignumber.js';
-import { isString } from 'lodash';
+import { isString } from 'lodash-es';
 import { ChainEntity } from '../../entities/chain';
 import { TokenEntity } from '../../entities/token';
 import { VaultEntity } from '../../entities/vault';
@@ -114,7 +114,7 @@ export class BeefyAPI {
   constructor() {
     // this could be mocked by passing mock axios to the constructor
     this.api = axios.create({
-      baseURL: process.env.REACT_APP_API_URL || 'https://api.beefy.finance',
+      baseURL: import.meta.env.VITE_API_URL || 'https://api.beefy.finance',
       timeout: 30 * 1000,
     });
   }

@@ -16,7 +16,7 @@ import {
   selectErc20TokenByAddress,
   selectTokenByAddress,
 } from '../../../../../../data/selectors/tokens';
-import { isString } from 'lodash';
+import { isString } from 'lodash-es';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../../data/actions/wallet';
 import { walletActions } from '../../../../../../data/actions/wallet-actions';
 
@@ -29,6 +29,7 @@ import { BIG_ZERO } from '../../../../../../../helpers/big-number';
 import { stepperActions } from '../../../../../../data/reducers/wallet/stepper';
 import { selectIsStepperStepping } from '../../../../../../data/selectors/stepper';
 import { startStepper } from '../../../../../../data/actions/stepper';
+import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
 
 const useStyles = makeStyles(styles);
 
@@ -226,10 +227,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       </div>
       <div className={classes.customDivider}>
         <div className={classes.line} />
-        <img
-          alt="arrowDown"
-          src={require('../../../../../../../images/icons/arrowDown.svg').default}
-        />
+        <img alt="arrowDown" src={iconArrowDown} />
         <div className={classes.line} />
       </div>
       <div className={classes.inputContainer}>

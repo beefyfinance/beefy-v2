@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FC, memo, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
-import { sortBy } from 'lodash';
+import { sortBy } from 'lodash-es';
 import { ExpandMore } from '@material-ui/icons';
 import clsx from 'clsx';
 import { Floating } from '../Floating';

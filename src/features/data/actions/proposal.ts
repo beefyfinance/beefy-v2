@@ -3,7 +3,7 @@ import { BeefyState } from '../../../redux-types';
 import { getBeefyApi } from '../apis/instances';
 import { BeefySnapshotActiveResponse, BeefySnapshotProposal } from '../apis/beefy/beefy-api';
 import { ProposalEntity } from '../entities/proposal';
-import { uniq } from 'lodash';
+import { uniq } from 'lodash-es';
 import { selectAllProposalIds } from '../selectors/proposals';
 
 const READ_STORAGE_KEY = 'readProposals';

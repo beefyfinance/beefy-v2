@@ -34,7 +34,7 @@ import { ZapEntityOneInch } from '../../../../entities/zap';
 import { AmmEntity } from '../../../../entities/amm';
 import { createOptionId, createQuoteId, createTokensId } from '../../utils';
 import { TransactMode } from '../../../../reducers/wallet/transact-types';
-import { first, uniqBy } from 'lodash';
+import { first, uniqBy } from 'lodash-es';
 import {
   BIG_ONE,
   BIG_ZERO,

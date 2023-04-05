@@ -1,5 +1,5 @@
 import { BigNumber } from 'bignumber.js';
-import { mapValues } from 'lodash';
+import { mapValues } from 'lodash-es';
 
 export type BigNumberish = BigNumber.Value;
 

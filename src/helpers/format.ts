@@ -1,11 +1,11 @@
 import { BigNumber } from 'bignumber.js';
 import { TotalApy } from '../features/data/reducers/apy';
-import { hexToNumber, isHexStrict } from 'web3-utils';
+import { toNumber } from 'web3-utils';
 import { ReactNode } from 'react';
 import { AllValuesAsString } from '../features/data/utils/types-utils';
 import { BIG_ONE, BIG_ZERO, isBigNumber } from './big-number';
 import { SerializedError } from '@reduxjs/toolkit';
-import { isString, padStart } from 'lodash';
+import { isString, padStart } from 'lodash-es';
 
 export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
   const number = num.toFormat({
@@ -289,7 +289,12 @@ export function maybeHexToNumber(input: any): number {
   }
 
   if (typeof input === 'string') {
-    return isHexStrict(input) ? hexToNumber(input) : Number(input);
+    const maybeNumber = toNumber(input, false);
+    if (typeof maybeNumber === 'number') {
+      return maybeNumber;
+    }
+
+    throw new Error(`${typeof input} "${input}" is too large to be a number.`);
   }
 
   throw new Error(`${typeof input} "${input}" is not valid hex or number.`);

@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { isString } from 'lodash';
+import { isString } from 'lodash-es';
 import { fetchAllBoosts } from '../../actions/boosts';
 import { fetchChainConfigs } from '../../actions/chains';
 import { fetchAllVaults } from '../../actions/vaults';

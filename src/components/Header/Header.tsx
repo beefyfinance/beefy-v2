@@ -28,9 +28,10 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { selectShouldInitProposals } from '../../features/data/selectors/data-loader';
 import { fetchActiveProposals } from '../../features/data/actions/proposal';
 import { UnreadProposalsDot } from './components/Badges/UnreadProposalsDot';
+import headerLogoMobile from '../../images/bifi-logos/header-logo-notext.svg';
+import headerLogoDesktop from '../../images/bifi-logos/header-logo.svg';
 
 const useStyles = makeStyles(styles);
-
 export const Header = memo(function () {
   const location = useLocation();
   const isOnDashboard =
@@ -58,14 +59,7 @@ export const Header = memo(function () {
           <Toolbar className={classes.content} disableGutters={true}>
             <div className={classes.flex}>
               <Link className={classes.beefy} to="/">
-                <img
-                  alt="BIFI"
-                  src={
-                    isMobile
-                      ? require(`../../images/bifi-logos/header-logo-notext.svg`).default
-                      : require(`../../images/bifi-logos/header-logo.svg`).default
-                  }
-                />
+                <img alt="BIFI" src={isMobile ? headerLogoMobile : headerLogoDesktop} />
               </Link>
               <Hidden mdDown>
                 <NavItem title={'Header-Vaults'} url="/" Icon={VaultsIcon} />

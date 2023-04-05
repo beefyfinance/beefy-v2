@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../store';
 import { selectUserVaultBalances } from '../../../data/selectors/balance';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 import { useInView } from 'react-intersection-observer';
 import { ChainTable } from '../ChainTable';
 import { Section } from '../../../../components/Section';

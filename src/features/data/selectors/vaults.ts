@@ -12,7 +12,7 @@ import {
 import { selectIsBeefyToken, selectIsTokenBluechip, selectIsTokenStable } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE } from '../../../helpers/big-number';
-import { differenceWith, first, isEqual } from 'lodash';
+import { differenceWith, first, isEqual } from 'lodash-es';
 import { selectChainById } from './chains';
 
 export const selectVaultById = createCachedSelector(

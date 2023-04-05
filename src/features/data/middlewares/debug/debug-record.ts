@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { isObject } from 'lodash';
+import { isObject } from 'lodash-es';
 import { Action } from 'redux';
 import { BeefyStore } from '../../../../redux-types';
 import { ChainEntity } from '../../entities/chain';

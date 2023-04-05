@@ -14,7 +14,7 @@ import { Namespace, TFunction } from 'react-i18next';
 import { GovVaultProvider } from './providers/gov-vault';
 import { OneInchZapProvider } from './providers/one-inch/one-inch';
 import { BeefySolidlyZapProvider } from './providers/beefy/solidly';
-import { partition } from 'lodash';
+import { partition } from 'lodash-es';
 import { isFulfilledResult } from '../../../../helpers/promises';
 
 export class TransactApi implements ITransactApi {

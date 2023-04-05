@@ -1,5 +1,6 @@
 import { makeStyles, Theme } from '@material-ui/core';
 import React, { memo } from 'react';
+import techLoaderUrl from '../../../../images/tech-loader.gif';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -14,11 +15,7 @@ export const GraphLoader = memo(function _GraphLoader({ imgHeight = 200 }: { img
   const classes = useStyles();
   return (
     <div className={classes.container}>
-      <img
-        style={{ height: imgHeight }}
-        src={require('../../../../images/tech-loader.gif').default}
-        alt="loader"
-      />
+      <img style={{ height: imgHeight }} src={techLoaderUrl} alt="loader" />
     </div>
   );
 });

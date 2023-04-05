@@ -8,7 +8,7 @@ import {
   selectToken,
 } from '../../../../../data/selectors/on-ramp';
 import { validateOnRampForm } from '../../../../../data/actions/on-ramp';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 
 export const FormValidator = memo(function FormValidator() {
   const dispatch = useAppDispatch();

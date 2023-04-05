@@ -15,7 +15,7 @@ export class BeefyDataApi implements IBeefyDataApi {
 
   constructor() {
     this.data = axios.create({
-      baseURL: `${process.env.REACT_APP_DATA_URL || 'https://data.beefy.finance'}/api/${
+      baseURL: `${import.meta.env.VITE_DATA_URL || 'https://data.beefy.finance'}/api/${
         this.version
       }/`,
       timeout: 30 * 1000,

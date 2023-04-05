@@ -9,7 +9,7 @@ import {
 import { fromUnixTime, isAfter, isBefore, sub } from 'date-fns';
 import { HistoricalState, TimeBucketsState, TimeBucketState } from './historical-types';
 import { Draft } from 'immer';
-import { mapValues } from 'lodash';
+import { mapValues } from 'lodash-es';
 import { TIME_BUCKETS } from '../../vault/components/HistoricGraph/utils';
 
 const initialState: HistoricalState = {

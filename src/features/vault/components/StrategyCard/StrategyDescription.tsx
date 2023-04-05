@@ -37,7 +37,7 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
   const chainNativeToken = chain.walletSettings.nativeCurrency.symbol;
 
   let i18nKey = `StrategyDescription-${vault.strategyTypeId}`;
-  if (!i18n.exists(i18nKey)) {
+  if (!i18n.exists(i18nKey, { ns: 'risks' })) {
     i18nKey = 'StrategyDescription-default';
   }
 
@@ -48,10 +48,11 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
       depositTokenProvider: depositTokenProviderName,
       chain: chainName,
       nativeToken: chainNativeToken,
+      ns: 'risks',
     };
 
-    for (const i of assets) {
-      opts[`token${i}`] = assets[i];
+    for (const i in assets) {
+      opts[`asset${i}`] = assets[i];
     }
 
     return opts;
@@ -70,6 +71,7 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
         <Trans
           t={t}
           i18nKey={i18nKey}
+          namespace="risks"
           values={options}
           components={{
             details: <DetailsLink />,

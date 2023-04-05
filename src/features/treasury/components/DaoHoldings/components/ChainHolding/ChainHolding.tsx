@@ -10,6 +10,7 @@ import { selectTreasuryBalanceByChainId } from '../../../../../data/selectors/tr
 import { Assets } from '../Assets';
 import clsx from 'clsx';
 import { ExplorerLinks } from '../../../ExplorerLinks';
+import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 
 const useStyles = makeStyles(styles);
 
@@ -27,11 +28,7 @@ export const ChainHolding = memo<ChainHoldingProps>(function ({ chainId }) {
     <div className={classes.container}>
       <div className={clsx(classes.title, classes[`headerNetwork-${chainId}`])}>
         <div className={classes.nameContainer}>
-          <img
-            className={classes.icon}
-            src={require(`../../../../../../images/networks/${chainId}.svg`).default}
-            alt={chainId}
-          />
+          <img className={classes.icon} src={getNetworkSrc(chainId)} alt={chainId} />
           <div className={classes.chainName}>{chain.name}</div>
           <ExplorerLinks chainId={chainId} />
         </div>

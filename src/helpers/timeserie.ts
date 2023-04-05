@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { isAfter, isEqual, max } from 'date-fns';
-import { sortBy } from 'lodash';
+import { sortBy } from 'lodash-es';
 import {
   ApiProductPriceRow,
   TimeBucketType,
@@ -40,8 +40,8 @@ export function getInvestorTimeserie(
 
   const fixedDate = max([firstDate, firstDate1]);
 
-  const sortedShares = sortBy(shares, 'timeline');
-  const sortedUnderlying = sortBy(underlying, 'timeline');
+  const sortedShares = sortBy(shares, 'date');
+  const sortedUnderlying = sortBy(underlying, 'date');
 
   let balanceIdx = 0;
   let sharesIdx = 0;

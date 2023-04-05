@@ -1,6 +1,6 @@
 import { BeefyAPI } from './beefy/beefy-api';
 import { ConfigAPI } from './config';
-import { sample } from 'lodash';
+import { sample } from 'lodash-es';
 import { createFactoryWithCacheByChain } from '../utils/factory-utils';
 import { ChainEntity } from '../entities/chain';
 import { IWalletConnectionApi, WalletConnectionOptions } from './wallet/wallet-connection-types';

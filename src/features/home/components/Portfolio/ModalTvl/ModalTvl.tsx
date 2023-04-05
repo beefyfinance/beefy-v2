@@ -12,7 +12,8 @@ import { formatBigUsd } from '../../../../../helpers/format';
 import { ContentLoading } from '../../../../../components/ContentLoading';
 import { Button } from '../../../../../components/Button';
 import { useAppSelector } from '../../../../../store';
-import { orderBy } from 'lodash';
+import { orderBy } from 'lodash-es';
+import { getNetworkSrc } from '../../../../../helpers/networkSrc';
 
 const useStyles = makeStyles(styles);
 
@@ -78,11 +79,7 @@ const Chain = memo<ChainProps>(function Chain({ chainId, tvl }) {
 
   return (
     <Box className={classes.chain}>
-      <img
-        className={classes.chainLogo}
-        alt={chain.id}
-        src={require(`../../../../../images/networks/${chain.id}.svg`).default}
-      />
+      <img className={classes.chainLogo} alt={chain.id} src={getNetworkSrc(chain.id)} />
       <Box>
         <div className={classes.chainText}>{chain.name}</div>
         <>

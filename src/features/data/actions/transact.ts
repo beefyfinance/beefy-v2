@@ -43,7 +43,7 @@ import { startStepperWithSteps } from './stepper';
 import { KeysOfType } from '../utils/types-utils';
 import { TransactMode } from '../reducers/wallet/transact-types';
 import { selectTokenByAddress } from '../selectors/tokens';
-import { first, groupBy, uniqBy } from 'lodash';
+import { first, groupBy, uniqBy } from 'lodash-es';
 import { fetchAllowanceAction } from './allowance';
 import { fetchAllAmmsAction } from './amm';
 import { fetchFees } from './fees';

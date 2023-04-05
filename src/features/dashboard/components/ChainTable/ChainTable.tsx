@@ -12,6 +12,7 @@ import { TableVaults } from './components/TableVaults/TableVaults';
 import { SortedOptions, useSortedVaults } from './hooks';
 import { styles } from './styles';
 import { Scrollable } from '../../../../components/Scrollable';
+import { getNetworkSrc } from '../../../../helpers/networkSrc';
 
 interface ChainTableProps {
   data: { vaults: VaultEntity[]; depositedByChain: BigNumber; chainId: ChainEntity['id'] };
@@ -46,11 +47,7 @@ const TableTitle = memo<TableTitleProps>(function ({ chainId, deposited }) {
 
   return (
     <div className={classes.titleContainer}>
-      <img
-        className={classes.icon}
-        src={require(`../../../../images/networks/${chainId}.svg`).default}
-        alt={chain.name}
-      />
+      <img className={classes.icon} src={getNetworkSrc(chain.id)} alt={chain.name} />
       <div className={classes.title}>{chain.name}</div>
       <div className={classes.value}>{formatBigUsd(deposited)}</div>
     </div>

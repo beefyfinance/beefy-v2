@@ -1,7 +1,7 @@
 import { VaultEntity } from '../../entities/vault';
 import { ChainEntity } from '../../entities/chain';
 import { TokenEntity } from '../../entities/token';
-import { sortBy } from 'lodash';
+import { sortBy } from 'lodash-es';
 import { nanoid } from '@reduxjs/toolkit';
 
 export function createQuoteId(optionId: string): string {
