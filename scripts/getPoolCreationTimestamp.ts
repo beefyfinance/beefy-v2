@@ -3,56 +3,40 @@ import Web3 from 'web3';
 import { chainRpcs, getVaultsForChain } from './common/config';
 
 const explorerApiUrls = {
-  cronos: 'https://api.cronoscan.com/api',
-  bsc: 'https://api.bscscan.com/api',
-  polygon: 'https://api.polygonscan.com/api',
-  fantom: 'https://api.ftmscan.com/api',
-  heco: 'https://api.hecoinfo.com/api',
-  avax: 'https://api.snowtrace.io//api',
-  moonbeam: 'https://api-moonbeam.moonscan.io/api',
-  celo: 'https://explorer.celo.org/',
-  moonriver: 'https://api-moonriver.moonscan.io/api',
-  arbitrum: 'https://api.arbiscan.io/api',
-  aurora: 'https://explorer.mainnet.aurora.dev/api',
-  metis: 'https://andromeda-explorer.metis.io/',
-  one: 'https://explorer.harmony.one/',
-  fuse: 'https://explorer.fuse.io/',
-  emerald: 'https://explorer.emerald.oasis.dev/',
-  optimism: 'https://api-optimistic.etherscan.io/api',
-  kava: 'https://explorer.kava.io/',
-  ethereum: 'https://api.etherscan.io/api',
+  cronos: 'api.cronoscan.com/api',
+  bsc: 'api.bscscan.com/api',
+  polygon: 'api.polygonscan.com/api',
+  fantom: 'api.ftmscan.com/api',
+  heco: 'api.hecoinfo.com/api',
+  avax: 'api.snowtrace.io/api',
+  moonbeam: 'api-moonbeam.moonscan.io/api',
+  celo: 'api.celoscan.io/api',
+  moonriver: 'api-moonriver.moonscan.io/api',
+  arbitrum: 'api.arbiscan.io/api',
+  aurora: 'explorer.mainnet.aurora.dev/api',
+  metis: 'andromeda-explorer.metis.io/api',
+  one: 'explorer.harmony.one/',
+  fuse: 'explorer.fuse.io/api',
+  emerald: 'explorer.emerald.oasis.dev/api',
+  optimism: 'api-optimistic.etherscan.io/api',
+  kava: 'explorer.kava.io/api',
+  ethereum: 'api.etherscan.io/api',
+  canto: 'tuber.build/api',
 };
 
-const blockScoutChainsTimeout = new Set(['fuse', 'metis', 'celo', 'emerald', 'kava', 'canto']);
+const blockScoutChains = new Set(['fuse', 'metis', 'emerald', 'kava', 'canto']);
 const harmonyRpcChains = new Set(['one']);
 
-const getCreationTimestamp = async (vaultAddress, explorerUrl) => {
+const getCreationTimestamp = async (vaultAddress, explorerUrl, chain) => {
   var url =
-    explorerUrl +
-    `?module=account&action=txlist&address=${vaultAddress}&startblock=1&endblock=99999999&page=1&offset=1&sort=asc&limit=1`;
+    `https://${explorerUrl}?module=account&action=txlist&address=${vaultAddress}` +
+    `&startblock=1&endblock=99999999&page=1&sort=asc&limit=1${
+      !blockScoutChains.has(chain) ? '&offset=1' : ''
+    }`;
   const resp = await axios.get(url);
 
   const block = resp.data.result[0].blockNumber;
   const timestamp = resp.data.result[0].timeStamp;
-
-  console.log(`Creation block: ${block} - timestamp: ${timestamp}`);
-  return timestamp;
-};
-
-const getCreationTimestampBlockScoutScraping = async (vaultAddress, explorerUrl, chain) => {
-  var url = explorerUrl + `/address/${vaultAddress}`;
-
-  let resp = await axios.get(url);
-
-  let tx = resp.data.split(`<a data-test="transaction_hash_link" href="/`)[1].split(`"`)[0];
-
-  let txResp = await axios.get(`${explorerUrl}/${tx}/internal-transactions`);
-
-  let block = txResp.data.split(`<a class="transaction__link" href="/block/`)[1].split(`"`)[0];
-
-  const rpc = chainRpcs[chain];
-  let web3 = new Web3(rpc);
-  let timestamp = (await web3.eth.getBlock(block)).timestamp;
 
   console.log(`Creation block: ${block} - timestamp: ${timestamp}`);
   return timestamp;
@@ -92,18 +76,11 @@ const getCreationTimestampHarmonyRpc = async (vaultAddress, chain) => {
 };
 
 const getTimestamp = async (vaultAddress, chain) => {
-  if (blockScoutChainsTimeout.has(chain)) {
-    console.log('BlockScout explorer detected for this chain, proceeding to scrape');
-    return await getCreationTimestampBlockScoutScraping(
-      vaultAddress,
-      explorerApiUrls[chain],
-      chain
-    );
-  } else if (harmonyRpcChains.has(chain)) {
+  if (harmonyRpcChains.has(chain)) {
     console.log('Using Harmony RPC method for this chain');
     return await getCreationTimestampHarmonyRpc(vaultAddress, chain);
   } else {
-    return await getCreationTimestamp(vaultAddress, explorerApiUrls[chain]);
+    return await getCreationTimestamp(vaultAddress, explorerApiUrls[chain], chain);
   }
 };
 

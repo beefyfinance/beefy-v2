@@ -1946,7 +1946,8 @@
     "earnContractAddress": "0xE63aCEbE35265896cC6E8BdB8eCC0640a1807141",
     "oracle": "lps",
     "oracleId": "swapfish-fish-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "swapfish",
     "assets": ["FISH", "USDC"],
     "risks": [
