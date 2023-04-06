@@ -382,11 +382,17 @@ function addVaultToState(
   }
 
   const depositToken = getDepositTokenFromLegacyVaultConfig(selectChainById(state, chainId), vault);
+
   if (sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()] === undefined) {
     sliceState.byChainId[chainId].byId[depositToken.id] = depositToken.address.toLowerCase();
     sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(depositToken.address);
     sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()] = depositToken;
+  } else {
+    // Vault oracleId takes precedence over address book oracleId
+    sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()].oracleId =
+      depositToken.oracleId;
   }
+
   if (
     sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()].providerId ===
     undefined

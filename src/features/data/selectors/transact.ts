@@ -1,7 +1,7 @@
 import { BeefyState } from '../../../redux-types';
 import { createSelector } from '@reduxjs/toolkit';
 import { ChainEntity } from '../entities/chain';
-import { first } from 'lodash';
+import { first } from 'lodash-es';
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectWalletAddressIfKnown } from './wallet';
 import { selectUserBalanceOfToken } from './balance';

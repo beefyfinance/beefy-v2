@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/styles';
 import { useTranslation } from 'react-i18next';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 import { useInView } from 'react-intersection-observer';
 import { Section } from '../../../../components/Section';
 import { styles } from './styles';

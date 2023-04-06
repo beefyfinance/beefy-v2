@@ -1,11 +1,15 @@
-import { Provider, ExternalProvider } from '@ethersproject/providers';
-
 declare module '@siddomains/sidjs' {
-  export type SIDOptions = {
-    networkId: number;
-    provider: Provider | ExternalProvider;
-    sidAddress?: string;
-  };
+  import { Provider, ExternalProvider } from '@ethersproject/providers';
+
+  export type SIDOptions =
+    | {
+        provider: Provider | ExternalProvider;
+        networkId: number;
+      }
+    | {
+        provider: Provider | ExternalProvider;
+        sidAddress: string;
+      };
 
   // eslint-disable-next-line no-restricted-syntax
   export default class SID {

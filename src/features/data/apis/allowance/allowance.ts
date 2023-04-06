@@ -6,7 +6,7 @@ import { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
 import { BoostEntity } from '../../entities/boost';
-import { chunk } from 'lodash';
+import { chunk } from 'lodash-es';
 import { isTokenErc20, TokenEntity, TokenErc20 } from '../../entities/token';
 import { FetchAllAllowanceResult, IAllowanceApi } from './allowance-types';
 import { selectTokenByAddress } from '../../selectors/tokens';

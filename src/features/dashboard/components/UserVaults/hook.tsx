@@ -1,4 +1,4 @@
-import { sortBy } from 'lodash';
+import { sortBy } from 'lodash-es';
 import { useState, useCallback, useMemo } from 'react';
 import { useAppSelector } from '../../../../store';
 import { selectUserVaultsPnl } from '../../../data/selectors/balance';

@@ -5,6 +5,7 @@ import { Debug } from './Debug';
 import { useTranslation } from 'react-i18next';
 import { PROVIDERS } from '../OnRamp/providers';
 import { featureFlag_debugOnRamp } from '../../../data/utils/feature-flags';
+import { getOnRampProviderLogo } from '../../../../helpers/onrampProviderSrc';
 
 const useStyles = makeStyles(styles);
 
@@ -26,12 +27,7 @@ export const Introduction = memo(function () {
         <div className={classes.poweredByLabel}>{t('OnRamp-Intro-PoweredBy')}</div>
         <div className={classes.poweredByLogos}>
           {Object.entries(PROVIDERS).map(([key, provider]) => (
-            <img
-              key={key}
-              src={require(`../../../../images/onramp-providers/logos/${key}.svg`).default}
-              alt={provider.title}
-              height="32"
-            />
+            <img key={key} src={getOnRampProviderLogo(key)} alt={provider.title} height="32" />
           ))}
         </div>
       </div>

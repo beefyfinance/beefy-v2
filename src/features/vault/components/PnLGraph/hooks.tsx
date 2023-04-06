@@ -9,7 +9,7 @@ import {
 } from '../../../data/selectors/analytics';
 import { getInvestorTimeserie } from '../../../../helpers/timeserie';
 import { eachDayOfInterval, isAfter } from 'date-fns';
-import { maxBy, minBy } from 'lodash';
+import { maxBy, minBy } from 'lodash-es';
 import { TimeBucketType } from '../../../data/apis/analytics/analytics-types';
 import { selectVaultById, selectVaultPricePerFullShare } from '../../../data/selectors/vaults';
 import {
@@ -80,9 +80,7 @@ export const usePnLChartData = (
       );
       return () => clearTimeout(handleUnderlyingToUsd);
     }
-
   }, [dispatch, sharesStatus, underlyingStatus, timebucket, productKey, vaultId]);
-
 
   const isLoading = useMemo(() => {
     return underlyingStatus !== 'fulfilled' || sharesStatus !== 'fulfilled';
@@ -115,7 +113,6 @@ export const usePnLChartData = (
       }
     }
 
-
     // This save us from re-rendering when data is loading
     // We need to make sure this object is not modified elsewhere
     return NO_CHART_DATA;
@@ -130,7 +127,6 @@ export const usePnLChartData = (
     sharesStatus,
     underlyingStatus,
     timebucket,
-
   ]);
 
   return { chartData, isLoading };

@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
+import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 
 const useStyles = makeStyles(styles);
 
@@ -24,7 +25,7 @@ const IconWithChain = memo<{ chainId: ChainEntity['id']; label: string; classNam
       <div className={clsx(classes.iconWithChain, className)}>
         <img
           alt=""
-          src={require(`../../../../../../images/networks/${chainId}.svg`).default}
+          src={getNetworkSrc(chainId)}
           width={24}
           height={24}
           className={classes.iconWithChainIcon}

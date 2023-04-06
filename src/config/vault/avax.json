@@ -5328,7 +5328,8 @@
     "earnContractAddress": "0xd38D82962a6d027B69e2503b6672f291E089421b",
     "oracle": "tokens",
     "oracleId": "sAVAX",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "aave",
     "assets": ["sAVAX"],
     "risks": [

@@ -26,7 +26,7 @@ import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
 import { KeysOfType } from '../utils/types-utils';
 import { getTopNArray } from '../utils/array-utils';
-import { sortBy } from 'lodash';
+import { sortBy } from 'lodash-es';
 import { createSelector } from '@reduxjs/toolkit';
 import { selectChainById } from './chains';
 import { selectVaultPnl } from './analytics';

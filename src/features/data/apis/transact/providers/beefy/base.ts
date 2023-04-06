@@ -20,7 +20,7 @@ import {
   TokenErc20,
   TokenNative,
 } from '../../../../entities/token';
-import { first } from 'lodash';
+import { first } from 'lodash-es';
 import { ZapEntityBeefy } from '../../../../entities/zap';
 import {
   InputTokenAmount,

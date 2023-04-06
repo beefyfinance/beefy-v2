@@ -14,7 +14,7 @@ import { usePnLChartData } from '../../hooks';
 import { PnLTooltip } from '../PnLTooltip';
 import { makeStyles, Theme, useMediaQuery } from '@material-ui/core';
 import { GraphLoader } from '../../../GraphLoader';
-import { max } from 'lodash';
+import { max } from 'lodash-es';
 import { formatUnderlyingTick, formatUsdTick, formatDateTimeTick, TIME_BUCKET } from './helpers';
 import { Legend } from '../Legend';
 import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../../helpers/graph';

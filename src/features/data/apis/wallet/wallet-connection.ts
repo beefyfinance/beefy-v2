@@ -1,6 +1,6 @@
 import Web3 from 'web3';
 import { ChainEntity } from '../../entities/chain';
-import { find, sample, uniq } from 'lodash';
+import { find, sample, uniq } from 'lodash-es';
 import { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types';
 import { maybeHexToNumber } from '../../../../helpers/format';
 import { isHexStrict, numberToHex } from 'web3-utils';
@@ -13,6 +13,9 @@ import { ConnectOptions } from '@web3-onboard/core/dist/types';
 import { createEIP1193Provider, WalletInit } from '@web3-onboard/common';
 import { customInjectedWallets } from './custom-injected-wallets';
 import { createWeb3Instance } from '../../../../helpers/web3';
+import appIcon from '../../../../images/bifi-logos/header-logo-notext.svg';
+import appLogo from '../../../../images/bifi-logos/header-logo.svg';
+import { getNetworkSrc } from '../../../../helpers/networkSrc';
 
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | null;
@@ -126,8 +129,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       },
       appMetadata: {
         name: 'Beefy Finance',
-        icon: require(`../../../../images/bifi-logos/header-logo-notext.svg`).default,
-        logo: require(`../../../../images/bifi-logos/header-logo.svg`).default,
+        icon: appIcon,
+        logo: appLogo,
         description:
           'Beefy is a Decentralized, Multichain Yield Optimizer that allows its users to earn compound interest on their crypto holdings. Beefy earns you the highest APYs with safety and efficiency in mind.',
         gettingStartedGuide: 'https://docs.beefy.finance/',
@@ -138,7 +141,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         label: chain.name,
         rpcUrl: sample(chain.rpc),
         blockExplorerUrl: chain.explorerUrl,
-        icon: require(`../../../../images/networks/${chain.id}.svg`).default,
+        icon: getNetworkSrc(chain.id),
       })),
       accountCenter: {
         desktop: {

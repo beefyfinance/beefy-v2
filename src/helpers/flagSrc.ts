@@ -1,18 +1,12 @@
-const requireContext = require.context('../images/currency-flags', false, /\.png$/);
-const currencyCodeToPath = Object.fromEntries(
-  requireContext.keys().map(path => [path.substring(2, path.lastIndexOf('.')).toLowerCase(), path])
-);
-const currencyCache = {};
+import { createGlobLoader } from './globLoader';
 
-export function getCurrencyFlag(currencyCode: string): string | undefined {
-  const id = currencyCode.toLowerCase();
+const pathToUrl = import.meta.glob('../images/currency-flags/*.png', {
+  as: 'url',
+  eager: true,
+});
 
-  if (id in currencyCache) {
-    return currencyCache[id];
-  }
+const keyToUrl = createGlobLoader(pathToUrl);
 
-  if (id in currencyCodeToPath) {
-    const asset = requireContext(currencyCodeToPath[id]).default;
-    return (currencyCache[id] = asset);
-  }
+export function getCurrencyFlag(currencyCode: string) {
+  return keyToUrl([currencyCode]);
 }

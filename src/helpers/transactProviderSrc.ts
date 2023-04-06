@@ -1,18 +1,12 @@
-const requireContext = require.context('../images/transact-providers', false, /\.svg$/);
-const providerToPath = Object.fromEntries(
-  requireContext.keys().map(path => [path.substring(2, path.lastIndexOf('.')).toLowerCase(), path])
-);
-const providerCache = {};
+import { createGlobLoader } from './globLoader';
 
-export function getTransactProviderIcon(provider: string): string | undefined {
-  const id = provider.toLowerCase();
+const pathToUrl = import.meta.glob('../images/transact-providers/*.svg', {
+  as: 'url',
+  eager: true,
+});
 
-  if (id in providerCache) {
-    return providerCache[id];
-  }
+const keyToUrl = createGlobLoader(pathToUrl);
 
-  if (id in providerToPath) {
-    const asset = requireContext(providerToPath[id]).default;
-    return (providerCache[id] = asset);
-  }
+export function getTransactProviderIcon(provider: string) {
+  return keyToUrl([provider]);
 }

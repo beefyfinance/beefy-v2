@@ -4,7 +4,7 @@ import { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import { TokenEntity } from '../entities/token';
 import { createSelector } from '@reduxjs/toolkit';
 import { ChartStat } from '../reducers/historical-types';
-import { mapValues } from 'lodash';
+import { mapValues } from 'lodash-es';
 import { selectVaultShouldShowInterest } from './data-loader';
 import { TIME_BUCKETS } from '../../vault/components/HistoricGraph/utils';
 

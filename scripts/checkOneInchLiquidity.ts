@@ -283,7 +283,7 @@ export async function getOneInchApi(
 
 async function fetchPricesByType(type: 'prices' | 'lps'): Promise<BeefyAPITokenPricesResponse> {
   const response = await fetch(
-    `${process.env.REACT_APP_API_URL || 'https://api.beefy.finance'}/${type}?_=${Date.now()}`
+    `${process.env.VITE_API_URL || 'https://api.beefy.finance'}/${type}?_=${Date.now()}`
   );
 
   return response.json();
@@ -818,10 +818,7 @@ async function exportTokenStatus() {
 }
 
 async function start() {
-  if (
-    !process.env.REACT_APP_ONE_INCH_API ||
-    process.env.REACT_APP_ONE_INCH_API === 'https://api.1inch.io'
-  ) {
+  if (!process.env.VITE_ONE_INCH_API || process.env.VITE_ONE_INCH_API === 'https://api.1inch.io') {
     throw new Error('This script will fail due to rate limiting using the default 1inch API.');
   }
 

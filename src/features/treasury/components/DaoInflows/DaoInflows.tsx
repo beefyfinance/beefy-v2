@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
-import { sortBy } from 'lodash';
+import { sortBy } from 'lodash-es';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ContentLoading } from '../../../../components/ContentLoading';
@@ -11,6 +11,7 @@ import { ChainEntity } from '../../../data/entities/chain';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectTvlByChain } from '../../../data/selectors/tvl';
 import { styles } from './styles';
+import { getNetworkSrc } from '../../../../helpers/networkSrc';
 
 const useStyles = makeStyles(styles);
 
@@ -54,11 +55,7 @@ const Chain = memo<ChainProps>(function ({ chainId, value }) {
   const chain = useAppSelector(state => selectChainById(state, chainId));
   return (
     <div className={classes.chain}>
-      <img
-        className={classes.chainLogo}
-        alt={chain.id}
-        src={require(`../../../../images/networks/${chain.id}.svg`).default}
-      />
+      <img className={classes.chainLogo} alt={chain.id} src={getNetworkSrc(chain.id)} />
       <div>
         <div className={classes.chainText}>{chain.name}</div>
         <>

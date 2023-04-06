@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { uniqBy } from 'lodash';
+import { uniqBy } from 'lodash-es';
 import { Dispatch } from 'redux';
 import boostAbi from '../../../config/abi/boost.json';
 import erc20Abi from '../../../config/abi/erc20.json';

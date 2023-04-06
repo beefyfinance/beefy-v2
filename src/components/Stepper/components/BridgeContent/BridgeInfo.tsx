@@ -17,6 +17,8 @@ import { ChainEntity } from '../../../../features/data/entities/chain';
 import { Button } from '../../../Button';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
 import { walletActions } from '../../../../features/data/actions/wallet-actions';
+import { getNetworkSrc } from '../../../../helpers/networkSrc';
+import iconCheck from '../../../../images/icons/check.svg';
 
 const useStyles = makeStyles(styles);
 
@@ -24,16 +26,11 @@ const Chain = memo(({ chain }: { chain: ChainEntity }) => {
   const classes = useStyles();
   return (
     <Box className={classes.chainStatusContainer}>
-      <img
-        className={classes.icon}
-        alt={chain.id}
-        src={require(`../../../../images/networks/${chain.id}.svg`).default}
-      />
+      <img className={classes.icon} alt={chain.id} src={getNetworkSrc(chain.id)} />
       <div className={classes.chainName}>{chain.name}</div>
     </Box>
   );
 });
-
 export const FromChainStatus = memo(function () {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -47,13 +44,7 @@ export const FromChainStatus = memo(function () {
     }
 
     if (walletActionsStateResult === 'success') {
-      return (
-        <img
-          style={{ height: '16px' }}
-          alt="check"
-          src={require(`../../../../images/icons/check.svg`).default}
-        />
-      );
+      return <img style={{ height: '16px' }} alt="check" src={iconCheck} />;
     }
   }, [walletActionsStateResult]);
 
@@ -91,13 +82,7 @@ export const DestChainStatus = memo(function () {
 
   const StatusIcon = useMemo(() => {
     if (bridgeStatus === 'success') {
-      return (
-        <img
-          style={{ height: '16px' }}
-          alt="check"
-          src={require(`../../../../images/icons/check.svg`).default}
-        />
-      );
+      return <img style={{ height: '16px' }} alt="check" src={iconCheck} />;
     } else {
       return <CircularProgress size={20} />;
     }

@@ -6,6 +6,7 @@ import { BIG_ZERO } from '../../helpers/big-number';
 import { formatBigUsd, formatPercent } from '../../helpers/format';
 import { styles } from './styles';
 import { TypeChart } from '../PieChart/PieChart';
+import { getNetworkSrc } from '../../helpers/networkSrc';
 
 interface TooltipProps {
   payload?: any;
@@ -32,11 +33,7 @@ export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type, act
           {data.key !== 'others' && (
             <>
               {type === 'chain' && (
-                <img
-                  className={classes.icon}
-                  src={require(`../../images/networks/${data.key}.svg`).default}
-                  alt={title}
-                />
+                <img className={classes.icon} src={getNetworkSrc(data.chainId)} alt={title} />
               )}
               {type === 'token' && (
                 <AssetsImage size={24} chainId={data.chainId} assetIds={data.assetIds} />

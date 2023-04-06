@@ -7,6 +7,7 @@ import { askForWalletConnection, doDisconnectWallet } from '../../../data/action
 import { selectWalletAddressIfKnown } from '../../../data/selectors/wallet';
 import { Section } from '../../../../components/Section';
 import { styles } from './styles';
+import iconEmptyState from '../../../../images/empty-state.svg';
 
 const useStyles = makeStyles(styles);
 
@@ -23,7 +24,6 @@ export const NoResults = memo(function () {
 type TextProps = PropsWithChildren<{
   text: string;
 }>;
-
 const Text = memo<TextProps>(function ({ text, children }) {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -31,11 +31,7 @@ const Text = memo<TextProps>(function ({ text, children }) {
     <Section>
       <div className={classes.container}>
         <div>
-          <img
-            className={classes.icon}
-            src={require('../../../../images/empty-state.svg').default}
-            alt="empty"
-          />
+          <img className={classes.icon} src={iconEmptyState} alt="empty" />
         </div>
         <div className={classes.textContainer}>
           <div className={classes.title}>{t('Dashboard-NoData')}</div>

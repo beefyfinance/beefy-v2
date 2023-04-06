@@ -4,7 +4,7 @@ import { ChainEntity } from '../../features/data/entities/chain';
 import { useAppSelector } from '../../store';
 import { selectTokenByAddressOrNull } from '../../features/data/selectors/tokens';
 import { AssetsImage, AssetsImageType } from '../AssetsImage';
-import { getSingleAssetSrc } from '../../helpers/singleAssetSrc';
+import { singleAssetExists } from '../../helpers/singleAssetSrc';
 import { selectFirstStandardVaultByDepositTokenAddress } from '../../features/data/selectors/vaults';
 
 export type TokenImageProps = {
@@ -21,7 +21,7 @@ export const TokenImage = memo<TokenImageProps>(function ({
 }) {
   const token = useAppSelector(state => selectTokenByAddressOrNull(state, chainId, tokenAddress));
   const haveAssetForToken = useMemo(() => {
-    return token && !!getSingleAssetSrc(token.id, token.chainId);
+    return token && singleAssetExists(token.id, token.chainId);
   }, [token]);
 
   return haveAssetForToken ? (

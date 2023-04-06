@@ -239,6 +239,9 @@ const theme = createTheme(
             '--onboard-connect-sidebar-progress-background': '#2e3151',
             '--onboard-link-color': '#999CB3',
           },
+          body: {
+            backgroundColor: '#1B1E31',
+          },
         },
       },
       MuiInputBase: {

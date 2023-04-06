@@ -1,18 +1,21 @@
-const requireContext = require.context('../images/onramp-providers/icons', false, /\.svg$/);
-const providerToPath = Object.fromEntries(
-  requireContext.keys().map(path => [path.substring(2, path.lastIndexOf('.')).toLowerCase(), path])
-);
-const providerCache = {};
+import { createGlobLoader } from './globLoader';
 
-export function getOnRampProviderIcon(provider: string): string | undefined {
-  const id = provider.toLowerCase();
+const iconPathToUrl = import.meta.glob('../images/onramp-providers/icons/*.svg', {
+  as: 'url',
+  eager: true,
+});
+const logoPathToUrl = import.meta.glob('../images/onramp-providers/icons/*.svg', {
+  as: 'url',
+  eager: true,
+});
 
-  if (id in providerCache) {
-    return providerCache[id];
-  }
+const iconKeyToUrl = createGlobLoader(iconPathToUrl);
+const logoKeyToUrl = createGlobLoader(logoPathToUrl);
 
-  if (id in providerToPath) {
-    const asset = requireContext(providerToPath[id]).default;
-    return (providerCache[id] = asset);
-  }
+export function getOnRampProviderIcon(provider: string) {
+  return iconKeyToUrl([provider]);
+}
+
+export function getOnRampProviderLogo(provider: string) {
+  return logoKeyToUrl([provider]);
 }

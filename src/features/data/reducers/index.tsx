@@ -32,6 +32,8 @@ import { treasurySlice } from './treasury';
 import { analyticsSlice } from './analytics';
 import { proposalsSlice } from './proposals';
 import { historicalSlice } from './historical';
+import { Reducer } from 'react';
+import { AnyAction } from '@reduxjs/toolkit';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -58,7 +60,7 @@ const userReducer = combineReducers<BeefyState['user']>({
   allowance: allowanceSlice.reducer,
   analytics: analyticsSlice.reducer,
   wallet: persistReducer(
-    { key: 'wallet', storage, whitelist: ['address', 'hideBalance', 'profilePictureUrl'] },
+    { key: 'wallet', storage, whitelist: ['address', 'hideBalance'] },
     walletSlice.reducer
   ),
   walletActions: walletActionsReducer,
@@ -66,12 +68,12 @@ const userReducer = combineReducers<BeefyState['user']>({
 const uiReducer = combineReducers<BeefyState['ui']>({
   filteredVaults: persistReducer({ key: 'filters', storage }, filteredVaultsSlice.reducer),
   theme: persistReducer({ key: 'theme', storage }, uiThemeSlice.reducer),
-  transact: transactReducer,
-  boost: boostSlice.reducer,
-  bridge: bridgeSlice.reducer,
+  transact: transactReducer as Reducer<BeefyState['ui']['transact'], AnyAction>,
+  boost: boostSlice.reducer as Reducer<BeefyState['ui']['boost'], AnyAction>,
+  bridge: bridgeSlice.reducer as Reducer<BeefyState['ui']['bridge'], AnyAction>,
   onRamp: onRamp.reducer,
   dataLoader: dataLoaderSlice.reducer,
-  stepperState: stepperSlice.reducer,
+  stepperState: stepperSlice.reducer as Reducer<BeefyState['ui']['stepperState'], AnyAction>,
   treasury: treasurySlice.reducer,
 });
 

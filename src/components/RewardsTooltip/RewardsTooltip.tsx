@@ -57,7 +57,7 @@ export const RewardsTooltipcontent = memo<RewardsTooltipContentProps>(function (
       <div className={classes.rewardsContainer}>
         {rewards.map(tokenRewards => {
           return (
-            <div>
+            <div key={tokenRewards.rewardToken}>
               <div className={classes.rewardsText}>
                 {formatBigNumber(tokenRewards.rewards)} {tokenRewards.rewardToken}
               </div>

@@ -9,7 +9,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 import { useInView } from 'react-intersection-observer';
 import { Vault } from '../../../Vault';
 import { VaultEntity } from '../../../../../data/entities/vault';

@@ -12,6 +12,7 @@ import { VaultIcon } from './components/VaultIcon';
 import { VaultTags } from './components/VaultTags';
 import { Link } from 'react-router-dom';
 import { punctuationWrap } from '../../helpers/string';
+import { getNetworkSrc } from '../../helpers/networkSrc';
 
 const useStyles = makeStyles(styles);
 
@@ -60,12 +61,7 @@ export const VaultNetwork = memo<VaultNetworkProps>(function VaultNetwork({ chai
 
   return (
     <div className={clsx(classes.vaultNetwork, className, classes[`vaultNetwork-${chainId}`])}>
-      <img
-        alt={chain.name}
-        src={require(`../../images/networks/${chainId}.svg`).default}
-        width={24}
-        height={24}
-      />
+      <img alt={chain.name} src={getNetworkSrc(chainId)} width={24} height={24} />
     </div>
   );
 });
