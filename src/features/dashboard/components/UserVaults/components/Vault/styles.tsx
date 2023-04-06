@@ -49,6 +49,6 @@ export const styles = (theme: Theme) => ({
     backgroundColor: 'rgba(209, 83, 71, 0.05)',
   },
   vaultRetired: {
-    backgroundColor: 'rgba(209,83,71,0.05)',
+    backgroundColor: '#242032',
   },
 });

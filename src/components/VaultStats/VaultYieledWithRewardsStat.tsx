@@ -46,7 +46,14 @@ export const VaultYieledWithRewardsStat = memo<VaultYieledStatProps>(function ({
   }, [rewards.length]);
 
   if (!vaultTimeline || !isLoaded) {
-    return <VaultValueStat label="Yield" value={'-'} loading={isLoaded ? true : false} />;
+    return (
+      <VaultValueStat
+        label="Yield"
+        showLabel={false}
+        value={'-'}
+        loading={isLoaded ? true : false}
+      />
+    );
   }
 
   return (
@@ -71,6 +78,7 @@ export const VaultYieledWithRewardsStat = memo<VaultYieledStatProps>(function ({
         </div>
       }
       subValue={formatBigUsd(totalYieldUsd)}
+      showLabel={false}
       loading={false}
     />
   );

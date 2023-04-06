@@ -16,7 +16,7 @@ export const Dashboard = memo(function () {
   return (
     <div className={classes.dashboard}>
       <DepositSummary />
-      {userVaults.length > 0 ? (
+      {userVaults.length !== 0 ? (
         <>
           <UserExposure />
           <UserVaults />

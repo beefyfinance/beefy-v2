@@ -6,9 +6,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(4,minmax(0, 1fr))',
     columnGap: '16px',
-    '& $stat': {
-      textAlign: 'right',
-    },
     [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: 'minmax(0, 1fr)',
       rowGap: '4px',
