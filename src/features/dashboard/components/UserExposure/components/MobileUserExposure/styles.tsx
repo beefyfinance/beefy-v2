@@ -5,6 +5,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.v2.cardBg,
     borderRadius: '8px',
     display: 'grid',
+    padding: '16px',
     [theme.breakpoints.only('md')]: {
       height: '120px',
     },

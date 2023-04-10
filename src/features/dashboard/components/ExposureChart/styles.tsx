@@ -7,6 +7,9 @@ export const styles = (theme: Theme) => ({
     [theme.breakpoints.down('md')]: {
       padding: '16px',
     },
+    [theme.breakpoints.down('sm')]: {
+      padding: '0px',
+    },
   },
   infoContainer: {
     display: 'flex',

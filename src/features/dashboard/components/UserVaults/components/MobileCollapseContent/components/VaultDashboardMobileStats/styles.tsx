@@ -10,14 +10,14 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
   },
-  triggerContainer: {
-    display: 'flex',
-    columnGap: '8px',
-    alignItems: 'center',
-  },
   value: {
     ...theme.typography['body-sm'],
     color: theme.palette.text.middle,
+  },
+  valueContainer: {
+    display: 'flex',
+    columnGap: '8px',
+    alignItems: 'center',
   },
   label: {
     ...theme.typography['body-sm'],

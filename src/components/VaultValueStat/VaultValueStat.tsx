@@ -42,38 +42,22 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
 
   return (
     <VaultLabelledStat
-      triggerClassName={triggerClassName}
+      triggerClassName={clsx(classes.value, {
+        [classes.blurValue]: blur,
+        [classes.boostedValue]: boosted,
+        [triggerClassName]: triggerClassName,
+      })}
       showLabel={showLabel}
       label={t(label)}
       tooltip={loading ? null : tooltip}
-      className={contentClassName}
+      className={className}
+      contentClassName={contentClassName}
       labelClassName={labelClassName}
+      subValue={subValue}
+      blur={blur}
+      boosted={boosted}
     >
-      {loading ? (
-        '...'
-      ) : (
-        <>
-          <div
-            className={clsx(classes.value, {
-              [classes.blurValue]: blur,
-              [classes.boostedValue]: boosted,
-              [className]: className,
-            })}
-          >
-            {shouldTranslate ? t(`${value}`) : value}
-          </div>
-          {subValue ? (
-            <div
-              className={clsx(classes.subValue, {
-                [classes.blurValue]: blur,
-                [classes.lineThroughValue]: boosted,
-              })}
-            >
-              {subValue}
-            </div>
-          ) : null}
-        </>
-      )}
+      {loading ? '...' : <>{shouldTranslate ? t(`${value}`) : value}</>}
     </VaultLabelledStat>
   );
 });

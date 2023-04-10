@@ -30,48 +30,48 @@ export const VaultDashboardMobileStats = memo(function ({
     <RowMobile>
       <div className={classes.inner}>
         <VaultAtDepositStat
-          contentClassName={classes.statMobile}
-          triggerClassName={classes.triggerContainer}
-          className={classes.value}
+          className={classes.statMobile}
+          contentClassName={classes.valueContainer}
+          triggerClassName={classes.value}
           labelClassName={classes.label}
           vaultId={vaultId}
         />
         <VaultNowStat
-          contentClassName={classes.statMobile}
-          triggerClassName={classes.triggerContainer}
-          className={classes.value}
+          className={classes.statMobile}
+          contentClassName={classes.valueContainer}
+          triggerClassName={classes.value}
           labelClassName={classes.label}
           vaultId={vaultId}
         />
         {rewards.length !== 0 && (
           <VaultRewardsStat
-            contentClassName={classes.statMobile}
-            triggerClassName={classes.triggerContainer}
-            className={classes.value}
+            className={classes.statMobile}
+            contentClassName={classes.valueContainer}
+            triggerClassName={classes.value}
             labelClassName={classes.label}
             vaultId={vaultId}
           />
         )}
         {!isGovVault(vault) && (
           <VaultYieledStat
-            contentClassName={classes.statMobile}
-            triggerClassName={classes.triggerContainer}
-            className={classes.value}
+            className={classes.statMobile}
+            contentClassName={classes.valueContainer}
+            triggerClassName={classes.value}
             labelClassName={classes.label}
             vaultId={vaultId}
           />
         )}
         <VaultYearlyStat
-          contentClassName={classes.statMobile}
-          triggerClassName={classes.triggerContainer}
-          className={classes.value}
+          className={classes.statMobile}
+          contentClassName={classes.valueContainer}
+          triggerClassName={classes.value}
           labelClassName={classes.label}
           vaultId={vaultId}
         />
         <VaultDailyUsdStat
-          contentClassName={classes.statMobile}
-          triggerClassName={classes.triggerContainer}
-          className={classes.value}
+          className={classes.statMobile}
+          contentClassName={classes.valueContainer}
+          triggerClassName={classes.value}
           labelClassName={classes.label}
           vaultId={vaultId}
         />

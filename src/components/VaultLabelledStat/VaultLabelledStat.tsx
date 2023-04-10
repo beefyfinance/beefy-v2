@@ -15,6 +15,10 @@ export type VaultLabelledStatProps = {
   className?: string;
   triggerClassName?: string;
   labelClassName?: string;
+  subValue?: ReactNode;
+  blur?: boolean;
+  boosted?: boolean;
+  contentClassName?: string;
 };
 export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabelledStat({
   label,
@@ -24,6 +28,10 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
   className,
   triggerClassName,
   labelClassName,
+  subValue,
+  blur,
+  boosted,
+  contentClassName,
 }) {
   const classes = useStyles();
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
@@ -39,11 +47,35 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
         </div>
       ) : null}
       {tooltip ? (
-        <Tooltip triggerClass={triggerClassName} content={tooltip}>
-          {children}
-        </Tooltip>
+        <div className={contentClassName}>
+          <Tooltip triggerClass={triggerClassName} content={tooltip}>
+            {children}
+          </Tooltip>
+          {subValue && (
+            <div
+              className={clsx(classes.subValue, {
+                [classes.blurValue]: blur,
+                [classes.lineThroughValue]: boosted,
+              })}
+            >
+              {subValue}
+            </div>
+          )}
+        </div>
       ) : (
-        <div className={triggerClassName}>{children}</div>
+        <div>
+          <div className={triggerClassName}>{children}</div>
+          {subValue && (
+            <div
+              className={clsx(classes.subValue, {
+                [classes.blurValue]: blur,
+                [classes.lineThroughValue]: boosted,
+              })}
+            >
+              {subValue}
+            </div>
+          )}
+        </div>
       )}
     </div>
   );

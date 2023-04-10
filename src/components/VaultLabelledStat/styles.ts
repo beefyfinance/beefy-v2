@@ -19,4 +19,17 @@ export const styles = (theme: Theme) => ({
       height: '16px',
     },
   },
+  subValue: {
+    ...theme.typography['body-sm'],
+    color: theme.palette.text.dark,
+  },
+  blurValue: {
+    filter: 'blur(.5rem)',
+  },
+  boostedValue: {
+    color: '#DB8332',
+  },
+  lineThroughValue: {
+    textDecoration: 'line-through',
+  },
 });

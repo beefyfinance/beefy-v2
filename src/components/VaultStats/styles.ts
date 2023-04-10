@@ -61,7 +61,7 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     width: '100%',
     gridTemplateColumns: 'minmax(0, 1fr)',
-    columnGap: '12px',
+    columnGap: '8px',
     '& $column': {
       marginLeft: 'auto',
       textAlign: 'right' as const,

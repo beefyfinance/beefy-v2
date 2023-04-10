@@ -7,6 +7,8 @@ import { isGovVault, VaultEntity, VaultGov } from '../entities/vault';
 import { selectActiveVaultBoostIds, selectAllVaultBoostIds, selectBoostById } from './boosts';
 import createCachedSelector from 're-reselect';
 import {
+  selectChainNativeToken,
+  selectChainWrappedNativeToken,
   selectHasBreakdownData,
   selectIsTokenStable,
   selectLpBreakdownByAddress,
@@ -487,12 +489,15 @@ export const selectTokenExposure = (state: BeefyState) => {
   const vaultIds = selectUserDepositedVaultIds(state);
   return vaultIds.reduce((totals, vaultId) => {
     const vault = selectVaultById(state, vaultId);
+    const wnative = selectChainWrappedNativeToken(state, vault.chainId);
+    const native = selectChainNativeToken(state, vault.chainId);
     if (vault.assetIds.length === 1) {
-      totals[vault.assetIds[0]] = {
+      const token = vault.assetIds[0] === wnative.oracleId ? native.id : vault.assetIds[0];
+      totals[token] = {
         value: (totals[vault.assetIds[0]]?.value || BIG_ZERO).plus(
           selectUserVaultDepositInUsd(state, vaultId)
         ),
-        assetIds: [vault.assetIds[0]],
+        assetIds: [token],
         chainId: vault.chainId,
       };
     } else {
@@ -509,9 +514,10 @@ export const selectTokenExposure = (state: BeefyState) => {
         );
         const { assets } = selectUserLpBreakdownBalance(state, vault, breakdown);
         for (const asset of assets) {
-          totals[asset.id] = {
-            value: (totals[asset.id]?.value || BIG_ZERO).plus(asset.userValue),
-            assetIds: [asset.id],
+          const assetId = asset.id === wnative.id ? native.id : asset.id;
+          totals[assetId] = {
+            value: (totals[assetId]?.value || BIG_ZERO).plus(asset.userValue),
+            assetIds: [assetId],
             chainId: vault.chainId,
           };
         }
