@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => ({
     position: 'relative' as const,
     color: '#9595B2',
     background: theme.palette.background.v2.cardBg,
-    padding: '24px',
+    padding: '24px 16px',
     textDecoration: 'none',
     '&:last-child': {
       borderBottom: 0,
