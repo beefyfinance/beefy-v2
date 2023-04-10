@@ -23,6 +23,9 @@ export const styles = (theme: Theme) => ({
     [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: 'minmax(0, 80fr) minmax(0, 20fr)',
     },
+    '&:hover': {
+      cursor: 'pointer',
+    },
   },
   network: {
     border: 'none',

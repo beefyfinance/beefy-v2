@@ -14,7 +14,7 @@ export function useSortedDashboardVaults() {
 
   const [sortedOptions, setSortedOptions] = useState<SortedOptions>({
     sortDirection: 'desc',
-    sort: 'pnl',
+    sort: 'now',
   });
 
   const handleSearchText = useCallback(e => setSearchText(e.target.value), []);

@@ -10,6 +10,7 @@ import { Vault } from './components/Vault';
 import { useSortedDashboardVaults } from './hook';
 import { VaultEntity } from '../../../data/entities/vault';
 import { NoVaults } from './components/NoVaults';
+import { Theme, useMediaQuery } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 
@@ -25,11 +26,14 @@ export const UserVaults = memo(function () {
     handleClearText,
   } = useSortedDashboardVaults();
 
+  const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+
+  const subTitle = useMemo(() => {
+    return mdDown ? 'Dashboard-Your-Vaults-Subtitle-Mobile' : 'Dashboard-Your-Vaults-Subtitle';
+  }, [mdDown]);
+
   return (
-    <Section
-      title={t('Dashboard-Your-Vaults-Title')}
-      subTitle={t('Dashboard-Your-Vaults-Subtitle')}
-    >
+    <Section title={t('Dashboard-Your-Vaults-Title')} subTitle={t(subTitle)}>
       <Filter
         sortOptions={sortedOptions}
         handleSort={handleSort}
