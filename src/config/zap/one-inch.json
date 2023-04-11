@@ -155,7 +155,8 @@
       "USDT-hUSDT LP",
       "USX",
       "wUSDR",
-      "MLP"
+      "MLP",
+      "DAI+"
     ],
     "blockedVaults": ["aavev3-op-eth"]
   },

@@ -1,4 +1,12 @@
 {
+  "overnight": {
+    "text": "Overnight Finance is an asset management protocol offering passive yield products based on delta-neutral strategies, primarily for conservative stablecoin investors. Overnight's core products include USD+  and DAI+: a USDC-pegged and DAI-pegged yield bearing stablecoins, 100% collaterized, mostly by delta-neutral strategies.",
+    "website": "https://overnight.fi/",
+    "social": {
+      "discord": "https://discord.gg/overnight-fi",
+      "twitter": "https://twitter.com/overnight_fi"
+    }
+  },
   "carbon": {
     "text": "Carbon is a Decentralized browser with AdBlock, VPN, Crypto Wallet, 100% Privacy and many other features.",
     "website": "https://carbon.website/",

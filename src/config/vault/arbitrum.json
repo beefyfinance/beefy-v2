@@ -1386,7 +1386,7 @@
     "earnContractAddress": "0x63934e5aBA120f2BAE2418711Ef0f20F7DB26CD2",
     "oracle": "lps",
     "oracleId": "curve-arb-f-fraxbp",
-    "status": "eol",
+    "status": "active",
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["FRAX", "USDC"],
@@ -1402,7 +1402,7 @@
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-41/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-41/withdraw",
     "network": "arbitrum",
-    "createdAt": 1669279735
+    "createdAt": 1681114818
   },
   {
     "id": "arbi-bifi-gov",
