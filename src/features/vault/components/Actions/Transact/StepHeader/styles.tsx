@@ -22,6 +22,13 @@ export const styles = (theme: Theme) => ({
       background: '#363B63',
     },
   },
+  backLink: {
+    flexShrink: 0,
+    flexGrow: 0,
+    display: 'flex',
+    columnGap: '12px',
+    cursor: 'pointer',
+  },
   backButton: {
     margin: 0,
     padding: 0,
@@ -32,12 +39,6 @@ export const styles = (theme: Theme) => ({
     boxShadow: 'none',
     cursor: 'pointer',
     border: 'none',
-    color: '#F5F5FF',
-    flexShrink: 0,
-    flexGrow: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   backIcon: {
     fill: '#F5F5FF',
