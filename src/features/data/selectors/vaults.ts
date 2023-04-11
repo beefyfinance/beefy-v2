@@ -9,7 +9,13 @@ import {
   VaultEntity,
   VaultGov,
 } from '../entities/vault';
-import { selectIsBeefyToken, selectIsTokenBluechip, selectIsTokenStable } from './tokens';
+import {
+  selectChainNativeToken,
+  selectIsBeefyToken,
+  selectIsLSDToken,
+  selectIsTokenBluechip,
+  selectIsTokenStable,
+} from './tokens';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE } from '../../../helpers/big-number';
 import { differenceWith, first, isEqual } from 'lodash-es';
@@ -205,6 +211,19 @@ export const selectIsVaultBeefy = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
     return vault.assetIds.some(assetId => selectIsBeefyToken(state, assetId));
+  },
+  res => res
+);
+
+export const selectIsVaultLsd = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+    const nativeToken = selectChainNativeToken(state, vault.chainId);
+    const assetsWithoutNative = vault.assetIds.filter(assetId => assetId !== nativeToken.oracleId);
+    return (
+      assetsWithoutNative.length !== 0 &&
+      assetsWithoutNative.every(assetId => selectIsLSDToken(state, assetId))
+    );
   },
   res => res
 );

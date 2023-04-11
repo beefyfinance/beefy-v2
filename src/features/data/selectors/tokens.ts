@@ -147,6 +147,22 @@ export const selectIsBeefyToken = (_: BeefyState, tokenId: TokenEntity['id']) =>
   );
 };
 
+export const selectIsLSDToken = (_: BeefyState, tokenId: TokenEntity['id']) => {
+  return [
+    'stETH',
+    'wstETH',
+    'rETH',
+    'sETH',
+    'frxETH',
+    'sfrxETH',
+    'cbETH',
+    'stMATIC',
+    'MaticX',
+    'BNBx',
+    'ankrBNB',
+  ].includes(tokenId);
+};
+
 export const selectIsTokenBluechip = (_: BeefyState, tokenId: TokenEntity['id']) => {
   return bluechipTokens.includes(tokenId);
 };

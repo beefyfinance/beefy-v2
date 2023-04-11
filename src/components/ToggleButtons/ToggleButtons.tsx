@@ -2,6 +2,7 @@ import { FC, memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
+import { ExtraOptionsList } from './components/ExtraOptionsList';
 
 const useStyles = makeStyles(styles);
 
@@ -15,6 +16,7 @@ export type ToggleButtonProps = {
 export type ToggleButtonsProps = {
   value: string;
   options: Record<string, string>;
+  extraOptions?: Record<string, string>;
   fullWidth?: boolean;
   buttonsClass?: string;
   buttonClass?: string;
@@ -46,6 +48,7 @@ export const ToggleButton = memo<ToggleButtonProps>(function ({
 export const ToggleButtons = memo<ToggleButtonsProps>(function ({
   value,
   options,
+  extraOptions,
   fullWidth,
   buttonsClass,
   buttonClass,
@@ -60,6 +63,7 @@ export const ToggleButtons = memo<ToggleButtonsProps>(function ({
     () => Object.entries(options).map(([value, label]) => ({ value, label })),
     [options]
   );
+
   const handleClick = useCallback(
     newValue => {
       if (untoggleValue) {
@@ -89,6 +93,16 @@ export const ToggleButtons = memo<ToggleButtonsProps>(function ({
           })}
         />
       ))}
+      {extraOptions && (
+        <ExtraOptionsList
+          ButtonComponent={ButtonComponent}
+          extraOptions={extraOptions}
+          onClick={handleClick}
+          value={value}
+          buttonClass={buttonClass}
+          selectedClass={selectedClass}
+        />
+      )}
     </div>
   );
 });
