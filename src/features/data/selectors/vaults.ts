@@ -215,19 +215,6 @@ export const selectIsVaultBeefy = createSelector(
   res => res
 );
 
-export const selectIsVaultLsd = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => {
-    const vault = selectVaultById(state, vaultId);
-    const allNativeTokens = selectAllChainsNativeAssetsIsd(state);
-    const assetsWithoutNative = vault.assetIds.filter(assetId => !allNativeTokens.has(assetId));
-    return (
-      assetsWithoutNative.length !== 0 &&
-      assetsWithoutNative.every(assetId => selectIsLSDToken(state, assetId))
-    );
-  },
-  res => res
-);
-
 export const selectIsVaultNoIL = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
@@ -235,7 +222,6 @@ export const selectIsVaultNoIL = createSelector(
     return (
       vault.risks.includes('IL_NONE') &&
       vault.assetIds.length > 1 &&
-      !selectIsVaultLsd(state, vaultId) &&
       !selectIsVaultStable(state, vaultId)
     );
   },

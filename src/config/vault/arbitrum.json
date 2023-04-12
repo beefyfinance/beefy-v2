@@ -2105,7 +2105,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_NONE",
+      "IL_LOW",
       "MCAP_MEDIUM",
       "AUDIT",
       "CONTRACTS_VERIFIED"

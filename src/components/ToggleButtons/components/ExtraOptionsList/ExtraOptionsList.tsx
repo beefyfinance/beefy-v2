@@ -46,9 +46,17 @@ export const ExtraOptionsList = memo<ExtraOptionsListProps>(function ({
     [extraOptions]
   );
 
+  const extraListOptionSelected = useMemo(() => {
+    return Object.keys(extraOptions).includes(value);
+  }, []);
+
   return (
     <ClickAwayListener onClickAway={handleClose} mouseEvent="onMouseDown" touchEvent="onTouchStart">
-      <div className={classes.container} onClick={handleToggle} ref={anchorEl}>
+      <div
+        className={clsx(classes.container, { [classes.selectedList]: extraListOptionSelected })}
+        onClick={handleToggle}
+        ref={anchorEl}
+      >
         {t('More')}
         <MoreVertRounded className={classes.icon} />
         <Floating

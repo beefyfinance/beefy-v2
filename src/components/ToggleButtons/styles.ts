@@ -98,6 +98,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: 'inherit',
     border: 'none',
     padding: 0,
+    textAlign: 'start' as const,
     '&:hover': {
       color: theme.palette.text.primary,
       cursor: 'pointer',

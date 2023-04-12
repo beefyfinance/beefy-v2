@@ -22,14 +22,11 @@ export const VaultCategoryButtonFilter = memo<VaultCategoryButtonFilterProps>(fu
     () =>
       Object.fromEntries(
         Object.entries(CATEGORY_OPTIONS)
-          .filter(([key]) => key !== allKey && key !== 'lsd')
+          .filter(([key]) => key !== allKey)
           .map(([key, label]) => [key, t(label)])
       ),
     [t]
   );
-  const extraOptions: Record<string, string> = {
-    lsd: t(CATEGORY_OPTIONS['lsd']),
-  };
   const value = useAppSelector(selectFilterVaultCategory);
   const handleChange = useCallback<ToggleButtonsProps['onChange']>(
     value => {
@@ -48,7 +45,6 @@ export const VaultCategoryButtonFilter = memo<VaultCategoryButtonFilterProps>(fu
       buttonsClass={className}
       fullWidth={false}
       untoggleValue={allKey}
-      extraOptions={extraOptions}
     />
   );
 });

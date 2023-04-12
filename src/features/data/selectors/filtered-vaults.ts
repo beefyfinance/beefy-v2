@@ -25,7 +25,6 @@ import {
   selectIsVaultBeefy,
   selectIsVaultBlueChip,
   selectIsVaultFeatured,
-  selectIsVaultLsd,
   selectIsVaultNoIL,
   selectIsVaultStable,
   selectVaultById,
@@ -215,9 +214,6 @@ export const selectFilteredVaults = (state: BeefyState) => {
       return false;
     }
     if (filterOptions.vaultCategory === 'beefy' && !selectIsVaultBeefy(state, vault.id)) {
-      return false;
-    }
-    if (filterOptions.vaultCategory === 'lsd' && !selectIsVaultLsd(state, vault.id)) {
       return false;
     }
     if (filterOptions.vaultCategory === 'noIL' && !selectIsVaultNoIL(state, vault.id)) {
