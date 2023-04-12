@@ -7,4 +7,5 @@ export const CATEGORY_OPTIONS: Record<FilteredVaultsState['vaultCategory'], stri
   bluechip: 'Filter-CatgryBlue',
   beefy: 'Filter-CatgryBeefy',
   lsd: 'Filter-CatgryLSD',
+  noIL: 'Filter-CatgryNoIL',
 };

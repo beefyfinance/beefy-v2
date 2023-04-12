@@ -7,8 +7,9 @@ import { styles } from './styles';
 import { ExtendedFiltersButton } from './components/ExtendedFilters';
 import { ClearFiltersButton } from './components/ClearFiltersButton';
 import clsx from 'clsx';
-import { VaultCategoryButtonFilter } from './components/VaultCategoryFilters';
+import { VaultCategoryDropdownFilter } from './components/VaultCategoryFilters';
 import { Theme } from '@material-ui/core/styles';
+import { PlatformDropdownFilter } from './components/PlatformFilters';
 
 const useStyles = makeStyles(styles);
 
@@ -22,7 +23,8 @@ export const Filters = memo(function Filters() {
       <UserCategoryButtonFilter className={classes.userCategory} />
       {desktopView ? (
         <>
-          <VaultCategoryButtonFilter className={classes.vaultCategory} />
+          <VaultCategoryDropdownFilter className={classes.vaultCategory} />
+          <PlatformDropdownFilter className={classes.platforms} />
           <VaultTypeButtonFilter className={classes.vaultType} />
         </>
       ) : (

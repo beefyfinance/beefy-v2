@@ -49,6 +49,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'MAI',
       'sethUSDC',
       'sethUSDT',
+      'eUSD',
     ],
   },
   polygon: {
@@ -176,6 +177,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'ETSAlpha',
       'DEI',
       'wUSDR',
+      'DOLA',
     ],
   },
   optimism: {
@@ -223,6 +225,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'bbUSD+',
       'bbDAI+',
       'wUSDR',
+      'DAI+',
     ],
   },
   fantom: {

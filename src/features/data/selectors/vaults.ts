@@ -19,7 +19,7 @@ import {
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE } from '../../../helpers/big-number';
 import { differenceWith, first, isEqual } from 'lodash-es';
-import { selectChainById } from './chains';
+import { selectAllChainsNativeAssetsIsd, selectChainById } from './chains';
 
 export const selectVaultById = createCachedSelector(
   (state: BeefyState) => state.entities.vaults.byId,
@@ -218,11 +218,25 @@ export const selectIsVaultBeefy = createSelector(
 export const selectIsVaultLsd = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
-    const nativeToken = selectChainNativeToken(state, vault.chainId);
-    const assetsWithoutNative = vault.assetIds.filter(assetId => assetId !== nativeToken.oracleId);
+    const allNativeTokens = selectAllChainsNativeAssetsIsd(state);
+    const assetsWithoutNative = vault.assetIds.filter(assetId => !allNativeTokens.has(assetId));
     return (
       assetsWithoutNative.length !== 0 &&
       assetsWithoutNative.every(assetId => selectIsLSDToken(state, assetId))
+    );
+  },
+  res => res
+);
+
+export const selectIsVaultNoIL = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+
+    return (
+      vault.risks.includes('IL_NONE') &&
+      vault.assetIds.length > 1 &&
+      !selectIsVaultLsd(state, vaultId) &&
+      !selectIsVaultStable(state, vaultId)
     );
   },
   res => res

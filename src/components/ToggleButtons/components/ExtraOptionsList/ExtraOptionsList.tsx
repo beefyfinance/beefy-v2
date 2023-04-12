@@ -49,6 +49,7 @@ export const ExtraOptionsList = memo<ExtraOptionsListProps>(function ({
   return (
     <ClickAwayListener onClickAway={handleClose} mouseEvent="onMouseDown" touchEvent="onTouchStart">
       <div className={classes.container} onClick={handleToggle} ref={anchorEl}>
+        {t('More')}
         <MoreVertRounded className={classes.icon} />
         <Floating
           open={isOpen}

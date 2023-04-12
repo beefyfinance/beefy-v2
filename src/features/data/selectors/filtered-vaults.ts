@@ -26,6 +26,7 @@ import {
   selectIsVaultBlueChip,
   selectIsVaultFeatured,
   selectIsVaultLsd,
+  selectIsVaultNoIL,
   selectIsVaultStable,
   selectVaultById,
   selectVaultSupportsAnyZap,
@@ -217,6 +218,9 @@ export const selectFilteredVaults = (state: BeefyState) => {
       return false;
     }
     if (filterOptions.vaultCategory === 'lsd' && !selectIsVaultLsd(state, vault.id)) {
+      return false;
+    }
+    if (filterOptions.vaultCategory === 'noIL' && !selectIsVaultNoIL(state, vault.id)) {
       return false;
     }
     if (filterOptions.chainIds.length > 0 && !chainIdMap[vault.chainId]) {

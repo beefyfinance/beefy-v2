@@ -156,10 +156,14 @@ export const selectIsLSDToken = (_: BeefyState, tokenId: TokenEntity['id']) => {
     'frxETH',
     'sfrxETH',
     'cbETH',
+    'ankrETH',
     'stMATIC',
     'MaticX',
     'BNBx',
     'ankrBNB',
+    'sFTMx',
+    'ankrFTM',
+    'wstDOT',
   ].includes(tokenId);
 };
 

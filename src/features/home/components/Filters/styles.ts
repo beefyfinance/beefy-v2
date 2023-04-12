@@ -11,6 +11,7 @@ export const styles = (theme: Theme) => ({
     width: '100%',
     [theme.breakpoints.up('lg')]: {
       width: 'fit-content',
+      marginRight: 'auto',
     },
   },
   chain: {
@@ -41,11 +42,8 @@ export const styles = (theme: Theme) => ({
       flexGrow: 0,
     },
   },
-  vaultCategory: {
-    [theme.breakpoints.up('lg')]: {
-      marginLeft: 'auto',
-    },
-  },
+  vaultCategory: {},
+  platforms: {},
   extended: {},
   clear: {},
   button: {

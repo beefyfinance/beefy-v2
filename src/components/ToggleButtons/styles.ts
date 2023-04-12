@@ -77,14 +77,17 @@ export const styles = (theme: Theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',
-  },
-  icon: {
-    height: '20px',
+    ...theme.typography['body-lg-med'],
+    color: theme.palette.text.dark,
     fill: theme.palette.text.dark,
     '&:hover': {
+      color: theme.palette.text.primary,
       fill: theme.palette.text.primary,
       cursor: 'pointer',
     },
+  },
+  icon: {
+    height: '20px',
   },
   iconActive: {
     fill: theme.palette.text.primary,
