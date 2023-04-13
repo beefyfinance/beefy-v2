@@ -8765,38 +8765,6 @@
     "createdAt": 1653013511
   },
   {
-    "id": "tomb-usdc-mai",
-    "name": "MAI-USDC LP",
-    "token": "MAI-USDC LP",
-    "tokenAddress": "0xEdf6595E2ae78a4e5C8725D7eD2A28AD974f1B8e",
-    "tokenDecimals": 18,
-    "tokenProviderId": "tombswap",
-    "tokenAmmId": "fantom-tombswap",
-    "earnedToken": "mooTombMAI-USDC",
-    "earnedTokenAddress": "0x76b8b4601A4c30dea22eAAdcc85f87D27052a2BB",
-    "earnContractAddress": "0x76b8b4601A4c30dea22eAAdcc85f87D27052a2BB",
-    "oracle": "lps",
-    "oracleId": "tomb-usdc-mai",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "tombswap",
-    "assets": ["MAI", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MEDIUM",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xfB98B335551a418cD0737375a2ea0ded62Ea213b",
-    "addLiquidityUrl": "https://swap.tomb.com/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xfB98B335551a418cD0737375a2ea0ded62Ea213b",
-    "removeLiquidityUrl": "https://swap.tomb.com/#/remove/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xfB98B335551a418cD0737375a2ea0ded62Ea213b",
-    "network": "fantom",
-    "createdAt": 1653013565
-  },
-  {
     "id": "tomb-tshare-weth",
     "name": "TSHARE-ETH LP",
     "token": "TSHARE-ETH LP",
