@@ -42,5 +42,9 @@
   {
     "id": "mmy-mlp",
     "name": "MMY"
+  },
+  {
+    "id": "flashloan-lending",
+    "name": "Flash Loan Lending"
   }
 ]
