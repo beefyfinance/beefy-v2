@@ -991,7 +991,8 @@
     "earnContractAddress": "0x68Ac25D2e7306037e1174b0D3405efd36701ca6b",
     "oracle": "lps",
     "oracleId": "balancer-bbamUSD",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["bbamUSDC", "bbamDAI", "bbamUSDT"],
     "risks": [
