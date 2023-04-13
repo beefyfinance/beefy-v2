@@ -1,23 +1,19 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { VaultEntity } from '../../../data/entities/vault';
-import { AlertWarning } from '../../../../components/Alerts';
-import { getWeb3Instance } from '../../../data/apis/instances';
-import { useAppSelector } from '../../../../store';
-import { selectVaultById } from '../../../data/selectors/vaults';
-import { selectChainById } from '../../../data/selectors/chains';
-import { ChainEntity } from '../../../data/entities/chain';
-import vaultABI from '../../../../config/abi/vault.json';
-import erc20ABI from '../../../../config/abi/erc20.json';
+import { VaultEntity } from '../../../../../data/entities/vault';
+import { AlertWarning } from '../../../../../../components/Alerts';
+import { getWeb3Instance } from '../../../../../data/apis/instances';
+import { useAppSelector } from '../../../../../../store';
+import { selectVaultById } from '../../../../../data/selectors/vaults';
+import { selectChainById } from '../../../../../data/selectors/chains';
+import { ChainEntity } from '../../../../../data/entities/chain';
+import vaultABI from '../../../../../../config/abi/vault.json';
+import erc20ABI from '../../../../../../config/abi/erc20.json';
 import { AbiItem } from 'web3-utils';
 import { MultiCall } from 'eth-multicall';
-import { selectTokenByAddress } from '../../../data/selectors/tokens';
-import { TokenEntity } from '../../../data/entities/token';
+import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
+import { TokenEntity } from '../../../../../data/entities/token';
 import { BigNumber } from 'bignumber.js';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { useAsync } from '../../../../helpers/useAsync';
-
-const useStyles = makeStyles(styles);
+import { useAsync } from '../../../../../../helpers/useAsync';
 
 const strategyABI: AbiItem[] = [
   {
@@ -32,6 +28,7 @@ const strategyABI: AbiItem[] = [
 const enableForVaults: VaultEntity['id'][] = ['scream-tusd', 'scream-frax'];
 type ScreamAvailableLiquidityProps = {
   vaultId: VaultEntity['id'];
+  onChange: (isLocked: boolean) => void;
 };
 
 async function getLiquidity(vault: VaultEntity, chain: ChainEntity, depositToken: TokenEntity) {
@@ -62,8 +59,7 @@ async function getLiquidity(vault: VaultEntity, chain: ChainEntity, depositToken
 
 // underlying.balanceOf(strategy) + underlying.balanceOf(scToken).
 const ScreamAvailableLiquidityImpl = memo<ScreamAvailableLiquidityProps>(
-  function ScreamAvailableLiquidityImpl({ vaultId }) {
-    const classes = useStyles();
+  function ScreamAvailableLiquidityImpl({ vaultId, onChange }) {
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
     const chain = useAppSelector(state => selectChainById(state, vault.chainId));
     const depositToken = useAppSelector(state =>
@@ -90,8 +86,12 @@ const ScreamAvailableLiquidityImpl = memo<ScreamAvailableLiquidityProps>(
       }
     }, [updateStatus, haveUpdatedOnce, setHaveUpdatedOnce]);
 
+    useEffect(() => {
+      onChange(haveUpdatedOnce && liquidity === 0);
+    }, [liquidity, haveUpdatedOnce, onChange]);
+
     return (
-      <AlertWarning className={classes.alert}>
+      <AlertWarning>
         <p>There is limited liquidity in the underlying protocol to withdraw.</p>
         {haveUpdatedOnce ? (
           <p>
@@ -105,10 +105,10 @@ const ScreamAvailableLiquidityImpl = memo<ScreamAvailableLiquidityProps>(
   }
 );
 
-export const ScreamAvailableLiquidity = memo<ScreamAvailableLiquidityProps>(
-  function ScreamAvailableLiquidity({ vaultId }) {
+export const ScreamAvailableLiquidityNotice = memo<ScreamAvailableLiquidityProps>(
+  function ScreamAvailableLiquidity({ vaultId, onChange }) {
     if (enableForVaults.includes(vaultId)) {
-      return <ScreamAvailableLiquidityImpl vaultId={vaultId} />;
+      return <ScreamAvailableLiquidityImpl vaultId={vaultId} onChange={onChange} />;
     }
 
     return null;
