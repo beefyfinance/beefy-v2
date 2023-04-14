@@ -32,7 +32,7 @@ export const DepositSummary = memo(function () {
         Icon: VaultIcon,
       },
       {
-        title: t('Summary-Yieled'),
+        title: t('Summary-Yield'),
         value: formatUsd(stats.yieldUsd),
         Icon: MonthlyIcon,
       },

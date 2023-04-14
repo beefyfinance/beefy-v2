@@ -22,15 +22,12 @@ import { VaultPnLDataType } from './types';
 
 const useStyles = makeStyles(styles);
 
-export type VaultYieledStatProps = {
+export type VaultYieldStatProps = {
   vaultId: VaultEntity['id'];
   pnlData: VaultPnLDataType;
 };
 
-export const VaultYieldWithRewardsStat = memo<VaultYieledStatProps>(function ({
-  vaultId,
-  pnlData,
-}) {
+export const VaultYieldWithRewardsStat = memo<VaultYieldStatProps>(function ({ vaultId, pnlData }) {
   const classes = useStyles();
   const vaultTimeline = useAppSelector(state =>
     selectUserDepositedTimelineByVaultId(state, vaultId)
