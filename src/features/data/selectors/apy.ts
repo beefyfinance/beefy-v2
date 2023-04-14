@@ -32,7 +32,7 @@ const EMPTY_GLOBAL_STATS = {
   yearly: 0,
   apy: 0,
   depositedVaults: 0,
-  yieledUsd: 0,
+  yieldUsd: 0,
 };
 export const selectUserGlobalStats = (state: BeefyState) => {
   const walletAddress = selectWalletAddressIfKnown(state);
@@ -72,7 +72,7 @@ export const selectUserGlobalStats = (state: BeefyState) => {
     // Add vault balance to total
     newGlobalStats.deposited += vaultUsdBalance;
 
-    newGlobalStats.yieledUsd += pnl.totalYieldUsd.toNumber();
+    newGlobalStats.yieldUsd += pnl.totalYieldUsd.toNumber();
 
     if (!isVaultActive(vault) || vaultUsdBalance <= 0) {
       continue;
@@ -153,6 +153,7 @@ export const selectVaultDailyYieldStats = (state: BeefyState, vaultId: VaultEnti
     dailyTokens = tokenBalance.times(apyData.totalDaily);
   } else {
     const boostBalance = selectUserActiveBoostBalanceInToken(state, vaultId).multipliedBy(ppfs);
+    const boostBalanceUsd = boostBalance.times(oraclePrice);
 
     const nonBoostBalanceInTokens = tokenBalance.minus(boostBalance);
     const nonBoostBalanceInUsd = nonBoostBalanceInTokens.times(oraclePrice);
@@ -161,7 +162,7 @@ export const selectVaultDailyYieldStats = (state: BeefyState, vaultId: VaultEnti
     dailyTokens = nonBoostBalanceInTokens.times(apyData.totalDaily);
 
     if ('boostedTotalDaily' in apyData && boostBalance.gt(BIG_ZERO)) {
-      dailyUsd = dailyUsd.plus(vaultUsdBalance.times(apyData.boostedTotalDaily));
+      dailyUsd = dailyUsd.plus(boostBalanceUsd.times(apyData.boostedTotalDaily));
       dailyTokens = dailyTokens.plus(boostBalance.times(apyData.boostedTotalDaily));
     }
   }

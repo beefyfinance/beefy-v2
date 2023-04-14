@@ -15,14 +15,14 @@ import {
 } from '../../features/data/selectors/analytics';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
 
-export type VaultYieledStatProps = {
+export type VaultYieldStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
 };
 
-export const VaultYieledStat = memo(connect(mapStateToProps)(VaultValueStat));
+export const VaultYieldStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId, className }: VaultYieledStatProps) {
+function mapStateToProps(state: BeefyState, { vaultId, className }: VaultYieldStatProps) {
   const label = 'Yield';
 
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);

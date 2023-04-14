@@ -33,7 +33,7 @@ export const DepositSummary = memo(function () {
       },
       {
         title: t('Summary-Yieled'),
-        value: formatUsd(stats.yieledUsd),
+        value: formatUsd(stats.yieldUsd),
         Icon: MonthlyIcon,
       },
       {
@@ -42,7 +42,7 @@ export const DepositSummary = memo(function () {
         Icon: DailyIcon,
       },
     ];
-  }, [stats.daily, stats.deposited, stats.depositedVaults, stats.yieledUsd, t]);
+  }, [stats.daily, stats.deposited, stats.depositedVaults, stats.yieldUsd, t]);
 
   return (
     <div className={classes.container}>

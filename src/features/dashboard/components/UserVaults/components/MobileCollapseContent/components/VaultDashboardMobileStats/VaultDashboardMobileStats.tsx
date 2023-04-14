@@ -5,13 +5,15 @@ import { VaultEntity, isGovVault } from '../../../../../../../data/entities/vaul
 import { VaultAtDepositStat } from '../../../../../../../../components/VaultStats/VaultAtDepositStat';
 import { VaultNowStat } from '../../../../../../../../components/VaultStats/VaultNowStat';
 import { RowMobile } from '../../../Row';
-import { VaultYieledStat } from '../../../../../../../../components/VaultStats/VaultYieledStat';
+import { VaultYieldStat } from '../../../../../../../../components/VaultStats/VaultYieldStat';
 import { VaultYearlyStat } from '../../../../../../../../components/VaultStats/VaultYearlyStat';
 import { VaultDailyUsdStat } from '../../../../../../../../components/VaultStats/VaultDailyUsdStat';
 import { useAppSelector } from '../../../../../../../../store';
 import { selectVaultById } from '../../../../../../../data/selectors/vaults';
 import { VaultRewardsStat } from '../../../../../../../../components/VaultStats/VaultRewardsStat';
 import { selectUserRewardsByVaultId } from '../../../../../../../data/selectors/balance';
+import { selectIsVaultPreStakedOrBoosted } from '../../../../../../../data/selectors/boosts';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -21,8 +23,11 @@ export const VaultDashboardMobileStats = memo(function ({
   vaultId: VaultEntity['id'];
 }) {
   const classes = useStyles();
-
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+
+  const isVaultBoostedOrPrestake = useAppSelector(state =>
+    selectIsVaultPreStakedOrBoosted(state, vaultId)
+  );
 
   const { rewards } = useAppSelector(state => selectUserRewardsByVaultId(state, vaultId));
 
@@ -53,7 +58,7 @@ export const VaultDashboardMobileStats = memo(function ({
           />
         )}
         {!isGovVault(vault) && (
-          <VaultYieledStat
+          <VaultYieldStat
             className={classes.statMobile}
             contentClassName={classes.valueContainer}
             triggerClassName={classes.value}
@@ -64,7 +69,9 @@ export const VaultDashboardMobileStats = memo(function ({
         <VaultYearlyStat
           className={classes.statMobile}
           contentClassName={classes.valueContainer}
-          triggerClassName={classes.value}
+          triggerClassName={clsx(classes.value, {
+            [classes.valueBoosted]: isVaultBoostedOrPrestake,
+          })}
           labelClassName={classes.label}
           vaultId={vaultId}
         />

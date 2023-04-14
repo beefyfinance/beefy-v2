@@ -30,7 +30,7 @@ export const RewardsTooltip = memo<RewardsTooltipProps>(({ vaultId, size = 20 })
   }
 
   return (
-    <Tooltip content={<RewardsTooltipcontent rewards={rewards} />}>
+    <Tooltip content={<RewardsTooltipContent rewards={rewards} />}>
       <div className={classes.container}>
         <AssetsImage chainId={vaultId} size={size} assetIds={rewardsTokens} />
       </div>
@@ -48,7 +48,7 @@ interface RewardsTooltipContentProps {
   rewards: RewardsType[];
 }
 
-export const RewardsTooltipcontent = memo<RewardsTooltipContentProps>(function ({ rewards }) {
+export const RewardsTooltipContent = memo<RewardsTooltipContentProps>(function ({ rewards }) {
   const { t } = useTranslation();
   const classes = useStyles();
   return (

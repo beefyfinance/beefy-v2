@@ -27,7 +27,7 @@ export type VaultYieledStatProps = {
   className?: string;
 };
 
-export const VaultYieledWithRewardsStat = memo<VaultYieledStatProps>(function ({ vaultId }) {
+export const VaultYielWithRewardsStat = memo<VaultYieledStatProps>(function ({ vaultId }) {
   const classes = useStyles();
   const vaultTimeline = useAppSelector(state =>
     selectUserDepositedTimelineByVaultId(state, vaultId)

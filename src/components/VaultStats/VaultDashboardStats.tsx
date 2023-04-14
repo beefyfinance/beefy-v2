@@ -11,7 +11,7 @@ import { VaultYearlyStat } from './VaultYearlyStat';
 import { useAppSelector } from '../../store';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { VaultRewardsStat } from './VaultRewardsStat';
-import { VaultYieledWithRewardsStat } from './VaultYieledWithRewardsStat';
+import { VaultYielWithRewardsStat } from './VaultYielWithRewardsStat';
 
 const useStyles = makeStyles(styles);
 
@@ -43,7 +43,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
           {isGovVault(vault) ? (
             <VaultRewardsStat showLabel={false} vaultId={vaultId} />
           ) : (
-            <VaultYieledWithRewardsStat vaultId={vaultId} />
+            <VaultYielWithRewardsStat vaultId={vaultId} />
           )}
         </div>
         <div className={classes.column}>

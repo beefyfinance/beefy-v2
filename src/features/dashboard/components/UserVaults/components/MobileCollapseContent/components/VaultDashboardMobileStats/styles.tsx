@@ -14,6 +14,9 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-sm'],
     color: theme.palette.text.middle,
   },
+  valueBoosted: {
+    color: '#DB8332',
+  },
   valueContainer: {
     display: 'flex',
     columnGap: '8px',

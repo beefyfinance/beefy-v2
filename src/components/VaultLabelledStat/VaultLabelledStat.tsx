@@ -63,7 +63,7 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
           )}
         </div>
       ) : (
-        <div>
+        <div className={contentClassName}>
           <div className={triggerClassName}>{children}</div>
           {subValue && (
             <div

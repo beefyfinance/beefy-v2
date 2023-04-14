@@ -492,12 +492,13 @@ export const selectTokenExposure = (state: BeefyState) => {
     const wnative = selectChainWrappedNativeToken(state, vault.chainId);
     const native = selectChainNativeToken(state, vault.chainId);
     if (vault.assetIds.length === 1) {
-      const token = vault.assetIds[0] === wnative.oracleId ? native.id : vault.assetIds[0];
-      totals[token] = {
+      //we are mergin wNative into the native token to avoid showing for eg : WETH & ETH exposure
+      const assetId = vault.assetIds[0] === wnative.oracleId ? native.id : vault.assetIds[0];
+      totals[assetId] = {
         value: (totals[vault.assetIds[0]]?.value || BIG_ZERO).plus(
           selectUserVaultDepositInUsd(state, vaultId)
         ),
-        assetIds: [token],
+        assetIds: [assetId],
         chainId: vault.chainId,
       };
     } else {
@@ -643,10 +644,13 @@ export const selectUserVaultsPnl = (state: BeefyState) => {
 };
 
 export const selectUserRewardsByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  let totals: Record<
-    string,
-    { rewardToken: TokenEntity['oracleId']; rewards: BigNumber; rewardsUsd: BigNumber }
-  > = {};
+  const rewards: {
+    rewardToken: TokenEntity['oracleId'];
+    rewards: BigNumber;
+    rewardsUsd: BigNumber;
+  }[] = [];
+  const rewardsTokens = [];
+  let totalRewardsUsd = BIG_ZERO;
 
   const vault = selectVaultById(state, vaultId);
 
@@ -655,36 +659,35 @@ export const selectUserRewardsByVaultId = (state: BeefyState, vaultId: VaultEnti
     const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(state, vault.id);
     const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id);
 
-    totals[vaultId] = {
+    totalRewardsUsd = rewardsEarnedUsd;
+    rewardsTokens.push(earnedToken.oracleId);
+
+    rewards.push({
       rewardToken: earnedToken.oracleId,
       rewards: rewardsEarnedToken,
       rewardsUsd: rewardsEarnedUsd,
-    };
+    });
   } else {
     const boosts = selectAllVaultBoostIds(state, vaultId);
-    totals = boosts.reduce((totals, boostId) => {
+    for (const boostId of boosts) {
       const rewardToken = selectBoostRewardsTokenEntity(state, boostId);
       const boostPendingRewards = selectBoostUserRewardsInToken(state, boostId);
       const oraclePrice = selectTokenPriceByTokenOracleId(state, rewardToken.oracleId);
       if (boostPendingRewards.isGreaterThan(BIG_ZERO)) {
-        totals[boostId] = {
-          rewardToken: rewardToken.oracleId,
+        const tokenOracleId = rewardToken.oracleId;
+        const tokenRewardsUsd = boostPendingRewards.times(oraclePrice);
+
+        rewardsTokens.push(tokenOracleId);
+        totalRewardsUsd = totalRewardsUsd.plus(tokenRewardsUsd);
+
+        rewards.push({
+          rewardToken: tokenOracleId,
           rewards: boostPendingRewards,
-          rewardsUsd: boostPendingRewards.times(oraclePrice),
-        };
+          rewardsUsd: tokenRewardsUsd,
+        });
       }
-      return totals;
-    }, {} as Record<string, { rewardToken: TokenEntity['oracleId']; rewards: BigNumber; rewardsUsd: BigNumber }>);
+    }
   }
-
-  let rewardsTokens = [];
-  let totalRewardsUsd = BIG_ZERO;
-
-  const rewards = Object.values(totals).map(item => {
-    rewardsTokens.push(item.rewardToken);
-    totalRewardsUsd = totalRewardsUsd.plus(item.rewardsUsd);
-    return { ...item };
-  });
 
   return { rewards, rewardsTokens, totalRewardsUsd };
 };
