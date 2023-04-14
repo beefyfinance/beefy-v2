@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_equilibre-wkava-usdc-kava",
+    "poolId": "equilibre-wkava-usdc",
+    "name": "Beefy",
+    "assets": ["KAVA", "USDC"],
+    "tokenAddress": "0x9C91730de8Df9eAc0D40AedA285Bfe052B32Cc77",
+    "earnedToken": "WKAVA",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc86c7C0eFbd6A49B35E8714C5f59D99De09A225b",
+    "earnContractAddress": "0x107Dbf9c9C0EF2Df114159e5C7DC2baf7C444cFF",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "WKAVA",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["kava"]
+  },
+  {
     "id": "moo_equilibre-bifi-wkava-kava",
     "poolId": "equilibre-bifi-wkava",
     "name": "Beefy",
