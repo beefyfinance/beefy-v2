@@ -16,7 +16,7 @@ export type VaultRewardsStatProps = {
 export const VaultRewardsStat = memo(connect(mapStateToProps)(VaultValueStat));
 
 function mapStateToProps(state: BeefyState, { vaultId }: VaultRewardsStatProps) {
-  const label = 'Claimable Rewards';
+  const label = 'VaultStat-Claimable Rewards';
 
   const vault = selectVaultById(state, vaultId);
 

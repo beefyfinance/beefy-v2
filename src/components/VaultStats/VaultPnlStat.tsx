@@ -7,17 +7,18 @@ import { VaultValueStat } from '../VaultValueStat';
 import {
   selectIsAnalyticsLoaded,
   selectUserDepositedTimelineByVaultId,
-  selectVaultPnl,
 } from '../../features/data/selectors/analytics';
+import { VaultPnLDataType } from './types';
 
 export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
+  pnlData: VaultPnLDataType;
 };
 
 export const VaultPnlStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailyStatProps) {
+function mapStateToProps(state: BeefyState, { vaultId, className, pnlData }: VaultDailyStatProps) {
   const label = '-';
 
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
@@ -45,7 +46,7 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailySt
     };
   }
 
-  const { totalPnlUsd } = selectVaultPnl(state, vaultId);
+  const { totalPnlUsd } = pnlData;
 
   return {
     label,

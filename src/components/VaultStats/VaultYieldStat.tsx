@@ -11,19 +11,20 @@ import { VaultValueStat } from '../VaultValueStat';
 import {
   selectIsAnalyticsLoaded,
   selectUserDepositedTimelineByVaultId,
-  selectVaultPnl,
 } from '../../features/data/selectors/analytics';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
+import { VaultPnLDataType } from './types';
 
 export type VaultYieldStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
+  pnlData: VaultPnLDataType;
 };
 
 export const VaultYieldStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId, className }: VaultYieldStatProps) {
-  const label = 'Yield';
+function mapStateToProps(state: BeefyState, { vaultId, className, pnlData }: VaultYieldStatProps) {
+  const label = 'VaultStat-Yield';
 
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
 
@@ -50,7 +51,7 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultYieldSt
     };
   }
 
-  const { totalYield, totalYieldUsd, oraclePrice, tokenDecimals } = selectVaultPnl(state, vaultId);
+  const { totalYield, totalYieldUsd, oraclePrice, tokenDecimals } = pnlData;
 
   return {
     label,

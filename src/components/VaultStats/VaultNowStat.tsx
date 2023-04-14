@@ -11,24 +11,20 @@ import { VaultValueStat } from '../VaultValueStat';
 import {
   selectIsAnalyticsLoaded,
   selectUserDepositedTimelineByVaultId,
-  selectVaultPnl,
 } from '../../features/data/selectors/analytics';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
+import { VaultPnLDataType } from './types';
 
 export type VaultNowStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
-
-  triggerClassName?: string;
+  pnlData: VaultPnLDataType;
 };
 
 export const VaultNowStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(
-  state: BeefyState,
-  { vaultId, className, triggerClassName }: VaultNowStatProps
-) {
-  const label = 'Now';
+function mapStateToProps(state: BeefyState, { vaultId, className, pnlData }: VaultNowStatProps) {
+  const label = 'VaultStat-Now';
 
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
 
@@ -55,7 +51,7 @@ function mapStateToProps(
     };
   }
 
-  const { deposit, depositUsd, oraclePrice, tokenDecimals } = selectVaultPnl(state, vaultId);
+  const { deposit, depositUsd, oraclePrice, tokenDecimals } = pnlData;
 
   return {
     label,
@@ -66,6 +62,5 @@ function mapStateToProps(
     boosted: false,
     tooltip: <BasicTooltipContent title={formatFullBigNumber(deposit, tokenDecimals)} />,
     className: className ?? '',
-    triggerClassName: triggerClassName ?? '',
   };
 }

@@ -9,7 +9,6 @@ import { VaultValueStat } from '../VaultValueStat';
 import {
   selectIsAnalyticsLoaded,
   selectUserDepositedTimelineByVaultId,
-  selectVaultPnl,
 } from '../../features/data/selectors/analytics';
 import { useAppSelector } from '../../store';
 import { selectUserRewardsByVaultId } from '../../features/data/selectors/balance';
@@ -19,15 +18,19 @@ import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
 import { Tooltip } from '../Tooltip';
+import { VaultPnLDataType } from './types';
 
 const useStyles = makeStyles(styles);
 
 export type VaultYieledStatProps = {
   vaultId: VaultEntity['id'];
-  className?: string;
+  pnlData: VaultPnLDataType;
 };
 
-export const VaultYielWithRewardsStat = memo<VaultYieledStatProps>(function ({ vaultId }) {
+export const VaultYieldWithRewardsStat = memo<VaultYieledStatProps>(function ({
+  vaultId,
+  pnlData,
+}) {
   const classes = useStyles();
   const vaultTimeline = useAppSelector(state =>
     selectUserDepositedTimelineByVaultId(state, vaultId)
@@ -37,9 +40,7 @@ export const VaultYielWithRewardsStat = memo<VaultYieledStatProps>(function ({ v
 
   const { rewards } = useAppSelector(state => selectUserRewardsByVaultId(state, vaultId));
 
-  const { totalYield, totalYieldUsd, oraclePrice, tokenDecimals } = useAppSelector(state =>
-    selectVaultPnl(state, vaultId)
-  );
+  const { totalYield, totalYieldUsd, oraclePrice, tokenDecimals } = pnlData;
 
   const hasRewards = useMemo(() => {
     return rewards.length !== 0 ? true : false;
@@ -48,7 +49,7 @@ export const VaultYielWithRewardsStat = memo<VaultYieledStatProps>(function ({ v
   if (!vaultTimeline || !isLoaded) {
     return (
       <VaultValueStat
-        label="Yield"
+        label="VaultStat-Yield"
         showLabel={false}
         value={'-'}
         loading={isLoaded ? true : false}
@@ -58,7 +59,7 @@ export const VaultYielWithRewardsStat = memo<VaultYieledStatProps>(function ({ v
 
   return (
     <VaultValueStat
-      label="Yield"
+      label="VaultStat-Yield"
       value={
         <div className={classes.flexEnd}>
           <Tooltip

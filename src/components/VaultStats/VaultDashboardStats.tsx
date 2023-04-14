@@ -11,7 +11,8 @@ import { VaultYearlyStat } from './VaultYearlyStat';
 import { useAppSelector } from '../../store';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { VaultRewardsStat } from './VaultRewardsStat';
-import { VaultYielWithRewardsStat } from './VaultYielWithRewardsStat';
+import { VaultYieldWithRewardsStat } from './VaultYieldWithRewardsStat';
+import { selectVaultPnl } from '../../features/data/selectors/analytics';
 
 const useStyles = makeStyles(styles);
 
@@ -22,11 +23,14 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
+  const pnlData = useAppSelector(state => selectVaultPnl(state, vaultId));
+
   return (
     <div className={classes.vaultStats}>
       <div className={clsx(classes.rowDashboard)}>
         <div className={clsx(classes.column, classes.hideSm)}>
           <VaultAtDepositStat
+            pnlData={pnlData}
             triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
             showLabel={false}
             vaultId={vaultId}
@@ -34,6 +38,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
         </div>
         <div className={clsx(classes.column, classes.hideSm)}>
           <VaultNowStat
+            pnlData={pnlData}
             triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
             showLabel={false}
             vaultId={vaultId}
@@ -43,11 +48,11 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
           {isGovVault(vault) ? (
             <VaultRewardsStat showLabel={false} vaultId={vaultId} />
           ) : (
-            <VaultYielWithRewardsStat vaultId={vaultId} />
+            <VaultYieldWithRewardsStat pnlData={pnlData} vaultId={vaultId} />
           )}
         </div>
         <div className={classes.column}>
-          <VaultPnlStat showLabel={false} vaultId={vaultId} />
+          <VaultPnlStat pnlData={pnlData} showLabel={false} vaultId={vaultId} />
         </div>
         <div className={clsx(classes.column, classes.hideMd)}>
           <VaultYearlyStat showLabel={false} vaultId={vaultId} />

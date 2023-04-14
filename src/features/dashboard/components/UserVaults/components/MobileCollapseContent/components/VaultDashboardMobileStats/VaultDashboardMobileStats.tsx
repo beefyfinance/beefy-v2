@@ -14,6 +14,7 @@ import { VaultRewardsStat } from '../../../../../../../../components/VaultStats/
 import { selectUserRewardsByVaultId } from '../../../../../../../data/selectors/balance';
 import { selectIsVaultPreStakedOrBoosted } from '../../../../../../../data/selectors/boosts';
 import clsx from 'clsx';
+import { selectVaultPnl } from '../../../../../../../data/selectors/analytics';
 
 const useStyles = makeStyles(styles);
 
@@ -29,12 +30,15 @@ export const VaultDashboardMobileStats = memo(function ({
     selectIsVaultPreStakedOrBoosted(state, vaultId)
   );
 
+  const pnlData = useAppSelector(state => selectVaultPnl(state, vaultId));
+
   const { rewards } = useAppSelector(state => selectUserRewardsByVaultId(state, vaultId));
 
   return (
     <RowMobile>
       <div className={classes.inner}>
         <VaultAtDepositStat
+          pnlData={pnlData}
           className={classes.statMobile}
           contentClassName={classes.valueContainer}
           triggerClassName={classes.value}
@@ -42,6 +46,7 @@ export const VaultDashboardMobileStats = memo(function ({
           vaultId={vaultId}
         />
         <VaultNowStat
+          pnlData={pnlData}
           className={classes.statMobile}
           contentClassName={classes.valueContainer}
           triggerClassName={classes.value}
@@ -59,6 +64,7 @@ export const VaultDashboardMobileStats = memo(function ({
         )}
         {!isGovVault(vault) && (
           <VaultYieldStat
+            pnlData={pnlData}
             className={classes.statMobile}
             contentClassName={classes.valueContainer}
             triggerClassName={classes.value}

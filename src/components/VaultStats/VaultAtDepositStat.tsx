@@ -11,19 +11,23 @@ import { VaultValueStat } from '../VaultValueStat';
 import {
   selectIsAnalyticsLoaded,
   selectUserDepositedTimelineByVaultId,
-  selectVaultPnl,
 } from '../../features/data/selectors/analytics';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
+import { VaultPnLDataType } from './types';
 
 export type VaultAtDepositStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
+  pnlData: VaultPnLDataType;
 };
 
 export const VaultAtDepositStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId, className }: VaultAtDepositStatProps) {
-  const label = 'At Deposit';
+function mapStateToProps(
+  state: BeefyState,
+  { vaultId, className, pnlData }: VaultAtDepositStatProps
+) {
+  const label = 'VaultStat-AtDeposit';
 
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
 
@@ -50,8 +54,7 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultAtDepos
     };
   }
 
-  const { balanceAtDeposit, usdBalanceAtDeposit, oraclePriceAtDeposit, tokenDecimals } =
-    selectVaultPnl(state, vaultId);
+  const { balanceAtDeposit, usdBalanceAtDeposit, oraclePriceAtDeposit, tokenDecimals } = pnlData;
 
   return {
     label,
