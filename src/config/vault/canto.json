@@ -48,7 +48,7 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1681407869
+    "createdAt": 1681476399
   },
   {
     "id": "velocimeterv2-eth-wsteth",
