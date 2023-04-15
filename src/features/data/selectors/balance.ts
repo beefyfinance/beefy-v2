@@ -32,6 +32,7 @@ import { sortBy } from 'lodash-es';
 import { createSelector } from '@reduxjs/toolkit';
 import { selectChainById } from './chains';
 import { selectVaultPnl } from './analytics';
+import { VaultPnLDataType } from '../../../components/VaultStats/types';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (selectIsWalletKnown(state)) {
@@ -636,11 +637,22 @@ export const selectUserVaultBalances = (state: BeefyState) => {
 
 export const selectUserVaultsPnl = (state: BeefyState) => {
   const userVaults = selectUserDepositedVaultIds(state);
-  const vaults = {};
+  const vaults: Record<string, VaultPnLDataType> = {};
   for (const vaultId of userVaults) {
     vaults[vaultId] = selectVaultPnl(state, vaultId);
   }
   return vaults;
+};
+
+export const selectUserTotalYieldUsd = (state: BeefyState) => {
+  const vaultPnls = selectUserVaultsPnl(state);
+
+  let totalYieldUsd = BIG_ZERO;
+  for (const vaultPnl of Object.values(vaultPnls)) {
+    totalYieldUsd = totalYieldUsd.plus(vaultPnl.totalYieldUsd);
+  }
+
+  return totalYieldUsd;
 };
 
 export const selectUserRewardsByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {

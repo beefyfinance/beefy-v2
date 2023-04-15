@@ -10,6 +10,7 @@ import { ReactComponent as WalletIcon } from '../../../../images/icons/wallet.sv
 import { ReactComponent as VaultIcon } from '../../../../images/icons/vault.svg';
 import { ReactComponent as DailyIcon } from '../../../../images/icons/daily-yield.svg';
 import { ReactComponent as MonthlyIcon } from '../../../../images/icons/monthly-yield.svg';
+import { selectUserTotalYieldUsd } from '../../../data/selectors/balance';
 
 const useStyles = makeStyles(styles);
 
@@ -18,6 +19,8 @@ export const DepositSummary = memo(function () {
   const classes = useStyles();
 
   const stats = useAppSelector(selectUserGlobalStats);
+
+  const totalYieldUsd = useAppSelector(selectUserTotalYieldUsd);
 
   const UserStats = useMemo(() => {
     return [
@@ -33,7 +36,7 @@ export const DepositSummary = memo(function () {
       },
       {
         title: t('Summary-Yield'),
-        value: formatUsd(stats.yieldUsd),
+        value: formatUsd(totalYieldUsd.toNumber()),
         Icon: MonthlyIcon,
       },
       {
@@ -42,7 +45,7 @@ export const DepositSummary = memo(function () {
         Icon: DailyIcon,
       },
     ];
-  }, [stats.daily, stats.deposited, stats.depositedVaults, stats.yieldUsd, t]);
+  }, [stats.daily, stats.deposited, stats.depositedVaults, totalYieldUsd, t]);
 
   return (
     <div className={classes.container}>

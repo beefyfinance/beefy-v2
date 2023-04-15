@@ -32,7 +32,6 @@ const EMPTY_GLOBAL_STATS = {
   yearly: 0,
   apy: 0,
   depositedVaults: 0,
-  yieldUsd: 0,
 };
 export const selectUserGlobalStats = (state: BeefyState) => {
   const walletAddress = selectWalletAddressIfKnown(state);
@@ -65,14 +64,11 @@ export const selectUserGlobalStats = (state: BeefyState) => {
       continue;
     }
 
-    const pnl = selectVaultPnl(state, vault.id);
     const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
     const vaultUsdBalance = tokenBalance.times(oraclePrice).toNumber();
 
     // Add vault balance to total
     newGlobalStats.deposited += vaultUsdBalance;
-
-    newGlobalStats.yieldUsd += pnl.totalYieldUsd.toNumber();
 
     if (!isVaultActive(vault) || vaultUsdBalance <= 0) {
       continue;
