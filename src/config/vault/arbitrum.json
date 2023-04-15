@@ -1,5 +1,28 @@
 [
   {
+    "id": "arbidex-arb-usdc",
+    "name": "ARB-USDC LP",
+    "token": "ARB-USDC LP",
+    "tokenAddress": "0xD65Ef54B1ff5D9a452B32Ac0c304d1674F761061",
+    "tokenDecimals": 18,
+    "tokenProviderId": "arbidex",
+    "tokenAmmId": "arbitrum-arbidex",
+    "earnedToken": "mooArbidexARB-USDC",
+    "earnedTokenAddress": "0x4a21F4fcd07c4CC6A28Ae52961C8Ca810362Ee94",
+    "earnContractAddress": "0x4a21F4fcd07c4CC6A28Ae52961C8Ca810362Ee94",
+    "oracle": "lps",
+    "oracleId": "arbidex-arb-usdc",
+    "status": "active",
+    "platformId": "arbidex",
+    "assets": ["ARB", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://arbidex.fi/swap/",
+    "addLiquidityUrl": "https://arbidex.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0x912CE59144191C1204E64559FE8253a0e49E6548/",
+    "network": "arbitrum",
+    "createdAt": 1681320410
+  },
+  {
     "id": "ramses-frax-fxs",
     "name": "FRAX-FXS vLP",
     "token": "FRAX-FXS vLP",

@@ -998,5 +998,10 @@
     "id": "mummy",
     "name": "Mummy",
     "filter": true
+  },
+  {
+    "id": "arbidex",
+    "name": "Arbidex",
+    "filter": true
   }
 ]
