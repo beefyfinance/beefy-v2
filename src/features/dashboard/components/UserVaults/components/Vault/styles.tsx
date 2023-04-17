@@ -14,6 +14,9 @@ export const styles = (theme: Theme) => ({
       borderBottomRightRadius: '8px',
       backgroundClip: 'padding-box',
     },
+    '&:hover': {
+      cursor: 'pointer',
+    },
   },
   vaultInner: {
     display: 'grid',
@@ -22,9 +25,6 @@ export const styles = (theme: Theme) => ({
     width: '100%',
     [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: 'minmax(0, 80fr) minmax(0, 20fr)',
-    },
-    '&:hover': {
-      cursor: 'pointer',
     },
   },
   network: {
