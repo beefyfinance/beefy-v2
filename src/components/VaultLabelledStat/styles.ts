@@ -32,4 +32,8 @@ export const styles = (theme: Theme) => ({
   lineThroughValue: {
     textDecoration: 'line-through',
   },
+  statContainer: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+  },
 });
