@@ -7,8 +7,12 @@ import { styles } from './styles';
 import { ExtendedFiltersButton } from './components/ExtendedFilters';
 import { ClearFiltersButton } from './components/ClearFiltersButton';
 import clsx from 'clsx';
-import { VaultCategoryButtonFilter } from './components/VaultCategoryFilters';
+import {
+  VaultCategoryButtonFilter,
+  VaultCategoryDropdownFilter,
+} from './components/VaultCategoryFilters';
 import { Theme } from '@material-ui/core/styles';
+import { PlatformDropdownFilter } from './components/PlatformFilters';
 
 const useStyles = makeStyles(styles);
 

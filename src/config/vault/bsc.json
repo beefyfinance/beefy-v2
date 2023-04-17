@@ -116,7 +116,7 @@
     "oracleId": "cake-stable-bnbx-wbnb",
     "status": "active",
     "platformId": "pancakeswap",
-    "assets": ["BNBx", "WBNB"],
+    "assets": ["BNBx", "BNB"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",

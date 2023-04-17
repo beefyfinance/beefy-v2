@@ -10,11 +10,17 @@ import {
   VaultEntity,
   VaultGov,
 } from '../entities/vault';
-import { selectIsBeefyToken, selectIsTokenBluechip, selectIsTokenStable } from './tokens';
+import {
+  selectChainNativeToken,
+  selectIsBeefyToken,
+  selectIsLSDToken,
+  selectIsTokenBluechip,
+  selectIsTokenStable,
+} from './tokens';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE } from '../../../helpers/big-number';
 import { differenceWith, first, isEqual } from 'lodash-es';
-import { selectChainById } from './chains';
+import { selectAllChainsNativeAssetsIsd, selectChainById } from './chains';
 
 export const selectVaultById = createCachedSelector(
   (state: BeefyState) => state.entities.vaults.byId,
@@ -211,6 +217,19 @@ export const selectIsVaultBeefy = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
     return vault.assetIds.some(assetId => selectIsBeefyToken(state, assetId));
+  },
+  res => res
+);
+
+export const selectIsVaultCorrelated = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+
+    return (
+      vault.risks.includes('IL_NONE') &&
+      vault.assetIds.length > 1 &&
+      !selectIsVaultStable(state, vaultId)
+    );
   },
   res => res
 );

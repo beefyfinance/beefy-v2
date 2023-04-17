@@ -43,6 +43,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   vaultCategory: {},
+  platforms: {},
   extended: {},
   clear: {},
   button: {
