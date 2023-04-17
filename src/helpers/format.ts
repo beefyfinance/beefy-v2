@@ -144,6 +144,10 @@ export function getBigNumOrder(num: BigNumber): number {
 }
 
 export function formatBigUsd(value: BigNumber) {
+  if (value.lt(BIG_ZERO)) {
+    return '-$' + formatBigNumber(value.negated());
+  }
+
   return '$' + formatBigNumber(value);
 }
 
