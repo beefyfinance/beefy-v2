@@ -215,7 +215,7 @@ export const selectIsVaultBeefy = createSelector(
   res => res
 );
 
-export const selectIsVaultNoIL = createSelector(
+export const selectIsVaultCorrelated = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
 

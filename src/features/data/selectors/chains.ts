@@ -22,13 +22,13 @@ export const selectAllChains = createSelector(
 export const selectAllChainsNativeAssetsIsd = (state: BeefyState) => {
   const allChainIds = selectAllChainIds(state);
 
-  let assetdsIds = [];
+  const assetdsIds = new Set();
   for (const chainId of allChainIds) {
     const nativeToken = selectChainNativeToken(state, chainId);
-    assetdsIds.push(nativeToken.id);
+    assetdsIds.add(nativeToken.id);
   }
 
-  return new Set(assetdsIds);
+  return assetdsIds;
 };
 
 export const selectAllChainIds = (state: BeefyState) => state.entities.chains.allIds;

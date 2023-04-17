@@ -25,7 +25,7 @@ import {
   selectIsVaultBeefy,
   selectIsVaultBlueChip,
   selectIsVaultFeatured,
-  selectIsVaultNoIL,
+  selectIsVaultCorrelated,
   selectIsVaultStable,
   selectVaultById,
   selectVaultSupportsAnyZap,
@@ -216,7 +216,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
     if (filterOptions.vaultCategory === 'beefy' && !selectIsVaultBeefy(state, vault.id)) {
       return false;
     }
-    if (filterOptions.vaultCategory === 'noIL' && !selectIsVaultNoIL(state, vault.id)) {
+    if (filterOptions.vaultCategory === 'correlated' && !selectIsVaultCorrelated(state, vault.id)) {
       return false;
     }
     if (filterOptions.chainIds.length > 0 && !chainIdMap[vault.chainId]) {
