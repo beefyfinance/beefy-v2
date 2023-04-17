@@ -113,6 +113,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'jBRL',
       '2BRZ',
       'bbamUSD',
+      'USDR',
       'wUSDR',
     ],
   },

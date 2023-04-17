@@ -6,6 +6,7 @@ import { TimeBucketType } from '../apis/analytics/analytics-types';
 import { VaultEntity } from '../entities/vault';
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
+import { selectUserVaultsPnl } from './balance';
 
 export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>

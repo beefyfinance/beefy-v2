@@ -2,8 +2,11 @@ import { VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
 import { connect } from 'react-redux';
 import { BeefyState } from '../../redux-types';
-import { formatBigUsd } from '../../helpers/format';
-import { VaultValueStat } from '../../features/home/components/Vault/components/VaultValueStat';
+import {
+  formatBigUsd,
+  formatFullBigNumber,
+  formatSignificantBigNumber,
+} from '../../helpers/format';
 import {
   selectVaultApyAvailable,
   selectVaultShouldShowInterest,
@@ -12,16 +15,22 @@ import {
   selectDidAPIReturnValuesForVault,
   selectVaultDailyYieldStats,
 } from '../../features/data/selectors/apy';
+import { VaultValueStat } from '../VaultValueStat';
+import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
 
-export type VaultDailyStatProps = {
+export type VaultDailyUsdStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
+  triggerClassName?: string;
 };
 
 export const VaultDailyUsdStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailyStatProps) {
-  const label = 'VaultStat-DAILY';
+function mapStateToProps(
+  state: BeefyState,
+  { vaultId, className, triggerClassName }: VaultDailyUsdStatProps
+) {
+  const label = 'Dashboard-Filter-DailyYield';
 
   const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
   if (!shouldShowInterest) {
@@ -59,16 +68,20 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailySt
     };
   }
 
-  const dailyInfo = selectVaultDailyYieldStats(state, vaultId);
+  const { dailyTokens, dailyUsd, oraclePrice, tokenDecimals } = selectVaultDailyYieldStats(
+    state,
+    vaultId
+  );
 
   return {
     label,
-    value: dailyInfo.dailyTokens.toFixed(2),
-    subValue: formatBigUsd(dailyInfo.dailyUsd),
+    value: formatSignificantBigNumber(dailyTokens, tokenDecimals, oraclePrice, 0, 2),
+    subValue: formatBigUsd(dailyUsd),
     blur: false,
     loading: !isLoaded,
     boosted: false,
-    tooltip: null,
+    tooltip: <BasicTooltipContent title={formatFullBigNumber(dailyTokens, tokenDecimals)} />,
     className: className ?? '',
+    triggerClassName: triggerClassName ?? '',
   };
 }

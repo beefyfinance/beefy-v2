@@ -1,5 +1,27 @@
 [
   {
+    "id": "curve-poly-usdr",
+    "name": "USDR/DAI/USDC/USDT",
+    "token": "USDR3CRV-f",
+    "tokenAddress": "0xa138341185a9D0429B0021A11FB717B225e13e1F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooConvexUSDR",
+    "earnedTokenAddress": "0x2520D50bfD793D3C757900D81229422F70171969",
+    "earnContractAddress": "0x2520D50bfD793D3C757900D81229422F70171969",
+    "oracle": "lps",
+    "oracleId": "curve-poly-usdr",
+    "status": "active",
+    "platformId": "convex",
+    "assets": ["USDR", "DAI", "USDC", "USDT"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-339/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-339/withdraw",
+    "network": "polygon",
+    "createdAt": 1681368730
+  },
+  {
     "id": "balancer-sd-maticx",
     "name": "SD-MaticX",
     "token": "SD-MaticX",
@@ -969,7 +991,8 @@
     "earnContractAddress": "0x68Ac25D2e7306037e1174b0D3405efd36701ca6b",
     "oracle": "lps",
     "oracleId": "balancer-bbamUSD",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["bbamUSDC", "bbamDAI", "bbamUSDT"],
     "risks": [

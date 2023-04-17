@@ -13,6 +13,7 @@ const useStyles = makeStyles(styles);
 export const Dashboard = memo(function () {
   const classes = useStyles();
   const userVaults = useAppSelector(selectUserDepositedVaultIds);
+
   return (
     <div className={classes.dashboard}>
       <DepositSummary />

@@ -38,7 +38,7 @@ declare module '@material-ui/core/styles/createPalette' {
       text: string;
       error: string;
     };
-    dashboard: {
+    v2: {
       summaryCard: string;
       iconBg: string;
       cardBg: string;

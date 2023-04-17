@@ -1,23 +1,21 @@
 import React, { memo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../store';
 import { selectUserExposureByKey } from '../../../data/selectors/balance';
 import { selectIsUserBalanceAvailable } from '../../../data/selectors/data-loader';
 import { ExposureChart } from '../ExposureChart';
+import { ExposureDashboardChartLoaderProps } from '../ExposureChart/types';
 
-const ChainExposure = memo(function () {
-  const { t } = useTranslation();
-
+const ChainExposure = memo<ExposureDashboardChartLoaderProps>(function ({ title }) {
   const chainExposureData = useAppSelector(state => selectUserExposureByKey(state, 'chainId'));
 
-  return <ExposureChart title={t('Exposure-Chain')} type="chain" data={chainExposureData} />;
+  return <ExposureChart title={title} type="chain" data={chainExposureData} />;
 });
 
-export const ChainExposureLoader = memo(function () {
+export const ChainExposureLoader = memo<ExposureDashboardChartLoaderProps>(function ({ title }) {
   const isUserDataAvailable = useAppSelector(selectIsUserBalanceAvailable);
 
   if (isUserDataAvailable) {
-    return <ChainExposure />;
+    return <ChainExposure title={title} />;
   }
 
   return null;

@@ -32,6 +32,7 @@ import { selectGovVaultPendingRewardsInToken } from '../../../../../data/selecto
 import { VaultGov } from '../../../../../data/entities/vault';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { GlpWithdrawNotice } from '../GlpNotices';
+import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotice';
 
 const useStyles = makeStyles(styles);
 
@@ -137,12 +138,17 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ({ option, quote, clas
   const [isDisabledByPriceImpact, setIsDisabledByPriceImpact] = useState(false);
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
+  const [isDisabledByScreamLiquidity, setIsDisabledByScreamLiquidity] = useState(false);
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
   const isDisabled =
-    isTxInProgress || isDisabledByPriceImpact || isDisabledByConfirm || isDisabledByGlpLock;
+    isTxInProgress ||
+    isDisabledByPriceImpact ||
+    isDisabledByConfirm ||
+    isDisabledByGlpLock ||
+    isDisabledByScreamLiquidity;
   const handleClick = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
@@ -150,6 +156,10 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ({ option, quote, clas
   return (
     <>
       {option.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
+      <ScreamAvailableLiquidityNotice
+        vaultId={option.vaultId}
+        onChange={setIsDisabledByScreamLiquidity}
+      />
       <GlpWithdrawNotice vaultId={option.vaultId} onChange={setIsDisabledByGlpLock} />
       <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />

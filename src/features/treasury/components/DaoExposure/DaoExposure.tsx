@@ -40,7 +40,7 @@ export const DaoExposure = memo(function () {
 
   const [chart, setChart] = React.useState<ChartEnum>(ChartEnum.Token);
 
-  const Chart = chartToComponent[chart];
+  const Chart = useMemo(() => chartToComponent[chart], [chart]);
 
   return (
     <Section>

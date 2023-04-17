@@ -11,7 +11,7 @@ const optionalPlugins = [];
 if (process.env.ANALYZE_BUNDLE) {
   optionalPlugins.push(
     visualizer({
-      template: 'sunburst', // or treemap/sunburst
+      template: 'treemap', // or treemap/sunburst
       open: true,
       gzipSize: true,
       brotliSize: true,

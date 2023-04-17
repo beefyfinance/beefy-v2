@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
 import React, { memo } from 'react';
 import { styles } from './styles';
 
@@ -9,13 +8,12 @@ interface SummaryStatProps {
   title: string;
   Icon: React.FC;
   value: string;
-  tinnyStyle?: boolean;
 }
 
-const SummaryStat = memo<SummaryStatProps>(function ({ title, Icon, value, tinnyStyle }) {
+const SummaryStat = memo<SummaryStatProps>(function ({ title, Icon, value }) {
   const classes = useStyles();
   return (
-    <div className={clsx(classes.container, { [classes.mobileVersion]: tinnyStyle })}>
+    <div className={classes.container}>
       <div className={classes.iconContainer}>
         <Icon />
       </div>
@@ -29,22 +27,15 @@ const SummaryStat = memo<SummaryStatProps>(function ({ title, Icon, value, tinny
 
 interface SummaryStatsProps {
   items: SummaryStatProps[];
-  tinnyStyle?: boolean;
 }
 
-export const SummaryStats = memo<SummaryStatsProps>(function ({ items, tinnyStyle = false }) {
+export const SummaryStats = memo<SummaryStatsProps>(function ({ items }) {
   const classes = useStyles();
 
   return (
-    <div className={clsx(classes.summaryContainer, { [classes.tinnyContainer]: tinnyStyle })}>
+    <div className={classes.summaryContainer}>
       {items.map(item => (
-        <SummaryStat
-          tinnyStyle={tinnyStyle}
-          key={item.title}
-          title={item.title}
-          value={item.value}
-          Icon={item.Icon}
-        />
+        <SummaryStat key={item.title} title={item.title} value={item.value} Icon={item.Icon} />
       ))}
     </div>
   );

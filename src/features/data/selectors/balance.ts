@@ -7,11 +7,14 @@ import { isGovVault, VaultEntity, VaultGov } from '../entities/vault';
 import { selectActiveVaultBoostIds, selectAllVaultBoostIds, selectBoostById } from './boosts';
 import createCachedSelector from 're-reselect';
 import {
+  selectChainNativeToken,
+  selectChainWrappedNativeToken,
   selectHasBreakdownData,
   selectIsTokenStable,
   selectLpBreakdownByAddress,
   selectTokenByAddress,
   selectTokenPriceByAddress,
+  selectTokenPriceByTokenOracleId,
   selectTokensByChainId,
 } from './tokens';
 import {
@@ -28,6 +31,8 @@ import { getTopNArray } from '../utils/array-utils';
 import { sortBy } from 'lodash-es';
 import { createSelector } from '@reduxjs/toolkit';
 import { selectChainById } from './chains';
+import { selectVaultPnl } from './analytics';
+import { VaultPnLDataType } from '../../../components/VaultStats/types';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (selectIsWalletKnown(state)) {
@@ -485,12 +490,16 @@ export const selectTokenExposure = (state: BeefyState) => {
   const vaultIds = selectUserDepositedVaultIds(state);
   return vaultIds.reduce((totals, vaultId) => {
     const vault = selectVaultById(state, vaultId);
+    const wnative = selectChainWrappedNativeToken(state, vault.chainId);
+    const native = selectChainNativeToken(state, vault.chainId);
     if (vault.assetIds.length === 1) {
-      totals[vault.assetIds[0]] = {
+      //we are mergin wNative into the native token to avoid showing for eg : WETH & ETH exposure
+      const assetId = vault.assetIds[0] === wnative.oracleId ? native.id : vault.assetIds[0];
+      totals[assetId] = {
         value: (totals[vault.assetIds[0]]?.value || BIG_ZERO).plus(
           selectUserVaultDepositInUsd(state, vaultId)
         ),
-        assetIds: [vault.assetIds[0]],
+        assetIds: [assetId],
         chainId: vault.chainId,
       };
     } else {
@@ -507,9 +516,10 @@ export const selectTokenExposure = (state: BeefyState) => {
         );
         const { assets } = selectUserLpBreakdownBalance(state, vault, breakdown);
         for (const asset of assets) {
-          totals[asset.id] = {
-            value: (totals[asset.id]?.value || BIG_ZERO).plus(asset.userValue),
-            assetIds: [asset.id],
+          const assetId = asset.id === wnative.id ? native.id : asset.id;
+          totals[assetId] = {
+            value: (totals[assetId]?.value || BIG_ZERO).plus(asset.userValue),
+            assetIds: [assetId],
             chainId: vault.chainId,
           };
         }
@@ -625,14 +635,71 @@ export const selectUserVaultBalances = (state: BeefyState) => {
   });
 };
 
-export const selectVaultsWithBalanceByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
+export const selectUserVaultsPnl = (state: BeefyState) => {
   const userVaults = selectUserDepositedVaultIds(state);
-  const vaults = {};
+  const vaults: Record<string, VaultPnLDataType> = {};
   for (const vaultId of userVaults) {
-    const vault = selectVaultById(state, vaultId);
-    if (vault.chainId === chainId) {
-      vaults[vaultId] = selectUserVaultDepositInUsd(state, vaultId);
-    }
+    vaults[vaultId] = selectVaultPnl(state, vaultId);
   }
   return vaults;
+};
+
+export const selectUserTotalYieldUsd = (state: BeefyState) => {
+  const vaultPnls = selectUserVaultsPnl(state);
+
+  let totalYieldUsd = BIG_ZERO;
+  for (const vaultPnl of Object.values(vaultPnls)) {
+    totalYieldUsd = totalYieldUsd.plus(vaultPnl.totalYieldUsd);
+  }
+
+  return totalYieldUsd;
+};
+
+export const selectUserRewardsByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const rewards: {
+    rewardToken: TokenEntity['oracleId'];
+    rewards: BigNumber;
+    rewardsUsd: BigNumber;
+  }[] = [];
+  const rewardsTokens = [];
+  let totalRewardsUsd = BIG_ZERO;
+
+  const vault = selectVaultById(state, vaultId);
+
+  if (isGovVault(vault)) {
+    const earnedToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+    const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(state, vault.id);
+    const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id);
+
+    totalRewardsUsd = rewardsEarnedUsd;
+    rewardsTokens.push(earnedToken.oracleId);
+
+    rewards.push({
+      rewardToken: earnedToken.oracleId,
+      rewards: rewardsEarnedToken,
+      rewardsUsd: rewardsEarnedUsd,
+    });
+  } else {
+    const boosts = selectAllVaultBoostIds(state, vaultId);
+    for (const boostId of boosts) {
+      const rewardToken = selectBoostRewardsTokenEntity(state, boostId);
+      const boostPendingRewards = selectBoostUserRewardsInToken(state, boostId);
+      const oraclePrice = selectTokenPriceByTokenOracleId(state, rewardToken.oracleId);
+      if (boostPendingRewards.isGreaterThan(BIG_ZERO)) {
+        const tokenOracleId = rewardToken.oracleId;
+        const tokenRewardsUsd = boostPendingRewards.times(oraclePrice);
+
+        rewardsTokens.push(tokenOracleId);
+        totalRewardsUsd = totalRewardsUsd.plus(tokenRewardsUsd);
+
+        rewards.push({
+          rewardToken: tokenOracleId,
+          rewards: boostPendingRewards,
+          rewardsUsd: tokenRewardsUsd,
+        });
+      }
+    }
+  }
+
+  return { rewards, rewardsTokens, totalRewardsUsd };
 };

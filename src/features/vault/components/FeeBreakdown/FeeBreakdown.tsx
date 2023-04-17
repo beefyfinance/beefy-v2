@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { VaultEntity } from '../../../data/entities/vault';
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import { InterestTooltipContent } from '../../../home/components/Vault/components/InterestTooltipContent';
 import { IconWithTooltip } from '../../../../components/Tooltip';
 import { formatPercent } from '../../../../helpers/format';
 import { selectVaultDepositFee } from '../../../data/selectors/vaults';
@@ -16,6 +15,7 @@ import {
 import { fetchFees } from '../../../data/actions/fees';
 import ContentLoader from 'react-content-loader';
 import { VaultFee } from '../../../data/reducers/fees';
+import { InterestTooltipContent } from '../../../../components/InterestTooltipContent';
 
 const useStyles = makeStyles(styles);
 
