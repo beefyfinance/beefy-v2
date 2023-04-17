@@ -10,7 +10,7 @@ const useStyles = makeStyles(styles);
 
 export const AnnouncementBanner = memo(function AnnouncementBanner() {
   const classes = useStyles();
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideYieldModule', false);
+  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideDashV2Banner', false);
 
   const closeBanner = useCallback(() => {
     setHideBanner(true);
