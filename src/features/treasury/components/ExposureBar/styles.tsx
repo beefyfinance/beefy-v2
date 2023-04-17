@@ -15,6 +15,6 @@ export const styles = (theme: Theme) => ({
   },
   barItem: {
     height: '100%',
-    borderRight: `2px solid ${theme.palette.background.dashboard.cardBg}`,
+    borderRight: `2px solid ${theme.palette.background.v2.cardBg}`,
   },
 });

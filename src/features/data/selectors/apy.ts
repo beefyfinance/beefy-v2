@@ -7,14 +7,15 @@ import {
   selectUserVaultDepositInDepositToken,
 } from './balance';
 import { selectIsUserBalanceAvailable } from './data-loader';
-import { selectTokenPriceByAddress } from './tokens';
-import { selectVaultById } from './vaults';
+import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
+import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectUserActiveBoostBalanceInToken } from './boosts';
 import { selectWalletAddressIfKnown } from './wallet';
 import { TotalApy } from '../reducers/apy';
 import { compoundInterest } from '../../../helpers/number';
 import { isEmpty } from '../../../helpers/utils';
+import { selectVaultPnl } from './analytics';
 
 export const selectVaultTotalApy = (state: BeefyState, vaultId: VaultEntity['id']) => {
   return state.biz.apy.totalApy.byVaultId[vaultId] || {};
@@ -134,6 +135,8 @@ export const selectUserGlobalStats = (state: BeefyState) => {
 export const selectVaultDailyYieldStats = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const ppfs = selectVaultPricePerFullShare(state, vaultId);
+  const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
   const tokenBalance = selectUserVaultDepositInDepositToken(state, vault.id);
   const vaultUsdBalance = tokenBalance.times(oraclePrice);
   const apyData = selectVaultTotalApy(state, vault.id);
@@ -145,7 +148,9 @@ export const selectVaultDailyYieldStats = (state: BeefyState, vaultId: VaultEnti
     dailyUsd = vaultUsdBalance.times(apyData.totalDaily);
     dailyTokens = tokenBalance.times(apyData.totalDaily);
   } else {
-    const boostBalance = selectUserActiveBoostBalanceInToken(state, vaultId);
+    const boostBalance = selectUserActiveBoostBalanceInToken(state, vaultId).multipliedBy(ppfs);
+    const boostBalanceUsd = boostBalance.times(oraclePrice);
+
     const nonBoostBalanceInTokens = tokenBalance.minus(boostBalance);
     const nonBoostBalanceInUsd = nonBoostBalanceInTokens.times(oraclePrice);
 
@@ -153,10 +158,10 @@ export const selectVaultDailyYieldStats = (state: BeefyState, vaultId: VaultEnti
     dailyTokens = nonBoostBalanceInTokens.times(apyData.totalDaily);
 
     if ('boostedTotalDaily' in apyData && boostBalance.gt(BIG_ZERO)) {
-      dailyUsd = dailyUsd.plus(tokenBalance.times(apyData.boostedTotalDaily));
-      dailyTokens = dailyUsd.plus(vaultUsdBalance.times(apyData.boostedTotalDaily));
+      dailyUsd = dailyUsd.plus(boostBalanceUsd.times(apyData.boostedTotalDaily));
+      dailyTokens = dailyTokens.plus(boostBalance.times(apyData.boostedTotalDaily));
     }
   }
 
-  return { dailyUsd, dailyTokens };
+  return { dailyUsd, dailyTokens, oraclePrice, tokenDecimals: token.decimals };
 };

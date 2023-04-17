@@ -10,7 +10,7 @@ import {
 } from '../../features/data/selectors/balance';
 import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
 import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/selectors/wallet';
-import { VaultValueStat } from '../../features/home/components/Vault/components/VaultValueStat';
+import { VaultValueStat } from '../VaultValueStat';
 
 export type VaultDepositStatProps = {
   vaultId: VaultEntity['id'];

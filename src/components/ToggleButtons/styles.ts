@@ -25,7 +25,6 @@ export const styles = (theme: Theme) => ({
     flexShrink: 0,
     '&:hover': {
       color: '#D0D0DA',
-      backgroundColor: 'rgba(245, 245, 255, 0.08)',
       boxShadow: 'none',
     },
     '&:active, &:hover:active': {
@@ -38,7 +37,6 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.vaults.defaultOutline,
     '&:hover': {
       color: '#ffffff',
-      backgroundColor: theme.palette.background.vaults.defaultOutline,
     },
   },
   untogglable: {

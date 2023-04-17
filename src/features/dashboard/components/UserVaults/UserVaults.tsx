@@ -1,29 +1,54 @@
 import { makeStyles } from '@material-ui/styles';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../store';
-import { selectUserVaultBalances } from '../../../data/selectors/balance';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { debounce } from 'lodash-es';
 import { useInView } from 'react-intersection-observer';
-import { ChainTable } from '../ChainTable';
 import { Section } from '../../../../components/Section';
 import { styles } from './styles';
+import { Filter } from './components/Filter';
+import { Vault } from './components/Vault';
+import { useSortedDashboardVaults } from './hook';
+import { VaultEntity } from '../../../data/entities/vault';
+import { NoVaults } from './components/NoVaults';
+import { Theme, useMediaQuery } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 
 export const UserVaults = memo(function () {
   const { t } = useTranslation();
 
+  const {
+    sortedFilteredVaults,
+    sortedOptions,
+    handleSort,
+    handleSearchText,
+    searchText,
+    handleClearText,
+  } = useSortedDashboardVaults();
+
+  const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+
+  const subTitle = useMemo(() => {
+    return mdDown ? 'Dashboard-Your-Vaults-Subtitle-Mobile' : 'Dashboard-Your-Vaults-Subtitle';
+  }, [mdDown]);
+
   return (
-    <Section title={t('Your Vaults')}>
-      <VirtualList />
+    <Section title={t('Dashboard-Your-Vaults-Title')} subTitle={t(subTitle)}>
+      <Filter
+        sortOptions={sortedOptions}
+        handleSort={handleSort}
+        handleSearchText={handleSearchText}
+        searchText={searchText}
+        handleClearText={handleClearText}
+      />
+      {sortedFilteredVaults.length === 0 ? <NoVaults /> : null}
+      <VirtualList vaults={sortedFilteredVaults} />
     </Section>
   );
 });
 
-export const VirtualList = function () {
+export const VirtualList = memo(function ({ vaults }: { vaults: VaultEntity[] }) {
   const classes = useStyles();
-  const vaults = useAppSelector(selectUserVaultBalances);
   const totalVaults = vaults.length;
   const minBatchSize = 3;
   const [renderCount, setRenderCount] = useState(minBatchSize);
@@ -94,13 +119,13 @@ export const VirtualList = function () {
 
   return (
     <>
-      <div className={classes.tablesContainer} ref={containerRef}>
-        {renderVaultIds.map(data => {
-          return <ChainTable key={data.chainId} data={data} />;
+      <div className={classes.container} ref={containerRef}>
+        {renderVaultIds.map(vault => {
+          return <Vault key={vault.id} vaultId={vault.id} />;
         })}
       </div>
       <div ref={bottomRef} />
       <div ref={placeholderRef} />
     </>
   );
-};
+});

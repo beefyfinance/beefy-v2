@@ -7,6 +7,7 @@ import { Section } from '../../../../components/Section';
 import { StablesExposure } from '../StablesExposure';
 import { TokenExposureLoader } from '../TokenExposure';
 import { styles } from './styles';
+import { MobileUserExposure } from './components/MobileUserExposure';
 
 const useStyles = makeStyles(styles);
 
@@ -17,9 +18,14 @@ export const UserExposure = memo(function () {
   return (
     <Section title={t('Overview')}>
       <div className={classes.pieChartsContainer}>
-        <ChainExposureLoader />
-        <PlatformExposureLoader />
-        <TokenExposureLoader />
+        <Hidden smDown>
+          <ChainExposureLoader title={t('Exposure-Chain')} />
+          <PlatformExposureLoader title={t('Exposure-Platform')} />
+          <TokenExposureLoader title={t('Exposure-Tokens')} />
+        </Hidden>
+        <Hidden mdUp>
+          <MobileUserExposure />
+        </Hidden>
         <Hidden lgUp>
           <StablesExposure />
         </Hidden>

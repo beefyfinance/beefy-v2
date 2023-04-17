@@ -7,14 +7,6 @@ export const styles = (theme: Theme) => ({
     [theme.breakpoints.down('md')]: {
       gridTemplateColumns: 'repeat(2, 1fr)',
     },
-    [theme.breakpoints.down('sm')]: {
-      gridTemplateColumns: '1fr',
-    },
-  },
-  tinnyContainer: {
-    [theme.breakpoints.down('sm')]: {
-      gridTemplateColumns: 'repeat(2, 1fr)',
-    },
   },
   container: {
     width: '100%',
@@ -22,17 +14,28 @@ export const styles = (theme: Theme) => ({
     columnGap: '16px',
     padding: '16px',
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.dashboard.summaryCard,
+    backgroundColor: theme.palette.background.v2.summaryCard,
     alignItems: 'center',
+    [theme.breakpoints.down('xs')]: {
+      columnGap: '8px',
+      backgroundColor: 'transparent',
+      padding: 0,
+      alignItems: 'flex-start',
+    },
   },
   iconContainer: {
     borderRadius: '130px',
-    backgroundColor: theme.palette.background.dashboard.iconBg,
+    backgroundColor: theme.palette.background.v2.iconBg,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     height: '48px',
     width: '48px',
+    [theme.breakpoints.down('xs')]: {
+      backgroundColor: 'transparent',
+      height: '24px',
+      width: '24px',
+    },
   },
   icon: {},
   contentContainer: {
@@ -43,33 +46,18 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['subline-lg'],
     fontWeight: 700,
     color: theme.palette.text.disabled,
+    [theme.breakpoints.down('xs')]: {
+      ...theme.typography['body-sm'],
+      fontWeight: 700,
+      textTransform: 'uppercase' as const,
+      letterSpacing: '0.5px',
+    },
   },
   value: {
     ...theme.typography.h1,
     color: theme.palette.text.secondary,
-  },
-  mobileVersion: {
     [theme.breakpoints.down('xs')]: {
-      '&$container': {
-        columnGap: '8px',
-        backgroundColor: 'transparent',
-        padding: 0,
-        alignItems: 'flex-start',
-      },
-      '& $iconContainer': {
-        backgroundColor: 'transparent',
-        height: '24px',
-        width: '24px',
-      },
-      '& $title': {
-        ...theme.typography['body-sm'],
-        fontWeight: 700,
-        textTransform: 'uppercase' as const,
-        letterSpacing: '0.5px',
-      },
-      '& $value': {
-        ...theme.typography['body-lg-med'],
-      },
+      ...theme.typography['body-lg-med'],
     },
   },
 });

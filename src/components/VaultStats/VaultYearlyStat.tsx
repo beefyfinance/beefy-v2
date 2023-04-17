@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { BeefyState } from '../../redux-types';
 import { selectIsVaultGov } from '../../features/data/selectors/vaults';
 import { formattedTotalApy } from '../../helpers/format';
-import { VaultValueStat } from '../../features/home/components/Vault/components/VaultValueStat';
+import { VaultValueStat } from '../VaultValueStat';
 import {
   selectVaultApyAvailable,
   selectVaultShouldShowInterest,
@@ -18,9 +18,9 @@ import {
   selectIsVaultPrestakedBoost,
 } from '../../features/data/selectors/boosts';
 import { useAppSelector } from '../../store';
-import { InterestTooltipContent } from '../../features/home/components/Vault/components/InterestTooltipContent';
 import { AllValuesAsString } from '../../features/data/utils/types-utils';
 import { TotalApy } from '../../features/data/reducers/apy';
+import { InterestTooltipContent } from '../InterestTooltipContent';
 
 export type VaultYearlyStatProps = {
   vaultId: VaultEntity['id'];

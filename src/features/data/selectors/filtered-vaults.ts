@@ -11,6 +11,7 @@ import {
 import {
   selectHasUserDepositInVault,
   selectIsUserEligibleForVault,
+  selectUserDepositedVaultIds,
   selectUserVaultDepositInUsd,
   selectUserVaultDepositTokenWalletBalanceInUsd,
 } from './balance';
@@ -185,6 +186,19 @@ function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchTex
     return false;
   });
 }
+
+export const SelectUserFilteredVaults = (state: BeefyState, text: string) => {
+  const vaults = selectUserDepositedVaultIds(state).map(id => selectVaultById(state, id));
+  const searchText = simplifySearchText(text);
+  const filteredVaults = vaults.filter(vault => {
+    if (searchText.length > 0 && !selectVaultMatchesText(state, vault, searchText)) {
+      return false;
+    }
+
+    return true;
+  });
+  return filteredVaults;
+};
 
 const selectPlatformIdForFilter = createCachedSelector(
   (state: BeefyState) => state.entities.platforms.filterIds,
