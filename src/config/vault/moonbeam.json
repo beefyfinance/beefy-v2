@@ -11,7 +11,7 @@
     "earnContractAddress": "0x7fc2554a069eb7aCE92396eDFd3acb5aE160ed5A",
     "oracle": "tokens",
     "oracleId": "USDT",
-    "status": "active",
+    "status": "paused",
     "platformId": "moonwell",
     "assets": ["USDTxc"],
     "risks": [
@@ -40,7 +40,7 @@
     "earnContractAddress": "0x2F4bcaAb64909A9fd517cCEc7Dc52903c58c752a",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "paused",
     "platformId": "moonwell",
     "assets": ["USDCwh"],
     "risks": [
@@ -69,7 +69,7 @@
     "earnContractAddress": "0xE16CaceF1832526a6BB4AF96b2cF22Ea8e9fbb23",
     "oracle": "tokens",
     "oracleId": "WETH",
-    "status": "active",
+    "status": "paused",
     "platformId": "moonwell",
     "assets": ["WETHwh"],
     "risks": [
@@ -98,7 +98,7 @@
     "earnContractAddress": "0x9a4C824d758a4C1568c2a790B73cD8B32da994Fa",
     "oracle": "tokens",
     "oracleId": "WBTC",
-    "status": "active",
+    "status": "paused",
     "platformId": "moonwell",
     "assets": ["WBTCwh"],
     "risks": [
