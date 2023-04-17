@@ -24,7 +24,7 @@ const explorerApiUrls = {
   canto: 'tuber.build/api',
 };
 
-const blockScoutChains = new Set(['fuse', 'metis', 'emerald', 'kava', 'canto']);
+const blockScoutChains = new Set(['fuse', 'metis', 'emerald', 'aurora', 'kava', 'canto']);
 const harmonyRpcChains = new Set(['one']);
 
 const getCreationTimestamp = async (vaultAddress, explorerUrl, chain) => {
