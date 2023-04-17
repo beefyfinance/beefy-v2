@@ -88,4 +88,8 @@ export const styles = (theme: Theme) => ({
   displayBlock: {
     display: 'block',
   },
+  contentContainer: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+  },
 });
