@@ -30,6 +30,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
       <div className={clsx(classes.rowDashboard)}>
         <div className={clsx(classes.column, classes.hideSm)}>
           <VaultAtDepositStat
+            contentClassName={classes.contentContainer}
             pnlData={pnlData}
             triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
             showLabel={false}
@@ -38,6 +39,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
         </div>
         <div className={clsx(classes.column, classes.hideSm)}>
           <VaultNowStat
+            contentClassName={classes.contentContainer}
             pnlData={pnlData}
             triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
             showLabel={false}

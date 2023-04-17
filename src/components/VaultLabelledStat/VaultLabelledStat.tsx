@@ -47,7 +47,7 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
         </div>
       ) : null}
       {tooltip ? (
-        <div className={clsx(classes.statContainer, contentClassName)}>
+        <div className={contentClassName}>
           <Tooltip triggerClass={triggerClassName} content={tooltip}>
             {children}
           </Tooltip>
@@ -63,7 +63,7 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
           )}
         </div>
       ) : (
-        <div className={clsx(classes.statContainer, contentClassName)}>
+        <div className={contentClassName}>
           <div className={triggerClassName}>{children}</div>
           {subValue && (
             <div
