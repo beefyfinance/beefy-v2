@@ -49,3 +49,7 @@ export type ShareItemProps = {
   icon: string;
   onClick: () => void;
 };
+
+export interface SaveItemProps {
+  vaultId: VaultEntity['id'];
+}

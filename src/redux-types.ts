@@ -31,6 +31,7 @@ import { TreasuryState } from './features/data/reducers/treasury';
 import { AnalyticsState } from './features/data/reducers/analytics';
 import { ProposalsState } from './features/data/reducers/proposals';
 import { HistoricalState } from './features/data/reducers/historical-types';
+import { SavedVaultsState } from './features/data/reducers/saved-vaults';
 
 export interface BeefyState {
   entities: {
@@ -70,6 +71,7 @@ export interface BeefyState {
     onRamp: OnRampTypes;
     stepperState: StepperState;
     treasury: TreasuryState;
+    savedVaults: SavedVaultsState;
   };
 }
 

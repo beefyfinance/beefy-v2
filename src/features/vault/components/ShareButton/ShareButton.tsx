@@ -3,7 +3,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import { Button } from '../../../../components/Button';
 import * as React from 'react';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { Theme, makeStyles, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import twitterIcon from '../../../../images/icons/share/twitter.svg';
@@ -24,6 +24,7 @@ import {
   BoostedVaultExtraDetails,
   CommonVaultDetails,
   GovVaultExtraDetails,
+  SaveItemProps,
   ShareButtonProps,
   ShareItemProps,
   ShareServiceItemProps,
@@ -31,6 +32,8 @@ import {
   VaultDetails,
 } from './types';
 import clsx from 'clsx';
+import { MoreVert } from '@material-ui/icons';
+import SaveButton from '../SaveButton/SaveButton';
 
 const useStyles = makeStyles(styles);
 
@@ -46,6 +49,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const apys = useAppSelector(state => selectVaultTotalApy(state, vault.id));
+  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
   const commonVaultDetails = useMemo<CommonVaultDetails>(() => {
     return {
       vaultName: vault.name,
@@ -130,8 +134,11 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
         active={isOpen}
         borderless={true}
       >
-        <span className={classes.shareText}>{t('Vault-Share')}</span>
-        <ShareIcon className={classes.shareIcon} />
+        {lgUp ? (
+          <ShareIcon className={classes.shareIcon} />
+        ) : (
+          <MoreVert className={classes.shareIcon} />
+        )}
       </Button>
       <Dropdown
         anchorEl={anchorEl}
@@ -141,6 +148,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
         dropdownClassName={classes.dropdown}
         innerClassName={classes.dropdownInner}
       >
+        {!lgUp && <SaveItem vaultId={vaultId} />}
         <TwitterItem details={vaultDetails} />
         <LensterItem details={vaultDetails} />
         <TelegramItem details={vaultDetails} />
@@ -212,6 +220,12 @@ const CopyLinkItem = memo<ShareServiceItemProps>(function CopyLinkItem({ details
   }, [details]);
 
   return <ShareItem text={t('Vault-Share-CopyLink')} onClick={onClick} icon={linkIcon} />;
+});
+
+const SaveItem = memo<SaveItemProps>(function SaveItem({ vaultId }) {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  return <SaveButton vaultId={vaultId} className={classes.shareItem} text={t('Save')} />;
 });
 
 const ShareItem = memo<ShareItemProps>(function ShareItem({ text, icon, onClick }) {

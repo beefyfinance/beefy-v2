@@ -5,12 +5,13 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
 import { selectChainById } from '../../../data/selectors/chains';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme, useMediaQuery } from '@material-ui/core';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { VaultPlatform } from '../../../../components/VaultPlatform';
 import { styles } from './styles';
 import { ShareButton } from '../ShareButton';
 import { punctuationWrap } from '../../../../helpers/string';
+import SaveButton from '../SaveButton/SaveButton';
 
 const useStyles = makeStyles(styles);
 
@@ -22,6 +23,7 @@ export const VaultHeader = memo<VaultHeaderProps>(function ({ vaultId }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
+  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 
   return (
     <div className={classes.header}>
@@ -42,9 +44,16 @@ export const VaultHeader = memo<VaultHeaderProps>(function ({ vaultId }) {
           </span>
         </div>
         {vault.status === 'active' ? (
-          <div className={classes.shareHolder}>
-            <ShareButton vaultId={vaultId} mobileAlternative={true} />
-          </div>
+          <>
+            {lgUp && (
+              <div className={classes.shareHolder}>
+                <SaveButton vaultId={vaultId} />
+              </div>
+            )}
+            <div className={classes.shareHolder}>
+              <ShareButton vaultId={vaultId} mobileAlternative={true} />
+            </div>
+          </>
         ) : null}
       </div>
     </div>

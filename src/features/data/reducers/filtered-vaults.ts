@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ChainEntity } from '../entities/chain';
 import { PlatformEntity } from '../entities/platform';
 import { KeysOfType } from '../utils/types-utils';
+import { VaultEntity } from '../entities/vault';
 
 /**
  * State containing Vault infos
@@ -25,6 +26,7 @@ export type FilteredVaultsState = {
   onlyPaused: boolean;
   onlyBoosted: boolean;
   onlyZappable: boolean;
+  onlySaved: boolean;
 };
 export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
 
@@ -42,6 +44,7 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   onlyPaused: false,
   onlyBoosted: false,
   onlyZappable: false,
+  onlySaved: false,
 };
 
 export const filteredVaultsSlice = createSlice({
@@ -109,6 +112,10 @@ export const filteredVaultsSlice = createSlice({
     setOnlyZappable(sliceState, action: PayloadAction<FilteredVaultsState['onlyZappable']>) {
       sliceState.reseted = false;
       sliceState.onlyZappable = action.payload;
+    },
+    setOnlySaved(sliceState, action: PayloadAction<FilteredVaultsState['onlySaved']>) {
+      sliceState.reseted = false;
+      sliceState.onlySaved = action.payload;
     },
     setBoolean(
       sliceState,
