@@ -1,5 +1,58 @@
 [
   {
+    "id": "exactly-supply-usdc",
+    "name": "USDC",
+    "token": "USDC",
+    "tokenAddress": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+    "tokenDecimals": 6,
+    "earnedToken": "mooExactlySupplyUSDC",
+    "earnedTokenAddress": "0xE7db4eA58560D4678DF204165D1f50d18185BC89",
+    "earnContractAddress": "0xE7db4eA58560D4678DF204165D1f50d18185BC89",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "platformId": "exactly",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/USDC",
+    "network": "optimism",
+    "createdAt": 1681411178
+  },
+  {
+    "id": "exactly-supply-eth",
+    "name": "ETH",
+    "token": "ETH",
+    "tokenDecimals": 18,
+    "earnedToken": "mooExactlySupplyETH",
+    "earnedTokenAddress": "0x0Bf7616889d0ae18382d9715eAc00a3302e9aB92",
+    "earnContractAddress": "0x0Bf7616889d0ae18382d9715eAc00a3302e9aB92",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "platformId": "exactly",
+    "assets": ["ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/USDC/WETH",
+    "network": "optimism",
+    "createdAt": 1681411178
+  },
+  {
     "id": "velodrome-frax-alusd",
     "name": "alUSD-FRAX sLP",
     "token": "alUSD-FRAX sLP",
