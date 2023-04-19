@@ -6,10 +6,16 @@ import { NormalizedEntity } from '../utils/normalized-entity';
 /**
  * State containing Vault infos
  */
-export type ChainsState = NormalizedEntity<ChainEntity>;
+export type ChainsState = NormalizedEntity<ChainEntity> & {
+  activeIds: ChainEntity['id'][];
+  eolIds: ChainEntity['id'][];
+};
+
 export const initialChainsState: ChainsState = {
   byId: {},
   allIds: [],
+  activeIds: [],
+  eolIds: [],
 };
 
 export const chainsSlice = createSlice({
@@ -20,6 +26,8 @@ export const chainsSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchChainConfigs.fulfilled, (sliceState, action) => {
+      const timestampNow = Date.now() / 1000;
+
       for (const chainConfig of action.payload.chainConfigs) {
         // we already know this chain
         if (chainConfig.id in sliceState.byId) {
@@ -35,6 +43,7 @@ export const chainsSlice = createSlice({
 
         sliceState.byId[chain.id] = chain;
         sliceState.allIds.push(chain.id);
+        sliceState[chain.eol && timestampNow > chain.eol ? 'eolIds' : 'activeIds'].push(chain.id);
       }
     });
   },

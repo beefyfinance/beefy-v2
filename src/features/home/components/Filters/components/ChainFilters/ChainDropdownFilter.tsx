@@ -1,9 +1,8 @@
 import React, { memo, ReactNode, useCallback, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { selectFilterChainIds } from '../../../../../data/selectors/filtered-vaults';
 import { ChainEntity } from '../../../../../data/entities/chain';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
-import { selectAllChains } from '../../../../../data/selectors/chains';
+import { selectActiveChains } from '../../../../../data/selectors/chains';
 import {
   DropdownItemLabelProps,
   LabeledMultiSelect,
@@ -14,6 +13,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
+import { useSelectedChainIds } from './hooks';
 
 const useStyles = makeStyles(styles);
 
@@ -76,22 +76,22 @@ export const ChainDropdownFilter = memo<ChainDropdownFilterProps>(function Chain
   className,
 }) {
   const dispatch = useAppDispatch();
-  const allChains = useAppSelector(selectAllChains);
-  const selectedChainIds = useAppSelector(selectFilterChainIds);
+  const activeChains = useAppSelector(selectActiveChains);
+  const selectedChainIds = useSelectedChainIds();
   const { t } = useTranslation();
 
   const handleChange = useCallback(
     (selected: ChainEntity['id'][]) => {
       dispatch(
-        filteredVaultsActions.setChainIds(selected.length === allChains.length ? [] : selected)
+        filteredVaultsActions.setChainIds(selected.length === activeChains.length ? [] : selected)
       );
     },
-    [dispatch, allChains]
+    [dispatch, activeChains]
   );
 
   const options = useMemo(() => {
-    return Object.fromEntries(allChains.map(chain => [chain.id, chain.name]));
-  }, [allChains]);
+    return Object.fromEntries(activeChains.map(chain => [chain.id, chain.name]));
+  }, [activeChains]);
 
   return (
     <LabeledMultiSelect

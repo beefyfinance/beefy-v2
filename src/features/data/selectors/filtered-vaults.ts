@@ -37,6 +37,7 @@ import { createCachedSelector } from 're-reselect';
 import { KeysOfType } from '../utils/types-utils';
 import { FilteredVaultsState } from '../reducers/filtered-vaults';
 import { PlatformEntity } from '../entities/platform';
+import { selectActiveChainIds, selectAllChainIds } from './chains';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 
@@ -188,7 +189,7 @@ function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchTex
   });
 }
 
-export const SelectUserFilteredVaults = (state: BeefyState, text: string) => {
+export const selectUserFilteredVaults = (state: BeefyState, text: string) => {
   const vaults = selectUserDepositedVaultIds(state).map(id => selectVaultById(state, id));
   const searchText = simplifySearchText(text);
   const filteredVaults = vaults.filter(vault => {
@@ -214,9 +215,16 @@ export const selectFilteredVaults = (state: BeefyState) => {
   const vaults = state.entities.vaults.allIds.map(id => selectVaultById(state, id));
   const tvlByVaultId = state.biz.tvl.byVaultId;
   const apyByVaultId = state.biz.apy.totalApy.byVaultId;
+  // Surface eol chains when user category is 'deposited', or 'only retired' filter is checked; otherwise, only show active chains
+  const allChainIds =
+    filterOptions.userCategory === 'deposited' || filterOptions.onlyRetired
+      ? selectAllChainIds(state)
+      : selectActiveChainIds(state);
 
   // apply filtering
-  const chainIdMap = createIdMap(filterOptions.chainIds);
+  const shouldShowChain = createIdMap(
+    filterOptions.chainIds.length === 0 ? allChainIds : filterOptions.chainIds
+  );
   const filteredVaults = vaults.filter(vault => {
     if (filterOptions.vaultCategory === 'featured' && !selectIsVaultFeatured(state, vault.id)) {
       return false;
@@ -233,7 +241,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
     if (filterOptions.vaultCategory === 'correlated' && !selectIsVaultCorrelated(state, vault.id)) {
       return false;
     }
-    if (filterOptions.chainIds.length > 0 && !chainIdMap[vault.chainId]) {
+    if (!shouldShowChain[vault.chainId]) {
       return false;
     }
     if (
@@ -406,7 +414,7 @@ export const selectTotalVaultCount = createSelector(
   c => c
 );
 
-function createIdMap(ids: string[]) {
+function createIdMap(ids: string[]): Record<string, boolean> {
   const map = {};
   for (const id of ids) {
     map[id] = true;

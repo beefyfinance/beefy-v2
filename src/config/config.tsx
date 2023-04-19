@@ -639,6 +639,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   },
   heco: {
     name: 'HECO',
+    eol: 1681913494,
     chainId: 128,
     rpc: ['https://http-mainnet.hecochain.com'],
     explorerUrl: 'https://hecoinfo.com',
@@ -666,6 +667,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   },
   harmony: {
     name: 'Harmony',
+    eol: 1681913494,
     chainId: 1666600000,
     rpc: ['https://api.s0.t.hmny.io'],
     explorerUrl: 'https://explorer.harmony.one',
