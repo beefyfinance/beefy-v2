@@ -16,7 +16,7 @@ const useStyles = makeStyles(styles);
 export type StakedInBoostProps = {
   className?: string;
 };
-export const StakedInBoost = memo<StakedInBoostProps>(function ({ className }) {
+export const StakedInBoost = memo<StakedInBoostProps>(function StakedInBoost({ className }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);

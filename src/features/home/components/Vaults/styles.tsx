@@ -1,6 +1,4 @@
-import { Theme } from '@material-ui/core/styles';
-
-export const styles = (theme: Theme) => ({
+export const styles = () => ({
   vaults: {
     marginTop: '32px',
     border: 'solid 2px #363B63',

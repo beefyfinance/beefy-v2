@@ -1,13 +1,14 @@
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import React, { memo, MouseEventHandler, useCallback, useRef, useState } from 'react';
+import type { MouseEventHandler } from 'react';
+import React, { memo, useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ExpandMore } from '@material-ui/icons';
 import { Floating } from '../../../Floating';
 import { styles } from './styles';
 import { NavItem } from '../NavItem';
-import { BadgeComponent } from '../Badges/types';
-import { NavItemConfig } from './types';
+import type { BadgeComponent } from '../Badges/types';
+import type { NavItemConfig } from './types';
 
 const useStyles = makeStyles(styles);
 
@@ -18,7 +19,12 @@ interface DropNavItemProps {
   Badge?: BadgeComponent;
 }
 
-export const DropNavItem = memo<DropNavItemProps>(function ({ title, Icon, items, Badge }) {
+export const DropNavItem = memo<DropNavItemProps>(function DropNavItem({
+  title,
+  Icon,
+  items,
+  Badge,
+}) {
   const { t } = useTranslation();
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);

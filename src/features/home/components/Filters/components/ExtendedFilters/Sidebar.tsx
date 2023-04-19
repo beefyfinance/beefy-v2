@@ -13,7 +13,7 @@ export type SidebarProps = {
   onClose: () => void;
 };
 
-export const Sidebar = memo<SidebarProps>(function ({ open, onClose }) {
+export const Sidebar = memo<SidebarProps>(function Sidebar({ open, onClose }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const drawerClasses = useMemo(

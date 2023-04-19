@@ -10,14 +10,14 @@ import {
   selectSupportedTokensForFiat,
 } from '../../../../../data/selectors/on-ramp';
 import { SearchableList } from '../../../../../../components/SearchableList';
-import { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
+import type { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { FiatTitleAdornment } from '../FiatTitleAdornment';
 import { setOnRampToken } from '../../../../../data/actions/on-ramp';
 
 const useStyles = makeStyles(styles);
 
-export const TokenStep = memo(function () {
+export const TokenStep = memo(function TokenStep() {
   const { t } = useTranslation();
   const fiat = useAppSelector(selectFiat);
   const supported = useAppSelector(state => selectIsFiatSupported(state, fiat));
@@ -33,11 +33,11 @@ export const TokenStep = memo(function () {
   );
 });
 
-const FiatNotSupported = memo<{ fiat: string }>(function ({ fiat }) {
+const FiatNotSupported = memo<{ fiat: string }>(function FiatNotSupported({ fiat }) {
   return <div>{fiat} not supported</div>;
 });
 
-const ListItem = memo<ItemInnerProps>(function ({ value }) {
+const ListItem = memo<ItemInnerProps>(function ListItem({ value }) {
   const classes = useStyles();
   const assetIds = useMemo(() => [value], [value]);
   return (
@@ -53,7 +53,7 @@ const ListItem = memo<ItemInnerProps>(function ({ value }) {
   );
 });
 
-const TokenSelector = memo<{ fiat: string }>(function ({ fiat }) {
+const TokenSelector = memo<{ fiat: string }>(function TokenSelector({ fiat }) {
   const tokens = useAppSelector(state => selectSupportedTokensForFiat(state, fiat));
   const sortedTokens = useMemo(() => [...tokens].sort(), [tokens]);
   const dispatch = useAppDispatch();

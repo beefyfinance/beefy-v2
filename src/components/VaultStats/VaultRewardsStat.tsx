@@ -1,7 +1,7 @@
-import { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
 import { connect } from 'react-redux';
-import { BeefyState } from '../../redux-types';
+import type { BeefyState } from '../../redux-types';
 import { formatBigUsd } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import { selectUserRewardsByVaultId } from '../../features/data/selectors/balance';

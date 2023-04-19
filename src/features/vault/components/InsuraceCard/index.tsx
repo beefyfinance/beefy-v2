@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { PartnerCard } from '../PartnerCard';
 import InsuraceLogo from '../../../../images/partners/insurace.svg';
 
-export const InsuraceCard = memo(function () {
+export const InsuraceCard = memo(function InsuraceCard() {
   const { t } = useTranslation();
   return (
     <PartnerCard

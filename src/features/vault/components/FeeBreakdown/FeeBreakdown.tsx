@@ -2,7 +2,7 @@ import { Box, Grid, makeStyles } from '@material-ui/core';
 import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { IconWithTooltip } from '../../../../components/Tooltip';
 import { formatPercent } from '../../../../helpers/format';
@@ -14,14 +14,14 @@ import {
 } from '../../../data/selectors/fees';
 import { fetchFees } from '../../../data/actions/fees';
 import ContentLoader from 'react-content-loader';
-import { VaultFee } from '../../../data/reducers/fees';
+import type { VaultFee } from '../../../data/reducers/fees';
 import { InterestTooltipContent } from '../../../../components/InterestTooltipContent';
 
 const useStyles = makeStyles(styles);
 
 type PerformanceFeesProps = { fees: VaultFee };
 
-const PerformanceFees = memo<PerformanceFeesProps>(function ({ fees }) {
+const PerformanceFees = memo<PerformanceFeesProps>(function PerformanceFees({ fees }) {
   const { t } = useTranslation();
   const rows = [];
 
@@ -66,7 +66,7 @@ const PerformanceFees = memo<PerformanceFeesProps>(function ({ fees }) {
   return <InterestTooltipContent rows={rows} />;
 });
 
-const FeeLoading = memo(function () {
+const FeeLoading = memo(function FeeLoading() {
   return (
     <ContentLoader
       viewBox="0 0 48 16"
@@ -80,7 +80,11 @@ const FeeLoading = memo(function () {
   );
 });
 
-export const FeeBreakdown = memo(({ vaultId }: { vaultId: VaultEntity['id'] }) => {
+export const FeeBreakdown = memo(function FeeBreakdown({
+  vaultId,
+}: {
+  vaultId: VaultEntity['id'];
+}) {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();

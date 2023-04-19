@@ -1,8 +1,8 @@
-import { makeStyles, Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import React, { memo } from 'react';
 import techLoaderUrl from '../../../../images/tech-loader.gif';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     display: 'flex',
     alignItems: 'center',

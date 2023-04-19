@@ -11,7 +11,7 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const ProgressBar = memo(function () {
+export const ProgressBar = memo(function ProgressBar() {
   const progress = useAppSelector(selectStepperProgress);
   const classes = useStyles({ progress });
   const showErrorBar = useAppSelector(selectErrorBar);

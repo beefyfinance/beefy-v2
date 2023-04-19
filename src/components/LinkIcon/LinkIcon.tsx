@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 
@@ -10,7 +10,7 @@ interface LinkIconProps {
   href;
 }
 
-export const LinkIcon: React.FC<LinkIconProps> = ({ href, logo, id }) => {
+export const LinkIcon: FC<LinkIconProps> = ({ href, logo, id }) => {
   const classes = useStyles();
   return (
     <a className={classes.link} href={href} target="_blank" rel="noopener noreferrer">

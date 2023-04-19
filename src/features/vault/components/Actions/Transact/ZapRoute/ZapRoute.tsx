@@ -1,5 +1,6 @@
-import React, { ComponentType, Fragment, memo, useCallback, useMemo } from 'react';
-import {
+import type { ComponentType } from 'react';
+import React, { Fragment, memo, useCallback, useMemo } from 'react';
+import type {
   ZapQuote,
   ZapQuoteStep,
   ZapQuoteStepBuild,
@@ -30,7 +31,9 @@ type StepContentProps<T extends ZapQuoteStep> = {
   className?: string;
 };
 
-const StepContentSwap = memo<StepContentProps<ZapQuoteStepSwap>>(function ({ step }) {
+const StepContentSwap = memo<StepContentProps<ZapQuoteStepSwap>>(function StepContentSwap({
+  step,
+}) {
   const { t } = useTranslation();
   return (
     <Trans
@@ -56,7 +59,9 @@ const StepContentSwap = memo<StepContentProps<ZapQuoteStepSwap>>(function ({ ste
   );
 });
 
-const StepContentBuild = memo<StepContentProps<ZapQuoteStepBuild>>(function ({ step }) {
+const StepContentBuild = memo<StepContentProps<ZapQuoteStepBuild>>(function StepContentBuild({
+  step,
+}) {
   const { t } = useTranslation();
   const provider = useAppSelector(state => selectPlatformById(state, step.outputToken.providerId));
   const tokenAmounts = useMemo(() => {
@@ -88,7 +93,9 @@ const StepContentBuild = memo<StepContentProps<ZapQuoteStepBuild>>(function ({ s
   );
 });
 
-const StepContentDeposit = memo<StepContentProps<ZapQuoteStepDeposit>>(function ({ step }) {
+const StepContentDeposit = memo<StepContentProps<ZapQuoteStepDeposit>>(function StepContentDeposit({
+  step,
+}) {
   const { t } = useTranslation();
   return (
     <Trans
@@ -106,7 +113,9 @@ const StepContentDeposit = memo<StepContentProps<ZapQuoteStepDeposit>>(function 
   );
 });
 
-const StepContentSplit = memo<StepContentProps<ZapQuoteStepSplit>>(function ({ step }) {
+const StepContentSplit = memo<StepContentProps<ZapQuoteStepSplit>>(function StepContentSplit({
+  step,
+}) {
   const { t } = useTranslation();
   const provider = useAppSelector(state => selectPlatformById(state, step.inputToken.providerId));
   const tokenAmounts = useMemo(() => {
@@ -152,7 +161,7 @@ type StepProps = {
   step: ZapQuoteStep;
   number: number;
 };
-const Step = memo<StepProps>(function ({ step, number }) {
+const Step = memo<StepProps>(function Step({ step, number }) {
   const classes = useStyles();
   const Component = StepContentComponents[step.type];
 
@@ -170,7 +179,7 @@ export type ZapRouteProps = {
   quote: ZapQuote;
   className?: string;
 };
-export const ZapRoute = memo<ZapRouteProps>(function ({ quote, className }) {
+export const ZapRoute = memo<ZapRouteProps>(function ZapRoute({ quote, className }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();

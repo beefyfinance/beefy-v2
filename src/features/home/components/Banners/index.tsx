@@ -1,10 +1,9 @@
-import * as React from 'react';
 import { memo } from 'react';
 import { RenBannerHome } from '../../../../components/Banners/RenBanner';
-import { Container, makeStyles, Theme } from '@material-ui/core';
+import { Container, makeStyles } from '@material-ui/core';
 import { AnnouncementBanner } from '../../../../components/Banners/AnnouncementBanner';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   banners: {
     display: 'flex',
     flexDirection: 'column' as const,
@@ -15,8 +14,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export type BannersProps = {};
-export const Banners = memo<BannersProps>(function () {
+export type BannersProps = object;
+export const Banners = memo<BannersProps>(function Banners() {
   const classes = useStyles();
 
   return (

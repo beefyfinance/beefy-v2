@@ -5,7 +5,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useAsync } from '../../../../../../helpers/useAsync';
 import { AlertError, AlertWarning } from '../../../../../../components/Alerts';
 import { TimeUntil } from '../../../../../../components/TimeUntil';
-import { UnlockTimeResult } from './types';
+import type { UnlockTimeResult } from './types';
 import { formatDistanceStrict } from 'date-fns';
 
 const useStyles = makeStyles(styles);

@@ -21,7 +21,10 @@ export type ConfirmNoticeProps = {
   onChange: (shouldDisable: boolean) => void;
   className?: string;
 };
-export const ConfirmNotice = memo<ConfirmNoticeProps>(function ({ className, onChange }) {
+export const ConfirmNotice = memo<ConfirmNoticeProps>(function ConfirmNotice({
+  className,
+  onChange,
+}) {
   const { t } = useTranslation();
   const classes = useStyles();
   const status = useAppSelector(selectTransactConfirmStatus);

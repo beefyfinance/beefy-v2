@@ -1,9 +1,10 @@
 import BigNumber from 'bignumber.js';
-import createCachedSelector from 're-reselect';
+import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO, isFiniteBigNumber } from '../../../helpers/big-number';
-import { BeefyState } from '../../../redux-types';
-import { ChainEntity } from '../entities/chain';
-import { isVaultHoldingEntity, TreasuryHoldingEntity } from '../entities/treasury';
+import type { BeefyState } from '../../../redux-types';
+import type { ChainEntity } from '../entities/chain';
+import type { TreasuryHoldingEntity } from '../entities/treasury';
+import { isVaultHoldingEntity } from '../entities/treasury';
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectLpBreakdownBalance } from './balance';
 import { selectChainById } from './chains';
@@ -91,7 +92,7 @@ export const selectTreasuryAssetsByChainId = createCachedSelector(
 export const selectTreasuryStats = (state: BeefyState) => {
   const treasury = selectTreasury(state);
   let holdings = BIG_ZERO;
-  let assets = [];
+  const assets = [];
   let beefyHeld = BIG_ZERO;
   let stables = BIG_ZERO;
   for (const [chainId, balances] of Object.entries(treasury)) {

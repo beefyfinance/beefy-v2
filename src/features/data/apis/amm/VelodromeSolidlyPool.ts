@@ -1,9 +1,9 @@
-import { ShapeWithLabel } from 'eth-multicall';
+import type { ShapeWithLabel } from 'eth-multicall';
 import { createContract } from '../../../../helpers/web3';
 import BigNumber from 'bignumber.js';
-import { SwapFeeParams } from './types';
+import type { SwapFeeParams } from './types';
 import { SolidlyPool } from './SolidlyPool';
-import { AbiItem } from 'web3-utils';
+import type { AbiItem } from 'web3-utils';
 
 export type FactoryDataResponse = {
   fee: string;
@@ -52,7 +52,7 @@ export class VelodromeSolidlyPool extends SolidlyPool {
     ];
   }
 
-  protected consumeFactoryDataResponse(untypedResult: any[]) {
+  protected consumeFactoryDataResponse(untypedResult: unknown[]) {
     const result = (untypedResult as FactoryDataResponse[])[0];
 
     this.factoryData = {
@@ -66,7 +66,7 @@ export class VelodromeSolidlyPool extends SolidlyPool {
     this.consumeFactoryDataResponse(results);
   }
 
-  async updateAllData(otherCalls: ShapeWithLabel[][] = []): Promise<any[][]> {
+  async updateAllData(otherCalls: ShapeWithLabel[][] = []): Promise<unknown[][]> {
     const otherResults = await super.updateAllData(otherCalls);
 
     await this.updateFactoryData();

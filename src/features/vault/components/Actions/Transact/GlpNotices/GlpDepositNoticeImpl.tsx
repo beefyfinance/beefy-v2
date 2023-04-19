@@ -1,11 +1,11 @@
 import { memo, useCallback } from 'react';
-import { VaultEntity } from '../../../../../data/entities/vault';
+import type { VaultEntity } from '../../../../../data/entities/vault';
 import { useAppSelector } from '../../../../../../store';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import { GlpNotice } from './GlpNotice';
 import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet';
-import { GlpLikeConfig } from './types';
+import type { GlpLikeConfig } from './types';
 import { getUnlockTime } from './GetUnlockTime';
 
 export type GlpDepositNoticeImplProps = {

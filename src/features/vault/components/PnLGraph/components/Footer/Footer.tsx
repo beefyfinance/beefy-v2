@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { memo } from 'react';
 import { BasicTabs } from '../../../../../../components/Tabs/BasicTabs';
-import { VaultEntity } from '../../../../../data/entities/vault';
+import type { VaultEntity } from '../../../../../data/entities/vault';
 
 import { styles } from './styles';
 
@@ -9,12 +9,12 @@ const useStyles = makeStyles(styles);
 
 interface FooterProps {
   period: number;
-  handlePeriod: (period: number) => any;
+  handlePeriod: (period: number) => void;
   vaultId: VaultEntity['id'];
   labels: string[];
 }
 
-export const Footer = memo<FooterProps>(function ({ period, handlePeriod, vaultId, labels }) {
+export const Footer = memo<FooterProps>(function Footer({ period, handlePeriod, labels }) {
   const classes = useStyles();
 
   return (

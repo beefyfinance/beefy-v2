@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NormalizedEntity } from '../utils/normalized-entity';
-import { ProposalEntity } from '../entities/proposal';
+import type { NormalizedEntity } from '../utils/normalized-entity';
+import type { ProposalEntity } from '../entities/proposal';
 import { fetchActiveProposals, markAllProposalsRead } from '../actions/proposal';
 import { keyBy, uniq } from 'lodash-es';
-import { BeefySnapshotProposal } from '../apis/beefy/beefy-api';
+import type { BeefySnapshotProposal } from '../apis/beefy/beefy-api';
 
 export type ProposalsState = NormalizedEntity<ProposalEntity> & {
   readIds: ProposalEntity['id'][];

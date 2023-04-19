@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Step } from '../../../../../../components/Step';
 import { ErrorIndicator } from '../ErrorIndicator';
 
-export const UnsupportedCountryStep = memo(function () {
+export const UnsupportedCountryStep = memo(function UnsupportedCountryStep() {
   const { t } = useTranslation();
 
   return (

@@ -9,7 +9,7 @@ import {
   selectIsVaultBoosted,
   selectPastBoostIdsWithUserBalance,
 } from '../../../../data/selectors/boosts';
-import { BoostEntity } from '../../../../data/entities/boost';
+import type { BoostEntity } from '../../../../data/entities/boost';
 import { selectVaultById } from '../../../../data/selectors/vaults';
 import { selectChainById } from '../../../../data/selectors/chains';
 import { Button } from '../../../../../components/Button';
@@ -63,7 +63,9 @@ export function PastBoosts({ vaultId }: { vaultId: BoostEntity['id'] }) {
               {t('Network-Change', { network: chain.name })}
             </Button>
           ) : (
-            pastBoostsWithUserBalance.map(boost => <BoostPastActionCard boost={boost} />)
+            pastBoostsWithUserBalance.map(boost => (
+              <BoostPastActionCard boost={boost} key={boost.id} />
+            ))
           )
         ) : (
           <Button

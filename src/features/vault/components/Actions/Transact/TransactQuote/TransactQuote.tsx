@@ -25,7 +25,7 @@ import { QuoteTitleRefresh } from '../QuoteTitleRefresh';
 import { AlertError } from '../../../../../../components/Alerts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { ZapSlippage } from '../ZapSlippage';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
 
 const useStyles = makeStyles(styles);
@@ -81,7 +81,7 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   );
 });
 
-const QuoteError = memo(function () {
+const QuoteError = memo(function QuoteError() {
   const { t } = useTranslation();
   const error = useAppSelector(selectTransactQuoteError);
 
@@ -93,11 +93,11 @@ const QuoteError = memo(function () {
   );
 });
 
-const QuoteLoading = memo(function () {
+const QuoteLoading = memo(function QuoteLoading() {
   return <TokenAmountIconLoader />;
 });
 
-const QuoteLoaded = memo(function () {
+const QuoteLoaded = memo(function QuoteLoaded() {
   const classes = useStyles();
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isZap = isZapQuote(quote);

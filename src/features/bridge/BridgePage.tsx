@@ -9,7 +9,7 @@ import { bridgeActions } from '../data/reducers/wallet/bridge';
 
 const useStyles = makeStyles(styles);
 
-export const BridgePage = memo(function () {
+export const BridgePage = memo(function BridgePage() {
   const classes = useStyles();
   const dispatch = useAppDispatch();
 

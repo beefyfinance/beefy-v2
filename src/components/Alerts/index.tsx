@@ -1,5 +1,7 @@
-import { memo, ReactNode } from 'react';
-import { ErrorOutline, ReportProblemOutlined, SvgIconComponent } from '@material-ui/icons';
+import type { ReactNode } from 'react';
+import { memo } from 'react';
+import type { SvgIconComponent } from '@material-ui/icons';
+import { ErrorOutline, ReportProblemOutlined } from '@material-ui/icons';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';

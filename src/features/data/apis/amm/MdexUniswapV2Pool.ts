@@ -1,15 +1,15 @@
-import {
+import type {
   MintFeeParams,
-  UniswapV2Pool,
   FactoryData as BaseFactoryData,
   FactoryDataResponse as BaseFactoryDataResponse,
 } from './UniswapV2Pool';
-import { ShapeWithLabel } from 'eth-multicall';
+import { UniswapV2Pool } from './UniswapV2Pool';
+import type { ShapeWithLabel } from 'eth-multicall';
 import { createContract } from '../../../../helpers/web3';
 import { ZERO_ADDRESS } from '../../../../helpers/addresses';
 import BigNumber from 'bignumber.js';
-import { SwapFeeParams } from './types';
-import { AbiItem } from 'web3-utils';
+import type { SwapFeeParams } from './types';
+import type { AbiItem } from 'web3-utils';
 
 export type FactoryDataResponse = BaseFactoryDataResponse & {
   pairRate: string;
@@ -82,7 +82,7 @@ export class MdexUniswapV2Pool extends UniswapV2Pool {
     ];
   }
 
-  protected consumeFactoryDataResponse(untypedResult: any[]) {
+  protected consumeFactoryDataResponse(untypedResult: unknown[]) {
     const result = (untypedResult as FactoryDataResponse[])[0];
 
     super.consumeFactoryDataResponse(untypedResult);

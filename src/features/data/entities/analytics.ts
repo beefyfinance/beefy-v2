@@ -1,6 +1,6 @@
-import BigNumber from 'bignumber.js';
-import { TimelineAnalyticsConfig } from '../apis/analytics/analytics-types';
-import { ChangeTypeOfKeys, SnakeToCamelCase } from '../utils/types-utils';
+import type BigNumber from 'bignumber.js';
+import type { TimelineAnalyticsConfig } from '../apis/analytics/analytics-types';
+import type { ChangeTypeOfKeys, SnakeToCamelCase } from '../utils/types-utils';
 
 export type VaultTimelineAnalyticsWithBigNumber = ChangeTypeOfKeys<
   {

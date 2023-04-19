@@ -1,7 +1,8 @@
 import React, { memo, useCallback, useState } from 'react';
-import { Collapse, Theme, makeStyles, useMediaQuery } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
+import { Collapse, makeStyles, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
-import { VaultEntity } from '../../../../../data/entities/vault';
+import type { VaultEntity } from '../../../../../data/entities/vault';
 import { VaultIdentity } from '../../../../../../components/VaultIdentity';
 import { VaultDashboardStats } from '../../../../../../components/VaultStats/VaultDashboardStats';
 import { VaultTransactions } from '../VaultTransactions';

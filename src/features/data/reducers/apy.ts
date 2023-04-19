@@ -1,16 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { WritableDraft } from 'immer/dist/internal';
-import { BeefyState } from '../../../redux-types';
+import type { Draft } from 'immer';
+import type { BeefyState } from '../../../redux-types';
 import { fetchApyAction } from '../actions/apy';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { ApyData } from '../apis/beefy/beefy-api';
-import {
+import type { ApyData } from '../apis/beefy/beefy-api';
+import type {
   BoostContractData,
   FetchAllContractDataResult,
 } from '../apis/contract-data/contract-data-types';
-import { BoostEntity } from '../entities/boost';
-import { isGovVault, VaultEntity } from '../entities/vault';
+import type { BoostEntity } from '../entities/boost';
+import type { VaultEntity } from '../entities/vault';
+import { isGovVault } from '../entities/vault';
 import {
   selectActiveVaultBoostIds,
   selectBoostById,
@@ -107,7 +108,7 @@ export const apySlice = createSlice({
 
 function addContractDataToState(
   state: BeefyState,
-  sliceState: WritableDraft<ApyState>,
+  sliceState: Draft<ApyState>,
   contractData: FetchAllContractDataResult
 ) {
   const activeBoostsByVaultIds: { [vaultId: VaultEntity['id']]: BoostContractData[] } = {};
@@ -193,7 +194,7 @@ function addContractDataToState(
 
 function recomputeTotalApy(
   state: BeefyState,
-  sliceState: WritableDraft<ApyState>,
+  sliceState: Draft<ApyState>,
   // we need up to date boost data to know if we need to include boost apy
   newActiveBoostsByVaultIds: { [vaultId: VaultEntity['id']]: BoostContractData[] } = {}
 ) {
@@ -202,7 +203,7 @@ function recomputeTotalApy(
     return;
   }
 
-  for (const [vaultId, apyData] of Object.entries(sliceState.rawApy.byVaultId)) {
+  for (const [vaultId, apy] of Object.entries(sliceState.rawApy.byVaultId)) {
     const values: TotalApy = {};
 
     // sometimes we get vault ids in the api that are not yet configure
@@ -224,26 +225,25 @@ function recomputeTotalApy(
           : selectActiveVaultBoostIds(state, vaultId)[0];
       boostApr = sliceState.rawApy.byBoostId[latestActiveBoostId]?.apr || 0;
     }
-    const apy = apyData as any; /* Legacy code fix */
 
-    values.totalApy = apy.totalApy;
+    values.totalApy = 'totalApy' in apy ? apy.totalApy : 0;
 
-    if (apy.vaultApr) {
+    if ('vaultApr' in apy && apy.vaultApr) {
       values.vaultApr = apy.vaultApr;
       values.vaultDaily = apy.vaultApr / 365;
     }
 
-    if (apy.tradingApr) {
+    if ('tradingApr' in apy && apy.tradingApr) {
       values.tradingApr = apy.tradingApr;
       values.tradingDaily = apy.tradingApr / 365;
     }
 
-    if (apy.composablePoolApr) {
+    if ('composablePoolApr' in apy && apy.composablePoolApr) {
       values.composablePoolApr = apy.composablePoolApr;
       values.composablePoolDaily = apy.composablePoolApr / 365;
     }
 
-    if (apy.liquidStakingApr) {
+    if ('liquidStakingApr' in apy && apy.liquidStakingApr) {
       values.liquidStakingApr = apy.liquidStakingApr;
       values.liquidStakingDaily = apy.liquidStakingApr / 365;
     }
@@ -263,7 +263,7 @@ function recomputeTotalApy(
       values.totalDaily = yearlyToDaily(values.totalApy);
     }
 
-    if (isGovVault(vault)) {
+    if (isGovVault(vault) && 'vaultApr' in apy) {
       values.totalApy = apy.vaultApr / 1;
       values.totalDaily = apy.vaultApr / 365;
     }

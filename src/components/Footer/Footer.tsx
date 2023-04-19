@@ -64,7 +64,7 @@ const socialLinks = [
 
 const useStyles = makeStyles(styles);
 
-export const Footer = memo(function () {
+export const Footer = memo(function Footer() {
   const classes = useStyles();
   const { t } = useTranslation();
 

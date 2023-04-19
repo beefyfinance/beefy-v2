@@ -1,4 +1,4 @@
-import {
+import type {
   IOneInchApi,
   PriceRequest,
   PriceResponse,
@@ -7,10 +7,11 @@ import {
   SwapRequest,
   SwapResponse,
 } from './one-inch-types';
-import { ChainEntity } from '../../entities/chain';
-import axios, { AxiosInstance } from 'axios';
+import type { ChainEntity } from '../../entities/chain';
+import type { AxiosInstance } from 'axios';
+import axios from 'axios';
 import { errorToString } from '../transact/helpers/one-inch';
-import Web3 from 'web3';
+import type Web3 from 'web3';
 import { MultiCall } from 'eth-multicall';
 import { createContract } from '../../../../helpers/web3';
 import { OneInchPriceOracleAbi } from '../../../../config/abi';
@@ -30,10 +31,10 @@ export class OneInchApi implements IOneInchApi {
     });
   }
 
-  protected async get<ResponseType extends {}, RequestType extends {}>(
-    url: string,
-    request: RequestType
-  ): Promise<ResponseType> {
+  protected async get<
+    ResponseType extends object,
+    RequestType extends Record<string, string | number | boolean>
+  >(url: string, request: RequestType): Promise<ResponseType> {
     try {
       const response = await this.api.get<ResponseType>(url, {
         headers: {
@@ -53,11 +54,11 @@ export class OneInchApi implements IOneInchApi {
   }
 
   async getQuote(request: QuoteRequest): Promise<QuoteResponse> {
-    return await this.get('/quote', request);
+    return await this.get<QuoteResponse, QuoteRequest>('/quote', request);
   }
 
   async getSwap(request: SwapRequest): Promise<SwapResponse> {
-    return await this.get('/swap', request);
+    return await this.get<SwapResponse, SwapRequest>('/swap', request);
   }
 
   async getWeb3(): Promise<Web3> {

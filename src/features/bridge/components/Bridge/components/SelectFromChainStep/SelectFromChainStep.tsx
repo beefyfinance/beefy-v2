@@ -30,7 +30,7 @@ export const _SelectFromChainStep = () => {
 
 export const SelectFromChainStep = memo(_SelectFromChainStep);
 
-const ChainSelector = memo(function () {
+const ChainSelector = memo(function ChainSelector() {
   const bridgeState = useAppSelector(selectBridgeState);
 
   const options = useAppSelector(selectBridgeSuportedChains);

@@ -12,7 +12,12 @@ export type CardTabProps = {
   className?: string;
 };
 
-export const CardsTabs = memo<CardTabProps>(function ({ selected, options, onChange, className }) {
+export const CardsTabs = memo<CardTabProps>(function CardsTabs({
+  selected,
+  options,
+  onChange,
+  className,
+}) {
   const classes = useStyles();
 
   return (
@@ -37,7 +42,7 @@ type TabProps = {
   selected: boolean;
   className?: string;
 };
-const Tab = memo<TabProps>(function ({ value, label, onChange, selected, className }) {
+const Tab = memo<TabProps>(function Tab({ value, label, onChange, selected, className }) {
   const classes = useStyles();
   const handleClick = useCallback(() => {
     onChange(value);

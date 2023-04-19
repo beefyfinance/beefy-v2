@@ -1,12 +1,13 @@
-import axios, { AxiosInstance } from 'axios';
+import type { AxiosInstance } from 'axios';
+import axios from 'axios';
 import BigNumber from 'bignumber.js';
 import { isString } from 'lodash-es';
-import { ChainEntity } from '../../entities/chain';
-import { TokenEntity } from '../../entities/token';
-import { VaultEntity } from '../../entities/vault';
+import type { ChainEntity } from '../../entities/chain';
+import type { TokenEntity } from '../../entities/token';
+import type { VaultEntity } from '../../entities/vault';
 import { mapValuesDeep } from '../../utils/array-utils';
 import { featureFlag_simulateBeefyApiError } from '../../utils/feature-flags';
-import { TreasuryConfig } from '../config-types';
+import type { TreasuryConfig } from '../config-types';
 
 export type ApyPerformanceFeeData = {
   total: number;

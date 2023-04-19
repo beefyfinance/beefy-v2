@@ -19,7 +19,7 @@ export type ListItemProps = {
   onSelect: (id: string) => void;
   className?: string;
 };
-export const ListItem = memo<ListItemProps>(function ({ quoteId, className, onSelect }) {
+export const ListItem = memo<ListItemProps>(function ListItem({ quoteId, className, onSelect }) {
   const classes = useStyles();
   const quote = useAppSelector(state => selectTransactQuoteById(state, quoteId));
   const option = useAppSelector(state => selectTransactOptionById(state, quote.optionId));
@@ -27,7 +27,7 @@ export const ListItem = memo<ListItemProps>(function ({ quoteId, className, onSe
   const outputs = useMemo(
     () =>
       quote.outputs.map(output => (
-        <TokenAmountFromEntity token={output.token} amount={output.amount} />
+        <TokenAmountFromEntity token={output.token} amount={output.amount} key={output.token.id} />
       )),
     [quote]
   );

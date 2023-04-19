@@ -1,12 +1,12 @@
-import { ApiChartData, ApiRanges, ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
-import { VaultEntity } from '../entities/vault';
-import { TokenEntity } from '../entities/token';
-import { SerializedError } from '@reduxjs/toolkit';
+import type { ApiChartData, ApiRanges, ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
+import type { VaultEntity } from '../entities/vault';
+import type { TokenEntity } from '../entities/token';
+import type { SerializedError } from '@reduxjs/toolkit';
 
 type LoadingStatus = 'idle' | 'pending' | 'rejected' | 'fulfilled';
 export type ChartStat = 'apy' | 'tvl' | 'price';
 
-type WithStatus<T extends {}> = {
+type WithStatus<T extends object> = {
   status: LoadingStatus;
   error?: SerializedError;
 } & Partial<T>;

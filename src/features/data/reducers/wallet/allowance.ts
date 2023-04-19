@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { fetchAllAllowanceAction, fetchAllowanceAction } from '../../actions/allowance';
-import { TokenAllowance } from '../../apis/allowance/allowance-types';
-import { WritableDraft } from 'immer/dist/internal';
-import { ChainEntity } from '../../entities/chain';
-import { TokenEntity } from '../../entities/token';
+import type { TokenAllowance } from '../../apis/allowance/allowance-types';
+import type { Draft } from 'immer';
+import type { ChainEntity } from '../../entities/chain';
+import type { TokenEntity } from '../../entities/token';
 import { accountHasChanged, walletHasDisconnected } from './wallet';
 import { selectVaultById } from '../../selectors/vaults';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
@@ -82,7 +82,7 @@ export const allowanceSlice = createSlice({
 });
 
 function addAllowancesToState(
-  sliceState: WritableDraft<AllowanceState>,
+  sliceState: Draft<AllowanceState>,
   chainId: ChainEntity['id'],
   allowances: TokenAllowance[]
 ) {
@@ -103,7 +103,7 @@ function addAllowancesToState(
 
     // only update data if necessary
     const spender = tokenAllowance.spenderAddress.toLowerCase();
-    let stateForSpender = stateForToken.bySpenderAddress[spender];
+    const stateForSpender = stateForToken.bySpenderAddress[spender];
     if (stateForSpender === undefined || !stateForSpender.isEqualTo(tokenAllowance.allowance)) {
       stateForToken.bySpenderAddress[spender] = tokenAllowance.allowance;
     }

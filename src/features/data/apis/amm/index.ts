@@ -1,15 +1,10 @@
-import {
-  AmmEntity,
-  AmmEntitySolidly,
-  AmmEntityUniswapV2,
-  isSolidlyAmm,
-  isUniswapV2Amm,
-} from '../../entities/amm';
+import type { AmmEntity, AmmEntitySolidly, AmmEntityUniswapV2 } from '../../entities/amm';
+import { isSolidlyAmm, isUniswapV2Amm } from '../../entities/amm';
 import { UniswapV2Pool } from './UniswapV2Pool';
-import { ChainEntity } from '../../entities/chain';
+import type { ChainEntity } from '../../entities/chain';
 import { SolidlyPool } from './SolidlyPool';
 import { MdexUniswapV2Pool } from './MdexUniswapV2Pool';
-import { IPool } from './types';
+import type { IPool } from './types';
 import { BiSwapUniswapV2Pool } from './BiSwapUniswapV2Pool';
 import { ConeSolidlyPool } from './ConeSolidlyPool';
 import { SwapsicleUniswapV2Pool } from './SwapsicleUniswapV2Pool';

@@ -30,7 +30,7 @@ import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount'
 
 const useStyles = makeStyles(styles);
 
-const SelectedInWallet = memo(function () {
+const SelectedInWallet = memo(function SelectedInWallet() {
   const chainId = useAppSelector(selectTransactSelectedChainId);
   const tokenAddresses = useAppSelector(selectTransactSelectedTokenAddresses);
 

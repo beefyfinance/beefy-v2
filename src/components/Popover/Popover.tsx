@@ -1,5 +1,7 @@
-import { makeStyles, Popper, PopperPlacementType } from '@material-ui/core';
-import React, { memo, ReactNode, useState } from 'react';
+import type { PopperPlacementType } from '@material-ui/core';
+import { makeStyles, Popper } from '@material-ui/core';
+import type { ReactNode } from 'react';
+import React, { memo, useState } from 'react';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 import { styles } from './styles';

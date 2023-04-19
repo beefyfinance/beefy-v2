@@ -1,9 +1,9 @@
-import { BeefyState } from '../../../redux-types';
-import { VaultEntity } from '../entities/vault';
-import { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
-import { TokenEntity } from '../entities/token';
+import type { BeefyState } from '../../../redux-types';
+import type { VaultEntity } from '../entities/vault';
+import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
+import type { TokenEntity } from '../entities/token';
 import { createSelector } from '@reduxjs/toolkit';
-import { ChartStat } from '../reducers/historical-types';
+import type { ChartStat } from '../reducers/historical-types';
 import { mapValues } from 'lodash-es';
 import { selectVaultShouldShowInterest } from './data-loader';
 import { TIME_BUCKETS } from '../../vault/components/HistoricGraph/utils';

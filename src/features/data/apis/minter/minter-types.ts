@@ -1,6 +1,6 @@
-import BigNumber from 'bignumber.js';
-import { MinterEntity } from '../../entities/minter';
-import { MinterConfig } from '../config-types';
+import type BigNumber from 'bignumber.js';
+import type { MinterEntity } from '../../entities/minter';
+import type { MinterConfig } from '../config-types';
 
 export interface IMinterApi {
   fetchMinterReserves(minter: MinterConfig): Promise<FetchMinterReservesResult>;

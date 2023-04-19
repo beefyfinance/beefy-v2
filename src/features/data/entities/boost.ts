@@ -1,7 +1,7 @@
-import { ChainEntity } from './chain';
-import { PartnerEntity } from './partner';
-import { TokenEntity } from './token';
-import { VaultEntity } from './vault';
+import type { ChainEntity } from './chain';
+import type { PartnerEntity } from './partner';
+import type { TokenEntity } from './token';
+import type { VaultEntity } from './vault';
 
 // TODO: WIP
 export interface BoostEntity {

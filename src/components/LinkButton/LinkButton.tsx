@@ -1,16 +1,16 @@
-import React from 'react';
+import type { FC } from 'react';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import CodeRoundedIcon from '@material-ui/icons/CodeRounded';
 import InsertIcon from '@material-ui/icons/InsertLink';
-import { LinkButtonProps } from './LinkButtonProps';
+import type { LinkButtonProps } from './LinkButtonProps';
 import clsx from 'clsx';
-import { Theme } from '@material-ui/core/styles';
+import type { Theme } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 
-export const LinkButton: React.FC<LinkButtonProps> = ({
+export const LinkButton: FC<LinkButtonProps> = ({
   href,
   text,
   type,

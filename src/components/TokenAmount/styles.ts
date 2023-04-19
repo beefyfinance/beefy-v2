@@ -1,6 +1,4 @@
-import { Theme } from '@material-ui/core/styles';
-
-export const styles = (theme: Theme) => ({
+export const styles = () => ({
   withTooltip: {
     textDecoration: 'underline 1px dotted',
     cursor: 'default' as const,

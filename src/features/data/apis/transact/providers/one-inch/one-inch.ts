@@ -1,8 +1,8 @@
-import { BeefyState } from '../../../../../../redux-types';
-import { isStandardVault, VaultEntity, VaultStandard } from '../../../../entities/vault';
-import {
+import type { BeefyState } from '../../../../../../redux-types';
+import type { VaultEntity, VaultStandard } from '../../../../entities/vault';
+import { isStandardVault } from '../../../../entities/vault';
+import type {
   InputTokenAmount,
-  isZapQuoteStepSwap,
   ITransactProvider,
   TokenAmount,
   TransactOption,
@@ -12,8 +12,9 @@ import {
   ZapQuote,
   ZapQuoteStepSwap,
 } from '../../transact-types';
-import { Namespace, TFunction } from 'react-i18next';
-import { Step } from '../../../../reducers/wallet/stepper';
+import { isZapQuoteStepSwap } from '../../transact-types';
+import type { Namespace, TFunction } from 'react-i18next';
+import type { Step } from '../../../../reducers/wallet/stepper';
 import {
   selectStandardVaultById,
   selectVaultById,
@@ -28,10 +29,11 @@ import {
   selectTokenById,
   selectTokenPriceByTokenOracleId,
 } from '../../../../selectors/tokens';
-import { isTokenEqual, isTokenErc20, TokenEntity, TokenErc20 } from '../../../../entities/token';
+import type { TokenEntity, TokenErc20 } from '../../../../entities/token';
+import { isTokenEqual, isTokenErc20 } from '../../../../entities/token';
 import { selectOneInchZapByChainId } from '../../../../selectors/zap';
-import { ZapEntityOneInch } from '../../../../entities/zap';
-import { AmmEntity } from '../../../../entities/amm';
+import type { ZapEntityOneInch } from '../../../../entities/zap';
+import type { AmmEntity } from '../../../../entities/amm';
 import { createOptionId, createQuoteId, createTokensId } from '../../utils';
 import { TransactMode } from '../../../../reducers/wallet/transact-types';
 import { first, uniqBy } from 'lodash-es';
@@ -57,11 +59,12 @@ import {
 import { selectTransactSlippage } from '../../../../selectors/transact';
 import BigNumber from 'bignumber.js';
 import { getPool } from '../../../amm';
-import { IPool, WANT_TYPE } from '../../../amm/types';
+import type { IPool } from '../../../amm/types';
+import { WANT_TYPE } from '../../../amm/types';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import { quoteWithFee } from '../../helpers/one-inch';
 import { selectAmmById } from '../../../../selectors/amm';
-import { IOneInchApi } from '../../../one-inch/one-inch-types';
+import type { IOneInchApi } from '../../../one-inch/one-inch-types';
 
 export type OneInchZapOptionBase = {
   zap: ZapEntityOneInch;
@@ -92,12 +95,12 @@ export class OneInchZapProvider implements ITransactProvider {
     return OneInchZapProvider.ID;
   }
 
-  async isSingleAssetVault(vault: VaultStandard, state: BeefyState): Promise<boolean> {
+  async isSingleAssetVault(vault: VaultStandard, _state: BeefyState): Promise<boolean> {
     // assume all vaults with 1 asset are 'single asset'; later we have a token block list to filter out false positives
     return vault.assetIds.length === 1;
   }
 
-  async isLPVault(vault: VaultStandard, state: BeefyState): Promise<boolean> {
+  async isLPVault(vault: VaultStandard, _state: BeefyState): Promise<boolean> {
     return vault.assetIds.length > 1;
   }
 
@@ -250,7 +253,7 @@ export class OneInchZapProvider implements ITransactProvider {
       return null;
     }
 
-    let amms = state.entities.amms.byChainId[vault.chainId];
+    const amms = state.entities.amms.byChainId[vault.chainId];
     if (amms === undefined || amms.length === 0) {
       return null;
     }
@@ -908,7 +911,7 @@ export class OneInchZapProvider implements ITransactProvider {
       return null;
     }
 
-    let amms = state.entities.amms.byChainId[vault.chainId];
+    const amms = state.entities.amms.byChainId[vault.chainId];
     if (amms === undefined || amms.length === 0) {
       return null;
     }

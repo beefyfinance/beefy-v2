@@ -1,4 +1,5 @@
-import { memo, PropsWithChildren, useCallback } from 'react';
+import type { PropsWithChildren } from 'react';
+import { memo, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
@@ -24,7 +25,7 @@ type MessageProps = PropsWithChildren<{
   text: string;
 }>;
 
-const Message = memo<MessageProps>(function ({ title, text, children }) {
+const Message = memo<MessageProps>(function Message({ title, text, children }) {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -37,7 +38,7 @@ const Message = memo<MessageProps>(function ({ title, text, children }) {
   );
 });
 
-const NotConnectedMessage = memo<MessageProps>(function ({ title, text }) {
+const NotConnectedMessage = memo<MessageProps>(function NotConnectedMessage({ title, text }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
@@ -58,7 +59,7 @@ const NotConnectedMessage = memo<MessageProps>(function ({ title, text }) {
   );
 });
 
-const NotDepositedMessage = memo<MessageProps>(function ({ title, text }) {
+const NotDepositedMessage = memo<MessageProps>(function NotDepositedMessage({ title, text }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const handleViewAll = useCallback(() => {
@@ -74,7 +75,7 @@ const NotDepositedMessage = memo<MessageProps>(function ({ title, text }) {
   );
 });
 
-const LoadingMessage = memo(function () {
+const LoadingMessage = memo(function LoadingMessage() {
   const classes = useStyles();
   return (
     <div className={classes.message}>
@@ -83,7 +84,7 @@ const LoadingMessage = memo(function () {
   );
 });
 
-export const NoResults = memo(function () {
+export const NoResults = memo(function NoResults() {
   const hasActiveFilter = useAppSelector(selectHasActiveFilterExcludingUserCategoryAndSort);
   const userCategory = useAppSelector(selectFilterUserCategory);
   const userBalanceAvailable = useAppSelector(selectIsUserBalanceAvailable);

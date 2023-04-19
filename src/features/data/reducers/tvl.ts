@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { mooAmountToOracleAmount } from '../utils/ppfs';
-import { WritableDraft } from 'immer/dist/internal';
+import type { Draft } from 'immer';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import { BoostEntity } from '../entities/boost';
-import { VaultEntity, VaultGov } from '../entities/vault';
+import type { BoostEntity } from '../entities/boost';
+import type { VaultEntity, VaultGov } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
 import { selectTokenByAddress, selectTokenPriceByAddress } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
-import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
-import { BeefyState } from '../../../redux-types';
+import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
+import type { BeefyState } from '../../../redux-types';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { ChainEntity } from '../entities/chain';
+import type { ChainEntity } from '../entities/chain';
 import { BIG_ZERO } from '../../../helpers/big-number';
 
 /**
@@ -72,7 +72,7 @@ export const tvlSlice = createSlice({
 
 function addContractDataToState(
   state: BeefyState,
-  sliceState: WritableDraft<TvlState>,
+  sliceState: Draft<TvlState>,
   contractData: FetchAllContractDataResult
 ) {
   // On standard vault contract data, recompute tvl and exclusions

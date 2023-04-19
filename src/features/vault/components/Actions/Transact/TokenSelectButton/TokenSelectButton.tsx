@@ -18,7 +18,9 @@ export type TokenSelectButtonProps = {
   className?: string;
 };
 
-export const TokenSelectButton = memo<TokenSelectButtonProps>(function ({ className }) {
+export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSelectButton({
+  className,
+}) {
   const dispatch = useAppDispatch();
   const classes = useStyles();
   const selectedTokens = useAppSelector(selectTransactSelectedTokens);

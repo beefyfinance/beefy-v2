@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { WritableDraft } from 'immer/dist/internal';
-import { PlatformEntity } from '../entities/platform';
-import { NormalizedEntity } from '../utils/normalized-entity';
+import type { Draft } from 'immer';
+import type { PlatformEntity } from '../entities/platform';
+import type { NormalizedEntity } from '../utils/normalized-entity';
 import { fetchPlatforms } from '../actions/platforms';
 import { fetchAllVaults } from '../actions/vaults';
-import { PlatformConfig, VaultConfig } from '../apis/config-types';
+import type { PlatformConfig, VaultConfig } from '../apis/config-types';
 
 /**
  * State containing Vault infos
@@ -45,7 +45,7 @@ export const platformsSlice = createSlice({
 });
 
 function addVaultPlatformToState(
-  sliceState: WritableDraft<PlatformsState>,
+  sliceState: Draft<PlatformsState>,
   platformId: VaultConfig['platformId'],
   active: boolean
 ) {
@@ -54,10 +54,7 @@ function addVaultPlatformToState(
   }
 }
 
-function addPlatformToState(
-  sliceState: WritableDraft<PlatformsState>,
-  platformConfig: PlatformConfig
-) {
+function addPlatformToState(sliceState: Draft<PlatformsState>, platformConfig: PlatformConfig) {
   if (sliceState.byId[platformConfig.id] === undefined) {
     const platform: PlatformEntity = {
       id: platformConfig.id,

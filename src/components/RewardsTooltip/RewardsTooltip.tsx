@@ -1,14 +1,14 @@
 import React, { memo } from 'react';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
-import { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault';
 import { Tooltip } from '../Tooltip';
 import { AssetsImage } from '../AssetsImage';
 import { useAppSelector } from '../../store';
 import { useTranslation } from 'react-i18next';
 import { selectUserRewardsByVaultId } from '../../features/data/selectors/balance';
-import { TokenEntity } from '../../features/data/entities/token';
-import BigNumber from 'bignumber.js';
+import type { TokenEntity } from '../../features/data/entities/token';
+import type BigNumber from 'bignumber.js';
 import { formatBigNumber, formatBigUsd } from '../../helpers/format';
 
 const useStyles = makeStyles(styles);
@@ -18,7 +18,10 @@ interface RewardsTooltipProps {
   size?: number;
 }
 
-export const RewardsTooltip = memo<RewardsTooltipProps>(({ vaultId, size = 20 }) => {
+export const RewardsTooltip = memo<RewardsTooltipProps>(function RewardsTooltip({
+  vaultId,
+  size = 20,
+}) {
   const classes = useStyles();
 
   const { rewards, rewardsTokens } = useAppSelector(state =>
@@ -48,24 +51,26 @@ interface RewardsTooltipContentProps {
   rewards: RewardsType[];
 }
 
-export const RewardsTooltipContent = memo<RewardsTooltipContentProps>(function ({ rewards }) {
-  const { t } = useTranslation();
-  const classes = useStyles();
-  return (
-    <div>
-      <div className={classes.tooltipTitle}>{t('Claimable rewards')}</div>
-      <div className={classes.rewardsContainer}>
-        {rewards.map(tokenRewards => {
-          return (
-            <div key={tokenRewards.rewardToken}>
-              <div className={classes.rewardsText}>
-                {formatBigNumber(tokenRewards.rewards)} {tokenRewards.rewardToken}
+export const RewardsTooltipContent = memo<RewardsTooltipContentProps>(
+  function RewardsTooltipContent({ rewards }) {
+    const { t } = useTranslation();
+    const classes = useStyles();
+    return (
+      <div>
+        <div className={classes.tooltipTitle}>{t('Claimable rewards')}</div>
+        <div className={classes.rewardsContainer}>
+          {rewards.map(tokenRewards => {
+            return (
+              <div key={tokenRewards.rewardToken}>
+                <div className={classes.rewardsText}>
+                  {formatBigNumber(tokenRewards.rewards)} {tokenRewards.rewardToken}
+                </div>
+                <div className={classes.usdPrice}>{formatBigUsd(tokenRewards.rewardsUsd)}</div>
               </div>
-              <div className={classes.usdPrice}>{formatBigUsd(tokenRewards.rewardsUsd)}</div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);

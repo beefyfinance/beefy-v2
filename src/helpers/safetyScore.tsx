@@ -7,7 +7,7 @@ const calcRisk = (arr: string[]) => {
   }
 
   // reverse lookup
-  arr.forEach((r, idx) => {
+  arr.forEach(r => {
     if (!(r in RISKS)) {
       //console.warn('unknown risk', r);
       return;

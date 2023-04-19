@@ -1,9 +1,10 @@
-import { createSlice, PayloadAction, ThunkAction } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction, ThunkAction } from '@reduxjs/toolkit';
+import type BigNumber from 'bignumber.js';
 import { startStepper } from '../../actions/stepper';
-import { ChainEntity } from '../../entities/chain';
-import { TokenEntity } from '../../entities/token';
-import { VaultEntity } from '../../entities/vault';
+import type { ChainEntity } from '../../entities/chain';
+import type { TokenEntity } from '../../entities/token';
+import type { VaultEntity } from '../../entities/vault';
 
 export enum StepContent {
   StartTx = 1,
@@ -31,6 +32,7 @@ export type Step = {
     | 'zap-in'
     | 'zap-out';
   message: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   action: ThunkAction<any, any, any, any>;
   pending: boolean;
   extraInfo?: {

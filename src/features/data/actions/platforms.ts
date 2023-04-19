@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getConfigApi } from '../apis/instances';
-import { PlatformConfig } from '../apis/config-types';
+import type { PlatformConfig } from '../apis/config-types';
 
 export type FetchPlatformsPayload = PlatformConfig[];
 

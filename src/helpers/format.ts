@@ -1,10 +1,10 @@
 import { BigNumber } from 'bignumber.js';
-import { TotalApy } from '../features/data/reducers/apy';
+import type { TotalApy } from '../features/data/reducers/apy';
 import { toNumber } from 'web3-utils';
-import { ReactNode } from 'react';
-import { AllValuesAsString } from '../features/data/utils/types-utils';
+import type { ReactNode } from 'react';
+import type { AllValuesAsString } from '../features/data/utils/types-utils';
 import { BIG_ONE, BIG_ZERO, isBigNumber } from './big-number';
-import { SerializedError } from '@reduxjs/toolkit';
+import type { SerializedError } from '@reduxjs/toolkit';
 import { isString, padStart } from 'lodash-es';
 
 export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
@@ -32,11 +32,11 @@ export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
  * @param dp
  * @param placeholder
  */
-export const formatPercent = (
+export function formatPercent<T = string>(
   percent: number | BigNumber | null | undefined,
   dp = 2,
-  placeholder: any = '?'
-) => {
+  placeholder: T | string = '?'
+): T | string {
   if (!percent && percent !== 0) return placeholder;
 
   if (percent === 0) {
@@ -67,7 +67,7 @@ export const formatPercent = (
         maximumFractionDigits: 0,
         minimumFractionDigits: 0,
       }) + '%';
-};
+}
 
 /**
  * @param percent 0..1
@@ -287,7 +287,7 @@ export function convertAmountToRawNumber(value, decimals = 18) {
     .toString(10);
 }
 
-export function maybeHexToNumber(input: any): number {
+export function maybeHexToNumber(input: number | string | unknown): number {
   if (typeof input === 'number') {
     return input;
   }

@@ -1,7 +1,7 @@
 import { selectPlatformById } from '../../features/data/selectors/platforms';
 import { selectTokenByAddress } from '../../features/data/selectors/tokens';
 import { selectVaultById } from '../../features/data/selectors/vaults';
-import { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault';
 import { useAppSelector } from '../../store';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';

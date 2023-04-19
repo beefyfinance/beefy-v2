@@ -1,4 +1,5 @@
 import React, { memo, useCallback, useMemo } from 'react';
+import type { TooltipProps } from 'recharts';
 import {
   Area,
   AreaChart,
@@ -6,21 +7,20 @@ import {
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
-  TooltipProps,
   XAxis,
   YAxis,
 } from 'recharts';
-import { VaultEntity } from '../../../../data/entities/vault';
-import { TokenEntity } from '../../../../data/entities/token';
-import { ChartStat } from '../../../../data/reducers/historical-types';
-import { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
+import type { VaultEntity } from '../../../../data/entities/vault';
+import type { TokenEntity } from '../../../../data/entities/token';
+import type { ChartStat } from '../../../../data/reducers/historical-types';
+import type { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
-import { Theme } from '@material-ui/core/styles';
+import type { Theme } from '@material-ui/core';
 import { format, fromUnixTime } from 'date-fns';
 import { XAxisTick } from '../../../../../components/XAxisTick';
 import { getXInterval, mapRangeToTicks } from '../../../../../helpers/graph';
 import { formatPercent, formatUsd } from '../../../../../helpers/format';
-import { LineTogglesState } from '../LineToggles';
+import type { LineTogglesState } from '../LineToggles';
 import { TooltipContent } from '../TooltipContent';
 import { useChartData } from './useChartData';
 import { styles } from './styles';
@@ -34,7 +34,7 @@ export type ChartProp = {
   bucket: ApiTimeBucket;
   toggles: LineTogglesState;
 };
-export const Graph = memo<ChartProp>(function ({ vaultId, oracleId, stat, bucket, toggles }) {
+export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, bucket, toggles }) {
   const classes = useStyles();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'));
   const { min, max, avg, data } = useChartData(stat, vaultId, oracleId, bucket);

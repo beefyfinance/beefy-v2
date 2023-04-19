@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { memo } from 'react';
 import { formatPercent } from '../../../../helpers/format';
-import { BaseEntry } from '../../../data/utils/array-utils';
+import type { BaseEntry } from '../../../data/utils/array-utils';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
@@ -14,7 +14,7 @@ interface ChartDetailsProps {
 
 const COLORS = ['#5C70D6', '#5C99D6', '#5CC2D6', '#5CD6AD', '#70D65C', '#7FB24D'];
 
-export const ChartDetails = memo<ChartDetailsProps>(function ({ data }) {
+export const ChartDetails = memo<ChartDetailsProps>(function ChartDetails({ data }) {
   const classes = useStyles();
 
   return (

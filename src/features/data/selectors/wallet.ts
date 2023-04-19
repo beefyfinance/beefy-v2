@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 
 // If we know the address: either from a wallet connection; or from hydration of persisted state from previous visit

@@ -1,4 +1,5 @@
-import { makeStyles, Theme } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
 import { format } from 'date-fns';
 import { memo } from 'react';
@@ -28,12 +29,19 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+// TODO: fix this type
+type PayloadData = {
+  datetime: string;
+  underlyingBalance: string;
+  usdBalance: string;
+};
+
 interface TooltipProps {
-  active?: any;
-  payload?: any;
+  active?: boolean;
+  payload?: { payload: PayloadData }[];
 }
 
-export const PnLTooltip = memo<TooltipProps>(function ({ active, payload }) {
+export const PnLTooltip = memo<TooltipProps>(function PnLTooltip({ active, payload }) {
   const classes = useStyles();
   const { t } = useTranslation();
   if (active && payload && payload.length) {

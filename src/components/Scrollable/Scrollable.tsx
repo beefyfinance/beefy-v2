@@ -1,5 +1,7 @@
-import React, { forwardRef, memo, ReactNode, useCallback, useState } from 'react';
-import { ScrollbarProps, Scrollbars as ScrollContainer } from 'react-custom-scrollbars-2';
+import type { ReactNode } from 'react';
+import React, { forwardRef, memo, useCallback, useState } from 'react';
+import type { ScrollbarProps } from 'react-custom-scrollbars-2';
+import { Scrollbars as ScrollContainer } from 'react-custom-scrollbars-2';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';

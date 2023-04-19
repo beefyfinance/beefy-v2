@@ -5,14 +5,18 @@ import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { ToggleButtons } from '../../../../../../components/ToggleButtons';
 import { VaultDashboardMobileStats } from './components/VaultDashboardMobileStats';
-import { VaultEntity } from '../../../../../data/entities/vault';
+import type { VaultEntity } from '../../../../../data/entities/vault';
 import { VaultTransactions } from '../VaultTransactions';
 
 const useStyles = makeStyles(styles);
 
 type ListComponentType = 'stats' | 'txHistory';
 
-export const MobileCollapseContent = memo(function ({ vaultId }: { vaultId: VaultEntity['id'] }) {
+export const MobileCollapseContent = memo(function MobileCollapseContent({
+  vaultId,
+}: {
+  vaultId: VaultEntity['id'];
+}) {
   const classes = useStyles();
   const [listComponent, setShowStats] = useState<ListComponentType>('stats');
   const { t } = useTranslation();

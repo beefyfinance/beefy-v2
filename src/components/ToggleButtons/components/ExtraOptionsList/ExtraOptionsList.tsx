@@ -1,10 +1,12 @@
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import React, { FC, memo, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
+import type { FC, MouseEventHandler } from 'react';
+import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Floating } from '../../../Floating';
 import { styles } from '../../styles';
-import { ToggleButton, ToggleButtonProps } from '../../ToggleButtons';
+import type { ToggleButtonProps } from '../../ToggleButtons';
+import { ToggleButton } from '../../ToggleButtons';
 import { MoreVertRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
@@ -18,7 +20,7 @@ interface ExtraOptionsListProps {
   selectedClass?: string;
 }
 
-export const ExtraOptionsList = memo<ExtraOptionsListProps>(function ({
+export const ExtraOptionsList = memo<ExtraOptionsListProps>(function ExtraOptionsList({
   extraOptions,
   ButtonComponent = ToggleButton,
   onClick,

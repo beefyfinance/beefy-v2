@@ -1,8 +1,10 @@
-import React, { FC, memo, useCallback, useMemo, useState } from 'react';
+import type { FC } from 'react';
+import React, { memo, useCallback, useMemo, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { Item } from './Item';
-import { ItemInner, ItemInnerProps } from './ItemInner';
+import type { ItemInnerProps } from './ItemInner';
+import { ItemInner } from './ItemInner';
 import { SearchInput } from '../SearchInput';
 import { useTranslation } from 'react-i18next';
 import { Scrollable } from '../Scrollable';
@@ -16,7 +18,7 @@ export type SearchableListProps = {
   EndComponent?: FC<ItemInnerProps>;
 };
 
-export const SearchableList = memo<SearchableListProps>(function ({
+export const SearchableList = memo<SearchableListProps>(function SearchableList({
   options,
   onSelect,
   ItemInnerComponent = ItemInner,

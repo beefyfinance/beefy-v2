@@ -1,4 +1,4 @@
-import { TokenEntity } from '../features/data/entities/token';
+import type { TokenEntity } from '../features/data/entities/token';
 import { uniqBy } from 'lodash-es';
 
 export function uniqueTokens<T extends TokenEntity>(tokens: T[]): T[] {

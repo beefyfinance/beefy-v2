@@ -1,4 +1,4 @@
-import { ChainEntity } from '../entities/chain';
+import type { ChainEntity } from '../entities/chain';
 
 const DEFAULT_CHUNK_SIZE = 468;
 const DEFAULT_CHUNK_SIZE_BY_CHAIN: Record<string, number> = {

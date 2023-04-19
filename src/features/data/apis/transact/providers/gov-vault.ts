@@ -1,4 +1,4 @@
-import {
+import type {
   GovVaultOption,
   GovVaultQuote,
   InputTokenAmount,
@@ -7,15 +7,17 @@ import {
   TransactOption,
   TransactQuote,
 } from '../transact-types';
-import { isGovVault, VaultEntity } from '../../../entities/vault';
-import { BeefyState } from '../../../../../redux-types';
+import type { VaultEntity } from '../../../entities/vault';
+import { isGovVault } from '../../../entities/vault';
+import type { BeefyState } from '../../../../../redux-types';
 import { selectGovVaultById, selectVaultById } from '../../../selectors/vaults';
 import { createOptionId, createQuoteId, createTokensId } from '../utils';
-import { Step } from '../../../reducers/wallet/stepper';
+import type { Step } from '../../../reducers/wallet/stepper';
 import { walletActions } from '../../../actions/wallet-actions';
-import { Namespace, TFunction } from 'react-i18next';
+import type { Namespace, TFunction } from 'react-i18next';
 import { TransactMode } from '../../../reducers/wallet/transact-types';
-import { isTokenErc20, TokenErc20 } from '../../../entities/token';
+import type { TokenErc20 } from '../../../entities/token';
+import { isTokenErc20 } from '../../../entities/token';
 import { selectGovVaultPendingRewardsInToken } from '../../../selectors/balance';
 import { BIG_ZERO } from '../../../../../helpers/big-number';
 import { selectTokenByAddress } from '../../../selectors/tokens';
@@ -123,7 +125,7 @@ export class GovVaultProvider implements ITransactProvider {
     }
 
     const isWithdrawAll = amounts[0].max;
-    let outputs: QuoteOutputTokenAmount[] = [...amounts];
+    const outputs: QuoteOutputTokenAmount[] = [...amounts];
 
     // if withdrawing all we can call exit() which also claims rewards
     if (isWithdrawAll) {

@@ -1,4 +1,4 @@
-import { SvgIconComponent } from '@material-ui/icons';
+import type { SvgIconComponent } from '@material-ui/icons';
 
 export interface SimpleLinkButtonProps {
   href?: string;

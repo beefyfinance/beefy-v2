@@ -1,7 +1,8 @@
-import { makeStyles, Theme, useMediaQuery } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
 import React, { memo, useMemo } from 'react';
 import { useAppSelector } from '../../../../../../store';
-import { VaultEntity } from '../../../../../data/entities/vault';
+import type { VaultEntity } from '../../../../../data/entities/vault';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { Transaction, TransactionMobile } from './components/Transaction';
@@ -12,7 +13,7 @@ interface VaultTransactionsProps {
   vaultId: VaultEntity['id'];
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   transactionsGrid: {
     display: 'grid',
     gridTemplateColumns: 'minmax(0, 1fr)',
@@ -20,7 +21,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const VaultTransactions = memo<VaultTransactionsProps>(function ({ vaultId }) {
+export const VaultTransactions = memo<VaultTransactionsProps>(function VaultTransactions({
+  vaultId,
+}) {
   const classes = useStyles();
 
   const vault = useAppSelector(state => selectVaultById(state, vaultId));

@@ -1,14 +1,14 @@
-import {
+import type {
   FactoryData as BaseFactoryData,
   FactoryDataResponse as BaseFactoryDataResponse,
   MintFeeResult,
-  UniswapV2Pool,
 } from './UniswapV2Pool';
-import { ShapeWithLabel } from 'eth-multicall';
+import { UniswapV2Pool } from './UniswapV2Pool';
+import type { ShapeWithLabel } from 'eth-multicall';
 import { createContract } from '../../../../helpers/web3';
 import { ZERO_ADDRESS } from '../../../../helpers/addresses';
 import { BIG_ZERO } from '../../../../helpers/big-number';
-import { AbiItem } from 'web3-utils';
+import type { AbiItem } from 'web3-utils';
 import BigNumber from 'bignumber.js';
 
 export type FactoryDataResponse = BaseFactoryDataResponse & {
@@ -48,7 +48,7 @@ export class SwapsicleUniswapV2Pool extends UniswapV2Pool {
     ];
   }
 
-  protected consumeFactoryDataResponse(untypedResult: any[]) {
+  protected consumeFactoryDataResponse(untypedResult: unknown[]) {
     const result = (untypedResult as FactoryDataResponse[])[0];
 
     super.consumeFactoryDataResponse(untypedResult);

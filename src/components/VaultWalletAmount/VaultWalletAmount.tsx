@@ -1,13 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault';
 import { selectUserBalanceOfToken } from '../../features/data/selectors/balance';
 import { selectTokenPriceByAddress } from '../../features/data/selectors/tokens';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/selectors/wallet';
 import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
-import { BeefyState } from '../../redux-types';
+import type { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 
 const _VaultWalletAmount = connect(

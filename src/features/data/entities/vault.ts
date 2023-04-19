@@ -1,7 +1,7 @@
-import { ChainEntity } from './chain';
-import { PlatformEntity } from './platform';
-import { TokenEntity } from './token';
-import { StrategyTypeEntity } from './strategy-type';
+import type { ChainEntity } from './chain';
+import type { PlatformEntity } from './platform';
+import type { TokenEntity } from './token';
+import type { StrategyTypeEntity } from './strategy-type';
 
 // maybe a RiskAnalysis type would be better
 

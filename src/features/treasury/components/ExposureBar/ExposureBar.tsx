@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { memo } from 'react';
 import { formatPercent } from '../../../../helpers/format';
-import { BaseEntry } from '../../../data/utils/array-utils';
+import type { BaseEntry } from '../../../data/utils/array-utils';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
@@ -12,7 +12,7 @@ interface ExposureBarProps {
 
 const COLORS = ['#5C70D6', '#5C99D6', '#5CC2D6', '#5CD6AD', '#70D65C', '#1e9c05'];
 
-export const ExposureBar = memo<ExposureBarProps>(function ({ data }) {
+export const ExposureBar = memo<ExposureBarProps>(function ExposureBar({ data }) {
   const classes = useStyles();
   return (
     <div className={classes.bar}>

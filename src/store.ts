@@ -9,8 +9,9 @@ import {
   featureFlag_recordReduxActions,
   featureFlag_replayReduxActions,
 } from './features/data/utils/feature-flags';
-import { TypedUseSelectorHook, useDispatch, useSelector, useStore } from 'react-redux';
-import { BeefyState } from './redux-types';
+import { useDispatch, useSelector, useStore } from 'react-redux';
+import type { BeefyState } from './redux-types';
+import type { TypedUseSelectorHook } from 'react-redux';
 
 let middlewares = [];
 

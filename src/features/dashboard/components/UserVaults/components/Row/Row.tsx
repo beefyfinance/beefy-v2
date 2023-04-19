@@ -1,6 +1,8 @@
-import { makeStyles, Theme } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import React, { memo, PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
+import React, { memo } from 'react';
 
 const useStyles = makeStyles((theme: Theme) => ({
   rowContainer: {
@@ -23,12 +25,12 @@ type RowGapProps = PropsWithChildren<{
   className?: string;
 }>;
 
-export const Row = memo<RowGapProps>(function ({ children, className }) {
+export const Row = memo<RowGapProps>(function Row({ children, className }) {
   const classes = useStyles();
   return <div className={clsx(classes.rowContainer, className)}>{children}</div>;
 });
 
-export const RowMobile = memo<RowGapProps>(function ({ children, className }) {
+export const RowMobile = memo<RowGapProps>(function RowMobile({ children, className }) {
   const classes = useStyles();
   return <div className={clsx(classes.rowMobileContainer, className)}>{children}</div>;
 });

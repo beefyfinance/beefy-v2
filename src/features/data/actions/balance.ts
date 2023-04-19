@@ -1,16 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
-import { FetchAllBalancesResult } from '../apis/balance/balance-types';
+import type { BeefyState } from '../../../redux-types';
+import type { FetchAllBalancesResult } from '../apis/balance/balance-types';
 import { getBalanceApi } from '../apis/instances';
-import { ChainEntity } from '../entities/chain';
+import type { ChainEntity } from '../entities/chain';
 import { selectAllTokenWhereUserCouldHaveBalance } from '../selectors/balance';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
 import { selectTokenByAddress } from '../selectors/tokens';
 import { selectAllGovVaultsByChainId } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
-import { TokenEntity } from '../entities/token';
-import { isGovVault, VaultEntity } from '../entities/vault';
+import type { TokenEntity } from '../entities/token';
+import type { VaultEntity } from '../entities/vault';
+import { isGovVault } from '../entities/vault';
 import { uniqueTokens } from '../../../helpers/tokens';
 
 interface ActionParams {

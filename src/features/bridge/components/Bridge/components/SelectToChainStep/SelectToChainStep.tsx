@@ -9,7 +9,7 @@ import {
   selectBridgeSuportedChains,
 } from '../../../../../data/selectors/bridge';
 import { ListItem } from '../ListItem';
-import { ChainEntity } from '../../../../../data/entities/chain';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 
 export const _SelectToChainStep = () => {
   const { t } = useTranslation();
@@ -29,7 +29,7 @@ export const _SelectToChainStep = () => {
 
 export const SelectToChainStep = memo(_SelectToChainStep);
 
-const ChainSelector = memo(function () {
+const ChainSelector = memo(function ChainSelector() {
   const bridgeState = useAppSelector(selectBridgeState);
   const options = useAppSelector(selectBridgeSuportedChains);
 

@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { InputMode } from '../reducers/on-ramp-types';
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { orderBy } from 'lodash-es';
@@ -48,7 +48,7 @@ export const selectIsFiatTokenSupported = (state: BeefyState, fiat: string, toke
 
 // All {network}s that exist for {token}
 export const selectNetworksForFiatToken = createSelector(
-  (state: BeefyState, fiat: string, token: string) => state.entities.chains.allIds,
+  (state: BeefyState) => state.entities.chains.allIds,
   (state: BeefyState, fiat: string, token: string) =>
     selectIsFiatTokenSupported(state, fiat, token)
       ? state.ui.onRamp.byFiat[fiat].byToken[token].allNetworks
@@ -57,7 +57,7 @@ export const selectNetworksForFiatToken = createSelector(
 );
 
 export const selectIsFiatTokenNetworkSupported = createSelector(
-  (state: BeefyState, fiat: string, token: string, network: string) =>
+  (state: BeefyState, fiat: string, token: string) =>
     selectNetworksForFiatToken(state, fiat, token),
   (state: BeefyState, fiat: string, token: string, network: string) => network,
   (networksForFiatToken, network) => networksForFiatToken.includes(network)
@@ -124,7 +124,7 @@ export const selectIsCheapestProviderSelected = createSelector(
 );
 
 export const selectFiatTokenMinMaxFiat = createSelector(
-  (state: BeefyState, fiat: string, token: string) => fiat,
+  (state: BeefyState, fiat: string) => fiat,
   (state: BeefyState, fiat: string, token: string) => token,
   (state: BeefyState) => state.ui.onRamp.byFiat,
   (fiat, token, byFiat) => ({

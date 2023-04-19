@@ -1,7 +1,6 @@
-import { Theme } from '@material-ui/core/styles';
 import { DEFAULT_SIZE } from '../AssetsImage/styles';
 
-export const styles = (theme: Theme) => ({
+export const styles = () => ({
   '@keyframes scrollBackground': {
     '0%': {
       backgroundPosition: '0 0',

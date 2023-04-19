@@ -1,8 +1,8 @@
 import { memo } from 'react';
-import { VaultEntity } from '../../../../../data/entities/vault';
+import type { VaultEntity } from '../../../../../data/entities/vault';
 import { GlpDepositNoticeImpl } from './GlpDepositNoticeImpl';
 import { GlpWithdrawNoticeImpl } from './GlpWithdrawNoticeImpl';
-import { GlpLikeConfig } from './types';
+import type { GlpLikeConfig } from './types';
 
 export const enableForVaults: Record<VaultEntity['id'], GlpLikeConfig> = {
   'opx-olp': { managerMethod: 'glpManager' },

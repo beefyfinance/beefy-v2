@@ -17,10 +17,10 @@ import { selectChainById } from '../../../data/selectors/chains';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectVaultTotalApy } from '../../../data/selectors/apy';
 import { formatPercent } from '../../../../helpers/format';
-import { BeefyState } from '../../../../redux-types';
+import type { BeefyState } from '../../../../redux-types';
 import { selectBoostById, selectPreStakeOrActiveBoostIds } from '../../../data/selectors/boosts';
 import { selectPartnerById } from '../../../data/selectors/partners';
-import {
+import type {
   BoostedVaultExtraDetails,
   CommonVaultDetails,
   GovVaultExtraDetails,

@@ -1,7 +1,7 @@
 import { memo, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertError } from '../../../../../../components/Alerts';
-import { TransactQuote } from '../../../../../data/apis/transact/transact-types';
+import type { TransactQuote } from '../../../../../data/apis/transact/transact-types';
 import { isTokenNative } from '../../../../../data/entities/token';
 
 export type MaxNativeProps = {

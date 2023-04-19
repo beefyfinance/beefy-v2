@@ -13,7 +13,10 @@ import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../../../../data/selectors/wallet';
-import { TransactOption, TransactQuote } from '../../../../../data/apis/transact/transact-types';
+import type {
+  TransactOption,
+  TransactQuote,
+} from '../../../../../data/apis/transact/transact-types';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 import { PriceImpactNotice } from '../PriceImpactNotice';
 import { MaxNativeNotice } from '../MaxNativeNotice';
@@ -22,7 +25,8 @@ import { EmeraldGasNotice } from '../EmeraldGasNotice';
 import clsx from 'clsx';
 import { ConfirmNotice } from '../ConfirmNotice';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
-import { ActionButtonProps, ActionConnect, ActionSwitch } from '../CommonActions';
+import type { ActionButtonProps } from '../CommonActions';
+import { ActionConnect, ActionSwitch } from '../CommonActions';
 import { GlpDepositNotice } from '../GlpNotices';
 
 const useStyles = makeStyles(styles);
@@ -54,7 +58,9 @@ export const DepositActions = memo<DepositActionsProps>(function DepositActions(
   return <ActionDeposit className={className} quote={quote} option={option} />;
 });
 
-const ActionDepositDisabled = memo<ActionButtonProps>(function ({ className }) {
+const ActionDepositDisabled = memo<ActionButtonProps>(function ActionDepositDisabled({
+  className,
+}) {
   const { t } = useTranslation();
 
   return (
@@ -74,7 +80,11 @@ type ActionDepositProps = {
   option: TransactOption;
   quote: TransactQuote;
 } & ActionButtonProps;
-const ActionDeposit = memo<ActionDepositProps>(function ({ option, quote, className }) {
+const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
+  option,
+  quote,
+  className,
+}) {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();

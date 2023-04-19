@@ -2,8 +2,8 @@ import { memo } from 'react';
 import { formatFullBigNumber, formatSignificantBigNumber } from '../../helpers/format';
 import { Tooltip } from '../Tooltip';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
-import { BigNumber } from 'bignumber.js';
-import { TokenEntity } from '../../features/data/entities/token';
+import type { BigNumber } from 'bignumber.js';
+import type { TokenEntity } from '../../features/data/entities/token';
 import { useAppSelector } from '../../store';
 import { selectTokenPriceByAddress } from '../../features/data/selectors/tokens';
 import { styles } from './styles';
@@ -49,22 +49,19 @@ export type TokenAmountFromEntityProps = {
   minShortPlaces?: number;
   className?: string;
 };
-export const TokenAmountFromEntity = memo<TokenAmountFromEntityProps>(function ({
-  amount,
-  token,
-  minShortPlaces = 2,
-  className,
-}) {
-  const price = useAppSelector(state =>
-    selectTokenPriceByAddress(state, token.chainId, token.address)
-  );
-  return (
-    <TokenAmount
-      amount={amount}
-      decimals={token.decimals}
-      price={price}
-      className={className}
-      minShortPlaces={minShortPlaces}
-    />
-  );
-});
+export const TokenAmountFromEntity = memo<TokenAmountFromEntityProps>(
+  function TokenAmountFromEntity({ amount, token, minShortPlaces = 2, className }) {
+    const price = useAppSelector(state =>
+      selectTokenPriceByAddress(state, token.chainId, token.address)
+    );
+    return (
+      <TokenAmount
+        amount={amount}
+        decimals={token.decimals}
+        price={price}
+        className={className}
+        minShortPlaces={minShortPlaces}
+      />
+    );
+  }
+);

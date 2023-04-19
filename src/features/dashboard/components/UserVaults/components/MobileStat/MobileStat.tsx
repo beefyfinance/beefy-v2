@@ -11,7 +11,11 @@ interface MobileStatsProps {
   valueClassName?: string;
 }
 
-export const MobileStat = memo<MobileStatsProps>(function ({ label, value, valueClassName }) {
+export const MobileStat = memo<MobileStatsProps>(function MobileStat({
+  label,
+  value,
+  valueClassName,
+}) {
   const classes = useStyles();
   return (
     <div className={classes.mobileStat}>

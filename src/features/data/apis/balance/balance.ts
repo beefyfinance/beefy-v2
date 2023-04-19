@@ -1,35 +1,31 @@
 import _BeefyV2AppMulticallUserAbi from '../../../../config/abi/BeefyV2AppMulticall.json';
-import { AbiItem } from 'web3-utils';
-import Web3 from 'web3';
-import { VaultGov } from '../../entities/vault';
-import { ChainEntity } from '../../entities/chain';
+import type { AbiItem } from 'web3-utils';
+import type Web3 from 'web3';
+import type { VaultGov } from '../../entities/vault';
+import type { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
-import { AllValuesAsString } from '../../utils/types-utils';
-import { BoostEntity } from '../../entities/boost';
+import type { AllValuesAsString } from '../../utils/types-utils';
+import type { BoostEntity } from '../../entities/boost';
 import { chunk } from 'lodash-es';
-import {
+import type {
   BoostBalance,
   FetchAllBalancesResult,
   GovVaultPoolBalance,
   IBalanceApi,
   TokenBalance,
 } from './balance-types';
-import {
-  isTokenErc20,
-  isTokenNative,
-  TokenEntity,
-  TokenErc20,
-  TokenNative,
-} from '../../entities/token';
+import type { TokenEntity, TokenErc20, TokenNative } from '../../entities/token';
+import { isTokenErc20, isTokenNative } from '../../entities/token';
 import { featureFlag_getBalanceApiChunkSize } from '../../utils/feature-flags';
-import { BeefyState } from '../../../../redux-types';
+import type { BeefyState } from '../../../../redux-types';
 import {
   selectBoostBalanceTokenEntity,
   selectBoostRewardsTokenEntity,
   selectGovVaultBalanceTokenEntity,
   selectGovVaultRewardsTokenEntity,
 } from '../../selectors/balance';
-import { makeBatchRequest, Web3Call } from '../../../../helpers/web3';
+import type { Web3Call, Web3CallMethod } from '../../../../helpers/web3';
+import { makeBatchRequest } from '../../../../helpers/web3';
 
 // fix ts types
 const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];
@@ -88,11 +84,11 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       });
     });
     requestsForBatch.push({
-      method: this.web3.eth.getBalance,
+      method: this.web3.eth.getBalance as unknown as Web3CallMethod,
       params: walletAddress,
     });
 
-    const results: any[] = await makeBatchRequest(this.web3, requestsForBatch);
+    const results: unknown[] = await makeBatchRequest(this.web3, requestsForBatch);
 
     // now reasign results
 
@@ -106,16 +102,22 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     let boostIndex = 0;
     for (let j = 0; j < boostAndGovVaultBatches.length; j++) {
-      for (let i = 0; i < results[resultsIdx].length; i++) {
+      for (let i = 0; i < (results[resultsIdx] as unknown[]).length; i++) {
         const boostOrGovVaultRes = results[resultsIdx][i];
         if (boostIndex < boosts.length) {
-          res.boosts.push(this.boostFormatter(state, boostOrGovVaultRes, boosts[boostIndex]));
+          res.boosts.push(
+            this.boostFormatter(
+              state,
+              boostOrGovVaultRes as AllValuesAsString<BoostBalance>,
+              boosts[boostIndex]
+            )
+          );
         } else {
           res.govVaults.push(
             this.govVaultFormatter(
               state,
-              boostOrGovVaultRes,
-              govVaults[boostIndex - boosts.length] as any
+              boostOrGovVaultRes as AllValuesAsString<GovVaultPoolBalance>,
+              govVaults[boostIndex - boosts.length] as VaultGov
             )
           );
         }
@@ -125,7 +127,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     }
 
     for (const erc20TokenBatch of erc20TokensBatches) {
-      const batchRes = results[resultsIdx].map((vaultRes, elemidx) =>
+      const batchRes = (results[resultsIdx] as string[]).map((vaultRes, elemidx) =>
         this.erc20TokenFormatter(vaultRes, erc20TokenBatch[elemidx])
       );
       res.tokens = res.tokens.concat(batchRes);
@@ -133,7 +135,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     }
 
     for (const nativeToken of nativeTokens) {
-      const formatted = this.nativeTokenFormatter(results[resultsIdx], nativeToken);
+      const formatted = this.nativeTokenFormatter(results[resultsIdx] as string, nativeToken);
       res.tokens.push(formatted);
       resultsIdx++;
     }

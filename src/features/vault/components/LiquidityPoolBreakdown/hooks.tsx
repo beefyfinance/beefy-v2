@@ -2,9 +2,9 @@ import { useAppSelector } from '../../../../store';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { useMemo } from 'react';
 import { BIG_ONE, BIG_ZERO } from '../../../../helpers/big-number';
-import { CalculatedBreakdownData } from './types';
-import { TokenLpBreakdown } from '../../../data/entities/token';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { CalculatedBreakdownData } from './types';
+import type { TokenLpBreakdown } from '../../../data/entities/token';
+import type { VaultEntity } from '../../../data/entities/vault';
 import { selectUserLpBreakdownBalance } from '../../../data/selectors/balance';
 
 export const chartColors = [

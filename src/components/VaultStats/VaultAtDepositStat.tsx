@@ -1,7 +1,7 @@
-import { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
 import { connect } from 'react-redux';
-import { BeefyState } from '../../redux-types';
+import type { BeefyState } from '../../redux-types';
 import {
   formatBigUsd,
   formatFullBigNumber,
@@ -13,7 +13,7 @@ import {
   selectUserDepositedTimelineByVaultId,
 } from '../../features/data/selectors/analytics';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
-import { VaultPnLDataType } from './types';
+import type { VaultPnLDataType } from './types';
 
 export type VaultAtDepositStatProps = {
   vaultId: VaultEntity['id'];

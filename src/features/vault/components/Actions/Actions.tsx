@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
 import { Transact } from './Transact/Transact';
 import { Boosts } from './Boosts';
 import { Minters } from './Minter';

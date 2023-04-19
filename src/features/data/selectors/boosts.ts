@@ -1,7 +1,7 @@
-import { BeefyState } from '../../../redux-types';
-import { BoostEntity } from '../entities/boost';
-import { ChainEntity } from '../entities/chain';
-import { VaultEntity } from '../entities/vault';
+import type { BeefyState } from '../../../redux-types';
+import type { BoostEntity } from '../entities/boost';
+import type { ChainEntity } from '../entities/chain';
+import type { VaultEntity } from '../entities/vault';
 import { getBoostStatusFromContractState } from '../reducers/boosts';
 import { selectBoostUserBalanceInToken, selectBoostUserRewardsInToken } from './balance';
 import { createCachedSelector } from 're-reselect';
@@ -108,7 +108,6 @@ export const selectPastBoostIdsWithUserBalance = (
     const userRewards = selectBoostUserRewardsInToken(state, eolBoostId);
     if (userRewards.gt(0)) {
       boostIds.push(eolBoostId);
-      continue;
     }
   }
   return boostIds;

@@ -1,10 +1,9 @@
 import { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
-import {
-  BasicTooltipContent,
-  BasicTooltipContentProps,
-} from '../../../../../../components/Tooltip/BasicTooltipContent';
-import { IconWithTooltip, IconWithTooltipProps } from '../../../../../../components/Tooltip';
+import type { BasicTooltipContentProps } from '../../../../../../components/Tooltip/BasicTooltipContent';
+import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
+import type { IconWithTooltipProps } from '../../../../../../components/Tooltip';
+import { IconWithTooltip } from '../../../../../../components/Tooltip';
 
 const useStyles = makeStyles({
   trigger: {
@@ -19,7 +18,7 @@ const useStyles = makeStyles({
   },
 });
 
-export type LabelTooltipProps = {} & BasicTooltipContentProps;
+export type LabelTooltipProps = BasicTooltipContentProps;
 
 export const LabelTooltip = memo<LabelTooltipProps>(function LabelTooltip({ title, content }) {
   const classes = useStyles();

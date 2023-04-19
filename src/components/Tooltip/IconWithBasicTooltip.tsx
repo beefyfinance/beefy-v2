@@ -1,8 +1,11 @@
 import { memo } from 'react';
-import { Tooltip, TooltipProps } from './Tooltip';
-import { HelpOutline, SvgIconComponent } from '@material-ui/icons';
-import { SvgIconProps } from '@material-ui/core/SvgIcon/SvgIcon';
-import { BasicTooltipContent, BasicTooltipContentProps } from './BasicTooltipContent';
+import type { TooltipProps } from './Tooltip';
+import { Tooltip } from './Tooltip';
+import type { SvgIconComponent } from '@material-ui/icons';
+import { HelpOutline } from '@material-ui/icons';
+import type { SvgIconProps } from '@material-ui/core/SvgIcon/SvgIcon';
+import type { BasicTooltipContentProps } from './BasicTooltipContent';
+import { BasicTooltipContent } from './BasicTooltipContent';
 
 export type IconWithBasicTooltipProps = {
   Icon?: SvgIconComponent;

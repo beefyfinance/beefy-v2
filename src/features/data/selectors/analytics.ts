@@ -1,12 +1,11 @@
-import createCachedSelector from 're-reselect';
+import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { PnL } from '../../../helpers/pnl';
-import { BeefyState } from '../../../redux-types';
-import { TimeBucketType } from '../apis/analytics/analytics-types';
-import { VaultEntity } from '../entities/vault';
+import type { BeefyState } from '../../../redux-types';
+import type { TimeBucketType } from '../apis/analytics/analytics-types';
+import type { VaultEntity } from '../entities/vault';
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
-import { selectUserVaultsPnl } from './balance';
 
 export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>

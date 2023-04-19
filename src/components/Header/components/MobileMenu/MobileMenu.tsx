@@ -7,13 +7,14 @@ import { LanguageDropdown } from '../../../LanguageDropdown';
 import { NavItemMobile } from '../NavItem';
 import { useTranslation } from 'react-i18next';
 import { MobileList } from '../../list';
-import { isNavDropdownConfig, NavConfig, NavDropdownConfig } from '../DropNavItem/types';
+import type { NavConfig, NavDropdownConfig } from '../DropNavItem/types';
+import { isNavDropdownConfig } from '../DropNavItem/types';
 import clsx from 'clsx';
 import { UnreadProposalsDot } from '../Badges/UnreadProposalsDot';
 
 const useStyles = makeStyles(styles);
 
-export const MobileMenu = memo(function () {
+export const MobileMenu = memo(function MobileMenu() {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
@@ -50,7 +51,7 @@ export const MobileMenu = memo(function () {
 });
 
 type MobileItemProps = { item: NavConfig; onClick: () => void };
-const MobileItem = memo<MobileItemProps>(function ({ item, onClick }) {
+const MobileItem = memo<MobileItemProps>(function MobileItem({ item, onClick }) {
   if (isNavDropdownConfig(item)) {
     const NavComponent = item.MobileComponent ?? DropMobile;
     return (
@@ -78,7 +79,13 @@ const MobileItem = memo<MobileItemProps>(function ({ item, onClick }) {
 
 type DropMobileProps = NavDropdownConfig;
 
-export const DropMobile = memo<DropMobileProps>(function ({ title, Icon, items, onClick, Badge }) {
+export const DropMobile = memo<DropMobileProps>(function DropMobile({
+  title,
+  Icon,
+  items,
+  onClick,
+  Badge,
+}) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (

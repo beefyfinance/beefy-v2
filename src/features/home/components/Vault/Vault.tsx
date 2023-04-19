@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { selectIsVaultGov, selectIsVaultRetired } from '../../../data/selectors/vaults';

@@ -1,13 +1,13 @@
-import {
+import type {
   PairData as BasePairData,
   PairDataResponse as BasePairDataResponse,
-  SolidlyPool,
 } from './SolidlyPool';
-import { SwapFeeParams } from './types';
+import { SolidlyPool } from './SolidlyPool';
+import type { SwapFeeParams } from './types';
 import BigNumber from 'bignumber.js';
-import { ShapeWithLabel } from 'eth-multicall';
+import type { ShapeWithLabel } from 'eth-multicall';
 import { createContract } from '../../../../helpers/web3';
-import { AbiItem } from 'web3-utils';
+import type { AbiItem } from 'web3-utils';
 
 type PairDataResponse = BasePairDataResponse & {
   swapFee: string;
@@ -46,7 +46,7 @@ export class ConeSolidlyPool extends SolidlyPool {
     ];
   }
 
-  protected consumePairDataResponse(untypedResult: any[]) {
+  protected consumePairDataResponse(untypedResult: unknown[]) {
     const result = (untypedResult as PairDataResponse[])[0];
 
     super.consumePairDataResponse(untypedResult);

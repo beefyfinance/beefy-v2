@@ -1,10 +1,10 @@
 import BigNumber from 'bignumber.js';
 import { toWei } from '../../../../../helpers/big-number';
-import { InputTokenAmount } from '../transact-types';
-import { VaultStandard } from '../../../entities/vault';
-import { BeefyState } from '../../../../../redux-types';
-import Web3 from 'web3';
-import { MultiCall } from 'eth-multicall';
+import type { InputTokenAmount } from '../transact-types';
+import type { VaultStandard } from '../../../entities/vault';
+import type { BeefyState } from '../../../../../redux-types';
+import type Web3 from 'web3';
+import type { MultiCall } from 'eth-multicall';
 import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../selectors/tokens';
 import { selectUserBalanceOfToken } from '../../../selectors/balance';
 import { selectVaultPricePerFullShare } from '../../../selectors/vaults';

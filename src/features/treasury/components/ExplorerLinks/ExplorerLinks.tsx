@@ -1,10 +1,11 @@
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 
-import React, { memo, MouseEventHandler, useCallback, useRef, useState } from 'react';
+import type { MouseEventHandler } from 'react';
+import React, { memo, useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Floating } from '../../../../components/Floating';
 import { useAppSelector } from '../../../../store';
-import { ChainEntity } from '../../../data/entities/chain';
+import type { ChainEntity } from '../../../data/entities/chain';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectTreasuryWalletAddressesByChainId } from '../../../data/selectors/treasury';
 import { styles } from './styles';
@@ -15,7 +16,7 @@ const useStyles = makeStyles(styles);
 interface ExplorerLinkProps {
   chainId: ChainEntity['id'];
 }
-export const ExplorerLinks = memo<ExplorerLinkProps>(function ({ chainId }) {
+export const ExplorerLinks = memo<ExplorerLinkProps>(function ExplorerLinks({ chainId }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);

@@ -1,13 +1,14 @@
-import React, { memo, ReactNode, useCallback, useMemo } from 'react';
+import type { ReactNode } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { ChainEntity } from '../../../../../data/entities/chain';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { selectActiveChains } from '../../../../../data/selectors/chains';
-import {
+import type {
   DropdownItemLabelProps,
-  LabeledMultiSelect,
   SelectedItemProps,
 } from '../../../../../../components/LabeledMultiSelect';
+import { LabeledMultiSelect } from '../../../../../../components/LabeledMultiSelect';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
@@ -18,7 +19,7 @@ import { useSelectedChainIds } from './hooks';
 const useStyles = makeStyles(styles);
 
 const IconWithChain = memo<{ chainId: ChainEntity['id']; label: string; className?: string }>(
-  function ({ chainId, label, className }) {
+  function IconWithChain({ chainId, label, className }) {
     const classes = useStyles();
 
     return (
@@ -36,7 +37,7 @@ const IconWithChain = memo<{ chainId: ChainEntity['id']; label: string; classNam
   }
 );
 
-const SelectedChain = memo<SelectedItemProps>(function ({
+const SelectedChain = memo<SelectedItemProps>(function SelectedChain({
   value,
   options,
   allSelected,

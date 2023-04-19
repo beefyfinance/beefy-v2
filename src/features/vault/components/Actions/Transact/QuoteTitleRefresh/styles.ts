@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
 
 export const AUTO_REFRESH_SECONDS = 15;
 

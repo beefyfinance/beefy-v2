@@ -1,7 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import { memo, useCallback, useState } from 'react';
-import { CalculatedAsset } from '../../types';
-import { Cell, Pie, PieChart, PieProps, Sector } from 'recharts';
+import type { CalculatedAsset } from '../../types';
+import type { PieProps } from 'recharts';
+import { Cell, Pie, PieChart, Sector } from 'recharts';
 import { styles } from './styles';
 import { formatPercent } from '../../../../../../helpers/format';
 
@@ -25,7 +26,6 @@ type ActiveShapeProps = {
 const ActiveShape = function ({
   cx,
   cy,
-  midAngle,
   innerRadius,
   outerRadius,
   startAngle,
@@ -34,8 +34,6 @@ const ActiveShape = function ({
   stroke,
   strokeWidth,
   payload,
-  percent,
-  value,
 }: ActiveShapeProps) {
   return (
     <g>
@@ -95,7 +93,7 @@ export const Chart = memo<ChartProps>(function Chart({ assets }) {
           activeShape={ActiveShape}
           activeIndex={activeIndex}
         >
-          {assets.map((asset, i) => (
+          {assets.map(asset => (
             <Cell key={asset.address} fill={asset.color} stroke={'#2D3153'} strokeWidth={3} />
           ))}
         </Pie>

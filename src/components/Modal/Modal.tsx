@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import { Modal as MuiModal, ModalProps as MuiModalProps } from '@material-ui/core';
+import type { ModalProps as MuiModalProps } from '@material-ui/core';
+import { Modal as MuiModal } from '@material-ui/core';
 
 const backdropProps: MuiModalProps['BackdropProps'] = {
   style: {
@@ -9,6 +10,6 @@ const backdropProps: MuiModalProps['BackdropProps'] = {
 };
 
 export type ModalProps = Omit<MuiModalProps, 'BackdropComponent' | 'BackdropProps'>;
-export const Modal = memo<ModalProps>(function ({ children, ...rest }) {
+export const Modal = memo<ModalProps>(function Modal({ children, ...rest }) {
   return <MuiModal {...rest} children={children} BackdropProps={backdropProps} />;
 });

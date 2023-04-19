@@ -1,5 +1,5 @@
-import { TimeBucketType } from '../features/data/apis/analytics/analytics-types';
-import { SamplingPeriod } from './sampling-period';
+import type { TimeBucketType } from '../features/data/apis/analytics/analytics-types';
+import type { SamplingPeriod } from './sampling-period';
 
 export function timeBucketToSamplingPeriod(timeBucket: TimeBucketType) {
   const bucketParamMap: {

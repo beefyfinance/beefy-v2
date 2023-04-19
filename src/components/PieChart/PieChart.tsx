@@ -1,7 +1,8 @@
-import { Theme, useMediaQuery } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
+import { useMediaQuery } from '@material-ui/core';
 import { memo, useMemo } from 'react';
 import { Cell, Pie, PieChart as RechartsPieChart, Tooltip } from 'recharts';
-import { BaseEntry } from '../../features/data/utils/array-utils';
+import type { BaseEntry } from '../../features/data/utils/array-utils';
 import { PieChartTooltip } from '../PieChartTooltip';
 
 export type TypeChart = 'chain' | 'platform' | 'token' | 'assetAvailability';
@@ -14,7 +15,7 @@ interface ChartProps {
 
 const COLORS = ['#5C70D6', '#5C99D6', '#5CC2D6', '#5CD6AD', '#70D65C', '#7FB24D', '#1e9c05'];
 
-export const PieChart = memo<ChartProps>(function ({ data, type, formatter }) {
+export const PieChart = memo<ChartProps>(function PieChart({ data, type, formatter }) {
   const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
 
   const chartPxs = useMemo(() => {

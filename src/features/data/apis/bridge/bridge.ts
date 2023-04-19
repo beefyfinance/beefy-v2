@@ -1,6 +1,7 @@
-import axios, { AxiosInstance } from 'axios';
-import { ChainEntity } from '../../entities/chain';
-import { BridgeInfoEntity, TxDataRes } from './bridge-types';
+import type { AxiosInstance } from 'axios';
+import axios from 'axios';
+import type { ChainEntity } from '../../entities/chain';
+import type { BridgeInfoEntity, TxDataRes } from './bridge-types';
 
 export interface FetchBridgeDataResult {
   data: BridgeInfoEntity[];

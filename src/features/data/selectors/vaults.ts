@@ -1,26 +1,19 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
-import { ChainEntity } from '../entities/chain';
-import { TokenEntity } from '../entities/token';
+import type { BeefyState } from '../../../redux-types';
+import type { ChainEntity } from '../entities/chain';
+import type { TokenEntity } from '../entities/token';
+import type { VaultEntity, VaultGov } from '../entities/vault';
 import {
   isGovVault,
   isVaultPaused,
   isVaultPausedOrRetired,
   isVaultRetired,
-  VaultEntity,
-  VaultGov,
 } from '../entities/vault';
-import {
-  selectChainNativeToken,
-  selectIsBeefyToken,
-  selectIsLSDToken,
-  selectIsTokenBluechip,
-  selectIsTokenStable,
-} from './tokens';
+import { selectIsBeefyToken, selectIsTokenBluechip, selectIsTokenStable } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE } from '../../../helpers/big-number';
 import { differenceWith, first, isEqual } from 'lodash-es';
-import { selectAllChainsNativeAssetsIsd, selectChainById } from './chains';
+import { selectChainById } from './chains';
 
 export const selectVaultById = createCachedSelector(
   (state: BeefyState) => state.entities.vaults.byId,
@@ -111,10 +104,10 @@ export const selectAllGovVaultsByChainId = createSelector(
 );
 
 export const selectStandardVaultIdsByDepositTokenAddress = createCachedSelector(
-  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) => chainId,
+  (state: BeefyState, chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) => chainId,
   (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
     tokenAddress.toLowerCase(),
-  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
+  (state: BeefyState, _chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) =>
     state.entities.vaults.byChainId,
   (chainId, tokenAddress, byChainId) =>
     byChainId[chainId]?.standardVault.byDepositTokenAddress[tokenAddress] || []
@@ -126,7 +119,7 @@ export const selectStandardVaultIdsByDepositTokenAddress = createCachedSelector(
 export const selectFirstStandardVaultByDepositTokenAddress = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
     selectStandardVaultIdsByDepositTokenAddress(state, chainId, tokenAddress),
-  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
+  (state: BeefyState, _chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) =>
     state.entities.vaults.byId,
   (ids, byId) => (ids.length ? byId[first(ids)] : null)
 )(
@@ -135,10 +128,10 @@ export const selectFirstStandardVaultByDepositTokenAddress = createCachedSelecto
 );
 
 export const selectGovVaultVaultIdsByDepositTokenAddress = createCachedSelector(
-  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) => chainId,
+  (state: BeefyState, chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) => chainId,
   (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
     tokenAddress.toLowerCase(),
-  (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
+  (state: BeefyState, _chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) =>
     state.entities.vaults.byChainId,
   (chainId, tokenAddress, byChainId) =>
     byChainId[chainId]?.govVault.byDepositTokenAddress[tokenAddress] || []
@@ -245,7 +238,7 @@ export const selectVaultDepositFee = createCachedSelector(
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectVaultSupportsAnyZap = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.zapSupportById,
+  (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.vaults.zapSupportById,
   (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
   (zapSupportById, vaultId) => {
     const zapSupport = zapSupportById[vaultId];
@@ -258,7 +251,7 @@ export const selectVaultSupportsAnyZap = createCachedSelector(
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectVaultSupportsBeefyZap = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.zapSupportById,
+  (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.vaults.zapSupportById,
   (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
   (zapSupportById, vaultId) => {
     const zapSupport = zapSupportById[vaultId];
@@ -271,7 +264,7 @@ export const selectVaultSupportsBeefyZap = createCachedSelector(
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectVaultSupportsOneInchZap = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.zapSupportById,
+  (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.vaults.zapSupportById,
   (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
   (zapSupportById, vaultId) => {
     const zapSupport = zapSupportById[vaultId];

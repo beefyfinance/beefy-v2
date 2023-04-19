@@ -1,10 +1,11 @@
-import { memo, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type ListJoinProps = {
   items: ReactNode[];
 };
-export const ListJoin = memo<ListJoinProps>(function ({ items }) {
+export const ListJoin = memo<ListJoinProps>(function ListJoin({ items }) {
   const { t } = useTranslation();
   const comma = t('List-Join-Comma');
   const and = t('List-Join-And');
