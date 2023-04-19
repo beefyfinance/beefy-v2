@@ -13,6 +13,7 @@ import type { BeefyState } from '../../../redux-types';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import type { ChainEntity } from '../entities/chain';
 import { BIG_ZERO } from '../../../helpers/big-number';
+import { selectActiveChainIds } from '../selectors/chains';
 
 /**
  * State containing APY infos indexed by vault id
@@ -37,6 +38,7 @@ export interface TvlState {
     [chaindId: ChainEntity['id']]: BigNumber;
   };
 }
+
 export const initialTvlState: TvlState = {
   totalTvl: BIG_ZERO,
   byVaultId: {},
@@ -152,14 +154,20 @@ function addContractDataToState(
     sliceState.byBoostId[boost.id] = { tvl, staked: totalStaked };
   }
 
+  const activeChainIds = selectActiveChainIds(state);
   const byChaindIdTotals = {};
   let totalTvl = BIG_ZERO;
   for (const [vaultId, vaultTvl] of Object.entries(sliceState.byVaultId)) {
     const vault = selectVaultById(state, vaultId);
+
     byChaindIdTotals[vault.chainId] = byChaindIdTotals[vault.chainId]
       ? byChaindIdTotals[vault.chainId].plus(vaultTvl.tvl)
       : vaultTvl.tvl;
-    totalTvl = totalTvl.plus(vaultTvl.tvl);
+
+    // Only include active chains in total
+    if (activeChainIds.includes(vault.chainId)) {
+      totalTvl = totalTvl.plus(vaultTvl.tvl);
+    }
   }
   sliceState.byChaindId = byChaindIdTotals;
   // recompute total tvl as a whole

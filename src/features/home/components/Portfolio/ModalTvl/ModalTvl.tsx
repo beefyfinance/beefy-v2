@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../../../../vault/comp
 import CloseIcon from '@material-ui/icons/Close';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
-import { selectChainById } from '../../../../data/selectors/chains';
+import { selectActiveChainIds, selectChainById } from '../../../../data/selectors/chains';
 import type { ChainEntity } from '../../../../data/entities/chain';
 import { selectTvlByChain } from '../../../../data/selectors/tvl';
 import type BigNumber from 'bignumber.js';
@@ -30,14 +30,16 @@ const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ModalTvl({ 
   const classes = useStyles();
   const { t } = useTranslation();
   const tvls = useAppSelector(selectTvlByChain);
+  const activeChainIds = useAppSelector(selectActiveChainIds);
 
   const sortedTvls = React.useMemo<ItemListType[]>(() => {
     const list = [];
     for (const [chainId, tvl] of Object.entries(tvls)) {
+      if (!activeChainIds.includes(chainId)) continue;
       list.push({ tvl: tvl.toNumber(), chainId });
     }
     return orderBy(list, 'tvl', 'desc');
-  }, [tvls]);
+  }, [tvls, activeChainIds]);
 
   return (
     <div className={classes.holder} ref={ref} tabIndex={-1}>
