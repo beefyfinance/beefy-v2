@@ -138,11 +138,6 @@ export const selectTotalUserBalanceInBoostsInDepositToken = (
   return BIG_ZERO;
 };
 
-export const selectIsUserEligibleForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const walletBalance = _selectWalletBalance(state);
-  return walletBalance ? walletBalance.eligibleVaultIds.indexOf(vaultId) !== -1 : false;
-};
-
 export const selectUserBalanceOfToken = (
   state: BeefyState,
   chainId: ChainEntity['id'],

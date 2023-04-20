@@ -98,7 +98,6 @@
   "NoResults-TryClearSearch": "Try clearing your search term.",
   "NoResults-NotConnected": "You haven't connected your wallet.",
   "NoResults-ConnectToViewMyVaults": "Connect to view your vaults.",
-  "NoResults-ConnectToViewEligibleVaults": "Connect to view eligible vaults.",
   "NoResults-ConnectWallet": "Connect Wallet",
   "NoResults-NotDeposited": "You haven't deposited in any vaults.",
   "NoResults-FindVault": "Find and deposit in a vault.",

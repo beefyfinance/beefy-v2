@@ -10,7 +10,6 @@ import {
 } from '../entities/vault';
 import {
   selectHasUserDepositInVault,
-  selectIsUserEligibleForVault,
   selectUserDepositedVaultIds,
   selectUserVaultDepositInUsd,
   selectUserVaultDepositTokenWalletBalanceInUsd,
