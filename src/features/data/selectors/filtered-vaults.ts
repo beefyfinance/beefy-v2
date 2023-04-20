@@ -65,7 +65,6 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.onlyPaused ? 1 : 0) +
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.onlyZappable ? 1 : 0) +
-    (filterOptions.onlySaved ? 1 : 0) +
     (filterOptions.platformId !== null ? 1 : 0) +
     (filterOptions.vaultType !== 'all' ? 1 : 0) +
     (filterOptions.vaultCategory !== 'all' ? 1 : 0) +
@@ -83,7 +82,6 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.onlyPaused !== false ||
     filterOptions.onlyBoosted !== false ||
     filterOptions.onlyZappable !== false ||
-    filterOptions.onlySaved !== false ||
     filterOptions.searchText !== '' ||
     filterOptions.platformId !== null ||
     filterOptions.sort !== 'default' ||
@@ -99,7 +97,6 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.onlyPaused !== false ||
     filterOptions.onlyBoosted !== false ||
     filterOptions.onlyZappable !== false ||
-    filterOptions.onlySaved !== false ||
     filterOptions.searchText !== '' ||
     filterOptions.platformId !== null ||
     filterOptions.chainIds.length > 0
@@ -259,10 +256,6 @@ export const selectFilteredVaults = (state: BeefyState) => {
       return false;
     }
 
-    if (filterOptions.onlySaved && !selectVaultIsSaved(state, vault.id)) {
-      return false;
-    }
-
     if (
       !filterOptions.onlyRetired &&
       isVaultRetired(vault) &&
@@ -282,10 +275,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
     }
 
     // hide when no wallet balance of deposit token
-    if (
-      filterOptions.userCategory === 'eligible' &&
-      !selectIsUserEligibleForVault(state, vault.id)
-    ) {
+    if (filterOptions.userCategory === 'saved' && !selectVaultIsSaved(state, vault.id)) {
       return false;
     }
 

@@ -17,7 +17,7 @@ export type FilteredVaultsState = {
   sort: 'tvl' | 'apy' | 'daily' | 'safetyScore' | 'default' | 'depositValue' | 'walletValue';
   sortDirection: 'asc' | 'desc';
   vaultCategory: 'all' | 'featured' | 'stable' | 'bluechip' | 'beefy' | 'correlated';
-  userCategory: 'all' | 'eligible' | 'deposited';
+  userCategory: 'all' | 'saved' | 'deposited';
   vaultType: 'all' | 'lps' | 'single';
   searchText: string;
   chainIds: ChainEntity['id'][];
@@ -26,7 +26,6 @@ export type FilteredVaultsState = {
   onlyPaused: boolean;
   onlyBoosted: boolean;
   onlyZappable: boolean;
-  onlySaved: boolean;
 };
 export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
 
@@ -44,7 +43,6 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   onlyPaused: false,
   onlyBoosted: false,
   onlyZappable: false,
-  onlySaved: false,
 };
 
 export const filteredVaultsSlice = createSlice({
@@ -113,10 +111,7 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState.onlyZappable = action.payload;
     },
-    setOnlySaved(sliceState, action: PayloadAction<FilteredVaultsState['onlySaved']>) {
-      sliceState.reseted = false;
-      sliceState.onlySaved = action.payload;
-    },
+
     setBoolean(
       sliceState,
       action: PayloadAction<{ filter: FilteredVaultBooleanKeys; value: boolean }>
