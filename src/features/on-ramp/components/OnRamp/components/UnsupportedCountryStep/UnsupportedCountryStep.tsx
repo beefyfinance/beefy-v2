@@ -8,7 +8,7 @@ export const UnsupportedCountryStep = memo(function () {
   const { t } = useTranslation();
 
   return (
-    <Step stepType="onRamp">
+    <Step stepType="onRamp" title={t('OnRamp-UnsupportedCountryStep-Title')}>
       <ErrorIndicator
         title={t('OnRamp-UnsupportedCountryStep-Title')}
         content={t('OnRamp-UnsupportedCountryStep-Content')}

@@ -10,7 +10,7 @@ export type StepType = 'bridge' | 'onRamp';
 
 export type StepProps = {
   stepType: StepType;
-  title?: string;
+  title: string;
   onBack?: () => void;
   children: ReactNode;
   titleAdornment?: ReactNode;
@@ -33,17 +33,19 @@ export const Step = memo<StepProps>(function ({
 
   return (
     <div className={classes.container}>
-      {title ? (
-        <div className={classes.titleBar}>
-          {onBack !== undefined ? (
-            <button onClick={onBack} className={classes.backButton}>
+      <div className={classes.titleBar}>
+        {onBack ? (
+          <a onClick={onBack} className={classes.backLink}>
+            <button className={classes.backButton}>
               <BackArrow className={classes.backIcon} />
             </button>
-          ) : null}
+            {title}
+          </a>
+        ) : (
           <div>{title}</div>
-          {titleAdornment ? <div className={classes.adornment}>{titleAdornment}</div> : null}
-        </div>
-      ) : null}
+        )}
+        {titleAdornment ? <div className={classes.adornment}>{titleAdornment}</div> : null}
+      </div>
       <div className={clsx(classes.content, contentClass, { [classes.noPadding]: noPadding })}>
         {children}
       </div>

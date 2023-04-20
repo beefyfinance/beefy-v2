@@ -7,18 +7,26 @@ const useStyles = makeStyles(styles);
 
 export type StepHeaderProps = {
   onBack?: () => void;
-  children: ReactNode;
+  title: string;
+  children?: ReactNode;
 };
-export const StepHeader = memo<StepHeaderProps>(function ({ onBack, children }) {
+export const StepHeader = memo<StepHeaderProps>(function ({ onBack, title, children }) {
   const classes = useStyles();
 
   return (
     <div className={classes.container}>
-      {onBack ? (
-        <button onClick={onBack} className={classes.backButton}>
-          <BackArrow className={classes.backIcon} />
-        </button>
-      ) : null}
+      <div>
+        {onBack ? (
+          <a onClick={onBack} className={classes.backLink}>
+            <button className={classes.backButton}>
+              <BackArrow className={classes.backIcon} />
+            </button>
+            {title}
+          </a>
+        ) : (
+          <div>{title}</div>
+        )}
+      </div>
       {children}
     </div>
   );
