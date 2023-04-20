@@ -1839,7 +1839,8 @@
     "earnContractAddress": "0x6E2DCebF8C14c72329f224A26EdfD547d3c3E09c",
     "oracle": "lps",
     "oracleId": "swapfish-weth-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "swapfish",
     "assets": ["ETH", "USDC"],
     "risks": [
