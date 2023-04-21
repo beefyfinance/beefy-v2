@@ -1,6 +1,6 @@
 import React, { FC, memo, SVGProps, useCallback } from 'react';
 import { ChainEntity } from '../../../../../data/entities/chain';
-import { selectAllChainIds, selectChainById } from '../../../../../data/selectors/chains';
+import { selectActiveChainIds, selectChainById } from '../../../../../data/selectors/chains';
 import { makeStyles, Tooltip } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
@@ -58,7 +58,7 @@ export const ChainButtonSelector = memo<ChainButtonSelectorProps>(function Chain
   className,
 }) {
   const classes = useStyles();
-  const chainIds = useAppSelector(selectAllChainIds);
+  const chainIds = useAppSelector(selectActiveChainIds);
   const handleChange = useCallback(
     (isSelected, id) => {
       if (isSelected) {

@@ -123,6 +123,7 @@ export type GasConfig = StandardGasConfig | EIP1559GasConfig | CeloGasConfig;
 export interface ChainConfig {
   id: string;
   name: string;
+  eol?: number;
   chainId: number;
   rpc: string[];
   explorerUrl: string;
