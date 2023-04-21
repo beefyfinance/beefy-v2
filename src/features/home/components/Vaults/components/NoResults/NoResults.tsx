@@ -100,7 +100,9 @@ export const NoResults = memo(function NoResults() {
   }
 
   if (userCategory === 'saved') {
-    return <Message title="NoResults-NoSavedVaults-Title" text="NoResults-NoSavedVaults" />;
+    return (
+      <NotDepositedMessage title="NoResults-NoSavedVaults-Title" text="NoResults-NoSavedVaults" />
+    );
   }
 
   if (!userBalanceAvailable && userCategory === 'deposited') {
