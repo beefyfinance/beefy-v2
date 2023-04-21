@@ -1284,7 +1284,7 @@
     "earnContractAddress": "0xeDe45f9dC994a66F1aD1ac68974Abb28086f909d",
     "oracle": "lps",
     "oracleId": "thena-usdt-busd",
-    "status": "acive",
+    "status": "active",
     "platformId": "thena",
     "assets": ["USDT", "BUSD"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
