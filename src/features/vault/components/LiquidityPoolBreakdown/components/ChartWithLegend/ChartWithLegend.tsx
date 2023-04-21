@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { memo } from 'react';
-import { CalculatedBreakdownData } from '../../types';
+import type { CalculatedBreakdownData } from '../../types';
 import { Legend } from '../Legend';
 import { Chart } from '../Chart';
 

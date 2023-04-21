@@ -1,5 +1,6 @@
-import { ElementType, memo, PropsWithChildren } from 'react';
-import { CustomVariant } from '@material-ui/core/styles/createTypography';
+import type { ElementType, PropsWithChildren } from 'react';
+import { memo } from 'react';
+import type { CustomVariant } from '@material-ui/core/styles/createTypography';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';

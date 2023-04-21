@@ -3,7 +3,8 @@ import ShareIcon from '@material-ui/icons/Share';
 import { Button } from '../../../../components/Button';
 import * as React from 'react';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
-import { Theme, makeStyles, useMediaQuery } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import twitterIcon from '../../../../images/icons/share/twitter.svg';
@@ -17,10 +18,10 @@ import { selectChainById } from '../../../data/selectors/chains';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectVaultTotalApy } from '../../../data/selectors/apy';
 import { formatPercent } from '../../../../helpers/format';
-import { BeefyState } from '../../../../redux-types';
+import type { BeefyState } from '../../../../redux-types';
 import { selectBoostById, selectPreStakeOrActiveBoostIds } from '../../../data/selectors/boosts';
 import { selectPartnerById } from '../../../data/selectors/partners';
-import {
+import type {
   BoostedVaultExtraDetails,
   CommonVaultDetails,
   GovVaultExtraDetails,
@@ -33,7 +34,7 @@ import {
 } from './types';
 import clsx from 'clsx';
 import { MoreVert } from '@material-ui/icons';
-import SaveButton from '../SaveButton/SaveButton';
+import { SaveButton } from '../SaveButton/SaveButton';
 
 const useStyles = makeStyles(styles);
 
@@ -42,7 +43,6 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   placement,
   mobileAlternative = false,
 }) {
-  const { t } = useTranslation();
   const classes = useStyles();
   const anchorEl = useRef();
   const [isOpen, setIsOpen] = useState(false);

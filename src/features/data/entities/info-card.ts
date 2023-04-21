@@ -1,4 +1,8 @@
-import { InfoCardChainConfig, InfoCardConfig, InfoCardVaultConfig } from '../apis/config-types';
+import type {
+  InfoCardChainConfig,
+  InfoCardConfig,
+  InfoCardVaultConfig,
+} from '../apis/config-types';
 
 export type InfoCardEntity = InfoCardConfig;
 export type InfoCardChainEntity = InfoCardChainConfig;

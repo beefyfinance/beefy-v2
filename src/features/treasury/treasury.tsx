@@ -10,7 +10,7 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const Treasury = memo(function () {
+export const Treasury = memo(function Treasury() {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const shouldInit = useAppSelector(selectShouldInitTreasury);

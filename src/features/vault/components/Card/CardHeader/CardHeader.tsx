@@ -1,4 +1,5 @@
-import React, { memo, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
@@ -10,7 +11,7 @@ export type CardHeaderProps = {
   className?: string;
   disableDefaultClass?: boolean;
 };
-export const CardHeader = memo<CardHeaderProps>(function ({
+export const CardHeader = memo<CardHeaderProps>(function CardHeader({
   children,
   className,
   disableDefaultClass = false,

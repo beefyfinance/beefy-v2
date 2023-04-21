@@ -7,7 +7,7 @@ import { formatBigDecimals } from '../../../../../../helpers/format';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { startStepper } from '../../../../../data/actions/stepper';
 import { walletActions } from '../../../../../data/actions/wallet-actions';
-import { BoostEntity } from '../../../../../data/entities/boost';
+import type { BoostEntity } from '../../../../../data/entities/boost';
 import { stepperActions } from '../../../../../data/reducers/wallet/stepper';
 import {
   selectBoostRewardsTokenEntity,
@@ -23,7 +23,9 @@ interface BoostPastCardActionCardProps {
   boost: BoostEntity;
 }
 
-export const BoostPastActionCard = memo<BoostPastCardActionCardProps>(function ({ boost }) {
+export const BoostPastActionCard = memo<BoostPastCardActionCardProps>(function BoostPastActionCard({
+  boost,
+}) {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();

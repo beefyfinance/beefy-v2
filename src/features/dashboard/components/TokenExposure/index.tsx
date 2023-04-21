@@ -8,13 +8,15 @@ interface TokenExposureProps {
   title?: string;
 }
 
-const TokenExposure = memo<TokenExposureProps>(function ({ title }) {
+const TokenExposure = memo<TokenExposureProps>(function TokenExposure({ title }) {
   const tokensExposureData = useAppSelector(state => selectUserTokenExposure(state));
 
   return <ExposureChart title={title} type="token" data={tokensExposureData} />;
 });
 
-export const TokenExposureLoader = memo<TokenExposureProps>(function ({ title }) {
+export const TokenExposureLoader = memo<TokenExposureProps>(function TokenExposureLoader({
+  title,
+}) {
   const isUserDataAvailable = useAppSelector(selectIsUserBalanceAvailable);
 
   if (isUserDataAvailable) {

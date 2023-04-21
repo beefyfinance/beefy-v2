@@ -4,10 +4,10 @@ import { styles } from './styles';
 import clsx from 'clsx';
 import { useAppDispatch } from '../../../../../../store';
 import { bridgeActions } from '../../../../../data/reducers/wallet/bridge';
-import { FormStep } from '../../../../../data/reducers/wallet/bridge';
+import type { FormStep } from '../../../../../data/reducers/wallet/bridge';
 import { ButtonAdornment } from '../../../../../../components/ButtonAdornment';
 import { ChainIcon } from '../ChainIcon';
-import { ChainEntity } from '../../../../../data/entities/chain';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 
 const useStyles = makeStyles(styles);
 

@@ -12,7 +12,7 @@ import { WithdrawTokenSelectList } from '../TokenSelectList/WithdrawTokenSelectL
 
 const useStyles = makeStyles(styles);
 
-export const TokenSelectStep = memo(function () {
+export const TokenSelectStep = memo(function TokenSelectStep() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const classes = useStyles();

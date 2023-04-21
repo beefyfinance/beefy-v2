@@ -12,7 +12,9 @@ const useStyles = makeStyles(styles);
 export type ExtendedFiltersProps = {
   desktopView: boolean;
 };
-export const ExtendedFilters = memo<ExtendedFiltersProps>(function ({ desktopView }) {
+export const ExtendedFilters = memo<ExtendedFiltersProps>(function ExtendedFilters({
+  desktopView,
+}) {
   const { t } = useTranslation();
   const classes = useStyles();
 

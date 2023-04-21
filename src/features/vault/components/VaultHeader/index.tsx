@@ -1,24 +1,26 @@
 import * as React from 'react';
 import { memo } from 'react';
-import { isGovVault, VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
+import { isGovVault } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
 import { selectChainById } from '../../../data/selectors/chains';
 import { useTranslation } from 'react-i18next';
-import { makeStyles, Theme, useMediaQuery } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { VaultPlatform } from '../../../../components/VaultPlatform';
 import { styles } from './styles';
 import { ShareButton } from '../ShareButton';
 import { punctuationWrap } from '../../../../helpers/string';
-import SaveButton from '../SaveButton/SaveButton';
+import { SaveButton } from '../SaveButton';
 
 const useStyles = makeStyles(styles);
 
 export type VaultHeaderProps = {
   vaultId: VaultEntity['id'];
 };
-export const VaultHeader = memo<VaultHeaderProps>(function ({ vaultId }) {
+export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));

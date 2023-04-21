@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import { memo, ReactNode, useCallback } from 'react';
+import type { ReactNode } from 'react';
+import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 

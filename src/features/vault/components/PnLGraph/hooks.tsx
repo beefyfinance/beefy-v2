@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import {
   selectLastVaultDepositStart,
@@ -10,7 +10,7 @@ import {
 import { getInvestorTimeserie } from '../../../../helpers/timeserie';
 import { eachDayOfInterval, isAfter } from 'date-fns';
 import { maxBy, minBy } from 'lodash-es';
-import { TimeBucketType } from '../../../data/apis/analytics/analytics-types';
+import type { TimeBucketType } from '../../../data/apis/analytics/analytics-types';
 import { selectVaultById, selectVaultPricePerFullShare } from '../../../data/selectors/vaults';
 import {
   selectDepositTokenByVaultId,

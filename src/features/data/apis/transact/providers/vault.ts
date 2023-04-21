@@ -1,4 +1,4 @@
-import {
+import type {
   InputTokenAmount,
   ITransactProvider,
   TransactOption,
@@ -6,15 +6,17 @@ import {
   VaultOption,
   VaultQuote,
 } from '../transact-types';
-import { isStandardVault, VaultEntity } from '../../../entities/vault';
-import { BeefyState } from '../../../../../redux-types';
+import type { VaultEntity } from '../../../entities/vault';
+import { isStandardVault } from '../../../entities/vault';
+import type { BeefyState } from '../../../../../redux-types';
 import { selectStandardVaultById, selectVaultById } from '../../../selectors/vaults';
 import { createOptionId, createQuoteId, createTokensId } from '../utils';
-import { Step } from '../../../reducers/wallet/stepper';
+import type { Step } from '../../../reducers/wallet/stepper';
 import { walletActions } from '../../../actions/wallet-actions';
-import { Namespace, TFunction } from 'react-i18next';
+import type { Namespace, TFunction } from 'react-i18next';
 import { TransactMode } from '../../../reducers/wallet/transact-types';
-import { isTokenErc20, TokenErc20 } from '../../../entities/token';
+import type { TokenErc20 } from '../../../entities/token';
+import { isTokenErc20 } from '../../../entities/token';
 
 /**
  * Basic deposit/withdraw of single token handled by the vault contract itself
@@ -110,7 +112,7 @@ export class VaultProvider implements ITransactProvider {
   async getWithdrawQuoteFor(
     option: TransactOption,
     amounts: InputTokenAmount[],
-    state: BeefyState
+    _state: BeefyState
   ): Promise<VaultQuote | null> {
     if (amounts.length !== 1) {
       throw new Error(`Only 1 input token supported`);

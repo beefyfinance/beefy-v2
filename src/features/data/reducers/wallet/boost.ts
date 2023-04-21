@@ -1,9 +1,10 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { formatBigDecimals, formatBigNumberSignificant } from '../../../../helpers/format';
-import { BeefyState } from '../../../../redux-types';
+import type { BeefyState } from '../../../../redux-types';
 import { initiateBoostForm } from '../../actions/boosts';
-import { BoostEntity } from '../../entities/boost';
+import type { BoostEntity } from '../../entities/boost';
 import { selectBoostUserBalanceInToken, selectUserBalanceOfToken } from '../../selectors/balance';
 import { selectBoostById } from '../../selectors/boosts';
 import { selectTokenByAddress } from '../../selectors/tokens';

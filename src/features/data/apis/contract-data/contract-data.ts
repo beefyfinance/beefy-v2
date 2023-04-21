@@ -1,13 +1,13 @@
 import _BeefyV2AppMulticallAbi from '../../../../config/abi/BeefyV2AppMulticall.json';
-import { AbiItem } from 'web3-utils';
-import Web3 from 'web3';
-import { VaultGov, VaultStandard } from '../../entities/vault';
-import { ChainEntity } from '../../entities/chain';
+import type { AbiItem } from 'web3-utils';
+import type Web3 from 'web3';
+import type { VaultGov, VaultStandard } from '../../entities/vault';
+import type { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
-import { AllValuesAsString } from '../../utils/types-utils';
-import { BoostEntity } from '../../entities/boost';
+import type { AllValuesAsString } from '../../utils/types-utils';
+import type { BoostEntity } from '../../entities/boost';
 import { chunk } from 'lodash-es';
-import {
+import type {
   BoostContractData,
   BoostContractDataResponse,
   FetchAllContractDataResult,
@@ -16,10 +16,11 @@ import {
   StandardVaultContractData,
 } from './contract-data-types';
 import { featureFlag_getContractDataApiChunkSize } from '../../utils/feature-flags';
-import { BeefyState } from '../../../../redux-types';
+import type { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
 import { selectTokenByAddress } from '../../selectors/tokens';
-import { makeBatchRequest, Web3Call } from '../../../../helpers/web3';
+import type { Web3Call } from '../../../../helpers/web3';
+import { makeBatchRequest } from '../../../../helpers/web3';
 
 // fix ts types
 const BeefyV2AppMulticallAbi = _BeefyV2AppMulticallAbi as AbiItem | AbiItem[];
@@ -67,7 +68,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       });
     });
 
-    const results: any[] = await makeBatchRequest(this.web3, requestsForBatch);
+    const results: unknown[] = await makeBatchRequest(this.web3, requestsForBatch);
 
     // now reasign results
 
@@ -79,22 +80,22 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
     let resultsIdx = 0;
     for (const boostBatch of boostBatches) {
-      const batchRes = results[resultsIdx].map((boostRes, elemidx) =>
-        this.boostFormatter(state, boostRes, boostBatch[elemidx])
+      const batchRes = (results[resultsIdx] as BoostContractDataResponse[]).map(
+        (boostRes, elemidx) => this.boostFormatter(state, boostRes, boostBatch[elemidx])
       );
       res.boosts = res.boosts.concat(batchRes);
       resultsIdx++;
     }
     for (const vaultBatch of vaultBatches) {
-      const batchRes = results[resultsIdx].map((vaultRes, elemidx) =>
-        this.standardVaultFormatter(state, vaultRes, vaultBatch[elemidx])
+      const batchRes = (results[resultsIdx] as AllValuesAsString<StandardVaultContractData>[]).map(
+        (vaultRes, elemidx) => this.standardVaultFormatter(state, vaultRes, vaultBatch[elemidx])
       );
       res.standardVaults = res.standardVaults.concat(batchRes);
       resultsIdx++;
     }
     for (const vaultBatch of govVaultBatches) {
-      const batchRes = results[resultsIdx].map((vaultRes, elemidx) =>
-        this.govVaultFormatter(state, vaultRes, vaultBatch[elemidx])
+      const batchRes = (results[resultsIdx] as AllValuesAsString<GovVaultContractData>[]).map(
+        (vaultRes, elemidx) => this.govVaultFormatter(state, vaultRes, vaultBatch[elemidx])
       );
       res.govVaults = res.govVaults.concat(batchRes);
       resultsIdx++;

@@ -10,8 +10,10 @@ import {
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { SearchInput } from '../../../../../../components/SearchInput';
 import { Scrollable } from '../../../../../../components/Scrollable';
-import { ListItem, ListItemProps } from './components/ListItem';
+import type { ListItemProps } from './components/ListItem';
+import { ListItem } from './components/ListItem';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -19,69 +21,71 @@ export type WithdrawTokenSelectListProps = {
   className?: string;
 };
 
-export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(function ({ className }) {
-  const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-  const classes = useStyles();
-  const vaultId = useAppSelector(selectTransactVaultId);
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  // const availableChains = useAppSelector(selectTransactTokenChains);
-  const [selectedChain] = useState(vault.chainId);
-  const [search, setSearch] = useState('');
-  const optionsForChain = useAppSelector(state =>
-    selectTransactWithdrawTokensForChain(state, selectedChain)
-  );
-  const filteredOptionsForChain = useMemo(() => {
-    let options = optionsForChain;
+export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
+  function WithdrawTokenSelectList({ className }) {
+    const { t } = useTranslation();
+    const dispatch = useAppDispatch();
+    const classes = useStyles();
+    const vaultId = useAppSelector(selectTransactVaultId);
+    const vault = useAppSelector(state => selectVaultById(state, vaultId));
+    // const availableChains = useAppSelector(selectTransactTokenChains);
+    const [selectedChain] = useState(vault.chainId);
+    const [search, setSearch] = useState('');
+    const optionsForChain = useAppSelector(state =>
+      selectTransactWithdrawTokensForChain(state, selectedChain)
+    );
+    const filteredOptionsForChain = useMemo(() => {
+      let options = optionsForChain;
 
-    if (search.length) {
-      options = options.filter(option =>
-        option.tokens
-          .map(token => token.symbol)
-          .join(' ')
-          .toLowerCase()
-          .includes(search.toLowerCase())
-      );
-    }
+      if (search.length) {
+        options = options.filter(option =>
+          option.tokens
+            .map(token => token.symbol)
+            .join(' ')
+            .toLowerCase()
+            .includes(search.toLowerCase())
+        );
+      }
 
-    return options;
-  }, [optionsForChain, search]);
-  // const hasMultipleChains = availableChains.length > 1;
-  const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
-    tokenId => {
-      dispatch(
-        transactActions.selectToken({
-          tokensId: tokenId,
-          resetInput: false,
-        })
-      );
-    },
-    [dispatch]
-  );
+      return options;
+    }, [optionsForChain, search]);
+    // const hasMultipleChains = availableChains.length > 1;
+    const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
+      tokenId => {
+        dispatch(
+          transactActions.selectToken({
+            tokensId: tokenId,
+            resetInput: false,
+          })
+        );
+      },
+      [dispatch]
+    );
 
-  return (
-    <div className={classes.container}>
-      <div className={classes.search}>
-        <SearchInput value={search} onChange={setSearch} className={classes.searchInput} />
-      </div>
-      {/*hasMultipleChains ? <div className={classes.chainSelector}>TODO {selectedChain}</div> : null*/}
-      <Scrollable className={classes.listContainer}>
-        <div className={classes.list}>
-          {filteredOptionsForChain.length ? (
-            filteredOptionsForChain.map(option => (
-              <ListItem
-                key={option.id}
-                tokenId={option.id}
-                tokens={option.tokens}
-                chainId={selectedChain}
-                onSelect={handleTokenSelect}
-              />
-            ))
-          ) : (
-            <div className={classes.noResults}>{t('Transact-TokenSelect-NoResults')}</div>
-          )}
+    return (
+      <div className={clsx(classes.container, className)}>
+        <div className={classes.search}>
+          <SearchInput value={search} onChange={setSearch} className={classes.searchInput} />
         </div>
-      </Scrollable>
-    </div>
-  );
-});
+        {/*hasMultipleChains ? <div className={classes.chainSelector}>TODO {selectedChain}</div> : null*/}
+        <Scrollable className={classes.listContainer}>
+          <div className={classes.list}>
+            {filteredOptionsForChain.length ? (
+              filteredOptionsForChain.map(option => (
+                <ListItem
+                  key={option.id}
+                  tokenId={option.id}
+                  tokens={option.tokens}
+                  chainId={selectedChain}
+                  onSelect={handleTokenSelect}
+                />
+              ))
+            ) : (
+              <div className={classes.noResults}>{t('Transact-TokenSelect-NoResults')}</div>
+            )}
+          </div>
+        </Scrollable>
+      </div>
+    );
+  }
+);

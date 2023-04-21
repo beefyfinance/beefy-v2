@@ -1,6 +1,7 @@
-import React, { FC, memo, SVGProps, useCallback } from 'react';
-import { ChainEntity } from '../../../../../data/entities/chain';
-import { selectAllChainIds, selectChainById } from '../../../../../data/selectors/chains';
+import type { FC, SVGProps } from 'react';
+import React, { memo, useCallback } from 'react';
+import type { ChainEntity } from '../../../../../data/entities/chain';
+import { selectActiveChainIds, selectChainById } from '../../../../../data/selectors/chains';
 import { makeStyles, Tooltip } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
@@ -20,7 +21,7 @@ type ChainButtonProps = {
   selected: boolean;
   onChange: (selected: boolean, id: ChainEntity['id']) => void;
 };
-const ChainButton = memo<ChainButtonProps>(function ({ id, selected, onChange }) {
+const ChainButton = memo<ChainButtonProps>(function ChainButton({ id, selected, onChange }) {
   const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, id));
   const handleChange = useCallback(() => {
@@ -58,7 +59,7 @@ export const ChainButtonSelector = memo<ChainButtonSelectorProps>(function Chain
   className,
 }) {
   const classes = useStyles();
-  const chainIds = useAppSelector(selectAllChainIds);
+  const chainIds = useAppSelector(selectActiveChainIds);
   const handleChange = useCallback(
     (isSelected, id) => {
       if (isSelected) {

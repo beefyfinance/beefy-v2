@@ -11,7 +11,7 @@ const WalletContainer = React.lazy(() => import(`../WalletContainer`));
 
 const useStyles = makeStyles(styles);
 
-export const ConnectionStatus = memo(function () {
+export const ConnectionStatus = memo(function ConnectionStatus() {
   const classes = useStyles();
   const open = useAppSelector(state => state.ui.dataLoader.statusIndicator.open);
   return (

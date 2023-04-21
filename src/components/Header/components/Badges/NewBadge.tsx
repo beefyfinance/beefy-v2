@@ -1,7 +1,8 @@
 import { memo } from 'react';
-import { makeStyles, Theme } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { BadgeComponentProps } from './types';
+import type { BadgeComponentProps } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   badge: {

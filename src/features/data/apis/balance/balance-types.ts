@@ -1,8 +1,8 @@
-import BigNumber from 'bignumber.js';
-import { BeefyState } from '../../../../redux-types';
-import { BoostEntity } from '../../entities/boost';
-import { TokenEntity } from '../../entities/token';
-import { VaultEntity, VaultGov } from '../../entities/vault';
+import type BigNumber from 'bignumber.js';
+import type { BeefyState } from '../../../../redux-types';
+import type { BoostEntity } from '../../entities/boost';
+import type { TokenEntity } from '../../entities/token';
+import type { VaultEntity, VaultGov } from '../../entities/vault';
 
 export interface IBalanceApi {
   fetchAllBalances(

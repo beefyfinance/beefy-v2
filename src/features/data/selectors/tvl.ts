@@ -1,5 +1,5 @@
-import { VaultEntity } from '../entities/vault';
-import { BeefyState } from '../../../redux-types';
+import type { VaultEntity } from '../entities/vault';
+import type { BeefyState } from '../../../redux-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
 
 export const selectVaultTvl = (state: BeefyState, vaultId: VaultEntity['id']) =>

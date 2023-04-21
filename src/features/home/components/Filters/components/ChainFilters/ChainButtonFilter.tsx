@@ -1,7 +1,7 @@
 import React, { memo, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectFilterChainIds } from '../../../../../data/selectors/filtered-vaults';
-import { ChainEntity } from '../../../../../data/entities/chain';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { ChainButtonSelector } from './ChainButtonSelector';
 

@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-export const DefaultMeta = memo(function () {
+export const DefaultMeta = memo(function DefaultMeta() {
   const location = useLocation();
   const { t, i18n } = useTranslation();
   const canonical = useMemo(() => {

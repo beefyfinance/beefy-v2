@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllZapsAction } from '../actions/zap';
-import { ChainEntity } from '../entities/chain';
-import { ZapEntityBeefy, ZapEntityOneInch } from '../entities/zap';
-import { AmmEntity } from '../entities/amm';
+import type { ChainEntity } from '../entities/chain';
+import type { ZapEntityBeefy, ZapEntityOneInch } from '../entities/zap';
+import type { AmmEntity } from '../entities/amm';
 
 /**
  * State containing Vault infos

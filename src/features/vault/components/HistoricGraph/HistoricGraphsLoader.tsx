@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import {
   selectHistoricalHasAnyChart,
@@ -12,7 +12,9 @@ export type HistoricGraphsLoaderProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const HistoricGraphsLoader = memo<HistoricGraphsLoaderProps>(function ({ vaultId }) {
+export const HistoricGraphsLoader = memo<HistoricGraphsLoaderProps>(function HistoricGraphsLoader({
+  vaultId,
+}) {
   const dispatch = useAppDispatch();
   const rangesStatus = useAppSelector(state => selectHistoricalRangesStatus(state, vaultId));
   const hasAnyChart = useAppSelector(state => selectHistoricalHasAnyChart(state, vaultId));

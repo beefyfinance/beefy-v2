@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import React, { memo } from 'react';
 import { formatPercent } from '../../../../helpers/format';
-import { BaseEntry } from '../../../data/utils/array-utils';
+import type { BaseEntry } from '../../../data/utils/array-utils';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
@@ -14,7 +14,10 @@ interface ExposureLegendProps {
 
 const COLORS = ['#5C70D6', '#5C99D6', '#5CC2D6', '#5CD6AD', '#70D65C', '#1e9c05'];
 
-export const ExposureLegend = memo<ExposureLegendProps>(function ({ data, formatter }) {
+export const ExposureLegend = memo<ExposureLegendProps>(function ExposureLegend({
+  data,
+  formatter,
+}) {
   const classes = useStyles();
   return (
     <div className={classes.legendContainer}>
@@ -37,7 +40,7 @@ interface LabelProps {
   formatter?: (s: string) => string;
 }
 
-const Label = memo<LabelProps>(function ({ item, formatter }) {
+const Label = memo<LabelProps>(function Label({ item, formatter }) {
   const classes = useStyles();
   const label = item.label ?? item.key;
   const labelFormatted = formatter ? formatter(label) : label;

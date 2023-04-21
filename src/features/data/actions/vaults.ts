@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi, getConfigApi } from '../apis/instances';
-import { ChainEntity } from '../entities/chain';
-import { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
-import { BeefyVaultZapSupportResponse } from '../apis/beefy/beefy-api';
+import type { ChainEntity } from '../entities/chain';
+import type { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
+import type { BeefyVaultZapSupportResponse } from '../apis/beefy/beefy-api';
 import { featureFlag_zapSupportOverrides } from '../utils/feature-flags';
 
 // given the list of vaults is pulled from some api at some point
@@ -18,7 +18,7 @@ export interface FulfilledAllVaultsPayload {
 }
 export const fetchAllVaults = createAsyncThunk<
   FulfilledAllVaultsPayload,
-  {},
+  void,
   { state: BeefyState }
 >('vaults/fetchAllVaults', async (_, { getState }) => {
   const api = getConfigApi();

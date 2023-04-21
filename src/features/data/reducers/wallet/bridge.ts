@@ -1,10 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { formatBigDecimals, formatBigNumberSignificant } from '../../../../helpers/format';
-import { BeefyState } from '../../../../redux-types';
+import type { BeefyState } from '../../../../redux-types';
 import { fetchBridgeChainData, initiateBridgeForm } from '../../actions/bridge';
-import { BridgeInfoEntity } from '../../apis/bridge/bridge-types';
-import { ChainEntity } from '../../entities/chain';
+import type { BridgeInfoEntity } from '../../apis/bridge/bridge-types';
+import type { ChainEntity } from '../../entities/chain';
 import { selectUserBalanceOfToken } from '../../selectors/balance';
 import { selectBridgeBifiDestChainData } from '../../selectors/bridge';
 import { selectChainById } from '../../selectors/chains';

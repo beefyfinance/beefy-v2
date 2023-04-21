@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { VaultEntity, VaultStandard } from '../../../data/entities/vault';
+import type { VaultEntity, VaultStandard } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectPlatformById } from '../../../data/selectors/platforms';
@@ -84,7 +84,7 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
   );
 });
 
-const DetailsLink = memo(function () {
+const DetailsLink = memo(function DetailsLink() {
   const classes = useStyles();
   const { t } = useTranslation();
   return (

@@ -1,8 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ChainEntity } from '../entities/chain';
-import { PlatformEntity } from '../entities/platform';
-import { KeysOfType } from '../utils/types-utils';
-import { VaultEntity } from '../entities/vault';
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type { VaultEntity } from '../entities/vault';
 
 export type SavedVaultsState = {
   savedVaultIds: VaultEntity['id'][];

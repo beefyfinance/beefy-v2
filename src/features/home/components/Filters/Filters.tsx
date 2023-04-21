@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
 import { ChainButtonFilter, ChainDropdownFilter } from './components/ChainFilters';
 import { UserCategoryButtonFilter } from './components/UserCategoryFilters';
 import { VaultTypeButtonFilter, VaultTypeDropdownFilter } from './components/VaultTypeFilters';
@@ -7,12 +8,7 @@ import { styles } from './styles';
 import { ExtendedFiltersButton } from './components/ExtendedFilters';
 import { ClearFiltersButton } from './components/ClearFiltersButton';
 import clsx from 'clsx';
-import {
-  VaultCategoryButtonFilter,
-  VaultCategoryDropdownFilter,
-} from './components/VaultCategoryFilters';
-import { Theme } from '@material-ui/core/styles';
-import { PlatformDropdownFilter } from './components/PlatformFilters';
+import { VaultCategoryButtonFilter } from './components/VaultCategoryFilters';
 
 const useStyles = makeStyles(styles);
 

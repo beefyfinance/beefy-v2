@@ -5,7 +5,7 @@ import { Card, CardHeader } from '../../../Card';
 import { styles } from './styles';
 import { Mint } from './components/Mint';
 import { Burn } from './components/Burn';
-import { MinterCardParams } from '../MinterCard';
+import type { MinterCardParams } from '../MinterCard';
 import { selectMinterById } from '../../../../../data/selectors/minters';
 import clsx from 'clsx';
 import { useAppSelector } from '../../../../../../store';

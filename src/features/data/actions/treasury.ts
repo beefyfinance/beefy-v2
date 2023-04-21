@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi } from '../apis/instances';
-import { TreasuryConfig } from '../apis/config-types';
+import type { TreasuryConfig } from '../apis/config-types';
 import { selectAllChainIds } from '../selectors/chains';
 
 export interface FetchTreasuryFulfilledPayload {

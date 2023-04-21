@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { getConfigApi } from '../apis/instances';
-import { BeefyZapConfig, OneInchZapConfig } from '../apis/config-types';
+import type { BeefyZapConfig, OneInchZapConfig } from '../apis/config-types';
 
 interface FetchAllZapsFulfilledPayload {
   beefy: BeefyZapConfig[];

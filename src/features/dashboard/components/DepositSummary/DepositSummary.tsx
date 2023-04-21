@@ -14,7 +14,7 @@ import { selectUserTotalYieldUsd } from '../../../data/selectors/balance';
 
 const useStyles = makeStyles(styles);
 
-export const DepositSummary = memo(function () {
+export const DepositSummary = memo(function DepositSummary() {
   const { t } = useTranslation();
   const classes = useStyles();
 

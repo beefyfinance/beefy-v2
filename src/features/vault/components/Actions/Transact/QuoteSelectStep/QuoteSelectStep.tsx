@@ -8,7 +8,8 @@ import { StepHeader } from '../StepHeader';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types';
 import { selectTransactQuoteIds } from '../../../../../data/selectors/transact';
 import { Scrollable } from '../../../../../../components/Scrollable';
-import { ListItem, ListItemProps } from './ListItem';
+import type { ListItemProps } from './ListItem';
+import { ListItem } from './ListItem';
 
 const useStyles = makeStyles(styles);
 

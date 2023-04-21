@@ -1,7 +1,8 @@
 import React, { memo } from 'react';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
-import { VaultEntity, isGovVault } from '../../../../../../../data/entities/vault';
+import type { VaultEntity } from '../../../../../../../data/entities/vault';
+import { isGovVault } from '../../../../../../../data/entities/vault';
 import { VaultAtDepositStat } from '../../../../../../../../components/VaultStats/VaultAtDepositStat';
 import { VaultNowStat } from '../../../../../../../../components/VaultStats/VaultNowStat';
 import { RowMobile } from '../../../Row';
@@ -18,7 +19,7 @@ import { selectVaultPnl } from '../../../../../../../data/selectors/analytics';
 
 const useStyles = makeStyles(styles);
 
-export const VaultDashboardMobileStats = memo(function ({
+export const VaultDashboardMobileStats = memo(function VaultDashboardMobileStats({
   vaultId,
 }: {
   vaultId: VaultEntity['id'];

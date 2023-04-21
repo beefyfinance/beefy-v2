@@ -1,6 +1,6 @@
-import { VaultEntity } from '../../../../data/entities/vault';
-import { TokenEntity } from '../../../../data/entities/token';
-import { ChartStat } from '../../../../data/reducers/historical-types';
+import type { VaultEntity } from '../../../../data/entities/vault';
+import type { TokenEntity } from '../../../../data/entities/token';
+import type { ChartStat } from '../../../../data/reducers/historical-types';
 import React, { memo, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../store';
 import {
@@ -13,8 +13,10 @@ import { GraphLoader } from '../../GraphLoader';
 import { RangeSwitcher } from '../RangeSwitcher';
 import { makeStyles } from '@material-ui/core';
 import { Graph } from '../Graph';
-import { getAvailableRanges, getDefaultTimeRange, TimeRange, timeRangeToBucket } from '../utils';
-import { LineToggles, LineTogglesState } from '../LineToggles';
+import type { TimeRange } from '../utils';
+import { getAvailableRanges, getDefaultTimeRange, timeRangeToBucket } from '../utils';
+import type { LineTogglesState } from '../LineToggles';
+import { LineToggles } from '../LineToggles';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
@@ -25,7 +27,11 @@ export type HistoricGraphProp = {
   stat: ChartStat;
 };
 
-export const GraphWithControls = memo<HistoricGraphProp>(function ({ vaultId, oracleId, stat }) {
+export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithControls({
+  vaultId,
+  oracleId,
+  stat,
+}) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const availableBuckets = useAppSelector(state =>

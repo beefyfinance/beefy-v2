@@ -1,12 +1,13 @@
-import { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault';
 import React, { memo } from 'react';
 import { connect } from 'react-redux';
-import { BeefyState } from '../../redux-types';
+import type { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { VaultValueStat } from '../VaultValueStat';
-import { SafetyScore, SafetyScoreProps } from '../SafetyScore';
+import type { SafetyScoreProps } from '../SafetyScore';
+import { SafetyScore } from '../SafetyScore';
 import { useMediaQuery } from '@material-ui/core';
-import { Theme } from '@material-ui/core/styles';
+import type { Theme } from '@material-ui/core';
 
 export type VaultSafetyStatProps = {
   vaultId: VaultEntity['id'];

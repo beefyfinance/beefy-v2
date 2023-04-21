@@ -1,6 +1,7 @@
-import { memo, PropsWithChildren } from 'react';
+import type { ReactNode } from 'react';
+import { memo } from 'react';
+import type { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
-import { Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
   label: {
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export type LabelProps = PropsWithChildren<{}>;
+export type LabelProps = { children: ReactNode };
 
 export const Label = memo<LabelProps>(function Label({ children }) {
   const classes = useStyles();

@@ -1,11 +1,12 @@
 import { Box, makeStyles } from '@material-ui/core';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { isArray } from 'lodash-es';
 import React from 'react';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { formatBigDecimals } from '../../../../helpers/format';
-import { TokenEntity } from '../../../data/entities/token';
-import { isGovVault, VaultEntity } from '../../../data/entities/vault';
+import type { TokenEntity } from '../../../data/entities/token';
+import type { VaultEntity } from '../../../data/entities/vault';
+import { isGovVault } from '../../../data/entities/vault';
 import {
   selectGovVaultUserStakedBalanceInDepositToken,
   selectStandardVaultUserBalanceInDepositTokenExcludingBoosts,
@@ -51,7 +52,7 @@ export function TokenWithDeposit({
     if (!convertAmountTo) {
       return [[oracleAmount, depositToken.symbol]];
     }
-    let amountsAndSymbol: [BigNumber, string][] = [];
+    const amountsAndSymbol: [BigNumber, string][] = [];
     const inputTokenPrice = selectTokenPriceByAddress(
       state,
       vault.chainId,

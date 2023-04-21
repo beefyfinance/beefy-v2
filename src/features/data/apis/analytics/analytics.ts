@@ -1,6 +1,7 @@
-import axios, { AxiosInstance } from 'axios';
+import type { AxiosInstance } from 'axios';
+import axios from 'axios';
 import BigNumber from 'bignumber.js';
-import {
+import type {
   AnalyticsPriceResponse,
   AnalyticsUserTimelineResponse,
   ApiProductPriceRow,

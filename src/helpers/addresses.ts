@@ -1,6 +1,7 @@
-import { ExternalProvider, Provider, Web3Provider } from '@ethersproject/providers';
+import { Web3Provider } from '@ethersproject/providers';
+import type { ExternalProvider, Provider } from '@ethersproject/providers';
 import { getWeb3Instance } from '../features/data/apis/instances';
-import { ChainEntity } from '../features/data/entities/chain';
+import type { ChainEntity } from '../features/data/entities/chain';
 import { lookupAddress } from 'ens-reverse';
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';

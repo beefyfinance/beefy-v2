@@ -1,5 +1,5 @@
-import Web3 from 'web3';
-import { ChainEntity } from '../../entities/chain';
+import type Web3 from 'web3';
+import type { ChainEntity } from '../../entities/chain';
 
 export interface WalletConnectionOptions {
   chains: ChainEntity[];
@@ -13,12 +13,6 @@ export interface WalletConnectionOptions {
     networkChainId: number | string,
     address: string
   ) => Promise<unknown> | unknown;
-}
-
-export interface Provider {
-  on?: (eventName: string, handler: () => {}) => {};
-  removeAllListeners?: () => {};
-  request: (req: { method: string; params: any[] }) => Promise<void>;
 }
 
 export interface IWalletConnectionApi {

@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { getBeefyDataApi } from '../apis/instances';
-import { VaultEntity } from '../entities/vault';
-import { ApiChartData, ApiRanges, ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
+import type { VaultEntity } from '../entities/vault';
+import type { ApiChartData, ApiRanges, ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import { selectVaultById } from '../selectors/vaults';
 import { selectTokenByAddress } from '../selectors/tokens';
-import { TokenEntity } from '../entities/token';
-import { ThunkAction } from 'redux-thunk';
-import { Action } from 'redux';
-import { ChartStat } from '../reducers/historical-types';
+import type { TokenEntity } from '../entities/token';
+import type { ThunkAction } from 'redux-thunk';
+import type { Action } from 'redux';
+import type { ChartStat } from '../reducers/historical-types';
 
 export interface HistoricalRangesPayload {
   vaultId: VaultEntity['id'];

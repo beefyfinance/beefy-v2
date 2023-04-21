@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
-import { WritableDraft } from 'immer/dist/internal';
+import type BigNumber from 'bignumber.js';
+import type { Draft } from 'immer';
 import { isEmpty, mapValues, sortBy } from 'lodash-es';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsZapSupport } from '../actions/vaults';
-import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
-import { ChainEntity } from '../entities/chain';
-import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
-import { NormalizedEntity } from '../utils/normalized-entity';
-import { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
+import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
+import type { ChainEntity } from '../entities/chain';
+import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
+import type { NormalizedEntity } from '../utils/normalized-entity';
+import type { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
 
 /**
  * State containing Vault infos
@@ -134,7 +134,7 @@ export const vaultsSlice = createSlice({
 });
 
 function addContractDataToState(
-  sliceState: WritableDraft<VaultsState>,
+  sliceState: Draft<VaultsState>,
   contractData: FetchAllContractDataResult
 ) {
   for (const vaultContractData of contractData.standardVaults) {
@@ -164,7 +164,7 @@ function addContractDataToState(
 
 function addVaultToState(
   state: BeefyState,
-  sliceState: WritableDraft<VaultsState>,
+  sliceState: Draft<VaultsState>,
   chainId: ChainEntity['id'],
   apiVault: VaultConfig
 ) {

@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo } from 'react';
 
-import { Checkbox, Theme, makeStyles } from '@material-ui/core';
-import { VaultEntity } from '../../../data/entities/vault';
+import { makeStyles } from '@material-ui/core';
+import type { VaultEntity } from '../../../data/entities/vault';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { BookmarkBorder, Bookmark } from '@material-ui/icons';
 import { savedVaultsActions } from '../../../data/reducers/saved-vaults';
@@ -18,7 +18,7 @@ interface SaveButtonProps {
   text?: string;
 }
 
-const SaveButton = memo<SaveButtonProps>(function SaveButton({ vaultId, className, text }) {
+export const SaveButton = memo<SaveButtonProps>(function SaveButton({ vaultId, className, text }) {
   const classes = useStyles();
 
   const savedVaultIds = useAppSelector(selectSavedVaultIds);
@@ -51,5 +51,3 @@ const SaveButton = memo<SaveButtonProps>(function SaveButton({ vaultId, classNam
     </Button>
   );
 });
-
-export default SaveButton;

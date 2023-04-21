@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NormalizedEntity } from '../utils/normalized-entity';
-import { ApyPerformanceFeeData, ApyVaultFeeData } from '../apis/beefy/beefy-api';
+import type { NormalizedEntity } from '../utils/normalized-entity';
+import type { ApyPerformanceFeeData, ApyVaultFeeData } from '../apis/beefy/beefy-api';
 import { fetchFees } from '../actions/fees';
-import { VaultEntity } from '../entities/vault';
+import type { VaultEntity } from '../entities/vault';
 
 export type VaultFee = {
   id: VaultEntity['id'];

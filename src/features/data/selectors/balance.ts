@@ -1,11 +1,12 @@
 import { mooAmountToOracleAmount } from '../utils/ppfs';
-import { BeefyState } from '../../../redux-types';
-import { BoostEntity } from '../entities/boost';
-import { ChainEntity } from '../entities/chain';
-import { TokenEntity, TokenLpBreakdown } from '../entities/token';
-import { isGovVault, VaultEntity, VaultGov } from '../entities/vault';
+import type { BeefyState } from '../../../redux-types';
+import type { BoostEntity } from '../entities/boost';
+import type { ChainEntity } from '../entities/chain';
+import type { TokenEntity, TokenLpBreakdown } from '../entities/token';
+import type { VaultEntity, VaultGov } from '../entities/vault';
+import { isGovVault } from '../entities/vault';
 import { selectActiveVaultBoostIds, selectAllVaultBoostIds, selectBoostById } from './boosts';
-import createCachedSelector from 're-reselect';
+import { createCachedSelector } from 're-reselect';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
@@ -26,13 +27,13 @@ import {
 import { selectIsWalletKnown, selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
-import { KeysOfType } from '../utils/types-utils';
+import type { KeysOfType } from '../utils/types-utils';
 import { getTopNArray } from '../utils/array-utils';
 import { sortBy } from 'lodash-es';
 import { createSelector } from '@reduxjs/toolkit';
 import { selectChainById } from './chains';
 import { selectVaultPnl } from './analytics';
-import { VaultPnLDataType } from '../../../components/VaultStats/types';
+import type { VaultPnLDataType } from '../../../components/VaultStats/types';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (selectIsWalletKnown(state)) {

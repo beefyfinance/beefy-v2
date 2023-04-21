@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { getOnRampApi } from '../apis/instances';
-import {
+import type {
   ApiQuoteRequest,
   ApiQuoteResponse,
   ApiSupportedResponse,
@@ -33,7 +33,7 @@ export const fetchOnRampSupportedProviders = createAsyncThunk<
   FulfilledSupportedPayload,
   void,
   { state: BeefyState }
->('on-ramp/fetchSupported', async (_, { getState }) => {
+>('on-ramp/fetchSupported', async () => {
   const api = await getOnRampApi();
   return await api.getSupported();
 });
@@ -44,7 +44,7 @@ export const fetchOnRampQuote = createAsyncThunk<
   FulfilledQuotePayload,
   ApiQuoteRequest,
   { state: BeefyState }
->('on-ramp/fetchQuote', async (options, { getState }) => {
+>('on-ramp/fetchQuote', async options => {
   const api = await getOnRampApi();
   return await api.getQuote(options);
 });

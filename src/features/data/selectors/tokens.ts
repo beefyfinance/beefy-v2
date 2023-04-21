@@ -1,11 +1,12 @@
 import { bluechipTokens } from '../../../helpers/utils';
-import { BeefyState } from '../../../redux-types';
-import { ChainEntity } from '../entities/chain';
-import { isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
+import type { BeefyState } from '../../../redux-types';
+import type { ChainEntity } from '../entities/chain';
+import type { TokenEntity } from '../entities/token';
+import { isTokenErc20, isTokenNative } from '../entities/token';
 import { selectChainById } from './chains';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectIsAddressBookLoaded } from './data-loader';
-import { VaultEntity } from '../entities/vault';
+import type { VaultEntity } from '../entities/vault';
 import { createCachedSelector } from 're-reselect';
 import { selectVaultById } from './vaults';
 
@@ -135,7 +136,7 @@ export const selectChainWrappedNativeToken = (state: BeefyState, chainId: ChainE
 };
 
 export const selectIsTokenStable = createCachedSelector(
-  (state: BeefyState, chainId: ChainEntity['id'], tokenId: TokenEntity['id']) =>
+  (state: BeefyState, chainId: ChainEntity['id'], _tokenId: TokenEntity['id']) =>
     selectChainById(state, chainId),
   (state: BeefyState, chainId: ChainEntity['id'], tokenId: TokenEntity['id']) => tokenId,
   (chain, tokenId) => chain.stableCoins.includes(tokenId)

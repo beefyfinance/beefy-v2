@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { getWalletConnectionApiInstance } from '../apis/instances';
-import { ChainEntity } from '../entities/chain';
+import type { ChainEntity } from '../entities/chain';
 import {
   accountHasChanged,
   chainHasChanged,

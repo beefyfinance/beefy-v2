@@ -3,7 +3,7 @@ import { styles } from './styles';
 import { memo } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { formatBigUsd } from '../../../../../../helpers/format';
-import { BreakdownMode, CalculatedBreakdownData } from '../../types';
+import type { BreakdownMode, CalculatedBreakdownData } from '../../types';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { TokenAmount } from '../../../../../../components/TokenAmount';

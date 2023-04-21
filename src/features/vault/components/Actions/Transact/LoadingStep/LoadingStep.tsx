@@ -6,7 +6,7 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const LoadingStep = memo(function () {
+export const LoadingStep = memo(function LoadingStep() {
   const { t } = useTranslation();
   const classes = useStyles();
 

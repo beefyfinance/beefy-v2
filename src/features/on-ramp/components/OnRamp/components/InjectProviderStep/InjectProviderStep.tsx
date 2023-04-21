@@ -8,7 +8,7 @@ import { PROVIDERS } from '../../providers';
 import { ProviderFrame } from './ProviderFrame';
 import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
 
-export const InjectProviderStep = memo(function () {
+export const InjectProviderStep = memo(function InjectProviderStep() {
   const quote = useAppSelector(selectSelectedQuote);
   const supported = quote.provider in PROVIDERS;
 
@@ -19,7 +19,9 @@ export const InjectProviderStep = memo(function () {
   return <ProviderNotSupported provider={quote.provider} />;
 });
 
-const ProviderNotSupported = memo<{ provider: string }>(function ({ provider }) {
+const ProviderNotSupported = memo<{ provider: string }>(function ProviderNotSupported({
+  provider,
+}) {
   const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
@@ -39,7 +41,7 @@ const ProviderNotSupported = memo<{ provider: string }>(function ({ provider }) 
   );
 });
 
-const Provider = memo<{ provider: string }>(function ({ provider }) {
+const Provider = memo<{ provider: string }>(function Provider({ provider }) {
   const { title } = PROVIDERS[provider];
 
   const dispatch = useAppDispatch();

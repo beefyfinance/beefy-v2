@@ -1,6 +1,7 @@
 import { memo } from 'react';
-import { makeStyles, Theme } from '@material-ui/core';
-import { BadgeComponentProps } from './types';
+import type { Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
+import type { BadgeComponentProps } from './types';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({

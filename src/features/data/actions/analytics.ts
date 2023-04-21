@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { getAnalyticsApi } from '../apis/instances';
-import { VaultTimelineAnalyticsEntity } from '../entities/analytics';
+import type { VaultTimelineAnalyticsEntity } from '../entities/analytics';
 import BigNumber from 'bignumber.js';
-import { AnalyticsPriceResponse, TimeBucketType } from '../apis/analytics/analytics-types';
-import { VaultEntity } from '../entities/vault';
+import type { AnalyticsPriceResponse, TimeBucketType } from '../apis/analytics/analytics-types';
+import type { VaultEntity } from '../entities/vault';
 
 export interface fetchWalletTimelineFullfilled {
   timeline: VaultTimelineAnalyticsEntity[];

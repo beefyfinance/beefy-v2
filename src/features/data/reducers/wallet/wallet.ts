@@ -1,7 +1,6 @@
-import { renderIcon } from '@download/blockies';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ChainEntity } from '../../entities/chain';
-import { memoize } from 'lodash-es';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { ChainEntity } from '../../entities/chain';
 import { getEns, initWallet } from '../../actions/wallet';
 
 /**
@@ -80,7 +79,7 @@ export const walletSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(initWallet.fulfilled, (sliceState, action) => {
+    builder.addCase(initWallet.fulfilled, (sliceState, _action) => {
       // wallet connection api initialized
       sliceState.initialized = true;
     });

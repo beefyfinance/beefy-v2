@@ -13,7 +13,7 @@ import { selectTreasuryStats } from '../../../data/selectors/treasury';
 
 const useStyles = makeStyles(styles);
 
-export const DaoSummary = memo(function () {
+export const DaoSummary = memo(function DaoSummary() {
   const { t } = useTranslation();
   const classes = useStyles();
 

@@ -1,21 +1,24 @@
-import Web3 from 'web3';
-import { ChainEntity } from '../../entities/chain';
+import type Web3 from 'web3';
+import type { ChainEntity } from '../../entities/chain';
 import { find, sample, uniq } from 'lodash-es';
-import { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types';
+import type { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types';
 import { maybeHexToNumber } from '../../../../helpers/format';
 import { isHexStrict, numberToHex } from 'web3-utils';
-import Onboard, { OnboardAPI } from '@web3-onboard/core';
+import type { OnboardAPI } from '@web3-onboard/core';
+import Onboard from '@web3-onboard/core';
 import createInjectedWallets from '@web3-onboard/injected-wallets';
 import standardInjectedWallets from '@web3-onboard/injected-wallets/dist/wallets';
 import createCoinbaseWalletModule from '@web3-onboard/coinbase';
 import createWalletConnectModule from '@web3-onboard/walletconnect';
-import { ConnectOptions } from '@web3-onboard/core/dist/types';
-import { createEIP1193Provider, WalletInit } from '@web3-onboard/common';
+import type { ConnectOptions } from '@web3-onboard/core/dist/types';
+import type { WalletInit } from '@web3-onboard/common';
+import { createEIP1193Provider } from '@web3-onboard/common';
 import { customInjectedWallets } from './custom-injected-wallets';
 import { createWeb3Instance } from '../../../../helpers/web3';
 import appIcon from '../../../../images/bifi-logos/header-logo-notext.svg';
 import appLogo from '../../../../images/bifi-logos/header-logo.svg';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
+import type { provider } from 'web3-core';
 
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | null;
@@ -336,13 +339,13 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     }
 
     const wallet = this.onboard.state.get().wallets[0];
-    return createWeb3Instance(wallet.provider as any);
+    return createWeb3Instance(wallet.provider as unknown as provider);
   }
 
   /**
    * Ask the user to connect if he isn't already
    */
-  public async askUserToConnectIfNeeded(isAutoConnect: boolean = false) {
+  public async askUserToConnectIfNeeded() {
     if (this.isConnected()) {
       console.log('askUserToConnectIfNeeded: Already connected');
       throw new Error('Already connected');

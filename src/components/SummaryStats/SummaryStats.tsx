@@ -10,7 +10,7 @@ interface SummaryStatProps {
   value: string;
 }
 
-const SummaryStat = memo<SummaryStatProps>(function ({ title, Icon, value }) {
+const SummaryStat = memo<SummaryStatProps>(function SummaryStat({ title, Icon, value }) {
   const classes = useStyles();
   return (
     <div className={classes.container}>
@@ -29,7 +29,7 @@ interface SummaryStatsProps {
   items: SummaryStatProps[];
 }
 
-export const SummaryStats = memo<SummaryStatsProps>(function ({ items }) {
+export const SummaryStats = memo<SummaryStatsProps>(function SummaryStats({ items }) {
   const classes = useStyles();
 
   return (

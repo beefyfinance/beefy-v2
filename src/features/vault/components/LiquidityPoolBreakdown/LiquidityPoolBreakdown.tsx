@@ -6,14 +6,14 @@ import { styles } from './styles';
 import { ToggleButtons } from '../../../../components/ToggleButtons';
 import { useTranslation } from 'react-i18next';
 import { BreakdownTable } from './components/BreakdownTable';
-import { BreakdownMode } from './types';
+import type { BreakdownMode } from './types';
 import { ChartWithLegend } from './components/ChartWithLegend';
 import { useCalculatedBreakdown } from './hooks';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
-import { TokenLpBreakdown } from '../../../data/entities/token';
+import type { TokenLpBreakdown } from '../../../data/entities/token';
 import { selectHasBreakdownData, selectLpBreakdownByAddress } from '../../../data/selectors/tokens';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
 import {
   selectIsAddressBookLoaded,
   selectShouldInitAddressBook,

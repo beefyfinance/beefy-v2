@@ -1,6 +1,6 @@
-import { ApiTimeBucket } from '../../../data/apis/beefy/beefy-data-api-types';
+import type { ApiTimeBucket } from '../../../data/apis/beefy/beefy-data-api-types';
 import { fromUnixTime, getUnixTime, sub } from 'date-fns';
-import { ChartStat } from '../../../data/reducers/historical-types';
+import type { ChartStat } from '../../../data/reducers/historical-types';
 import { first } from 'lodash-es';
 
 // must match API

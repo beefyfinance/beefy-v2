@@ -1,14 +1,14 @@
-import { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
 import { connect } from 'react-redux';
-import { BeefyState } from '../../redux-types';
+import type { BeefyState } from '../../redux-types';
 import { formatBigUsd } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import {
   selectIsAnalyticsLoaded,
   selectUserDepositedTimelineByVaultId,
 } from '../../features/data/selectors/analytics';
-import { VaultPnLDataType } from './types';
+import type { VaultPnLDataType } from './types';
 
 export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];

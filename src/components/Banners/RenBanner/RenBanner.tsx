@@ -5,7 +5,7 @@ import { selectUserDepositedVaultIdsForAsset } from '../../../features/data/sele
 import { useAppSelector } from '../../../store';
 import { AssetsImage } from '../../AssetsImage';
 import { selectVaultById } from '../../../features/data/selectors/vaults';
-import { VaultEntity } from '../../../features/data/entities/vault';
+import type { VaultEntity } from '../../../features/data/entities/vault';
 import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
 import { Banner } from '../Banner';
 

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllAmmsAction } from '../actions/amm';
-import { ChainEntity } from '../entities/chain';
-import { AmmEntity } from '../entities/amm';
+import type { ChainEntity } from '../entities/chain';
+import type { AmmEntity } from '../entities/amm';
 
 export type AmmsState = {
   byId: {

@@ -2,7 +2,7 @@ import React, { memo, useCallback, useState } from 'react';
 import { InputBase, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
-import { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
+import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
 
 const useStyles = makeStyles(styles);
 
@@ -11,7 +11,7 @@ function isValidNumberInputString(value: string, maxDecimals: number): boolean {
   return !!value.match(regex);
 }
 
-function numberInputStringToNumber(value: string, maxDecimals: number): number {
+function numberInputStringToNumber(value: string): number {
   const parsedText = value.replace(/[^0-9.]+/g, '').replace(/\.$/, '');
   return parseFloat(parsedText);
 }
@@ -65,7 +65,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
       }
 
       // Convert string input to number
-      const parsedNumber = numberInputStringToNumber(rawInput, maxDecimals);
+      const parsedNumber = numberInputStringToNumber(rawInput);
 
       // Check valid number
       if (isNaN(parsedNumber) || !isFinite(parsedNumber) || parsedNumber < 0) {
@@ -91,7 +91,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
       if (rawInput === '.') {
         setInput('');
       } else {
-        const parsedNumber = numberInputStringToNumber(rawInput, maxDecimals);
+        const parsedNumber = numberInputStringToNumber(rawInput);
         setInput(numberToString(parsedNumber, maxDecimals));
       }
     },

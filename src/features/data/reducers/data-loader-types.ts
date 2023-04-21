@@ -1,4 +1,4 @@
-import { ChainEntity } from '../entities/chain';
+import type { ChainEntity } from '../entities/chain';
 
 /**
  * because we want to be smart about data loading

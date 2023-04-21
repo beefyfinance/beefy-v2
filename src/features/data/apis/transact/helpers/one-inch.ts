@@ -1,7 +1,9 @@
-import { isTokenNative, TokenEntity } from '../../../entities/token';
-import { AxiosError } from 'axios';
-import { isZapFeeNonZero, ZapFee } from '../transact-types';
-import { QuoteRequest, SwapRequest } from '../../one-inch/one-inch-types';
+import type { TokenEntity } from '../../../entities/token';
+import { isTokenNative } from '../../../entities/token';
+import type { AxiosError } from 'axios';
+import type { ZapFee } from '../transact-types';
+import { isZapFeeNonZero } from '../transact-types';
+import type { QuoteRequest, SwapRequest } from '../../one-inch/one-inch-types';
 
 export const ONE_INCH_NATIVE_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
 
@@ -19,7 +21,9 @@ export function errorToString(error: AxiosError): string {
       const { error: title, description } = error.response.data;
       return `${title}: ${description}`;
     }
-  } catch {}
+  } catch {
+    // ignore
+  }
 
   return error.message;
 }

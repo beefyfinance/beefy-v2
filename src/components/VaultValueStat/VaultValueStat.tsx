@@ -1,4 +1,5 @@
-import React, { memo, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchTreasury } from '../actions/treasury';
-import { ChainEntity } from '../entities/chain';
-import { TreasuryHoldingEntity } from '../entities/treasury';
+import type { ChainEntity } from '../entities/chain';
+import type { TreasuryHoldingEntity } from '../entities/treasury';
 import { mapValues } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { isVaultHoldingConfig } from '../apis/config-types';

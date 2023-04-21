@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { VaultTag, VaultTagWithTooltip } from './VaultTag';
 import { useTranslation } from 'react-i18next';
-import { BoostEntity } from '../../../../features/data/entities/boost';
+import type { BoostEntity } from '../../../../features/data/entities/boost';
 import { useAppSelector } from '../../../../store';
 import {
   selectBoostById,
@@ -11,14 +11,14 @@ import {
 } from '../../../../features/data/selectors/boosts';
 import { useIsOverflowingHorizontally } from '../../../../helpers/overflow';
 import { BasicTooltipContent } from '../../../Tooltip/BasicTooltipContent';
-import { ChainEntity } from '../../../../features/data/entities/chain';
-import { TokenEntity } from '../../../../features/data/entities/token';
+import type { ChainEntity } from '../../../../features/data/entities/chain';
+import type { TokenEntity } from '../../../../features/data/entities/token';
 import { selectTokenByAddress } from '../../../../features/data/selectors/tokens';
+import type { VaultEntity } from '../../../../features/data/entities/vault';
 import {
   isGovVault,
   isVaultPaused,
   isVaultRetired,
-  VaultEntity,
 } from '../../../../features/data/entities/vault';
 import { VaultPlatform } from '../../../VaultPlatform';
 import { selectVaultById } from '../../../../features/data/selectors/vaults';

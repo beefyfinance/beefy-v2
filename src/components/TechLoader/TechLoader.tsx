@@ -9,7 +9,7 @@ export type TechLoaderProps = {
   text?: string;
 };
 
-export const TechLoader = memo<TechLoaderProps>(function ({ text }) {
+export const TechLoader = memo<TechLoaderProps>(function TechLoader({ text }) {
   const classes = useStyles();
   return (
     <div className={classes.loader}>
@@ -25,7 +25,7 @@ export const TechLoader = memo<TechLoaderProps>(function ({ text }) {
   );
 });
 
-export const FullscreenTechLoader = memo<TechLoaderProps>(function ({ text }) {
+export const FullscreenTechLoader = memo<TechLoaderProps>(function FullscreenTechLoader({ text }) {
   const classes = useStyles();
   return (
     <div className={classes.fullscreen}>

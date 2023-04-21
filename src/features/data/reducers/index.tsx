@@ -11,7 +11,7 @@ import { allowanceSlice } from './wallet/allowance';
 import { boostsSlice } from './boosts';
 import { dataLoaderSlice } from './data-loader';
 import { walletSlice } from './wallet/wallet';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { buybackSlice } from './buyback';
 import { filteredVaultsSlice } from './filtered-vaults';
 import { platformsSlice } from './platforms';
@@ -32,9 +32,9 @@ import { treasurySlice } from './treasury';
 import { analyticsSlice } from './analytics';
 import { proposalsSlice } from './proposals';
 import { historicalSlice } from './historical';
-import { Reducer } from 'react';
-import { AnyAction } from '@reduxjs/toolkit';
 import { savedVaultsSlice } from './saved-vaults';
+import type { Reducer } from 'react';
+import type { AnyAction } from '@reduxjs/toolkit';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,

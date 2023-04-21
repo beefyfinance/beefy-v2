@@ -1,18 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { mooAmountToOracleAmount } from '../utils/ppfs';
-import { WritableDraft } from 'immer/dist/internal';
+import type { Draft } from 'immer';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import { BoostEntity } from '../entities/boost';
-import { VaultEntity, VaultGov } from '../entities/vault';
+import type { BoostEntity } from '../entities/boost';
+import type { VaultEntity, VaultGov } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
 import { selectTokenByAddress, selectTokenPriceByAddress } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
-import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
-import { BeefyState } from '../../../redux-types';
+import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
+import type { BeefyState } from '../../../redux-types';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { ChainEntity } from '../entities/chain';
+import type { ChainEntity } from '../entities/chain';
 import { BIG_ZERO } from '../../../helpers/big-number';
+import { selectActiveChainIds } from '../selectors/chains';
 
 /**
  * State containing APY infos indexed by vault id
@@ -37,6 +38,7 @@ export interface TvlState {
     [chaindId: ChainEntity['id']]: BigNumber;
   };
 }
+
 export const initialTvlState: TvlState = {
   totalTvl: BIG_ZERO,
   byVaultId: {},
@@ -72,7 +74,7 @@ export const tvlSlice = createSlice({
 
 function addContractDataToState(
   state: BeefyState,
-  sliceState: WritableDraft<TvlState>,
+  sliceState: Draft<TvlState>,
   contractData: FetchAllContractDataResult
 ) {
   // On standard vault contract data, recompute tvl and exclusions
@@ -152,14 +154,20 @@ function addContractDataToState(
     sliceState.byBoostId[boost.id] = { tvl, staked: totalStaked };
   }
 
+  const activeChainIds = selectActiveChainIds(state);
   const byChaindIdTotals = {};
   let totalTvl = BIG_ZERO;
   for (const [vaultId, vaultTvl] of Object.entries(sliceState.byVaultId)) {
     const vault = selectVaultById(state, vaultId);
+
     byChaindIdTotals[vault.chainId] = byChaindIdTotals[vault.chainId]
       ? byChaindIdTotals[vault.chainId].plus(vaultTvl.tvl)
       : vaultTvl.tvl;
-    totalTvl = totalTvl.plus(vaultTvl.tvl);
+
+    // Only include active chains in total
+    if (activeChainIds.includes(vault.chainId)) {
+      totalTvl = totalTvl.plus(vaultTvl.tvl);
+    }
   }
   sliceState.byChaindId = byChaindIdTotals;
   // recompute total tvl as a whole

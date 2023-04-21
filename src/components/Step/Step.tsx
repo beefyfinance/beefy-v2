@@ -1,4 +1,5 @@
-import React, { memo, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import clsx from 'clsx';
@@ -18,7 +19,7 @@ export type StepProps = {
   noPadding?: boolean;
 };
 
-export const Step = memo<StepProps>(function ({
+export const Step = memo<StepProps>(function Step({
   stepType,
   title,
   titleAdornment,

@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import { memo } from 'react';
-import { CalculatedAsset } from '../../types';
+import type { CalculatedAsset } from '../../types';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
-import { ChainEntity } from '../../../../../data/entities/chain';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 import { formatPercent } from '../../../../../../helpers/format';
 import { styles } from './styles';
 import clsx from 'clsx';

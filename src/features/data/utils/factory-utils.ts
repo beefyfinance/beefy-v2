@@ -1,4 +1,4 @@
-import { ChainEntity } from '../entities/chain';
+import type { ChainEntity } from '../entities/chain';
 
 /**
  * Creates a new factory function based on the input factory function

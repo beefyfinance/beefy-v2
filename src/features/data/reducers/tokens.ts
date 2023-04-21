@@ -1,32 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import { WritableDraft } from 'immer/dist/internal';
-import { BeefyState } from '../../../redux-types';
+import type { Draft } from 'immer';
+import type { BeefyState } from '../../../redux-types';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllPricesAction } from '../actions/prices';
-import {
-  fetchAddressBookAction,
-  FetchAddressBookPayload,
-  fetchAllAddressBookAction,
-} from '../actions/tokens';
+import type { FetchAddressBookPayload } from '../actions/tokens';
+import { fetchAddressBookAction, fetchAllAddressBookAction } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
-import { ChainEntity } from '../entities/chain';
-import {
-  isTokenNative,
-  TokenEntity,
-  TokenErc20,
-  TokenLpBreakdown,
-  TokenNative,
-} from '../entities/token';
+import type { ChainEntity } from '../entities/chain';
+import type { TokenEntity, TokenErc20, TokenLpBreakdown, TokenNative } from '../entities/token';
+import { isTokenNative } from '../entities/token';
 import { selectChainById } from '../selectors/chains';
 import {
   getBoostTokenAddressFromLegacyConfig,
   getDepositTokenFromLegacyVaultConfig,
 } from '../utils/config-hacks';
 import { fetchAllMinters } from '../actions/minters';
-import { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
-import { LpData } from '../apis/beefy/beefy-api';
+import type { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
+import type { LpData } from '../apis/beefy/beefy-api';
 import { isNativeAlternativeAddress } from '../../../helpers/addresses';
 
 /**
@@ -169,7 +161,7 @@ export const tokensSlice = createSlice({
 });
 
 function addPriceToState(
-  sliceState: WritableDraft<TokensState>,
+  sliceState: Draft<TokensState>,
   oracleId: string,
   price: number | undefined | null
 ) {
@@ -188,11 +180,7 @@ function addPriceToState(
   }
 }
 
-function addBreakdownToState(
-  sliceState: WritableDraft<TokensState>,
-  oracleId: string,
-  breakdown: LpData
-) {
+function addBreakdownToState(sliceState: Draft<TokensState>, oracleId: string, breakdown: LpData) {
   // Must have breakdown
   if (!('tokens' in breakdown) || !('balances' in breakdown)) {
     // console.warn(`[LP Breakdown] ${oracleId} missing breakdown`);
@@ -227,7 +215,7 @@ function addBreakdownToState(
 }
 
 function addAddressBookToState(
-  sliceState: WritableDraft<TokensState>,
+  sliceState: Draft<TokensState>,
   addressBookPayload: FetchAddressBookPayload
 ) {
   const chainId = addressBookPayload.chainId;
@@ -273,7 +261,7 @@ function addAddressBookToState(
 }
 
 function addBoostToState(
-  sliceState: WritableDraft<TokensState>,
+  sliceState: Draft<TokensState>,
   chainId: ChainEntity['id'],
   apiBoost: BoostConfig
 ) {
@@ -309,7 +297,7 @@ function addBoostToState(
 }
 
 function addMinterToState(
-  sliceState: WritableDraft<TokensState>,
+  sliceState: Draft<TokensState>,
   chainId: ChainEntity['id'],
   apiMinter: MinterConfig
 ) {
@@ -366,7 +354,7 @@ function addMinterToState(
 
 function addVaultToState(
   state: BeefyState,
-  sliceState: WritableDraft<TokensState>,
+  sliceState: Draft<TokensState>,
   chain: ChainEntity,
   vault: VaultConfig
 ) {

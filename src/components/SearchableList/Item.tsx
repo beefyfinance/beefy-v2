@@ -1,5 +1,7 @@
-import React, { FC, memo, useCallback } from 'react';
-import { ItemInner, ItemInnerProps } from './ItemInner';
+import type { FC } from 'react';
+import React, { memo, useCallback } from 'react';
+import type { ItemInnerProps } from './ItemInner';
+import { ItemInner } from './ItemInner';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { itemStyles } from './styles';
@@ -14,7 +16,7 @@ type ItemProps = {
   EndAdornementComponent?: FC<ItemInnerProps> | null;
   ItemInnerComponent?: FC<ItemInnerProps>;
 };
-export const Item = memo<ItemProps>(function ({
+export const Item = memo<ItemProps>(function Item({
   value,
   onSelect,
   ItemInnerComponent = ItemInner,

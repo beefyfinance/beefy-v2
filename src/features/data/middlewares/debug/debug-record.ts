@@ -1,12 +1,11 @@
 import BigNumber from 'bignumber.js';
 import { isObject } from 'lodash-es';
-import { Action } from 'redux';
-import { BeefyStore } from '../../../../redux-types';
-import { ChainEntity } from '../../entities/chain';
+import type { Action } from 'redux';
+import type { ChainEntity } from '../../entities/chain';
 import { mapValuesDeep } from '../../utils/array-utils';
 import { featureFlag_recordReduxActions } from '../../utils/feature-flags';
 
-const actionLog: Action<any>[] = [];
+const actionLog: Action[] = [];
 
 function exportActionLog(pretty: boolean = true) {
   if (!featureFlag_recordReduxActions()) {
@@ -38,12 +37,13 @@ if (featureFlag_recordReduxActions()) {
   globalThis.__export_action_log = exportActionLog;
 }
 
-export function debugRecorderMiddleware(_: BeefyStore) {
+export function debugRecorderMiddleware() {
   if (featureFlag_recordReduxActions()) {
     console.info('Recording redux actions, use `__export_action_log()` to export the result');
   }
   return next => async (action: { type: string; payload: { chainId?: ChainEntity['id'] } }) => {
     if (featureFlag_recordReduxActions()) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let smallAction: any = action;
       // empty some actions to make the export less heavy
       if (
@@ -77,7 +77,7 @@ export function debugRecorderMiddleware(_: BeefyStore) {
 
 // https://stackoverflow.com/a/45831280/2523414
 function downloadObjectAsJsonFile(
-  obj: any,
+  obj: object,
   filename: string = 'download.json',
   pretty: boolean = true
 ) {

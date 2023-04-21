@@ -1,8 +1,8 @@
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { WALLET_ACTION, WALLET_ACTION_RESET } from '../../actions/wallet-actions';
-import { TokenEntity, TokenErc20 } from '../../entities/token';
-import { EventLog } from 'web3-core';
-import { VaultEntity } from '../../entities/vault';
+import type { TokenEntity, TokenErc20 } from '../../entities/token';
+import type { EventLog } from 'web3-core';
+import type { VaultEntity } from '../../entities/vault';
 
 export type TrxHash = string;
 export type TrxReceipt = {

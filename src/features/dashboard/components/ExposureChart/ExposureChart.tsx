@@ -3,11 +3,15 @@ import React, { memo } from 'react';
 import { PieChart } from '../../../../components/PieChart/PieChart';
 import { ChartDetails } from '../ChartDetails';
 import { styles } from './styles';
-import { ExposureDashboardChartProps } from './types';
+import type { ExposureDashboardChartProps } from './types';
 
 const useStyles = makeStyles(styles);
 
-export const ExposureChart = memo<ExposureDashboardChartProps>(function ({ title, data, type }) {
+export const ExposureChart = memo<ExposureDashboardChartProps>(function ExposureChart({
+  title,
+  data,
+  type,
+}) {
   const classes = useStyles();
 
   return (

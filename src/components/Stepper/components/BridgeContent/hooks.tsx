@@ -8,7 +8,7 @@ export function useBridgeStatus() {
 
   // Use a ref to keep track of a stateful value that doesn't affect rendering,
   // the `setInterval` ID in this case.
-  const intervalRef: any = useRef();
+  const intervalRef = useRef<ReturnType<typeof setInterval>>();
 
   const hash =
     walletActionsState.result === 'success'

@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ChainEntity } from '../entities/chain';
-import { PlatformEntity } from '../entities/platform';
-import { KeysOfType } from '../utils/types-utils';
-import { VaultEntity } from '../entities/vault';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { ChainEntity } from '../entities/chain';
+import type { PlatformEntity } from '../entities/platform';
+import type { KeysOfType } from '../utils/types-utils';
 
 /**
  * State containing Vault infos

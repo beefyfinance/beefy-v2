@@ -1,14 +1,11 @@
-import {
-  FilteredVaultBooleanKeys,
-  filteredVaultsActions,
-} from '../../../../../data/reducers/filtered-vaults';
-import { memo, ReactNode, useCallback } from 'react';
+import type { FilteredVaultBooleanKeys } from '../../../../../data/reducers/filtered-vaults';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
+import type { ReactNode } from 'react';
+import { memo, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectFilterBoolean } from '../../../../../data/selectors/filtered-vaults';
-import {
-  LabelledCheckbox,
-  LabelledCheckboxProps,
-} from '../../../../../../components/LabelledCheckbox';
+import type { LabelledCheckboxProps } from '../../../../../../components/LabelledCheckbox';
+import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import { styles } from './styles';

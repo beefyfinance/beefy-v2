@@ -1,4 +1,4 @@
-import { ChainEntity } from '../entities/chain';
+import type { ChainEntity } from '../entities/chain';
 import { getGasPricer } from '../apis/instances';
 
 export async function getGasPriceOptions(chain: ChainEntity) {

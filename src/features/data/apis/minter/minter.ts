@@ -1,10 +1,10 @@
-import Web3 from 'web3';
-import { ChainEntity } from '../../entities/chain';
-import { FetchMinterReservesResult, IMinterApi } from './minter-types';
+import type Web3 from 'web3';
+import type { ChainEntity } from '../../entities/chain';
+import type { FetchMinterReservesResult, IMinterApi } from './minter-types';
 import { getContract } from '../../../../helpers/getContract';
 import MinterAbi from '../../../../config/abi/minter.json';
 import BigNumber from 'bignumber.js';
-import { MinterEntity } from '../../entities/minter';
+import type { MinterEntity } from '../../entities/minter';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 
 export class MinterApi implements IMinterApi {

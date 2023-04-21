@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormStep } from '../../../../../data/reducers/wallet/bridge';
-import { Confirm } from '../Confirm/Confirm';
+import { FormStep, bridgeActions } from '../../../../../data/reducers/wallet/bridge';
+import { Confirm } from '../Confirm';
 import { Step } from '../../../../../../components/Step';
-import { bridgeActions } from '../../../../../data/reducers/wallet/bridge';
+
 import { useAppDispatch } from '../../../../../../store';
 
 export const ConfirmStep = () => {

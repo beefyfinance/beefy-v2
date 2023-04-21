@@ -9,7 +9,7 @@ import { Title } from '../Title';
 import { useBridgeStatus } from './hooks';
 import {
   AnySwapLinkButton,
-  BridgeSuccesInfo,
+  BridgeSuccessInfo,
   DestChainStatus,
   FromChainStatus,
   CloseButton,
@@ -17,7 +17,7 @@ import {
 
 const useStyles = makeStyles(styles);
 
-export const BridgeContent = memo(function () {
+export const BridgeContent = memo(function BridgeContent() {
   const classes = useStyles();
   const { t } = useTranslation();
   const bridgeStatus = useAppSelector(selectBridgeStatus);
@@ -45,7 +45,7 @@ export const BridgeContent = memo(function () {
   return (
     <>
       <Title text={t(title)} />
-      {isBridgeSuccess && <BridgeSuccesInfo />}
+      {isBridgeSuccess && <BridgeSuccessInfo />}
       {txData?.status === 14 && (
         <AlertWarning className={classes.errorMessage}>{t('Multichain-Error')}</AlertWarning>
       )}

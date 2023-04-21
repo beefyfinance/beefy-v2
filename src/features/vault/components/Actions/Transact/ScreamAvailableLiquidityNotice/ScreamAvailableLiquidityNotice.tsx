@@ -1,17 +1,17 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { VaultEntity } from '../../../../../data/entities/vault';
+import type { VaultEntity } from '../../../../../data/entities/vault';
 import { AlertWarning } from '../../../../../../components/Alerts';
 import { getWeb3Instance } from '../../../../../data/apis/instances';
 import { useAppSelector } from '../../../../../../store';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectChainById } from '../../../../../data/selectors/chains';
-import { ChainEntity } from '../../../../../data/entities/chain';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 import vaultABI from '../../../../../../config/abi/vault.json';
 import erc20ABI from '../../../../../../config/abi/erc20.json';
-import { AbiItem } from 'web3-utils';
+import type { AbiItem } from 'web3-utils';
 import { MultiCall } from 'eth-multicall';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
-import { TokenEntity } from '../../../../../data/entities/token';
+import type { TokenEntity } from '../../../../../data/entities/token';
 import { BigNumber } from 'bignumber.js';
 import { useAsync } from '../../../../../../helpers/useAsync';
 

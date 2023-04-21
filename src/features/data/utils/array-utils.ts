@@ -1,10 +1,13 @@
 import { isArray, isPlainObject, mapValues, sortBy } from 'lodash-es';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import BigNumber from 'bignumber.js';
-import { KeysOfType } from './types-utils';
+import type BigNumber from 'bignumber.js';
+import type { KeysOfType } from './types-utils';
 
 // https://github.com/lodash/lodash/issues/1244#issuecomment-356676695
-export const mapValuesDeep = (obj: any, fn: (val: any, key: string, obj: any) => any) =>
+export const mapValuesDeep = (
+  obj: unknown[] | object,
+  fn: (val: unknown, key: string | number, obj: unknown) => unknown
+) =>
   isArray(obj)
     ? obj.map(item => mapValuesDeep(item, fn))
     : mapValues(obj, (val, key) =>
@@ -59,7 +62,7 @@ export function getTopNArray<T extends BaseEntry>(
   return top;
 }
 
-export function sortWith<T extends {}>(items: T[], compareFn: (a: T, b: T) => number): T[] {
+export function sortWith<T>(items: T[], compareFn: (a: T, b: T) => number): T[] {
   return [...items].sort(compareFn);
 }
 

@@ -1,5 +1,5 @@
-import { ChainEntity } from '../../entities/chain';
-import { EIP1559GasConfig, GasConfig, StandardGasConfig } from '../config-types';
+import type { ChainEntity } from '../../entities/chain';
+import type { EIP1559GasConfig, GasConfig, StandardGasConfig } from '../config-types';
 import { getWeb3Instance } from '../instances';
 import { BigNumber } from 'bignumber.js';
 import {
@@ -9,8 +9,8 @@ import {
   compareBigNumber,
 } from '../../../../helpers/big-number';
 import { itemAtPercentile, sortWith } from '../../utils/array-utils';
-import Web3 from 'web3';
-import { Contract } from 'web3-eth-contract';
+import type Web3 from 'web3';
+import type { Contract } from 'web3-eth-contract';
 
 export type StandardGasPrice = {
   gasPrice: string;

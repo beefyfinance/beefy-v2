@@ -1,10 +1,5 @@
-import {
-  isTokenEqual,
-  isTokenNative,
-  TokenEntity,
-  TokenErc20,
-  TokenNative,
-} from '../../../entities/token';
+import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token';
+import { isTokenEqual, isTokenNative } from '../../../entities/token';
 import { sortBy } from 'lodash-es';
 
 /**

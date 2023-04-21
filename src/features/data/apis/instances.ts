@@ -2,16 +2,19 @@ import { BeefyAPI } from './beefy/beefy-api';
 import { ConfigAPI } from './config';
 import { sample } from 'lodash-es';
 import { createFactoryWithCacheByChain } from '../utils/factory-utils';
-import { ChainEntity } from '../entities/chain';
-import { IWalletConnectionApi, WalletConnectionOptions } from './wallet/wallet-connection-types';
+import type { ChainEntity } from '../entities/chain';
+import type {
+  IWalletConnectionApi,
+  WalletConnectionOptions,
+} from './wallet/wallet-connection-types';
 import { BridgeApi } from './bridge/bridge';
-import { IOnRampApi } from './on-ramp/on-ramp-types';
-import { ITransactApi } from './transact/transact-types';
+import type { IOnRampApi } from './on-ramp/on-ramp-types';
+import type { ITransactApi } from './transact/transact-types';
 import { createWeb3Instance } from '../../../helpers/web3';
 import { createGasPricer } from './gas-prices';
 import { AnalyticsApi } from './analytics/analytics';
-import { IOneInchApi } from './one-inch/one-inch-types';
-import { IBeefyDataApi } from './beefy/beefy-data-api-types';
+import type { IOneInchApi } from './one-inch/one-inch-types';
+import type { IBeefyDataApi } from './beefy/beefy-data-api-types';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();

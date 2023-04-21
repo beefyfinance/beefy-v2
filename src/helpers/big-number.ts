@@ -28,7 +28,7 @@ export function toBigNumber(input: BigNumberish): BigNumber {
   return new BigNumber(input);
 }
 
-export function isBigNumber(value: any): value is BigNumber {
+export function isBigNumber(value: unknown): value is BigNumber {
   return BigNumber.isBigNumber(value);
 }
 
@@ -77,7 +77,7 @@ export function bigNumberToStringDeep(input: unknown) {
   return input;
 }
 
-export function isFiniteBigNumber(value: any): value is BigNumber {
+export function isFiniteBigNumber(value: unknown): value is BigNumber {
   return value !== null && isBigNumber(value) && !value.isNaN() && value.isFinite();
 }
 

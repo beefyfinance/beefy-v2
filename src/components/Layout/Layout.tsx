@@ -1,14 +1,6 @@
-import React, { memo, PropsWithChildren } from 'react';
+import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { useTranslation } from 'react-i18next';
-import { ReactComponent as IconGithub } from '../../images/socials/github.svg';
-import { ReactComponent as IconTelegram } from '../../images/socials/telegram.svg';
-import { ReactComponent as IconDiscord } from '../../images/socials/discord.svg';
-import { ReactComponent as IconTwitter } from '../../images/socials/twitter.svg';
-import { ReactComponent as IconReddit } from '../../images/socials/reddit.svg';
-import clsx from 'clsx';
-import { useLocation } from 'react-router';
 
 const useStyles = makeStyles(styles);
 

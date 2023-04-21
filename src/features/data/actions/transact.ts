@@ -1,6 +1,6 @@
 import { createAsyncThunk, miniSerializeError, nanoid } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
-import { VaultEntity, VaultGov } from '../entities/vault';
+import type { BeefyState } from '../../../redux-types';
+import type { VaultEntity, VaultGov } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
 import { selectShouldInitAddressBook } from '../selectors/data-loader';
 import { fetchAddressBookAction } from './tokens';
@@ -22,7 +22,7 @@ import {
   selectTransactTokensIdTokens,
   selectTransactVaultId,
 } from '../selectors/transact';
-import {
+import type {
   InputTokenAmount,
   ITransactApi,
   QuoteOutputTokenAmountChange,
@@ -31,16 +31,18 @@ import {
   TransactQuote,
 } from '../apis/transact/transact-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { ChainEntity } from '../entities/chain';
-import { isTokenEqual, isTokenErc20, TokenEntity } from '../entities/token';
+import type { ChainEntity } from '../entities/chain';
+import type { TokenEntity } from '../entities/token';
+import { isTokenEqual, isTokenErc20 } from '../entities/token';
 import { BigNumber } from 'bignumber.js';
-import { Namespace, TFunction } from 'react-i18next';
-import { Step, stepperActions } from '../reducers/wallet/stepper';
+import type { Namespace, TFunction } from 'react-i18next';
+import type { Step } from '../reducers/wallet/stepper';
+import { stepperActions } from '../reducers/wallet/stepper';
 import { selectAllowanceByTokenAddress } from '../selectors/allowances';
 import { walletActions } from './wallet-actions';
-import { ThunkAction } from 'redux-thunk';
+import type { ThunkAction } from 'redux-thunk';
 import { startStepperWithSteps } from './stepper';
-import { KeysOfType } from '../utils/types-utils';
+import type { KeysOfType } from '../utils/types-utils';
 import { TransactMode } from '../reducers/wallet/transact-types';
 import { selectTokenByAddress } from '../selectors/tokens';
 import { first, groupBy, uniqBy } from 'lodash-es';
@@ -49,12 +51,13 @@ import { fetchAllAmmsAction } from './amm';
 import { fetchFees } from './fees';
 import { uniqueTokens } from '../../../helpers/tokens';
 import { fetchBalanceAction } from './balance';
+import type { Action } from 'redux';
 
 export type TransactInitArgs = {
   vaultId: VaultEntity['id'];
 };
 
-export type TransactInitPayload = {};
+export type TransactInitPayload = void;
 
 export const transactInit = createAsyncThunk<
   TransactInitPayload,
@@ -148,7 +151,7 @@ export const transactFetchOptions = createAsyncThunk<
     };
   },
   {
-    condition({ vaultId, mode }, { getState }) {
+    condition({ mode }, { getState }) {
       const state = getState();
 
       return (
@@ -314,7 +317,7 @@ const actionForByMode: Record<
 export function transactSteps(
   quote: TransactQuote,
   t: TFunction<Namespace>
-): ThunkAction<void, BeefyState, void, any> {
+): ThunkAction<void, BeefyState, void, Action> {
   return async function (dispatch, getState) {
     const steps: Step[] = [];
     const state = getState();
@@ -358,8 +361,8 @@ export function transactSteps(
 export function transactStepsClaimGov(
   vault: VaultGov,
   t: TFunction<Namespace>
-): ThunkAction<void, BeefyState, void, any> {
-  return async function (dispatch, getState) {
+): ThunkAction<void, BeefyState, void, Action> {
+  return async function (dispatch, _getState) {
     dispatch(
       startStepperWithSteps(
         [

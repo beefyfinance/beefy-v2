@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Collapsable } from '../../../../components/Collapsable';
 import { useAppSelector } from '../../../../store';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { styles } from './styles';
 import { TokenCard } from '../TokenCard';
@@ -14,7 +14,7 @@ interface AssetsCardProps {
   vaultId: VaultEntity['id'];
 }
 
-export const AssetsCard = memo<AssetsCardProps>(function ({ vaultId }) {
+export const AssetsCard = memo<AssetsCardProps>(function AssetsCard({ vaultId }) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const classes = useStyles();

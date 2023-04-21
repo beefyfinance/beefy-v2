@@ -1,14 +1,16 @@
 import * as React from 'react';
-import { FC, memo, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
+import type { FC, MouseEventHandler } from 'react';
+import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import { sortBy } from 'lodash-es';
 import { ExpandMore } from '@material-ui/icons';
 import clsx from 'clsx';
 import { Floating } from '../Floating';
-import { LabeledSelectCommonProps } from '../LabeledSelect';
+import type { LabeledSelectCommonProps } from '../LabeledSelect';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
-import { LabelledCheckbox, LabelledCheckboxProps } from '../LabelledCheckbox';
+import type { LabelledCheckboxProps } from '../LabelledCheckbox';
+import { LabelledCheckbox } from '../LabelledCheckbox';
 
 const useStyles = makeStyles(styles);
 
@@ -81,11 +83,11 @@ const DropdownItem = memo<DropdownItemProps>(function DropdownItem({
   );
 });
 
-const DropdownItemLabel = memo<DropdownItemLabelProps>(function DropdownItem({ label }) {
+const DropdownItemLabel = memo<DropdownItemLabelProps>(function DropdownItemLabel({ label }) {
   return <>{label}</>;
 });
 
-const SelectedItem = memo<SelectedItemProps>(function ({
+const SelectedItem = memo<SelectedItemProps>(function SelectedItem({
   value,
   options,
   allSelected,

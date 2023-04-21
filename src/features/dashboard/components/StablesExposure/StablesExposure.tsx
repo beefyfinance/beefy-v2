@@ -8,7 +8,7 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const StablesExposure = memo(function () {
+export const StablesExposure = memo(function StablesExposure() {
   const { t } = useTranslation();
   const stablecoinsExposureData = useAppSelector(state => selectUserStablecoinsExposure(state));
   const stablePercentage = stablecoinsExposureData.filter(item => item.key === 'stable');

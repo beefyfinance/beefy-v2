@@ -12,7 +12,8 @@ import { useAppSelector } from '../../../../../../store';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { usePnLChartData } from '../../hooks';
 import { PnLTooltip } from '../PnLTooltip';
-import { makeStyles, Theme, useMediaQuery } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { GraphLoader } from '../../../GraphLoader';
 import { max } from 'lodash-es';
 import { formatUnderlyingTick, formatUsdTick, formatDateTimeTick, TIME_BUCKET } from './helpers';
@@ -23,7 +24,7 @@ import { XAxisTick } from '../../../../../../components/XAxisTick';
 
 const useStyles = makeStyles(styles);
 
-export const Graph = memo(function ({ vaultId, period }: { vaultId: string; period: number }) {
+export const Graph = memo(function Graph({ vaultId, period }: { vaultId: string; period: number }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   const classes = useStyles();

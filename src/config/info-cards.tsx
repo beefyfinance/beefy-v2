@@ -1,4 +1,4 @@
-import { InfoCardsConfig } from '../features/data/apis/config-types';
+import type { InfoCardsConfig } from '../features/data/apis/config-types';
 
 export const infoCards: InfoCardsConfig = [
   {

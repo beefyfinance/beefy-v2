@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { FC, memo, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
+import type { FC, MouseEventHandler } from 'react';
+import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import { orderBy } from 'lodash-es';
 import { styles } from './styles';
 import { ExpandMore } from '@material-ui/icons';
 import clsx from 'clsx';
 import { Floating } from '../Floating';
-import { Placement } from '@floating-ui/react-dom';
+import type { Placement } from '@floating-ui/react-dom';
 
 const useStyles = makeStyles(styles);
 
@@ -101,11 +102,11 @@ const DropdownItem = memo<DropdownItemProps>(function DropdownItem({
   );
 });
 
-const DropdownItemLabel = memo<DropdownItemLabelProps>(function DropdownItem({ label }) {
+const DropdownItemLabel = memo<DropdownItemLabelProps>(function DropdownItemLabel({ label }) {
   return <>{label}</>;
 });
 
-const SelectedItem = memo<SelectedItemProps>(function ({ value, options }) {
+const SelectedItem = memo<SelectedItemProps>(function SelectedItem({ value, options }) {
   return <>{options[value]}</>;
 });
 

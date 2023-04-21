@@ -1,5 +1,6 @@
-import { BeefyState } from '../../../redux-types';
-import { isGovVault, isVaultActive, VaultEntity } from '../entities/vault';
+import type { BeefyState } from '../../../redux-types';
+import type { VaultEntity } from '../entities/vault';
+import { isGovVault, isVaultActive } from '../entities/vault';
 import {
   selectAddressDepositedVaultIds,
   selectGovVaultUserStakedBalanceInDepositToken,
@@ -12,10 +13,9 @@ import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectUserActiveBoostBalanceInToken } from './boosts';
 import { selectWalletAddressIfKnown } from './wallet';
-import { TotalApy } from '../reducers/apy';
+import type { TotalApy } from '../reducers/apy';
 import { compoundInterest } from '../../../helpers/number';
 import { isEmpty } from '../../../helpers/utils';
-import { selectVaultPnl } from './analytics';
 
 export const selectVaultTotalApy = (state: BeefyState, vaultId: VaultEntity['id']) => {
   return state.biz.apy.totalApy.byVaultId[vaultId] || {};
@@ -109,7 +109,7 @@ export const selectUserGlobalStats = (state: BeefyState) => {
       }
 
       // compoundable components
-      let totalCompoundableDaily = vaultDaily;
+      const totalCompoundableDaily = vaultDaily;
 
       // total
       newGlobalStats.daily +=
