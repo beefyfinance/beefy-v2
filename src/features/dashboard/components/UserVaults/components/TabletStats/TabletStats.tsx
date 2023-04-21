@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
-import { memo } from 'react';
-import { VaultEntity } from '../../../../../data/entities/vault';
+import { memo, useMemo } from 'react';
+import type { VaultEntity } from '../../../../../data/entities/vault';
 import { useAppSelector } from '../../../../../../store';
 import { selectVaultDailyYieldStats, selectVaultTotalApy } from '../../../../../data/selectors/apy';
 import { formatBigUsd, formattedTotalApy } from '../../../../../../helpers/format';
@@ -15,14 +15,14 @@ interface TableStatsInterface {
   vaultId: VaultEntity['id'];
 }
 
-export const TabletStats = memo<TableStatsInterface>(function ({ vaultId }) {
+export const TabletStats = memo<TableStatsInterface>(function TabletStats({ vaultId }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
   const { dailyUsd } = useAppSelector(state => selectVaultDailyYieldStats(state, vaultId));
 
   const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
-  const formatted = useAppSelector(state => formattedTotalApy(values, '???'));
+  const formatted = useMemo(() => formattedTotalApy(values, '???'), [values]);
   const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
 
   return (

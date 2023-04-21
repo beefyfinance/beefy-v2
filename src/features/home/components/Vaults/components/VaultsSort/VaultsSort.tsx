@@ -1,17 +1,17 @@
-import React, { FC, memo, useCallback, useMemo } from 'react';
+import type { FC } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
-import { Theme } from '@material-ui/core/styles';
-import {
-  filteredVaultsActions,
-  FilteredVaultsState,
-} from '../../../../../data/reducers/filtered-vaults';
+import type { Theme } from '@material-ui/core';
+import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectFilterSearchSortDirection,
   selectFilterSearchSortField,
 } from '../../../../../data/selectors/filtered-vaults';
-import { LabeledSelect, LabeledSelectProps } from '../../../../../../components/LabeledSelect';
+import type { LabeledSelectProps } from '../../../../../../components/LabeledSelect';
+import { LabeledSelect } from '../../../../../../components/LabeledSelect';
 import { styles } from './styles';
 import { SortColumnHeader } from '../../../../../../components/SortColumnHeader';
 

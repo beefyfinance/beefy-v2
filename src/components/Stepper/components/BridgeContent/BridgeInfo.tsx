@@ -13,7 +13,7 @@ import {
   selectBridgeStatus,
   selectBridgeTxData,
 } from '../../../../features/data/selectors/bridge';
-import { ChainEntity } from '../../../../features/data/entities/chain';
+import type { ChainEntity } from '../../../../features/data/entities/chain';
 import { Button } from '../../../Button';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
 import { walletActions } from '../../../../features/data/actions/wallet-actions';
@@ -22,7 +22,7 @@ import iconCheck from '../../../../images/icons/check.svg';
 
 const useStyles = makeStyles(styles);
 
-const Chain = memo(({ chain }: { chain: ChainEntity }) => {
+const Chain = memo(function Chain({ chain }: { chain: ChainEntity }) {
   const classes = useStyles();
   return (
     <Box className={classes.chainStatusContainer}>
@@ -31,7 +31,8 @@ const Chain = memo(({ chain }: { chain: ChainEntity }) => {
     </Box>
   );
 });
-export const FromChainStatus = memo(function () {
+
+export const FromChainStatus = memo(function FromChainStatus() {
   const classes = useStyles();
   const { t } = useTranslation();
   const walletActionsStateResult = useAppSelector(state => state.user.walletActions.result);
@@ -71,7 +72,7 @@ export const FromChainStatus = memo(function () {
   );
 });
 
-export const DestChainStatus = memo(function () {
+export const DestChainStatus = memo(function DestChainStatus() {
   const classes = useStyles();
   const { t } = useTranslation();
   const bridgeState = useAppSelector(selectBridgeState);
@@ -118,7 +119,7 @@ export const DestChainStatus = memo(function () {
   );
 });
 
-export const BridgeSuccesInfo = memo(function () {
+export const BridgeSuccessInfo = memo(function BridgeSuccessInfo() {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -136,7 +137,7 @@ export const BridgeSuccesInfo = memo(function () {
   );
 });
 
-export const AnySwapLinkButton = memo(function ({ hash }: { hash: string }) {
+export const AnySwapLinkButton = memo(function AnySwapLinkButton({ hash }: { hash: string }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -152,7 +153,7 @@ export const AnySwapLinkButton = memo(function ({ hash }: { hash: string }) {
   );
 });
 
-export const CloseButton = memo(function () {
+export const CloseButton = memo(function CloseButton() {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();

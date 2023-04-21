@@ -1,19 +1,7 @@
-import React, {
-  forwardRef,
-  memo,
-  MouseEventHandler,
-  ReactNode,
-  useCallback,
-  useMemo,
-  useState,
-} from 'react';
-import {
-  ClickAwayListener,
-  makeStyles,
-  Popper,
-  PopperPlacementType,
-  setRef,
-} from '@material-ui/core';
+import type { MouseEventHandler, ReactNode } from 'react';
+import React, { forwardRef, memo, useCallback, useMemo, useState } from 'react';
+import type { PopperPlacementType } from '@material-ui/core';
+import { ClickAwayListener, makeStyles, Popper, setRef } from '@material-ui/core';
 import clsx from 'clsx';
 import { styles } from './styles';
 

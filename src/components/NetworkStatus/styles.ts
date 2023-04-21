@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core/styles';
+import type { Theme } from '@material-ui/core';
 
 const loadingColor = '#D6D05C';
 const warningColor = '#D19847';

@@ -1,4 +1,5 @@
-import { FC, memo, useMemo, useState } from 'react';
+import type { FC } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import clsx from 'clsx';
@@ -6,7 +7,7 @@ import { makeStyles } from '@material-ui/core';
 import { TokenExposureLoader } from '../../../TokenExposure';
 import { ChainExposureLoader } from '../../../ChainExposure';
 import { PlatformExposureLoader } from '../../../PlatformExposure';
-import { ExposureDashboardChartLoaderProps } from '../../../ExposureChart/types';
+import type { ExposureDashboardChartLoaderProps } from '../../../ExposureChart/types';
 
 enum ChartEnum {
   Chain = 1,
@@ -22,7 +23,7 @@ const chartToComponent: Record<ChartEnum, FC<ExposureDashboardChartLoaderProps>>
 
 const useStyles = makeStyles(styles);
 
-export const MobileUserExposure = memo(function () {
+export const MobileUserExposure = memo(function MobileUserExposure() {
   const { t } = useTranslation();
   const classes = useStyles();
 

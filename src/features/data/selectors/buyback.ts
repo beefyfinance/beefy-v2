@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
 
 export const selectTotalBuybackUsdAmount = createSelector(

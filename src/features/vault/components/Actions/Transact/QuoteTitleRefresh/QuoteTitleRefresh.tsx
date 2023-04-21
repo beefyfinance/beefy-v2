@@ -13,7 +13,7 @@ export type QuoteTitleRefreshProps = {
   enableRefresh?: boolean;
   className?: string;
 };
-export const QuoteTitleRefresh = memo<QuoteTitleRefreshProps>(function ({
+export const QuoteTitleRefresh = memo<QuoteTitleRefreshProps>(function QuoteTitleRefresh({
   title,
   enableRefresh = false,
   className,

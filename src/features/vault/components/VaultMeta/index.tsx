@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { memo } from 'react';
-import { isGovVault, VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
+import { isGovVault } from '../../../data/entities/vault';
 import { Meta } from '../../../../components/Meta/Meta';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
@@ -12,7 +13,7 @@ import { selectPlatformById } from '../../../data/selectors/platforms';
 export type VaultMetaProps = {
   vaultId: VaultEntity['id'];
 };
-export const VaultMeta = memo<VaultMetaProps>(function ({ vaultId }) {
+export const VaultMeta = memo<VaultMetaProps>(function VaultMeta({ vaultId }) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { LinkButton } from '../../../../components/LinkButton';
 import { CardContent } from '../Card';
 import { styles } from './styles';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
 import { selectBoostById, selectPreStakeOrActiveBoostIds } from '../../../data/selectors/boosts';
 import { selectBoostedVaultMainPartner } from '../../../data/selectors/partners';
 import { useAppSelector } from '../../../../store';

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { memo, MouseEventHandler, ReactNode, useCallback } from 'react';
+import type { MouseEventHandler, ReactNode } from 'react';
+import { memo, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';

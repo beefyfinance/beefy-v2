@@ -1,9 +1,10 @@
-import { makeStyles, Theme } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { memo } from 'react';
 import { SortColumnHeader } from '../../../../../../../../components/SortColumnHeader';
 import { InfoGrid } from '../InfoGrid';
 import { Row } from '../../../Row/Row';
-import { SortedOptions } from '../../hook';
+import type { SortedOptions } from '../../hook';
 
 const SORT_COLUMNS: {
   label: string;

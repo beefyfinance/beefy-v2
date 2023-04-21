@@ -1,26 +1,30 @@
 import BigNumber from 'bignumber.js';
 import { uniqBy } from 'lodash-es';
-import { Dispatch } from 'redux';
+import type { Action } from 'redux';
 import boostAbi from '../../../config/abi/boost.json';
 import erc20Abi from '../../../config/abi/erc20.json';
 import vaultAbi from '../../../config/abi/vault.json';
 import minterAbi from '../../../config/abi/minter.json';
 import zapAbi from '../../../config/abi/zap.json';
 import bridgeAbi from '../../../config/abi/BridgeAbi.json';
-import { BeefyState, BeefyThunk } from '../../../redux-types';
+import type { BeefyState, BeefyThunk } from '../../../redux-types';
 import { getOneInchApi, getWalletConnectionApiInstance } from '../apis/instances';
-import { BoostEntity } from '../entities/boost';
-import { ChainEntity } from '../entities/chain';
-import { isTokenNative, TokenEntity, TokenErc20 } from '../entities/token';
-import { isStandardVault, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
-import {
-  createWalletActionErrorAction,
-  createWalletActionPendingAction,
-  createWalletActionSuccessAction,
+import type { BoostEntity } from '../entities/boost';
+import type { ChainEntity } from '../entities/chain';
+import type { TokenEntity, TokenErc20 } from '../entities/token';
+import { isTokenNative } from '../entities/token';
+import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
+import { isStandardVault } from '../entities/vault';
+import type {
   MandatoryAdditionalData,
   TrxError,
   TrxHash,
   TrxReceipt,
+} from '../reducers/wallet/wallet-action';
+import {
+  createWalletActionErrorAction,
+  createWalletActionPendingAction,
+  createWalletActionSuccessAction,
 } from '../reducers/wallet/wallet-action';
 import {
   selectBoostUserBalanceInToken,
@@ -42,31 +46,34 @@ import { selectWalletAddress } from '../selectors/wallet';
 import { oracleAmountToMooAmount } from '../utils/ppfs';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
 import { getGasPriceOptions } from '../utils/gas-utils';
-import { AbiItem } from 'web3-utils';
+import type { AbiItem } from 'web3-utils';
 import { convertAmountToRawNumber, errorToString } from '../../../helpers/format';
 import { FriendlyError } from '../utils/error-utils';
-import { MinterEntity } from '../entities/minter';
+import type { MinterEntity } from '../entities/minter';
 import { reloadReserves } from './minters';
 import { selectChainById } from '../selectors/chains';
 import { BIG_ZERO, fromWeiString, toWei, toWeiString } from '../../../helpers/big-number';
 import { updateSteps } from './stepper';
 import { StepContent, stepperActions } from '../reducers/wallet/stepper';
-import {
+import type {
   InputTokenAmount,
   TokenAmount,
   ZapFee,
   ZapQuoteStepSwap,
 } from '../apis/transact/transact-types';
-import { ZapEntityBeefy, ZapEntityOneInch } from '../entities/zap';
+import type { ZapEntityBeefy, ZapEntityOneInch } from '../entities/zap';
 import { BeefyZapOneInchAbi, ZapAbi } from '../../../config/abi';
 import { OneInchZapProvider } from '../apis/transact/providers/one-inch/one-inch';
 import { MultiCall } from 'eth-multicall';
 import { getPool } from '../apis/amm';
-import { AmmEntity } from '../entities/amm';
+import type { AmmEntity } from '../entities/amm';
 import { WANT_TYPE } from '../apis/amm/types';
 import { getVaultWithdrawnFromContract } from '../apis/transact/helpers/vault';
 import { swapWithFee } from '../apis/transact/helpers/one-inch';
 import { selectOneInchZapByChainId } from '../selectors/zap';
+import type { DestChainEntity } from '../apis/bridge/bridge-types';
+import type { PromiEvent } from 'web3-core';
+import type { ThunkDispatch } from 'redux-thunk';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -84,7 +91,7 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
     const native = selectChainNativeToken(state, token.chainId);
 
-    const contract = new web3.eth.Contract(erc20Abi as any, token.address);
+    const contract = new web3.eth.Contract(erc20Abi as AbiItem[], token.address);
     const maxAmount = web3.utils.toWei('8000000000', 'ether');
     const chain = selectChainById(state, token.chainId);
     const gasPrices = await getGasPriceOptions(chain);
@@ -124,7 +131,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     const native = selectChainNativeToken(state, vault.chainId);
     const isNativeToken = depositToken.id === native.id;
     const contractAddr = mooToken.address;
-    const contract = new web3.eth.Contract(vaultAbi as any, contractAddr);
+    const contract = new web3.eth.Contract(vaultAbi as AbiItem[], contractAddr);
     const rawAmount = amount
       .shiftedBy(depositToken.decimals)
       .decimalPlaces(0, BigNumber.ROUND_FLOOR);
@@ -185,7 +192,7 @@ const beefIn = (
     const vaultAddress = vault.earnedTokenAddress;
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(zapAbi as any, zap.zapAddress);
+    const contract = new web3.eth.Contract(zapAbi as AbiItem[], zap.zapAddress);
     const rawSwapAmountOutMin = toWei(
       swap.toAmount.times(1 - slippageTolerance),
       swap.toToken.decimals
@@ -824,7 +831,7 @@ const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => 
     const native = selectChainNativeToken(state, vault.chainId);
     const isNativeToken = depositToken.id === native.id;
     const contractAddr = mooToken.address;
-    const contract = new web3.eth.Contract(vaultAbi as any, contractAddr);
+    const contract = new web3.eth.Contract(vaultAbi as AbiItem[], contractAddr);
 
     const mooAmount = oracleAmountToMooAmount(mooToken, depositToken, ppfs, oracleAmount);
     const rawAmount = mooAmount
@@ -880,7 +887,7 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     const inputToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     const contractAddr = vault.earnContractAddress;
-    const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
+    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
@@ -925,7 +932,7 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
       .decimalPlaces(0, BigNumber.ROUND_FLOOR);
 
     const contractAddr = vault.earnContractAddress;
-    const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
+    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
     const transaction = contract.methods
@@ -962,7 +969,7 @@ const claimGovVault = (vault: VaultGov) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contractAddr = vault.earnContractAddress;
 
-    const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
+    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
     const transaction = contract.methods.getReward().send({ from: address, ...gasPrices });
@@ -997,7 +1004,7 @@ const exitGovVault = (vault: VaultGov) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contractAddr = vault.earnContractAddress;
 
-    const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
+    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
 
     /**
      * withdraw() and by extension exit() will fail if already withdrawn (Cannot withdraw 0),
@@ -1039,7 +1046,7 @@ const claimBoost = (boost: BoostEntity) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contractAddr = boost.earnContractAddress;
 
-    const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
+    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
     const transaction = contract.methods.getReward().send({ from: address, ...gasPrices });
@@ -1075,7 +1082,7 @@ const exitBoost = (boost: BoostEntity) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contractAddr = boost.earnContractAddress;
 
-    const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
+    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
 
     /**
      * withdraw() and by extension exit() will fail if already withdrawn (Cannot withdraw 0),
@@ -1117,7 +1124,7 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     const inputToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
 
     const contractAddr = boost.earnContractAddress;
-    const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
+    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
@@ -1155,7 +1162,7 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     const inputToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
 
     const contractAddr = boost.earnContractAddress;
-    const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
+    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
@@ -1350,7 +1357,7 @@ const bridge = (
     const bridgeTokenData = state.ui.bridge.bridgeDataByChainId[chainId];
 
     const destChain = selectChainById(state, destChainId);
-    const destChainData: any = Object.values(
+    const destChainData: DestChainEntity = Object.values(
       bridgeTokenData.destChains[destChain.networkChainId]
     )[0];
 
@@ -1462,8 +1469,8 @@ function captureWalletErrors<ReturnType>(
 }
 
 function bindTransactionEvents<T extends MandatoryAdditionalData>(
-  dispatch: Dispatch<any>,
-  transaction: any /* todo: find out what it is */,
+  dispatch: ThunkDispatch<BeefyState, unknown, Action<unknown>>,
+  transaction: PromiEvent<unknown>,
   additionalData: T,
   refreshOnSuccess?: {
     chainId: ChainEntity['id'];

@@ -5,9 +5,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import { selectActiveChainIds, selectChainById } from '../../../../data/selectors/chains';
-import { ChainEntity } from '../../../../data/entities/chain';
+import type { ChainEntity } from '../../../../data/entities/chain';
 import { selectTvlByChain } from '../../../../data/selectors/tvl';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { formatBigUsd } from '../../../../../helpers/format';
 import { ContentLoading } from '../../../../../components/ContentLoading';
 import { Button } from '../../../../../components/Button';
@@ -26,7 +26,7 @@ interface ItemListType {
   tvl: number;
 }
 
-const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ({ close }, ref) {
+const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ModalTvl({ close }, ref) {
   const classes = useStyles();
   const { t } = useTranslation();
   const tvls = useAppSelector(selectTvlByChain);

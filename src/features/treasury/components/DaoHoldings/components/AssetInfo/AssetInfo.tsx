@@ -1,14 +1,15 @@
 import { makeStyles, useMediaQuery } from '@material-ui/core';
-import { memo, PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
+import { memo } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { formatBigUsd } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
-import { ChainEntity } from '../../../../../data/entities/chain';
-import { TokenEntity } from '../../../../../data/entities/token';
-import { TreasuryHoldingEntity } from '../../../../../data/entities/treasury';
-import { VaultEntity } from '../../../../../data/entities/vault';
+import type { ChainEntity } from '../../../../../data/entities/chain';
+import type { TokenEntity } from '../../../../../data/entities/token';
+import type { TreasuryHoldingEntity } from '../../../../../data/entities/treasury';
+import type { VaultEntity } from '../../../../../data/entities/vault';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { styles } from './styles';
 
@@ -19,7 +20,7 @@ interface AssetInfoProps {
   token: TreasuryHoldingEntity;
 }
 
-export const AssetInfo = memo<AssetInfoProps>(function ({ chainId, token }) {
+export const AssetInfo = memo<AssetInfoProps>(function AssetInfo({ chainId, token }) {
   const isVault = token.assetType === 'vault';
 
   const isLP = token.assetType === 'token' && token.oracleType === 'lps';
@@ -54,7 +55,7 @@ type AssetContainerProps = PropsWithChildren<{
   token: TreasuryHoldingEntity;
 }>;
 
-const AssetContainer = memo<AssetContainerProps>(function ({ token, children }) {
+const AssetContainer = memo<AssetContainerProps>(function AssetContainer({ token, children }) {
   const classes = useStyles();
   return (
     <div className={classes.asset}>
@@ -71,7 +72,7 @@ interface VaultNameProps {
   vaultId: VaultEntity['id'];
 }
 
-export const VaultIdentity = memo<VaultNameProps>(function ({ vaultId }) {
+export const VaultIdentity = memo<VaultNameProps>(function VaultIdentity({ vaultId }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   return (
@@ -88,7 +89,7 @@ interface LPidentityProps {
   name: TreasuryHoldingEntity['name'];
 }
 
-export const LPidentity = memo<LPidentityProps>(function ({ address, chainId, name }) {
+export const LPidentity = memo<LPidentityProps>(function LPidentity({ chainId, name }) {
   const regex = / .*?LP/g; // THIS REGEX WILL MATCH space + any chars/nothing  + "LP", for example BIFI-ETH JLP will return BIFI-ETH
   const assets = name.replace(regex, '').split('-');
 
@@ -104,7 +105,7 @@ interface AssetNameProps {
   name: string;
 }
 
-export const AssetName = memo<AssetNameProps>(function ({ name }) {
+export const AssetName = memo<AssetNameProps>(function AssetName({ name }) {
   const isMobile = useMediaQuery('(max-width: 600px)');
   const needTooltip = isMobile && name.length > 12;
 

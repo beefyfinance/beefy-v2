@@ -1,7 +1,8 @@
-import { Action } from 'redux';
-import { ChainEntity } from '../entities/chain';
+import type { Action } from 'redux';
+import type { ChainEntity } from '../entities/chain';
 import { selectIsWalletKnown } from '../selectors/wallet';
-import { createFulfilledActionCapturer, poll, PollStop } from '../utils/async-utils';
+import type { PollStop } from '../utils/async-utils';
+import { createFulfilledActionCapturer, poll } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
 import { fetchAllBoosts, initiateBoostForm } from './boosts';
 import { fetchChainConfigs } from './chains';
@@ -10,17 +11,17 @@ import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsZapSupport } from './va
 import { fetchAllBalanceAction } from './balance';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_noDataPolling } from '../utils/feature-flags';
-import { BeefyStore, BeefyThunk } from '../../../redux-types';
+import type { BeefyStore, BeefyThunk } from '../../../redux-types';
 import { chains as chainsConfig } from '../../../config/config';
 import { initWallet } from './wallet';
 import { recomputeBoostStatus } from '../reducers/boosts';
 import { fetchPartnersConfig } from './partners';
 import { fetchAddressBookAction, fetchAllAddressBookAction } from './tokens';
-import { BoostEntity } from '../entities/boost';
+import type { BoostEntity } from '../entities/boost';
 import { selectBoostById } from '../selectors/boosts';
 import { selectShouldInitAddressBook } from '../selectors/data-loader';
 import { initiateMinterForm } from './minters';
-import { MinterEntity } from '../entities/minter';
+import type { MinterEntity } from '../entities/minter';
 import { selectMinterById } from '../selectors/minters';
 import { initiateBridgeForm } from './bridge';
 import { fetchPlatforms } from './platforms';
@@ -51,7 +52,7 @@ export async function initHomeDataV4(store: BeefyStore) {
 
   // we fetch the configuration for all chain
   const boostListPromise = store.dispatch(fetchAllBoosts());
-  const vaultListFulfill = captureFulfill(fetchAllVaults({}));
+  const vaultListFulfill = captureFulfill(fetchAllVaults());
 
   // we can start fetching prices right now and await them later
   const pricesPromise = store.dispatch(fetchAllPricesAction());
@@ -59,7 +60,7 @@ export async function initHomeDataV4(store: BeefyStore) {
   // create the wallet instance as soon as we get the chain list
   setTimeout(async () => {
     // we can start fetching apy, it will arrive when it wants, nothing depends on it
-    store.dispatch(fetchApyAction({}));
+    store.dispatch(fetchApyAction());
 
     // we start fetching buyback
     store.dispatch(fetchBeefyBuybackAction());
@@ -130,9 +131,11 @@ export async function initHomeDataV4(store: BeefyStore) {
   if (featureFlag_noDataPolling()) {
     console.debug('Polling disabled');
     try {
-      (window as any).__manual_poll = () => store.dispatch(manualPoll());
+      window['__manual_poll'] = () => store.dispatch(manualPoll());
       console.debug('Use window.__manual_poll(); to simulate.');
-    } catch {}
+    } catch {
+      // ignore
+    }
     return;
   }
 
@@ -150,10 +153,7 @@ export async function initHomeDataV4(store: BeefyStore) {
 
   // now set regular calls to update prices
   pollStop = poll(async () => {
-    return Promise.all([
-      store.dispatch(fetchAllPricesAction()),
-      store.dispatch(fetchApyAction({})),
-    ]);
+    return Promise.all([store.dispatch(fetchAllPricesAction()), store.dispatch(fetchApyAction())]);
   }, 45 * 1000 /* every 45s */);
   pollStopFns.push(pollStop);
 
@@ -196,7 +196,7 @@ export function manualPoll(): BeefyThunk {
 
     dispatch(recomputeBoostStatus());
     dispatch(fetchAllPricesAction());
-    dispatch(fetchApyAction({}));
+    dispatch(fetchApyAction());
 
     for (const chainId of chains) {
       dispatch(fetchAllContractDataByChainAction({ chainId: chainId }));

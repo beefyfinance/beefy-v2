@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../store';
-import { ChainEntity } from '../../../../../data/entities/chain';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 import { selectTreasuryAssetsByChainId } from '../../../../../data/selectors/treasury';
 import { AssetInfo } from '../AssetInfo';
 import { useSortedAssets } from './hooks';
@@ -14,7 +14,7 @@ interface AssetsProps {
   chainId: ChainEntity['id'];
 }
 
-export const Assets = memo<AssetsProps>(function ({ chainId }) {
+export const Assets = memo<AssetsProps>(function Assets({ chainId }) {
   const { t } = useTranslation();
 
   const assets = useAppSelector(state => selectTreasuryAssetsByChainId(state, chainId));

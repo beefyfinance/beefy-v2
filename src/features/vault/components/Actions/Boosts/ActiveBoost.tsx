@@ -8,7 +8,7 @@ import { selectVaultById } from '../../../../data/selectors/vaults';
 import { selectCurrentChainId, selectIsWalletConnected } from '../../../../data/selectors/wallet';
 import { selectBoostById, selectBoostContractState } from '../../../../data/selectors/boosts';
 import { walletActions } from '../../../../data/actions/wallet-actions';
-import { BoostEntity } from '../../../../data/entities/boost';
+import type { BoostEntity } from '../../../../data/entities/boost';
 import {
   selectBoostRewardsTokenEntity,
   selectBoostUserBalanceInToken,

@@ -1,5 +1,5 @@
-import { BeefyState } from '../../../redux-types';
-import { VaultEntity } from '../entities/vault';
+import type { BeefyState } from '../../../redux-types';
+import type { VaultEntity } from '../entities/vault';
 import { selectBoostById, selectPreStakeOrActiveBoostIds } from './boosts';
 import { selectVaultById } from './vaults';
 

@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isEmpty } from '../../../helpers/utils';
-import { BeefyState } from '../../../redux-types';
-import { TokenAllowance } from '../apis/allowance/allowance-types';
-import { FetchAllBalancesResult } from '../apis/balance/balance-types';
-import { BridgeInfoEntity, DestChainEntity, TxDataRes } from '../apis/bridge/bridge-types';
+import type { BeefyState } from '../../../redux-types';
+import type { TokenAllowance } from '../apis/allowance/allowance-types';
+import type { FetchAllBalancesResult } from '../apis/balance/balance-types';
+import type { BridgeInfoEntity, DestChainEntity, TxDataRes } from '../apis/bridge/bridge-types';
 import { getAllowanceApi, getBalanceApi, getBridgeApi } from '../apis/instances';
-import { ChainEntity } from '../entities/chain';
+import type { ChainEntity } from '../entities/chain';
 import { isTokenErc20 } from '../entities/token';
 import { selectAllChains, selectChainById } from '../selectors/chains';
 import { selectTokenByAddress } from '../selectors/tokens';
@@ -90,7 +90,7 @@ export const initiateBridgeForm = createAsyncThunk<
         )
       : [];
 
-  let supportedChains = [chain.id];
+  const supportedChains = [chain.id];
 
   for (const _chain of allChains) {
     if (!isEmpty(bridgeDataRes?.destChains[_chain.networkChainId])) {

@@ -65,7 +65,7 @@ const Item = ({ title, children }) => {
   );
 };
 
-const FeesLoader = memo(function () {
+const FeesLoader = memo(function FeesLoader() {
   const classes = useStyles();
 
   return (

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { Quote } from '../../../data/reducers/on-ramp-types';
-import { ApiUrlRequest } from '../../../data/apis/on-ramp/on-ramp-types';
+import type { Quote } from '../../../data/reducers/on-ramp-types';
+import type { ApiUrlRequest } from '../../../data/apis/on-ramp/on-ramp-types';
 import { getOnRampApi } from '../../../data/apis/instances';
 
 export type ProviderType = {

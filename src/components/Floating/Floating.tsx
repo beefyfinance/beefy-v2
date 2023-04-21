@@ -1,14 +1,7 @@
-import { memo, MutableRefObject, ReactNode, useLayoutEffect, useMemo } from 'react';
-import {
-  autoUpdate,
-  flip,
-  hide,
-  offset,
-  Placement,
-  shift,
-  size,
-  useFloating,
-} from '@floating-ui/react-dom';
+import type { MutableRefObject, ReactNode } from 'react';
+import React, { memo, useLayoutEffect, useMemo } from 'react';
+import { autoUpdate, flip, hide, offset, shift, size, useFloating } from '@floating-ui/react-dom';
+import type { Placement } from '@floating-ui/react-dom';
 
 export type FloatingProps = {
   open: boolean;

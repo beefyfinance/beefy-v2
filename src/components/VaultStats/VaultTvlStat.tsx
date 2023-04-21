@@ -1,7 +1,7 @@
-import { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
 import { connect } from 'react-redux';
-import { BeefyState } from '../../redux-types';
+import type { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { VaultValueStat } from '../VaultValueStat';
 import { selectVaultTvl } from '../../features/data/selectors/tvl';

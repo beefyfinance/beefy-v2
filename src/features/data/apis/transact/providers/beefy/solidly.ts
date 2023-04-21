@@ -1,16 +1,14 @@
-import {
-  BeefyBaseZapProvider,
-  CommonDepositQuoteOptions,
-  CommonWithdrawQuoteOptions,
-} from './base';
-import { isTokenErc20, TokenErc20 } from '../../../../entities/token';
-import { ZapQuote, ZapQuoteStepSplit } from '../../transact-types';
+import type { CommonDepositQuoteOptions, CommonWithdrawQuoteOptions } from './base';
+import { BeefyBaseZapProvider } from './base';
+import type { TokenErc20 } from '../../../../entities/token';
+import { isTokenErc20 } from '../../../../entities/token';
+import type { ZapQuote, ZapQuoteStepSplit } from '../../transact-types';
 import { ZapAbi } from '../../../../../../config/abi';
 import BigNumber from 'bignumber.js';
 import { createQuoteId } from '../../utils';
 import { fromWei } from '../../../../../../helpers/big-number';
 import { wnativeToNative } from '../../helpers/tokens';
-import { AmmEntitySolidly } from '../../../../entities/amm';
+import type { AmmEntitySolidly } from '../../../../entities/amm';
 import { getPool } from '../../../amm';
 
 /**
@@ -23,7 +21,6 @@ export class BeefySolidlyZapProvider extends BeefyBaseZapProvider<AmmEntitySolid
 
   async getDepositQuoteForType({
     web3,
-    multicall,
     chain,
     depositToken,
     swapTokenIn,
@@ -31,7 +28,6 @@ export class BeefySolidlyZapProvider extends BeefyBaseZapProvider<AmmEntitySolid
     userAmountInWei,
     option,
     vault,
-    userInput,
     amounts,
   }: CommonDepositQuoteOptions<AmmEntitySolidly>): Promise<ZapQuote | null> {
     const lp = getPool(depositToken.address, option.amm, chain);
@@ -127,8 +123,6 @@ export class BeefySolidlyZapProvider extends BeefyBaseZapProvider<AmmEntitySolid
   }
 
   async getWithdrawQuoteForType({
-    web3,
-    multicall,
     chain,
     withdrawnToken,
     withdrawnAmountAfterFeeWei,
@@ -138,7 +132,6 @@ export class BeefySolidlyZapProvider extends BeefyBaseZapProvider<AmmEntitySolid
     swapTokenIn,
     swapTokenOut,
     option,
-    vault,
     amounts,
     native,
     wnative,

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { memo } from 'react';
-import { isGovVault, VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
+import { isGovVault } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
 import { selectChainById } from '../../../data/selectors/chains';
@@ -17,7 +18,7 @@ const useStyles = makeStyles(styles);
 export type VaultHeaderProps = {
   vaultId: VaultEntity['id'];
 };
-export const VaultHeader = memo<VaultHeaderProps>(function ({ vaultId }) {
+export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));

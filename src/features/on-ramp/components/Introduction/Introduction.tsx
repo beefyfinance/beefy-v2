@@ -9,7 +9,7 @@ import { getOnRampProviderLogo } from '../../../../helpers/onrampProviderSrc';
 
 const useStyles = makeStyles(styles);
 
-export const Introduction = memo(function () {
+export const Introduction = memo(function Introduction() {
   const classes = useStyles();
   const { t } = useTranslation();
 

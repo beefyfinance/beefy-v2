@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { BadgeComponentProps } from './types';
+import type { BadgeComponentProps } from './types';
 import { useAppSelector } from '../../../../store';
 import { selectUnreadActiveProposals } from '../../../../features/data/selectors/proposals';
 import { NotificationCount } from './NotificationCount';

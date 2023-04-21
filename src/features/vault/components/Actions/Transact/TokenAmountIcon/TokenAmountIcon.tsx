@@ -1,6 +1,7 @@
-import { memo, ReactNode, useMemo } from 'react';
-import BigNumber from 'bignumber.js';
-import { TokenEntity } from '../../../../../data/entities/token';
+import type { ReactNode } from 'react';
+import { memo, useMemo } from 'react';
+import type BigNumber from 'bignumber.js';
+import type { TokenEntity } from '../../../../../data/entities/token';
 import { useAppSelector } from '../../../../../../store';
 import {
   selectTokenByAddress,
@@ -23,7 +24,7 @@ export type TokenAmountIconProps = {
   chainId: TokenEntity['chainId'];
   className?: string;
 };
-export const TokenAmountIcon = memo<TokenAmountIconProps>(function ({
+export const TokenAmountIcon = memo<TokenAmountIconProps>(function TokenAmountIcon({
   amount,
   tokenAddress,
   chainId,
@@ -62,17 +63,19 @@ export const TokenAmountIcon = memo<TokenAmountIconProps>(function ({
 export type TokenAmountIconLoaderProps = {
   className?: string;
 };
-export const TokenAmountIconLoader = memo<TokenAmountIconLoaderProps>(function ({ className }) {
-  return (
-    <TokenAmountIconComponent
-      className={className}
-      amount={<TextLoader placeholder="1234.5678" />}
-      value={<TextLoader placeholder="$1245.56" />}
-      tokenSymbol={<TextLoader placeholder="ABC-XYZ LP" />}
-      tokenIcon={<IconLoader size={32} />}
-    />
-  );
-});
+export const TokenAmountIconLoader = memo<TokenAmountIconLoaderProps>(
+  function TokenAmountIconLoader({ className }) {
+    return (
+      <TokenAmountIconComponent
+        className={className}
+        amount={<TextLoader placeholder="1234.5678" />}
+        value={<TextLoader placeholder="$1245.56" />}
+        tokenSymbol={<TextLoader placeholder="ABC-XYZ LP" />}
+        tokenIcon={<IconLoader size={32} />}
+      />
+    );
+  }
+);
 
 type TokenAmountIconComponentProps = {
   amount: ReactNode;
@@ -81,24 +84,20 @@ type TokenAmountIconComponentProps = {
   tokenIcon?: ReactNode;
   className?: string;
 };
-const TokenAmountIconComponent = memo<TokenAmountIconComponentProps>(function ({
-  amount,
-  value,
-  tokenSymbol,
-  tokenIcon,
-  className,
-}) {
-  const classes = useStyles();
-  return (
-    <div className={clsx(classes.holder, className)}>
-      <div className={classes.amountWithValue}>
-        {amount}
-        <div className={classes.value}>{value}</div>
+const TokenAmountIconComponent = memo<TokenAmountIconComponentProps>(
+  function TokenAmountIconComponent({ amount, value, tokenSymbol, tokenIcon, className }) {
+    const classes = useStyles();
+    return (
+      <div className={clsx(classes.holder, className)}>
+        <div className={classes.amountWithValue}>
+          {amount}
+          <div className={classes.value}>{value}</div>
+        </div>
+        <div className={classes.tokenWithIcon}>
+          <span className={classes.token}>{tokenSymbol}</span>
+          {tokenIcon}
+        </div>
       </div>
-      <div className={classes.tokenWithIcon}>
-        <span className={classes.token}>{tokenSymbol}</span>
-        {tokenIcon}
-      </div>
-    </div>
-  );
-});
+    );
+  }
+);

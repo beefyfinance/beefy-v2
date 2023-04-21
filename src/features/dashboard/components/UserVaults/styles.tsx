@@ -1,6 +1,4 @@
-import { Theme } from '@material-ui/core';
-
-export const styles = (theme: Theme) => ({
+export const styles = () => ({
   container: {
     display: 'grid',
     gridTemplateColumns: 'minmax(0, 1fr)',

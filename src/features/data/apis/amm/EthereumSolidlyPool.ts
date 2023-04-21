@@ -1,13 +1,13 @@
-import { ShapeWithLabel } from 'eth-multicall';
+import type { ShapeWithLabel } from 'eth-multicall';
 import { createContract } from '../../../../helpers/web3';
 import BigNumber from 'bignumber.js';
-import { SwapFeeParams } from './types';
-import {
+import type { SwapFeeParams } from './types';
+import type {
   PairData as BasePairData,
   PairDataResponse as BasePairDataResponse,
-  SolidlyPool,
 } from './SolidlyPool';
-import { AbiItem } from 'web3-utils';
+import { SolidlyPool } from './SolidlyPool';
+import type { AbiItem } from 'web3-utils';
 
 type PairDataResponse = BasePairDataResponse & {
   feeRatio: string;
@@ -46,7 +46,7 @@ export class EthereumSolidlyPool extends SolidlyPool {
     ];
   }
 
-  protected consumePairDataResponse(untypedResult: any[]) {
+  protected consumePairDataResponse(untypedResult: unknown[]) {
     const result = (untypedResult as PairDataResponse[])[0];
 
     super.consumePairDataResponse(untypedResult);

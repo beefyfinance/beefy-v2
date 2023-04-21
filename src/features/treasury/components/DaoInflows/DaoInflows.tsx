@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { sortBy } from 'lodash-es';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +7,7 @@ import { ContentLoading } from '../../../../components/ContentLoading';
 import { Section } from '../../../../components/Section';
 import { formatBigUsd } from '../../../../helpers/format';
 import { useAppSelector } from '../../../../store';
-import { ChainEntity } from '../../../data/entities/chain';
+import type { ChainEntity } from '../../../data/entities/chain';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectTvlByChain } from '../../../data/selectors/tvl';
 import { styles } from './styles';
@@ -20,7 +20,7 @@ interface ItemListType {
   tvl: number;
 }
 
-export const DaoInflows = memo(function () {
+export const DaoInflows = memo(function DaoInflows() {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -38,7 +38,7 @@ export const DaoInflows = memo(function () {
     <Section title={t('Treasury-Title-Inflows')}>
       <div className={classes.container}>
         {sortedTvls.map(item => {
-          return <Chain value={tvls[item.chainId]} chainId={item.chainId} />;
+          return <Chain key={item.chainId} value={tvls[item.chainId]} chainId={item.chainId} />;
         })}
       </div>
     </Section>
@@ -50,7 +50,7 @@ interface ChainProps {
   value: BigNumber;
 }
 
-const Chain = memo<ChainProps>(function ({ chainId, value }) {
+const Chain = memo<ChainProps>(function Chain({ chainId, value }) {
   const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, chainId));
   return (

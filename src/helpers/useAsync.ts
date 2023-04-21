@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { miniSerializeError, SerializedError } from '@reduxjs/toolkit';
+import type { SerializedError } from '@reduxjs/toolkit';
+import { miniSerializeError } from '@reduxjs/toolkit';
 
 type AsyncStatus = 'idle' | 'pending' | 'success' | 'error';
 

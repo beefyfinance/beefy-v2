@@ -1,4 +1,5 @@
-import React, { FC, memo, useEffect } from 'react';
+import type { FC } from 'react';
+import React, { memo, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { useAppSelector, useAppStore } from '../../../../store';
@@ -25,7 +26,7 @@ const stepToComponent: Record<FormStep, FC> = {
   [FormStep.SelectToNetwork]: SelectToChainStep,
 };
 
-export const Bridge = memo(function () {
+export const Bridge = memo(function Bridge() {
   const classes = useStyles();
   const step = useAppSelector(selectBridgeStep);
   const StepComponent = stepToComponent[step];

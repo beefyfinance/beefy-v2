@@ -1,20 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import { WritableDraft } from 'immer/dist/internal';
+import type { Draft } from 'immer';
 import { uniq } from 'lodash-es';
-import { BeefyState } from '../../../../redux-types';
-import {
-  fetchAllBalanceAction,
-  FetchAllBalanceFulfilledPayload,
-  fetchBalanceAction,
-} from '../../actions/balance';
+import type { BeefyState } from '../../../../redux-types';
+import type { FetchAllBalanceFulfilledPayload } from '../../actions/balance';
+import { fetchAllBalanceAction, fetchBalanceAction } from '../../actions/balance';
 import { initiateBoostForm } from '../../actions/boosts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
-import { BoostBalance, GovVaultPoolBalance, TokenBalance } from '../../apis/balance/balance-types';
-import { BoostEntity } from '../../entities/boost';
-import { ChainEntity } from '../../entities/chain';
-import { TokenEntity } from '../../entities/token';
-import { VaultEntity } from '../../entities/vault';
+import type {
+  BoostBalance,
+  GovVaultPoolBalance,
+  TokenBalance,
+} from '../../apis/balance/balance-types';
+import type { BoostEntity } from '../../entities/boost';
+import type { ChainEntity } from '../../entities/chain';
+import type { TokenEntity } from '../../entities/token';
+import type { VaultEntity } from '../../entities/vault';
 import { selectAllVaultBoostIds, selectBoostById } from '../../selectors/boosts';
 import {
   selectGovVaultVaultIdsByDepositTokenAddress,
@@ -164,7 +165,7 @@ export const balanceSlice = createSlice({
   },
 });
 
-function getWalletState(sliceState: WritableDraft<BalanceState>, walletAddress: string) {
+function getWalletState(sliceState: Draft<BalanceState>, walletAddress: string) {
   if (sliceState.byAddress[walletAddress] === undefined) {
     sliceState.byAddress[walletAddress] = {
       depositedVaultIds: [],
@@ -181,7 +182,7 @@ function getWalletState(sliceState: WritableDraft<BalanceState>, walletAddress: 
 }
 
 function addBalancesToState(
-  sliceState: WritableDraft<BalanceState>,
+  sliceState: Draft<BalanceState>,
   payload: FetchAllBalanceFulfilledPayload
 ) {
   const state = payload.state;
@@ -197,7 +198,7 @@ function addBalancesToState(
 
 function addTokenBalanceToState(
   state: BeefyState,
-  walletState: WritableDraft<BalanceState['byAddress']['0xABC']>,
+  walletState: Draft<BalanceState['byAddress']['0xABC']>,
   chainId: ChainEntity['id'],
   balances: TokenBalance[]
 ) {
@@ -268,7 +269,7 @@ function addTokenBalanceToState(
 }
 
 function addGovVaultBalanceToState(
-  walletState: WritableDraft<BalanceState['byAddress']['0xABC']>,
+  walletState: Draft<BalanceState['byAddress']['0xABC']>,
   govVaultBalance: GovVaultPoolBalance[]
 ) {
   for (const vaultBalance of govVaultBalance) {
@@ -294,7 +295,7 @@ function addGovVaultBalanceToState(
 
 function addBoostBalanceToState(
   state: BeefyState,
-  walletState: WritableDraft<BalanceState['byAddress']['0xABC']>,
+  walletState: Draft<BalanceState['byAddress']['0xABC']>,
   boostBalances: BoostBalance[]
 ) {
   for (const boostBalance of boostBalances) {
@@ -336,7 +337,7 @@ function addBoostBalanceToState(
 }
 
 function addOrRemoveFromDepositedList(
-  walletState: WritableDraft<BalanceState['byAddress']['0xABC']>,
+  walletState: Draft<BalanceState['byAddress']['0xABC']>,
   amount: BigNumber,
   vaultId: VaultEntity['id']
 ) {
@@ -352,7 +353,7 @@ function addOrRemoveFromDepositedList(
 }
 
 function addOrRemoveFromEligibleList(
-  walletState: WritableDraft<BalanceState['byAddress']['0xABC']>,
+  walletState: Draft<BalanceState['byAddress']['0xABC']>,
   amount: BigNumber,
   vaultId: VaultEntity['id']
 ) {

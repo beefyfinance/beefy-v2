@@ -1,5 +1,6 @@
 import { Container, Hidden, makeStyles } from '@material-ui/core';
-import React, { lazy, memo, PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
+import React, { lazy, memo } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { styles } from './styles';
 import { StrategyCard } from './components/StrategyCard';
@@ -12,7 +13,8 @@ import {
   selectVaultIdIgnoreCase,
 } from '../data/selectors/vaults';
 import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
-import { isGovVault, VaultEntity } from '../data/entities/vault';
+import type { VaultEntity } from '../data/entities/vault';
+import { isGovVault } from '../data/entities/vault';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { TechLoader } from '../../components/TechLoader';
 import { InfoCards } from './components/InfoCards/InfoCards';
@@ -36,7 +38,7 @@ type VaultUrlParams = {
   id: VaultEntity['id'];
 };
 export const Vault = memo(function Vault() {
-  let { id } = useParams<VaultUrlParams>();
+  const { id } = useParams<VaultUrlParams>();
   const isLoaded = useAppSelector(selectIsConfigAvailable);
   const vaultExists = useAppSelector(state => selectVaultExistsById(state, id));
 

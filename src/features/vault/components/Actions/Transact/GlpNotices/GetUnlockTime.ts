@@ -1,6 +1,6 @@
-import { GlpLikeConfig, UnlockTimeResult } from './types';
-import { AbiItem } from 'web3-utils';
-import { ChainEntity } from '../../../../../data/entities/chain';
+import type { GlpLikeConfig, UnlockTimeResult } from './types';
+import type { AbiItem } from 'web3-utils';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 import { getWeb3Instance } from '../../../../../data/apis/instances';
 import { MultiCall } from 'eth-multicall';
 import { BigNumber } from 'bignumber.js';

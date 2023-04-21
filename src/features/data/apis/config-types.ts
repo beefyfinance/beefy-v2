@@ -1,10 +1,10 @@
-import { VaultEntity } from '../entities/vault';
-import { ChainEntity } from '../entities/chain';
-import { TokenEntity } from '../entities/token';
-import { PlatformEntity } from '../entities/platform';
-import { StrategyTypeEntity } from '../entities/strategy-type';
-import { AmmEntity } from '../entities/amm';
-import { ZapFee } from './transact/transact-types';
+import type { VaultEntity } from '../entities/vault';
+import type { ChainEntity } from '../entities/chain';
+import type { TokenEntity } from '../entities/token';
+import type { PlatformEntity } from '../entities/platform';
+import type { StrategyTypeEntity } from '../entities/strategy-type';
+import type { AmmEntity } from '../entities/amm';
+import type { ZapFee } from './transact/transact-types';
 
 export interface VaultConfig {
   id: string;

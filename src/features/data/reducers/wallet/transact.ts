@@ -1,23 +1,22 @@
-import { BigNumber } from 'bignumber.js';
+import type { BigNumber } from 'bignumber.js';
 import { first } from 'lodash-es';
-import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction, SerializedError } from '@reduxjs/toolkit';
 import { transactFetchOptions, transactFetchQuotes, transactInit } from '../../actions/transact';
-import {
+import type {
   QuoteOutputTokenAmountChange,
   TransactOption,
   TransactQuote,
 } from '../../apis/transact/transact-types';
-import { WritableDraft } from 'immer/dist/internal';
+import type { Draft } from 'immer';
 import { BIG_ZERO } from '../../../../helpers/big-number';
-import {
-  TransactMode,
+import type {
   TransactOptions,
   TransactQuotes,
   TransactState,
-  TransactStatus,
-  TransactStep,
   TransactTokens,
 } from './transact-types';
+import { TransactMode, TransactStatus, TransactStep } from './transact-types';
 
 const initialTransactTokens: TransactTokens = {
   allTokensIds: [],
@@ -216,7 +215,7 @@ const transactSlice = createSlice({
   },
 });
 
-function resetForm(sliceState: WritableDraft<TransactState>) {
+function resetForm(sliceState: Draft<TransactState>) {
   sliceState.selectedChainId = null;
   sliceState.selectedTokensId = null;
   sliceState.inputAmount = BIG_ZERO;
@@ -236,7 +235,7 @@ function resetForm(sliceState: WritableDraft<TransactState>) {
   resetQuotes(sliceState);
 }
 
-function resetQuotes(sliceState: WritableDraft<TransactState>) {
+function resetQuotes(sliceState: Draft<TransactState>) {
   sliceState.selectedQuoteId = null;
   sliceState.quotes.status = TransactStatus.Idle;
   sliceState.quotes.allQuoteIds = [];
@@ -247,14 +246,14 @@ function resetQuotes(sliceState: WritableDraft<TransactState>) {
   resetConfirm(sliceState);
 }
 
-function resetConfirm(sliceState: WritableDraft<TransactState>) {
+function resetConfirm(sliceState: Draft<TransactState>) {
   sliceState.confirm.requestId = null;
   sliceState.confirm.error = null;
   sliceState.confirm.status = TransactStatus.Idle;
   sliceState.confirm.changes = [];
 }
 
-function addQuotesToState(sliceState: WritableDraft<TransactState>, quotes: TransactQuote[]) {
+function addQuotesToState(sliceState: Draft<TransactState>, quotes: TransactQuote[]) {
   for (const quote of quotes) {
     if (quote.id in sliceState.quotes.byQuoteId) {
       console.warn(`Attempting to add duplicate quote id ${quote.id} to state`);
@@ -266,7 +265,7 @@ function addQuotesToState(sliceState: WritableDraft<TransactState>, quotes: Tran
   }
 }
 
-function addOptionsToState(sliceState: WritableDraft<TransactState>, options: TransactOption[]) {
+function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOption[]) {
   for (const option of options) {
     if (option.id in sliceState.options.byOptionId) {
       console.warn(`Attempting to add duplicate option id ${option.id} to state`);

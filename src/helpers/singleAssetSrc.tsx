@@ -1,5 +1,5 @@
-import { TokenEntity } from '../features/data/entities/token';
-import { ChainEntity } from '../features/data/entities/chain';
+import type { TokenEntity } from '../features/data/entities/token';
+import type { ChainEntity } from '../features/data/entities/chain';
 import { createGlobLoader, removeExtension } from './globLoader';
 
 const pathToUrl = import.meta.glob('../images/single-assets/**/*.(svg|webp|png)', {

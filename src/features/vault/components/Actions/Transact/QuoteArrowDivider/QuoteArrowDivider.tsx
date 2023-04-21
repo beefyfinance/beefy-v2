@@ -9,7 +9,9 @@ const useStyles = makeStyles(styles);
 export type QuoteDownArrowProps = {
   className?: string;
 };
-export const QuoteArrowDivider = memo<QuoteDownArrowProps>(function ({ className }) {
+export const QuoteArrowDivider = memo<QuoteDownArrowProps>(function QuoteArrowDivider({
+  className,
+}) {
   const classes = useStyles();
   return (
     <div className={clsx(classes.holder, className)}>

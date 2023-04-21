@@ -1,13 +1,14 @@
-import axios, { AxiosInstance } from 'axios';
-import {
+import type { AxiosInstance } from 'axios';
+import axios from 'axios';
+import type {
   ApiChartData,
   IBeefyDataApi,
   ApiRanges,
   ApiStat,
   ApiTimeBucket,
 } from './beefy-data-api-types';
-import { VaultEntity } from '../../entities/vault';
-import { TokenEntity } from '../../entities/token';
+import type { VaultEntity } from '../../entities/vault';
+import type { TokenEntity } from '../../entities/token';
 
 export class BeefyDataApi implements IBeefyDataApi {
   private readonly version = 'v2';

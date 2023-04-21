@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchPartnersConfig } from '../actions/partners';
-import { ChainEntity } from '../entities/chain';
-import { PartnerEntity } from '../entities/partner';
-import { VaultEntity } from '../entities/vault';
+import type { ChainEntity } from '../entities/chain';
+import type { PartnerEntity } from '../entities/partner';
+import type { VaultEntity } from '../entities/vault';
 
 /**
  * State containing Vault infos

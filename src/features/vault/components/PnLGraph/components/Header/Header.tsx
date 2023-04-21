@@ -1,8 +1,9 @@
 import { makeStyles } from '@material-ui/core';
 import { HelpOutline } from '@material-ui/icons';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import clsx from 'clsx';
-import React, { memo, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
@@ -13,7 +14,7 @@ import {
   formatSignificantBigNumber,
 } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
-import { VaultEntity } from '../../../../../data/entities/vault';
+import type { VaultEntity } from '../../../../../data/entities/vault';
 import { selectVaultPnl } from '../../../../../data/selectors/analytics';
 
 import { styles } from './styles';
@@ -24,7 +25,7 @@ interface HeaderProps {
   vaultId: VaultEntity['id'];
 }
 
-export const Header = memo<HeaderProps>(function ({ vaultId }) {
+export const Header = memo<HeaderProps>(function Header({ vaultId }) {
   const { t } = useTranslation();
 
   const {
@@ -94,7 +95,7 @@ interface HeaderItemProps {
   tooltipText: string;
 }
 
-const HeaderItem = memo<HeaderItemProps>(function ({
+const HeaderItem = memo<HeaderItemProps>(function HeaderItem({
   label,
   border = true,
   className,
@@ -125,7 +126,7 @@ interface UsdValueProps {
   percentage?: BigNumber;
 }
 
-const UsdValue = memo<UsdValueProps>(function ({ value, className, percentage }) {
+const UsdValue = memo<UsdValueProps>(function UsdValue({ value, className, percentage }) {
   const classes = useStyles();
   return (
     <div className={clsx(classes.value, className)}>
@@ -145,7 +146,7 @@ interface SharesValueProps {
   subValue?: string;
 }
 
-const SharesValue = memo<SharesValueProps>(function ({
+const SharesValue = memo<SharesValueProps>(function SharesValue({
   className,
   percentage,
   amount,

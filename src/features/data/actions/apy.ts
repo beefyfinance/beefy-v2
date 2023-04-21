@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
-import { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api';
+import type { BeefyState } from '../../../redux-types';
+import type { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api';
 import { getBeefyApi } from '../apis/instances';
 
 export interface FetchAllApyFulfilledPayload {
@@ -11,7 +11,7 @@ export interface FetchAllApyFulfilledPayload {
 
 export const fetchApyAction = createAsyncThunk<
   FetchAllApyFulfilledPayload,
-  {},
+  void,
   { state: BeefyState }
 >('prices/fetchApy', async (_, { getState }) => {
   const api = getBeefyApi();

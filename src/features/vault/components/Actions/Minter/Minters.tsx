@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { memo, PropsWithChildren, useEffect } from 'react';
-import { VaultEntity } from '../../../../data/entities/vault';
+import type { PropsWithChildren } from 'react';
+import { memo, useEffect } from 'react';
+import type { VaultEntity } from '../../../../data/entities/vault';
 import {
   selectMintersByVaultId,
   selectShouldInitMinters,

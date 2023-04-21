@@ -1,7 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
-import { ChainEntity } from '../entities/chain';
-import { shouldVaultShowInterest, VaultEntity } from '../entities/vault';
+import type { BeefyState } from '../../../redux-types';
+import type { ChainEntity } from '../entities/chain';
+import type { VaultEntity } from '../entities/vault';
+import { shouldVaultShowInterest } from '../entities/vault';
 import { selectVaultById } from './vaults';
 import { createCachedSelector } from 're-reselect';
 import { isInitialLoader, isPending } from '../reducers/data-loader-types';

@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
-import { ChainEntity } from '../../../../../data/entities/chain';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 
 export type ChainIconProps = {
   chainId: ChainEntity['id'];

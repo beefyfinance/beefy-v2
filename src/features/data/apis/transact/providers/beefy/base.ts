@@ -1,5 +1,6 @@
-import { isStandardVault, VaultEntity, VaultStandard } from '../../../../entities/vault';
-import { BeefyState } from '../../../../../../redux-types';
+import type { VaultEntity, VaultStandard } from '../../../../entities/vault';
+import { isStandardVault } from '../../../../entities/vault';
+import type { BeefyState } from '../../../../../../redux-types';
 import {
   selectStandardVaultById,
   selectVaultById,
@@ -12,34 +13,28 @@ import {
   selectTokenByAddress,
   selectTokenById,
 } from '../../../../selectors/tokens';
-import {
-  isTokenEqual,
-  isTokenErc20,
-  isTokenNative,
-  TokenEntity,
-  TokenErc20,
-  TokenNative,
-} from '../../../../entities/token';
+import type { TokenEntity, TokenErc20, TokenNative } from '../../../../entities/token';
+import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../../entities/token';
 import { first } from 'lodash-es';
-import { ZapEntityBeefy } from '../../../../entities/zap';
-import {
+import type { ZapEntityBeefy } from '../../../../entities/zap';
+import type {
   InputTokenAmount,
-  isZapQuoteStepSwap,
   ITransactProvider,
   TransactOption,
   ZapFee,
   ZapOption,
   ZapQuote,
 } from '../../transact-types';
+import { isZapQuoteStepSwap } from '../../transact-types';
 import { createOptionId, createTokensId } from '../../utils';
 import { selectChainById } from '../../../../selectors/chains';
 import { getWeb3Instance } from '../../../instances';
 import { MultiCall } from 'eth-multicall';
 import { BIG_ZERO, toWei } from '../../../../../../helpers/big-number';
-import BigNumber from 'bignumber.js';
-import { Namespace, TFunction } from 'react-i18next';
+import type BigNumber from 'bignumber.js';
+import type { Namespace, TFunction } from 'react-i18next';
 import { walletActions } from '../../../../actions/wallet-actions';
-import { Step } from '../../../../reducers/wallet/stepper';
+import type { Step } from '../../../../reducers/wallet/stepper';
 import {
   nativeToWNative,
   tokensToLp,
@@ -47,12 +42,12 @@ import {
   tokensToZapWithdraw,
   wnativeToNative,
 } from '../../helpers/tokens';
-import Web3 from 'web3';
+import type Web3 from 'web3';
 import { TransactMode } from '../../../../reducers/wallet/transact-types';
-import { AmmEntity } from '../../../../entities/amm';
+import type { AmmEntity } from '../../../../entities/amm';
 import { selectBeefyZapByAmmId, selectBeefyZapsByChainId } from '../../../../selectors/zap';
 import { selectTransactSlippage } from '../../../../selectors/transact';
-import { ChainEntity } from '../../../../entities/chain';
+import type { ChainEntity } from '../../../../entities/chain';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import { selectAmmById } from '../../../../selectors/amm';
 
@@ -129,7 +124,7 @@ export abstract class BeefyBaseZapProvider<AmmType extends AmmEntity> implements
   ): Promise<CommonOptionsData<AmmType>> {
     const vault = selectVaultById(state, vaultId);
 
-    let zaps = selectBeefyZapsByChainId(state, vault.chainId);
+    const zaps = selectBeefyZapsByChainId(state, vault.chainId);
     if (zaps === undefined || zaps.length === 0) {
       return null;
     }

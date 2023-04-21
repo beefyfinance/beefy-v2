@@ -19,7 +19,7 @@ import { ChevronRight } from '@material-ui/icons';
 const useStyles = makeStyles(styles);
 
 export type ProviderSelectProps = { pending: boolean };
-export const ProviderSelect = memo<ProviderSelectProps>(function ({ pending }) {
+export const ProviderSelect = memo<ProviderSelectProps>(function ProviderSelect({ pending }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const quote = useAppSelector(selectSelectedQuote);

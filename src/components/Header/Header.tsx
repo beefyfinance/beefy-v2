@@ -32,7 +32,7 @@ import headerLogoMobile from '../../images/bifi-logos/header-logo-notext.svg';
 import headerLogoDesktop from '../../images/bifi-logos/header-logo.svg';
 
 const useStyles = makeStyles(styles);
-export const Header = memo(function () {
+export const Header = memo(function Header() {
   const location = useLocation();
   const isOnDashboard =
     location.pathname.includes('dashboard') || location.pathname.includes('treasury');

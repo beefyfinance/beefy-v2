@@ -1,7 +1,8 @@
-import React, { memo, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React, { memo } from 'react';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
-import { Theme } from '@material-ui/core/styles';
+import type { Theme } from '@material-ui/core';
 import { IconWithTooltip, Tooltip } from '../Tooltip';
 import clsx from 'clsx';
 

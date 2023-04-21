@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { AlertError, AlertWarning } from '../../../../../../components/Alerts';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox';
 import { formatPercent } from '../../../../../../helpers/format';
-import { isZapQuote, TransactQuote } from '../../../../../data/apis/transact/transact-types';
+import type { TransactQuote } from '../../../../../data/apis/transact/transact-types';
+import { isZapQuote } from '../../../../../data/apis/transact/transact-types';
 
 const IMPACT_WARN_PERCENT = 1 / 100;
 const IMPACT_CONFIRM_PERCENT = 5 / 100;

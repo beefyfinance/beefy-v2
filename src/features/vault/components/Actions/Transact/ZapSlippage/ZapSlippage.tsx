@@ -1,13 +1,5 @@
-import React, {
-  ChangeEventHandler,
-  memo,
-  MouseEventHandler,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import type { ChangeEventHandler, MouseEventHandler } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
@@ -84,7 +76,7 @@ type CustomSlippageInputProps = {
   isCustom: boolean;
   className?: string;
 };
-const CustomSlippageInput = memo<CustomSlippageInputProps>(function ({
+const CustomSlippageInput = memo<CustomSlippageInputProps>(function CustomSlippageInput({
   onChange,
   onFocus,
   value,
@@ -181,7 +173,11 @@ type SlippageButtonProps = Omit<ButtonProps, 'onChange' | 'onClick' | 'value'> &
   value: number;
   onChange: (value: number) => void;
 };
-const SlippageButton = memo<SlippageButtonProps>(function ({ onChange, value, ...rest }) {
+const SlippageButton = memo<SlippageButtonProps>(function SlippageButton({
+  onChange,
+  value,
+  ...rest
+}) {
   const handleClick = useCallback(() => onChange(value * 100), [onChange, value]);
   return (
     <button onClick={handleClick} {...rest}>
@@ -193,7 +189,7 @@ const SlippageButton = memo<SlippageButtonProps>(function ({ onChange, value, ..
 export type ZapSlippageProps = {
   className?: string;
 };
-export const ZapSlippage = memo<ZapSlippageProps>(function ({ className }) {
+export const ZapSlippage = memo<ZapSlippageProps>(function ZapSlippage({ className }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();

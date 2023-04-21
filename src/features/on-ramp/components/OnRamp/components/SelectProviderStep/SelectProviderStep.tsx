@@ -11,14 +11,14 @@ import {
 } from '../../../../../data/selectors/on-ramp';
 import { useDispatch } from 'react-redux';
 import { SearchableList } from '../../../../../../components/SearchableList';
-import { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
+import type { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 import { ProviderIcon } from '../ProviderIcon';
 import { PROVIDERS } from '../../providers';
 
 const useStyles = makeStyles(styles);
 
-export const SelectProviderStep = memo(function () {
+export const SelectProviderStep = memo(function SelectProviderStep() {
   const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
@@ -34,7 +34,7 @@ export const SelectProviderStep = memo(function () {
   );
 });
 
-const ListItem = memo<ItemInnerProps>(function ({ value }) {
+const ListItem = memo<ItemInnerProps>(function ListItem({ value }) {
   const classes = useStyles();
   const quote = useAppSelector(state => selectQuoteByProvider(state, value));
 
@@ -49,7 +49,7 @@ const ListItem = memo<ItemInnerProps>(function ({ value }) {
   );
 });
 
-const ProviderSelector = memo(function () {
+const ProviderSelector = memo(function ProviderSelector() {
   const providers = useAppSelector(selectSortedQuoteProviders);
   const dispatch = useDispatch();
 

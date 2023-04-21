@@ -11,7 +11,7 @@ export type ZapProviderProps = {
   providerId: string;
   className?: string;
 };
-export const ZapProvider = memo<ZapProviderProps>(function ({ providerId, className }) {
+export const ZapProvider = memo<ZapProviderProps>(function ZapProvider({ providerId, className }) {
   const classes = useStyles();
   const { t } = useTranslation();
 

@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(styles);
 
-export const ProviderFrame = memo(function () {
+export const ProviderFrame = memo(function ProviderFrame() {
   const classes = useStyles();
   const { t } = useTranslation();
   const quote = useAppSelector(selectSelectedQuote);

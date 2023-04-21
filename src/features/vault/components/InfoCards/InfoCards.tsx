@@ -1,12 +1,13 @@
-import React, { memo, PropsWithChildren, useEffect, useMemo } from 'react';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { PropsWithChildren } from 'react';
+import React, { memo, useEffect, useMemo } from 'react';
+import type { VaultEntity } from '../../../data/entities/vault';
 import {
   selectInfoCardsByChainId,
   selectInfoCardsByVaultId,
   selectShouldInitInfoCards,
 } from '../../../data/selectors/info-cards';
 import { fetchAllInfoCards } from '../../../data/actions/info-cards';
-import { ChainEntity } from '../../../data/entities/chain';
+import type { ChainEntity } from '../../../data/entities/chain';
 import { uniq } from 'lodash-es';
 import { InfoCard } from './InfoCard';
 import { useAppDispatch, useAppSelector } from '../../../../store';

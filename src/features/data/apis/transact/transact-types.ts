@@ -1,11 +1,11 @@
-import { VaultEntity } from '../../entities/vault';
-import { BeefyState } from '../../../../redux-types';
-import BigNumber from 'bignumber.js';
-import { ChainEntity } from '../../entities/chain';
-import { TokenEntity, TokenErc20 } from '../../entities/token';
-import { Step } from '../../reducers/wallet/stepper';
-import { Namespace, TFunction } from 'react-i18next';
-import { TransactMode } from '../../reducers/wallet/transact-types';
+import type { VaultEntity } from '../../entities/vault';
+import type { BeefyState } from '../../../../redux-types';
+import type BigNumber from 'bignumber.js';
+import type { ChainEntity } from '../../entities/chain';
+import type { TokenEntity, TokenErc20 } from '../../entities/token';
+import type { Step } from '../../reducers/wallet/stepper';
+import type { Namespace, TFunction } from 'react-i18next';
+import type { TransactMode } from '../../reducers/wallet/transact-types';
 
 export type VaultOption = {
   id: string;

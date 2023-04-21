@@ -1,7 +1,9 @@
 import { memo, useCallback } from 'react';
-import { ClickAwayListener, ClickAwayListenerProps, makeStyles, Portal } from '@material-ui/core';
+import { ClickAwayListener, makeStyles, Portal } from '@material-ui/core';
+import type { ClickAwayListenerProps } from '@material-ui/core';
 import { styles } from './styles';
-import { Floating, FloatingProps } from '../Floating';
+import type { FloatingProps } from '../Floating';
+import { Floating } from '../Floating';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
@@ -12,7 +14,7 @@ export type DropdownProps = Omit<FloatingProps, 'autoHeight' | 'autoWidth' | 'cl
   innerClassName?: string;
 };
 
-export const Dropdown = memo<DropdownProps>(function ({
+export const Dropdown = memo<DropdownProps>(function Dropdown({
   onClose,
   children,
   dropdownClassName,

@@ -1,9 +1,11 @@
 import { BigNumber } from 'bignumber.js';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { formatBigDecimals } from '../../../helpers/format';
-import { isTokenErc20, TokenErc20 } from '../entities/token';
-import { Step, StepContent } from '../reducers/wallet/stepper';
-import { TokenAmount } from '../apis/transact/transact-types';
+import type { TokenErc20 } from '../entities/token';
+import { isTokenErc20 } from '../entities/token';
+import type { Step } from '../reducers/wallet/stepper';
+import { StepContent } from '../reducers/wallet/stepper';
+import type { TokenAmount } from '../apis/transact/transact-types';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,

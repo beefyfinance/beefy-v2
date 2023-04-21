@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi } from '../apis/instances';
-import { BeefySnapshotActiveResponse, BeefySnapshotProposal } from '../apis/beefy/beefy-api';
-import { ProposalEntity } from '../entities/proposal';
+import type { BeefySnapshotActiveResponse, BeefySnapshotProposal } from '../apis/beefy/beefy-api';
+import type { ProposalEntity } from '../entities/proposal';
 import { uniq } from 'lodash-es';
 import { selectAllProposalIds } from '../selectors/proposals';
 
@@ -13,11 +13,13 @@ function getReadProposals(): ProposalEntity['id'][] {
     const readStorage = window.localStorage.getItem('readProposals');
     if (readStorage && readStorage.startsWith('[') && readStorage.endsWith(']')) {
       const read = JSON.parse(readStorage);
-      if (Array.isArray(read) && read.every((id: any) => typeof id === 'string')) {
+      if (Array.isArray(read) && read.every((id: unknown) => typeof id === 'string')) {
         return read;
       }
     }
-  } catch {}
+  } catch {
+    // ignore
+  }
 
   return [];
 }
@@ -33,7 +35,9 @@ function setReadProposals(read: ProposalEntity['id'][], joinExisting: boolean = 
       window.localStorage.setItem(READ_STORAGE_KEY, JSON.stringify(read));
       return read;
     }
-  } catch {}
+  } catch {
+    // ignore
+  }
 
   return read;
 }

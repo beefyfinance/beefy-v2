@@ -1,4 +1,5 @@
-import React, { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import { styles } from './styles';

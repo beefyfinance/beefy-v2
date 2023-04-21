@@ -1,4 +1,5 @@
-import { FC, memo, useCallback, useMemo } from 'react';
+import type { FC } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
@@ -28,7 +29,7 @@ export type ToggleButtonsProps = {
   untoggleValue?: string;
 };
 
-export const ToggleButton = memo<ToggleButtonProps>(function ({
+export const ToggleButton = memo<ToggleButtonProps>(function ToggleButton({
   value,
   label,
   onClick,
@@ -45,7 +46,7 @@ export const ToggleButton = memo<ToggleButtonProps>(function ({
   );
 });
 
-export const ToggleButtons = memo<ToggleButtonsProps>(function ({
+export const ToggleButtons = memo<ToggleButtonsProps>(function ToggleButtons({
   value,
   options,
   extraOptions,

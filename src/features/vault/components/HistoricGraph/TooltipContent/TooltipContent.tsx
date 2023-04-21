@@ -1,9 +1,9 @@
 import React, { memo, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { TooltipProps } from 'recharts';
-import { ChartStat } from '../../../../data/reducers/historical-types';
-import { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
-import { LineTogglesState } from '../LineToggles';
+import type { TooltipProps } from 'recharts';
+import type { ChartStat } from '../../../../data/reducers/historical-types';
+import type { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
+import type { LineTogglesState } from '../LineToggles';
 import { format, fromUnixTime } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { getBucketParams } from '../utils';
@@ -19,7 +19,7 @@ export type TooltipContentProps = TooltipProps<number, string> & {
   avg: number;
 };
 
-export const TooltipContent = memo<TooltipContentProps>(function ({
+export const TooltipContent = memo<TooltipContentProps>(function TooltipContent({
   active,
   payload,
   stat,

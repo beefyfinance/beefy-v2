@@ -1,4 +1,4 @@
-import { ChainConfig } from '../features/data/apis/config-types';
+import type { ChainConfig } from '../features/data/apis/config-types';
 
 export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   ethereum: {

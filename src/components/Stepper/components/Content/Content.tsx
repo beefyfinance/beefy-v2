@@ -1,8 +1,10 @@
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
-import React, { memo, ReactNode, useMemo } from 'react';
+import type { ReactNode } from 'react';
+import React, { memo, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Step, stepperActions } from '../../../../features/data/reducers/wallet/stepper';
+import type { Step } from '../../../../features/data/reducers/wallet/stepper';
+import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
 import {
   selectMintResult,
   selectStepperCurrentStep,
@@ -21,11 +23,11 @@ import { Title } from '../Title';
 import { ListJoin } from '../../../ListJoin';
 import iconError from '../../../../images/icons/error.svg';
 import { ShareButton } from '../../../../features/vault/components/ShareButton';
-import { VaultEntity } from '../../../../features/data/entities/vault';
+import type { VaultEntity } from '../../../../features/data/entities/vault';
 
 const useStyles = makeStyles(styles);
 
-export const StepsCountContent = memo(function () {
+export const StepsCountContent = memo(function StepsCountContent() {
   const { t } = useTranslation();
   const classes = useStyles();
   const currentStepData = useAppSelector(selectStepperCurrentStepData);
@@ -40,7 +42,7 @@ export const StepsCountContent = memo(function () {
   );
 });
 
-export const WaitingContent = memo(function () {
+export const WaitingContent = memo(function WaitingContent() {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -52,7 +54,7 @@ export const WaitingContent = memo(function () {
   );
 });
 
-export const ErrorContent = memo(function () {
+export const ErrorContent = memo(function ErrorContent() {
   const { t } = useTranslation();
   const classes = useStyles();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
@@ -81,7 +83,7 @@ export const ErrorContent = memo(function () {
   );
 });
 
-export const CloseButton = memo(function () {
+export const CloseButton = memo(function CloseButton() {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
@@ -108,7 +110,7 @@ type SuccessContentProps = {
   step: Step;
 };
 
-const ZapSuccessContent = memo<SuccessContentProps>(function ({ step }) {
+const ZapSuccessContent = memo<SuccessContentProps>(function ZapSuccessContent({ step }) {
   const { t } = useTranslation();
   const returned = useAppSelector(state => selectZapReturned(state, step.step));
 
@@ -142,7 +144,7 @@ const ZapSuccessContent = memo<SuccessContentProps>(function ({ step }) {
   );
 });
 
-const MintSuccessContent = memo<SuccessContentProps>(function ({ step }) {
+const MintSuccessContent = memo<SuccessContentProps>(function MintSuccessContent({ step }) {
   const { t } = useTranslation();
   const { type, amount, token } = useAppSelector(selectMintResult);
 
@@ -154,7 +156,7 @@ const MintSuccessContent = memo<SuccessContentProps>(function ({ step }) {
   );
 });
 
-const FallbackSuccessContent = memo<SuccessContentProps>(function ({ step }) {
+const FallbackSuccessContent = memo<SuccessContentProps>(function FallbackSuccessContent({ step }) {
   const { t } = useTranslation();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
   const hasRememberMsg = step.step === 'deposit' || step.step === 'stake';
@@ -208,7 +210,7 @@ type SuccessContentDisplayProps = {
   rememberMessage?: ReactNode;
   shareVaultId?: VaultEntity['id'];
 };
-const SuccessContentDisplay = memo<SuccessContentDisplayProps>(function ({
+const SuccessContentDisplay = memo<SuccessContentDisplayProps>(function SuccessContentDisplay({
   title,
   message,
   messageHighlight,
@@ -253,7 +255,7 @@ const stepToSuccessContent: StepToSuccessContent = {
   mint: MintSuccessContent,
 };
 
-export const SuccessContent = memo(function () {
+export const SuccessContent = memo(function SuccessContent() {
   const step = useAppSelector(selectStepperCurrentStepData);
   const Component = stepToSuccessContent[step.step] || FallbackSuccessContent;
   return <Component step={step} />;

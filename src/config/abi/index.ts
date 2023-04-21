@@ -1,4 +1,4 @@
-import { AbiItem } from 'web3-utils';
+import type { AbiItem } from 'web3-utils';
 import BeefyV2AppMulticallJson from './BeefyV2AppMulticall.json';
 import BoostJson from './boost.json';
 import BridgeJson from './BridgeAbi.json';

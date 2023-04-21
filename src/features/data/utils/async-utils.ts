@@ -1,6 +1,6 @@
-import { AsyncThunkAction } from '@reduxjs/toolkit';
-import { Action, Store } from 'redux';
-import { BeefyState } from '../../../redux-types';
+import type { AsyncThunkAction } from '@reduxjs/toolkit';
+import type { Action, Store } from 'redux';
+import type { BeefyState } from '../../../redux-types';
 
 /**
  * allows us to do
@@ -22,7 +22,7 @@ export type PollStop = () => void;
  * The return value is a stop() function to stop looping
  */
 export function poll(
-  fn: () => Promise<any>,
+  fn: () => Promise<unknown>,
   ms: number,
   pauseWhenAppNotShown: boolean = true
 ): PollStop {
@@ -105,7 +105,7 @@ export function createFulfilledActionCapturer(store: Store) {
    * As we are delaying those actions from being dispatched we need
    * to update the state in this payload according to the latest state
    */
-  function prepareAction(action: CustomAction<any>): () => CustomAction<any> {
+  function prepareAction(action: CustomAction<unknown>): () => CustomAction<unknown> {
     return () => {
       // replace the action state with the latest available state
       if (action.payload && action.payload.state) {
@@ -128,13 +128,13 @@ export function createFulfilledActionCapturer(store: Store) {
    */
   return function captureFulfilledAction<Returned, ThunkArg, ThunkApiConfig>(
     asyncAction: AsyncThunkAction<Returned, ThunkArg, ThunkApiConfig>
-  ): Promise<() => Action<any>> {
+  ): Promise<() => Action> {
     const extra = {};
     return new Promise((resolve, reject) => {
       try {
         asyncAction(
           // @ts-ignore I could not find a proper TS type here
-          (action: Action<string> & { payload: any }) => {
+          (action: Action<string> & { payload: unknown }) => {
             // if this is the fulfilled action
             if (action.type.endsWith('/fulfilled')) {
               // we don't dispatch it to the store, just pass it to our caller

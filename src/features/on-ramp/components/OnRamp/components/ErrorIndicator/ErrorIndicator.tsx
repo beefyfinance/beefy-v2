@@ -1,4 +1,5 @@
-import React, { memo, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { ReportProblemOutlined } from '@material-ui/icons';
@@ -12,7 +13,11 @@ export type ErrorIndicatorProps = {
   className?: string;
 };
 
-export const ErrorIndicator = memo<ErrorIndicatorProps>(function ({ title, content, className }) {
+export const ErrorIndicator = memo<ErrorIndicatorProps>(function ErrorIndicator({
+  title,
+  content,
+  className,
+}) {
   const classes = useStyles();
 
   return (

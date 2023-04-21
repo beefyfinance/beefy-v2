@@ -1,12 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { sortBy } from 'lodash-es';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
+import type { VaultEntity } from '../entities/vault';
 import {
   isGovVault,
   isVaultPaused,
   isVaultRetired,
   shouldVaultShowInterest,
-  VaultEntity,
 } from '../entities/vault';
 import {
   selectHasUserDepositInVault,
@@ -34,9 +34,9 @@ import {
 import escapeStringRegexp from 'escape-string-regexp';
 import { selectTokenByAddress } from './tokens';
 import { createCachedSelector } from 're-reselect';
-import { KeysOfType } from '../utils/types-utils';
-import { FilteredVaultsState } from '../reducers/filtered-vaults';
-import { PlatformEntity } from '../entities/platform';
+import type { KeysOfType } from '../utils/types-utils';
+import type { FilteredVaultsState } from '../reducers/filtered-vaults';
+import type { PlatformEntity } from '../entities/platform';
 import { selectActiveChainIds, selectAllChainIds } from './chains';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;

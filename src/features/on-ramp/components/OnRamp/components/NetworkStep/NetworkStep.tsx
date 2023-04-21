@@ -13,7 +13,7 @@ import {
 } from '../../../../../data/selectors/on-ramp';
 import { useDispatch } from 'react-redux';
 import { SearchableList } from '../../../../../../components/SearchableList';
-import { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
+import type { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 import clsx from 'clsx';
 import { selectChainById } from '../../../../../data/selectors/chains';
@@ -22,7 +22,7 @@ import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 
 const useStyles = makeStyles(styles);
 
-export const NetworkStep = memo(function () {
+export const NetworkStep = memo(function NetworkStep() {
   const { t } = useTranslation();
   const fiat = useAppSelector(selectFiat);
   const token = useAppSelector(selectToken);
@@ -50,7 +50,10 @@ export const NetworkStep = memo(function () {
   );
 });
 
-const TokenNotSupported = memo<{ fiat: string; token: string }>(function ({ fiat, token }) {
+const TokenNotSupported = memo<{ fiat: string; token: string }>(function TokenNotSupported({
+  fiat,
+  token,
+}) {
   return (
     <div>
       {token} not supported for {fiat}
@@ -62,11 +65,14 @@ type NetworkIconPlaceholderProps = {
   network: string;
   className?: string;
 };
-const NetworkIconPlaceholder = memo<NetworkIconPlaceholderProps>(function ({ network, className }) {
+const NetworkIconPlaceholder = memo<NetworkIconPlaceholderProps>(function NetworkIconPlaceholder({
+  network,
+  className,
+}) {
   return <div className={className} data-network={network} />;
 });
 
-const ListItem = memo<ItemInnerProps>(function ({ value }) {
+const ListItem = memo<ItemInnerProps>(function ListItem({ value }) {
   const classes = useStyles();
   const src = getNetworkSrc(value);
   const chain = useAppSelector(state => selectChainById(state, value));
@@ -86,7 +92,10 @@ const ListItem = memo<ItemInnerProps>(function ({ value }) {
   );
 });
 
-const NetworkSelector = memo<{ fiat: string; token: string }>(function ({ fiat, token }) {
+const NetworkSelector = memo<{ fiat: string; token: string }>(function NetworkSelector({
+  fiat,
+  token,
+}) {
   const networks = useAppSelector(state => selectNetworksForFiatToken(state, fiat, token));
   const sortedNetworks = useMemo(() => [...networks].sort(), [networks]);
   const dispatch = useDispatch();

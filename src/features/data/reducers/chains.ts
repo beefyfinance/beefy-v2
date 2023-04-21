@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchChainConfigs } from '../actions/chains';
-import { ChainEntity } from '../entities/chain';
-import { NormalizedEntity } from '../utils/normalized-entity';
+import type { ChainEntity } from '../entities/chain';
+import type { NormalizedEntity } from '../utils/normalized-entity';
+import { omit } from 'lodash-es';
 
 /**
  * State containing Vault infos
@@ -35,9 +36,8 @@ export const chainsSlice = createSlice({
         }
         // for now, both ChainEntity and ChainConfig have somewhat compatible types
         // we just rename the chainId to networkChainId to avoid confusion
-        const { chainId: _, ...chainConfigData } = chainConfig;
         const chain: ChainEntity = {
-          ...chainConfigData,
+          ...omit(chainConfig, 'chainId'),
           networkChainId: chainConfig.chainId,
         };
 

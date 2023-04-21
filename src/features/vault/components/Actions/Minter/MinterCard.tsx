@@ -1,6 +1,6 @@
 import React, { memo, Suspense, useEffect } from 'react';
-import { VaultEntity } from '../../../../data/entities/vault';
-import { MinterEntity } from '../../../../data/entities/minter';
+import type { VaultEntity } from '../../../../data/entities/vault';
+import type { MinterEntity } from '../../../../data/entities/minter';
 import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loader';
 import { Loader } from '../../../../../components/Loader';
 import { selectIsWalletKnown, selectWalletAddress } from '../../../../data/selectors/wallet';

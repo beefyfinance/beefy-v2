@@ -1,4 +1,4 @@
-import { AmmConfigSolidly, AmmConfigUniswapV2 } from '../apis/config-types';
+import type { AmmConfigSolidly, AmmConfigUniswapV2 } from '../apis/config-types';
 
 export type AmmEntityUniswapV2 = AmmConfigUniswapV2;
 export type AmmEntitySolidly = AmmConfigSolidly;

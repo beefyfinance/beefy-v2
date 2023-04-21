@@ -1,7 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import React, { memo } from 'react';
-import { VaultEntity, isGovVault } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault';
+import { isGovVault } from '../../features/data/entities/vault';
 import clsx from 'clsx';
 import { VaultDailyUsdStat } from './VaultDailyUsdStat';
 import { VaultPnlStat } from './VaultPnlStat';

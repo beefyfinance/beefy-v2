@@ -1,6 +1,7 @@
-import { memo, PropsWithChildren } from 'react';
+import type { ReactNode } from 'react';
+import { memo } from 'react';
+import type { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
-import { Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
   value: {
@@ -10,7 +11,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export type ValueProps = PropsWithChildren<{}>;
+export type ValueProps = {
+  children: ReactNode;
+};
 
 export const Value = memo<ValueProps>(function Value({ children }) {
   const classes = useStyles();

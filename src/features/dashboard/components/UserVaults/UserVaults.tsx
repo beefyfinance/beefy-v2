@@ -8,13 +8,14 @@ import { styles } from './styles';
 import { Filter } from './components/Filter';
 import { Vault } from './components/Vault';
 import { useSortedDashboardVaults } from './hook';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
 import { NoVaults } from './components/NoVaults';
-import { Theme, useMediaQuery } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
+import { useMediaQuery } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 
-export const UserVaults = memo(function () {
+export const UserVaults = memo(function UserVaults() {
   const { t } = useTranslation();
 
   const {
@@ -47,7 +48,7 @@ export const UserVaults = memo(function () {
   );
 });
 
-export const VirtualList = memo(function ({ vaults }: { vaults: VaultEntity[] }) {
+export const VirtualList = memo(function VirtualList({ vaults }: { vaults: VaultEntity[] }) {
   const classes = useStyles();
   const totalVaults = vaults.length;
   const minBatchSize = 3;

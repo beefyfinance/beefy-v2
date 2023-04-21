@@ -11,7 +11,7 @@ import { ReactComponent as AuditIcon } from '../../images/icons/navigation/audit
 import { ReactComponent as TreasuryIcon } from '../../images/icons/navigation/treasury.svg';
 import { ReactComponent as DaoIcon } from '../../images/icons/navigation/dao.svg';
 import { ProposalsNavItem } from './components/NavItem/ProposalsNavItem';
-import { NavConfig, NavItemConfig } from './components/DropNavItem/types';
+import type { NavConfig, NavItemConfig } from './components/DropNavItem/types';
 import { ProposalsMobileNavItem } from './components/NavItem/ProposalsMobileNavItem';
 
 export const DaoNavItems: NavItemConfig[] = [

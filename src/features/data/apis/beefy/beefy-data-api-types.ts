@@ -1,5 +1,5 @@
-import { VaultEntity } from '../../entities/vault';
-import { TokenEntity } from '../../entities/token';
+import type { VaultEntity } from '../../entities/vault';
+import type { TokenEntity } from '../../entities/token';
 
 export type ApiTimeBucket = '1h_1d' | '1h_1w' | '1d_1M' | '1d_1Y';
 

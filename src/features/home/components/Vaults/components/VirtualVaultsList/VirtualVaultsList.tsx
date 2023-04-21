@@ -1,18 +1,11 @@
 import { useMediaQuery } from '@material-ui/core';
-import { Theme } from '@material-ui/core/styles';
-import React, {
-  CSSProperties,
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import type { Theme } from '@material-ui/core';
+import type { CSSProperties } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { debounce } from 'lodash-es';
 import { useInView } from 'react-intersection-observer';
 import { Vault } from '../../../Vault';
-import { VaultEntity } from '../../../../../data/entities/vault';
+import type { VaultEntity } from '../../../../../data/entities/vault';
 
 function useVaultHeightEstimate() {
   const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
@@ -52,7 +45,9 @@ function useVaultHeightEstimate() {
 type VirtualVaultsListProps = {
   vaultIds: VaultEntity['id'][];
 };
-export const VirtualVaultsList = memo<VirtualVaultsListProps>(function ({ vaultIds }) {
+export const VirtualVaultsList = memo<VirtualVaultsListProps>(function VirtualVaultsList({
+  vaultIds,
+}) {
   const totalVaults = vaultIds.length;
   const minBatchSize = 10;
   const [renderCount, setRenderCount] = useState(minBatchSize);

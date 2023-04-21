@@ -1,6 +1,6 @@
-import { ChainEntity } from '../../../data/entities/chain';
-import { TokenEntity } from '../../../data/entities/token';
-import { BigNumber } from 'bignumber.js';
+import type { ChainEntity } from '../../../data/entities/chain';
+import type { TokenEntity } from '../../../data/entities/token';
+import type { BigNumber } from 'bignumber.js';
 
 export type BreakdownMode = 'user' | 'one' | 'total';
 

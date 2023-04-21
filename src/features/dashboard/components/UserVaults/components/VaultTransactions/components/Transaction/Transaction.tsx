@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { VaultTimelineAnalyticsEntity } from '../../../../../../../data/entities/analytics';
+import type { VaultTimelineAnalyticsEntity } from '../../../../../../../data/entities/analytics';
 import clsx from 'clsx';
 import { formatISO9075 } from 'date-fns';
 import { formatBigUsd, formatSignificantBigNumber } from '../../../../../../../../helpers/format';
@@ -18,7 +18,7 @@ interface TransactionProps {
   data: VaultTimelineAnalyticsEntity;
   tokenDecimals: number;
 }
-export const Transaction = memo<TransactionProps>(function ({ data, tokenDecimals }) {
+export const Transaction = memo<TransactionProps>(function Transaction({ data, tokenDecimals }) {
   const classes = useStyles();
   const {
     internal,
@@ -77,7 +77,10 @@ export const Transaction = memo<TransactionProps>(function ({ data, tokenDecimal
   );
 });
 
-export const TransactionMobile = memo<TransactionProps>(function ({ data, tokenDecimals }) {
+export const TransactionMobile = memo<TransactionProps>(function TransactionMobile({
+  data,
+  tokenDecimals,
+}) {
   const classes = useStyles();
   const { t } = useTranslation();
   const {

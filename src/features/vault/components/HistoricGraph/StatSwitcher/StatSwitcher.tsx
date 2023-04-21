@@ -1,4 +1,4 @@
-import { ChartStat } from '../../../../data/reducers/historical-types';
+import type { ChartStat } from '../../../../data/reducers/historical-types';
 import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ToggleButtons } from '../../../../../components/ToggleButtons';
@@ -13,7 +13,11 @@ export type StatSwitcherProps = {
   onChange: (newStat: ChartStat) => void;
 };
 
-export const StatSwitcher = memo<StatSwitcherProps>(function ({ availableStats, stat, onChange }) {
+export const StatSwitcher = memo<StatSwitcherProps>(function StatSwitcher({
+  availableStats,
+  stat,
+  onChange,
+}) {
   const classes = useStyles();
   const { t } = useTranslation();
   const options: Record<string, string> = useMemo(() => {

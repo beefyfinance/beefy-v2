@@ -1,5 +1,6 @@
-import { BrowserRouter, BrowserRouterProps, HashRouter, HashRouterProps } from 'react-router-dom';
-import { ElementType } from 'react';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
+import type { BrowserRouterProps, HashRouterProps } from 'react-router-dom';
+import type { ElementType } from 'react';
 
 type RouterProps = BrowserRouterProps & HashRouterProps;
 

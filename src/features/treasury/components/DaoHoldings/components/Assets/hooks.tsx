@@ -1,5 +1,5 @@
 import { sortBy } from 'lodash-es';
-import { TreasuryHoldingEntity } from '../../../../../data/entities/treasury';
+import type { TreasuryHoldingEntity } from '../../../../../data/entities/treasury';
 
 type SortedAssetCategories = {
   stakedAssets: TreasuryHoldingEntity[];

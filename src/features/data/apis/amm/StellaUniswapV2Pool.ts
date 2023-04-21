@@ -1,14 +1,14 @@
-import {
+import type {
   MintFeeParams,
   PairData as BasePairData,
   PairDataResponse as BasePairDataResponse,
-  UniswapV2Pool,
 } from './UniswapV2Pool';
+import { UniswapV2Pool } from './UniswapV2Pool';
 import { BigNumber } from 'bignumber.js';
-import { ShapeWithLabel } from 'eth-multicall';
+import type { ShapeWithLabel } from 'eth-multicall';
 import { createContract } from '../../../../helpers/web3';
 import { ZERO_ADDRESS } from '../../../../helpers/addresses';
-import { AbiItem } from 'web3-utils';
+import type { AbiItem } from 'web3-utils';
 
 type PairDataResponse = BasePairDataResponse & {
   devFee: string;
@@ -47,7 +47,7 @@ export class StellaUniswapV2Pool extends UniswapV2Pool {
     ];
   }
 
-  protected consumePairDataResponse(untypedResult: any[]) {
+  protected consumePairDataResponse(untypedResult: unknown[]) {
     const result = (untypedResult as PairDataResponse[])[0];
 
     super.consumePairDataResponse(untypedResult);

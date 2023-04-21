@@ -3,7 +3,8 @@ import React, { memo, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { localeToLanguageMap } from '../../i18n';
 import { styles } from './styles';
-import { LabeledSelect, LabeledSelectProps } from '../LabeledSelect';
+import type { LabeledSelectProps } from '../LabeledSelect';
+import { LabeledSelect } from '../LabeledSelect';
 import { ReactComponent as Globe } from '../../images/icons/navigation/globe.svg';
 const useStyles = makeStyles(styles);
 

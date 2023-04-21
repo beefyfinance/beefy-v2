@@ -14,7 +14,7 @@ import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
 
 const useStyles = makeStyles(styles);
 
-export const AmountStep = memo(function () {
+export const AmountStep = memo(function AmountStep() {
   const classes = useStyles();
   const { t } = useTranslation();
   const inputMode = useAppSelector(selectInputMode);

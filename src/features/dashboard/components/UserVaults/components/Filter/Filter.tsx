@@ -1,35 +1,41 @@
 import { InputBase, makeStyles } from '@material-ui/core';
-import React, { ChangeEvent, memo, useMemo } from 'react';
+import type { ChangeEvent } from 'react';
+import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CloseRounded, Search as SearchIcon } from '@material-ui/icons';
 import { SortColumnHeader } from '../../../../../../components/SortColumnHeader';
 import { styles } from './styles';
+import type { SortedOptions } from '../../hook';
 
 const useStyles = makeStyles(styles);
 
 interface FilterProps {
-  sortOptions: any;
+  sortOptions: SortedOptions;
   handleSort: (field: string) => void;
   handleSearchText: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   handleClearText: () => void;
   searchText: string;
 }
 
-export const Filter = memo<FilterProps>(
-  ({ sortOptions, handleSort, handleSearchText, searchText, handleClearText }) => {
-    const classes = useStyles();
-    return (
-      <div className={classes.container}>
-        <Search
-          handleSearchText={handleSearchText}
-          searchText={searchText}
-          handleClearText={handleClearText}
-        />
-        <SortColumns sortOptions={sortOptions} handleSort={handleSort} />
-      </div>
-    );
-  }
-);
+export const Filter = memo<FilterProps>(function Filter({
+  sortOptions,
+  handleSort,
+  handleSearchText,
+  searchText,
+  handleClearText,
+}) {
+  const classes = useStyles();
+  return (
+    <div className={classes.container}>
+      <Search
+        handleSearchText={handleSearchText}
+        searchText={searchText}
+        handleClearText={handleClearText}
+      />
+      <SortColumns sortOptions={sortOptions} handleSort={handleSort} />
+    </div>
+  );
+});
 
 interface SearchProps {
   handleSearchText: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
@@ -85,7 +91,7 @@ const SORT_COLUMNS: {
 ];
 
 interface SortColumnsProps {
-  sortOptions: any;
+  sortOptions: SortedOptions;
   handleSort: (field: string) => void;
 }
 

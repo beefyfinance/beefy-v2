@@ -3,8 +3,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { LinkButton } from '../../../../components/LinkButton';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
-import { ChainEntity } from '../../../data/entities/chain';
-import { isTokenErc20, TokenEntity } from '../../../data/entities/token';
+import type { ChainEntity } from '../../../data/entities/chain';
+import type { TokenEntity } from '../../../data/entities/token';
+import { isTokenErc20 } from '../../../data/entities/token';
 import { selectChainById } from '../../../data/selectors/chains';
 import {
   selectIsAddressBookLoaded,

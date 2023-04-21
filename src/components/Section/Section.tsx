@@ -1,5 +1,6 @@
 import { Container, makeStyles } from '@material-ui/core';
-import React, { memo, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React, { memo } from 'react';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
@@ -10,7 +11,7 @@ interface SectionProps {
   children: ReactNode;
 }
 
-export const Section = memo<SectionProps>(function ({ title, subTitle, children }) {
+export const Section = memo<SectionProps>(function Section({ title, subTitle, children }) {
   const classes = useStyles();
   return (
     <div className={classes.sectionContainer}>

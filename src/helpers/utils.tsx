@@ -1,4 +1,4 @@
-let trimReg = /(^\s*)|(\s*$)/g;
+const trimReg = /(^\s*)|(\s*$)/g;
 
 export function isEmpty(key) {
   if (key === undefined || key === '' || key === null) {
@@ -10,7 +10,7 @@ export function isEmpty(key) {
   } else if (typeof key === 'undefined') {
     return true;
   } else if (typeof key == 'object') {
-    for (let i in key) {
+    for (const i in key) {
       return false;
     }
     return true;

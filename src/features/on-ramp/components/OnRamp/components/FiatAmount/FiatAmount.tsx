@@ -25,7 +25,11 @@ type OutOfRangeErrorProps = {
   min: number;
   max: number;
 };
-const OutOfRangeError = memo<OutOfRangeErrorProps>(function ({ currency, min, max }) {
+const OutOfRangeError = memo<OutOfRangeErrorProps>(function OutOfRangeError({
+  currency,
+  min,
+  max,
+}) {
   const classes = useStyles();
   const { t } = useTranslation();
   const key = 'OnRamp-' + (max === Number.MAX_VALUE ? 'RangeErrorMin' : 'RangeErrorMinMax');
@@ -44,7 +48,7 @@ const OutOfRangeError = memo<OutOfRangeErrorProps>(function ({ currency, min, ma
 type FiatAmountInputProps = {
   fiat: string;
 };
-const FiatAmountInput = memo<FiatAmountInputProps>(function ({ fiat }) {
+const FiatAmountInput = memo<FiatAmountInputProps>(function FiatAmountInput({ fiat }) {
   const dispatch = useAppDispatch();
 
   const inputValue = useAppSelector(selectInputAmount);
@@ -77,7 +81,7 @@ const FiatAmountInput = memo<FiatAmountInputProps>(function ({ fiat }) {
 type FiatAmountOutputProps = {
   fiat: string;
 };
-const FiatAmountOutput = memo<FiatAmountOutputProps>(function ({ fiat }) {
+const FiatAmountOutput = memo<FiatAmountOutputProps>(function FiatAmountOutput({ fiat }) {
   const outputValue = useAppSelector(selectOutputAmount);
 
   return (

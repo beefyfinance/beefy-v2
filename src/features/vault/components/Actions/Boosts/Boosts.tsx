@@ -1,4 +1,4 @@
-import { VaultEntity } from '../../../../data/entities/vault';
+import type { VaultEntity } from '../../../../data/entities/vault';
 import { selectShouldDisplayVaultBoost } from '../../../../data/selectors/boosts';
 import { useAppSelector } from '../../../../../store';
 import { memo } from 'react';
@@ -7,7 +7,7 @@ import { ActivePast } from './ActivePast';
 export type BoostsProps = {
   vaultId: VaultEntity['id'];
 };
-export const Boosts = memo<BoostsProps>(function ({ vaultId }) {
+export const Boosts = memo<BoostsProps>(function Boosts({ vaultId }) {
   const shouldDisplay = useAppSelector(state => selectShouldDisplayVaultBoost(state, vaultId));
   if (!shouldDisplay) {
     return null;

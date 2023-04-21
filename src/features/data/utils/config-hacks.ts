@@ -1,6 +1,6 @@
-import { ChainEntity } from '../entities/chain';
-import { TokenEntity } from '../entities/token';
-import { BoostConfig, VaultConfig } from '../apis/config-types';
+import type { ChainEntity } from '../entities/chain';
+import type { TokenEntity } from '../entities/token';
+import type { BoostConfig, VaultConfig } from '../apis/config-types';
 
 /**
  * let tokenId = apiBoost.earnedOracleId;

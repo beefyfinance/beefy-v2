@@ -1,7 +1,7 @@
 import { sortBy } from 'lodash-es';
 import { useState, useCallback, useMemo } from 'react';
 import { useAppSelector } from '../../../../../../store';
-import { VaultEntity } from '../../../../../data/entities/vault';
+import type { VaultEntity } from '../../../../../data/entities/vault';
 import { selectUserDepositedTimelineByVaultId } from '../../../../../data/selectors/analytics';
 
 export type SortedOptions = {

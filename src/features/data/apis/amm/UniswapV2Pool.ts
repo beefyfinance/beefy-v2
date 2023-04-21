@@ -1,22 +1,23 @@
-import Web3 from 'web3';
-import { AmmEntityUniswapV2 } from '../../entities/amm';
+import type Web3 from 'web3';
+import type { AmmEntityUniswapV2 } from '../../entities/amm';
 import BigNumber from 'bignumber.js';
-import { MultiCall, ShapeWithLabel } from 'eth-multicall';
+import type { ShapeWithLabel } from 'eth-multicall';
+import { MultiCall } from 'eth-multicall';
 import { UniswapV2FactoryAbi, UniswapV2PairAbi } from '../../../../config/abi';
-import { ChainEntity } from '../../entities/chain';
+import type { ChainEntity } from '../../entities/chain';
 import { createContract } from '../../../../helpers/web3';
 import { ZERO_ADDRESS } from '../../../../helpers/addresses';
 import { getWeb3Instance } from '../instances';
 import { BIG_ZERO } from '../../../../helpers/big-number';
-import {
+import type {
   AddLiquidityRatio,
   AddLiquidityResult,
   IPool,
   RemoveLiquidityResult,
   SwapFeeParams,
   SwapResult,
-  WANT_TYPE,
 } from './types';
+import { WANT_TYPE } from './types';
 
 export type PairDataResponse = {
   totalSupply: string;
@@ -109,7 +110,7 @@ export class UniswapV2Pool implements IPool {
     ];
   }
 
-  protected consumePairDataResponse(untypedResult: any[]) {
+  protected consumePairDataResponse(untypedResult: unknown[]) {
     const result = (untypedResult as PairDataResponse[])[0];
 
     this.pairData = {
@@ -138,7 +139,7 @@ export class UniswapV2Pool implements IPool {
     ];
   }
 
-  protected consumeFactoryDataResponse(untypedResult: any[]) {
+  protected consumeFactoryDataResponse(untypedResult: unknown[]) {
     const result = (untypedResult as FactoryDataResponse[])[0];
 
     this.factoryData = {
@@ -152,7 +153,7 @@ export class UniswapV2Pool implements IPool {
     this.consumeFactoryDataResponse(results);
   }
 
-  async updateAllData(otherCalls: ShapeWithLabel[][] = []): Promise<any[][]> {
+  async updateAllData(otherCalls: ShapeWithLabel[][] = []): Promise<unknown[][]> {
     const multicall = await this.getMulticall();
     const calls = [this.getPairDataRequest(), this.getFactoryDataRequest(), ...otherCalls];
     const [pairResults, factoryResults, ...otherResults] = await multicall.all(calls);

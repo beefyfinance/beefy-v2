@@ -3,7 +3,7 @@ import { selectActiveChainIds } from '../../../../../data/selectors/chains';
 import { selectFilterChainIds } from '../../../../../data/selectors/filtered-vaults';
 import { useEffect } from 'react';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
-import { ChainEntity } from '../../../../../data/entities/chain';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 
 export function useSelectedChainIds(): ChainEntity['id'][] {
   const dispatch = useAppDispatch();

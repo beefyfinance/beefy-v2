@@ -1,4 +1,5 @@
-import { ActionReducerMapBuilder, AsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { ActionReducerMapBuilder, AsyncThunk } from '@reduxjs/toolkit';
 import { fetchAllAllowanceAction } from '../actions/allowance';
 import { fetchApyAction } from '../actions/apy';
 import { fetchAllBalanceAction } from '../actions/balance';
@@ -25,7 +26,7 @@ import { initiateBridgeForm } from '../actions/bridge';
 import { fetchPlatforms } from '../actions/platforms';
 import { fetchOnRampSupportedProviders } from '../actions/on-ramp';
 import { fetchFees } from '../actions/fees';
-import { DataLoaderState, LoaderState } from './data-loader-types';
+import type { DataLoaderState, LoaderState } from './data-loader-types';
 import { errorToString } from '../../../helpers/format';
 import { fetchAllAmmsAction } from '../actions/amm';
 import { fetchTreasury } from '../actions/treasury';

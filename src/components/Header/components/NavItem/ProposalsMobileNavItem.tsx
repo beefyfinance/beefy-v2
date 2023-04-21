@@ -1,11 +1,11 @@
 import { memo, useCallback } from 'react';
-import { NavItemProps } from '../DropNavItem/types';
+import type { NavItemProps } from '../DropNavItem/types';
 import { NavItemMobile } from './NavItem';
 import { markAllProposalsRead } from '../../../../features/data/actions/proposal';
 import { useAppDispatch } from '../../../../store';
 import { UnreadProposalsCount } from '../Badges/UnreadProposalsCount';
 
-export const ProposalsMobileNavItem = memo<NavItemProps>(function ({
+export const ProposalsMobileNavItem = memo<NavItemProps>(function ProposalsMobileNavItem({
   url,
   title,
   Icon,

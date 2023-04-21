@@ -1,10 +1,8 @@
 import React, { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
-import {
-  LabelledCheckbox,
-  LabelledCheckboxProps,
-} from '../../../../../components/LabelledCheckbox';
+import type { LabelledCheckboxProps } from '../../../../../components/LabelledCheckbox';
+import { LabelledCheckbox } from '../../../../../components/LabelledCheckbox';
 import { styles } from './styles';
 import clsx from 'clsx';
 
@@ -21,7 +19,11 @@ export type LineTogglesProps = {
   onChange: (newToggles: LineTogglesState) => void;
 };
 
-export const LineToggles = memo<LineTogglesProps>(function ({ toggles, onChange, className }) {
+export const LineToggles = memo<LineTogglesProps>(function LineToggles({
+  toggles,
+  onChange,
+  className,
+}) {
   const classes = useStyles();
   const { t } = useTranslation();
   const handleChange = useCallback<LineToggleProps['onChange']>(
@@ -59,7 +61,13 @@ type LineToggleProps = {
   onChange: (key: keyof LineTogglesState, e: boolean) => void;
 };
 
-const LineToggle = memo<LineToggleProps>(function ({ checked, color, label, toggle, onChange }) {
+const LineToggle = memo<LineToggleProps>(function LineToggle({
+  checked,
+  color,
+  label,
+  toggle,
+  onChange,
+}) {
   const classes = useStyles();
   const handleChange = useCallback<LabelledCheckboxProps['onChange']>(
     nowChecked => onChange(toggle, nowChecked),
@@ -82,7 +90,7 @@ type LineToggleLabelProps = {
   text: string;
   color: string;
 };
-const LineToggleLabel = memo<LineToggleLabelProps>(function ({ text, color }) {
+const LineToggleLabel = memo<LineToggleLabelProps>(function LineToggleLabel({ text, color }) {
   const classes = useStyles();
   return (
     <>
