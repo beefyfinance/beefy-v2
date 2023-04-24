@@ -364,7 +364,7 @@
     "earnContractAddress": "0x18618F543b3C4Ba5D98A151253005e5365b0929c",
     "oracle": "lps",
     "oracleId": "thena-wusdr-usdc",
-    "status": "paused",
+    "status": "active",
     "pauseReason": "upgrade",
     "platformId": "thena",
     "assets": ["wUSDR", "USDC"],
@@ -381,7 +381,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1677122554
+    "createdAt": 1682334773
   },
   {
     "id": "thena-fil-wbnb",
@@ -771,7 +771,7 @@
     "oracle": "lps",
     "oracleId": "thena-wbnb-bifi",
     "status": "paused",
-    "pauseReason": "upgrade",
+    "pauseReason": "active",
     "platformId": "thena",
     "assets": ["BIFI", "BNB"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -780,7 +780,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1675891871
+    "createdAt": 1682334773
   },
   {
     "id": "thena-bnbx-sd",
