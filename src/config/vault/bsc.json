@@ -1225,8 +1225,7 @@
     "earnContractAddress": "0xbb6685C25b1077a3f2ceD72C915785363dDAb191",
     "oracle": "lps",
     "oracleId": "thena-frax-busd",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "thena",
     "assets": ["FRAX", "BUSD"],
     "risks": [
@@ -1242,7 +1241,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1673571556
+    "createdAt": 1682334773
   },
   {
     "id": "thena-usdc-busd",
