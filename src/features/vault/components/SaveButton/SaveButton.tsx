@@ -15,10 +15,9 @@ const useStyles = makeStyles(styles);
 interface SaveButtonProps {
   vaultId: VaultEntity['id'];
   className?: string;
-  text?: string;
 }
 
-export const SaveButton = memo<SaveButtonProps>(function SaveButton({ vaultId, className, text }) {
+export const SaveButton = memo<SaveButtonProps>(function SaveButton({ vaultId, className }) {
   const classes = useStyles();
 
   const savedVaultIds = useAppSelector(selectSavedVaultIds);
@@ -39,15 +38,17 @@ export const SaveButton = memo<SaveButtonProps>(function SaveButton({ vaultId, c
   }, [dispatch, isSaved, savedVaultIds]);
 
   return (
-    <Button className={clsx(classes.shareButton, className)} onClick={handleSave} variant="middle">
-      <div className={classes.iconHolder}>
-        {isSaved ? (
-          <Bookmark className={classes.shareIcon} />
-        ) : (
-          <BookmarkBorder className={classes.shareIcon} />
-        )}
-      </div>
-      {text}
+    <Button
+      borderless={true}
+      className={clsx(classes.shareButton, className)}
+      onClick={handleSave}
+      variant="middle"
+    >
+      {isSaved ? (
+        <Bookmark className={classes.icon} />
+      ) : (
+        <BookmarkBorder className={classes.icon} />
+      )}
     </Button>
   );
 });

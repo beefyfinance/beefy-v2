@@ -6,8 +6,7 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
 import { selectChainById } from '../../../data/selectors/chains';
 import { useTranslation } from 'react-i18next';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
-import type { Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { VaultPlatform } from '../../../../components/VaultPlatform';
 import { styles } from './styles';
@@ -25,7 +24,6 @@ export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
-  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 
   return (
     <div className={classes.header}>
@@ -47,13 +45,9 @@ export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId
         </div>
         {vault.status === 'active' ? (
           <>
-            {lgUp && (
-              <div className={classes.shareHolder}>
-                <SaveButton vaultId={vaultId} />
-              </div>
-            )}
             <div className={classes.shareHolder}>
-              <ShareButton vaultId={vaultId} mobileAlternative={true} />
+              <SaveButton vaultId={vaultId} />
+              <ShareButton hideText={true} vaultId={vaultId} mobileAlternative={true} />
             </div>
           </>
         ) : null}

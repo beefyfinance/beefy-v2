@@ -6,6 +6,7 @@ export type ShareButtonProps = {
   vaultId: VaultEntity['id'];
   placement?: Placement;
   mobileAlternative?: boolean;
+  hideText?: boolean;
 };
 
 export type CommonVaultDetails = {
@@ -49,7 +50,3 @@ export type ShareItemProps = {
   icon: string;
   onClick: () => void;
 };
-
-export interface SaveItemProps {
-  vaultId: VaultEntity['id'];
-}

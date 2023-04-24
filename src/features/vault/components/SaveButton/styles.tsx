@@ -3,6 +3,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   shareButton: {
     display: 'flex',
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     gap: '8px',
@@ -11,8 +12,11 @@ export const styles = (theme: Theme) => ({
       outline: 'none',
       backgroundColor: '#363B63',
     },
+    [theme.breakpoints.down('md')]: {
+      padding: '10px',
+    },
   },
-  shareIcon: {
+  icon: {
     flexShrink: 0,
     flexGrow: 0,
     fontSize: '16px',
