@@ -238,7 +238,11 @@
       "USD+",
       "DAI+",
       "LQTY",
-      "gDAI"
+      "gDAI",
+      "ETH-hETH LP",
+      "USDC-hUSDC LP",
+      "USDT-hUSDT LP",
+      "DAI-hDAI LP"
     ],
     "blockedVaults": []
   },
