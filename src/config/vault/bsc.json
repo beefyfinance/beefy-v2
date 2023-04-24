@@ -53,7 +53,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1679652960
+    "createdAt": 1682334773
   },
   {
     "id": "thena-usdt-wbnb",
@@ -365,7 +365,6 @@
     "oracle": "lps",
     "oracleId": "thena-wusdr-usdc",
     "status": "active",
-    "pauseReason": "upgrade",
     "platformId": "thena",
     "assets": ["wUSDR", "USDC"],
     "risks": [
@@ -618,7 +617,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1676926172
+    "createdAt": 1682334773
   },
   {
     "id": "thena-matic-busd",
@@ -724,7 +723,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1676504000
+    "createdAt": 1682334773
   },
   {
     "id": "thena-usdt-frax",
@@ -755,7 +754,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1676504000
+    "createdAt": 1682334773
   },
   {
     "id": "thena-wbnb-bifi",
@@ -770,8 +769,7 @@
     "earnContractAddress": "0x9B17328Ac1aC1a04F4340bb0d1eD754Fa826b672",
     "oracle": "lps",
     "oracleId": "thena-wbnb-bifi",
-    "status": "paused",
-    "pauseReason": "active",
+    "status": "active",
     "platformId": "thena",
     "assets": ["BIFI", "BNB"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -804,7 +802,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1675891871
+    "createdAt": 1682334773
   },
   {
     "id": "swapfish-bsc-wbnb-busd",
@@ -925,7 +923,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1675521404
+    "createdAt": 1682334773
   },
   {
     "id": "thena-frxeth-frax",
@@ -999,7 +997,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1673783906
+    "createdAt": 1682334773
   },
   {
     "id": "thena-frax-fxs",
@@ -1080,7 +1078,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1673571556
+    "createdAt": 1682334773
   },
   {
     "id": "thena-wbnb-busd",
@@ -1293,7 +1291,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1673571556
+    "createdAt": 1682334773
   },
   {
     "id": "ellipsis-ankrBNB",
