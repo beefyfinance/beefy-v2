@@ -90,20 +90,22 @@ export const NoResults = memo(function NoResults() {
   const userBalanceAvailable = useAppSelector(selectIsUserBalanceAvailable);
   const isWalletKnown = useAppSelector(selectIsWalletKnown);
 
-  if (!isWalletKnown && (userCategory === 'eligible' || userCategory === 'deposited')) {
+  if (!isWalletKnown && userCategory === 'deposited') {
     return (
       <NotConnectedMessage
         title={'NoResults-NotConnected'}
-        text={
-          userCategory === 'deposited'
-            ? 'NoResults-ConnectToViewMyVaults'
-            : 'NoResults-ConnectToViewEligibleVaults'
-        }
+        text={'NoResults-ConnectToViewMyVaults'}
       />
     );
   }
 
-  if (!userBalanceAvailable && (userCategory === 'eligible' || userCategory === 'deposited')) {
+  if (userCategory === 'saved') {
+    return (
+      <NotDepositedMessage title="NoResults-NoSavedVaults-Title" text="NoResults-NoSavedVaults" />
+    );
+  }
+
+  if (!userBalanceAvailable && userCategory === 'deposited') {
     return <LoadingMessage />;
   }
 
@@ -111,5 +113,5 @@ export const NoResults = memo(function NoResults() {
     return <NotDepositedMessage title="NoResults-NotDeposited" text="NoResults-FindVault" />;
   }
 
-  return <Message title="NoResults-NoResultsFound" text="NoResults-TryClearFilters" />;
+  return <Message title="NoResults-NoResultsFound" text={'NoResults-TryClearFilters'} />;
 });

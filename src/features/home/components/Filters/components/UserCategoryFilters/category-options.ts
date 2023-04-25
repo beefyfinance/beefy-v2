@@ -2,6 +2,6 @@ import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-
 
 export const CATEGORY_OPTIONS: Record<FilteredVaultsState['userCategory'], string> = {
   all: 'Filter-AllVaults',
-  eligible: 'Filter-Eligible',
+  saved: 'Filter-Saved',
   deposited: 'Filter-MyVaults',
 };

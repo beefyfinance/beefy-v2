@@ -40,6 +40,9 @@ export const styles = (theme: Theme) => ({
     },
   },
   shareHolder: {
+    display: 'flex',
+    columnGap: '8px',
+    alignItems: 'center',
     marginLeft: 'auto',
   },
 });

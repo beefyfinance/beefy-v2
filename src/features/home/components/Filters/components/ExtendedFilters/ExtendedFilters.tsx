@@ -27,11 +27,6 @@ export const ExtendedFilters = memo<ExtendedFiltersProps>(function ExtendedFilte
         filter="onlyZappable"
         label={t('Filter-Zappable')}
       />
-      <CheckboxFilter
-        className={classes.checkbox}
-        filter="onlyRetired"
-        label={t('Filter-Retired')}
-      />
       <CheckboxFilter className={classes.checkbox} filter="onlyPaused" label={t('Filter-Paused')} />
       {!desktopView ? <VaultCategoryDropdownFilter className={classes.select} /> : null}
       <PlatformDropdownFilter className={classes.select} />

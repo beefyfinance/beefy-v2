@@ -6,6 +6,7 @@ export type ShareButtonProps = {
   vaultId: VaultEntity['id'];
   placement?: Placement;
   mobileAlternative?: boolean;
+  hideText?: boolean;
 };
 
 export type CommonVaultDetails = {

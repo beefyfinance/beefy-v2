@@ -18,10 +18,8 @@ import type { TokenEntity } from '../../entities/token';
 import type { VaultEntity } from '../../entities/vault';
 import { selectAllVaultBoostIds, selectBoostById } from '../../selectors/boosts';
 import {
-  selectGovVaultVaultIdsByDepositTokenAddress,
   selectIsStandardVaultEarnTokenAddress,
   selectStandardVaultByEarnTokenAddress,
-  selectStandardVaultIdsByDepositTokenAddress,
   selectVaultById,
 } from '../../selectors/vaults';
 import { initiateMinterForm } from '../../actions/minters';
@@ -40,8 +38,6 @@ export interface BalanceState {
       // quick access to all deposited vaults for this address
       // this can include gov, standard, or a boost's target vault
       depositedVaultIds: VaultEntity['id'][];
-      // quick access to all vaults that the user can deposit into
-      eligibleVaultIds: VaultEntity['id'][];
 
       /**
        * all balances below represent token amounts
@@ -169,7 +165,6 @@ function getWalletState(sliceState: Draft<BalanceState>, walletAddress: string) 
   if (sliceState.byAddress[walletAddress] === undefined) {
     sliceState.byAddress[walletAddress] = {
       depositedVaultIds: [],
-      eligibleVaultIds: [],
       tokenAmount: {
         byChainId: {},
         byBoostId: {},
@@ -244,25 +239,6 @@ function addTokenBalanceToState(
           totalDepositOrRewards = totalDepositOrRewards.plus(boostDeposit).plus(boostRewards);
         }
         addOrRemoveFromDepositedList(walletState, totalDepositOrRewards, vaultId);
-      }
-
-      // if the token is the oracleId of a vault
-      // this means the user can deposit in a vault
-      const stdVaultIds = selectStandardVaultIdsByDepositTokenAddress(
-        state,
-        chainId,
-        tokenBalance.tokenAddress
-      );
-      for (const vaultId of stdVaultIds) {
-        addOrRemoveFromEligibleList(walletState, tokenBalance.amount, vaultId);
-      }
-      const govVaultIds = selectGovVaultVaultIdsByDepositTokenAddress(
-        state,
-        chainId,
-        tokenBalance.tokenAddress
-      );
-      for (const vaultId of govVaultIds) {
-        addOrRemoveFromEligibleList(walletState, tokenBalance.amount, vaultId);
       }
     }
   }
@@ -348,22 +324,6 @@ function addOrRemoveFromDepositedList(
   } else {
     if (walletState.depositedVaultIds.includes(vaultId)) {
       walletState.depositedVaultIds = walletState.depositedVaultIds.filter(vid => vid !== vaultId);
-    }
-  }
-}
-
-function addOrRemoveFromEligibleList(
-  walletState: Draft<BalanceState['byAddress']['0xABC']>,
-  amount: BigNumber,
-  vaultId: VaultEntity['id']
-) {
-  if (amount.isGreaterThan(0)) {
-    if (!walletState.eligibleVaultIds.includes(vaultId)) {
-      walletState.eligibleVaultIds.push(vaultId);
-    }
-  } else {
-    if (walletState.eligibleVaultIds.includes(vaultId)) {
-      walletState.eligibleVaultIds = walletState.eligibleVaultIds.filter(vid => vid !== vaultId);
     }
   }
 }

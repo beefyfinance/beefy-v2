@@ -17,7 +17,7 @@ export type FilteredVaultsState = {
   sort: 'tvl' | 'apy' | 'daily' | 'safetyScore' | 'default' | 'depositValue' | 'walletValue';
   sortDirection: 'asc' | 'desc';
   vaultCategory: 'all' | 'featured' | 'stable' | 'bluechip' | 'beefy' | 'correlated';
-  userCategory: 'all' | 'eligible' | 'deposited';
+  userCategory: 'all' | 'saved' | 'deposited';
   vaultType: 'all' | 'lps' | 'single';
   searchText: string;
   chainIds: ChainEntity['id'][];
@@ -111,6 +111,7 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState.onlyZappable = action.payload;
     },
+
     setBoolean(
       sliceState,
       action: PayloadAction<{ filter: FilteredVaultBooleanKeys; value: boolean }>

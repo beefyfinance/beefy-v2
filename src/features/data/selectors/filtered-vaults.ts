@@ -10,7 +10,6 @@ import {
 } from '../entities/vault';
 import {
   selectHasUserDepositInVault,
-  selectIsUserEligibleForVault,
   selectUserDepositedVaultIds,
   selectUserVaultDepositInUsd,
   selectUserVaultDepositTokenWalletBalanceInUsd,
@@ -38,6 +37,7 @@ import type { KeysOfType } from '../utils/types-utils';
 import type { FilteredVaultsState } from '../reducers/filtered-vaults';
 import type { PlatformEntity } from '../entities/platform';
 import { selectActiveChainIds, selectAllChainIds } from './chains';
+import { selectIsVaultIdSaved } from './saved-vaults';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 
@@ -282,10 +282,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
     }
 
     // hide when no wallet balance of deposit token
-    if (
-      filterOptions.userCategory === 'eligible' &&
-      !selectIsUserEligibleForVault(state, vault.id)
-    ) {
+    if (filterOptions.userCategory === 'saved' && !selectIsVaultIdSaved(state, vault.id)) {
       return false;
     }
 

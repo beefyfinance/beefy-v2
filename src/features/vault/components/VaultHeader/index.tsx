@@ -12,6 +12,7 @@ import { VaultPlatform } from '../../../../components/VaultPlatform';
 import { styles } from './styles';
 import { ShareButton } from '../ShareButton';
 import { punctuationWrap } from '../../../../helpers/string';
+import { SaveButton } from '../SaveButton';
 
 const useStyles = makeStyles(styles);
 
@@ -43,9 +44,12 @@ export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId
           </span>
         </div>
         {vault.status === 'active' ? (
-          <div className={classes.shareHolder}>
-            <ShareButton vaultId={vaultId} mobileAlternative={true} />
-          </div>
+          <>
+            <div className={classes.shareHolder}>
+              <SaveButton vaultId={vaultId} />
+              <ShareButton hideText={true} vaultId={vaultId} mobileAlternative={true} />
+            </div>
+          </>
         ) : null}
       </div>
     </div>

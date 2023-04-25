@@ -15,7 +15,6 @@ export const styles = (theme: Theme) => ({
   },
   mobileAlternative: {
     [theme.breakpoints.down('md')]: {
-      borderRadius: '50%',
       padding: '10px',
       '& $shareText': {
         display: 'none',
