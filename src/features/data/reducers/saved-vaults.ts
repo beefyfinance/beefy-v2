@@ -19,7 +19,7 @@ export const savedVaultsSlice = createSlice({
     setSavedVaultIds(sliceState, action: PayloadAction<VaultEntity['id']>) {
       const vaultId = action.payload;
       const savedVaultIds = sliceState.byVaultId;
-      if (Object.keys(savedVaultIds).includes(vaultId)) {
+      if (savedVaultIds[vaultId]) {
         delete sliceState.byVaultId[vaultId];
       } else {
         sliceState.byVaultId[vaultId] = true;
