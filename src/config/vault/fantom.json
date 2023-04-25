@@ -133,7 +133,7 @@
     "addLiquidityUrl": "https://equalizer.exchange/liquidity/0x9B696b6B0F1DEE0B1af1d6bc927c15e27597f556",
     "removeLiquidityUrl": "https://equalizer.exchange/liquidity/0x9B696b6B0F1DEE0B1af1d6bc927c15e27597f556",
     "network": "fantom",
-    "createdAt": 1681986800
+    "createdAt": 1682431913
   },
   {
     "id": "equalizer-wftm-avax",
@@ -157,7 +157,7 @@
     "addLiquidityUrl": "https://equalizer.exchange/liquidity/0xF77235B283fC72514f2bb260717F981B8E7474Ed",
     "removeLiquidityUrl": "https://equalizer.exchange/liquidity/0xF77235B283fC72514f2bb260717F981B8E7474Ed",
     "network": "fantom",
-    "createdAt": 1681986800
+    "createdAt": 1682431913
   },
   {
     "id": "mmy-ftm-mlp",
@@ -200,7 +200,7 @@
     "earnContractAddress": "0x70491A6A6eaF93B4f254d7299E167A8dA462096D",
     "oracle": "lps",
     "oracleId": "beets-ankr-fantom-liquid-ocean",
-    "status": "paused",
+    "status": "active",
     "platformId": "beethovenx",
     "assets": ["ankrFTM", "FTM"],
     "risks": [
@@ -304,7 +304,7 @@
     "earnContractAddress": "0xB598d7ac4C8e0988DE2356E5B98d2Dd3Bf477a10",
     "oracle": "lps",
     "oracleId": "equalizer-wftm-bnb",
-    "status": "paused",
+    "status": "active",
     "platformId": "equalizer",
     "assets": ["BNB", "FTM"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -313,7 +313,7 @@
     "addLiquidityUrl": "https://equalizer.exchange/liquidity/0x7552BFa10037356A2De0379a2EF8d4CC480B8E00",
     "removeLiquidityUrl": "https://equalizer.exchange/liquidity/0x7552BFa10037356A2De0379a2EF8d4CC480B8E00",
     "network": "fantom",
-    "createdAt": 1681985942
+    "createdAt": 1682431913
   },
   {
     "id": "equalizer-fxs-frax",
