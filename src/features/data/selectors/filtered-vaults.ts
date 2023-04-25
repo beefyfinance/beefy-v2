@@ -29,7 +29,6 @@ import {
   selectIsVaultStable,
   selectVaultById,
   selectVaultSupportsAnyZap,
-  selectVaultIsSaved,
 } from './vaults';
 import escapeStringRegexp from 'escape-string-regexp';
 import { selectTokenByAddress } from './tokens';
@@ -38,6 +37,7 @@ import type { KeysOfType } from '../utils/types-utils';
 import type { FilteredVaultsState } from '../reducers/filtered-vaults';
 import type { PlatformEntity } from '../entities/platform';
 import { selectActiveChainIds, selectAllChainIds } from './chains';
+import { selectIsVaultIdSaved } from './saved-vaults';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 
@@ -282,7 +282,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
     }
 
     // hide when no wallet balance of deposit token
-    if (filterOptions.userCategory === 'saved' && !selectVaultIsSaved(state, vault.id)) {
+    if (filterOptions.userCategory === 'saved' && !selectIsVaultIdSaved(state, vault.id)) {
       return false;
     }
 

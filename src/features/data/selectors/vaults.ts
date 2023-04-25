@@ -14,7 +14,6 @@ import { createCachedSelector } from 're-reselect';
 import { BIG_ONE } from '../../../helpers/big-number';
 import { differenceWith, first, isEqual } from 'lodash-es';
 import { selectChainById } from './chains';
-import { selectSavedVaultIds } from './saved-vaults';
 
 export const selectVaultById = createCachedSelector(
   (state: BeefyState) => state.entities.vaults.byId,
@@ -248,14 +247,6 @@ export const selectVaultSupportsAnyZap = createCachedSelector(
     }
 
     return zapSupport.beefy || zapSupport.oneInch;
-  }
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
-
-export const selectVaultIsSaved = createCachedSelector(
-  (state: BeefyState, _vaultId: VaultEntity['id']) => selectSavedVaultIds(state),
-  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  (savedVaultIds, vaultId) => {
-    return savedVaultIds.includes(vaultId);
   }
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
