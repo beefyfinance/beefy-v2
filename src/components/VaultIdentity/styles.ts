@@ -91,4 +91,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-canto': {
     backgroundColor: '#06fc99',
   },
+  'vaultNetwork-zksync': {
+    backgroundColor: '#fff',
+  },
 });
