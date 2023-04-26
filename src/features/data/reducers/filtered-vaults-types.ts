@@ -11,16 +11,10 @@ export type SortDirectionType = 'asc' | 'desc';
 
 export type VaultCategoryType = 'all' | 'featured' | 'stable' | 'bluechip' | 'beefy' | 'correlated';
 
-export type VaultType = 'all' | 'lps' | 'single';
+export type VaultType = 'all' | 'lps' | 'single' | 'eligible';
 
 export type UserCategoryType = 'all' | 'saved' | 'deposited';
 
-export type InvalidUserCategoryType = 'eligible';
-
-export type UserCategoryFromLocalStorageType = UserCategoryType | InvalidUserCategoryType;
-
-export function isUserCategoryInvalid(
-  category: UserCategoryFromLocalStorageType
-): category is InvalidUserCategoryType {
-  return category === 'eligible';
+export function isValidUserCategory(category: string): category is UserCategoryType {
+  return ['all', 'saved', 'deposited'].includes(category);
 }

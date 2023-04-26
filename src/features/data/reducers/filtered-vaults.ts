@@ -11,7 +11,7 @@ import type {
   VaultCategoryType,
   VaultType,
 } from './filtered-vaults-types';
-import { isUserCategoryInvalid } from './filtered-vaults-types';
+import { isValidUserCategory } from './filtered-vaults-types';
 
 /**
  * State containing Vault infos
@@ -135,18 +135,16 @@ export const filteredVaultsActions = filteredVaultsSlice.actions;
 
 export const filteredVaultsTransform = createTransform(
   (state: FilteredVaultsState) => state,
-  (state: FilteredVaultsState) => {
-    const newState = state;
-    const chainIds = state.chainIds;
-    if (chainIds.includes('heco') || chainIds.includes('harmony')) {
-      newState.chainIds = [];
-    }
-
-    if (isUserCategoryInvalid(state.userCategory)) {
-      newState.userCategory = 'all';
-    }
-
-    return newState;
+  (
+    state: Omit<FilteredVaultsState, 'userCategory'> & { userCategory: string }
+  ): FilteredVaultsState => {
+    return {
+      ...state,
+      userCategory: isValidUserCategory(state.userCategory) ? state.userCategory : 'all',
+      chainIds: JSON.stringify(state.chainIds).includes(JSON.stringify(['heco', 'harmony']))
+        ? state.chainIds
+        : [],
+    };
   },
   { whitelist: ['chainIds', 'userCategory'] }
 );
