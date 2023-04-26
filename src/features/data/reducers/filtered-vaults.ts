@@ -3,6 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { ChainEntity } from '../entities/chain';
 import type { PlatformEntity } from '../entities/platform';
 import type { KeysOfType } from '../utils/types-utils';
+import createTransform from 'redux-persist/es/createTransform';
+import type {
+  SortDirectionType,
+  SortType,
+  UserCategoryType,
+  VaultCategoryType,
+  VaultType,
+} from './filtered-vaults-types';
+import { isUserCategoryInvalid } from './filtered-vaults-types';
 
 /**
  * State containing Vault infos
@@ -14,11 +23,11 @@ export type FilteredVaultsState = {
    * to reset their local copy. The search text is (for now) the only example.
    **/
   reseted: boolean;
-  sort: 'tvl' | 'apy' | 'daily' | 'safetyScore' | 'default' | 'depositValue' | 'walletValue';
-  sortDirection: 'asc' | 'desc';
-  vaultCategory: 'all' | 'featured' | 'stable' | 'bluechip' | 'beefy' | 'correlated';
-  userCategory: 'all' | 'saved' | 'deposited';
-  vaultType: 'all' | 'lps' | 'single';
+  sort: SortType;
+  sortDirection: SortDirectionType;
+  vaultCategory: VaultCategoryType;
+  userCategory: UserCategoryType;
+  vaultType: VaultType;
   searchText: string;
   chainIds: ChainEntity['id'][];
   platformId: PlatformEntity['id'] | null;
@@ -123,3 +132,21 @@ export const filteredVaultsSlice = createSlice({
 });
 
 export const filteredVaultsActions = filteredVaultsSlice.actions;
+
+export const filteredVaultsTransform = createTransform(
+  (state: FilteredVaultsState) => state,
+  (state: FilteredVaultsState) => {
+    const newState = state;
+    const chainIds = state.chainIds;
+    if (chainIds.includes('heco') || chainIds.includes('harmony')) {
+      newState.chainIds = [];
+    }
+
+    if (isUserCategoryInvalid(state.userCategory)) {
+      newState.userCategory = 'all';
+    }
+
+    return newState;
+  },
+  { whitelist: ['chainIds', 'userCategory'] }
+);

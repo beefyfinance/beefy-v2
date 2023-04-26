@@ -6,14 +6,9 @@ import {
 } from './config';
 import { getChainAddressBook } from '../../src/features/data/apis/addressbook';
 import { chainsByAppId } from './chains';
-import { ChainEntity } from '../../src/features/data/entities/chain';
-import {
-  isTokenErc20,
-  isTokenNative,
-  TokenEntity,
-  TokenErc20,
-  TokenNative,
-} from '../../src/features/data/entities/token';
+import type { ChainEntity } from '../../src/features/data/entities/chain';
+import type { TokenEntity, TokenErc20, TokenNative } from '../../src/features/data/entities/token';
+import { isTokenErc20, isTokenNative } from '../../src/features/data/entities/token';
 import { keyBy, mapValues } from 'lodash';
 
 /**
