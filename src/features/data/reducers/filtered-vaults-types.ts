@@ -11,7 +11,7 @@ export type SortDirectionType = 'asc' | 'desc';
 
 export type VaultCategoryType = 'all' | 'featured' | 'stable' | 'bluechip' | 'beefy' | 'correlated';
 
-export type VaultType = 'all' | 'lps' | 'single' | 'eligible';
+export type VaultType = 'all' | 'lps' | 'single';
 
 export type UserCategoryType = 'all' | 'saved' | 'deposited';
 
