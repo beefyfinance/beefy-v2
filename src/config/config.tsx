@@ -565,6 +565,30 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     },
     stableCoins: ['USDC', 'NOTE', 'USDT', 'BUSD'],
   },
+  zksync: {
+    name: 'zkSync',
+    chainId: 324,
+    rpc: ['https://mainnet.era.zksync.io'],
+    explorerUrl: 'https://explorer.zksync.io',
+    multicallAddress: '0x1E9231Cc9782D9F8e213736F6dAC00020D8271cB',
+    appMulticallContractAddress: '0x5479d2A10e60110F4728d910b5321Af4B78c30E4',
+    providerName: 'Canto',
+    walletSettings: {
+      chainId: `0x${parseInt('324', 10).toString(16)}`,
+      chainName: 'zksync',
+      nativeCurrency: {
+        name: 'ETH',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://mainnet.era.zksync.io'],
+      blockExplorerUrls: ['https://explorer.zksync.io/'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['USDC', 'BUSD'],
+  },
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,
