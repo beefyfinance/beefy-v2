@@ -86,4 +86,7 @@ export const styles = (theme: Theme) => ({
   'headerNetwork-canto': {
     backgroundColor: 'rgba(6, 252, 153, 0.2)',
   },
+  'headerNetwork-zksync': {
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  },
 });
