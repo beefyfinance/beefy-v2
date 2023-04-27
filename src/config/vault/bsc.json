@@ -882,8 +882,7 @@
     "earnContractAddress": "0x3A2047069549100322fACaaaA4647c22fa11b296",
     "oracle": "lps",
     "oracleId": "thena-hay-usd+",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "thena",
     "assets": ["HAY", "USD+"],
     "risks": [
@@ -899,7 +898,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1674180481
+    "createdAt": 1682607111
   },
   {
     "id": "thena-eth-frxeth",
@@ -938,8 +937,7 @@
     "earnContractAddress": "0xD9093C4e237CFD3a296EbCa9Bb01b04f469c33f4",
     "oracle": "lps",
     "oracleId": "thena-frxeth-frax",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "thena",
     "assets": ["frxETH", "FRAX"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -948,7 +946,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1675521404
+    "createdAt": 1682607111
   },
   {
     "id": "thena-usdc-ftm",
@@ -1093,8 +1091,7 @@
     "earnContractAddress": "0x684d86518e6E7d622d24854cBb1C179d6C0E3f75",
     "oracle": "lps",
     "oracleId": "thena-wbnb-busd",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "thena",
     "assets": ["BUSD", "BNB"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -1103,7 +1100,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1673571556
+    "createdAt": 1682607111
   },
   {
     "id": "thena-btcb-wbnb",
@@ -1168,8 +1165,7 @@
     "earnContractAddress": "0xAd36A6a7fC6D6B2aeBB77B48A85a0B58D0f3AB28",
     "oracle": "lps",
     "oracleId": "thena-wbnb-stkbnb",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "thena",
     "assets": ["stkBNB", "BNB"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -1178,7 +1174,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1673571556
+    "createdAt": 1682607111
   },
   {
     "id": "thena-mai-busd",
