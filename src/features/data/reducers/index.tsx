@@ -13,7 +13,7 @@ import { dataLoaderSlice } from './data-loader';
 import { walletSlice } from './wallet/wallet';
 import type { BeefyState } from '../../../redux-types';
 import { buybackSlice } from './buyback';
-import { filteredVaultsSlice, filteredVaultsTransform } from './filtered-vaults';
+import { chanIdsTransform, filteredVaultsSlice, userCategoryTransform } from './filtered-vaults';
 import { platformsSlice } from './platforms';
 import { uiThemeSlice } from './ui-theme';
 import { partnersSlice } from './partners';
@@ -68,7 +68,11 @@ const userReducer = combineReducers<BeefyState['user']>({
 });
 const uiReducer = combineReducers<BeefyState['ui']>({
   filteredVaults: persistReducer(
-    { key: 'filters', storage, transforms: [filteredVaultsTransform] },
+    {
+      key: 'filters',
+      storage,
+      transforms: [userCategoryTransform, chanIdsTransform],
+    },
     filteredVaultsSlice.reducer
   ),
   theme: persistReducer({ key: 'theme', storage }, uiThemeSlice.reducer),

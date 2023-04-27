@@ -133,18 +133,18 @@ export const filteredVaultsSlice = createSlice({
 
 export const filteredVaultsActions = filteredVaultsSlice.actions;
 
-export const filteredVaultsTransform = createTransform(
-  (state: FilteredVaultsState) => state,
-  (
-    state: Omit<FilteredVaultsState, 'userCategory'> & { userCategory: string }
-  ): FilteredVaultsState => {
-    return {
-      ...state,
-      userCategory: isValidUserCategory(state.userCategory) ? state.userCategory : 'all',
-      chainIds: JSON.stringify(state.chainIds).includes(JSON.stringify(['heco', 'harmony']))
-        ? state.chainIds
-        : [],
-    };
+export const userCategoryTransform = createTransform(
+  (userCategory: FilteredVaultsState['userCategory']) => userCategory,
+  (userCategoryFromLocalStorage: string): FilteredVaultsState['userCategory'] => {
+    return isValidUserCategory(userCategoryFromLocalStorage) ? userCategoryFromLocalStorage : 'all';
   },
-  { whitelist: ['chainIds', 'userCategory'] }
+  { whitelist: ['userCategory'] }
+);
+
+export const chanIdsTransform = createTransform(
+  (chanIds: FilteredVaultsState['chainIds']) => chanIds,
+  (chainIdsFromLocalStorage: FilteredVaultsState['chainIds']) => {
+    return chainIdsFromLocalStorage.filter(chainId => !['heco', 'harmony'].includes(chainId));
+  },
+  { whitelist: ['chainIds'] }
 );
