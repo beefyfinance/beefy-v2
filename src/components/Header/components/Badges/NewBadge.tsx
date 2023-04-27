@@ -3,6 +3,7 @@ import type { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import type { BadgeComponentProps } from './types';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
   badge: {
@@ -24,13 +25,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const NewBadge = memo<BadgeComponentProps>(function NewBadge() {
+export const NewBadge = memo<BadgeComponentProps>(function NewBadge({ className }) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
     <>
       <div className={classes.spacer} />
-      <div className={classes.badge}>{t('Header-Badge-New')}</div>
+      <div className={clsx(classes.badge, className)}>{t('Header-Badge-New')}</div>
     </>
   );
 });
