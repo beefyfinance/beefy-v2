@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core/styles';
+import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   buttons: {
@@ -25,19 +25,18 @@ export const styles = (theme: Theme) => ({
     flexShrink: 0,
     '&:hover': {
       color: '#D0D0DA',
-      backgroundColor: 'rgba(245, 245, 255, 0.08)',
       boxShadow: 'none',
     },
     '&:active, &:hover:active': {
-      color: '#ffffff',
+      color: theme.palette.text.primary,
     },
   },
   selected: {
     pointerEvents: 'none' as const,
-    color: '#ffffff',
+    color: theme.palette.text.primary,
     backgroundColor: theme.palette.background.vaults.defaultOutline,
     '&:hover': {
-      color: '#ffffff',
+      color: theme.palette.text.primary,
       backgroundColor: theme.palette.background.vaults.defaultOutline,
     },
   },
@@ -50,18 +49,61 @@ export const styles = (theme: Theme) => ({
         backgroundColor: 'transparent',
       },
       '&:active, &:hover:active': {
-        color: '#ffffff',
+        color: theme.palette.text.primary,
         backgroundColor: 'transparent',
       },
       '&$selected': {
         pointerEvents: 'all' as const,
-        color: '#ffffff',
+        color: theme.palette.text.primary,
         backgroundColor: 'transparent',
         '&:hover': {
-          color: '#ffffff',
+          color: theme.palette.text.primary,
           backgroundColor: 'transparent',
         },
       },
     },
+  },
+  dropdown: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '8px',
+    padding: `12px`,
+    backgroundColor: '#303550',
+    borderRadius: '8px',
+    marginTop: '8px',
+    marginLeft: '4px',
+  },
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    ...theme.typography['body-lg-med'],
+    color: theme.palette.text.dark,
+    fill: theme.palette.text.dark,
+    '&:hover': {
+      color: theme.palette.text.primary,
+      fill: theme.palette.text.primary,
+      cursor: 'pointer',
+    },
+  },
+  icon: {
+    height: '20px',
+  },
+  iconActive: {
+    fill: theme.palette.text.primary,
+  },
+  buttonList: {
+    ...theme.typography['body-lg-med'],
+    color: '#848BAD',
+    backgroundColor: 'inherit',
+    border: 'none',
+    padding: 0,
+    textAlign: 'start' as const,
+    '&:hover': {
+      color: theme.palette.text.primary,
+      cursor: 'pointer',
+    },
+  },
+  selectedList: {
+    color: theme.palette.text.primary,
   },
 });

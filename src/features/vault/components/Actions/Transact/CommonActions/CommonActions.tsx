@@ -1,4 +1,4 @@
-import { ChainEntity } from '../../../../../data/entities/chain';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
@@ -10,7 +10,7 @@ export type ActionButtonProps = {
   className?: string;
 };
 
-export const ActionConnect = memo<ActionButtonProps>(function ({ className }) {
+export const ActionConnect = memo<ActionButtonProps>(function ActionConnect({ className }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const handleClick = useCallback(() => {
@@ -31,7 +31,7 @@ export const ActionConnect = memo<ActionButtonProps>(function ({ className }) {
 });
 
 export type ActionSwitchProps = { chainId: ChainEntity['id'] } & ActionButtonProps;
-export const ActionSwitch = memo<ActionSwitchProps>(function ({ chainId, className }) {
+export const ActionSwitch = memo<ActionSwitchProps>(function ActionSwitch({ chainId, className }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const chain = useAppSelector(state => selectChainById(state, chainId));

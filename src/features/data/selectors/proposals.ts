@@ -1,5 +1,5 @@
-import { ProposalEntity } from '../entities/proposal';
-import { BeefyState } from '../../../redux-types';
+import type { ProposalEntity } from '../entities/proposal';
+import type { BeefyState } from '../../../redux-types';
 import { createSelector } from '@reduxjs/toolkit';
 
 const DELAY_NON_CORE_PROPOSALS = 2 * 60 * 60; // 2 hours

@@ -1,11 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { WritableDraft } from 'immer/dist/internal';
-import { ChainEntity } from '../entities/chain';
-import { VaultEntity } from '../entities/vault';
-import { NormalizedEntity } from '../utils/normalized-entity';
+import type { Draft } from 'immer';
+import type { ChainEntity } from '../entities/chain';
+import type { VaultEntity } from '../entities/vault';
+import type { NormalizedEntity } from '../utils/normalized-entity';
 import { fetchAllInfoCards } from '../actions/info-cards';
-import { InfoCardConfig } from '../apis/config-types';
-import { InfoCardChainEntity, InfoCardEntity, InfoCardVaultEntity } from '../entities/info-card';
+import type { InfoCardConfig } from '../apis/config-types';
+import type {
+  InfoCardChainEntity,
+  InfoCardEntity,
+  InfoCardVaultEntity,
+} from '../entities/info-card';
 
 export type InfoCardsState = NormalizedEntity<InfoCardEntity> & {
   byChainId: {
@@ -36,10 +40,7 @@ export const infoCardsSlice = createSlice({
   },
 });
 
-function addInfoCardToState(
-  sliceState: WritableDraft<InfoCardsState>,
-  apiConfigCard: InfoCardConfig
-) {
+function addInfoCardToState(sliceState: Draft<InfoCardsState>, apiConfigCard: InfoCardConfig) {
   if (apiConfigCard.id in sliceState.byId) {
     return;
   }

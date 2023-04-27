@@ -7,7 +7,11 @@ export type CountdownProps = {
   maxParts?: number;
   minParts?: number;
 };
-export const Countdown = memo<CountdownProps>(function ({ time, minParts = 3, maxParts = 3 }) {
+export const Countdown = memo<CountdownProps>(function Countdown({
+  time,
+  minParts = 3,
+  maxParts = 3,
+}) {
   const [formatted, setFormatted] = useState(() => formatTimeUntil(time, maxParts, minParts));
 
   useEffect(() => {
@@ -23,7 +27,7 @@ export const Countdown = memo<CountdownProps>(function ({ time, minParts = 3, ma
 export type TimeUntilProps = {
   time?: Date;
 } & Omit<CountdownProps, 'time'>;
-export const TimeUntil = memo<TimeUntilProps>(function ({ time, ...rest }) {
+export const TimeUntil = memo<TimeUntilProps>(function TimeUntil({ time, ...rest }) {
   if (time && isDate(time)) {
     return <Countdown time={time} {...rest} />;
   }

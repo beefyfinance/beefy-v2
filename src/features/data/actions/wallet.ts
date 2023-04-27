@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { getWalletConnectionApiInstance } from '../apis/instances';
-import { ChainEntity } from '../entities/chain';
+import type { ChainEntity } from '../entities/chain';
 import {
   accountHasChanged,
   chainHasChanged,
@@ -12,11 +12,7 @@ import {
 import { selectAllChains, selectChainById } from '../selectors/chains';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 import { selectIsWalletConnected } from '../selectors/wallet';
-import {
-  getEnsAddress,
-  getSpaceIdAddress,
-  getUnstoppableAddress,
-} from '../../../helpers/addresses';
+import { getAddressDomains } from '../../../helpers/addresses';
 
 const ensCache: Record<string, string> = {};
 export const getEns = createAsyncThunk<string, { address: string | null }, { state: BeefyState }>(
@@ -34,22 +30,13 @@ export const getEns = createAsyncThunk<string, { address: string | null }, { sta
     const bscChain = selectChainById(getState(), 'bsc');
     const ethChain = selectChainById(getState(), 'ethereum');
     const polygonChain = selectChainById(getState(), 'polygon');
-    const results = await Promise.allSettled([
-      getEnsAddress(address, ethChain),
-      getUnstoppableAddress(address, ethChain),
-      getUnstoppableAddress(address, polygonChain),
-      getSpaceIdAddress(address, bscChain),
-    ]);
+    const arbChain = selectChainById(getState(), 'arbitrum');
 
-    for (const result of results) {
-      if (result.status === 'fulfilled' && result.value) {
-        ensCache[addressLower] = result.value;
-        return result.value;
-      }
-    }
+    const domains = await getAddressDomains(address, [bscChain, ethChain, polygonChain, arbChain]);
+    const domain = domains?.[0] || '';
 
-    ensCache[addressLower] = '';
-    return '';
+    ensCache[addressLower] = domain;
+    return domain;
   }
 );
 

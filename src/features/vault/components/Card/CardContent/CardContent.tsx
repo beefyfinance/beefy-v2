@@ -11,7 +11,7 @@ type CardContentProps = {
   disableDefaultClass?: boolean;
 };
 
-export const CardContent = memo<CardContentProps>(function ({
+export const CardContent = memo<CardContentProps>(function CardContent({
   children,
   className,
   disableDefaultClass = false,

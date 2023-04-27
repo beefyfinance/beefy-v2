@@ -1,4 +1,5 @@
-import { memo, PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
+import { memo } from 'react';
 import { Hidden, makeStyles, useMediaQuery } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { formatPercent, formatUsd } from '../../../../../helpers/format';
@@ -35,7 +36,7 @@ const VisibleAbove = memo<VisibleAboveProps>(function VisibleAbove({ width, chil
   return <>{aboveWidth ? children : null}</>;
 });
 
-export const UserStats = memo(function () {
+export const UserStats = memo(function UserStats() {
   const stats = useAppSelector(selectUserGlobalStats);
   const hideBalance = useAppSelector(selectIsBalanceHidden);
   const classes = useStyles();

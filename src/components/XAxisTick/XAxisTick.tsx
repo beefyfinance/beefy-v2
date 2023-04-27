@@ -1,5 +1,7 @@
 import React from 'react';
-import { Text, TextProps } from 'recharts';
+import type { TextProps } from 'recharts';
+import { Text } from 'recharts';
+import { omit } from 'lodash-es';
 
 interface Props {
   payload: {
@@ -22,7 +24,6 @@ export function XAxisTick({
   tickFormatter,
   visibleTicksCount,
   index,
-  ref,
   ...rest
 }: xAxisTickProps) {
   const { value } = payload;
@@ -33,9 +34,10 @@ export function XAxisTick({
       : index === visibleTicksCount - 1 && rest.x > rest.width - halfMaxTickTextWidth
       ? 'end'
       : 'middle';
+  const textProps = omit(rest, ['ref']);
 
   return (
-    <Text {...rest} textAnchor={textAnchor} className="recharts-cartesian-axis-tick-value">
+    <Text {...textProps} textAnchor={textAnchor} className="recharts-cartesian-axis-tick-value">
       {tickFormatter ? tickFormatter(value) : value}
     </Text>
   );

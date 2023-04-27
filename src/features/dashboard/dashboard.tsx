@@ -10,9 +10,10 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const Dashboard = memo(function () {
+export const Dashboard = memo(function Dashboard() {
   const classes = useStyles();
   const userVaults = useAppSelector(selectUserDepositedVaultIds);
+
   return (
     <div className={classes.dashboard}>
       <DepositSummary />

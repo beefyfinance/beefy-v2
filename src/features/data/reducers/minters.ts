@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { WritableDraft } from 'immer/dist/internal';
-import { ChainEntity } from '../entities/chain';
-import { VaultEntity } from '../entities/vault';
-import { NormalizedEntity } from '../utils/normalized-entity';
-import { MinterEntity } from '../entities/minter';
+import type { Draft } from 'immer';
+import type { ChainEntity } from '../entities/chain';
+import type { VaultEntity } from '../entities/vault';
+import type { NormalizedEntity } from '../utils/normalized-entity';
+import type { MinterEntity } from '../entities/minter';
 import { fetchAllMinters, initiateMinterForm, reloadReserves } from '../actions/minters';
-import { MinterConfig } from '../apis/config-types';
-import BigNumber from 'bignumber.js';
+import type { MinterConfig } from '../apis/config-types';
+import type BigNumber from 'bignumber.js';
 
 export type MintersState = NormalizedEntity<MinterEntity> & {
   byChainId: {
@@ -51,7 +51,7 @@ export const mintersSlice = createSlice({
 });
 
 function addMinterToState(
-  sliceState: WritableDraft<MintersState>,
+  sliceState: Draft<MintersState>,
   chainId: ChainEntity['id'],
   apiMinter: MinterConfig
 ) {

@@ -1,13 +1,13 @@
-import {
+import type {
   QuoteOutputTokenAmountChange,
   TransactOption,
   TransactQuote,
 } from '../../apis/transact/transact-types';
-import { SerializedError } from '@reduxjs/toolkit';
-import { VaultEntity } from '../../entities/vault';
-import { TokenEntity } from '../../entities/token';
-import { ChainEntity } from '../../entities/chain';
-import { BigNumber } from 'bignumber.js';
+import type { SerializedError } from '@reduxjs/toolkit';
+import type { VaultEntity } from '../../entities/vault';
+import type { TokenEntity } from '../../entities/token';
+import type { ChainEntity } from '../../entities/chain';
+import type { BigNumber } from 'bignumber.js';
 
 export enum TransactStep {
   Loading,

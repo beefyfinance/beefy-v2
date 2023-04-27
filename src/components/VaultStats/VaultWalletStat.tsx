@@ -1,12 +1,12 @@
-import { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
 import { connect } from 'react-redux';
-import { BeefyState } from '../../redux-types';
+import type { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { selectUserBalanceOfToken } from '../../features/data/selectors/balance';
 import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
 import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/selectors/wallet';
-import { VaultValueStat } from '../../features/home/components/Vault/components/VaultValueStat';
+import { VaultValueStat } from '../VaultValueStat';
 import { selectTokenPriceByAddress } from '../../features/data/selectors/tokens';
 
 export type VaultWalletStatProps = {

@@ -1,10 +1,9 @@
-import { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault';
 import React, { memo, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { BeefyState } from '../../redux-types';
+import type { BeefyState } from '../../redux-types';
 import { selectIsVaultGov } from '../../features/data/selectors/vaults';
 import { formattedTotalApy } from '../../helpers/format';
-import { VaultValueStat } from '../../features/home/components/Vault/components/VaultValueStat';
 import {
   selectVaultApyAvailable,
   selectVaultShouldShowInterest,
@@ -17,10 +16,11 @@ import {
   selectIsVaultBoosted,
   selectIsVaultPrestakedBoost,
 } from '../../features/data/selectors/boosts';
-import { AllValuesAsString } from '../../features/data/utils/types-utils';
-import { TotalApy } from '../../features/data/reducers/apy';
+import type { AllValuesAsString } from '../../features/data/utils/types-utils';
+import type { TotalApy } from '../../features/data/reducers/apy';
 import { useAppSelector } from '../../store';
-import { InterestTooltipContent } from '../../features/home/components/Vault/components/InterestTooltipContent';
+import { InterestTooltipContent } from '../InterestTooltipContent';
+import { VaultValueStat } from '../VaultValueStat';
 
 export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];

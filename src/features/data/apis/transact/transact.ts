@@ -1,7 +1,7 @@
 import { BeefyUniswapV2ZapProvider } from './providers/beefy/uniswap-v2';
-import { VaultEntity } from '../../entities/vault';
-import { BeefyState } from '../../../../redux-types';
-import {
+import type { VaultEntity } from '../../entities/vault';
+import type { BeefyState } from '../../../../redux-types';
+import type {
   InputTokenAmount,
   ITransactApi,
   ITransactProvider,
@@ -9,8 +9,8 @@ import {
   TransactQuote,
 } from './transact-types';
 import { VaultProvider } from './providers/vault';
-import { Step } from '../../reducers/wallet/stepper';
-import { Namespace, TFunction } from 'react-i18next';
+import type { Step } from '../../reducers/wallet/stepper';
+import type { Namespace, TFunction } from 'react-i18next';
 import { GovVaultProvider } from './providers/gov-vault';
 import { OneInchZapProvider } from './providers/one-inch/one-inch';
 import { BeefySolidlyZapProvider } from './providers/beefy/solidly';

@@ -1,7 +1,10 @@
-import { Theme } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   sectionContainer: {
     marginTop: '48px',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '24px',
+    },
   },
   titleContainer: {
     marginBottom: '24px',

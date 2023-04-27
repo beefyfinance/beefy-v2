@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import {
   fetchOnRampQuote,
   fetchOnRampSupportedProviders,
@@ -6,10 +7,11 @@ import {
   setOnRampToken,
   validateOnRampForm,
 } from '../actions/on-ramp';
-import { WritableDraft } from 'immer/dist/internal';
-import { ApiQuote, ApiQuoteRequest } from '../apis/on-ramp/on-ramp-types';
+import type { Draft } from 'immer';
+import type { ApiQuote, ApiQuoteRequest } from '../apis/on-ramp/on-ramp-types';
 import { first, orderBy } from 'lodash-es';
-import { CountryError, FormStep, InputMode, OnRampTypes, Quote } from './on-ramp-types';
+import type { OnRampTypes, Quote } from './on-ramp-types';
+import { CountryError, FormStep, InputMode } from './on-ramp-types';
 
 const initialState: OnRampTypes = {
   step: FormStep.SelectToken,
@@ -35,7 +37,7 @@ const initialState: OnRampTypes = {
   },
 };
 
-function clearQuote(sliceState: WritableDraft<OnRampTypes>) {
+function clearQuote(sliceState: Draft<OnRampTypes>) {
   sliceState.quote = initialState.quote;
 }
 
@@ -64,7 +66,7 @@ function processApiQuote(request: ApiQuoteRequest, provider: string, input: ApiQ
   };
 }
 
-function setStep(sliceState: WritableDraft<OnRampTypes>, step: FormStep) {
+function setStep(sliceState: Draft<OnRampTypes>, step: FormStep) {
   if (sliceState.step !== step) {
     const lastStep = sliceState.step;
     sliceState.step = step;

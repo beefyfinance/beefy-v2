@@ -12,7 +12,8 @@
     "earnContractAddress": "0xe80c44542a09F96970302f18F81207170da588Fc",
     "oracle": "lps",
     "oracleId": "thena-btcb-multibtc",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "thena",
     "assets": ["BTCB", "multiBTC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -52,7 +53,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1679652960
+    "createdAt": 1682334773
   },
   {
     "id": "thena-usdt-wbnb",
@@ -67,7 +68,8 @@
     "earnContractAddress": "0xc14FD42D7482630B89A5471Fd0AEe8F23BD64F0e",
     "oracle": "lps",
     "oracleId": "thena-usdt-wbnb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "thena",
     "assets": ["USDT", "BNB"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -91,7 +93,8 @@
     "earnContractAddress": "0xF80d1196119B65aFc91357Daebb02F368F3Bca02",
     "oracle": "lps",
     "oracleId": "thena-bnbx-frax",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "thena",
     "assets": ["BNBx", "FRAX"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -116,7 +119,7 @@
     "oracleId": "cake-stable-bnbx-wbnb",
     "status": "active",
     "platformId": "pancakeswap",
-    "assets": ["BNBx", "WBNB"],
+    "assets": ["BNBx", "BNB"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -173,7 +176,8 @@
     "earnContractAddress": "0x48aE3F2f6421b8DA1E2664aAE92D23C461167eBC",
     "oracle": "lps",
     "oracleId": "thena-usdt-usd+",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "thena",
     "assets": ["USDT", "USD+"],
     "risks": [
@@ -204,7 +208,8 @@
     "earnContractAddress": "0x3cf5e39a698d553d0B28606Eb6083Ccff70A7712",
     "oracle": "lps",
     "oracleId": "thena-bnbx-usdt",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "thena",
     "assets": ["BNBx", "USDT"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -228,7 +233,8 @@
     "earnContractAddress": "0x0Fff50490Dc98b77AFC4ed6952EB8ABD9e39ff91",
     "oracle": "lps",
     "oracleId": "thena-primal-busd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "thena",
     "assets": ["PRIMAL", "BUSD"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -252,7 +258,8 @@
     "earnContractAddress": "0x8e13d9bE2D32B11a047CE2AB6cdD2B431dbB8aAb",
     "oracle": "lps",
     "oracleId": "thena-usdt-primal",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "thena",
     "assets": ["PRIMAL", "USDT"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -276,7 +283,8 @@
     "earnContractAddress": "0x2b8F9C83FCE1a693f7fD71B7eA743b937ADB0Ca5",
     "oracle": "lps",
     "oracleId": "thena-ankrbnb-ankreth",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "thena",
     "assets": ["ankrBNB", "ankrETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -300,7 +308,8 @@
     "earnContractAddress": "0xAEdF7c8b5c3cE80faC86986EBd7E2D7938bD2be9",
     "oracle": "lps",
     "oracleId": "thena-multi-wbnb",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "thena",
     "assets": ["MULTI", "BNB"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -371,7 +380,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1677122554
+    "createdAt": 1682334773
   },
   {
     "id": "thena-fil-wbnb",
@@ -386,7 +395,8 @@
     "earnContractAddress": "0x56C254017Ea3AecB27d671905d25Cc56a5EdA95E",
     "oracle": "lps",
     "oracleId": "thena-fil-wbnb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "thena",
     "assets": ["FIL", "BNB"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -410,7 +420,8 @@
     "earnContractAddress": "0x6E9543bCEA3d91b4D594efd77DCc256A2c835e67",
     "oracle": "lps",
     "oracleId": "thena-eth-ankreth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "thena",
     "assets": ["ankrETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -434,7 +445,8 @@
     "earnContractAddress": "0x245B41B641e1E1369FF910a7cA1CF990e771F899",
     "oracle": "lps",
     "oracleId": "thena-fs-usdt",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "thena",
     "assets": ["FS", "USDT"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -490,7 +502,8 @@
     "earnContractAddress": "0x2dD19132C93DbD942B0086cE0E50DD30526D7Ba9",
     "oracle": "lps",
     "oracleId": "thena-avax-wbnb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "thena",
     "assets": ["AVAX", "BNB"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -514,7 +527,8 @@
     "earnContractAddress": "0xBD2b86C3D541B6598aa2e9fCf4d6C36D7c54728D",
     "oracle": "lps",
     "oracleId": "thena-ankrbnb-ankr",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "thena",
     "assets": ["ankrBNB", "ANKR"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -538,7 +552,8 @@
     "earnContractAddress": "0x9E6182054258e90228afF17952b347dCfd7cC1b1",
     "oracle": "lps",
     "oracleId": "thena-idia-busd",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "thena",
     "assets": ["IDIA", "BUSD"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -562,7 +577,8 @@
     "earnContractAddress": "0xb36fffD0174B2eC18D82d21BB2e24b132ecBA5b0",
     "oracle": "lps",
     "oracleId": "thena-jbrl-brz",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "thena",
     "assets": ["jBRL", "BRZ"],
     "risks": [
@@ -601,7 +617,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1676926172
+    "createdAt": 1682334773
   },
   {
     "id": "thena-matic-busd",
@@ -616,7 +632,8 @@
     "earnContractAddress": "0x13939652caF011CCa8228293Dc901E4CB2c47BA3",
     "oracle": "lps",
     "oracleId": "thena-matic-busd",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "thena",
     "assets": ["MATIC", "BUSD"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -640,7 +657,8 @@
     "earnContractAddress": "0x52b7D9B83409682810c1a38AcFF6964C56fbfdE9",
     "oracle": "lps",
     "oracleId": "thena-multi-busd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "thena",
     "assets": ["MULTI", "BUSD"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -664,7 +682,8 @@
     "earnContractAddress": "0xC0Ef56393ab4ee2E81A3325959059892E1880bFF",
     "oracle": "lps",
     "oracleId": "thena-usdt-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "thena",
     "assets": ["USDT", "USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -704,7 +723,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1676504000
+    "createdAt": 1682334773
   },
   {
     "id": "thena-usdt-frax",
@@ -735,7 +754,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1676504000
+    "createdAt": 1682334773
   },
   {
     "id": "thena-wbnb-bifi",
@@ -759,7 +778,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1675891871
+    "createdAt": 1682334773
   },
   {
     "id": "thena-bnbx-sd",
@@ -783,7 +802,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1675891871
+    "createdAt": 1682334773
   },
   {
     "id": "swapfish-bsc-wbnb-busd",
@@ -879,7 +898,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1674180481
+    "createdAt": 1682607111
   },
   {
     "id": "thena-eth-frxeth",
@@ -903,7 +922,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1675521404
+    "createdAt": 1682334773
   },
   {
     "id": "thena-frxeth-frax",
@@ -927,7 +946,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1675521404
+    "createdAt": 1682607111
   },
   {
     "id": "thena-usdc-ftm",
@@ -942,7 +961,8 @@
     "earnContractAddress": "0xE03cB832EFba6Cee25292A0772b4fabf174a0005",
     "oracle": "lps",
     "oracleId": "thena-usdc-ftm",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "thena",
     "assets": ["USDC", "FTM"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -975,7 +995,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1673783906
+    "createdAt": 1682334773
   },
   {
     "id": "thena-frax-fxs",
@@ -990,7 +1010,8 @@
     "earnContractAddress": "0xC06eF6610860072da361F90437E3aF8b1195d0c9",
     "oracle": "lps",
     "oracleId": "thena-frax-fxs",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "thena",
     "assets": ["FRAX", "FXS"],
     "risks": [
@@ -1021,7 +1042,8 @@
     "earnContractAddress": "0x9F204aC611C9493b94043218537c43a595F46052",
     "oracle": "lps",
     "oracleId": "thena-wbnb-ankr",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "thena",
     "assets": ["ANKR", "BNB"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -1054,7 +1076,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1673571556
+    "createdAt": 1682334773
   },
   {
     "id": "thena-wbnb-busd",
@@ -1078,7 +1100,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1673571556
+    "createdAt": 1682607111
   },
   {
     "id": "thena-btcb-wbnb",
@@ -1093,7 +1115,8 @@
     "earnContractAddress": "0x17b2230E40E4D886A98cFC7f02495810Ae3A691A",
     "oracle": "lps",
     "oracleId": "thena-btcb-wbnb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "thena",
     "assets": ["BTCB", "BNB"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -1117,7 +1140,8 @@
     "earnContractAddress": "0xFc9A1CfE805A33BeeB04Cf96e4c341C1FDD6a9E8",
     "oracle": "lps",
     "oracleId": "thena-eth-wbnb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "thena",
     "assets": ["ETH", "BNB"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -1150,7 +1174,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1673571556
+    "createdAt": 1682607111
   },
   {
     "id": "thena-mai-busd",
@@ -1165,7 +1189,8 @@
     "earnContractAddress": "0xE08D670E8b4040756ca4F31D4a81d4CAB318aeB7",
     "oracle": "lps",
     "oracleId": "thena-mai-busd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "thena",
     "assets": ["MAI", "BUSD"],
     "risks": [
@@ -1212,7 +1237,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1673571556
+    "createdAt": 1682334773
   },
   {
     "id": "thena-usdc-busd",
@@ -1227,7 +1252,8 @@
     "earnContractAddress": "0x1c94779aD700cd4a0681e516fFA3d5Ba6d8B3d3c",
     "oracle": "lps",
     "oracleId": "thena-usdc-busd",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "thena",
     "assets": ["USDC", "BUSD"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -1260,7 +1286,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1673571556
+    "createdAt": 1682334773
   },
   {
     "id": "ellipsis-ankrBNB",
@@ -1821,7 +1847,8 @@
     "earnContractAddress": "0x435d92064a7af6B91aC03F9F0cD4c5f9BB0BFaeB",
     "oracle": "lps",
     "oracleId": "cone-usdt-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "cone",
     "assets": ["USDT", "USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -3328,7 +3355,7 @@
     "oracleId": "belt-4belt",
     "status": "active",
     "platformId": "belt",
-    "assets": ["USDT", "BUSD", "USDC", "DAI", "4BELT"],
+    "assets": ["USDT", "BUSD", "USDC", "DAI"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",

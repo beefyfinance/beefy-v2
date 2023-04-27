@@ -1,8 +1,9 @@
-import { makeStyles, Theme } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../store';
-import { VaultEntity } from '../../../../../data/entities/vault';
+import type { VaultEntity } from '../../../../../data/entities/vault';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -33,7 +34,7 @@ export interface LegendProps {
   vaultId: VaultEntity['id'];
 }
 
-export const Legend = memo<LegendProps>(function ({ vaultId }) {
+export const Legend = memo<LegendProps>(function Legend({ vaultId }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -64,7 +65,7 @@ interface LegendItemProps {
   text: string;
 }
 
-const LegendItem = memo<LegendItemProps>(function ({ color, text }) {
+const LegendItem = memo<LegendItemProps>(function LegendItem({ color, text }) {
   const classes = useStyles();
 
   return (

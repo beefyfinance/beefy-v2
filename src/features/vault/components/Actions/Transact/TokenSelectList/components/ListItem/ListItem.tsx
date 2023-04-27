@@ -2,10 +2,10 @@ import React, { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { formatBigDecimals } from '../../../../../../../../helpers/format';
-import { ChainEntity } from '../../../../../../../data/entities/chain';
+import type { ChainEntity } from '../../../../../../../data/entities/chain';
 import clsx from 'clsx';
-import { TokenEntity } from '../../../../../../../data/entities/token';
-import BigNumber from 'bignumber.js';
+import type { TokenEntity } from '../../../../../../../data/entities/token';
+import type BigNumber from 'bignumber.js';
 import { ChevronRight } from '@material-ui/icons';
 import { TokensImage } from '../../../../../../../../components/TokenImage/TokenImage';
 import { ListJoin } from '../../../../../../../../components/ListJoin';
@@ -20,7 +20,7 @@ export type ListItemProps = {
   onSelect: (id: string) => void;
   className?: string;
 };
-export const ListItem = memo<ListItemProps>(function ({
+export const ListItem = memo<ListItemProps>(function ListItem({
   tokenId,
   tokens,
   balance,

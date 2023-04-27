@@ -1,16 +1,16 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { sortBy } from 'lodash-es';
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
+import type { VaultEntity } from '../entities/vault';
 import {
   isGovVault,
   isVaultPaused,
   isVaultRetired,
   shouldVaultShowInterest,
-  VaultEntity,
 } from '../entities/vault';
 import {
   selectHasUserDepositInVault,
-  selectIsUserEligibleForVault,
+  selectUserDepositedVaultIds,
   selectUserVaultDepositInUsd,
   selectUserVaultDepositTokenWalletBalanceInUsd,
 } from './balance';
@@ -25,6 +25,7 @@ import {
   selectIsVaultBeefy,
   selectIsVaultBlueChip,
   selectIsVaultFeatured,
+  selectIsVaultCorrelated,
   selectIsVaultStable,
   selectVaultById,
   selectVaultSupportsAnyZap,
@@ -32,9 +33,11 @@ import {
 import escapeStringRegexp from 'escape-string-regexp';
 import { selectTokenByAddress } from './tokens';
 import { createCachedSelector } from 're-reselect';
-import { KeysOfType } from '../utils/types-utils';
-import { FilteredVaultsState } from '../reducers/filtered-vaults';
-import { PlatformEntity } from '../entities/platform';
+import type { KeysOfType } from '../utils/types-utils';
+import type { FilteredVaultsState } from '../reducers/filtered-vaults';
+import type { PlatformEntity } from '../entities/platform';
+import { selectActiveChainIds, selectAllChainIds } from './chains';
+import { selectIsVaultIdSaved } from './saved-vaults';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 
@@ -186,6 +189,19 @@ function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchTex
   });
 }
 
+export const selectUserFilteredVaults = (state: BeefyState, text: string) => {
+  const vaults = selectUserDepositedVaultIds(state).map(id => selectVaultById(state, id));
+  const searchText = simplifySearchText(text);
+  const filteredVaults = vaults.filter(vault => {
+    if (searchText.length > 0 && !selectVaultMatchesText(state, vault, searchText)) {
+      return false;
+    }
+
+    return true;
+  });
+  return filteredVaults;
+};
+
 const selectPlatformIdForFilter = createCachedSelector(
   (state: BeefyState) => state.entities.platforms.filterIds,
   (state: BeefyState, platformId: PlatformEntity['id']) => platformId,
@@ -199,9 +215,16 @@ export const selectFilteredVaults = (state: BeefyState) => {
   const vaults = state.entities.vaults.allIds.map(id => selectVaultById(state, id));
   const tvlByVaultId = state.biz.tvl.byVaultId;
   const apyByVaultId = state.biz.apy.totalApy.byVaultId;
+  // Surface eol chains when user category is 'deposited', or 'only retired' filter is checked; otherwise, only show active chains
+  const allChainIds =
+    filterOptions.userCategory === 'deposited' || filterOptions.onlyRetired
+      ? selectAllChainIds(state)
+      : selectActiveChainIds(state);
 
   // apply filtering
-  const chainIdMap = createIdMap(filterOptions.chainIds);
+  const shouldShowChain = createIdMap(
+    filterOptions.chainIds.length === 0 ? allChainIds : filterOptions.chainIds
+  );
   const filteredVaults = vaults.filter(vault => {
     if (filterOptions.vaultCategory === 'featured' && !selectIsVaultFeatured(state, vault.id)) {
       return false;
@@ -215,8 +238,10 @@ export const selectFilteredVaults = (state: BeefyState) => {
     if (filterOptions.vaultCategory === 'beefy' && !selectIsVaultBeefy(state, vault.id)) {
       return false;
     }
-
-    if (filterOptions.chainIds.length > 0 && !chainIdMap[vault.chainId]) {
+    if (filterOptions.vaultCategory === 'correlated' && !selectIsVaultCorrelated(state, vault.id)) {
+      return false;
+    }
+    if (!shouldShowChain[vault.chainId]) {
       return false;
     }
     if (
@@ -257,10 +282,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
     }
 
     // hide when no wallet balance of deposit token
-    if (
-      filterOptions.userCategory === 'eligible' &&
-      !selectIsUserEligibleForVault(state, vault.id)
-    ) {
+    if (filterOptions.userCategory === 'saved' && !selectIsVaultIdSaved(state, vault.id)) {
       return false;
     }
 
@@ -389,7 +411,7 @@ export const selectTotalVaultCount = createSelector(
   c => c
 );
 
-function createIdMap(ids: string[]) {
+function createIdMap(ids: string[]): Record<string, boolean> {
   const map = {};
   for (const id of ids) {
     map[id] = true;

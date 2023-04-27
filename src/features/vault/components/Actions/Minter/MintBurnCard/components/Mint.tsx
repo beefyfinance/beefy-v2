@@ -20,7 +20,7 @@ import { isString } from 'lodash-es';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../../data/actions/wallet';
 import { walletActions } from '../../../../../../data/actions/wallet-actions';
 
-import { MinterCardParams } from '../../MinterCard';
+import type { MinterCardParams } from '../../MinterCard';
 import { selectMinterById } from '../../../../../../data/selectors/minters';
 import { selectAllowanceByTokenAddress } from '../../../../../../data/selectors/allowances';
 import { selectChainById } from '../../../../../../data/selectors/chains';

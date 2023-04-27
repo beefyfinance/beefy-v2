@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { WritableDraft } from 'immer/dist/internal';
+import type { Draft } from 'immer';
 import { isEqual } from 'lodash-es';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
-import { BoostEntity } from '../entities/boost';
-import { ChainEntity } from '../entities/chain';
-import { VaultEntity } from '../entities/vault';
-import { NormalizedEntity } from '../utils/normalized-entity';
-import { BoostConfig } from '../apis/config-types';
+import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
+import type { BoostEntity } from '../entities/boost';
+import type { ChainEntity } from '../entities/chain';
+import type { VaultEntity } from '../entities/vault';
+import type { NormalizedEntity } from '../utils/normalized-entity';
+import type { BoostConfig } from '../apis/config-types';
 import { datesAreEqual } from '../../../helpers/date';
 
 export type BoostContractState = {
@@ -85,7 +85,7 @@ export const boostsSlice = createSlice({
 export const { recomputeBoostStatus } = boostsSlice.actions;
 
 function addContractDataToState(
-  sliceState: WritableDraft<BoostsState>,
+  sliceState: Draft<BoostsState>,
   contractData: FetchAllContractDataResult
 ) {
   for (const boostContractData of contractData.boosts) {
@@ -133,7 +133,7 @@ export function getBoostStatusFromContractState(
   }
 }
 
-function updateBoostStatus(sliceState: WritableDraft<BoostsState>) {
+function updateBoostStatus(sliceState: Draft<BoostsState>) {
   const now = new Date();
 
   for (const boostData of [sliceState.byVaultId, sliceState.byChainId]) {
@@ -179,7 +179,7 @@ function updateBoostStatus(sliceState: WritableDraft<BoostsState>) {
 }
 
 function addBoostToState(
-  sliceState: WritableDraft<BoostsState>,
+  sliceState: Draft<BoostsState>,
   chainId: ChainEntity['id'],
   apiBoost: BoostConfig
 ) {

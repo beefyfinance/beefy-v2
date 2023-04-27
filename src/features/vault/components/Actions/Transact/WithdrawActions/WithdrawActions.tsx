@@ -14,12 +14,12 @@ import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../../../../data/selectors/wallet';
-import {
+import type {
   GovVaultQuote,
-  isGovVaultQuote,
   TransactOption,
   TransactQuote,
 } from '../../../../../data/apis/transact/transact-types';
+import { isGovVaultQuote } from '../../../../../data/apis/transact/transact-types';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 import { PriceImpactNotice } from '../PriceImpactNotice';
 import { transactSteps, transactStepsClaimGov } from '../../../../../data/actions/transact';
@@ -27,16 +27,17 @@ import { EmeraldGasNotice } from '../EmeraldGasNotice';
 import { ConfirmNotice } from '../ConfirmNotice';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { selectGovVaultById, selectIsVaultGov } from '../../../../../data/selectors/vaults';
-import { ActionButtonProps, ActionConnect, ActionSwitch } from '../CommonActions';
+import type { ActionButtonProps } from '../CommonActions';
+import { ActionConnect, ActionSwitch } from '../CommonActions';
 import { selectGovVaultPendingRewardsInToken } from '../../../../../data/selectors/balance';
-import { VaultGov } from '../../../../../data/entities/vault';
+import type { VaultGov } from '../../../../../data/entities/vault';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { GlpWithdrawNotice } from '../GlpNotices';
+import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotice';
 
 const useStyles = makeStyles(styles);
 
-export type WithdrawActionsProps = {};
-export const WithdrawActions = memo<WithdrawActionsProps>(function WithdrawActions() {
+export const WithdrawActions = memo(function WithdrawActions() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const isGovVault = useAppSelector(state => selectIsVaultGov(state, vaultId));
 
@@ -47,33 +48,31 @@ export const WithdrawActions = memo<WithdrawActionsProps>(function WithdrawActio
   return <WithdrawActionsStandard />;
 });
 
-export const WithdrawActionsStandard = memo<WithdrawActionsProps>(
-  function WithdrawActionsStandard() {
-    const quoteStatus = useAppSelector(selectTransactQuoteStatus);
-    const quote = useAppSelector(selectTransactSelectedQuote);
-    const option = useAppSelector(state =>
-      quote ? selectTransactOptionById(state, quote.optionId) : null
-    );
-    const isWalletConnected = useAppSelector(selectIsWalletConnected);
-    const connectedChainId = useAppSelector(selectCurrentChainId);
+export const WithdrawActionsStandard = memo(function WithdrawActionsStandard() {
+  const quoteStatus = useAppSelector(selectTransactQuoteStatus);
+  const quote = useAppSelector(selectTransactSelectedQuote);
+  const option = useAppSelector(state =>
+    quote ? selectTransactOptionById(state, quote.optionId) : null
+  );
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+  const connectedChainId = useAppSelector(selectCurrentChainId);
 
-    if (!isWalletConnected) {
-      return <ActionConnect />;
-    }
-
-    if (option && option.chainId !== connectedChainId) {
-      return <ActionSwitch chainId={option.chainId} />;
-    }
-
-    if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
-      return <ActionWithdrawDisabled />;
-    }
-
-    return <ActionWithdraw quote={quote} option={option} />;
+  if (!isWalletConnected) {
+    return <ActionConnect />;
   }
-);
 
-export const WithdrawActionsGov = memo<WithdrawActionsProps>(function WithdrawActionsGov() {
+  if (option && option.chainId !== connectedChainId) {
+    return <ActionSwitch chainId={option.chainId} />;
+  }
+
+  if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
+    return <ActionWithdrawDisabled />;
+  }
+
+  return <ActionWithdraw quote={quote} option={option} />;
+});
+
+export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
   const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectGovVaultById(state, vaultId));
@@ -111,7 +110,9 @@ export const WithdrawActionsGov = memo<WithdrawActionsProps>(function WithdrawAc
   );
 });
 
-const ActionWithdrawDisabled = memo<ActionButtonProps>(function ({ className }) {
+const ActionWithdrawDisabled = memo<ActionButtonProps>(function ActionWithdrawDisabled({
+  className,
+}) {
   const { t } = useTranslation();
 
   return (
@@ -131,18 +132,23 @@ type ActionWithdrawProps = {
   option: TransactOption;
   quote: TransactQuote;
 } & ActionButtonProps;
-const ActionWithdraw = memo<ActionWithdrawProps>(function ({ option, quote, className }) {
+const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ option, quote }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [isDisabledByPriceImpact, setIsDisabledByPriceImpact] = useState(false);
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
+  const [isDisabledByScreamLiquidity, setIsDisabledByScreamLiquidity] = useState(false);
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
   const isDisabled =
-    isTxInProgress || isDisabledByPriceImpact || isDisabledByConfirm || isDisabledByGlpLock;
+    isTxInProgress ||
+    isDisabledByPriceImpact ||
+    isDisabledByConfirm ||
+    isDisabledByGlpLock ||
+    isDisabledByScreamLiquidity;
   const handleClick = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
@@ -150,6 +156,10 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ({ option, quote, clas
   return (
     <>
       {option.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
+      <ScreamAvailableLiquidityNotice
+        vaultId={option.vaultId}
+        onChange={setIsDisabledByScreamLiquidity}
+      />
       <GlpWithdrawNotice vaultId={option.vaultId} onChange={setIsDisabledByGlpLock} />
       <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
@@ -171,11 +181,10 @@ type ActionClaimWithdrawProps = {
   quote: GovVaultQuote;
   vault: VaultGov;
 } & ActionButtonProps;
-const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ({
+const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimWithdraw({
   option,
   quote,
   vault,
-  className,
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -221,7 +230,7 @@ const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ({
 type ActionClaimProps = {
   vault: VaultGov;
 } & ActionButtonProps;
-const ActionClaim = memo<ActionClaimProps>(function ({ vault, className }) {
+const ActionClaim = memo<ActionClaimProps>(function ActionClaim({ vault }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const pendingRewards = useAppSelector(state =>

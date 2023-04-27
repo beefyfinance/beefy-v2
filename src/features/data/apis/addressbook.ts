@@ -1,6 +1,6 @@
 import { memoize } from 'lodash-es';
-import { ChainEntity } from '../entities/chain';
-import { TokenEntity } from '../entities/token';
+import type { ChainEntity } from '../entities/chain';
+import type { TokenEntity } from '../entities/token';
 
 interface AddressBookTokenConfig {
   name: string;

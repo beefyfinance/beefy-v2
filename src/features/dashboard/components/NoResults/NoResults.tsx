@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo, PropsWithChildren, useCallback } from 'react';
+import type { PropsWithChildren } from 'react';
+import React, { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonLink } from '../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../store';
@@ -11,7 +12,7 @@ import iconEmptyState from '../../../../images/empty-state.svg';
 
 const useStyles = makeStyles(styles);
 
-export const NoResults = memo(function () {
+export const NoResults = memo(function NoResults() {
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
 
   if (walletAddress) {
@@ -24,7 +25,7 @@ export const NoResults = memo(function () {
 type TextProps = PropsWithChildren<{
   text: string;
 }>;
-const Text = memo<TextProps>(function ({ text, children }) {
+const Text = memo<TextProps>(function Text({ text, children }) {
   const { t } = useTranslation();
   const classes = useStyles();
   return (
@@ -43,7 +44,7 @@ const Text = memo<TextProps>(function ({ text, children }) {
   );
 });
 
-const NotConnected = memo(function () {
+const NotConnected = memo(function NotConnected() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
@@ -63,7 +64,7 @@ const NotConnected = memo(function () {
   );
 });
 
-const NoVaults = memo(function () {
+const NoVaults = memo(function NoVaults() {
   const { t } = useTranslation();
   return (
     <Text text={t('Dashboard-NoVaults')}>

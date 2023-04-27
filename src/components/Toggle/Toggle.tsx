@@ -1,4 +1,5 @@
-import { ChangeEventHandler, memo, ReactNode, useCallback } from 'react';
+import type { ChangeEventHandler, ReactNode } from 'react';
+import { memo, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';

@@ -1,7 +1,7 @@
-import BigNumber from 'bignumber.js';
-import { BeefyState } from '../../../../redux-types';
-import { BoostEntity } from '../../entities/boost';
-import { VaultGov, VaultStandard } from '../../entities/vault';
+import type BigNumber from 'bignumber.js';
+import type { BeefyState } from '../../../../redux-types';
+import type { BoostEntity } from '../../entities/boost';
+import type { VaultGov, VaultStandard } from '../../entities/vault';
 
 export interface IContractDataApi {
   fetchAllContractData(

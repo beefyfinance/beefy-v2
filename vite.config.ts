@@ -3,15 +3,20 @@ import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfil
 import RollupNodePolyFillPlugin from 'rollup-plugin-polyfill-node';
 import react from '@vitejs/plugin-react';
 import svgrPlugin from 'vite-plugin-svgr';
+import eslint from 'vite-plugin-eslint';
 import { visualizer } from 'rollup-plugin-visualizer';
 import * as path from 'path';
 
 const optionalPlugins = [];
 
+if (process.env.NODE_ENV === 'development') {
+  optionalPlugins.push(eslint());
+}
+
 if (process.env.ANALYZE_BUNDLE) {
   optionalPlugins.push(
     visualizer({
-      template: 'sunburst', // or treemap/sunburst
+      template: 'treemap', // or treemap/sunburst
       open: true,
       gzipSize: true,
       brotliSize: true,

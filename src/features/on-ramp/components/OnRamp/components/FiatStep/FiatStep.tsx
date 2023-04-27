@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectAllFiat, selectLastStep } from '../../../../../data/selectors/on-ramp';
 import { SearchableList } from '../../../../../../components/SearchableList';
-import { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
+import type { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
 import { CurrencyFlag } from '../CurrencyFlag';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 import { setOnRampFiat } from '../../../../../data/actions/on-ramp';
@@ -14,7 +14,7 @@ import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
 
 const useStyles = makeStyles(styles);
 
-export const FiatStep = memo(function () {
+export const FiatStep = memo(function FiatStep() {
   const { t } = useTranslation();
   const lastStep = useAppSelector(selectLastStep);
 
@@ -32,7 +32,7 @@ export const FiatStep = memo(function () {
   );
 });
 
-const ListItem = memo<ItemInnerProps>(function ({ value }) {
+const ListItem = memo<ItemInnerProps>(function ListItem({ value }) {
   const classes = useStyles();
   return (
     <>
@@ -42,7 +42,7 @@ const ListItem = memo<ItemInnerProps>(function ({ value }) {
   );
 });
 
-const FiatSelector = memo(function () {
+const FiatSelector = memo(function FiatSelector() {
   const currencies = useAppSelector(selectAllFiat);
   const sortedCurrencies = useMemo(() => [...currencies].sort(), [currencies]);
   const dispatch = useAppDispatch();

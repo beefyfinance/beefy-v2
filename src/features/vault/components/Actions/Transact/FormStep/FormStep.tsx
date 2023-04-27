@@ -1,4 +1,5 @@
-import React, { ComponentType, memo, useCallback, useEffect, useMemo } from 'react';
+import type { ComponentType } from 'react';
+import React, { memo, useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
@@ -18,7 +19,7 @@ const modeToComponent: Record<TransactMode, ComponentType> = {
   [TransactMode.Withdraw]: WithdrawFormLoader,
 };
 
-export const FormStep = memo(function () {
+export const FormStep = memo(function FormStep() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const classes = useStyles();

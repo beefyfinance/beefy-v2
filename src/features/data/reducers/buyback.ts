@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { fetchBeefyBuybackAction } from '../actions/prices';
-import { ChainEntity } from '../entities/chain';
+import type { ChainEntity } from '../entities/chain';
 
 /**
  * State containing APY infos indexed by vault id

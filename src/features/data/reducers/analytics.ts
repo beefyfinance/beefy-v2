@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import {
   fetchWalletTimeline,
   fetchShareToUnderlying,
   fetchUnderlyingToUsd,
 } from '../actions/analytics';
-import { ApiProductPriceRow, TimeBucketType } from '../apis/analytics/analytics-types';
-import { VaultTimelineAnalyticsEntity } from '../entities/analytics';
-import { BoostEntity } from '../entities/boost';
-import { VaultEntity } from '../entities/vault';
+import type { ApiProductPriceRow, TimeBucketType } from '../apis/analytics/analytics-types';
+import type { VaultTimelineAnalyticsEntity } from '../entities/analytics';
+import type { BoostEntity } from '../entities/boost';
+import type { VaultEntity } from '../entities/vault';
 import { selectAllVaultBoostIds } from '../selectors/boosts';
-import { Draft } from 'immer';
+import type { Draft } from 'immer';
 
 type StatusType = 'idle' | 'pending' | 'fulfilled' | 'rejected';
 

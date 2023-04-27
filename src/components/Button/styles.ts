@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core/styles';
+import type { Theme } from '@material-ui/core';
 
 const borderWidth = 2;
 const paddings: Record<string, Record<'x' | 'y', number>> = {

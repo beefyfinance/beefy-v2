@@ -288,5 +288,10 @@
     "chainId": "polygon",
     "ammId": "polygon-dystopia",
     "zapAddress": "0x1B03127EC0F4D12EFD84d84C70d5Aa7ef83Fe136"
+  },
+  {
+    "chainId": "zksync",
+    "ammId": "zksync-velocore",
+    "zapAddress": "0x3f02b129138377722FfE9d374B3F65fc7599475e"
   }
 ]

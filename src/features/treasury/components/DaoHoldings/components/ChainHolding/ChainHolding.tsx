@@ -4,7 +4,7 @@ import { useAppSelector } from '../../../../../../store';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import { makeStyles } from '@material-ui/core';
 import { formatBigUsd } from '../../../../../../helpers/format';
-import { ChainEntity } from '../../../../../data/entities/chain';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 import { selectTreasuryBalanceByChainId } from '../../../../../data/selectors/treasury';
 
 import { Assets } from '../Assets';
@@ -18,7 +18,7 @@ interface ChainHoldingProps {
   chainId: ChainEntity['id'];
 }
 
-export const ChainHolding = memo<ChainHoldingProps>(function ({ chainId }) {
+export const ChainHolding = memo<ChainHoldingProps>(function ChainHolding({ chainId }) {
   const totalUsd = useAppSelector(state => selectTreasuryBalanceByChainId(state, chainId));
 
   const classes = useStyles();

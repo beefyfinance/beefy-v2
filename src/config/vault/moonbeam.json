@@ -128,7 +128,8 @@
     "earnContractAddress": "0xc302DF25DA018444f8B9261CF7f0f4eA0999e97B",
     "oracle": "lps",
     "oracleId": "beamswap-wstdot-xcdot",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beamswap",
     "assets": ["wstDOT", "xcDOT"],
     "risks": [
@@ -630,7 +631,8 @@
     "earnContractAddress": "0x82C56892495ACC321Ffea7178d9a9831f5AAf893",
     "oracle": "lps",
     "oracleId": "beamswap-4pool",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beamswap",
     "assets": ["USDC", "USDT", "DAI", "BUSD"],
     "risks": [
@@ -848,7 +850,8 @@
     "earnContractAddress": "0xC96b496F78d1a45D9cec6d628a75614ed230D6D4",
     "oracle": "lps",
     "oracleId": "beamswap-usdc-wglmr",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beamswap",
     "assets": ["USDC", "GLMR"],
     "risks": [
@@ -943,7 +946,8 @@
     "earnContractAddress": "0x452bE05439d83D3A6A510F11a4Ba1F1909d1cA6d",
     "oracle": "lps",
     "oracleId": "beamswap-busd-bnb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beamswap",
     "assets": ["BUSD", "BNB"],
     "risks": [
@@ -1006,7 +1010,8 @@
     "earnContractAddress": "0x93E0573029Bd4452d2D4BAF7725ecf8e5B0b5Dd7",
     "oracle": "lps",
     "oracleId": "beamswap-usdc-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beamswap",
     "assets": ["USDC", "ETH"],
     "risks": [

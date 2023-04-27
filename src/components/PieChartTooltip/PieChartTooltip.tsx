@@ -5,11 +5,22 @@ import { AssetsImage } from '../AssetsImage';
 import { BIG_ZERO } from '../../helpers/big-number';
 import { formatBigUsd, formatPercent } from '../../helpers/format';
 import { styles } from './styles';
-import { TypeChart } from '../PieChart/PieChart';
+import type { TypeChart } from '../PieChart/PieChart';
 import { getNetworkSrc } from '../../helpers/networkSrc';
+import type BigNumber from 'bignumber.js';
+
+// TODO: fix this type
+type PayloadData = {
+  value?: BigNumber;
+  percentage?: number;
+  label?: string;
+  key?: string;
+  chainId: string;
+  assetIds: string[];
+};
 
 interface TooltipProps {
-  payload?: any;
+  payload?: { payload: PayloadData }[];
   active?: boolean;
   type?: TypeChart;
   formatter?: (s: string) => string;
@@ -17,7 +28,12 @@ interface TooltipProps {
 
 const useStyles = makeStyles(styles);
 
-export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type, active, formatter }) {
+export const PieChartTooltip = memo<TooltipProps>(function PieChartTooltip({
+  payload,
+  type,
+  active,
+  formatter,
+}) {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -33,7 +49,7 @@ export const PieChartTooltip = memo<TooltipProps>(function ({ payload, type, act
           {data.key !== 'others' && (
             <>
               {type === 'chain' && (
-                <img className={classes.icon} src={getNetworkSrc(data.chainId)} alt={title} />
+                <img className={classes.icon} src={getNetworkSrc(data.key)} alt={title} />
               )}
               {type === 'token' && (
                 <AssetsImage size={24} chainId={data.chainId} assetIds={data.assetIds} />

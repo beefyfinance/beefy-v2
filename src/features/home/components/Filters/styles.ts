@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core/styles';
+import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   filters: {
@@ -43,6 +43,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   vaultCategory: {},
+  platforms: {},
   extended: {},
   clear: {},
   button: {

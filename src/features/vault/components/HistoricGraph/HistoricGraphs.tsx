@@ -1,5 +1,5 @@
-import { ChartStat } from '../../../data/reducers/historical-types';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { ChartStat } from '../../../data/reducers/historical-types';
+import type { VaultEntity } from '../../../data/entities/vault';
 import React, { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../store';
@@ -18,7 +18,7 @@ const useStyles = makeStyles(styles);
 type HistoricGraphsProps = {
   vaultId: VaultEntity['id'];
 };
-export const HistoricGraphs = memo<HistoricGraphsProps>(function ({ vaultId }) {
+export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs({ vaultId }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));

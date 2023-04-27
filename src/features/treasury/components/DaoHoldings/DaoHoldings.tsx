@@ -53,7 +53,7 @@ function useNumColumns() {
   return useMemo(() => (isDesktop ? 3 : isTablet ? 2 : 1), [isDesktop, isTablet]);
 }
 
-export const DaoHoldings = memo(function () {
+export const DaoHoldings = memo(function DaoHoldings() {
   const { t } = useTranslation();
   const classes = useStyles();
   const numColumns = useNumColumns();

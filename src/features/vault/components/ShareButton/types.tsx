@@ -1,11 +1,12 @@
-import { VaultEntity } from '../../../data/entities/vault';
-import { Placement } from '@floating-ui/react-dom';
-import { AllValuesAsString } from '../../../data/utils/types-utils';
+import type { VaultEntity } from '../../../data/entities/vault';
+import type { Placement } from '@floating-ui/react-dom';
+import type { AllValuesAsString } from '../../../data/utils/types-utils';
 
 export type ShareButtonProps = {
   vaultId: VaultEntity['id'];
   placement?: Placement;
   mobileAlternative?: boolean;
+  hideText?: boolean;
 };
 
 export type CommonVaultDetails = {

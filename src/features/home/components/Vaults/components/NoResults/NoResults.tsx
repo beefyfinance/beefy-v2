@@ -1,4 +1,5 @@
-import { memo, PropsWithChildren, useCallback } from 'react';
+import type { PropsWithChildren } from 'react';
+import { memo, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
@@ -24,7 +25,7 @@ type MessageProps = PropsWithChildren<{
   text: string;
 }>;
 
-const Message = memo<MessageProps>(function ({ title, text, children }) {
+const Message = memo<MessageProps>(function Message({ title, text, children }) {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -37,7 +38,7 @@ const Message = memo<MessageProps>(function ({ title, text, children }) {
   );
 });
 
-const NotConnectedMessage = memo<MessageProps>(function ({ title, text }) {
+const NotConnectedMessage = memo<MessageProps>(function NotConnectedMessage({ title, text }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
@@ -58,7 +59,7 @@ const NotConnectedMessage = memo<MessageProps>(function ({ title, text }) {
   );
 });
 
-const NotDepositedMessage = memo<MessageProps>(function ({ title, text }) {
+const NotDepositedMessage = memo<MessageProps>(function NotDepositedMessage({ title, text }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const handleViewAll = useCallback(() => {
@@ -74,7 +75,7 @@ const NotDepositedMessage = memo<MessageProps>(function ({ title, text }) {
   );
 });
 
-const LoadingMessage = memo(function () {
+const LoadingMessage = memo(function LoadingMessage() {
   const classes = useStyles();
   return (
     <div className={classes.message}>
@@ -83,26 +84,28 @@ const LoadingMessage = memo(function () {
   );
 });
 
-export const NoResults = memo(function () {
+export const NoResults = memo(function NoResults() {
   const hasActiveFilter = useAppSelector(selectHasActiveFilterExcludingUserCategoryAndSort);
   const userCategory = useAppSelector(selectFilterUserCategory);
   const userBalanceAvailable = useAppSelector(selectIsUserBalanceAvailable);
   const isWalletKnown = useAppSelector(selectIsWalletKnown);
 
-  if (!isWalletKnown && (userCategory === 'eligible' || userCategory === 'deposited')) {
+  if (!isWalletKnown && userCategory === 'deposited') {
     return (
       <NotConnectedMessage
         title={'NoResults-NotConnected'}
-        text={
-          userCategory === 'deposited'
-            ? 'NoResults-ConnectToViewMyVaults'
-            : 'NoResults-ConnectToViewEligibleVaults'
-        }
+        text={'NoResults-ConnectToViewMyVaults'}
       />
     );
   }
 
-  if (!userBalanceAvailable && (userCategory === 'eligible' || userCategory === 'deposited')) {
+  if (userCategory === 'saved') {
+    return (
+      <NotDepositedMessage title="NoResults-NoSavedVaults-Title" text="NoResults-NoSavedVaults" />
+    );
+  }
+
+  if (!userBalanceAvailable && userCategory === 'deposited') {
     return <LoadingMessage />;
   }
 
@@ -110,5 +113,5 @@ export const NoResults = memo(function () {
     return <NotDepositedMessage title="NoResults-NotDeposited" text="NoResults-FindVault" />;
   }
 
-  return <Message title="NoResults-NoResultsFound" text="NoResults-TryClearFilters" />;
+  return <Message title="NoResults-NoResultsFound" text={'NoResults-TryClearFilters'} />;
 });

@@ -28,7 +28,7 @@ import { WithdrawLinks } from '../WithDrawLinks';
 
 const useStyles = makeStyles(styles);
 
-const DepositedInVault = memo(function () {
+const DepositedInVault = memo(function DepositedInVault() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const token = useAppSelector(state =>

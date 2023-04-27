@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { memo } from 'react';
-import { isGovVault, VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
+import { isGovVault } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
 import { selectChainById } from '../../../data/selectors/chains';
@@ -11,13 +12,14 @@ import { VaultPlatform } from '../../../../components/VaultPlatform';
 import { styles } from './styles';
 import { ShareButton } from '../ShareButton';
 import { punctuationWrap } from '../../../../helpers/string';
+import { SaveButton } from '../SaveButton';
 
 const useStyles = makeStyles(styles);
 
 export type VaultHeaderProps = {
   vaultId: VaultEntity['id'];
 };
-export const VaultHeader = memo<VaultHeaderProps>(function ({ vaultId }) {
+export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -42,9 +44,12 @@ export const VaultHeader = memo<VaultHeaderProps>(function ({ vaultId }) {
           </span>
         </div>
         {vault.status === 'active' ? (
-          <div className={classes.shareHolder}>
-            <ShareButton vaultId={vaultId} mobileAlternative={true} />
-          </div>
+          <>
+            <div className={classes.shareHolder}>
+              <SaveButton vaultId={vaultId} />
+              <ShareButton hideText={true} vaultId={vaultId} mobileAlternative={true} />
+            </div>
+          </>
         ) : null}
       </div>
     </div>

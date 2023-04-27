@@ -1,8 +1,10 @@
-import { ButtonHTMLAttributes, DetailedHTMLProps, forwardRef, memo, ReactNode } from 'react';
+import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
+import { forwardRef, memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
-import { Link, LinkProps } from 'react-router-dom';
+import type { LinkProps } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(styles);
 

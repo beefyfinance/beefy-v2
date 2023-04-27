@@ -1,5 +1,6 @@
-import React, { memo, PropsWithChildren } from 'react';
-import { InfoCardEntity } from '../../../data/entities/info-card';
+import type { PropsWithChildren } from 'react';
+import React, { memo } from 'react';
+import type { InfoCardEntity } from '../../../data/entities/info-card';
 import { selectInfoCardById } from '../../../data/selectors/info-cards';
 import {
   Card,
@@ -45,7 +46,12 @@ export const InfoCard = memo<InfoCardProps>(function InfoCard({ cardId }) {
         {card.actions ? (
           <CardActions>
             {card.actions.map(action => (
-              <CardAction type={action.type} href={action.url} text={t(action.text)} />
+              <CardAction
+                key={action.url}
+                type={action.type}
+                href={action.url}
+                text={t(action.text)}
+              />
             ))}
           </CardActions>
         ) : null}

@@ -1,7 +1,7 @@
-import { ChartStat } from '../../../../data/reducers/historical-types';
-import { VaultEntity } from '../../../../data/entities/vault';
-import { TokenEntity } from '../../../../data/entities/token';
-import { ApiPoint, ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
+import type { ChartStat } from '../../../../data/reducers/historical-types';
+import type { VaultEntity } from '../../../../data/entities/vault';
+import type { TokenEntity } from '../../../../data/entities/token';
+import type { ApiPoint, ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
 import { useMemo } from 'react';
 import { getBucketParams } from '../utils';
 import { useAppSelector } from '../../../../../store';

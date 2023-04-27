@@ -8,11 +8,12 @@ import { sleep } from '../../utils/async-utils';
 import { featureFlag_replayReduxActions } from '../../utils/feature-flags';
 import { store } from '../../../../store';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function replayReduxActions(actionsList: any[], delayMs: 200) {
   for (const action of actionsList) {
     // replay removed actions from log
     if (action.type.startsWith('vaults/fetchAllVaults/')) {
-      await store.dispatch(fetchAllVaults({}));
+      await store.dispatch(fetchAllVaults());
     } else if (action.type.startsWith('boosts/fetchAllBoosts/')) {
       await store.dispatch(fetchAllBoosts());
     } else if (action.type.startsWith('chains/fetchChainConfigs/')) {

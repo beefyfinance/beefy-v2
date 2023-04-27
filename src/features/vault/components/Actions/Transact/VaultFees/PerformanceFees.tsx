@@ -1,8 +1,8 @@
-import { VaultFee } from '../../../../../data/reducers/fees';
+import type { VaultFee } from '../../../../../data/reducers/fees';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatPercent } from '../../../../../../helpers/format';
-import { InterestTooltipContent } from '../../../../../home/components/Vault/components/InterestTooltipContent';
+import { InterestTooltipContent } from '../../../../../../components/InterestTooltipContent';
 
 export type PerformanceFeesProps = { fees: VaultFee };
 
@@ -12,7 +12,7 @@ const performanceFeeLabels = {
   strategist: 'Transact-Fee-Developers',
   call: 'Transact-Fee-HarvestFee',
 };
-export const PerformanceFees = memo<PerformanceFeesProps>(function ({ fees }) {
+export const PerformanceFees = memo<PerformanceFeesProps>(function PerformanceFees({ fees }) {
   const { t } = useTranslation();
   const rows = Object.entries(performanceFeeLabels)
     .filter(([key]) => key in fees)

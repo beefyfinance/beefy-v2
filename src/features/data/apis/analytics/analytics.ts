@@ -1,6 +1,7 @@
-import axios, { AxiosInstance } from 'axios';
+import type { AxiosInstance } from 'axios';
+import axios from 'axios';
 import BigNumber from 'bignumber.js';
-import {
+import type {
   AnalyticsPriceResponse,
   AnalyticsUserTimelineResponse,
   ApiProductPriceRow,
@@ -13,7 +14,7 @@ export class AnalyticsApi {
 
   constructor() {
     this.api = axios.create({
-      baseURL: 'https://databarn.beefy.com/api',
+      baseURL: 'https://databarn.beefy.finance/api',
     });
   }
 

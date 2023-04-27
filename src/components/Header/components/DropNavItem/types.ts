@@ -1,5 +1,5 @@
-import { FC, FunctionComponent, SVGProps } from 'react';
-import { BadgeComponent } from '../Badges/types';
+import type { FC, FunctionComponent, SVGProps } from 'react';
+import type { BadgeComponent } from '../Badges/types';
 
 type BaseNavItemProps = {
   title: string;

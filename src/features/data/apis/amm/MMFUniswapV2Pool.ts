@@ -1,13 +1,13 @@
-import {
+import type {
   PairData as BasePairData,
   PairDataResponse as BasePairDataResponse,
-  UniswapV2Pool,
 } from './UniswapV2Pool';
+import { UniswapV2Pool } from './UniswapV2Pool';
 import { BigNumber } from 'bignumber.js';
-import { ShapeWithLabel } from 'eth-multicall';
+import type { ShapeWithLabel } from 'eth-multicall';
 import { createContract } from '../../../../helpers/web3';
-import { SwapFeeParams } from './types';
-import { AbiItem } from 'web3-utils';
+import type { SwapFeeParams } from './types';
+import type { AbiItem } from 'web3-utils';
 
 type PairDataResponse = BasePairDataResponse & {
   swapFee: string;
@@ -48,7 +48,7 @@ export class MMFUniswapV2Pool extends UniswapV2Pool {
     ];
   }
 
-  protected consumePairDataResponse(untypedResult: any[]) {
+  protected consumePairDataResponse(untypedResult: unknown[]) {
     const result = (untypedResult as PairDataResponse[])[0];
 
     super.consumePairDataResponse(untypedResult);

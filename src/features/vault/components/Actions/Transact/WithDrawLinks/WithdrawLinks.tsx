@@ -13,7 +13,7 @@ const useStyles = makeStyles(styles);
 export type WithdrawLinksProps = {
   className?: string;
 };
-export const WithdrawLinks = memo<WithdrawLinksProps>(({ className }) => {
+export const WithdrawLinks = memo<WithdrawLinksProps>(function WithdrawLinks({ className }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);

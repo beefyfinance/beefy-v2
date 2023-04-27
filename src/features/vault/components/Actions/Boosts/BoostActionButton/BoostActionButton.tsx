@@ -1,6 +1,6 @@
 import { Collapse, IconButton, InputBase, makeStyles } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector, useAppStore } from '../../../../../../s
 import { initBoostForm } from '../../../../../data/actions/scenarios';
 import { startStepper } from '../../../../../data/actions/stepper';
 import { walletActions } from '../../../../../data/actions/wallet-actions';
-import { BoostEntity } from '../../../../../data/entities/boost';
+import type { BoostEntity } from '../../../../../data/entities/boost';
 import { isFulfilled } from '../../../../../data/reducers/data-loader-types';
 import { boostActions } from '../../../../../data/reducers/wallet/boost';
 import { stepperActions } from '../../../../../data/reducers/wallet/stepper';
@@ -38,7 +38,7 @@ interface BoostActionButtonProps {
   balance: BigNumber;
 }
 
-export const BoostActionButton = memo<BoostActionButtonProps>(function ({
+export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActionButton({
   type,
   boostId,
   open,

@@ -1,8 +1,8 @@
-import BigNumber from 'bignumber.js';
-import { BeefyState } from '../../../../redux-types';
-import { BoostEntity } from '../../entities/boost';
-import { TokenEntity, TokenErc20 } from '../../entities/token';
-import { VaultGov, VaultStandard } from '../../entities/vault';
+import type BigNumber from 'bignumber.js';
+import type { BeefyState } from '../../../../redux-types';
+import type { BoostEntity } from '../../entities/boost';
+import type { TokenEntity, TokenErc20 } from '../../entities/token';
+import type { VaultGov, VaultStandard } from '../../entities/vault';
 
 export interface IAllowanceApi {
   fetchAllAllowances(

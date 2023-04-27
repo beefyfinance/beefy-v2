@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/core';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { memo } from 'react';
 import { connect } from 'react-redux';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import { formatBigUsd } from '../../../../helpers/format';
-import { BeefyState } from '../../../../redux-types';
+import type { BeefyState } from '../../../../redux-types';
 import bifiToken from '../../../../images/bifi-logos/BIFI-TOKEN.svg';
 
 import { styles } from './styles';

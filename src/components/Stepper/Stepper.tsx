@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import type { FC } from 'react';
+import React from 'react';
 import { makeStyles, Snackbar } from '@material-ui/core';
 import { isEmpty } from '../../helpers/utils';
 import { styles } from './styles';
@@ -42,7 +43,6 @@ const _Stepper = () => {
       dispatch(stepperActions.updateCurrentStep({ pending: true }));
       dispatch(currentStepData.action);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, steps.currentStep]);
 
   return (

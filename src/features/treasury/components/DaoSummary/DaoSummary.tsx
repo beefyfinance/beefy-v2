@@ -13,7 +13,7 @@ import { selectTreasuryStats } from '../../../data/selectors/treasury';
 
 const useStyles = makeStyles(styles);
 
-export const DaoSummary = memo(function () {
+export const DaoSummary = memo(function DaoSummary() {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -48,7 +48,7 @@ export const DaoSummary = memo(function () {
     <div className={classes.container}>
       <Container maxWidth="lg">
         <div className={classes.title}>{t('Treasury-Title')}</div>
-        <SummaryStats tinnyStyle={true} items={DaoStats} />
+        <SummaryStats items={DaoStats} />
       </Container>
     </div>
   );

@@ -4,18 +4,15 @@ import {
   selectTransactOptionById,
   selectTransactSelectedQuote,
 } from '../../../../../data/selectors/transact';
-import {
-  isZapFeeDiscounted,
-  isZapQuote,
-  ZapOption,
-} from '../../../../../data/apis/transact/transact-types';
+import type { ZapOption } from '../../../../../data/apis/transact/transact-types';
+import { isZapFeeDiscounted, isZapQuote } from '../../../../../data/apis/transact/transact-types';
 import { Value } from './Value';
 import { Label } from './Label';
 import { useTranslation } from 'react-i18next';
 import { LabelTooltip } from './LabelTooltip';
 import { formatSmallPercent } from '../../../../../../helpers/format';
 import { makeStyles } from '@material-ui/core';
-import { Theme } from '@material-ui/core/styles';
+import type { Theme } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
   original: {
@@ -31,8 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-type MaybeZapFeesProps = {};
-export const MaybeZapFees = memo<MaybeZapFeesProps>(function MaybeZapFees() {
+export const MaybeZapFees = memo(function MaybeZapFees() {
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isZap = quote && isZapQuote(quote);
 

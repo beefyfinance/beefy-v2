@@ -1,4 +1,4 @@
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { selectAllowanceByTokenAddress } from './allowances';
 import { selectBoostById } from './boosts';
 import { selectTokenByAddress } from './tokens';

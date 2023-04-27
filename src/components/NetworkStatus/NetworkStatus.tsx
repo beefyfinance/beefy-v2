@@ -3,20 +3,16 @@ import clsx from 'clsx';
 import { isEqual, sortedUniq, uniq } from 'lodash-es';
 import React, { memo, useCallback, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { ChainEntity } from '../../features/data/entities/chain';
+import type { ChainEntity } from '../../features/data/entities/chain';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader';
 import { selectBoostById } from '../../features/data/selectors/boosts';
-import { BeefyState } from '../../redux-types';
+import type { BeefyState } from '../../redux-types';
 import { styles } from './styles';
 import { Floating } from '../Floating';
 import { useAppDispatch, useAppSelector } from '../../store';
 import CloseIcon from '@material-ui/icons/Close';
-import {
-  DataLoaderState,
-  isPending,
-  isRejected,
-  LoaderState,
-} from '../../features/data/reducers/data-loader-types';
+import type { DataLoaderState, LoaderState } from '../../features/data/reducers/data-loader-types';
+import { isPending, isRejected } from '../../features/data/reducers/data-loader-types';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
@@ -155,7 +151,7 @@ export function NetworkStatus() {
   );
 }
 
-const ConnectedChain = memo(function ({ chainId }: { chainId: ChainEntity['id'] }) {
+const ConnectedChain = memo(function ConnectedChain({ chainId }: { chainId: ChainEntity['id'] }) {
   const chain = useAppSelector(state => selectChainById(state, chainId));
   return (
     <>

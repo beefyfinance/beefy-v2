@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
-import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
+import type { BeefyState } from '../../../redux-types';
+import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { getContractDataApi } from '../apis/instances';
-import { ChainEntity } from '../entities/chain';
-import { isGovVault, VaultGov, VaultStandard } from '../entities/vault';
+import type { ChainEntity } from '../entities/chain';
+import type { VaultGov, VaultStandard } from '../entities/vault';
+import { isGovVault } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
 import { selectVaultByChainId, selectVaultById } from '../selectors/vaults';

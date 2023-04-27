@@ -1,5 +1,5 @@
-import BigNumber from 'bignumber.js';
-import { TokenHoldingConfig, VaultHoldingConfig } from '../apis/config-types';
+import type BigNumber from 'bignumber.js';
+import type { TokenHoldingConfig, VaultHoldingConfig } from '../apis/config-types';
 
 type TreasuryHoldingConfigToEntity<T> = Omit<T, 'usdValue' | 'balance' | 'pricePerFullShare'> & {
   usdValue: BigNumber;

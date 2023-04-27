@@ -1,17 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../../redux-types';
-import { MinterConfig } from '../apis/config-types';
+import type { BeefyState } from '../../../redux-types';
+import type { MinterConfig } from '../apis/config-types';
 import { getAllowanceApi, getBalanceApi, getConfigApi, getMintersApi } from '../apis/instances';
-import { ChainEntity } from '../entities/chain';
-import { FetchAllBalancesResult } from '../apis/balance/balance-types';
-import { TokenAllowance } from '../apis/allowance/allowance-types';
+import type { ChainEntity } from '../entities/chain';
+import type { FetchAllBalancesResult } from '../apis/balance/balance-types';
+import type { TokenAllowance } from '../apis/allowance/allowance-types';
 import { selectMinterById } from '../selectors/minters';
 import { selectChainById } from '../selectors/chains';
 import { selectTokenByAddress } from '../selectors/tokens';
-import { MinterEntity } from '../entities/minter';
+import type { MinterEntity } from '../entities/minter';
 import { isTokenErc20 } from '../entities/token';
-import BigNumber from 'bignumber.js';
-import { FetchMinterReservesReloadResult } from '../apis/minter/minter-types';
+import type BigNumber from 'bignumber.js';
+import type { FetchMinterReservesReloadResult } from '../apis/minter/minter-types';
 
 export interface FulfilledAllMintersPayload {
   byChainId: {

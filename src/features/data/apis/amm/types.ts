@@ -1,5 +1,5 @@
-import BigNumber from 'bignumber.js';
-import { ShapeWithLabel } from 'eth-multicall';
+import type BigNumber from 'bignumber.js';
+import type { ShapeWithLabel } from 'eth-multicall';
 
 export type SwapResult = {
   amountIn: BigNumber;
@@ -50,6 +50,6 @@ export interface IPool {
   addLiquidity(amountA: BigNumber, tokenA: string, amountB: BigNumber): AddLiquidityResult;
   removeLiquidity(amount: BigNumber, updateReserves?: boolean): RemoveLiquidityResult;
   getAddLiquidityRatio(amountIn: BigNumber): AddLiquidityRatio;
-  updateAllData(otherCalls?: ShapeWithLabel[][]): Promise<any[][]>;
+  updateAllData(otherCalls?: ShapeWithLabel[][]): Promise<unknown[][]>;
   getWantType(): WANT_TYPE;
 }

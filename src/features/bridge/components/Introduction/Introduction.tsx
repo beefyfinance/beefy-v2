@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import logoMultichain from '../../../../images/partners/multichain.png';
 
 const useStyles = makeStyles(styles);
-export const Introduction = memo(function () {
+export const Introduction = memo(function Introduction() {
   const classes = useStyles();
   const { t } = useTranslation();
   const chains = useAppSelector(selectAllChains);

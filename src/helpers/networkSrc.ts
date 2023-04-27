@@ -1,4 +1,4 @@
-import { ChainEntity } from '../features/data/entities/chain';
+import type { ChainEntity } from '../features/data/entities/chain';
 import { createGlobLoader } from './globLoader';
 
 const pathToUrl = import.meta.glob<string>('../images/networks/*.svg', {

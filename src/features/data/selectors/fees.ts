@@ -1,7 +1,7 @@
 import { createCachedSelector } from 're-reselect';
-import { BeefyState } from '../../../redux-types';
-import { VaultEntity } from '../entities/vault';
-import { VaultFee } from '../reducers/fees';
+import type { BeefyState } from '../../../redux-types';
+import type { VaultEntity } from '../entities/vault';
+import type { VaultFee } from '../reducers/fees';
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectIsVaultGov } from './vaults';
 

@@ -12,7 +12,7 @@ import {
   selectIsWalletKnown,
   selectWalletAddress,
 } from '../../../../features/data/selectors/wallet';
-import { BeefyState } from '../../../../redux-types';
+import type { BeefyState } from '../../../../redux-types';
 import {
   askForWalletConnection,
   doDisconnectWallet,

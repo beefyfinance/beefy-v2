@@ -1,8 +1,7 @@
 import { makeStyles } from '@material-ui/core';
-import React, { useCallback } from 'react';
-import { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { useAppSelector } from '../../../../store';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
 import {
   selectIsAnalyticsLoaded,
   selectUserDepositedTimelineByVaultId,
@@ -14,9 +13,7 @@ import { Graph } from './components/Graph';
 import { Header } from './components/Header';
 import { useVaultPeriods } from './hooks';
 
-import { Theme } from '@material-ui/core/styles';
-
-export const useStyles = makeStyles((theme: Theme) => ({
+export const useStyles = makeStyles(() => ({
   pnlContainer: {
     borderRadius: '12px',
     backgroundColor: '#2D3153',
@@ -27,7 +24,7 @@ interface PnLGraphProps {
   vaultId: VaultEntity['id'];
 }
 
-export const PnLGraphLoader = memo<PnLGraphProps>(function ({ vaultId }) {
+export const PnLGraphLoader = memo<PnLGraphProps>(function PnLGraphLoader({ vaultId }) {
   const userVaults = useAppSelector(selectUserDepositedVaultIds);
 
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -49,7 +46,7 @@ export const PnLGraphLoader = memo<PnLGraphProps>(function ({ vaultId }) {
   return null;
 });
 
-export const PnLGraph = memo<PnLGraphProps>(function ({ vaultId }) {
+export const PnLGraph = memo<PnLGraphProps>(function PnLGraph({ vaultId }) {
   const classes = useStyles();
 
   const labels = useVaultPeriods(vaultId);

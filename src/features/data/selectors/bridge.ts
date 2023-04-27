@@ -1,5 +1,5 @@
-import { BeefyState } from '../../../redux-types';
-import { ChainEntity } from '../entities/chain';
+import type { BeefyState } from '../../../redux-types';
+import type { ChainEntity } from '../entities/chain';
 import { isInitialLoader } from '../reducers/data-loader-types';
 
 export const selectBridgeState = (state: BeefyState) => state.ui.bridge;

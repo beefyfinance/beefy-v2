@@ -5,8 +5,8 @@ import { AssetsImage } from '../../../../components/AssetsImage';
 import { Button } from '../../../../components/Button';
 import { LinkButton } from '../../../../components/LinkButton';
 import { useAppSelector } from '../../../../store';
-import { ChainEntity } from '../../../data/entities/chain';
-import { TokenEntity } from '../../../data/entities/token';
+import type { ChainEntity } from '../../../data/entities/chain';
+import type { TokenEntity } from '../../../data/entities/token';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
 import { ReactComponent as PlusIcon } from '../../../../images/icons/plus.svg';
@@ -19,7 +19,10 @@ interface AddTokenToWalletProps {
   chainId: ChainEntity['id'];
 }
 
-export const AddTokenToWallet = memo<AddTokenToWalletProps>(function ({ token, chainId }) {
+export const AddTokenToWallet = memo<AddTokenToWalletProps>(function AddTokenToWallet({
+  token,
+  chainId,
+}) {
   const { t } = useTranslation();
   const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, chainId));
@@ -39,7 +42,9 @@ export const AddTokenToWallet = memo<AddTokenToWalletProps>(function ({ token, c
           },
         },
       });
-    } catch (error) {}
+    } catch (error) {
+      // ignore
+    }
   }, [token.address, token.decimals, token.symbol]);
 
   const explorerUrl = chain.explorerUrl + '/address/' + token.address;

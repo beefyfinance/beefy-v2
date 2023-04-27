@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   container: {
@@ -17,7 +17,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     padding: '12px',
     columnGap: '8px',
-    backgroundColor: theme.palette.background.dashboard.cardBg,
+    backgroundColor: theme.palette.background.v2.cardBg,
     borderRadius: '4px',
     alignItems: 'center',
   },

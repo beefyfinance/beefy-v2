@@ -1,11 +1,11 @@
-import { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types';
 import { createSelector } from '@reduxjs/toolkit';
-import { ChainEntity } from '../entities/chain';
+import type { ChainEntity } from '../entities/chain';
 import { first } from 'lodash-es';
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectWalletAddressIfKnown } from './wallet';
 import { selectUserBalanceOfToken } from './balance';
-import { TokenAmount, TransactOption, TransactQuote } from '../apis/transact/transact-types';
+import type { TokenAmount, TransactOption, TransactQuote } from '../apis/transact/transact-types';
 import BigNumber from 'bignumber.js';
 import { TransactStatus } from '../reducers/wallet/transact-types';
 

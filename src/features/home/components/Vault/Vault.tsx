@@ -1,12 +1,12 @@
 import React, { memo } from 'react';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { selectIsVaultGov, selectIsVaultRetired } from '../../../data/selectors/vaults';
 import clsx from 'clsx';
 import { useAppSelector } from '../../../../store';
 import { Link } from 'react-router-dom';
-import { VaultIdentity } from './components/VaultIdentity';
+import { VaultIdentity } from '../../../../components/VaultIdentity';
 import { VaultStats } from '../../../../components/VaultStats';
 
 const useStyles = makeStyles(styles);

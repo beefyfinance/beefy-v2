@@ -12,7 +12,7 @@ export type InputSwitcherProps = {
   className?: string;
 };
 
-export const InputSwitcher = memo<InputSwitcherProps>(function ({ className }) {
+export const InputSwitcher = memo<InputSwitcherProps>(function InputSwitcher({ className }) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const setInputMode = useCallback(() => dispatch(onRampFormActions.toggleInputMode()), [dispatch]);

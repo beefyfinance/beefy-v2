@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { WritableDraft } from 'immer/dist/internal';
-import { NormalizedEntity } from '../utils/normalized-entity';
+import type { Draft } from 'immer';
+import type { NormalizedEntity } from '../utils/normalized-entity';
 import { fetchStrategyTypes } from '../actions/strategy-types';
-import { StrategyTypeEntity } from '../entities/strategy-type';
-import { StrategyTypeConfig } from '../apis/config-types';
+import type { StrategyTypeEntity } from '../entities/strategy-type';
+import type { StrategyTypeConfig } from '../apis/config-types';
 
 export type StrategyTypesState = NormalizedEntity<StrategyTypeEntity>;
 export const initialStrategyTypes: StrategyTypesState = { byId: {}, allIds: [] };
@@ -25,7 +25,7 @@ export const strategyTypesSlice = createSlice({
 });
 
 function addTypeToState(
-  sliceState: WritableDraft<StrategyTypesState>,
+  sliceState: Draft<StrategyTypesState>,
   strategyTypeConfig: StrategyTypeConfig
 ) {
   if (sliceState.byId[strategyTypeConfig.id] === undefined) {

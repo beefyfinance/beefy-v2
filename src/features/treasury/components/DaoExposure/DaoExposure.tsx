@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import React, { FC, memo, useMemo } from 'react';
+import type { FC } from 'react';
+import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Section } from '../../../../components/Section';
 import { TreasuryAvailabilityExposure } from '../TreasuryAvailabilityExposure';
@@ -22,7 +23,7 @@ const chartToComponent: Record<ChartEnum, FC> = {
   [ChartEnum.Availability]: TreasuryAvailabilityExposure,
 };
 
-export const DaoExposure = memo(function () {
+export const DaoExposure = memo(function DaoExposure() {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -40,7 +41,7 @@ export const DaoExposure = memo(function () {
 
   const [chart, setChart] = React.useState<ChartEnum>(ChartEnum.Token);
 
-  const Chart = chartToComponent[chart];
+  const Chart = useMemo(() => chartToComponent[chart], [chart]);
 
   return (
     <Section>

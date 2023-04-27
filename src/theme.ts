@@ -1,5 +1,6 @@
-import { createTheme, ThemeOptions } from '@material-ui/core/styles';
-import { TypographyStyleOptions } from '@material-ui/core/styles/createTypography';
+import { createTheme } from '@material-ui/core/styles';
+import type { ThemeOptions } from '@material-ui/core/styles';
+import type { TypographyStyleOptions } from '@material-ui/core/styles/createTypography';
 import { featureFlag_breakpoints } from './features/data/utils/feature-flags';
 
 const fontStack = [
@@ -147,7 +148,7 @@ const theme = createTheme(
           text: '#2D3153',
           error: '#DC2C10',
         },
-        dashboard: {
+        v2: {
           summaryCard: '#121421',
           iconBg: 'rgba(92, 112, 214, 0.2)',
           cardBg: '#242842',

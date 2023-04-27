@@ -1,9 +1,10 @@
 import { memo, useMemo } from 'react';
-import { TokenEntity } from '../../features/data/entities/token';
-import { ChainEntity } from '../../features/data/entities/chain';
+import type { TokenEntity } from '../../features/data/entities/token';
+import type { ChainEntity } from '../../features/data/entities/chain';
 import { useAppSelector } from '../../store';
 import { selectTokenByAddressOrNull } from '../../features/data/selectors/tokens';
-import { AssetsImage, AssetsImageType } from '../AssetsImage';
+import type { AssetsImageType } from '../AssetsImage';
+import { AssetsImage } from '../AssetsImage';
 import { singleAssetExists } from '../../helpers/singleAssetSrc';
 import { selectFirstStandardVaultByDepositTokenAddress } from '../../features/data/selectors/vaults';
 
@@ -13,7 +14,7 @@ export type TokenImageProps = {
   size?: AssetsImageType['size'];
   className?: AssetsImageType['className'];
 };
-export const TokenImage = memo<TokenImageProps>(function ({
+export const TokenImage = memo<TokenImageProps>(function TokenImage({
   tokenAddress,
   chainId,
   size,
@@ -36,7 +37,11 @@ export const TokenImage = memo<TokenImageProps>(function ({
 type TokenWithoutAssetProps = {
   token: TokenEntity;
 } & Pick<TokenImageProps, 'size' | 'className'>;
-const TokenWithoutAsset = memo<TokenWithoutAssetProps>(function ({ token, size, className }) {
+const TokenWithoutAsset = memo<TokenWithoutAssetProps>(function TokenWithoutAsset({
+  token,
+  size,
+  className,
+}) {
   // The assets of a LP are defined on the vault config for a vault with that deposit token
   const vault = useAppSelector(state =>
     selectFirstStandardVaultByDepositTokenAddress(state, token.chainId, token.address)
@@ -59,7 +64,11 @@ export type TokensImageProps = {
   size?: AssetsImageType['size'];
   className?: AssetsImageType['className'];
 };
-export const TokensImage = memo<TokensImageProps>(function ({ tokens, size, className }) {
+export const TokensImage = memo<TokensImageProps>(function TokensImage({
+  tokens,
+  size,
+  className,
+}) {
   if (tokens.length === 1) {
     return (
       <TokenImage

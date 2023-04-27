@@ -2,7 +2,7 @@ import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ToggleButtons } from '../../../../../components/ToggleButtons';
 import { makeStyles } from '@material-ui/core';
-import { TimeRange } from '../utils';
+import type { TimeRange } from '../utils';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
@@ -13,7 +13,7 @@ export type RangeSwitcherProps = {
   onChange: (newBucket: TimeRange) => void;
 };
 
-export const RangeSwitcher = memo<RangeSwitcherProps>(function ({
+export const RangeSwitcher = memo<RangeSwitcherProps>(function RangeSwitcher({
   availableRanges,
   range,
   onChange,

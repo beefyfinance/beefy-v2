@@ -7,7 +7,7 @@ import OnRamp from './components/OnRamp';
 
 const useStyles = makeStyles(styles);
 
-export const OnRampPage = memo(function () {
+export const OnRampPage = memo(function OnRampPage() {
   const classes = useStyles();
   return (
     <Container maxWidth="lg" className={classes.pageContainer}>

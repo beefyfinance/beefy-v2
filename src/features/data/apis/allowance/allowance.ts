@@ -1,17 +1,18 @@
 import _BeefyV2AppMulticallUserAbi from '../../../../config/abi/BeefyV2AppMulticall.json';
-import { AbiItem } from 'web3-utils';
-import Web3 from 'web3';
-import { VaultGov, VaultStandard } from '../../entities/vault';
-import { ChainEntity } from '../../entities/chain';
+import type { AbiItem } from 'web3-utils';
+import type Web3 from 'web3';
+import type { VaultGov, VaultStandard } from '../../entities/vault';
+import type { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
-import { AllValuesAsString } from '../../utils/types-utils';
-import { BoostEntity } from '../../entities/boost';
+import type { AllValuesAsString } from '../../utils/types-utils';
+import type { BoostEntity } from '../../entities/boost';
 import { chunk } from 'lodash-es';
-import { isTokenErc20, TokenEntity, TokenErc20 } from '../../entities/token';
-import { FetchAllAllowanceResult, IAllowanceApi } from './allowance-types';
+import type { TokenEntity, TokenErc20 } from '../../entities/token';
+import { isTokenErc20 } from '../../entities/token';
+import type { FetchAllAllowanceResult, IAllowanceApi } from './allowance-types';
 import { selectTokenByAddress } from '../../selectors/tokens';
 import { featureFlag_getAllowanceApiChunkSize } from '../../utils/feature-flags';
-import { BeefyState } from '../../../../redux-types';
+import type { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
 
 // fix ts types

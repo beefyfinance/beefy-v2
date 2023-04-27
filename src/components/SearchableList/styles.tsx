@@ -1,6 +1,6 @@
-import { Theme } from '@material-ui/core/styles';
+import type { Theme } from '@material-ui/core';
 
-export const styles = (theme: Theme) => ({
+export const styles = () => ({
   searchableList: {
     display: 'grid',
     gridTemplateColumns: 'auto',

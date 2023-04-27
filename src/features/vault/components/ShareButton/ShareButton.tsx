@@ -17,10 +17,10 @@ import { selectChainById } from '../../../data/selectors/chains';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectVaultTotalApy } from '../../../data/selectors/apy';
 import { formatPercent } from '../../../../helpers/format';
-import { BeefyState } from '../../../../redux-types';
+import type { BeefyState } from '../../../../redux-types';
 import { selectBoostById, selectPreStakeOrActiveBoostIds } from '../../../data/selectors/boosts';
 import { selectPartnerById } from '../../../data/selectors/partners';
-import {
+import type {
   BoostedVaultExtraDetails,
   CommonVaultDetails,
   GovVaultExtraDetails,
@@ -38,6 +38,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   vaultId,
   placement,
   mobileAlternative = false,
+  hideText = false,
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -130,7 +131,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
         active={isOpen}
         borderless={true}
       >
-        <span className={classes.shareText}>{t('Vault-Share')}</span>
+        {!hideText && <span className={classes.shareText}>{t('Vault-Share')}</span>}
         <ShareIcon className={classes.shareIcon} />
       </Button>
       <Dropdown

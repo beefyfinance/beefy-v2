@@ -1,11 +1,11 @@
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { isAfter, isEqual, max } from 'date-fns';
 import { sortBy } from 'lodash-es';
-import {
+import type {
   ApiProductPriceRow,
   TimeBucketType,
 } from '../features/data/apis/analytics/analytics-types';
-import { VaultTimelineAnalyticsEntity } from '../features/data/entities/analytics';
+import type { VaultTimelineAnalyticsEntity } from '../features/data/entities/analytics';
 import { BIG_ZERO } from './big-number';
 import { roundDownMinutes } from './date';
 import { samplingPeriodMs } from './sampling-period';

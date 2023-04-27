@@ -2,7 +2,7 @@ import React, { memo, useMemo } from 'react';
 import { InputBase, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
-import { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
+import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
 import ContentLoader from 'react-content-loader';
 import { useAppSelector } from '../../../../../../store';
 import { selectQuoteStatus } from '../../../../../data/selectors/on-ramp';
@@ -19,7 +19,7 @@ function numberToString(value: number, maxDecimals: number): string {
   });
 }
 
-const PendingAmount = memo(() => {
+const PendingAmount = memo(function PendingAmount() {
   const classes = useStyles();
   return (
     <div className={classes.pending}>

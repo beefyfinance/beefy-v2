@@ -2,10 +2,11 @@ import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink, NavLinkProps } from 'react-router-dom';
+import type { NavLinkProps } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { styles } from './styles';
 import { ArrowForwardIosRounded as RightArrow } from '@material-ui/icons';
-import { NavItemProps } from '../DropNavItem/types';
+import type { NavItemProps } from '../DropNavItem/types';
 
 const useStyles = makeStyles(styles);
 
@@ -17,7 +18,7 @@ type AutoNavLinkProps = {
   children: NavLinkProps['children'];
   className: HTMLAnchorElement['className'];
 };
-const AutoNavLink = memo<AutoNavLinkProps>(function ({
+const AutoNavLink = memo<AutoNavLinkProps>(function AutoNavLink({
   to,
   className,
   children,
@@ -42,7 +43,7 @@ const AutoNavLink = memo<AutoNavLinkProps>(function ({
   return <NavLink className={className} to={to} children={children} onClick={onClick} {...rest} />;
 });
 
-export const NavItem = memo<NavItemProps>(function ({ url, title, Icon, Badge, onClick }) {
+export const NavItem = memo<NavItemProps>(function NavItem({ url, title, Icon, Badge, onClick }) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
@@ -65,7 +66,7 @@ export const NavItem = memo<NavItemProps>(function ({ url, title, Icon, Badge, o
 
 type NavItemPropsMobile = NavItemProps;
 
-export const NavItemMobile = memo<NavItemPropsMobile>(function ({
+export const NavItemMobile = memo<NavItemPropsMobile>(function NavItemMobile({
   url,
   title,
   Icon,

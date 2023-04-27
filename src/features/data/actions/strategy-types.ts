@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getConfigApi } from '../apis/instances';
-import { StrategyTypeConfig } from '../apis/config-types';
+import type { StrategyTypeConfig } from '../apis/config-types';
 
 export type FetchStrategyTypesPayload = StrategyTypeConfig[];
 

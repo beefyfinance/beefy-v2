@@ -3,7 +3,7 @@ import { REDIRECTS } from '../../config/redirects';
 import { matchPath, useHistory, useLocation } from 'react-router-dom';
 import { routerMode } from '../Router';
 
-export const Redirects = memo(function () {
+export const Redirects = memo(function Redirects() {
   const history = useHistory();
   const location = useLocation();
 

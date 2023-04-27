@@ -8,7 +8,8 @@ import {
 } from '../../../../../data/selectors/transact';
 import clsx from 'clsx';
 import { selectUserVaultDepositInDepositTokenExcludingBoosts } from '../../../../../data/selectors/balance';
-import { AmountInput, AmountInputProps } from '../AmountInput';
+import type { AmountInputProps } from '../AmountInput';
+import { AmountInput } from '../AmountInput';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { BigNumber } from 'bignumber.js';
 import { selectVaultById } from '../../../../../data/selectors/vaults';

@@ -1,7 +1,6 @@
-import { ComponentType, memo, useEffect } from 'react';
-import { VaultEntity } from '../../../../data/entities/vault';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import type { ComponentType } from 'react';
+import { memo, useEffect } from 'react';
+import type { VaultEntity } from '../../../../data/entities/vault';
 import { useAppDispatch, useAppSelector } from '../../../../../store';
 import { transactInit } from '../../../../data/actions/transact';
 import { selectTransactStep, selectTransactVaultId } from '../../../../data/selectors/transact';
@@ -11,8 +10,6 @@ import { Card } from '../../Card';
 import { TokenSelectStep } from './TokenSelectStep';
 import { TransactStep } from '../../../../data/reducers/wallet/transact-types';
 import { QuoteSelectStep } from './QuoteSelectStep';
-
-const useStyles = makeStyles(styles);
 
 const stepToComponent: Record<TransactStep, ComponentType> = {
   [TransactStep.Loading]: LoadingStep,
@@ -25,7 +22,6 @@ export type TransactProps = {
   vaultId: VaultEntity['id'];
 };
 export const Transact = memo<TransactProps>(function Transact({ vaultId }) {
-  const classes = useStyles();
   const transactStep = useAppSelector(selectTransactStep);
   const transactVaultId = useAppSelector(selectTransactVaultId);
   const step = transactVaultId === vaultId ? transactStep : TransactStep.Loading;
@@ -37,7 +33,7 @@ export const Transact = memo<TransactProps>(function Transact({ vaultId }) {
   }, [dispatch, vaultId]);
 
   return (
-    <Card className={classes.container}>
+    <Card>
       <StepComponent key={step} />
     </Card>
   );

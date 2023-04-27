@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   bar: {
     height: '12px',
@@ -15,6 +15,6 @@ export const styles = (theme: Theme) => ({
   },
   barItem: {
     height: '100%',
-    borderRight: `2px solid ${theme.palette.background.dashboard.cardBg}`,
+    borderRight: `2px solid ${theme.palette.background.v2.cardBg}`,
   },
 });

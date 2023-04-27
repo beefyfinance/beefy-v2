@@ -15,7 +15,9 @@ interface BalanceEndAdornementProps {
   value: string;
 }
 
-export const BalanceEndAdornement = memo<BalanceEndAdornementProps>(function ({ value }) {
+export const BalanceEndAdornement = memo<BalanceEndAdornementProps>(function BalanceEndAdornement({
+  value,
+}) {
   const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, value));
 

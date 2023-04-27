@@ -1,4 +1,5 @@
-import React, { ComponentType, memo, useEffect } from 'react';
+import type { ComponentType } from 'react';
+import React, { memo, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { NetworkStep } from './components/NetworkStep';
@@ -31,7 +32,7 @@ const stepToComponent: Record<FormStep, ComponentType> = {
   [FormStep.InjectProvider]: InjectProviderStep,
 };
 
-export const OnRamp = memo(function () {
+export const OnRamp = memo(function OnRamp() {
   const classes = useStyles();
   const step = useAppSelector(selectStep);
   const StepComponent = stepToComponent[step];

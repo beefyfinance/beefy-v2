@@ -1,7 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { isGovVault, VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault';
+import { isGovVault } from '../../features/data/entities/vault';
 import {
   selectGovVaultUserStakedBalanceInDepositToken,
   selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
@@ -10,7 +11,7 @@ import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
 import { selectVaultTvl } from '../../features/data/selectors/tvl';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { formatBigUsd } from '../../helpers/format';
-import { BeefyState } from '../../redux-types';
+import type { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { BIG_ZERO } from '../../helpers/big-number';
 

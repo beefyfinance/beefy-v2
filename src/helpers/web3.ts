@@ -1,15 +1,21 @@
 import Web3 from 'web3';
-import ContractConstructor, { Contract } from 'web3-eth-contract';
-import { AbiItem } from 'web3-utils';
+import type { Contract } from 'web3-eth-contract';
+import ContractConstructor from 'web3-eth-contract';
+import type { AbiItem } from 'web3-utils';
 import utils from 'web3-utils';
 import { formatters } from 'web3-core-helpers';
-import { Transaction, provider } from 'web3-core';
+import type { Transaction, provider } from 'web3-core';
 import BigNumber from 'bignumber.js';
 import { maybeHexToNumber } from './format';
+import type { Method } from 'web3-core-method';
+
+export type Web3CallMethod = {
+  request: (params: unknown, callback: (err: Error, data: unknown) => void) => Method;
+};
 
 export interface Web3Call {
-  method: any;
-  params: any;
+  method: Web3CallMethod;
+  params: unknown;
 }
 
 type RawBlockResult = {
@@ -86,7 +92,7 @@ declare module 'web3-eth' {
   }
 }
 
-export function makeBatchRequest(web3: Web3, calls: Web3Call[]): Promise<any[]> {
+export function makeBatchRequest(web3: Web3, calls: Web3Call[]): Promise<unknown[]> {
   const batch = new web3.BatchRequest();
 
   const promises = calls.map(call => {
@@ -103,7 +109,7 @@ export function makeBatchRequest(web3: Web3, calls: Web3Call[]): Promise<any[]> 
   return Promise.all(promises);
 }
 
-function inputBooleanFormatter(value: any): boolean {
+function inputBooleanFormatter(value: unknown): boolean {
   return !!value;
 }
 
@@ -151,6 +157,10 @@ function beefyFeeHistoryResultFormatter(feeHistory: RawFeeHistoryResult): BeefyF
   };
 }
 
+type Web3DummyFormatter = () => void;
+type Web3DummyInputFormatter = Web3DummyFormatter[];
+type Web3DummyOutputFormatter = Web3DummyFormatter;
+
 /**
  * Creates a new Web3 instance with our custom methods
  * @param rpc
@@ -163,33 +173,40 @@ export function createWeb3Instance(rpc: provider): Web3 {
       {
         name: 'getChainId',
         call: 'eth_chainId',
-        outputFormatter: maybeHexToNumber as any,
+        outputFormatter: maybeHexToNumber as unknown as Web3DummyOutputFormatter,
       },
       {
         name: 'getBeefyBlock',
         call: 'eth_getBlockByNumber',
         params: 2,
-        inputFormatter: [formatters.inputBlockNumberFormatter, inputBooleanFormatter] as any,
-        outputFormatter: beefyBlockFormatter as any,
+        inputFormatter: [
+          formatters.inputBlockNumberFormatter,
+          inputBooleanFormatter,
+        ] as unknown as Web3DummyInputFormatter,
+        outputFormatter: beefyBlockFormatter as unknown as Web3DummyOutputFormatter,
       },
       {
         name: 'getBeefyFeeHistory',
         call: 'eth_feeHistory',
         params: 3,
-        inputFormatter: [utils.numberToHex, formatters.inputBlockNumberFormatter, null] as any,
-        outputFormatter: beefyFeeHistoryResultFormatter as any,
+        inputFormatter: [
+          utils.numberToHex,
+          formatters.inputBlockNumberFormatter,
+          null,
+        ] as unknown as Web3DummyInputFormatter,
+        outputFormatter: beefyFeeHistoryResultFormatter as unknown as Web3DummyOutputFormatter,
       },
       {
         name: 'getBeefyMaxPriorityFeePerGas',
         call: 'eth_maxPriorityFeePerGas',
         params: 0,
-        outputFormatter: beefyBigNumberFormatter as any,
+        outputFormatter: beefyBigNumberFormatter as unknown as Web3DummyOutputFormatter,
       },
       {
         name: 'getBeefyGasPrice',
         call: 'eth_gasPrice',
         params: 0,
-        outputFormatter: beefyBigNumberFormatter as any,
+        outputFormatter: beefyBigNumberFormatter as unknown as Web3DummyOutputFormatter,
       },
     ],
   });

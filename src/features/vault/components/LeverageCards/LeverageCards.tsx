@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Collapsable } from '../../../../components/Collapsable';
 import { useAppSelector } from '../../../../store';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
 import { selectIsVaultQidao } from '../../../data/selectors/partners';
 import { QiDao } from '../QiDaoCard';
 
@@ -15,7 +15,7 @@ interface LeverageCardsProps {
   vaultId: VaultEntity['id'];
 }
 
-export const LeverageCards = memo<LeverageCardsProps>(function ({ vaultId }) {
+export const LeverageCards = memo<LeverageCardsProps>(function LeverageCards({ vaultId }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const isQidao = useAppSelector(state => selectIsVaultQidao(state, vaultId));

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { TokenEntity } from '../../features/data/entities/token';
-import { VaultGov } from '../../features/data/entities/vault';
+import type { TokenEntity } from '../../features/data/entities/token';
+import type { VaultGov } from '../../features/data/entities/vault';
 import {
   selectGovVaultPendingRewardsInToken,
   selectGovVaultPendingRewardsInUsd,
@@ -11,7 +11,7 @@ import { selectTokenByAddress } from '../../features/data/selectors/tokens';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/selectors/wallet';
 import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
-import { BeefyState } from '../../redux-types';
+import type { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 
 const _GovVaultRewards = connect((state: BeefyState, { vaultId }: { vaultId: VaultGov['id'] }) => {

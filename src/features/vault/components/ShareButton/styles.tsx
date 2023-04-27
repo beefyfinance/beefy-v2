@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   shareButton: {
@@ -15,7 +15,6 @@ export const styles = (theme: Theme) => ({
   },
   mobileAlternative: {
     [theme.breakpoints.down('md')]: {
-      borderRadius: '50%',
       padding: '10px',
       '& $shareText': {
         display: 'none',

@@ -1,13 +1,9 @@
 // when some wallet actions are triggered (like connection or account changed)
 
-import { BeefyStore } from '../../../redux-types';
-import {
-  CapturedFulfilledActions,
-  chains,
-  dispatchUserFfs,
-  fetchCaptureUserData,
-} from '../actions/scenarios';
-import { ChainEntity } from '../entities/chain';
+import type { BeefyStore } from '../../../redux-types';
+import type { CapturedFulfilledActions } from '../actions/scenarios';
+import { chains, dispatchUserFfs, fetchCaptureUserData } from '../actions/scenarios';
+import type { ChainEntity } from '../entities/chain';
 import { selectHasWalletBalanceBeenFetched } from '../selectors/balance';
 
 async function reloadUserData(store: BeefyStore) {

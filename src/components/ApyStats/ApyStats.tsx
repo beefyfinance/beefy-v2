@@ -7,18 +7,15 @@ import {
   selectDidAPIReturnValuesForVault,
   selectVaultTotalApy,
 } from '../../features/data/selectors/apy';
-import {
-  isGovVault,
-  shouldVaultShowInterest,
-  VaultEntity,
-} from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault';
+import { isGovVault, shouldVaultShowInterest } from '../../features/data/entities/vault';
 import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
 import { selectVaultApyAvailable } from '../../features/data/selectors/data-loader';
-import { TotalApy } from '../../features/data/reducers/apy';
-import { AllValuesAsString } from '../../features/data/utils/types-utils';
+import type { TotalApy } from '../../features/data/reducers/apy';
+import type { AllValuesAsString } from '../../features/data/utils/types-utils';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
-import { InterestTooltipContent } from '../../features/home/components/Vault/components/InterestTooltipContent';
 import { useAppSelector } from '../../store';
+import { InterestTooltipContent } from '../InterestTooltipContent';
 
 const _YearlyBreakdownTooltip = ({
   isGovVault,

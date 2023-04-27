@@ -10,7 +10,12 @@ export type PartnerCardProps = {
   content: string;
   url: string;
 };
-export const PartnerCard = memo<PartnerCardProps>(function ({ logo, title, content, url }) {
+export const PartnerCard = memo<PartnerCardProps>(function PartnerCard({
+  logo,
+  title,
+  content,
+  url,
+}) {
   const classes = useStyles();
 
   return (

@@ -1,21 +1,22 @@
-import Web3 from 'web3';
-import { AmmEntitySolidly } from '../../entities/amm';
+import type Web3 from 'web3';
+import type { AmmEntitySolidly } from '../../entities/amm';
 import BigNumber from 'bignumber.js';
-import { MultiCall, ShapeWithLabel } from 'eth-multicall';
+import type { ShapeWithLabel } from 'eth-multicall';
+import { MultiCall } from 'eth-multicall';
 import { SolidlyPairAbi } from '../../../../config/abi';
-import { ChainEntity } from '../../entities/chain';
+import type { ChainEntity } from '../../entities/chain';
 import { createContract } from '../../../../helpers/web3';
 import { getWeb3Instance } from '../instances';
 import { BIG_ONE, BIG_ZERO, fromWei, toWei } from '../../../../helpers/big-number';
-import {
+import type {
   AddLiquidityRatio,
   AddLiquidityResult,
   IPool,
   RemoveLiquidityResult,
   SwapFeeParams,
   SwapResult,
-  WANT_TYPE,
 } from './types';
+import { WANT_TYPE } from './types';
 
 enum MetadataKeys {
   decimals0,
@@ -109,7 +110,7 @@ export class SolidlyPool implements IPool {
     ];
   }
 
-  protected consumePairDataResponse(untypedResult: any[]) {
+  protected consumePairDataResponse(untypedResult: unknown[]) {
     const result = (untypedResult as PairDataResponse[])[0];
 
     this.pairData = {
@@ -131,7 +132,7 @@ export class SolidlyPool implements IPool {
     this.consumePairDataResponse(results);
   }
 
-  async updateAllData(otherCalls: ShapeWithLabel[][] = []): Promise<any[][]> {
+  async updateAllData(otherCalls: ShapeWithLabel[][] = []): Promise<unknown[][]> {
     const multicall = await this.getMulticall();
     const calls = [this.getPairDataRequest(), ...otherCalls];
     const [pairResults, ...otherResults] = await multicall.all(calls);

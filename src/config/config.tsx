@@ -1,4 +1,4 @@
-import { ChainConfig } from '../features/data/apis/config-types';
+import type { ChainConfig } from '../features/data/apis/config-types';
 
 export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   ethereum: {
@@ -49,6 +49,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'MAI',
       'sethUSDC',
       'sethUSDT',
+      'eUSD',
     ],
   },
   polygon: {
@@ -112,6 +113,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'jBRL',
       '2BRZ',
       'bbamUSD',
+      'USDR',
       'wUSDR',
     ],
   },
@@ -176,6 +178,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'ETSAlpha',
       'DEI',
       'wUSDR',
+      'DOLA',
     ],
   },
   optimism: {
@@ -223,6 +226,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'bbUSD+',
       'bbDAI+',
       'wUSDR',
+      'DAI+',
     ],
   },
   fantom: {
@@ -561,6 +565,30 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     },
     stableCoins: ['USDC', 'NOTE', 'USDT', 'BUSD'],
   },
+  zksync: {
+    name: 'zkSync',
+    chainId: 324,
+    rpc: ['https://mainnet.era.zksync.io'],
+    explorerUrl: 'https://explorer.zksync.io',
+    multicallAddress: '0x1E9231Cc9782D9F8e213736F6dAC00020D8271cB',
+    appMulticallContractAddress: '0x5479d2A10e60110F4728d910b5321Af4B78c30E4',
+    providerName: 'Canto',
+    walletSettings: {
+      chainId: `0x${parseInt('324', 10).toString(16)}`,
+      chainName: 'zksync',
+      nativeCurrency: {
+        name: 'ETH',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://mainnet.era.zksync.io'],
+      blockExplorerUrls: ['https://explorer.zksync.io/'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['USDC', 'BUSD'],
+  },
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,
@@ -635,6 +663,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   },
   heco: {
     name: 'HECO',
+    eol: 1681913494,
     chainId: 128,
     rpc: ['https://http-mainnet.hecochain.com'],
     explorerUrl: 'https://hecoinfo.com',
@@ -662,6 +691,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   },
   harmony: {
     name: 'Harmony',
+    eol: 1681913494,
     chainId: 1666600000,
     rpc: ['https://api.s0.t.hmny.io'],
     explorerUrl: 'https://explorer.harmony.one',

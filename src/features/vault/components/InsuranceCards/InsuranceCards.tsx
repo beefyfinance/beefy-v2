@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Collapsable } from '../../../../components/Collapsable';
 import { useAppSelector } from '../../../../store';
-import { VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault';
 import { selectIsVaultInsurace, selectIsVaultNexus } from '../../../data/selectors/partners';
 import { InsuraceCard } from '../InsuraceCard';
 import { NexusCard } from '../NexusCard';
@@ -15,7 +15,7 @@ interface InsuraceCardProps {
   vaultId: VaultEntity['id'];
 }
 
-export const InsuranceCards = memo<InsuraceCardProps>(function ({ vaultId }) {
+export const InsuranceCards = memo<InsuraceCardProps>(function InsuranceCards({ vaultId }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const isInsurace = useAppSelector(state => selectIsVaultInsurace(state, vaultId));

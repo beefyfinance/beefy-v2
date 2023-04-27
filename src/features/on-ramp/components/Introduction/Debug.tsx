@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { useAppSelector } from '../../../../store';
 import { selectCanQuote, selectHaveQuote } from '../../../data/selectors/on-ramp';
 
-export const Debug = memo(function () {
+export const Debug = memo(function Debug() {
   const quote = useAppSelector(state => state.ui.onRamp.quote);
   const canQuote = useAppSelector(selectCanQuote);
   const haveQuote = useAppSelector(selectHaveQuote);

@@ -4831,7 +4831,8 @@
     "earnContractAddress": "0x2b1b82D0D3F79D0Ff0300263F215Ed2dCE0734D2",
     "oracle": "lps",
     "oracleId": "png-fitfi-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "pangolin",
     "assets": ["FITFI", "AVAX"],
     "risks": [
@@ -5332,7 +5333,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_NONE",
+      "IL_LOW",
       "MCAP_MEDIUM",
       "AUDIT",
       "CONTRACTS_VERIFIED"

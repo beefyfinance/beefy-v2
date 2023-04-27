@@ -1,7 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ChainEntity } from '../entities/chain';
-import { PlatformEntity } from '../entities/platform';
-import { KeysOfType } from '../utils/types-utils';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { ChainEntity } from '../entities/chain';
+import type { PlatformEntity } from '../entities/platform';
+import type { KeysOfType } from '../utils/types-utils';
 
 /**
  * State containing Vault infos
@@ -15,8 +16,8 @@ export type FilteredVaultsState = {
   reseted: boolean;
   sort: 'tvl' | 'apy' | 'daily' | 'safetyScore' | 'default' | 'depositValue' | 'walletValue';
   sortDirection: 'asc' | 'desc';
-  vaultCategory: 'all' | 'featured' | 'stable' | 'bluechip' | 'beefy';
-  userCategory: 'all' | 'eligible' | 'deposited';
+  vaultCategory: 'all' | 'featured' | 'stable' | 'bluechip' | 'beefy' | 'correlated';
+  userCategory: 'all' | 'saved' | 'deposited';
   vaultType: 'all' | 'lps' | 'single';
   searchText: string;
   chainIds: ChainEntity['id'][];
@@ -110,6 +111,7 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState.onlyZappable = action.payload;
     },
+
     setBoolean(
       sliceState,
       action: PayloadAction<{ filter: FilteredVaultBooleanKeys; value: boolean }>
