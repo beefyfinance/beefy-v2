@@ -12,8 +12,7 @@
     "earnContractAddress": "0xe80c44542a09F96970302f18F81207170da588Fc",
     "oracle": "lps",
     "oracleId": "thena-btcb-multibtc",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "thena",
     "assets": ["BTCB", "multiBTC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -22,7 +21,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1680744767
+    "createdAt": 1682607738
   },
   {
     "id": "thena-dola-frax",
