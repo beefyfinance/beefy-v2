@@ -1,0 +1,14 @@
+[
+  {
+    "id": "zksync-velocore",
+    "name": "Velocore",
+    "type": "solidly",
+    "routerAddress": "0x46dbd39e26a56778d88507d7aEC6967108C0BD36",
+    "factoryAddress": "0xE140EaC2bB748c8F456719a457F26636617Bb0E9",
+    "pairInitHash": "0x010008376467d85cad8b83235a46a7543598e783b3308e9989f6fa6cc265c8b2",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "3",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
+  }
+]

@@ -1003,5 +1003,10 @@
     "id": "exactly",
     "name": "Exactly",
     "filter": true
+  },
+  {
+    "id": "velocore",
+    "name": "Velocore",
+    "filter": true
   }
 ]
