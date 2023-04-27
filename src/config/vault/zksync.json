@@ -49,8 +49,8 @@
   },
   {
     "id": "velocore-weth-vc",
-    "name": "VC-WETH vLP",
-    "token": "VC-WETH vLP",
+    "name": "VC-ETH vLP",
+    "token": "VC-ETH vLP",
     "tokenAddress": "0x80aB452b8Ba46722029a69308aC52c0897d3a855",
     "tokenDecimals": 18,
     "tokenProviderId": "velocore",
