@@ -62,8 +62,8 @@ export const styles = (theme: Theme) => ({
     marginLeft: '4px',
   },
   badgeMobile: {
+    transform: 'translate(-25%, -100%)',
     top: 'auto',
-    left: '22%',
     right: 'auto',
   },
 });

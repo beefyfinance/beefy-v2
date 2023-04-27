@@ -33,7 +33,11 @@ const IconWithChain = memo<{ chainId: ChainEntity['id']; label: string; classNam
           className={classes.iconWithChainIcon}
         />
         {label}
-        {chainId === 'zksync' && <NewBadge className={classes.badgeMobile} />}
+        {chainId === 'zksync' && (
+          <div>
+            <NewBadge className={classes.badgeMobile} />
+          </div>
+        )}
       </div>
     );
   }
