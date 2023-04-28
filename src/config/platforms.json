@@ -1000,6 +1000,11 @@
     "filter": true
   },
   {
+    "id": "arbidex",
+    "name": "Arbidex",
+    "filter": true
+  },
+  {
     "id": "exactly",
     "name": "Exactly",
     "filter": true
