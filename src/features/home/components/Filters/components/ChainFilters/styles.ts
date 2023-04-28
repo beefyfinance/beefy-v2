@@ -55,4 +55,15 @@ export const styles = (theme: Theme) => ({
       marginRight: '4px',
     },
   },
+  badge: {
+    top: 'auto',
+    right: 'auto',
+    marginTop: '-12px',
+    marginLeft: '4px',
+  },
+  badgeMobile: {
+    transform: 'translate(-25%, -100%)',
+    top: 'auto',
+    right: 'auto',
+  },
 });
