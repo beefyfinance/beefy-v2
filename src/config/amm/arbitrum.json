@@ -50,5 +50,19 @@
     "swapFeeNumerator": "2",
     "swapFeeDenominator": "1000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "arbitrum-arbidex",
+    "name": "Arbidex",
+    "type": "uniswapv2",
+    "routerAddress": "0x7238FB45146BD8FcB2c463Dc119A53494be57Aac",
+    "factoryAddress": "0x1C6E968f2E6c9DEC61DB874E28589fd5CE3E1f2c",
+    "pairInitHash": "0x724c966696ee786bca53d9ebb15f34f4961a6a2d55b17599d6dd4681a335275a",
+    "minimumLiquidity": "1000",
+    "mintFeeNumerator": "20",
+    "mintFeeDenominator": "5",
+    "swapFeeNumerator": "25",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
   }
 ]
