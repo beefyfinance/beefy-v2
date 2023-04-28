@@ -175,8 +175,8 @@
     "earnContractAddress": "0x48aE3F2f6421b8DA1E2664aAE92D23C461167eBC",
     "oracle": "lps",
     "oracleId": "thena-usdt-usd+",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "thena",
     "assets": ["USDT", "USD+"],
     "risks": [
