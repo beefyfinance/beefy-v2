@@ -1,28 +1,25 @@
-import type BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { TimelineAnalyticsConfig } from '../apis/analytics/analytics-types';
 import type { ChangeTypeOfKeys, SnakeToCamelCase } from '../utils/types-utils';
 
-export type VaultTimelineAnalyticsWithBigNumber = ChangeTypeOfKeys<
-  {
-    [K in keyof TimelineAnalyticsConfig as SnakeToCamelCase<K>]: TimelineAnalyticsConfig[K];
-  },
-  | 'shareBalance'
-  | 'shareDiff'
-  | 'shareToUnderlyingPrice'
-  | 'underlyingBalance'
-  | 'underlyingDiff'
-  | 'underlyingToUsdPrice'
-  | 'usdBalance'
-  | 'usdDiff',
+type VTACSnake = {
+  [K in keyof TimelineAnalyticsConfig as SnakeToCamelCase<K>]: TimelineAnalyticsConfig[K];
+};
+
+type VTACBigNumber = ChangeTypeOfKeys<
+  VTACSnake,
+  'shareBalance' | 'shareDiff' | 'shareToUnderlyingPrice' | 'underlyingBalance' | 'underlyingDiff',
   BigNumber
 >;
 
-export type VaultTimelineAnalyticsWithDateTime = ChangeTypeOfKeys<
-  VaultTimelineAnalyticsWithBigNumber,
-  'datetime',
-  Date
+type VTACOptionalBigNumber = ChangeTypeOfKeys<
+  VTACBigNumber,
+  'underlyingToUsdPrice' | 'usdBalance' | 'usdDiff',
+  BigNumber | null
 >;
 
-export type VaultTimelineAnalyticsEntity = VaultTimelineAnalyticsWithDateTime & {
+type VTACWithDateTime = ChangeTypeOfKeys<VTACOptionalBigNumber, 'datetime', Date>;
+
+export type VaultTimelineAnalyticsEntity = VTACWithDateTime & {
   internal?: boolean;
 };
