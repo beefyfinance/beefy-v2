@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { TimelineAnalyticsConfig } from '../apis/analytics/analytics-types';
 import type { ChangeTypeOfKeys, SnakeToCamelCase } from '../utils/types-utils';
 
