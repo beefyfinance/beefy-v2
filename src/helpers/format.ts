@@ -126,7 +126,7 @@ export const formatUsd = (tvl, oraclePrice = undefined) => {
   }
   const prefix = '$';
 
-  return num < 999
+  return (num instanceof BigNumber ? num.toNumber() : num) < 999
     ? prefix + num.toFixed(2) + unitToDisplay
     : tvl.toLocaleString('en-US', {
         style: 'currency',
@@ -212,12 +212,13 @@ export function formatFullBigNumber(
 export function formatSignificantBigNumber(
   value: BigNumber,
   decimals: number,
-  price: BigNumber,
+  price: BigNumber | null,
   extraPlaces: number = 0,
   minPlaces: number = 2,
   roundMode: BigNumber.RoundingMode = BigNumber.ROUND_FLOOR
 ) {
-  const tokensPerCent = BIG_ONE.dividedBy(price.multipliedBy(100));
+  const tokensPerCent =
+    !price || price.isZero() ? BIG_ZERO : BIG_ONE.dividedBy(price.multipliedBy(100));
   const sigPlaces = getFirstNonZeroDecimal(tokensPerCent, decimals) + extraPlaces;
   const places = Math.max(Math.min(sigPlaces, decimals), minPlaces);
 
