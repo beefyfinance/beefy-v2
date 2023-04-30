@@ -1251,8 +1251,7 @@
     "earnContractAddress": "0x1c94779aD700cd4a0681e516fFA3d5Ba6d8B3d3c",
     "oracle": "lps",
     "oracleId": "thena-usdc-busd",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "thena",
     "assets": ["USDC", "BUSD"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -1261,7 +1260,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1673571556
+    "createdAt": 1682865428
   },
   {
     "id": "thena-usdt-busd",
