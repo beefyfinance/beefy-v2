@@ -61,7 +61,7 @@
     "id": "balancer-stmatic-bbawmatic",
     "name": "stMATIC-bbaWMATIC",
     "token": "stMATIC-bbaWMATIC",
-    "tokenAddress": "0x216690738aac4aa0c4770253ca26a28f0115c595",
+    "tokenAddress": "0x216690738Aac4aa0C4770253CA26a28f0115c595",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
     "earnedToken": "mooBalancerPolystMatic-bbaWMATIC",
