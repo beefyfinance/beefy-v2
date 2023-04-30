@@ -1,5 +1,34 @@
 [
   {
+    "id": "balancer-reth-bbaweth",
+    "name": "rETH-bbaWETH",
+    "token": "rETH-bbaWETH",
+    "tokenAddress": "0xCba9Ff45cfB9cE238AfDE32b0148Eb82CbE63562",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerArbrETH-bbaWETH",
+    "earnedTokenAddress": "0xA9640CaA54E431ec21a4E14DE8dde0b05Cf034E7",
+    "earnContractAddress": "0xA9640CaA54E431ec21a4E14DE8dde0b05Cf034E7",
+    "oracle": "lps",
+    "oracleId": "balancer-reth-bbaweth",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["rETH", "bbaaWETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xcba9ff45cfb9ce238afde32b0148eb82cbe635620000000000000000000003fd/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xcba9ff45cfb9ce238afde32b0148eb82cbe635620000000000000000000003fd/withdraw",
+    "network": "arbitrum",
+    "createdAt": 1682857348
+  },
+  {
     "id": "arbidex-arb-usdc",
     "name": "ARB-USDC LP",
     "token": "ARB-USDC LP",
