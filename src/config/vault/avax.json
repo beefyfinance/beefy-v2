@@ -2726,7 +2726,8 @@
     "earnContractAddress": "0x37a51D57958386E52f6d7D7d08ACb381abDA9157",
     "oracle": "lps",
     "oracleId": "joe-wavax-savax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "traderjoe",
     "assets": ["sAVAX", "AVAX"],
     "risks": [

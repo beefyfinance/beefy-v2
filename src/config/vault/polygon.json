@@ -1019,7 +1019,8 @@
     "earnContractAddress": "0xDe6b38969f4813B77F4878b8F637eFcFC834076e",
     "oracle": "lps",
     "oracleId": "balancer-2brl-bbamusd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "balancer",
     "assets": ["2BRZ", "bbamUSD"],
     "risks": [

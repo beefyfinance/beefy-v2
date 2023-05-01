@@ -1653,7 +1653,8 @@
     "earnContractAddress": "0x70D24C99E411c98628C63C27F30044eb777d9624",
     "oracle": "lps",
     "oracleId": "cakev2-mgp-busd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "pancakeswap",
     "assets": ["MGP", "BUSD"],
     "risks": [
