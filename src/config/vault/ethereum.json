@@ -1,5 +1,27 @@
 [
   {
+    "id": "curve-lvusd",
+    "name": "lvUSD/DAI/USDC/USDT",
+    "token": "3CRVlvUSD3CRV-f",
+    "tokenAddress": "0xe9123CBC5d1EA65301D417193c40A72Ac8D53501",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveLvUSD",
+    "earnedTokenAddress": "0xa40DEAA277422bFa8F31297f1a394000DA253c51",
+    "earnContractAddress": "0xa40DEAA277422bFa8F31297f1a394000DA253c51",
+    "oracle": "lps",
+    "oracleId": "curve-lvusd",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["lvUSD", "DAI", "USDC", "USDT"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-268/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-268/withdraw",
+    "network": "ethereum",
+    "createdAt": 1682932828
+  },
+  {
     "id": "convex-eusdfraxbp",
     "name": "eUSD/FRAX/USDC",
     "token": "eUSD3CRV-f",
