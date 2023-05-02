@@ -18536,7 +18536,8 @@
     "earnContractAddress": "0x8C6069624e746513Ac1B1d1434aABbEDA152f181",
     "oracle": "lps",
     "oracleId": "ripae-pbnb-bnb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "ripae",
     "assets": ["pBNB", "BNB"],
     "risks": [
