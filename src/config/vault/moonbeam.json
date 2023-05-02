@@ -159,7 +159,8 @@
     "earnContractAddress": "0xffbf83be790e184a57584d3faF40505eA1ECab3f",
     "oracle": "lps",
     "oracleId": "stellaswap-mai4pool",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["stella4pool", "MAI"],
     "risks": [
@@ -191,7 +192,8 @@
     "earnContractAddress": "0x6EA8ad7228eBcA6C686096269d60bb1C72D13fa8",
     "oracle": "lps",
     "oracleId": "stellaswap-wstdot-xcdot",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["wstDOT", "xcDOT"],
     "risks": [
@@ -221,7 +223,8 @@
     "earnContractAddress": "0xA576b4429d190f8EcD0f82c0C1f492cEA8c7DE9B",
     "oracle": "lps",
     "oracleId": "stellaswap-4pool",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["USDCwh", "USDTxc", "BUSDwh", "FRAX"],
     "risks": [
@@ -253,7 +256,8 @@
     "earnContractAddress": "0x1f36bBa3b906D6EA46409454Fe6376B5BE4fd268",
     "oracle": "lps",
     "oracleId": "stellaswap-wbtcwh-wglmr",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["WBTCwh", "GLMR"],
     "risks": [
@@ -284,7 +288,8 @@
     "earnContractAddress": "0xAD88b66648123919cE3a663B7A9Dd8b09C48873f",
     "oracle": "lps",
     "oracleId": "stellaswap-ethwh-wglmr",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["ETHwh", "GLMR"],
     "risks": [
@@ -315,7 +320,8 @@
     "earnContractAddress": "0x7E6E617ad68E1f4ACC8E2d935CBe569AeC9EC6cF",
     "oracle": "lps",
     "oracleId": "stellaswap-usdcwh-wglmr",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["USDCwh", "GLMR"],
     "risks": [
@@ -1731,7 +1737,8 @@
     "earnContractAddress": "0xAECd33b7b048960A78CacF59F8da658E1FF0eD64",
     "oracle": "lps",
     "oracleId": "stellaswap-wglmr-xcdot",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["xcDOT", "GLMR"],
     "risks": [
