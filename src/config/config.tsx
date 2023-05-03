@@ -367,7 +367,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'FRAX',
       'nUSD',
       'MIM',
-      'USDC',
       'UST',
       'saUSDT',
       'saUSDC',
@@ -492,7 +491,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['mUSDT', 'mUSDC', 'mDAI', 'USDT'],
+    stableCoins: ['mUSDT', 'mUSDC', 'mDAI', 'USDT', 'USDC'],
   },
   fuse: {
     name: 'Fuse',

@@ -8,7 +8,12 @@ import { isVaultHoldingEntity } from '../entities/treasury';
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectLpBreakdownBalance } from './balance';
 import { selectChainById } from './chains';
-import { selectHasBreakdownData, selectIsTokenStable, selectLpBreakdownByOracleId } from './tokens';
+import {
+  selectHasBreakdownData,
+  selectIsTokenStable,
+  selectLpBreakdownByOracleId,
+  selectWrappedToNativeSymbolOrTokenSymbol,
+} from './tokens';
 import { selectIsVaultStable } from './vaults';
 
 export const selectIsTreasuryLoaded = (state: BeefyState) =>
@@ -166,7 +171,8 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
                   if (selectIsTokenStable(state, chainId, asset.id)) {
                     totals['stables'] = (totals['stables'] || BIG_ZERO).plus(asset.userValue);
                   } else {
-                    totals[asset.id] = (totals[asset.id] || BIG_ZERO).plus(asset.userValue);
+                    const assetId = selectWrappedToNativeSymbolOrTokenSymbol(state, asset.symbol);
+                    totals[assetId] = (totals[assetId] || BIG_ZERO).plus(asset.userValue);
                   }
                 }
               } else {
@@ -177,7 +183,8 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
             if (selectIsTokenStable(state, chainId, token.oracleId)) {
               totals['stables'] = (totals['stables'] || BIG_ZERO).plus(tokenBalanceUsd);
             } else {
-              totals[token.oracleId] = (totals[token.oracleId] || BIG_ZERO).plus(tokenBalanceUsd);
+              const assetId = selectWrappedToNativeSymbolOrTokenSymbol(state, token.oracleId);
+              totals[assetId] = (totals[token.oracleId] || BIG_ZERO).plus(tokenBalanceUsd);
             }
           }
         }
