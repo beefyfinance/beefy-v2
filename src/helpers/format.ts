@@ -3,7 +3,7 @@ import type { TotalApy } from '../features/data/reducers/apy';
 import { toNumber } from 'web3-utils';
 import type { ReactNode } from 'react';
 import type { AllValuesAsString } from '../features/data/utils/types-utils';
-import { BIG_ONE, BIG_ZERO, isBigNumber } from './big-number';
+import { BIG_ONE, BIG_ZERO, isBigNumber, toBigNumber } from './big-number';
 import type { SerializedError } from '@reduxjs/toolkit';
 import { isString, padStart } from 'lodash-es';
 
@@ -103,38 +103,45 @@ export const formattedTotalApy = (
   );
 };
 
-export const formatUsd = (tvl, oraclePrice = undefined) => {
-  // TODO: bignum?
-  if (oraclePrice) {
-    tvl *= oraclePrice;
-  }
+/**
+ * Formats: 123 -> $123, 1234 -> $1.23k, 1234567 -> $1.23M etc
+ * Supports `BigNumber`, but only for values than can fit in normal js `number`
+ */
+export function formatUsd(
+  input: number | BigNumber,
+  oraclePrice: number | BigNumber | undefined = undefined
+): string {
+  const value: number = oraclePrice
+    ? toBigNumber(input).times(oraclePrice).toNumber()
+    : isBigNumber(input)
+    ? input.toNumber()
+    : input;
 
-  if (tvl === 0) {
+  if (value === 0) {
     return '$0';
   }
 
-  const order = Math.floor(Math.log10(tvl) / 3);
-
+  const order = Math.floor(Math.log10(value) / 3);
   const units = ['', 'k', 'M', 'B', 'T'];
   const shouldShowUnits = order > 1; // only use units if 1M+
   let unitToDisplay = '';
-  let num: BigNumber | number = new BigNumber(tvl);
+  let num: number = value;
 
   if (shouldShowUnits) {
-    num = tvl / 1000 ** order;
+    num = value / 1000 ** order;
     unitToDisplay = units[order];
   }
   const prefix = '$';
 
   return num < 999
     ? prefix + num.toFixed(2) + unitToDisplay
-    : tvl.toLocaleString('en-US', {
+    : value.toLocaleString('en-US', {
         style: 'currency',
         currency: 'USD',
         maximumFractionDigits: 0,
         minimumFractionDigits: 0,
       });
-};
+}
 
 export function getBigNumOrder(num: BigNumber): number {
   const nEstr = num.abs().decimalPlaces(0, BigNumber.ROUND_FLOOR).toExponential();

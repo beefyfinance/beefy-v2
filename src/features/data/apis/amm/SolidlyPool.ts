@@ -115,7 +115,7 @@ export class SolidlyPool implements IPool {
 
     this.pairData = {
       totalSupply: new BigNumber(result.totalSupply),
-      decimals: parseInt(result.totalSupply, 10),
+      decimals: parseInt(result.decimals, 10),
       token0: result.metadata[MetadataKeys.token0],
       token1: result.metadata[MetadataKeys.token1],
       reserves0: new BigNumber(result.metadata[MetadataKeys.reserves0]),

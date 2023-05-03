@@ -98,7 +98,7 @@ export const usePnLChartData = (
         filteredUnderlying,
         vaultLastDeposit,
         currentPpfs,
-        currentOraclePrice.toNumber(),
+        currentOraclePrice,
         currentMooTokenBalance
       );
 

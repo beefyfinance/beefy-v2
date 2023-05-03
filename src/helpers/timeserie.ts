@@ -1,5 +1,5 @@
 import type BigNumber from 'bignumber.js';
-import { isAfter, isEqual, max } from 'date-fns';
+import { isAfter, isBefore, isEqual, max, subDays } from 'date-fns';
 import { sortBy } from 'lodash-es';
 import type {
   ApiProductPriceRow,
@@ -19,6 +19,20 @@ export interface PriceTsRow {
   usdBalance: number | null;
 }
 
+function sortAndFixPrices(
+  prices: ApiProductPriceRow[],
+  currentPrice: BigNumber
+): ApiProductPriceRow[] {
+  const oneDayAgo = subDays(new Date(), 1);
+
+  return sortBy(prices, 'date').map(
+    ({ date, value }): ApiProductPriceRow => ({
+      date,
+      value: value ?? (isBefore(date, oneDayAgo) ? BIG_ZERO : currentPrice),
+    })
+  );
+}
+
 export function getInvestorTimeserie(
   timeBucket: TimeBucketType,
   timeline: VaultTimelineAnalyticsEntity[],
@@ -26,7 +40,7 @@ export function getInvestorTimeserie(
   underlying: ApiProductPriceRow[],
   firstDate: Date,
   currentPpfs: BigNumber,
-  currentPrice: number,
+  currentPrice: BigNumber,
   currentShareBalance: BigNumber
 ): PriceTsRow[] {
   // so, first we need to generate datetime keys for each row
@@ -40,8 +54,9 @@ export function getInvestorTimeserie(
 
   const fixedDate = max([firstDate, firstDate1]);
 
-  const sortedShares = sortBy(shares, 'date');
-  const sortedUnderlying = sortBy(underlying, 'date');
+  // Use the current price to fill in any missing prices in the past 24 hours (otherwise set to 0)
+  const sortedShares = sortAndFixPrices(shares, currentPpfs);
+  const sortedUnderlying = sortAndFixPrices(underlying, currentPrice);
 
   let balanceIdx = 0;
   let sharesIdx = 0;
@@ -91,13 +106,12 @@ export function getInvestorTimeserie(
 
     // now we have the correct rows for this date
     const balance = timeline[balanceIdx].shareBalance;
-    const shares = sortedShares[sharesIdx];
-    const underlying = sortedUnderlying[underlyingIdx];
-    const underlyingBalance = shares && balance ? shares.value.times(balance) : null;
-    const usdBalance =
-      underlyingBalance && underlying ? underlyingBalance.times(underlying.value) : null;
-
     if (balance && !balance.isEqualTo(BIG_ZERO)) {
+      const shares = sortedShares[sharesIdx];
+      const underlying = sortedUnderlying[underlyingIdx];
+      const underlyingBalance = shares.value.times(balance);
+      const usdBalance = underlyingBalance.times(underlying.value);
+
       pricesTs.push({
         //return date on seconds
         datetime: currentDate.getTime(),

@@ -115,7 +115,7 @@ export class UniswapV2Pool implements IPool {
 
     this.pairData = {
       totalSupply: new BigNumber(result.totalSupply),
-      decimals: parseInt(result.totalSupply, 10),
+      decimals: parseInt(result.decimals, 10),
       token0: result.token0,
       token1: result.token1,
       reserves0: new BigNumber(result.reserves[0]),
