@@ -7,11 +7,13 @@ import { selectTreasurySorted } from '../../../data/selectors/treasury';
 import { ChainHolding } from './components/ChainHolding';
 import { styles } from './styles';
 import { useMediaQuery } from '@material-ui/core';
+import { selectEolChainIds } from '../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles);
 
 function useTreasuryColumns(numColumns: number) {
   const sortedTreasury = useAppSelector(selectTreasurySorted);
+  const eolChains = useAppSelector(selectEolChainIds);
 
   return useMemo(() => {
     if (numColumns === 1) {
@@ -23,24 +25,26 @@ function useTreasuryColumns(numColumns: number) {
     let nextColumn = 0;
 
     for (const chainTreasury of sortedTreasury) {
-      columns[nextColumn].push(chainTreasury.chainId);
+      if (!eolChains.includes(chainTreasury.chainId)) {
+        columns[nextColumn].push(chainTreasury.chainId);
 
-      const numCategories =
-        (chainTreasury.liquid > 0 ? 1 : 0) +
-        (chainTreasury.staked > 0 ? 1 : 0) +
-        (chainTreasury.locked > 0 ? 1 : 0);
-      const numAssets = chainTreasury.liquid + chainTreasury.staked + chainTreasury.locked;
-      const numRows = 2 + numCategories + numAssets;
+        const numCategories =
+          (chainTreasury.liquid > 0 ? 1 : 0) +
+          (chainTreasury.staked > 0 ? 1 : 0) +
+          (chainTreasury.locked > 0 ? 1 : 0);
+        const numAssets = chainTreasury.liquid + chainTreasury.staked + chainTreasury.locked;
+        const numRows = 2 + numCategories + numAssets;
 
-      heights[nextColumn] +=
-        64 + // chain header
-        52 + // table header
-        numCategories * 52 + // category headers
-        numAssets * 76 + // asset rows
-        (numRows - 1) * 2 + // row gaps
-        (columns[nextColumn].length > 1 ? 16 : 0); // chain gap
+        heights[nextColumn] +=
+          64 + // chain header
+          52 + // table header
+          numCategories * 52 + // category headers
+          numAssets * 76 + // asset rows
+          (numRows - 1) * 2 + // row gaps
+          (columns[nextColumn].length > 1 ? 16 : 0); // chain gap
 
-      nextColumn = heights.indexOf(Math.min(...heights));
+        nextColumn = heights.indexOf(Math.min(...heights));
+      }
     }
 
     return columns;
