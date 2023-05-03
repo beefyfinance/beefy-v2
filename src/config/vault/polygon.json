@@ -1256,7 +1256,8 @@
     "earnContractAddress": "0x42Cbb13EC7b35AA76D5fE7B0A446fA7B64F7086A",
     "oracle": "lps",
     "oracleId": "balancer-matic-maticx-v2",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["MATIC", "MaticX"],
     "risks": [
