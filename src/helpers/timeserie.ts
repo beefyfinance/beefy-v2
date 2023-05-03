@@ -36,8 +36,8 @@ function sortAndFixPrices(
 export function getInvestorTimeserie(
   timeBucket: TimeBucketType,
   timeline: VaultTimelineAnalyticsEntity[],
-  shares: ApiProductPriceRow[],
-  underlying: ApiProductPriceRow[],
+  sharesToUnderlying: ApiProductPriceRow[],
+  underlyingToUsd: ApiProductPriceRow[],
   firstDate: Date,
   currentPpfs: BigNumber,
   currentPrice: BigNumber,
@@ -55,8 +55,8 @@ export function getInvestorTimeserie(
   const fixedDate = max([firstDate, firstDate1]);
 
   // Use the current price to fill in any missing prices in the past 24 hours (otherwise set to 0)
-  const sortedShares = sortAndFixPrices(shares, currentPpfs);
-  const sortedUnderlying = sortAndFixPrices(underlying, currentPrice);
+  const sortedSharesToUnderlying = sortAndFixPrices(sharesToUnderlying, currentPpfs);
+  const sortedUnderlyingToUsd = sortAndFixPrices(underlyingToUsd, currentPrice);
 
   let balanceIdx = 0;
   let sharesIdx = 0;
@@ -91,31 +91,33 @@ export function getInvestorTimeserie(
     }
     // find the corresponding shares row
     while (
-      sharesIdx < sortedShares.length - 1 &&
-      isAfter(currentDate, sortedShares[sharesIdx + 1].date)
+      sharesIdx < sortedSharesToUnderlying.length - 1 &&
+      isAfter(currentDate, sortedSharesToUnderlying[sharesIdx + 1].date)
     ) {
       sharesIdx++;
     }
     // find the corresponding underlying row
     while (
-      underlyingIdx < sortedUnderlying.length - 1 &&
-      isAfter(currentDate, sortedUnderlying[underlyingIdx + 1].date)
+      underlyingIdx < sortedUnderlyingToUsd.length - 1 &&
+      isAfter(currentDate, sortedUnderlyingToUsd[underlyingIdx + 1].date)
     ) {
       underlyingIdx++;
     }
 
     // now we have the correct rows for this date
-    const balance = timeline[balanceIdx].shareBalance;
-    if (balance && !balance.isEqualTo(BIG_ZERO)) {
-      const shares = sortedShares[sharesIdx];
-      const underlying = sortedUnderlying[underlyingIdx];
-      const underlyingBalance = shares.value.times(balance);
+    const shareBalance = timeline[balanceIdx].shareBalance;
+    if (shareBalance && !shareBalance.isEqualTo(BIG_ZERO)) {
+      // Shares to underlying
+      const shares = sortedSharesToUnderlying[sharesIdx];
+      const underlyingBalance = shareBalance.times(shares.value);
+      // Underlying to usd
+      const underlying = sortedUnderlyingToUsd[underlyingIdx];
       const usdBalance = underlyingBalance.times(underlying.value);
 
       pricesTs.push({
         //return date on seconds
         datetime: currentDate.getTime(),
-        shareBalance: balance.toNumber(),
+        shareBalance: shareBalance.toNumber(),
         underlyingBalance: underlyingBalance.toNumber(),
         usdBalance: usdBalance.toNumber(),
       });

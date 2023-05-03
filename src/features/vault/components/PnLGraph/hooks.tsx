@@ -49,11 +49,11 @@ export const usePnLChartData = (
   );
   const vaultLastDeposit = useAppSelector(state => selectLastVaultDepositStart(state, vaultId));
 
-  const { data: shares, status: sharesStatus } = useAppSelector(state =>
+  const { data: sharesToUnderlying, status: sharesStatus } = useAppSelector(state =>
     selectShareToUnderlyingTimebucketByVaultId(state, vaultId, timebucket)
   );
 
-  const { data: underlying, status: underlyingStatus } = useAppSelector(state =>
+  const { data: underlyingToUsd, status: underlyingStatus } = useAppSelector(state =>
     selectUnderlyingToUsdTimebucketByVaultId(state, vaultId, timebucket)
   );
 
@@ -88,14 +88,18 @@ export const usePnLChartData = (
 
   const chartData = useMemo(() => {
     if (sharesStatus === 'fulfilled' && underlyingStatus === 'fulfilled') {
-      const filteredShares = shares.filter(price => isAfter(price.date, vaultLastDeposit));
-      const filteredUnderlying = underlying.filter(price => isAfter(price.date, vaultLastDeposit));
+      const filteredSharesToUnderlying = sharesToUnderlying.filter(price =>
+        isAfter(price.date, vaultLastDeposit)
+      );
+      const filteredUnderlyingToUsd = underlyingToUsd.filter(price =>
+        isAfter(price.date, vaultLastDeposit)
+      );
 
       const data = getInvestorTimeserie(
         timebucket,
         vaultTimeline,
-        filteredShares,
-        filteredUnderlying,
+        filteredSharesToUnderlying,
+        filteredUnderlyingToUsd,
         vaultLastDeposit,
         currentPpfs,
         currentOraclePrice,
@@ -117,8 +121,8 @@ export const usePnLChartData = (
     // We need to make sure this object is not modified elsewhere
     return NO_CHART_DATA;
   }, [
-    shares,
-    underlying,
+    sharesToUnderlying,
+    underlyingToUsd,
     currentMooTokenBalance,
     currentOraclePrice,
     currentPpfs,
