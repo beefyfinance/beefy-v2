@@ -26,6 +26,11 @@
   },
   {
     "chainId": "avax",
+    "ammId": "avax-solisnek",
+    "zapAddress": "0x7Ea78295A09C3C55F9435a7998D0bbA4Ed9ecB7d"
+  },
+  {
+    "chainId": "avax",
     "ammId": "avax-pangolin",
     "zapAddress": "0x7f62aF30081178F502c3d4DA17825e58d240D737"
   },

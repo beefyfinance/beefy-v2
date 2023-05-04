@@ -206,7 +206,10 @@
       "S*USDC",
       "S*USDT",
       "SUSHI",
-      "WINE"
+      "WINE",
+      "DEUS",
+      "DOLA",
+      "DEI"
     ],
     "blockedVaults": ["aavev3-avax"]
   },
