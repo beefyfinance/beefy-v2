@@ -1,5 +1,17 @@
 [
   {
+    "id": "avax-solisnek",
+    "name": "SoliSnek",
+    "type": "solidly",
+    "routerAddress": "0xeeee17b45E4d127cFaAAD14e2710489523ADB4d8",
+    "factoryAddress": "0xeeee1F1c93836B2CAf8B9E929cb978c35d46657E",
+    "pairInitHash": "0x79cda3bba5402e92f13ed1967c06033e6b7a1bc8d2e1d013b29fa0c4d0a4aa0f ",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "2",
+    "swapFeeDenominator": "1000",
+    "getAmountOutMode": "getAmountOut"
+  },
+  {
     "id": "avax-pangolin",
     "name": "Pangolin",
     "type": "uniswapv2",
