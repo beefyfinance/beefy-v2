@@ -1013,5 +1013,10 @@
     "id": "velocore",
     "name": "Velocore",
     "filter": true
+  },
+  {
+    "id": "solisnek",
+    "name": "SoliSnek",
+    "filter": true
   }
 ]
