@@ -255,8 +255,7 @@
     "earnContractAddress": "0x3cf5e39a698d553d0B28606Eb6083Ccff70A7712",
     "oracle": "lps",
     "oracleId": "thena-bnbx-usdt",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "thena",
     "assets": ["BNBx", "USDT"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -265,7 +264,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1677856678
+    "createdAt": 1683224586
   },
   {
     "id": "thena-primal-busd",
@@ -330,8 +329,7 @@
     "earnContractAddress": "0x2b8F9C83FCE1a693f7fD71B7eA743b937ADB0Ca5",
     "oracle": "lps",
     "oracleId": "thena-ankrbnb-ankreth",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "thena",
     "assets": ["ankrBNB", "ankrETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -340,7 +338,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1677768450
+    "createdAt": 1683224586
   },
   {
     "id": "thena-multi-wbnb",
@@ -355,8 +353,7 @@
     "earnContractAddress": "0xAEdF7c8b5c3cE80faC86986EBd7E2D7938bD2be9",
     "oracle": "lps",
     "oracleId": "thena-multi-wbnb",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "thena",
     "assets": ["MULTI", "BNB"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -365,7 +362,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1677723847
+    "createdAt": 1683224586
   },
   {
     "id": "cakev2-csix-cake",
@@ -574,8 +571,7 @@
     "earnContractAddress": "0xBD2b86C3D541B6598aa2e9fCf4d6C36D7c54728D",
     "oracle": "lps",
     "oracleId": "thena-ankrbnb-ankr",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "thena",
     "assets": ["ankrBNB", "ANKR"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -584,7 +580,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1677122554
+    "createdAt": 1683224586
   },
   {
     "id": "thena-idia-busd",
@@ -599,8 +595,7 @@
     "earnContractAddress": "0x9E6182054258e90228afF17952b347dCfd7cC1b1",
     "oracle": "lps",
     "oracleId": "thena-idia-busd",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "thena",
     "assets": ["IDIA", "BUSD"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -609,7 +604,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1677122554
+    "createdAt": 1683224586
   },
   {
     "id": "thena-jbrl-brz",
@@ -679,8 +674,7 @@
     "earnContractAddress": "0x13939652caF011CCa8228293Dc901E4CB2c47BA3",
     "oracle": "lps",
     "oracleId": "thena-matic-busd",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "thena",
     "assets": ["MATIC", "BUSD"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -689,7 +683,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1676917019
+    "createdAt": 1683224586
   },
   {
     "id": "thena-multi-busd",
