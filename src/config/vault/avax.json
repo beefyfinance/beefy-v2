@@ -118,7 +118,7 @@
     "earnContractAddress": "0x7f6e2FD400f7fB43Ea8d41cc733eF45f37510C5C",
     "oracle": "lps",
     "oracleId": "solisnek-usdc-dei",
-    "status": "active",
+    "status": "paused",
     "platformId": "solisnek",
     "assets": ["DEI", "USDC"],
     "risks": [
@@ -300,7 +300,7 @@
     "earnContractAddress": "0x5A2D3D6D21Fa219D1C549B3D0e070E05D98011af",
     "oracle": "lps",
     "oracleId": "solisnek-wavax-deus",
-    "status": "active",
+    "status": "paused",
     "platformId": "solisnek",
     "assets": ["DEUS", "AVAX"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],

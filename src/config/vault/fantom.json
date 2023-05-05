@@ -521,7 +521,7 @@
     "earnContractAddress": "0x941C797a905688D1A7BA0Ae732610D042408AF46",
     "oracle": "lps",
     "oracleId": "equalizer-wftm-deus",
-    "status": "active",
+    "status": "paused",
     "platformId": "equalizer",
     "assets": ["DEUS", "FTM"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -689,7 +689,7 @@
     "earnContractAddress": "0xa43A80F527aC3619ce904C55758D83A7b468fb16",
     "oracle": "lps",
     "oracleId": "boo-dei-usdc",
-    "status": "active",
+    "status": "paused",
     "platformId": "spookyswap",
     "assets": ["DEI", "USDC"],
     "risks": [
@@ -720,7 +720,7 @@
     "earnContractAddress": "0x168D2069cC58f0bB3847172dcC47c295dc49F06f",
     "oracle": "lps",
     "oracleId": "boo-deus-wftm",
-    "status": "active",
+    "status": "paused",
     "platformId": "spookyswap",
     "assets": ["DEUS", "FTM"],
     "risks": [
@@ -782,7 +782,7 @@
     "earnContractAddress": "0x6aB501afC4326071A9d53EE039Ee2fb448C78037",
     "oracle": "lps",
     "oracleId": "beets-another-dei-another-dollar",
-    "status": "active",
+    "status": "paused",
     "platformId": "beethovenx",
     "assets": ["DEI", "USDC"],
     "risks": [
