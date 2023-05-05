@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_balancer-maticx-bbawmatic-stader",
+    "poolId": "balancer-maticx-bbawmatic",
+    "name": "Stader",
+    "assets": ["MaticX", "bbaWMATIC"],
+    "tokenAddress": "0x4C98CB046c3eb7e3ae7Eb49a33D6f3386Ec2b9D9",
+    "earnedToken": "SD",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x1d734A02eF1e1f5886e66b0673b71Af5B53ffA94",
+    "earnContractAddress": "0x2e5598608A4436dBb9c34CE6862B5AF882F49a6B",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "SD",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["stader"]
+  },
+  {
     "id": "moo_kyber-wsteth-eth-lido",
     "poolId": "kyber-wsteth-eth",
     "name": "Lido",
