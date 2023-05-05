@@ -3,14 +3,13 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
 import { Banner } from '../Banner';
-import DashboardIcon from '../../../images/icons/dashboard.svg';
-import { Link } from 'react-router-dom';
+import { Bookmark } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
 export const AnnouncementBanner = memo(function AnnouncementBanner() {
   const classes = useStyles();
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideDashV2Banner', false);
+  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideSavedBanner', false);
 
   const closeBanner = useCallback(() => {
     setHideBanner(true);
@@ -22,15 +21,20 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
 
   return (
     <Banner
-      icon={<img className={classes.icon} src={DashboardIcon} alt="graph" />}
+      icon={<Bookmark className={classes.icon} />}
       text={
         <>
-          Beefy{' '}
-          <Link className={classes.link} to="/dashboard">
-            Dashboard
-          </Link>{' '}
-          just got better! The updated version now shows your accrued yield, PNL, transaction
-          history, claimable boost rewards and more.
+          Introducing{' '}
+          <a
+            className={classes.link}
+            href="https://twitter.com/beefyfinance/status/1653402008890507267"
+            target="_blank"
+            rel="noopener"
+          >
+            Saved Vaults
+          </a>{' '}
+          {`- bookmark any of our 700+ vaults to keep track of the ones you're interested in, anytime
+          and anywhere.`}
         </>
       }
       onClose={closeBanner}
