@@ -329,7 +329,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   avax: {
     name: 'Avalanche',
     chainId: 43114,
-    rpc: ['https://api.avax.network/ext/bc/C/rpc'],
+    rpc: ['https://rpc.ankr.com/avalanche'],
     explorerUrl: 'https://cchain.explorer.avax.network',
     multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
     appMulticallContractAddress: '0x911E556Afd49468429072A3677f895B3cE0AcCcB',
@@ -342,7 +342,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'AVAX',
         decimals: 18,
       },
-      rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+      rpcUrls: ['https://rpc.ankr.com/avalanche'],
       blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
     },
     gas: {
