@@ -5,7 +5,7 @@ import type { TreasuryHoldingEntity } from '../entities/treasury';
 import BigNumber from 'bignumber.js';
 import type { TreasuryHoldingConfig } from '../apis/config-types';
 import { isVaultHoldingConfig } from '../apis/config-types';
-import { selectTokenIsOnAddresBookByChainId } from '../selectors/tokens';
+import { selectIsTokenLoadedOnChain } from '../selectors/tokens';
 import type { BeefyState } from '../../../redux-types';
 
 interface AddressHolding {
@@ -32,7 +32,7 @@ export const treasurySlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchTreasury.fulfilled, (sliceState, action) => {
-      const { data, allChainIds, eolChainIds, state } = action.payload;
+      const { data, activeChainIds, state } = action.payload;
       for (const [chainId, balances] of Object.entries(data)) {
         const items = {};
 
@@ -44,7 +44,7 @@ export const treasurySlice = createSlice({
           };
         }
 
-        if (allChainIds.includes(chainId) && !eolChainIds.includes(chainId)) {
+        if (activeChainIds.includes(chainId)) {
           sliceState.byChainId[chainId] = items;
         }
       }
@@ -61,7 +61,7 @@ const mapBalances = (
     if (
       token.assetType === 'native' ||
       token.assetType === 'validator' ||
-      selectTokenIsOnAddresBookByChainId(state, token.address, chainId)
+      selectIsTokenLoadedOnChain(state, token.address, chainId)
     ) {
       totals[token.address] = {
         ...token,
