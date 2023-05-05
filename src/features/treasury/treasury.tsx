@@ -18,6 +18,7 @@ export const Treasury = memo(function Treasury() {
   const isAddressBookLoaded = useAppSelector(
     state => state.ui.dataLoader.global.addressBook.alreadyLoadedOnce
   );
+  const vaultsLoaded = useAppSelector(state => state.ui.dataLoader.global.vaults.alreadyLoadedOnce);
 
   useEffect(() => {
     if (shouldInit) {
@@ -25,7 +26,7 @@ export const Treasury = memo(function Treasury() {
     }
   }, [dispatch, shouldInit]);
 
-  if (!isLoaded && !isAddressBookLoaded) {
+  if (!isLoaded && !isAddressBookLoaded && !vaultsLoaded) {
     return <div>Loading ...</div>;
   }
 

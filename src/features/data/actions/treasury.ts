@@ -2,11 +2,14 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi } from '../apis/instances';
 import type { TreasuryConfig } from '../apis/config-types';
-import { selectAllChainIds } from '../selectors/chains';
+import { selectAllChainIds, selectEolChainIds } from '../selectors/chains';
+import type { ChainEntity } from '../entities/chain';
 
 export interface FetchTreasuryFulfilledPayload {
-  allChainIds: string[];
+  allChainIds: ChainEntity['id'][];
+  eolChainIds: ChainEntity['id'][];
   data: TreasuryConfig;
+  state: BeefyState;
 }
 
 export const fetchTreasury = createAsyncThunk<
@@ -14,8 +17,11 @@ export const fetchTreasury = createAsyncThunk<
   void,
   { state: BeefyState }
 >('treasury/fetchTreasury', async (_, { getState }) => {
+  const state = getState();
   const api = getBeefyApi();
-  const allChainIds = selectAllChainIds(getState());
+  const allChainIds = selectAllChainIds(state);
+  const eolChainIds = selectEolChainIds(state);
   const data = await api.getTreasury();
-  return { allChainIds, data };
+
+  return { allChainIds, eolChainIds, data, state };
 });

@@ -233,3 +233,10 @@ export const selectHasBreakdownData = (
   // Must have prices of tokens in state
   return tokens.findIndex(token => !state.entities.tokens.prices.byOracleId[token.oracleId]) === -1;
 };
+
+export const selectTokenIsOnAddresBookByChainId = createCachedSelector(
+  (state: BeefyState, _address: TokenEntity['address'], chainId: ChainEntity['id']) =>
+    state.entities.tokens.byChainId[chainId],
+  (state: BeefyState, address: TokenEntity['address']) => address.toLowerCase(),
+  (tokensByChainId, address) => (tokensByChainId.byAddress[address] === undefined ? false : true)
+)((state: BeefyState, address: TokenEntity['address'], _chainId: ChainEntity['id']) => address);

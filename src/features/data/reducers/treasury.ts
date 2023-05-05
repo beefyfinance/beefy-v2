@@ -2,9 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchTreasury } from '../actions/treasury';
 import type { ChainEntity } from '../entities/chain';
 import type { TreasuryHoldingEntity } from '../entities/treasury';
-import { mapValues } from 'lodash-es';
 import BigNumber from 'bignumber.js';
+import type { TreasuryHoldingConfig } from '../apis/config-types';
 import { isVaultHoldingConfig } from '../apis/config-types';
+import { selectTokenIsOnAddresBookByChainId } from '../selectors/tokens';
+import type { BeefyState } from '../../../redux-types';
 
 interface AddressHolding {
   address: string;
@@ -30,30 +32,47 @@ export const treasurySlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchTreasury.fulfilled, (sliceState, action) => {
-      const { data, allChainIds } = action.payload;
-      for (const [_chainId, balances] of Object.entries(data)) {
+      const { data, allChainIds, eolChainIds, state } = action.payload;
+      for (const [chainId, balances] of Object.entries(data)) {
         const items = {};
 
         for (const [address, data] of Object.entries(balances)) {
           items[address] = {
             address: address,
             name: data.name,
-            balances: mapValues(data.balances, balance => ({
-              ...balance,
-              usdValue: new BigNumber(balance.usdValue),
-              balance: new BigNumber(balance.balance),
-              pricePerFullShare: new BigNumber(
-                isVaultHoldingConfig(balance) ? balance.pricePerFullShare : '1'
-              ),
-            })),
+            balances: mapBalances(state, data.balances, chainId),
           };
         }
 
-        const chainId = _chainId === 'one' ? 'harmony' : _chainId;
-        if (allChainIds.includes(chainId)) {
+        if (allChainIds.includes(chainId) && !eolChainIds.includes(chainId)) {
           sliceState.byChainId[chainId] = items;
         }
       }
     });
   },
 });
+
+const mapBalances = (
+  state: BeefyState,
+  balances: { [address: string]: TreasuryHoldingConfig },
+  chainId: ChainEntity['id']
+) => {
+  return Object.values(balances).reduce((totals, token) => {
+    if (
+      token.assetType === 'native' ||
+      token.assetType === 'validator' ||
+      selectTokenIsOnAddresBookByChainId(state, token.address, chainId)
+    ) {
+      totals[token.address] = {
+        ...token,
+        usdValue: new BigNumber(token.usdValue),
+        balance: new BigNumber(token.balance),
+        pricePerFullShare: new BigNumber(
+          isVaultHoldingConfig(token) ? token.pricePerFullShare : '1'
+        ),
+      };
+    }
+
+    return totals;
+  }, {} as Record<string, TreasuryHoldingEntity>);
+};
