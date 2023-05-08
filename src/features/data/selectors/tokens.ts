@@ -3,7 +3,7 @@ import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity } from '../entities/token';
 import { isTokenErc20, isTokenNative } from '../entities/token';
-import { selectChainById } from './chains';
+import { selectAllChainIds, selectChainById } from './chains';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectIsAddressBookLoaded } from './data-loader';
 import type { VaultEntity } from '../entities/vault';
@@ -240,3 +240,24 @@ export const selectIsTokenLoadedOnChain = createCachedSelector(
   (state: BeefyState, address: TokenEntity['address']) => address.toLowerCase(),
   (tokensByChainId, address) => (tokensByChainId.byAddress[address] === undefined ? false : true)
 )((state: BeefyState, address: TokenEntity['address'], _chainId: ChainEntity['id']) => address);
+
+export const selectWrappedToNativeSymbolMap = (state: BeefyState) => {
+  const chainIds = selectAllChainIds(state);
+
+  const wrappedToNativeSymbolMap = new Map();
+
+  for (const chainId of chainIds) {
+    const wnative = selectChainWrappedNativeToken(state, chainId);
+    const native = selectChainNativeToken(state, chainId);
+    wrappedToNativeSymbolMap.set(wnative.symbol, native.symbol);
+  }
+  return wrappedToNativeSymbolMap;
+};
+
+export const selectWrappedToNativeSymbolOrTokenSymbol = createCachedSelector(
+  (state: BeefyState, _symbol: string) => selectWrappedToNativeSymbolMap(state),
+  (state: BeefyState, symbol: string) => symbol,
+  (wrappedToNativeSymbolMap, symbol) => {
+    return wrappedToNativeSymbolMap.has(symbol) ? wrappedToNativeSymbolMap.get(symbol) : symbol;
+  }
+)((state: BeefyState, symbol: string) => symbol);

@@ -8,8 +8,6 @@ import { isGovVault } from '../entities/vault';
 import { selectActiveVaultBoostIds, selectAllVaultBoostIds, selectBoostById } from './boosts';
 import { createCachedSelector } from 're-reselect';
 import {
-  selectChainNativeToken,
-  selectChainWrappedNativeToken,
   selectHasBreakdownData,
   selectIsTokenStable,
   selectLpBreakdownByAddress,
@@ -17,6 +15,7 @@ import {
   selectTokenPriceByAddress,
   selectTokenPriceByTokenOracleId,
   selectTokensByChainId,
+  selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens';
 import {
   selectIsVaultStable,
@@ -486,13 +485,11 @@ export const selectTokenExposure = (state: BeefyState) => {
   const vaultIds = selectUserDepositedVaultIds(state);
   return vaultIds.reduce((totals, vaultId) => {
     const vault = selectVaultById(state, vaultId);
-    const wnative = selectChainWrappedNativeToken(state, vault.chainId);
-    const native = selectChainNativeToken(state, vault.chainId);
+
     if (vault.assetIds.length === 1) {
-      //we are mergin wNative into the native token to avoid showing for eg : WETH & ETH exposure
-      const assetId = vault.assetIds[0] === wnative.oracleId ? native.id : vault.assetIds[0];
+      const assetId = selectWrappedToNativeSymbolOrTokenSymbol(state, vault.assetIds[0]);
       totals[assetId] = {
-        value: (totals[vault.assetIds[0]]?.value || BIG_ZERO).plus(
+        value: (totals[assetId]?.value || BIG_ZERO).plus(
           selectUserVaultDepositInUsd(state, vaultId)
         ),
         assetIds: [assetId],
@@ -512,7 +509,7 @@ export const selectTokenExposure = (state: BeefyState) => {
         );
         const { assets } = selectUserLpBreakdownBalance(state, vault, breakdown);
         for (const asset of assets) {
-          const assetId = asset.id === wnative.id ? native.id : asset.id;
+          const assetId = selectWrappedToNativeSymbolOrTokenSymbol(state, asset.symbol);
           totals[assetId] = {
             value: (totals[assetId]?.value || BIG_ZERO).plus(asset.userValue),
             assetIds: [assetId],
