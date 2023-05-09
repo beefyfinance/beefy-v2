@@ -28,6 +28,35 @@
     "createdAt": 1623706144
   },
   {
+    "id": "curve-celo-3pool",
+    "name": "cUSD/USDC/USDT",
+    "token": "cUSD3Pool-f",
+    "tokenAddress": "0x32fD7e563c6521Ab4D59CE3277bcfBe3317CFd63",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurvecUSD3Pool-f",
+    "earnedTokenAddress": "0xb06D2126645024c35347bf1A59b30fC213839840",
+    "earnContractAddress": "0xb06D2126645024c35347bf1A59b30fC213839840",
+    "oracle": "lps",
+    "oracleId": "curve-celo-3pool",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["cUSD", "USDC", "USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://curve.fi/#/celo/pools/factory-v2-1/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/celo/pools/factory-v2-1/withdraw",
+    "network": "celo",
+    "createdAt": 1683640846
+  },
+  {
     "id": "celo-bifi-maxi",
     "name": "BIFI Maxi",
     "token": "BIFI",
