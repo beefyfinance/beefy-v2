@@ -5,6 +5,8 @@ export const styles = (theme: Theme) => ({
     columnGap: '32px',
     flexWrap: 'wrap' as const,
     rowGap: '8px',
+    opacity: '0',
+    animation: '$fadeInOut 500ms ease-in-out forwards',
     [theme.breakpoints.down('xs')]: {
       flexDirection: 'column' as const,
       columnGap: '16px',
@@ -44,5 +46,13 @@ export const styles = (theme: Theme) => ({
   },
   uppercase: {
     textTransform: 'uppercase' as const,
+  },
+  '@keyframes fadeInOut': {
+    from: {
+      opacity: '0',
+    },
+    to: {
+      opacity: '1',
+    },
   },
 });
