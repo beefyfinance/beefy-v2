@@ -1,5 +1,5 @@
 import type BigNumber from 'bignumber.js';
-import { isAfter, isEqual, max } from 'date-fns';
+import { isAfter, isBefore, isEqual, max, subDays } from 'date-fns';
 import { sortBy } from 'lodash-es';
 import type {
   ApiProductPriceRow,
@@ -19,14 +19,28 @@ export interface PriceTsRow {
   usdBalance: number | null;
 }
 
+function sortAndFixPrices(
+  prices: ApiProductPriceRow[],
+  currentPrice: BigNumber
+): ApiProductPriceRow[] {
+  const oneDayAgo = subDays(new Date(), 1);
+
+  return sortBy(prices, 'date').map(
+    ({ date, value }): ApiProductPriceRow => ({
+      date,
+      value: value ?? (isBefore(date, oneDayAgo) ? BIG_ZERO : currentPrice),
+    })
+  );
+}
+
 export function getInvestorTimeserie(
   timeBucket: TimeBucketType,
   timeline: VaultTimelineAnalyticsEntity[],
-  shares: ApiProductPriceRow[],
-  underlying: ApiProductPriceRow[],
+  sharesToUnderlying: ApiProductPriceRow[],
+  underlyingToUsd: ApiProductPriceRow[],
   firstDate: Date,
   currentPpfs: BigNumber,
-  currentPrice: number,
+  currentPrice: BigNumber,
   currentShareBalance: BigNumber
 ): PriceTsRow[] {
   // so, first we need to generate datetime keys for each row
@@ -40,8 +54,9 @@ export function getInvestorTimeserie(
 
   const fixedDate = max([firstDate, firstDate1]);
 
-  const sortedShares = sortBy(shares, 'date');
-  const sortedUnderlying = sortBy(underlying, 'date');
+  // Use the current price to fill in any missing prices in the past 24 hours (otherwise set to 0)
+  const sortedSharesToUnderlying = sortAndFixPrices(sharesToUnderlying, currentPpfs);
+  const sortedUnderlyingToUsd = sortAndFixPrices(underlyingToUsd, currentPrice);
 
   let balanceIdx = 0;
   let sharesIdx = 0;
@@ -76,32 +91,33 @@ export function getInvestorTimeserie(
     }
     // find the corresponding shares row
     while (
-      sharesIdx < sortedShares.length - 1 &&
-      isAfter(currentDate, sortedShares[sharesIdx + 1].date)
+      sharesIdx < sortedSharesToUnderlying.length - 1 &&
+      isAfter(currentDate, sortedSharesToUnderlying[sharesIdx + 1].date)
     ) {
       sharesIdx++;
     }
     // find the corresponding underlying row
     while (
-      underlyingIdx < sortedUnderlying.length - 1 &&
-      isAfter(currentDate, sortedUnderlying[underlyingIdx + 1].date)
+      underlyingIdx < sortedUnderlyingToUsd.length - 1 &&
+      isAfter(currentDate, sortedUnderlyingToUsd[underlyingIdx + 1].date)
     ) {
       underlyingIdx++;
     }
 
     // now we have the correct rows for this date
-    const balance = timeline[balanceIdx].shareBalance;
-    const shares = sortedShares[sharesIdx];
-    const underlying = sortedUnderlying[underlyingIdx];
-    const underlyingBalance = shares && balance ? shares.value.times(balance) : null;
-    const usdBalance =
-      underlyingBalance && underlying ? underlyingBalance.times(underlying.value) : null;
+    const shareBalance = timeline[balanceIdx].shareBalance;
+    if (shareBalance && !shareBalance.isEqualTo(BIG_ZERO)) {
+      // Shares to underlying
+      const shares = sortedSharesToUnderlying[sharesIdx];
+      const underlyingBalance = shareBalance.times(shares.value);
+      // Underlying to usd
+      const underlying = sortedUnderlyingToUsd[underlyingIdx];
+      const usdBalance = underlyingBalance.times(underlying.value);
 
-    if (balance && !balance.isEqualTo(BIG_ZERO)) {
       pricesTs.push({
         //return date on seconds
         datetime: currentDate.getTime(),
-        shareBalance: balance.toNumber(),
+        shareBalance: shareBalance.toNumber(),
         underlyingBalance: underlyingBalance.toNumber(),
         usdBalance: usdBalance.toNumber(),
       });

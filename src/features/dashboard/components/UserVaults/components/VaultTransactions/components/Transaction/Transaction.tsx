@@ -70,7 +70,7 @@ export const Transaction = memo<TransactionProps>(function Transaction({ data, t
         </div>
         {/*Usd Balance */}
         <div className={classes.column}>
-          <div className={classes.stat}>{formatBigUsd(usdBalance ?? BIG_ZERO)}</div>
+          <div className={classes.stat}>{formatBigUsd(usdBalance)}</div>
         </div>
       </InfoGrid>
     </Row>
@@ -137,10 +137,7 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
           label={t('Dashboard-Filter-MooTokens')}
           value={mooTokenBal}
         />
-        <MobileStat
-          label={t('Dashboard-Filter-UsdBalance')}
-          value={formatBigUsd(usdBalance ?? BIG_ZERO)}
-        />
+        <MobileStat label={t('Dashboard-Filter-UsdBalance')} value={formatBigUsd(usdBalance)} />
       </InfoGrid>
     </RowMobile>
   );

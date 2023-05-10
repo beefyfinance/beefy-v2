@@ -28,7 +28,7 @@ export const VaultTransactions = memo<VaultTransactionsProps>(function VaultTran
 
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
-  const token = useAppSelector(state =>
+  const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
 
@@ -44,7 +44,13 @@ export const VaultTransactions = memo<VaultTransactionsProps>(function VaultTran
     <div className={classes.transactionsGrid}>
       <TransactionsFilter sortOptions={sortedOptions} handleSort={handleSort} />
       {sortedTimeline.map(tx => {
-        return <TxComponent key={tx.datetime.getTime()} tokenDecimals={token.decimals} data={tx} />;
+        return (
+          <TxComponent
+            key={tx.datetime.getTime()}
+            tokenDecimals={depositToken.decimals}
+            data={tx}
+          />
+        );
       })}
     </div>
   );

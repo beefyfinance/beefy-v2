@@ -1,8 +1,12 @@
 import { sortBy } from 'lodash-es';
-import { useState, useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useAppSelector } from '../../../../../../store';
 import type { VaultEntity } from '../../../../../data/entities/vault';
 import { selectUserDepositedTimelineByVaultId } from '../../../../../data/selectors/analytics';
+import { selectVaultById } from '../../../../../data/selectors/vaults';
+import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
+import { isBefore, subDays } from 'date-fns';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 export type SortedOptions = {
   sort: 'datetime' | 'amount' | 'balance' | 'mooTokenBal' | 'usdBalance' | 'default';
@@ -10,9 +14,33 @@ export type SortedOptions = {
 };
 
 export function useSortedTimeline(vaultId: VaultEntity['id']) {
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const currentOraclePrice = useAppSelector(state =>
+    selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
+  );
   const vaultTimeline = useAppSelector(state =>
     selectUserDepositedTimelineByVaultId(state, vaultId)
   );
+
+  // Replace nulls with current price or 0
+  const vaultTimelineFixed = useMemo(() => {
+    const oneDayAgo = subDays(new Date(), 1);
+    return vaultTimeline.map(row => {
+      if (!row.underlyingToUsdPrice) {
+        const underlyingToUsdPrice =
+          row.underlyingToUsdPrice ??
+          (isBefore(row.datetime, oneDayAgo) ? BIG_ZERO : currentOraclePrice);
+        return {
+          ...row,
+          underlyingToUsdPrice,
+          usdBalance: row.underlyingBalance.times(underlyingToUsdPrice),
+          usdDiff: row.underlyingDiff.times(underlyingToUsdPrice),
+        };
+      }
+
+      return row;
+    });
+  }, [vaultTimeline, currentOraclePrice]);
 
   const [sortedOptions, setSortedOptions] = useState<SortedOptions>({
     sortDirection: 'none',
@@ -49,7 +77,7 @@ export function useSortedTimeline(vaultId: VaultEntity['id']) {
     }
 
     return sortedResult;
-  }, [sortedOptions.sort, sortedOptions.sortDirection, vaultTimeline]);
+  }, [sortedOptions.sort, sortedOptions.sortDirection, vaultTimelineFixed]);
 
   const handleSort = useCallback(
     field => {
