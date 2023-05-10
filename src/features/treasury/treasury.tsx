@@ -29,7 +29,7 @@ export const Treasury = memo(function Treasury() {
     }
   }, [dispatch, shouldInit]);
 
-  if (!isLoaded && !isAddressBookLoaded && !vaultsLoaded) {
+  if (!isLoaded || !isAddressBookLoaded || !vaultsLoaded) {
     return <TechLoader text={t('Treasury-Loading')} />;
   }
 
