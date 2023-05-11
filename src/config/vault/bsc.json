@@ -316,8 +316,7 @@
     "earnContractAddress": "0xF80d1196119B65aFc91357Daebb02F368F3Bca02",
     "oracle": "lps",
     "oracleId": "thena-bnbx-frax",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "thena",
     "assets": ["BNBx", "FRAX"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -326,7 +325,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1678993582
+    "createdAt": 1683814958
   },
   {
     "id": "cake-stable-bnbx-wbnb",
@@ -1454,7 +1453,7 @@
     "addLiquidityUrl": "https://thena.fi/liquidity",
     "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
-    "createdAt": 1682334773
+    "createdAt": 1683814958
   },
   {
     "id": "thena-usdc-busd",
@@ -1706,7 +1705,7 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/56/swap/BNB/BIFI",
     "network": "bsc",
-    "createdAt": 1648477070
+    "createdAt": 1683814958
   },
   {
     "id": "bifi-gov",
