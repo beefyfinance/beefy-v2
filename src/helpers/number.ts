@@ -42,3 +42,7 @@ export class MovingAverage {
     return this.add(value).average;
   }
 }
+
+export function isFiniteNumber(x: unknown): x is number {
+  return typeof x === 'number' && isFinite(x) && !isNaN(x);
+}

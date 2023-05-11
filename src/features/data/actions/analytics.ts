@@ -5,6 +5,7 @@ import type { VaultTimelineAnalyticsEntity } from '../entities/analytics';
 import BigNumber from 'bignumber.js';
 import type { AnalyticsPriceResponse, TimeBucketType } from '../apis/analytics/analytics-types';
 import type { VaultEntity } from '../entities/vault';
+import { isFiniteNumber } from '../../../helpers/number';
 
 export interface fetchWalletTimelineFullfilled {
   timeline: VaultTimelineAnalyticsEntity[];
@@ -32,11 +33,11 @@ export const fetchWalletTimeline = createAsyncThunk<
       shareToUnderlyingPrice: new BigNumber(row.share_to_underlying_price),
       underlyingBalance: new BigNumber(row.underlying_balance),
       underlyingDiff: new BigNumber(row.underlying_diff),
-      underlyingToUsdPrice: row.underlying_to_usd_price
+      underlyingToUsdPrice: isFiniteNumber(row.underlying_to_usd_price)
         ? new BigNumber(row.underlying_to_usd_price)
         : null,
-      usdBalance: row.usd_balance ? new BigNumber(row.usd_balance) : null,
-      usdDiff: row.usd_diff ? new BigNumber(row.usd_diff) : null,
+      usdBalance: isFiniteNumber(row.usd_balance) ? new BigNumber(row.usd_balance) : null,
+      usdDiff: isFiniteNumber(row.usd_diff) ? new BigNumber(row.usd_diff) : null,
     };
   });
 
