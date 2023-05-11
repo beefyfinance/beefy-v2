@@ -169,11 +169,11 @@
     "platformId": "thena",
     "assets": ["wUSDR", "USDC"],
     "strategyTypeId": "multi-lp",
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://thena.fi/liquidity/fusion?currency0=0x2952beb1326accbb5243725bd4da2fc937bca087&currency1=0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d&strategy=GAMMA_STABLE",
     "removeLiquidityUrl": "https://thena.fi/liquidity/fusion?currency0=0x2952beb1326accbb5243725bd4da2fc937bca087&currency1=0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d&strategy=GAMMA_STABLE",
     "network": "bsc",
-    "createdAt": 1683532903
+    "createdAt": 1683640845
   },
   {
     "id": "thena-hay-ankrbnb",
