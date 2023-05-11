@@ -12,9 +12,19 @@ export const styles = (theme: Theme) => ({
       borderRadius: '0px 80px 80px 0px',
       borderRight: 'none',
     },
+    opacity: '0',
+    animation: '$fadeInOut 500ms ease-in-out forwards',
   },
   barItem: {
     height: '100%',
     borderRight: `2px solid ${theme.palette.background.v2.cardBg}`,
+  },
+  '@keyframes fadeInOut': {
+    from: {
+      opacity: '0',
+    },
+    to: {
+      opacity: '1',
+    },
   },
 });

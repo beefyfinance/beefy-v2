@@ -7,10 +7,13 @@ import { DaoExposure } from './components/DaoExposure';
 import { DaoHoldings } from './components/DaoHoldings';
 import { DaoSummary } from './components/DaoSummary';
 import { styles } from './styles';
+import { TechLoader } from '../../components/TechLoader';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(styles);
 
 export const Treasury = memo(function Treasury() {
+  const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const shouldInit = useAppSelector(selectShouldInitTreasury);
@@ -18,6 +21,7 @@ export const Treasury = memo(function Treasury() {
   const isAddressBookLoaded = useAppSelector(
     state => state.ui.dataLoader.global.addressBook.alreadyLoadedOnce
   );
+  const vaultsLoaded = useAppSelector(state => state.ui.dataLoader.global.vaults.alreadyLoadedOnce);
 
   useEffect(() => {
     if (shouldInit) {
@@ -25,8 +29,8 @@ export const Treasury = memo(function Treasury() {
     }
   }, [dispatch, shouldInit]);
 
-  if (!isLoaded && !isAddressBookLoaded) {
-    return <div>Loading ...</div>;
+  if (!isLoaded || !isAddressBookLoaded || !vaultsLoaded) {
+    return <TechLoader text={t('Treasury-Loading')} />;
   }
 
   return (

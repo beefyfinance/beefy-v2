@@ -4,6 +4,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     gap: '16px',
+    minHeight: '48px',
     [theme.breakpoints.down('xs')]: {
       flexDirection: 'row' as const,
       justifyContent: 'space-between',
