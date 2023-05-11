@@ -34,17 +34,15 @@ export const treasurySlice = createSlice({
     builder.addCase(fetchTreasury.fulfilled, (sliceState, action) => {
       const { data, activeChainIds, state } = action.payload;
       for (const [chainId, balances] of Object.entries(data)) {
-        const items = {};
-
-        for (const [address, data] of Object.entries(balances)) {
-          items[address] = {
-            address: address,
-            name: data.name,
-            balances: mapBalances(state, data.balances, chainId),
-          };
-        }
-
         if (activeChainIds.includes(chainId)) {
+          const items = {};
+          for (const [address, data] of Object.entries(balances)) {
+            items[address] = {
+              address: address,
+              name: data.name,
+              balances: mapBalances(state, data.balances, chainId),
+            };
+          }
           sliceState.byChainId[chainId] = items;
         }
       }
