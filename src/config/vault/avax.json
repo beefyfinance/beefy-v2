@@ -718,7 +718,8 @@
     "earnContractAddress": "0x10d52685E9f55884a67a88f2b5Ed2215D607d0a2",
     "oracle": "lps",
     "oracleId": "joe-btc.b-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "traderjoe",
     "assets": ["BTCb", "AVAX"],
     "risks": [
@@ -1964,7 +1965,8 @@
     "earnContractAddress": "0x42ab5A790E99dF1b5d46f1C5C3e61d0Cd63D1f6E",
     "oracle": "lps",
     "oracleId": "joe-usdc.e-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "traderjoe",
     "assets": ["USDC", "USDCe"],
     "risks": [
@@ -2245,7 +2247,8 @@
     "earnContractAddress": "0x258e9884c111E2e3e0273372521982bd57ef29Bd",
     "oracle": "lps",
     "oracleId": "joe-usdt-usdt.e",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "traderjoe",
     "assets": ["USDT", "USDTe"],
     "risks": [
@@ -4545,7 +4548,8 @@
     "earnContractAddress": "0xe7f4AB519b20A0F4dF71B9ad9147b9cd4f183349",
     "oracle": "lps",
     "oracleId": "joe-usdt-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "traderjoe",
     "assets": ["USDT", "AVAX"],
     "risks": [
