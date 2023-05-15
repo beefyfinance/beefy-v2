@@ -1018,5 +1018,10 @@
     "id": "solisnek",
     "name": "SoliSnek",
     "filter": true
+  },
+  {
+    "id": "chronos",
+    "name": "Chronos",
+    "filter": true
   }
 ]

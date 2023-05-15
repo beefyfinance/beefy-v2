@@ -1,5 +1,27 @@
 [
   {
+    "id": "chronos-wusdr-usdc",
+    "name": "wUSDR-USDC vLP",
+    "token": "vAMM-wUSDR/USDC",
+    "tokenAddress": "0x278f76df86EfdcbE0f2573AE54e917505621E312",
+    "tokenDecimals": 18,
+    "tokenProviderId": "chronos",
+    "earnedToken": "mooChronos_wUSDR-USDC",
+    "earnedTokenAddress": "0xA5fc91bE851AdAbA6db55A60FEc68716dC46C6CE",
+    "earnContractAddress": "0xA5fc91bE851AdAbA6db55A60FEc68716dC46C6CE",
+    "oracle": "lps",
+    "oracleId": "chronos-wusdr-usdc",
+    "status": "active",
+    "platformId": "chronos",
+    "assets": ["wUSDR", "USDC"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.chronos.exchange/liquidity",
+    "removeLiquidityUrl": "https://app.chronos.exchange/liquidity",
+    "network": "arbitrum",
+    "createdAt": 1684143581
+  },
+  {
     "id": "ramses-eth-ram",
     "name": "RAM-ETH vLP",
     "token": "RAM-ETH vLP",
