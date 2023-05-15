@@ -1,5 +1,27 @@
 [
   {
+    "id": "thena-gamma-eth-ankreth",
+    "name": "ankrETH-ETH gammaLP",
+    "token": "aETH-ANKRETH",
+    "tokenAddress": "0x5c15842fCC12313C4f94dFB6fad1Af3f989D33e9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenaGamma_ETH-ankrETH",
+    "earnedTokenAddress": "0x72fC82b9955f04b20166b0Da7e1af4f893F6316a",
+    "earnContractAddress": "0x72fC82b9955f04b20166b0Da7e1af4f893F6316a",
+    "oracle": "lps",
+    "oracleId": "thena-gamma-eth-ankreth",
+    "status": "active",
+    "platformId": "thena",
+    "assets": ["ankrETH", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://thena.fi/liquidity/fusion?currency0=0x2170ed0880ac9a755fd29b2688956bd959f933f8&currency1=0xe05a08226c49b636acf99c40da8dc6af83ce5bb3&strategy=GAMMA_STABLE",
+    "removeLiquidityUrl": "https://thena.fi/liquidity/fusion?currency0=0x2170ed0880ac9a755fd29b2688956bd959f933f8&currency1=0xe05a08226c49b636acf99c40da8dc6af83ce5bb3&strategy=GAMMA_STABLE",
+    "network": "bsc",
+    "createdAt": 1684141140
+  },
+  {
     "id": "thena-gamma-usdt-usdc",
     "name": "USDT-USDC gammaLP",
     "token": "aUSDT-USDC",
