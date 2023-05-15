@@ -80,50 +80,53 @@ export function getInvestorTimeserie(
     currentDate = new Date(currentDate.getTime() + bucketSize);
   }
 
-  while (currentDate <= lastDate) {
-    // add a row for each date
-    // find the corresponding balance row
-    while (
-      balanceIdx < timeline.length - 1 &&
-      isAfter(currentDate, timeline[balanceIdx + 1].datetime)
-    ) {
-      balanceIdx++;
-    }
-    // find the corresponding shares row
-    while (
-      sharesIdx < sortedSharesToUnderlying.length - 1 &&
-      isAfter(currentDate, sortedSharesToUnderlying[sharesIdx + 1].date)
-    ) {
-      sharesIdx++;
-    }
-    // find the corresponding underlying row
-    while (
-      underlyingIdx < sortedUnderlyingToUsd.length - 1 &&
-      isAfter(currentDate, sortedUnderlyingToUsd[underlyingIdx + 1].date)
-    ) {
-      underlyingIdx++;
-    }
+  // Need at least one row in each series to work from
+  if (sortedSharesToUnderlying.length && sortedUnderlyingToUsd.length) {
+    while (currentDate <= lastDate) {
+      // add a row for each date
+      // find the corresponding balance row
+      while (
+        balanceIdx < timeline.length - 1 &&
+        isAfter(currentDate, timeline[balanceIdx + 1].datetime)
+      ) {
+        balanceIdx++;
+      }
+      // find the corresponding shares row
+      while (
+        sharesIdx < sortedSharesToUnderlying.length - 1 &&
+        isAfter(currentDate, sortedSharesToUnderlying[sharesIdx + 1].date)
+      ) {
+        sharesIdx++;
+      }
+      // find the corresponding underlying row
+      while (
+        underlyingIdx < sortedUnderlyingToUsd.length - 1 &&
+        isAfter(currentDate, sortedUnderlyingToUsd[underlyingIdx + 1].date)
+      ) {
+        underlyingIdx++;
+      }
 
-    // now we have the correct rows for this date
-    const shareBalance = timeline[balanceIdx].shareBalance;
-    if (shareBalance && !shareBalance.isEqualTo(BIG_ZERO)) {
-      // Shares to underlying
-      const shares = sortedSharesToUnderlying[sharesIdx];
-      const underlyingBalance = shareBalance.times(shares.value);
-      // Underlying to usd
-      const underlying = sortedUnderlyingToUsd[underlyingIdx];
-      const usdBalance = underlyingBalance.times(underlying.value);
+      // now we have the correct rows for this date
+      const shareBalance = timeline[balanceIdx].shareBalance;
+      if (shareBalance && !shareBalance.isEqualTo(BIG_ZERO)) {
+        // Shares to underlying
+        const shares = sortedSharesToUnderlying[sharesIdx];
+        const underlyingBalance = shareBalance.times(shares.value);
+        // Underlying to usd
+        const underlying = sortedUnderlyingToUsd[underlyingIdx];
+        const usdBalance = underlyingBalance.times(underlying.value);
 
-      pricesTs.push({
-        //return date on seconds
-        datetime: currentDate.getTime(),
-        shareBalance: shareBalance.toNumber(),
-        underlyingBalance: underlyingBalance.toNumber(),
-        usdBalance: usdBalance.toNumber(),
-      });
+        pricesTs.push({
+          //return date on seconds
+          datetime: currentDate.getTime(),
+          shareBalance: shareBalance.toNumber(),
+          underlyingBalance: underlyingBalance.toNumber(),
+          usdBalance: usdBalance.toNumber(),
+        });
+      }
+
+      currentDate = new Date(currentDate.getTime() + bucketSize);
     }
-
-    currentDate = new Date(currentDate.getTime() + bucketSize);
   }
 
   pricesTs.push({
