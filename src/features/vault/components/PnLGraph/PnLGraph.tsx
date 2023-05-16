@@ -12,13 +12,9 @@ import { Footer } from './components/Footer';
 import { Graph } from './components/Graph';
 import { Header } from './components/Header';
 import { useVaultPeriods } from './hooks';
+import { styles } from './styles';
 
-export const useStyles = makeStyles(() => ({
-  pnlContainer: {
-    borderRadius: '12px',
-    backgroundColor: '#2D3153',
-  },
-}));
+export const useStyles = makeStyles(styles);
 
 interface PnLGraphProps {
   vaultId: VaultEntity['id'];
@@ -60,6 +56,25 @@ export const PnLGraph = memo<PnLGraphProps>(function PnLGraph({ vaultId }) {
   return (
     <div className={classes.pnlContainer}>
       <Header vaultId={vaultId} />
+      <Graph period={period} vaultId={vaultId} />
+      <Footer labels={labels} vaultId={vaultId} period={period} handlePeriod={handlePeriod} />
+    </div>
+  );
+});
+
+export const DashboardPnLGraph = memo<PnLGraphProps>(function PnLGraph({ vaultId }) {
+  const classes = useStyles();
+
+  const labels = useVaultPeriods(vaultId);
+
+  const [period, setPeriod] = React.useState<number>(labels.length - 1);
+
+  const handlePeriod = useCallback((newPeriod: number) => {
+    setPeriod(newPeriod);
+  }, []);
+
+  return (
+    <div className={classes.dashboardPnlContainer}>
       <Graph period={period} vaultId={vaultId} />
       <Footer labels={labels} vaultId={vaultId} period={period} handlePeriod={handlePeriod} />
     </div>

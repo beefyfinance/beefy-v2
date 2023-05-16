@@ -54,4 +54,16 @@ export const styles = (theme: Theme) => ({
   vaultRetired: {
     backgroundColor: '#242032',
   },
+  toggleContainer: {
+    padding: '16px',
+    backgroundColor: theme.palette.background.appBG,
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  activeClassName: {
+    backgroundColor: theme.palette.primary.main,
+  },
+  buttonText: {
+    ...theme.typography['body-sm-med'],
+  },
 });

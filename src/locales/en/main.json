@@ -593,5 +593,6 @@
   "Dashboard-Filter-UsdBalance": "USD Balance",
   "Dashboard-Filter-MooTokens": "MooTokens",
   "Dashboard-VaultData": "Vault Data",
-  "Dashboard-TransactionHistory": "Transaction History"
+  "Dashboard-TransactionHistory": "Transaction History",
+  "Dashboard-Pnl": "Pnl"
 }
