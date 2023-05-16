@@ -1259,7 +1259,8 @@
     "earnContractAddress": "0xC1bfe1b2cFbFc97e3f6bdb3162132dDfbAe4927F",
     "oracle": "lps",
     "oracleId": "solidlizard-lusd-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solidlizard",
     "assets": ["LUSD", "USDC"],
     "risks": [
@@ -3076,7 +3077,8 @@
     "earnContractAddress": "0xD295d690b9BF17bd217B94BC50C12729762C1862",
     "oracle": "lps",
     "oracleId": "sushi-arb-weth-gohm",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["gOHM", "ETH"],
     "risks": [

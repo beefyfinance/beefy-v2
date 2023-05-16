@@ -821,7 +821,8 @@
     "earnContractAddress": "0xbFF1EF9e84121f7CaEd2416b1c1B8aE81715F96a",
     "oracle": "lps",
     "oracleId": "netswap-byte-m.usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "netswap",
     "assets": ["BYTE", "mUSDC"],
     "risks": [
