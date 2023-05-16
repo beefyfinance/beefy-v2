@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#2D3153',
   },
   dashboardPnlContainer: {
-    backgroundColor: '#2D3153',
+    backgroundColor: '#242842',
     borderRadius: '12px',
     [theme.breakpoints.down('sm')]: {
       borderRadius: '0px',

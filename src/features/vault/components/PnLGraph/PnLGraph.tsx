@@ -2,12 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import React, { memo, useCallback } from 'react';
 import { useAppSelector } from '../../../../store';
 import type { VaultEntity } from '../../../data/entities/vault';
-import {
-  selectIsAnalyticsLoaded,
-  selectUserDepositedTimelineByVaultId,
-} from '../../../data/selectors/analytics';
-import { selectUserDepositedVaultIds } from '../../../data/selectors/balance';
-import { selectVaultById } from '../../../data/selectors/vaults';
+import { selectHasDataToShowGraphByVaultId } from '../../../data/selectors/analytics';
 import { Footer } from './components/Footer';
 import { Graph } from './components/Graph';
 import { Header } from './components/Header';
@@ -21,22 +16,9 @@ interface PnLGraphProps {
 }
 
 export const PnLGraphLoader = memo<PnLGraphProps>(function PnLGraphLoader({ vaultId }) {
-  const userVaults = useAppSelector(selectUserDepositedVaultIds);
+  const hasData = useAppSelector(state => selectHasDataToShowGraphByVaultId(state, vaultId));
 
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
-  const vaultTimeline = useAppSelector(state =>
-    selectUserDepositedTimelineByVaultId(state, vaultId)
-  );
-
-  const isLoaded = useAppSelector(selectIsAnalyticsLoaded);
-
-  if (
-    isLoaded &&
-    userVaults.includes(vaultId) &&
-    vaultTimeline.length !== 0 &&
-    vault.status === 'active'
-  ) {
+  if (hasData) {
     return <PnLGraph vaultId={vaultId} />;
   }
   return null;

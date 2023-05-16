@@ -18,10 +18,11 @@ import { MobileCollapseContent } from '../MobileCollapseContent/MobileCollapseCo
 import { DashboardPnLGraph } from '../../../../../vault/components/PnLGraph';
 import { ToggleButtons } from '../../../../../../components/ToggleButtons';
 import { useTranslation } from 'react-i18next';
+import { selectHasDataToShowGraphByVaultId } from '../../../../../data/selectors/analytics';
 
 const useStyles = makeStyles(styles);
 
-type ListComponentType = 'txHistory' | 'pnl';
+type ListComponentType = 'txHistory' | 'chart';
 
 export type VaultProps = {
   vaultId: VaultEntity['id'];
@@ -32,10 +33,9 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
   const isRetired = useAppSelector(state => selectIsVaultRetired(state, vaultId));
   const isPaused = useAppSelector(state => selectIsVaultPaused(state, vaultId));
   const isGov = useAppSelector(state => selectIsVaultGov(state, vaultId));
-
-  const isActive = useMemo(() => {
-    return !isRetired && !isPaused;
-  }, []);
+  const hasAnalyticsData = useAppSelector(state =>
+    selectHasDataToShowGraphByVaultId(state, vaultId)
+  );
 
   const handleOpen = useCallback(() => {
     setOpen(!open);
@@ -50,7 +50,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
   const options = useMemo(() => {
     const items = {
       txHistory: t('Dashboard-TransactionHistory'),
-      pnl: t('Analytics'),
+      chart: t('Dashboard-Chart'),
     };
 
     return items;
@@ -82,7 +82,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
           <MobileCollapseContent vaultId={vaultId} />
         ) : (
           <>
-            {isActive && (
+            {hasAnalyticsData && (
               <div className={classes.toggleContainer}>
                 <ToggleButtons
                   selectedClass={classes.activeClassName}
@@ -96,7 +96,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
             <div className={classes.collapseInner}>
               <TabletStats vaultId={vaultId} />
               {listComponent === 'txHistory' && <VaultTransactions vaultId={vaultId} />}
-              {listComponent === 'pnl' && <DashboardPnLGraph vaultId={vaultId} />}
+              {listComponent === 'chart' && <DashboardPnLGraph vaultId={vaultId} />}
             </div>
           </>
         )}

@@ -6,15 +6,14 @@ import { useTranslation } from 'react-i18next';
 import { ToggleButtons } from '../../../../../../components/ToggleButtons';
 import { VaultDashboardMobileStats } from './components/VaultDashboardMobileStats';
 import type { VaultEntity } from '../../../../../data/entities/vault';
-import { isVaultActive } from '../../../../../data/entities/vault';
 import { VaultTransactions } from '../VaultTransactions';
 import { DashboardPnLGraph } from '../../../../../vault/components/PnLGraph';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../../../store';
+import { selectHasDataToShowGraphByVaultId } from '../../../../../data/selectors/analytics';
 
 const useStyles = makeStyles(styles);
 
-type ListComponentType = 'stats' | 'txHistory' | 'pnl';
+type ListComponentType = 'stats' | 'txHistory' | 'chart';
 
 export const MobileCollapseContent = memo(function MobileCollapseContent({
   vaultId,
@@ -24,15 +23,18 @@ export const MobileCollapseContent = memo(function MobileCollapseContent({
   const classes = useStyles();
   const [listComponent, setShowStats] = useState<ListComponentType>('stats');
   const { t } = useTranslation();
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+
+  const hasAnalyticsData = useAppSelector(state =>
+    selectHasDataToShowGraphByVaultId(state, vaultId)
+  );
 
   const options = useMemo(() => {
     const items = {
       stats: t('Dashboard-VaultData'),
       txHistory: t('Dashboard-TransactionHistory'),
     };
-    if (isVaultActive(vault)) {
-      items['pnl'] = t('Analytics');
+    if (hasAnalyticsData) {
+      items['chart'] = t('Dashboard-Chart');
     }
     return items;
   }, [t]);
@@ -54,7 +56,7 @@ export const MobileCollapseContent = memo(function MobileCollapseContent({
       </div>
       {listComponent === 'stats' && <VaultDashboardMobileStats vaultId={vaultId} />}
       {listComponent === 'txHistory' && <VaultTransactions vaultId={vaultId} />}
-      {listComponent === 'pnl' && <DashboardPnLGraph vaultId={vaultId} />}
+      {listComponent === 'chart' && <DashboardPnLGraph vaultId={vaultId} />}
     </div>
   );
 });
