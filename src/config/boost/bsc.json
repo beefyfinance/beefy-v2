@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_thena-gamma-bnbx-bnb-stader",
+    "poolId": "thena-gamma-bnbx-bnb",
+    "name": "Stader",
+    "assets": ["BNBx", "BNB"],
+    "tokenAddress": "0x77c9a64C88Ad5e5467B53E20E66AD2F8800BBf3d",
+    "earnedToken": "SD",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x3BC5AC0dFdC871B365d159f728dd1B9A0B5481E8",
+    "earnContractAddress": "0x7232f4582a97B3D4fDa2249f7f5EEcc674b65cF8",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "SD",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["stader-bsc"]
+  },
+  {
     "id": "moo_thena-bnbx-usdt-stader",
     "poolId": "thena-bnbx-usdt",
     "name": "Stader",
