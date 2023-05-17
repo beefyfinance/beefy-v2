@@ -12,4 +12,10 @@ export const styles = (theme: Theme) => ({
       borderRadius: '0px',
     },
   },
+
+  tabsDashboard: {
+    '& .MuiTab-root': {
+      ...theme.typography['subline-sm'],
+    },
+  },
 });

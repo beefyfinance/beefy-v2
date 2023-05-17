@@ -86,7 +86,6 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
               <div className={classes.toggleContainer}>
                 <ToggleButtons
                   selectedClass={classes.activeClassName}
-                  buttonClass={classes.buttonText}
                   value={listComponent}
                   onChange={handleChange}
                   options={options}
