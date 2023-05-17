@@ -486,7 +486,8 @@
     "earnContractAddress": "0x72E7801C7190443ED2D3Ae6B740E07bFC0307f11",
     "oracle": "lps",
     "oracleId": "velodrome-jeur-mai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["jEUR", "MAI"],
     "risks": [

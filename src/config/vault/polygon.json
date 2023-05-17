@@ -286,7 +286,8 @@
     "earnContractAddress": "0x1d81c50d5aB5f095894c41B41BA49B9873033399",
     "oracle": "lps",
     "oracleId": "balancer-poly-wsteth-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["wstETH", "ETH"],
     "risks": [
@@ -1286,7 +1287,8 @@
     "earnContractAddress": "0xF79BF908d0e6d8E7054375CD80dD33424B1980bf",
     "oracle": "lps",
     "oracleId": "balancer-matic-stmatic-v2",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["stMATIC", "MATIC"],
     "risks": [
