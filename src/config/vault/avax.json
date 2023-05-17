@@ -687,7 +687,8 @@
     "earnContractAddress": "0xf4d9FaDD4a96D4977a3B8f8E8a8873755C232B92",
     "oracle": "lps",
     "oracleId": "sicle-link.e-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "swapsicle",
     "assets": ["LINKe", "AVAX"],
     "risks": [

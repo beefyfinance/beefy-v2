@@ -336,7 +336,8 @@
     "earnContractAddress": "0x8F7E7e3c52FE407006333be9a9d038db86119bF0",
     "oracle": "lps",
     "oracleId": "velocimeterv2-note-multibtc",
-    "status": "active",
+    "status": "eol",
+    "retireReason":"tvl",
     "platformId": "velocimeter",
     "assets": ["NOTE", "multiBTC"],
     "risks": [
