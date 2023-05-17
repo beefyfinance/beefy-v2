@@ -990,7 +990,8 @@
     "earnContractAddress": "0xE0570ddFca69E5E90d83Ea04bb33824D3BbE6a85",
     "oracle": "lps",
     "oracleId": "curve-matic-stmatic",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "curve",
     "assets": ["stMATIC", "MATIC"],
     "risks": [
