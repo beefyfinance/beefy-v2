@@ -143,7 +143,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     },
     gas: {
       type: 'standard',
-      minimum: '5000000000',
+      minimum: '3000000000',
     },
     stableCoins: [
       'BUSD',
