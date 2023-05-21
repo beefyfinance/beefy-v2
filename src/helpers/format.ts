@@ -159,14 +159,14 @@ export function formatBigUsd(value: BigNumber) {
 }
 
 export function formatBigNumber(value: BigNumber) {
-  value = value.decimalPlaces(2, BigNumber.ROUND_FLOOR);
+  value = value.decimalPlaces(2, BigNumber.ROUND_HALF_FLOOR);
 
   if (value.isZero()) {
     return '0';
   }
   const order = getBigNumOrder(value);
   if (value.abs().gte(100)) {
-    value = value.decimalPlaces(0, BigNumber.ROUND_FLOOR);
+    value = value.decimalPlaces(0, BigNumber.ROUND_HALF_FLOOR);
   }
   if (order < 2 && value.abs().gte(100)) {
     return value.toNumber().toLocaleString('en-US', {

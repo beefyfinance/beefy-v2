@@ -1,0 +1,282 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Boosts slice tests > should correctly handle mooFuse boost config 1`] = `
+{
+  "allIds": [
+    "moo_fusefi-wfuse-usdc-fuse",
+  ],
+  "byChainId": {
+    "fuse": {
+      "activeBoostsIds": [],
+      "allBoostsIds": [
+        "moo_fusefi-wfuse-usdc-fuse",
+      ],
+      "expiredBoostsIds": [],
+      "prestakeBoostsIds": [],
+    },
+  },
+  "byId": {
+    "moo_fusefi-wfuse-usdc-fuse": {
+      "assets": [
+        "USDC",
+        "FUSE",
+      ],
+      "chainId": "fuse",
+      "earnContractAddress": "0x405EE7F4f067604b787346bC22ACb66b06b15A4B",
+      "earnedTokenAddress": "0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3",
+      "id": "moo_fusefi-wfuse-usdc-fuse",
+      "logo": undefined,
+      "name": "Fuse",
+      "partnerIds": [],
+      "vaultId": "voltage-wfuse-usdc",
+    },
+  },
+  "byVaultId": {
+    "voltage-wfuse-usdc": {
+      "activeBoostsIds": [],
+      "allBoostsIds": [
+        "moo_fusefi-wfuse-usdc-fuse",
+      ],
+      "expiredBoostsIds": [],
+      "prestakeBoostsIds": [],
+    },
+  },
+  "contractState": {},
+}
+`;
+
+exports[`Boosts slice tests > should correctly handle wfuse-elon boost config 1`] = `
+{
+  "allIds": [
+    "moo_voltage-wfuse-elon-elon",
+  ],
+  "byChainId": {
+    "fuse": {
+      "activeBoostsIds": [],
+      "allBoostsIds": [
+        "moo_voltage-wfuse-elon-elon",
+      ],
+      "expiredBoostsIds": [],
+      "prestakeBoostsIds": [],
+    },
+  },
+  "byId": {
+    "moo_voltage-wfuse-elon-elon": {
+      "assets": [
+        "ELON",
+        "FUSE",
+      ],
+      "chainId": "fuse",
+      "earnContractAddress": "0xc3a4fdcba79DB04b4C3e352b1C467B3Ba909D84A",
+      "earnedTokenAddress": "0xe418c323fA450e7e18c4dB304bEFC7ffF92D2Cc1",
+      "id": "moo_voltage-wfuse-elon-elon",
+      "logo": undefined,
+      "name": "Dogelon Mars x Fuse",
+      "partnerIds": [],
+      "vaultId": "voltage-wfuse-elon",
+    },
+  },
+  "byVaultId": {
+    "voltage-wfuse-elon": {
+      "activeBoostsIds": [],
+      "allBoostsIds": [
+        "moo_voltage-wfuse-elon-elon",
+      ],
+      "expiredBoostsIds": [],
+      "prestakeBoostsIds": [],
+    },
+  },
+  "contractState": {},
+}
+`;
+
+exports[`Boosts slice tests > should update state on fulfilled boost contract data 1`] = `
+{
+  "allIds": [
+    "moo_banana-banana-busd-bitcrush",
+    "moo_banana-bnb-stars-mogul2",
+  ],
+  "byChainId": {
+    "bsc": {
+      "activeBoostsIds": [
+        "moo_banana-bnb-stars-mogul2",
+      ],
+      "allBoostsIds": [
+        "moo_banana-banana-busd-bitcrush",
+        "moo_banana-bnb-stars-mogul2",
+      ],
+      "expiredBoostsIds": [
+        "moo_banana-banana-busd-bitcrush",
+      ],
+      "prestakeBoostsIds": [],
+    },
+  },
+  "byId": {
+    "moo_banana-banana-busd-bitcrush": {
+      "assets": undefined,
+      "chainId": "bsc",
+      "earnContractAddress": "0x20948Cad130c3D7B24d27CC66163b4aaed4684F0",
+      "earnedTokenAddress": "0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3",
+      "id": "moo_banana-banana-busd-bitcrush",
+      "logo": "single-assets/BTCB.svg",
+      "name": "Iron / Garuda / Fanatics",
+      "partnerIds": [],
+      "vaultId": "aave-wbtc",
+    },
+    "moo_banana-bnb-stars-mogul2": {
+      "assets": undefined,
+      "chainId": "bsc",
+      "earnContractAddress": "0x9B508ad657ed5A139D1a7c97fD84d7B7240849Cf",
+      "earnedTokenAddress": "0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3",
+      "id": "moo_banana-bnb-stars-mogul2",
+      "logo": "single-assets/ETH.svg",
+      "name": "Iron / Garuda / Fanatics",
+      "partnerIds": [],
+      "vaultId": "aave-eth",
+    },
+  },
+  "byVaultId": {
+    "aave-eth": {
+      "activeBoostsIds": [
+        "moo_banana-bnb-stars-mogul2",
+      ],
+      "allBoostsIds": [
+        "moo_banana-bnb-stars-mogul2",
+      ],
+      "expiredBoostsIds": [],
+      "prestakeBoostsIds": [],
+    },
+    "aave-wbtc": {
+      "activeBoostsIds": [],
+      "allBoostsIds": [
+        "moo_banana-banana-busd-bitcrush",
+      ],
+      "expiredBoostsIds": [
+        "moo_banana-banana-busd-bitcrush",
+      ],
+      "prestakeBoostsIds": [],
+    },
+  },
+  "contractState": {
+    "moo_banana-banana-busd-bitcrush": {
+      "isPreStake": false,
+      "periodFinish": 2022-01-01T00:00:00.000Z,
+    },
+    "moo_banana-bnb-stars-mogul2": {
+      "isPreStake": false,
+      "periodFinish": 2250-01-01T00:00:00.000Z,
+    },
+    "moo_banana-crush-wbnb-bitcrush": {
+      "isPreStake": true,
+      "periodFinish": null,
+    },
+  },
+  "periodFinish": "tested-below",
+}
+`;
+
+exports[`Boosts slice tests > should update state on fulfilled boost contract data 2`] = `
+[
+  [
+    "moo_banana-banana-busd-bitcrush",
+    "Sat, 01 Jan 2022 00:00:00 GMT",
+    false,
+  ],
+  [
+    "moo_banana-bnb-stars-mogul2",
+    "Tue, 01 Jan 2250 00:00:00 GMT",
+    false,
+  ],
+  [
+    "moo_banana-crush-wbnb-bitcrush",
+    null,
+    true,
+  ],
+]
+`;
+
+exports[`Boosts slice tests > should update state on fulfilled boosts list 1`] = `
+{
+  "allIds": [
+    "moo_banana-pera",
+    "moo_aave-btc",
+    "moo_aave-eth",
+  ],
+  "byChainId": {
+    "harmony": {
+      "activeBoostsIds": [],
+      "allBoostsIds": [
+        "moo_banana-pera",
+        "moo_aave-btc",
+        "moo_aave-eth",
+      ],
+      "expiredBoostsIds": [],
+      "prestakeBoostsIds": [],
+    },
+  },
+  "byId": {
+    "moo_aave-btc": {
+      "assets": undefined,
+      "chainId": "harmony",
+      "earnContractAddress": "0x20948Cad130c3D7B24d27CC66163b4aaed4684F0",
+      "earnedTokenAddress": "0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3",
+      "id": "moo_aave-btc",
+      "logo": "single-assets/BTCB.svg",
+      "name": "Iron / Garuda / Fanatics",
+      "partnerIds": [],
+      "vaultId": "aave-wbtc",
+    },
+    "moo_aave-eth": {
+      "assets": undefined,
+      "chainId": "harmony",
+      "earnContractAddress": "0x9B508ad657ed5A139D1a7c97fD84d7B7240849Cf",
+      "earnedTokenAddress": "0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3",
+      "id": "moo_aave-eth",
+      "logo": "single-assets/ETH.svg",
+      "name": "Iron / Garuda / Fanatics",
+      "partnerIds": [],
+      "vaultId": "aave-eth",
+    },
+    "moo_banana-pera": {
+      "assets": undefined,
+      "chainId": "harmony",
+      "earnContractAddress": "0x38247fCE28480A7BEF2CB7aD134ce091Bd2E1a82",
+      "earnedTokenAddress": "0xb9D8592E16A9c1a3AE6021CDDb324EaC1Cbc70d6",
+      "id": "moo_banana-pera",
+      "logo": "degens/BANANA.svg",
+      "name": "Pera",
+      "partnerIds": [
+        "https://pera.finance/",
+      ],
+      "vaultId": "banana-banana-eol",
+    },
+  },
+  "byVaultId": {
+    "aave-eth": {
+      "activeBoostsIds": [],
+      "allBoostsIds": [
+        "moo_aave-eth",
+      ],
+      "expiredBoostsIds": [],
+      "prestakeBoostsIds": [],
+    },
+    "aave-wbtc": {
+      "activeBoostsIds": [],
+      "allBoostsIds": [
+        "moo_aave-btc",
+      ],
+      "expiredBoostsIds": [],
+      "prestakeBoostsIds": [],
+    },
+    "banana-banana-eol": {
+      "activeBoostsIds": [],
+      "allBoostsIds": [
+        "moo_banana-pera",
+      ],
+      "expiredBoostsIds": [],
+      "prestakeBoostsIds": [],
+    },
+  },
+  "contractState": {},
+}
+`;

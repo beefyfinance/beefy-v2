@@ -63,6 +63,7 @@
   },
   "scripts": {
     "start": "vite",
+    "test": "vitest run --shard=1/3 && vitest run --shard=2/3 && vitest run --shard=3/3",
     "build": "echo 'DO NOT disable validation on build, fix underlying issue' && yarn validate && tsc && vite build",
     "build-only": "tsc && vite build",
     "preview": "vite preview",
@@ -123,7 +124,8 @@
     "typescript": "4.9.3",
     "vite": "^4.1.4",
     "vite-plugin-eslint": "^1.8.1",
-    "vite-plugin-svgr": "^2.4.0"
+    "vite-plugin-svgr": "^2.4.0",
+    "vitest": "^0.31.1"
   },
   "lint-staged": {
     "*.{ts,tsx,json}": "prettier --write"

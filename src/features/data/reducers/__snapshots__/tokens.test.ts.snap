@@ -1,0 +1,254 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Tokens slice tests > should correctly handle mooFuse config 1`] = `
+{
+  "breakdown": {
+    "byOracleId": {},
+  },
+  "byChainId": {
+    "fuse": {
+      "byAddress": {
+        "0x2c43dbef81aba6b95799fd2aec738cd721ba77f3": {
+          "address": "0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3",
+          "buyUrl": null,
+          "chainId": "fuse",
+          "decimals": 18,
+          "description": null,
+          "documentation": null,
+          "id": "mooFuse",
+          "oracleId": "WFUSE",
+          "symbol": "mooFuse",
+          "type": "erc20",
+          "website": null,
+        },
+      },
+      "byId": {
+        "mooFuse": "0x2c43dbef81aba6b95799fd2aec738cd721ba77f3",
+      },
+      "interestingBalanceTokenAddresses": [
+        "0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3",
+      ],
+      "native": null,
+      "wnative": null,
+    },
+  },
+  "prices": {
+    "byOracleId": {},
+  },
+}
+`;
+
+exports[`Tokens slice tests > should handle fuse-fuse config correctly 1`] = `
+{
+  "breakdown": {
+    "byOracleId": {},
+  },
+  "byChainId": {
+    "fuse": {
+      "byAddress": {
+        "0x2c43dbef81aba6b95799fd2aec738cd721ba77f3": {
+          "address": "0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3",
+          "buyUrl": null,
+          "chainId": "fuse",
+          "decimals": 18,
+          "description": null,
+          "documentation": null,
+          "id": "mooFuse",
+          "oracleId": "WFUSE",
+          "symbol": "mooFuse",
+          "type": "erc20",
+          "website": null,
+        },
+        "native": {
+          "address": "native",
+          "buyUrl": null,
+          "chainId": "fuse",
+          "decimals": 18,
+          "description": null,
+          "documentation": null,
+          "id": "FUSE",
+          "oracleId": "FUSE",
+          "providerId": undefined,
+          "symbol": "FUSE",
+          "type": "native",
+          "website": null,
+        },
+      },
+      "byId": {
+        "FUSE": "native",
+        "mooFuse": "0x2c43dbef81aba6b95799fd2aec738cd721ba77f3",
+      },
+      "interestingBalanceTokenAddresses": [
+        "native",
+        "0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3",
+      ],
+      "native": null,
+      "wnative": null,
+    },
+  },
+  "prices": {
+    "byOracleId": {},
+  },
+}
+`;
+
+exports[`Tokens slice tests > should update state on fulfilled boosts list 1`] = `
+{
+  "breakdown": {
+    "byOracleId": {},
+  },
+  "byChainId": {
+    "harmony": {
+      "byAddress": {
+        "0xb9d8592e16a9c1a3ae6021cddb324eac1cbc70d6": {
+          "address": "0xb9D8592E16A9c1a3AE6021CDDb324EaC1Cbc70d6",
+          "buyUrl": null,
+          "chainId": "harmony",
+          "decimals": 18,
+          "description": null,
+          "documentation": null,
+          "id": "PERA",
+          "oracleId": "PERA",
+          "symbol": "PERA",
+          "type": "erc20",
+          "website": null,
+        },
+        "0xfecf784f48125ccb7d8855cdda7c5ed6b5024cb3": {
+          "address": "0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3",
+          "buyUrl": null,
+          "chainId": "harmony",
+          "decimals": 18,
+          "description": null,
+          "documentation": null,
+          "id": "mooPolygonBIFI",
+          "oracleId": "BIFI",
+          "symbol": "mooPolygonBIFI",
+          "type": "erc20",
+          "website": null,
+        },
+      },
+      "byId": {
+        "PERA": "0xb9d8592e16a9c1a3ae6021cddb324eac1cbc70d6",
+        "mooPolygonBIFI": "0xfecf784f48125ccb7d8855cdda7c5ed6b5024cb3",
+      },
+      "interestingBalanceTokenAddresses": [
+        "0xb9D8592E16A9c1a3AE6021CDDb324EaC1Cbc70d6",
+        "0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3",
+      ],
+      "native": null,
+      "wnative": null,
+    },
+  },
+  "prices": {
+    "byOracleId": {},
+  },
+}
+`;
+
+exports[`Tokens slice tests > should update state on fulfilled prices list 1`] = `
+{
+  "breakdown": {
+    "byOracleId": {},
+  },
+  "byChainId": {},
+  "prices": {
+    "byOracleId": {
+      "1AAVE": "238.16568740268866",
+      "1AXS": "79.04891966147113",
+      "1BTC": "609115.1079533856",
+      "1inch-1inch-bnb": "0",
+      "2omb-2omb-ftm": "16.710317081168196",
+      "2omb-2share-ftm": "171.84420463276956",
+      "solarbeam-avax-wmovr": "1",
+      "solarbeam-bnb-busd": "1",
+    },
+  },
+}
+`;
+
+exports[`Tokens slice tests > should update state on fulfilled vault list 1`] = `
+{
+  "breakdown": {
+    "byOracleId": {},
+  },
+  "byChainId": {
+    "harmony": {
+      "byAddress": {
+        "0x40112850efd90e9e17b56de35d86bdff9f4d07fd": {
+          "address": "0x40112850EFd90e9e17b56de35d86BdFf9f4d07Fd",
+          "ammId": "harmony-sushi",
+          "buyUrl": null,
+          "chainId": "harmony",
+          "decimals": 18,
+          "description": null,
+          "documentation": null,
+          "id": "1YGG-1ETH LP",
+          "oracleId": "sushi-one-1ygg-1eth",
+          "providerId": "sushi",
+          "symbol": "1YGG-1ETH LP",
+          "type": "erc20",
+          "website": null,
+        },
+        "0x69f683aa79ab78b95a9823ace8b9771ad18ffc71": {
+          "address": "0x69F683aa79ab78B95A9823Ace8b9771Ad18fFC71",
+          "buyUrl": null,
+          "chainId": "harmony",
+          "decimals": 18,
+          "description": null,
+          "documentation": null,
+          "id": "mooSushiYGG-ETH",
+          "oracleId": "sushi-one-1ygg-1eth",
+          "symbol": "mooSushiYGG-ETH",
+          "type": "erc20",
+          "website": null,
+        },
+        "0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8": {
+          "address": "0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8",
+          "ammId": undefined,
+          "buyUrl": null,
+          "chainId": "harmony",
+          "decimals": 18,
+          "description": null,
+          "documentation": null,
+          "id": "BIFI",
+          "oracleId": "BIFI",
+          "providerId": undefined,
+          "symbol": "BIFI",
+          "type": "erc20",
+          "website": null,
+        },
+        "0xcf664087a5bb0237a0bad6742852ec6c8d69a27a": {
+          "address": "0xcf664087a5bb0237a0bad6742852ec6c8d69a27a",
+          "buyUrl": null,
+          "chainId": "harmony",
+          "decimals": 18,
+          "description": null,
+          "documentation": null,
+          "id": "WONE",
+          "oracleId": "WONE",
+          "symbol": "WONE",
+          "type": "erc20",
+          "website": null,
+        },
+      },
+      "byId": {
+        "1YGG-1ETH LP": "0x40112850efd90e9e17b56de35d86bdff9f4d07fd",
+        "BIFI": "0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8",
+        "WONE": "0xcf664087a5bb0237a0bad6742852ec6c8d69a27a",
+        "mooSushiYGG-ETH": "0x69f683aa79ab78b95a9823ace8b9771ad18ffc71",
+      },
+      "interestingBalanceTokenAddresses": [
+        "0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8",
+        "0xcf664087a5bb0237a0bad6742852ec6c8d69a27a",
+        "0x40112850EFd90e9e17b56de35d86BdFf9f4d07Fd",
+        "0x69F683aa79ab78B95A9823Ace8b9771Ad18fFC71",
+      ],
+      "native": null,
+      "wnative": null,
+    },
+  },
+  "prices": {
+    "byOracleId": {},
+  },
+}
+`;

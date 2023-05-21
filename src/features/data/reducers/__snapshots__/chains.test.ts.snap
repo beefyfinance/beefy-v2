@@ -1,0 +1,89 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Chains slice tests > should update state on fulfilled chain config list 1`] = `
+{
+  "activeIds": [
+    "arbitrum",
+    "celo",
+  ],
+  "allIds": [
+    "arbitrum",
+    "celo",
+  ],
+  "byId": {
+    "arbitrum": {
+      "appMulticallContractAddress": "0x332f4079E042A5764060E24C72DE765c8Ea1BC95",
+      "explorerUrl": "https://arbiscan.io",
+      "gas": {
+        "blocks": 100,
+        "percentile": 0.6,
+        "type": "eip1559",
+      },
+      "id": "arbitrum",
+      "multicallAddress": "0x13aD51a6664973EbD0749a7c84939d973F247921",
+      "name": "Arbitrum",
+      "networkChainId": 42161,
+      "providerName": "Arbitrum",
+      "rpc": [
+        "https://arb1.arbitrum.io/rpc",
+      ],
+      "stableCoins": [
+        "USDC",
+        "USDT",
+        "MIM",
+      ],
+      "walletSettings": {
+        "blockExplorerUrls": [
+          "https://arbiscan.io/",
+        ],
+        "chainId": "0xa4b1",
+        "chainName": "Arbitrum One",
+        "nativeCurrency": {
+          "decimals": 18,
+          "name": "ETH",
+          "symbol": "ETH",
+        },
+        "rpcUrls": [
+          "https://arb1.arbitrum.io/rpc",
+        ],
+      },
+    },
+    "celo": {
+      "appMulticallContractAddress": "0x0bF5F48d8F761efAe0f187eCce60784e5d3E87E6",
+      "explorerUrl": "https://explorer.celo.org",
+      "gas": {
+        "type": "celo",
+      },
+      "id": "celo",
+      "multicallAddress": "0xa9E6E271b27b20F65394914f8784B3B860dBd259",
+      "name": "Celo",
+      "networkChainId": 42220,
+      "providerName": "Celo",
+      "rpc": [
+        "https://forno.celo.org",
+      ],
+      "stableCoins": [
+        "cUSD",
+        "cEUR",
+        "DAI",
+      ],
+      "walletSettings": {
+        "blockExplorerUrls": [
+          "https://explorer.celo.org/",
+        ],
+        "chainId": "0xa4ec",
+        "chainName": "Celo",
+        "nativeCurrency": {
+          "decimals": 18,
+          "name": "CELO",
+          "symbol": "CELO",
+        },
+        "rpcUrls": [
+          "https://forno.celo.org",
+        ],
+      },
+    },
+  },
+  "eolIds": [],
+}
+`;

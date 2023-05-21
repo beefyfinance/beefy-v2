@@ -1,0 +1,230 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Vaults slice tests > should handle fuse-fuse config correctly 1`] = `
+{
+  "allIds": [
+    "fuse-fuse",
+  ],
+  "byChainId": {
+    "fuse": {
+      "allActiveIds": [
+        "fuse-fuse",
+      ],
+      "allRetiredIds": [],
+      "govVault": {
+        "byDepositTokenAddress": {},
+      },
+      "standardVault": {
+        "byDepositTokenAddress": {
+          "native": [
+            "fuse-fuse",
+          ],
+        },
+        "byEarnedTokenAddress": {
+          "0x2c43dbef81aba6b95799fd2aec738cd721ba77f3": "fuse-fuse",
+        },
+      },
+    },
+  },
+  "byId": {
+    "fuse-fuse": {
+      "addLiquidityUrl": null,
+      "assetIds": [
+        "WFUSE",
+      ],
+      "buyTokenUrl": "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+      "chainId": "fuse",
+      "createdAt": 1641908745,
+      "depositFee": "0%",
+      "depositTokenAddress": "native",
+      "earnContractAddress": "0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3",
+      "earnedTokenAddress": "0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3",
+      "id": "fuse-fuse",
+      "isGovVault": false,
+      "name": "FUSE",
+      "pauseReason": undefined,
+      "platformId": "beefy",
+      "removeLiquidityUrl": null,
+      "retireReason": undefined,
+      "risks": [
+        "COMPLEXITY_LOW",
+        "BATTLE_TESTED",
+        "IL_NONE",
+        "MCAP_LARGE",
+        "AUDIT",
+        "CONTRACTS_VERIFIED",
+      ],
+      "safetyScore": 10,
+      "status": "active",
+      "strategyTypeId": "single",
+      "type": "single",
+    },
+  },
+  "contractData": {
+    "byVaultId": {},
+  },
+  "featuredVaults": {},
+  "zapSupportById": {},
+}
+`;
+
+exports[`Vaults slice tests > should track featured vault list 1`] = `
+{
+  "nope": false,
+  "test-vault": true,
+}
+`;
+
+exports[`Vaults slice tests > should update state on fulfilled vault list 1`] = `
+{
+  "allIds": [
+    "sushi-one-1ygg-1eth-eol",
+    "one-bifi-gov",
+    "banana-banana-eol",
+  ],
+  "byChainId": {
+    "harmony": {
+      "allActiveIds": [
+        "one-bifi-gov",
+        "sushi-one-1ygg-1eth-eol",
+      ],
+      "allRetiredIds": [
+        "banana-banana-eol",
+      ],
+      "govVault": {
+        "byDepositTokenAddress": {
+          "0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8": [
+            "one-bifi-gov",
+          ],
+        },
+      },
+      "standardVault": {
+        "byDepositTokenAddress": {
+          "0x40112850efd90e9e17b56de35d86bdff9f4d07fd": [
+            "sushi-one-1ygg-1eth-eol",
+          ],
+          "0x603c7f932ed1fc6575303d8fb018fdcbb0f39a95": [
+            "banana-banana-eol",
+          ],
+        },
+        "byEarnedTokenAddress": {
+          "0x69f683aa79ab78b95a9823ace8b9771ad18ffc71": "sushi-one-1ygg-1eth-eol",
+          "0xd307e7cc6a302046b7d91d83aa4b8324cfb7a786": "banana-banana-eol",
+        },
+      },
+    },
+  },
+  "byId": {
+    "banana-banana-eol": {
+      "addLiquidityUrl": null,
+      "assetIds": [
+        "BANANA",
+      ],
+      "buyTokenUrl": "https://apeswap.finance/swap?inputCurrency=0x603c7f932ED1fc6575303D8Fb018fDCBb0f39a95&outputCurrency=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "chainId": "harmony",
+      "createdAt": 1615196201,
+      "depositFee": "0%",
+      "depositTokenAddress": "0x603c7f932ED1fc6575303D8Fb018fDCBb0f39a95",
+      "earnContractAddress": "0xD307e7CC6a302046b7D91D83aa4B8324cFB7a786",
+      "earnedTokenAddress": "0xD307e7CC6a302046b7D91D83aa4B8324cFB7a786",
+      "id": "banana-banana-eol",
+      "isGovVault": false,
+      "name": "BANANA",
+      "pauseReason": undefined,
+      "platformId": "apeswap",
+      "removeLiquidityUrl": null,
+      "retireReason": undefined,
+      "risks": [],
+      "safetyScore": 0,
+      "status": "eol",
+      "strategyTypeId": "single",
+      "type": "single",
+    },
+    "one-bifi-gov": {
+      "addLiquidityUrl": null,
+      "assetIds": [
+        "BIFI",
+      ],
+      "buyTokenUrl": null,
+      "chainId": "harmony",
+      "createdAt": 1623706144,
+      "depositFee": "0%",
+      "depositTokenAddress": "0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8",
+      "earnContractAddress": "0x5b96bbaca98d777cb736dd89a519015315e00d02",
+      "earnedTokenAddress": "0xcf664087a5bb0237a0bad6742852ec6c8d69a27a",
+      "excludedId": null,
+      "id": "one-bifi-gov",
+      "isGovVault": true,
+      "name": "BIFI Earnings Pool",
+      "pauseReason": undefined,
+      "platformId": "beefy",
+      "removeLiquidityUrl": null,
+      "retireReason": "rewards",
+      "risks": [
+        "COMPLEXITY_LOW",
+        "BATTLE_TESTED",
+        "IL_NONE",
+        "MCAP_SMALL",
+        "AUDIT",
+        "CONTRACTS_VERIFIED",
+      ],
+      "safetyScore": 9.1,
+      "status": "active",
+      "type": "single",
+    },
+    "sushi-one-1ygg-1eth-eol": {
+      "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x40112850efd90e9e17b56de35d86bdff9f4d07fd/add",
+      "assetIds": [
+        "YGG",
+        "ETH",
+      ],
+      "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x63cf309500d8be0B9fDB8F1fb66C821236c0438c",
+      "chainId": "harmony",
+      "createdAt": 1631279238,
+      "depositFee": "0%",
+      "depositTokenAddress": "0x40112850EFd90e9e17b56de35d86BdFf9f4d07Fd",
+      "earnContractAddress": "0x69F683aa79ab78B95A9823Ace8b9771Ad18fFC71",
+      "earnedTokenAddress": "0x69F683aa79ab78B95A9823Ace8b9771Ad18fFC71",
+      "id": "sushi-one-1ygg-1eth-eol",
+      "isGovVault": false,
+      "name": "1YGG-1ETH LP",
+      "pauseReason": undefined,
+      "platformId": "sushi",
+      "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x40112850efd90e9e17b56de35d86bdff9f4d07fd/remove",
+      "retireReason": "rewards",
+      "risks": [
+        "COMPLEXITY_LOW",
+        "BATTLE_TESTED",
+        "IL_LOW",
+        "MCAP_MEDIUM",
+        "AUDIT",
+        "CONTRACTS_VERIFIED",
+      ],
+      "safetyScore": 9.1,
+      "status": "active",
+      "strategyTypeId": "lp",
+      "type": "lps",
+    },
+  },
+  "contractData": {
+    "byVaultId": {},
+  },
+  "featuredVaults": {},
+  "zapSupportById": {},
+}
+`;
+
+exports[`Vaults slice tests > should update state on fulfilled vault list 2`] = `
+{
+  "byVaultId": {
+    "one-bifi-gov": {
+      "pricePerFullShare": "123",
+      "strategyAddress": "test",
+    },
+    "sushi-one-1ygg-1eth": {
+      "pricePerFullShare": "456",
+      "strategyAddress": "test",
+    },
+  },
+}
+`;

@@ -62,7 +62,7 @@ export function isMaxiVaultApy(apy: ApyData): apy is ApyMaxiVault {
 }
 
 export interface BeefyAPITokenPricesResponse {
-  [tokenId: TokenEntity['id']]: number;
+  [tokenId: TokenEntity['id']]: number | null;
 }
 
 export interface BeefyAPIApyBreakdownResponse {
