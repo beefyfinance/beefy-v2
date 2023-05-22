@@ -593,7 +593,8 @@
     "earnContractAddress": "0xf747C3285645B8Dbc966ccd728e2586A769858E1",
     "oracle": "lps",
     "oracleId": "sicle-btc.b-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "swapsicle",
     "assets": ["BTCb", "AVAX"],
     "risks": [

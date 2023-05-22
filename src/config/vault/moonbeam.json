@@ -416,7 +416,8 @@
     "earnContractAddress": "0xbaAcbb2A18Db15D185AE5fAdc53bEe21Ed626a5e",
     "oracle": "lps",
     "oracleId": "stellaswap-wglmr-xcibtc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["xciBTC", "GLMR"],
     "risks": [
