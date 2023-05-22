@@ -7035,7 +7035,8 @@
     "earnContractAddress": "0xe2A269BE12bCfBc3EA33eafe53e9B068848017f6",
     "oracle": "lps",
     "oracleId": "boo-wftm-ape",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "spookyswap",
     "assets": ["APE", "FTM"],
     "risks": [

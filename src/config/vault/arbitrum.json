@@ -299,7 +299,8 @@
     "earnContractAddress": "0xf13A3355B052dC4e689D00f0A4124f89BA2d3AC8",
     "oracle": "lps",
     "oracleId": "ramses-frax-fxs",
-    "status": "active",
+    "status": "eol",
+    "retireReason":"tvl",
     "platformId": "ramses",
     "assets": ["FRAX", "FXS"],
     "risks": [
