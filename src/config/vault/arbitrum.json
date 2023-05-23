@@ -1,5 +1,28 @@
 [
   {
+    "id": "chronos-weth-bifi",
+    "name": "BIFI-ETH vLP",
+    "token": "vAMM-WETH/BIFI",
+    "tokenAddress": "0x04c106eddDBe89f2Ed983f52020F33D126fA544b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "chronos",
+    "tokenAmmId": "arbitrum-chronos",
+    "earnedToken": "mooChronos_WETH-BIFI",
+    "earnedTokenAddress": "0x5E2E2fE00c94D64F351A46284C786663fbB34B20",
+    "earnContractAddress": "0x5E2E2fE00c94D64F351A46284C786663fbB34B20",
+    "oracle": "lps",
+    "oracleId": "chronos-weth-bifi",
+    "status": "active",
+    "platformId": "chronos",
+    "assets": ["BIFI", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0x04c106eddDBe89f2Ed983f52020F33D126fA544b",
+    "removeLiquidityUrl": "https://app.chronos.exchange/liquidity/0x04c106eddDBe89f2Ed983f52020F33D126fA544b",
+    "network": "arbitrum",
+    "createdAt": 1684830864
+  },
+  {
     "id": "chronos-weth-usdc",
     "name": "ETH-USDC vLP",
     "token": "vAMM-WETH/USDC",
@@ -300,7 +323,7 @@
     "oracle": "lps",
     "oracleId": "ramses-frax-fxs",
     "status": "eol",
-    "retireReason":"tvl",
+    "retireReason": "tvl",
     "platformId": "ramses",
     "assets": ["FRAX", "FXS"],
     "risks": [
