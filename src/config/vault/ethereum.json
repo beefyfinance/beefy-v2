@@ -1,5 +1,24 @@
 [
   {
+    "id": "ape-ape",
+    "name": "APE",
+    "token": "APE",
+    "tokenAddress": "0x4d224452801ACEd8B2F0aebE155379bb5D594381",
+    "tokenDecimals": 18,
+    "earnedToken": "mooAPE",
+    "earnedTokenAddress": "0xFc6a9D39b44a174B5Ba708dBaa437632d78B8585",
+    "earnContractAddress": "0xFc6a9D39b44a174B5Ba708dBaa437632d78B8585",
+    "oracle": "tokens",
+    "oracleId": "APE",
+    "status": "active",
+    "platformId": "ape",
+    "assets": ["APE"],
+    "strategyTypeId": "single",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "network": "ethereum",
+    "createdAt": 1684833624
+  },
+  {
     "id": "convex-t",
     "name": "T/ETH",
     "token": "crvTETH",
@@ -704,7 +723,7 @@
     "oracle": "lps",
     "oracleId": "monolith-usdc-weth",
     "status": "eol",
-    "retireReason":"tvl",
+    "retireReason": "tvl",
     "platformId": "solidly",
     "assets": ["USDC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
