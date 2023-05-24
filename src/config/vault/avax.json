@@ -118,13 +118,13 @@
     "earnContractAddress": "0x7f6e2FD400f7fB43Ea8d41cc733eF45f37510C5C",
     "oracle": "lps",
     "oracleId": "solisnek-usdc-dei",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "solisnek",
     "assets": ["DEI", "USDC"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_NONE",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
