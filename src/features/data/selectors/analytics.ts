@@ -6,6 +6,7 @@ import type { TimeBucketType } from '../apis/analytics/analytics-types';
 import type { VaultEntity } from '../entities/vault';
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
+import { selectUserDepositedVaultIds } from './balance';
 
 export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
@@ -116,3 +117,17 @@ export const selectUnderlyingToUsdTimebucketByVaultId = (
     }
   );
 };
+
+export const selectHasDataToShowGraphByVaultId = createCachedSelector(
+  (state: BeefyState, _vaultId: VaultEntity['id']) => selectUserDepositedVaultIds(state),
+  (state: BeefyState, _vaultId: VaultEntity['id']) => selectIsAnalyticsLoaded(state),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectUserDepositedTimelineByVaultId(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (userVaults, isLoaded, timeline, vault, vaultId) => {
+    return (
+      isLoaded && userVaults.includes(vaultId) && timeline.length !== 0 && vault.status === 'active'
+    );
+  }
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
