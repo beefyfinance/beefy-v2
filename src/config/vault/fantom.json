@@ -690,7 +690,8 @@
     "earnContractAddress": "0xa43A80F527aC3619ce904C55758D83A7b468fb16",
     "oracle": "lps",
     "oracleId": "boo-dei-usdc",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "spookyswap",
     "assets": ["DEI", "USDC"],
     "risks": [
@@ -783,7 +784,8 @@
     "earnContractAddress": "0x6aB501afC4326071A9d53EE039Ee2fb448C78037",
     "oracle": "lps",
     "oracleId": "beets-another-dei-another-dollar",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "beethovenx",
     "assets": ["DEI", "USDC"],
     "risks": [
