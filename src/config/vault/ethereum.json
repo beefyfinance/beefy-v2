@@ -1,5 +1,27 @@
 [
   {
+    "id": "convex-wbeth",
+    "name": "wBETH/ETH",
+    "token": "ETHwBETHCRV",
+    "tokenAddress": "0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooConvexWBETH",
+    "earnedTokenAddress": "0x56d50Ca676f9AdC1E90f29F25e0d12DeC02746eE",
+    "earnContractAddress": "0x56d50Ca676f9AdC1E90f29F25e0d12DeC02746eE",
+    "oracle": "lps",
+    "oracleId": "convex-wbeth",
+    "status": "active",
+    "platformId": "convex",
+    "assets": ["wBETH", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/wbeth/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/wbeth/withdraw",
+    "network": "ethereum",
+    "createdAt": 1685011917
+  },
+  {
     "id": "ape-ape",
     "name": "APE",
     "token": "APE",
