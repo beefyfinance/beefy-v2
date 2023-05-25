@@ -410,7 +410,7 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-note-multibtc",
     "status": "eol",
-    "retireReason":"tvl",
+    "retireReason": "tvl",
     "platformId": "velocimeter",
     "assets": ["NOTE", "multiBTC"],
     "risks": [
@@ -465,7 +465,8 @@
     "earnContractAddress": "0x016a77661A44fC1B0bb5d13989e0959b6D74fDd6",
     "oracle": "lps",
     "oracleId": "velocimeterv2-multibtc-usdt",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "velocimeter",
     "assets": ["USDT", "multiBTC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
