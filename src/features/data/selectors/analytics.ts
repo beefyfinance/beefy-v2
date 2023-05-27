@@ -10,7 +10,7 @@ import { selectUserDepositedVaultIds } from './balance';
 
 export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
-    state.user.analytics.timeline.byVaultId[vaultId],
+    state.user.analytics.byAddress['0x']?.timeline.byVaultId[vaultId],
   timeline => timeline || []
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
@@ -98,7 +98,9 @@ export const selectShareToUnderlyingTimebucketByVaultId = (
   timebucket: TimeBucketType
 ) => {
   return (
-    state.user.analytics.shareToUnderlying.byVaultId[vaultId]?.byTimebucket[timebucket] || {
+    state.user.analytics.byAddress['0x']?.shareToUnderlying.byVaultId[vaultId]?.byTimebucket[
+      timebucket
+    ] || {
       data: [],
       status: 'idle',
     }
@@ -111,7 +113,9 @@ export const selectUnderlyingToUsdTimebucketByVaultId = (
   timebucket: TimeBucketType
 ) => {
   return (
-    state.user.analytics.underlyingToUsd.byVaultId[vaultId]?.byTimebucket[timebucket] || {
+    state.user.analytics.byAddress['0x']?.underlyingToUsd.byVaultId[vaultId]?.byTimebucket[
+      timebucket
+    ] || {
       data: [],
       status: 'idle',
     }
@@ -124,7 +128,9 @@ export const selectHasDataToShowGraphByVaultId = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     selectUserDepositedTimelineByVaultId(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+
   (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+
   (userVaults, isLoaded, timeline, vault, vaultId) => {
     return (
       isLoaded && userVaults.includes(vaultId) && timeline.length !== 0 && vault.status === 'active'

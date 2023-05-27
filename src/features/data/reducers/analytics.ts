@@ -16,29 +16,33 @@ import type { Draft } from 'immer';
 type StatusType = 'idle' | 'pending' | 'fulfilled' | 'rejected';
 
 export interface AnalyticsState {
-  timeline: {
-    byVaultId: { [vaultId: VaultEntity['id']]: VaultTimelineAnalyticsEntity[] };
-    byBoostId: { [boostId: BoostEntity['id']]: VaultTimelineAnalyticsEntity[] };
-  };
-  shareToUnderlying: {
-    byVaultId: {
-      [vaultId: VaultEntity['id']]: {
-        byTimebucket: {
-          [K in TimeBucketType]?: {
-            status: StatusType;
-            data: ApiProductPriceRow[];
+  byAddress: {
+    [address: string]: {
+      timeline: {
+        byVaultId: { [vaultId: VaultEntity['id']]: VaultTimelineAnalyticsEntity[] };
+        byBoostId: { [boostId: BoostEntity['id']]: VaultTimelineAnalyticsEntity[] };
+      };
+      shareToUnderlying: {
+        byVaultId: {
+          [vaultId: VaultEntity['id']]: {
+            byTimebucket: {
+              [K in TimeBucketType]?: {
+                status: StatusType;
+                data: ApiProductPriceRow[];
+              };
+            };
           };
         };
       };
-    };
-  };
-  underlyingToUsd: {
-    byVaultId: {
-      [vaultId: VaultEntity['id']]: {
-        byTimebucket: {
-          [K in TimeBucketType]?: {
-            status: StatusType;
-            data: ApiProductPriceRow[];
+      underlyingToUsd: {
+        byVaultId: {
+          [vaultId: VaultEntity['id']]: {
+            byTimebucket: {
+              [K in TimeBucketType]?: {
+                status: StatusType;
+                data: ApiProductPriceRow[];
+              };
+            };
           };
         };
       };
@@ -47,16 +51,7 @@ export interface AnalyticsState {
 }
 
 const initialState: AnalyticsState = {
-  timeline: {
-    byVaultId: {},
-    byBoostId: {},
-  },
-  shareToUnderlying: {
-    byVaultId: {},
-  },
-  underlyingToUsd: {
-    byVaultId: {},
-  },
+  byAddress: {},
 };
 
 export const analyticsSlice = createSlice({
@@ -65,7 +60,7 @@ export const analyticsSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchWalletTimeline.fulfilled, (sliceState, action) => {
-      const { timeline, state } = action.payload;
+      const { timeline, walletAddress, state } = action.payload;
 
       const totals = {
         byBoostId: {},
@@ -130,42 +125,53 @@ export const analyticsSlice = createSlice({
         }
       }
 
-      sliceState.timeline.byBoostId = totals.byBoostId;
-      sliceState.timeline.byVaultId = totals.byVaultId;
+      sliceState.byAddress[walletAddress] = {
+        timeline: { ...totals },
+        shareToUnderlying: {
+          byVaultId: {},
+        },
+        underlyingToUsd: {
+          byVaultId: {},
+        },
+      };
     });
 
     builder.addCase(fetchShareToUnderlying.fulfilled, (sliceState, action) => {
-      const { data, vaultId, timebucket } = action.payload;
+      const { data, vaultId, walletAddress, timebucket } = action.payload;
 
-      setStatus(sliceState, 'shareToUnderlying', vaultId, timebucket, 'fulfilled');
-      sliceState.shareToUnderlying.byVaultId[vaultId].byTimebucket[timebucket].data = data;
+      setStatus(sliceState, 'shareToUnderlying', vaultId, timebucket, walletAddress, 'fulfilled');
+      sliceState.byAddress[walletAddress].shareToUnderlying.byVaultId[vaultId].byTimebucket[
+        timebucket
+      ].data = data;
     });
 
     builder.addCase(fetchShareToUnderlying.pending, (sliceState, action) => {
-      const { timebucket, vaultId } = action.meta.arg;
-      setStatus(sliceState, 'shareToUnderlying', vaultId, timebucket, 'pending');
+      const { timebucket, walletAddress, vaultId } = action.meta.arg;
+      setStatus(sliceState, 'shareToUnderlying', vaultId, timebucket, walletAddress, 'pending');
     });
 
     builder.addCase(fetchShareToUnderlying.rejected, (sliceState, action) => {
-      const { timebucket, vaultId } = action.meta.arg;
-      setStatus(sliceState, 'shareToUnderlying', vaultId, timebucket, 'rejected');
+      const { timebucket, walletAddress, vaultId } = action.meta.arg;
+      setStatus(sliceState, 'shareToUnderlying', vaultId, timebucket, walletAddress, 'rejected');
     });
 
     builder.addCase(fetchUnderlyingToUsd.fulfilled, (sliceState, action) => {
-      const { data, vaultId, timebucket } = action.payload;
+      const { data, vaultId, walletAddress, timebucket } = action.payload;
 
-      setStatus(sliceState, 'underlyingToUsd', vaultId, timebucket, 'fulfilled');
-      sliceState.underlyingToUsd.byVaultId[vaultId].byTimebucket[timebucket].data = data;
+      setStatus(sliceState, 'underlyingToUsd', vaultId, timebucket, walletAddress, 'fulfilled');
+      sliceState.byAddress[walletAddress].underlyingToUsd.byVaultId[vaultId].byTimebucket[
+        timebucket
+      ].data = data;
     });
 
     builder.addCase(fetchUnderlyingToUsd.pending, (sliceState, action) => {
-      const { timebucket, vaultId } = action.meta.arg;
-      setStatus(sliceState, 'underlyingToUsd', vaultId, timebucket, 'pending');
+      const { timebucket, walletAddress, vaultId } = action.meta.arg;
+      setStatus(sliceState, 'underlyingToUsd', vaultId, timebucket, walletAddress, 'pending');
     });
 
     builder.addCase(fetchUnderlyingToUsd.rejected, (sliceState, action) => {
-      const { timebucket, vaultId } = action.meta.arg;
-      setStatus(sliceState, 'underlyingToUsd', vaultId, timebucket, 'rejected');
+      const { timebucket, walletAddress, vaultId } = action.meta.arg;
+      setStatus(sliceState, 'underlyingToUsd', vaultId, timebucket, walletAddress, 'rejected');
     });
   },
 });
@@ -175,18 +181,20 @@ function setStatus(
   part: 'shareToUnderlying' | 'underlyingToUsd',
   vaultId: VaultEntity['id'],
   timebucket: TimeBucketType,
+  walletAddress: string,
   status: StatusType
 ) {
-  if (!sliceState[part].byVaultId[vaultId]) {
-    sliceState[part].byVaultId[vaultId] = { byTimebucket: {} };
+  if (!sliceState.byAddress[walletAddress][part].byVaultId[vaultId]) {
+    sliceState.byAddress[walletAddress][part].byVaultId[vaultId] = { byTimebucket: {} };
   }
 
-  if (!sliceState[part].byVaultId[vaultId].byTimebucket[timebucket]) {
-    sliceState[part].byVaultId[vaultId].byTimebucket[timebucket] = {
+  if (!sliceState.byAddress[walletAddress][part].byVaultId[vaultId].byTimebucket[timebucket]) {
+    sliceState.byAddress[walletAddress][part].byVaultId[vaultId].byTimebucket[timebucket] = {
       data: [],
       status: status,
     };
   } else {
-    sliceState[part].byVaultId[vaultId].byTimebucket[timebucket].status = status;
+    sliceState.byAddress[walletAddress][part].byVaultId[vaultId].byTimebucket[timebucket].status =
+      status;
   }
 }

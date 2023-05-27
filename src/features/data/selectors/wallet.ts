@@ -19,9 +19,6 @@ export const selectWalletAddress = createSelector(
   (state: BeefyState) => state.user.wallet.address,
   address => {
     address = featureFlag_walletAddressOverride(address);
-    if (address === null) {
-      throw new Error("Wallet isn't connected");
-    }
     return address;
   }
 );

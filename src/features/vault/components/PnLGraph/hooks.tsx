@@ -59,15 +59,37 @@ export const usePnLChartData = (
 
   useEffect(() => {
     if (sharesStatus === 'idle') {
-      dispatch(fetchShareToUnderlying({ productKey, vaultId, timebucket }));
+      dispatch(
+        fetchShareToUnderlying({
+          productKey,
+          vaultId,
+          walletAddress: '0x',
+          timebucket,
+        })
+      );
     }
     if (underlyingStatus === 'idle') {
-      dispatch(fetchUnderlyingToUsd({ productKey, vaultId, timebucket }));
+      dispatch(
+        fetchUnderlyingToUsd({
+          productKey,
+          vaultId,
+          walletAddress: '0x',
+          timebucket,
+        })
+      );
     }
 
     if (sharesStatus === 'rejected') {
       const handleShareToUnderlying = setTimeout(
-        () => dispatch(fetchShareToUnderlying({ productKey, vaultId, timebucket })),
+        () =>
+          dispatch(
+            fetchShareToUnderlying({
+              productKey,
+              vaultId,
+              walletAddress: '0x',
+              timebucket,
+            })
+          ),
         5000
       );
       return () => clearTimeout(handleShareToUnderlying);
@@ -75,7 +97,15 @@ export const usePnLChartData = (
 
     if (underlyingStatus === 'rejected') {
       const handleUnderlyingToUsd = setTimeout(
-        () => dispatch(fetchUnderlyingToUsd({ productKey, vaultId, timebucket })),
+        () =>
+          dispatch(
+            fetchUnderlyingToUsd({
+              productKey,
+              vaultId,
+              walletAddress: '0x',
+              timebucket,
+            })
+          ),
         5000
       );
       return () => clearTimeout(handleUnderlyingToUsd);
