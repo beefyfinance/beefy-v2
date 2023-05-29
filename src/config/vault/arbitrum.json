@@ -1720,7 +1720,7 @@
     "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/invest",
     "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/withdraw",
     "network": "arbitrum",
-    "createdAt": 1673731740
+    "createdAt": 1685364888
   },
   {
     "id": "curve-arb-f-fraxbp",
@@ -2613,7 +2613,7 @@
     "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/invest",
     "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/withdraw",
     "network": "arbitrum",
-    "createdAt": 1665023339
+    "createdAt": 1685364888
   },
   {
     "id": "stargate-arb-usdc",

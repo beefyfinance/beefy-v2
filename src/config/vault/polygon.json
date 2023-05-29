@@ -361,7 +361,7 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/withdraw",
     "network": "polygon",
-    "createdAt": 1678119805
+    "createdAt": 1685364888
   },
   {
     "id": "balancer-jeur-par",
@@ -9369,7 +9369,7 @@
     "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a/invest",
     "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a/withdraw",
     "network": "polygon",
-    "createdAt": 1661772010
+    "createdAt": 1685364888
   },
   {
     "id": "jarvis-2eure",

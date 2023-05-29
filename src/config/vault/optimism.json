@@ -2194,7 +2194,7 @@
     "addLiquidityUrl": "https://op.beets.fi/pool/0x4fd63966879300cafafbb35d157dc5229278ed2300020000000000000000002b",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x4fd63966879300cafafbb35d157dc5229278ed2300020000000000000000002b",
     "network": "optimism",
-    "createdAt": 1662062686
+    "createdAt": 1685364888
   },
   {
     "id": "velodrome-susd-lusd",
