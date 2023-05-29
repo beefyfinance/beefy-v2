@@ -1735,7 +1735,7 @@
     "earnContractAddress": "0x63934e5aBA120f2BAE2418711Ef0f20F7DB26CD2",
     "oracle": "lps",
     "oracleId": "curve-arb-f-fraxbp",
-    "status": "active",
+    "status": "eol",
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["FRAX", "USDC"],
