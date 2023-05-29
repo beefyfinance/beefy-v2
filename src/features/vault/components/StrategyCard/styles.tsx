@@ -38,8 +38,8 @@ export const styles = (theme: Theme) => ({
   },
   apys: {
     display: 'flex',
-    columnGap: '32px',
-    rowGap: '24px',
+    flexWrap: 'wrap' as const,
+    gap: '12px 32px',
   },
   apy: {},
   apyLabel: {
