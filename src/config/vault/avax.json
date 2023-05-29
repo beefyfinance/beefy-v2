@@ -379,7 +379,8 @@
     "earnContractAddress": "0x38ae5c03C222D9020A0C3359544425748Ef30807",
     "oracle": "lps",
     "oracleId": "kyber-avax-usdc-mai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "kyber",
     "assets": ["MAI", "USDC"],
     "risks": [
@@ -4048,7 +4049,8 @@
     "earnContractAddress": "0x326d4521e4Cf78Fb2f8693b1ebc4D24ecE89de01",
     "oracle": "lps",
     "oracleId": "png-wavax-ncash",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "pangolin",
     "assets": ["NCASH", "AVAX"],
     "risks": [
