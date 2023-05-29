@@ -576,7 +576,8 @@
     "earnContractAddress": "0xBA6fcc357B7Ce91dC45a3ff11b8B95E6ee4425e0",
     "oracle": "lps",
     "oracleId": "cakev2-csix-cake",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "pancakeswap",
     "assets": ["CSIX", "CAKE"],
     "risks": [

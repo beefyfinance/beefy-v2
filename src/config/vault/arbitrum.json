@@ -405,7 +405,8 @@
     "earnContractAddress": "0x1C83E83Ab71B7BF7ca3c5865f241E006Caf1Fe7D",
     "oracle": "lps",
     "oracleId": "ramses-lusd-lqty",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "ramses",
     "assets": ["LQTY", "LUSD"],
     "risks": [

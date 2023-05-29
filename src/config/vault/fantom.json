@@ -964,7 +964,8 @@
     "earnContractAddress": "0x916dD4AB72550E944Fcb56FC1Cc18e07909d86AF",
     "oracle": "lps",
     "oracleId": "spiritV2-usdc-mim",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "spiritswap",
     "assets": ["MIM", "USDC"],
     "risks": [
