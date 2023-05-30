@@ -1,4 +1,12 @@
 {
+  "scanto": {
+    "text": "When you stake $CANTO at scanto.io you get $sCANTO a liquid staking derivitive that can be used across a range of DeFi applications.",
+    "website": "https://scanto.io",
+    "social": {
+      "telegram": "",
+      "twitter": ""
+    }
+  },
   "overnight": {
     "text": "Overnight Finance is an asset management protocol offering passive yield products based on delta-neutral strategies, primarily for conservative stablecoin investors. Overnight's core products include USD+  and DAI+: a USDC-pegged and DAI-pegged yield bearing stablecoins, 100% collaterized, mostly by delta-neutral strategies.",
     "website": "https://overnight.fi/",
