@@ -645,38 +645,6 @@
     "createdAt": 1657809643
   },
   {
-    "id": "sicle-wavax-usdc",
-    "name": "USDC-AVAX LP",
-    "token": "USDC-AVAX LP",
-    "tokenAddress": "0x7e028006ec8632bf009fa4BdD8F1E5a50124EFec",
-    "tokenDecimals": 18,
-    "tokenProviderId": "swapsicle",
-    "tokenAmmId": "avax-swapsicle",
-    "earnedToken": "mooSicleAVAX-USDC",
-    "earnedTokenAddress": "0x2F03bA091627A207c18cE1E6e7540cCE225B1144",
-    "earnContractAddress": "0x2F03bA091627A207c18cE1E6e7540cCE225B1144",
-    "oracle": "lps",
-    "oracleId": "sicle-wavax-usdc",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "swapsicle",
-    "assets": ["USDC", "AVAX"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.swapsicle.io/swap?inputCurrency=AVAX&outputCurrency=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
-    "addLiquidityUrl": "https://www.swapsicle.io/add/ETH/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
-    "removeLiquidityUrl": "https://www.swapsicle.io/remove/ETH/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
-    "network": "avax",
-    "createdAt": 1657811075
-  },
-  {
     "id": "sicle-link.e-wavax",
     "name": "LINK.e-AVAX LP",
     "token": "LINK.e-AVAX LP",
