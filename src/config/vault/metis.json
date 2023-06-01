@@ -70,7 +70,8 @@
     "earnContractAddress": "0x587895668a5db7B3b43F51b9F92460D5BbFD8D89",
     "oracle": "lps",
     "oracleId": "hermes-m.dai-m.usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "hermes",
     "assets": ["mDAI", "mUSDC"],
     "risks": [
