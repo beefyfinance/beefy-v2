@@ -1,5 +1,27 @@
 [
   {
+    "id": "aura-wbeth-wsteth",
+    "name": "wBETH-wstETH",
+    "token": "wBETH-wstETH",
+    "tokenAddress": "0x2E848426AEc6dbF2260535a5bEa048ed94d9FF3D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAurawBETH-wstETH",
+    "earnedTokenAddress": "0x9f8e3E829DbF75dc035d79502bae87d412c2bC36",
+    "earnContractAddress": "0x9f8e3E829DbF75dc035d79502bae87d412c2bC36",
+    "oracle": "lps",
+    "oracleId": "aura-wbeth-wsteth",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["wBETH", "wstETH"],
+    "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x2e848426aec6dbf2260535a5bea048ed94d9ff3d000000000000000000000536/invest",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x2e848426aec6dbf2260535a5bea048ed94d9ff3d000000000000000000000536/withdraw",
+    "network": "ethereum",
+    "createdAt": 1685636136
+  },
+  {
     "id": "convex-wbeth",
     "name": "wBETH/ETH",
     "token": "ETHwBETHCRV",
