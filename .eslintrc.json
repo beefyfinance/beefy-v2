@@ -4,7 +4,8 @@
     "plugin:react/recommended",
     "plugin:import/recommended",
     "plugin:@typescript-eslint/recommended",
-    "eslint-config-prettier"
+    "eslint-config-prettier",
+    "plugin:react-hooks/recommended"
   ],
   "settings": {
     "paths": ["src"],
