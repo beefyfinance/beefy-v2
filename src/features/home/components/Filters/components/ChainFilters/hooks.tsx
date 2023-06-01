@@ -18,7 +18,7 @@ export function useSelectedChainIds(): ChainEntity['id'][] {
         )
       );
     }
-  }, [activeChainIds, selectedChainIds]);
+  }, [activeChainIds, dispatch, selectedChainIds]);
 
   return selectedChainIds;
 }
