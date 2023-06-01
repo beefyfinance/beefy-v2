@@ -9,6 +9,7 @@ import { UserVaults } from './components/UserVaults';
 import { styles } from './styles';
 import { useParams } from 'react-router';
 import { initViewAsAddress } from '../data/actions/wallet';
+import { setViewAsAddress } from '../data/reducers/wallet/wallet';
 
 const useStyles = makeStyles(styles);
 
@@ -26,8 +27,12 @@ export const Dashboard = memo(function Dashboard() {
   useEffect(() => {
     if (address) {
       dispatch(initViewAsAddress({ address }));
+
+      return () => {
+        dispatch(setViewAsAddress({ address: null }));
+      };
     }
-  }, []);
+  }, [address, dispatch]);
 
   return (
     <div className={classes.dashboard}>

@@ -6,6 +6,7 @@ import {
   accountHasChanged,
   chainHasChanged,
   chainHasChangedToUnsupported,
+  setViewAsAddress,
   userDidConnect,
   walletHasDisconnected,
 } from '../reducers/wallet/wallet';
@@ -73,21 +74,18 @@ export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
   }
 );
 
-type initViewAsAddress = string;
-export const initViewAsAddress = createAsyncThunk<
-  initViewAsAddress,
-  { address: string },
-  { state: BeefyState }
->('wallet/initViewAsAddress', async ({ address }, { getState, dispatch }) => {
-  const state = getState();
-  const chains = selectAllChainIds(state);
-  for (const chainId of chains) {
-    dispatch(fetchAllBalanceAction({ chainId, address }));
+export const initViewAsAddress = createAsyncThunk<void, { address: string }, { state: BeefyState }>(
+  'wallet/initViewAsAddress',
+  async ({ address }, { getState, dispatch }) => {
+    const state = getState();
+    const chains = selectAllChainIds(state);
+    dispatch(setViewAsAddress({ address }));
+    for (const chainId of chains) {
+      dispatch(fetchAllBalanceAction({ chainId, address }));
+    }
+    dispatch(fetchWalletTimeline({ address }));
   }
-  dispatch(fetchWalletTimeline({ address }));
-
-  return address;
-});
+);
 
 export const tryToAutoReconnect = createAsyncThunk<void, void, { state: BeefyState }>(
   'wallet/tryToAutoReconnect',
