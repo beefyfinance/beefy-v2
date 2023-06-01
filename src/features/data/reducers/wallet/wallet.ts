@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { ChainEntity } from '../../entities/chain';
-import { getEns, initWallet } from '../../actions/wallet';
+import { getEns, initViewAsAddress, initWallet } from '../../actions/wallet';
 
 /**
  * Only address and hideBalance are persisted
@@ -14,6 +14,7 @@ export type WalletState = {
   selectedChainId: ChainEntity['id'] | null;
   error: 'unsupported chain' | null;
   hideBalance: boolean;
+  viewAsAddress: string | null;
 };
 
 const initialWalletState: WalletState = {
@@ -24,6 +25,7 @@ const initialWalletState: WalletState = {
   selectedChainId: null,
   error: null,
   hideBalance: false,
+  viewAsAddress: null,
 };
 
 export const walletSlice = createSlice({
@@ -71,6 +73,9 @@ export const walletSlice = createSlice({
       sliceState.selectedChainId = null;
       sliceState.error = 'unsupported chain';
     },
+    setViewAsAddress(sliceState, action: PayloadAction<{ address: string }>) {
+      sliceState.viewAsAddress = action.payload.address;
+    },
     /**
      * Display configuration
      */
@@ -85,6 +90,9 @@ export const walletSlice = createSlice({
     });
     builder.addCase(getEns.fulfilled, (sliceState, action) => {
       sliceState.ens = action.payload;
+    });
+    builder.addCase(initViewAsAddress.fulfilled, (sliceState, action) => {
+      sliceState.viewAsAddress = action.payload;
     });
   },
 });

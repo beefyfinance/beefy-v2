@@ -16,6 +16,7 @@ import { uniqueTokens } from '../../../helpers/tokens';
 
 interface ActionParams {
   chainId: ChainEntity['id'];
+  address?: string;
 }
 
 export interface FetchAllBalanceFulfilledPayload {
@@ -30,10 +31,10 @@ export const fetchAllBalanceAction = createAsyncThunk<
   FetchAllBalanceFulfilledPayload,
   ActionParams,
   { state: BeefyState }
->('balance/fetchAllBalanceAction', async ({ chainId }, { getState }) => {
+>('balance/fetchAllBalanceAction', async ({ chainId, address }, { getState }) => {
   const state = getState();
 
-  const walletAddress = selectWalletAddress(state);
+  const walletAddress = address ?? selectWalletAddress(state);
   const chain = selectChainById(state, chainId);
   const api = await getBalanceApi(chain);
 

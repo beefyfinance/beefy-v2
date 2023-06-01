@@ -15,11 +15,20 @@ export const selectIsWalletConnected = createSelector(
   (connectedAddress, address) => connectedAddress !== null && connectedAddress === address
 );
 
-export const selectWalletAddress = createSelector(
+export const selectConnectedWalletAddress = createSelector(
   (state: BeefyState) => state.user.wallet.address,
   address => {
     address = featureFlag_walletAddressOverride(address);
     return address;
+  }
+);
+
+export const selectWalletAddress = createSelector(
+  (state: BeefyState) => state.user.wallet.address,
+  (state: BeefyState) => state.user.wallet.viewAsAddress,
+  (address, viewAsAddress) => {
+    address = featureFlag_walletAddressOverride(address);
+    return viewAsAddress ?? address;
   }
 );
 

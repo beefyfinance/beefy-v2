@@ -18,6 +18,7 @@ import {
 } from '../../../data/selectors/tokens';
 import { selectUserBalanceOfTokensIncludingBoosts } from '../../../data/selectors/balance';
 import { fetchShareToUnderlying, fetchUnderlyingToUsd } from '../../../data/actions/analytics';
+import { selectWalletAddress } from '../../../data/selectors/wallet';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], minUnderlying: 0, maxUnderlying: 0, minUsd: 0, maxUsd: 0 };
@@ -48,6 +49,7 @@ export const usePnLChartData = (
     )
   );
   const vaultLastDeposit = useAppSelector(state => selectLastVaultDepositStart(state, vaultId));
+  const walletAddress = useAppSelector(selectWalletAddress);
 
   const { data: sharesToUnderlying, status: sharesStatus } = useAppSelector(state =>
     selectShareToUnderlyingTimebucketByVaultId(state, vaultId, timebucket)
@@ -58,57 +60,59 @@ export const usePnLChartData = (
   );
 
   useEffect(() => {
-    if (sharesStatus === 'idle') {
-      dispatch(
-        fetchShareToUnderlying({
-          productKey,
-          vaultId,
-          walletAddress: '0x',
-          timebucket,
-        })
-      );
-    }
-    if (underlyingStatus === 'idle') {
-      dispatch(
-        fetchUnderlyingToUsd({
-          productKey,
-          vaultId,
-          walletAddress: '0x',
-          timebucket,
-        })
-      );
-    }
+    if (walletAddress) {
+      if (sharesStatus === 'idle') {
+        dispatch(
+          fetchShareToUnderlying({
+            productKey,
+            vaultId,
+            walletAddress,
+            timebucket,
+          })
+        );
+      }
+      if (underlyingStatus === 'idle') {
+        dispatch(
+          fetchUnderlyingToUsd({
+            productKey,
+            vaultId,
+            walletAddress,
+            timebucket,
+          })
+        );
+      }
 
-    if (sharesStatus === 'rejected') {
-      const handleShareToUnderlying = setTimeout(
-        () =>
-          dispatch(
-            fetchShareToUnderlying({
-              productKey,
-              vaultId,
-              walletAddress: '0x',
-              timebucket,
-            })
-          ),
-        5000
-      );
-      return () => clearTimeout(handleShareToUnderlying);
-    }
+      if (sharesStatus === 'rejected') {
+        const handleShareToUnderlying = setTimeout(
+          () =>
+            dispatch(
+              fetchShareToUnderlying({
+                productKey,
+                vaultId,
+                walletAddress,
+                timebucket,
+              })
+            ),
+          5000
+        );
+        return () => clearTimeout(handleShareToUnderlying);
+      }
 
-    if (underlyingStatus === 'rejected') {
-      const handleUnderlyingToUsd = setTimeout(
-        () =>
-          dispatch(
-            fetchUnderlyingToUsd({
-              productKey,
-              vaultId,
-              walletAddress: '0x',
-              timebucket,
-            })
-          ),
-        5000
-      );
-      return () => clearTimeout(handleUnderlyingToUsd);
+      if (underlyingStatus === 'rejected') {
+        const handleUnderlyingToUsd = setTimeout(
+          () =>
+            dispatch(
+              fetchUnderlyingToUsd({
+                productKey,
+                vaultId,
+                walletAddress,
+                timebucket,
+              })
+            ),
+          5000
+        );
+        return () => clearTimeout(handleUnderlyingToUsd);
+      }
     }
   }, [dispatch, sharesStatus, underlyingStatus, timebucket, productKey, vaultId]);
 

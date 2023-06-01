@@ -7,11 +7,14 @@ import type { VaultEntity } from '../entities/vault';
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { selectUserDepositedVaultIds } from './balance';
+import { selectWalletAddress } from './wallet';
 
 export const selectUserDepositedTimelineByVaultId = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) =>
-    state.user.analytics.byAddress['0x']?.timeline.byVaultId[vaultId],
-  timeline => timeline || []
+  (state: BeefyState, _vaultId: VaultEntity['id']) => selectWalletAddress(state),
+  (state: BeefyState, _vaultId: VaultEntity['id']) => state.user.analytics,
+  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (walletAddress, analyticsState, vaultId) =>
+    analyticsState.byAddress[walletAddress]?.timeline.byVaultId[vaultId] || []
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectIsAnalyticsLoaded = (state: BeefyState) =>
@@ -97,10 +100,10 @@ export const selectShareToUnderlyingTimebucketByVaultId = (
   vaultId: VaultEntity['id'],
   timebucket: TimeBucketType
 ) => {
+  const walletAddress = selectWalletAddress(state);
   return (
-    state.user.analytics.byAddress['0x']?.shareToUnderlying.byVaultId[vaultId]?.byTimebucket[
-      timebucket
-    ] || {
+    state.user.analytics.byAddress[walletAddress]?.shareToUnderlying.byVaultId[vaultId]
+      ?.byTimebucket[timebucket] || {
       data: [],
       status: 'idle',
     }
@@ -112,8 +115,9 @@ export const selectUnderlyingToUsdTimebucketByVaultId = (
   vaultId: VaultEntity['id'],
   timebucket: TimeBucketType
 ) => {
+  const walletAddress = selectWalletAddress(state);
   return (
-    state.user.analytics.byAddress['0x']?.underlyingToUsd.byVaultId[vaultId]?.byTimebucket[
+    state.user.analytics.byAddress[walletAddress]?.underlyingToUsd.byVaultId[vaultId]?.byTimebucket[
       timebucket
     ] || {
       data: [],

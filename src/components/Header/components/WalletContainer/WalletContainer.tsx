@@ -10,7 +10,7 @@ import {
   selectIsBalanceHidden,
   selectIsWalletConnected,
   selectIsWalletKnown,
-  selectWalletAddress,
+  selectConnectedWalletAddress,
 } from '../../../../features/data/selectors/wallet';
 import type { BeefyState } from '../../../../redux-types';
 import {
@@ -29,7 +29,7 @@ const useStyles = makeStyles(styles);
 export const WalletContainer = connect((state: BeefyState) => {
   const isWalletConnected = selectIsWalletConnected(state);
   const isWalletKnown = selectIsWalletKnown(state);
-  const walletAddress = isWalletKnown ? selectWalletAddress(state) : null;
+  const walletAddress = isWalletKnown ? selectConnectedWalletAddress(state) : null;
   const walletPending = selectIsWalletPending(state);
   const blurred = selectIsBalanceHidden(state);
   const ens = selectEns(state);

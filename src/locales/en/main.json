@@ -474,6 +474,7 @@
   "Leverage": "Leverage",
   "Saving-Games": "Savings Games",
   "Dashboard-Title": "Your Dashboard",
+  "Dashboard-Title-With-Address": "{{address}} Dashboard",
   "Summary-Deposit": "Your deposits",
   "Summary-Monthly": "Est. Monthly yield",
   "Summary-Daily": "Est. daily yield",

@@ -9,10 +9,12 @@ import {
   userDidConnect,
   walletHasDisconnected,
 } from '../reducers/wallet/wallet';
-import { selectAllChains, selectChainById } from '../selectors/chains';
+import { selectAllChains, selectChainById, selectAllChainIds } from '../selectors/chains';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 import { selectIsWalletConnected } from '../selectors/wallet';
 import { getAddressDomains } from '../../../helpers/addresses';
+import { fetchWalletTimeline } from './analytics';
+import { fetchAllBalanceAction } from './balance';
 
 const ensCache: Record<string, string> = {};
 export const getEns = createAsyncThunk<string, { address: string | null }, { state: BeefyState }>(
@@ -70,6 +72,22 @@ export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
     }, 500);
   }
 );
+
+type initViewAsAddress = string;
+export const initViewAsAddress = createAsyncThunk<
+  initViewAsAddress,
+  { address: string },
+  { state: BeefyState }
+>('wallet/initViewAsAddress', async ({ address }, { getState, dispatch }) => {
+  const state = getState();
+  const chains = selectAllChainIds(state);
+  for (const chainId of chains) {
+    dispatch(fetchAllBalanceAction({ chainId, address }));
+  }
+  dispatch(fetchWalletTimeline({ address }));
+
+  return address;
+});
 
 export const tryToAutoReconnect = createAsyncThunk<void, void, { state: BeefyState }>(
   'wallet/tryToAutoReconnect',

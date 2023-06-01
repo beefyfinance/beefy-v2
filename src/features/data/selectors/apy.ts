@@ -12,7 +12,7 @@ import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectUserActiveBoostBalanceInToken } from './boosts';
-import { selectWalletAddressIfKnown } from './wallet';
+import { selectWalletAddress } from './wallet';
 import type { TotalApy } from '../reducers/apy';
 import { compoundInterest } from '../../../helpers/number';
 import { isEmpty } from '../../../helpers/utils';
@@ -34,7 +34,7 @@ const EMPTY_GLOBAL_STATS = {
   depositedVaults: 0,
 };
 export const selectUserGlobalStats = (state: BeefyState) => {
-  const walletAddress = selectWalletAddressIfKnown(state);
+  const walletAddress = selectWalletAddress(state);
   if (!walletAddress) {
     return EMPTY_GLOBAL_STATS;
   }

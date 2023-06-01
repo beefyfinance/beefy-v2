@@ -55,6 +55,9 @@ export const App = () => {
                   <Route exact path="/dashboard">
                     <Dashboard />
                   </Route>
+                  <Route strict exact path="/dashboard/:address">
+                    <Dashboard />
+                  </Route>
                   <Route exact path="/treasury">
                     <Treasury />
                   </Route>

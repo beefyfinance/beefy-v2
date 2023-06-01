@@ -1,7 +1,7 @@
 import { Container, makeStyles } from '@material-ui/core';
 import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatUsd } from '../../../../helpers/format';
+import { formatAddressShort, formatUsd } from '../../../../helpers/format';
 import { useAppSelector } from '../../../../store';
 import { selectUserGlobalStats } from '../../../data/selectors/apy';
 import { SummaryStats } from '../../../../components/SummaryStats';
@@ -14,7 +14,11 @@ import { selectUserTotalYieldUsd } from '../../../data/selectors/balance';
 
 const useStyles = makeStyles(styles);
 
-export const DepositSummary = memo(function DepositSummary() {
+export const DepositSummary = memo(function DepositSummary({
+  viewAsAddress,
+}: {
+  viewAsAddress?: string;
+}) {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -50,7 +54,11 @@ export const DepositSummary = memo(function DepositSummary() {
   return (
     <div className={classes.container}>
       <Container maxWidth="lg">
-        <div className={classes.title}>{t('Dashboard-Title')}</div>
+        <div className={classes.title}>
+          {viewAsAddress
+            ? t('Dashboard-Title-With-Address', { address: formatAddressShort(viewAsAddress) })
+            : t('Dashboard-Title')}
+        </div>
         <SummaryStats items={UserStats} />
       </Container>
     </div>
