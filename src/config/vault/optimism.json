@@ -1,5 +1,36 @@
 [
   {
+    "id": "velodrome-frax-usd+",
+    "name": "USD+-FRAX sLP",
+    "token": "USD+-FRAX sLP",
+    "tokenAddress": "0x947A96B025C70497DbC0D095D966f3B59a675a70",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "tokenAmmId": "optimism-velodrome",
+    "earnedToken": "mooVelodromeUSD+-FRAX",
+    "earnedTokenAddress": "0x44CB9241eb013C436bC241096Af0b02BeA0516eE",
+    "earnContractAddress": "0x44CB9241eb013C436bC241096Af0b02BeA0516eE",
+    "oracle": "lps",
+    "oracleId": "velodrome-frax-usd+",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["USD+", "FRAX"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "network": "optimism",
+    "createdAt": 1685588249
+  },
+  {
     "id": "velodrome-usdc-mta",
     "name": "MTA-USDC vLP",
     "token": "MTA-USDC vLP",
@@ -257,7 +288,14 @@
     "status": "active",
     "platformId": "velodrome",
     "assets": ["USD+", "DAI+"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
@@ -1055,7 +1093,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_MICRO",
+      "MCAP_SMALL",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
@@ -1914,7 +1952,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_MICRO",
+      "MCAP_SMALL",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
@@ -2080,7 +2118,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_MICRO",
+      "MCAP_SMALL",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
