@@ -1,6 +1,6 @@
 [
   {
-    "id": "moo_balancer-maticx-bbawmatic-stader",
+    "id": "moo_balancer-maticx-bbawmatic-stader-refill",
     "poolId": "balancer-maticx-bbawmatic",
     "name": "Stader",
     "assets": ["MaticX", "bbaWMATIC"],
