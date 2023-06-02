@@ -5,6 +5,7 @@ import { AssetsImage } from '../../../../components/AssetsImage';
 import { Button } from '../../../../components/Button';
 import { LinkButton } from '../../../../components/LinkButton';
 import { useAppSelector } from '../../../../store';
+import { getSingleAssetSrc } from '../../../../helpers/singleAssetSrc';
 import type { ChainEntity } from '../../../data/entities/chain';
 import type { TokenEntity } from '../../../data/entities/token';
 import { selectChainById } from '../../../data/selectors/chains';
@@ -39,6 +40,7 @@ export const AddTokenToWallet = memo<AddTokenToWalletProps>(function AddTokenToW
             address: token.address,
             symbol: token.symbol,
             decimals: token.decimals,
+            image: window.location.origin + getSingleAssetSrc(token.id, chainId),
           },
         },
       });
