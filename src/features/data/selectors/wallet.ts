@@ -5,7 +5,8 @@ import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 // If we know the address: either from a wallet connection; or from hydration of persisted state from previous visit
 export const selectIsWalletKnown = createSelector(
   (state: BeefyState) => state.user.wallet.address,
-  address => address !== null
+  (state: BeefyState) => state.user.wallet.viewAsAddress,
+  (address, viewAsAddress) => address !== null || viewAsAddress !== null
 );
 
 // If address is actually connected
