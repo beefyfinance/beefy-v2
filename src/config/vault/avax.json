@@ -1,5 +1,28 @@
 [
   {
+    "id": "solisnek-usdt-usdc",
+    "name": "USDT-USDC sLP",
+    "token": "USDT-USDC sLP",
+    "tokenAddress": "0x1CF7F397af73F6206055C69205fC9cb7D69187A0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "solisnek",
+    "tokenAmmId": "avax-solisnek",
+    "earnedToken": "mooSoliSnekUSDT-USDC",
+    "earnedTokenAddress": "0x90A1F633D6eB460E591c3B3640721D78eCD238b2",
+    "earnContractAddress": "0x90A1F633D6eB460E591c3B3640721D78eCD238b2",
+    "oracle": "lps",
+    "oracleId": "solisnek-usdt-usdc",
+    "status": "active",
+    "platformId": "solisnek",
+    "assets": ["USDT", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://www.solisnek.finance/swap?from=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7&to=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x1CF7F397af73F6206055C69205fC9cb7D69187A0",
+    "network": "avax",
+    "createdAt": 1685752356
+  },
+  {
     "id": "solisnek-wavax-bifi",
     "name": "BIFI-AVAX vLP",
     "token": "BIFI-AVAX vLP",
