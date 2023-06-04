@@ -20,7 +20,7 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xc7198437980c041c805A1EDcbA50c1Ce5db95118&to=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0xE107aB1f58B12807E980d1c814D1dc8F0A2905Ad",
     "network": "avax",
-    "createdAt": 1685766379
+    "createdAt": 1685899114
   },
   {
     "id": "solisnek-usdt-usdc",
@@ -43,7 +43,7 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7&to=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x1CF7F397af73F6206055C69205fC9cb7D69187A0",
     "network": "avax",
-    "createdAt": 1685752356
+    "createdAt": 1685899114
   },
   {
     "id": "solisnek-wavax-bifi",
