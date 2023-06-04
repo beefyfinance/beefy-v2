@@ -1,5 +1,28 @@
 [
   {
+    "id": "solisnek-usdt-usdt.e",
+    "name": "USDT.e-USDT sLP",
+    "token": "USDT.e-USDT sLP",
+    "tokenAddress": "0xE107aB1f58B12807E980d1c814D1dc8F0A2905Ad",
+    "tokenDecimals": 18,
+    "tokenProviderId": "solisnek",
+    "tokenAmmId": "avax-solisnek",
+    "earnedToken": "mooSoliSnekUSDT.e-USDT",
+    "earnedTokenAddress": "0x519dad51937999DEBE15DE3a9704FEaa2B097848",
+    "earnContractAddress": "0x519dad51937999DEBE15DE3a9704FEaa2B097848",
+    "oracle": "lps",
+    "oracleId": "solisnek-usdt-usdt.e",
+    "status": "active",
+    "platformId": "solisnek",
+    "assets": ["USDTe", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xc7198437980c041c805A1EDcbA50c1Ce5db95118&to=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+    "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0xE107aB1f58B12807E980d1c814D1dc8F0A2905Ad",
+    "network": "avax",
+    "createdAt": 1685766379
+  },
+  {
     "id": "solisnek-usdt-usdc",
     "name": "USDT-USDC sLP",
     "token": "USDT-USDC sLP",
