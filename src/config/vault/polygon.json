@@ -9030,7 +9030,8 @@
     "earnContractAddress": "0xdb15F201529778b5e2dfa52D41615cd1AB24c765",
     "oracle": "lps",
     "oracleId": "ripae-pmatic-matic",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "ripae",
     "assets": ["pMATIC", "MATIC"],
     "risks": [
