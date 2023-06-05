@@ -5982,37 +5982,6 @@
     "createdAt": 1621508945
   },
   {
-    "id": "froyo-3pool-eol",
-    "name": "USDT/DAI/USDC",
-    "token": "FROYO 3Pool",
-    "tokenAddress": "0x4f85Bbf3B0265DCEd4Ec72ebD0358ccCf190F1B3",
-    "tokenDecimals": 18,
-    "tokenProviderId": "froyo",
-    "earnedToken": "mooFroyo3Pool",
-    "earnedTokenAddress": "0xb18398ad9735fea37C97dcba50C0Bb947Dc0eeBD",
-    "earnContractAddress": "0xb18398ad9735fea37C97dcba50C0Bb947Dc0eeBD",
-    "oracle": "lps",
-    "oracleId": "froyo-3pool",
-    "status": "eol",
-    "retireReason": "tvl",
-    "platformId": "froyo",
-    "assets": ["USDT", "DAI", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://frozenyogurt.finance/pool",
-    "removeLiquidityUrl": "https://frozenyogurt.finance/pool",
-    "network": "fantom",
-    "createdAt": 1620633860
-  },
-  {
     "id": "froyo-froyo-ftm-eol",
     "name": "FROYO-FTM LP",
     "token": "FROYO-FTM LP",
