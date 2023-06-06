@@ -61,7 +61,4 @@ export const styles = (theme: Theme) => ({
       backgroundColor: theme.palette.primary.main,
     },
   },
-  withRightAlign: {
-    justifyContent: 'flex-end',
-  },
 });
