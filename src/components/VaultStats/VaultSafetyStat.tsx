@@ -27,6 +27,18 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultSafetyStatProps) {
   const label = 'VaultStat-SAFETY';
   const vault = selectVaultById(state, vaultId);
 
+  const isLoaded = state.ui.dataLoader.global.vaults.alreadyLoadedOnce;
+
+  if (!isLoaded) {
+    return {
+      label,
+      value: '-',
+      subValue: null,
+      blur: false,
+      loading: true,
+    };
+  }
+
   return {
     label,
     value: <StatSafetyScore score={vault.safetyScore} />,
