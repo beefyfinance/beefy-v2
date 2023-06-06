@@ -1,5 +1,5 @@
 import type { VaultEntity } from '../../features/data/entities/vault';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
@@ -30,6 +30,9 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultSafetyStatProps) {
 
 type StatSafetyScoreProps = { score: SafetyScoreProps['score'] };
 const StatSafetyScore = memo<StatSafetyScoreProps>(function SafetyTooltip({ score }) {
-  const alignRight = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
-  return <SafetyScore score={score} size="sm" align={alignRight ? 'right' : 'left'} />;
+  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
+  const alignDirection = useMemo(() => {
+    return lgUp ? 'right' : 'left';
+  }, [lgUp]);
+  return <SafetyScore score={score} size="sm" align={alignDirection} />;
 });
