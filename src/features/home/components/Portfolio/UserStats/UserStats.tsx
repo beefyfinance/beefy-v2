@@ -32,7 +32,7 @@ type VisibleAboveProps = PropsWithChildren<{
   width: number;
 }>;
 const VisibleAbove = memo<VisibleAboveProps>(function VisibleAbove({ width, children }) {
-  const aboveWidth = useMediaQuery(`(min-width: ${width}px)`);
+  const aboveWidth = useMediaQuery(`(min-width: ${width}px)`, { noSsr: true });
   return <>{aboveWidth ? children : null}</>;
 });
 

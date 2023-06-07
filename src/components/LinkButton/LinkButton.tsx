@@ -19,7 +19,7 @@ export const LinkButton: FC<LinkButtonProps> = ({
 }) => {
   const classes = useStyles();
 
-  const mobileView = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+  const mobileView = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
 
   const shouldHideIcon = hideIconOnMobile && mobileView;
   return (

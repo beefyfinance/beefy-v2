@@ -14,7 +14,7 @@ const useStyles = makeStyles(styles);
 
 export const Filters = memo(function Filters() {
   const classes = useStyles();
-  const desktopView = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
+  const desktopView = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
 
   return (
     <div className={classes.filters}>

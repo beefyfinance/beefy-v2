@@ -28,7 +28,7 @@ const getSelectedLanguage = i18n => {
 };
 
 const SelectedLanguage = memo<LabeledSelectProps>(function SelectedLanguage({ value }) {
-  const isMobile = useMediaQuery('(max-width: 960px)');
+  const isMobile = useMediaQuery('(max-width: 960px)', { noSsr: true });
   const classes = useStyles();
   return (
     <div className={classes.flex}>
@@ -42,7 +42,7 @@ export const LanguageDropdown = () => {
   const { i18n } = useTranslation();
   const i18nLanguage = getSelectedLanguage(i18n);
   const [language, setLanguage] = React.useState(i18nLanguage);
-  const isMobile = useMediaQuery('(max-width: 960px)');
+  const isMobile = useMediaQuery('(max-width: 960px)', { noSsr: true });
 
   const classes = useStyles();
 

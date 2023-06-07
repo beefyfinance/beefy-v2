@@ -41,7 +41,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
     setOpen(!open);
   }, [open]);
 
-  const mobileView = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+  const mobileView = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
 
   const { t } = useTranslation();
 

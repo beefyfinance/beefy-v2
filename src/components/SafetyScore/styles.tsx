@@ -33,9 +33,6 @@ export const styles = (theme: Theme) => ({
     '& $barsContainer': {
       margin: '0 0 0 8px',
     },
-    '& $label': {
-      ...theme.typography['h2'],
-    },
   },
   withScoreLow: {
     '& $sm': {

@@ -27,7 +27,7 @@ export const UserVaults = memo(function UserVaults() {
     handleClearText,
   } = useSortedDashboardVaults();
 
-  const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+  const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
 
   const subTitle = useMemo(() => {
     return mdDown ? 'Dashboard-Your-Vaults-Subtitle-Mobile' : 'Dashboard-Your-Vaults-Subtitle';

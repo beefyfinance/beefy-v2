@@ -16,7 +16,7 @@ interface ChartProps {
 const COLORS = ['#5C70D6', '#5C99D6', '#5CC2D6', '#5CD6AD', '#70D65C', '#7FB24D', '#1e9c05'];
 
 export const PieChart = memo<ChartProps>(function PieChart({ data, type, formatter }) {
-  const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
+  const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'), { noSsr: true });
 
   const chartPxs = useMemo(() => {
     return smUp ? 164 : 124;

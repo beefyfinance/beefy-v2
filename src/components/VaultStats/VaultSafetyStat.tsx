@@ -30,6 +30,6 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultSafetyStatProps) {
 
 type StatSafetyScoreProps = { score: SafetyScoreProps['score'] };
 const StatSafetyScore = memo<StatSafetyScoreProps>(function SafetyTooltip({ score }) {
-  const alignRight = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
+  const alignRight = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
   return <SafetyScore score={score} size="sm" align={alignRight ? 'right' : 'left'} />;
 });
