@@ -26,6 +26,7 @@ export const Dashboard = memo(function Dashboard() {
 
   useEffect(() => {
     if (address) {
+      console.log(address);
       dispatch(initViewAsAddress({ address }));
       return () => {
         dispatch(setViewAsAddress({ address: null }));

@@ -7,8 +7,16 @@ export const styles = (theme: Theme) => ({
       padding: '24px 0px',
     },
   },
+  titleContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: '24px',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column' as const,
+      rowGap: '12px',
+    },
+  },
   title: {
     ...theme.typography.h1,
-    marginBottom: '24px',
   },
 });

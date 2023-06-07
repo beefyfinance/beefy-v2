@@ -11,6 +11,7 @@ import { ReactComponent as VaultIcon } from '../../../../images/icons/vault.svg'
 import { ReactComponent as DailyIcon } from '../../../../images/icons/daily-yield.svg';
 import { ReactComponent as MonthlyIcon } from '../../../../images/icons/monthly-yield.svg';
 import { selectUserTotalYieldUsd } from '../../../data/selectors/balance';
+import { AddressInput } from '../AddressInput';
 
 const useStyles = makeStyles(styles);
 
@@ -54,10 +55,15 @@ export const DepositSummary = memo(function DepositSummary({
   return (
     <div className={classes.container}>
       <Container maxWidth="lg">
-        <div className={classes.title}>
-          {viewAsAddress
-            ? t('Dashboard-Title-With-Address', { address: formatAddressShort(viewAsAddress) })
-            : t('Dashboard-Title')}
+        <div className={classes.titleContainer}>
+          <div className={classes.title}>
+            {viewAsAddress
+              ? t('Dashboard-Title-With-Address', { address: formatAddressShort(viewAsAddress) })
+              : t('Dashboard-Title')}
+          </div>
+          <div>
+            <AddressInput />
+          </div>
         </div>
         <SummaryStats items={UserStats} />
       </Container>
