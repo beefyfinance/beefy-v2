@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_balancer-jeur-par-v2-jarvis",
+    "poolId": "balancer-jeur-par-v2",
+    "name": "Jarvis",
+    "assets": ["jEUR", "PAR"],
+    "tokenAddress": "0xB476B7A027da3D9fB5A5c9CB6078A34f7289B476",
+    "earnedToken": "jEUR",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c",
+    "earnContractAddress": "0x4F0C2f936b4dDFB93019986C000ea3aeE7F83Baf",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "jEUR",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["jarvis"]
+  },
+  {
     "id": "moo_balancer-wsteth-bbaweth-lido",
     "poolId": "balancer-wsteth-bbaweth",
     "name": "Lido",
