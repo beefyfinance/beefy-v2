@@ -1,5 +1,28 @@
 [
   {
+    "id": "solisnek-frxeth-weth.e",
+    "name": "frxETH-WETH.e sLP",
+    "token": "frxETH-WETH.e sLP",
+    "tokenAddress": "0xcfDDbd48d178d0dBd84cEa448e5Cc784eD18A44D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "solisnek",
+    "tokenAmmId": "avax-solisnek",
+    "earnedToken": "mooSoliSnekfrxETH-WETH.e",
+    "earnedTokenAddress": "0x6083BE18a0ec91B7bcb23e024a657aFf235c1726",
+    "earnContractAddress": "0x6083BE18a0ec91B7bcb23e024a657aFf235c1726",
+    "oracle": "lps",
+    "oracleId": "solisnek-frxeth-weth.e",
+    "status": "active",
+    "platformId": "solisnek",
+    "assets": ["frxETH", "WETHe"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://www.solisnek.finance/swap?from=0x2018B0CA0eDcE80800851958bD094dD4a8DA1fc4&to=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
+    "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0xcfDDbd48d178d0dBd84cEa448e5Cc784eD18A44D",
+    "network": "avax",
+    "createdAt": 1686174525
+  },
+  {
     "id": "solisnek-usdt-usdt.e",
     "name": "USDT.e-USDT sLP",
     "token": "USDT.e-USDT sLP",
@@ -20,7 +43,7 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xc7198437980c041c805A1EDcbA50c1Ce5db95118&to=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0xE107aB1f58B12807E980d1c814D1dc8F0A2905Ad",
     "network": "avax",
-    "createdAt": 1686104276
+    "createdAt": 1686174525
   },
   {
     "id": "solisnek-usdt-usdc",
@@ -43,7 +66,7 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7&to=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x1CF7F397af73F6206055C69205fC9cb7D69187A0",
     "network": "avax",
-    "createdAt": 1686104276
+    "createdAt": 1686174525
   },
   {
     "id": "solisnek-wavax-bifi",
