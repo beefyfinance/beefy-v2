@@ -79,7 +79,7 @@ export const initViewAsAddress = createAsyncThunk<void, { address: string }, { s
   async ({ address }, { getState, dispatch }) => {
     const state = getState();
     const chains = selectAllChainIds(state);
-    dispatch(setViewAsAddress({ address }));
+    dispatch(setViewAsAddress({ address: address.toLocaleLowerCase() }));
     for (const chainId of chains) {
       dispatch(fetchAllBalanceAction({ chainId, address }));
     }
