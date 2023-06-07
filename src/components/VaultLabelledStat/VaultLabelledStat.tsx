@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react';
 import React, { memo } from 'react';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import type { Theme } from '@material-ui/core';
 import { IconWithTooltip, Tooltip } from '../Tooltip';
 import clsx from 'clsx';
 
@@ -35,14 +34,13 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
   contentClassName,
 }) {
   const classes = useStyles();
-  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 
   return (
     <div className={className}>
-      {!lgUp && showLabel ? (
+      {showLabel ? (
         <div className={classes.label}>
           <div className={clsx(classes.labelText, labelClassName)}>{label}</div>
-          {tooltip && lgUp ? (
+          {tooltip ? (
             <IconWithTooltip content={tooltip} triggerClass={classes.tooltipTrigger} />
           ) : null}
         </div>

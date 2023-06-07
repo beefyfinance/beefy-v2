@@ -4,6 +4,9 @@ export const styles = (theme: Theme) => ({
   label: {
     display: 'flex',
     alignItems: 'center',
+    [theme.breakpoints.up('lg')]: {
+      display: 'none',
+    },
   },
   labelText: {
     ...theme.typography['subline-sm'],
@@ -14,6 +17,9 @@ export const styles = (theme: Theme) => ({
     height: '16px',
     flexShrink: 0,
     marginLeft: '4px',
+    [theme.breakpoints.up('lg')]: {
+      display: 'none',
+    },
     '& svg': {
       width: '16px',
       height: '16px',
