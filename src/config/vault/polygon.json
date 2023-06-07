@@ -1,5 +1,34 @@
 [
   {
+    "id": "balancer-frxeth-bbaweth",
+    "name": "frxETH-bbaWETH",
+    "token": "frxETH-bbaWETH",
+    "tokenAddress": "0xD00f9Ca46ce0E4A63067c4657986f0167b0De1E5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerfrxETH-bbaWETH",
+    "earnedTokenAddress": "0xb87e2D83DB70599B14818C931DE0A656bf620e77",
+    "earnContractAddress": "0xb87e2D83DB70599B14818C931DE0A656bf620e77",
+    "oracle": "lps",
+    "oracleId": "balancer-frxeth-bbaweth",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["frxETH", "bbaWETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0xd00f9ca46ce0e4a63067c4657986f0167b0de1e5000000000000000000000b42/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0xd00f9ca46ce0e4a63067c4657986f0167b0de1e5000000000000000000000b42/withdraw",
+    "network": "polygon",
+    "createdAt": 1685191493
+  },
+  {
     "id": "balancer-wsteth-bbaweth",
     "name": "wstETH-bbaWETH",
     "token": "wstETH-bbaWETH",
@@ -332,7 +361,7 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/withdraw",
     "network": "polygon",
-    "createdAt": 1678119805
+    "createdAt": 1685364888
   },
   {
     "id": "balancer-jeur-par",
@@ -547,7 +576,8 @@
     "earnContractAddress": "0xEC209bCdEf8798772aC1456ea9d93C940187363C",
     "oracle": "lps",
     "oracleId": "kyber-wsteth-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "kyber",
     "assets": ["wstETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -9000,7 +9030,8 @@
     "earnContractAddress": "0xdb15F201529778b5e2dfa52D41615cd1AB24c765",
     "oracle": "lps",
     "oracleId": "ripae-pmatic-matic",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "ripae",
     "assets": ["pMATIC", "MATIC"],
     "risks": [
@@ -9340,7 +9371,7 @@
     "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a/invest",
     "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a/withdraw",
     "network": "polygon",
-    "createdAt": 1661772010
+    "createdAt": 1685364888
   },
   {
     "id": "jarvis-2eure",

@@ -18,7 +18,7 @@ import { OneInchPriceOracleAbi } from '../../../../config/abi';
 import BigNumber from 'bignumber.js';
 import { getWeb3Instance } from '../instances';
 
-const API_URL = import.meta.env.VITE_ONE_INCH_API || 'https://api.1inch.io';
+const API_URL = import.meta.env.VITE_API_URL || 'https://api.beefy.finance';
 
 export class OneInchApi implements IOneInchApi {
   protected api: AxiosInstance;
@@ -27,7 +27,7 @@ export class OneInchApi implements IOneInchApi {
 
   constructor(protected chain: ChainEntity, protected oracleAddress: string) {
     this.api = axios.create({
-      baseURL: `${API_URL}/v5.0/${chain.networkChainId}/`,
+      baseURL: `${API_URL}/oneinch/${chain.id}/`,
     });
   }
 

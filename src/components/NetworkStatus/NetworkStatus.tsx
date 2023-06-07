@@ -17,7 +17,7 @@ import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../features/data/selectors/wallet';
-import { selectChainById } from '../../features/data/selectors/chains';
+import { selectChainById, selectEolChainIds } from '../../features/data/selectors/chains';
 import { getNetworkSrc } from '../../helpers/networkSrc';
 import iconUnsupportedChain from '../../images/icons/navigation/unsuported-chain.svg';
 
@@ -180,7 +180,12 @@ const stringArrCompare = (left: string[], right: string[]) => {
 
 const findChainIdMatching = (state: BeefyState, matcher: (loader: LoaderState) => boolean) => {
   const chainIds: ChainEntity['id'][] = [];
-  for (const [chainId, loader] of Object.entries(state.ui.dataLoader.byChainId)) {
+  const eolChains = selectEolChainIds(state);
+  const chainsToCheck = Object.entries(state.ui.dataLoader.byChainId).filter(
+    ([chainId, _]) => !eolChains.includes(chainId)
+  );
+
+  for (const [chainId, loader] of chainsToCheck) {
     if (
       matcher(loader.balance) ||
       matcher(loader.allowance) ||

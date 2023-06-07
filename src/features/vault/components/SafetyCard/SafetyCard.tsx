@@ -3,7 +3,6 @@ import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Popover } from '../../../../components/Popover';
 import { RISKS } from '../../../../config/risk';
-import { SafetyScore } from '../../../../components/SafetyScore';
 import { Card } from '../Card';
 import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
@@ -26,7 +25,6 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
     <Card>
       <CardHeader className={classes.header}>
         <div className={classes.safetyLabel}>{t('Safety-Score1')}</div>
-        <SafetyScore score={vault.safetyScore} colorLabel={true} size="md" />
       </CardHeader>
       <CardContent>
         <div className={classes.riskList}>

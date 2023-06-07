@@ -1,5 +1,34 @@
 [
   {
+    "id": "balancer-wsteth-bbaaweth",
+    "name": "wstETH-bbaWETH",
+    "token": "wstETH-bbaWETH Arbitrum",
+    "tokenAddress": "0x5A7f39435fD9c381e4932fa2047C9a5136A5E3E7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerArbwstETH-bbaWETH",
+    "earnedTokenAddress": "0x98767133bc938ed88d3FD9cD93A4f01e593fc746",
+    "earnContractAddress": "0x98767133bc938ed88d3FD9cD93A4f01e593fc746",
+    "oracle": "lps",
+    "oracleId": "balancer-wsteth-bbaaweth",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["wstETH", "bbaaWETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x5a7f39435fd9c381e4932fa2047c9a5136a5e3e7000000000000000000000400/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x5a7f39435fd9c381e4932fa2047c9a5136a5e3e7000000000000000000000400/withdraw",
+    "network": "arbitrum",
+    "createdAt": 1685191493
+  },
+  {
     "id": "chronos-weth-bifi",
     "name": "BIFI-ETH vLP",
     "token": "vAMM-WETH/BIFI",
@@ -164,7 +193,7 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xcba9ff45cfb9ce238afde32b0148eb82cbe635620000000000000000000003fd/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xcba9ff45cfb9ce238afde32b0148eb82cbe635620000000000000000000003fd/withdraw",
     "network": "arbitrum",
-    "createdAt": 1682857348
+    "createdAt": 1685191493
   },
   {
     "id": "arbidex-arb-usdc",
@@ -376,7 +405,8 @@
     "earnContractAddress": "0x1C83E83Ab71B7BF7ca3c5865f241E006Caf1Fe7D",
     "oracle": "lps",
     "oracleId": "ramses-lusd-lqty",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "ramses",
     "assets": ["LQTY", "LUSD"],
     "risks": [
@@ -496,13 +526,13 @@
     "earnContractAddress": "0x87c2644d34019157eD3C85336936B6e6B67fa9B2",
     "oracle": "lps",
     "oracleId": "ramses-frax-dei",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "ramses",
     "assets": ["FRAX", "DEI"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_NONE",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
@@ -711,10 +741,11 @@
     "earnContractAddress": "0x315a3674711bc1A41A4b6993c5780d23EaE034Db",
     "oracle": "lps",
     "oracleId": "ramses-lusd-dei",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "ramses",
     "assets": ["LUSD", "DEI"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x93b346b6BC2548dA6A1E7d98E9a421B42541425b&to=0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x6b18AE9225011eaf4A7e52f1069fB66462406bF0",
@@ -927,13 +958,13 @@
     "earnContractAddress": "0xc496b3691d9A6Cded3cff9a3BEDaD512B0D0270F",
     "oracle": "lps",
     "oracleId": "ramses-dei-usdc",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "ramses",
     "assets": ["DEI", "USDC"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_NONE",
       "MCAP_SMALL",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
@@ -1690,7 +1721,7 @@
     "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/invest",
     "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/withdraw",
     "network": "arbitrum",
-    "createdAt": 1673731740
+    "createdAt": 1685364888
   },
   {
     "id": "curve-arb-f-fraxbp",
@@ -1704,7 +1735,7 @@
     "earnContractAddress": "0x63934e5aBA120f2BAE2418711Ef0f20F7DB26CD2",
     "oracle": "lps",
     "oracleId": "curve-arb-f-fraxbp",
-    "status": "active",
+    "status": "eol",
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["FRAX", "USDC"],
@@ -2583,7 +2614,7 @@
     "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/invest",
     "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/withdraw",
     "network": "arbitrum",
-    "createdAt": 1665023339
+    "createdAt": 1685364888
   },
   {
     "id": "stargate-arb-usdc",

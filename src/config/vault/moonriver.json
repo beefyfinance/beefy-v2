@@ -531,7 +531,8 @@
     "earnContractAddress": "0x65bb8496DDfE7470516C0Ed014C0eDc7C7973676",
     "oracle": "lps",
     "oracleId": "sushi-mr-eth-wmovr",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["ETH", "WMOVR_SUSHI"],
     "risks": [

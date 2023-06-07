@@ -50,6 +50,8 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'sethUSDC',
       'sethUSDT',
       'eUSD',
+      'lvUSD',
+      'R',
     ],
   },
   polygon: {
@@ -176,7 +178,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'jCHF',
       'TOR',
       'ETSAlpha',
-      'DEI',
       'wUSDR',
       'DOLA',
     ],
@@ -275,7 +276,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'USTaxl',
       'USDL',
       'TOR',
-      'DEI',
       'BUSD',
       'alUSD',
     ],
@@ -322,9 +322,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'DOLA',
       'USD+',
       'DAI+',
-      'DEI',
       'gDAI',
       'jEUR',
+      'wUSDR',
     ],
   },
   avax: {
@@ -373,6 +373,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'saUSDC',
       'USTw',
       'USD+',
+      'DOLA',
     ],
   },
   cronos: {

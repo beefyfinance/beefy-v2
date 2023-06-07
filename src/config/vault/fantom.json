@@ -690,7 +690,8 @@
     "earnContractAddress": "0xa43A80F527aC3619ce904C55758D83A7b468fb16",
     "oracle": "lps",
     "oracleId": "boo-dei-usdc",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "spookyswap",
     "assets": ["DEI", "USDC"],
     "risks": [
@@ -783,7 +784,8 @@
     "earnContractAddress": "0x6aB501afC4326071A9d53EE039Ee2fb448C78037",
     "oracle": "lps",
     "oracleId": "beets-another-dei-another-dollar",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "beethovenx",
     "assets": ["DEI", "USDC"],
     "risks": [
@@ -962,7 +964,8 @@
     "earnContractAddress": "0x916dD4AB72550E944Fcb56FC1Cc18e07909d86AF",
     "oracle": "lps",
     "oracleId": "spiritV2-usdc-mim",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "spiritswap",
     "assets": ["MIM", "USDC"],
     "risks": [
@@ -5979,37 +5982,6 @@
     "createdAt": 1621508945
   },
   {
-    "id": "froyo-3pool-eol",
-    "name": "USDT/DAI/USDC",
-    "token": "FROYO 3Pool",
-    "tokenAddress": "0x4f85Bbf3B0265DCEd4Ec72ebD0358ccCf190F1B3",
-    "tokenDecimals": 18,
-    "tokenProviderId": "froyo",
-    "earnedToken": "mooFroyo3Pool",
-    "earnedTokenAddress": "0xb18398ad9735fea37C97dcba50C0Bb947Dc0eeBD",
-    "earnContractAddress": "0xb18398ad9735fea37C97dcba50C0Bb947Dc0eeBD",
-    "oracle": "lps",
-    "oracleId": "froyo-3pool",
-    "status": "eol",
-    "retireReason": "tvl",
-    "platformId": "froyo",
-    "assets": ["USDT", "DAI", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://frozenyogurt.finance/pool",
-    "removeLiquidityUrl": "https://frozenyogurt.finance/pool",
-    "network": "fantom",
-    "createdAt": 1620633860
-  },
-  {
     "id": "froyo-froyo-ftm-eol",
     "name": "FROYO-FTM LP",
     "token": "FROYO-FTM LP",
@@ -7287,7 +7259,8 @@
     "earnContractAddress": "0x07EC069DC86D5ca2eB3c705C7030525A62e6E78C",
     "oracle": "lps",
     "oracleId": "stargate-fantom-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stargate",
     "assets": ["USDC"],
     "risks": [
