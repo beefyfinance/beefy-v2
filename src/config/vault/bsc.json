@@ -4075,6 +4075,14 @@
     "status": "active",
     "platformId": "apeswap",
     "assets": ["YEL", "BNB"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0xD3b71117E6C1558c1553305b44988cd944e97300",
     "addLiquidityUrl": "https://apeswap.finance/add/ETH/0xD3b71117E6C1558c1553305b44988cd944e97300",
@@ -4769,6 +4777,15 @@
     "status": "active",
     "platformId": "openocean",
     "assets": ["OOE", "BNB"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_SMALL",
+      "IL_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://openocean.finance/classic",
     "addLiquidityUrl": "https://openocean.finance/pools/?t=1631247635777#/add/BNB/0x9029FdFAe9A03135846381c7cE16595C3554e10A",
@@ -5123,6 +5140,14 @@
     "status": "active",
     "platformId": "pancakeswap",
     "assets": ["CAKE", "USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://pancakeswap.finance/swap?inputCurrency=0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82&outputCurrency=0x55d398326f99059fF775485246999027B3197955",
     "addLiquidityUrl": "https://pancakeswap.finance/add/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82/0x55d398326f99059fF775485246999027B3197955",
@@ -5984,6 +6009,14 @@
     "status": "active",
     "platformId": "pancakeswap",
     "assets": ["CAKE", "BUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://pancakeswap.finance/swap?inputCurrency=0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     "addLiquidityUrl": "https://pancakeswap.finance/add/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
@@ -7911,6 +7944,14 @@
     "status": "active",
     "platformId": "pancakeswap",
     "assets": ["TWT", "BNB"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x4b0f1812e5df2a09796481ff14017e6005508003",
     "addLiquidityUrl": "https://pancakeswap.finance/add/BNB/0x4b0f1812e5df2a09796481ff14017e6005508003",
@@ -9758,6 +9799,14 @@
     "status": "active",
     "platformId": "mdex",
     "assets": ["ETH", "USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "strategyTypeId": "lp",
     "depositFee": "<0.1%",
     "buyTokenUrl": "https://bsc.mdex.com/#/swap?inputCurrency=0x2170ed0880ac9a755fd29b2688956bd959f933f8&outputCurrency=0x55d398326f99059ff775485246999027b3197955",

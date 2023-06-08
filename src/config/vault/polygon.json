@@ -2782,6 +2782,15 @@
     "status": "active",
     "platformId": "telxchange",
     "assets": ["TEL", "AAVE"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_SMALL",
+      "IL_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0xD6DF932A45C0f255f85145f286eA0b292B21C90B&outputCurrency=0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xD6DF932A45C0f255f85145f286eA0b292B21C90B/0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
