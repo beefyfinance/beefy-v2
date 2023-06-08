@@ -62,7 +62,7 @@ export const DepositSummary = memo(function DepositSummary({
               : t('Dashboard-Title')}
           </div>
           <div>
-            <AddressInput />
+            <AddressInput viewAsAddress={viewAsAddress} />
           </div>
         </div>
         <SummaryStats items={UserStats} />

@@ -1,20 +1,29 @@
 import { InputBase, makeStyles } from '@material-ui/core';
-import { Search } from '@material-ui/icons';
+import { CloseRounded, Search } from '@material-ui/icons';
 import React, { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Web3 from 'web3';
 import { styles } from './styles';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
-export const AddressInput = memo(function AddressInput() {
+export const AddressInput = memo(function AddressInput({
+  viewAsAddress,
+}: {
+  viewAsAddress: string;
+}) {
   const [address, setAddress] = useState<string>('');
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const handleChange = useCallback((e: any) => {
+  const handleChange = useCallback(e => {
     setAddress(e.target.value);
+  }, []);
+
+  const handleClear = useCallback(() => {
+    setAddress('');
   }, []);
 
   const isValid = useMemo(() => {
@@ -25,31 +34,65 @@ export const AddressInput = memo(function AddressInput() {
     }
   }, [address]);
 
+  const addressAlreadyLoaded = useMemo(() => {
+    return viewAsAddress === address;
+  }, [address, viewAsAddress]);
+
   return (
-    <div>
-      <InputBase
-        className={classes.search}
-        value={address}
-        onChange={handleChange}
-        fullWidth={true}
-        endAdornment={<GoToDashboardButton isValid={isValid} address={address} />}
-        placeholder={t('Dashboard-SearchInput-Placeholder')}
-      />
-    </div>
+    <InputBase
+      className={classes.search}
+      value={address}
+      onChange={handleChange}
+      fullWidth={true}
+      endAdornment={
+        <GoToDashboardButton
+          isValid={isValid}
+          address={address}
+          handleClear={handleClear}
+          canClear={addressAlreadyLoaded}
+        />
+      }
+      placeholder={t('Dashboard-SearchInput-Placeholder')}
+    />
   );
 });
 
 const GoToDashboardButton = memo(function GoToDashboardButton({
   isValid,
   address,
+  handleClear,
+  canClear,
 }: {
   isValid: boolean;
   address: string;
+  handleClear: () => void;
+  canClear: boolean;
 }) {
   const classes = useStyles();
+
+  if (isValid && !canClear) {
+    return (
+      <Link
+        className={clsx(classes.icon, classes.activeIcon)}
+        aria-disabled={isValid}
+        to={`/dashboard/${address}`}
+      >
+        <Search />
+      </Link>
+    );
+  }
+
+  if (address.length !== 0) {
+    return (
+      <button onClick={handleClear} className={clsx(classes.icon, classes.activeIcon)}>
+        <CloseRounded />
+      </button>
+    );
+  }
+
   return (
-    <Link className={classes.icon} aria-disabled={isValid} to={`/dashboard/${address}`}>
+    <div className={clsx(classes.icon, classes.disabledIcon)}>
       <Search />
-    </Link>
+    </div>
   );
 });

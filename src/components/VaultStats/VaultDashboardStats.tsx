@@ -61,7 +61,11 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
           <VaultYearlyStat showLabel={false} vaultId={vaultId} />
         </div>
         <div className={clsx(classes.column, classes.hideMd)}>
-          <VaultDailyUsdStat className={classes.textOverflow} showLabel={false} vaultId={vaultId} />
+          <VaultDailyUsdStat
+            triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
+            showLabel={false}
+            vaultId={vaultId}
+          />
         </div>
       </div>
     </div>
