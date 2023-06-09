@@ -40,7 +40,7 @@ export const AddressInput = memo(function AddressInput({
 
   return (
     <InputBase
-      className={classes.search}
+      className={clsx(classes.search, { [classes.active]: address.length !== 0 })}
       value={address}
       onChange={handleChange}
       fullWidth={true}

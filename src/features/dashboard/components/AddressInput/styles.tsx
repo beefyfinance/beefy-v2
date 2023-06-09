@@ -27,6 +27,14 @@ export const styles = (theme: Theme) => ({
       },
     },
   },
+  active: {
+    '& .MuiInputBase-input': {
+      width: '375px',
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+      },
+    },
+  },
   icon: {
     background: 'transparent',
     padding: 0,
