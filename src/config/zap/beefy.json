@@ -192,7 +192,7 @@
   {
     "chainId": "fantom",
     "ammId": "fantom-equalizer",
-    "zapAddress": "0xE82CAf86578AEBb5E43980375e91dA44355780C6"
+    "zapAddress": "0xE7f943De8386F1d2BF58F3D10c0938aB4fb67c07"
   },
   {
     "chainId": "fuse",
