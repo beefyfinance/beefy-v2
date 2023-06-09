@@ -114,7 +114,7 @@ export const usePnLChartData = (
         return () => clearTimeout(handleUnderlyingToUsd);
       }
     }
-  }, [dispatch, sharesStatus, underlyingStatus, timebucket, productKey, vaultId]);
+  }, [dispatch, sharesStatus, underlyingStatus, timebucket, productKey, vaultId, walletAddress]);
 
   const isLoading = useMemo(() => {
     return underlyingStatus !== 'fulfilled' || sharesStatus !== 'fulfilled';

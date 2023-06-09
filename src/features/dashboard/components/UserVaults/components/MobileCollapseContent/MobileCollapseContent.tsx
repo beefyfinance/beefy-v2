@@ -37,7 +37,7 @@ export const MobileCollapseContent = memo(function MobileCollapseContent({
       items['chart'] = t('Dashboard-Chart');
     }
     return items;
-  }, [t]);
+  }, [hasAnalyticsData, t]);
 
   const handleChange = useCallback(newValue => {
     setShowStats(newValue);

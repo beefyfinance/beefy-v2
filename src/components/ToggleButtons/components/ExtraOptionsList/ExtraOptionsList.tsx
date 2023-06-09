@@ -50,7 +50,7 @@ export const ExtraOptionsList = memo<ExtraOptionsListProps>(function ExtraOption
 
   const extraListOptionSelected = useMemo(() => {
     return Object.keys(extraOptions).includes(value);
-  }, []);
+  }, [extraOptions, value]);
 
   return (
     <ClickAwayListener onClickAway={handleClose} mouseEvent="onMouseDown" touchEvent="onTouchStart">
