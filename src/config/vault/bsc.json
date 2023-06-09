@@ -1,5 +1,27 @@
 [
   {
+    "id": "thena-gamma-bnb-bifi",
+    "name": "BIFI-BNB gammaLP",
+    "token": "aWBNB-BIFI",
+    "tokenAddress": "0x6896655Ebad0C3730776111040D7731975A42aBc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenaGamma_BNB-BIFI",
+    "earnedTokenAddress": "0x4Ea9af68bC24d14935460bb6E6d39ae11bb0Ed99",
+    "earnContractAddress": "0x4Ea9af68bC24d14935460bb6E6d39ae11bb0Ed99",
+    "oracle": "lps",
+    "oracleId": "thena-gamma-bnb-bifi",
+    "status": "active",
+    "platformId": "thena",
+    "assets": ["BIFI", "BNB"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://thena.fi/liquidity/fusion?currency0=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c&currency1=0xca3f508b8e4dd382ee878a314789373d80a5190a&strategy=GAMMA_WIDE",
+    "removeLiquidityUrl": "https://thena.fi/liquidity/fusion?currency0=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c&currency1=0xca3f508b8e4dd382ee878a314789373d80a5190a&strategy=GAMMA_WIDE",
+    "network": "bsc",
+    "createdAt": 1686300494
+  },
+  {
     "id": "thena-usdt+-usd+",
     "name": "USD+-USDT+ sLP",
     "token": "USD+-USDT+ sLP",
