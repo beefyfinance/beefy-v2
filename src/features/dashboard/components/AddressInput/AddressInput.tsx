@@ -2,7 +2,7 @@ import { InputBase, makeStyles } from '@material-ui/core';
 import { CloseRounded, Search } from '@material-ui/icons';
 import React, { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Web3 from 'web3';
 import { styles } from './styles';
 import clsx from 'clsx';
@@ -17,6 +17,8 @@ export const AddressInput = memo(function AddressInput({
   const [address, setAddress] = useState<string>('');
   const { t } = useTranslation();
   const classes = useStyles();
+
+  const history = useHistory();
 
   const handleChange = useCallback(e => {
     setAddress(e.target.value);
@@ -38,12 +40,22 @@ export const AddressInput = memo(function AddressInput({
     return viewAsAddress === address;
   }, [address, viewAsAddress]);
 
+  const handleGoToDashboardOnEnterKey = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === 'Enter' && isValid) {
+        history.push(`/dashboard/${address}`);
+      }
+    },
+    [address, history, isValid]
+  );
+
   return (
     <InputBase
       className={clsx(classes.search, { [classes.active]: address.length !== 0 })}
       value={address}
       onChange={handleChange}
       fullWidth={true}
+      onKeyPress={handleGoToDashboardOnEnterKey}
       endAdornment={
         <GoToDashboardButton
           isValid={isValid}
