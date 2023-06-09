@@ -8,9 +8,9 @@ import { Vault } from '../../../Vault';
 import type { VaultEntity } from '../../../../../data/entities/vault';
 
 function useVaultHeightEstimate() {
-  const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
-  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
-  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
+  const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'), { noSsr: true });
+  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'), { noSsr: true });
+  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
 
   return useMemo(() => {
     if (lgUp) {

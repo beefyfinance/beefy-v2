@@ -36,7 +36,7 @@ export type ChartProp = {
 };
 export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, bucket, toggles }) {
   const classes = useStyles();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'));
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
   const { min, max, avg, data } = useChartData(stat, vaultId, oracleId, bucket);
 
   const chartMargin = useMemo(() => {

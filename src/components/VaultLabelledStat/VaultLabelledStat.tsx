@@ -35,7 +35,7 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
   contentClassName,
 }) {
   const classes = useStyles();
-  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
+  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
 
   return (
     <div className={className}>

@@ -37,7 +37,7 @@ export const Header = memo(function Header() {
   const isOnDashboard =
     location.pathname.includes('dashboard') || location.pathname.includes('treasury');
   const classes = useStyles();
-  const isMobile = useMediaQuery('(max-width: 500px)');
+  const isMobile = useMediaQuery('(max-width: 500px)', { noSsr: true });
   const dispatch = useAppDispatch();
   const shouldLoad = useAppSelector(selectShouldInitProposals);
 

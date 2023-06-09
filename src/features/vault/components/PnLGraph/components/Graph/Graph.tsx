@@ -77,7 +77,7 @@ export const Graph = memo(function Graph({ vaultId, period }: { vaultId: string;
     return (value: number) => formatDateTimeTick(value, TIME_BUCKET[period]);
   }, [period]);
 
-  const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'));
+  const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
 
   const xInterval = useMemo(() => {
     return getXInterval(data.length, xsDown);
