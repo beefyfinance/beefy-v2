@@ -48,6 +48,7 @@
     "react/display-name": "warn",
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
-    "react/no-children-prop": "off"
+    "react/no-children-prop": "off",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }
