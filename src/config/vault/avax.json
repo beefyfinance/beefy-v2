@@ -626,7 +626,8 @@
     "earnContractAddress": "0x0ca490ea23232DBd9e8EA8F5E0b81CAdFF696206",
     "oracle": "lps",
     "oracleId": "sicle-pops-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "swapsicle",
     "assets": ["POPS", "AVAX"],
     "risks": [
