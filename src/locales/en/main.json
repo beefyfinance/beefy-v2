@@ -492,6 +492,7 @@
   "Dashboard-Deposited": "Deposited: ",
   "Dashboard-Percentage": "Percentage: ",
   "Dashboard-NoData": "No data available",
+  "Dashboard-NoAddress": "No address selected",
   "Dashboard-NoVaults": "Deposit into a vault to view dashboard for connected wallet or enter another wallet address",
   "Glp-Withdraw-Notice": "The underlying protocol requires withdrawals to be at least {{cooldown}} after a deposit/harvest.",
   "Glp-Withdraw-Notice-Unlocks": "Unlocks in <countdown/>",

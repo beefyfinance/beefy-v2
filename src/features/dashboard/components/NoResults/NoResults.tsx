@@ -28,17 +28,19 @@ export const NoResults = memo(function NoResults({ viewAsAddress }: { viewAsAddr
   }, [dispatch, walletAddress]);
 
   return (
-    <Text text={walletAddress ? t('Dashboard-NoVaults') : null}>
+    <Text walletAddress={walletAddress}>
       <div className={classes.actionsContainer}>
-        {walletAddress ? (
-          <ButtonLink className={classes.btn} to="/" variant="success">
-            {t('NoResults-ViewAllVaults')}
-          </ButtonLink>
-        ) : (
-          <Button className={classes.btn} onClick={handleWalletConnect} variant="success">
-            {t('NoResults-ConnectWallet')}
-          </Button>
-        )}
+        <div className={classes.center}>
+          {walletAddress ? (
+            <ButtonLink className={classes.btn} to="/" variant="success">
+              {t('NoResults-ViewAllVaults')}
+            </ButtonLink>
+          ) : (
+            <Button className={classes.btn} onClick={handleWalletConnect} variant="success">
+              {t('NoResults-ConnectWallet')}
+            </Button>
+          )}
+        </div>
         <Divider />
         <AddressInput viewAsAddress={viewAsAddress} />
       </div>
@@ -47,9 +49,9 @@ export const NoResults = memo(function NoResults({ viewAsAddress }: { viewAsAddr
 });
 
 type TextProps = PropsWithChildren<{
-  text?: string;
+  walletAddress?: string | null;
 }>;
-const Text = memo<TextProps>(function Text({ text, children }) {
+const Text = memo<TextProps>(function Text({ walletAddress, children }) {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -60,8 +62,10 @@ const Text = memo<TextProps>(function Text({ text, children }) {
           <img className={classes.icon} src={iconEmptyState} alt="empty" />
         </div>
         <div className={classes.textContainer}>
-          <div className={classes.title}>{t('Dashboard-NoData')}</div>
-          {text && <div className={classes.text}>{text}</div>}
+          <div className={classes.title}>
+            {walletAddress ? t('Dashboard-NoData') : t('Dashboard-NoAddress')}
+          </div>
+          {walletAddress && <div className={classes.text}>{t('Dashboard-NoVaults')}</div>}
         </div>
         {children}
       </div>

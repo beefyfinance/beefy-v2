@@ -53,9 +53,14 @@ export const styles = (theme: Theme) => ({
   btn: {
     width: '100%',
     padding: '6px 12px',
+    maxWidth: '250px',
   },
   or: {
     ...theme.typography['subline-sm'],
     color: theme.palette.text.disabled,
+  },
+  center: {
+    display: 'flex',
+    justifyContent: 'center',
   },
 });
