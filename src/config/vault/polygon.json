@@ -1643,7 +1643,8 @@
     "earnContractAddress": "0xADA7F98fb2594E76914EB593e74B348A498Ea5Bd",
     "oracle": "lps",
     "oracleId": "ape-banana-matic",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "apeswap",
     "assets": ["BANANA", "MATIC"],
     "risks": [
