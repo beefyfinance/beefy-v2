@@ -13,7 +13,7 @@ import { setViewAsAddress } from '../data/reducers/wallet/wallet';
 
 const useStyles = makeStyles(styles);
 
-type DashboardUrlParams = {
+export type DashboardUrlParams = {
   address?: string;
 };
 
@@ -26,7 +26,6 @@ export const Dashboard = memo(function Dashboard() {
 
   useEffect(() => {
     if (address) {
-      console.log(address);
       dispatch(initViewAsAddress({ address }));
       return () => {
         dispatch(setViewAsAddress({ address: null }));
@@ -43,7 +42,7 @@ export const Dashboard = memo(function Dashboard() {
           <UserVaults />
         </>
       ) : (
-        <NoResults />
+        <NoResults viewAsAddress={address} />
       )}
     </div>
   );

@@ -18,7 +18,7 @@ const useStyles = makeStyles(styles);
 export const DepositSummary = memo(function DepositSummary({
   viewAsAddress,
 }: {
-  viewAsAddress?: string;
+  viewAsAddress: string;
 }) {
   const { t } = useTranslation();
   const classes = useStyles();

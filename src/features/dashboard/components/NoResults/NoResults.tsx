@@ -9,25 +9,50 @@ import { selectWalletAddressIfKnown } from '../../../data/selectors/wallet';
 import { Section } from '../../../../components/Section';
 import { styles } from './styles';
 import iconEmptyState from '../../../../images/empty-state.svg';
+import { AddressInput } from '../AddressInput';
 
 const useStyles = makeStyles(styles);
 
-export const NoResults = memo(function NoResults() {
+export const NoResults = memo(function NoResults({ viewAsAddress }: { viewAsAddress: string }) {
+  const { t } = useTranslation();
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
+  const classes = useStyles();
+  const dispatch = useAppDispatch();
 
-  if (walletAddress) {
-    return <NoVaults />;
-  }
+  const handleWalletConnect = useCallback(() => {
+    if (walletAddress) {
+      dispatch(doDisconnectWallet());
+    } else {
+      dispatch(askForWalletConnection());
+    }
+  }, [dispatch, walletAddress]);
 
-  return <NotConnected />;
+  return (
+    <Text text={walletAddress ? t('Dashboard-NoVaults') : null}>
+      <div className={classes.actionsContainer}>
+        {walletAddress ? (
+          <ButtonLink className={classes.btn} to="/" variant="success">
+            {t('NoResults-ViewAllVaults')}
+          </ButtonLink>
+        ) : (
+          <Button className={classes.btn} onClick={handleWalletConnect} variant="success">
+            {t('NoResults-ConnectWallet')}
+          </Button>
+        )}
+        <Divider />
+        <AddressInput viewAsAddress={viewAsAddress} />
+      </div>
+    </Text>
+  );
 });
 
 type TextProps = PropsWithChildren<{
-  text: string;
+  text?: string;
 }>;
 const Text = memo<TextProps>(function Text({ text, children }) {
   const { t } = useTranslation();
   const classes = useStyles();
+
   return (
     <Section>
       <div className={classes.container}>
@@ -36,7 +61,7 @@ const Text = memo<TextProps>(function Text({ text, children }) {
         </div>
         <div className={classes.textContainer}>
           <div className={classes.title}>{t('Dashboard-NoData')}</div>
-          <div className={classes.text}>{text}</div>
+          {text && <div className={classes.text}>{text}</div>}
         </div>
         {children}
       </div>
@@ -44,33 +69,13 @@ const Text = memo<TextProps>(function Text({ text, children }) {
   );
 });
 
-const NotConnected = memo(function NotConnected() {
-  const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-  const walletAddress = useAppSelector(selectWalletAddressIfKnown);
-  const handleWalletConnect = useCallback(() => {
-    if (walletAddress) {
-      dispatch(doDisconnectWallet());
-    } else {
-      dispatch(askForWalletConnection());
-    }
-  }, [dispatch, walletAddress]);
+const Divider = memo(function Divider() {
+  const classes = useStyles();
   return (
-    <Text text={t('Dashboard-NoConnected')}>
-      <Button onClick={handleWalletConnect} variant="success">
-        {t('NoResults-ConnectWallet')}
-      </Button>
-    </Text>
-  );
-});
-
-const NoVaults = memo(function NoVaults() {
-  const { t } = useTranslation();
-  return (
-    <Text text={t('Dashboard-NoVaults')}>
-      <ButtonLink to="/" variant="success">
-        {t('NoResults-ViewAllVaults')}
-      </ButtonLink>
-    </Text>
+    <div className={classes.dividerContainer}>
+      <div className={classes.line} />
+      <div className={classes.or}>OR</div>
+      <div className={classes.line} />
+    </div>
   );
 });

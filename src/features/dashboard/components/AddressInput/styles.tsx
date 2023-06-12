@@ -7,14 +7,15 @@ export const styles = (theme: Theme) => ({
     borderRadius: '8px',
     '&.Mui-focused': {
       '& .MuiInputBase-input': {
-        width: '375px',
+        width: '395px',
         [theme.breakpoints.down('md')]: {
           width: '100%',
         },
       },
     },
     '& .MuiInputBase-input': {
-      transition: '0.5s ease-in-out',
+      minWidth: '140px',
+      transition: '0.2s ease-in-out',
       padding: '8px 16px',
       color: '#D0D0DA',
       height: 'auto',
@@ -29,7 +30,7 @@ export const styles = (theme: Theme) => ({
   },
   active: {
     '& .MuiInputBase-input': {
-      width: '375px',
+      width: '395px',
       [theme.breakpoints.down('sm')]: {
         width: '100%',
       },
