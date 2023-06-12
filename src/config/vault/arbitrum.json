@@ -3,7 +3,7 @@
     "id": "balancer-tbtc-wbtc",
     "name": "tBTC-WBTC",
     "token": "tBTC-WBTC",
-    "tokenAddress": "0x542F16DA0efB162D20bF4358EfA095B70A100f9E",
+    "tokenAddress": "0xc9f52540976385A84BF416903e1Ca3983c539E34",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
     "earnedToken": "mooBalancertBTC-WBTC",
