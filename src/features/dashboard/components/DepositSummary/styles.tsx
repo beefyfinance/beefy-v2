@@ -19,6 +19,7 @@ export const styles = (theme: Theme) => ({
   title: {
     display: 'flex',
     columnGap: '8px',
+    alignItems: 'center',
     ...theme.typography.h1,
   },
 });

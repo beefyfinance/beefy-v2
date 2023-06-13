@@ -312,11 +312,11 @@ export function maybeHexToNumber(input: number | string | unknown): number {
 }
 
 export function formatAddressShort(addr: string): string {
-  return addr.substring(0, 6) + '...' + addr.substring(addr.length - 4);
+  return addr.substring(0, 4) + '...' + addr.substring(addr.length - 4);
 }
 
-export function formatEns(ens: string): string {
-  if (ens.length > 16) {
+export function formatEns(ens: string, lenght: number = 16): string {
+  if (ens.length > lenght) {
     return ens.substring(0, 6) + '...' + ens.substring(ens.length - 3);
   }
   return ens;

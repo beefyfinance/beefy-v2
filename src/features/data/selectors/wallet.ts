@@ -46,8 +46,7 @@ export const selectIsNetworkSupported = (state: BeefyState) =>
 export const selectIsWalletInitialized = (state: BeefyState) => state.user.wallet.initialized;
 
 export const selectEns = createSelector(
-  (state: BeefyState, _address?: string) => selectWalletAddress(state),
-  (state: BeefyState, _address?: string) => state.user.wallet.ens.byAddress,
+  (state: BeefyState, _address?: string) => state.user.wallet.ens,
   (state: BeefyState, address?: string) => address,
-  (walletAddress, ensByAddress, address) => ensByAddress[address ?? walletAddress]
+  (ensState, address) => ensState?.byAddress[address] || ''
 );

@@ -88,7 +88,9 @@ export const initViewAsAddress = createAsyncThunk<void, { address: string }, { s
     if (address.includes('.eth')) {
       const resolvedAddress = await getEnsResolver(address, ethChain);
       if (resolvedAddress) {
-        dispatch(setViewAsAddress({ address: resolvedAddress.toLowerCase() }));
+        const lowerCaseAddress = resolvedAddress.toLowerCase();
+        dispatch(setViewAsAddress({ address: lowerCaseAddress }));
+        dispatch(setEns({ address: lowerCaseAddress, ens: address }));
         for (const chainId of chains) {
           dispatch(fetchAllBalanceAction({ chainId, address: resolvedAddress }));
         }
