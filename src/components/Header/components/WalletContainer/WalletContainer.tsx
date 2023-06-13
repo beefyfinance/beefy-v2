@@ -32,7 +32,7 @@ export const WalletContainer = connect((state: BeefyState) => {
   const walletAddress = isWalletKnown ? selectConnectedWalletAddress(state) : null;
   const walletPending = selectIsWalletPending(state);
   const blurred = selectIsBalanceHidden(state);
-  const ens = selectEns(state);
+  const ens = selectEns(state, walletAddress);
   return { isWalletConnected, walletAddress, walletPending, blurred, ens };
 })(
   ({

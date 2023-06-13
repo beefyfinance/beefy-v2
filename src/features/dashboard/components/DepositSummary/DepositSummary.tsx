@@ -1,7 +1,7 @@
 import { Container, makeStyles } from '@material-ui/core';
 import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatAddressShort, formatUsd } from '../../../../helpers/format';
+import { formatUsd } from '../../../../helpers/format';
 import { useAppSelector } from '../../../../store';
 import { selectUserGlobalStats } from '../../../data/selectors/apy';
 import { SummaryStats } from '../../../../components/SummaryStats';
@@ -56,11 +56,7 @@ export const DepositSummary = memo(function DepositSummary({
     <div className={classes.container}>
       <Container maxWidth="lg">
         <div className={classes.titleContainer}>
-          <div className={classes.title}>
-            {viewAsAddress
-              ? t('Dashboard-Title-With-Address', { address: formatAddressShort(viewAsAddress) })
-              : t('Dashboard-Title')}
-          </div>
+          <div className={classes.title}>{t('Dashboard-Title')}</div>
           <div>
             <AddressInput viewAsAddress={viewAsAddress} />
           </div>

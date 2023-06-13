@@ -29,7 +29,7 @@ export const AddressInput = memo(function AddressInput({
   }, []);
 
   const isValid = useMemo(() => {
-    if (Web3.utils.isAddress(address)) {
+    if (address.includes('.eth') || Web3.utils.isAddress(address)) {
       return true;
     } else {
       return false;
@@ -44,9 +44,10 @@ export const AddressInput = memo(function AddressInput({
     (e: React.KeyboardEvent<HTMLDivElement>) => {
       if (e.key === 'Enter' && isValid) {
         history.push(`/dashboard/${address}`);
+        handleClear();
       }
     },
-    [address, history, isValid]
+    [address, handleClear, history, isValid]
   );
 
   return (
@@ -85,6 +86,7 @@ const GoToDashboardButton = memo(function GoToDashboardButton({
   if (isValid && !canClear) {
     return (
       <Link
+        onClick={handleClear}
         className={clsx(classes.icon, classes.activeIcon)}
         aria-disabled={isValid}
         to={`/dashboard/${address}`}

@@ -76,10 +76,12 @@ const Text = memo<TextProps>(function Text({ walletAddress, children }) {
 const Divider = memo(function Divider() {
   const classes = useStyles();
   return (
-    <div className={classes.dividerContainer}>
-      <div className={classes.line} />
-      <div className={classes.or}>OR</div>
-      <div className={classes.line} />
+    <div className={classes.center}>
+      <div className={classes.dividerContainer}>
+        <div className={classes.line} />
+        <div className={classes.or}>OR</div>
+        <div className={classes.line} />
+      </div>
     </div>
   );
 });

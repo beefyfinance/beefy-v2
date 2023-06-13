@@ -473,8 +473,7 @@
   "Insurance": "Insurance",
   "Leverage": "Leverage",
   "Saving-Games": "Savings Games",
-  "Dashboard-Title": "Your Dashboard",
-  "Dashboard-Title-With-Address": "{{address}} Dashboard",
+  "Dashboard-Title": "Dashboard",
   "Summary-Deposit": "Your deposits",
   "Summary-Monthly": "Est. Monthly yield",
   "Summary-Daily": "Est. daily yield",
@@ -596,5 +595,5 @@
   "Dashboard-VaultData": "Vault Data",
   "Dashboard-TransactionHistory": "Transaction History",
   "Dashboard-Chart": "Chart",
-  "Dashboard-SearchInput-Placeholder": "Enter an address"
+  "Dashboard-SearchInput-Placeholder": "Enter an Address/ENS"
 }

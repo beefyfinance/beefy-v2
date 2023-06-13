@@ -25,3 +25,10 @@ export async function getAddressDomains(
 
   return await lookupAddress(address, providers);
 }
+
+export async function getEnsResolver(ens: string, chain: ChainEntity): Promise<string | null> {
+  const web3Instance = await getWeb3Instance(chain);
+  const provider = new Web3Provider(web3Instance.currentProvider as ExternalProvider);
+  const address = await provider.resolveName(ens);
+  return address;
+}

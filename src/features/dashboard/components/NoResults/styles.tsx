@@ -35,14 +35,14 @@ export const styles = (theme: Theme) => ({
     textAlign: 'center' as const,
   },
   actionsContainer: {
-    display: 'flex',
+    display: 'grid',
     gap: '12px',
-    flexDirection: 'column' as const,
   },
   dividerContainer: {
     display: 'flex',
     alignItems: 'center',
     columnGap: '8px',
+    width: '250px',
   },
   line: {
     height: '2px',

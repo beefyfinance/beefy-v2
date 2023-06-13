@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => ({
     borderRadius: '8px',
     '&.Mui-focused': {
       '& .MuiInputBase-input': {
-        width: '395px',
+        width: '400px',
         [theme.breakpoints.down('md')]: {
           width: '100%',
         },
@@ -30,7 +30,7 @@ export const styles = (theme: Theme) => ({
   },
   active: {
     '& .MuiInputBase-input': {
-      width: '395px',
+      width: '400px',
       [theme.breakpoints.down('sm')]: {
         width: '100%',
       },

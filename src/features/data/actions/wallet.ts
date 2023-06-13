@@ -6,6 +6,7 @@ import {
   accountHasChanged,
   chainHasChanged,
   chainHasChangedToUnsupported,
+  setEns,
   setViewAsAddress,
   userDidConnect,
   walletHasDisconnected,
@@ -13,33 +14,37 @@ import {
 import { selectAllChains, selectChainById, selectAllChainIds } from '../selectors/chains';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 import { selectIsWalletConnected } from '../selectors/wallet';
-import { getAddressDomains } from '../../../helpers/addresses';
+import { getAddressDomains, getEnsResolver } from '../../../helpers/addresses';
 import { fetchWalletTimeline } from './analytics';
 import { fetchAllBalanceAction } from './balance';
 
 const ensCache: Record<string, string> = {};
-export const getEns = createAsyncThunk<string, { address: string | null }, { state: BeefyState }>(
+export const getEns = createAsyncThunk<void, { address: string | null }, { state: BeefyState }>(
   'wallet/getEns',
-  async ({ address }, { getState }) => {
-    if (!address) {
-      return '';
+  async ({ address }, { getState, dispatch }) => {
+    if (address) {
+      const addressLower = address.toLowerCase();
+      if (addressLower in ensCache) {
+        dispatch(setEns({ ens: ensCache[addressLower], address: addressLower }));
+      }
+
+      const bscChain = selectChainById(getState(), 'bsc');
+      const ethChain = selectChainById(getState(), 'ethereum');
+      const polygonChain = selectChainById(getState(), 'polygon');
+      const arbChain = selectChainById(getState(), 'arbitrum');
+
+      const domains = await getAddressDomains(address, [
+        bscChain,
+        ethChain,
+        polygonChain,
+        arbChain,
+      ]);
+      const domain = domains?.[0] || '';
+
+      ensCache[addressLower] = domain;
+
+      dispatch(setEns({ ens: domain, address: addressLower }));
     }
-
-    const addressLower = address.toLowerCase();
-    if (addressLower in ensCache) {
-      return ensCache[addressLower];
-    }
-
-    const bscChain = selectChainById(getState(), 'bsc');
-    const ethChain = selectChainById(getState(), 'ethereum');
-    const polygonChain = selectChainById(getState(), 'polygon');
-    const arbChain = selectChainById(getState(), 'arbitrum');
-
-    const domains = await getAddressDomains(address, [bscChain, ethChain, polygonChain, arbChain]);
-    const domain = domains?.[0] || '';
-
-    ensCache[addressLower] = domain;
-    return domain;
   }
 );
 
@@ -78,12 +83,25 @@ export const initViewAsAddress = createAsyncThunk<void, { address: string }, { s
   'wallet/initViewAsAddress',
   async ({ address }, { getState, dispatch }) => {
     const state = getState();
+    const ethChain = selectChainById(state, 'ethereum');
     const chains = selectAllChainIds(state);
-    dispatch(setViewAsAddress({ address: address.toLocaleLowerCase() }));
-    for (const chainId of chains) {
-      dispatch(fetchAllBalanceAction({ chainId, address }));
+    if (address.includes('.eth')) {
+      const resolvedAddress = await getEnsResolver(address, ethChain);
+      if (resolvedAddress) {
+        dispatch(setViewAsAddress({ address: resolvedAddress.toLowerCase() }));
+        for (const chainId of chains) {
+          dispatch(fetchAllBalanceAction({ chainId, address: resolvedAddress }));
+        }
+        dispatch(fetchWalletTimeline({ address: resolvedAddress }));
+      }
+    } else {
+      dispatch(setViewAsAddress({ address: address.toLowerCase() }));
+      for (const chainId of chains) {
+        dispatch(fetchAllBalanceAction({ chainId, address }));
+      }
+      dispatch(fetchWalletTimeline({ address }));
+      dispatch(getEns({ address }));
     }
-    dispatch(fetchWalletTimeline({ address }));
   }
 );
 
