@@ -300,6 +300,11 @@
     "zapAddress": "0x1B03127EC0F4D12EFD84d84C70d5Aa7ef83Fe136"
   },
   {
+    "chainId": "polygon",
+    "ammId": "polygon-pearl",
+    "zapAddress": "0x12eCa88BDd180C082B1231aE83Ca55c3E72f301d"
+  },
+  {
     "chainId": "zksync",
     "ammId": "zksync-velocore",
     "zapAddress": "0x3f02b129138377722FfE9d374B3F65fc7599475e"
