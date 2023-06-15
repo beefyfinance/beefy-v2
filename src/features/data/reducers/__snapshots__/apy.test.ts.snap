@@ -1,0 +1,105 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`APY slice tests > should properly compute binSPIRIT boost apr when getting the ppfs beforehand 1`] = `1.5224351568892651`;
+
+exports[`APY slice tests > should properly compute binSPIRIT boost apr when getting the ppfs in the same action 1`] = `1.5224351568892651`;
+
+exports[`APY slice tests > should update state on fulfilled apy data action 1`] = `
+{
+  "rawApy": {
+    "byBoostId": {},
+    "byVaultId": {
+      "banana-banana-busd": {
+        "beefyPerformanceFee": 0.045,
+        "compoundingsPerYear": 2190,
+        "lpFee": 0.0002,
+        "totalApy": 0.0343505989421522,
+        "tradingApr": 0.000309155,
+        "vaultApr": 0.03346493761979882,
+        "vaultApy": 0.03403092311211742,
+      },
+      "ellipsis-renbtc": {
+        "beefyPerformanceFee": 0.045,
+        "compoundingsPerYear": 2190,
+        "lpFee": 0.0002,
+        "totalApy": 0.0343505989421522,
+        "tradingApr": 0.000309155,
+        "vaultApr": 0.03346493761979882,
+        "vaultApy": 0.03403092311211742,
+      },
+      "future-extra-super-hyped-vault": {
+        "vaultApr": 0.013855864509528597,
+      },
+      "one-bifi-gov": {
+        "vaultApr": 0.013855864509528597,
+      },
+      "one-bifi-maxi": {
+        "totalApy": 0.01401646541942525,
+      },
+    },
+  },
+  "totalApy": {
+    "byVaultId": {},
+  },
+}
+`;
+
+exports[`APY slice tests > should update state on fulfilled apy data action 2`] = `
+{
+  "rawApy": {
+    "byBoostId": {
+      "moo_banana-banana-busd-bitcrush": {
+        "apr": 4950.645066260906,
+      },
+    },
+    "byVaultId": {
+      "banana-banana-busd": {
+        "beefyPerformanceFee": 0.045,
+        "compoundingsPerYear": 2190,
+        "lpFee": 0.0002,
+        "totalApy": 0.0343505989421522,
+        "tradingApr": 0.000309155,
+        "vaultApr": 0.03346493761979882,
+        "vaultApy": 0.03403092311211742,
+      },
+      "ellipsis-renbtc": {
+        "beefyPerformanceFee": 0.045,
+        "compoundingsPerYear": 2190,
+        "lpFee": 0.0002,
+        "totalApy": 0.0343505989421522,
+        "tradingApr": 0.000309155,
+        "vaultApr": 0.03346493761979882,
+        "vaultApy": 0.03403092311211742,
+      },
+      "future-extra-super-hyped-vault": {
+        "vaultApr": 0.013855864509528597,
+      },
+      "one-bifi-gov": {
+        "vaultApr": 0.013855864509528597,
+      },
+      "one-bifi-maxi": {
+        "totalApy": 0.01401646541942525,
+      },
+    },
+  },
+  "totalApy": {
+    "byVaultId": {},
+  },
+}
+`;
+
+exports[`APY slice tests > should update state on fulfilled boost contract data 1`] = `
+{
+  "rawApy": {
+    "byBoostId": {
+      "moo_banana-banana-busd-bitcrush": {
+        "apr": 16.099658752067988,
+      },
+    },
+    "byVaultId": {},
+  },
+  "totalApy": {
+    "byVaultId": {},
+  },
+}
+`;

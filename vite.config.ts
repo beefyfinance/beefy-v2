@@ -31,7 +31,9 @@ export default defineConfig({
     open: true,
   },
   plugins: [
-    react(),
+    react({
+      fastRefresh: process.env.NODE_ENV !== 'test',
+    }),
     {
       ...svgrPlugin(),
       enforce: 'post',

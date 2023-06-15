@@ -1,0 +1,1457 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Data Loader slice tests > should update state on fulfilled action by chain id 1`] = `
+{
+  "byChainId": {
+    "test": {
+      "addressBook": {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+      "allowance": {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+      "balance": {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "pending",
+      },
+      "contractData": {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+    },
+  },
+  "global": {
+    "addressBook": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "amms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "analytics": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "apy": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "bridge": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "fees": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "infoCards": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minterForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minters": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "onRamp": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "platforms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "proposals": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "treasury": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "vaults": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+  "instances": {
+    "wallet": false,
+  },
+  "statusIndicator": {
+    "open": false,
+  },
+}
+`;
+
+exports[`Data Loader slice tests > should update state on fulfilled action by chain id 2`] = `
+{
+  "byChainId": {
+    "test": {
+      "addressBook": {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+      "allowance": {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+      "balance": {
+        "alreadyLoadedOnce": true,
+        "error": null,
+        "status": "fulfilled",
+      },
+      "contractData": {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+    },
+  },
+  "global": {
+    "addressBook": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "amms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "analytics": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "apy": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "bridge": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "fees": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "infoCards": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minterForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minters": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "onRamp": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "platforms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "proposals": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "treasury": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "vaults": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+  "instances": {
+    "wallet": false,
+  },
+  "statusIndicator": {
+    "open": false,
+  },
+}
+`;
+
+exports[`Data Loader slice tests > should update state on fulfilled action by chain id 3`] = `
+{
+  "byChainId": {
+    "test": {
+      "addressBook": {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+      "allowance": {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+      "balance": {
+        "alreadyLoadedOnce": true,
+        "error": "fatality",
+        "status": "rejected",
+      },
+      "contractData": {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+    },
+  },
+  "global": {
+    "addressBook": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "amms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "analytics": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "apy": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "bridge": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "fees": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "infoCards": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minterForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minters": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "onRamp": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "platforms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "proposals": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "treasury": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "vaults": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+  "instances": {
+    "wallet": false,
+  },
+  "statusIndicator": {
+    "open": true,
+  },
+}
+`;
+
+exports[`Data Loader slice tests > should update state on fulfilled action by chain id 4`] = `
+{
+  "byChainId": {
+    "test": {
+      "addressBook": {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+      "allowance": {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+      "balance": {
+        "alreadyLoadedOnce": true,
+        "error": null,
+        "status": "pending",
+      },
+      "contractData": {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+    },
+  },
+  "global": {
+    "addressBook": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "amms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "analytics": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "apy": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "bridge": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "fees": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "infoCards": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minterForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minters": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "onRamp": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "platforms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "proposals": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "treasury": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "vaults": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+  "instances": {
+    "wallet": false,
+  },
+  "statusIndicator": {
+    "open": true,
+  },
+}
+`;
+
+exports[`Data Loader slice tests > should update state on fulfilled global action 1`] = `
+{
+  "byChainId": {},
+  "global": {
+    "addressBook": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "amms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "analytics": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "apy": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "bridge": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "fees": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "infoCards": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minterForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minters": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "onRamp": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "platforms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "pending",
+    },
+    "proposals": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "treasury": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "vaults": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+  "instances": {
+    "wallet": false,
+  },
+  "statusIndicator": {
+    "open": false,
+  },
+}
+`;
+
+exports[`Data Loader slice tests > should update state on fulfilled global action 2`] = `
+{
+  "byChainId": {},
+  "global": {
+    "addressBook": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "amms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "analytics": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "apy": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "bridge": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "fees": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "infoCards": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minterForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minters": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "onRamp": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "platforms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": {
+      "alreadyLoadedOnce": true,
+      "error": null,
+      "status": "fulfilled",
+    },
+    "proposals": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "treasury": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "vaults": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+  "instances": {
+    "wallet": false,
+  },
+  "statusIndicator": {
+    "open": false,
+  },
+}
+`;
+
+exports[`Data Loader slice tests > should update state on fulfilled global action 3`] = `
+{
+  "byChainId": {},
+  "global": {
+    "addressBook": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "amms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "analytics": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "apy": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "bridge": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "fees": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "infoCards": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minterForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minters": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "onRamp": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "platforms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": {
+      "alreadyLoadedOnce": true,
+      "error": "fatality",
+      "status": "rejected",
+    },
+    "proposals": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "treasury": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "vaults": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+  "instances": {
+    "wallet": false,
+  },
+  "statusIndicator": {
+    "open": true,
+  },
+}
+`;
+
+exports[`Data Loader slice tests > should update state on fulfilled global action 4`] = `
+{
+  "byChainId": {},
+  "global": {
+    "addressBook": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "amms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "analytics": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "apy": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "bridge": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "fees": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "infoCards": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minterForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minters": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "onRamp": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "platforms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": {
+      "alreadyLoadedOnce": true,
+      "error": "fatality message",
+      "status": "rejected",
+    },
+    "proposals": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "treasury": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "vaults": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+  "instances": {
+    "wallet": false,
+  },
+  "statusIndicator": {
+    "open": true,
+  },
+}
+`;
+
+exports[`Data Loader slice tests > should update state on fulfilled global action 5`] = `
+{
+  "byChainId": {},
+  "global": {
+    "addressBook": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "amms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "analytics": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "apy": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "bridge": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "fees": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "infoCards": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minterForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minters": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "onRamp": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "platforms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": {
+      "alreadyLoadedOnce": true,
+      "error": "fatality name",
+      "status": "rejected",
+    },
+    "proposals": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "treasury": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "vaults": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+  "instances": {
+    "wallet": false,
+  },
+  "statusIndicator": {
+    "open": true,
+  },
+}
+`;
+
+exports[`Data Loader slice tests > should update state on fulfilled global action 6`] = `
+{
+  "byChainId": {},
+  "global": {
+    "addressBook": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "amms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "analytics": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "apy": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "bridge": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "fees": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "infoCards": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minterForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minters": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "onRamp": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "platforms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": {
+      "alreadyLoadedOnce": true,
+      "error": "1234",
+      "status": "rejected",
+    },
+    "proposals": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "treasury": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "vaults": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+  "instances": {
+    "wallet": false,
+  },
+  "statusIndicator": {
+    "open": true,
+  },
+}
+`;
+
+exports[`Data Loader slice tests > should update state on fulfilled global action 7`] = `
+{
+  "byChainId": {},
+  "global": {
+    "addressBook": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "amms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "analytics": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "apy": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "bridge": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "fees": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "infoCards": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minterForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "minters": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "onRamp": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "platforms": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": {
+      "alreadyLoadedOnce": true,
+      "error": null,
+      "status": "pending",
+    },
+    "proposals": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "treasury": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "vaults": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+  "instances": {
+    "wallet": false,
+  },
+  "statusIndicator": {
+    "open": true,
+  },
+}
+`;

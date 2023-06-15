@@ -1,0 +1,88 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Async utils tests > should delay dispatching a /fulfilled action 1`] = `
+{
+  "log": [
+    {
+      "args": {
+        "what": "NOT catched async 1",
+      },
+      "payload": undefined,
+      "type": "test/pending",
+    },
+    {
+      "args": {
+        "what": "NOT catched async 1",
+      },
+      "payload": {
+        "what": "NOT catched async 1",
+      },
+      "type": "test/fulfilled",
+    },
+    {
+      "args": {
+        "what": "Captured Action",
+      },
+      "payload": undefined,
+      "type": "test/pending",
+    },
+    {
+      "args": {
+        "what": "NOT catched async 2",
+      },
+      "payload": undefined,
+      "type": "test/pending",
+    },
+    {
+      "args": {
+        "what": "NOT catched async 2",
+      },
+      "payload": {
+        "what": "NOT catched async 2",
+      },
+      "type": "test/fulfilled",
+    },
+    {
+      "args": {
+        "what": "Exception",
+      },
+      "payload": undefined,
+      "type": "test/pending",
+    },
+    {
+      "args": {
+        "what": "Exception",
+      },
+      "payload": undefined,
+      "type": "test/rejected",
+    },
+    {
+      "args": {
+        "what": "Captured Action",
+      },
+      "payload": {
+        "what": "Captured Action",
+      },
+      "type": "test/fulfilled",
+    },
+  ],
+}
+`;
+
+exports[`Async utils tests > should replace action state payload with the latest state 1`] = `
+{
+  "state": {
+    "log": [
+      {
+        "args": {
+          "state": {},
+          "what": "Captured Action",
+        },
+        "payload": undefined,
+        "type": "test/pending",
+      },
+    ],
+  },
+  "what": "Captured Action",
+}
+`;

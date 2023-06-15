@@ -1,0 +1,60 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TVL slice tests > should fully recompute total TVL when getting new chain data 1`] = `"817.047632700577131"`;
+
+exports[`TVL slice tests > should fully recompute total TVL when getting new chain data 2`] = `"817.047632700577131"`;
+
+exports[`TVL slice tests > should fully recompute total TVL when getting new chain data 3`] = `"22957.045679782069632"`;
+
+exports[`TVL slice tests > should update state on fulfilled boost contract data 1`] = `
+{
+  "byBoostId": {
+    "moo_banana-banana-busd-bitcrush": {
+      "staked": "148140",
+      "tvl": "310127.810437199460438",
+    },
+  },
+  "byChaindId": {
+    "bsc": "257.4977769932194791",
+  },
+  "byVaultId": {
+    "banana-banana-busd": {
+      "tvl": "257.4977769932194791",
+    },
+  },
+  "exclusions": {},
+  "totalTvl": "257.4977769932194791",
+}
+`;
+
+exports[`TVL slice tests > should update state on fulfilled gov vault contract data 1`] = `
+{
+  "byBoostId": {},
+  "byChaindId": {
+    "bsc": "3839731.6410978912054",
+  },
+  "byVaultId": {
+    "bifi-gov": {
+      "tvl": "3839731.6410978912054",
+    },
+  },
+  "exclusions": {},
+  "totalTvl": "3839731.6410978912054",
+}
+`;
+
+exports[`TVL slice tests > should update state on fulfilled standard vault contract data 1`] = `
+{
+  "byBoostId": {},
+  "byChaindId": {
+    "bsc": "817.047632700577131",
+  },
+  "byVaultId": {
+    "banana-cyt-bnb": {
+      "tvl": "817.047632700577131",
+    },
+  },
+  "exclusions": {},
+  "totalTvl": "817.047632700577131",
+}
+`;
