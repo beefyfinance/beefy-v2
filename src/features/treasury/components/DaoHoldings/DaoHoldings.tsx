@@ -48,8 +48,8 @@ function useTreasuryColumns(numColumns: number) {
 }
 
 function useNumColumns() {
-  const isDesktop = useMediaQuery('(min-width: 1296px)');
-  const isTablet = useMediaQuery('(min-width: 960px)');
+  const isDesktop = useMediaQuery('(min-width: 1296px)', { noSsr: true });
+  const isTablet = useMediaQuery('(min-width: 960px)', { noSsr: true });
   return useMemo(() => (isDesktop ? 3 : isTablet ? 2 : 1), [isDesktop, isTablet]);
 }
 

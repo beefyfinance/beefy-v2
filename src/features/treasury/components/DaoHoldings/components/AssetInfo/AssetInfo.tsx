@@ -106,7 +106,7 @@ interface AssetNameProps {
 }
 
 export const AssetName = memo<AssetNameProps>(function AssetName({ name }) {
-  const isMobile = useMediaQuery('(max-width: 600px)');
+  const isMobile = useMediaQuery('(max-width: 600px)', { noSsr: true });
   const needTooltip = isMobile && name.length > 12;
 
   if (needTooltip) {

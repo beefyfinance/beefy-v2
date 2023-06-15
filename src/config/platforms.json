@@ -1025,6 +1025,11 @@
     "filter": true
   },
   {
+    "id": "pearl",
+    "name": "Pearl",
+    "filter": true
+  },
+  {
     "id": "chronos",
     "name": "Chronos",
     "filter": true

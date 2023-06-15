@@ -101,7 +101,7 @@ const SortDropdown = memo(function SortDropdown() {
 });
 
 export const VaultsSort = memo(function VaultsSort() {
-  const sortColumns = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
+  const sortColumns = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
 
   return sortColumns ? (
     <SortColumns />

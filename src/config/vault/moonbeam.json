@@ -922,7 +922,8 @@
     "earnContractAddress": "0x011A0aDc7663334f73Aa6da3db9c9951d0CbB8CF",
     "oracle": "lps",
     "oracleId": "beamswap-wglmr-glint",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beamswap",
     "assets": ["GLINT", "GLMR"],
     "risks": [

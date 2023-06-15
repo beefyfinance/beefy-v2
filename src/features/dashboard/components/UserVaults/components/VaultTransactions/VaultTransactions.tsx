@@ -34,7 +34,7 @@ export const VaultTransactions = memo<VaultTransactionsProps>(function VaultTran
 
   const { sortedTimeline, sortedOptions, handleSort } = useSortedTimeline(vaultId);
 
-  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
 
   const TxComponent = useMemo(() => {
     return smDown ? TransactionMobile : Transaction;
