@@ -6,16 +6,9 @@ import { formatAddressShort, formatEns } from '../../../../helpers/format';
 import { Tooltip } from '../../../../components/Tooltip';
 import type { Theme } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { styles } from './styles';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  shortAddress: {
-    ...theme.typography['h3'],
-    color: theme.palette.text.disabled,
-  },
-  longAddress: {
-    ...theme.typography['body-sm'],
-  },
-}));
+const useStyles = makeStyles(styles);
 
 export const ShortAddress = memo(function ShortAddress() {
   const classes = useStyles();
@@ -44,12 +37,14 @@ export const ShortAddress = memo(function ShortAddress() {
       <Tooltip
         onClick={handleCopyAddressToClipboard}
         contentClass={classes.longAddress}
+        triggerClass={classes.triggerClass}
+        tooltipClass={classes.tooltipContent}
         children={
           <div className={classes.shortAddress}>
             {`(${ens ? formatedEns : formatAddressShort(walletAddress)})`}
           </div>
         }
-        content={clipboard ? t('Copied to clipboard') : walletAddress}
+        content={clipboard ? t('Clipboard-Copied') : walletAddress}
       />
     );
   }

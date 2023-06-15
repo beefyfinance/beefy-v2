@@ -595,5 +595,6 @@
   "Dashboard-VaultData": "Vault Data",
   "Dashboard-TransactionHistory": "Transaction History",
   "Dashboard-Chart": "Chart",
-  "Dashboard-SearchInput-Placeholder": "Search address / ENS"
+  "Dashboard-SearchInput-Placeholder": "Search address / ENS",
+  "Clipboard-Copied": "Copied to clipboard!"
 }
