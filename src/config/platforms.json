@@ -1033,5 +1033,10 @@
     "id": "chronos",
     "name": "Chronos",
     "filter": true
+  },
+  {
+    "id": "gamma",
+    "name": "Gamma",
+    "filter": true
   }
 ]
