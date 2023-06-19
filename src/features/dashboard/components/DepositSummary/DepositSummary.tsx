@@ -18,8 +18,10 @@ const useStyles = makeStyles(styles);
 
 export const DepositSummary = memo(function DepositSummary({
   viewAsAddress,
+  loading,
 }: {
   viewAsAddress: string;
+  loading: boolean;
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -59,7 +61,7 @@ export const DepositSummary = memo(function DepositSummary({
         <div className={classes.titleContainer}>
           <div className={classes.title}>
             {t('Dashboard-Title')}
-            <ShortAddress />
+            <ShortAddress loading={loading} />
           </div>
           <div>
             <AddressInput viewAsAddress={viewAsAddress} />

@@ -13,7 +13,12 @@ import { AddressInput } from '../AddressInput';
 
 const useStyles = makeStyles(styles);
 
-export const NoResults = memo(function NoResults({ viewAsAddress }: { viewAsAddress: string }) {
+interface NoResultsProps {
+  viewAsAddress: string;
+  error: boolean;
+}
+
+export const NoResults = memo<NoResultsProps>(function NoResults({ viewAsAddress, error }) {
   const { t } = useTranslation();
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
   const classes = useStyles();
@@ -28,7 +33,7 @@ export const NoResults = memo(function NoResults({ viewAsAddress }: { viewAsAddr
   }, [dispatch, walletAddress]);
 
   return (
-    <Text walletAddress={walletAddress}>
+    <Text error={error} walletAddress={walletAddress}>
       <div className={classes.actionsContainer}>
         <div className={classes.center}>
           {walletAddress ? (
@@ -50,8 +55,9 @@ export const NoResults = memo(function NoResults({ viewAsAddress }: { viewAsAddr
 
 type TextProps = PropsWithChildren<{
   walletAddress?: string | null;
+  error: boolean;
 }>;
-const Text = memo<TextProps>(function Text({ walletAddress, children }) {
+const Text = memo<TextProps>(function Text({ walletAddress, error, children }) {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -63,9 +69,15 @@ const Text = memo<TextProps>(function Text({ walletAddress, children }) {
         </div>
         <div className={classes.textContainer}>
           <div className={classes.title}>
-            {walletAddress ? t('Dashboard-NoData') : t('Dashboard-NoAddress')}
+            {error
+              ? t('Dashboard-Invalid-Address')
+              : walletAddress
+              ? t('Dashboard-NoData')
+              : t('Dashboard-NoAddress')}
           </div>
-          {walletAddress && <div className={classes.text}>{t('Dashboard-NoVaults')}</div>}
+          <div className={classes.text}>
+            {error ? t('Dashboard-Invalid') : walletAddress ? t('Dashboard-NoVaults') : null}
+          </div>
         </div>
         {children}
       </div>

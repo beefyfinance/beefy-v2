@@ -1,48 +1,44 @@
 import { makeStyles } from '@material-ui/core';
 import React, { memo, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store';
+import { useAppSelector } from '../../store';
 import { selectUserDepositedVaultIds } from '../data/selectors/balance';
 import { DepositSummary } from './components/DepositSummary';
 import { NoResults } from './components/NoResults';
 import { UserExposure } from './components/UserExposure';
 import { UserVaults } from './components/UserVaults';
 import { styles } from './styles';
-import { useParams } from 'react-router';
-import { initViewAsAddress } from '../data/actions/wallet';
-import { setViewAsAddress } from '../data/reducers/wallet/wallet';
+import { useInitDashboard } from './hooks';
+import { useHistory } from 'react-router';
+import { selectConnectedWalletAddress } from '../data/selectors/wallet';
+import { TechLoader } from '../../components/TechLoader';
 
 const useStyles = makeStyles(styles);
 
-export type DashboardUrlParams = {
-  address?: string;
-};
-
 export const Dashboard = memo(function Dashboard() {
   const classes = useStyles();
-  const userVaults = useAppSelector(selectUserDepositedVaultIds);
-  const dispatch = useAppDispatch();
-
-  const { address } = useParams<DashboardUrlParams>();
+  const { userAddress, error, loading } = useInitDashboard();
+  const userVaults = useAppSelector(state => selectUserDepositedVaultIds(state, userAddress));
+  const connectedWalletAddress = useAppSelector(state => selectConnectedWalletAddress(state));
+  const history = useHistory();
 
   useEffect(() => {
-    if (address) {
-      dispatch(initViewAsAddress({ address }));
-      return () => {
-        dispatch(setViewAsAddress({ address: null }));
-      };
+    if (!userAddress && connectedWalletAddress) {
+      history.push(`/dashboard/${connectedWalletAddress}`);
     }
-  }, [address, dispatch]);
+  }, [connectedWalletAddress, history, userAddress]);
 
   return (
     <div className={classes.dashboard}>
-      <DepositSummary viewAsAddress={address} />
-      {userVaults.length > 0 ? (
+      <DepositSummary loading={loading} viewAsAddress={userAddress} />
+      {loading ? (
+        <TechLoader />
+      ) : userVaults.length > 0 && userAddress ? (
         <>
           <UserExposure />
           <UserVaults />
         </>
       ) : (
-        <NoResults viewAsAddress={address} />
+        <NoResults error={error} viewAsAddress={userAddress} />
       )}
     </div>
   );

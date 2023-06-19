@@ -493,6 +493,8 @@
   "Dashboard-NoData": "No data available",
   "Dashboard-NoAddress": "No address selected",
   "Dashboard-NoVaults": "Deposit into a vault to view dashboard for connected wallet or enter another wallet address",
+  "Dashboard-Invalid-Address": "Not valid address",
+  "Dashboard-Invalid": "Address or ENS you trying to load isn’t valid. Connect your wallet or search another address",
   "Glp-Withdraw-Notice": "The underlying protocol requires withdrawals to be at least {{cooldown}} after a deposit/harvest.",
   "Glp-Withdraw-Notice-Unlocks": "Unlocks in <countdown/>",
   "Glp-Deposit-Notice": "The underlying protocol requires deposits to be at least {{cooldown}} after adding or transferring liquidity.",

@@ -3,6 +3,7 @@ import type { ExternalProvider, Provider } from '@ethersproject/providers';
 import { getWeb3Instance } from '../features/data/apis/instances';
 import type { ChainEntity } from '../features/data/entities/chain';
 import { lookupAddress } from 'ens-reverse';
+import Web3 from 'web3';
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const EEEE_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
@@ -31,4 +32,13 @@ export async function getEnsResolver(ens: string, chain: ChainEntity): Promise<s
   const provider = new Web3Provider(web3Instance.currentProvider as ExternalProvider);
   const address = await provider.resolveName(ens);
   return address;
+}
+
+export function isValidEns(ens: string) {
+  //min lenght for ens is 3 chars + 4 by default (.eth)
+  return ens.length >= 7 && ens.includes('.eth');
+}
+
+export function isValidAddress(address: string) {
+  return address.startsWith('0x') && Web3.utils.isAddress(address);
 }

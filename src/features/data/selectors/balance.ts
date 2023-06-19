@@ -56,8 +56,8 @@ export const selectHasWalletBalanceBeenFetched = (state: BeefyState, walletAddre
   return state.user.balance.byAddress[walletAddress.toLowerCase()] !== undefined;
 };
 
-export const selectUserDepositedVaultIds = (state: BeefyState) => {
-  const walletBalance = _selectWalletBalance(state);
+export const selectUserDepositedVaultIds = (state: BeefyState, walletAddress?: string) => {
+  const walletBalance = _selectWalletBalance(state, walletAddress);
   return walletBalance?.depositedVaultIds || [];
 };
 
