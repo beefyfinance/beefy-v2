@@ -117,6 +117,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'bbamUSD',
       'USDR',
       'wUSDR',
+      'axlUSDC',
     ],
   },
   bsc: {
@@ -180,6 +181,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'ETSAlpha',
       'wUSDR',
       'DOLA',
+      'USDT+',
     ],
   },
   optimism: {
@@ -278,6 +280,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'TOR',
       'BUSD',
       'alUSD',
+      'axlUSDC',
     ],
   },
   arbitrum: {
