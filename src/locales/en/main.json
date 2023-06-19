@@ -598,5 +598,7 @@
   "Dashboard-TransactionHistory": "Transaction History",
   "Dashboard-Chart": "Chart",
   "Dashboard-SearchInput-Placeholder": "Search address / ENS",
-  "Clipboard-Copied": "Copied to clipboard!"
+  "Clipboard-Copied": "Copied to clipboard!",
+  "Dashboard-SearchInput-Invalid-Ens": "Introduce a valid ENS",
+  "Dashboard-SearchInput-Invalid-Address": "Introduce a valid Address"
 }

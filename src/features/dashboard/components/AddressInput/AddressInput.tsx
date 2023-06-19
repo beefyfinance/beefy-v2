@@ -1,12 +1,14 @@
 import { InputBase, makeStyles } from '@material-ui/core';
 import { CloseRounded, Search } from '@material-ui/icons';
-import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
 import { styles } from './styles';
 import clsx from 'clsx';
-import { isValidAddress, isValidEns } from '../../../../helpers/addresses';
+import { getEnsResolver, isValidAddress, isValidEns } from '../../../../helpers/addresses';
 import { Floating } from '../../../../components/Floating';
+import { useAppSelector } from '../../../../store';
+import { selectChainById } from '../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles);
 
@@ -16,11 +18,26 @@ export const AddressInput = memo(function AddressInput({
   viewAsAddress: string;
 }) {
   const [address, setAddress] = useState<string>('');
+  const [isENSValid, setENSValid] = useState<boolean>(false);
+  const ethChain = useAppSelector(state => selectChainById(state, 'ethereum'));
   const { t } = useTranslation();
   const classes = useStyles();
   const anchorEl = useRef();
-
   const history = useHistory();
+
+  useEffect(() => {
+    async function fetchValidEns() {
+      if (isValidEns(address)) {
+        const resolvedAddress = await getEnsResolver(address, ethChain);
+        if (resolvedAddress) {
+          setENSValid(true);
+        } else {
+          setENSValid(false);
+        }
+      }
+    }
+    fetchValidEns();
+  }, [address, ethChain]);
 
   const handleChange = useCallback(e => {
     setAddress(e.target.value);
@@ -30,14 +47,11 @@ export const AddressInput = memo(function AddressInput({
     setAddress('');
   }, []);
 
-  const isValid = useMemo(() => {
-    //min lenght for ens is 3 chars + 4 by default (.eth)
-    if (isValidEns(address) || isValidAddress(address)) {
-      return true;
-    } else {
-      return false;
-    }
+  const isAddressValid = useMemo(() => {
+    return isValidAddress(address);
   }, [address]);
+
+  const isValid = useMemo(() => isAddressValid || isENSValid, [isAddressValid, isENSValid]);
 
   const addressAlreadyLoaded = useMemo(() => {
     return viewAsAddress === address;
@@ -80,7 +94,11 @@ export const AddressInput = memo(function AddressInput({
         display="flex"
         autoWidth={false}
       >
-        No Match
+        <div>
+          {address.includes('eth')
+            ? t('Dashboard-SearchInput-Invalid-Ens')
+            : t('Dashboard-SearchInput-Invalid-Address')}
+        </div>
       </Floating>
     </>
   );
