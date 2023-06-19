@@ -2241,7 +2241,8 @@
     "earnContractAddress": "0x96e23B0d217894b8dA9e149F0Ca1A97b9B7C77b2",
     "oracle": "lps",
     "oracleId": "swapfish-wbtc-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "swapfish",
     "assets": ["WBTC", "ETH"],
     "risks": [

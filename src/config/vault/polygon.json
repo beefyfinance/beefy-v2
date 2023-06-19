@@ -1572,7 +1572,8 @@
     "earnContractAddress": "0x265e9AEC73bE4Af6AE667EE0902ccde88d0A83d8",
     "oracle": "lps",
     "oracleId": "balancer-brz-jbrl",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "balancer",
     "assets": ["BRZ", "jBRL"],
     "risks": [
