@@ -76,7 +76,7 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0x48e345bf70E6bb30A4FC7cDC94A185D5c931EFD4",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0x48e345bf70E6bb30A4FC7cDC94A185D5c931EFD4",
     "network": "kava",
-    "createdAt": 1687243494
+    "createdAt": 1687262769
   },
   {
     "id": "equilibre-wkava-axlusdc",
@@ -100,7 +100,7 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0x35067270e3cde15A3881ea0Ce6c93D8E3FE688f4",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0x35067270e3cde15A3881ea0Ce6c93D8E3FE688f4",
     "network": "kava",
-    "createdAt": 1687243494
+    "createdAt": 1687262769
   },
   {
     "id": "equilibre-axleth-wkava",
@@ -124,7 +124,7 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0x93932676cDC21F61fCd476CaaB3Ec3b3F3f347D7",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0x93932676cDC21F61fCd476CaaB3Ec3b3F3f347D7",
     "network": "kava",
-    "createdAt": 1687243494
+    "createdAt": 1687262769
   },
   {
     "id": "equilibre-bifi-usdc",
