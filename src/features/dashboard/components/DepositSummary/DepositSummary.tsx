@@ -17,11 +17,9 @@ import { ShortAddress } from '../ShortAddress';
 const useStyles = makeStyles(styles);
 
 export const DepositSummary = memo(function DepositSummary({
-  viewAsAddress,
   loading,
   error,
 }: {
-  viewAsAddress: string;
   loading: boolean;
   error: boolean;
 }) {
@@ -70,7 +68,7 @@ export const DepositSummary = memo(function DepositSummary({
             <ShortAddress error={error} loading={loading} />
           </div>
           <div>
-            <AddressInput viewAsAddress={viewAsAddress} />
+            <AddressInput />
           </div>
         </div>
         <SummaryStats items={UserStats} />

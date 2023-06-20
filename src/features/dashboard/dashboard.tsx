@@ -19,7 +19,7 @@ export const Dashboard = memo(function Dashboard() {
 
   return (
     <div className={classes.dashboard}>
-      <DepositSummary error={error} loading={loading} viewAsAddress={userAddress} />
+      <DepositSummary error={error} loading={loading} />
       {loading ? (
         <TechLoader />
       ) : userVaults.length > 0 && userAddress && !error ? (
