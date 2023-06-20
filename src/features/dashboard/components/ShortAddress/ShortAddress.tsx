@@ -10,7 +10,13 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const ShortAddress = memo(function ShortAddress({ loading }: { loading: boolean }) {
+export const ShortAddress = memo(function ShortAddress({
+  loading,
+  error,
+}: {
+  loading: boolean;
+  error: boolean;
+}) {
   const classes = useStyles();
   const { t } = useTranslation();
   const [clipboard, setClipboard] = useState<boolean>(false);
@@ -32,7 +38,7 @@ export const ShortAddress = memo(function ShortAddress({ loading }: { loading: b
     return formatEns(ens);
   }, [ens, mdUp]);
 
-  if (walletAddress && !loading) {
+  if (walletAddress && !loading && !error) {
     return (
       <Tooltip
         onClick={handleCopyAddressToClipboard}

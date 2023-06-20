@@ -19,9 +19,11 @@ const useStyles = makeStyles(styles);
 export const DepositSummary = memo(function DepositSummary({
   viewAsAddress,
   loading,
+  error,
 }: {
   viewAsAddress: string;
   loading: boolean;
+  error: boolean;
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -30,30 +32,34 @@ export const DepositSummary = memo(function DepositSummary({
 
   const totalYieldUsd = useAppSelector(selectUserTotalYieldUsd);
 
+  const shouldShowZero = useMemo(() => {
+    return loading || error;
+  }, [error, loading]);
+
   const UserStats = useMemo(() => {
     return [
       {
         title: t('Summary-Deposit'),
-        value: formatUsd(stats.deposited),
+        value: formatUsd(shouldShowZero ? 0 : stats.deposited),
         Icon: WalletIcon,
       },
       {
         title: t('Summary-Vaults'),
-        value: `${stats.depositedVaults}`,
+        value: shouldShowZero ? '0' : `${stats.depositedVaults}`,
         Icon: VaultIcon,
       },
       {
         title: t('Summary-Yield'),
-        value: formatUsd(totalYieldUsd.toNumber()),
+        value: formatUsd(shouldShowZero ? 0 : totalYieldUsd.toNumber()),
         Icon: MonthlyIcon,
       },
       {
         title: t('Summary-Daily'),
-        value: formatUsd(stats.daily),
+        value: formatUsd(shouldShowZero ? 0 : stats.daily),
         Icon: DailyIcon,
       },
     ];
-  }, [stats.daily, stats.deposited, stats.depositedVaults, totalYieldUsd, t]);
+  }, [t, shouldShowZero, stats.deposited, stats.depositedVaults, stats.daily, totalYieldUsd]);
 
   return (
     <div className={classes.container}>
@@ -61,7 +67,7 @@ export const DepositSummary = memo(function DepositSummary({
         <div className={classes.titleContainer}>
           <div className={classes.title}>
             {t('Dashboard-Title')}
-            <ShortAddress loading={loading} />
+            <ShortAddress error={error} loading={loading} />
           </div>
           <div>
             <AddressInput viewAsAddress={viewAsAddress} />

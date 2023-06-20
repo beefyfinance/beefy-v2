@@ -36,9 +36,9 @@ export async function getEnsResolver(ens: string, chain: ChainEntity): Promise<s
 
 export function isValidEns(ens: string) {
   //min lenght for ens is 3 chars + 4 by default (.eth)
-  return ens.length >= 7 && ens.includes('.eth');
+  return ens.length >= 7 && ens.endsWith('.eth');
 }
 
 export function isValidAddress(address: string) {
-  return address.startsWith('0x') && Web3.utils.isAddress(address);
+  return address.startsWith('0x') && address.length === 42 && Web3.utils.isAddress(address);
 }

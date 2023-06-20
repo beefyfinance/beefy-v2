@@ -14,11 +14,10 @@ import { AddressInput } from '../AddressInput';
 const useStyles = makeStyles(styles);
 
 interface NoResultsProps {
-  viewAsAddress: string;
   error: boolean;
 }
 
-export const NoResults = memo<NoResultsProps>(function NoResults({ viewAsAddress, error }) {
+export const NoResults = memo<NoResultsProps>(function NoResults({ error }) {
   const { t } = useTranslation();
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
   const classes = useStyles();
@@ -47,7 +46,7 @@ export const NoResults = memo<NoResultsProps>(function NoResults({ viewAsAddress
           )}
         </div>
         <Divider />
-        <AddressInput viewAsAddress={viewAsAddress} />
+        <AddressInput />
       </div>
     </Text>
   );

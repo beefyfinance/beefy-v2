@@ -4,8 +4,8 @@ import { selectChainById } from '../data/selectors/chains';
 import { initViewAsAddress } from '../data/actions/wallet';
 import { setViewAsAddress } from '../data/reducers/wallet/wallet';
 import { getEnsResolver, isValidAddress, isValidEns } from '../../helpers/addresses';
-import { useParams } from 'react-router';
-// import { selectConnectedWalletAddress } from '../data/selectors/wallet';
+import { useHistory, useParams } from 'react-router';
+import { selectConnectedWalletAddress } from '../data/selectors/wallet';
 
 export type DashboardUrlParams = {
   address?: string;
@@ -18,11 +18,14 @@ export const useInitDashboard = () => {
   const [error, setError] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const ethChain = useAppSelector(state => selectChainById(state, 'ethereum'));
+  const walletStatus = useAppSelector(state => state.ui.dataLoader.global.wallet.status);
+  const connectedWalletAddress = useAppSelector(state => selectConnectedWalletAddress(state));
+  const history = useHistory();
 
   useEffect(() => {
     async function fetchAddress() {
       setLoading(true);
-      if (address) {
+      if (address && connectedWalletAddress !== address) {
         if (isValidEns(address)) {
           const resolvedAddress = await getEnsResolver(address, ethChain);
           if (resolvedAddress) {
@@ -40,16 +43,23 @@ export const useInitDashboard = () => {
           }
         }
       } else {
-        setUserAddress('');
+        if (connectedWalletAddress) {
+          setUserAddress(connectedWalletAddress);
+          history.push(`/dashboard/${connectedWalletAddress}`);
+        } else {
+          setUserAddress('');
+        }
       }
       setLoading(false);
     }
 
     fetchAddress();
+
     return () => {
       dispatch(setViewAsAddress({ address: null }));
+      setError(false);
     };
-  }, [address, dispatch, ethChain]);
+  }, [address, connectedWalletAddress, dispatch, ethChain, history, walletStatus]);
 
   return { userAddress, error, loading };
 };

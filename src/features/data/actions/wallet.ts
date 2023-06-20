@@ -43,7 +43,7 @@ export const getEns = createAsyncThunk<void, { address: string | null }, { state
 
       ensCache[addressLower] = domain;
 
-      dispatch(setEns({ ens: domain, address: addressLower }));
+      dispatch(setEns({ address: addressLower, ens: domain }));
     }
   }
 );

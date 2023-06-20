@@ -58,18 +58,4 @@ export const styles = (theme: Theme) => ({
   disabledIcon: {
     color: theme.palette.text.disabled,
   },
-  dropdown: {
-    ...theme.typography['body-lg-med'],
-    display: 'flex',
-    flexDirection: 'column' as const,
-    alignItems: 'center',
-    color: theme.palette.text.disabled,
-    padding: '6px 12px',
-    backgroundColor: '#242737',
-    border: '2px solid #30354F',
-    borderRadius: '8px',
-    marginTop: '4px',
-    minWidth: '250px',
-    zIndex: 999,
-  },
 });

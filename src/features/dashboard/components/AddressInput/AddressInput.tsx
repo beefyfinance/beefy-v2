@@ -6,19 +6,15 @@ import { Link, useHistory } from 'react-router-dom';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { getEnsResolver, isValidAddress, isValidEns } from '../../../../helpers/addresses';
-import { Floating } from '../../../../components/Floating';
 import { useAppSelector } from '../../../../store';
 import { selectChainById } from '../../../data/selectors/chains';
+import { FloatingError } from './FloatingError';
 
 const useStyles = makeStyles(styles);
 
-export const AddressInput = memo(function AddressInput({
-  viewAsAddress,
-}: {
-  viewAsAddress: string;
-}) {
-  const [address, setAddress] = useState<string>('');
-  const [isENSValid, setENSValid] = useState<boolean>(false);
+export const AddressInput = memo(function AddressInput() {
+  const [userInput, setUserInput] = useState<string>('');
+  const [isENSValid, setIsENSValid] = useState<boolean>(false);
   const ethChain = useAppSelector(state => selectChainById(state, 'ethereum'));
   const { t } = useTranslation();
   const classes = useStyles();
@@ -27,110 +23,95 @@ export const AddressInput = memo(function AddressInput({
 
   useEffect(() => {
     async function fetchValidEns() {
-      if (isValidEns(address)) {
-        const resolvedAddress = await getEnsResolver(address, ethChain);
+      if (isValidEns(userInput)) {
+        const resolvedAddress = await getEnsResolver(userInput, ethChain);
         if (resolvedAddress) {
-          setENSValid(true);
+          setIsENSValid(true);
         } else {
-          setENSValid(false);
+          setIsENSValid(false);
         }
       }
     }
     fetchValidEns();
-  }, [address, ethChain]);
+
+    return () => {
+      setIsENSValid(false);
+    };
+  }, [userInput, ethChain]);
 
   const handleChange = useCallback(e => {
-    setAddress(e.target.value);
+    setUserInput(e.target.value);
   }, []);
 
   const handleClear = useCallback(() => {
-    setAddress('');
+    setUserInput('');
   }, []);
 
   const isAddressValid = useMemo(() => {
-    return isValidAddress(address);
-  }, [address]);
+    return isValidAddress(userInput);
+  }, [userInput]);
 
   const isValid = useMemo(() => isAddressValid || isENSValid, [isAddressValid, isENSValid]);
-
-  const addressAlreadyLoaded = useMemo(() => {
-    return viewAsAddress === address;
-  }, [address, viewAsAddress]);
 
   const handleGoToDashboardOnEnterKey = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
       if (e.key === 'Enter' && isValid) {
-        history.push(`/dashboard/${address}`);
+        history.push(`/dashboard/${userInput}`);
         handleClear();
       }
     },
-    [address, handleClear, history, isValid]
+    [userInput, handleClear, history, isValid]
   );
 
   return (
     <>
       <InputBase
         ref={anchorEl}
-        className={clsx(classes.search, { [classes.active]: address.length !== 0 })}
-        value={address}
+        className={clsx(classes.search, { [classes.active]: userInput.length !== 0 })}
+        value={userInput}
         onChange={handleChange}
         fullWidth={true}
         onKeyPress={handleGoToDashboardOnEnterKey}
         endAdornment={
-          <GoToDashboardButton
-            isValid={isValid}
-            address={address}
-            handleClear={handleClear}
-            canClear={addressAlreadyLoaded}
-          />
+          <GoToDashboardButton isValid={isValid} userInput={userInput} handleClear={handleClear} />
         }
         placeholder={t('Dashboard-SearchInput-Placeholder')}
       />
-      <Floating
-        open={address.length > 6 && !isValid}
-        placement="bottom-start"
-        anchorEl={anchorEl}
-        className={classes.dropdown}
-        display="flex"
-        autoWidth={false}
-      >
-        <div>
-          {address.includes('eth')
-            ? t('Dashboard-SearchInput-Invalid-Ens')
-            : t('Dashboard-SearchInput-Invalid-Address')}
-        </div>
-      </Floating>
+      <FloatingError
+        anchorRef={anchorEl}
+        userInput={userInput}
+        isAddressValid={isAddressValid}
+        isEnsValid={isENSValid}
+      />
     </>
   );
 });
 
 const GoToDashboardButton = memo(function GoToDashboardButton({
   isValid,
-  address,
+  userInput,
   handleClear,
-  canClear,
 }: {
   isValid: boolean;
-  address: string;
+  userInput: string;
   handleClear: () => void;
-  canClear: boolean;
 }) {
   const classes = useStyles();
 
-  if (isValid && !canClear) {
+  if (isValid) {
     return (
       <Link
         onClick={handleClear}
         className={clsx(classes.icon, classes.activeIcon)}
         aria-disabled={isValid}
-        to={`/dashboard/${address}`}
+        to={`/dashboard/${userInput}`}
       >
         <Search />
       </Link>
     );
   }
 
-  if (address.length !== 0) {
+  if (userInput.length !== 0) {
     return (
       <button onClick={handleClear} className={clsx(classes.icon, classes.activeIcon)}>
         <CloseRounded />
