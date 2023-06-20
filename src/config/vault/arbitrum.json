@@ -1,5 +1,28 @@
 [
   {
+    "id": "chronos-weth-reth",
+    "name": "rETH-ETH vLP",
+    "token": "vAMM-WETH/rETH",
+    "tokenAddress": "0xBbBe4D4a3d370F478be7f2D3B734591BB1a99d37",
+    "tokenDecimals": 18,
+    "tokenProviderId": "chronos",
+    "tokenAmmId": "arbitrum-chronos",
+    "earnedToken": "mooChronos_rETH-ETH",
+    "earnedTokenAddress": "0x1DEa584BDD929C32d4723b2196C824D7ee8d3fAd",
+    "earnContractAddress": "0x1DEa584BDD929C32d4723b2196C824D7ee8d3fAd",
+    "oracle": "lps",
+    "oracleId": "chronos-weth-reth",
+    "status": "active",
+    "platformId": "chronos",
+    "assets": ["rETH", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0xBbBe4D4a3d370F478be7f2D3B734591BB1a99d37",
+    "removeLiquidityUrl": "https://app.chronos.exchange/liquidity/0xBbBe4D4a3d370F478be7f2D3B734591BB1a99d37",
+    "network": "arbitrum",
+    "createdAt": 1687296816
+  },
+  {
     "id": "balancer-tbtc-wbtc",
     "name": "tBTC-WBTC",
     "token": "tBTC-WBTC",
