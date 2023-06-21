@@ -6,7 +6,7 @@
     "fee": {
       "value": 0.0005,
       "recipient": "0x8Af5c669620B5e525CE85DB00D0c159FF6BbE983"
-    },
+    }, 
     "depositFromTokens": ["MATIC", "WMATIC", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
     "withdrawToTokens": ["MATIC", "BIFI", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
     "blockedTokens": [
