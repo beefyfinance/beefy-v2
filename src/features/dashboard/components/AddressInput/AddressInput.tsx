@@ -113,11 +113,12 @@ const GoToDashboardButton = memo(function GoToDashboardButton({
 
   if (ensLoading && userInput.endsWith('.eth'))
     return (
-      <div>
+      <div className={classes.flex}>
         <CircularProgress
+          disableShrink={true}
           thickness={4}
-          size={24}
-          className={clsx(classes.icon, classes.disabledIcon)}
+          size={20}
+          className={clsx(classes.loader, classes.disabledIcon)}
         />
       </div>
     );

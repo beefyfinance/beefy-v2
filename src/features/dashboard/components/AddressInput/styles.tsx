@@ -58,4 +58,10 @@ export const styles = (theme: Theme) => ({
   disabledIcon: {
     color: theme.palette.text.disabled,
   },
+  flex: {
+    display: 'flex',
+  },
+  loader: {
+    margin: '0 16px 0 0',
+  },
 });
