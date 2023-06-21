@@ -599,6 +599,6 @@
   "Dashboard-Chart": "Chart",
   "Dashboard-SearchInput-Placeholder": "Search address / ENS",
   "Clipboard-Copied": "Copied to clipboard!",
-  "Dashboard-SearchInput-Invalid-Ens": "Introduce a valid ENS",
-  "Dashboard-SearchInput-Invalid-Address": "Introduce a valid Address"
+  "Dashboard-SearchInput-Invalid-Ens": "Entered ENS is not valid",
+  "Dashboard-SearchInput-Invalid-Address": "Entered address is not valid"
 }
