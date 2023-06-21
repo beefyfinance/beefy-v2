@@ -25,6 +25,7 @@ interface FloatingErrorProps {
   userInput: string;
   isAddressValid: boolean;
   isEnsValid: boolean;
+  ensLoading: boolean;
   anchorRef: React.RefObject<HTMLInputElement>;
 }
 
@@ -32,12 +33,13 @@ export const FloatingError = memo<FloatingErrorProps>(function FloatingError({
   userInput,
   isAddressValid,
   isEnsValid,
+  ensLoading,
   anchorRef,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  if (userInput.endsWith('.eth'))
+  if (!ensLoading && userInput.endsWith('.eth'))
     return (
       <Floating
         open={userInput.length > 6 && !isEnsValid}

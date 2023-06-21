@@ -1,4 +1,4 @@
-import { InputBase, makeStyles } from '@material-ui/core';
+import { CircularProgress, InputBase, makeStyles } from '@material-ui/core';
 import { CloseRounded, Search } from '@material-ui/icons';
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +15,7 @@ const useStyles = makeStyles(styles);
 export const AddressInput = memo(function AddressInput() {
   const [userInput, setUserInput] = useState<string>('');
   const [isENSValid, setIsENSValid] = useState<boolean>(false);
+  const [ensLoading, setEnsLoading] = useState<boolean>(false);
   const ethChain = useAppSelector(state => selectChainById(state, 'ethereum'));
   const { t } = useTranslation();
   const classes = useStyles();
@@ -30,6 +31,7 @@ export const AddressInput = memo(function AddressInput() {
         } else {
           setIsENSValid(false);
         }
+        setEnsLoading(false);
       }
     }
     fetchValidEns();
@@ -39,7 +41,10 @@ export const AddressInput = memo(function AddressInput() {
     };
   }, [userInput, ethChain]);
 
-  const handleChange = useCallback(e => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.endsWith('.eth')) {
+      setEnsLoading(true);
+    }
     setUserInput(e.target.value);
   }, []);
 
@@ -73,7 +78,12 @@ export const AddressInput = memo(function AddressInput() {
         fullWidth={true}
         onKeyPress={handleGoToDashboardOnEnterKey}
         endAdornment={
-          <GoToDashboardButton isValid={isValid} userInput={userInput} handleClear={handleClear} />
+          <GoToDashboardButton
+            ensLoading={ensLoading}
+            isValid={isValid}
+            userInput={userInput}
+            handleClear={handleClear}
+          />
         }
         placeholder={t('Dashboard-SearchInput-Placeholder')}
       />
@@ -82,6 +92,7 @@ export const AddressInput = memo(function AddressInput() {
         userInput={userInput}
         isAddressValid={isAddressValid}
         isEnsValid={isENSValid}
+        ensLoading={ensLoading}
       />
     </>
   );
@@ -91,12 +102,25 @@ const GoToDashboardButton = memo(function GoToDashboardButton({
   isValid,
   userInput,
   handleClear,
+  ensLoading,
 }: {
   isValid: boolean;
   userInput: string;
   handleClear: () => void;
+  ensLoading: boolean;
 }) {
   const classes = useStyles();
+
+  if (ensLoading && userInput.endsWith('.eth'))
+    return (
+      <div>
+        <CircularProgress
+          thickness={4}
+          size={24}
+          className={clsx(classes.icon, classes.disabledIcon)}
+        />
+      </div>
+    );
 
   if (isValid) {
     return (
