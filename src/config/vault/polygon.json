@@ -312,7 +312,7 @@
   },
   {
     "id": "pearl-weth-usdr",
-    "name": "WETH-USDR vLP",
+    "name": "ETH-USDR vLP",
     "token": "vAMM-WETH/USDR",
     "tokenAddress": "0x6B3aA71C74042e113Bd0b055224d70a131334761",
     "tokenDecimals": 18,
