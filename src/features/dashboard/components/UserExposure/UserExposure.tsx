@@ -15,7 +15,7 @@ export type UserExposureProps = {
   address: string;
 };
 
-export const UserExposure = memo<UserExposureProps>(function UserExposure() {
+export const UserExposure = memo<UserExposureProps>(function UserExposure({ address }) {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -23,19 +23,19 @@ export const UserExposure = memo<UserExposureProps>(function UserExposure() {
     <Section title={t('Overview')}>
       <div className={classes.pieChartsContainer}>
         <Hidden smDown>
-          <ChainExposureLoader title={t('Exposure-Chain')} />
-          <PlatformExposureLoader title={t('Exposure-Platform')} />
-          <TokenExposureLoader title={t('Exposure-Tokens')} />
+          <ChainExposureLoader address={address} title={t('Exposure-Chain')} />
+          <PlatformExposureLoader address={address} title={t('Exposure-Platform')} />
+          <TokenExposureLoader address={address} title={t('Exposure-Tokens')} />
         </Hidden>
         <Hidden mdUp>
-          <MobileUserExposure />
+          <MobileUserExposure address={address} />
         </Hidden>
         <Hidden lgUp>
-          <StablesExposure />
+          <StablesExposure address={address} />
         </Hidden>
       </div>
       <Hidden mdDown>
-        <StablesExposure />
+        <StablesExposure address={address} />
       </Hidden>
     </Section>
   );

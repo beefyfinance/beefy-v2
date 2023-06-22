@@ -8,7 +8,11 @@ import clsx from 'clsx';
 import { isMaybeDomain, isValidAddress } from '../../../../helpers/addresses';
 import { FloatingError } from './FloatingError';
 import { useResolveDomain } from '../../../data/hooks/resolver';
-import { isFulfilledStatus, isRejectedStatus } from '../../../data/reducers/wallet/resolver-types';
+import {
+  isFulfilledStatus,
+  isPendingStatus,
+  isRejectedStatus,
+} from '../../../data/reducers/wallet/resolver-types';
 
 const useStyles = makeStyles(styles);
 
@@ -114,7 +118,7 @@ export const AddressInput = memo(function AddressInput() {
         }
         placeholder={t('Dashboard-SearchInput-Placeholder')}
       />
-      {hasFocus && !isValid && userInput.length > 0 ? (
+      {hasFocus && !isValid && userInput.length > 0 && !isPendingStatus(resolverStatus) ? (
         <FloatingError
           userInput={userInput}
           anchorRef={anchorEl}

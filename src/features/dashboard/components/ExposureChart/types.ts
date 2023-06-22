@@ -8,4 +8,5 @@ export interface ExposureDashboardChartProps {
 
 export interface ExposureDashboardChartLoaderProps {
   title?: string;
+  address: string;
 }

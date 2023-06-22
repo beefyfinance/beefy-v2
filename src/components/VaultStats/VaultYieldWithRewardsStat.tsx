@@ -25,18 +25,21 @@ const useStyles = makeStyles(styles);
 export type VaultYieldStatProps = {
   vaultId: VaultEntity['id'];
   pnlData: VaultPnLDataType;
+  walletAddress?: string;
 };
 
 export const VaultYieldWithRewardsStat = memo<VaultYieldStatProps>(
-  function VaultYieldWithRewardsStat({ vaultId, pnlData }) {
+  function VaultYieldWithRewardsStat({ vaultId, pnlData, walletAddress }) {
     const classes = useStyles();
     const vaultTimeline = useAppSelector(state =>
-      selectUserDepositedTimelineByVaultId(state, vaultId)
+      selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress)
     );
 
     const isLoaded = useAppSelector(state => selectIsAnalyticsLoaded(state));
 
-    const { rewards } = useAppSelector(state => selectUserRewardsByVaultId(state, vaultId));
+    const { rewards } = useAppSelector(state =>
+      selectUserRewardsByVaultId(state, vaultId, walletAddress)
+    );
 
     const { totalYield, totalYieldUsd, oraclePrice, tokenDecimals } = pnlData;
 
@@ -73,7 +76,7 @@ export const VaultYieldWithRewardsStat = memo<VaultYieldStatProps>(
             {hasRewards && (
               <>
                 <div>+</div>
-                <RewardsTooltip vaultId={vaultId} />
+                <RewardsTooltip walletAddress={walletAddress} vaultId={vaultId} />
               </>
             )}
           </div>

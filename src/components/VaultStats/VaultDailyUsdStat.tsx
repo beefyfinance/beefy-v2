@@ -22,13 +22,14 @@ export type VaultDailyUsdStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
   triggerClassName?: string;
+  walletAddress?: string;
 };
 
 export const VaultDailyUsdStat = memo(connect(mapStateToProps)(VaultValueStat));
 
 function mapStateToProps(
   state: BeefyState,
-  { vaultId, className, triggerClassName }: VaultDailyUsdStatProps
+  { vaultId, className, triggerClassName, walletAddress }: VaultDailyUsdStatProps
 ) {
   const label = 'Dashboard-Filter-DailyYield';
 
@@ -70,7 +71,8 @@ function mapStateToProps(
 
   const { dailyTokens, dailyUsd, oraclePrice, tokenDecimals } = selectVaultDailyYieldStats(
     state,
-    vaultId
+    vaultId,
+    walletAddress
   );
 
   return {

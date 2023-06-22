@@ -13,13 +13,13 @@ export type SortedOptions = {
   sortDirection: 'asc' | 'desc' | 'none';
 };
 
-export function useSortedTimeline(vaultId: VaultEntity['id']) {
+export function useSortedTimeline(vaultId: VaultEntity['id'], address: string) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const currentOraclePrice = useAppSelector(state =>
     selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const vaultTimeline = useAppSelector(state =>
-    selectUserDepositedTimelineByVaultId(state, vaultId)
+    selectUserDepositedTimelineByVaultId(state, vaultId, address)
   );
 
   // Replace nulls with current price or 0

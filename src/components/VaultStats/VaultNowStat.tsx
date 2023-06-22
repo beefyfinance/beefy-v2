@@ -19,14 +19,18 @@ export type VaultNowStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
   pnlData: VaultPnLDataType;
+  walletAddres: string;
 };
 
 export const VaultNowStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId, className, pnlData }: VaultNowStatProps) {
+function mapStateToProps(
+  state: BeefyState,
+  { vaultId, className, pnlData, walletAddres }: VaultNowStatProps
+) {
   const label = 'VaultStat-Now';
 
-  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
+  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddres);
 
   const isLoaded = selectIsAnalyticsLoaded(state);
 

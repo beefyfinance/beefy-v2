@@ -19,77 +19,87 @@ import { selectVaultPnl } from '../../../../../../../data/selectors/analytics';
 
 const useStyles = makeStyles(styles);
 
-export const VaultDashboardMobileStats = memo(function VaultDashboardMobileStats({
-  vaultId,
-}: {
+interface VaultDashboardMobileStatsProps {
   vaultId: VaultEntity['id'];
-}) {
-  const classes = useStyles();
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  address: string;
+}
 
-  const isVaultBoostedOrPrestake = useAppSelector(state =>
-    selectIsVaultPreStakedOrBoosted(state, vaultId)
-  );
+export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
+  function VaultDashboardMobileStats({ vaultId, address }) {
+    const classes = useStyles();
+    const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
-  const pnlData = useAppSelector(state => selectVaultPnl(state, vaultId));
+    const isVaultBoostedOrPrestake = useAppSelector(state =>
+      selectIsVaultPreStakedOrBoosted(state, vaultId)
+    );
 
-  const { rewards } = useAppSelector(state => selectUserRewardsByVaultId(state, vaultId));
+    const pnlData = useAppSelector(state => selectVaultPnl(state, vaultId, address));
 
-  return (
-    <RowMobile>
-      <div className={classes.inner}>
-        <VaultAtDepositStat
-          pnlData={pnlData}
-          className={classes.statMobile}
-          contentClassName={classes.valueContainer}
-          triggerClassName={classes.value}
-          labelClassName={classes.label}
-          vaultId={vaultId}
-        />
-        <VaultNowStat
-          pnlData={pnlData}
-          className={classes.statMobile}
-          contentClassName={classes.valueContainer}
-          triggerClassName={classes.value}
-          labelClassName={classes.label}
-          vaultId={vaultId}
-        />
-        {rewards.length !== 0 && (
-          <VaultRewardsStat
-            className={classes.statMobile}
-            contentClassName={classes.valueContainer}
-            triggerClassName={classes.value}
-            labelClassName={classes.label}
-            vaultId={vaultId}
-          />
-        )}
-        {!isGovVault(vault) && (
-          <VaultYieldStat
+    const { rewards } = useAppSelector(state =>
+      selectUserRewardsByVaultId(state, vaultId, address)
+    );
+
+    return (
+      <RowMobile>
+        <div className={classes.inner}>
+          <VaultAtDepositStat
             pnlData={pnlData}
             className={classes.statMobile}
             contentClassName={classes.valueContainer}
             triggerClassName={classes.value}
             labelClassName={classes.label}
             vaultId={vaultId}
+            walletAddres={address}
           />
-        )}
-        <VaultYearlyStat
-          className={classes.statMobile}
-          contentClassName={classes.valueContainer}
-          triggerClassName={clsx(classes.value, {
-            [classes.valueBoosted]: isVaultBoostedOrPrestake,
-          })}
-          labelClassName={classes.label}
-          vaultId={vaultId}
-        />
-        <VaultDailyUsdStat
-          className={classes.statMobile}
-          contentClassName={classes.valueContainer}
-          triggerClassName={classes.value}
-          labelClassName={classes.label}
-          vaultId={vaultId}
-        />
-      </div>
-    </RowMobile>
-  );
-});
+          <VaultNowStat
+            pnlData={pnlData}
+            className={classes.statMobile}
+            contentClassName={classes.valueContainer}
+            triggerClassName={classes.value}
+            labelClassName={classes.label}
+            vaultId={vaultId}
+            walletAddres={address}
+          />
+          {rewards.length !== 0 && (
+            <VaultRewardsStat
+              className={classes.statMobile}
+              contentClassName={classes.valueContainer}
+              triggerClassName={classes.value}
+              labelClassName={classes.label}
+              vaultId={vaultId}
+              walletAddres={address}
+            />
+          )}
+          {!isGovVault(vault) && (
+            <VaultYieldStat
+              pnlData={pnlData}
+              className={classes.statMobile}
+              contentClassName={classes.valueContainer}
+              triggerClassName={classes.value}
+              labelClassName={classes.label}
+              vaultId={vaultId}
+              walletAddress={address}
+            />
+          )}
+          <VaultYearlyStat
+            className={classes.statMobile}
+            contentClassName={classes.valueContainer}
+            triggerClassName={clsx(classes.value, {
+              [classes.valueBoosted]: isVaultBoostedOrPrestake,
+            })}
+            labelClassName={classes.label}
+            vaultId={vaultId}
+          />
+          <VaultDailyUsdStat
+            className={classes.statMobile}
+            contentClassName={classes.valueContainer}
+            triggerClassName={classes.value}
+            labelClassName={classes.label}
+            vaultId={vaultId}
+            walletAddress={address}
+          />
+        </div>
+      </RowMobile>
+    );
+  }
+);

@@ -10,20 +10,25 @@ import { selectUserDepositedVaultIds } from './balance';
 import { selectWalletAddress } from './wallet';
 
 export const selectUserDepositedTimelineByVaultId = createCachedSelector(
-  (state: BeefyState, _vaultId: VaultEntity['id']) => selectWalletAddress(state),
-  (state: BeefyState, _vaultId: VaultEntity['id']) => state.user.analytics,
-  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (state: BeefyState, _vaultId: VaultEntity['id'], address?: string) =>
+    address || selectWalletAddress(state),
+  (state: BeefyState, _vaultId: VaultEntity['id'], _address?: string) => state.user.analytics,
+  (state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId,
   (walletAddress, analyticsState, vaultId) =>
     analyticsState.byAddress[walletAddress]?.timeline.byVaultId[vaultId] || []
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+)((state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
 
 export const selectIsAnalyticsLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.analytics.alreadyLoadedOnce;
 
-export const selectVaultPnl = (state: BeefyState, vaultId: VaultEntity['id']) => {
+export const selectVaultPnl = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
   const vault = selectVaultById(state, vaultId);
 
-  const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
+  const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
 
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
 
@@ -78,8 +83,12 @@ export const selectVaultPnl = (state: BeefyState, vaultId: VaultEntity['id']) =>
   };
 };
 
-export const selectLastVaultDepositStart = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
+export const selectLastVaultDepositStart = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
 
   let firstDepositDate = new Date();
 
@@ -98,9 +107,10 @@ export const selectLastVaultDepositStart = (state: BeefyState, vaultId: VaultEnt
 export const selectShareToUnderlyingTimebucketByVaultId = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
-  timebucket: TimeBucketType
+  timebucket: TimeBucketType,
+  address?: string
 ) => {
-  const walletAddress = selectWalletAddress(state);
+  const walletAddress = address || selectWalletAddress(state);
   return (
     state.user.analytics.byAddress[walletAddress]?.shareToUnderlying.byVaultId[vaultId]
       ?.byTimebucket[timebucket] || {
@@ -113,9 +123,10 @@ export const selectShareToUnderlyingTimebucketByVaultId = (
 export const selectUnderlyingToUsdTimebucketByVaultId = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
-  timebucket: TimeBucketType
+  timebucket: TimeBucketType,
+  address?: string
 ) => {
-  const walletAddress = selectWalletAddress(state);
+  const walletAddress = address || selectWalletAddress(state);
   return (
     state.user.analytics.byAddress[walletAddress]?.underlyingToUsd.byVaultId[vaultId]?.byTimebucket[
       timebucket
@@ -127,10 +138,11 @@ export const selectUnderlyingToUsdTimebucketByVaultId = (
 };
 
 export const selectHasDataToShowGraphByVaultId = createCachedSelector(
-  (state: BeefyState, _vaultId: VaultEntity['id']) => selectUserDepositedVaultIds(state),
+  (state: BeefyState, _vaultId: VaultEntity['id'], walletAddress) =>
+    selectUserDepositedVaultIds(state, walletAddress),
   (state: BeefyState, _vaultId: VaultEntity['id']) => selectIsAnalyticsLoaded(state),
-  (state: BeefyState, vaultId: VaultEntity['id']) =>
-    selectUserDepositedTimelineByVaultId(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress) =>
+    selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress),
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
 
   (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
@@ -140,4 +152,7 @@ export const selectHasDataToShowGraphByVaultId = createCachedSelector(
       isLoaded && userVaults.includes(vaultId) && timeline.length !== 0 && vault.status === 'active'
     );
   }
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+)(
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+    `${walletAddress}-${vaultId}`
+);

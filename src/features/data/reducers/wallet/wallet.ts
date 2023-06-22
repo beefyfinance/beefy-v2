@@ -13,7 +13,6 @@ export type WalletState = {
   selectedChainId: ChainEntity['id'] | null;
   error: 'unsupported chain' | null;
   hideBalance: boolean;
-  viewAsAddress: string | null;
 };
 
 const initialWalletState: WalletState = {
@@ -23,7 +22,6 @@ const initialWalletState: WalletState = {
   selectedChainId: null,
   error: null,
   hideBalance: false,
-  viewAsAddress: null,
 };
 
 export const walletSlice = createSlice({
@@ -69,9 +67,7 @@ export const walletSlice = createSlice({
       sliceState.selectedChainId = null;
       sliceState.error = 'unsupported chain';
     },
-    setViewAsAddress(sliceState, action: PayloadAction<{ address: string | null }>) {
-      sliceState.viewAsAddress = action.payload.address;
-    },
+
     /**
      * Display configuration
      */
@@ -94,5 +90,4 @@ export const {
   chainHasChangedToUnsupported,
   userDidConnect,
   setToggleHideBalance,
-  setViewAsAddress,
 } = walletSlice.actions;

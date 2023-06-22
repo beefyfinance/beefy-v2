@@ -26,11 +26,12 @@ export const NO_CHART_DATA = { data: [], minUnderlying: 0, maxUnderlying: 0, min
 export const usePnLChartData = (
   timebucket: TimeBucketType,
   productKey: string,
-  vaultId: VaultEntity['id']
+  vaultId: VaultEntity['id'],
+  address?: string
 ) => {
   const dispatch = useAppDispatch();
   const vaultTimeline = useAppSelector(state =>
-    selectUserDepositedTimelineByVaultId(state, vaultId)
+    selectUserDepositedTimelineByVaultId(state, vaultId, address)
   );
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const depositToken = useAppSelector(state => selectDepositTokenByVaultId(state, vaultId));
@@ -45,18 +46,19 @@ export const usePnLChartData = (
       state,
       vault.id,
       vault.chainId,
-      vault.earnContractAddress
+      vault.earnContractAddress,
+      address
     )
   );
   const vaultLastDeposit = useAppSelector(state => selectLastVaultDepositStart(state, vaultId));
-  const walletAddress = useAppSelector(selectWalletAddress);
+  const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
 
   const { data: sharesToUnderlying, status: sharesStatus } = useAppSelector(state =>
-    selectShareToUnderlyingTimebucketByVaultId(state, vaultId, timebucket)
+    selectShareToUnderlyingTimebucketByVaultId(state, vaultId, timebucket, address)
   );
 
   const { data: underlyingToUsd, status: underlyingStatus } = useAppSelector(state =>
-    selectUnderlyingToUsdTimebucketByVaultId(state, vaultId, timebucket)
+    selectUnderlyingToUsdTimebucketByVaultId(state, vaultId, timebucket, address)
   );
 
   useEffect(() => {
@@ -170,8 +172,10 @@ export const usePnLChartData = (
   return { chartData, isLoading };
 };
 
-export const useVaultPeriods = (vaultId: VaultEntity['id']) => {
-  const vaultDepositDate = useAppSelector(state => selectLastVaultDepositStart(state, vaultId));
+export const useVaultPeriods = (vaultId: VaultEntity['id'], address?: string) => {
+  const vaultDepositDate = useAppSelector(state =>
+    selectLastVaultDepositStart(state, vaultId, address)
+  );
   const currentDate = new Date();
 
   const result = eachDayOfInterval({

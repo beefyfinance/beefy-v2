@@ -13,21 +13,22 @@ export const useStyles = makeStyles(styles);
 
 interface PnLGraphProps {
   vaultId: VaultEntity['id'];
+  address?: string;
 }
 
-export const PnLGraphLoader = memo<PnLGraphProps>(function PnLGraphLoader({ vaultId }) {
+export const PnLGraphLoader = memo<PnLGraphProps>(function PnLGraphLoader({ vaultId, address }) {
   const hasData = useAppSelector(state => selectHasDataToShowGraphByVaultId(state, vaultId));
 
   if (hasData) {
-    return <PnLGraph vaultId={vaultId} />;
+    return <PnLGraph address={address} vaultId={vaultId} />;
   }
   return null;
 });
 
-export const PnLGraph = memo<PnLGraphProps>(function PnLGraph({ vaultId }) {
+export const PnLGraph = memo<PnLGraphProps>(function PnLGraph({ vaultId, address }) {
   const classes = useStyles();
 
-  const labels = useVaultPeriods(vaultId);
+  const labels = useVaultPeriods(vaultId, address);
 
   const [period, setPeriod] = React.useState<number>(labels.length - 1);
 
@@ -38,16 +39,16 @@ export const PnLGraph = memo<PnLGraphProps>(function PnLGraph({ vaultId }) {
   return (
     <div className={classes.pnlContainer}>
       <Header vaultId={vaultId} />
-      <Graph period={period} vaultId={vaultId} />
+      <Graph address={address} period={period} vaultId={vaultId} />
       <Footer labels={labels} vaultId={vaultId} period={period} handlePeriod={handlePeriod} />
     </div>
   );
 });
 
-export const DashboardPnLGraph = memo<PnLGraphProps>(function PnLGraph({ vaultId }) {
+export const DashboardPnLGraph = memo<PnLGraphProps>(function PnLGraph({ vaultId, address }) {
   const classes = useStyles();
 
-  const labels = useVaultPeriods(vaultId);
+  const labels = useVaultPeriods(vaultId, address);
 
   const [period, setPeriod] = React.useState<number>(labels.length - 1);
 
@@ -57,7 +58,7 @@ export const DashboardPnLGraph = memo<PnLGraphProps>(function PnLGraph({ vaultId
 
   return (
     <div className={classes.dashboardPnlContainer}>
-      <Graph period={period} vaultId={vaultId} />
+      <Graph address={address} period={period} vaultId={vaultId} />
       <Footer
         tabsClassName={classes.tabsDashboard}
         labels={labels}

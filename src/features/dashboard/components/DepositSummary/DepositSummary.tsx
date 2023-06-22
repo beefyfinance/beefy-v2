@@ -27,8 +27,8 @@ export const DepositSummary = memo<DepositSummaryProps>(function DepositSummary(
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const stats = useAppSelector(selectUserGlobalStats);
-  const totalYieldUsd = useAppSelector(selectUserTotalYieldUsd);
+  const stats = useAppSelector(state => selectUserGlobalStats(state, address));
+  const totalYieldUsd = useAppSelector(state => selectUserTotalYieldUsd(state, address));
 
   const UserStats = useMemo(() => {
     return [

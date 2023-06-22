@@ -6,7 +6,6 @@ import {
   accountHasChanged,
   chainHasChanged,
   chainHasChangedToUnsupported,
-  setViewAsAddress,
   userDidConnect,
   walletHasDisconnected,
 } from '../reducers/wallet/wallet';
@@ -53,7 +52,6 @@ export const initViewAsAddress = createAsyncThunk<void, { address: string }, { s
     const state = getState();
     const chains = selectAllChainIds(state);
     const lowerCaseAddress = address.toLowerCase();
-    dispatch(setViewAsAddress({ address: lowerCaseAddress }));
     for (const chainId of chains) {
       dispatch(fetchAllBalanceAction({ chainId, address: lowerCaseAddress }));
     }

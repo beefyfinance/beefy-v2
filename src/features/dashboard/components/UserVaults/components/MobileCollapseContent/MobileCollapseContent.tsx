@@ -15,48 +15,53 @@ const useStyles = makeStyles(styles);
 
 type ListComponentType = 'stats' | 'txHistory' | 'chart';
 
-export const MobileCollapseContent = memo(function MobileCollapseContent({
-  vaultId,
-}: {
+interface MobileCollapseContentProps {
   vaultId: VaultEntity['id'];
-}) {
-  const classes = useStyles();
-  const [listComponent, setShowStats] = useState<ListComponentType>('stats');
-  const { t } = useTranslation();
+  address: string;
+}
 
-  const hasAnalyticsData = useAppSelector(state =>
-    selectHasDataToShowGraphByVaultId(state, vaultId)
-  );
+export const MobileCollapseContent = memo<MobileCollapseContentProps>(
+  function MobileCollapseContent({ vaultId, address }) {
+    const classes = useStyles();
+    const [listComponent, setShowStats] = useState<ListComponentType>('stats');
+    const { t } = useTranslation();
 
-  const options = useMemo(() => {
-    const items = {
-      stats: t('Dashboard-VaultData'),
-      txHistory: t('Dashboard-TransactionHistory'),
-    };
-    if (hasAnalyticsData) {
-      items['chart'] = t('Dashboard-Chart');
-    }
-    return items;
-  }, [hasAnalyticsData, t]);
+    const hasAnalyticsData = useAppSelector(state =>
+      selectHasDataToShowGraphByVaultId(state, vaultId, address)
+    );
 
-  const handleChange = useCallback(newValue => {
-    setShowStats(newValue);
-  }, []);
+    const options = useMemo(() => {
+      const items = {
+        stats: t('Dashboard-VaultData'),
+        txHistory: t('Dashboard-TransactionHistory'),
+      };
+      if (hasAnalyticsData) {
+        items['chart'] = t('Dashboard-Chart');
+      }
+      return items;
+    }, [hasAnalyticsData, t]);
 
-  return (
-    <div className={classes.container}>
-      <div className={classes.toggleContainer}>
-        <ToggleButtons
-          selectedClass={classes.activeClassName}
-          buttonClass={classes.buttonText}
-          value={listComponent}
-          onChange={handleChange}
-          options={options}
-        />
+    const handleChange = useCallback(newValue => {
+      setShowStats(newValue);
+    }, []);
+
+    return (
+      <div className={classes.container}>
+        <div className={classes.toggleContainer}>
+          <ToggleButtons
+            selectedClass={classes.activeClassName}
+            buttonClass={classes.buttonText}
+            value={listComponent}
+            onChange={handleChange}
+            options={options}
+          />
+        </div>
+        {listComponent === 'stats' && (
+          <VaultDashboardMobileStats address={address} vaultId={vaultId} />
+        )}
+        {listComponent === 'txHistory' && <VaultTransactions address={address} vaultId={vaultId} />}
+        {listComponent === 'chart' && <DashboardPnLGraph address={address} vaultId={vaultId} />}
       </div>
-      {listComponent === 'stats' && <VaultDashboardMobileStats vaultId={vaultId} />}
-      {listComponent === 'txHistory' && <VaultTransactions vaultId={vaultId} />}
-      {listComponent === 'chart' && <DashboardPnLGraph vaultId={vaultId} />}
-    </div>
-  );
-});
+    );
+  }
+);

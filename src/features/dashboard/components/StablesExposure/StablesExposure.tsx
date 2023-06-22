@@ -8,9 +8,15 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const StablesExposure = memo(function StablesExposure() {
+interface StablesExposureProps {
+  address: string;
+}
+
+export const StablesExposure = memo<StablesExposureProps>(function StablesExposure({ address }) {
   const { t } = useTranslation();
-  const stablecoinsExposureData = useAppSelector(state => selectUserStablecoinsExposure(state));
+  const stablecoinsExposureData = useAppSelector(state =>
+    selectUserStablecoinsExposure(state, address)
+  );
   const stablePercentage = stablecoinsExposureData.filter(item => item.key === 'stable');
   const classes = useStyles({
     stablesPercentage: formatPercent(stablePercentage[0]?.percentage, 0, '0%'),

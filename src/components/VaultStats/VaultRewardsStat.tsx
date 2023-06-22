@@ -11,11 +11,12 @@ import { selectIsWalletKnown } from '../../features/data/selectors/wallet';
 
 export type VaultRewardsStatProps = {
   vaultId: VaultEntity['id'];
+  walletAddres?: string;
 };
 
 export const VaultRewardsStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId }: VaultRewardsStatProps) {
+function mapStateToProps(state: BeefyState, { vaultId, walletAddres }: VaultRewardsStatProps) {
   const label = 'VaultStat-Claimable Rewards';
 
   const vault = selectVaultById(state, vaultId);
@@ -35,7 +36,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultRewardsStatProps) 
     };
   }
 
-  const { totalRewardsUsd } = selectUserRewardsByVaultId(state, vaultId);
+  const { totalRewardsUsd } = selectUserRewardsByVaultId(state, vaultId, walletAddres);
 
   return {
     label,

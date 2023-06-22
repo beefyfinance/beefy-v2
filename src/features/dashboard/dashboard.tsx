@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import type { ReactNode } from 'react';
 import React, { memo } from 'react';
 import { useAppSelector } from '../../store';
-import { selectUserDepositedVaultIds } from '../data/selectors/balance';
+import { selectAddressDepositedVaultIds } from '../data/selectors/balance';
 import { DepositSummary } from './components/DepositSummary';
 import { InvalidAddress, InvalidDomain, NoResults, NotConnected } from './components/NoResults';
 import { UserExposure } from './components/UserExposure';
@@ -31,7 +31,7 @@ const DashboardFromUrl = memo(function DashboardFromWallet() {
   const { address: addressOrDomain } = useParams<{ address: string }>();
 
   if (isValidAddress(addressOrDomain)) {
-    return <DashboardForAddress address={addressOrDomain} />;
+    return <DashboardForAddress address={addressOrDomain.toLocaleLowerCase()} />;
   }
 
   if (isMaybeDomain(addressOrDomain)) {
@@ -69,7 +69,7 @@ const DashboardFromDomain = memo<DashboardFromDomainProps>(function DashboardFro
   const status = useResolveDomain(domain);
 
   if (isFulfilledStatus(status)) {
-    return <DashboardForAddress address={status.value} addressLabel={domain} />;
+    return <DashboardForAddress address={status.value.toLocaleLowerCase()} addressLabel={domain} />;
   }
 
   if (isRejectedStatus(status)) {
@@ -101,7 +101,7 @@ const DashboardForAddress = memo<DashboardForAddressProps>(function DashboardFor
   addressLabel,
 }) {
   const { loading } = useInitDashboard(address);
-  const userVaults = useAppSelector(state => selectUserDepositedVaultIds(state, address));
+  const userVaults = useAppSelector(state => selectAddressDepositedVaultIds(state, address));
 
   return (
     <DashboardContainer>

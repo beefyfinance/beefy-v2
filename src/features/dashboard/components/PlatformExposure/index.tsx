@@ -7,20 +7,21 @@ import type { ExposureDashboardChartLoaderProps } from '../ExposureChart/types';
 
 const PlatformExposure = memo<ExposureDashboardChartLoaderProps>(function PlatformExposure({
   title,
+  address,
 }) {
   const platformExposureData = useAppSelector(state =>
-    selectUserExposureByKey(state, 'platformId')
+    selectUserExposureByKey(state, 'platformId', address)
   );
 
   return <ExposureChart title={title} type="platform" data={platformExposureData} />;
 });
 
 export const PlatformExposureLoader = memo<ExposureDashboardChartLoaderProps>(
-  function PlatformExposureLoader({ title }) {
+  function PlatformExposureLoader({ title, address }) {
     const isUserDataAvailable = useAppSelector(selectIsUserBalanceAvailable);
 
     if (isUserDataAvailable) {
-      return <PlatformExposure title={title} />;
+      return <PlatformExposure address={address} title={title} />;
     }
 
     return null;
