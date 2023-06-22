@@ -3929,9 +3929,9 @@ enhanced-resolve@^5.8.3:
     tapable "^2.2.0"
 
 ens-reverse@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ens-reverse/-/ens-reverse-1.0.0.tgz#6122abb83b6a45e3bb4a4ba44d5992950573c00d"
-  integrity sha512-GIn7TOnBojK1hyNsXyglO144fjmYaQDMb7NwR+oT7Da8aQaDE9xCdlIIkP7VyvTGLBHi2xpptvbUxQVBExl92A==
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ens-reverse/-/ens-reverse-1.0.2.tgz#d759de222a9e89a70ce05a798beeaae428d72bbc"
+  integrity sha512-QIGuVM/ogBEPzcA1lNjtJNGncEkwf0SSi0ubQ/VwaVw8n/K7zFAqidxR1ksi/XeRp+Ij/fn03ODjxk9rTmf+5g==
 
 entities@^4.4.0:
   version "4.4.0"

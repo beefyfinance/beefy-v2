@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import type { PropsWithChildren } from 'react';
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonLink } from '../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../store';
@@ -13,51 +12,75 @@ import { AddressInput } from '../AddressInput';
 
 const useStyles = makeStyles(styles);
 
-interface NoResultsProps {
-  error: boolean;
-}
-
-export const NoResults = memo<NoResultsProps>(function NoResults({ error }) {
+export const InvalidDomain = memo(function InvalidDomain() {
   const { t } = useTranslation();
-  const walletAddress = useAppSelector(selectWalletAddressIfKnown);
-  const classes = useStyles();
-  const dispatch = useAppDispatch();
-
-  const handleWalletConnect = useCallback(() => {
-    if (walletAddress) {
-      dispatch(doDisconnectWallet());
-    } else {
-      dispatch(askForWalletConnection());
-    }
-  }, [dispatch, walletAddress]);
+  const connectedAddress = useAppSelector(selectWalletAddressIfKnown);
 
   return (
-    <Text error={error} walletAddress={walletAddress}>
-      <div className={classes.actionsContainer}>
-        <div className={classes.center}>
-          {walletAddress ? (
-            <ButtonLink className={classes.btn} to="/" variant="success">
-              {t('NoResults-ViewAllVaults')}
-            </ButtonLink>
-          ) : (
-            <Button className={classes.btn} onClick={handleWalletConnect} variant="success">
-              {t('NoResults-ConnectWallet')}
-            </Button>
-          )}
-        </div>
-        <Divider />
-        <AddressInput />
-      </div>
-    </Text>
+    <Error
+      title={t('Dashboard-Title-InvalidDomain')}
+      text={t(
+        connectedAddress ? 'Dashboard-Text-InvalidDomain-Connected' : 'Dashboard-Text-InvalidDomain'
+      )}
+      connectedAction={'dashboard'}
+    />
   );
 });
 
-type TextProps = PropsWithChildren<{
-  walletAddress?: string | null;
-  error: boolean;
-}>;
-const Text = memo<TextProps>(function Text({ walletAddress, error, children }) {
+export const InvalidAddress = memo(function InvalidAddress() {
   const { t } = useTranslation();
+  const connectedAddress = useAppSelector(selectWalletAddressIfKnown);
+
+  return (
+    <Error
+      title={t('Dashboard-Title-InvalidAddress')}
+      text={t(
+        connectedAddress
+          ? 'Dashboard-Text-InvalidAddress-Connected'
+          : 'Dashboard-Text-InvalidAddress'
+      )}
+      connectedAction={'dashboard'}
+    />
+  );
+});
+
+export const NotConnected = memo(function NotConnected() {
+  const { t } = useTranslation();
+  return <Error title={t('Dashboard-Title-NoAddress')} text={t('Dashboard-Text-NoAddress')} />;
+});
+
+export type NoResultsProps = {
+  title: string;
+  address: string;
+};
+export const NoResults = memo<NoResultsProps>(function NoResults({ title, address }) {
+  const { t } = useTranslation();
+  const connectedAddress = useAppSelector(selectWalletAddressIfKnown);
+  const requestForConnectedWallet = useMemo(() => {
+    return address && connectedAddress && address.toLowerCase() === connectedAddress.toLowerCase();
+  }, [address, connectedAddress]);
+
+  return (
+    <Error
+      title={title}
+      text={t(
+        requestForConnectedWallet
+          ? 'Dashboard-Text-NoData-ViewingConnected'
+          : connectedAddress
+          ? 'Dashboard-Text-NoData-Connected'
+          : 'Dashboard-Text-NoData'
+      )}
+      connectedAction={!requestForConnectedWallet ? 'dashboard' : 'vaults'}
+    />
+  );
+});
+
+type ErrorProps = {
+  title: string;
+  text: string;
+  connectedAction?: 'vaults' | 'dashboard';
+};
+const Error = memo<ErrorProps>(function Error({ title, text, connectedAction = 'vaults' }) {
   const classes = useStyles();
 
   return (
@@ -67,20 +90,58 @@ const Text = memo<TextProps>(function Text({ walletAddress, error, children }) {
           <img className={classes.icon} src={iconEmptyState} alt="empty" />
         </div>
         <div className={classes.textContainer}>
-          <div className={classes.title}>
-            {error
-              ? t('Dashboard-Invalid-Address')
-              : walletAddress
-              ? t('Dashboard-NoData')
-              : t('Dashboard-NoAddress')}
-          </div>
-          <div className={classes.text}>
-            {error ? t('Dashboard-Invalid') : walletAddress ? t('Dashboard-NoVaults') : null}
-          </div>
+          <div className={classes.title}>{title}</div>
+          {text ? <div className={classes.text}>{text}</div> : null}
         </div>
-        {children}
+        <Actions connectedAction={connectedAction} />
       </div>
     </Section>
+  );
+});
+
+type ActionProps = {
+  connectedAction?: 'vaults' | 'dashboard';
+};
+const Actions = memo<ActionProps>(function Actions({ connectedAction }) {
+  const { t } = useTranslation();
+  const connectedAddress = useAppSelector(selectWalletAddressIfKnown);
+  const classes = useStyles();
+  const dispatch = useAppDispatch();
+
+  const handleWalletConnect = useCallback(() => {
+    if (connectedAddress) {
+      dispatch(doDisconnectWallet());
+    } else {
+      dispatch(askForWalletConnection());
+    }
+  }, [dispatch, connectedAddress]);
+
+  return (
+    <div className={classes.actionsContainer}>
+      <div className={classes.center}>
+        {connectedAddress ? (
+          connectedAction === 'dashboard' ? (
+            <ButtonLink
+              className={classes.btn}
+              to={`/dashboard/${connectedAddress}`}
+              variant="success"
+            >
+              {t('NoResults-ViewConnectedDashboard')}
+            </ButtonLink>
+          ) : (
+            <ButtonLink className={classes.btn} to="/" variant="success">
+              {t('NoResults-ViewAllVaults')}
+            </ButtonLink>
+          )
+        ) : (
+          <Button className={classes.btn} onClick={handleWalletConnect} variant="success">
+            {t('NoResults-ConnectWallet')}
+          </Button>
+        )}
+      </div>
+      <Divider />
+      <AddressInput />
+    </div>
   );
 });
 

@@ -16,48 +16,44 @@ import { ShortAddress } from '../ShortAddress';
 
 const useStyles = makeStyles(styles);
 
-export const DepositSummary = memo(function DepositSummary({
-  loading,
-  error,
-}: {
-  loading: boolean;
-  error: boolean;
+interface DepositSummaryProps {
+  address: string;
+  addressLabel?: string;
+}
+
+export const DepositSummary = memo<DepositSummaryProps>(function DepositSummary({
+  address,
+  addressLabel,
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
-
   const stats = useAppSelector(selectUserGlobalStats);
-
   const totalYieldUsd = useAppSelector(selectUserTotalYieldUsd);
-
-  const shouldShowZero = useMemo(() => {
-    return loading || error;
-  }, [error, loading]);
 
   const UserStats = useMemo(() => {
     return [
       {
         title: t('Summary-Deposit'),
-        value: formatUsd(shouldShowZero ? 0 : stats.deposited),
+        value: formatUsd(stats.deposited),
         Icon: WalletIcon,
       },
       {
         title: t('Summary-Vaults'),
-        value: shouldShowZero ? '0' : `${stats.depositedVaults}`,
+        value: `${stats.depositedVaults}`,
         Icon: VaultIcon,
       },
       {
         title: t('Summary-Yield'),
-        value: formatUsd(shouldShowZero ? 0 : totalYieldUsd.toNumber()),
+        value: formatUsd(totalYieldUsd.toNumber()),
         Icon: MonthlyIcon,
       },
       {
         title: t('Summary-Daily'),
-        value: formatUsd(shouldShowZero ? 0 : stats.daily),
+        value: formatUsd(stats.daily),
         Icon: DailyIcon,
       },
     ];
-  }, [t, shouldShowZero, stats.deposited, stats.depositedVaults, stats.daily, totalYieldUsd]);
+  }, [t, stats.deposited, stats.depositedVaults, stats.daily, totalYieldUsd]);
 
   return (
     <div className={classes.container}>
@@ -65,7 +61,7 @@ export const DepositSummary = memo(function DepositSummary({
         <div className={classes.titleContainer}>
           <div className={classes.title}>
             {t('Dashboard-Title')}
-            <ShortAddress error={error} loading={loading} />
+            <ShortAddress address={address} addressLabel={addressLabel} />
           </div>
           <div>
             <AddressInput />

@@ -52,11 +52,11 @@ export const App = () => {
                   <Route exact path="/bridge">
                     <Bridge />
                   </Route>
-                  <Route exact path="/dashboard">
-                    <Dashboard />
-                  </Route>
                   <Route strict exact path="/dashboard/:address">
-                    <Dashboard />
+                    <Dashboard mode={'url'} />
+                  </Route>
+                  <Route exact path="/dashboard">
+                    <Dashboard mode={'wallet'} />
                   </Route>
                   <Route exact path="/treasury">
                     <Treasury />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, FormControl, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { connect } from 'react-redux';
@@ -6,23 +6,23 @@ import { useTranslation } from 'react-i18next';
 import { StatLoader } from '../../../StatLoader';
 import { useTheme } from '@material-ui/core/styles';
 import {
-  selectEns,
+  selectConnectedWalletAddress,
   selectIsBalanceHidden,
   selectIsWalletConnected,
   selectIsWalletKnown,
-  selectConnectedWalletAddress,
 } from '../../../../features/data/selectors/wallet';
 import type { BeefyState } from '../../../../redux-types';
 import {
   askForWalletConnection,
   doDisconnectWallet,
-  getEns,
 } from '../../../../features/data/actions/wallet';
 import { selectIsWalletPending } from '../../../../features/data/selectors/data-loader';
 import clsx from 'clsx';
 import { useAppDispatch } from '../../../../store';
-import { formatAddressShort, formatEns } from '../../../../helpers/format';
+import { formatAddressShort, formatDomain } from '../../../../helpers/format';
 import { fetchWalletTimeline } from '../../../../features/data/actions/analytics';
+import { useResolveAddress } from '../../../../features/data/hooks/resolver';
+import { isFulfilledStatus } from '../../../../features/data/reducers/wallet/resolver-types';
 
 const useStyles = makeStyles(styles);
 
@@ -32,26 +32,24 @@ export const WalletContainer = connect((state: BeefyState) => {
   const walletAddress = isWalletKnown ? selectConnectedWalletAddress(state) : null;
   const walletPending = selectIsWalletPending(state);
   const blurred = selectIsBalanceHidden(state);
-  const ens = selectEns(state, walletAddress);
-  return { isWalletConnected, walletAddress, walletPending, blurred, ens };
+  return { isWalletConnected, walletAddress, walletPending, blurred };
 })(
   ({
     isWalletConnected,
     walletAddress,
     walletPending,
     blurred,
-    ens,
   }: {
     isWalletConnected: boolean;
     walletAddress: null | string;
     walletPending: boolean;
     blurred: boolean;
-    ens: string | null;
   }) => {
     const theme = useTheme();
     const classes = useStyles();
     const dispatch = useAppDispatch();
     const { t } = useTranslation();
+    const resolverStatus = useResolveAddress(walletAddress);
 
     const handleWalletConnect = () => {
       if (walletAddress) {
@@ -67,9 +65,8 @@ export const WalletContainer = connect((state: BeefyState) => {
       onClick: handleWalletConnect,
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
       if (walletAddress) {
-        dispatch(getEns({ address: walletAddress }));
         dispatch(fetchWalletTimeline({ address: walletAddress }));
       }
     }, [dispatch, walletAddress]);
@@ -96,8 +93,8 @@ export const WalletContainer = connect((state: BeefyState) => {
               <React.Fragment>
                 <div className={clsx(classes.address, { [classes.blurred]: blurred })}>
                   {walletAddress
-                    ? ens
-                      ? formatEns(ens)
+                    ? isFulfilledStatus(resolverStatus)
+                      ? formatDomain(resolverStatus.value)
                       : formatAddressShort(walletAddress)
                     : t('Network-ConnectWallet')}
                 </div>
