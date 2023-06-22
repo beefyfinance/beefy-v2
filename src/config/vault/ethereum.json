@@ -1188,7 +1188,7 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xcfca23ca9ca720b6e98e3eb9b6aa0ffc4a5c08b9000200000000000000000274/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xcfca23ca9ca720b6e98e3eb9b6aa0ffc4a5c08b9000200000000000000000274/withdraw",
     "network": "ethereum",
-    "createdAt": 1673010116
+    "createdAt": 1687443962
   },
   {
     "id": "aura-aurabal-balbpt",
@@ -1210,7 +1210,7 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x3dd0843a028c86e0b760b1a76929d1c5ef93a2dd000200000000000000000249/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x3dd0843a028c86e0b760b1a76929d1c5ef93a2dd000200000000000000000249/withdraw",
     "network": "ethereum",
-    "createdAt": 1673010116
+    "createdAt": 1687443962
   },
   {
     "id": "aura-acx-wsteth",
@@ -1791,7 +1791,7 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/pool/0x1e19cf2d73a72ef1332c882f20534b6519be0276000200000000000000000112/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/pool/0x1e19cf2d73a72ef1332c882f20534b6519be0276000200000000000000000112/withdraw",
     "network": "ethereum",
-    "createdAt": 1671240920
+    "createdAt": 1687443962
   },
   {
     "id": "aura-mai-usdc",
@@ -1836,7 +1836,7 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/pool/0x32296969ef14eb0c6d29669c550d4a0449130230000200000000000000000080/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/pool/0x32296969ef14eb0c6d29669c550d4a0449130230000200000000000000000080/withdraw",
     "network": "ethereum",
-    "createdAt": 1671240920
+    "createdAt": 1687443962
   },
   {
     "id": "aura-bbausd",
