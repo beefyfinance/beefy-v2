@@ -19,7 +19,7 @@ export const styles = (theme: Theme) => ({
   title: {
     display: 'flex',
     columnGap: '8px',
-    alignItems: 'center',
+    alignItems: 'baseline',
     ...theme.typography.h1,
   },
 });

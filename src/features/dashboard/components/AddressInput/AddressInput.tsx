@@ -5,58 +5,48 @@ import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
 import { styles } from './styles';
 import clsx from 'clsx';
-import { getEnsResolver, isValidAddress, isValidEns } from '../../../../helpers/addresses';
-import { useAppSelector } from '../../../../store';
-import { selectChainById } from '../../../data/selectors/chains';
+import { isMaybeDomain, isValidAddress } from '../../../../helpers/addresses';
 import { FloatingError } from './FloatingError';
+import { useResolveDomain } from '../../../data/hooks/resolver';
+import { isFulfilledStatus, isRejectedStatus } from '../../../data/reducers/wallet/resolver-types';
 
 const useStyles = makeStyles(styles);
 
 export const AddressInput = memo(function AddressInput() {
   const [userInput, setUserInput] = useState<string>('');
-  const [isENSValid, setIsENSValid] = useState<boolean>(false);
-  const [ensLoading, setEnsLoading] = useState<boolean>(false);
-  const ethChain = useAppSelector(state => selectChainById(state, 'ethereum'));
+  const [inputMode, setInputMode] = useState<'address' | 'domain'>('address');
+  const resolverStatus = useResolveDomain(inputMode === 'domain' ? userInput : '');
+  const [isDomainValid, setIsDomainValid] = useState<boolean>(false);
+  const [isDomainResolving, setIsDomainResolving] = useState<boolean>(false);
+  const [hasFocus, setHasFocus] = useState<boolean>(false);
   const { t } = useTranslation();
   const classes = useStyles();
   const anchorEl = useRef();
   const history = useHistory();
 
-  useEffect(() => {
-    async function fetchValidEns() {
-      if (isValidEns(userInput)) {
-        const resolvedAddress = await getEnsResolver(userInput, ethChain);
-        if (resolvedAddress) {
-          setIsENSValid(true);
-        } else {
-          setIsENSValid(false);
-        }
-        setEnsLoading(false);
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const input = e.target.value;
+      if (isMaybeDomain(input)) {
+        setInputMode('domain');
+      } else {
+        setInputMode('address');
       }
-    }
-    fetchValidEns();
-
-    return () => {
-      setIsENSValid(false);
-    };
-  }, [userInput, ethChain]);
-
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.endsWith('.eth')) {
-      setEnsLoading(true);
-    }
-    setUserInput(e.target.value);
-  }, []);
+      setUserInput(input);
+    },
+    [setUserInput, setInputMode]
+  );
 
   const handleClear = useCallback(() => {
     setUserInput('');
+    setInputMode('address');
   }, []);
 
   const isAddressValid = useMemo(() => {
-    return isValidAddress(userInput);
-  }, [userInput]);
+    return inputMode === 'address' && isValidAddress(userInput);
+  }, [inputMode, userInput]);
 
-  const isValid = useMemo(() => isAddressValid || isENSValid, [isAddressValid, isENSValid]);
+  const isValid = useMemo(() => isAddressValid || isDomainValid, [isAddressValid, isDomainValid]);
 
   const handleGoToDashboardOnEnterKey = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -68,6 +58,40 @@ export const AddressInput = memo(function AddressInput() {
     [userInput, handleClear, history, isValid]
   );
 
+  const handleFocus = useCallback(() => {
+    setHasFocus(true);
+  }, [setHasFocus]);
+
+  const handleBlur = useCallback(() => {
+    setHasFocus(false);
+  }, [setHasFocus]);
+
+  useEffect(() => {
+    if (isMaybeDomain(userInput)) {
+      setInputMode('domain');
+    } else {
+      setInputMode('address');
+    }
+  }, [userInput, setInputMode]);
+
+  useEffect(() => {
+    if (inputMode === 'domain') {
+      if (isFulfilledStatus(resolverStatus)) {
+        setIsDomainValid(true);
+        setIsDomainResolving(false);
+      } else if (isRejectedStatus(resolverStatus)) {
+        setIsDomainValid(false);
+        setIsDomainResolving(false);
+      } else {
+        setIsDomainValid(false);
+        setIsDomainResolving(true);
+      }
+    } else {
+      setIsDomainValid(false);
+      setIsDomainResolving(false);
+    }
+  }, [inputMode, resolverStatus, setIsDomainValid, setIsDomainResolving]);
+
   return (
     <>
       <InputBase
@@ -75,43 +99,53 @@ export const AddressInput = memo(function AddressInput() {
         className={clsx(classes.search, { [classes.active]: userInput.length !== 0 })}
         value={userInput}
         onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         fullWidth={true}
         onKeyPress={handleGoToDashboardOnEnterKey}
         endAdornment={
           <GoToDashboardButton
-            ensLoading={ensLoading}
+            domainResolving={isDomainResolving}
             isValid={isValid}
             userInput={userInput}
             handleClear={handleClear}
+            inputMode={inputMode}
           />
         }
         placeholder={t('Dashboard-SearchInput-Placeholder')}
       />
-      <FloatingError
-        anchorRef={anchorEl}
-        userInput={userInput}
-        isAddressValid={isAddressValid}
-        isEnsValid={isENSValid}
-        ensLoading={ensLoading}
-      />
+      {hasFocus && !isValid && userInput.length > 0 ? (
+        <FloatingError
+          userInput={userInput}
+          anchorRef={anchorEl}
+          inputMode={inputMode}
+          isAddressValid={isAddressValid}
+          isDomainValid={isDomainValid}
+          isDomainResolving={isDomainResolving}
+        />
+      ) : null}
     </>
   );
 });
 
-const GoToDashboardButton = memo(function GoToDashboardButton({
-  isValid,
-  userInput,
-  handleClear,
-  ensLoading,
-}: {
+interface GoToDashboardButtonProps {
   isValid: boolean;
   userInput: string;
   handleClear: () => void;
-  ensLoading: boolean;
+  domainResolving: boolean;
+  inputMode: 'address' | 'domain';
+}
+
+const GoToDashboardButton = memo<GoToDashboardButtonProps>(function GoToDashboardButton({
+  isValid,
+  userInput,
+  handleClear,
+  domainResolving,
+  inputMode,
 }) {
   const classes = useStyles();
 
-  if (ensLoading && userInput.endsWith('.eth'))
+  if (domainResolving && inputMode === 'domain')
     return (
       <div className={classes.flex}>
         <CircularProgress

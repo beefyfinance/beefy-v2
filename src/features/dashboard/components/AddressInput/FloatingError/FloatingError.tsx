@@ -23,40 +23,43 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface FloatingErrorProps {
   userInput: string;
+  inputMode: 'address' | 'domain';
   isAddressValid: boolean;
-  isEnsValid: boolean;
-  ensLoading: boolean;
+  isDomainValid: boolean;
+  isDomainResolving: boolean;
   anchorRef: React.RefObject<HTMLInputElement>;
 }
 
 export const FloatingError = memo<FloatingErrorProps>(function FloatingError({
   userInput,
+  inputMode,
   isAddressValid,
-  isEnsValid,
-  ensLoading,
+  isDomainValid,
+  isDomainResolving,
   anchorRef,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  if (!ensLoading && userInput.endsWith('.eth'))
+  if (!isDomainResolving && inputMode === 'domain') {
     return (
       <Floating
-        open={userInput.length > 6 && !isEnsValid}
+        open={!isDomainValid}
         placement="bottom-start"
         anchorEl={anchorRef}
         className={classes.dropdown}
         display="flex"
         autoWidth={false}
       >
-        <div>{t('Dashboard-SearchInput-Invalid-Ens')}</div>
+        <div>{t('Dashboard-SearchInput-Invalid-Domain')}</div>
       </Floating>
     );
+  }
 
-  if (userInput.startsWith('0x')) {
+  if (inputMode === 'address' && userInput.toLowerCase().startsWith('0x')) {
     return (
       <Floating
-        open={userInput.length > 40 && !isAddressValid}
+        open={!isAddressValid}
         placement="bottom-start"
         anchorEl={anchorRef}
         className={classes.dropdown}

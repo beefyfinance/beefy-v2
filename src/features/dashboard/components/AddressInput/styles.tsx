@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => ({
       },
     },
     '& .MuiInputBase-input': {
-      minWidth: '140px',
+      minWidth: '200px',
       transition: '0.2s ease-in-out',
       padding: '8px 16px',
       color: '#D0D0DA',

@@ -1,56 +1,58 @@
-import React, { memo, useCallback, useMemo, useState } from 'react';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
-import { useAppSelector } from '../../../../store';
-import { selectEns, selectWalletAddress } from '../../../data/selectors/wallet';
-import { formatAddressShort, formatEns } from '../../../../helpers/format';
-import { Tooltip } from '../../../../components/Tooltip';
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import type { Theme } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
+import { formatAddressShort, formatDomain } from '../../../../helpers/format';
+import { Tooltip } from '../../../../components/Tooltip';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const ShortAddress = memo(function ShortAddress({
-  loading,
-  error,
-}: {
-  loading: boolean;
-  error: boolean;
+export type ShortAddressProps = {
+  address: string;
+  addressLabel?: string;
+};
+
+export const ShortAddress = memo<ShortAddressProps>(function ShortAddress({
+  address,
+  addressLabel,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const [clipboard, setClipboard] = useState<boolean>(false);
-  const walletAddress = useAppSelector(state => selectWalletAddress(state));
-
+  const [showCopied, setShowCopied] = useState<boolean>(false);
   const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'), { noSsr: true });
-  const ens = useAppSelector(state => selectEns(state, walletAddress));
 
   const handleCopyAddressToClipboard = useCallback(() => {
-    setClipboard(true);
-    navigator.clipboard.writeText(walletAddress);
-    setTimeout(() => setClipboard(false), 3000);
-  }, [walletAddress]);
+    setShowCopied(true);
+    navigator.clipboard.writeText(address);
+  }, [address, setShowCopied]);
 
-  const formatedEns = useMemo(() => {
-    if (mdUp) {
-      return formatEns(ens, 20);
+  const shortAddressLabel = useMemo(() => {
+    if (addressLabel) {
+      return mdUp ? formatDomain(addressLabel, 20) : formatDomain(addressLabel);
     }
-    return formatEns(ens);
-  }, [ens, mdUp]);
 
-  if (walletAddress && !loading && !error) {
+    return formatAddressShort(address);
+  }, [addressLabel, address, mdUp]);
+
+  useEffect(() => {
+    if (showCopied) {
+      const handle = setTimeout(() => {
+        setShowCopied(false);
+      }, 3000);
+      return () => clearTimeout(handle);
+    }
+  }, [showCopied, setShowCopied]);
+
+  if (address) {
     return (
       <Tooltip
         onClick={handleCopyAddressToClipboard}
         contentClass={classes.longAddress}
         triggerClass={classes.triggerClass}
         tooltipClass={classes.tooltipContent}
-        children={
-          <div className={classes.shortAddress}>
-            {`(${ens ? formatedEns : formatAddressShort(walletAddress)})`}
-          </div>
-        }
-        content={clipboard ? t('Clipboard-Copied') : walletAddress}
+        children={<div className={classes.shortAddress}>{`(${shortAddressLabel})`}</div>}
+        content={showCopied ? t('Clipboard-Copied') : address}
       />
     );
   }

@@ -6,47 +6,15 @@ import {
   accountHasChanged,
   chainHasChanged,
   chainHasChangedToUnsupported,
-  setEns,
   setViewAsAddress,
   userDidConnect,
   walletHasDisconnected,
 } from '../reducers/wallet/wallet';
-import { selectAllChains, selectChainById, selectAllChainIds } from '../selectors/chains';
+import { selectAllChainIds, selectAllChains } from '../selectors/chains';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 import { selectIsWalletConnected } from '../selectors/wallet';
-import { getAddressDomains } from '../../../helpers/addresses';
 import { fetchWalletTimeline } from './analytics';
 import { fetchAllBalanceAction } from './balance';
-
-const ensCache: Record<string, string> = {};
-export const getEns = createAsyncThunk<void, { address: string | null }, { state: BeefyState }>(
-  'wallet/getEns',
-  async ({ address }, { getState, dispatch }) => {
-    if (address) {
-      const addressLower = address.toLowerCase();
-      if (addressLower in ensCache) {
-        dispatch(setEns({ ens: ensCache[addressLower], address: addressLower }));
-      }
-
-      const bscChain = selectChainById(getState(), 'bsc');
-      const ethChain = selectChainById(getState(), 'ethereum');
-      const polygonChain = selectChainById(getState(), 'polygon');
-      const arbChain = selectChainById(getState(), 'arbitrum');
-
-      const domains = await getAddressDomains(address, [
-        bscChain,
-        ethChain,
-        polygonChain,
-        arbChain,
-      ]);
-      const domain = domains?.[0] || '';
-
-      ensCache[addressLower] = domain;
-
-      dispatch(setEns({ address: addressLower, ens: domain }));
-    }
-  }
-);
 
 export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
   'wallet/initWallet',
@@ -79,25 +47,19 @@ export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
   }
 );
 
-export const initViewAsAddress = createAsyncThunk<
-  void,
-  { address: string; ens?: string },
-  { state: BeefyState }
->('wallet/initViewAsAddress', async ({ address, ens }, { getState, dispatch }) => {
-  const state = getState();
-  const chains = selectAllChainIds(state);
-  const lowerCaseAddress = address.toLowerCase();
-  dispatch(setViewAsAddress({ address: lowerCaseAddress }));
-  for (const chainId of chains) {
-    dispatch(fetchAllBalanceAction({ chainId, address: lowerCaseAddress }));
+export const initViewAsAddress = createAsyncThunk<void, { address: string }, { state: BeefyState }>(
+  'wallet/initViewAsAddress',
+  async ({ address }, { getState, dispatch }) => {
+    const state = getState();
+    const chains = selectAllChainIds(state);
+    const lowerCaseAddress = address.toLowerCase();
+    dispatch(setViewAsAddress({ address: lowerCaseAddress }));
+    for (const chainId of chains) {
+      dispatch(fetchAllBalanceAction({ chainId, address: lowerCaseAddress }));
+    }
+    dispatch(fetchWalletTimeline({ address }));
   }
-  dispatch(fetchWalletTimeline({ address }));
-  if (ens) {
-    dispatch(setEns({ address: lowerCaseAddress, ens }));
-  } else {
-    dispatch(getEns({ address: address }));
-  }
-});
+);
 
 export const tryToAutoReconnect = createAsyncThunk<void, void, { state: BeefyState }>(
   'wallet/tryToAutoReconnect',

@@ -35,6 +35,7 @@ import { historicalSlice } from './historical';
 import { savedVaultsSlice } from './saved-vaults';
 import type { Reducer } from 'react';
 import type { AnyAction } from '@reduxjs/toolkit';
+import { resolverReducer } from './wallet/resolver';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -65,6 +66,7 @@ const userReducer = combineReducers<BeefyState['user']>({
     walletSlice.reducer
   ),
   walletActions: walletActionsReducer,
+  resolver: resolverReducer,
 });
 const uiReducer = combineReducers<BeefyState['ui']>({
   filteredVaults: persistReducer(

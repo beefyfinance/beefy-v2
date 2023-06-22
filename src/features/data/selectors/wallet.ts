@@ -44,9 +44,3 @@ export const selectIsBalanceHidden = (state: BeefyState) => state.user.wallet.hi
 export const selectIsNetworkSupported = (state: BeefyState) =>
   state.user.wallet.error !== 'unsupported chain';
 export const selectIsWalletInitialized = (state: BeefyState) => state.user.wallet.initialized;
-
-export const selectEns = createSelector(
-  (state: BeefyState, _address?: string) => state.user.wallet.ens,
-  (state: BeefyState, address?: string) => address,
-  (ensState, address) => ensState?.byAddress[address] || ''
-);

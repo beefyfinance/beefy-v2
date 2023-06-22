@@ -2,7 +2,7 @@ import { Web3Provider } from '@ethersproject/providers';
 import type { ExternalProvider, Provider } from '@ethersproject/providers';
 import { getWeb3Instance } from '../features/data/apis/instances';
 import type { ChainEntity } from '../features/data/entities/chain';
-import { lookupAddress } from 'ens-reverse';
+import { lookupAddress, lookupDomain } from 'ens-reverse';
 import Web3 from 'web3';
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
@@ -27,16 +27,64 @@ export async function getAddressDomains(
   return await lookupAddress(address, providers);
 }
 
-export async function getEnsResolver(ens: string, chain: ChainEntity): Promise<string | null> {
-  const web3Instance = await getWeb3Instance(chain);
-  const provider = new Web3Provider(web3Instance.currentProvider as ExternalProvider);
-  const address = await provider.resolveName(ens);
-  return address;
+export async function getDomainAddress(
+  address: string,
+  chains: ChainEntity[]
+): Promise<string | undefined> {
+  const providers: Record<number, Provider> = (
+    await Promise.all(chains.map(chain => getWeb3Instance(chain)))
+  ).reduce((acc: Record<number, Provider>, web3, index) => {
+    acc[chains[index].networkChainId] = new Web3Provider(web3.currentProvider as ExternalProvider);
+    return acc;
+  }, {});
+
+  return await lookupDomain(address, providers);
 }
 
-export function isValidEns(ens: string) {
-  //min lenght for ens is 3 chars + 4 by default (.eth)
-  return ens.length >= 7 && ens.endsWith('.eth');
+const DEFAULT_VALID_TLDS: string[] = [
+  'eth', // ENS
+  'crypto', // https://api.unstoppabledomains.com/resolve/supported_tlds
+  'bitcoin',
+  'blockchain',
+  'dao',
+  'nft',
+  '888',
+  'wallet',
+  'x',
+  'klever',
+  'zil',
+  'hi',
+  'kresus',
+  'polygon',
+  'anime',
+  'manga',
+  'binanceus',
+  'bnb', // https://space.id/
+  'arb',
+];
+
+/**
+ * Check if a string is likely a valid domain name, not exhaustive
+ */
+export function isMaybeDomain(domain: string, validTlds = DEFAULT_VALID_TLDS, minNameLength = 3) {
+  const minTldLength = Math.min(...validTlds.map(tld => tld.length));
+  const minTotalLength = minNameLength + 1 + minTldLength;
+
+  if (domain.length < minTotalLength) {
+    return false;
+  }
+
+  const dot = domain.lastIndexOf('.');
+  if (dot < minNameLength || dot === domain.length - 1) {
+    return undefined;
+  }
+
+  const tld = domain.substring(dot + 1);
+  if (tld.length < minTldLength) {
+    return false;
+  }
+
+  return validTlds.includes(tld.toLowerCase());
 }
 
 export function isValidAddress(address: string) {

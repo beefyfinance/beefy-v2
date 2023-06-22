@@ -15,7 +15,11 @@ import { useMediaQuery } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 
-export const UserVaults = memo(function UserVaults() {
+export type UserVaultsProps = {
+  address: string;
+};
+
+export const UserVaults = memo<UserVaultsProps>(function UserVaults() {
   const { t } = useTranslation();
 
   const {

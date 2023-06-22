@@ -11,7 +11,11 @@ import { MobileUserExposure } from './components/MobileUserExposure';
 
 const useStyles = makeStyles(styles);
 
-export const UserExposure = memo(function UserExposure() {
+export type UserExposureProps = {
+  address: string;
+};
+
+export const UserExposure = memo<UserExposureProps>(function UserExposure() {
   const { t } = useTranslation();
   const classes = useStyles();
 
