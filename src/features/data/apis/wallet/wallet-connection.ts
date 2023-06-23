@@ -44,7 +44,11 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   private static createOnboardWalletInitializers() {
     return [
       WalletConnectionApi.createInjectedWalletsModule(),
-      createWalletConnectModule(),
+      createWalletConnectModule({
+        version: 2,
+        projectId: 'af38b343e1be64b27c3e4a272cb453b9',
+        requiredChains: [],
+      }),
       createCoinbaseWalletModule(),
       WalletConnectionApi.createCDCWalletModule(),
     ];
@@ -119,7 +123,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     const onboard = Onboard({
       connect: {
         showSidebar: true,
-        disableUDResolution: true,
+        wheresMyWalletLink: undefined,
       },
       wallets: this.getOnboardWalletInitializers(),
       theme: {
