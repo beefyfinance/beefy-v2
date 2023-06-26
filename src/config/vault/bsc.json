@@ -18061,7 +18061,8 @@
     "earnContractAddress": "0x6bCD9493dFA06D07003aB6920DacE6D4F854E162",
     "oracle": "tokens",
     "oracleId": "BTCB",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "valas",
     "assets": ["BTCB"],
     "risks": [
