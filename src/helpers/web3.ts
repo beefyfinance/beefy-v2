@@ -224,9 +224,9 @@ type PrivateWeb3 = Web3 & {
 };
 
 type PrivateProvider = {
-  request?: (...args: unknown[]) => unknown;
-  send?: (...args: unknown[]) => unknown;
-  sendAsync?: (...args: unknown[]) => unknown;
+  request?: (...args: unknown[]) => Promise<unknown>;
+  send?: (payload: unknown, callback: (err: unknown, data: unknown) => unknown) => void;
+  sendAsync?: (payload: unknown, callback: (err: unknown, data: unknown) => unknown) => void;
 };
 
 export function rateLimitWeb3Instance(web3: Web3, queue: PQueue): Web3 {
@@ -253,22 +253,25 @@ export function rateLimitWeb3Instance(web3: Web3, queue: PQueue): Web3 {
 
 function rateLimitProvider(provider: PrivateProvider, queue: PQueue): PrivateProvider {
   // send and sendAsync are callback based
-  for (const method of ['send', 'sendAsync']) {
+  for (const method of ['send', 'sendAsync'] as const) {
     if (provider[method]) {
       const originalMethod = provider[method].bind(provider);
-      provider[method] = async (
-        payload: unknown,
-        callback: (err: unknown, data: unknown) => unknown
-      ) => {
-        await queue.add(
-          () =>
-            new Promise(resolve => {
-              originalMethod(payload, (err, data) => {
-                callback(err, data);
-                resolve(undefined); // queue promise resolves either way
-              });
-            })
-        );
+      provider[method] = (payload: unknown, callback: (err: unknown, data: unknown) => unknown) => {
+        queue
+          .add(
+            () =>
+              new Promise((resolve, reject) => {
+                originalMethod(payload, (err, data) => {
+                  if (err) {
+                    reject(err);
+                  } else {
+                    resolve(data);
+                  }
+                });
+              })
+          )
+          .then(data => callback(null, data))
+          .catch(err => callback(err, null));
       };
     }
   }
