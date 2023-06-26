@@ -8,6 +8,7 @@ import type { Transaction, provider } from 'web3-core';
 import BigNumber from 'bignumber.js';
 import { maybeHexToNumber } from './format';
 import type { Method } from 'web3-core-method';
+import type PQueue from 'p-queue';
 
 export type Web3CallMethod = {
   request: (params: unknown, callback: (err: Error, data: unknown) => void) => Method;
@@ -88,6 +89,7 @@ declare module 'web3-eth' {
     ) => Promise<BeefyFeeHistory>;
 
     getBeefyGasPrice(): Promise<BigNumber>;
+
     getBeefyMaxPriorityFeePerGas(): Promise<BigNumber>;
   }
 }
@@ -212,6 +214,74 @@ export function createWeb3Instance(rpc: provider): Web3 {
   });
 
   return instance;
+}
+
+type PrivateWeb3 = Web3 & {
+  _requestManager: {
+    provider: PrivateProvider;
+    setProvider: (provider: PrivateProvider, net: unknown) => unknown;
+  };
+};
+
+type PrivateProvider = {
+  request?: (...args: unknown[]) => unknown;
+  send?: (...args: unknown[]) => unknown;
+  sendAsync?: (...args: unknown[]) => unknown;
+};
+
+export function rateLimitWeb3Instance(web3: Web3, queue: PQueue): Web3 {
+  const privateWeb3 = web3 as PrivateWeb3;
+  const originalSetProvider = privateWeb3._requestManager.setProvider.bind(
+    privateWeb3._requestManager
+  );
+
+  // rate limit future providers
+  privateWeb3._requestManager.setProvider = (provider: PrivateProvider, net: unknown) => {
+    return originalSetProvider(rateLimitProvider(provider, queue), net);
+  };
+
+  // rate limit this provider
+  if (privateWeb3._requestManager.provider) {
+    privateWeb3._requestManager.provider = rateLimitProvider(
+      privateWeb3._requestManager.provider,
+      queue
+    );
+  }
+
+  return privateWeb3;
+}
+
+function rateLimitProvider(provider: PrivateProvider, queue: PQueue): PrivateProvider {
+  // send and sendAsync are callback based
+  for (const method of ['send', 'sendAsync']) {
+    if (provider[method]) {
+      const originalMethod = provider[method].bind(provider);
+      provider[method] = async (
+        payload: unknown,
+        callback: (err: unknown, data: unknown) => unknown
+      ) => {
+        await queue.add(
+          () =>
+            new Promise(resolve => {
+              originalMethod(payload, (err, data) => {
+                callback(err, data);
+                resolve(undefined); // queue promise resolves either way
+              });
+            })
+        );
+      };
+    }
+  }
+
+  // Request is promise based
+  if (provider.request) {
+    const originalRequest = provider.request.bind(provider);
+    provider.request = async (...args: unknown[]) => {
+      return await queue.add(() => originalRequest(...args));
+    };
+  }
+
+  return provider;
 }
 
 export function createContract(jsonInterface: AbiItem[], address: string): Contract {
