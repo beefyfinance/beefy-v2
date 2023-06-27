@@ -118,7 +118,11 @@ export const AddressInput = memo(function AddressInput() {
         }
         placeholder={t('Dashboard-SearchInput-Placeholder')}
       />
-      {hasFocus && !isValid && userInput.length > 0 && !isPendingStatus(resolverStatus) ? (
+      {hasFocus &&
+      !isValid &&
+      userInput.length > 0 &&
+      !isPendingStatus(resolverStatus) &&
+      !isFulfilledStatus(resolverStatus) ? (
         <FloatingError
           userInput={userInput}
           anchorRef={anchorEl}
