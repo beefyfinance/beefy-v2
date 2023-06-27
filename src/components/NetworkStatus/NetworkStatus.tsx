@@ -193,7 +193,7 @@ const findChainIdMatching = (state: BeefyState, matcher: (loader: LoaderState) =
     }
   }
 
-  if (walletAddress) {
+  if (walletAddress && state.ui.dataLoader.byAddress[walletAddress]) {
     const userDataToCheck = Object.entries(
       state.ui.dataLoader.byAddress[walletAddress].byChainId
     ).filter(([chainId, _]) => !eolChains.includes(chainId));
