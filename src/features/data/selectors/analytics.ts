@@ -18,8 +18,26 @@ export const selectUserDepositedTimelineByVaultId = createCachedSelector(
     analyticsState.byAddress[walletAddress]?.timeline.byVaultId[vaultId] || []
 )((state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
 
-export const selectIsAnalyticsLoaded = (state: BeefyState) =>
-  state.ui.dataLoader.global.analytics.alreadyLoadedOnce;
+export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAddress: string) => {
+  const dataByAddress = state.ui.dataLoader.byAddress[walletAddress];
+
+  const timelineLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
+
+  if (timelineLoaded) {
+    for (const chainId of Object.values(dataByAddress.byChainId)) {
+      if (chainId.balance.alreadyLoadedOnce && chainId.balance.status === 'fulfilled') {
+        // if any chain has already loaded, then  data is available
+        return true;
+      }
+    }
+  }
+
+  return false;
+};
+
+export const selectIsAnalyticsLoadedByAddress = (state: BeefyState, walletAddress: string) => {
+  return state.ui.dataLoader.timelineByAddress[walletAddress]?.alreadyLoadedOnce;
+};
 
 export const selectVaultPnl = (
   state: BeefyState,
@@ -138,14 +156,16 @@ export const selectUnderlyingToUsdTimebucketByVaultId = (
 };
 
 export const selectHasDataToShowGraphByVaultId = createCachedSelector(
-  (state: BeefyState, _vaultId: VaultEntity['id'], walletAddress) =>
+  (state: BeefyState, _vaultId: VaultEntity['id'], walletAddress: string) =>
     selectUserDepositedVaultIds(state, walletAddress),
-  (state: BeefyState, _vaultId: VaultEntity['id']) => selectIsAnalyticsLoaded(state),
-  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress) =>
+  (state: BeefyState, _vaultId: VaultEntity['id'], walletAddress) =>
+    selectIsAnalyticsLoadedByAddress(state, walletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
     selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress),
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress: string) =>
+    selectVaultById(state, vaultId),
 
-  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress: string) => vaultId,
 
   (userVaults, isLoaded, timeline, vault, vaultId) => {
     return (

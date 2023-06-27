@@ -167,7 +167,7 @@ export const selectUserBalanceOfTokensIncludingBoosts = (
   walletAddress?: string
 ) => {
   //first we get mootokens
-  let mooTokenBalance = selectUserBalanceOfToken(state, chainId, tokenAddress);
+  let mooTokenBalance = selectUserBalanceOfToken(state, chainId, tokenAddress, walletAddress);
 
   // we also need to account for deposits in boost (even those expired)
   const boostIds = selectAllVaultBoostIds(state, vaultId);

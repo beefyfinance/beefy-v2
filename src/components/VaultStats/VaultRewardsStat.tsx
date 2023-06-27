@@ -11,19 +11,19 @@ import { selectIsWalletKnown } from '../../features/data/selectors/wallet';
 
 export type VaultRewardsStatProps = {
   vaultId: VaultEntity['id'];
-  walletAddres?: string;
+  walletAddress?: string;
 };
 
 export const VaultRewardsStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId, walletAddres }: VaultRewardsStatProps) {
+function mapStateToProps(state: BeefyState, { vaultId, walletAddress }: VaultRewardsStatProps) {
   const label = 'VaultStat-Claimable Rewards';
 
   const vault = selectVaultById(state, vaultId);
 
   const isLoaded =
     state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
-      ? state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
+      ? state.ui.dataLoader[walletAddress]?.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
       : true;
 
   if (!isLoaded) {
@@ -36,7 +36,7 @@ function mapStateToProps(state: BeefyState, { vaultId, walletAddres }: VaultRewa
     };
   }
 
-  const { totalRewardsUsd } = selectUserRewardsByVaultId(state, vaultId, walletAddres);
+  const { totalRewardsUsd } = selectUserRewardsByVaultId(state, vaultId, walletAddress);
 
   return {
     label,

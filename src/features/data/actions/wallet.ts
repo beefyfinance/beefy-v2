@@ -46,18 +46,21 @@ export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
   }
 );
 
-export const initViewAsAddress = createAsyncThunk<void, { address: string }, { state: BeefyState }>(
-  'wallet/initViewAsAddress',
-  async ({ address }, { getState, dispatch }) => {
-    const state = getState();
-    const chains = selectAllChainIds(state);
-    const lowerCaseAddress = address.toLowerCase();
-    for (const chainId of chains) {
-      dispatch(fetchAllBalanceAction({ chainId, address: lowerCaseAddress }));
-    }
-    dispatch(fetchWalletTimeline({ address }));
+export const initDashboardByAddress = createAsyncThunk<
+  { address: string },
+  { address: string },
+  { state: BeefyState }
+>('wallet/initDashboardByAddress', async ({ address }, { getState, dispatch }) => {
+  const state = getState();
+  const chains = selectAllChainIds(state);
+  const lowerCaseAddress = address.toLowerCase();
+  for (const chainId of chains) {
+    dispatch(fetchAllBalanceAction({ chainId, walletAddress: lowerCaseAddress }));
   }
-);
+  await dispatch(fetchWalletTimeline({ address }));
+
+  return { address: lowerCaseAddress };
+});
 
 export const tryToAutoReconnect = createAsyncThunk<void, void, { state: BeefyState }>(
   'wallet/tryToAutoReconnect',

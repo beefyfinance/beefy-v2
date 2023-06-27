@@ -18,7 +18,9 @@ const PlatformExposure = memo<ExposureDashboardChartLoaderProps>(function Platfo
 
 export const PlatformExposureLoader = memo<ExposureDashboardChartLoaderProps>(
   function PlatformExposureLoader({ title, address }) {
-    const isUserDataAvailable = useAppSelector(selectIsUserBalanceAvailable);
+    const isUserDataAvailable = useAppSelector(state =>
+      selectIsUserBalanceAvailable(state, address)
+    );
 
     if (isUserDataAvailable) {
       return <PlatformExposure address={address} title={title} />;

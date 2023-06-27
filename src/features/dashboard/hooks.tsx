@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../store';
-import { initViewAsAddress } from '../data/actions/wallet';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { initDashboardByAddress } from '../data/actions/wallet';
+import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
 
 export function useInitDashboard(address: string) {
-  const [loading, setLoading] = useState<boolean>(false);
+  const connectedAddress = useAppSelector(selectWalletAddressIfKnown);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (address) {
-      dispatch(initViewAsAddress({ address }));
-      setLoading(false); // not a real indicator, only indicates init was dispatched
+    if (address && address !== connectedAddress) {
+      dispatch(initDashboardByAddress({ address }));
     }
-  }, [dispatch, address, setLoading]);
-
-  return { loading };
+  }, [dispatch, address, connectedAddress]);
 }

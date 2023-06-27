@@ -7,10 +7,7 @@ import {
   selectHasActiveFilterExcludingUserCategoryAndSort,
 } from '../../../../../data/selectors/filtered-vaults';
 import { styles } from './styles';
-import {
-  selectIsWalletKnown,
-  selectWalletAddressIfKnown,
-} from '../../../../../data/selectors/wallet';
+import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet';
 import { useTranslation } from 'react-i18next';
 import { selectIsUserBalanceAvailable } from '../../../../../data/selectors/data-loader';
 import { Loader } from '../../../../../../components/Loader';
@@ -87,10 +84,12 @@ const LoadingMessage = memo(function LoadingMessage() {
 export const NoResults = memo(function NoResults() {
   const hasActiveFilter = useAppSelector(selectHasActiveFilterExcludingUserCategoryAndSort);
   const userCategory = useAppSelector(selectFilterUserCategory);
-  const userBalanceAvailable = useAppSelector(selectIsUserBalanceAvailable);
-  const isWalletKnown = useAppSelector(selectIsWalletKnown);
+  const walletAddress = useAppSelector(selectWalletAddressIfKnown);
+  const userBalanceAvailable = useAppSelector(state =>
+    selectIsUserBalanceAvailable(state, walletAddress)
+  );
 
-  if (!isWalletKnown && userCategory === 'deposited') {
+  if (!walletAddress && userCategory === 'deposited') {
     return (
       <NotConnectedMessage
         title={'NoResults-NotConnected'}

@@ -30,6 +30,7 @@ import { RenBannerVault } from '../../components/Banners/RenBanner';
 import { PnLGraphLoader } from './components/PnLGraph';
 import { VaultsStats } from './components/VaultsStats';
 import { HistoricGraphsLoader } from './components/HistoricGraph';
+import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -70,6 +71,7 @@ type VaultContentProps = PropsWithChildren<{
 const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const walletAddress = useAppSelector(selectWalletAddressIfKnown);
   const isBoostedOrPreStake = useAppSelector(state =>
     selectIsVaultPreStakedOrBoosted(state, vaultId)
   );
@@ -92,7 +94,9 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
           <div className={classes.columnInfo}>
             {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
             {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
-            {!isGovVault(vault) ? <PnLGraphLoader vaultId={vaultId} /> : null}
+            {!isGovVault(vault) ? (
+              <PnLGraphLoader vaultId={vaultId} address={walletAddress} />
+            ) : null}
             {!isGovVault(vault) ? <HistoricGraphsLoader vaultId={vaultId} /> : null}
             <LiquidityPoolBreakdownLoader vaultId={vaultId} />
             <SafetyCard vaultId={vaultId} />

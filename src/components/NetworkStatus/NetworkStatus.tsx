@@ -186,12 +186,7 @@ const findChainIdMatching = (state: BeefyState, matcher: (loader: LoaderState) =
   );
 
   for (const [chainId, loader] of chainsToCheck) {
-    if (
-      matcher(loader.balance) ||
-      matcher(loader.allowance) ||
-      matcher(loader.addressBook) ||
-      matcher(loader.contractData)
-    ) {
+    if (matcher(loader.addressBook) || matcher(loader.contractData)) {
       chainIds.push(chainId);
     }
   }

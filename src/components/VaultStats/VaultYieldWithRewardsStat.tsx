@@ -7,7 +7,7 @@ import {
 } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import {
-  selectIsAnalyticsLoaded,
+  selectIsAnalyticsLoadedByAddress,
   selectUserDepositedTimelineByVaultId,
 } from '../../features/data/selectors/analytics';
 import { useAppSelector } from '../../store';
@@ -35,7 +35,9 @@ export const VaultYieldWithRewardsStat = memo<VaultYieldStatProps>(
       selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress)
     );
 
-    const isLoaded = useAppSelector(state => selectIsAnalyticsLoaded(state));
+    const isLoaded = useAppSelector(state =>
+      selectIsAnalyticsLoadedByAddress(state, walletAddress)
+    );
 
     const { rewards } = useAppSelector(state =>
       selectUserRewardsByVaultId(state, vaultId, walletAddress)

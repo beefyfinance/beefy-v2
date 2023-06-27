@@ -18,7 +18,9 @@ const ChainExposure = memo<ExposureDashboardChartLoaderProps>(function ChainExpo
 
 export const ChainExposureLoader = memo<ExposureDashboardChartLoaderProps>(
   function ChainExposureLoader({ title, address }) {
-    const isUserDataAvailable = useAppSelector(selectIsUserBalanceAvailable);
+    const isUserDataAvailable = useAppSelector(state =>
+      selectIsUserBalanceAvailable(state, address)
+    );
 
     if (isUserDataAvailable) {
       return <ChainExposure address={address} title={title} />;

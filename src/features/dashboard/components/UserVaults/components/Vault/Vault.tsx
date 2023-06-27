@@ -51,11 +51,13 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
   const options = useMemo(() => {
     const items = {
       txHistory: t('Dashboard-TransactionHistory'),
-      chart: t('Dashboard-Chart'),
     };
+    if (hasAnalyticsData) {
+      items['chart'] = t('Dashboard-Chart');
+    }
 
     return items;
-  }, [t]);
+  }, [hasAnalyticsData, t]);
 
   const handleChange = useCallback(newValue => {
     setShowStats(newValue);

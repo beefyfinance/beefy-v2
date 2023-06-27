@@ -39,7 +39,7 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
     return EMPTY_GLOBAL_STATS;
   }
 
-  if (!selectIsUserBalanceAvailable(state)) {
+  if (!selectIsUserBalanceAvailable(state, walletAddress)) {
     return EMPTY_GLOBAL_STATS;
   }
 

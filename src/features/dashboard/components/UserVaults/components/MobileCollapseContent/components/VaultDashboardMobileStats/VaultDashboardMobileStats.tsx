@@ -49,7 +49,7 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
             triggerClassName={classes.value}
             labelClassName={classes.label}
             vaultId={vaultId}
-            walletAddres={address}
+            walletAddress={address}
           />
           <VaultNowStat
             pnlData={pnlData}
@@ -58,7 +58,7 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
             triggerClassName={classes.value}
             labelClassName={classes.label}
             vaultId={vaultId}
-            walletAddres={address}
+            walletAddress={address}
           />
           {rewards.length !== 0 && (
             <VaultRewardsStat
@@ -67,7 +67,7 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
               triggerClassName={classes.value}
               labelClassName={classes.label}
               vaultId={vaultId}
-              walletAddres={address}
+              walletAddress={address}
             />
           )}
           {!isGovVault(vault) && (

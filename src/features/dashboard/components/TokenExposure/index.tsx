@@ -16,7 +16,9 @@ const TokenExposure = memo<ExposureDashboardChartLoaderProps>(function TokenExpo
 
 export const TokenExposureLoader = memo<ExposureDashboardChartLoaderProps>(
   function TokenExposureLoader({ title, address }) {
-    const isUserDataAvailable = useAppSelector(selectIsUserBalanceAvailable);
+    const isUserDataAvailable = useAppSelector(state =>
+      selectIsUserBalanceAvailable(state, address)
+    );
 
     if (isUserDataAvailable) {
       return <TokenExposure address={address} title={title} />;

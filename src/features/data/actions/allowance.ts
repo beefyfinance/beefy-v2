@@ -13,6 +13,7 @@ import { selectWalletAddress } from '../selectors/wallet';
 
 interface ActionParams {
   chainId: ChainEntity['id'];
+  walletAddress: string;
 }
 
 export interface FetchAllAllowanceFulfilledPayload {
@@ -24,10 +25,10 @@ export const fetchAllAllowanceAction = createAsyncThunk<
   FetchAllAllowanceFulfilledPayload,
   ActionParams,
   { state: BeefyState }
->('allowance/fetchAllAllowanceAction', async ({ chainId }, { getState }) => {
+>('allowance/fetchAllAllowanceAction', async ({ chainId, walletAddress }, { getState }) => {
   const state = getState();
 
-  const walletAddress = selectWalletAddress(state);
+  const userAddress = walletAddress || selectWalletAddress(state);
   const chain = selectChainById(state, chainId);
   const api = await getAllowanceApi(chain);
 
@@ -55,7 +56,7 @@ export const fetchAllAllowanceAction = createAsyncThunk<
     standardVaults,
     govVaults,
     boosts,
-    walletAddress
+    userAddress
   );
   return { chainId, data };
 });
@@ -64,22 +65,26 @@ interface FetchAllowanceActionParams {
   chainId: ChainEntity['id'];
   spenderAddress: string;
   tokens: TokenErc20[];
+  walletAddress: string;
 }
 
 export const fetchAllowanceAction = createAsyncThunk<
   FetchAllAllowanceFulfilledPayload,
   FetchAllowanceActionParams,
   { state: BeefyState }
->('allowance/fetchAllowanceAction', async ({ chainId, spenderAddress, tokens }, { getState }) => {
-  const state = getState();
-  const walletAddress = selectWalletAddress(state);
-  const chain = selectChainById(state, chainId);
-  const api = await getAllowanceApi(chain);
+>(
+  'allowance/fetchAllowanceAction',
+  async ({ chainId, spenderAddress, tokens, walletAddress }, { getState }) => {
+    const state = getState();
+    const userAddress = walletAddress || selectWalletAddress(state);
+    const chain = selectChainById(state, chainId);
+    const api = await getAllowanceApi(chain);
 
-  const allowanceRes =
-    walletAddress && spenderAddress
-      ? await api.fetchTokensAllowance(getState(), tokens, walletAddress, spenderAddress)
-      : [];
+    const allowanceRes =
+      userAddress && spenderAddress
+        ? await api.fetchTokensAllowance(getState(), tokens, userAddress, spenderAddress)
+        : [];
 
-  return { chainId, data: allowanceRes };
-});
+    return { chainId, data: allowanceRes };
+  }
+);

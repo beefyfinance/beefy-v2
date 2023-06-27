@@ -37,7 +37,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
             triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
             showLabel={false}
             vaultId={vaultId}
-            walletAddres={address}
+            walletAddress={address}
           />
         </div>
         <div className={clsx(classes.column, classes.hideSm)}>
@@ -47,12 +47,12 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
             triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
             showLabel={false}
             vaultId={vaultId}
-            walletAddres={address}
+            walletAddress={address}
           />
         </div>
         <div className={clsx(classes.column, classes.hideSm)}>
           {isGovVault(vault) ? (
-            <VaultRewardsStat walletAddres={address} showLabel={false} vaultId={vaultId} />
+            <VaultRewardsStat walletAddress={address} showLabel={false} vaultId={vaultId} />
           ) : (
             <VaultYieldWithRewardsStat
               walletAddress={address}

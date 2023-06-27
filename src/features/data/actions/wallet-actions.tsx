@@ -105,6 +105,7 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
       transaction,
       { spender: spenderAddress, amount: bigMaxAmount, token: token },
       {
+        walletAddress: address,
         chainId: token.chainId,
         spenderAddress,
         tokens: uniqBy([token, native], 'id'),
@@ -165,6 +166,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
       transaction,
       { spender: contractAddr, amount, token: depositToken },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: getVaultTokensToRefresh(state, vault),
@@ -228,6 +230,7 @@ const beefIn = (
       transaction,
       { spender: zap.zapAddress, amount: fullAmount, token: swap.fromToken },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: zap.zapAddress,
         tokens: uniqBy(
@@ -281,6 +284,7 @@ const beefOut = (vault: VaultStandard, input: InputTokenAmount, zap: ZapEntityBe
         token: input.token,
       },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: zap.zapAddress,
         tokens: getVaultTokensToRefresh(state, vault),
@@ -395,6 +399,7 @@ const oneInchBeefInSingle = (
         vaultId: vault.id,
       },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: zap.zapAddress,
         tokens: uniqBy(
@@ -497,6 +502,7 @@ const oneInchBeefInLP = (
       transaction,
       { spender: zap.zapAddress, amount: input.amount, token: input.token, vaultId: vault.id },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: zap.zapAddress,
         tokens: uniqBy(
@@ -598,6 +604,7 @@ const oneInchBeefOutSingle = (
         expectedTokens: [swap.toToken],
       },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: zap.zapAddress,
         tokens: uniqBy(
@@ -732,6 +739,7 @@ const oneInchBeefOutLP = (
         expectedTokens: uniqBy(expectedTokens, 'address'),
       },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: zap.zapAddress,
         tokens: uniqBy(
@@ -801,6 +809,7 @@ const beefOutAndSwap = (
       transaction,
       { spender: zap.zapAddress, amount: input.amount, token: input.token },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: zap.zapAddress,
         tokens: uniqBy(
@@ -865,6 +874,7 @@ const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => 
       transaction,
       { spender: contractAddr, amount: oracleAmount, token: depositToken },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: getVaultTokensToRefresh(state, vault),
@@ -900,6 +910,7 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
       transaction,
       { spender: contractAddr, amount, token: inputToken },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: getVaultTokensToRefresh(state, vault),
@@ -944,6 +955,7 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
       transaction,
       { spender: contractAddr, amount, token: depositToken },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: getVaultTokensToRefresh(state, vault),
@@ -979,6 +991,7 @@ const claimGovVault = (vault: VaultGov) => {
       transaction,
       { spender: contractAddr, amount, token },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: getVaultTokensToRefresh(state, vault),
@@ -1021,6 +1034,7 @@ const exitGovVault = (vault: VaultGov) => {
       transaction,
       { spender: contractAddr, amount: balanceAmount, token },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: getVaultTokensToRefresh(state, vault),
@@ -1056,6 +1070,7 @@ const claimBoost = (boost: BoostEntity) => {
       transaction,
       { spender: contractAddr, amount, token },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: getVaultTokensToRefresh(state, vault),
@@ -1099,6 +1114,7 @@ const exitBoost = (boost: BoostEntity) => {
       transaction,
       { spender: contractAddr, amount: boostAmount, token },
       {
+        walletAddress: address,
         chainId: boost.chainId,
         spenderAddress: contractAddr,
         tokens: getVaultTokensToRefresh(state, vault),
@@ -1137,6 +1153,7 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
       transaction,
       { spender: contractAddr, amount, token: inputToken },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: getVaultTokensToRefresh(state, vault),
@@ -1175,6 +1192,7 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
       transaction,
       { spender: contractAddr, amount, token: inputToken },
       {
+        walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: getVaultTokensToRefresh(state, vault),
@@ -1284,6 +1302,7 @@ const mintDeposit = (
         token: mintedToken,
       },
       {
+        walletAddress: address,
         chainId: chainId,
         spenderAddress: minterAddress,
         tokens: uniqBy([gasToken, payToken, mintedToken], 'id'),
@@ -1330,6 +1349,7 @@ const burnWithdraw = (
         token: burnedToken,
       },
       {
+        walletAddress: address,
         chainId: chainId,
         spenderAddress: contractAddr,
         tokens: uniqBy([gasToken, withdrawnToken, burnedToken], 'id'),
@@ -1405,6 +1425,7 @@ const bridge = (
         token: bridgeToken,
       },
       {
+        walletAddress: address,
         chainId: chainId,
         spenderAddress: routerAddr,
         tokens: uniqBy([gasToken, bridgeToken, destToken], 'id'),
@@ -1473,6 +1494,7 @@ function bindTransactionEvents<T extends MandatoryAdditionalData>(
   transaction: PromiEvent<unknown>,
   additionalData: T,
   refreshOnSuccess?: {
+    walletAddress: string;
     chainId: ChainEntity['id'];
     spenderAddress: string;
     tokens: TokenEntity[];
@@ -1499,6 +1521,7 @@ function bindTransactionEvents<T extends MandatoryAdditionalData>(
       if (refreshOnSuccess) {
         dispatch(
           reloadBalanceAndAllowanceAndGovRewardsAndBoostData({
+            walletAddress: refreshOnSuccess.walletAddress,
             chainId: refreshOnSuccess.chainId,
             govVaultId: refreshOnSuccess.govVaultId,
             boostId: refreshOnSuccess.boostId,

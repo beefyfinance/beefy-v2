@@ -9,7 +9,7 @@ import {
 } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import {
-  selectIsAnalyticsLoaded,
+  selectIsAnalyticsLoadedByAddress,
   selectUserDepositedTimelineByVaultId,
 } from '../../features/data/selectors/analytics';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
@@ -32,7 +32,7 @@ function mapStateToProps(
 
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
 
-  const isLoaded = selectIsAnalyticsLoaded(state);
+  const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
 
   if (!vaultTimeline) {
     return {

@@ -14,9 +14,9 @@ import type { VaultEntity } from '../entities/vault';
 import { isGovVault } from '../entities/vault';
 import { uniqueTokens } from '../../../helpers/tokens';
 
-interface ActionParams {
+export interface FetchAllBalanceActionParams {
   chainId: ChainEntity['id'];
-  address?: string;
+  walletAddress: string;
 }
 
 export interface FetchAllBalanceFulfilledPayload {
@@ -29,12 +29,12 @@ export interface FetchAllBalanceFulfilledPayload {
 
 export const fetchAllBalanceAction = createAsyncThunk<
   FetchAllBalanceFulfilledPayload,
-  ActionParams,
+  FetchAllBalanceActionParams,
   { state: BeefyState }
->('balance/fetchAllBalanceAction', async ({ chainId, address }, { getState }) => {
+>('balance/fetchAllBalanceAction', async ({ chainId, walletAddress }, { getState }) => {
   const state = getState();
 
-  const walletAddress = address ?? selectWalletAddress(state);
+  const userAddress = walletAddress ?? selectWalletAddress(state);
   const chain = selectChainById(state, chainId);
   const api = await getBalanceApi(chain);
 
@@ -47,10 +47,10 @@ export const fetchAllBalanceAction = createAsyncThunk<
   );
   const govVaults = selectAllGovVaultsByChainId(state, chain.id);
 
-  const data = await api.fetchAllBalances(getState(), tokens, govVaults, boosts, walletAddress);
+  const data = await api.fetchAllBalances(getState(), tokens, govVaults, boosts, userAddress);
   return {
     chainId,
-    walletAddress,
+    walletAddress: userAddress,
     data,
     state: getState(),
   };

@@ -13,11 +13,13 @@ export const useStyles = makeStyles(styles);
 
 interface PnLGraphProps {
   vaultId: VaultEntity['id'];
-  address?: string;
+  address: string;
 }
 
 export const PnLGraphLoader = memo<PnLGraphProps>(function PnLGraphLoader({ vaultId, address }) {
-  const hasData = useAppSelector(state => selectHasDataToShowGraphByVaultId(state, vaultId));
+  const hasData = useAppSelector(state =>
+    selectHasDataToShowGraphByVaultId(state, vaultId, address)
+  );
 
   if (hasData) {
     return <PnLGraph address={address} vaultId={vaultId} />;

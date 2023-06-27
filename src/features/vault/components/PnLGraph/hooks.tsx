@@ -30,8 +30,10 @@ export const usePnLChartData = (
   address?: string
 ) => {
   const dispatch = useAppDispatch();
+  const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
+
   const vaultTimeline = useAppSelector(state =>
-    selectUserDepositedTimelineByVaultId(state, vaultId, address)
+    selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress)
   );
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const depositToken = useAppSelector(state => selectDepositTokenByVaultId(state, vaultId));
@@ -47,18 +49,19 @@ export const usePnLChartData = (
       vault.id,
       vault.chainId,
       vault.earnContractAddress,
-      address
+      walletAddress
     )
   );
-  const vaultLastDeposit = useAppSelector(state => selectLastVaultDepositStart(state, vaultId));
-  const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
+  const vaultLastDeposit = useAppSelector(state =>
+    selectLastVaultDepositStart(state, vaultId, walletAddress)
+  );
 
   const { data: sharesToUnderlying, status: sharesStatus } = useAppSelector(state =>
-    selectShareToUnderlyingTimebucketByVaultId(state, vaultId, timebucket, address)
+    selectShareToUnderlyingTimebucketByVaultId(state, vaultId, timebucket, walletAddress)
   );
 
   const { data: underlyingToUsd, status: underlyingStatus } = useAppSelector(state =>
-    selectUnderlyingToUsdTimebucketByVaultId(state, vaultId, timebucket, address)
+    selectUnderlyingToUsdTimebucketByVaultId(state, vaultId, timebucket, walletAddress)
   );
 
   useEffect(() => {
