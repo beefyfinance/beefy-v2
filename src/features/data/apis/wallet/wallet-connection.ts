@@ -123,7 +123,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     const onboard = Onboard({
       connect: {
         showSidebar: true,
-        wheresMyWalletLink: undefined,
       },
       wallets: this.getOnboardWalletInitializers(),
       theme: {
@@ -141,6 +140,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         description:
           'Beefy is a Decentralized, Multichain Yield Optimizer that allows its users to earn compound interest on their crypto holdings. Beefy earns you the highest APYs with safety and efficiency in mind.',
         gettingStartedGuide: 'https://docs.beefy.finance/',
+        explore: 'https://beefy.com/',
       },
       chains: this.options.chains.map(chain => ({
         id: numberToHex(chain.networkChainId),
