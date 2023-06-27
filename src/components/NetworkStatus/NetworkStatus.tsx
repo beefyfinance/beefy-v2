@@ -16,6 +16,7 @@ import { isPending, isRejected } from '../../features/data/reducers/data-loader-
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
+  selectWalletAddressIfKnown,
 } from '../../features/data/selectors/wallet';
 import { selectChainById, selectEolChainIds } from '../../features/data/selectors/chains';
 import { getNetworkSrc } from '../../helpers/networkSrc';
@@ -181,6 +182,7 @@ const stringArrCompare = (left: string[], right: string[]) => {
 const findChainIdMatching = (state: BeefyState, matcher: (loader: LoaderState) => boolean) => {
   const chainIds: ChainEntity['id'][] = [];
   const eolChains = selectEolChainIds(state);
+  const walletAddress = selectWalletAddressIfKnown(state);
   const chainsToCheck = Object.entries(state.ui.dataLoader.byChainId).filter(
     ([chainId, _]) => !eolChains.includes(chainId)
   );
@@ -188,6 +190,17 @@ const findChainIdMatching = (state: BeefyState, matcher: (loader: LoaderState) =
   for (const [chainId, loader] of chainsToCheck) {
     if (matcher(loader.addressBook) || matcher(loader.contractData)) {
       chainIds.push(chainId);
+    }
+  }
+
+  if (walletAddress) {
+    const userDataToCheck = Object.entries(
+      state.ui.dataLoader.byAddress[walletAddress].byChainId
+    ).filter(([chainId, _]) => !eolChains.includes(chainId));
+    for (const [chainId, loader] of userDataToCheck) {
+      if (matcher(loader.balance) || matcher(loader.allowance)) {
+        chainIds.push(chainId);
+      }
     }
   }
 
