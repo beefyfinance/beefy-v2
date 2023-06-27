@@ -150,6 +150,11 @@
     "filter": false
   },
   {
+    "id": "synapse",
+    "name": "Synapse",
+    "filter": false
+  },
+  {
     "id": "pancakebunny",
     "name": "Pancakebunny",
     "filter": false
