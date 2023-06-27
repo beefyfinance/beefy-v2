@@ -173,6 +173,45 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "contract IBeefyVault",
+        "name": "beefyVault",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "desiredToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "withdrawAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "estimateSwapOut",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "swapAmountIn",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "swapAmountOut",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "swapTokenIn",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "minimumAmount",
     "outputs": [

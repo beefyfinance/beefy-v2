@@ -566,6 +566,7 @@
   "Transact-Provider-one-inch": "Beefy × 1inch",
   "Transact-Provider-beefy-zap-uniswapv2": "Beefy",
   "Transact-Provider-beefy-zap-solidly": "Beefy",
+  "Transact-Provider-beefy-zap-conic": "Beefy",
   "Treasury-treasuryMultisig": "Multisig",
   "Treasury-treasury": "Treasury",
   "Treasury-validator": "Validator",

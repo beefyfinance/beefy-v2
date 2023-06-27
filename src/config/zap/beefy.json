@@ -136,6 +136,11 @@
   },
   {
     "chainId": "ethereum",
+    "ammId": "ethereum-conic",
+    "zapAddress": "0x1F3aabF169aE52E868a6065CD1AE6B29Ae1a0368"
+  },
+  {
+    "chainId": "ethereum",
     "ammId": "ethereum-solidly",
     "zapAddress": "0x6674f3961C5908B086A5551377806f4BA8F0Ac99"
   },

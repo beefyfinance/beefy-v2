@@ -10,6 +10,11 @@
     "filter": true
   },
   {
+    "id": "conic",
+    "name": "Conic",
+    "filter": true
+  },
+  {
     "id": "apeswap",
     "name": "ApeSwap",
     "filter": true
