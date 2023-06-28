@@ -1,22 +1,27 @@
+import { mapValues, omit } from 'lodash';
 import { getVaultsForChain } from './common/config';
 import { saveJson } from './common/utils';
 import { allChainIds, AppChainId } from './common/chains';
 import { sortVaultKeys } from './common/vault-fields';
-import { mapValues } from 'lodash';
-import { VaultConfig } from '../src/features/data/apis/config-types';
+import type { VaultConfig } from '../src/features/data/apis/config-types';
 import { getTokenById } from './common/tokens';
 
 const WARN_MISSING_ASSET_ON_ACTIVE_VAULTS_ONLY: boolean = true;
 
 type ChainProviderUrls = {
   [chain in AppChainId]?: {
-    [tokenProviderId: string]: ProviderUrls;
+    [tokenProviderId: string]: ProviderUrls | ProviderConfigWithCondition[];
   };
 };
 
 type ProviderUrls = {
+  buyTokenUrl?: string;
   addLiquidityUrl?: string;
   removeLiquidityUrl?: string;
+};
+
+type ProviderConfigWithCondition = ProviderUrls & {
+  condition: (vault: VaultConfig) => boolean;
 };
 
 // TODO rest of chains/providers
@@ -26,38 +31,59 @@ type ProviderUrls = {
  */
 const URLS: ChainProviderUrls = {
   fantom: {
-    equalizer: {
-      addLiquidityUrl: 'https://equalizer.exchange/liquidity/{lp}',
-      removeLiquidityUrl: 'https://equalizer.exchange/liquidity/{lp}',
-    },
     wigoswap: {
       addLiquidityUrl: 'https://wigoswap.io/add/{token0}/{token1}',
       removeLiquidityUrl: 'https://wigoswap.io/remove/{token0}/{token1}',
     },
+    equalizer: {
+      addLiquidityUrl: 'https://equalizer.exchange/liquidity/{lp}',
+      removeLiquidityUrl: 'https://equalizer.exchange/liquidity/{lp}',
+    },
+    spiritswap: [
+      {
+        condition: (vault: VaultConfig) => vault.id.startsWith('spiritV2-'),
+        buyTokenUrl: 'https://www.spiritswap.finance/swap/{token0}/{token1}',
+        addLiquidityUrl: 'https://www.spiritswap.finance/liquidity/{token0}/{token1}',
+        removeLiquidityUrl: 'https://www.spiritswap.finance/liquidity/{token0}/{token1}',
+      },
+    ],
   },
 };
 
-function getUrlsForTokenProvider(
-  chainId: AppChainId,
-  tokenProviderId: string,
+function replaceUrlsForVault(
+  vault: VaultConfig,
   addresses: Record<string, string>
 ): ProviderUrls | undefined {
-  const urls = URLS[chainId]?.[tokenProviderId];
-  if (urls) {
-    return mapValues(urls, url => {
-      const replaced = Object.entries(addresses).reduce((acc, [key, value]) => {
-        return acc.replace(`{${key}}`, value);
-      }, url);
-
-      if (replaced.includes('{')) {
-        throw new Error(`Missing replacement in ${replaced}`);
-      }
-
-      return replaced;
-    });
+  const urlsForProvider = URLS[vault.network]?.[vault.tokenProviderId];
+  if (!urlsForProvider) {
+    return undefined;
   }
 
-  return undefined;
+  let urlsForVault: ProviderUrls | undefined;
+  if (Array.isArray(urlsForProvider)) {
+    const found = urlsForProvider.find(x => x.condition(vault));
+    if (found) {
+      urlsForVault = omit(found, 'condition');
+    }
+  } else {
+    urlsForVault = urlsForProvider;
+  }
+
+  if (!urlsForVault) {
+    return undefined;
+  }
+
+  return mapValues(urlsForVault, url => {
+    const replaced = Object.entries(addresses).reduce((acc, [key, value]) => {
+      return acc.replace(`{${key}}`, value);
+    }, url);
+
+    if (replaced.includes('{')) {
+      throw new Error(`Missing replacement in ${replaced}`);
+    }
+
+    return replaced;
+  });
 }
 
 async function getUrlsForVault(vault: VaultConfig): Promise<ProviderUrls | undefined> {
@@ -82,7 +108,7 @@ async function getUrlsForVault(vault: VaultConfig): Promise<ProviderUrls | undef
       replacements[`token${i}`] = token.address === 'native' ? token.symbol : token.address;
     }
 
-    return getUrlsForTokenProvider(vault.network, vault.tokenProviderId, replacements);
+    return replaceUrlsForVault(vault, replacements);
   }
 
   return undefined;
