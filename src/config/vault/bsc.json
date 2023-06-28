@@ -1,5 +1,27 @@
 [
   {
+    "id": "thena-gamma-wusdr-dola",
+    "name": "wUSDR-DOLA LP",
+    "token": "aWUSDR-DOLA",
+    "tokenAddress": "0x92104a7BeC32297DdD022A8f242bf498d0470876",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenaGamma_wUSDR-DOLA",
+    "earnedTokenAddress": "0x0fe7E86aF871fCacBdaB214094A9c01B0f85961f",
+    "earnContractAddress": "0x0fe7E86aF871fCacBdaB214094A9c01B0f85961f",
+    "oracle": "lps",
+    "oracleId": "thena-gamma-wusdr-dola",
+    "status": "active",
+    "platformId": "gamma",
+    "assets": ["wUSDR", "DOLA"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://thena.fi/liquidity/fusion?currency0=0x2952beb1326accbb5243725bd4da2fc937bca087&currency1=0x2f29bc0ffaf9bff337b31cbe6cb5fb3bf12e5840&strategy=CORRELATED",
+    "removeLiquidityUrl": "https://thena.fi/liquidity/fusion?currency0=0x2952beb1326accbb5243725bd4da2fc937bca087&currency1=0x2f29bc0ffaf9bff337b31cbe6cb5fb3bf12e5840&strategy=CORRELATED",
+    "network": "bsc",
+    "createdAt": 1687780839
+  },
+  {
     "id": "thena-gamma-bnbx-usdt-wide",
     "name": "BNBx-USDT Wide LP",
     "token": "awBNBX-USDT",
@@ -18061,7 +18083,8 @@
     "earnContractAddress": "0x6bCD9493dFA06D07003aB6920DacE6D4F854E162",
     "oracle": "tokens",
     "oracleId": "BTCB",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "valas",
     "assets": ["BTCB"],
     "risks": [

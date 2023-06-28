@@ -189,8 +189,14 @@ function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchTex
   });
 }
 
-export const selectUserFilteredVaults = (state: BeefyState, text: string) => {
-  const vaults = selectUserDepositedVaultIds(state).map(id => selectVaultById(state, id));
+export const selectUserFilteredVaults = (
+  state: BeefyState,
+  text: string,
+  walletAddress?: string
+) => {
+  const vaults = selectUserDepositedVaultIds(state, walletAddress).map(id =>
+    selectVaultById(state, id)
+  );
   const searchText = simplifySearchText(text);
   const filteredVaults = vaults.filter(vault => {
     if (searchText.length > 0 && !selectVaultMatchesText(state, vault, searchText)) {

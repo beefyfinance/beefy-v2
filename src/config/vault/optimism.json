@@ -1,5 +1,32 @@
 [
   {
+    "id": "exactly-supply-wsteth",
+    "name": "wstETH",
+    "token": "wstETH",
+    "tokenAddress": "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
+    "tokenDecimals": 18,
+    "earnedToken": "mooExactlySupplywstETH",
+    "earnedTokenAddress": "0x1910CCeCC57869F1Ff2337dda001246B92E8418A",
+    "earnContractAddress": "0x1910CCeCC57869F1Ff2337dda001246B92E8418A",
+    "oracle": "tokens",
+    "oracleId": "wstETH",
+    "status": "active",
+    "platformId": "exactly",
+    "assets": ["wstETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/wstETH",
+    "network": "optimism",
+    "createdAt": 1687869830
+  },
+  {
     "id": "velodrome-frax-usd+",
     "name": "USD+-FRAX sLP",
     "token": "USD+-FRAX sLP",

@@ -19,9 +19,6 @@ export const selectWalletAddress = createSelector(
   (state: BeefyState) => state.user.wallet.address,
   address => {
     address = featureFlag_walletAddressOverride(address);
-    if (address === null) {
-      throw new Error("Wallet isn't connected");
-    }
     return address;
   }
 );
@@ -37,4 +34,3 @@ export const selectIsBalanceHidden = (state: BeefyState) => state.user.wallet.hi
 export const selectIsNetworkSupported = (state: BeefyState) =>
   state.user.wallet.error !== 'unsupported chain';
 export const selectIsWalletInitialized = (state: BeefyState) => state.user.wallet.initialized;
-export const selectEns = (state: BeefyState) => state.user.wallet.ens;

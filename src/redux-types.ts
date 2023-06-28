@@ -32,6 +32,7 @@ import type { AnalyticsState } from './features/data/reducers/analytics';
 import type { ProposalsState } from './features/data/reducers/proposals';
 import type { HistoricalState } from './features/data/reducers/historical-types';
 import type { SavedVaultsState } from './features/data/reducers/saved-vaults';
+import type { ResolverState } from './features/data/reducers/wallet/resolver-types';
 
 export interface BeefyState {
   entities: {
@@ -55,11 +56,12 @@ export interface BeefyState {
     historical: HistoricalState;
   };
   user: {
-    wallet: WalletState;
-    walletActions: WalletActionsState;
-    balance: BalanceState;
     allowance: AllowanceState;
     analytics: AnalyticsState;
+    balance: BalanceState;
+    resolver: ResolverState;
+    wallet: WalletState;
+    walletActions: WalletActionsState;
   };
   ui: {
     dataLoader: DataLoaderState;

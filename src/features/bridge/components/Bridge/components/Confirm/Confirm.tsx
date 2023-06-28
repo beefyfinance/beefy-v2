@@ -69,13 +69,14 @@ function _Confirm() {
     if (isTokenErc20(depositedToken)) {
       dispatch(
         fetchAllowanceAction({
+          walletAddress: walletAddress,
           chainId: formState.fromChainId,
           spenderAddress: routerAddress,
           tokens: [depositedToken],
         })
       );
     }
-  }, [depositedToken, dispatch, formState.fromChainId, routerAddress]);
+  }, [depositedToken, dispatch, formState.fromChainId, routerAddress, walletAddress]);
 
   const depositTokenAllowance = useAppSelector(state =>
     selectAllowanceByTokenAddress(

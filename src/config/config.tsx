@@ -51,6 +51,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'sethUSDT',
       'eUSD',
       'lvUSD',
+      'crvUSD',
       'R',
     ],
   },

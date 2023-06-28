@@ -26,15 +26,16 @@ type ListComponentType = 'txHistory' | 'chart';
 
 export type VaultProps = {
   vaultId: VaultEntity['id'];
+  address: string;
 };
-export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
+export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const isRetired = useAppSelector(state => selectIsVaultRetired(state, vaultId));
   const isPaused = useAppSelector(state => selectIsVaultPaused(state, vaultId));
   const isGov = useAppSelector(state => selectIsVaultGov(state, vaultId));
   const hasAnalyticsData = useAppSelector(state =>
-    selectHasDataToShowGraphByVaultId(state, vaultId)
+    selectHasDataToShowGraphByVaultId(state, vaultId, address)
   );
 
   const handleOpen = useCallback(() => {
@@ -50,11 +51,13 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
   const options = useMemo(() => {
     const items = {
       txHistory: t('Dashboard-TransactionHistory'),
-      chart: t('Dashboard-Chart'),
     };
+    if (hasAnalyticsData) {
+      items['chart'] = t('Dashboard-Chart');
+    }
 
     return items;
-  }, [t]);
+  }, [hasAnalyticsData, t]);
 
   const handleChange = useCallback(newValue => {
     setShowStats(newValue);
@@ -74,12 +77,12 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
       >
         <div className={classes.vaultInner}>
           <VaultIdentity isLink={true} networkClassName={classes.network} vaultId={vaultId} />
-          <VaultDashboardStats vaultId={vaultId} />
+          <VaultDashboardStats vaultId={vaultId} address={address} />
         </div>
       </div>
       <Collapse in={open} timeout="auto">
         {mobileView ? (
-          <MobileCollapseContent vaultId={vaultId} />
+          <MobileCollapseContent address={address} vaultId={vaultId} />
         ) : (
           <>
             {hasAnalyticsData && (
@@ -94,8 +97,12 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
             )}
             <div className={classes.collapseInner}>
               <TabletStats vaultId={vaultId} />
-              {listComponent === 'txHistory' && <VaultTransactions vaultId={vaultId} />}
-              {listComponent === 'chart' && <DashboardPnLGraph vaultId={vaultId} />}
+              {listComponent === 'txHistory' && (
+                <VaultTransactions address={address} vaultId={vaultId} />
+              )}
+              {listComponent === 'chart' && (
+                <DashboardPnLGraph address={address} vaultId={vaultId} />
+              )}
             </div>
           </>
         )}

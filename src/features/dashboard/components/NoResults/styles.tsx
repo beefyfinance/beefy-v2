@@ -32,5 +32,35 @@ export const styles = (theme: Theme) => ({
   text: {
     ...theme.typography['body-lg'],
     color: theme.palette.text.secondary,
+    textAlign: 'center' as const,
+  },
+  actionsContainer: {
+    display: 'grid',
+    gap: '12px',
+  },
+  dividerContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    columnGap: '8px',
+    width: '250px',
+  },
+  line: {
+    height: '2px',
+    width: '100%',
+    backgroundColor: '#2D3153',
+    borderRadius: '8px',
+  },
+  btn: {
+    width: '100%',
+    padding: '6px 12px',
+    maxWidth: '250px',
+  },
+  or: {
+    ...theme.typography['subline-sm'],
+    color: theme.palette.text.disabled,
+  },
+  center: {
+    display: 'flex',
+    justifyContent: 'center',
   },
 });

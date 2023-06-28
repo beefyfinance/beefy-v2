@@ -44,7 +44,11 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   private static createOnboardWalletInitializers() {
     return [
       WalletConnectionApi.createInjectedWalletsModule(),
-      createWalletConnectModule(),
+      createWalletConnectModule({
+        version: 2,
+        projectId: 'af38b343e1be64b27c3e4a272cb453b9',
+        requiredChains: [],
+      }),
       createCoinbaseWalletModule(),
       WalletConnectionApi.createCDCWalletModule(),
     ];
@@ -119,7 +123,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     const onboard = Onboard({
       connect: {
         showSidebar: true,
-        disableUDResolution: true,
       },
       wallets: this.getOnboardWalletInitializers(),
       theme: {
@@ -137,6 +140,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         description:
           'Beefy is a Decentralized, Multichain Yield Optimizer that allows its users to earn compound interest on their crypto holdings. Beefy earns you the highest APYs with safety and efficiency in mind.',
         gettingStartedGuide: 'https://docs.beefy.finance/',
+        explore: 'https://beefy.com/',
       },
       chains: this.options.chains.map(chain => ({
         id: numberToHex(chain.networkChainId),

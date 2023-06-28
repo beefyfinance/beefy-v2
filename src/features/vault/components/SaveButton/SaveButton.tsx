@@ -25,7 +25,7 @@ export const SaveButton = memo<SaveButtonProps>(function SaveButton({ vaultId, c
 
   const handleSave = useCallback(() => {
     dispatch(savedVaultsActions.setSavedVaultIds(vaultId));
-  }, [dispatch, isSaved]);
+  }, [dispatch, vaultId]);
 
   return (
     <Button

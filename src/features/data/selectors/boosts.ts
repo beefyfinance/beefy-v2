@@ -186,7 +186,8 @@ export const selectUserBalanceOnActiveOrPastBoost = (
 
 export const selectUserActiveBoostBalanceInToken = (
   state: BeefyState,
-  vaultId: VaultEntity['id']
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
 ) => {
   const isBoosted = selectIsVaultBoosted(state, vaultId);
 
@@ -194,5 +195,5 @@ export const selectUserActiveBoostBalanceInToken = (
     ? selectBoostById(state, selectPreStakeOrActiveBoostIds(state, vaultId)[0])
     : null;
 
-  return isBoosted ? selectBoostUserBalanceInToken(state, activeBoost.id) : BIG_ZERO;
+  return isBoosted ? selectBoostUserBalanceInToken(state, activeBoost.id, walletAddress) : BIG_ZERO;
 };

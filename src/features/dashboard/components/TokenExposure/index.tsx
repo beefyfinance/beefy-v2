@@ -3,25 +3,27 @@ import { useAppSelector } from '../../../../store';
 import { selectUserTokenExposure } from '../../../data/selectors/balance';
 import { selectIsUserBalanceAvailable } from '../../../data/selectors/data-loader';
 import { ExposureChart } from '../ExposureChart';
+import type { ExposureDashboardChartLoaderProps } from '../ExposureChart/types';
 
-interface TokenExposureProps {
-  title?: string;
-}
-
-const TokenExposure = memo<TokenExposureProps>(function TokenExposure({ title }) {
-  const tokensExposureData = useAppSelector(state => selectUserTokenExposure(state));
+const TokenExposure = memo<ExposureDashboardChartLoaderProps>(function TokenExposure({
+  title,
+  address,
+}) {
+  const tokensExposureData = useAppSelector(state => selectUserTokenExposure(state, address));
 
   return <ExposureChart title={title} type="token" data={tokensExposureData} />;
 });
 
-export const TokenExposureLoader = memo<TokenExposureProps>(function TokenExposureLoader({
-  title,
-}) {
-  const isUserDataAvailable = useAppSelector(selectIsUserBalanceAvailable);
+export const TokenExposureLoader = memo<ExposureDashboardChartLoaderProps>(
+  function TokenExposureLoader({ title, address }) {
+    const isUserDataAvailable = useAppSelector(state =>
+      selectIsUserBalanceAvailable(state, address)
+    );
 
-  if (isUserDataAvailable) {
-    return <TokenExposure title={title} />;
+    if (isUserDataAvailable) {
+      return <TokenExposure address={address} title={title} />;
+    }
+
+    return null;
   }
-
-  return null;
-});
+);

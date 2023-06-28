@@ -16,16 +16,18 @@ const useStyles = makeStyles(styles);
 interface RewardsTooltipProps {
   vaultId: VaultEntity['id'];
   size?: number;
+  walletAddress?: string;
 }
 
 export const RewardsTooltip = memo<RewardsTooltipProps>(function RewardsTooltip({
   vaultId,
   size = 20,
+  walletAddress,
 }) {
   const classes = useStyles();
 
   const { rewards, rewardsTokens } = useAppSelector(state =>
-    selectUserRewardsByVaultId(state, vaultId)
+    selectUserRewardsByVaultId(state, vaultId, walletAddress)
   );
 
   if (rewards.length === 0) {

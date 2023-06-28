@@ -3,7 +3,6 @@ import { Divider, Drawer, makeStyles } from '@material-ui/core';
 import { Close, Menu } from '@material-ui/icons';
 import { styles } from './styles';
 import { BifiPrice } from '../BifiPrice';
-import { LanguageDropdown } from '../../../LanguageDropdown';
 import { NavItemMobile } from '../NavItem';
 import { useTranslation } from 'react-i18next';
 import { MobileList } from '../../list';
@@ -31,7 +30,6 @@ export const MobileMenu = memo(function MobileMenu() {
           <div className={classes.head}>
             <div className={classes.flex}>
               <BifiPrice />
-              <LanguageDropdown />
             </div>
             <Close className={classes.cross} onClick={handleDrawerToggle} />
           </div>
