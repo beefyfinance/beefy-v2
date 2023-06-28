@@ -11,7 +11,11 @@ import {
 } from '../../features/data/selectors/balance';
 import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
 import { selectVaultById } from '../../features/data/selectors/vaults';
-import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/selectors/wallet';
+import {
+  selectIsBalanceHidden,
+  selectIsWalletKnown,
+  selectWalletAddress,
+} from '../../features/data/selectors/wallet';
 import { formatBigUsd } from '../../helpers/format';
 import type { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
@@ -32,9 +36,11 @@ const _BoostedVaultDepositedLarge = connect(
     const hasDeposit = deposit.gt(0);
     const depositUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vaultId));
     const blurred = selectIsBalanceHidden(state);
+    const walletAddress = selectWalletAddress(state);
     const isLoaded =
       state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
-        ? state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
+        ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
+            .alreadyLoadedOnce
         : true;
     return {
       hasDeposit,
@@ -87,9 +93,11 @@ const _NonBoostedVaultDeposited = connect(
     const hasDeposit = deposit.gt(0);
     const depositUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vaultId));
     const blurred = selectIsBalanceHidden(state);
+    const walletAddress = selectWalletAddress(state);
     const isLoaded =
       state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
-        ? state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
+        ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
+            .alreadyLoadedOnce
         : true;
     return {
       hasDeposit,

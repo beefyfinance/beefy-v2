@@ -11,16 +11,24 @@ import { ReactComponent as VaultIcon } from '../../../../images/icons/vault.svg'
 import { ReactComponent as DailyIcon } from '../../../../images/icons/daily-yield.svg';
 import { ReactComponent as MonthlyIcon } from '../../../../images/icons/monthly-yield.svg';
 import { selectUserTotalYieldUsd } from '../../../data/selectors/balance';
+import { AddressInput } from '../AddressInput';
+import { ShortAddress } from '../ShortAddress';
 
 const useStyles = makeStyles(styles);
 
-export const DepositSummary = memo(function DepositSummary() {
+interface DepositSummaryProps {
+  address: string;
+  addressLabel?: string;
+}
+
+export const DepositSummary = memo<DepositSummaryProps>(function DepositSummary({
+  address,
+  addressLabel,
+}) {
   const { t } = useTranslation();
   const classes = useStyles();
-
-  const stats = useAppSelector(selectUserGlobalStats);
-
-  const totalYieldUsd = useAppSelector(selectUserTotalYieldUsd);
+  const stats = useAppSelector(state => selectUserGlobalStats(state, address));
+  const totalYieldUsd = useAppSelector(state => selectUserTotalYieldUsd(state, address));
 
   const UserStats = useMemo(() => {
     return [
@@ -45,12 +53,20 @@ export const DepositSummary = memo(function DepositSummary() {
         Icon: DailyIcon,
       },
     ];
-  }, [stats.daily, stats.deposited, stats.depositedVaults, totalYieldUsd, t]);
+  }, [t, stats.deposited, stats.depositedVaults, stats.daily, totalYieldUsd]);
 
   return (
     <div className={classes.container}>
       <Container maxWidth="lg">
-        <div className={classes.title}>{t('Dashboard-Title')}</div>
+        <div className={classes.titleContainer}>
+          <div className={classes.title}>
+            {t('Dashboard-Title')}
+            <ShortAddress address={address} addressLabel={addressLabel} />
+          </div>
+          <div>
+            <AddressInput />
+          </div>
+        </div>
         <SummaryStats items={UserStats} />
       </Container>
     </div>

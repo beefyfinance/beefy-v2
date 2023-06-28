@@ -10,7 +10,11 @@ import {
   selectUserVaultDepositInUsd,
 } from '../../features/data/selectors/balance';
 import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
-import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/selectors/wallet';
+import {
+  selectIsBalanceHidden,
+  selectIsWalletKnown,
+  selectWalletAddress,
+} from '../../features/data/selectors/wallet';
 import { VaultValueStat } from '../VaultValueStat';
 
 export type VaultDepositStatProps = {
@@ -24,10 +28,12 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDeposit
   const label = 'VaultStat-DEPOSITED';
   const vault = selectVaultById(state, vaultId);
   const hideBalance = selectIsBalanceHidden(state);
+  const walletAddress = selectWalletAddress(state);
 
   const isLoaded =
     state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
-      ? state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
+      ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
+          .alreadyLoadedOnce
       : true;
 
   if (!isLoaded) {

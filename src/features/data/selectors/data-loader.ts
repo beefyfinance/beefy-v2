@@ -36,12 +36,12 @@ export const selectVaultShouldShowInterest = createCachedSelector(
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectIsUserBalanceAvailable = createSelector(
-  [
-    selectIsConfigAvailable,
-    selectIsPriceAvailable,
-    (state: BeefyState) => state.ui.dataLoader.byChainId,
-  ],
-  (configAvailable, pricesAvailable, byChainId) => {
+  (state: BeefyState, _walletAddress: string) => selectIsConfigAvailable(state),
+  (state: BeefyState, _walletAddress: string) => selectIsPriceAvailable(state),
+  (state: BeefyState, _walletAddress: string) => state.ui.dataLoader.byChainId,
+  (state: BeefyState, _walletAddress: string) => state.ui.dataLoader.byAddress,
+  (state: BeefyState, walletAddress: string) => walletAddress,
+  (configAvailable, pricesAvailable, byChainId, byAddress, walletAddress) => {
     if (!configAvailable || !pricesAvailable) {
       return false;
     }
@@ -49,7 +49,7 @@ export const selectIsUserBalanceAvailable = createSelector(
       // if any chain has balance data, then balance data is available
       if (
         byChainId[chainId].contractData.alreadyLoadedOnce &&
-        byChainId[chainId].balance.alreadyLoadedOnce
+        byAddress[walletAddress]?.byChainId[chainId]?.balance.alreadyLoadedOnce
       ) {
         return true;
       }

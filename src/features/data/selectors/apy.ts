@@ -12,10 +12,10 @@ import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectUserActiveBoostBalanceInToken } from './boosts';
-import { selectWalletAddressIfKnown } from './wallet';
 import type { TotalApy } from '../reducers/apy';
 import { compoundInterest } from '../../../helpers/number';
 import { isEmpty } from '../../../helpers/utils';
+import { selectWalletAddress } from './wallet';
 
 export const selectVaultTotalApy = (state: BeefyState, vaultId: VaultEntity['id']) => {
   return state.biz.apy.totalApy.byVaultId[vaultId] || {};
@@ -33,17 +33,18 @@ const EMPTY_GLOBAL_STATS = {
   apy: 0,
   depositedVaults: 0,
 };
-export const selectUserGlobalStats = (state: BeefyState) => {
-  const walletAddress = selectWalletAddressIfKnown(state);
+export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
+  const walletAddress = address || selectWalletAddress(state);
   if (!walletAddress) {
     return EMPTY_GLOBAL_STATS;
   }
 
-  if (!selectIsUserBalanceAvailable(state)) {
+  if (!selectIsUserBalanceAvailable(state, walletAddress)) {
     return EMPTY_GLOBAL_STATS;
   }
 
   const userVaultIds = selectAddressDepositedVaultIds(state, walletAddress);
+
   if (userVaultIds.length === 0) {
     return EMPTY_GLOBAL_STATS;
   }
@@ -57,8 +58,8 @@ export const selectUserGlobalStats = (state: BeefyState) => {
 
   for (const vault of userVaults) {
     const tokenBalance = isGovVault(vault)
-      ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
-      : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
+      ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id, walletAddress)
+      : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id, walletAddress);
 
     if (tokenBalance.lte(BIG_ZERO)) {
       continue;
@@ -132,12 +133,16 @@ export const selectUserGlobalStats = (state: BeefyState) => {
   return newGlobalStats;
 };
 
-export const selectVaultDailyYieldStats = (state: BeefyState, vaultId: VaultEntity['id']) => {
+export const selectVaultDailyYieldStats = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
   const vault = selectVaultById(state, vaultId);
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
   const ppfs = selectVaultPricePerFullShare(state, vaultId);
   const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
-  const tokenBalance = selectUserVaultDepositInDepositToken(state, vault.id);
+  const tokenBalance = selectUserVaultDepositInDepositToken(state, vault.id, walletAddress);
   const vaultUsdBalance = tokenBalance.times(oraclePrice);
   const apyData = selectVaultTotalApy(state, vault.id);
 
@@ -148,7 +153,11 @@ export const selectVaultDailyYieldStats = (state: BeefyState, vaultId: VaultEnti
     dailyUsd = vaultUsdBalance.times(apyData.totalDaily);
     dailyTokens = tokenBalance.times(apyData.totalDaily);
   } else {
-    const boostBalance = selectUserActiveBoostBalanceInToken(state, vaultId).multipliedBy(ppfs);
+    const boostBalance = selectUserActiveBoostBalanceInToken(
+      state,
+      vaultId,
+      walletAddress
+    ).multipliedBy(ppfs);
     const boostBalanceUsd = boostBalance.times(oraclePrice);
 
     const nonBoostBalanceInTokens = tokenBalance.minus(boostBalance);

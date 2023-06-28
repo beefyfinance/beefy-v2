@@ -11,6 +11,7 @@ export type TooltipProps = {
   children: ReactNode;
   content: ReactNode;
   placement?: PopperPlacementType;
+  onClick?: () => void;
   triggerClass?: string;
   tooltipClass?: string;
   arrowClass?: string;
@@ -29,6 +30,7 @@ export const Tooltip = memo(
       contentClass,
       placement = 'top-end',
       disabled = false,
+      onClick,
     },
     ref
   ) {
@@ -53,9 +55,12 @@ export const Tooltip = memo(
           e.stopPropagation();
           e.preventDefault();
           setIsOpen(true);
+          if (onClick) {
+            onClick();
+          }
         }
       },
-      [setIsOpen, disabled]
+      [disabled, onClick]
     );
 
     const modifiers = useMemo(

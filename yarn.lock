@@ -4291,9 +4291,9 @@ enhanced-resolve@^5.8.3:
     tapable "^2.2.0"
 
 ens-reverse@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ens-reverse/-/ens-reverse-1.0.0.tgz#6122abb83b6a45e3bb4a4ba44d5992950573c00d"
-  integrity sha512-GIn7TOnBojK1hyNsXyglO144fjmYaQDMb7NwR+oT7Da8aQaDE9xCdlIIkP7VyvTGLBHi2xpptvbUxQVBExl92A==
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ens-reverse/-/ens-reverse-1.0.2.tgz#d759de222a9e89a70ce05a798beeaae428d72bbc"
+  integrity sha512-QIGuVM/ogBEPzcA1lNjtJNGncEkwf0SSi0ubQ/VwaVw8n/K7zFAqidxR1ksi/XeRp+Ij/fn03ODjxk9rTmf+5g==
 
 entities@^4.4.0:
   version "4.4.0"
@@ -4557,6 +4557,11 @@ eslint-plugin-import@^2.27.5:
     resolve "^1.22.1"
     semver "^6.3.0"
     tsconfig-paths "^3.14.1"
+
+eslint-plugin-react-hooks@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.6.0.tgz#4c3e697ad95b77e93f8646aaa1630c1ba607edd3"
+  integrity sha512-oFc7Itz9Qxh2x4gNHStv3BqJq54ExXmfC+a1NjAta66IAN87Wu0R/QArgIS9qKzX3dXKPI9H5crl9QchNMY9+g==
 
 eslint-plugin-react@^7.32.2:
   version "7.32.2"

@@ -23,7 +23,13 @@ const chartToComponent: Record<ChartEnum, FC<ExposureDashboardChartLoaderProps>>
 
 const useStyles = makeStyles(styles);
 
-export const MobileUserExposure = memo(function MobileUserExposure() {
+interface MobileUserExposureProps {
+  address: string;
+}
+
+export const MobileUserExposure = memo<MobileUserExposureProps>(function MobileUserExposure({
+  address,
+}) {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -60,7 +66,7 @@ export const MobileUserExposure = memo(function MobileUserExposure() {
           );
         })}
       </div>
-      <Chart />
+      <Chart address={address} />
     </div>
   );
 });

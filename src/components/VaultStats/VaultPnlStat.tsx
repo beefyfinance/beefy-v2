@@ -5,7 +5,7 @@ import type { BeefyState } from '../../redux-types';
 import { formatBigUsd } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import {
-  selectIsAnalyticsLoaded,
+  selectIsAnalyticsLoadedByAddress,
   selectUserDepositedTimelineByVaultId,
 } from '../../features/data/selectors/analytics';
 import type { VaultPnLDataType } from './types';
@@ -14,16 +14,20 @@ export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
   pnlData: VaultPnLDataType;
+  walletAddress: string;
 };
 
 export const VaultPnlStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId, className, pnlData }: VaultDailyStatProps) {
+function mapStateToProps(
+  state: BeefyState,
+  { vaultId, className, pnlData, walletAddress }: VaultDailyStatProps
+) {
   const label = '-';
 
-  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
+  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
 
-  const isLoaded = selectIsAnalyticsLoaded(state);
+  const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
 
   if (!vaultTimeline) {
     return {

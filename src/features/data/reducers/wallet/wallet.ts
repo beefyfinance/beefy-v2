@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { ChainEntity } from '../../entities/chain';
-import { getEns, initWallet } from '../../actions/wallet';
+import { initWallet } from '../../actions/wallet';
 
 /**
  * Only address and hideBalance are persisted
@@ -9,7 +9,6 @@ import { getEns, initWallet } from '../../actions/wallet';
 export type WalletState = {
   initialized: boolean;
   address: string | null;
-  ens: string | null;
   connectedAddress: string | null;
   selectedChainId: ChainEntity['id'] | null;
   error: 'unsupported chain' | null;
@@ -19,7 +18,6 @@ export type WalletState = {
 const initialWalletState: WalletState = {
   initialized: false,
   address: null,
-  ens: null,
   connectedAddress: null,
   selectedChainId: null,
   error: null,
@@ -46,12 +44,10 @@ export const walletSlice = createSlice({
       sliceState.address = null;
       sliceState.connectedAddress = null;
       sliceState.error = null;
-      sliceState.ens = null;
     },
     accountHasChanged(sliceState, action: PayloadAction<{ address: string }>) {
       sliceState.address = action.payload.address;
       sliceState.connectedAddress = action.payload.address;
-      sliceState.ens = null;
     },
     chainHasChanged(
       sliceState,
@@ -71,6 +67,7 @@ export const walletSlice = createSlice({
       sliceState.selectedChainId = null;
       sliceState.error = 'unsupported chain';
     },
+
     /**
      * Display configuration
      */
@@ -82,9 +79,6 @@ export const walletSlice = createSlice({
     builder.addCase(initWallet.fulfilled, (sliceState, _action) => {
       // wallet connection api initialized
       sliceState.initialized = true;
-    });
-    builder.addCase(getEns.fulfilled, (sliceState, action) => {
-      sliceState.ens = action.payload;
     });
   },
 });
