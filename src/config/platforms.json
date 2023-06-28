@@ -1038,5 +1038,10 @@
     "id": "gamma",
     "name": "Gamma",
     "filter": true
+  },
+  {
+    "id": "betswirl",
+    "name": "BetSwirl",
+    "filter": true
   }
 ]

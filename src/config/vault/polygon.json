@@ -1,5 +1,26 @@
 [
   {
+    "id": "betswirl-poly-bets",
+    "name": "BETS",
+    "token": "BETS",
+    "tokenAddress": "0x9246a5F10A79a5a939b0C2a75A3AD196aAfDB43b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "betswirl",
+    "earnedToken": "mooBetswirlBETS",
+    "earnedTokenAddress": "0x6eAc1214B81acb0F33c5aC4d426587032E53e5eC",
+    "earnContractAddress": "0x6eAc1214B81acb0F33c5aC4d426587032E53e5eC",
+    "oracle": "tokens",
+    "oracleId": "BETS",
+    "status": "active",
+    "platformId": "betswirl",
+    "assets": ["BETS"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://quickswap.exchange/#/swap?currency0=ETH&currency1=0x9246a5F10A79a5a939b0C2a75A3AD196aAfDB43b",
+    "network": "polygon",
+    "createdAt": 1687939772
+  },
+  {
     "id": "quick-gamma-wbtc-usdc-narrow",
     "name": "WBTC-USDC Narrow LP",
     "token": "aWBTC-USDC",
