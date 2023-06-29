@@ -5,11 +5,19 @@ const DEFAULT_CHUNK_SIZE_BY_CHAIN: Record<string, number> = {
   fantom: 200,
 };
 
+let searchParamsCache: URLSearchParams | undefined;
+function getSearchParams(): URLSearchParams {
+  if (!searchParamsCache) {
+    searchParamsCache = new URLSearchParams(window.location.search);
+  }
+  return searchParamsCache;
+}
+
 export function featureFlag_getContractDataApiImplem():
   | 'eth-multicall'
   | 'new-multicall'
   | 'webworker-eth-multicall' {
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   // default is new-multicall
   if (!params.has('__contract_data_api')) {
     return 'new-multicall';
@@ -27,7 +35,7 @@ export function featureFlag_getContractDataApiImplem():
 }
 
 export function featureFlag_getContractDataApiChunkSize(chain: ChainEntity['id']): number {
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   if (params.has(`__contract_data_api_chunk_size_${chain}`)) {
     return parseInt(params.get(`__contract_data_api_chunk_size_${chain}`));
   }
@@ -41,7 +49,7 @@ export function featureFlag_getContractDataApiChunkSize(chain: ChainEntity['id']
 }
 
 export function featureFlag_getBalanceApiImplem(): 'eth-multicall' | 'new-multicall' {
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   // default is eth-multicall
   if (!params.has('__balance_api')) {
     return 'new-multicall';
@@ -54,7 +62,7 @@ export function featureFlag_getBalanceApiImplem(): 'eth-multicall' | 'new-multic
   return 'new-multicall';
 }
 export function featureFlag_getBalanceApiChunkSize(): number {
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   // default is eth-multicall
   if (params.has('__balance_api_chunk_size')) {
     return parseInt(params.get('__balance_api_chunk_size'));
@@ -63,7 +71,7 @@ export function featureFlag_getBalanceApiChunkSize(): number {
 }
 
 export function featureFlag_getAllowanceApiImplem(): 'eth-multicall' | 'new-multicall' {
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   // default is eth-multicall
   if (!params.has('__allowance_api')) {
     return 'new-multicall';
@@ -77,7 +85,7 @@ export function featureFlag_getAllowanceApiImplem(): 'eth-multicall' | 'new-mult
 }
 
 export function featureFlag_getAllowanceApiChunkSize(): number {
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   // default is eth-multicall
   if (params.has('__allowance_api_chunk_size')) {
     return parseInt(params.get('__allowance_api_chunk_size'));
@@ -86,17 +94,17 @@ export function featureFlag_getAllowanceApiChunkSize(): number {
 }
 
 export function featureFlag_noDataPolling() {
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   return params.has('__no_polling');
 }
 
 export function featureFlag_debugOnRamp() {
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   return params.has('__debug_onramp');
 }
 
 export function featureFlag_walletAddressOverride(walletAddress: string | null | undefined) {
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   if (walletAddress && params.has('__view_as')) {
     return params.get('__view_as');
   } else {
@@ -110,17 +118,17 @@ export function featureFlag_recordReduxActions() {
   if (!isAuthorizedDomain) {
     return false;
   }
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   return params.has('__record_redux_actions');
 }
 
 export function featureFlag_logReduxActions() {
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   return params.has('__log_redux_actions');
 }
 
 export function featureFlag_logging() {
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   return params.has('__logging');
 }
 
@@ -130,7 +138,7 @@ export function featureFlag_replayReduxActions() {
   if (!isAuthorizedDomain) {
     return false;
   }
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   return params.has('__replay_redux_actions');
 }
 
@@ -140,7 +148,7 @@ export function featureFlag_simulateRpcError(chainId: ChainEntity['id']) {
   if (!isAuthorizedDomain) {
     return false;
   }
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   if (params.has('__simulate_rpc_error')) {
     const chainIds = params.get('__simulate_rpc_error').split(',');
     return chainIds.includes(chainId);
@@ -164,7 +172,7 @@ export function featureFlag_simulateBeefyApiError(
   if (!isAuthorizedDomain) {
     return false;
   }
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   if (params.has('__simulate_beefy_error')) {
     const chainIds = params.get('__simulate_beefy_error').split(',');
     return chainIds.includes(key);
@@ -172,7 +180,7 @@ export function featureFlag_simulateBeefyApiError(
 }
 
 export function featureFlag_breakpoints() {
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   return params.has('__breakpoints');
 }
 
@@ -181,7 +189,7 @@ type ZapOverrides = {
   oneInch: 'all' | string[];
 };
 export function featureFlag_zapSupportOverrides(): ZapOverrides {
-  const params = new URLSearchParams(window.location.search);
+  const params = getSearchParams();
   const overrides: ZapOverrides = {
     beefy: [],
     oneInch: [],
@@ -199,4 +207,15 @@ export function featureFlag_zapSupportOverrides(): ZapOverrides {
   }
 
   return overrides;
+}
+
+export function featureFlag_walletConnectChainId(): number {
+  const params = getSearchParams();
+  if (params.has('__wc_chain_id')) {
+    const chainId = parseInt(params.get('__wc_chain_id')!);
+    if (chainId) {
+      return chainId;
+    }
+  }
+  return 1;
 }

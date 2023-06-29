@@ -19,6 +19,7 @@ import appIcon from '../../../../images/bifi-logos/header-logo-notext.svg';
 import appLogo from '../../../../images/bifi-logos/header-logo.svg';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
 import type { provider } from 'web3-core';
+import { featureFlag_walletConnectChainId } from '../../utils/feature-flags';
 
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | null;
@@ -47,7 +48,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       createWalletConnectModule({
         version: 2,
         projectId: 'af38b343e1be64b27c3e4a272cb453b9',
-        requiredChains: [],
+        requiredChains: [featureFlag_walletConnectChainId()],
       }),
       createCoinbaseWalletModule(),
       WalletConnectionApi.createCDCWalletModule(),
@@ -432,7 +433,27 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     // Clear last wallet
     WalletConnectionApi.setLastConnectedWallet(null);
 
+    // Clear wallet connect storage or else it will try to reconnect to same session
+    WalletConnectionApi.clearWalletConnectStorage();
+
     // Raise events
     this.options.onWalletDisconnected();
+  }
+
+  private static clearWalletConnectStorage() {
+    try {
+      const toRemove = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('wc@2:')) {
+          toRemove.push(key);
+        }
+      }
+      for (const key of toRemove) {
+        localStorage.removeItem(key);
+      }
+    } catch {
+      // ignored
+    }
   }
 }
