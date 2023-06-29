@@ -212,9 +212,12 @@ export function featureFlag_zapSupportOverrides(): ZapOverrides {
 export function featureFlag_walletConnectChainId(): number {
   const params = getSearchParams();
   if (params.has('__wc_chain_id')) {
-    const chainId = parseInt(params.get('__wc_chain_id')!);
-    if (chainId) {
-      return chainId;
+    const maybeId = params.get('__wc_chain_id');
+    if (maybeId) {
+      const chainId = parseInt(maybeId);
+      if (chainId) {
+        return chainId;
+      }
     }
   }
   return 1;
