@@ -41,7 +41,7 @@ function mapStateToProps(state: BeefyState, { vaultId, walletAddress }: VaultRew
 
   return {
     label,
-    value: <RewardsTooltip size={20} vaultId={vaultId} />,
+    value: <RewardsTooltip size={20} vaultId={vaultId} walletAddress={walletAddress} />,
     subValue: formatBigUsd(totalRewardsUsd),
     blur: false,
     loading: !isLoaded,
