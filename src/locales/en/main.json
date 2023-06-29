@@ -609,5 +609,6 @@
   "Dashboard-SearchInput-Placeholder": "Search address / domain",
   "Clipboard-Copied": "Copied to clipboard!",
   "Dashboard-SearchInput-Invalid-Domain": "Unable to resolve domain",
-  "Dashboard-SearchInput-Invalid-Address": "Entered address is not valid"
+  "Dashboard-SearchInput-Invalid-Address": "Entered address is not valid",
+  "beVELOV2-description": "As $VELOV1 is retired by Velodrome, $beVELO holders are urged to move your tokens to the new beVELO Earnings Pool to ensure you can continue earning $VELOV2 rewards. With our Earnings Pool, you can share in Velodrome protocol emissions earned by Beefy's Velodrome veNFT, which we regularly claim and transfer back to you."
 }
