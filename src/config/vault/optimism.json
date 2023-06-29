@@ -409,7 +409,7 @@
   },
   {
     "id": "beefy-bevelo-v2-earnings",
-    "name": "beVELO Earnings Pool",
+    "name": "beVELO Migration Pool",
     "token": "beVELO",
     "tokenAddress": "0xfDeFFc7Ad816BF7867C642dF7eBC2CC5554ec265",
     "tokenDecimals": 18,
