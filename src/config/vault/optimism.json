@@ -277,7 +277,7 @@
     "oracleId": "velodrome-v2-usd+-dola",
     "status": "active",
     "platformId": "velodrome",
-    "assets": ["alETH", "ETH"],
+    "assets": ["USD+", "DOLA"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://velodrome.finance/swap?from=0x73cb180bf0521828d8849bc8cf2b920918e23032&to=0x8ae125e8653821e851f12a49f7765db9a9ce7384",
