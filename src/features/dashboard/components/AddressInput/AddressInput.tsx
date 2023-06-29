@@ -159,7 +159,7 @@ const GoToDashboardButton = memo<GoToDashboardButtonProps>(function GoToDashboar
         <CircularProgress
           disableShrink={true}
           thickness={4}
-          size={20}
+          size={23}
           className={clsx(classes.loader, classes.disabledIcon)}
         />
       </div>
