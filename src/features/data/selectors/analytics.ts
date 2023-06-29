@@ -4,6 +4,7 @@ import { PnL } from '../../../helpers/pnl';
 import type { BeefyState } from '../../../redux-types';
 import type { TimeBucketType } from '../apis/analytics/analytics-types';
 import type { VaultEntity } from '../entities/vault';
+import { isGovVault } from '../entities/vault';
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { selectUserDepositedVaultIds } from './balance';
@@ -169,7 +170,11 @@ export const selectHasDataToShowGraphByVaultId = createCachedSelector(
 
   (userVaults, isLoaded, timeline, vault, vaultId) => {
     return (
-      isLoaded && userVaults.includes(vaultId) && timeline.length !== 0 && vault.status === 'active'
+      isLoaded &&
+      userVaults.includes(vaultId) &&
+      timeline.length !== 0 &&
+      vault.status === 'active' &&
+      !isGovVault(vault)
     );
   }
 )(
