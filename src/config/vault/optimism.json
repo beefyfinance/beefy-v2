@@ -6,7 +6,6 @@
     "tokenAddress": "0xe9581d0F1A628B038fC8B2a7F5A7d904f0e2f937",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-
     "earnedToken": "mooVeloV2OP-VELO",
     "earnedTokenAddress": "0x04c4a21D7439eD05fd33469565541bF6464F7157",
     "earnContractAddress": "0x04c4a21D7439eD05fd33469565541bF6464F7157",
@@ -37,7 +36,6 @@
     "tokenAddress": "0x4d7959d17B9710BE87e3657e69d946914221BB88",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-
     "earnedToken": "mooVeloV2USDC-alUSD",
     "earnedTokenAddress": "0x8a21Ea69300Fe56ee19fE974e9791a212114573F",
     "earnContractAddress": "0x8a21Ea69300Fe56ee19fE974e9791a212114573F",
@@ -69,7 +67,6 @@
     "tokenAddress": "0xa1055762336F92b4B8d2eDC032A0Ce45ead6280a",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-
     "earnedToken": "mooVeloV2alETH-WETH",
     "earnedTokenAddress": "0x1A1F0Db1050D1cAD52eEB72371EbFD7716b53a2f",
     "earnContractAddress": "0x1A1F0Db1050D1cAD52eEB72371EbFD7716b53a2f",
@@ -101,7 +98,6 @@
     "tokenAddress": "0x6B95147a8d2c7f480C0CF7288FCf268400CE9970",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-
     "earnedToken": "mooVeloV2HND-USDC",
     "earnedTokenAddress": "0xFA6abeFC9B4082bE205c1Aa18DdaD7f747bDC81F",
     "earnContractAddress": "0xFA6abeFC9B4082bE205c1Aa18DdaD7f747bDC81F",
@@ -442,7 +438,6 @@
     "tokenAddress": "0x1cdfAe29a66b39C30Eb2b090a2dbba562026e9FF",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-
     "earnedToken": "mooVeloV2ETH-BIFI",
     "earnedTokenAddress": "0xA86b4C3EC8C765A8073b4034281131Aa2735409E",
     "earnContractAddress": "0xA86b4C3EC8C765A8073b4034281131Aa2735409E",
@@ -466,7 +461,6 @@
     "tokenAddress": "0xe0A1467A9d86d9F433496c48c6831c0142464CE6",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-
     "earnedToken": "mooVeloV2OP-BIFI",
     "earnedTokenAddress": "0xE91cf9c187e1dE875B6feeB15DD4e3a89C1d021D",
     "earnContractAddress": "0xE91cf9c187e1dE875B6feeB15DD4e3a89C1d021D",
@@ -490,7 +484,6 @@
     "tokenAddress": "0x3f42Dc59DC4dF5cD607163bC620168f7FF7aB970",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-
     "earnedToken": "mooVeloV2ETH-frxETH",
     "earnedTokenAddress": "0x06E0A84c71dBD037c618CCf90798474E0e6f9C91",
     "earnContractAddress": "0x06E0A84c71dBD037c618CCf90798474E0e6f9C91",
@@ -514,7 +507,6 @@
     "tokenAddress": "0xFF5318f81Dd791e92d51b8A54fA3538832D2890D",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-
     "earnedToken": "mooVeloV2sfrxETH-frxETH",
     "earnedTokenAddress": "0x88F72d1f49Ea88f86fc52bebB0c1d0Ef232AE483",
     "earnContractAddress": "0x88F72d1f49Ea88f86fc52bebB0c1d0Ef232AE483",
@@ -538,7 +530,6 @@
     "tokenAddress": "0x2B47C794c3789f499D8A54Ec12f949EeCCE8bA16",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-
     "earnedToken": "mooVeloV2USDC-USDT",
     "earnedTokenAddress": "0x8aD01c3a425987c508A69149185383BAf6F47534",
     "earnContractAddress": "0x8aD01c3a425987c508A69149185383BAf6F47534",
@@ -562,7 +553,6 @@
     "tokenAddress": "0xfA09479d72E2b3f8B6dF63399772237Ad6658D76",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-
     "earnedToken": "mooVeloV2alUSD-MAI",
     "earnedTokenAddress": "0xf659Fe930eEa70Bc49B6DD53d828CBaD12673a2a",
     "earnContractAddress": "0xf659Fe930eEa70Bc49B6DD53d828CBaD12673a2a",
@@ -586,7 +576,6 @@
     "tokenAddress": "0xeFe139aa71b674168f5823360A824B3714f2718D",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-
     "earnedToken": "mooVeloV2OP-agEUR",
     "earnedTokenAddress": "0x20881a4f1d09c0ec1305D84012bba8E0C97b3951",
     "earnContractAddress": "0x20881a4f1d09c0ec1305D84012bba8E0C97b3951",
