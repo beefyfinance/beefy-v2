@@ -4295,7 +4295,7 @@ enhanced-resolve@^5.8.3:
     graceful-fs "^4.2.4"
     tapable "^2.2.0"
 
-ens-reverse@^1.0.0:
+ens-reverse@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/ens-reverse/-/ens-reverse-1.0.2.tgz#d759de222a9e89a70ce05a798beeaae428d72bbc"
   integrity sha512-QIGuVM/ogBEPzcA1lNjtJNGncEkwf0SSi0ubQ/VwaVw8n/K7zFAqidxR1ksi/XeRp+Ij/fn03ODjxk9rTmf+5g==
