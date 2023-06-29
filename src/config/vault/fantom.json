@@ -112,6 +112,35 @@
     "createdAt": 1646162527
   },
   {
+    "id": "beets-ankr-fantom-liquid-mosaic",
+    "name": "Ankr Fantom Liquid Mosaic",
+    "token": "Ankr Fantom Liquid Mosaic",
+    "tokenAddress": "0x723d43bd1A1ff40DeaaB77a164B5c3eA4F654DB2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsAnkrFantomLiquidMosaic",
+    "earnedTokenAddress": "0x6f37aA11f06FE9c151c8ef1C971705D2Fdfb9e27",
+    "earnContractAddress": "0x6f37aA11f06FE9c151c8ef1C971705D2Fdfb9e27",
+    "oracle": "lps",
+    "oracleId": "beets-ankr-fantom-liquid-mosaic",
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["ankrFTM", "FTM"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://beets.fi/pool/0x723d43bd1a1ff40deaab77a164b5c3ea4f654db2000000000000000000000750",
+    "removeLiquidityUrl": "https://beets.fi/pool/0x723d43bd1a1ff40deaab77a164b5c3ea4f654db2000000000000000000000750",
+    "network": "fantom",
+    "createdAt": 1688054286
+  },
+  {
     "id": "beets-ankr-ethereum-liquid-ocean",
     "name": "Ankr Ethereum Liquid Ocean",
     "token": "Ankr Ethereum Liquid Ocean",
@@ -278,14 +307,15 @@
     "earnContractAddress": "0x70491A6A6eaF93B4f254d7299E167A8dA462096D",
     "oracle": "lps",
     "oracleId": "beets-ankr-fantom-liquid-ocean",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beethovenx",
     "assets": ["ankrFTM", "FTM"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_SMALL",
+      "MCAP_MEDIUM",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
