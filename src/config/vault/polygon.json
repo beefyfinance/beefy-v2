@@ -640,7 +640,8 @@
     "earnContractAddress": "0xB43bF2ee9085640549F6aCEF5Ed804529C2c9636",
     "oracle": "lps",
     "oracleId": "balancer-sd-maticx",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["SD", "MaticX"],
     "risks": [
@@ -755,7 +756,8 @@
     "earnContractAddress": "0x1a96eF3b72a2fC7d5724a66a040Dc5D856f4A00c",
     "oracle": "lps",
     "oracleId": "balancer-poly-eth-frxeth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["frxETH", "ETH"],
     "risks": [
@@ -836,7 +838,8 @@
     "earnContractAddress": "0x67E6E5D769194Fd4421b514380526CD7bDae92E6",
     "oracle": "lps",
     "oracleId": "balancer-usdc-wusdr",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["wUSDR", "USDC"],
     "risks": [
