@@ -29,7 +29,8 @@ const _VaultWalletAmount = connect(
     const blurred = selectIsBalanceHidden(state);
     const isLoaded =
       state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
-        ? state.ui.dataLoader[walletAddress]?.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
+        ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
+            .alreadyLoadedOnce
         : true;
     return {
       hasInWallet: userOracleInWallet.gt(0),

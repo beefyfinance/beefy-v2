@@ -23,7 +23,8 @@ function mapStateToProps(state: BeefyState, { vaultId, walletAddress }: VaultRew
 
   const isLoaded =
     state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
-      ? state.ui.dataLoader[walletAddress]?.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
+      ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
+          .alreadyLoadedOnce
       : true;
 
   if (!isLoaded) {

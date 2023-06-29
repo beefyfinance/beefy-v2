@@ -27,7 +27,8 @@ const _GovVaultRewards = connect((state: BeefyState, { vaultId }: { vaultId: Vau
   const walletAddress = selectWalletAddress(state);
   const isLoaded =
     state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
-      ? state.ui.dataLoader[walletAddress]?.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
+      ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
+          .alreadyLoadedOnce
       : true;
   const hasRewards = rewardsEarnedUsd.gt(0);
   return {
