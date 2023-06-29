@@ -1,5 +1,35 @@
 [
   {
+    "id": "velodrome-v2-usdt-lusd",
+    "name": "LUSD-USDT V2 sLP",
+    "token": "LUSD-USDT V2 sLP",
+    "tokenAddress": "0xe8B8bfF1E415258eb3d5FA8DeeE9C38406e609cd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "tokenAmmId": "optimism-velodrome",
+    "earnedToken": "mooVeloV2LUSD-USDT",
+    "earnedTokenAddress": "0x6Fb45a8183660F30EA1c6cDFDDBFdC7ef7925801",
+    "earnContractAddress": "0x6Fb45a8183660F30EA1c6cDFDDBFdC7ef7925801",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-usdt-lusd",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["LUSD", "USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://app.velodrome.finance/swap?from=0x94b008aa00579c1307b0ef2c499ad98a8ce58e58&to=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819",
+    "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x94b008aa00579c1307b0ef2c499ad98a8ce58e58&token1=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&stable=true",
+    "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xe8B8bfF1E415258eb3d5FA8DeeE9C38406e609cd",
+    "network": "optimism",
+    "createdAt": 1688011336
+  },
+  {
     "id": "velodrome-v2-usdc-mai",
     "name": "MAI-USDC sLP V2",
     "token": "MAI-USDC sLP V2",
