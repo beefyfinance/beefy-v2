@@ -307,7 +307,8 @@
     "earnContractAddress": "0x70491A6A6eaF93B4f254d7299E167A8dA462096D",
     "oracle": "lps",
     "oracleId": "beets-ankr-fantom-liquid-ocean",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beethovenx",
     "assets": ["ankrFTM", "FTM"],
     "risks": [
