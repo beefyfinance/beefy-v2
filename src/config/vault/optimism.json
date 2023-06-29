@@ -1,5 +1,33 @@
 [
   {
+    "id": "beefy-bevelo-v2-earnings",
+    "name": "beVELO Earnings Pool",
+    "token": "beVELO",
+    "tokenAddress": "0xfDeFFc7Ad816BF7867C642dF7eBC2CC5554ec265",
+    "tokenDecimals": 18,
+    "earnedToken": "VELOV2",
+    "earnedTokenAddress": "0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
+    "earnedTokenDecimals": 18,
+    "earnContractAddress": "0x2489F2f7f972cA7eE6436666A3Ab0AAFB5A06c7b",
+    "oracle": "tokens",
+    "oracleId": "BeVELO",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["beVELO"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "isGovVault": true,
+    "network": "optimism",
+    "createdAt": 1687996562
+  },
+  {
     "id": "exactly-supply-wsteth",
     "name": "wstETH",
     "token": "wstETH",
