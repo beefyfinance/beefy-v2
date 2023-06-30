@@ -48,6 +48,33 @@ const URLS: ChainProviderUrls = {
       },
     ],
   },
+  optimism: {
+    velodrome: [
+      {
+        condition: (vault: VaultConfig) =>
+          vault.id.startsWith('velodrome-') && !vault.id.startsWith('velodrome-v2-'),
+        buyTokenUrl: 'https://app.velodrome.finance/swap?from={token0}&to={token1}',
+        addLiquidityUrl: 'https://v1.velodrome.finance/liquidity/manage?address={lp}',
+        removeLiquidityUrl: 'https://v1.velodrome.finance/liquidity/manage?address={lp}',
+      },
+      {
+        condition: (vault: VaultConfig) =>
+          vault.id.startsWith('velodrome-v2-') && vault.token.includes(' sLP'),
+        buyTokenUrl: 'https://app.velodrome.finance/swap?from={token0:lower}&to={token1:lower}',
+        addLiquidityUrl:
+          'https://app.velodrome.finance/deposit?token0={token0:lower}&token1={token1:lower}&stable=true',
+        removeLiquidityUrl: 'https://app.velodrome.finance/withdraw?pair={lp:lower}',
+      },
+      {
+        condition: (vault: VaultConfig) =>
+          vault.id.startsWith('velodrome-v2-') && vault.token.includes(' vLP'),
+        buyTokenUrl: 'https://app.velodrome.finance/swap?from={token0:lower}&to={token1:lower}',
+        addLiquidityUrl:
+          'https://app.velodrome.finance/deposit?token0={token0:lower}&token1={token1:lower}&stable=false',
+        removeLiquidityUrl: 'https://app.velodrome.finance/withdraw?pair={lp:lower}',
+      },
+    ],
+  },
 };
 
 function replaceUrlsForVault(
@@ -90,6 +117,7 @@ async function getUrlsForVault(vault: VaultConfig): Promise<ProviderUrls | undef
   if (vault.tokenAddress && vault.tokenProviderId) {
     const replacements = {
       lp: vault.tokenAddress,
+      'lp:lower': vault.tokenAddress.toLowerCase(),
     };
 
     for (const i in vault.assets) {
@@ -106,6 +134,7 @@ async function getUrlsForVault(vault: VaultConfig): Promise<ProviderUrls | undef
       }
 
       replacements[`token${i}`] = token.address === 'native' ? token.symbol : token.address;
+      replacements[`token${i}:lower`] = replacements[`token${i}`].toLowerCase();
     }
 
     return replaceUrlsForVault(vault, replacements);
