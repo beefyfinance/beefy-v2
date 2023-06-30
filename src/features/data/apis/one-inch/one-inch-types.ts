@@ -1,5 +1,7 @@
 import type BigNumber from 'bignumber.js';
 
+export type WithCacheBuster<T> = T & { cacheBuster: string };
+
 export type QuoteRequest = {
   fromTokenAddress: string;
   toTokenAddress: string;
