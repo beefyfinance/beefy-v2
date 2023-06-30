@@ -265,6 +265,11 @@
     "zapAddress": "0x9b50B06B81f033ca86D70F0a44F30BD7E0155737"
   },
   {
+    "chainId": "optimism",
+    "ammId": "optimism-velodrome-v2",
+    "zapAddress": "0x25e66f746254cd7582E65EF7dE1F10d8883F4640"
+  },
+  {
     "chainId": "polygon",
     "ammId": "polygon-quickswap",
     "zapAddress": "0x540A9f99bB730631BF243a34B19fd00BA8CF315C"
