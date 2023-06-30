@@ -6,7 +6,6 @@ import type {
   QuoteResponse,
   SwapRequest,
   SwapResponse,
-  WithCacheBuster,
 } from './one-inch-types';
 import type { ChainEntity } from '../../entities/chain';
 import type { AxiosInstance } from 'axios';
@@ -54,19 +53,12 @@ export class OneInchApi implements IOneInchApi {
     }
   }
 
-  addCacheBuster<T extends Record<string, unknown>>(params: T): WithCacheBuster<T> {
-    return {
-      ...params,
-      cacheBuster: Date.now().toString(),
-    };
-  }
-
   async getQuote(request: QuoteRequest): Promise<QuoteResponse> {
-    return await this.get<QuoteResponse, QuoteRequest>('/quote', this.addCacheBuster(request));
+    return await this.get<QuoteResponse, QuoteRequest>('/quote', request);
   }
 
   async getSwap(request: SwapRequest): Promise<SwapResponse> {
-    return await this.get<SwapResponse, SwapRequest>('/swap', this.addCacheBuster(request));
+    return await this.get<SwapResponse, SwapRequest>('/swap', request);
   }
 
   async getWeb3(): Promise<Web3> {
