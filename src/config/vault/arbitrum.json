@@ -1720,7 +1720,8 @@
     "earnContractAddress": "0x6489b78bC1B33A0cC0f6411AcD3C98175a3A41d3",
     "oracle": "lps",
     "oracleId": "kyber-arbitrum-usdc-mai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "kyber",
     "assets": ["MAI", "USDCe"],
     "risks": [
