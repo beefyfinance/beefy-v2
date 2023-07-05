@@ -114,6 +114,34 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
   });
 };
 
+const migrateUnstake = (unstakeCall, vault: VaultEntity, amount: BigNumber) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const chain = selectChainById(state, vault.chainId);
+    const gasPrices = await getGasPriceOptions(chain);
+    const transaction = unstakeCall.send({ from: address, ...gasPrices });
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      { spender: vault.earnContractAddress, amount, token: depositToken },
+      {
+        walletAddress: address,
+        chainId: vault.chainId,
+        spenderAddress: vault.earnContractAddress,
+        tokens: getVaultTokensToRefresh(state, vault),
+      }
+    );
+  });
+};
+
 const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
@@ -1460,6 +1488,7 @@ export const walletActions = {
   burnWithdraw,
   bridge,
   resetWallet,
+  migrateUnstake,
   oneInchBeefInSingle,
   oneInchBeefInLP,
   oneInchBeefOutSingle,

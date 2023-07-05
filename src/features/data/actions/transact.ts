@@ -25,6 +25,8 @@ import {
 import type {
   InputTokenAmount,
   ITransactApi,
+  MigrateOption,
+  MigrateQuote,
   QuoteOutputTokenAmountChange,
   QuoteTokenAmount,
   TransactOption,
@@ -129,6 +131,13 @@ export const transactFetchOptions = createAsyncThunk<
 
     if (!options || options.length === 0) {
       throw new Error(`No transact options available.`);
+    }
+
+    if (mode === TransactMode.Deposit) {
+      const migrateOption = options.find(o => o.type === 'migrate');
+      if (migrateOption?.type === 'migrate') {
+        dispatch(transactFetchMigrateAllQuotes(migrateOption));
+      }
     }
 
     // update balances
@@ -303,6 +312,79 @@ export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state:
   }
 );
 
+export const transactFetchMigrateAllQuotes = createAsyncThunk<
+  TransactFetchDepositQuotesPayload,
+  MigrateOption,
+  { state: BeefyState }
+>('transact/fetchMigrateQuotes', async (option, { getState, dispatch }) => {
+  const api = await getTransactApi();
+  const state = getState();
+  const mode = TransactMode.Deposit;
+  const walletAddress = selectWalletAddress(state);
+
+  const tokensId = option.tokensId;
+  if (!tokensId) {
+    throw new Error(`No tokensId selected`);
+  }
+
+  const chainId = option.chainId;
+  if (!chainId) {
+    throw new Error(`No chainId selected`);
+  }
+
+  const options = [option];
+  const vaultId = selectTransactVaultId(state);
+  const vault = selectVaultById(state, vaultId);
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+
+  const inputAmounts: InputTokenAmount[] = [
+    {
+      amount: BIG_ZERO,
+      token: depositToken,
+      max: false,
+    },
+  ];
+
+  const method = quotesForByMode[mode];
+  const quotes = await api[method](options, inputAmounts, state);
+
+  quotes.sort((a, b) => {
+    const valueA = selectTokenAmountsTotalValue(state, a.outputs);
+    const valueB = selectTokenAmountsTotalValue(state, b.outputs);
+    return valueB.comparedTo(valueA);
+  });
+
+  // update allowances
+  const uniqueAllowances = uniqBy(
+    quotes.map(quote => quote.allowances).flat(),
+    allowance => `${allowance.token.chainId}-${allowance.spenderAddress}-${allowance.token.address}`
+  );
+  const allowancesPerChainSpender = groupBy(
+    uniqueAllowances,
+    allowance => `${allowance.token.chainId}-${allowance.spenderAddress}`
+  );
+
+  await Promise.all(
+    Object.values(allowancesPerChainSpender).map(allowances =>
+      dispatch(
+        fetchAllowanceAction({
+          chainId: allowances[0].token.chainId,
+          spenderAddress: allowances[0].spenderAddress,
+          tokens: allowances.map(allowance => allowance.token),
+          walletAddress,
+        })
+      )
+    )
+  );
+
+  return {
+    tokensId,
+    chainId,
+    inputAmounts,
+    quotes,
+  };
+});
+
 const actionForByMode: Record<
   TransactMode,
   KeysOfType<ITransactApi, ITransactApi['getDepositStep']>
@@ -353,6 +435,50 @@ export function transactSteps(
     const method = actionForByMode[option.mode];
     const originalStep = await api[method](quote, option, state, t);
     steps.push(wrapStepConfirmQuote(originalStep, quote));
+
+    dispatch(startStepperWithSteps(steps, quote.inputs[0].token.chainId));
+  };
+}
+
+export function transactMigrateSteps(
+  quote: MigrateQuote,
+  t: TFunction<Namespace>
+): ThunkAction<void, BeefyState, void, Action> {
+  return async function (dispatch, getState) {
+    const steps: Step[] = [];
+    const state = getState();
+    const option = selectTransactOptionById(state, quote.optionId);
+    const api = await getTransactApi();
+
+    const method = actionForByMode[option.mode];
+    const migrateStep = await api[method](quote, option, state, t);
+    steps.push(migrateStep);
+
+    for (const allowanceTokenAmount of quote.allowances) {
+      if (isTokenErc20(allowanceTokenAmount.token)) {
+        const allowance = selectAllowanceByTokenAddress(
+          state,
+          allowanceTokenAmount.token.chainId,
+          allowanceTokenAmount.token.address,
+          allowanceTokenAmount.spenderAddress
+        );
+
+        if (allowance.lt(allowanceTokenAmount.amount)) {
+          steps.push({
+            step: 'approve',
+            message: t('Vault-ApproveMsg'),
+            action: walletActions.approval(
+              allowanceTokenAmount.token,
+              allowanceTokenAmount.spenderAddress
+            ),
+            pending: false,
+          });
+        }
+      }
+    }
+
+    const depositStep = await api[method](quote.depositQuote, quote.depositOption, state, t);
+    steps.push(wrapStepConfirmQuote(depositStep, quote.depositQuote));
 
     dispatch(startStepperWithSteps(steps, quote.inputs[0].token.chainId));
   };

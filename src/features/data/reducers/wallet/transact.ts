@@ -2,7 +2,12 @@ import type { BigNumber } from 'bignumber.js';
 import { first } from 'lodash-es';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction, SerializedError } from '@reduxjs/toolkit';
-import { transactFetchOptions, transactFetchQuotes, transactInit } from '../../actions/transact';
+import {
+  transactFetchMigrateAllQuotes,
+  transactFetchOptions,
+  transactFetchQuotes,
+  transactInit,
+} from '../../actions/transact';
 import type {
   QuoteOutputTokenAmountChange,
   TransactOption,
@@ -64,6 +69,7 @@ const initialTransactState: TransactState = {
   tokens: initialTransactTokens,
   options: initialTransactOptions,
   quotes: initialTransactQuotes,
+  migrateQuotes: initialTransactQuotes,
   confirm: initialTransactConfirm,
 };
 
@@ -211,6 +217,28 @@ const transactSlice = createSlice({
             }
           }
         }
+      })
+      .addCase(transactFetchMigrateAllQuotes.pending, (sliceState, action) => {
+        sliceState.migrateQuotes = initialTransactQuotes;
+        sliceState.migrateQuotes.status = TransactStatus.Pending;
+        sliceState.migrateQuotes.requestId = action.meta.requestId;
+      })
+      .addCase(transactFetchMigrateAllQuotes.rejected, (sliceState, action) => {
+        if (sliceState.migrateQuotes.requestId === action.meta.requestId) {
+          sliceState.migrateQuotes.status = TransactStatus.Rejected;
+          sliceState.migrateQuotes.error = action.error;
+        }
+      })
+      .addCase(transactFetchMigrateAllQuotes.fulfilled, (sliceState, action) => {
+        if (sliceState.migrateQuotes.requestId === action.meta.requestId) {
+          if (action.payload.quotes.length === 0) {
+            sliceState.migrateQuotes.status = TransactStatus.Rejected;
+            sliceState.migrateQuotes.error = { name: 'No quotes returned.' };
+          } else {
+            sliceState.migrateQuotes.status = TransactStatus.Fulfilled;
+            addMigrateQuotesToState(sliceState, action.payload.quotes);
+          }
+        }
       });
   },
 });
@@ -233,6 +261,7 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.tokens.byChainId = {};
 
   resetQuotes(sliceState);
+  sliceState.migrateQuotes = initialTransactQuotes;
 }
 
 function resetQuotes(sliceState: Draft<TransactState>) {
@@ -262,6 +291,18 @@ function addQuotesToState(sliceState: Draft<TransactState>, quotes: TransactQuot
 
     sliceState.quotes.byQuoteId[quote.id] = quote;
     sliceState.quotes.allQuoteIds.push(quote.id);
+  }
+}
+
+function addMigrateQuotesToState(sliceState: Draft<TransactState>, quotes: TransactQuote[]) {
+  for (const quote of quotes) {
+    if (quote.id in sliceState.quotes.byQuoteId) {
+      console.warn(`Attempting to add duplicate quote id ${quote.id} to state`);
+      continue;
+    }
+
+    sliceState.migrateQuotes.byQuoteId[quote.id] = quote;
+    sliceState.migrateQuotes.allQuoteIds.push(quote.id);
   }
 }
 
