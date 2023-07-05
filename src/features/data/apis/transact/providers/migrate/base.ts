@@ -35,7 +35,7 @@ export abstract class BaseMigrateProvider implements ITransactProvider {
     vault: VaultEntity,
     userAddress: string,
     state: BeefyState
-  ): Promise<BigNumber>;
+  ): BigNumber;
 
   abstract getUnstakeMethodFor(
     vault: VaultEntity,
@@ -138,8 +138,8 @@ export abstract class BaseMigrateProvider implements ITransactProvider {
     const unstakeCall = await this.getUnstakeMethodFor(vault, amount, state);
 
     return {
-      step: 'unstake',
-      message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+      step: 'migration',
+      message: t('Vault-MigrationStart'),
       action: walletActions.migrateUnstake(unstakeCall, vault, amount),
       pending: false,
       extraInfo: { vaultId: vault.id },

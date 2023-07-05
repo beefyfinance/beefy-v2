@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
 import { getSingleAssetSrc } from '../../../../helpers/singleAssetSrc';
@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectPlatformById } from '../../../data/selectors/platforms';
 import { formatBigDecimals } from '../../../../helpers/format';
-import { selectWalletAddressIfKnown } from '../../../data/selectors/wallet';
+import { selectCurrentChainId, selectWalletAddressIfKnown } from '../../../data/selectors/wallet';
 import { fetchAllMigrators, fetchConicStakedBalance } from '../../../data/actions/migrator';
 import {
   selectHasMigrationByVaultId,
@@ -17,6 +17,10 @@ import {
   selectUserBalanceToMigrateByVaultId,
 } from '../../../data/selectors/migration';
 import { BIG_ZERO } from '../../../../helpers/big-number';
+import { selectTransactMigrateAllQuote } from '../../../data/selectors/transact';
+import { transactMigrateSteps } from '../../../data/actions/transact';
+import { selectChainById } from '../../../data/selectors/chains';
+import { askForNetworkChange } from '../../../data/actions/wallet';
 
 const useStyles = makeStyles(styles);
 
@@ -47,17 +51,31 @@ const ConicMigrationContent = memo<ConicMigrationProps>(function ConicMigrationC
   const classes = useStyles();
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const dispatch = useAppDispatch();
   const userBalanceToMigrate = useAppSelector(state =>
     selectUserBalanceToMigrateByVaultId(state, vaultId)
   );
   const platform = useAppSelector(state => selectPlatformById(state, vault.platformId));
+  const migrateAllQuote = useAppSelector(selectTransactMigrateAllQuote);
+
+  const isWalletOnVaultChain = useAppSelector(
+    state => selectCurrentChainId(state) === vault.chainId
+  );
 
   useEffect(() => {
     if (userBalanceToMigrate.eq(BIG_ZERO)) {
       dispatch(fetchConicStakedBalance({ vaultId }));
     }
   }, [dispatch, userBalanceToMigrate, vaultId]);
+
+  const handleMigrateAll = useCallback(() => {
+    dispatch(transactMigrateSteps(migrateAllQuote, t));
+  }, [dispatch, migrateAllQuote, t]);
+
+  const handleConnectedChain = useCallback(() => {
+    dispatch(askForNetworkChange({ chainId: vault.chainId }));
+  }, [dispatch, vault.chainId]);
 
   if (userBalanceToMigrate.gt(0)) {
     return (
@@ -76,9 +94,26 @@ const ConicMigrationContent = memo<ConicMigrationProps>(function ConicMigrationC
               platform: platform.name,
             })}
           </div>
-          <Button variant="success" fullWidth={true} borderless={true}>
-            {t('Migration-Action')}
-          </Button>
+          {isWalletOnVaultChain ? (
+            <Button
+              disabled={!migrateAllQuote}
+              onClick={handleMigrateAll}
+              variant="success"
+              fullWidth={true}
+              borderless={true}
+            >
+              {t('Migration-Action')}
+            </Button>
+          ) : (
+            <Button
+              onClick={handleConnectedChain}
+              variant="success"
+              fullWidth={true}
+              borderless={true}
+            >
+              {t('Network-Change', { network: chain.name })}
+            </Button>
+          )}
         </div>
       </div>
     );

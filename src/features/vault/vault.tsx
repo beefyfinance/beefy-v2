@@ -1,6 +1,6 @@
 import { Container, Hidden, makeStyles } from '@material-ui/core';
 import type { PropsWithChildren } from 'react';
-import React, { lazy, memo, useCallback } from 'react';
+import React, { lazy, memo } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { styles } from './styles';
 import { StrategyCard } from './components/StrategyCard';
@@ -19,7 +19,7 @@ import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { TechLoader } from '../../components/TechLoader';
 import { InfoCards } from './components/InfoCards/InfoCards';
 import { VaultMeta } from './components/VaultMeta';
-import { useAppDispatch, useAppSelector } from '../../store';
+import { useAppSelector } from '../../store';
 import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdown';
 import { AssetsCard } from './components/AssetsCard';
 import { InsuranceCards } from './components/InsuranceCards';
@@ -31,10 +31,6 @@ import { PnLGraphLoader } from './components/PnLGraph';
 import { VaultsStats } from './components/VaultsStats';
 import { HistoricGraphsLoader } from './components/HistoricGraph';
 import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
-import { Button } from '../../components/Button';
-import { selectTransactMigrateAllQuote } from '../data/selectors/transact';
-import { transactMigrateSteps } from '../data/actions/transact';
-import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -73,20 +69,12 @@ type VaultContentProps = PropsWithChildren<{
   vaultId: VaultEntity['id'];
 }>;
 const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) {
-  const { t } = useTranslation();
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
   const isBoostedOrPreStake = useAppSelector(state =>
     selectIsVaultPreStakedOrBoosted(state, vaultId)
   );
-  const dispatch = useAppDispatch();
-  const migrateAllQuote = useAppSelector(selectTransactMigrateAllQuote);
-  console.log('migrateAllQuote', migrateAllQuote);
-
-  const handleMigrateAll = useCallback(() => {
-    dispatch(transactMigrateSteps(migrateAllQuote, t));
-  }, [dispatch, migrateAllQuote, t]);
 
   return (
     <Container maxWidth="lg" className={classes.page}>
@@ -97,11 +85,6 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
       <div className={classes.contentContainer}>
         <div className={classes.contentColumns}>
           <div className={classes.columnActions}>
-            {migrateAllQuote != undefined ? (
-              <Button fullWidth={true} onClick={handleMigrateAll}>
-                Migrate {migrateAllQuote.availableBalance.toString(10)} LP
-              </Button>
-            ) : null}
             <Actions vaultId={vaultId} />
             <Hidden smDown>
               <InsuranceCards vaultId={vaultId} />

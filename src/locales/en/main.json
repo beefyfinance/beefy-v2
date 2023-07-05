@@ -149,6 +149,7 @@
   "Vault-Breakdown-BoostDaily": "Boost Daily",
   "Vault-ApproveMsg": "Approval transaction happens once per vault",
   "Vault-TxnConfirm": "Confirm wallet transaction to complete {{type}}",
+  "Vault-MigrationStart": "Confirm wallet transaction to begin migration ",
   "Vault-Wallet": "Wallet:",
   "Vault-Deposited": "Deposited:",
   "Vault-Strategy": "Strategy",

@@ -30,7 +30,8 @@ export type Step = {
     | 'burn'
     | 'bridge'
     | 'zap-in'
-    | 'zap-out';
+    | 'zap-out'
+    | 'migration';
   message: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   action: ThunkAction<any, any, any, any>;
