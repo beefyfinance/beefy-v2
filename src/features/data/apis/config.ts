@@ -9,6 +9,7 @@ import type {
   ChainConfig,
   FeaturedVaultConfig,
   InfoCardsConfig,
+  MigratorConfig,
   MinterConfig,
   OneInchZapConfig,
   PartnersConfig,
@@ -90,6 +91,17 @@ export class ConfigAPI {
         Object.keys(chainConfigs).map(async chainId => [
           chainId,
           (await import(`../../../config/minters/${chainId}.tsx`)).minters,
+        ])
+      )
+    );
+  }
+
+  public async fetchAllMigrators(): Promise<{ [chainId: ChainEntity['id']]: MigratorConfig[] }> {
+    return Object.fromEntries(
+      await Promise.all(
+        Object.keys(chainConfigs).map(async chainId => [
+          chainId,
+          (await import(`../../../config/migrators/${chainId}.tsx`)).migrators,
         ])
       )
     );

@@ -38,6 +38,7 @@ import { fetchTreasury } from '../actions/treasury';
 import type { fetchWalletTimelineFullfilled } from '../actions/analytics';
 import { fetchWalletTimeline } from '../actions/analytics';
 import { fetchActiveProposals } from '../actions/proposal';
+import { fetchAllMigrators } from '../actions/migrator';
 
 const dataLoaderStateInit: LoaderState = {
   alreadyLoadedOnce: false,
@@ -98,6 +99,7 @@ export const initialDataLoaderState: DataLoaderState = {
     treasury: dataLoaderStateInit,
     analytics: dataLoaderStateInit,
     proposals: dataLoaderStateInit,
+    migrators: dataLoaderStateInit,
   },
   byChainId: {},
   byAddress: {},
@@ -310,6 +312,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts', true);
     addGlobalAsyncThunkActions(builder, fetchFees, 'fees', true);
     addGlobalAsyncThunkActions(builder, fetchAllMinters, 'minters', false);
+    addGlobalAsyncThunkActions(builder, fetchAllMigrators, 'migrators', false);
     addGlobalAsyncThunkActions(builder, fetchAllInfoCards, 'infoCards', false);
     addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm', true);
     addGlobalAsyncThunkActions(builder, initiateMinterForm, 'minterForm', true);

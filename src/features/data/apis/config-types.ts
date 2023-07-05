@@ -40,6 +40,7 @@ export interface VaultConfig {
   refundContractAddress?: string | null;
   showWarning?: boolean | null;
   warning?: string | null;
+  migrationId?: string;
 }
 
 export interface FeaturedVaultConfig {
@@ -316,3 +317,10 @@ export type TreasuryConfig = {
     };
   };
 };
+
+export interface MigratorConfig {
+  migrationId: string;
+  vaultIds: {
+    [vaultId: VaultConfig['id']]: string;
+  };
+}

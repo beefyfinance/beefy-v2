@@ -70,6 +70,7 @@ export interface VaultStandard {
 
   retireReason?: string;
   pauseReason?: string;
+  migrationId?: string;
 }
 
 export interface VaultGov {
@@ -127,6 +128,7 @@ export interface VaultGov {
 
   retireReason?: string;
   pauseReason?: string;
+  migrationId?: string;
 }
 
 export function isGovVault(vault: VaultEntity): vault is VaultGov {

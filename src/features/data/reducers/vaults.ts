@@ -251,6 +251,7 @@ function addVaultToState(
       createdAt: apiVault.createdAt ?? 0,
       retireReason: apiVault.retireReason,
       pauseReason: apiVault.pauseReason,
+      migrationId: apiVault.migrationId,
     };
     // redux toolkit uses immer by default so we can
     // directly modify the state as usual
