@@ -1,5 +1,27 @@
 [
   {
+    "id": "quick-gamma-usdc-mimatic-stable",
+    "name": "MAI-USDC Stable LP",
+    "token": "aMAI-USDC",
+    "tokenAddress": "0x25B186eEd64ca5FDD1bc33fc4CFfd6d34069BAec",
+    "tokenDecimals": 18,
+    "tokenProviderId": "quickswap",
+    "earnedToken": "mooQuickMAI-USDC_Stable",
+    "earnedTokenAddress": "0x8E2E71C236A0cEB822eE916C9E2701D1D2F80893",
+    "earnContractAddress": "0x8E2E71C236A0cEB822eE916C9E2701D1D2F80893",
+    "oracle": "lps",
+    "oracleId": "quick-gamma-usdc-mimatic-stable",
+    "status": "active",
+    "platformId": "gamma",
+    "assets": ["MAI", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
+    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
+    "network": "polygon",
+    "createdAt": 1688597681
+  },
+  {
     "id": "quick-gamma-wbtc-usdc-narrow",
     "name": "WBTC-USDC Narrow LP",
     "token": "aWBTC-USDC",
@@ -697,7 +719,8 @@
     "earnContractAddress": "0x009E0aBc8CeCBc576DFE2b8e372338b8e597DbC9",
     "oracle": "tokens",
     "oracleId": "stMATIC",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "aave",
     "assets": ["stMATIC"],
     "risks": [
@@ -3083,7 +3106,8 @@
     "earnContractAddress": "0xebe0c8d842AA5A57D7BEf8e524dEabA676F91cD1",
     "oracle": "lps",
     "oracleId": "mai-usdc-mimatic",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "mai",
     "assets": ["MAI", "USDC"],
     "risks": [

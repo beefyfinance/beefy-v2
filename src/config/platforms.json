@@ -1048,5 +1048,10 @@
     "id": "gamma",
     "name": "Gamma",
     "filter": true
+  },
+  {
+    "id": "vesync",
+    "name": "veSync",
+    "filter": true
   }
 ]

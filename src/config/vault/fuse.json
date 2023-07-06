@@ -725,7 +725,8 @@
     "earnContractAddress": "0x49E9d6f4BbD8c51d92f163837fffdb611d705392",
     "oracle": "tokens",
     "oracleId": "xVOLT",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "voltage",
     "assets": ["xVOLT"],
     "risks": [
