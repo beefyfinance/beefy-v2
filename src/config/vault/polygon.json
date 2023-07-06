@@ -18,7 +18,7 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?currency0=ETH&currency1=0x9246a5F10A79a5a939b0C2a75A3AD196aAfDB43b",
     "network": "polygon",
-    "createdAt": 1688617888
+    "createdAt": 1688618418
   },
   {
     "id": "quick-gamma-usdc-mimatic-stable",
@@ -37,8 +37,8 @@
     "assets": ["MAI", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
+    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "network": "polygon",
     "createdAt": 1688597681
   },
