@@ -2188,7 +2188,8 @@
     "earnContractAddress": "0x8f6ea594bAADA4cA19CB055eEE8996e3bb260B55",
     "oracle": "lps",
     "oracleId": "swapfish-mim-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "swapfish",
     "assets": ["MIM", "USDCe"],
     "risks": [
