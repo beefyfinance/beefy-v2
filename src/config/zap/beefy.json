@@ -318,5 +318,10 @@
     "chainId": "zksync",
     "ammId": "zksync-velocore",
     "zapAddress": "0x3f02b129138377722FfE9d374B3F65fc7599475e"
+  },
+  {
+    "chainId": "zksync",
+    "ammId": "zksync-vesync",
+    "zapAddress": "0x910c12048FdbAD20E9e323f72Bd85964c9E5AE8d"
   }
 ]
