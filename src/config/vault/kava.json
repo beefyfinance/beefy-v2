@@ -436,7 +436,8 @@
     "earnContractAddress": "0xf22f879caD502D40872519133029b43468fC915f",
     "oracle": "lps",
     "oracleId": "equilibre-dai-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "equilibre",
     "assets": ["DAI", "USDC"],
     "risks": [

@@ -2431,7 +2431,8 @@
     "earnContractAddress": "0x15DD4398721733D8273FD4Ed9ac5eadC6c018866",
     "oracle": "tokens",
     "oracleId": "BOO",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "spookyswap",
     "assets": ["BOO"],
     "risks": [
