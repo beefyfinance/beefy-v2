@@ -4,7 +4,8 @@
     "plugin:react/recommended",
     "plugin:import/recommended",
     "plugin:@typescript-eslint/recommended",
-    "eslint-config-prettier"
+    "eslint-config-prettier",
+    "plugin:react-hooks/recommended"
   ],
   "settings": {
     "paths": ["src"],
@@ -47,6 +48,7 @@
     "react/display-name": "warn",
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
-    "react/no-children-prop": "off"
+    "react/no-children-prop": "off",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }

@@ -47,7 +47,7 @@ export const AddTokenToWallet = memo<AddTokenToWalletProps>(function AddTokenToW
     } catch (error) {
       // ignore
     }
-  }, [token.address, token.decimals, token.symbol]);
+  }, [chainId, token.address, token.decimals, token.id, token.symbol]);
 
   const explorerUrl = chain.explorerUrl + '/address/' + token.address;
 

@@ -1,6 +1,6 @@
 import type { Action } from 'redux';
 import type { ChainEntity } from '../entities/chain';
-import { selectIsWalletKnown } from '../selectors/wallet';
+import { selectIsWalletKnown, selectWalletAddress } from '../selectors/wallet';
 import type { PollStop } from '../utils/async-utils';
 import { createFulfilledActionCapturer, poll } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
@@ -203,8 +203,9 @@ export function manualPoll(): BeefyThunk {
     }
 
     if (selectIsWalletKnown(state)) {
+      const walletAddress = selectWalletAddress(state);
       for (const chainId of chains) {
-        dispatch(fetchAllBalanceAction({ chainId }));
+        dispatch(fetchAllBalanceAction({ chainId, walletAddress }));
       }
     }
   };
@@ -215,8 +216,10 @@ export function fetchCaptureUserData(
   chainId: ChainEntity['id']
 ): CapturedFulfilledActions['user'] {
   const captureFulfill = createFulfilledActionCapturer(store);
+
+  const walletAddress = selectWalletAddress(store.getState());
   return {
-    balance: captureFulfill(fetchAllBalanceAction({ chainId })),
+    balance: captureFulfill(fetchAllBalanceAction({ chainId, walletAddress })),
     // TODO: do we really need to fetch allowances right now?
     //allowance: captureFulfill(fetchAllAllowanceAction({ chainId })),
   };

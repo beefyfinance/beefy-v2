@@ -13,13 +13,13 @@ export type SortedOptions = {
   sortDirection: 'asc' | 'desc' | 'none';
 };
 
-export function useSortedTimeline(vaultId: VaultEntity['id']) {
+export function useSortedTimeline(vaultId: VaultEntity['id'], address: string) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const currentOraclePrice = useAppSelector(state =>
     selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const vaultTimeline = useAppSelector(state =>
-    selectUserDepositedTimelineByVaultId(state, vaultId)
+    selectUserDepositedTimelineByVaultId(state, vaultId, address)
   );
 
   // Replace nulls with current price or 0
@@ -49,29 +49,29 @@ export function useSortedTimeline(vaultId: VaultEntity['id']) {
 
   const sortedTimeline = useMemo(() => {
     const sortDirMul = sortedOptions.sortDirection === 'desc' ? -1 : 1;
-    let sortedResult = vaultTimeline;
+    let sortedResult = vaultTimelineFixed;
     if (sortedOptions.sort === 'datetime') {
-      sortedResult = sortBy(vaultTimeline, tx => {
+      sortedResult = sortBy(vaultTimelineFixed, tx => {
         return tx.datetime.getTime() * sortDirMul;
       });
     }
     if (sortedOptions.sort === 'amount') {
-      sortedResult = sortBy(vaultTimeline, tx => {
+      sortedResult = sortBy(vaultTimelineFixed, tx => {
         return tx.shareDiff.toNumber() * sortDirMul;
       });
     }
     if (sortedOptions.sort === 'balance') {
-      sortedResult = sortBy(vaultTimeline, tx => {
+      sortedResult = sortBy(vaultTimelineFixed, tx => {
         return tx.shareBalance.times(tx.shareToUnderlyingPrice).toNumber() * sortDirMul;
       });
     }
     if (sortedOptions.sort === 'mooTokenBal') {
-      sortedResult = sortBy(vaultTimeline, tx => {
+      sortedResult = sortBy(vaultTimelineFixed, tx => {
         return tx.shareBalance.toNumber() * sortDirMul;
       });
     }
     if (sortedOptions.sort === 'usdBalance') {
-      sortedResult = sortBy(vaultTimeline, tx => {
+      sortedResult = sortBy(vaultTimelineFixed, tx => {
         return tx.usdBalance?.toNumber() * sortDirMul;
       });
     }

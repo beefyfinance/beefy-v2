@@ -11,6 +11,7 @@ import { useSortedTimeline } from './hook';
 
 interface VaultTransactionsProps {
   vaultId: VaultEntity['id'];
+  address: string;
 }
 
 const useStyles = makeStyles(() => ({
@@ -23,6 +24,7 @@ const useStyles = makeStyles(() => ({
 
 export const VaultTransactions = memo<VaultTransactionsProps>(function VaultTransactions({
   vaultId,
+  address,
 }) {
   const classes = useStyles();
 
@@ -32,7 +34,7 @@ export const VaultTransactions = memo<VaultTransactionsProps>(function VaultTran
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
 
-  const { sortedTimeline, sortedOptions, handleSort } = useSortedTimeline(vaultId);
+  const { sortedTimeline, sortedOptions, handleSort } = useSortedTimeline(vaultId, address);
 
   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
 

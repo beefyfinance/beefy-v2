@@ -24,7 +24,13 @@ import { XAxisTick } from '../../../../../../components/XAxisTick';
 
 const useStyles = makeStyles(styles);
 
-export const Graph = memo(function Graph({ vaultId, period }: { vaultId: string; period: number }) {
+interface GraphProps {
+  vaultId: string;
+  period: number;
+  address: string;
+}
+
+export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   const classes = useStyles();
@@ -33,7 +39,12 @@ export const Graph = memo(function Graph({ vaultId, period }: { vaultId: string;
     return `beefy:vault:${vault.chainId}:${vault.earnContractAddress.toLowerCase()}`;
   }, [vault.chainId, vault.earnContractAddress]);
 
-  const { chartData, isLoading } = usePnLChartData(TIME_BUCKET[period], productKey, vaultId);
+  const { chartData, isLoading } = usePnLChartData(
+    TIME_BUCKET[period],
+    productKey,
+    vaultId,
+    address
+  );
 
   const { data, minUnderlying, maxUnderlying, minUsd, maxUsd } = chartData;
 

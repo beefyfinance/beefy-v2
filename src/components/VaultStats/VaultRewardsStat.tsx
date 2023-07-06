@@ -11,18 +11,20 @@ import { selectIsWalletKnown } from '../../features/data/selectors/wallet';
 
 export type VaultRewardsStatProps = {
   vaultId: VaultEntity['id'];
+  walletAddress?: string;
 };
 
 export const VaultRewardsStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId }: VaultRewardsStatProps) {
+function mapStateToProps(state: BeefyState, { vaultId, walletAddress }: VaultRewardsStatProps) {
   const label = 'VaultStat-Claimable Rewards';
 
   const vault = selectVaultById(state, vaultId);
 
   const isLoaded =
     state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
-      ? state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
+      ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
+          .alreadyLoadedOnce
       : true;
 
   if (!isLoaded) {
@@ -35,11 +37,11 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultRewardsStatProps) 
     };
   }
 
-  const { totalRewardsUsd } = selectUserRewardsByVaultId(state, vaultId);
+  const { totalRewardsUsd } = selectUserRewardsByVaultId(state, vaultId, walletAddress);
 
   return {
     label,
-    value: <RewardsTooltip size={20} vaultId={vaultId} />,
+    value: <RewardsTooltip size={20} vaultId={vaultId} walletAddress={walletAddress} />,
     subValue: formatBigUsd(totalRewardsUsd),
     blur: false,
     loading: !isLoaded,

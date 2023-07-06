@@ -9,7 +9,7 @@ export type SortedOptions = {
   sortDirection: 'asc' | 'desc' | 'none';
 };
 
-export function useSortedDashboardVaults() {
+export function useSortedDashboardVaults(address: string) {
   const [searchText, setSearchText] = useState('');
 
   const [sortedOptions, setSortedOptions] = useState<SortedOptions>({
@@ -23,11 +23,13 @@ export function useSortedDashboardVaults() {
     setSearchText('');
   }, []);
 
-  const filteredVaults = useAppSelector(state => selectUserFilteredVaults(state, searchText));
+  const filteredVaults = useAppSelector(state =>
+    selectUserFilteredVaults(state, searchText, address)
+  );
 
   const apyByVaultId = useAppSelector(state => state.biz.apy.totalApy.byVaultId);
 
-  const userVaultsPnl = useAppSelector(selectUserVaultsPnl);
+  const userVaultsPnl = useAppSelector(state => selectUserVaultsPnl(state, address));
 
   const sortedFilteredVaults = useMemo(() => {
     const sortDirMul = sortedOptions.sortDirection === 'desc' ? -1 : 1;

@@ -19,6 +19,7 @@ import appIcon from '../../../../images/bifi-logos/header-logo-notext.svg';
 import appLogo from '../../../../images/bifi-logos/header-logo.svg';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
 import type { provider } from 'web3-core';
+import { featureFlag_walletConnectChainId } from '../../utils/feature-flags';
 
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | null;
@@ -44,7 +45,11 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   private static createOnboardWalletInitializers() {
     return [
       WalletConnectionApi.createInjectedWalletsModule(),
-      createWalletConnectModule(),
+      createWalletConnectModule({
+        version: 2,
+        projectId: 'af38b343e1be64b27c3e4a272cb453b9',
+        requiredChains: [featureFlag_walletConnectChainId()],
+      }),
       createCoinbaseWalletModule(),
       WalletConnectionApi.createCDCWalletModule(),
     ];
@@ -119,7 +124,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     const onboard = Onboard({
       connect: {
         showSidebar: true,
-        disableUDResolution: true,
       },
       wallets: this.getOnboardWalletInitializers(),
       theme: {
@@ -137,6 +141,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         description:
           'Beefy is a Decentralized, Multichain Yield Optimizer that allows its users to earn compound interest on their crypto holdings. Beefy earns you the highest APYs with safety and efficiency in mind.',
         gettingStartedGuide: 'https://docs.beefy.finance/',
+        explore: 'https://beefy.com/',
       },
       chains: this.options.chains.map(chain => ({
         id: numberToHex(chain.networkChainId),
@@ -428,7 +433,27 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     // Clear last wallet
     WalletConnectionApi.setLastConnectedWallet(null);
 
+    // Clear wallet connect storage or else it will try to reconnect to same session
+    WalletConnectionApi.clearWalletConnectStorage();
+
     // Raise events
     this.options.onWalletDisconnected();
+  }
+
+  private static clearWalletConnectStorage() {
+    try {
+      const toRemove = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('wc@2:')) {
+          toRemove.push(key);
+        }
+      }
+      for (const key of toRemove) {
+        localStorage.removeItem(key);
+      }
+    } catch {
+      // ignored
+    }
   }
 }

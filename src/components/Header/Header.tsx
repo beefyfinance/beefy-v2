@@ -10,7 +10,6 @@ import {
   useMediaQuery,
 } from '@material-ui/core';
 import clsx from 'clsx';
-import { LanguageDropdown } from '../LanguageDropdown';
 import { styles } from './styles';
 import { NavItem } from './components/NavItem';
 import { ReactComponent as VaultsIcon } from '../../images/icons/navigation/vault.svg';
@@ -82,7 +81,6 @@ export const Header = memo(function Header() {
                 <NavItem title={'Header-BuyCrypto'} url="/onramp" Icon={BuyCryptoIcon} />
                 <NavItem title={'Header-BridgeBifi'} url="/bridge" Icon={BridgeIcon} />
                 <BifiPrice />
-                <LanguageDropdown />
               </Hidden>
               <ConnectionStatus />
               <Hidden lgUp>

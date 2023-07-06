@@ -16,6 +16,7 @@ import { OneInchZapProvider } from './providers/one-inch/one-inch';
 import { BeefySolidlyZapProvider } from './providers/beefy/solidly';
 import { partition } from 'lodash-es';
 import { isFulfilledResult } from '../../../../helpers/promises';
+import { ConicZapProvider } from './providers/beefy/conic';
 
 export class TransactApi implements ITransactApi {
   private providers: ITransactProvider[] = [];
@@ -27,6 +28,7 @@ export class TransactApi implements ITransactApi {
     this.providers.push(new BeefyUniswapV2ZapProvider());
     this.providers.push(new BeefySolidlyZapProvider());
     this.providers.push(new OneInchZapProvider());
+    this.providers.push(new ConicZapProvider());
 
     this.providersById = this.providers.reduce((byId, provider) => {
       byId[provider.getId()] = provider;

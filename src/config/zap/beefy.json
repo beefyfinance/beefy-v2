@@ -136,6 +136,11 @@
   },
   {
     "chainId": "ethereum",
+    "ammId": "ethereum-conic",
+    "zapAddress": "0x1F3aabF169aE52E868a6065CD1AE6B29Ae1a0368"
+  },
+  {
+    "chainId": "ethereum",
     "ammId": "ethereum-solidly",
     "zapAddress": "0x6674f3961C5908B086A5551377806f4BA8F0Ac99"
   },
@@ -258,6 +263,11 @@
     "chainId": "optimism",
     "ammId": "optimism-velodrome",
     "zapAddress": "0x9b50B06B81f033ca86D70F0a44F30BD7E0155737"
+  },
+  {
+    "chainId": "optimism",
+    "ammId": "optimism-velodrome-v2",
+    "zapAddress": "0x25e66f746254cd7582E65EF7dE1F10d8883F4640"
   },
   {
     "chainId": "polygon",

@@ -18,6 +18,7 @@ import {
 } from '../../../data/selectors/tokens';
 import { selectUserBalanceOfTokensIncludingBoosts } from '../../../data/selectors/balance';
 import { fetchShareToUnderlying, fetchUnderlyingToUsd } from '../../../data/actions/analytics';
+import { selectWalletAddress } from '../../../data/selectors/wallet';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], minUnderlying: 0, maxUnderlying: 0, minUsd: 0, maxUsd: 0 };
@@ -25,11 +26,14 @@ export const NO_CHART_DATA = { data: [], minUnderlying: 0, maxUnderlying: 0, min
 export const usePnLChartData = (
   timebucket: TimeBucketType,
   productKey: string,
-  vaultId: VaultEntity['id']
+  vaultId: VaultEntity['id'],
+  address?: string
 ) => {
   const dispatch = useAppDispatch();
+  const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
+
   const vaultTimeline = useAppSelector(state =>
-    selectUserDepositedTimelineByVaultId(state, vaultId)
+    selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress)
   );
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const depositToken = useAppSelector(state => selectDepositTokenByVaultId(state, vaultId));
@@ -44,43 +48,78 @@ export const usePnLChartData = (
       state,
       vault.id,
       vault.chainId,
-      vault.earnContractAddress
+      vault.earnContractAddress,
+      walletAddress
     )
   );
-  const vaultLastDeposit = useAppSelector(state => selectLastVaultDepositStart(state, vaultId));
+  const vaultLastDeposit = useAppSelector(state =>
+    selectLastVaultDepositStart(state, vaultId, walletAddress)
+  );
 
   const { data: sharesToUnderlying, status: sharesStatus } = useAppSelector(state =>
-    selectShareToUnderlyingTimebucketByVaultId(state, vaultId, timebucket)
+    selectShareToUnderlyingTimebucketByVaultId(state, vaultId, timebucket, walletAddress)
   );
 
   const { data: underlyingToUsd, status: underlyingStatus } = useAppSelector(state =>
-    selectUnderlyingToUsdTimebucketByVaultId(state, vaultId, timebucket)
+    selectUnderlyingToUsdTimebucketByVaultId(state, vaultId, timebucket, walletAddress)
   );
 
   useEffect(() => {
-    if (sharesStatus === 'idle') {
-      dispatch(fetchShareToUnderlying({ productKey, vaultId, timebucket }));
-    }
-    if (underlyingStatus === 'idle') {
-      dispatch(fetchUnderlyingToUsd({ productKey, vaultId, timebucket }));
-    }
+    if (walletAddress) {
+      if (sharesStatus === 'idle') {
+        dispatch(
+          fetchShareToUnderlying({
+            productKey,
+            vaultId,
+            walletAddress,
+            timebucket,
+          })
+        );
+      }
+      if (underlyingStatus === 'idle') {
+        dispatch(
+          fetchUnderlyingToUsd({
+            productKey,
+            vaultId,
+            walletAddress,
+            timebucket,
+          })
+        );
+      }
 
-    if (sharesStatus === 'rejected') {
-      const handleShareToUnderlying = setTimeout(
-        () => dispatch(fetchShareToUnderlying({ productKey, vaultId, timebucket })),
-        5000
-      );
-      return () => clearTimeout(handleShareToUnderlying);
-    }
+      if (sharesStatus === 'rejected') {
+        const handleShareToUnderlying = setTimeout(
+          () =>
+            dispatch(
+              fetchShareToUnderlying({
+                productKey,
+                vaultId,
+                walletAddress,
+                timebucket,
+              })
+            ),
+          5000
+        );
+        return () => clearTimeout(handleShareToUnderlying);
+      }
 
-    if (underlyingStatus === 'rejected') {
-      const handleUnderlyingToUsd = setTimeout(
-        () => dispatch(fetchUnderlyingToUsd({ productKey, vaultId, timebucket })),
-        5000
-      );
-      return () => clearTimeout(handleUnderlyingToUsd);
+      if (underlyingStatus === 'rejected') {
+        const handleUnderlyingToUsd = setTimeout(
+          () =>
+            dispatch(
+              fetchUnderlyingToUsd({
+                productKey,
+                vaultId,
+                walletAddress,
+                timebucket,
+              })
+            ),
+          5000
+        );
+        return () => clearTimeout(handleUnderlyingToUsd);
+      }
     }
-  }, [dispatch, sharesStatus, underlyingStatus, timebucket, productKey, vaultId]);
+  }, [dispatch, sharesStatus, underlyingStatus, timebucket, productKey, vaultId, walletAddress]);
 
   const isLoading = useMemo(() => {
     return underlyingStatus !== 'fulfilled' || sharesStatus !== 'fulfilled';
@@ -136,8 +175,10 @@ export const usePnLChartData = (
   return { chartData, isLoading };
 };
 
-export const useVaultPeriods = (vaultId: VaultEntity['id']) => {
-  const vaultDepositDate = useAppSelector(state => selectLastVaultDepositStart(state, vaultId));
+export const useVaultPeriods = (vaultId: VaultEntity['id'], address?: string) => {
+  const vaultDepositDate = useAppSelector(state =>
+    selectLastVaultDepositStart(state, vaultId, address)
+  );
   const currentDate = new Date();
 
   const result = eachDayOfInterval({

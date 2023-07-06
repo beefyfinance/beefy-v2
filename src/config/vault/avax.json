@@ -4564,7 +4564,8 @@
     "earnContractAddress": "0xDb054F4978a485bC5D9ae144B487340B141E41db",
     "oracle": "lps",
     "oracleId": "joe-yeti-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "traderjoe",
     "assets": ["YETI", "AVAX"],
     "risks": [
@@ -4746,7 +4747,8 @@
     "earnContractAddress": "0x02BE142346cbCAf2A1d8A8F7B4a5F2d929259270",
     "oracle": "lps",
     "oracleId": "png-wavax-lost",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "pangolin",
     "assets": ["LOST", "AVAX"],
     "risks": [

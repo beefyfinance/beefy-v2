@@ -9,7 +9,7 @@ import {
 } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import {
-  selectIsAnalyticsLoaded,
+  selectIsAnalyticsLoadedByAddress,
   selectUserDepositedTimelineByVaultId,
 } from '../../features/data/selectors/analytics';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
@@ -19,19 +19,20 @@ export type VaultAtDepositStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
   pnlData: VaultPnLDataType;
+  walletAddress: string;
 };
 
 export const VaultAtDepositStat = memo(connect(mapStateToProps)(VaultValueStat));
 
 function mapStateToProps(
   state: BeefyState,
-  { vaultId, className, pnlData }: VaultAtDepositStatProps
+  { vaultId, className, pnlData, walletAddress }: VaultAtDepositStatProps
 ) {
   const label = 'VaultStat-AtDeposit';
 
-  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId);
+  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
 
-  const isLoaded = selectIsAnalyticsLoaded(state);
+  const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
 
   if (!vaultTimeline) {
     return {

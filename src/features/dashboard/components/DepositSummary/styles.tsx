@@ -7,8 +7,19 @@ export const styles = (theme: Theme) => ({
       padding: '24px 0px',
     },
   },
-  title: {
-    ...theme.typography.h1,
+  titleContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
     marginBottom: '24px',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column' as const,
+      rowGap: '12px',
+    },
+  },
+  title: {
+    display: 'flex',
+    columnGap: '8px',
+    alignItems: 'baseline',
+    ...theme.typography.h1,
   },
 });
