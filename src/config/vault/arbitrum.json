@@ -1689,7 +1689,8 @@
     "earnContractAddress": "0x6489b78bC1B33A0cC0f6411AcD3C98175a3A41d3",
     "oracle": "lps",
     "oracleId": "kyber-arbitrum-usdc-mai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "kyber",
     "assets": ["MAI", "USDCe"],
     "risks": [
@@ -2156,7 +2157,8 @@
     "earnContractAddress": "0x8f6ea594bAADA4cA19CB055eEE8996e3bb260B55",
     "oracle": "lps",
     "oracleId": "swapfish-mim-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "swapfish",
     "assets": ["MIM", "USDCe"],
     "risks": [

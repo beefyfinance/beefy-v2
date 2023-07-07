@@ -740,7 +740,8 @@
     "earnContractAddress": "0x009E0aBc8CeCBc576DFE2b8e372338b8e597DbC9",
     "oracle": "tokens",
     "oracleId": "stMATIC",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "aave",
     "assets": ["stMATIC"],
     "risks": [

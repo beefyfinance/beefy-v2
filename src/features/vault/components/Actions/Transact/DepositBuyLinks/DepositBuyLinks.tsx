@@ -7,7 +7,6 @@ import { LinkButton } from '../../../../../../components/LinkButton';
 import clsx from 'clsx';
 import { memo } from 'react';
 import { selectTransactVaultId } from '../../../../../data/selectors/transact';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(styles);
 
@@ -31,11 +30,11 @@ export const DepositBuyLinks = memo<DepositBuyLinksProps>(function DepositBuyLin
       {vault.addLiquidityUrl && (
         <LinkButton href={vault.addLiquidityUrl} text={t('Transact-AddLiquidity')} />
       )}
-      {vault.assetIds.includes('BIFI') && (
+      {/* {vault.assetIds.includes('BIFI') && (
         <Link to="/bridge" className={classes.btnSecondary}>
           {t('Header-BridgeBifi')}
         </Link>
-      )}
+      )} */}
     </div>
   );
 });

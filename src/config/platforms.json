@@ -1050,6 +1050,11 @@
     "filter": true
   },
   {
+    "id": "vesync",
+    "name": "veSync",
+    "filter": true
+  },
+  {
     "id": "betswirl",
     "name": "BetSwirl",
     "filter": true

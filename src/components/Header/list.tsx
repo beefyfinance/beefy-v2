@@ -1,6 +1,6 @@
 import { ReactComponent as VaultsIcon } from '../../images/icons/navigation/vault.svg';
 import { ReactComponent as DashboardIcon } from '../../images/icons/navigation/dashboard.svg';
-import { ReactComponent as BridgeIcon } from '../../images/icons/navigation/bridge.svg';
+// import { ReactComponent as BridgeIcon } from '../../images/icons/navigation/bridge.svg';
 import { ReactComponent as BuyCryptoIcon } from '../../images/icons/navigation/buy-crypto.svg';
 import { ReactComponent as ResourcesIcon } from '../../images/icons/navigation/resources.svg';
 import { ReactComponent as ProposalsIcon } from '../../images/icons/navigation/proposals.svg';
@@ -42,5 +42,5 @@ export const MobileList: NavConfig[] = [
   { title: 'Header-Dao', Icon: DaoIcon, items: DaoNavItems },
   { title: 'Header-Resources', Icon: ResourcesIcon, items: ResourcesNavItems },
   { title: 'Header-BuyCrypto', Icon: BuyCryptoIcon, url: '/onramp' },
-  { title: 'Header-BridgeBifi', Icon: BridgeIcon, url: '/bridge' },
+  // { title: 'Header-BridgeBifi', Icon: BridgeIcon, url: '/bridge' },
 ];
