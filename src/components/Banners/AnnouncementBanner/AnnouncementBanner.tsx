@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
 import { Banner } from '../Banner';
-import { Bookmark } from '@material-ui/icons';
+import { ReactComponent as SnapshotLogo } from '../../../images/partners/snapshot-logo.svg';
 
 const useStyles = makeStyles(styles);
 
@@ -21,20 +21,28 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
 
   return (
     <Banner
-      icon={<Bookmark className={classes.icon} />}
+      icon={<SnapshotLogo className={classes.icon} />}
       text={
         <>
-          Introducing{' '}
+          New signalling proposal is live: [BSP:03] To gauge support for a plan to promptly migrate
+          $BIFI token away from Multichain. Discuss on{' '}
           <a
             className={classes.link}
-            href="https://twitter.com/beefyfinance/status/1653402008890507267"
+            href="https://discord.gg/qvrRTRmW"
             target="_blank"
             rel="noopener"
           >
-            Saved Vaults
+            Discord
           </a>{' '}
-          {`- bookmark any of our 700+ vaults to keep track of the ones you're interested in, anytime
-          and anywhere.`}
+          and vote on{' '}
+          <a
+            className={classes.link}
+            href="https://vote.beefy.finance/#/proposal/0xdd3cc7640a784f78621062ccd0641d765f5ca9dcc91dfaa823e19329ee8f77f5"
+            target="_blank"
+            rel="noopener"
+          >
+            Snapshot.
+          </a>
         </>
       }
       onClose={closeBanner}
