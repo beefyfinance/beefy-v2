@@ -3708,7 +3708,8 @@
     "earnContractAddress": "0xedEb044BC7Ce11Dfa436CFA8Be43e6eB0d601814",
     "oracle": "tokens",
     "oracleId": "CRV",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "geist",
     "assets": ["CRV"],
     "risks": [
@@ -3796,7 +3797,8 @@
     "earnContractAddress": "0xbf1340159c1b69Ae98Ff08BE5fC77cdc084dDc73",
     "oracle": "tokens",
     "oracleId": "FTM",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "geist",
     "assets": ["FTM"],
     "risks": [
@@ -3851,7 +3853,8 @@
     "earnContractAddress": "0x7bdD39339bE40adC54199aB4b5Fb6B2A89D40d4c",
     "oracle": "tokens",
     "oracleId": "ETH",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "geist",
     "assets": ["ETH"],
     "risks": [
@@ -3878,7 +3881,8 @@
     "earnContractAddress": "0x4Fa9263B35DC20bfa2eDEE24ee26113b40C4D3bB",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "geist",
     "assets": ["USDC"],
     "risks": [
@@ -3938,7 +3942,8 @@
     "earnContractAddress": "0xE7E08D82853dcf1057B2f8BCeF781d904602B6a0",
     "oracle": "tokens",
     "oracleId": "MIM",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "geist",
     "assets": ["MIM"],
     "risks": [
