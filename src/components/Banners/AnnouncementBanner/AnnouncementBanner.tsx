@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
 import { Banner } from '../Banner';
-import { ReactComponent as SnapshotLogo } from '../../../images/partners/snapshot-logo.svg';
+import SnapshotLogo from '../../../images/partners/snapshot-logo.svg';
 
 const useStyles = makeStyles(styles);
 
@@ -21,11 +21,11 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
 
   return (
     <Banner
-      icon={<SnapshotLogo className={classes.icon} />}
+      icon={<img alt="snapshot" src={SnapshotLogo} className={classes.icon} />}
       text={
         <>
-          New signalling proposal is live: [BSP:03] To gauge support for a plan to promptly migrate
-          $BIFI token away from Multichain. Discuss on{' '}
+          New signalling proposal is live: [BSP:03] To gauge support for a plan to migrate $BIFI
+          away from Multichain. Discuss on{' '}
           <a
             className={classes.link}
             href="https://discord.gg/qvrRTRmW"
