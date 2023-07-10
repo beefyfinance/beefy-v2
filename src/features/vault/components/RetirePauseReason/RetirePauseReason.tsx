@@ -72,7 +72,7 @@ const BIFIV2Link = memo(function BIFIV2Link() {
       target="_blank"
       rel="noopener"
     >
-      {t('More-info')}.
+      {t('More-info')}
     </a>
   );
 });
