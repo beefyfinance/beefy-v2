@@ -282,6 +282,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'BUSD',
       'alUSD',
       'axlUSDC',
+      'lzUSDC',
     ],
   },
   arbitrum: {
