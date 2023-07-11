@@ -441,7 +441,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "equilibre",
-    "assets": ["DAI", "USDC"],
+    "assets": ["DAI", "multichainUSDT"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -604,7 +604,7 @@
     "oracleId": "curve-kava-3pool",
     "status": "active",
     "platformId": "curve",
-    "assets": ["DAI", "USDC", "USDT"],
+    "assets": ["DAI", "USDC", "multichainUSDT"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -619,6 +619,35 @@
     "removeLiquidityUrl": "https://kava.curve.fi/factory/0/withdraw",
     "network": "kava",
     "createdAt": 1665750277
+  },
+  {
+    "id": "curve-kava-axlusdt-f",
+    "name": "axlUSDT/USDt",
+    "token": "kava-axlUSDT-f",
+    "tokenAddress": "0xAA3b055186f96dD29d0c2A17710d280Bc54290c7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveaxlUSDT-f",
+    "earnedTokenAddress": "0xd5BC6DEa24A93A542C0d3Aa7e4dFBD05d97AF0F8",
+    "earnContractAddress": "0xd5BC6DEa24A93A542C0d3Aa7e4dFBD05d97AF0F8",
+    "oracle": "lps",
+    "oracleId": "curve-kava-3pool",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["axlUSDT", "USDt"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-13/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-13/withdraw",
+    "network": "kava",
+    "createdAt": 1689035208
   },
   {
     "id": "sushi-kava-wkava-usdc",
@@ -731,7 +760,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "sushi",
-    "assets": ["USDT", "KAVA"],
+    "assets": ["multichainUSDT", "KAVA"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MEDIUM", "AUDIT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap",
