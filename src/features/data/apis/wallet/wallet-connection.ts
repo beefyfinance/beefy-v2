@@ -122,6 +122,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    */
   private createOnboard() {
     const onboard = Onboard({
+      disableFontDownload: true,
       connect: {
         showSidebar: true,
       },
@@ -152,6 +153,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         icon: getNetworkSrc(chain.id),
       })),
       accountCenter: {
+        hideTransactionProtectionBtn: true,
         desktop: {
           enabled: false,
         },
