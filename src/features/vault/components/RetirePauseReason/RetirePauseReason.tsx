@@ -67,7 +67,7 @@ const BIFIV2Link = memo(function BIFIV2Link() {
   return (
     <a
       href={
-        'https://vote.beefy.finance/#/proposal/0xdd3cc7640a784f78621062ccd0641d765f5ca9dcc91dfaa823e19329ee8f77f5'
+        'https://snapshot.org/#/beefydao.eth/proposal/0x55e6ad9dd3ebcca3334e23872fa8e2ab1e926466b3d2d0af6f462cc45b1541a2'
       }
       target="_blank"
       rel="noopener"
