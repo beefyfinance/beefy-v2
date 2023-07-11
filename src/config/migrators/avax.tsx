@@ -1,3 +1,3 @@
-import type { MigratorConfig } from '../../features/data/apis/config-types';
+import type { BaseMigrationConfig } from '../../features/data/apis/config-types';
 
-export const migrators: MigratorConfig[] = [];
+export const migrators: BaseMigrationConfig[] = [];

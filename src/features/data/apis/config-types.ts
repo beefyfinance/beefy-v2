@@ -318,9 +318,9 @@ export type TreasuryConfig = {
   };
 };
 
-export interface MigratorConfig {
-  migrationId: string;
-  vaultIds: {
-    [vaultId: VaultConfig['id']]: string;
-  };
-}
+export type BaseMigrationConfig = {
+  id: string; // eg ethereum-conic
+  name: string; // eg Conic Finance
+  icon: string;
+  lpByVaultId: Record<VaultEntity['id'], string>;
+};

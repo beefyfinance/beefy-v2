@@ -2,20 +2,29 @@ import type { Draft } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { VaultEntity } from '../../entities/vault';
 import type BigNumber from 'bignumber.js';
-import { fetchAllMigrators, fetchConicStakedBalance } from '../../actions/migrator';
+import { fetchAllMigrators } from '../../actions/migrator';
+import type { BaseMigrationConfig } from '../../apis/config-types';
+import { fetchConicStakedBalance } from '../../apis/migration/migrator-ethereum-conic';
+
+type MigrationConfig = {
+  ['ethereum-conic']?: BaseMigrationConfig;
+};
+
+type UserMigrationData = {
+  ['ethereum-conic']?: { balance: BigNumber };
+};
 
 export interface MigrationState {
   byUserAddress: {
     [address: string]: {
-      [vaultId: VaultEntity['id']]: BigNumber;
+      byVaultId: {
+        [vaultId: VaultEntity['id']]: {
+          byMigrationId: UserMigrationData;
+        };
+      };
     };
   };
-  byMigrationId: {
-    [migrationId: VaultEntity['migrationId']]: {
-      //The storage value is the LP of the staked address on the underlying platform
-      [vaultId: VaultEntity['id']]: string;
-    };
-  };
+  byMigrationId: MigrationConfig; // loaded from configs
 }
 
 const migrationInitialState: MigrationState = { byUserAddress: {}, byMigrationId: {} };
@@ -28,18 +37,13 @@ export const migrationSlice = createSlice({
     builder.addCase(fetchAllMigrators.fulfilled, (sliceState, action) => {
       for (const migrators of Object.values(action.payload.byChainId)) {
         for (const migrator of migrators) {
-          if (sliceState.byMigrationId[migrator.migrationId] === undefined) {
-            sliceState.byMigrationId[migrator.migrationId] = {};
-          }
-          for (const [vaultId, address] of Object.entries(migrator.vaultIds)) {
-            sliceState.byMigrationId[migrator.migrationId][vaultId] = address;
-          }
+          sliceState.byMigrationId[migrator.id] = migrator;
         }
       }
     });
     builder.addCase(fetchConicStakedBalance.fulfilled, (sliceState, action) => {
-      const { balance, walletAddress, vaultId } = action.payload;
-      addUserBalanceToMigrate(sliceState, balance, walletAddress, vaultId);
+      const { balance, walletAddress, migrationId, vaultId } = action.payload;
+      addUserBalanceToMigrate(sliceState, balance, walletAddress, vaultId, migrationId);
     });
   },
 });
@@ -48,10 +52,17 @@ function addUserBalanceToMigrate(
   state: Draft<MigrationState>,
   balance: BigNumber,
   walletAddress: string,
-  vaultId: VaultEntity['id']
+  vaultId: VaultEntity['id'],
+  migrationId: BaseMigrationConfig['id']
 ) {
   if (state.byUserAddress[walletAddress] === undefined) {
-    state.byUserAddress[walletAddress] = {};
+    state.byUserAddress[walletAddress] = {
+      byVaultId: {},
+    };
   }
-  state.byUserAddress[walletAddress][vaultId] = balance;
+
+  if (state.byUserAddress[walletAddress].byVaultId[vaultId] === undefined) {
+    state.byUserAddress[walletAddress].byVaultId[vaultId] = { byMigrationId: {} };
+  }
+  state.byUserAddress[walletAddress].byVaultId[vaultId].byMigrationId[migrationId] = balance;
 }

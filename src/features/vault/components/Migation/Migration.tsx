@@ -7,28 +7,28 @@ import type { VaultEntity } from '../../../data/entities/vault';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
-import { selectPlatformById } from '../../../data/selectors/platforms';
+import {} from '../../../data/selectors/platforms';
 import { formatBigDecimals } from '../../../../helpers/format';
 import { selectCurrentChainId, selectWalletAddressIfKnown } from '../../../data/selectors/wallet';
-import { fetchAllMigrators, fetchConicStakedBalance } from '../../../data/actions/migrator';
+import { fetchAllMigrators, migratorUpdate } from '../../../data/actions/migrator';
 import {
   selectHasMigrationByVaultId,
+  selectMigratorById,
   selectShouldInitMigration,
   selectUserBalanceToMigrateByVaultId,
 } from '../../../data/selectors/migration';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import { selectTransactMigrateAllQuote } from '../../../data/selectors/transact';
-import { transactMigrateSteps } from '../../../data/actions/transact';
 import { selectChainById } from '../../../data/selectors/chains';
 import { askForNetworkChange } from '../../../data/actions/wallet';
 
 const useStyles = makeStyles(styles);
 
-interface ConicMigrationProps {
+interface MigrationProps {
   vaultId: VaultEntity['id'];
 }
 
-export const ConicMigration = memo<ConicMigrationProps>(function ConicMigration({ vaultId }) {
+export const Migration = memo<MigrationProps>(function Migration({ vaultId }) {
   const dispatch = useAppDispatch();
   const shouldInitMigration = useAppSelector(selectShouldInitMigration);
   const vaultHasMigration = useAppSelector(state => selectHasMigrationByVaultId(state, vaultId));
@@ -40,14 +40,12 @@ export const ConicMigration = memo<ConicMigrationProps>(function ConicMigration(
     }
   }, [dispatch, shouldInitMigration]);
 
-  if (walletAddress && vaultHasMigration) return <ConicMigrationContent vaultId={vaultId} />;
+  if (walletAddress && vaultHasMigration) return <Migrator vaultId={vaultId} />;
 
   return null;
 });
 
-const ConicMigrationContent = memo<ConicMigrationProps>(function ConicMigrationContent({
-  vaultId,
-}) {
+const Migrator = memo<MigrationProps>(function Migrator({ vaultId }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -56,7 +54,7 @@ const ConicMigrationContent = memo<ConicMigrationProps>(function ConicMigrationC
   const userBalanceToMigrate = useAppSelector(state =>
     selectUserBalanceToMigrateByVaultId(state, vaultId)
   );
-  const platform = useAppSelector(state => selectPlatformById(state, vault.platformId));
+  const migrator = useAppSelector(state => selectMigratorById(state, vault.migrationId));
   const migrateAllQuote = useAppSelector(selectTransactMigrateAllQuote);
 
   const isWalletOnVaultChain = useAppSelector(
@@ -65,13 +63,13 @@ const ConicMigrationContent = memo<ConicMigrationProps>(function ConicMigrationC
 
   useEffect(() => {
     if (userBalanceToMigrate.eq(BIG_ZERO)) {
-      dispatch(fetchConicStakedBalance({ vaultId }));
+      dispatch(migratorUpdate({ vaultId }));
     }
   }, [dispatch, userBalanceToMigrate, vaultId]);
 
   const handleMigrateAll = useCallback(() => {
-    dispatch(transactMigrateSteps(migrateAllQuote, t));
-  }, [dispatch, migrateAllQuote, t]);
+    console.log('executooor');
+  }, []);
 
   const handleConnectedChain = useCallback(() => {
     dispatch(askForNetworkChange({ chainId: vault.chainId }));
@@ -81,9 +79,9 @@ const ConicMigrationContent = memo<ConicMigrationProps>(function ConicMigrationC
     return (
       <div className={classes.container}>
         <div className={classes.header}>
-          <img className={classes.icon} src={getSingleAssetSrc('CNC')} />
+          <img className={classes.icon} src={getSingleAssetSrc(migrator.icon)} />
           <div>
-            <div className={classes.subTitle}>{platform.name}</div>
+            <div className={classes.subTitle}>{migrator.name}</div>
             <div className={classes.title}>{t('Migration-Title')}</div>
           </div>
         </div>
@@ -91,7 +89,7 @@ const ConicMigrationContent = memo<ConicMigrationProps>(function ConicMigrationC
           <div>
             {t('Migration-Text', {
               balance: formatBigDecimals(userBalanceToMigrate, 4),
-              platform: platform.name,
+              platform: migrator.name,
             })}
           </div>
           {isWalletOnVaultChain ? (
