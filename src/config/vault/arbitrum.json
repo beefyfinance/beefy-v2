@@ -41,7 +41,7 @@
     "oracle": "lps",
     "oracleId": "balancer-tbtc-wbtc",
     "status": "active",
-    "platformId": "balancer",
+    "platformId": "aura",
     "assets": ["tBTC", "WBTC"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -55,7 +55,7 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x542f16da0efb162d20bf4358efa095b70a100f9e000000000000000000000436/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x542f16da0efb162d20bf4358efa095b70a100f9e000000000000000000000436/withdraw",
     "network": "arbitrum",
-    "createdAt": 1686576386
+    "createdAt": 1689076794
   },
   {
     "id": "balancer-tbtc-weth",
@@ -70,7 +70,7 @@
     "oracle": "lps",
     "oracleId": "balancer-tbtc-weth",
     "status": "active",
-    "platformId": "balancer",
+    "platformId": "aura",
     "assets": ["tBTC", "ETH"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -84,7 +84,7 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xc9f52540976385a84bf416903e1ca3983c539e34000200000000000000000434/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xc9f52540976385a84bf416903e1ca3983c539e34000200000000000000000434/withdraw",
     "network": "arbitrum",
-    "createdAt": 1686576386
+    "createdAt": 1689076794
   },
   {
     "id": "ramses-frxeth-sfrxeth",
