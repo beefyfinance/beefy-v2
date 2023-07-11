@@ -631,7 +631,7 @@
     "earnedTokenAddress": "0xd5BC6DEa24A93A542C0d3Aa7e4dFBD05d97AF0F8",
     "earnContractAddress": "0xd5BC6DEa24A93A542C0d3Aa7e4dFBD05d97AF0F8",
     "oracle": "lps",
-    "oracleId": "curve-kava-3pool",
+    "oracleId": "curve-kava-axlusdt-f",
     "status": "active",
     "platformId": "curve",
     "assets": ["axlUSDT", "USDt"],
