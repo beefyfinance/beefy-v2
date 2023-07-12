@@ -35,3 +35,15 @@ export const migratorUpdate = createAsyncThunk<
   const migrator = await migrationApi.getMigrator(vault.migrationId);
   dispatch(migrator.update({ vaultId }));
 });
+
+export const migratorExecute = createAsyncThunk<
+  void,
+  { vaultId: VaultEntity['id'] },
+  { state: BeefyState }
+>('migration/update', async ({ vaultId }, { getState, dispatch }) => {
+  const state = getState();
+  const vault = selectVaultById(state, vaultId);
+  const migrationApi = new MigrationApi();
+  const migrator = await migrationApi.getMigrator(vault.migrationId);
+  dispatch(migrator.execute({ vaultId }));
+});

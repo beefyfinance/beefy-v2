@@ -10,7 +10,7 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import {} from '../../../data/selectors/platforms';
 import { formatBigDecimals } from '../../../../helpers/format';
 import { selectCurrentChainId, selectWalletAddressIfKnown } from '../../../data/selectors/wallet';
-import { fetchAllMigrators, migratorUpdate } from '../../../data/actions/migrator';
+import { fetchAllMigrators, migratorExecute, migratorUpdate } from '../../../data/actions/migrator';
 import {
   selectHasMigrationByVaultId,
   selectMigratorById,
@@ -68,8 +68,8 @@ const Migrator = memo<MigrationProps>(function Migrator({ vaultId }) {
   }, [dispatch, userBalanceToMigrate, vaultId]);
 
   const handleMigrateAll = useCallback(() => {
-    console.log('executooor');
-  }, []);
+    dispatch(migratorExecute({ vaultId }));
+  }, [dispatch, vaultId]);
 
   const handleConnectedChain = useCallback(() => {
     dispatch(askForNetworkChange({ chainId: vault.chainId }));
