@@ -5,12 +5,7 @@ import { first } from 'lodash-es';
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectWalletAddressIfKnown } from './wallet';
 import { selectUserBalanceOfToken } from './balance';
-import type {
-  MigrateQuote,
-  TokenAmount,
-  TransactOption,
-  TransactQuote,
-} from '../apis/transact/transact-types';
+import type { TokenAmount, TransactOption, TransactQuote } from '../apis/transact/transact-types';
 import BigNumber from 'bignumber.js';
 import { TransactStatus } from '../reducers/wallet/transact-types';
 
@@ -98,11 +93,6 @@ export const selectTransactTokenChains = (state: BeefyState) =>
 
 export const selectTransactNumTokens = (state: BeefyState) =>
   state.ui.transact.tokens.allTokensIds.length;
-
-export const selectTransactMigrateAllQuote = (state: BeefyState) =>
-  Object.values(state.ui.transact.migrateQuotes.byQuoteId).find(
-    q => q.type === 'migrate'
-  ) as MigrateQuote;
 
 export const selectTransactWithdrawTokensForChain = (
   state: BeefyState,

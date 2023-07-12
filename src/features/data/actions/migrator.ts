@@ -6,6 +6,7 @@ import { getConfigApi } from '../apis/instances';
 import type { VaultEntity } from '../entities/vault';
 import { MigrationApi } from '../apis/migration';
 import { selectVaultById } from '../selectors/vaults';
+import type { MigratorActionProps } from '../apis/migration/migration-types';
 
 export interface FulfilledAllMigratorsPayload {
   byChainId: {
@@ -36,14 +37,13 @@ export const migratorUpdate = createAsyncThunk<
   dispatch(migrator.update({ vaultId }));
 });
 
-export const migratorExecute = createAsyncThunk<
-  void,
-  { vaultId: VaultEntity['id'] },
-  { state: BeefyState }
->('migration/update', async ({ vaultId }, { getState, dispatch }) => {
-  const state = getState();
-  const vault = selectVaultById(state, vaultId);
-  const migrationApi = new MigrationApi();
-  const migrator = await migrationApi.getMigrator(vault.migrationId);
-  dispatch(migrator.execute({ vaultId }));
-});
+export const migratorExecute = createAsyncThunk<void, MigratorActionProps, { state: BeefyState }>(
+  'migration/update',
+  async ({ vaultId, t }, { getState, dispatch }) => {
+    const state = getState();
+    const vault = selectVaultById(state, vaultId);
+    const migrationApi = new MigrationApi();
+    const migrator = await migrationApi.getMigrator(vault.migrationId);
+    dispatch(migrator.execute({ vaultId, t }));
+  }
+);

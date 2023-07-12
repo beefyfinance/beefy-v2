@@ -55,29 +55,6 @@ export type VaultQuote = {
   outputs: QuoteOutputTokenAmount[];
 };
 
-export type MigrateOption = {
-  id: string;
-  type: 'migrate';
-  providerId: string;
-  vaultId: VaultEntity['id'];
-  chainId: ChainEntity['id'];
-  tokensId: string;
-  tokenAddresses: TokenEntity['address'][];
-  mode: TransactMode;
-};
-
-export type MigrateQuote = {
-  id: string;
-  type: 'migrate';
-  optionId: string;
-  allowances: AllowanceTokenAmount[];
-  inputs: QuoteInputTokenAmount[];
-  outputs: QuoteOutputTokenAmount[];
-  availableBalance: BigNumber;
-  depositOption: TransactOption;
-  depositQuote: TransactQuote;
-};
-
 export type GovVaultOption = {
   id: string;
   providerId: string;
@@ -188,9 +165,9 @@ export function isZapQuoteStepSwap(step: ZapQuoteStep): step is ZapQuoteStepSwap
   return step.type === 'swap';
 }
 
-export type TransactOption = VaultOption | GovVaultOption | ZapOption | MigrateOption;
+export type TransactOption = VaultOption | GovVaultOption | ZapOption;
 
-export type TransactQuote = VaultQuote | GovVaultQuote | ZapQuote | MigrateQuote;
+export type TransactQuote = VaultQuote | GovVaultQuote | ZapQuote;
 
 export function isVaultOption(option: TransactOption): option is VaultOption {
   return option.type === 'vault';

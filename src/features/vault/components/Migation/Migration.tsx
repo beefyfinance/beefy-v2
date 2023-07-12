@@ -18,7 +18,6 @@ import {
   selectUserBalanceToMigrateByVaultId,
 } from '../../../data/selectors/migration';
 import { BIG_ZERO } from '../../../../helpers/big-number';
-import { selectTransactMigrateAllQuote } from '../../../data/selectors/transact';
 import { selectChainById } from '../../../data/selectors/chains';
 import { askForNetworkChange } from '../../../data/actions/wallet';
 
@@ -55,7 +54,6 @@ const Migrator = memo<MigrationProps>(function Migrator({ vaultId }) {
     selectUserBalanceToMigrateByVaultId(state, vaultId)
   );
   const migrator = useAppSelector(state => selectMigratorById(state, vault.migrationId));
-  const migrateAllQuote = useAppSelector(selectTransactMigrateAllQuote);
 
   const isWalletOnVaultChain = useAppSelector(
     state => selectCurrentChainId(state) === vault.chainId
@@ -65,11 +63,12 @@ const Migrator = memo<MigrationProps>(function Migrator({ vaultId }) {
     if (userBalanceToMigrate.eq(BIG_ZERO)) {
       dispatch(migratorUpdate({ vaultId }));
     }
-  }, [dispatch, userBalanceToMigrate, vaultId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleMigrateAll = useCallback(() => {
-    dispatch(migratorExecute({ vaultId }));
-  }, [dispatch, vaultId]);
+    dispatch(migratorExecute({ vaultId, t }));
+  }, [dispatch, t, vaultId]);
 
   const handleConnectedChain = useCallback(() => {
     dispatch(askForNetworkChange({ chainId: vault.chainId }));
@@ -93,13 +92,7 @@ const Migrator = memo<MigrationProps>(function Migrator({ vaultId }) {
             })}
           </div>
           {isWalletOnVaultChain ? (
-            <Button
-              disabled={!migrateAllQuote}
-              onClick={handleMigrateAll}
-              variant="success"
-              fullWidth={true}
-              borderless={true}
-            >
+            <Button onClick={handleMigrateAll} variant="success" fullWidth={true} borderless={true}>
               {t('Migration-Action')}
             </Button>
           ) : (
