@@ -1,5 +1,26 @@
 [
   {
+    "id": "conic-eth",
+    "name": "ETH LP",
+    "token": "cncETH",
+    "tokenAddress": "0x3565A68666FD3A6361F06f84637E805b727b4A47",
+    "tokenDecimals": 18,
+    "tokenProviderId": "conic",
+    "tokenAmmId": "ethereum-conic",
+    "earnedToken": "mooConicETH",
+    "earnedTokenAddress": "0x865500c065287B6727d31ddD9BAc8e959bBB809F",
+    "earnContractAddress": "0x865500c065287B6727d31ddD9BAc8e959bBB809F",
+    "oracle": "lps",
+    "oracleId": "conic-eth",
+    "status": "active",
+    "platformId": "conic",
+    "assets": ["ETH"],
+    "strategyTypeId": "single-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "network": "ethereum",
+    "createdAt": 1689155486
+  },
+  {
     "id": "conic-crvusd",
     "name": "crvUSD LP",
     "token": "conicCRVUSD-LP",
