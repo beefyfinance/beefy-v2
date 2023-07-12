@@ -1,5 +1,28 @@
 [
   {
+    "id": "pearl-tngbl-usdr",
+    "name": "TNGBL-USDR LP",
+    "token": "vAMM-TNGBL/USDR",
+    "tokenAddress": "0x16e9D19221DF563CfB15628953B5c51E4a2Be30c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pearl",
+    "tokenAmmId": "polygon-pearl",
+    "earnedToken": "mooPearlTNGBL-USDR",
+    "earnedTokenAddress": "0x99AB491471FBcB7D9d2b69729462fe223a4cCdab",
+    "earnContractAddress": "0x99AB491471FBcB7D9d2b69729462fe223a4cCdab",
+    "oracle": "lps",
+    "oracleId": "pearl-tngbl-usdr",
+    "status": "active",
+    "platformId": "pearl",
+    "assets": ["TNGBL", "USDR"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0x16e9D19221DF563CfB15628953B5c51E4a2Be30c",
+    "removeLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0x16e9D19221DF563CfB15628953B5c51E4a2Be30c",
+    "network": "polygon",
+    "createdAt": 1689156422
+  },
+  {
     "id": "quick-gamma-usdc-mimatic-stable",
     "name": "MAI-USDC Stable LP",
     "token": "aMAI-USDC",
