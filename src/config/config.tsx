@@ -282,6 +282,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'BUSD',
       'alUSD',
       'axlUSDC',
+      'lzUSDC',
     ],
   },
   arbitrum: {
@@ -330,6 +331,10 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'jEUR',
       'wUSDR',
       'USDCe',
+      'bbaaUSDC',
+      'bbaaUSDT',
+      'bbaaDAI',
+      'bbaaUSD',
     ],
   },
   avax: {
@@ -546,7 +551,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['USDC', 'DAI', 'USDT', 'axlDAI', 'axlUSDC', 'axlUSDT', 'MAI'],
+    stableCoins: ['USDC', 'DAI', 'USDT', 'axlDAI', 'axlUSDC', 'axlUSDT', 'MAI', 'USDt'],
   },
   canto: {
     name: 'Canto',

@@ -173,6 +173,7 @@
   "Vault-RetireReason-exploit": "This vault is retired. Funds sit idle in the vault, withdrawn from the underlying platform.",
   "Vault-RetireReason-tvl": "This vault is retired. TVL has fallen too low.",
   "Vault-RetireReason-default": "This vault is retired. You may withdraw your funds.",
+  "Vault-RetireReason-bifiV2": "This vault has been retired. A migration is planned for the BIFI token. We urge users to break any LP positions involving the BIFI token and move from BIFI maxi vault to BIFI earning pools. <link/>.",
   "Vault-PauseReason-upgrade": "This vault is paused pending a strategy upgrade. New deposits are temporarily unavailable.",
   "Vault-PauseReason-rewards": "This vault is paused as the underlying platform has temporarily stopped rewards. New deposits are temporarily unavailable.",
   "Vault-PauseReason-viability": "This vault is paused while it's future viability is being investigated. New deposits are temporarily unavailable.",
@@ -612,7 +613,8 @@
   "Dashboard-SearchInput-Invalid-Domain": "Unable to resolve domain",
   "Dashboard-SearchInput-Invalid-Address": "Entered address is not valid",
   "beVELOV2-description": "As $VELO is retired by Velodrome, $beVELO holders are urged to move your tokens to the new beVELO Earnings Pool to ensure you can continue earning $VELOV2 rewards. With our Earnings Pool, you can share in Velodrome protocol emissions earned by Beefy's Velodrome veNFT, which we regularly claim and transfer back to you.",
+  "More-info": "More info",
   "Migration-Title": "Migrate your deposit",
-  "Migration-Text": "You have {{balance}} LP tokens staked on {{platform}} that are available for an easy migration into this autocompounding vault",
+  "Migration-Text": "You have {{balance}} LP tokens staked on {{migrator}} that are available for an easy migration into this autocompounding vault",
   "Migration-Action": "Migrate Now"
 }

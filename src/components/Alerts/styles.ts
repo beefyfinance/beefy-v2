@@ -25,6 +25,9 @@ export const styles = (theme: Theme) => ({
     minWidth: 0,
     color: '#D0D0DA',
     wordBreak: 'break-word' as const,
+    '& a': {
+      color: '#D0D0DA',
+    },
     '& p:first-child': {
       marginTop: 0,
     },

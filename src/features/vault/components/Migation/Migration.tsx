@@ -89,7 +89,7 @@ const Migrator = memo<MigrationProps>(function Migrator({ vaultId }) {
           <div>
             {t('Migration-Text', {
               balance: formatBigDecimals(userBalanceToMigrate, 4),
-              platform: migrator.name,
+              migrator: migrator.name,
             })}
           </div>
           {isWalletOnVaultChain ? (
