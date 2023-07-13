@@ -2,15 +2,14 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { BaseMigrationConfig } from '../apis/config-types';
 import type { ChainEntity } from '../entities/chain';
-import { getConfigApi } from '../apis/instances';
+import { getConfigApi, getMigrationApi } from '../apis/instances';
 import type { VaultEntity } from '../entities/vault';
-import { MigrationApi } from '../apis/migration';
-import { selectVaultById } from '../selectors/vaults';
 import type { MigratorActionProps } from '../apis/migration/migration-types';
+import type { MigrationConfig } from '../reducers/wallet/migration';
 
 export interface FulfilledAllMigratorsPayload {
   byChainId: {
-    [chainId: ChainEntity['id']]: BaseMigrationConfig[];
+    [chainId: ChainEntity['id']]: MigrationConfig[];
   };
   state: BeefyState;
 }
@@ -27,23 +26,19 @@ export const fetchAllMigrators = createAsyncThunk<
 
 export const migratorUpdate = createAsyncThunk<
   void,
-  { vaultId: VaultEntity['id'] },
+  { vaultId: VaultEntity['id']; migrationId: BaseMigrationConfig['id'] },
   { state: BeefyState }
->('migration/update', async ({ vaultId }, { getState, dispatch }) => {
-  const state = getState();
-  const vault = selectVaultById(state, vaultId);
-  const migrationApi = new MigrationApi();
-  const migrator = await migrationApi.getMigrator(vault.migrationId);
+>('migration/update', async ({ vaultId, migrationId }, { dispatch }) => {
+  const migrationApi = getMigrationApi();
+  const migrator = await migrationApi.getMigrator(migrationId);
   dispatch(migrator.update({ vaultId }));
 });
 
 export const migratorExecute = createAsyncThunk<void, MigratorActionProps, { state: BeefyState }>(
   'migration/update',
-  async ({ vaultId, t }, { getState, dispatch }) => {
-    const state = getState();
-    const vault = selectVaultById(state, vaultId);
-    const migrationApi = new MigrationApi();
-    const migrator = await migrationApi.getMigrator(vault.migrationId);
+  async ({ vaultId, t, migrationId }, { dispatch }) => {
+    const migrationApi = getMigrationApi();
+    const migrator = await migrationApi.getMigrator(migrationId);
     dispatch(migrator.execute({ vaultId, t }));
   }
 );

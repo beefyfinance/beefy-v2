@@ -11,7 +11,7 @@ export interface IMigrationApi {
 
 export interface Migrator {
   update: AsyncThunk<any, any, any>;
-  execute?: AsyncThunk<any, any, any>;
+  execute: AsyncThunk<any, any, any>;
 }
 
 export interface FullFilledFetchBalanceFromUnderlyingProtocol {
@@ -24,4 +24,5 @@ export interface FullFilledFetchBalanceFromUnderlyingProtocol {
 export interface MigratorActionProps {
   vaultId: VaultEntity['id'];
   t: TFunction<Namespace>;
+  migrationId: BaseMigrationConfig['id'];
 }

@@ -16,12 +16,14 @@ import { AnalyticsApi } from './analytics/analytics';
 import type { IOneInchApi } from './one-inch/one-inch-types';
 import type { IBeefyDataApi } from './beefy/beefy-data-api-types';
 import PQueue from 'p-queue';
+import { MigrationApi } from './migration';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
 const configApi = new ConfigAPI();
 const bridgeApi = new BridgeApi();
 const analyticsApi = new AnalyticsApi();
+const migrationApi = new MigrationApi();
 
 /**
  * These are basically factories so user code don't have to worry
@@ -41,6 +43,10 @@ export function getBridgeApi(): BridgeApi {
 
 export function getAnalyticsApi(): AnalyticsApi {
   return analyticsApi;
+}
+
+export function getMigrationApi(): MigrationApi {
+  return migrationApi;
 }
 
 export const getWeb3Instance = createFactoryWithCacheByChain(async chain => {

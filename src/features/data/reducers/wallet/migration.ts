@@ -4,11 +4,10 @@ import type { VaultEntity } from '../../entities/vault';
 import type BigNumber from 'bignumber.js';
 import { fetchAllMigrators } from '../../actions/migrator';
 import type { BaseMigrationConfig } from '../../apis/config-types';
-import { fetchConicStakedBalance } from '../../apis/migration/migrator-ethereum-conic';
+import { fetchConicStakedBalance } from '../../apis/migration/ethereum-conic/migrator';
+import type { ConicMigrationConfig } from '../../apis/migration/ethereum-conic/types';
 
-type MigrationConfig = {
-  ['ethereum-conic']?: BaseMigrationConfig;
-};
+export type MigrationConfig = ConicMigrationConfig;
 
 type UserMigrationData = {
   ['ethereum-conic']?: { balance: BigNumber };
@@ -24,7 +23,9 @@ export interface MigrationState {
       };
     };
   };
-  byMigrationId: MigrationConfig; // loaded from configs
+  byMigrationId: {
+    [migrationId: BaseMigrationConfig['id']]: MigrationConfig;
+  }; // loaded from configs
 }
 
 const migrationInitialState: MigrationState = { byUserAddress: {}, byMigrationId: {} };

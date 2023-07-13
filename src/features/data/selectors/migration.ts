@@ -2,39 +2,27 @@ import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity } from '../entities/vault';
 import { isInitialLoader } from '../reducers/data-loader-types';
-import { selectVaultById } from './vaults';
 import { selectWalletAddress } from './wallet';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import type { BaseMigrationConfig } from '../apis/config-types';
+import { selectVaultById } from './vaults';
 
 export const selectShouldInitMigration = (state: BeefyState) =>
   isInitialLoader(state.ui.dataLoader.global.migrators);
 
-export const selectHasMigrationByVaultId = createSelector(
-  (state: BeefyState, _vaultId: VaultEntity['id']) => state.user.migration,
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
-  (migrationState, vault) => {
-    return migrationState.byMigrationId[vault.migrationId]?.lpByVaultId[vault.id] ? true : false;
-  }
-);
-
-export const selectStakedLpAddressByVaultId = createSelector(
-  (state: BeefyState, _vaultId: VaultEntity['id']) => state.user.migration,
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
-  (migrationState, vault) => {
-    return migrationState.byMigrationId[vault.migrationId].lpByVaultId[vault.id];
-  }
-);
-
 export const selectUserBalanceToMigrateByVaultId = createSelector(
-  (state: BeefyState, _vaultId: VaultEntity['id']) => state.user.migration,
-  (state: BeefyState, _vaultId: VaultEntity['id']) => selectWalletAddress(state),
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
-  (migrationState, walletAddress, vault) => {
+  (state: BeefyState, _vaultId: VaultEntity['id'], _migrationId: BaseMigrationConfig['id']) =>
+    state.user.migration,
+  (state: BeefyState, _vaultId: VaultEntity['id'], _migrationId: BaseMigrationConfig['id']) =>
+    selectWalletAddress(state),
+  (state: BeefyState, vaultId: VaultEntity['id'], _migrationId: BaseMigrationConfig['id']) =>
+    vaultId,
+  (state: BeefyState, _vaultId: VaultEntity['id'], migrationId: BaseMigrationConfig['id']) =>
+    migrationId,
+  (migrationState, walletAddress, vaultId, migrationId) => {
     return (
-      migrationState.byUserAddress[walletAddress]?.byVaultId[vault.id]?.byMigrationId[
-        vault.migrationId
-      ] || BIG_ZERO
+      migrationState.byUserAddress[walletAddress]?.byVaultId[vaultId]?.byMigrationId[migrationId] ||
+      BIG_ZERO
     );
   }
 );
@@ -43,4 +31,9 @@ export const selectMigratorById = createSelector(
   (state: BeefyState, _migratorId: BaseMigrationConfig['id']) => state.user.migration.byMigrationId,
   (state: BeefyState, migratorId: BaseMigrationConfig['id']) => migratorId,
   (migratorsById, migratorId) => migratorsById[migratorId]
+);
+
+export const selectMigrationIdsByVaultId = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  vault => vault.migrationIds || []
 );

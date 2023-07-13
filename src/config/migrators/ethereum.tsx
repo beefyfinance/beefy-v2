@@ -1,14 +1,10 @@
-import type { BaseMigrationConfig } from '../../features/data/apis/config-types';
+import type { MigrationConfig } from '../../features/data/reducers/wallet/migration';
 
-export const migrators: BaseMigrationConfig[] = [
+export const migrators: MigrationConfig[] = [
   {
     id: 'ethereum-conic',
     name: 'Conic Finance',
     icon: 'CNC',
-    lpByVaultId: {
-      'conic-crvusd': '0x369cbc5c6f139b1132d3b91b87241b37fc5b971f',
-      'conic-usdc': '0x07b577f10d4e00f3018542d08a87f255a49175a5',
-      'conic-eth': '0xBb787d6243a8D450659E09ea6fD82F1C859691e9',
-    },
+    vaultIds: ['conic-crvusd', 'conic-usdc', 'conic-eth'],
   },
 ];

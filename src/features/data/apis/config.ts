@@ -9,7 +9,6 @@ import type {
   ChainConfig,
   FeaturedVaultConfig,
   InfoCardsConfig,
-  BaseMigrationConfig,
   MinterConfig,
   OneInchZapConfig,
   PartnersConfig,
@@ -18,6 +17,7 @@ import type {
   VaultConfig,
 } from './config-types';
 import { mapValues } from 'lodash-es';
+import type { MigrationConfig } from '../reducers/wallet/migration';
 
 /**
  * A class to access beefy configuration
@@ -97,7 +97,7 @@ export class ConfigAPI {
   }
 
   public async fetchAllMigrators(): Promise<{
-    [chainId: ChainEntity['id']]: BaseMigrationConfig[];
+    [chainId: ChainEntity['id']]: MigrationConfig[];
   }> {
     return Object.fromEntries(
       await Promise.all(

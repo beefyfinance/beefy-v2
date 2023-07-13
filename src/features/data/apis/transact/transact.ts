@@ -23,8 +23,7 @@ export class TransactApi implements ITransactApi {
   private providersById: Record<string, ITransactProvider> = {};
 
   constructor() {
-    const vaultProvider = new VaultProvider();
-    this.providers.push(vaultProvider);
+    this.providers.push(new VaultProvider());
     this.providers.push(new GovVaultProvider());
     this.providers.push(new BeefyUniswapV2ZapProvider());
     this.providers.push(new BeefySolidlyZapProvider());

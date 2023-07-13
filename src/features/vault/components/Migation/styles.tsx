@@ -13,7 +13,7 @@ export const styles = (theme: Theme) => ({
     columnGap: '16px',
     backgroundColor: theme.palette.background.default,
     borderRadius: '12px 12px 0px 0px ',
-    padding: '16px',
+    padding: '24px',
   },
   icon: {
     height: '48px',
@@ -32,7 +32,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     justifyContent: 'center',
-    padding: '16px',
+    padding: '24px',
     rowGap: '8px',
   },
 });
