@@ -4905,7 +4905,8 @@
     "earnContractAddress": "0xfA9f791Ff43128bbEB8B89Ee452Ba31eEFDd52f0",
     "oracle": "lps",
     "oracleId": "ooe-ooe-bnb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "openocean",
     "assets": ["OOE", "BNB"],
     "risks": [
