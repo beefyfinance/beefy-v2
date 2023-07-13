@@ -20056,7 +20056,8 @@
     "earnContractAddress": "0xF46E3e2eb855baE2A32eD941f0c03b1D9b7b96a0",
     "oracle": "lps",
     "oracleId": "ellipsis-3brl",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "dotdot",
     "assets": ["jBRL", "BRZ", "BRZw"],
     "risks": [
@@ -20087,7 +20088,8 @@
     "earnContractAddress": "0x80ACf5C89A284C4b6Fdbc851Ba9844D29d4c6BEd",
     "oracle": "lps",
     "oracleId": "ellipsis-busd-jchf",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "dotdot",
     "assets": ["jCHF", "BUSD"],
     "risks": [

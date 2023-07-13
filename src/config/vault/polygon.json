@@ -3956,7 +3956,8 @@
     "earnContractAddress": "0x1BE356364a1e849af2F7a513Fc46dAB6063Db485",
     "oracle": "lps",
     "oracleId": "ape-matic-usdt",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "apeswap",
     "assets": ["MATIC", "USDT"],
     "risks": [
