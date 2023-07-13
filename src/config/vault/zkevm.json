@@ -1,0 +1,31 @@
+[
+  {
+    "id": "balancer-zkevm-wsteth-eth",
+    "name": "wstETH-ETH",
+    "token": "wstETH-ETH",
+    "tokenAddress": "0xe1F2c039a68A216dE6DD427Be6c60dEcf405762A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerwstETH-ETH",
+    "earnedTokenAddress": "0xcb25214EC41Ea480068638897FcBd6F1206F5521",
+    "earnContractAddress": "0xcb25214EC41Ea480068638897FcBd6F1206F5521",
+    "oracle": "lps",
+    "oracleId": "balancer-zkevm-wsteth-eth",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["wstETH", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0xe1f2c039a68a216de6dd427be6c60decf405762a00000000000000000000000e/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0xe1f2c039a68a216de6dd427be6c60decf405762a00000000000000000000000e/withdraw",
+    "network": "zkevm",
+    "createdAt": 1689280073
+  }
+]
