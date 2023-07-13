@@ -26,6 +26,7 @@ import { selectMinterById } from '../selectors/minters';
 import { initiateBridgeForm } from './bridge';
 import { fetchPlatforms } from './platforms';
 import { selectAllChainIds } from '../selectors/chains';
+import { fetchBridges } from './bridges';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 
@@ -72,6 +73,8 @@ export async function initHomeDataV4(store: BeefyStore) {
     store.dispatch(fetchPartnersConfig());
 
     store.dispatch(fetchPlatforms());
+
+    store.dispatch(fetchBridges());
   });
 
   // create the wallet instance as soon as we get the chain list

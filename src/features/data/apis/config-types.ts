@@ -316,3 +316,10 @@ export type TreasuryConfig = {
     };
   };
 };
+
+export interface BridgeConfig {
+  readonly id: string;
+  readonly name: string;
+  readonly tagName?: string;
+  readonly website: string;
+}

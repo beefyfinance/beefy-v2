@@ -612,5 +612,8 @@
   "Dashboard-SearchInput-Invalid-Domain": "Unable to resolve domain",
   "Dashboard-SearchInput-Invalid-Address": "Entered address is not valid",
   "beVELOV2-description": "As $VELO is retired by Velodrome, $beVELO holders are urged to move your tokens to the new beVELO Earnings Pool to ensure you can continue earning $VELOV2 rewards. With our Earnings Pool, you can share in Velodrome protocol emissions earned by Beefy's Velodrome veNFT, which we regularly claim and transfer back to you.",
-  "More-info": "More info"
+  "More-info": "More info",
+  "TokenBridge-native": "Native",
+  "TokenBridge-Tooltip-native": "Asset is native to {{chain}}",
+  "TokenBridge-Tooltip-bridge": "Asset is bridged to {{chain}} via <website>{{bridge}}</website>."
 }
