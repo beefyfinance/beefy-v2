@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_curve-kava-axlusdt-f-kava",
+    "poolId": "curve-kava-axlusdt-f",
+    "name": "kava",
+    "assets": ["axlUSDT", "USDt"],
+    "tokenAddress": "0xd5BC6DEa24A93A542C0d3Aa7e4dFBD05d97AF0F8",
+    "earnedToken": "WKAVA",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc86c7C0eFbd6A49B35E8714C5f59D99De09A225b",
+    "earnContractAddress": "0xA43d8f6Db69610C8260B953658553cabF01D77c6",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "WKAVA",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["kava"]
+  },
+  {
     "id": "moo_equilibre-wkava-eth-kava",
     "poolId": "equilibre-wkava-eth",
     "name": "kava",
