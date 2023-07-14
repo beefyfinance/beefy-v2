@@ -75,9 +75,9 @@ export const executeConicAction = createAsyncThunk<
   const state = getState();
   const vault = selectVaultById(state, vaultId);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const amount = selectUserBalanceToMigrateByVaultId(state, vaultId, migrationId);
+  const { balance } = selectUserBalanceToMigrateByVaultId(state, vaultId, migrationId);
 
-  const call = await unstakeCall(vault, amount, state);
+  const call = await unstakeCall(vault, balance, state);
 
   steps.push({
     step: 'migration',
@@ -85,7 +85,7 @@ export const executeConicAction = createAsyncThunk<
     action: walletActions.migrateUnstake(
       call,
       vault,
-      amount.shiftedBy(depositToken.decimals),
+      balance.shiftedBy(depositToken.decimals),
       migrationId
     ),
     pending: false,
@@ -99,7 +99,7 @@ export const executeConicAction = createAsyncThunk<
       depositToken.address,
       vault.earnContractAddress
     );
-    if (allowance.lt(amount)) {
+    if (allowance.lt(balance)) {
       steps.push({
         step: 'approve',
         message: t('Vault-ApproveMsg'),
@@ -112,7 +112,7 @@ export const executeConicAction = createAsyncThunk<
   steps.push({
     step: 'deposit',
     message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-    action: walletActions.deposit(vault, amount, true),
+    action: walletActions.deposit(vault, balance, true),
     pending: false,
     extraInfo: { vaultId: vault.id },
   });
