@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type {
-  FullfilledFetchBalanceFromUnderlyingProtocol,
+  FulfilledFetchBalanceFromUnderlyingProtocol,
   Migrator,
   MigratorActionProps,
   MigratorUpdateProps,
@@ -24,7 +24,7 @@ import { selectAllowanceByTokenAddress } from '../../../selectors/allowances';
 const CONIC_LP_TOKEN_STAKER = '0xeC037423A61B634BFc490dcc215236349999ca3d';
 
 export const fetchConicStakedBalance = createAsyncThunk<
-  FullfilledFetchBalanceFromUnderlyingProtocol,
+  FulfilledFetchBalanceFromUnderlyingProtocol,
   MigratorUpdateProps,
   { state: BeefyState }
 >('migration/fetchConicStakedBalance', async ({ vaultId, walletAddress }, { getState }) => {

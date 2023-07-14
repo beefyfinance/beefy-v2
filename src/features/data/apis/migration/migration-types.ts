@@ -14,7 +14,7 @@ export interface Migrator {
   execute: AsyncThunk<any, MigratorActionProps, any>;
 }
 
-export interface FullfilledFetchBalanceFromUnderlyingProtocol {
+export interface FulfilledFetchBalanceFromUnderlyingProtocol {
   readonly balance: BigNumber;
   readonly vaultId: VaultEntity['id'];
   readonly walletAddress: string;

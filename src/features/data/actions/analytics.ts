@@ -7,14 +7,14 @@ import type { AnalyticsPriceResponse, TimeBucketType } from '../apis/analytics/a
 import type { VaultEntity } from '../entities/vault';
 import { isFiniteNumber } from '../../../helpers/number';
 
-export interface fetchWalletTimelineFullfilled {
+export interface fetchWalletTimelineFulfilled {
   timeline: VaultTimelineAnalyticsEntity[];
   walletAddress: string;
   state: BeefyState;
 }
 
 export const fetchWalletTimeline = createAsyncThunk<
-  fetchWalletTimelineFullfilled,
+  fetchWalletTimelineFulfilled,
   { address: string },
   { state: BeefyState }
 >('analytics/fetchWalletTimeline', async ({ address }, { getState }) => {
@@ -45,7 +45,7 @@ export const fetchWalletTimeline = createAsyncThunk<
   return { timeline, walletAddress: address.toLowerCase(), state: getState() };
 });
 
-interface DataMartPricesFullfilled {
+interface DataMartPricesFulfilled {
   data: AnalyticsPriceResponse;
   vaultId: VaultEntity['id'];
   timebucket: TimeBucketType;
@@ -61,7 +61,7 @@ interface DataMartPricesProps {
 }
 
 export const fetchShareToUnderlying = createAsyncThunk<
-  DataMartPricesFullfilled,
+  DataMartPricesFulfilled,
   DataMartPricesProps,
   { state: BeefyState }
 >(
@@ -80,7 +80,7 @@ export const fetchShareToUnderlying = createAsyncThunk<
 );
 
 export const fetchUnderlyingToUsd = createAsyncThunk<
-  DataMartPricesFullfilled,
+  DataMartPricesFulfilled,
   DataMartPricesProps,
   { state: BeefyState }
 >(

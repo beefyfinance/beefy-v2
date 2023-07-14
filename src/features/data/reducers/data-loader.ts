@@ -35,7 +35,7 @@ import type {
 import { errorToString } from '../../../helpers/format';
 import { fetchAllAmmsAction } from '../actions/amm';
 import { fetchTreasury } from '../actions/treasury';
-import type { fetchWalletTimelineFullfilled } from '../actions/analytics';
+import type { fetchWalletTimelineFulfilled } from '../actions/analytics';
 import { fetchWalletTimeline } from '../actions/analytics';
 import { fetchActiveProposals } from '../actions/proposal';
 import { fetchAllMigrators } from '../actions/migrator';
@@ -257,7 +257,7 @@ function addByChainAsyncThunkActions<
 
 function addByAddressAsyncThunkActions(
   builder: ActionReducerMapBuilder<DataLoaderState>,
-  action: AsyncThunk<fetchWalletTimelineFullfilled, { address: string }, unknown>
+  action: AsyncThunk<fetchWalletTimelineFulfilled, { address: string }, unknown>
 ) {
   builder.addCase(action.pending, (sliceState, action) => {
     const address = action.meta?.arg.address;
