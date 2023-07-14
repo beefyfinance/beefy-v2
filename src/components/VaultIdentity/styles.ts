@@ -94,4 +94,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-zksync': {
     backgroundColor: '#fff',
   },
+  'vaultNetwork-zkevm': {
+    backgroundColor: '#f5f0fd',
+  },
 });
