@@ -44,7 +44,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#e74142',
   },
   'vaultNetwork-polygon': {
-    backgroundColor: '#8247e4',
+    backgroundColor: '#f5f0fd',
   },
   'vaultNetwork-fantom': {
     backgroundColor: '#1969FF',
@@ -95,6 +95,6 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#fff',
   },
   'vaultNetwork-zkevm': {
-    backgroundColor: '#f5f0fd',
+    backgroundColor: '#8247e4',
   },
 });

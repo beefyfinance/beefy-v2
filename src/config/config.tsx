@@ -56,7 +56,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     ],
   },
   polygon: {
-    name: 'Polygon',
+    name: 'Polygon PoS',
     chainId: 137,
     rpc: ['https://polygon-rpc.com'],
     explorerUrl: 'https://polygonscan.com',
@@ -65,7 +65,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     providerName: 'polygon',
     walletSettings: {
       chainId: `0x${parseInt('137', 10).toString(16)}`,
-      chainName: 'Polygon Mainnet',
+      chainName: 'Polygon PoS',
       nativeCurrency: {
         name: 'MATIC',
         symbol: 'MATIC',
@@ -602,6 +602,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     stableCoins: ['USDC', 'BUSD', 'wTBT'],
   },
   zkevm: {
+    new: true,
     name: 'Polygon zkEVM',
     chainId: 1101,
     rpc: ['https://zkevm-rpc.com'],
