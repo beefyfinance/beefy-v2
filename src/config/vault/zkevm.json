@@ -23,7 +23,7 @@
   },
   {
     "id": "quick-gamma-zk-usdt-usdc",
-    "name": "USDC-USDC Stable LP",
+    "name": "USDC-USDT Stable LP",
     "token": "aUSDC-USDT zkevm",
     "tokenAddress": "0x145d55aE4848f9782eFCAC785A655E3e5DcE1bCD",
     "tokenDecimals": 18,
