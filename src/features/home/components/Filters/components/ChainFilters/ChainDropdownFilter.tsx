@@ -3,7 +3,7 @@ import React, { memo, useCallback, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
-import { selectActiveChains } from '../../../../../data/selectors/chains';
+import { selectActiveChains, selectChainById } from '../../../../../data/selectors/chains';
 import type {
   DropdownItemLabelProps,
   SelectedItemProps,
@@ -15,13 +15,14 @@ import { styles } from './styles';
 import clsx from 'clsx';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 import { useSelectedChainIds } from './hooks';
-// import { NewBadge } from '../../../../../../components/Header/components/Badges/NewBadge';
+import { NewBadge } from '../../../../../../components/Header/components/Badges/NewBadge';
 
 const useStyles = makeStyles(styles);
 
 const IconWithChain = memo<{ chainId: ChainEntity['id']; label: string; className?: string }>(
   function IconWithChain({ chainId, label, className }) {
     const classes = useStyles();
+    const chain = useAppSelector(state => selectChainById(state, chainId));
 
     return (
       <div className={clsx(classes.iconWithChain, className)}>
@@ -33,11 +34,7 @@ const IconWithChain = memo<{ chainId: ChainEntity['id']; label: string; classNam
           className={classes.iconWithChainIcon}
         />
         {label}
-        {/* {chainId === 'zksync' && (
-          <div>
-            <NewBadge className={classes.badgeMobile} />
-          </div>
-        )} */}
+        {chain.new ? <NewBadge className={classes.badgeMobile} spacer={false} /> : null}
       </div>
     );
   }

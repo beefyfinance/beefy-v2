@@ -143,6 +143,7 @@ export interface ChainConfig {
   };
   gas: GasConfig;
   stableCoins: string[];
+  new?: boolean;
 }
 
 export interface AmmConfigBase {

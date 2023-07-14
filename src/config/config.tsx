@@ -602,6 +602,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     stableCoins: ['USDC', 'BUSD', 'wTBT'],
   },
   zkevm: {
+    new: true,
     name: 'Polygon zkEVM',
     chainId: 1101,
     rpc: ['https://zkevm-rpc.com'],
