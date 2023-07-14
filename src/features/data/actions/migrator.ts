@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
-import type { BaseMigrationConfig } from '../apis/config-types';
 import type { ChainEntity } from '../entities/chain';
 import { getConfigApi, getMigrationApi } from '../apis/instances';
 import type { VaultEntity } from '../entities/vault';
@@ -26,10 +25,10 @@ export const fetchAllMigrators = createAsyncThunk<
 
 export const migratorUpdate = createAsyncThunk<
   void,
-  { vaultId: VaultEntity['id']; migrationId: BaseMigrationConfig['id']; walletAddress: string },
+  { vaultId: VaultEntity['id']; migrationId: MigrationConfig['id']; walletAddress: string },
   { state: BeefyState }
 >('migration/update', async ({ vaultId, migrationId, walletAddress }, { dispatch }) => {
-  const migrationApi = getMigrationApi();
+  const migrationApi = await getMigrationApi();
   const migrator = await migrationApi.getMigrator(migrationId);
   dispatch(migrator.update({ vaultId, walletAddress }));
 });
@@ -37,7 +36,7 @@ export const migratorUpdate = createAsyncThunk<
 export const migratorExecute = createAsyncThunk<void, MigratorActionProps, { state: BeefyState }>(
   'migration/update',
   async ({ vaultId, t, migrationId }, { dispatch }) => {
-    const migrationApi = getMigrationApi();
+    const migrationApi = await getMigrationApi();
     const migrator = await migrationApi.getMigrator(migrationId);
     dispatch(migrator.execute({ vaultId, t, migrationId }));
   }

@@ -24,8 +24,8 @@ import {
 } from '../../../data/selectors/migration';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import { ActionConnect, ActionSwitch } from '../Actions/Transact/CommonActions';
-import type { BaseMigrationConfig } from '../../../data/apis/config-types';
 import { isEmpty } from '../../../../helpers/utils';
+import type { MigrationConfig } from '../../../data/reducers/wallet/migration';
 
 const useStyles = makeStyles(styles);
 
@@ -57,68 +57,64 @@ export const Migration = memo<MigrationProps>(function Migration({ vaultId }) {
   return null;
 });
 
-const Migrator = memo<{ migrationId: BaseMigrationConfig['id'] } & MigrationProps>(
-  function Migrator({ vaultId, migrationId }) {
-    const classes = useStyles();
-    const { t } = useTranslation();
-    const vault = useAppSelector(state => selectVaultById(state, vaultId));
-    const isWalletConnected = useAppSelector(selectIsWalletConnected);
-    const dispatch = useAppDispatch();
-    const { initialized, balance } = useAppSelector(state =>
-      selectUserBalanceToMigrateByVaultId(state, vaultId, migrationId)
-    );
-    const migrator = useAppSelector(state => selectMigratorById(state, migrationId));
-    const walletAddress = useAppSelector(selectWalletAddress);
+const Migrator = memo<{ migrationId: MigrationConfig['id'] } & MigrationProps>(function Migrator({
+  vaultId,
+  migrationId,
+}) {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+  const dispatch = useAppDispatch();
+  const { initialized, balance } = useAppSelector(state =>
+    selectUserBalanceToMigrateByVaultId(state, vaultId, migrationId)
+  );
+  const migrator = useAppSelector(state => selectMigratorById(state, migrationId));
+  const walletAddress = useAppSelector(selectWalletAddress);
 
-    const isWalletOnVaultChain = useAppSelector(
-      state => selectCurrentChainId(state) === vault.chainId
-    );
+  const isWalletOnVaultChain = useAppSelector(
+    state => selectCurrentChainId(state) === vault.chainId
+  );
 
-    useEffect(() => {
-      if (balance.eq(BIG_ZERO) && !initialized) {
-        dispatch(migratorUpdate({ vaultId, migrationId, walletAddress }));
-      }
-    }, [dispatch, migrationId, balance, vaultId, walletAddress, initialized]);
+  useEffect(() => {
+    if (balance.eq(BIG_ZERO) && !initialized) {
+      dispatch(migratorUpdate({ vaultId, migrationId, walletAddress }));
+    }
+  }, [dispatch, migrationId, balance, vaultId, walletAddress, initialized]);
 
-    const handleMigrateAll = useCallback(() => {
-      dispatch(migratorExecute({ vaultId, t, migrationId }));
-    }, [dispatch, migrationId, t, vaultId]);
+  const handleMigrateAll = useCallback(() => {
+    dispatch(migratorExecute({ vaultId, t, migrationId }));
+  }, [dispatch, migrationId, t, vaultId]);
 
-    if (balance.gt(0)) {
-      return (
-        <div className={classes.container}>
-          <div className={classes.header}>
-            <img className={classes.icon} src={getSingleAssetSrc(migrator.icon)} />
-            <div>
-              <div className={classes.subTitle}>{migrator.name}</div>
-              <div className={classes.title}>{t('Migration-Title')}</div>
-            </div>
-          </div>
-          <div className={classes.content}>
-            <div>
-              {t('Migration-Text', {
-                balance: formatBigDecimals(balance, 4),
-                migrator: migrator.name,
-              })}
-            </div>
-            {!isWalletConnected ? (
-              <ActionConnect />
-            ) : isWalletOnVaultChain ? (
-              <Button
-                onClick={handleMigrateAll}
-                variant="success"
-                fullWidth={true}
-                borderless={true}
-              >
-                {t('Migration-Action')}
-              </Button>
-            ) : (
-              <ActionSwitch chainId={vault.chainId} />
-            )}
+  if (balance.gt(0)) {
+    return (
+      <div className={classes.container}>
+        <div className={classes.header}>
+          <img className={classes.icon} alt={migrator.id} src={getSingleAssetSrc(migrator.icon)} />
+          <div>
+            <div className={classes.subTitle}>{migrator.name}</div>
+            <div className={classes.title}>{t('Migration-Title')}</div>
           </div>
         </div>
-      );
-    }
-    return null;
+        <div className={classes.content}>
+          <div>
+            {t('Migration-Text', {
+              balance: formatBigDecimals(balance, 4),
+              migrator: migrator.name,
+            })}
+          </div>
+          {!isWalletConnected ? (
+            <ActionConnect />
+          ) : isWalletOnVaultChain ? (
+            <Button onClick={handleMigrateAll} variant="success" fullWidth={true} borderless={true}>
+              {t('Migration-Action')}
+            </Button>
+          ) : (
+            <ActionSwitch chainId={vault.chainId} />
+          )}
+        </div>
+      </div>
+    );
   }
-);
+  return null;
+});

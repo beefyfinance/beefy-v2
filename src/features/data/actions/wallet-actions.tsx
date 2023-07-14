@@ -74,8 +74,8 @@ import { selectOneInchZapByChainId } from '../selectors/zap';
 import type { DestChainEntity } from '../apis/bridge/bridge-types';
 import type { PromiEvent } from 'web3-core';
 import type { ThunkDispatch } from 'redux-thunk';
-import type { BaseMigrationConfig } from '../apis/config-types';
 import { migratorUpdate } from './migrator';
+import type { MigrationConfig } from '../reducers/wallet/migration';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -120,7 +120,7 @@ const migrateUnstake = (
   unstakeCall,
   vault: VaultEntity,
   amount: BigNumber,
-  migrationId: BaseMigrationConfig['id']
+  migrationId: MigrationConfig['id']
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
@@ -1540,7 +1540,7 @@ function bindTransactionEvents<T extends MandatoryAdditionalData>(
     boostId?: BoostEntity['id'];
     minterId?: MinterEntity['id'];
     vaultId?: VaultEntity['id'];
-    migrationId?: BaseMigrationConfig['id'];
+    migrationId?: MigrationConfig['id'];
   },
   step?: string
 ) {

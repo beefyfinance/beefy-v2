@@ -3,14 +3,16 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { VaultEntity } from '../../entities/vault';
 import type BigNumber from 'bignumber.js';
 import { fetchAllMigrators } from '../../actions/migrator';
-import type { BaseMigrationConfig } from '../../apis/config-types';
 import { fetchConicStakedBalance } from '../../apis/migration/ethereum-conic/migrator';
+import type {
+  ConicMigrationConfig,
+  ConicMigrationData,
+} from '../../apis/migration/ethereum-conic/types';
 
-//TODO : CONIC don't need extra type, when add another migration this will change
-export type MigrationConfig = BaseMigrationConfig;
+export type MigrationConfig = ConicMigrationConfig;
 
 type UserMigrationData = {
-  ['ethereum-conic']?: { initialized: boolean; balance: BigNumber };
+  ['ethereum-conic']?: ConicMigrationData;
 };
 
 export interface MigrationState {
@@ -24,7 +26,7 @@ export interface MigrationState {
     };
   };
   byMigrationId: {
-    [migrationId: BaseMigrationConfig['id']]: MigrationConfig;
+    [migrationId: MigrationConfig['id']]: MigrationConfig;
   }; // loaded from configs
 }
 
@@ -54,7 +56,7 @@ function addUserBalanceToMigrate(
   balance: BigNumber,
   walletAddress: string,
   vaultId: VaultEntity['id'],
-  migrationId: BaseMigrationConfig['id']
+  migrationId: MigrationConfig['id']
 ) {
   if (state.byUserAddress[walletAddress] === undefined) {
     state.byUserAddress[walletAddress] = {

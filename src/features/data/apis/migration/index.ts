@@ -1,10 +1,10 @@
-import type { BaseMigrationConfig } from '../config-types';
+import type { MigrationConfig } from '../../reducers/wallet/migration';
 import type { Migrator, IMigrationApi } from './migration-types';
 
-const migrators: BaseMigrationConfig['id'][] = ['ethereum-conic'];
+const migrators: MigrationConfig['id'][] = ['ethereum-conic'];
 
 export class MigrationApi implements IMigrationApi {
-  public async getMigrator(id: BaseMigrationConfig['id']): Promise<Migrator> {
+  public async getMigrator(id: MigrationConfig['id']): Promise<Migrator> {
     if (migrators.includes(id)) {
       return (await import(`./${id}/migrator.ts`)).migrator;
     } else {
