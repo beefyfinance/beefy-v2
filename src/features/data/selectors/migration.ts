@@ -21,8 +21,9 @@ export const selectUserBalanceToMigrateByVaultId = createSelector(
     migrationId,
   (migrationState, walletAddress, vaultId, migrationId) => {
     return (
-      migrationState.byUserAddress[walletAddress]?.byVaultId[vaultId]?.byMigrationId[migrationId] ||
-      BIG_ZERO
+      migrationState.byUserAddress[walletAddress]?.byVaultId[vaultId]?.byMigrationId[
+        migrationId
+      ] || { balance: BIG_ZERO, initialized: false }
     );
   }
 );

@@ -10,19 +10,24 @@ export interface IMigrationApi {
 }
 
 export interface Migrator {
-  update: AsyncThunk<any, any, any>;
-  execute: AsyncThunk<any, any, any>;
+  update: AsyncThunk<any, MigratorUpdateProps, any>;
+  execute: AsyncThunk<any, MigratorActionProps, any>;
 }
 
 export interface FullFilledFetchBalanceFromUnderlyingProtocol {
-  balance: BigNumber;
-  vaultId: VaultEntity['id'];
-  walletAddress: string;
-  migrationId: BaseMigrationConfig['id'];
+  readonly balance: BigNumber;
+  readonly vaultId: VaultEntity['id'];
+  readonly walletAddress: string;
+  readonly migrationId: BaseMigrationConfig['id'];
 }
 
 export interface MigratorActionProps {
-  vaultId: VaultEntity['id'];
+  readonly vaultId: VaultEntity['id'];
   t: TFunction<Namespace>;
-  migrationId: BaseMigrationConfig['id'];
+  readonly migrationId: BaseMigrationConfig['id'];
+}
+
+export interface MigratorUpdateProps {
+  vaultId: VaultEntity['id'];
+  walletAddress: string;
 }

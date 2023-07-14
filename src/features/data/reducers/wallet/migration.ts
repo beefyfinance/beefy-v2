@@ -5,12 +5,12 @@ import type BigNumber from 'bignumber.js';
 import { fetchAllMigrators } from '../../actions/migrator';
 import type { BaseMigrationConfig } from '../../apis/config-types';
 import { fetchConicStakedBalance } from '../../apis/migration/ethereum-conic/migrator';
-import type { ConicMigrationConfig } from '../../apis/migration/ethereum-conic/types';
 
-export type MigrationConfig = ConicMigrationConfig;
+//TODO : CONIC don't need extra type, when add another migration this will change
+export type MigrationConfig = BaseMigrationConfig;
 
 type UserMigrationData = {
-  ['ethereum-conic']?: { balance: BigNumber };
+  ['ethereum-conic']?: { initialized: boolean; balance: BigNumber };
 };
 
 export interface MigrationState {
@@ -65,5 +65,8 @@ function addUserBalanceToMigrate(
   if (state.byUserAddress[walletAddress].byVaultId[vaultId] === undefined) {
     state.byUserAddress[walletAddress].byVaultId[vaultId] = { byMigrationId: {} };
   }
-  state.byUserAddress[walletAddress].byVaultId[vaultId].byMigrationId[migrationId] = balance;
+  state.byUserAddress[walletAddress].byVaultId[vaultId].byMigrationId[migrationId] = {
+    initialized: true,
+    balance,
+  };
 }

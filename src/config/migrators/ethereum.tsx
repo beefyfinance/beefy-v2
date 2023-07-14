@@ -5,6 +5,5 @@ export const migrators: MigrationConfig[] = [
     id: 'ethereum-conic',
     name: 'Conic Finance',
     icon: 'CNC',
-    vaultIds: ['conic-crvusd', 'conic-usdc', 'conic-eth'],
   },
 ];

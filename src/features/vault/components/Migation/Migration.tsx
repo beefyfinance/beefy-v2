@@ -9,7 +9,12 @@ import { useAppDispatch, useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import {} from '../../../data/selectors/platforms';
 import { formatBigDecimals } from '../../../../helpers/format';
-import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
+import {
+  selectCurrentChainId,
+  selectIsWalletConnected,
+  selectWalletAddress,
+  selectWalletAddressIfKnown,
+} from '../../../data/selectors/wallet';
 import { fetchAllMigrators, migratorExecute, migratorUpdate } from '../../../data/actions/migrator';
 import {
   selectMigrationIdsByVaultId,
@@ -31,7 +36,7 @@ interface MigrationProps {
 export const Migration = memo<MigrationProps>(function Migration({ vaultId }) {
   const dispatch = useAppDispatch();
   const shouldInitMigration = useAppSelector(selectShouldInitMigration);
-
+  const walletAddress = useAppSelector(selectWalletAddressIfKnown);
   const migrationIds = useAppSelector(state => selectMigrationIdsByVaultId(state, vaultId));
 
   useEffect(() => {
@@ -40,7 +45,7 @@ export const Migration = memo<MigrationProps>(function Migration({ vaultId }) {
     }
   }, [dispatch, shouldInitMigration]);
 
-  if (!isEmpty(migrationIds)) {
+  if (!isEmpty(migrationIds) && walletAddress) {
     return (
       <>
         {migrationIds.map(migrationId => {
@@ -59,27 +64,27 @@ const Migrator = memo<{ migrationId: BaseMigrationConfig['id'] } & MigrationProp
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
     const isWalletConnected = useAppSelector(selectIsWalletConnected);
     const dispatch = useAppDispatch();
-    const userBalanceToMigrate = useAppSelector(state =>
+    const { initialized, balance } = useAppSelector(state =>
       selectUserBalanceToMigrateByVaultId(state, vaultId, migrationId)
     );
     const migrator = useAppSelector(state => selectMigratorById(state, migrationId));
+    const walletAddress = useAppSelector(selectWalletAddress);
 
     const isWalletOnVaultChain = useAppSelector(
       state => selectCurrentChainId(state) === vault.chainId
     );
 
     useEffect(() => {
-      if (userBalanceToMigrate.eq(BIG_ZERO)) {
-        dispatch(migratorUpdate({ vaultId, migrationId }));
+      if (balance.eq(BIG_ZERO) && !initialized) {
+        dispatch(migratorUpdate({ vaultId, migrationId, walletAddress }));
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [dispatch, migrationId, balance, vaultId, walletAddress, initialized]);
 
     const handleMigrateAll = useCallback(() => {
       dispatch(migratorExecute({ vaultId, t, migrationId }));
     }, [dispatch, migrationId, t, vaultId]);
 
-    if (userBalanceToMigrate.gt(0)) {
+    if (balance.gt(0)) {
       return (
         <div className={classes.container}>
           <div className={classes.header}>
@@ -92,7 +97,7 @@ const Migrator = memo<{ migrationId: BaseMigrationConfig['id'] } & MigrationProp
           <div className={classes.content}>
             <div>
               {t('Migration-Text', {
-                balance: formatBigDecimals(userBalanceToMigrate, 4),
+                balance: formatBigDecimals(balance, 4),
                 migrator: migrator.name,
               })}
             </div>

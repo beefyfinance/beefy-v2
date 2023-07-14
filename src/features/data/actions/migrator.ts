@@ -26,12 +26,12 @@ export const fetchAllMigrators = createAsyncThunk<
 
 export const migratorUpdate = createAsyncThunk<
   void,
-  { vaultId: VaultEntity['id']; migrationId: BaseMigrationConfig['id'] },
+  { vaultId: VaultEntity['id']; migrationId: BaseMigrationConfig['id']; walletAddress: string },
   { state: BeefyState }
->('migration/update', async ({ vaultId, migrationId }, { dispatch }) => {
+>('migration/update', async ({ vaultId, migrationId, walletAddress }, { dispatch }) => {
   const migrationApi = getMigrationApi();
   const migrator = await migrationApi.getMigrator(migrationId);
-  dispatch(migrator.update({ vaultId }));
+  dispatch(migrator.update({ vaultId, walletAddress }));
 });
 
 export const migratorExecute = createAsyncThunk<void, MigratorActionProps, { state: BeefyState }>(
@@ -39,6 +39,6 @@ export const migratorExecute = createAsyncThunk<void, MigratorActionProps, { sta
   async ({ vaultId, t, migrationId }, { dispatch }) => {
     const migrationApi = getMigrationApi();
     const migrator = await migrationApi.getMigrator(migrationId);
-    dispatch(migrator.execute({ vaultId, t }));
+    dispatch(migrator.execute({ vaultId, t, migrationId }));
   }
 );

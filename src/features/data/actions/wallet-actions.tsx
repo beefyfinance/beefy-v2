@@ -74,6 +74,8 @@ import { selectOneInchZapByChainId } from '../selectors/zap';
 import type { DestChainEntity } from '../apis/bridge/bridge-types';
 import type { PromiEvent } from 'web3-core';
 import type { ThunkDispatch } from 'redux-thunk';
+import type { BaseMigrationConfig } from '../apis/config-types';
+import { migratorUpdate } from './migrator';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -114,7 +116,12 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
   });
 };
 
-const migrateUnstake = (unstakeCall, vault: VaultEntity, amount: BigNumber) => {
+const migrateUnstake = (
+  unstakeCall,
+  vault: VaultEntity,
+  amount: BigNumber,
+  migrationId: BaseMigrationConfig['id']
+) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
@@ -137,6 +144,8 @@ const migrateUnstake = (unstakeCall, vault: VaultEntity, amount: BigNumber) => {
         chainId: vault.chainId,
         spenderAddress: vault.earnContractAddress,
         tokens: getVaultTokensToRefresh(state, vault),
+        migrationId,
+        vaultId: vault.id,
       }
     );
   });
@@ -1530,6 +1539,8 @@ function bindTransactionEvents<T extends MandatoryAdditionalData>(
     govVaultId?: VaultEntity['id'];
     boostId?: BoostEntity['id'];
     minterId?: MinterEntity['id'];
+    vaultId?: VaultEntity['id'];
+    migrationId?: BaseMigrationConfig['id'];
   },
   step?: string
 ) {
@@ -1548,23 +1559,38 @@ function bindTransactionEvents<T extends MandatoryAdditionalData>(
 
       // fetch new balance and allowance of native token (gas spent) and allowance token
       if (refreshOnSuccess) {
+        const {
+          walletAddress,
+          chainId,
+          govVaultId,
+          boostId,
+          spenderAddress,
+          tokens,
+          minterId,
+          vaultId,
+          migrationId,
+        } = refreshOnSuccess;
+
         dispatch(
           reloadBalanceAndAllowanceAndGovRewardsAndBoostData({
-            walletAddress: refreshOnSuccess.walletAddress,
-            chainId: refreshOnSuccess.chainId,
-            govVaultId: refreshOnSuccess.govVaultId,
-            boostId: refreshOnSuccess.boostId,
-            spenderAddress: refreshOnSuccess.spenderAddress,
-            tokens: refreshOnSuccess.tokens,
+            walletAddress: walletAddress,
+            chainId: chainId,
+            govVaultId: govVaultId,
+            boostId: boostId,
+            spenderAddress: spenderAddress,
+            tokens: tokens,
           })
         );
-        if (refreshOnSuccess.minterId) {
+        if (minterId) {
           dispatch(
             reloadReserves({
-              chainId: refreshOnSuccess.chainId,
-              minterId: refreshOnSuccess.minterId,
+              chainId: chainId,
+              minterId: minterId,
             })
           );
+        }
+        if (migrationId) {
+          dispatch(migratorUpdate({ vaultId, migrationId, walletAddress }));
         }
       }
     })

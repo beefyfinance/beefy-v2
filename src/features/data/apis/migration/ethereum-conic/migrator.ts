@@ -3,13 +3,13 @@ import type {
   FullFilledFetchBalanceFromUnderlyingProtocol,
   Migrator,
   MigratorActionProps,
+  MigratorUpdateProps,
 } from '../migration-types';
 import type { VaultEntity } from '../../../entities/vault';
 import BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { selectVaultById } from '../../../selectors/vaults';
 import { selectChainById } from '../../../selectors/chains';
-import { selectWalletAddress } from '../../../selectors/wallet';
 import { getWalletConnectionApiInstance, getWeb3Instance } from '../../instances';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import { selectUserBalanceToMigrateByVaultId } from '../../../selectors/migration';
@@ -25,14 +25,13 @@ const CONIC_LP_TOKEN_STAKER = '0xeC037423A61B634BFc490dcc215236349999ca3d';
 
 export const fetchConicStakedBalance = createAsyncThunk<
   FullFilledFetchBalanceFromUnderlyingProtocol,
-  { vaultId: VaultEntity['id'] },
+  MigratorUpdateProps,
   { state: BeefyState }
->('migration/fetchConicStakedBalance', async ({ vaultId }, { getState }) => {
+>('migration/fetchConicStakedBalance', async ({ vaultId, walletAddress }, { getState }) => {
   const state = getState();
   const vault = selectVaultById(state, vaultId);
   const chain = selectChainById(state, vault.chainId);
   const web3 = await getWeb3Instance(chain);
-  const walletAddress = selectWalletAddress(state);
 
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const lpTokenStaker = new web3.eth.Contract(ConicLpTokenStakerAbi, CONIC_LP_TOKEN_STAKER);
@@ -83,7 +82,12 @@ export const executeConicAction = createAsyncThunk<
   steps.push({
     step: 'migration',
     message: t('Vault-MigrationStart'),
-    action: walletActions.migrateUnstake(call, vault, amount.shiftedBy(depositToken.decimals)),
+    action: walletActions.migrateUnstake(
+      call,
+      vault,
+      amount.shiftedBy(depositToken.decimals),
+      migrationId
+    ),
     pending: false,
     extraInfo: { vaultId },
   });

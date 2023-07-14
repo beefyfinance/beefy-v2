@@ -1,3 +1,3 @@
-import type { BaseMigrationConfig } from '../../features/data/apis/config-types';
+import type { MigrationConfig } from '../../features/data/reducers/wallet/migration';
 
-export const migrators: BaseMigrationConfig[] = [];
+export const migrators: MigrationConfig[] = [];
