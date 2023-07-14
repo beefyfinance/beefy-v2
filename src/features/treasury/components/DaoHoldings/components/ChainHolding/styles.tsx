@@ -90,6 +90,6 @@ export const styles = (theme: Theme) => ({
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
   },
   'headerNetwork-zkevm': {
-    backgroundColor: 'rgba(130, 71, 228, 0.2)',
+    backgroundColor: 'rgba(123, 63, 228, 0.5)',
   },
 });
