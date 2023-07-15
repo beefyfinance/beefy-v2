@@ -6392,7 +6392,8 @@
     "earnContractAddress": "0x6f991190577eE0FF85C0730A185746af3aFAe799",
     "oracle": "lps",
     "oracleId": "wigo-usdc-wigo",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "wigoswap",
     "assets": ["WIGO", "USDC"],
     "risks": [
@@ -6455,7 +6456,8 @@
     "earnContractAddress": "0x0c7cf8118eafea41bBBECe3e2d91dCdF6cafD5F9",
     "oracle": "lps",
     "oracleId": "wigo-crv-ftm",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "wigoswap",
     "assets": ["CRV", "FTM"],
     "risks": [
@@ -6486,7 +6488,8 @@
     "earnContractAddress": "0xe65DE6b412aB7d221E0C87fe61EE893490E8E6B3",
     "oracle": "lps",
     "oracleId": "wigo-dai-ftm",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "wigoswap",
     "assets": ["DAI", "FTM"],
     "risks": [
@@ -6518,7 +6521,8 @@
     "earnContractAddress": "0x70c6AF9Dff8C19B3db576E5E199B22A883874f05",
     "oracle": "lps",
     "oracleId": "wigo-usdc-ftm",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "wigoswap",
     "assets": ["USDC", "FTM"],
     "risks": [
@@ -6549,7 +6553,8 @@
     "earnContractAddress": "0xDb852f7398f9Bdbf868ed4Dda2eb3B055e219B3c",
     "oracle": "lps",
     "oracleId": "wigo-eth-ftm",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "wigoswap",
     "assets": ["ETH", "FTM"],
     "risks": [
