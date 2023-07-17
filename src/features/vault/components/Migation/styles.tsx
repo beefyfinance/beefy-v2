@@ -33,6 +33,6 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     justifyContent: 'center',
     padding: '24px',
-    rowGap: '8px',
+    rowGap: '16px',
   },
 });
