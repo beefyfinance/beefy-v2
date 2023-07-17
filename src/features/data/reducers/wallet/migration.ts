@@ -45,7 +45,7 @@ export const migrationSlice = createSlice({
       }
     });
 
-    handleCommonMigratorsUpdate(builder, ['ethereum-conic']);
+    handleCommonMigratorsUpdate(builder, ['ethereum-conic', 'polygon-pearl']);
   },
 });
 
