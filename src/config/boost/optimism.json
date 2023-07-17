@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_velodrome-v2-usdc-velo-velodrome",
+    "poolId": "velodrome-v2-usdc-velo",
+    "name": "Beefy",
+    "assets": ["VELOV2", "USDC"],
+    "tokenAddress": "0x746c19a336a3131fd85d3ab5f16576b1b047f512",
+    "earnedToken": "OP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
+    "earnContractAddress": "0x1201c2D3d03aB1C60395B679352ba0a97ED697cE",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OP",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["velodrome"]
+  },
+  {
     "id": "moo_velodrome-usdp-usdc-overnight",
     "poolId": "velodrome-usdp-usdc",
     "name": "Overnight",
