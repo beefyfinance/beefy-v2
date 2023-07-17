@@ -149,6 +149,7 @@
   "Vault-Breakdown-BoostDaily": "Boost Daily",
   "Vault-ApproveMsg": "Approval transaction happens once per vault",
   "Vault-TxnConfirm": "Confirm wallet transaction to complete {{type}}",
+  "Vault-MigrationStart": "Confirm wallet transaction to begin migration ",
   "Vault-Wallet": "Wallet:",
   "Vault-Deposited": "Deposited:",
   "Vault-Strategy": "Strategy",
@@ -612,5 +613,8 @@
   "Dashboard-SearchInput-Invalid-Domain": "Unable to resolve domain",
   "Dashboard-SearchInput-Invalid-Address": "Entered address is not valid",
   "beVELOV2-description": "As $VELO is retired by Velodrome, $beVELO holders are urged to move your tokens to the new beVELO Earnings Pool to ensure you can continue earning $VELOV2 rewards. With our Earnings Pool, you can share in Velodrome protocol emissions earned by Beefy's Velodrome veNFT, which we regularly claim and transfer back to you.",
-  "More-info": "More info"
+  "More-info": "More info",
+  "Migration-Title": "Migrate your deposit",
+  "Migration-Text": "You have {{balance}} LP tokens staked on {{migrator}} that are available for an easy migration into this autocompounding vault",
+  "Migration-Action": "Migrate Now"
 }

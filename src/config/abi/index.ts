@@ -16,6 +16,7 @@ import ZapJson from './zap.json';
 import BeefyZapOneInchJson from './beefyZapOneInch.json';
 import OneInchPriceOracleJson from './oneInchPriceOracle.json';
 import VelodromeV2PairJson from './velodromeV2Pair.json';
+import ConicLpTokenStakerJson from './conicLpTokenStaker.json';
 
 export const BeefyV2AppMulticallAbi = BeefyV2AppMulticallJson as AbiItem[];
 export const BoostAbi = BoostJson as AbiItem[];
@@ -34,3 +35,4 @@ export const SolidlyPairAbi = SolidlyPairJson as AbiItem[];
 export const SolidlyFactoryAbi = SolidlyFactoryJson as AbiItem[];
 export const OneInchPriceOracleAbi = OneInchPriceOracleJson as AbiItem[];
 export const VelodromeV2PairAbi = VelodromeV2PairJson as AbiItem[];
+export const ConicLpTokenStakerAbi = ConicLpTokenStakerJson as AbiItem[];

@@ -35,9 +35,10 @@ import type {
 import { errorToString } from '../../../helpers/format';
 import { fetchAllAmmsAction } from '../actions/amm';
 import { fetchTreasury } from '../actions/treasury';
-import type { fetchWalletTimelineFullfilled } from '../actions/analytics';
+import type { fetchWalletTimelineFulfilled } from '../actions/analytics';
 import { fetchWalletTimeline } from '../actions/analytics';
 import { fetchActiveProposals } from '../actions/proposal';
+import { fetchAllMigrators } from '../actions/migrator';
 
 const dataLoaderStateInit: LoaderState = {
   alreadyLoadedOnce: false,
@@ -98,6 +99,7 @@ export const initialDataLoaderState: DataLoaderState = {
     treasury: dataLoaderStateInit,
     analytics: dataLoaderStateInit,
     proposals: dataLoaderStateInit,
+    migrators: dataLoaderStateInit,
   },
   byChainId: {},
   byAddress: {},
@@ -255,7 +257,7 @@ function addByChainAsyncThunkActions<
 
 function addByAddressAsyncThunkActions(
   builder: ActionReducerMapBuilder<DataLoaderState>,
-  action: AsyncThunk<fetchWalletTimelineFullfilled, { address: string }, unknown>
+  action: AsyncThunk<fetchWalletTimelineFulfilled, { address: string }, unknown>
 ) {
   builder.addCase(action.pending, (sliceState, action) => {
     const address = action.meta?.arg.address;
@@ -310,6 +312,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts', true);
     addGlobalAsyncThunkActions(builder, fetchFees, 'fees', true);
     addGlobalAsyncThunkActions(builder, fetchAllMinters, 'minters', false);
+    addGlobalAsyncThunkActions(builder, fetchAllMigrators, 'migrators', false);
     addGlobalAsyncThunkActions(builder, fetchAllInfoCards, 'infoCards', false);
     addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm', true);
     addGlobalAsyncThunkActions(builder, initiateMinterForm, 'minterForm', true);

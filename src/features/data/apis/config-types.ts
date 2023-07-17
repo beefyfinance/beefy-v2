@@ -40,6 +40,7 @@ export interface VaultConfig {
   refundContractAddress?: string | null;
   showWarning?: boolean | null;
   warning?: string | null;
+  migrationIds?: string[];
 }
 
 export interface FeaturedVaultConfig {
@@ -316,4 +317,10 @@ export type TreasuryConfig = {
       };
     };
   };
+};
+
+export type BaseMigrationConfig = {
+  readonly id: string; // eg ethereum-conic
+  readonly name: string; // eg Conic Finance
+  readonly icon: string;
 };
