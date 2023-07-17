@@ -99,7 +99,7 @@ const Migrator = memo<{ migrationId: MigrationConfig['id'] } & MigrationProps>(f
         <div className={classes.content}>
           <div>
             {t('Migration-Text', {
-              balance: formatBigDecimals(balance, 4),
+              balance: formatBigDecimals(balance, 18),
               migrator: migrator.name,
             })}
           </div>
