@@ -1,4 +1,12 @@
 {
+  "optimism": {
+    "text": "Optimism is an L2 blockchain built by Ethereum developers that processes its transactions in batches using optimistic rollups. Users gain access to cheap and near instantaneous transactions are cheap and nearly instantaneous.",
+    "website": "https://www.optimism.io/",
+    "social": {
+      "telegram": "https://discord.com/invite/optimism",
+      "twitter": "https://twitter.com/optimismFND"
+    }
+  },
   "tprotocol": {
     "text": "TBT is short for T-Bill token. TBT is fully backed by permissioned sTBT issued by a multi-billion ceDeFi institution.",
     "website": "https://www.tprotocol.io/",
