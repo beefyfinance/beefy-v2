@@ -144,37 +144,6 @@
     "createdAt": 1689626323
   },
   {
-    "id": "boo-lzusdc-lzweth",
-    "name": "lzUSDC-lzWETH LP",
-    "token": "lzUSDC-lzWETH LP",
-    "tokenAddress": "0xf2610511493473379d76Bfee07B673D0cB4Ed3E7",
-    "tokenDecimals": 18,
-    "tokenProviderId": "spookyswap",
-    "tokenAmmId": "fantom-spookyswap",
-    "earnedToken": "mooSpookylzUSDC-lzWETH",
-    "earnedTokenAddress": "0x92c80feDb43ad4F0884D33D57080331213806282",
-    "earnContractAddress": "0x92c80feDb43ad4F0884D33D57080331213806282",
-    "oracle": "lps",
-    "oracleId": "boo-lzusdc-lzweth",
-    "status": "active",
-    "platformId": "spookyswap",
-    "assets": ["lzUSDC", "lzWETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://spooky.fi/#/swap",
-    "addLiquidityUrl": "https://spooky.fi/#/add/0x28a92dde19D9989F39A49905d7C9C2FAc7799bDf/0x695921034f0387eAc4e11620EE91b1b15A6A09fE",
-    "removeLiquidityUrl": "https://spooky.fi/#/pool",
-    "network": "fantom",
-    "createdAt": 1689626323
-  },
-  {
     "id": "equalizer-axlusdc-lzusdc",
     "name": "axlUSDC-lzUSDC sLP",
     "token": "axlUSDC-lzUSDC sLP",
