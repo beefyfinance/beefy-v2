@@ -1,4 +1,12 @@
 {
+  "tprotocol": {
+    "text": "TBT is short for T-Bill token. TBT is fully backed by permissioned sTBT issued by a multi-billion ceDeFi institution.",
+    "website": "https://www.tprotocol.io/",
+    "social": {
+      "telegram": "https://discord.com/invite/ZEV6PNXK9Q",
+      "twitter": "https://twitter.com/TProtocol_"
+    }
+  },
   "scanto": {
     "text": "When you stake $CANTO at scanto.io you get $sCANTO a liquid staking derivative that can be used across a range of DeFi applications.",
     "website": "https://scanto.io",
