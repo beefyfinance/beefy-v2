@@ -7,13 +7,14 @@ import type { AnalyticsPriceResponse, TimeBucketType } from '../apis/analytics/a
 import type { VaultEntity } from '../entities/vault';
 import { isFiniteNumber } from '../../../helpers/number';
 
-export interface fetchWalletTimelineFullfilled {
+export interface fetchWalletTimelineFulfilled {
   timeline: VaultTimelineAnalyticsEntity[];
+  walletAddress: string;
   state: BeefyState;
 }
 
 export const fetchWalletTimeline = createAsyncThunk<
-  fetchWalletTimelineFullfilled,
+  fetchWalletTimelineFulfilled,
   { address: string },
   { state: BeefyState }
 >('analytics/fetchWalletTimeline', async ({ address }, { getState }) => {
@@ -41,38 +42,58 @@ export const fetchWalletTimeline = createAsyncThunk<
     };
   });
 
-  return { timeline, state: getState() };
+  return { timeline, walletAddress: address.toLowerCase(), state: getState() };
 });
 
-interface DataMartPricesFullfilled {
+interface DataMartPricesFulfilled {
   data: AnalyticsPriceResponse;
   vaultId: VaultEntity['id'];
   timebucket: TimeBucketType;
+  walletAddress: string;
   state: BeefyState;
 }
 
 interface DataMartPricesProps {
   productKey: string;
   timebucket: TimeBucketType;
+  walletAddress: string;
   vaultId: VaultEntity['id'];
 }
 
 export const fetchShareToUnderlying = createAsyncThunk<
-  DataMartPricesFullfilled,
+  DataMartPricesFulfilled,
   DataMartPricesProps,
   { state: BeefyState }
->('analytics/fetchShareToUnderlying', async ({ productKey, timebucket, vaultId }, { getState }) => {
-  const api = await getAnalyticsApi();
-  const data = await api.getVaultPrices(productKey, 'share_to_underlying', timebucket);
-  return { data, vaultId, timebucket, state: getState() };
-});
+>(
+  'analytics/fetchShareToUnderlying',
+  async ({ productKey, walletAddress, timebucket, vaultId }, { getState }) => {
+    const api = await getAnalyticsApi();
+    const data = await api.getVaultPrices(productKey, 'share_to_underlying', timebucket);
+    return {
+      data,
+      vaultId,
+      timebucket,
+      walletAddress: walletAddress.toLocaleLowerCase(),
+      state: getState(),
+    };
+  }
+);
 
 export const fetchUnderlyingToUsd = createAsyncThunk<
-  DataMartPricesFullfilled,
+  DataMartPricesFulfilled,
   DataMartPricesProps,
   { state: BeefyState }
->('analytics/fetchUnderlyingToUsd', async ({ productKey, timebucket, vaultId }, { getState }) => {
-  const api = await getAnalyticsApi();
-  const data = await api.getVaultPrices(productKey, 'underlying_to_usd', timebucket);
-  return { data, vaultId, timebucket, state: getState() };
-});
+>(
+  'analytics/fetchUnderlyingToUsd',
+  async ({ productKey, timebucket, walletAddress, vaultId }, { getState }) => {
+    const api = await getAnalyticsApi();
+    const data = await api.getVaultPrices(productKey, 'underlying_to_usd', timebucket);
+    return {
+      data,
+      vaultId,
+      timebucket,
+      walletAddress: walletAddress.toLocaleLowerCase(),
+      state: getState(),
+    };
+  }
+);

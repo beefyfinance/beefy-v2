@@ -51,11 +51,12 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'sethUSDT',
       'eUSD',
       'lvUSD',
+      'crvUSD',
       'R',
     ],
   },
   polygon: {
-    name: 'Polygon',
+    name: 'Polygon PoS',
     chainId: 137,
     rpc: ['https://polygon-rpc.com'],
     explorerUrl: 'https://polygonscan.com',
@@ -64,7 +65,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     providerName: 'polygon',
     walletSettings: {
       chainId: `0x${parseInt('137', 10).toString(16)}`,
-      chainName: 'Polygon Mainnet',
+      chainName: 'Polygon PoS',
       nativeCurrency: {
         name: 'MATIC',
         symbol: 'MATIC',
@@ -281,6 +282,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'BUSD',
       'alUSD',
       'axlUSDC',
+      'lzUSDC',
     ],
   },
   arbitrum: {
@@ -329,6 +331,10 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'jEUR',
       'wUSDR',
       'USDCe',
+      'bbaaUSDC',
+      'bbaaUSDT',
+      'bbaaDAI',
+      'bbaaUSD',
     ],
   },
   avax: {
@@ -545,7 +551,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['USDC', 'DAI', 'USDT', 'axlDAI', 'axlUSDC', 'axlUSDT', 'MAI'],
+    stableCoins: ['USDC', 'DAI', 'USDT', 'axlDAI', 'axlUSDC', 'axlUSDT', 'MAI', 'USDt'],
   },
   canto: {
     name: 'Canto',
@@ -578,7 +584,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     explorerUrl: 'https://explorer.zksync.io',
     multicallAddress: '0x1E9231Cc9782D9F8e213736F6dAC00020D8271cB',
     appMulticallContractAddress: '0x5479d2A10e60110F4728d910b5321Af4B78c30E4',
-    providerName: 'Canto',
+    providerName: 'zkSync',
     walletSettings: {
       chainId: `0x${parseInt('324', 10).toString(16)}`,
       chainName: 'zksync',
@@ -593,7 +599,32 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['USDC', 'BUSD'],
+    stableCoins: ['USDC', 'BUSD', 'wTBT'],
+  },
+  zkevm: {
+    new: true,
+    name: 'Polygon zkEVM',
+    chainId: 1101,
+    rpc: ['https://zkevm-rpc.com'],
+    explorerUrl: 'https://zkevm.polygonscan.com/',
+    multicallAddress: '0xD19ab62F83380908D65E344567378cF104cE46c2',
+    appMulticallContractAddress: '0x2ec5d5e9aaf3c3f56eBeF2fC46A5af9e42810b41',
+    providerName: 'zkEVM',
+    walletSettings: {
+      chainId: `0x${parseInt('1101', 10).toString(16)}`,
+      chainName: 'Polygon zkEVM',
+      nativeCurrency: {
+        name: 'ETH',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://zkevm-rpc.com'],
+      blockExplorerUrls: ['https://zkevm.polygonscan.com/'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['USDC', 'USDT', 'DAI', 'FRAX'],
   },
   aurora: {
     name: 'Aurora',

@@ -85,13 +85,29 @@ export interface DataLoaderState {
     treasury: LoaderState;
     analytics: LoaderState;
     proposals: LoaderState;
+    migrators: LoaderState;
   };
   byChainId: {
-    [chainId: ChainEntity['id']]: {
-      contractData: LoaderState;
-      balance: LoaderState;
-      allowance: LoaderState;
-      addressBook: LoaderState;
+    [chainId: ChainEntity['id']]: ChainIdDataEntity;
+  };
+  byAddress: {
+    [address: string]: {
+      byChainId: {
+        [chainId: ChainEntity['id']]: ChainIdDataByAddressEntity;
+      };
     };
   };
+  timelineByAddress: {
+    [address: string]: LoaderState;
+  };
+}
+
+export interface ChainIdDataEntity {
+  contractData: LoaderState;
+  addressBook: LoaderState;
+}
+
+export interface ChainIdDataByAddressEntity {
+  balance: LoaderState;
+  allowance: LoaderState;
 }

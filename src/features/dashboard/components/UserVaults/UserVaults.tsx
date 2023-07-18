@@ -15,7 +15,11 @@ import { useMediaQuery } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 
-export const UserVaults = memo(function UserVaults() {
+export type UserVaultsProps = {
+  address: string;
+};
+
+export const UserVaults = memo<UserVaultsProps>(function UserVaults({ address }) {
   const { t } = useTranslation();
 
   const {
@@ -25,7 +29,7 @@ export const UserVaults = memo(function UserVaults() {
     handleSearchText,
     searchText,
     handleClearText,
-  } = useSortedDashboardVaults();
+  } = useSortedDashboardVaults(address);
 
   const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
 
@@ -43,12 +47,17 @@ export const UserVaults = memo(function UserVaults() {
         handleClearText={handleClearText}
       />
       {sortedFilteredVaults.length === 0 ? <NoVaults /> : null}
-      <VirtualList vaults={sortedFilteredVaults} />
+      <VirtualList address={address} vaults={sortedFilteredVaults} />
     </Section>
   );
 });
 
-export const VirtualList = memo(function VirtualList({ vaults }: { vaults: VaultEntity[] }) {
+interface VirtualListProps {
+  vaults: VaultEntity[];
+  address: string;
+}
+
+export const VirtualList = memo<VirtualListProps>(function VirtualList({ vaults, address }) {
   const classes = useStyles();
   const totalVaults = vaults.length;
   const minBatchSize = 3;
@@ -122,7 +131,7 @@ export const VirtualList = memo(function VirtualList({ vaults }: { vaults: Vault
     <>
       <div className={classes.container} ref={containerRef}>
         {renderVaultIds.map(vault => {
-          return <Vault key={vault.id} vaultId={vault.id} />;
+          return <Vault address={address} key={vault.id} vaultId={vault.id} />;
         })}
       </div>
       <div ref={bottomRef} />

@@ -4,9 +4,9 @@ import {
   getMintersForChain,
   getVaultsForChain,
 } from './config';
-import { getChainAddressBook } from '../../src/features/data/apis/addressbook';
+import { ChainAddressBook, getChainAddressBook } from './addressbook';
 import { chainsByAppId } from './chains';
-import { ChainEntity } from '../../src/features/data/entities/chain';
+import type { ChainEntity } from '../../src/features/data/entities/chain';
 import {
   isTokenErc20,
   isTokenNative,

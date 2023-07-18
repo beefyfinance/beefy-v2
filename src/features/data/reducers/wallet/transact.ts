@@ -64,6 +64,7 @@ const initialTransactState: TransactState = {
   tokens: initialTransactTokens,
   options: initialTransactOptions,
   quotes: initialTransactQuotes,
+  migrateQuotes: initialTransactQuotes,
   confirm: initialTransactConfirm,
 };
 
@@ -233,6 +234,7 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.tokens.byChainId = {};
 
   resetQuotes(sliceState);
+  sliceState.migrateQuotes = initialTransactQuotes;
 }
 
 function resetQuotes(sliceState: Draft<TransactState>) {

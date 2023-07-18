@@ -10,11 +10,14 @@ import type {
 import { BridgeApi } from './bridge/bridge';
 import type { IOnRampApi } from './on-ramp/on-ramp-types';
 import type { ITransactApi } from './transact/transact-types';
-import { createWeb3Instance } from '../../../helpers/web3';
+import { createWeb3Instance, rateLimitWeb3Instance } from '../../../helpers/web3';
 import { createGasPricer } from './gas-prices';
 import { AnalyticsApi } from './analytics/analytics';
 import type { IOneInchApi } from './one-inch/one-inch-types';
 import type { IBeefyDataApi } from './beefy/beefy-data-api-types';
+import PQueue from 'p-queue';
+
+import type { IMigrationApi } from './migration/migration-types';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -44,10 +47,18 @@ export function getAnalyticsApi(): AnalyticsApi {
 
 export const getWeb3Instance = createFactoryWithCacheByChain(async chain => {
   // pick one RPC endpoint at random
-  // todo: not the smartest thing to do but good enough yet
   const rpc = sample(chain.rpc);
-  console.debug(`Instanciating Web3 for chain ${chain.id}`);
-  return createWeb3Instance(rpc);
+  const requestsPerSecond = 10; // may need to be configurable per rpc [ankr allows ~30 rps]
+  const queue = new PQueue({
+    concurrency: requestsPerSecond,
+    intervalCap: requestsPerSecond,
+    interval: 1000,
+    carryoverConcurrencyCount: true,
+    autoStart: true,
+  });
+
+  console.debug(`Instantiating rate-limited Web3 for chain ${chain.id} via ${rpc}`);
+  return rateLimitWeb3Instance(createWeb3Instance(rpc), queue);
 });
 
 export const getGasPricer = createFactoryWithCacheByChain(async chain => {
@@ -158,4 +169,15 @@ export async function getBeefyDataApi(): Promise<IBeefyDataApi> {
   const { BeefyDataApi } = await import('./beefy/beefy-data-api');
   beefyDataApiInstance = new BeefyDataApi();
   return beefyDataApiInstance;
+}
+
+let migrationApiInstance: IMigrationApi | null = null;
+export async function getMigrationApi(): Promise<IMigrationApi> {
+  if (migrationApiInstance) {
+    return migrationApiInstance;
+  }
+
+  const { MigrationApi } = await import('./migration');
+  migrationApiInstance = new MigrationApi();
+  return migrationApiInstance;
 }

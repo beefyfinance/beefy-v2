@@ -19,12 +19,13 @@ const useStyles = makeStyles(styles);
 
 export type VaultStatsProps = {
   vaultId: VaultEntity['id'];
+  address: string;
 };
-export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ vaultId }) {
+export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ vaultId, address }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
-  const pnlData = useAppSelector(state => selectVaultPnl(state, vaultId));
+  const pnlData = useAppSelector(state => selectVaultPnl(state, vaultId, address));
 
   return (
     <div className={classes.vaultStats}>
@@ -36,6 +37,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
             triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
             showLabel={false}
             vaultId={vaultId}
+            walletAddress={address}
           />
         </div>
         <div className={clsx(classes.column, classes.hideSm)}>
@@ -45,23 +47,38 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
             triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
             showLabel={false}
             vaultId={vaultId}
+            walletAddress={address}
           />
         </div>
         <div className={clsx(classes.column, classes.hideSm)}>
           {isGovVault(vault) ? (
-            <VaultRewardsStat showLabel={false} vaultId={vaultId} />
+            <VaultRewardsStat walletAddress={address} showLabel={false} vaultId={vaultId} />
           ) : (
-            <VaultYieldWithRewardsStat pnlData={pnlData} vaultId={vaultId} />
+            <VaultYieldWithRewardsStat
+              walletAddress={address}
+              pnlData={pnlData}
+              vaultId={vaultId}
+            />
           )}
         </div>
         <div className={classes.column}>
-          <VaultPnlStat pnlData={pnlData} showLabel={false} vaultId={vaultId} />
+          <VaultPnlStat
+            walletAddress={address}
+            pnlData={pnlData}
+            showLabel={false}
+            vaultId={vaultId}
+          />
         </div>
         <div className={clsx(classes.column, classes.hideMd)}>
           <VaultYearlyStat showLabel={false} vaultId={vaultId} />
         </div>
         <div className={clsx(classes.column, classes.hideMd)}>
-          <VaultDailyUsdStat className={classes.textOverflow} showLabel={false} vaultId={vaultId} />
+          <VaultDailyUsdStat
+            triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
+            showLabel={false}
+            vaultId={vaultId}
+            walletAddress={address}
+          />
         </div>
       </div>
     </div>

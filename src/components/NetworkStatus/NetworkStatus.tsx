@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { isEqual, sortedUniq, uniq } from 'lodash-es';
-import React, { memo, useCallback, useRef } from 'react';
+import React, { memo, useCallback } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import type { ChainEntity } from '../../features/data/entities/chain';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader';
@@ -16,6 +16,7 @@ import { isPending, isRejected } from '../../features/data/reducers/data-loader-
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
+  selectWalletAddressIfKnown,
 } from '../../features/data/selectors/wallet';
 import { selectChainById, selectEolChainIds } from '../../features/data/selectors/chains';
 import { getNetworkSrc } from '../../helpers/networkSrc';
@@ -35,11 +36,14 @@ const ActiveChain = ({ chainId }: { chainId: string | null }) => {
   );
 };
 
-export function NetworkStatus() {
+export const NetworkStatus = memo(function NetworkStatus({
+  anchorEl,
+}: {
+  anchorEl: React.RefObject<HTMLSelectElement>;
+}) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const anchorEl = useRef();
   const open = useAppSelector(state => state.ui.dataLoader.statusIndicator.open);
   const chainsById = useAppSelector(state => state.entities.chains.byId);
   const handleClose = useCallback(() => dispatch(dataLoaderActions.closeIndicator()), [dispatch]);
@@ -71,11 +75,7 @@ export function NetworkStatus() {
 
   return (
     <>
-      <button
-        ref={anchorEl}
-        className={clsx({ [classes.container]: true, open: open })}
-        onClick={handleToggle}
-      >
+      <button className={clsx({ [classes.container]: true, open: open })} onClick={handleToggle}>
         <div className={clsx(classes.circle, colorClasses)}>
           <div className={pulseClassName} />
           <div className={pulseClassName} />
@@ -86,7 +86,7 @@ export function NetworkStatus() {
       </button>
       <Floating
         open={open}
-        placement="bottom-start"
+        placement="bottom-end"
         anchorEl={anchorEl}
         className={classes.dropdown}
         display="flex"
@@ -149,7 +149,7 @@ export function NetworkStatus() {
       </Floating>
     </>
   );
-}
+});
 
 const ConnectedChain = memo(function ConnectedChain({ chainId }: { chainId: ChainEntity['id'] }) {
   const chain = useAppSelector(state => selectChainById(state, chainId));
@@ -181,18 +181,25 @@ const stringArrCompare = (left: string[], right: string[]) => {
 const findChainIdMatching = (state: BeefyState, matcher: (loader: LoaderState) => boolean) => {
   const chainIds: ChainEntity['id'][] = [];
   const eolChains = selectEolChainIds(state);
+  const walletAddress = selectWalletAddressIfKnown(state);
   const chainsToCheck = Object.entries(state.ui.dataLoader.byChainId).filter(
     ([chainId, _]) => !eolChains.includes(chainId)
   );
 
   for (const [chainId, loader] of chainsToCheck) {
-    if (
-      matcher(loader.balance) ||
-      matcher(loader.allowance) ||
-      matcher(loader.addressBook) ||
-      matcher(loader.contractData)
-    ) {
+    if (matcher(loader.addressBook) || matcher(loader.contractData)) {
       chainIds.push(chainId);
+    }
+  }
+
+  if (walletAddress && state.ui.dataLoader.byAddress[walletAddress]) {
+    const userDataToCheck = Object.entries(
+      state.ui.dataLoader.byAddress[walletAddress].byChainId
+    ).filter(([chainId, _]) => !eolChains.includes(chainId));
+    for (const [chainId, loader] of userDataToCheck) {
+      if (matcher(loader.balance) || matcher(loader.allowance)) {
+        chainIds.push(chainId);
+      }
     }
   }
 

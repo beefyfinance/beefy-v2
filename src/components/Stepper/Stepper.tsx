@@ -43,7 +43,7 @@ const _Stepper = () => {
       dispatch(stepperActions.updateCurrentStep({ pending: true }));
       dispatch(currentStepData.action);
     }
-  }, [dispatch, steps.currentStep]);
+  }, [currentStepData, dispatch, steps.currentStep, steps.modal]);
 
   return (
     <Snackbar

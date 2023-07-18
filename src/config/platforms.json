@@ -10,6 +10,11 @@
     "filter": true
   },
   {
+    "id": "conic",
+    "name": "Conic Finance",
+    "filter": true
+  },
+  {
     "id": "apeswap",
     "name": "ApeSwap",
     "filter": true
@@ -142,6 +147,11 @@
   {
     "id": "satis",
     "name": "Satis",
+    "filter": false
+  },
+  {
+    "id": "synapse",
+    "name": "Synapse",
     "filter": false
   },
   {
@@ -1037,6 +1047,11 @@
   {
     "id": "gamma",
     "name": "Gamma",
+    "filter": true
+  },
+  {
+    "id": "vesync",
+    "name": "veSync",
     "filter": true
   }
 ]

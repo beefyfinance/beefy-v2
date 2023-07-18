@@ -39,7 +39,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: 'rgba(231, 65, 66, 0.2)',
   },
   'headerNetwork-polygon': {
-    backgroundColor: 'rgba(130, 71, 228, 0.2)',
+    backgroundColor: 'rgba(245, 240, 253, 0.3)',
   },
   'headerNetwork-fantom': {
     backgroundColor: 'rgba(25, 105, 255, 0.2)',
@@ -88,5 +88,8 @@ export const styles = (theme: Theme) => ({
   },
   'headerNetwork-zksync': {
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  },
+  'headerNetwork-zkevm': {
+    backgroundColor: 'rgba(130, 71, 228, 0.2)',
   },
 });

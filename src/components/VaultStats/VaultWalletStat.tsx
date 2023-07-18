@@ -5,7 +5,11 @@ import type { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { selectUserBalanceOfToken } from '../../features/data/selectors/balance';
 import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
-import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/selectors/wallet';
+import {
+  selectIsBalanceHidden,
+  selectIsWalletKnown,
+  selectWalletAddress,
+} from '../../features/data/selectors/wallet';
 import { VaultValueStat } from '../VaultValueStat';
 import { selectTokenPriceByAddress } from '../../features/data/selectors/tokens';
 
@@ -19,9 +23,11 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultWalletStatProps) {
   const label = 'VaultStat-WALLET';
   const vault = selectVaultById(state, vaultId);
   const hideBalance = selectIsBalanceHidden(state);
+  const walletAddress = selectWalletAddress(state);
   const isLoaded =
     state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
-      ? state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
+      ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
+          .alreadyLoadedOnce
       : true;
 
   if (!isLoaded) {

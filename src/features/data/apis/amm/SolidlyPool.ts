@@ -18,7 +18,7 @@ import type {
 } from './types';
 import { WANT_TYPE } from './types';
 
-enum MetadataKeys {
+export enum MetadataKeys {
   decimals0,
   decimals1,
   reserves0,
