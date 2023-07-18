@@ -17,6 +17,8 @@ import type { IOneInchApi } from './one-inch/one-inch-types';
 import type { IBeefyDataApi } from './beefy/beefy-data-api-types';
 import PQueue from 'p-queue';
 
+import type { IMigrationApi } from './migration/migration-types';
+
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
 const configApi = new ConfigAPI();
@@ -167,4 +169,15 @@ export async function getBeefyDataApi(): Promise<IBeefyDataApi> {
   const { BeefyDataApi } = await import('./beefy/beefy-data-api');
   beefyDataApiInstance = new BeefyDataApi();
   return beefyDataApiInstance;
+}
+
+let migrationApiInstance: IMigrationApi | null = null;
+export async function getMigrationApi(): Promise<IMigrationApi> {
+  if (migrationApiInstance) {
+    return migrationApiInstance;
+  }
+
+  const { MigrationApi } = await import('./migration');
+  migrationApiInstance = new MigrationApi();
+  return migrationApiInstance;
 }

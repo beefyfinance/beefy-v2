@@ -25,12 +25,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const NewBadge = memo<BadgeComponentProps>(function NewBadge({ className }) {
+export const NewBadge = memo<BadgeComponentProps>(function NewBadge({ className, spacer = true }) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
     <>
-      <div className={classes.spacer} />
+      {spacer === false ? null : <div className={classes.spacer} />}
       <div className={clsx(classes.badge, className)}>{t('Header-Badge-New')}</div>
     </>
   );

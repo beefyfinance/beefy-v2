@@ -98,9 +98,12 @@ function addContractDataToState(
 
     // handle gov vault TVL exclusion
     if (vault.excludedId) {
-      const excludedTVL = sliceState.byVaultId[vault.excludedId]?.tvl;
-      if (excludedTVL) {
-        tvl = tvl.minus(excludedTVL);
+      const excludedVault = selectVaultById(state, vault.excludedId) as VaultEntity;
+      if (excludedVault && excludedVault.status === 'active') {
+        const excludedTVL = sliceState.byVaultId[vault.excludedId]?.tvl;
+        if (excludedTVL) {
+          tvl = tvl.minus(excludedTVL);
+        }
       }
     }
     sliceState.byVaultId[vault.id] = { tvl: tvl };

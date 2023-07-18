@@ -78,7 +78,9 @@ export const ErrorContent = memo(function ErrorContent() {
         )}
         <div className={classes.message}>{walletActionsState.data.error.message}</div>
       </div>
-      <CloseButton />
+      <div className={classes.buttons}>
+        <CloseButton />
+      </div>
     </>
   );
 });
