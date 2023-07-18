@@ -1,9 +1,9 @@
 [
   {
-    "id": "moo_velodrome-v2-wtbt-usdc-tprotocol",
+    "id": "moo_velodrome-v2-usdc-wtbt-tprotocol",
     "poolId": "velodrome-v2-usdc-wtbt",
     "name": "Beefy",
-    "assets": ["VELOV2", "USDC"],
+    "assets": ["wTBT", "USDC"],
     "tokenAddress": "0xdc54C0C57deD2A7788C6F49D151B9b0AC5d62BAB",
     "earnedToken": "OP",
     "earnedTokenDecimals": 18,
