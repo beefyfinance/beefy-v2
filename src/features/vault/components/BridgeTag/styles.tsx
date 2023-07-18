@@ -1,15 +1,17 @@
 import type { Theme } from '@material-ui/core';
 
-export const styles = (_theme: Theme) => ({
+export const styles = (theme: Theme) => ({
   tag: {
-    padding: '4px',
-    background: 'red',
+    padding: '2px 8px',
+    background: theme.palette.background.filters.active,
     display: 'flex',
     gap: '4px',
+    alignItems: 'center',
+    borderRadius: '4px',
   },
   icon: {
-    width: '24px',
-    height: '24px',
+    width: '16px',
+    height: '16px',
     display: 'block',
   },
   tooltip: {},

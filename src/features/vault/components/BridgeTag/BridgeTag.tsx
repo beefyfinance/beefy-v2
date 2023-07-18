@@ -109,7 +109,12 @@ const TagWithTooltip = memo(
   ) {
     const classes = useStyles();
     return (
-      <Tooltip triggerClass={clsx(classes.tag, className, triggerClass)} ref={ref} {...rest}>
+      <Tooltip
+        placement="top"
+        triggerClass={clsx(classes.tag, className, triggerClass)}
+        ref={ref}
+        {...rest}
+      >
         {children}
       </Tooltip>
     );
