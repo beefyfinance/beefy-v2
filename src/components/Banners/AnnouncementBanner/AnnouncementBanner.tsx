@@ -9,7 +9,7 @@ const useStyles = makeStyles(styles);
 
 export const AnnouncementBanner = memo(function AnnouncementBanner() {
   const classes = useStyles();
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideSavedBanner', false);
+  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideBIP71Banner', false);
 
   const closeBanner = useCallback(() => {
     setHideBanner(true);
@@ -24,11 +24,10 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
       icon={<img alt="snapshot" src={SnapshotLogo} className={classes.icon} />}
       text={
         <>
-          New signalling proposal is live: [BSP:03] To gauge support for a plan to migrate $BIFI
-          away from Multichain. Discuss on{' '}
+          [BIP:71] $BIFI Migration Plan. Discuss on{' '}
           <a
             className={classes.link}
-            href="https://discord.gg/qvrRTRmW"
+            href="https://discord.com/invite/beefyfinance"
             target="_blank"
             rel="noopener"
           >
@@ -37,7 +36,7 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
           and vote on{' '}
           <a
             className={classes.link}
-            href="https://snapshot.org/#/beefydao.eth/proposal/0x55e6ad9dd3ebcca3334e23872fa8e2ab1e926466b3d2d0af6f462cc45b1541a2"
+            href="https://vote.beefy.finance/#/proposal/0x975b10f949c0ea62a53f7a3ab5aa738376422efbd7bb33712daa74b98bd4b727"
             target="_blank"
             rel="noopener"
           >
