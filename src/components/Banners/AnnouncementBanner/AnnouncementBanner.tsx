@@ -24,7 +24,7 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
       icon={<img alt="snapshot" src={SnapshotLogo} className={classes.icon} />}
       text={
         <>
-          [BIP:71] $BIFI Migration Plan. Discuss on{' '}
+          New proposal is live: [BIP:71] $BIFI Migration Plan. Discuss on{' '}
           <a
             className={classes.link}
             href="https://discord.com/invite/beefyfinance"
