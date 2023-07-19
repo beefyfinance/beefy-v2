@@ -161,14 +161,9 @@ export class GovVaultProvider implements ITransactProvider {
     const depositTokenAmount = quote.inputs[0];
     const isWithdrawAll = quote.inputs.every(tokenAmount => tokenAmount.max === true);
 
-    if (isWithdrawAll) {
-      const rewardTokenAmount =
-        quote.outputs.length === 2
-          ? quote.outputs[1]
-          : {
-              token: selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress),
-              amount: BIG_ZERO,
-            };
+    // Can only call exit if 1) withdrawing all and 2) there are pending rewards
+    if (isWithdrawAll && quote.outputs.length === 2 && quote.outputs[1].amount.gt(BIG_ZERO)) {
+      const rewardTokenAmount = quote.outputs[1];
 
       return {
         step: 'claim-withdraw',
