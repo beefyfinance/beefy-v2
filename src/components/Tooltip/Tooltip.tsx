@@ -17,7 +17,7 @@ export type TooltipProps = {
   arrowClass?: string;
   contentClass?: string;
   disabled?: boolean;
-  onlyClick?: boolean;
+  onlyClickable?: boolean;
 };
 
 export const Tooltip = memo(
@@ -32,7 +32,7 @@ export const Tooltip = memo(
       placement = 'top-end',
       disabled = false,
       onClick,
-      onlyClick,
+      onlyClickable = false,
     },
     ref
   ) {
@@ -56,7 +56,7 @@ export const Tooltip = memo(
         if (!disabled) {
           e.stopPropagation();
           e.preventDefault();
-          if (!onlyClick) {
+          if (!onlyClickable) {
             setIsOpen(true);
           } else {
             setIsOpen(!isOpen);
@@ -66,7 +66,7 @@ export const Tooltip = memo(
           }
         }
       },
-      [disabled, isOpen, onClick, onlyClick]
+      [disabled, isOpen, onClick, onlyClickable]
     );
 
     const modifiers = useMemo(
@@ -88,16 +88,16 @@ export const Tooltip = memo(
     );
 
     const onMouseEnter = useCallback(() => {
-      if (!onlyClick) {
+      if (!onlyClickable) {
         handleOpen();
       }
-    }, [handleOpen, onlyClick]);
+    }, [handleOpen, onlyClickable]);
 
     const onMouseLeave = useCallback(() => {
-      if (!onlyClick) {
+      if (!onlyClickable) {
         handleClose();
       }
-    }, [handleClose, onlyClick]);
+    }, [handleClose, onlyClickable]);
 
     return (
       <ClickAwayListener onClickAway={handleClose}>
