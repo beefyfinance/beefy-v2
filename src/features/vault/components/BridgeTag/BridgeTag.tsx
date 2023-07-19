@@ -39,7 +39,7 @@ export const BridgeTag = memo<BridgeTagProps>(function BridgeTag({ bridge, chain
   const icon = getBridgeIcon(bridge.id);
 
   return (
-    <TagWithTooltip onlyClickable={true} content={<BridgeTooltip bridge={bridge} chain={chain} />}>
+    <TagWithTooltip content={<BridgeTooltip bridge={bridge} chain={chain} />}>
       {icon ? <img src={icon} alt={bridge.name} className={classes.icon} width={24} /> : null}
       {bridge.tagName}
     </TagWithTooltip>
@@ -112,6 +112,7 @@ const TagWithTooltip = memo(
       <Tooltip
         placement="top"
         triggerClass={clsx(classes.tag, className, triggerClass)}
+        onlyClickable={true}
         ref={ref}
         {...rest}
       >
