@@ -2,7 +2,7 @@
   {
     "id": "moo_velodrome-v2-weth-op-optimism",
     "poolId": "velodrome-v2-weth-op",
-    "name": "Optimism",
+    "name": "Beefy",
     "assets": ["OP", "ETH"],
     "tokenAddress": "0x00557e194B717dCfEbaE6222091C5F806DF99698",
     "earnedToken": "OP",
@@ -19,7 +19,7 @@
   {
     "id": "moo_velodrome-v2-usdc-wtbt-tprotocol",
     "poolId": "velodrome-v2-usdc-wtbt",
-    "name": "TProtocol",
+    "name": "Beefy",
     "assets": ["wTBT", "USDC"],
     "tokenAddress": "0xdc54C0C57deD2A7788C6F49D151B9b0AC5d62BAB",
     "earnedToken": "OP",
@@ -36,7 +36,7 @@
   {
     "id": "moo_velodrome-v2-usdc-velo-velodrome",
     "poolId": "velodrome-v2-usdc-velo",
-    "name": "Velodrome",
+    "name": "Beefy",
     "assets": ["VELOV2", "USDC"],
     "tokenAddress": "0x746c19a336a3131fd85d3ab5f16576b1b047f512",
     "earnedToken": "OP",
@@ -155,7 +155,7 @@
   {
     "id": "moo_velodrome-wsteth-ldo-beefy",
     "poolId": "velodrome-wsteth-ldo",
-    "name": "Lido",
+    "name": "Beefy",
     "assets": ["wstETH", "LDO"],
     "tokenAddress": "0xdFd25571eC749cA396462222D3f4c5B3A79c1A81",
     "earnedToken": "OP",
@@ -189,7 +189,7 @@
   {
     "id": "moo_curve-op-f-susd-synthetix",
     "poolId": "curve-op-f-susd",
-    "name": "Synthetix",
+    "name": "Beefy",
     "assets": ["sUSD", "DAI", "USDC", "USDT"],
     "tokenAddress": "0x107Dbf9c9C0EF2Df114159e5C7DC2baf7C444cFF",
     "earnedToken": "OP",
@@ -206,7 +206,7 @@
   {
     "id": "moo_velodrome-wsteth-weth-lido-op",
     "poolId": "velodrome-wsteth-weth",
-    "name": "Lido",
+    "name": "Beefy",
     "assets": ["wstETH", "ETH"],
     "tokenAddress": "0xcAdC68d5834898D54929E694eD19e833e0117694",
     "earnedToken": "OP",
@@ -240,7 +240,7 @@
   {
     "id": "moo_velodrome-snx-usdc-synthetix",
     "poolId": "velodrome-snx-usdc",
-    "name": "Synthetix",
+    "name": "Beefy",
     "assets": ["SNX", "USDC"],
     "tokenAddress": "0x48B3EdF0D7412B11c232BD9A5114B590B7F28134",
     "earnedToken": "OP",
@@ -257,7 +257,7 @@
   {
     "id": "moo_velodrome-velo-usdc-velodrome",
     "poolId": "velodrome-velo-usdc",
-    "name": "Velodrome",
+    "name": "Beefy",
     "assets": ["VELO", "USDC"],
     "tokenAddress": "0x81F2F132465Ffb4B3C5d11f3d94582cC5c281c04",
     "earnedToken": "OP",
