@@ -28,7 +28,7 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000042&token1=0x2e3d870790dc77a83dd1d18184acc7439a53f475&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xe9b168fa9409EaFFa07679196c7568317baf80eD",
     "network": "optimism",
-    "createdAt": 1689743539
+    "createdAt": 1689798505
   },
   {
     "id": "velodrome-v2-op-frxeth",
@@ -59,7 +59,7 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000042&token1=0x6806411765af15bddd26f8f544a34cc40cb9838b&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x2fE304b407c7fAb2a3c10962F14dB751468a4f5b",
     "network": "optimism",
-    "createdAt": 1689743539
+    "createdAt": 1689798505
   },
   {
     "id": "velodrome-v2-lusd-mai",
@@ -90,7 +90,7 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0xdfa46478f9e5ea86d57387849598dbfb2e964b02&token1=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x537cB4D4fE1a9dF1E295872f2B82c1da9df7500f",
     "network": "optimism",
-    "createdAt": 1689743539
+    "createdAt": 1689798505
   },
   {
     "id": "velodrome-v2-susd-lusd",
@@ -121,7 +121,7 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9&token1=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x3B375bA61920551217f5944F4F5d8a63989A438e",
     "network": "optimism",
-    "createdAt": 1689743539
+    "createdAt": 1689798505
   },
   {
     "id": "velodrome-v2-weth-velo",
@@ -145,7 +145,7 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x9560e827af36c94d2ac33a39bce1fe78631088db&token1=eth&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x58e6433A6903886E440Ddf519eCC573c4046a6b2",
     "network": "optimism",
-    "createdAt": 1689743539
+    "createdAt": 1689798505
   },
   {
     "id": "velodrome-v2-usd+-lusd",
@@ -176,7 +176,7 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x73cb180bf0521828d8849bc8cf2b920918e23032&token1=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x37e7D30CC180A750C83D68ED0C2511dA10694d63",
     "network": "optimism",
-    "createdAt": 1689743539
+    "createdAt": 1689798505
   },
   {
     "id": "velodrome-v2-thales-weth",
@@ -200,7 +200,38 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x217d47011b23bb961eb6d93ca9945b7501a5bb11&token1=eth&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xDFF90E4A6c229565f25337B1DB9fA12f6d8cB118",
     "network": "optimism",
-    "createdAt": 1689743539
+    "createdAt": 1689798505
+  },
+  {
+    "id": "hop-op-susd",
+    "name": "sUSD LP",
+    "token": "sUSD-hsUSD LP",
+    "tokenAddress": "0xBD08972Cef7C9a5A046C9Ef13C9c3CE13739B8d6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "hop",
+    "earnedToken": "mooHopsUSD",
+    "earnedTokenAddress": "0x718A66F21415a5f75F5e8652e8Be55FCF1D1df05",
+    "earnContractAddress": "0x718A66F21415a5f75F5e8652e8Be55FCF1D1df05",
+    "oracle": "lps",
+    "oracleId": "hop-op-susd",
+    "status": "active",
+    "platformId": "hop",
+    "assets": ["sUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single-lp",
+    "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/sUSD",
+    "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=sUSD&sourceNetwork=optimism",
+    "removeLiquidityUrl": "https://app.hop.exchange/#/pool/withdraw?token=sUSD&sourceNetwork=optimism",
+    "network": "optimism",
+    "createdAt": 1689591528
   },
   {
     "id": "velodrome-v2-weth-unidx",

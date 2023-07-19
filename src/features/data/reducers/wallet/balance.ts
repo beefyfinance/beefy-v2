@@ -251,6 +251,11 @@ function addGovVaultBalanceToState(
   for (const vaultBalance of govVaultBalance) {
     const vaultId = vaultBalance.vaultId;
 
+    // bug with old bifi gov pool
+    if (vaultId === 'bifi-gov-eol') {
+      vaultBalance.rewards = BIG_ZERO;
+    }
+
     // only update data if necessary
     const stateForVault = walletState.tokenAmount.byGovVaultId[vaultId];
     if (

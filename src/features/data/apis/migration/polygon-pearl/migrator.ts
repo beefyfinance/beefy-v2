@@ -67,54 +67,57 @@ export const executePearlAction = createAsyncThunk<
   void,
   MigratorExecuteProps,
   { state: BeefyState }
->('wallet/executePearl', async ({ vaultId, t, migrationId }, { getState, dispatch }) => {
-  const steps: Step[] = [];
-  const state = getState();
-  const vault = selectVaultById(state, vaultId);
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const { balance } = selectUserBalanceToMigrateByVaultId(state, vaultId, migrationId);
+>(
+  'migration/polygon-pearl/execute',
+  async ({ vaultId, t, migrationId }, { getState, dispatch }) => {
+    const steps: Step[] = [];
+    const state = getState();
+    const vault = selectVaultById(state, vaultId);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const { balance } = selectUserBalanceToMigrateByVaultId(state, vaultId, migrationId);
 
-  const call = await unstakeCall(vault, balance, state);
+    const call = await unstakeCall(vault, balance, state);
 
-  steps.push({
-    step: 'migration',
-    message: t('Vault-MigrationStart'),
-    action: walletActions.migrateUnstake(
-      call,
-      vault,
-      balance.shiftedBy(depositToken.decimals),
-      migrationId
-    ),
-    pending: false,
-    extraInfo: { vaultId },
-  });
+    steps.push({
+      step: 'migration',
+      message: t('Vault-MigrationStart'),
+      action: walletActions.migrateUnstake(
+        call,
+        vault,
+        balance.shiftedBy(depositToken.decimals),
+        migrationId
+      ),
+      pending: false,
+      extraInfo: { vaultId },
+    });
 
-  if (isTokenErc20(depositToken)) {
-    const allowance = selectAllowanceByTokenAddress(
-      state,
-      depositToken.chainId,
-      depositToken.address,
-      vault.earnContractAddress
-    );
-    if (allowance.lt(balance)) {
-      steps.push({
-        step: 'approve',
-        message: t('Vault-ApproveMsg'),
-        action: walletActions.approval(depositToken, vault.earnContractAddress),
-        pending: false,
-      });
+    if (isTokenErc20(depositToken)) {
+      const allowance = selectAllowanceByTokenAddress(
+        state,
+        depositToken.chainId,
+        depositToken.address,
+        vault.earnContractAddress
+      );
+      if (allowance.lt(balance)) {
+        steps.push({
+          step: 'approve',
+          message: t('Vault-ApproveMsg'),
+          action: walletActions.approval(depositToken, vault.earnContractAddress),
+          pending: false,
+        });
+      }
     }
+
+    steps.push({
+      step: 'deposit',
+      message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+      action: walletActions.deposit(vault, balance, true),
+      pending: false,
+      extraInfo: { vaultId: vault.id },
+    });
+
+    dispatch(startStepperWithSteps(steps, vault.chainId));
   }
-
-  steps.push({
-    step: 'deposit',
-    message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-    action: walletActions.deposit(vault, balance, true),
-    pending: false,
-    extraInfo: { vaultId: vault.id },
-  });
-
-  dispatch(startStepperWithSteps(steps, vault.chainId));
-});
+);
 
 export const migrator: Migrator = { update: fetchPearlStakedBalance, execute: executePearlAction };
