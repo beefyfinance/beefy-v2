@@ -74,6 +74,8 @@ import { selectOneInchZapByChainId } from '../selectors/zap';
 import type { DestChainEntity } from '../apis/bridge/bridge-types';
 import type { PromiEvent } from 'web3-core';
 import type { ThunkDispatch } from 'redux-thunk';
+import { migratorUpdate } from './migrator';
+import type { MigrationConfig } from '../reducers/wallet/migration';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -109,6 +111,41 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
         chainId: token.chainId,
         spenderAddress,
         tokens: uniqBy([token, native], 'id'),
+      }
+    );
+  });
+};
+
+const migrateUnstake = (
+  unstakeCall,
+  vault: VaultEntity,
+  amount: BigNumber,
+  migrationId: MigrationConfig['id']
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const chain = selectChainById(state, vault.chainId);
+    const gasPrices = await getGasPriceOptions(chain);
+    const transaction = unstakeCall.send({ from: address, ...gasPrices });
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      { spender: vault.earnContractAddress, amount, token: depositToken },
+      {
+        walletAddress: address,
+        chainId: vault.chainId,
+        spenderAddress: vault.earnContractAddress,
+        tokens: getVaultTokensToRefresh(state, vault),
+        migrationId,
+        vaultId: vault.id,
       }
     );
   });
@@ -1460,6 +1497,7 @@ export const walletActions = {
   burnWithdraw,
   bridge,
   resetWallet,
+  migrateUnstake,
   oneInchBeefInSingle,
   oneInchBeefInLP,
   oneInchBeefOutSingle,
@@ -1501,6 +1539,8 @@ function bindTransactionEvents<T extends MandatoryAdditionalData>(
     govVaultId?: VaultEntity['id'];
     boostId?: BoostEntity['id'];
     minterId?: MinterEntity['id'];
+    vaultId?: VaultEntity['id'];
+    migrationId?: MigrationConfig['id'];
   },
   step?: string
 ) {
@@ -1519,23 +1559,38 @@ function bindTransactionEvents<T extends MandatoryAdditionalData>(
 
       // fetch new balance and allowance of native token (gas spent) and allowance token
       if (refreshOnSuccess) {
+        const {
+          walletAddress,
+          chainId,
+          govVaultId,
+          boostId,
+          spenderAddress,
+          tokens,
+          minterId,
+          vaultId,
+          migrationId,
+        } = refreshOnSuccess;
+
         dispatch(
           reloadBalanceAndAllowanceAndGovRewardsAndBoostData({
-            walletAddress: refreshOnSuccess.walletAddress,
-            chainId: refreshOnSuccess.chainId,
-            govVaultId: refreshOnSuccess.govVaultId,
-            boostId: refreshOnSuccess.boostId,
-            spenderAddress: refreshOnSuccess.spenderAddress,
-            tokens: refreshOnSuccess.tokens,
+            walletAddress: walletAddress,
+            chainId: chainId,
+            govVaultId: govVaultId,
+            boostId: boostId,
+            spenderAddress: spenderAddress,
+            tokens: tokens,
           })
         );
-        if (refreshOnSuccess.minterId) {
+        if (minterId) {
           dispatch(
             reloadReserves({
-              chainId: refreshOnSuccess.chainId,
-              minterId: refreshOnSuccess.minterId,
+              chainId: chainId,
+              minterId: minterId,
             })
           );
+        }
+        if (migrationId) {
+          dispatch(migratorUpdate({ vaultId, migrationId, walletAddress }));
         }
       }
     })

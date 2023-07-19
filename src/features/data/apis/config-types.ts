@@ -40,6 +40,7 @@ export interface VaultConfig {
   refundContractAddress?: string | null;
   showWarning?: boolean | null;
   warning?: string | null;
+  migrationIds?: string[];
 }
 
 export interface FeaturedVaultConfig {
@@ -143,6 +144,7 @@ export interface ChainConfig {
   };
   gas: GasConfig;
   stableCoins: string[];
+  new?: boolean;
 }
 
 export interface AmmConfigBase {
@@ -323,3 +325,8 @@ export interface BridgeConfig {
   readonly tagName?: string;
   readonly website: string;
 }
+export type BaseMigrationConfig = {
+  readonly id: string; // eg ethereum-conic
+  readonly name: string; // eg Conic Finance
+  readonly icon: string;
+};

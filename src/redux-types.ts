@@ -34,6 +34,7 @@ import type { HistoricalState } from './features/data/reducers/historical-types'
 import type { SavedVaultsState } from './features/data/reducers/saved-vaults';
 import type { ResolverState } from './features/data/reducers/wallet/resolver-types';
 import type { BridgesState } from './features/data/reducers/bridges';
+import type { MigrationState } from './features/data/reducers/wallet/migration';
 
 export interface BeefyState {
   entities: {
@@ -64,6 +65,7 @@ export interface BeefyState {
     resolver: ResolverState;
     wallet: WalletState;
     walletActions: WalletActionsState;
+    migration: MigrationState;
   };
   ui: {
     dataLoader: DataLoaderState;

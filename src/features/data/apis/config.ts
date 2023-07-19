@@ -18,6 +18,7 @@ import type {
   VaultConfig,
 } from './config-types';
 import { mapValues } from 'lodash-es';
+import type { MigrationConfig } from '../reducers/wallet/migration';
 
 /**
  * A class to access beefy configuration
@@ -91,6 +92,19 @@ export class ConfigAPI {
         Object.keys(chainConfigs).map(async chainId => [
           chainId,
           (await import(`../../../config/minters/${chainId}.tsx`)).minters,
+        ])
+      )
+    );
+  }
+
+  public async fetchAllMigrators(): Promise<{
+    [chainId: ChainEntity['id']]: MigrationConfig[];
+  }> {
+    return Object.fromEntries(
+      await Promise.all(
+        Object.keys(chainConfigs).map(async chainId => [
+          chainId,
+          (await import(`../../../config/migrators/${chainId}.tsx`)).migrators,
         ])
       )
     );

@@ -81,6 +81,7 @@
   "Filter-Deposited": "Deposited vaults",
   "Filter-Boost": "🔥 Boosted vaults",
   "Filter-Zappable": "Zappable vaults",
+  "Filter-Native": "Native vaults",
   "Filter-Platform": "Platform:",
   "Filter-Type": "Vault type:",
   "Filter-Chain": "Chain:",
@@ -149,6 +150,7 @@
   "Vault-Breakdown-BoostDaily": "Boost Daily",
   "Vault-ApproveMsg": "Approval transaction happens once per vault",
   "Vault-TxnConfirm": "Confirm wallet transaction to complete {{type}}",
+  "Vault-MigrationStart": "Confirm wallet transaction to begin migration ",
   "Vault-Wallet": "Wallet:",
   "Vault-Deposited": "Deposited:",
   "Vault-Strategy": "Strategy",
@@ -613,7 +615,10 @@
   "Dashboard-SearchInput-Invalid-Address": "Entered address is not valid",
   "beVELOV2-description": "As $VELO is retired by Velodrome, $beVELO holders are urged to move your tokens to the new beVELO Earnings Pool to ensure you can continue earning $VELOV2 rewards. With our Earnings Pool, you can share in Velodrome protocol emissions earned by Beefy's Velodrome veNFT, which we regularly claim and transfer back to you.",
   "More-info": "More info",
+  "Migration-Title": "Migrate your deposit",
+  "Migration-Text": "You have {{balance}} LP tokens staked on {{migrator}} that are available for an easy migration into this autocompounding vault",
+  "Migration-Action": "Migrate Now",
   "TokenBridge-native": "Native",
-  "TokenBridge-Tooltip-native": "Asset is native to {{chain}}",
-  "TokenBridge-Tooltip-bridge": "Asset is bridged to {{chain}} via <website>{{bridge}}</website>."
+  "TokenBridge-Tooltip-native": "Token is native to {{chain}}",
+  "TokenBridge-Tooltip-bridge": "Token is bridged to {{chain}} via <website>{{bridge}}</website>"
 }
