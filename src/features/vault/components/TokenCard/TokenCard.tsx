@@ -29,7 +29,6 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
   const bridge = useAppSelector(state =>
     isErc20 && token.bridge && !isNative ? selectBridgeByIdIfKnown(state, token.bridge) : undefined
   );
-  console.log({ isErc20, isNative, bridge, token });
 
   return (
     <div className={classes.container}>
