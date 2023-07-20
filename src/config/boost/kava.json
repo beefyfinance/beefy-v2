@@ -2,7 +2,7 @@
   {
     "id": "moo_curve-kava-axlusdt-f-kava",
     "poolId": "curve-kava-axlusdt-f",
-    "name": "kava",
+    "name": "Kava",
     "assets": ["axlUSDT", "USDt"],
     "tokenAddress": "0xd5BC6DEa24A93A542C0d3Aa7e4dFBD05d97AF0F8",
     "earnedToken": "WKAVA",
@@ -19,7 +19,7 @@
   {
     "id": "moo_equilibre-wkava-eth-kava",
     "poolId": "equilibre-wkava-eth",
-    "name": "kava",
+    "name": "Kava",
     "assets": ["ETH", "KAVA"],
     "tokenAddress": "0xd3754c0D018A5A5E318129Fb12dEdED653c700Ba",
     "earnedToken": "WKAVA",
