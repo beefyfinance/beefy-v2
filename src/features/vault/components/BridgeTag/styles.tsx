@@ -6,6 +6,7 @@ export const styles = (theme: Theme) => ({
     fontWeight: 700,
     padding: '2px 8px',
     background: theme.palette.background.filters.active,
+    color: theme.palette.text.middle,
     display: 'flex',
     gap: '4px',
     alignItems: 'center',
