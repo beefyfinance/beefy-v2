@@ -6,52 +6,50 @@ import { styles } from './styles';
 import type { BridgeEntity } from '../../../data/entities/bridge';
 import clsx from 'clsx';
 import type { TooltipProps } from '../../../../components/Tooltip';
-import { Tooltip } from '../../../../components/Tooltip';
+import { Tooltip, TRIGGERS } from '../../../../components/Tooltip';
 import { getBridgeIcon } from '../../../../helpers/bridgeProviderSrc';
 import type { ChainEntity } from '../../../data/entities/chain';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
-import type { HandleTokenTooltipInfoClick } from '../AssetsCard';
 
 const useStyles = makeStyles(styles);
 
 export type NativeTagProps = {
   chain: ChainEntity;
-  handleClick: HandleTokenTooltipInfoClick;
 };
 
-export const NativeTag = memo<NativeTagProps>(function NativeTag({ chain, handleClick }) {
+export const NativeTag = memo<NativeTagProps>(function NativeTag({ chain }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const icon = getNetworkSrc(chain.id);
 
   return (
-    <div className={classes.tag} onClick={handleClick({ native: true, bridge: null })}>
+    <TagWithTooltip content={<NativeTooltip chain={chain} />} group="asset-details">
       {icon ? <img src={icon} alt={chain.name} className={classes.icon} width={24} /> : null}
       {t('TokenBridge-native')}
-    </div>
+    </TagWithTooltip>
   );
 });
 
 export type BridgeTagProps = {
   bridge: BridgeEntity;
-  handleClick: HandleTokenTooltipInfoClick;
+  chain: ChainEntity;
 };
-export const BridgeTag = memo<BridgeTagProps>(function BridgeTag({ bridge, handleClick }) {
+export const BridgeTag = memo<BridgeTagProps>(function BridgeTag({ bridge, chain }) {
   const classes = useStyles();
   const icon = getBridgeIcon(bridge.id);
 
   return (
-    <div className={classes.tag} onClick={handleClick({ native: false, bridge })}>
+    <TagWithTooltip content={<BridgeTooltip bridge={bridge} chain={chain} />} group="asset-details">
       {icon ? <img src={icon} alt={bridge.name} className={classes.icon} width={24} /> : null}
       {bridge.tagName}
-    </div>
+    </TagWithTooltip>
   );
 });
 
 export type NativeTooltipProps = {
   chain: ChainEntity;
 };
-export const NativeTooltipContent = memo<NativeTooltipProps>(function NativeTooltip({ chain }) {
+const NativeTooltip = memo<NativeTooltipProps>(function NativeTooltip({ chain }) {
   const { t } = useTranslation();
   return <TagTooltip content={t('TokenBridge-Tooltip-native', { chain: chain.name })} />;
 });
@@ -60,10 +58,7 @@ export type BridgeTooltipProps = {
   bridge: BridgeEntity;
   chain: ChainEntity;
 };
-export const BridgeTooltipContent = memo<BridgeTooltipProps>(function BridgeTooltip({
-  bridge,
-  chain,
-}) {
+const BridgeTooltip = memo<BridgeTooltipProps>(function BridgeTooltip({ bridge, chain }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const onClick = useCallback<MouseEventHandler<HTMLAnchorElement>>(e => {
@@ -107,7 +102,7 @@ type TagWithTooltipProps = {
   children: ReactNode;
 } & TooltipProps;
 
-export const TagWithTooltip = memo(
+const TagWithTooltip = memo(
   forwardRef<HTMLDivElement, TagWithTooltipProps>(function TagWithTooltip(
     { children, className, triggerClass, ...rest },
     ref
@@ -117,6 +112,7 @@ export const TagWithTooltip = memo(
       <Tooltip
         placement="top"
         triggerClass={clsx(classes.tag, className, triggerClass)}
+        triggers={TRIGGERS.CLICK}
         ref={ref}
         {...rest}
       >
