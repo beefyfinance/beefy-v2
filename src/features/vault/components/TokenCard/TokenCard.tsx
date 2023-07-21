@@ -17,10 +17,16 @@ import { useAppDispatch, useAppSelector } from '../../../../store';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { selectBridgeByIdIfKnown } from '../../../data/selectors/bridges';
 import { BridgeTag, NativeTag } from '../BridgeTag';
+import type { HandleTokenTooltipInfoClick } from '../AssetsCard';
 
 const useStyles = makeStyles(styles);
 
-function TokenCardDisplay({ token }: { token: TokenEntity }) {
+interface TokenCardDisplayProps {
+  token: TokenEntity;
+  handleClick: HandleTokenTooltipInfoClick;
+}
+
+function TokenCardDisplay({ token, handleClick }: TokenCardDisplayProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const chain = useAppSelector(state => selectChainById(state, token.chainId));
@@ -37,9 +43,9 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
           <AssetsImage assetIds={[token.id]} chainId={chain.id} size={24} />
           <span>{token.symbol}</span>
           {isNative ? (
-            <NativeTag chain={chain} />
+            <NativeTag handleClick={handleClick} chain={chain} />
           ) : bridge ? (
-            <BridgeTag bridge={bridge} chain={chain} />
+            <BridgeTag handleClick={handleClick} bridge={bridge} />
           ) : null}
         </div>
         <div className={classes.buttonsContainer}>
@@ -68,9 +74,11 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
 function TokenCardComponent({
   chainId,
   tokenId,
+  handleClick,
 }: {
   chainId: ChainEntity['id'];
   tokenId: TokenEntity['id'];
+  handleClick: HandleTokenTooltipInfoClick;
 }) {
   const tokenLoaded = useAppSelector(
     state =>
@@ -98,7 +106,7 @@ function TokenCardComponent({
     return <></>;
   }
 
-  return <TokenCardDisplay token={token} />;
+  return <TokenCardDisplay handleClick={handleClick} token={token} />;
 }
 
 export const TokenCard = React.memo(TokenCardComponent);
