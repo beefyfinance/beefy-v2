@@ -113,6 +113,35 @@
     "createdAt": 1646162527
   },
   {
+    "id": "beets-a-layered-quartet",
+    "name": "A Layered Quartet",
+    "token": "A Layered Quartet",
+    "tokenAddress": "0xCE752063c544F604Ddb99a4335EB79B38c439D72",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsALayeredQuartet",
+    "earnedTokenAddress": "0x2Bb24a836d56Fcea17337268C945951BfDab12e1",
+    "earnContractAddress": "0x2Bb24a836d56Fcea17337268C945951BfDab12e1",
+    "oracle": "lps",
+    "oracleId": "beets-a-layered-quartet",
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["FTM", "lzUSDC", "lzWETH", "lzWBTC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://beets.fi/pool/0xce752063c544f604ddb99a4335eb79b38c439d7200010000000000000000075c",
+    "removeLiquidityUrl": "https://beets.fi/pool/0xce752063c544f604ddb99a4335eb79b38c439d7200010000000000000000075c",
+    "network": "fantom",
+    "createdAt": 1689957046
+  },
+  {
     "id": "boo-lzusdc-lzusdt",
     "name": "lzUSDC-lzUSDT LP",
     "token": "lzUSDC-lzUSDT LP",
