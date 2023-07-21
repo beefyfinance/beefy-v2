@@ -20,7 +20,7 @@
     "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0x393c93f8133bc89db3177D6e10182Efd4129D0d1",
     "removeLiquidityUrl": "https://app.chronos.exchange/liquidity/0x393c93f8133bc89db3177D6e10182Efd4129D0d1",
     "network": "arbitrum",
-    "createdAt": 1689656435
+    "createdAt": 1689957428
   },
   {
     "id": "chronos-rdnt-weth",
@@ -43,7 +43,7 @@
     "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0x9aC09266B68a8Fea081C232e54fA31526E740570",
     "removeLiquidityUrl": "https://app.chronos.exchange/liquidity/0x9aC09266B68a8Fea081C232e54fA31526E740570",
     "network": "arbitrum",
-    "createdAt": 1689656435
+    "createdAt": 1689957428
   },
   {
     "id": "chronos-arb-usdc.e",
@@ -66,7 +66,7 @@
     "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0xd302119B5C46d504D0b3534312e56eC321976251",
     "removeLiquidityUrl": "https://app.chronos.exchange/liquidity/0xd302119B5C46d504D0b3534312e56eC321976251",
     "network": "arbitrum",
-    "createdAt": 1689656435
+    "createdAt": 1689957428
   },
   {
     "id": "chronos-weth-reth",
@@ -89,7 +89,7 @@
     "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0xBbBe4D4a3d370F478be7f2D3B734591BB1a99d37",
     "removeLiquidityUrl": "https://app.chronos.exchange/liquidity/0xBbBe4D4a3d370F478be7f2D3B734591BB1a99d37",
     "network": "arbitrum",
-    "createdAt": 1689656435
+    "createdAt": 1689957428
   },
   {
     "id": "aura-bbaaUSD",
