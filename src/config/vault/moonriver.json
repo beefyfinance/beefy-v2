@@ -192,7 +192,8 @@
     "earnContractAddress": "0x0FB94775d16e14627678391D24E4576fdA05E3ed",
     "oracle": "lps",
     "oracleId": "solarbeam-wbtc-wmovr",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "solarbeam",
     "assets": ["WBTC", "MOVR"],
     "risks": [
