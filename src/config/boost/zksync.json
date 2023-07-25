@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "id": "moo_vesync-usdc-wtbt-tprotocol",
+    "poolId": "vesync-usdc-wtbt",
+    "name": "TProtocol",
+    "assets": ["wTBT", "USDC"],
+    "tokenAddress": "0x5288D86d78571278e7C5591F264bcF65e787550e",
+    "earnedToken": "USDC",
+    "earnedTokenDecimals": 6,
+    "earnedTokenAddress": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
+    "earnContractAddress": "0x829e669bfb45AB51E853572920D9258a4907f89D",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "USDC",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["tprotocol"]
+  }
+]
