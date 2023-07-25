@@ -33,7 +33,9 @@ import type { ProposalsState } from './features/data/reducers/proposals';
 import type { HistoricalState } from './features/data/reducers/historical-types';
 import type { SavedVaultsState } from './features/data/reducers/saved-vaults';
 import type { ResolverState } from './features/data/reducers/wallet/resolver-types';
+import type { BridgesState } from './features/data/reducers/bridges';
 import type { MigrationState } from './features/data/reducers/wallet/migration';
+import type { TooltipsState } from './features/data/reducers/tooltips';
 
 export interface BeefyState {
   entities: {
@@ -48,6 +50,7 @@ export interface BeefyState {
     minters: MintersState;
     infoCards: InfoCardsState;
     proposals: ProposalsState;
+    bridges: BridgesState;
   };
   biz: {
     tvl: TvlState;
@@ -76,6 +79,7 @@ export interface BeefyState {
     stepperState: StepperState;
     treasury: TreasuryState;
     savedVaults: SavedVaultsState;
+    tooltips: TooltipsState;
   };
 }
 

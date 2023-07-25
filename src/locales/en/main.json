@@ -81,6 +81,7 @@
   "Filter-Deposited": "Deposited vaults",
   "Filter-Boost": "🔥 Boosted vaults",
   "Filter-Zappable": "Zappable vaults",
+  "Filter-Native": "Native vaults",
   "Filter-Platform": "Platform:",
   "Filter-Type": "Vault type:",
   "Filter-Chain": "Chain:",
@@ -396,12 +397,12 @@
   "Bridge-Advice-2": "Crosschain amount larger than {{amount}} BIFI could take up to 12 hours",
   "Bridge-Button-1": "Bridge BIFI to {{network}}",
   "Multichain-Error": "Something was wrong, please check your transaction Multichain Explorer",
-  "Meta-Title-Template": "{{title}} - Beefy Finance",
-  "Meta-Default-Title": "Beefy Finance",
+  "Meta-Title-Template": "{{title}} - Beefy",
+  "Meta-Default-Title": "Beefy",
   "Meta-Default-Description": "The Multichain Yield Optimizer",
   "Meta-Vault-Title": "{{vault}} vault on {{chain}}",
   "Meta-Vault-Title-Gov": "{{vault}} on {{chain}}",
-  "Meta-Vault-Description": "Deposit {{token}}, earn {{token}} on {{chain}} with {{platform}} and Beefy Finance",
+  "Meta-Vault-Description": "Deposit {{token}}, earn {{token}} on {{chain}} with {{platform}} and Beefy",
   "Meta-MediaKit-Title": "Media Kit",
   "Meta-MediaKit-Description": "Downloadable assets like the Beefy logo SVG",
   "Meta-NotFound-Title": "Page Not Found",
@@ -616,5 +617,8 @@
   "More-info": "More info",
   "Migration-Title": "Migrate your deposit",
   "Migration-Text": "You have {{balance}} LP tokens staked on {{migrator}} that are available for an easy migration into this autocompounding vault",
-  "Migration-Action": "Migrate Now"
+  "Migration-Action": "Migrate Now",
+  "TokenBridge-native": "Native",
+  "TokenBridge-Tooltip-native": "Token is native to {{chain}}",
+  "TokenBridge-Tooltip-bridge": "Token is bridged to {{chain}} via <website>{{bridge}}</website>"
 }

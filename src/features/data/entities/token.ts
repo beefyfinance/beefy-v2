@@ -30,6 +30,7 @@ export interface TokenErc20 {
   website: string | null;
   description: string | null;
   documentation: string | null;
+  bridge?: string;
 }
 
 /**

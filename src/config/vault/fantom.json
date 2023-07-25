@@ -113,6 +113,37 @@
     "createdAt": 1646162527
   },
   {
+    "id": "boo-lzusdc-lzusdt",
+    "name": "lzUSDC-lzUSDT LP",
+    "token": "lzUSDC-lzUSDT LP",
+    "tokenAddress": "0xc109a353aEf40CA84B2Fb0828042d00F1A02d725",
+    "tokenDecimals": 18,
+    "tokenProviderId": "spookyswap",
+    "tokenAmmId": "fantom-spookyswap",
+    "earnedToken": "mooSpookylzUSDC-lzUSDT",
+    "earnedTokenAddress": "0x65CAF43Bed5855690ca0098E992e20F8DB1a98cE",
+    "earnContractAddress": "0x65CAF43Bed5855690ca0098E992e20F8DB1a98cE",
+    "oracle": "lps",
+    "oracleId": "boo-lzusdc-lzusdt",
+    "status": "active",
+    "platformId": "spookyswap",
+    "assets": ["lzUSDC", "lzUSDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://spooky.fi/#/swap",
+    "addLiquidityUrl": "https://spooky.fi/#/add/0x28a92dde19D9989F39A49905d7C9C2FAc7799bDf/0xcc1b99dDAc1a33c201a742A1851662E87BC7f22C",
+    "removeLiquidityUrl": "https://spooky.fi/#/pool",
+    "network": "fantom",
+    "createdAt": 1689626323
+  },
+  {
     "id": "equalizer-axlusdc-lzusdc",
     "name": "axlUSDC-lzUSDC sLP",
     "token": "axlUSDC-lzUSDC sLP",

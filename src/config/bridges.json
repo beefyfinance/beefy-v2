@@ -1,0 +1,42 @@
+[
+  {
+    "id": "axelar",
+    "name": "Axelar",
+    "website": "https://axelar.network"
+  },
+  {
+    "id": "ren",
+    "name": "RenBridge",
+    "website": "https://bridge.renproject.io"
+  },
+  {
+    "id": "frax",
+    "name": "Fraxferry",
+    "website": "https://app.frax.finance/fraxferry"
+  },
+  {
+    "id": "multichain",
+    "name": "Multichain",
+    "website": "https://multichain.xyz"
+  },
+  {
+    "id": "celer",
+    "name": "Celer cBridge",
+    "website": "https://cbridge.celer.network"
+  },
+  {
+    "id": "layer-zero",
+    "name": "LayerZero",
+    "website": "https://layerzero.network"
+  },
+  {
+    "id": "stargate",
+    "name": "Stargate",
+    "website": "https://stargate.finance"
+  },
+  {
+    "id": "wormhole",
+    "name": "Wormhole",
+    "website": "https://wormhole.com"
+  }
+]

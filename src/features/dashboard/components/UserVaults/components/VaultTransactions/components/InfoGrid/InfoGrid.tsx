@@ -1,6 +1,7 @@
 import type { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
-import React, { memo } from 'react';
+import type { ReactNode } from 'react';
+import { memo } from 'react';
 
 const useStyles = makeStyles((theme: Theme) => ({
   infoGrid: {
@@ -14,7 +15,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const InfoGrid = memo(function InfoGrid({ children }) {
+type InfoGridProps = {
+  children: ReactNode;
+};
+export const InfoGrid = memo<InfoGridProps>(function InfoGrid({ children }) {
   const classes = useStyles();
   return <div className={classes.infoGrid}>{children}</div>;
 });

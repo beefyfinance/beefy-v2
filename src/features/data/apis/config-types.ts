@@ -319,6 +319,12 @@ export type TreasuryConfig = {
   };
 };
 
+export interface BridgeConfig {
+  readonly id: string;
+  readonly name: string;
+  readonly tagName?: string;
+  readonly website: string;
+}
 export type BaseMigrationConfig = {
   readonly id: string; // eg ethereum-conic
   readonly name: string; // eg Conic Finance

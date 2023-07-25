@@ -5,7 +5,7 @@ import { LinkButton } from '../../../../components/LinkButton';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
 import type { ChainEntity } from '../../../data/entities/chain';
 import type { TokenEntity } from '../../../data/entities/token';
-import { isTokenErc20 } from '../../../data/entities/token';
+import { isTokenErc20, isTokenNative } from '../../../data/entities/token';
 import { selectChainById } from '../../../data/selectors/chains';
 import {
   selectIsAddressBookLoaded,
@@ -15,14 +15,20 @@ import { selectIsTokenLoaded, selectTokenById } from '../../../data/selectors/to
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { AssetsImage } from '../../../../components/AssetsImage';
+import { selectBridgeByIdIfKnown } from '../../../data/selectors/bridges';
+import { BridgeTag, NativeTag } from '../BridgeTag';
 
 const useStyles = makeStyles(styles);
 
 function TokenCardDisplay({ token }: { token: TokenEntity }) {
   const classes = useStyles();
   const { t } = useTranslation();
-
   const chain = useAppSelector(state => selectChainById(state, token.chainId));
+  const isErc20 = isTokenErc20(token);
+  const isNative = isTokenNative(token) || (isErc20 && token.bridge === 'native');
+  const bridge = useAppSelector(state =>
+    isErc20 && token.bridge && !isNative ? selectBridgeByIdIfKnown(state, token.bridge) : undefined
+  );
 
   return (
     <div className={classes.container}>
@@ -30,12 +36,17 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
         <div className={classes.title}>
           <AssetsImage assetIds={[token.id]} chainId={chain.id} size={24} />
           <span>{token.symbol}</span>
+          {isNative ? (
+            <NativeTag chain={chain} />
+          ) : bridge ? (
+            <BridgeTag bridge={bridge} chain={chain} />
+          ) : null}
         </div>
         <div className={classes.buttonsContainer}>
           {token.website && (
             <LinkButton hideIconOnMobile={true} href={token.website} text={t('Token-Site')} />
           )}
-          {isTokenErc20(token) && (
+          {isErc20 && (
             <LinkButton
               hideIconOnMobile={true}
               href={`${chain.explorerUrl}/token/${token.address}`}

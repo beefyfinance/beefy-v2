@@ -6,6 +6,7 @@ import type {
   AmmConfig,
   BeefyZapConfig,
   BoostConfig,
+  BridgeConfig,
   ChainConfig,
   FeaturedVaultConfig,
   InfoCardsConfig,
@@ -119,5 +120,9 @@ export class ConfigAPI {
 
   public async fetchPlatforms(): Promise<PlatformConfig[]> {
     return (await import('../../../config/platforms.json')).default;
+  }
+
+  public async fetchBridges(): Promise<BridgeConfig[]> {
+    return (await import('../../../config/bridges.json')).default;
   }
 }

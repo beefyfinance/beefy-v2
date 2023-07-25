@@ -85,6 +85,7 @@ export interface DataLoaderState {
     treasury: LoaderState;
     analytics: LoaderState;
     proposals: LoaderState;
+    bridges: LoaderState;
     migrators: LoaderState;
   };
   byChainId: {

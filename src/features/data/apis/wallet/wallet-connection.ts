@@ -136,7 +136,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         '--w3o-border-radius': '8px',
       },
       appMetadata: {
-        name: 'Beefy Finance',
+        name: 'Beefy',
         icon: appIcon,
         logo: appLogo,
         description:
