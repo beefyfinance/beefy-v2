@@ -13,4 +13,12 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     rowGap: '16px',
   },
+  content: {
+    ...theme.typography['body-lg'],
+    color: '#272B4A',
+    padding: '12px 16px',
+    background: '#fff',
+    borderRadius: '8px',
+    textAlign: 'left' as const,
+  },
 });

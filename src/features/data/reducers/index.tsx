@@ -36,7 +36,9 @@ import { savedVaultsSlice } from './saved-vaults';
 import type { Reducer } from 'react';
 import type { AnyAction } from '@reduxjs/toolkit';
 import { resolverReducer } from './wallet/resolver';
+import { bridgesSlice } from './bridges';
 import { migrationSlice } from './wallet/migration';
+import { tooltipsSlice } from './tooltips';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -50,6 +52,7 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
   minters: mintersSlice.reducer,
   infoCards: infoCardsSlice.reducer,
   proposals: proposalsSlice.reducer,
+  bridges: bridgesSlice.reducer,
 });
 const bizReducer = combineReducers<BeefyState['biz']>({
   tvl: tvlSlice.reducer,
@@ -88,6 +91,7 @@ const uiReducer = combineReducers<BeefyState['ui']>({
   dataLoader: dataLoaderSlice.reducer,
   stepperState: stepperSlice.reducer as Reducer<BeefyState['ui']['stepperState'], AnyAction>,
   treasury: treasurySlice.reducer,
+  tooltips: tooltipsSlice.reducer,
 });
 
 export const rootReducer = combineReducers<BeefyState>({

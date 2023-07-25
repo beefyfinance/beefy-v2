@@ -38,6 +38,7 @@ import { fetchTreasury } from '../actions/treasury';
 import type { fetchWalletTimelineFulfilled } from '../actions/analytics';
 import { fetchWalletTimeline } from '../actions/analytics';
 import { fetchActiveProposals } from '../actions/proposal';
+import { fetchBridges } from '../actions/bridges';
 import { fetchAllMigrators } from '../actions/migrator';
 
 const dataLoaderStateInit: LoaderState = {
@@ -99,6 +100,7 @@ export const initialDataLoaderState: DataLoaderState = {
     treasury: dataLoaderStateInit,
     analytics: dataLoaderStateInit,
     proposals: dataLoaderStateInit,
+    bridges: dataLoaderStateInit,
     migrators: dataLoaderStateInit,
   },
   byChainId: {},
@@ -321,6 +323,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchAllAmmsAction, 'amms', true);
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
     addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms', true);
+    addGlobalAsyncThunkActions(builder, fetchBridges, 'bridges', true);
     addGlobalAsyncThunkActions(builder, fetchOnRampSupportedProviders, 'onRamp', true);
     addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury', true);
     addGlobalAsyncThunkActions(builder, fetchActiveProposals, 'proposals', false);

@@ -16,9 +16,8 @@ export const styles = (theme: Theme) => ({
   title: {
     ...theme.typography['body-lg-med'],
     display: 'flex',
-    '& span': {
-      marginLeft: '8px',
-    },
+    alignItems: 'center',
+    gap: '8px',
   },
   buttonsContainer: {
     display: 'flex',

@@ -13,6 +13,7 @@ interface AddressBookTokenConfig {
   description?: string;
   documentation?: string;
   oracleId?: string;
+  bridge?: string;
 }
 
 export interface ChainAddressBook {
@@ -98,6 +99,7 @@ export const getChainAddressBook = memoize(
           description: bookToken.description || null,
           documentation: bookToken.documentation || null,
           type: 'erc20',
+          bridge: bookToken.bridge,
         };
       }
 
