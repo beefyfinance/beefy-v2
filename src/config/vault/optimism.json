@@ -2535,7 +2535,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-alusd-mai-samm",
     "status": "eol",
-    "retireReason": "rewards",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["alUSD", "MAI"],
     "risks": [
@@ -4451,7 +4451,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-hnd-usdc",
     "status": "eol",
-    "retireReason": "rewards",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["HND", "USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
