@@ -143,7 +143,7 @@
     "logo": "stake/beefy/beefyfinance.png",
     "logoNight": "stake/beefy/beefyfinance_night.png",
     "background": "stake/beefy/background.png",
-    "text": "Beefy Finance is The Multi-Chain Yield Optimizer across many blockchains, enabling users to earn autocompounded yield on their crypto. Did you know also that you can own a piece of Beefy itself? Beefy runs on its governance token, BIFI. The token has a set supply of 80,000 across all chains; no more may be minted, ever! As a holder of BIFI you may create and vote on important DAO proposals, and you become dividend-eligible to earn a share of every compounding harvest on Beefy vaults, hour by hour.",
+    "text": "Beefy is The Multi-Chain Yield Optimizer across many blockchains, enabling users to earn autocompounded yield on their crypto. Did you know also that you can own a piece of Beefy itself? Beefy runs on its governance token, BIFI. The token has a set supply of 80,000 across all chains; no more may be minted, ever! As a holder of BIFI you may create and vote on important DAO proposals, and you become dividend-eligible to earn a share of every compounding harvest on Beefy vaults, hour by hour.",
     "website": "https://app.beefy.finance",
     "social": {
       "telegram": "http://t.me/beefyfinance",
@@ -381,7 +381,7 @@
   "moonpot": {
     "logo": "stake/moonpot/logo.png",
     "background": "stake/moonpot/bg.png",
-    "text": "Moonpot is a win-win savings game on Binance Smart Chain powered by Beefy Finance. By depositing crypto into a Moonpot, users gain interest on their assets and enter into a prize draw at the same time. There’s a chance to win weekly prizes paid out in crypto from each Moonpot entered — as well as an exclusive monthly prize draw for $POTS stakers.",
+    "text": "Moonpot is a win-win savings game on Binance Smart Chain powered by Beefy. By depositing crypto into a Moonpot, users gain interest on their assets and enter into a prize draw at the same time. There’s a chance to win weekly prizes paid out in crypto from each Moonpot entered — as well as an exclusive monthly prize draw for $POTS stakers.",
     "website": "https://moonpot.com/",
     "social": {
       "telegram": "https://t.me/moonpotdotcom",

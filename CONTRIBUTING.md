@@ -1,6 +1,6 @@
 # Contributing to the Beefy v2 App
 
-We really appreciate and value contributions to the Beefy.Finance repositories. Please take 5' to review the items listed below to make sure that your contributions are merged as soon as possible.
+We really appreciate and value contributions to the Beefy repositories. Please take 5' to review the items listed below to make sure that your contributions are merged as soon as possible.
 
 ## Creating Pull Requests (PRs)
 
