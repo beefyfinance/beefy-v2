@@ -4,10 +4,10 @@ import { makeStyles } from '@material-ui/core';
 import { getSingleAssetSrc } from '../../../../helpers/singleAssetSrc';
 import { Button } from '../../../../components/Button';
 import type { VaultEntity } from '../../../data/entities/vault';
+import { isVaultActive } from '../../../data/entities/vault';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
-import {} from '../../../data/selectors/platforms';
 import { formatBigDecimals } from '../../../../helpers/format';
 import {
   selectCurrentChainId,
@@ -38,6 +38,7 @@ export const Migration = memo<MigrationProps>(function Migration({ vaultId }) {
   const shouldInitMigration = useAppSelector(selectShouldInitMigration);
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
   const migrationIds = useAppSelector(state => selectMigrationIdsByVaultId(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   useEffect(() => {
     if (shouldInitMigration) {
@@ -45,7 +46,7 @@ export const Migration = memo<MigrationProps>(function Migration({ vaultId }) {
     }
   }, [dispatch, shouldInitMigration]);
 
-  if (!isEmpty(migrationIds) && walletAddress) {
+  if (!isEmpty(migrationIds) && walletAddress && isVaultActive(vault)) {
     return (
       <>
         {migrationIds.map(migrationId => {

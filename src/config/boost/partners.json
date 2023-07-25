@@ -1,9 +1,33 @@
 {
+  "stargate": {
+    "text": "Stargate is a fully composable cross-chain bridge protocol built on LayerZero that enables native asset transfers between different blockchain networks.",
+    "website": "https://stargate.finance/",
+    "social": {
+      "telegram": "https://t.me/joinchat/LEM0ELklmO1kODdh",
+      "twitter": "https://twitter.com/StargateFinance"
+    }
+  },
+  "kwenta": {
+    "text": "Kwenta is a decentralized derivatives trading platform, live on Optimism, offering real-world and on-chain synthetic assets using the power of the Synthetix protocol.",
+    "website": "https://kwenta.eth.limo/",
+    "social": {
+      "discord": "https://discord.com/invite/kwentaio",
+      "twitter": "https://twitter.com/kwenta_io"
+    }
+  },
+  "optimism": {
+    "text": "Optimism is an L2 blockchain built by Ethereum developers that processes its transactions in batches using optimistic rollups. Users gain access to cheap and near instantaneous transactions.",
+    "website": "https://www.optimism.io/",
+    "social": {
+      "discord": "https://discord.com/invite/optimism",
+      "twitter": "https://twitter.com/optimismFND"
+    }
+  },
   "tprotocol": {
     "text": "TBT is short for T-Bill token. TBT is fully backed by permissioned sTBT issued by a multi-billion ceDeFi institution.",
     "website": "https://www.tprotocol.io/",
     "social": {
-      "telegram": "https://discord.com/invite/ZEV6PNXK9Q",
+      "discord": "https://discord.com/invite/ZEV6PNXK9Q",
       "twitter": "https://twitter.com/TProtocol_"
     }
   },
@@ -11,12 +35,12 @@
     "text": "When you stake $CANTO at scanto.io you get $sCANTO a liquid staking derivative that can be used across a range of DeFi applications.",
     "website": "https://scanto.io",
     "social": {
-      "telegram": "",
-      "twitter": ""
+      "discord": "https://discord.com/invite/scanto",
+      "twitter": "https://twitter.com/stakedCANTO"
     }
   },
   "overnight": {
-    "text": "Overnight Finance is an asset management protocol offering passive yield products based on delta-neutral strategies, primarily for conservative stablecoin investors. Overnight's core products include USD+  and DAI+: a USDC-pegged and DAI-pegged yield bearing stablecoins, 100% collaterized, mostly by delta-neutral strategies.",
+    "text": "Overnight Finance is an asset management protocol offering passive yield products based on delta-neutral strategies, primarily for conservative stablecoin investors. Overnight's core products include USD+  and DAI+: a USDC-pegged and DAI-pegged yield bearing stablecoins, 100% collateralized, mostly by delta-neutral strategies.",
     "website": "https://overnight.fi/",
     "social": {
       "discord": "https://discord.gg/overnight-fi",
@@ -43,6 +67,7 @@
     "text": "Kava is a decentralized blockchain that combines the speed and interoperability of Cosmos with the developer power of Ethereum.",
     "website": "https://www.kava.io/",
     "social": {
+      "discord": "https://discord.com/invite/q6QuanE4bx",
       "telegram": "https://t.me/kavalabs",
       "twitter": "https://twitter.com/kava_platform"
     }
@@ -51,15 +76,15 @@
     "text": "Metavault.Trade is a next generation Decentralized Exchange, designed to provide a large range of trading features and very deep liquidity on many large cap crypto assets. Spot trading with swaps is offered on one side, while perpetual futures are offered on the other side including leverage trading. Whether visiting the platform as a trader or an investor, both are brought into a profitable symbiosis through a unique and rewarding trading experience.",
     "website": "https://metavault.trade/",
     "social": {
-      "telegram": "https://discord.gg/metavault",
+      "discord": "https://discord.gg/metavault",
       "twitter": "https://twitter.com/MetavaultTRADE/"
     }
   },
   "opx": {
-    "text": "OPX Finance is a Decentralized swap and perpetual Exchange built on Optimism. Inspired by GMX.IO, OPX Finance is designed to provide a wide range of trading features and very deep liquidity for many large-cap crypto assets. \nTraders can use it in two ways:\n- Spot trading: with swaps and limit orders.\n- Perpetual futures trading: with up to 30x leverage on short and long positions.\nTrading is supported by a unique multi-asset pool that earns liquidity providers fees from market making, swap fees and leverage trading. In addition, Dynamic pricing is supported by Chainlink Oracles and an aggregate of prices from leading volume exchanges, making OPX non-liquidation wicks and no slippage platform for every trading. This ensures fair trade and long-term benefits for both traders and liquidity providers.\n✅ Spot and Leverage  ✅ No Price Impact ✅ Extremely Low Transaction Fees",
+    "text": "OPX Finance is a Decentralized swap and perpetual Exchange built on Optimism. Inspired by GMX.IO, OPX Finance is designed to provide a wide range of trading features and very deep liquidity for many large-cap crypto assets. \nTraders can use it in two ways:\n- Spot trading: with swaps and limit orders.\n- Perpetual futures trading: with up to 30x leverage on short and long positions.\nTrading is supported by a unique multi-asset pool that earns liquidity providers fees from market making, swap fees and leverage trading. In addition, Dynamic pricing is supported by Chainlink Oracles and an aggregate of prices from leading volume exchanges, making OPX non-liquidation wicks and no slippage platform for every trading. This ensures fair trade and long-term benefits for both traders and liquidity providers.\n✅ Spot and Leverage ✅ No Price Impact ✅ Extremely Low Transaction Fees",
     "website": "https://www.opx.finance/",
     "social": {
-      "telegram": "https://discord.gg/mNdHE52zZp",
+      "discord": "https://discord.gg/mNdHE52zZp",
       "twitter": "https://twitter.com/opxfinance"
     }
   },
@@ -67,7 +92,7 @@
     "text": "Synthetix is a new financial primitive enabling the creation of synthetic assets, offering unique derivatives and exposure to real-world assets on the blockchain.",
     "website": "https://synthetix.io/",
     "social": {
-      "telegram": "https://discord.com/invite/AEdUHzt",
+      "discord": "https://discord.com/invite/AEdUHzt",
       "twitter": "https://twitter.com/synthetix_io"
     }
   },
@@ -75,28 +100,29 @@
     "text": "Velodrome Finance, at its core, is a solution for protocols on Optimism to properly incentivize liquidity for their own use cases. Building on top of the groundwork laid out by Solidly, their team has addressed that first iteration's core issues to realize its full potential.",
     "website": "https://app.velodrome.finance/swap",
     "social": {
-      "telegram": "https://discord.com/invite/velodrome",
+      "discord": "https://discord.com/invite/velodrome",
       "twitter": "https://twitter.com/VelodromeFi"
     }
   },
   "stader": {
     "text": "Stader aims to be the distribution layer of staking while building protocols and products which enhance the security, decentralization, liquidity, governance of some of the major DPoS blockchain networks like Ethereum, Terra, Polygon, Solana and BNB Chain.",
-    "website": "https://polygon.staderlabs.com/liquid-staking/maticx",
+    "website": "https://www.staderlabs.com/polygon/stake/",
     "social": {
+      "telegram": "https://t.me/StaderLabs_Polygon_Official",
       "discord": "https://discord.com/invite/ReasyJB4Rq",
       "twitter": "https://twitter.com/stader_polygon"
     }
   },
   "stader-bsc": {
     "text": "Stader aims to be the distribution layer of staking while building protocols and products which enhance the security, decentralization, liquidity, governance of some of the major DPoS blockchain networks like Ethereum, Terra, Polygon, Solana and BNB Chain.",
-    "website": "https://binance.staderlabs.com/liquid-staking/bnbx",
+    "website": "https://www.staderlabs.com/bnb/stake/",
     "social": {
       "telegram": "https://t.me/staderlabs_bnb_official",
       "twitter": "https://twitter.com/stader_bnb"
     }
   },
   "swapsicle": {
-    "text": "Swapsicle is a decentralised exchange built on the avalanche blockchain offering swaps, farming and staking opportunities.\n\nSwapsicle DEX is built by the community and for the community meaning POPS holders are rewarded for using the platform.",
+    "text": "Swapsicle is a decentralized exchange built on the avalanche blockchain offering swaps, farming and staking opportunities.\n\nSwapsicle DEX is built by the community and for the community meaning POPS holders are rewarded for using the platform.",
     "website": "https://www.swapsicle.io/en/swap",
     "social": {
       "discord": "https://discord.com/invite/swapsicle",
@@ -947,7 +973,7 @@
     "text": "Orkan is a meta-governance protocol over liquidity flow within the FTM ecosystem. Orkan utilizes perpetual bond issuance to acquire governance tokens from protocols on FTM employing liquidity gauges and locking mechanisms as exchange incentives. Orkan's other plan is to enable deep liquidity and usage of wrapped BTC assets within the ecosystem.",
     "website": "https://orkan.finance/#/dashboard",
     "social": {
-      "telegram": "https://discord.com/invite/mqd2ZaXeEB",
+      "discord": "https://discord.com/invite/mqd2ZaXeEB",
       "twitter": "https://twitter.com/EnterTheStrudel"
     }
   },

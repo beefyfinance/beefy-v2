@@ -71,7 +71,7 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
         <Trans
           t={t}
           i18nKey={i18nKey}
-          namespace="risks"
+          ns="risks"
           values={options}
           components={{
             details: <DetailsLink />,

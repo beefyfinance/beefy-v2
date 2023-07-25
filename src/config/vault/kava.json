@@ -1,5 +1,27 @@
 [
   {
+    "id": "curve-kava-mimusdt",
+    "name": "MIM/USDt",
+    "token": "MIMUSDt-f",
+    "tokenAddress": "0xCf5f5ddE4D1D866b11b4cA2ba3Ff146Ec0fe3743",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveMIMUSDT",
+    "earnedTokenAddress": "0x1C56B004a6938b26D194ecd3B814f8d28a8692B4",
+    "earnContractAddress": "0x1C56B004a6938b26D194ecd3B814f8d28a8692B4",
+    "oracle": "lps",
+    "oracleId": "curve-kava-mimusdt",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["MIM", "USDT"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-16/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-16/withdraw",
+    "network": "kava",
+    "createdAt": 1689834853
+  },
+  {
     "id": "kava-bifi-maxi",
     "name": "BIFI Maxi",
     "token": "BIFI",
