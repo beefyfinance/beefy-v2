@@ -7,8 +7,8 @@
       "value": 0.0005,
       "recipient": "0x9F9FE15FDa14eAA2d878Ed667C805A7CC13c2560"
     },
-    "depositFromTokens": ["ETH", "WETH", "USDC", "WBTC"],
-    "withdrawToTokens": ["ETH", "USDC", "WBTC"],
+    "depositFromTokens": ["ETH", "WETH", "USDC", "WBTC", "BUSD", "VC"],
+    "withdrawToTokens": ["ETH", "USDC", "WBTC", "BUSD", "VC"],
     "blockedTokens": [],
     "blockedVaults": []
   },
