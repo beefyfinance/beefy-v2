@@ -395,7 +395,8 @@
     "earnContractAddress": "0x1E2f6B6cdaA7aEbf21011ba9E1D450C7a1C31e47",
     "oracle": "lps",
     "oracleId": "beets-ankr-ethereum-liquid-ocean",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "beethovenx",
     "assets": ["ankrETH", "ETH"],
     "risks": [
@@ -2621,7 +2622,8 @@
     "earnContractAddress": "0x6C4593D4f91c790404cCEe5007E929d2b7bF45bD",
     "oracle": "lps",
     "oracleId": "boo-wftm-treeb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "spookyswap",
     "assets": ["TREEB", "FTM"],
     "risks": [
@@ -8915,7 +8917,8 @@
     "earnContractAddress": "0xf723aE5478B1F03cA88C204F1ae5498d3576B78F",
     "oracle": "lps",
     "oracleId": "boo-wftm-tor",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "spookyswap",
     "assets": ["TOR", "FTM"],
     "risks": [
