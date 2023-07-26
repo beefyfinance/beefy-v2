@@ -4,8 +4,8 @@ export function explorerTokenUrl(chain: ChainEntity, tokenAddress: string) {
   return chain.explorerTokenUrlTemplate.replace('{address}', tokenAddress);
 }
 
-export function explorerAddressUrl(chain: ChainEntity, contractAddress: string) {
-  return chain.explorerAddressUrlTemplate.replace('{address}', contractAddress);
+export function explorerAddressUrl(chain: ChainEntity, address: string) {
+  return chain.explorerAddressUrlTemplate.replace('{address}', address);
 }
 
 export function explorerTxUrl(chain: ChainEntity, txHash: string) {
