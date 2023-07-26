@@ -15,6 +15,7 @@ import { selectChainById } from '../../../data/selectors/chains';
 import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
 import { StatLoader } from '../../../../components/StatLoader';
 import { useAppSelector } from '../../../../store';
+import { explorerAddressUrl } from '../../../../helpers/url';
 
 const useStyles = makeStyles(styles);
 
@@ -42,14 +43,11 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         </div>
         <div className={classes.cardActions}>
           <div className={classes.cardAction}>
-            <LinkButton
-              href={`${chain.explorerUrl}/address/${stratAddr}`}
-              text={t('Strat-Address')}
-            />
+            <LinkButton href={explorerAddressUrl(chain, stratAddr)} text={t('Strat-Address')} />
           </div>
           <div className={classes.cardAction}>
             <LinkButton
-              href={`${chain.explorerUrl}/address/${vault.earnContractAddress}`}
+              href={explorerAddressUrl(chain, vault.earnContractAddress)}
               text={t('Strat-AddressVault')}
             />
           </div>

@@ -19,6 +19,7 @@ import { stepperActions } from '../../../../features/data/reducers/wallet/steppe
 import { walletActions } from '../../../../features/data/actions/wallet-actions';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
 import iconCheck from '../../../../images/icons/check.svg';
+import { explorerTxUrl } from '../../../../helpers/url';
 
 const useStyles = makeStyles(styles);
 
@@ -109,7 +110,7 @@ export const DestChainStatus = memo(function DestChainStatus() {
       {!txData.error && txData.swapTx && (
         <MuiButton
           className={classes.redirectLinkSuccess}
-          href={destChain.explorerUrl + '/tx/' + txData.swapTx}
+          href={explorerTxUrl(destChain, txData.swapTx)}
           target="_blank"
         >
           {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" fontSize="inherit" />}

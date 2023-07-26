@@ -26,7 +26,15 @@ import type { MigrationConfig } from '../reducers/wallet/migration';
  */
 export class ConfigAPI {
   public async fetchChainConfigs(): Promise<ChainConfig[]> {
-    return Object.entries(chainConfigs).map(([id, chain]) => ({ id, ...chain }));
+    return Object.entries(chainConfigs).map(([id, chain]) => ({
+      id,
+      ...chain,
+      explorerTokenUrlTemplate:
+        chain.explorerTokenUrlTemplate || `${chain.explorerUrl}/token/{address}`,
+      explorerAddressUrlTemplate:
+        chain.explorerAddressUrlTemplate || `${chain.explorerUrl}/address/{address}`,
+      explorerTxUrlTemplate: chain.explorerTxUrlTemplate || `${chain.explorerUrl}/tx/{hash}`,
+    }));
   }
 
   public async fetchFeaturedVaults(): Promise<FeaturedVaultConfig> {
