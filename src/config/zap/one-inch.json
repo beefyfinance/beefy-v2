@@ -157,7 +157,7 @@
       "MLP",
       "DAI+"
     ],
-    "blockedVaults": ["aavev3-op-eth"]
+    "blockedVaults": ["aavev3-op-eth", "exactly-supply-eth"]
   },
   {
     "zapAddress": "0xc0A1865b4B32B1e343EE515f6a092B45F1628b5D",

@@ -1,5 +1,32 @@
 [
   {
+    "id": "exactly-supply-op",
+    "name": "OP",
+    "token": "OP",
+    "tokenAddress": "0x4200000000000000000000000000000000000042",
+    "tokenDecimals": 18,
+    "earnedToken": "mooExactlySupplyOP",
+    "earnedTokenAddress": "0xBe0eB1af5d47b118fC24987EA85a20dFa3a98303",
+    "earnContractAddress": "0xBe0eB1af5d47b118fC24987EA85a20dFa3a98303",
+    "oracle": "tokens",
+    "oracleId": "OP",
+    "status": "active",
+    "platformId": "exactly",
+    "assets": ["OP"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/OP",
+    "network": "optimism",
+    "createdAt": 1690301358
+  },
+  {
     "id": "velodrome-v2-frax-op",
     "name": "OP-FRAX vLP V2",
     "token": "OP-FRAX vLP V2",
@@ -1743,7 +1770,7 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/wstETH",
     "network": "optimism",
-    "createdAt": 1687869830
+    "createdAt": 1690301357
   },
   {
     "id": "velodrome-frax-usd+",
@@ -1908,7 +1935,7 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/USDC",
     "network": "optimism",
-    "createdAt": 1681411178
+    "createdAt": 1690301357
   },
   {
     "id": "exactly-supply-eth",
@@ -1934,7 +1961,7 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/USDC/WETH",
     "network": "optimism",
-    "createdAt": 1681411178
+    "createdAt": 1690301357
   },
   {
     "id": "velodrome-frax-alusd",
