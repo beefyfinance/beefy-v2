@@ -113,6 +113,35 @@
     "createdAt": 1646162527
   },
   {
+    "id": "beets-a-layered-quartet",
+    "name": "A Layered Quartet",
+    "token": "A Layered Quartet",
+    "tokenAddress": "0xCE752063c544F604Ddb99a4335EB79B38c439D72",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsALayeredQuartet",
+    "earnedTokenAddress": "0xe4e41EBFF70BD98709D19aC787fBb3A39FE5C61D",
+    "earnContractAddress": "0xe4e41EBFF70BD98709D19aC787fBb3A39FE5C61D",
+    "oracle": "lps",
+    "oracleId": "beets-a-layered-quartet",
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["FTM", "lzUSDC", "lzWETH", "lzWBTC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://beets.fi/pool/0xce752063c544f604ddb99a4335eb79b38c439d7200010000000000000000075c",
+    "removeLiquidityUrl": "https://beets.fi/pool/0xce752063c544f604ddb99a4335eb79b38c439d7200010000000000000000075c",
+    "network": "fantom",
+    "createdAt": 1689957046
+  },
+  {
     "id": "boo-lzusdc-lzusdt",
     "name": "lzUSDC-lzUSDT LP",
     "token": "lzUSDC-lzUSDT LP",
@@ -366,7 +395,8 @@
     "earnContractAddress": "0x1E2f6B6cdaA7aEbf21011ba9E1D450C7a1C31e47",
     "oracle": "lps",
     "oracleId": "beets-ankr-ethereum-liquid-ocean",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "beethovenx",
     "assets": ["ankrETH", "ETH"],
     "risks": [
@@ -2592,7 +2622,8 @@
     "earnContractAddress": "0x6C4593D4f91c790404cCEe5007E929d2b7bF45bD",
     "oracle": "lps",
     "oracleId": "boo-wftm-treeb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "spookyswap",
     "assets": ["TREEB", "FTM"],
     "risks": [
@@ -8886,7 +8917,8 @@
     "earnContractAddress": "0xf723aE5478B1F03cA88C204F1ae5498d3576B78F",
     "oracle": "lps",
     "oracleId": "boo-wftm-tor",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "spookyswap",
     "assets": ["TOR", "FTM"],
     "risks": [

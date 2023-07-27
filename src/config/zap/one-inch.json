@@ -1,12 +1,25 @@
 [
   {
+    "zapAddress": "0x8d8f1E4CA4812Dc6A494D507B8CDdCa30011B428",
+    "priceOracleAddress": "0xC762d56614D3411eC6fABD56cb075D904b801613",
+    "chainId": "zksync",
+    "fee": {
+      "value": 0.0005,
+      "recipient": "0x9F9FE15FDa14eAA2d878Ed667C805A7CC13c2560"
+    },
+    "depositFromTokens": ["ETH", "WETH", "USDC", "WBTC", "BUSD", "VC"],
+    "withdrawToTokens": ["ETH", "USDC", "WBTC", "BUSD", "VC"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
     "zapAddress": "0xdc2EB6BBbCce7c9690138fC1c68E9b760948A9fd",
     "priceOracleAddress": "0x7F069df72b7A39bCE9806e3AfaF579E54D8CF2b9",
     "chainId": "polygon",
     "fee": {
       "value": 0.0005,
       "recipient": "0x8Af5c669620B5e525CE85DB00D0c159FF6BbE983"
-    }, 
+    },
     "depositFromTokens": ["MATIC", "WMATIC", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
     "withdrawToTokens": ["MATIC", "BIFI", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
     "blockedTokens": [
@@ -157,7 +170,7 @@
       "MLP",
       "DAI+"
     ],
-    "blockedVaults": ["aavev3-op-eth"]
+    "blockedVaults": ["aavev3-op-eth", "exactly-supply-eth"]
   },
   {
     "zapAddress": "0xc0A1865b4B32B1e343EE515f6a092B45F1628b5D",
@@ -221,8 +234,30 @@
       "value": 0.0005,
       "recipient": "0x8Ccf8606ccf0Aff9937B68e0297967e257eB148b"
     },
-    "depositFromTokens": ["ETH", "ARB", "WETH", "USDC", "USDCe", "USDT", "DAI", "MIM", "WBTC", "wstETH"],
-    "withdrawToTokens": ["ETH", "ARB", "BIFI", "USDC", "USDCe", "USDT", "DAI", "MIM", "WBTC", "wstETH"],
+    "depositFromTokens": [
+      "ETH",
+      "ARB",
+      "WETH",
+      "USDC",
+      "USDCe",
+      "USDT",
+      "DAI",
+      "MIM",
+      "WBTC",
+      "wstETH"
+    ],
+    "withdrawToTokens": [
+      "ETH",
+      "ARB",
+      "BIFI",
+      "USDC",
+      "USDCe",
+      "USDT",
+      "DAI",
+      "MIM",
+      "WBTC",
+      "wstETH"
+    ],
     "blockedTokens": [
       "agEUR",
       "FISH",
