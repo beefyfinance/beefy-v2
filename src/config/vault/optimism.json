@@ -2430,7 +2430,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-bevelo-velo",
     "status": "eol",
-    "retireReason": "tvl",
+    "retireReason": "bevelo",
     "platformId": "velodrome",
     "assets": ["beVELO", "VELO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -3492,7 +3492,7 @@
     "oracle": "tokens",
     "oracleId": "BeVELO",
     "status": "eol",
-    "retireReason": "rewards",
+    "retireReason": "bevelo",
     "platformId": "beefy",
     "assets": ["beVELO"],
     "risks": [
