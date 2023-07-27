@@ -3491,7 +3491,8 @@
     "earnContractAddress": "0x5cD57fe9d760E6302aba167993a0D1cC03895eD9",
     "oracle": "tokens",
     "oracleId": "BeVELO",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beefy",
     "assets": ["beVELO"],
     "risks": [
