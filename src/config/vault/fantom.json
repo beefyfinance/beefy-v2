@@ -802,7 +802,8 @@
     "earnContractAddress": "0xb4a268a8992991886065A039a2B71c2fb182e1C9",
     "oracle": "lps",
     "oracleId": "beets-two-smoking-fantoms",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beethovenx",
     "assets": ["sFTMx", "bb-yv-FTM"],
     "risks": [
@@ -8885,7 +8886,8 @@
     "earnContractAddress": "0x8B92DE822b121761a3caF894627a09a9f87864C0",
     "oracle": "lps",
     "oracleId": "hector-tor-crv",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "hector",
     "assets": ["TOR", "DAI", "USDC"],
     "risks": [

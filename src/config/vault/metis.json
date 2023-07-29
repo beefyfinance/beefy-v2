@@ -509,7 +509,8 @@
     "earnContractAddress": "0x85f287c860f02bAc3aE5023eFb547b6B7Aa4D9eD",
     "oracle": "lps",
     "oracleId": "netswap-weth-m.usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "netswap",
     "assets": ["mUSDC", "WETH"],
     "risks": [
