@@ -583,6 +583,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     chainId: 324,
     rpc: ['https://mainnet.era.zksync.io'],
     explorerUrl: 'https://explorer.zksync.io',
+    explorerTokenUrlTemplate: 'https://explorer.zksync.io/address/{address}',
     multicallAddress: '0x1E9231Cc9782D9F8e213736F6dAC00020D8271cB',
     appMulticallContractAddress: '0x5479d2A10e60110F4728d910b5321Af4B78c30E4',
     providerName: 'zkSync',

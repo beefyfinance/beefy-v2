@@ -128,6 +128,9 @@ export interface ChainConfig {
   chainId: number;
   rpc: string[];
   explorerUrl: string;
+  explorerAddressUrlTemplate?: string;
+  explorerTokenUrlTemplate?: string;
+  explorerTxUrlTemplate?: string;
   multicallAddress: string;
   appMulticallContractAddress: string;
   providerName: string;

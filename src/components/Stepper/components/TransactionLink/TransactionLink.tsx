@@ -5,6 +5,7 @@ import { selectChainById } from '../../../../features/data/selectors/chains';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../store';
 import { selectStepperChainId } from '../../../../features/data/selectors/stepper';
+import { explorerTxUrl } from '../../../../helpers/url';
 
 const useStyles = makeStyles(styles);
 
@@ -30,7 +31,7 @@ export function TransactionLink() {
   return (
     <Button
       className={classes.redirectLinkSuccess}
-      href={chain.explorerUrl + '/tx/' + hash}
+      href={explorerTxUrl(chain, hash)}
       target="_blank"
     >
       {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" fontSize="inherit" />}
