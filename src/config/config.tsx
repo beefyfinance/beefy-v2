@@ -53,6 +53,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'lvUSD',
       'crvUSD',
       'R',
+      'GHO',
     ],
   },
   polygon: {
