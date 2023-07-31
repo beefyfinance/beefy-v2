@@ -43,7 +43,29 @@ export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePau
                 t={t}
                 i18nKey={maybeKey}
                 components={{
-                  link: <BIFIV2Link />,
+                  info: (
+                    <a
+                      href="https://snapshot.org/#/beefydao.eth/proposal/0x55e6ad9dd3ebcca3334e23872fa8e2ab1e926466b3d2d0af6f462cc45b1541a2"
+                      target={'_blank'}
+                      rel={'noopener'}
+                    />
+                  ),
+                }}
+              />
+            );
+          } else if (reasonCode === 'bevelo') {
+            return (
+              <Trans
+                t={t}
+                i18nKey={maybeKey}
+                components={{
+                  pool: (
+                    <a
+                      href="https://app.beefy.com/vault/beefy-bevelo-v2-earnings"
+                      target={'_blank'}
+                      rel={'noopener'}
+                    />
+                  ),
                 }}
               />
             );
@@ -60,19 +82,4 @@ export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePau
   }, [t, i18n, status, retireReason, pauseReason]);
 
   return message ? <AlertWarning className={className}>{message}</AlertWarning> : null;
-});
-
-const BIFIV2Link = memo(function BIFIV2Link() {
-  const { t } = useTranslation();
-  return (
-    <a
-      href={
-        'https://snapshot.org/#/beefydao.eth/proposal/0x55e6ad9dd3ebcca3334e23872fa8e2ab1e926466b3d2d0af6f462cc45b1541a2'
-      }
-      target="_blank"
-      rel="noopener"
-    >
-      {t('More-info')}
-    </a>
-  );
 });
