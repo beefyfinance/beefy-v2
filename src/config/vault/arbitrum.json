@@ -3104,7 +3104,8 @@
     "earnContractAddress": "0xF26C10811D602e39580C9448944ddAe7b183fD95",
     "oracle": "lps",
     "oracleId": "curve-arb-tricrypto",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "withdraw",
     "platformId": "convex",
     "assets": ["USDT", "WBTC", "ETH"],
     "risks": [
