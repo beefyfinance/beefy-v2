@@ -1,5 +1,27 @@
 [
   {
+    "id": "curve-kava-mimusdt-new",
+    "name": "MIM/USDt",
+    "token": "MIMUSDt-f",
+    "tokenAddress": "0x591199E16E006Dec3eDcf79AE0fCea1Dd0F5b69D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveMIMUSDT_v2",
+    "earnedTokenAddress": "0x4ec819843F6229722FD0d6F8944aCF3FF9F8acB8",
+    "earnContractAddress": "0x4ec819843F6229722FD0d6F8944aCF3FF9F8acB8",
+    "oracle": "lps",
+    "oracleId": "curve-kava-mimusdt-new",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["MIM", "USDT"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-17/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-17/withdraw",
+    "network": "kava",
+    "createdAt": 1690789534
+  },
+  {
     "id": "curve-kava-mimusdt",
     "name": "MIM/USDt",
     "token": "MIMUSDt-f",

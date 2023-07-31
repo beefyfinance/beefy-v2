@@ -2021,38 +2021,6 @@
     "createdAt": 1681185627
   },
   {
-    "id": "velodrome-aleth-frxeth",
-    "name": "alETH-frxETH sLP",
-    "token": "alETH-frxETH sLP",
-    "tokenAddress": "0x87383ec35aF6F0d58DB242960898AC4D8C9F83A6",
-    "tokenDecimals": 18,
-    "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
-    "earnedToken": "mooVelodromealETH-frxETH",
-    "earnedTokenAddress": "0x11b2b8B0e22ff11521042E8275Afb2d024B23C90",
-    "earnContractAddress": "0x11b2b8B0e22ff11521042E8275Afb2d024B23C90",
-    "oracle": "lps",
-    "oracleId": "velodrome-aleth-frxeth",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "velodrome",
-    "assets": ["alETH", "frxETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MEDIUM",
-      "OVER_COLLAT_ALGO_STABLECOIN",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.velodrome.finance/swap?from=0x3E29D3A9316dAB217754d13b28646B76607c5f04&to=0x6806411765Af15Bddd26f8f544A34cC40cb9838B",
-    "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x87383ec35aF6F0d58DB242960898AC4D8C9F83A6",
-    "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x87383ec35aF6F0d58DB242960898AC4D8C9F83A6",
-    "network": "optimism",
-    "createdAt": 1681185627
-  },
-  {
     "id": "velodrome-usd+-dai+",
     "name": "USD+-DAI+ sLP",
     "token": "USD+-DAI+ sLP",
