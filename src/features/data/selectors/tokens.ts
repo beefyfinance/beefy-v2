@@ -49,7 +49,7 @@ export const selectTokenByAddress = (
   const tokensByChainId = selectTokensByChainId(state, chainId);
   const token = tokensByChainId.byAddress[address.toLowerCase()];
   if (token === undefined) {
-    throw new Error(`selectTokenByAddress: Unknown token address`);
+    throw new Error(`selectTokenByAddress: Unknown token address ${address}`);
   }
   return token;
 };
@@ -209,6 +209,40 @@ export const selectHasBreakdownData = (
   const token = selectTokenByAddressOrNull(state, chainId, depositTokenAddress);
   if (!token) return false;
   const breakdown = selectLpBreakdownByOracleId(state, token.oracleId);
+
+  if (
+    !isPricesLoaded ||
+    !isAddressBookLoaded ||
+    !breakdown ||
+    !breakdown.tokens ||
+    !breakdown.tokens.length ||
+    !breakdown.balances ||
+    breakdown.balances.length !== breakdown.tokens.length
+  ) {
+    return false;
+  }
+
+  // Must have tokens in state
+  const tokens = breakdown.tokens.map(
+    address => state.entities.tokens.byChainId[chainId].byAddress[address.toLowerCase()]
+  );
+  if (tokens.findIndex(token => !token) !== -1) {
+    return false;
+  }
+
+  // Must have prices of tokens in state
+  return tokens.findIndex(token => !state.entities.tokens.prices.byOracleId[token.oracleId]) === -1;
+};
+
+export const selectTreasuryV3HasBreakdownData = (
+  state: BeefyState,
+  oracleId: TokenEntity['oracleId'],
+  chainId: ChainEntity['id']
+) => {
+  const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
+  const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
+
+  const breakdown = selectLpBreakdownByOracleId(state, oracleId);
 
   if (
     !isPricesLoaded ||

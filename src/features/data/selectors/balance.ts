@@ -419,6 +419,22 @@ export const selectLpBreakdownBalance = (
   return { assets, userShareOfPool, lpTotalSupplyDecimal };
 };
 
+export const selectTreasuryV3PositionBreakdown = (
+  state: BeefyState,
+  breakdown: TokenLpBreakdown,
+  chainId: ChainEntity['id']
+) => {
+  const assets = breakdown.tokens.map((tokenAddress, i) => {
+    const assetToken = selectTokenByAddress(state, chainId, tokenAddress);
+    return {
+      ...assetToken,
+      balance: breakdown.balances[i],
+    };
+  });
+
+  return assets;
+};
+
 export const selectUserLpBreakdownBalance = (
   state: BeefyState,
   vault: VaultEntity,

@@ -6,12 +6,13 @@ import type { ChainEntity } from '../entities/chain';
 import type { TreasuryHoldingEntity } from '../entities/treasury';
 import { isVaultHoldingEntity } from '../entities/treasury';
 import { isInitialLoader } from '../reducers/data-loader-types';
-import { selectLpBreakdownBalance } from './balance';
+import { selectLpBreakdownBalance, selectTreasuryV3PositionBreakdown } from './balance';
 import { selectChainById } from './chains';
 import {
   selectHasBreakdownData,
   selectIsTokenStable,
   selectLpBreakdownByOracleId,
+  selectTreasuryV3HasBreakdownData,
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens';
 import { selectIsVaultStable } from './vaults';
@@ -155,28 +156,47 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
         if (isFiniteBigNumber(token.usdValue)) {
           const tokenBalanceUsd = token.usdValue;
           if (token.oracleType === 'lps') {
-            if (isVaultHoldingEntity(token) && selectIsVaultStable(state, token.vaultId)) {
-              totals['stables'] = (totals['stables'] || BIG_ZERO).plus(tokenBalanceUsd);
-            } else {
-              const haveBreakdownData = selectHasBreakdownData(state, token.address, chainId);
-              if (haveBreakdownData) {
-                let balance = token.balance.shiftedBy(-token.decimals);
-                if (isVaultHoldingEntity(token)) {
-                  const ppfs = token.pricePerFullShare.shiftedBy(-18); // ppfs always need to be shifted by 18e
-                  balance = balance.multipliedBy(ppfs);
-                }
+            if (token.assetType === 'concLiquidity') {
+              const hasBreakdown = selectTreasuryV3HasBreakdownData(state, token.oracleId, chainId);
+              if (hasBreakdown) {
                 const breakdown = selectLpBreakdownByOracleId(state, token.oracleId);
-                const { assets } = selectLpBreakdownBalance(state, breakdown, balance, chainId);
+                const assets = selectTreasuryV3PositionBreakdown(state, breakdown, chainId);
+
                 for (const asset of assets) {
                   if (selectIsTokenStable(state, chainId, asset.id)) {
-                    totals['stables'] = (totals['stables'] || BIG_ZERO).plus(asset.userValue);
+                    totals['stables'] = (totals['stables'] || BIG_ZERO).plus(asset.balance);
                   } else {
                     const assetId = selectWrappedToNativeSymbolOrTokenSymbol(state, asset.symbol);
-                    totals[assetId] = (totals[assetId] || BIG_ZERO).plus(asset.userValue);
+                    totals[assetId] = (totals[assetId] || BIG_ZERO).plus(asset.balance);
                   }
                 }
               } else {
                 totals[token.oracleId] = tokenBalanceUsd;
+              }
+            } else {
+              if (isVaultHoldingEntity(token) && selectIsVaultStable(state, token.vaultId)) {
+                totals['stables'] = (totals['stables'] || BIG_ZERO).plus(tokenBalanceUsd);
+              } else {
+                const haveBreakdownData = selectHasBreakdownData(state, token.address, chainId);
+                if (haveBreakdownData) {
+                  let balance = token.balance.shiftedBy(-token.decimals);
+                  if (isVaultHoldingEntity(token)) {
+                    const ppfs = token.pricePerFullShare.shiftedBy(-18); // ppfs always need to be shifted by 18e
+                    balance = balance.multipliedBy(ppfs);
+                  }
+                  const breakdown = selectLpBreakdownByOracleId(state, token.oracleId);
+                  const { assets } = selectLpBreakdownBalance(state, breakdown, balance, chainId);
+                  for (const asset of assets) {
+                    if (selectIsTokenStable(state, chainId, asset.id)) {
+                      totals['stables'] = (totals['stables'] || BIG_ZERO).plus(asset.userValue);
+                    } else {
+                      const assetId = selectWrappedToNativeSymbolOrTokenSymbol(state, asset.symbol);
+                      totals[assetId] = (totals[assetId] || BIG_ZERO).plus(asset.userValue);
+                    }
+                  }
+                } else {
+                  totals[token.oracleId] = tokenBalanceUsd;
+                }
               }
             }
           } else {
