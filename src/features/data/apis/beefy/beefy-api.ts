@@ -240,7 +240,7 @@ export class BeefyAPI {
     }
 
     const res = await this.api.get<ApyFeeData>('/fees', {
-      params: { _: this.getCacheBuster('long') },
+      params: { _: this.getCacheBuster('short') },
     });
     return res.data;
   }
@@ -251,7 +251,7 @@ export class BeefyAPI {
     }
 
     const res = await this.api.get<BeefyVaultZapSupportResponse>('/vaults/zap-support', {
-      params: { _: this.getCacheBuster('long') },
+      params: { _: this.getCacheBuster('short') },
     });
     return res.data;
   }
@@ -262,7 +262,7 @@ export class BeefyAPI {
     }
 
     const res = await this.api.get<TreasuryConfig>('/treasury', {
-      params: { _: this.getCacheBuster('long') },
+      params: { _: this.getCacheBuster('short') },
     });
     return res.data;
   }
@@ -273,7 +273,7 @@ export class BeefyAPI {
     }
 
     const res = await this.api.get<BeefySnapshotActiveResponse>('/snapshot/active', {
-      params: { _: this.getCacheBuster('long') },
+      params: { _: this.getCacheBuster('short') },
     });
     return res.data;
   }
