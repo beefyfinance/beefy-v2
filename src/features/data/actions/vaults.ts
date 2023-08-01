@@ -66,3 +66,16 @@ export const fetchVaultsZapSupport = createAsyncThunk<
 
   return { byVaultId: vaultsZapSupport };
 });
+
+type VaultLastHarvestResponse = {
+  byVaultId: { [vaultId: VaultConfig['id']]: number };
+};
+
+export const fetchVaultsLastHarvests = createAsyncThunk<VaultLastHarvestResponse>(
+  'vaults/last-harvest',
+  async () => {
+    const api = getBeefyApi();
+    const vaults = await api.getVaultLastHarvest();
+    return { byVaultId: vaults };
+  }
+);

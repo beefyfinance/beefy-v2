@@ -7,7 +7,12 @@ import { fetchApyAction } from './apy';
 import { fetchAllBoosts, initiateBoostForm } from './boosts';
 import { fetchChainConfigs } from './chains';
 import { fetchAllPricesAction, fetchBeefyBuybackAction } from './prices';
-import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsZapSupport } from './vaults';
+import {
+  fetchAllVaults,
+  fetchFeaturedVaults,
+  fetchVaultsZapSupport,
+  fetchVaultsLastHarvests,
+} from './vaults';
 import { fetchAllBalanceAction } from './balance';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_noDataPolling } from '../utils/feature-flags';
@@ -75,6 +80,8 @@ export async function initHomeDataV4(store: BeefyStore) {
     store.dispatch(fetchPlatforms());
 
     store.dispatch(fetchBridges());
+
+    store.dispatch(fetchVaultsLastHarvests());
   });
 
   // create the wallet instance as soon as we get the chain list
