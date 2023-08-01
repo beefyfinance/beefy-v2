@@ -91,8 +91,7 @@ export type BeefyChartDataResponse = {
   v: number;
 }[];
 
-// note that there is more infos but we don't need it
-type BeefyAPIVaultsResponse = Record<string, number>;
+type BeefyApiVaultLastHarvestResponse = Record<string, number>;
 
 export type BeefySnapshotProposal = {
   id: string;
@@ -201,8 +200,8 @@ export class BeefyAPI {
    * For now we fetch lastHarvest from the api
    * TODO: fetch this from the contract directly
    */
-  public async getVaultLastHarvest(): Promise<BeefyAPIVaultsResponse> {
-    const res = await this.api.get<BeefyAPIVaultsResponse>('/vaults/last-harvest', {
+  public async getVaultLastHarvest(): Promise<BeefyApiVaultLastHarvestResponse> {
+    const res = await this.api.get<BeefyApiVaultLastHarvestResponse>('/vaults/last-harvest', {
       params: { _: this.getCacheBuster('short') },
     });
 

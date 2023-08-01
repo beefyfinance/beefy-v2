@@ -279,5 +279,5 @@ export const selectVaultSupportsOneInchZap = createCachedSelector(
 export const selectVaultLastHarvestByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.vaults.lastHarvestById,
   (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  (lastHarvestById, vaultId) => lastHarvestById[vaultId]
+  (lastHarvestById, vaultId) => lastHarvestById[vaultId] || 0
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);

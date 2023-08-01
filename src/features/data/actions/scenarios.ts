@@ -167,6 +167,12 @@ export async function initHomeDataV4(store: BeefyStore) {
   }, 45 * 1000 /* every 45s */);
   pollStopFns.push(pollStop);
 
+  // regular calls to update last harvest
+  pollStop = poll(async () => {
+    return store.dispatch(fetchVaultsLastHarvests());
+  }, 3 * 60 * 1000 /* every 3 minutes */);
+  pollStopFns.push(pollStop);
+
   // now set regular calls to update contract data
   for (const chain of chains) {
     const pollStop = poll(async () => {

@@ -127,6 +127,7 @@ export const vaultsSlice = createSlice({
 
     builder.addCase(fetchVaultsLastHarvests.fulfilled, (sliceState, action) => {
       for (const [vaultId, lastHarvest] of Object.entries(action.payload.byVaultId)) {
+        // time in milliseconds since unix epoch
         sliceState.lastHarvestById[vaultId] = lastHarvest * 1000;
       }
     });
