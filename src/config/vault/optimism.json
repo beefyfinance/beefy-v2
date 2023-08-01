@@ -4688,7 +4688,8 @@
     "earnContractAddress": "0x70e793220761418A18fEbcc556eFb24a45DA123C",
     "oracle": "lps",
     "oracleId": "velodrome-frax-fxs",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["FXS", "FRAX"],
     "risks": [

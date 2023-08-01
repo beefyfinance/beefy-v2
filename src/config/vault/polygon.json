@@ -1174,7 +1174,8 @@
     "earnContractAddress": "0x2eac840950F1FF53d03A55A0255ea787fE84a4b5",
     "oracle": "lps",
     "oracleId": "kyber-usdc-mai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "kyber",
     "assets": ["MAI", "USDC"],
     "risks": [
@@ -9160,7 +9161,8 @@
     "earnContractAddress": "0x1A723371f9dc30653dafd826B60d9335bf867E35",
     "oracle": "tokens",
     "oracleId": "newQUICK",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "quickswap",
     "assets": ["newQUICK"],
     "risks": [
