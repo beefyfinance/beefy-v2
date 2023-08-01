@@ -43,12 +43,14 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    * @private
    */
   private static createOnboardWalletInitializers() {
+    const requiredChainId = featureFlag_walletConnectChainId();
+
     return [
       WalletConnectionApi.createInjectedWalletsModule(),
       createWalletConnectModule({
         version: 2,
         projectId: 'af38b343e1be64b27c3e4a272cb453b9',
-        requiredChains: [featureFlag_walletConnectChainId()],
+        requiredChains: requiredChainId ? [requiredChainId] : [],
       }),
       createCoinbaseWalletModule(),
       WalletConnectionApi.createCDCWalletModule(),
@@ -125,6 +127,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       disableFontDownload: true,
       connect: {
         showSidebar: true,
+        removeWhereIsMyWalletWarning: true,
       },
       wallets: this.getOnboardWalletInitializers(),
       theme: {
@@ -176,6 +179,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   private subscribeToOnboardEvents(onboard: OnboardAPI) {
     const wallets = onboard.state.select('wallets');
     return wallets.subscribe(wallets => {
+      console.log('Wallets changed', wallets);
       if (wallets.length === 0) {
         if (this.ignoreDisconnectFromAutoConnect) {
           console.log('Ignoring disconnect event from auto reconnect wallet attempt');
