@@ -12,7 +12,8 @@
     "earnContractAddress": "0xD295d690b9BF17bd217B94BC50C12729762C1862",
     "oracle": "lps",
     "oracleId": "yuzu-wrose-wbtc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "yuzuswap",
     "assets": ["WBTC", "ROSE"],
     "risks": [
@@ -75,7 +76,8 @@
     "earnContractAddress": "0x80514CfB7cb438F1f997Ab62fFD1314c1a1c0f12",
     "oracle": "lps",
     "oracleId": "yuzu-wrose-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "yuzuswap",
     "assets": ["WETH", "ROSE"],
     "risks": [
@@ -106,7 +108,8 @@
     "earnContractAddress": "0x685aaba90132C70220765Ac8c729EE7D935d7810",
     "oracle": "lps",
     "oracleId": "yuzu-usdt-yuzu",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "yuzuswap",
     "assets": ["USDT", "YUZU"],
     "risks": [
@@ -137,7 +140,8 @@
     "earnContractAddress": "0xcD5B6833d4A30c43F1c30bDC4D8DC5c7aCB50972",
     "oracle": "lps",
     "oracleId": "yuzu-wrose-yuzu",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "yuzuswap",
     "assets": ["YUZU", "ROSE"],
     "risks": [
@@ -168,7 +172,8 @@
     "earnContractAddress": "0x9712b6aff7d2dB96097565EB8b2183b75e839130",
     "oracle": "lps",
     "oracleId": "yuzu-wrose-usdt",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "yuzuswap",
     "assets": ["USDT", "ROSE"],
     "risks": [
@@ -199,7 +204,8 @@
     "earnContractAddress": "0xb42441990ffb06f155Bb5b52577Fb137Bcb1eb5F",
     "oracle": "lps",
     "oracleId": "yuzu-ceusdc-usdt",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "yuzuswap",
     "assets": ["ceUSDC", "USDT"],
     "risks": [
