@@ -605,7 +605,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     stableCoins: ['USDC', 'BUSD', 'wTBT'],
   },
   zkevm: {
-    new: true,
     name: 'Polygon zkEVM',
     chainId: 1101,
     rpc: ['https://zkevm-rpc.com'],
@@ -628,6 +627,31 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       type: 'standard',
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'FRAX'],
+  },
+  base: {
+    new: true,
+    name: 'Base',
+    chainId: 8453,
+    rpc: ['https://mainnet.base.org'],
+    explorerUrl: 'https://mainnet.base.org',
+    multicallAddress: '0x0000000000000000000000000000000000000000',
+    appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
+    providerName: 'Base',
+    walletSettings: {
+      chainId: `0x${parseInt('8453', 10).toString(16)}`,
+      chainName: 'Base',
+      nativeCurrency: {
+        name: 'ETH',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://mainnet.base.org'],
+      blockExplorerUrls: ['https://mainnet.base.org'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: [],
   },
   aurora: {
     name: 'Aurora',
