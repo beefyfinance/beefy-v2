@@ -8,9 +8,9 @@ import { isGovVault } from '../entities/vault';
 import { selectActiveVaultBoostIds, selectAllVaultBoostIds, selectBoostById } from './boosts';
 import { createCachedSelector } from 're-reselect';
 import {
-  selectHasBreakdownData,
+  selectHasBreakdownDataByTokenAddress,
   selectIsTokenStable,
-  selectLpBreakdownByAddress,
+  selectLpBreakdownByTokenAddress,
   selectTokenByAddress,
   selectTokenPriceByAddress,
   selectTokenPriceByTokenOracleId,
@@ -428,11 +428,11 @@ export const selectTreasuryV3PositionBreakdown = (
     const assetToken = selectTokenByAddress(state, chainId, tokenAddress);
     return {
       ...assetToken,
-      balance: breakdown.balances[i],
+      userValue: breakdown.balances[i],
     };
   });
 
-  return assets;
+  return { assets };
 };
 
 export const selectUserLpBreakdownBalance = (
@@ -530,13 +530,13 @@ export const selectTokenExposure = (state: BeefyState, walletAddress?: string) =
         chainId: vault.chainId,
       };
     } else {
-      const haveBreakdownData = selectHasBreakdownData(
+      const haveBreakdownData = selectHasBreakdownDataByTokenAddress(
         state,
         vault.depositTokenAddress,
         vault.chainId
       );
       if (haveBreakdownData) {
-        const breakdown = selectLpBreakdownByAddress(
+        const breakdown = selectLpBreakdownByTokenAddress(
           state,
           vault.chainId,
           vault.depositTokenAddress
@@ -591,13 +591,13 @@ export const selectStablecoinsExposure = (state: BeefyState, walletAddress?: str
           selectUserVaultDepositInUsd(state, vaultId, walletAddress)
         );
       } else {
-        const haveBreakdownData = selectHasBreakdownData(
+        const haveBreakdownData = selectHasBreakdownDataByTokenAddress(
           state,
           vault.depositTokenAddress,
           vault.chainId
         );
         if (haveBreakdownData) {
-          const breakdown = selectLpBreakdownByAddress(
+          const breakdown = selectLpBreakdownByTokenAddress(
             state,
             vault.chainId,
             vault.depositTokenAddress

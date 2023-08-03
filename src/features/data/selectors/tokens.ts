@@ -190,7 +190,7 @@ export const selectTokenPriceByTokenOracleId = createCachedSelector(
 export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
   state.entities.tokens.breakdown.byOracleId[oracleId];
 
-export const selectLpBreakdownByAddress = (
+export const selectLpBreakdownByTokenAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
   address: string
@@ -199,49 +199,23 @@ export const selectLpBreakdownByAddress = (
   return selectLpBreakdownByOracleId(state, token.oracleId);
 };
 
-export const selectHasBreakdownData = (
+export const selectHasBreakdownDataByTokenAddress = (
   state: BeefyState,
   depositTokenAddress: VaultEntity['depositTokenAddress'],
   chainId: ChainEntity['id']
 ) => {
-  const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
-  const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
   const token = selectTokenByAddressOrNull(state, chainId, depositTokenAddress);
   if (!token) return false;
-  const breakdown = selectLpBreakdownByOracleId(state, token.oracleId);
-
-  if (
-    !isPricesLoaded ||
-    !isAddressBookLoaded ||
-    !breakdown ||
-    !breakdown.tokens ||
-    !breakdown.tokens.length ||
-    !breakdown.balances ||
-    breakdown.balances.length !== breakdown.tokens.length
-  ) {
-    return false;
-  }
-
-  // Must have tokens in state
-  const tokens = breakdown.tokens.map(
-    address => state.entities.tokens.byChainId[chainId].byAddress[address.toLowerCase()]
-  );
-  if (tokens.findIndex(token => !token) !== -1) {
-    return false;
-  }
-
-  // Must have prices of tokens in state
-  return tokens.findIndex(token => !state.entities.tokens.prices.byOracleId[token.oracleId]) === -1;
+  return selectHasBreakdownDataByOracleId(state, token.oracleId, chainId);
 };
 
-export const selectTreasuryV3HasBreakdownData = (
+export const selectHasBreakdownDataByOracleId = (
   state: BeefyState,
   oracleId: TokenEntity['oracleId'],
   chainId: ChainEntity['id']
 ) => {
   const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
   const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
-
   const breakdown = selectLpBreakdownByOracleId(state, oracleId);
 
   if (
