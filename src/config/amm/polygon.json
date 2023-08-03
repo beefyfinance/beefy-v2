@@ -120,5 +120,17 @@
     "swapFeeNumerator": "1",
     "swapFeeDenominator": "1000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "polygon-pearl-v2",
+    "name": "Pearl",
+    "type": "solidly",
+    "routerAddress": "0x06374F57991CDc836E5A318569A910FE6456D230",
+    "factoryAddress": "0xEaF188cdd22fEEBCb345DCb529Aa18CA9FcB4FBd",
+    "pairInitHash": "0x6a1e12c70d83893294e48a567eda3ccc4bc8f1e3842e27cc323653ec6c76b785",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "1",
+    "swapFeeDenominator": "1000",
+    "getAmountOutMode": "getAmountOut"
   }
 ]
