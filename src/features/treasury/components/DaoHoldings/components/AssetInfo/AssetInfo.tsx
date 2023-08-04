@@ -1,14 +1,16 @@
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import type { PropsWithChildren } from 'react';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { formatBigUsd } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
 import type { ChainEntity } from '../../../../../data/entities/chain';
-import type { TokenEntity } from '../../../../../data/entities/token';
-import type { TreasuryHoldingEntity } from '../../../../../data/entities/treasury';
+import {
+  isVaultHoldingEntity,
+  type TreasuryHoldingEntity,
+} from '../../../../../data/entities/treasury';
 import type { VaultEntity } from '../../../../../data/entities/vault';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { styles } from './styles';
@@ -21,11 +23,23 @@ interface AssetInfoProps {
 }
 
 export const AssetInfo = memo<AssetInfoProps>(function AssetInfo({ chainId, token }) {
-  const isVault = token.assetType === 'vault';
+  const isV3 = useMemo(() => {
+    return token.assetType === 'concLiquidity' && token.oracleType === 'lps';
+  }, [token.assetType, token.oracleType]);
 
-  const isLP = token.assetType === 'token' && token.oracleType === 'lps';
+  const isLP = useMemo(() => {
+    return token.assetType === 'token' && token.oracleType === 'lps';
+  }, [token.assetType, token.oracleType]);
 
-  if (isVault) {
+  if (isV3) {
+    return (
+      <AssetContainer token={token}>
+        <LPidentity regexType="v3" chainId={chainId} name={token.name} />
+      </AssetContainer>
+    );
+  }
+
+  if (isVaultHoldingEntity(token)) {
     return (
       <AssetContainer token={token}>
         <VaultIdentity vaultId={token.vaultId} />
@@ -36,7 +50,7 @@ export const AssetInfo = memo<AssetInfoProps>(function AssetInfo({ chainId, toke
   if (isLP) {
     return (
       <AssetContainer token={token}>
-        <LPidentity chainId={chainId} address={token.address} name={token.name} />
+        <LPidentity regexType="lp" chainId={chainId} name={token.name} />
       </AssetContainer>
     );
   }
@@ -84,13 +98,21 @@ export const VaultIdentity = memo<VaultNameProps>(function VaultIdentity({ vault
 });
 
 interface LPidentityProps {
-  address: TokenEntity['address'];
   chainId: ChainEntity['id'];
   name: TreasuryHoldingEntity['name'];
+  regexType: 'lp' | 'v3';
 }
 
-export const LPidentity = memo<LPidentityProps>(function LPidentity({ chainId, name }) {
-  const regex = / .*?LP/g; // THIS REGEX WILL MATCH space + any chars/nothing  + "LP", for example BIFI-ETH JLP will return BIFI-ETH
+export const LPidentity = memo<LPidentityProps>(function LPidentity({ chainId, name, regexType }) {
+  // THIS REGEX WILL MATCH space + any chars/nothing  + "LP", for example BIFI-ETH JLP will return BIFI-ETH
+  const regex: RegExp = useMemo(() => {
+    if (regexType === 'lp') {
+      return / .*?LP/g;
+    } else {
+      return / .*?V3/g;
+    }
+  }, [regexType]);
+
   const assets = name.replace(regex, '').split('-');
 
   return (

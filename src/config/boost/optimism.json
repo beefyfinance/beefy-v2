@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_velodrome-v2-exa-weth-exactly",
+    "poolId": "velodrome-v2-exa-weth",
+    "name": "Exactly",
+    "assets": ["EXA", "ETH"],
+    "tokenAddress": "0xdD84190aF336Ee2831eea88B6783958e8F269de9",
+    "earnedToken": "OP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
+    "earnContractAddress": "0xd50f954e456d1eb53ae9c44860db99c6cdda78cb",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OP",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["exactly"]
+  },
+  {
     "id": "moo_velodrome-v2-stg-usdc-stargate",
     "poolId": "velodrome-v2-stg-usdc",
     "name": "Beefy",

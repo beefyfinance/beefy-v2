@@ -8,9 +8,9 @@ import { isGovVault } from '../entities/vault';
 import { selectActiveVaultBoostIds, selectAllVaultBoostIds, selectBoostById } from './boosts';
 import { createCachedSelector } from 're-reselect';
 import {
-  selectHasBreakdownData,
+  selectHasBreakdownDataByTokenAddress,
   selectIsTokenStable,
-  selectLpBreakdownByAddress,
+  selectLpBreakdownByTokenAddress,
   selectTokenByAddress,
   selectTokenPriceByAddress,
   selectTokenPriceByTokenOracleId,
@@ -419,6 +419,22 @@ export const selectLpBreakdownBalance = (
   return { assets, userShareOfPool, lpTotalSupplyDecimal };
 };
 
+export const selectTreasuryV3PositionBreakdown = (
+  state: BeefyState,
+  breakdown: TokenLpBreakdown,
+  chainId: ChainEntity['id']
+) => {
+  const assets = breakdown.tokens.map((tokenAddress, i) => {
+    const assetToken = selectTokenByAddress(state, chainId, tokenAddress);
+    return {
+      ...assetToken,
+      userValue: breakdown.balances[i],
+    };
+  });
+
+  return { assets };
+};
+
 export const selectUserLpBreakdownBalance = (
   state: BeefyState,
   vault: VaultEntity,
@@ -514,13 +530,13 @@ export const selectTokenExposure = (state: BeefyState, walletAddress?: string) =
         chainId: vault.chainId,
       };
     } else {
-      const haveBreakdownData = selectHasBreakdownData(
+      const haveBreakdownData = selectHasBreakdownDataByTokenAddress(
         state,
         vault.depositTokenAddress,
         vault.chainId
       );
       if (haveBreakdownData) {
-        const breakdown = selectLpBreakdownByAddress(
+        const breakdown = selectLpBreakdownByTokenAddress(
           state,
           vault.chainId,
           vault.depositTokenAddress
@@ -575,13 +591,13 @@ export const selectStablecoinsExposure = (state: BeefyState, walletAddress?: str
           selectUserVaultDepositInUsd(state, vaultId, walletAddress)
         );
       } else {
-        const haveBreakdownData = selectHasBreakdownData(
+        const haveBreakdownData = selectHasBreakdownDataByTokenAddress(
           state,
           vault.depositTokenAddress,
           vault.chainId
         );
         if (haveBreakdownData) {
-          const breakdown = selectLpBreakdownByAddress(
+          const breakdown = selectLpBreakdownByTokenAddress(
             state,
             vault.chainId,
             vault.depositTokenAddress
