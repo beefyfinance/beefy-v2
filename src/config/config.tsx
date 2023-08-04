@@ -633,9 +633,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     name: 'Base',
     chainId: 8453,
     rpc: ['https://mainnet.base.org'],
-    explorerUrl: 'https://mainnet.base.org',
-    multicallAddress: '0x0000000000000000000000000000000000000000',
-    appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
+    explorerUrl: 'https://basescan.org',
+    multicallAddress: '0x2840463Ea288c26B66E24f92E8C704e1aB6b095c',
+    appMulticallContractAddress: '0x354D3d7B61230C88F5f50176d9329d13366FbC28',
     providerName: 'Base',
     walletSettings: {
       chainId: `0x${parseInt('8453', 10).toString(16)}`,
@@ -646,12 +646,12 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         decimals: 18,
       },
       rpcUrls: ['https://mainnet.base.org'],
-      blockExplorerUrls: ['https://mainnet.base.org'],
+      blockExplorerUrls: ['https://basescan.org/'],
     },
     gas: {
       type: 'standard',
     },
-    stableCoins: [],
+    stableCoins: ['USDbC, DAI, bsUSD'],
   },
   aurora: {
     name: 'Aurora',
