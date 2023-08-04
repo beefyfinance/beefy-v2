@@ -1058,5 +1058,10 @@
     "id": "betswirl",
     "name": "BetSwirl",
     "filter": true
+  },
+  {
+    "id": "baseswap",
+    "name": "BaseSwap",
+    "filter": true
   }
 ]
