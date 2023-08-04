@@ -1,5 +1,34 @@
 [
   {
+    "id": "quick-zk-qlp",
+    "name": "QLP",
+    "token": "QLP",
+    "tokenAddress": "0x973ae30Cb49986E1D3BdCAB4d40B96fEA5baBE84",
+    "tokenDecimals": 18,
+    "tokenProviderId": "quickswap",
+    "earnedToken": "mooQuickQLP",
+    "earnedTokenAddress": "0xdA86D4168e63111055b6ffEf0AbA1ca5A9aD98B1",
+    "earnContractAddress": "0xdA86D4168e63111055b6ffEf0AbA1ca5A9aD98B1",
+    "oracle": "lps",
+    "oracleId": "quick-zk-qlp",
+    "status": "active",
+    "platformId": "quickswap",
+    "assets": ["WETH", "WBTC", "MATIC", "USDC", "USDT", "DAI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "qlp",
+    "addLiquidityUrl": "https://perps.quickswap.exchange/#/liquidity?ref=beefy",
+    "removeLiquidityUrl": "https://perps.quickswap.exchange/#/liquidity#redeem?ref=beefy",
+    "network": "zkevm",
+    "createdAt": 1691170243
+  },
+  {
     "id": "quick-gamma-zk-weth-matic-narrow",
     "name": "MATIC-ETH Narrow LP",
     "token": "aMATIC-ETH zkevm",
