@@ -7,7 +7,7 @@
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
     "tokenAmmId": "optimism-velodrome-v2",
-    "earnedToken": "mooVeloV2wUSDR-USDC",
+    "earnedToken": "mooVeloV2USDC-wUSDR",
     "earnedTokenAddress": "0xcAa74e50428bDC4Af6A7Ead65fFFf77F0D231E80",
     "earnContractAddress": "0xcAa74e50428bDC4Af6A7Ead65fFFf77F0D231E80",
     "oracle": "lps",
