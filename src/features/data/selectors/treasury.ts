@@ -9,9 +9,9 @@ import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectLpBreakdownBalance } from './balance';
 import { selectChainById } from './chains';
 import {
-  selectHasBreakdownData,
   selectIsTokenStable,
   selectLpBreakdownByOracleId,
+  selectHasBreakdownDataByOracleId,
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens';
 import { selectIsVaultStable } from './vaults';
@@ -36,7 +36,7 @@ export const selectTreasurySorted = function (state: BeefyState) {
           acc.usdTotal = acc.usdTotal.plus(asset.usdValue);
           if (['token', 'native'].includes(asset.assetType)) {
             acc.liquid++;
-          } else if (asset.assetType === 'vault') {
+          } else if (asset.assetType === 'vault' || asset.assetType === 'concLiquidity') {
             acc.staked++;
           } else if (asset.assetType === 'validator') {
             acc.locked++;
@@ -109,7 +109,11 @@ export const selectTreasuryStats = (state: BeefyState) => {
             beefyHeld = beefyHeld.plus(balanceInTokens);
           }
           if (token.oracleType === 'lps') {
-            const haveBreakdownData = selectHasBreakdownData(state, token.address, chainId);
+            const haveBreakdownData = selectHasBreakdownDataByOracleId(
+              state,
+              token.oracleId,
+              chainId
+            );
             if (haveBreakdownData) {
               if (isVaultHoldingEntity(token)) {
                 const ppfs = token.pricePerFullShare.shiftedBy(-18); // ppfs always need to be shifted by 18e
@@ -125,6 +129,9 @@ export const selectTreasuryStats = (state: BeefyState) => {
               for (const asset of assets) {
                 if (asset.id === 'BIFI') {
                   beefyHeld = beefyHeld.plus(asset.userAmount);
+                }
+                if (selectIsTokenStable(state, chainId, asset.oracleId)) {
+                  stables = stables.plus(asset.userValue);
                 }
               }
             }
@@ -158,7 +165,11 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
             if (isVaultHoldingEntity(token) && selectIsVaultStable(state, token.vaultId)) {
               totals['stables'] = (totals['stables'] || BIG_ZERO).plus(tokenBalanceUsd);
             } else {
-              const haveBreakdownData = selectHasBreakdownData(state, token.address, chainId);
+              const haveBreakdownData = selectHasBreakdownDataByOracleId(
+                state,
+                token.oracleId,
+                chainId
+              );
               if (haveBreakdownData) {
                 let balance = token.balance.shiftedBy(-token.decimals);
                 if (isVaultHoldingEntity(token)) {
@@ -243,10 +254,10 @@ export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
     for (const token of assetsByChainId) {
       if (isFiniteBigNumber(token.usdValue)) {
         const usdValue = new BigNumber(token.usdValue);
-        if (token.assetType === 'token' || token.assetType === 'native') {
+        if (['token', 'native'].includes(token.assetType)) {
           totals['liquidAssets'] = (totals['liquidAssets'] || BIG_ZERO).plus(usdValue);
         }
-        if (token.assetType === 'vault') {
+        if (['vault', 'concLiquidity'].includes(token.assetType)) {
           totals['stakedAssets'] = (totals['stakedAssets'] || BIG_ZERO).plus(usdValue);
         }
         if (token.assetType === 'validator') {

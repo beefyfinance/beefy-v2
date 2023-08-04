@@ -279,7 +279,7 @@ export interface TokenHoldingConfig {
   decimals: number;
   oracleId: string;
   oracleType: 'lps' | 'token' | 'validator';
-  assetType: 'token' | 'native' | 'validator';
+  assetType: 'token' | 'native' | 'validator' | 'concLiquidity';
   price: number;
   usdValue: string;
   balance: string;
