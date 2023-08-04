@@ -11,7 +11,8 @@
     "earnContractAddress": "0x2D250016E3621CfC50A0ff7e5f6E34bbC6bfE50E",
     "oracle": "tokens",
     "oracleId": "BIFI",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "beefy",
     "assets": ["BIFI"],
     "risks": [
@@ -39,7 +40,8 @@
     "earnContractAddress": "0xb06D2126645024c35347bf1A59b30fC213839840",
     "oracle": "lps",
     "oracleId": "curve-celo-3pool",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "curve",
     "assets": ["cUSD", "USDC", "USDT"],
     "risks": [
@@ -190,7 +192,8 @@
     "earnContractAddress": "0x5261780fc6e0AE1FfCe37682044371932c2e8E97",
     "oracle": "lps",
     "oracleId": "sushi-celo-wethv2-celo",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "sushi",
     "assets": ["CELO", "WETH"],
     "risks": [
@@ -220,7 +223,8 @@
     "earnContractAddress": "0x8F2894459026CaE358C4613eD6779e515f1F514e",
     "oracle": "lps",
     "oracleId": "sushi-celo-wethv2-cusd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "sushi",
     "assets": ["cUSD", "WETH"],
     "risks": [
