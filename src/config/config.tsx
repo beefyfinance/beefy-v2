@@ -635,7 +635,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     chainId: 8453,
     rpc: ['https://mainnet.base.org'],
     explorerUrl: 'https://basescan.org',
-    multicallAddress: '0x2840463Ea288c26B66E24f92E8C704e1aB6b095c',
+    multicallAddress: '0xbA790ec6F95D68123E772A43b314464585B311b4',
     appMulticallContractAddress: '0x354D3d7B61230C88F5f50176d9329d13366FbC28',
     providerName: 'Base',
     walletSettings: {
