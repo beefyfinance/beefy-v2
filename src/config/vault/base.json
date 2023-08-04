@@ -31,7 +31,7 @@
   {
     "id": "balancer-base-usdbc-dai",
     "name": "USDbC-DAI",
-    "token": "USDbC-DAI base",
+    "token": "bsUSD",
     "tokenAddress": "0x6FbFcf88DB1aADA31F34215b2a1Df7fafb4883e9",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
