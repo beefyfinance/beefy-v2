@@ -5,6 +5,11 @@
     "website": "https://axelar.network"
   },
   {
+    "id": "base",
+    "name": "Base",
+    "website": "https://bridge.base.org/deposit"
+  },
+  {
     "id": "ren",
     "name": "RenBridge",
     "website": "https://bridge.renproject.io"

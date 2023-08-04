@@ -49,7 +49,7 @@ export const selectTokenByAddress = (
   const tokensByChainId = selectTokensByChainId(state, chainId);
   const token = tokensByChainId.byAddress[address.toLowerCase()];
   if (token === undefined) {
-    throw new Error(`selectTokenByAddress: Unknown token address`);
+    throw new Error(`selectTokenByAddress: Unknown token address ${address}`);
   }
   return token;
 };
@@ -190,7 +190,7 @@ export const selectTokenPriceByTokenOracleId = createCachedSelector(
 export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
   state.entities.tokens.breakdown.byOracleId[oracleId];
 
-export const selectLpBreakdownByAddress = (
+export const selectLpBreakdownByTokenAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
   address: string
@@ -199,16 +199,24 @@ export const selectLpBreakdownByAddress = (
   return selectLpBreakdownByOracleId(state, token.oracleId);
 };
 
-export const selectHasBreakdownData = (
+export const selectHasBreakdownDataByTokenAddress = (
   state: BeefyState,
   depositTokenAddress: VaultEntity['depositTokenAddress'],
   chainId: ChainEntity['id']
 ) => {
-  const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
-  const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
   const token = selectTokenByAddressOrNull(state, chainId, depositTokenAddress);
   if (!token) return false;
-  const breakdown = selectLpBreakdownByOracleId(state, token.oracleId);
+  return selectHasBreakdownDataByOracleId(state, token.oracleId, chainId);
+};
+
+export const selectHasBreakdownDataByOracleId = (
+  state: BeefyState,
+  oracleId: TokenEntity['oracleId'],
+  chainId: ChainEntity['id']
+) => {
+  const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
+  const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
+  const breakdown = selectLpBreakdownByOracleId(state, oracleId);
 
   if (
     !isPricesLoaded ||

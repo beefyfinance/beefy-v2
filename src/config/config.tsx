@@ -184,6 +184,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'wUSDR',
       'DOLA',
       'USDT+',
+      'vUSDT',
     ],
   },
   optimism: {
@@ -605,7 +606,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     stableCoins: ['USDC', 'BUSD', 'wTBT'],
   },
   zkevm: {
-    new: true,
     name: 'Polygon zkEVM',
     chainId: 1101,
     rpc: ['https://zkevm-rpc.com'],
@@ -629,9 +629,35 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'FRAX'],
   },
+  base: {
+    new: true,
+    name: 'Base',
+    chainId: 8453,
+    rpc: ['https://mainnet.base.org'],
+    explorerUrl: 'https://basescan.org',
+    multicallAddress: '0xbA790ec6F95D68123E772A43b314464585B311b4',
+    appMulticallContractAddress: '0x354D3d7B61230C88F5f50176d9329d13366FbC28',
+    providerName: 'Base',
+    walletSettings: {
+      chainId: `0x${parseInt('8453', 10).toString(16)}`,
+      chainName: 'Base',
+      nativeCurrency: {
+        name: 'ETH',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://mainnet.base.org'],
+      blockExplorerUrls: ['https://basescan.org/'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['USDbC, DAI, bsUSD'],
+  },
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,
+    eol: 1691085875,
     rpc: ['https://mainnet.aurora.dev'],
     explorerUrl: 'https://aurorascan.dev',
     multicallAddress: '0x55f46144bC62e9Af4bAdB71842B62162e2194E90',
@@ -656,6 +682,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   emerald: {
     name: 'Emerald',
     chainId: 42262,
+    eol: 1691085875,
     rpc: ['https://emerald.oasis.dev'],
     explorerUrl: 'https://explorer.emerald.oasis.dev',
     multicallAddress: '0xFE40f6eAD11099D91D51a945c145CFaD1DD15Bb8',
@@ -680,6 +707,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   celo: {
     name: 'Celo',
     chainId: 42220,
+    eol: 1691085875,
     rpc: ['https://forno.celo.org'],
     explorerUrl: 'https://celoscan.io',
     multicallAddress: '0xa9E6E271b27b20F65394914f8784B3B860dBd259',

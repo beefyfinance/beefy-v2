@@ -11,7 +11,8 @@
     "earnContractAddress": "0xE6ab45f5e93FA377D0c4cC097187Ab7256c2AEBf",
     "oracle": "tokens",
     "oracleId": "BIFI",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "beefy",
     "assets": ["BIFI"],
     "risks": [
@@ -72,7 +73,8 @@
     "earnContractAddress": "0x9E2dE72D197d446a149FA6fA8220a7d5fCc9B265",
     "oracle": "lps",
     "oracleId": "trisolaris-near-wbtc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "trisolaris",
     "assets": ["NEAR", "WBTC"],
     "risks": [
@@ -103,7 +105,8 @@
     "earnContractAddress": "0x1c9270ac5C42E51611d7b97b1004313D52c80293",
     "oracle": "lps",
     "oracleId": "trisolaris-usdt-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "trisolaris",
     "assets": ["USDC", "USDT"],
     "risks": [
@@ -134,7 +137,8 @@
     "earnContractAddress": "0x939c13c8055fEAac5aDB70Bad2e8b465019bbC08",
     "oracle": "lps",
     "oracleId": "trisolaris-near-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "trisolaris",
     "assets": ["NEAR", "ETH"],
     "risks": [
@@ -165,7 +169,8 @@
     "earnContractAddress": "0x198d1CfE0D663F52C8b854E6434022A52a27fA1b",
     "oracle": "lps",
     "oracleId": "tri-aurora-tri",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "trisolaris",
     "assets": ["AURORA", "TRI"],
     "risks": [
@@ -196,7 +201,8 @@
     "earnContractAddress": "0xC9737c178d327b410068a1d0ae2D30ef8e428754",
     "oracle": "lps",
     "oracleId": "tri-aurora-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "trisolaris",
     "assets": ["AURORA", "ETH"],
     "risks": [
@@ -565,7 +571,8 @@
     "earnContractAddress": "0x513f6F732d7635e01Fc8DA16412a408f3596696E",
     "oracle": "lps",
     "oracleId": "tri-stnear-near",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "trisolaris",
     "assets": ["STNEAR", "NEAR"],
     "risks": [
@@ -596,7 +603,8 @@
     "earnContractAddress": "0xA477cFaFEF8BEe2B306A717ba809bc97776c740C",
     "oracle": "lps",
     "oracleId": "tri-aurora-near",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "trisolaris",
     "assets": ["AURORA", "NEAR"],
     "risks": [
