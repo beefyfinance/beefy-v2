@@ -92,4 +92,7 @@ export const styles = (theme: Theme) => ({
   'headerNetwork-zkevm': {
     backgroundColor: 'rgba(130, 71, 228, 0.2)',
   },
+  'headerNetwork-base': {
+    backgroundColor: 'rgba(0, 82, 255, 0.2)',
+  },
 });

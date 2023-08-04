@@ -1,0 +1,60 @@
+[
+  {
+    "id": "balancer-base-eth-bbsusd",
+    "name": "ETH-bsUSD",
+    "token": "ETH-bsUSD base",
+    "tokenAddress": "0x2Db50a0e0310723EF0C2a165CB9A9f80D772ba2F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerBaseETH/USDbC-DAI",
+    "earnedTokenAddress": "0x54d91365cB1eA8F454DaA43af91f9198d32b62FD",
+    "earnContractAddress": "0x54d91365cB1eA8F454DaA43af91f9198d32b62FD",
+    "oracle": "lps",
+    "oracleId": "balancer-base-eth-bbsusd",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["ETH", "bsUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0x2db50a0e0310723ef0c2a165cb9a9f80d772ba2f00020000000000000000000d/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0x2db50a0e0310723ef0c2a165cb9a9f80d772ba2f00020000000000000000000d/withdraw",
+    "network": "base",
+    "createdAt": 1691168108
+  },
+  {
+    "id": "balancer-base-usdbc-dai",
+    "name": "USDbC-DAI",
+    "token": "USDbC-DAI base",
+    "tokenAddress": "0x6FbFcf88DB1aADA31F34215b2a1Df7fafb4883e9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerBaseUSDbC-DAI",
+    "earnedTokenAddress": "0xb58E4B1f4ba8E0c6a9f26262EE76Ea1D417E3228",
+    "earnContractAddress": "0xb58E4B1f4ba8E0c6a9f26262EE76Ea1D417E3228",
+    "oracle": "lps",
+    "oracleId": "balancer-base-usdbc-dai",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["USDbC", "DAI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0x6fbfcf88db1aada31f34215b2a1df7fafb4883e900000000000000000000000c/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0x6fbfcf88db1aada31f34215b2a1df7fafb4883e900000000000000000000000c/withdraw",
+    "network": "base",
+    "createdAt": 1691168108
+  }
+]
