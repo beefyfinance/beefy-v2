@@ -1068,5 +1068,10 @@
     "id": "retro",
     "name": "Retro",
     "filter": true
+  },
+  {
+    "id": "uniswap",
+    "name": "Uniswap",
+    "filter": true
   }
 ]
