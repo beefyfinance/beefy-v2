@@ -116,7 +116,7 @@
     "website": "https://bridge.zksync.io/"
   },
   {
-    "id": "zkevn-canonical",
+    "id": "zkevm-canonical",
     "name": "Polygon zkEVM Bridge",
     "website": "https://wallet.polygon.technology/zkEVM-Bridge/bridge"
   }
