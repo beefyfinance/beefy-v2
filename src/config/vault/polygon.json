@@ -342,8 +342,8 @@
     "assets": ["WBTC", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "network": "polygon",
     "createdAt": 1686917465
   },
