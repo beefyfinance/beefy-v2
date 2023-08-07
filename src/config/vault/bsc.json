@@ -829,7 +829,8 @@
     "earnContractAddress": "0x18618F543b3C4Ba5D98A151253005e5365b0929c",
     "oracle": "lps",
     "oracleId": "thena-wusdr-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "thena",
     "assets": ["wUSDR", "USDC"],
     "risks": [
