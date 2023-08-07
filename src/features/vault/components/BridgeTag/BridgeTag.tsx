@@ -36,7 +36,7 @@ export type BridgeTagProps = {
 };
 export const BridgeTag = memo<BridgeTagProps>(function BridgeTag({ bridge, chain }) {
   const classes = useStyles();
-  const icon = getBridgeIcon(bridge.id);
+  const icon = bridge.id.includes('canonical') ? getNetworkSrc(chain.id) : getBridgeIcon(bridge.id);
 
   return (
     <TagWithTooltip content={<BridgeTooltip bridge={bridge} chain={chain} />} group="asset-details">

@@ -39,6 +39,7 @@ const overrides = {
   'geist-eth': { harvestOnDeposit: undefined },
   'geist-usdc': { harvestOnDeposit: undefined },
   'geist-mim': { harvestOnDeposit: undefined },
+  'pearl-wbtc-usdrv3': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
