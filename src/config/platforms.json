@@ -1070,6 +1070,11 @@
     "filter": true
   },
   {
+    "id": "uniswap",
+    "name": "Uniswap",
+    "filter": true
+  },
+  {
     "id": "fvm",
     "name": "FVM",
     "filter": true
