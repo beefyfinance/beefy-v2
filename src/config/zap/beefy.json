@@ -210,6 +210,11 @@
     "zapAddress": "0xE7f943De8386F1d2BF58F3D10c0938aB4fb67c07"
   },
   {
+    "chainId": "fantom",
+    "ammId": "fantom-fvm",
+    "zapAddress": "0x632B4F51acB95137b97917780Fb219586900D540"
+  },
+  {
     "chainId": "fuse",
     "ammId": "fuse-fusefi",
     "zapAddress": "0xb0F9c6FBcfE226EEAD3AE8b019ce4666cE223a78"
