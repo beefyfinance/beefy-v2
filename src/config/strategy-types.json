@@ -50,5 +50,9 @@
   {
     "id": "qlp",
     "name": "QLP"
+  },
+  {
+    "id": "managed-conc-lp",
+    "name": "Managed Concentrated Liquidity"
   }
 ]
