@@ -60,6 +60,11 @@
     "zapAddress": "0x1d6e766DcE6085dd8208F5124304BcbBc951c170"
   },
   {
+    "chainId": "base",
+    "ammId": "base-bvm",
+    "zapAddress": "0x5d2EF803D6e255eF4D1c66762CBc8845051B54dB"
+  },
+  {
     "chainId": "bsc",
     "ammId": "bsc-pancakeswap-v2",
     "zapAddress": "0x03c509fd85d51dc7E75fa2De06276cFA147486EA"

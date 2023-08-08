@@ -1073,5 +1073,10 @@
     "id": "uniswap",
     "name": "Uniswap",
     "filter": true
+  },
+  {
+    "id": "bvm",
+    "name": "BVM",
+    "filter": true
   }
 ]
