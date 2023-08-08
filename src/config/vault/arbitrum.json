@@ -10,7 +10,7 @@
     "earnedTokenAddress": "0xeD29730F9FF29ea50D63462D8EC84307d36b8954",
     "earnContractAddress": "0xeD29730F9FF29ea50D63462D8EC84307d36b8954",
     "oracle": "lps",
-    "oracleId": "joe-weth-usdc.e",
+    "oracleId": "joe-auto-weth-usdc.e",
     "status": "active",
     "platformId": "traderjoe",
     "assets": ["WETH", "USDCe"],
