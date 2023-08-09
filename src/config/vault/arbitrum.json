@@ -3,7 +3,7 @@
     "id": "aura-reth-bbaweth-v2",
     "name": "rETH-bbaWETH V2",
     "token": "rETH-bbaWETH V2 Arb",
-    "tokenAddress": "0xbe0f30217be1e981add883848d0773a86d2d2cd4",
+    "tokenAddress": "0xBe0f30217BE1e981aDD883848D0773A86d2d2CD4",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
     "earnedToken": "mooAuraArbrETH-bbaWETHV2",
