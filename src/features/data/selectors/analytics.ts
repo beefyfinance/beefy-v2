@@ -16,7 +16,7 @@ export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], _address?: string) => state.user.analytics,
   (state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId,
   (walletAddress, analyticsState, vaultId) =>
-    analyticsState.byAddress[walletAddress]?.timeline.byVaultId[vaultId] || []
+    analyticsState.byAddress[walletAddress.toLocaleLowerCase()]?.timeline.byVaultId[vaultId] || []
 )((state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
 
 export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAddress: string) => {
@@ -131,8 +131,9 @@ export const selectShareToUnderlyingTimebucketByVaultId = (
 ) => {
   const walletAddress = address || selectWalletAddress(state);
   return (
-    state.user.analytics.byAddress[walletAddress]?.shareToUnderlying.byVaultId[vaultId]
-      ?.byTimebucket[timebucket] || {
+    state.user.analytics.byAddress[walletAddress.toLocaleLowerCase()]?.shareToUnderlying.byVaultId[
+      vaultId
+    ]?.byTimebucket[timebucket] || {
       data: [],
       status: 'idle',
     }
@@ -147,9 +148,9 @@ export const selectUnderlyingToUsdTimebucketByVaultId = (
 ) => {
   const walletAddress = address || selectWalletAddress(state);
   return (
-    state.user.analytics.byAddress[walletAddress]?.underlyingToUsd.byVaultId[vaultId]?.byTimebucket[
-      timebucket
-    ] || {
+    state.user.analytics.byAddress[walletAddress.toLocaleLowerCase()]?.underlyingToUsd.byVaultId[
+      vaultId
+    ]?.byTimebucket[timebucket] || {
       data: [],
       status: 'idle',
     }
