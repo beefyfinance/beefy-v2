@@ -37,6 +37,7 @@ const mapSolidly: Record<string, typeof SolidlyPool> = {
   'optimism-velodrome-v2': VelodromeV2SolidlyPool,
   'fantom-equalizer': VelodromeSolidlyPool,
   'canto-velocimeter': VelodromeSolidlyPool,
+  'base-bvm': VelodromeSolidlyPool,
   'zksync-velocore': VelodromeSolidlyPool,
   'zksync-vesync': VelodromeSolidlyPool,
   'kava-equilibre': VelodromeSolidlyPool,
