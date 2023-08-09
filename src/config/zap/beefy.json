@@ -315,6 +315,11 @@
     "zapAddress": "0x12eCa88BDd180C082B1231aE83Ca55c3E72f301d"
   },
   {
+    "chainId": "polygon",
+    "ammId": "polygon-pearl-v2",
+    "zapAddress": "0x017443Dfc7A70A9d4D5cbCb966E95222955A6a7d"
+  },
+  {
     "chainId": "zksync",
     "ammId": "zksync-velocore",
     "zapAddress": "0x3f02b129138377722FfE9d374B3F65fc7599475e"
