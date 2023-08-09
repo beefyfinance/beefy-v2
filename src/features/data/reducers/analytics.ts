@@ -60,8 +60,7 @@ export const analyticsSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchWalletTimeline.fulfilled, (sliceState, action) => {
-      const { timeline, state } = action.payload;
-      const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
+      const { timeline, walletAddress, state } = action.payload;
 
       const totals = {
         byBoostId: {},
@@ -141,9 +140,9 @@ export const analyticsSlice = createSlice({
       const { data, vaultId, walletAddress, timebucket } = action.payload;
 
       setStatus(sliceState, 'shareToUnderlying', vaultId, timebucket, walletAddress, 'fulfilled');
-      sliceState.byAddress[walletAddress.toLocaleLowerCase()].shareToUnderlying.byVaultId[
-        vaultId
-      ].byTimebucket[timebucket].data = data;
+      sliceState.byAddress[walletAddress].shareToUnderlying.byVaultId[vaultId].byTimebucket[
+        timebucket
+      ].data = data;
     });
 
     builder.addCase(fetchShareToUnderlying.pending, (sliceState, action) => {
@@ -160,9 +159,9 @@ export const analyticsSlice = createSlice({
       const { data, vaultId, walletAddress, timebucket } = action.payload;
 
       setStatus(sliceState, 'underlyingToUsd', vaultId, timebucket, walletAddress, 'fulfilled');
-      sliceState.byAddress[walletAddress.toLocaleLowerCase()].underlyingToUsd.byVaultId[
-        vaultId
-      ].byTimebucket[timebucket].data = data;
+      sliceState.byAddress[walletAddress].underlyingToUsd.byVaultId[vaultId].byTimebucket[
+        timebucket
+      ].data = data;
     });
 
     builder.addCase(fetchUnderlyingToUsd.pending, (sliceState, action) => {
@@ -185,7 +184,6 @@ function setStatus(
   walletAddress: string,
   status: StatusType
 ) {
-  walletAddress = walletAddress.toLocaleLowerCase();
   if (!sliceState.byAddress[walletAddress][part].byVaultId[vaultId]) {
     sliceState.byAddress[walletAddress][part].byVaultId[vaultId] = { byTimebucket: {} };
   }
