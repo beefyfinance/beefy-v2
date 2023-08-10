@@ -1076,12 +1076,12 @@
   },
   {
     "id": "fvm",
-    "name": "FVM",
+    "name": "Velocimeter FVM",
     "filter": true
   },
   {
     "id": "bvm",
-    "name": "BVM",
+    "name": "Velocimeter BVM",
     "filter": true
   }
 ]
