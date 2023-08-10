@@ -652,7 +652,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['USDbC', 'DAI', 'bsUSD', 'axlUSDC', 'MIM'],
+    stableCoins: ['USDbC', 'DAI', 'bsUSD', 'axlUSDC', 'MIM', 'USD+', 'DAI+'],
   },
   aurora: {
     name: 'Aurora',
