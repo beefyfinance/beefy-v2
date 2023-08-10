@@ -1,5 +1,27 @@
 [
   {
+    "id": "thena-gamma-usdc-wusdrv3",
+    "name": "USDC-wUSDR LP",
+    "token": "aUSDC-WUSDR",
+    "tokenAddress": "0xF7369B1D005F2cbB1887233B5aa0CB0B39fB9891",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenaGamma_USDC-wUSDRv3",
+    "earnedTokenAddress": "0xe0Af98A11DB57c7282c1f6066d116E13F02BF0E9",
+    "earnContractAddress": "0xe0Af98A11DB57c7282c1f6066d116E13F02BF0E9",
+    "oracle": "lps",
+    "oracleId": "thena-gamma-usdc-wusdrv3",
+    "status": "active",
+    "platformId": "gamma",
+    "assets": ["USDC", "wUSDR"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://thena.fi/liquidity/fusion?currency0=0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d&currency1=0x9467f15f44a8641389556387b43d9ed3f6981818&strategy=CORRELATED",
+    "removeLiquidityUrl": "https://thena.fi/liquidity/fusion?currency0=0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d&currency1=0x9467f15f44a8641389556387b43d9ed3f6981818&strategy=CORRELATED",
+    "network": "bsc",
+    "createdAt": 1691656281
+  },
+  {
     "id": "ooev2-ooe-bnb",
     "name": "OOE-BNB LP",
     "token": "OOE-BNB LP V2",
