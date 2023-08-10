@@ -12,6 +12,7 @@ import { selectChainById } from '../../../data/selectors/chains';
 import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
 import { ReactComponent as PlusIcon } from '../../../../images/icons/plus.svg';
 import { styles } from './styles';
+import { explorerTokenUrl } from '../../../../helpers/url';
 
 const useStyles = makeStyles(styles);
 
@@ -49,8 +50,6 @@ export const AddTokenToWallet = memo<AddTokenToWalletProps>(function AddTokenToW
     }
   }, [chainId, token.address, token.decimals, token.id, token.symbol]);
 
-  const explorerUrl = chain.explorerUrl + '/address/' + token.address;
-
   const shouldShowAddButton = isWalletConnected && isWalletOnSameChain;
 
   return (
@@ -66,7 +65,11 @@ export const AddTokenToWallet = memo<AddTokenToWalletProps>(function AddTokenToW
             <PlusIcon className={classes.icon} />
           </Button>
         )}
-        <LinkButton className={classes.linkButtonBg} href={explorerUrl} text={t('Explorer')} />
+        <LinkButton
+          className={classes.linkButtonBg}
+          href={explorerTokenUrl(chain, token.address)}
+          text={t('Explorer')}
+        />
       </div>
     </div>
   );

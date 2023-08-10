@@ -9,4 +9,12 @@ import type { ChainConfig } from '../apis/config-types';
  * We give another name to "chainId" to avoid any confusion between
  * beefy chain id ("harmony", "bsc") and the network chain id (8, 16, etc)
  */
-export type ChainEntity = Omit<ChainConfig, 'chainId'> & { networkChainId: number };
+export type ChainEntity = Omit<
+  ChainConfig,
+  'chainId' | 'explorerTokenUrlTemplate' | 'explorerAddressUrlTemplate' | 'explorerTxUrlTemplate'
+> & {
+  networkChainId: number;
+  explorerTokenUrlTemplate: string;
+  explorerAddressUrlTemplate: string;
+  explorerTxUrlTemplate: string;
+};

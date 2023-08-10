@@ -128,6 +128,9 @@ export interface ChainConfig {
   chainId: number;
   rpc: string[];
   explorerUrl: string;
+  explorerAddressUrlTemplate?: string;
+  explorerTokenUrlTemplate?: string;
+  explorerTxUrlTemplate?: string;
   multicallAddress: string;
   appMulticallContractAddress: string;
   providerName: string;
@@ -276,7 +279,7 @@ export interface TokenHoldingConfig {
   decimals: number;
   oracleId: string;
   oracleType: 'lps' | 'token' | 'validator';
-  assetType: 'token' | 'native' | 'validator';
+  assetType: 'token' | 'native' | 'validator' | 'concLiquidity';
   price: number;
   usdValue: string;
   balance: string;

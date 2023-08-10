@@ -25,7 +25,7 @@ export const useSortedAssets = (assets: TreasuryHoldingEntity[]): SortedAssetCat
       if (token.assetType === 'token' || token.assetType === 'native') {
         list.liquidAssets.push(token);
       }
-      if (token.assetType === 'vault') {
+      if (token.assetType === 'vault' || token.assetType === 'concLiquidity') {
         list.stakedAssets.push(token);
       }
       if (token.assetType === 'validator') {

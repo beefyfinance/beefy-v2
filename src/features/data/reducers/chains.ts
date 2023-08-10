@@ -37,8 +37,20 @@ export const chainsSlice = createSlice({
         // for now, both ChainEntity and ChainConfig have somewhat compatible types
         // we just rename the chainId to networkChainId to avoid confusion
         const chain: ChainEntity = {
-          ...omit(chainConfig, 'chainId'),
+          ...omit(chainConfig, [
+            'chainId',
+            'explorerTokenUrlTemplate',
+            'explorerAddressUrlTemplate',
+            'explorerTxUrlTemplate',
+          ]),
           networkChainId: chainConfig.chainId,
+          explorerTokenUrlTemplate:
+            chainConfig.explorerTokenUrlTemplate || `${chainConfig.explorerUrl}/token/{address}`,
+          explorerAddressUrlTemplate:
+            chainConfig.explorerAddressUrlTemplate ||
+            `${chainConfig.explorerUrl}/address/{address}`,
+          explorerTxUrlTemplate:
+            chainConfig.explorerTxUrlTemplate || `${chainConfig.explorerUrl}/tx/{hash}`,
         };
 
         sliceState.byId[chain.id] = chain;

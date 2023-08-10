@@ -208,6 +208,21 @@ export const selectUserFilteredVaults = (
   return filteredVaults;
 };
 
+function selectFilterPlatformIdsForVault(state: BeefyState, vault: VaultEntity): string[] {
+  const vaultPlatform = selectPlatformIdForFilter(state, vault.platformId);
+  const vaultPlatforms = [vaultPlatform];
+
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  if (depositToken.providerId) {
+    const depositTokenPlatform = selectPlatformIdForFilter(state, depositToken.providerId);
+    if (depositTokenPlatform !== 'other' && depositTokenPlatform != vaultPlatform) {
+      vaultPlatforms.push(depositTokenPlatform);
+    }
+  }
+
+  return vaultPlatforms;
+}
+
 const selectPlatformIdForFilter = createCachedSelector(
   (state: BeefyState) => state.entities.platforms.filterIds,
   (state: BeefyState, platformId: PlatformEntity['id']) => platformId,
@@ -250,11 +265,12 @@ export const selectFilteredVaults = (state: BeefyState) => {
     if (!shouldShowChain[vault.chainId]) {
       return false;
     }
-    if (
-      filterOptions.platformId !== null &&
-      selectPlatformIdForFilter(state, vault.platformId) !== filterOptions.platformId
-    ) {
-      return false;
+
+    if (filterOptions.platformId !== null) {
+      const vaultPlatforms = selectFilterPlatformIdsForVault(state, vault);
+      if (!vaultPlatforms.includes(filterOptions.platformId)) {
+        return false;
+      }
     }
 
     if (filterOptions.onlyRetired && !isVaultRetired(vault)) {

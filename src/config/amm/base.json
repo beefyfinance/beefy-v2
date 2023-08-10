@@ -1,0 +1,28 @@
+[
+  {
+    "id": "base-baseswap",
+    "name": "BaseSwap",
+    "type": "uniswapv2",
+    "routerAddress": "0x327Df1E6de05895d2ab08513aaDD9313Fe505d86",
+    "factoryAddress": "0xFDa619b6d20975be80A10332cD39b9a4b0FAa8BB",
+    "pairInitHash": "0xb618a2730fae167f5f8ac7bd659dd8436d571872655bcb6fd11f2158c8a64a3b",
+    "minimumLiquidity": "1000",
+    "mintFeeNumerator": "17",
+    "mintFeeDenominator": "8",
+    "swapFeeNumerator": "25",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "base-bvm",
+    "name": "BVM",
+    "type": "solidly",
+    "routerAddress": "0xE11b93B61f6291d35c5a2beA0A9fF169080160cF",
+    "factoryAddress": "0xe21Aac7F113Bd5DC2389e4d8a8db854a87fD6951",
+    "pairInitHash": "0x0ccd005ee58d5fb11632ef5c2e0866256b240965c62c8e990c0f84a97f311879",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "3",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
+  }
+]

@@ -5,6 +5,11 @@
     "website": "https://axelar.network"
   },
   {
+    "id": "base",
+    "name": "Base",
+    "website": "https://bridge.base.org/deposit"
+  },
+  {
     "id": "ren",
     "name": "RenBridge",
     "website": "https://bridge.renproject.io"
@@ -38,5 +43,81 @@
     "id": "wormhole",
     "name": "Wormhole",
     "website": "https://wormhole.com"
+  },
+  {
+    "id": "synapse",
+    "name": "Synapse",
+    "website": "https://www.synapseprotocol.com/"
+  },
+  {
+    "id": "threshold",
+    "name": "Threshold",
+    "website": "https://threshold.network/"
+  },
+
+  {
+    "id": "gravity",
+    "name": "Gravity",
+    "website": "https://bridge.blockscape.network/"
+  },
+  {
+    "id": "optics",
+    "name": "Optics",
+    "website": "https://optics.app/"
+  },
+  {
+    "id": "kusama",
+    "name": "Kusama",
+    "website": "https://apps.moonbeam.network/moonriver/xcm?asset=KSM"
+  },
+  {
+    "id": "bittorent",
+    "name": "Bittorent",
+    "website": "https://bttc.bittorrent.com/"
+  },
+  {
+    "id": "arbitrum-canonical",
+    "name": "Arbitrum Bridge",
+    "website": "https://bridge.arbitrum.io/"
+  },
+  {
+    "id": "avax-canonical",
+    "name": "Avax Bridge",
+    "website": "https://core.app/bridge"
+  },
+  {
+    "id": "bsc-canonical",
+    "name": "Binance Bridge",
+    "website": "https://www.bnbchain.org/en/bridge?ref=binance.ghost.io"
+  },
+  {
+    "id": "cronos-canonical",
+    "name": "Cronos Bridge",
+    "website": "https://cronos.org/bridge/"
+  },
+  {
+    "id": "metis-canonical",
+    "name": "Metis Brdige",
+    "website": "https://bridge.metis.io/home"
+  },
+  {
+    "id": "optimism-canonical",
+    "name": "Optimism Bridge",
+    "website": "https://app.optimism.io/bridge"
+  },
+  {
+    "id": "polygon-canonical",
+    "name": "Polygon PoS Brdige",
+    "website": "https://wallet.polygon.technology/polygon/bridge"
+  },
+  {
+    "id": "zksync-canonical",
+    "name": "zkSync Bridge",
+    "website": "https://bridge.zksync.io/"
+  },
+  {
+    "id": "zkevm-canonical",
+    "name": "Polygon zkEVM Bridge",
+    "website": "https://wallet.polygon.technology/zkEVM-Bridge/bridge"
   }
 ]

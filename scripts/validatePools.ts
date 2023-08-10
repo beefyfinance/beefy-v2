@@ -14,7 +14,7 @@ import strategyABI from '../src/config/abi/strategy.json';
 import vaultABI from '../src/config/abi/vault.json';
 import platforms from '../src/config/platforms.json';
 import strategyTypes from '../src/config/strategy-types.json';
-import { VaultConfig } from '../src/features/data/apis/config-types';
+import type { VaultConfig } from '../src/features/data/apis/config-types';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
@@ -39,6 +39,7 @@ const overrides = {
   'geist-eth': { harvestOnDeposit: undefined },
   'geist-usdc': { harvestOnDeposit: undefined },
   'geist-mim': { harvestOnDeposit: undefined },
+  'pearl-wbtc-usdrv3': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
@@ -116,6 +117,15 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     } else {
       console.error(`Error: New Harmony pool added without validation`);
       return { chainId, exitCode: 1, updates: 'New Harmony pool added without validation' };
+    }
+  }
+  if (chainId === 'fuse') {
+    if (pools.length === 28) {
+      console.log('Skip Fuse validation');
+      return { chainId, exitCode: 0, updates: {} };
+    } else {
+      console.error(`Error: New Fuse pool added without validation`);
+      return { chainId, exitCode: 1, updates: 'New Fuse pool added without validation' };
     }
   }
   console.log(`Validating ${pools.length} pools in ${chainId}...`);

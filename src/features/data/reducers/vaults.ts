@@ -6,7 +6,12 @@ import { safetyScoreNum } from '../../../helpers/safetyScore';
 import type { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsZapSupport } from '../actions/vaults';
+import {
+  fetchAllVaults,
+  fetchFeaturedVaults,
+  fetchVaultsZapSupport,
+  fetchVaultsLastHarvests,
+} from '../actions/vaults';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import type { ChainEntity } from '../entities/chain';
 import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
@@ -74,6 +79,10 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
       oneInch: boolean;
     };
   };
+
+  lastHarvestById: {
+    [vaultId: VaultEntity['id']]: number;
+  };
 };
 export const initialVaultsState: VaultsState = {
   byId: {},
@@ -82,6 +91,7 @@ export const initialVaultsState: VaultsState = {
   contractData: { byVaultId: {} },
   featuredVaults: {},
   zapSupportById: {},
+  lastHarvestById: {},
 };
 
 export const vaultsSlice = createSlice({
@@ -113,6 +123,13 @@ export const vaultsSlice = createSlice({
 
     builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
       addContractDataToState(sliceState, action.payload.data);
+    });
+
+    builder.addCase(fetchVaultsLastHarvests.fulfilled, (sliceState, action) => {
+      for (const [vaultId, lastHarvest] of Object.entries(action.payload.byVaultId)) {
+        // time in milliseconds since unix epoch
+        sliceState.lastHarvestById[vaultId] = lastHarvest * 1000;
+      }
     });
 
     builder.addCase(

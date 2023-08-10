@@ -1,4 +1,12 @@
 {
+  "exactly": {
+    "text": "Exactly is a decentralized, non-custodial and open-source protocol that provides an autonomous fixed and variable interest rate market enabling users to frictionlessly exchange the time value of their assets and completing the DeFi credit market.",
+    "website": "https://exact.ly/",
+    "social": {
+      "telegram": "https://t.me/exactlyFinance",
+      "twitter": "https://twitter.com/exactlyprotocol"
+    }
+  },
   "stargate": {
     "text": "Stargate is a fully composable cross-chain bridge protocol built on LayerZero that enables native asset transfers between different blockchain networks.",
     "website": "https://stargate.finance/",

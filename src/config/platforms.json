@@ -1058,5 +1058,30 @@
     "id": "betswirl",
     "name": "BetSwirl",
     "filter": true
+  },
+  {
+    "id": "baseswap",
+    "name": "BaseSwap",
+    "filter": true
+  },
+  {
+    "id": "retro",
+    "name": "Retro",
+    "filter": true
+  },
+  {
+    "id": "uniswap",
+    "name": "Uniswap",
+    "filter": true
+  },
+  {
+    "id": "fvm",
+    "name": "FVM",
+    "filter": true
+  },
+  {
+    "id": "bvm",
+    "name": "BVM",
+    "filter": true
   }
 ]

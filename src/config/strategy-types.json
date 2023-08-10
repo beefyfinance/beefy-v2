@@ -46,5 +46,13 @@
   {
     "id": "flashloan-lending",
     "name": "Flash Loan Lending"
+  },
+  {
+    "id": "qlp",
+    "name": "QLP"
+  },
+  {
+    "id": "managed-conc-lp",
+    "name": "Managed Concentrated Liquidity"
   }
 ]

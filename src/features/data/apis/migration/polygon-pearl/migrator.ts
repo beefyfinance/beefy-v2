@@ -21,7 +21,7 @@ import { startStepperWithSteps } from '../../../actions/stepper';
 import { isTokenErc20 } from '../../../entities/token';
 import { selectAllowanceByTokenAddress } from '../../../selectors/allowances';
 
-const PEARL_VOTER = '0x83Cc83DA2Acb44a513956bFca7f16ab31dAb445a';
+const PEARL_VOTER = '0xa26C2A6BfeC5512c13Ae9EacF41Cb4319d30cCF0';
 
 export const fetchPearlStakedBalance = createAsyncThunk<
   CommonMigrationUpdateFulfilledPayload,

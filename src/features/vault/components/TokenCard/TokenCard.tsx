@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from '../../../../store';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { selectBridgeByIdIfKnown } from '../../../data/selectors/bridges';
 import { BridgeTag, NativeTag } from '../BridgeTag';
+import { explorerTokenUrl } from '../../../../helpers/url';
 
 const useStyles = makeStyles(styles);
 
@@ -49,7 +50,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
           {isErc20 && (
             <LinkButton
               hideIconOnMobile={true}
-              href={`${chain.explorerUrl}/token/${token.address}`}
+              href={explorerTokenUrl(chain, token.address)}
               text={t('Token-Contract')}
             />
           )}

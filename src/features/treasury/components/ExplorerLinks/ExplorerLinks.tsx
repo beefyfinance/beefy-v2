@@ -10,6 +10,7 @@ import { selectChainById } from '../../../data/selectors/chains';
 import { selectTreasuryWalletAddressesByChainId } from '../../../data/selectors/treasury';
 import { styles } from './styles';
 import iconExternalLink from '../../../../images/icons/external-link.svg';
+import { explorerAddressUrl } from '../../../../helpers/url';
 
 const useStyles = makeStyles(styles);
 
@@ -51,7 +52,7 @@ export const ExplorerLinks = memo<ExplorerLinkProps>(function ExplorerLinks({ ch
             return (
               <a
                 key={wallet.address}
-                href={`${chain.explorerUrl}/address/${wallet.address}`}
+                href={explorerAddressUrl(chain, wallet.address)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={classes.item}
