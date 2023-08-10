@@ -31,7 +31,7 @@ export const platformsSlice = createSlice({
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
       for (const vaults of Object.values(action.payload.byChainId)) {
         for (const vault of vaults) {
-          addVaultPlatformToState(sliceState, vault.platformId, vault.status !== 'eol');
+          addVaultToState(sliceState, vault);
         }
       }
     });
@@ -44,13 +44,14 @@ export const platformsSlice = createSlice({
   },
 });
 
-function addVaultPlatformToState(
-  sliceState: Draft<PlatformsState>,
-  platformId: VaultConfig['platformId'],
-  active: boolean
-) {
-  if (active && !sliceState.activeIds.includes(platformId)) {
-    sliceState.activeIds.push(platformId);
+function addVaultToState(sliceState: Draft<PlatformsState>, vault: VaultConfig) {
+  if (vault.status !== 'eol') {
+    if (vault.platformId && !sliceState.activeIds.includes(vault.platformId)) {
+      sliceState.activeIds.push(vault.platformId);
+    }
+    if (vault.tokenProviderId && !sliceState.activeIds.includes(vault.tokenProviderId)) {
+      sliceState.activeIds.push(vault.tokenProviderId);
+    }
   }
 }
 
