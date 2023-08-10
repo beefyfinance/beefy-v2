@@ -31,8 +31,8 @@
     "factoryAddress": "0x68e03D7B8B3F9669750C1282AD6d36988f4FE18e",
     "pairInitHash": "0x1d6b57dabc343f1999a6ca9b6adf9d3c7527f7bdbeef47b3b0d2267f1fb2531a",
     "minimumLiquidity": "1000",
-    "swapFeeNumerator": "3",
-    "swapFeeDenominator": "10000",
+    "swapFeeNumerator": "1",
+    "swapFeeDenominator": "5000",
     "getAmountOutMode": "getAmountOut"
   }
 ]
