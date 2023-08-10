@@ -1083,5 +1083,10 @@
     "id": "bvm",
     "name": "BVM",
     "filter": true
+  },
+  {
+    "id": "alienbase",
+    "name": "AlienBase",
+    "filter": true
   }
 ]
