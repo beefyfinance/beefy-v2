@@ -7,8 +7,8 @@
     "tokenDecimals": 18,
     "tokenProviderId": "stargate",
     "earnedToken": "mooStargateETH",
-    "earnedTokenAddress": "0xAc0E6ba47A20EE95E3149910dA3844b851537f25",
-    "earnContractAddress": "0xAc0E6ba47A20EE95E3149910dA3844b851537f25",
+    "earnedTokenAddress": "0x155d105DD8e21c044F5EDAcb5af2301E2F7CBc26",
+    "earnContractAddress": "0x155d105DD8e21c044F5EDAcb5af2301E2F7CBc26",
     "oracle": "lps",
     "oracleId": "stargate-base-eth",
     "status": "active",
@@ -27,7 +27,7 @@
     "addLiquidityUrl": "https://stargate.finance/pool/ETH-BASE/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/ETH-BASE/remove",
     "network": "base",
-    "createdAt": 1691240469
+    "createdAt": 1691661307
   },
   {
     "id": "stargate-base-usdbc",
@@ -37,8 +37,8 @@
     "tokenDecimals": 6,
     "tokenProviderId": "stargate",
     "earnedToken": "mooStargateUSDbC",
-    "earnedTokenAddress": "0x0c565588D89D893D1B801be72e2dB72e1f63779F",
-    "earnContractAddress": "0x0c565588D89D893D1B801be72e2dB72e1f63779F",
+    "earnedTokenAddress": "0x37028FA1A4365733fD2fB42E1329285ED7988562",
+    "earnContractAddress": "0x37028FA1A4365733fD2fB42E1329285ED7988562",
     "oracle": "lps",
     "oracleId": "stargate-base-usdbc",
     "status": "active",
@@ -57,7 +57,7 @@
     "addLiquidityUrl": "https://stargate.finance/pool/USDC-BASE/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/USDC-BASE/remove",
     "network": "base",
-    "createdAt": 1691240469
+    "createdAt": 1691661307
   },
   {
     "id": "baseswap-cbeth-weth",
