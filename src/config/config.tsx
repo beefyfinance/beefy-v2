@@ -338,6 +338,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'bbaaUSDT',
       'bbaaDAI',
       'bbaaUSD',
+      'bbaaUSDTV2',
+      'bbaaUSDCV2',
+      'bbaaDAIV2'
     ],
   },
   avax: {
@@ -652,7 +655,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['USDbC', 'DAI', 'bsUSD', 'axlUSDC', 'MIM', 'USD+', 'DAI+'],
+    stableCoins: ['USDbC', 'DAI', 'bsUSD', 'axlUSDC', 'MIM', 'USD+', 'DAI+', 'R', 'bbsDAI'],
   },
   aurora: {
     name: 'Aurora',
