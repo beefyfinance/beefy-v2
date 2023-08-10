@@ -244,8 +244,8 @@
     "assets": ["USDC", "MATIC"],
     "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://retro.finance/liquidity/managev3?currency0=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&currency1=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&strategy=GAMMA_NARROW",
-    "removeLiquidityUrl": "https://retro.finance/liquidity/managev3?currency0=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&currency1=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&strategy=GAMMA_NARROW",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-usdc-500-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-usdc-500-narrow",
     "network": "polygon",
     "createdAt": 1691364568
   },
@@ -266,8 +266,8 @@
     "assets": ["USDC", "ETH"],
     "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://retro.finance/liquidity/managev3?currency0=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&currency1=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&strategy=GAMMA_NARROW",
-    "removeLiquidityUrl": "https://retro.finance/liquidity/managev3?currency0=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&currency1=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&strategy=GAMMA_NARROW",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc-weth-500-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc-weth-500-narrow",
     "network": "polygon",
     "createdAt": 1691364568
   },
@@ -288,8 +288,8 @@
     "assets": ["MATIC", "ETH"],
     "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://retro.finance/liquidity/managev3?currency0=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&currency1=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&strategy=GAMMA_NARROW",
-    "removeLiquidityUrl": "https://retro.finance/liquidity/managev3?currency0=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&currency1=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&strategy=GAMMA_NARROW",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-weth-500-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-weth-500-narrow",
     "network": "polygon",
     "createdAt": 1691364568
   },
