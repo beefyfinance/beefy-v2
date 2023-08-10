@@ -7,7 +7,12 @@ import { fetchApyAction } from './apy';
 import { fetchAllBoosts, initiateBoostForm } from './boosts';
 import { fetchChainConfigs } from './chains';
 import { fetchAllPricesAction, fetchBeefyBuybackAction } from './prices';
-import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsZapSupport } from './vaults';
+import {
+  fetchAllVaults,
+  fetchFeaturedVaults,
+  fetchVaultsZapSupport,
+  fetchVaultsLastHarvests,
+} from './vaults';
 import { fetchAllBalanceAction } from './balance';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_noDataPolling } from '../utils/feature-flags';
@@ -74,6 +79,8 @@ export async function initHomeDataV4(store: BeefyStore) {
     store.dispatch(fetchPlatforms());
 
     store.dispatch(fetchBridges());
+
+    store.dispatch(fetchVaultsLastHarvests());
   });
 
   // create the wallet instance as soon as we get the chain list
@@ -157,6 +164,12 @@ export async function initHomeDataV4(store: BeefyStore) {
   pollStop = poll(async () => {
     return Promise.all([store.dispatch(fetchAllPricesAction()), store.dispatch(fetchApyAction())]);
   }, 45 * 1000 /* every 45s */);
+  pollStopFns.push(pollStop);
+
+  // regular calls to update last harvest
+  pollStop = poll(async () => {
+    return store.dispatch(fetchVaultsLastHarvests());
+  }, 3 * 60 * 1000 /* every 3 minutes */);
   pollStopFns.push(pollStop);
 
   // now set regular calls to update contract data

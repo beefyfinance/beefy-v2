@@ -102,23 +102,6 @@
     "partners": ["kava"]
   },
   {
-    "id": "moo_equilibre-wbtc-eth-kava",
-    "poolId": "equilibre-wbtc-eth",
-    "name": "Beefy",
-    "assets": ["WBTC", "ETH"],
-    "tokenAddress": "0x22DE4A2F6b7f21d802Eb97E4B7bC21f40ef9dd38",
-    "earnedToken": "WKAVA",
-    "earnedTokenDecimals": 18,
-    "earnedTokenAddress": "0xc86c7C0eFbd6A49B35E8714C5f59D99De09A225b",
-    "earnContractAddress": "0xeD4ea30c755676C07d3e0e0f74Ff84C0193B4551",
-    "earnedOracle": "tokens",
-    "earnedOracleId": "WKAVA",
-    "partnership": true,
-    "status": "active",
-    "isMooStaked": true,
-    "partners": ["kava"]
-  },
-  {
     "id": "moo_equilibre-mai-usdc-kava",
     "poolId": "equilibre-mai-usdc",
     "name": "Beefy",

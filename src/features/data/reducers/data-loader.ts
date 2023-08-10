@@ -12,7 +12,7 @@ import {
   fetchAllAddressBookAction,
   reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
 } from '../actions/tokens';
-import { fetchAllVaults } from '../actions/vaults';
+import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults';
 import {
   askForNetworkChange,
   askForWalletConnection,
@@ -83,6 +83,7 @@ export const initialDataLoaderState: DataLoaderState = {
     apy: dataLoaderStateInit,
     boosts: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
+    lastHarvests: dataLoaderStateInit,
     fees: dataLoaderStateInit,
     wallet: dataLoaderStateInit,
     amms: dataLoaderStateInit,
@@ -311,6 +312,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchAllPricesAction, 'prices', true);
     addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy', true);
     addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults', true);
+    addGlobalAsyncThunkActions(builder, fetchVaultsLastHarvests, 'lastHarvests', true);
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts', true);
     addGlobalAsyncThunkActions(builder, fetchFees, 'fees', true);
     addGlobalAsyncThunkActions(builder, fetchAllMinters, 'minters', false);

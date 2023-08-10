@@ -1,26 +1,33 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Box, Divider, Grid, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { isGovVault } from '../../../data/entities/vault';
-import { selectVaultById } from '../../../data/selectors/vaults';
+import { selectVaultById, selectVaultLastHarvestByVaultId } from '../../../data/selectors/vaults';
 import { DailyApyStats, YearlyApyStats } from '../../../../components/ApyStats';
 import { ValueBlock } from '../../../../components/ValueBlock/ValueBlock';
 import { VaultTvl } from '../../../../components/VaultTvl/VaultTvl';
 import { VaultDeposited } from '../../../../components/VaultDeposited/VaultDeposited';
 import { GovVaultRewards } from '../../../../components/GovVaultRewards/GovVaultRewards';
-import { getBeefyApi } from '../../../data/apis/instances';
 import { useAppSelector } from '../../../../store';
 import { formatDistance } from 'date-fns';
 
 const useStyles = makeStyles(styles);
 
 function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
-  const lastHarvestStr = useLastHarvestStr(vaultId);
+  const lastHarvest = useAppSelector(state => selectVaultLastHarvestByVaultId(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const classes = useStyles();
   const { t } = useTranslation();
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+
+  const lastHarvetFormatted = useMemo(() => {
+    if (lastHarvest === 0) {
+      return 'never';
+    } else {
+      return formatDistance(lastHarvest, new Date(), { addSuffix: true });
+    }
+  }, [lastHarvest]);
 
   return (
     <div className={classes.stats}>
@@ -50,15 +57,15 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
               <VaultDeposited vaultId={vaultId} />
             </Box>
           </Grid>
-          {(isGovVault(vault) || lastHarvestStr !== 'never') && (
+          {(isGovVault(vault) || lastHarvest !== 0) && (
             <Divider flexItem={true} className={classes.divider1} orientation="vertical" />
           )}
           {!isGovVault(vault) ? (
             <>
-              {lastHarvestStr !== 'never' && (
+              {lastHarvest !== 0 && (
                 <Grid item xs={6}>
                   <Box className={classes.stat4}>
-                    <ValueBlock label={t('Vault-LastHarvest')} value={lastHarvestStr} />
+                    <ValueBlock label={t('Vault-LastHarvest')} value={lastHarvetFormatted} />
                   </Box>
                 </Grid>
               )}
@@ -77,24 +84,3 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
 }
 
 export const VaultsStats = React.memo(VaultsStatsComponent);
-
-const useLastHarvestStr = (vaultId: string) => {
-  const [state, setState] = React.useState('');
-
-  React.useEffect(() => {
-    (async () => {
-      const beefyApi = getBeefyApi();
-      const lastHarvest = await beefyApi.getVaultLastHarvest(vaultId);
-
-      if (lastHarvest === null) {
-        setState('never');
-      } else {
-        const lhStr = formatDistance(lastHarvest, new Date(), { addSuffix: true });
-
-        setState(lhStr);
-      }
-    })();
-  }, [vaultId]);
-
-  return state;
-};

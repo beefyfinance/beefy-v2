@@ -60,6 +60,11 @@
     "zapAddress": "0x1d6e766DcE6085dd8208F5124304BcbBc951c170"
   },
   {
+    "chainId": "base",
+    "ammId": "base-bvm",
+    "zapAddress": "0x5d2EF803D6e255eF4D1c66762CBc8845051B54dB"
+  },
+  {
     "chainId": "bsc",
     "ammId": "bsc-pancakeswap-v2",
     "zapAddress": "0x03c509fd85d51dc7E75fa2De06276cFA147486EA"
@@ -203,6 +208,11 @@
     "chainId": "fantom",
     "ammId": "fantom-equalizer",
     "zapAddress": "0xE7f943De8386F1d2BF58F3D10c0938aB4fb67c07"
+  },
+  {
+    "chainId": "fantom",
+    "ammId": "fantom-fvm",
+    "zapAddress": "0x632B4F51acB95137b97917780Fb219586900D540"
   },
   {
     "chainId": "fuse",

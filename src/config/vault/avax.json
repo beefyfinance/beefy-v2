@@ -1,5 +1,36 @@
 [
   {
+    "id": "joe-auto-wavax-usdc",
+    "name": "AVAX-USDC APT",
+    "token": "AVAX-USDC APT",
+    "tokenAddress": "0x32833a12ed3Fd5120429FB01564c98ce3C60FC1d",
+    "tokenDecimals": 12,
+    "tokenProviderId": "traderjoe",
+    "earnedToken": "mooJoeAVAX-USDC",
+    "earnedTokenAddress": "0x595786A3848B1de66C6056C87BA91977935fBC46",
+    "earnContractAddress": "0x595786A3848B1de66C6056C87BA91977935fBC46",
+    "oracle": "lps",
+    "oracleId": "joe-auto-wavax-usdc",
+    "status": "active",
+    "platformId": "traderjoe",
+    "assets": ["AVAX", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "managed-conc-lp",
+    "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x9C9e5fD8bbc25984B178FdCE6117Defa39d2db39#/",
+    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x32833a12ed3fd5120429fb01564c98ce3c60fc1d",
+    "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x32833a12ed3fd5120429fb01564c98ce3c60fc1d",
+    "network": "avax",
+    "createdAt": 1691411422
+  },
+  {
     "id": "balancer-savax-bbaavavax",
     "name": "sAVAX-bbaAVAX",
     "token": "sAVAX-bbaAVAX",
