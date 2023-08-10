@@ -328,8 +328,54 @@ export interface BridgeConfig {
   readonly tagName?: string;
   readonly website: string;
 }
+
 export type BaseMigrationConfig = {
   readonly id: string; // eg ethereum-conic
   readonly name: string; // eg Conic Finance
   readonly icon: string;
 };
+
+export type BeefyLayerZeroBridgeConfig = {
+  id: 'layer-zero';
+  chains: Record<
+    ChainEntity['id'],
+    {
+      /** Address of our deployed bridge contract */
+      bridge: string;
+      /** @see https://layerzero.gitbook.io/docs/technical-reference/mainnet/supported-chain-ids */
+      chainId: string;
+    }
+  >;
+};
+
+export type BeefyLayerZeroDummyBridgeConfig = {
+  id: 'layer-zero-dummy';
+  chains: Record<
+    ChainEntity['id'],
+    {
+      /** Address of our deployed bridge contract */
+      bridge: string;
+      /** @see https://layerzero.gitbook.io/docs/technical-reference/mainnet/supported-chain-ids */
+      chainId: string;
+    }
+  >;
+};
+
+export type BeefyAnyBridgeConfig = BeefyLayerZeroBridgeConfig | BeefyLayerZeroDummyBridgeConfig;
+
+export type BeefyBridgeConfig = Readonly<{
+  source: {
+    id: string;
+    symbol: string;
+    chainId: ChainEntity['id'];
+    oracleId: string;
+    address: string;
+    decimals: number;
+    description: string;
+  };
+  tokens: Record<ChainEntity['id'], string>;
+  bridges: {
+    'layer-zero': BeefyLayerZeroBridgeConfig;
+    'layer-zero-dummy': BeefyLayerZeroDummyBridgeConfig;
+  };
+}>;

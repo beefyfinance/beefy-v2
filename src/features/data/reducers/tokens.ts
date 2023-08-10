@@ -20,6 +20,7 @@ import { fetchAllMinters } from '../actions/minters';
 import type { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
 import type { LpData } from '../apis/beefy/beefy-api';
 import { isNativeAlternativeAddress } from '../../../helpers/addresses';
+import { fetchBridgeConfig } from '../actions/bridge';
 
 /**
  * State containing Vault infos
@@ -135,7 +136,7 @@ export const tokensSlice = createSlice({
     });
 
     // when prices are changed, update prices
-    // this could also just be a a super quick drop in replacement
+    // this could also just be a super quick drop in replacement
     // if we are OK to not use BigNumber, which I don't think we are
     builder.addCase(fetchAllPricesAction.fulfilled, (sliceState, action) => {
       for (const [oracleId, price] of Object.entries(action.payload.prices)) {
@@ -148,17 +149,103 @@ export const tokensSlice = createSlice({
       }
     });
 
-    // we have another way of finding token info
+    // tokens from addressbook
     builder.addCase(fetchAddressBookAction.fulfilled, (sliceState, action) => {
       addAddressBookToState(sliceState, action.payload);
     });
+
     builder.addCase(fetchAllAddressBookAction.fulfilled, (sliceState, action) => {
       for (const payload of action.payload) {
         addAddressBookToState(sliceState, payload);
       }
     });
+
+    // tokens from beefy bridge
+    builder.addCase(fetchBridgeConfig.fulfilled, (sliceState, action) => {
+      const {
+        config: { source, tokens },
+      } = action.payload;
+
+      const sourceToken = addBridgeTokenToState(
+        sliceState,
+        {
+          ...source,
+          type: 'erc20',
+          buyUrl: null,
+          website: null,
+          documentation: null,
+        },
+        true
+      );
+
+      for (const [chainId, address] of Object.entries(tokens)) {
+        if (chainId === sourceToken.chainId) continue; // only add non-source tokens
+
+        const token: TokenErc20 = {
+          ...sourceToken,
+          id: `${source.id}-${chainId}`,
+          chainId: chainId,
+          address,
+        };
+
+        addBridgeTokenToState(sliceState, token, true);
+      }
+    });
   },
 });
+
+function addBridgeTokenToState(
+  sliceState: Draft<TokensState>,
+  token: TokenErc20,
+  trackBalance: boolean
+): TokenErc20 {
+  const chainId = token.chainId;
+  const addressLower = token.address.toLowerCase();
+
+  if (sliceState.byChainId[chainId] === undefined) {
+    sliceState.byChainId[chainId] = {
+      byId: {},
+      byAddress: {},
+      interestingBalanceTokenAddresses: [],
+      native: null,
+      wnative: null,
+    };
+  }
+
+  if (sliceState.byChainId[chainId].byAddress[addressLower] === undefined) {
+    // new token, add it
+    sliceState.byChainId[chainId].byAddress[addressLower] = token;
+    console.debug('add', token);
+    if (trackBalance) {
+      sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(addressLower);
+    }
+  } else {
+    const existingToken = sliceState.byChainId[chainId].byAddress[addressLower];
+    // if existing token is not erc20, we are trying to overwrite the chain native token
+    if (!isTokenErc20(existingToken)) {
+      throw new Error(`Existing token ${existingToken.id} is not an ERC20 token`);
+    }
+
+    // update token metadata
+    console.debug('update', token);
+    existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
+    existingToken.description = existingToken.description || token.description;
+    existingToken.website = existingToken.website || token.website;
+    existingToken.bridge = existingToken.bridge || token.bridge;
+  }
+
+  // id => address mapping
+  if (sliceState.byChainId[chainId].byId[token.id] === undefined) {
+    sliceState.byChainId[chainId].byId[token.id] = addressLower;
+  }
+
+  const stateToken = sliceState.byChainId[chainId].byAddress[addressLower];
+  if (isTokenErc20(stateToken)) {
+    return stateToken;
+  }
+
+  throw new Error(`Existing token ${stateToken.id} is not an ERC20 token`);
+}
 
 function addPriceToState(
   sliceState: Draft<TokensState>,

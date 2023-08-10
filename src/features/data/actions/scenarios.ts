@@ -23,7 +23,6 @@ import { selectShouldInitAddressBook } from '../selectors/data-loader';
 import { initiateMinterForm } from './minters';
 import type { MinterEntity } from '../entities/minter';
 import { selectMinterById } from '../selectors/minters';
-import { initiateBridgeForm } from './bridge';
 import { fetchPlatforms } from './platforms';
 import { selectAllChainIds } from '../selectors/chains';
 import { fetchBridges } from './bridges';
@@ -118,7 +117,7 @@ export async function initHomeDataV4(store: BeefyStore) {
       const chainFfs = fulfillsByNet[chain.id];
       await store.dispatch((await chainFfs.contractData)());
       if (chainFfs.user !== null) {
-        dispatchUserFfs(store, chainFfs.user);
+        return dispatchUserFfs(store, chainFfs.user);
       }
     })().catch(err => {
       // as we still dispatch network errors, for reducers to handle
@@ -278,8 +277,4 @@ export async function initMinterForm(
 
   // then we can init the form
   store.dispatch(initiateMinterForm({ minterId, walletAddress }));
-}
-
-export async function initBridgeForm(store: BeefyStore, walletAddress: string | null) {
-  store.dispatch(initiateBridgeForm({ walletAddress }));
 }

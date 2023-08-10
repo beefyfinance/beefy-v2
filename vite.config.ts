@@ -10,7 +10,7 @@ import * as path from 'path';
 const optionalPlugins = [];
 
 if (process.env.NODE_ENV === 'development') {
-  optionalPlugins.push(eslint());
+  // optionalPlugins.push(eslint());
 }
 
 if (process.env.ANALYZE_BUNDLE) {

@@ -18,14 +18,14 @@ export type VaultOption = {
   mode: TransactMode;
 };
 
-export type TokenAmount = {
+export type TokenAmount<T extends TokenEntity = TokenEntity> = {
   amount: BigNumber;
-  token: TokenEntity;
+  token: T;
 };
 
-export type InputTokenAmount = {
+export type InputTokenAmount<T extends TokenEntity = TokenEntity> = {
   amount: BigNumber;
-  token: TokenEntity;
+  token: T;
   max: boolean;
 };
 

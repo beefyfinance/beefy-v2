@@ -7,7 +7,7 @@ import type {
   IWalletConnectionApi,
   WalletConnectionOptions,
 } from './wallet/wallet-connection-types';
-import { BridgeApi } from './bridge/bridge';
+import { BridgeApi } from './bridge/bridge-api';
 import type { IOnRampApi } from './on-ramp/on-ramp-types';
 import type { ITransactApi } from './transact/transact-types';
 import { createWeb3Instance, rateLimitWeb3Instance } from '../../../helpers/web3';
@@ -18,11 +18,11 @@ import type { IBeefyDataApi } from './beefy/beefy-data-api-types';
 import PQueue from 'p-queue';
 
 import type { IMigrationApi } from './migration/migration-types';
+import type { IBridgeApi } from './bridge/bridge-api-types';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
 const configApi = new ConfigAPI();
-const bridgeApi = new BridgeApi();
 const analyticsApi = new AnalyticsApi();
 
 /**
@@ -35,10 +35,6 @@ export function getBeefyApi(): BeefyAPI {
 
 export function getConfigApi(): ConfigAPI {
   return configApi;
-}
-
-export function getBridgeApi(): BridgeApi {
-  return bridgeApi;
 }
 
 export function getAnalyticsApi(): AnalyticsApi {
@@ -180,4 +176,15 @@ export async function getMigrationApi(): Promise<IMigrationApi> {
   const { MigrationApi } = await import('./migration');
   migrationApiInstance = new MigrationApi();
   return migrationApiInstance;
+}
+
+let bridgeApiInstance: IBridgeApi | null = null;
+export async function getBridgeApi(): Promise<IBridgeApi> {
+  if (bridgeApiInstance) {
+    return bridgeApiInstance;
+  }
+
+  const { BridgeApi } = await import('./bridge/bridge-api');
+  bridgeApiInstance = new BridgeApi();
+  return bridgeApiInstance;
 }

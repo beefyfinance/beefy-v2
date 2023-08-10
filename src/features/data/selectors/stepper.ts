@@ -92,7 +92,7 @@ export const selectStepperProgress = (state: BeefyState) => {
   const step = state.ui.stepperState.items[currentStep]?.step;
   const percentagePerStep = 100 / state.ui.stepperState.items.length;
   const currentTxProgress =
-    step === 'bridge' ? selectBridgeTxProgress(state) : selectStandardTxPercentage(state);
+    /*step === 'bridge' ? selectBridgeTxProgress(state) :*/ selectStandardTxPercentage(state);
 
   return currentStep * percentagePerStep + percentagePerStep * currentTxProgress;
 };
@@ -112,29 +112,6 @@ const selectStandardTxPercentage = (state: BeefyState) => {
   }
 };
 
-/*
-Each Bridge Tx have 5 possible scenarios
-1- need user interaction
-2- tx mining
-3- tx mined - dest tx need to start
-4- bridge tx mining
-5- bridge tx mined
-*/
-export const selectBridgeTxProgress = (state: BeefyState) => {
-  const bridgeStatus = state.ui.bridge.status;
-  const walletActionsStateResult = state.user.walletActions.result;
-
-  if (walletActionsStateResult === null) {
-    return 0;
-  } else if (walletActionsStateResult === 'success_pending') {
-    return 0.25;
-  } else if (bridgeStatus === 'loading') {
-    return 0.5;
-  } else if (bridgeStatus === 'confirming') {
-    return 0.75;
-  }
-};
-
 export const selectErrorBar = (state: BeefyState) => {
   const walletActionsStateResult = state.user.walletActions.result;
 
@@ -143,9 +120,8 @@ export const selectErrorBar = (state: BeefyState) => {
 
 export const selectSuccessBar = (state: BeefyState) => {
   const stepContent = state.ui.stepperState.stepContent;
-  const bridgeStatus = state.ui.bridge.status;
 
-  return stepContent === StepContent.SuccessTx || bridgeStatus === 'success';
+  return stepContent === StepContent.SuccessTx;
 };
 
 export function selectZapReturned(state: BeefyState, type: Step['step']) {

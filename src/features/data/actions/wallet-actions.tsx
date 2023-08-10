@@ -6,7 +6,6 @@ import erc20Abi from '../../../config/abi/erc20.json';
 import vaultAbi from '../../../config/abi/vault.json';
 import minterAbi from '../../../config/abi/minter.json';
 import zapAbi from '../../../config/abi/zap.json';
-import bridgeAbi from '../../../config/abi/BridgeAbi.json';
 import type { BeefyState, BeefyThunk } from '../../../redux-types';
 import { getOneInchApi, getWalletConnectionApiInstance } from '../apis/instances';
 import type { BoostEntity } from '../entities/boost';
@@ -62,7 +61,7 @@ import type {
   ZapQuoteStepSwap,
 } from '../apis/transact/transact-types';
 import type { ZapEntityBeefy, ZapEntityOneInch } from '../entities/zap';
-import { BeefyZapOneInchAbi, ZapAbi } from '../../../config/abi';
+import { BeefyLayerZeroBridgeAbi, BeefyZapOneInchAbi, ZapAbi } from '../../../config/abi';
 import { OneInchZapProvider } from '../apis/transact/providers/one-inch/one-inch';
 import { MultiCall } from 'eth-multicall';
 import { getPool } from '../apis/amm';
@@ -71,7 +70,6 @@ import { WANT_TYPE } from '../apis/amm/types';
 import { getVaultWithdrawnFromContract } from '../apis/transact/helpers/vault';
 import { swapWithFee } from '../apis/transact/helpers/one-inch';
 import { selectOneInchZapByChainId } from '../selectors/zap';
-import type { DestChainEntity } from '../apis/bridge/bridge-types';
 import type { PromiEvent } from 'web3-core';
 import type { ThunkDispatch } from 'redux-thunk';
 import { migratorUpdate } from './migrator';
@@ -1396,12 +1394,11 @@ const burnWithdraw = (
   });
 };
 
-const bridge = (
-  chainId: ChainEntity['id'],
-  destChainId: ChainEntity['id'],
-  routerAddr: string,
-  amount: BigNumber,
-  isRouter: boolean
+const bridgeViaLayerZero = (
+  input: TokenAmount,
+  output: TokenAmount,
+  toLzChainId: string,
+  viaBeefyBridgeAddress: string
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
@@ -1411,61 +1408,33 @@ const bridge = (
       return;
     }
 
-    const bridgeTokenData = state.ui.bridge.bridgeDataByChainId[chainId];
-
-    const destChain = selectChainById(state, destChainId);
-    const destChainData: DestChainEntity = Object.values(
-      bridgeTokenData.destChains[destChain.networkChainId]
-    )[0];
-
-    const bridgeToken = selectTokenByAddress(state, chainId, bridgeTokenData.address);
-    const destToken = selectTokenByAddress(state, destChainId, destChainData.address);
-
-    const gasToken = selectChainNativeToken(state, chainId);
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
+    const contract = new web3.eth.Contract(BeefyLayerZeroBridgeAbi, viaBeefyBridgeAddress);
+    const inputWei = toWeiString(input.amount, input.token.decimals);
+    const feeWei = await contract.methods.bridgeCost(toLzChainId, inputWei, address).call();
+    const chainId = input.token.chainId;
+    const gasToken = selectChainNativeToken(state, chainId);
     const chain = selectChainById(state, chainId);
     const gasPrices = await getGasPriceOptions(chain);
-
-    const transaction = (() => {
-      const rawAmount = convertAmountToRawNumber(amount, bridgeTokenData.decimals);
-      if (isRouter) {
-        //ROUTER CONTRACT
-        const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], routerAddr);
-
-        return bridgeTokenData.underlying
-          ? contract.methods
-              .anySwapOutUnderlying(
-                bridgeTokenData.underlying.address,
-                address,
-                rawAmount,
-                destChain.networkChainId
-              )
-              .send({ from: address, ...gasPrices })
-          : contract.methods
-              .anySwapOut(bridgeTokenData.address, address, rawAmount, destChain.networkChainId)
-              .send({ from: address, ...gasPrices });
-      } else {
-        //BIFI TOKEN CONTRACT
-        const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], bridgeTokenData.address);
-        return destChainData.type === 'swapout'
-          ? contract.methods.Swapout(rawAmount, address).send({ from: address, ...gasPrices })
-          : contract.methods.transfer(routerAddr, rawAmount).send({ from: address, ...gasPrices });
-      }
-    })();
+    const transaction = contract.methods.bridge(toLzChainId, inputWei, address).send({
+      ...gasPrices,
+      from: address,
+      value: feeWei,
+    });
 
     bindTransactionEvents(
       dispatch,
       transaction,
       {
-        amount: amount,
-        token: bridgeToken,
+        amount: input.amount,
+        token: input.token,
       },
       {
         walletAddress: address,
         chainId: chainId,
-        spenderAddress: routerAddr,
-        tokens: uniqBy([gasToken, bridgeToken, destToken], 'id'),
+        spenderAddress: viaBeefyBridgeAddress,
+        tokens: uniqBy([gasToken, input.token], 'id'),
       },
       'bridge'
     );
@@ -1495,13 +1464,13 @@ export const walletActions = {
   unstakeBoost,
   mintDeposit,
   burnWithdraw,
-  bridge,
   resetWallet,
   migrateUnstake,
   oneInchBeefInSingle,
   oneInchBeefInLP,
   oneInchBeefOutSingle,
   oneInchBeefOutLP,
+  bridgeViaLayerZero,
 };
 
 function captureWalletErrors<ReturnType>(
@@ -1548,7 +1517,7 @@ function bindTransactionEvents<T extends MandatoryAdditionalData>(
     .on('transactionHash', function (hash: TrxHash) {
       dispatch(createWalletActionPendingAction(hash, additionalData));
       if (step === 'bridge') {
-        dispatch(stepperActions.setStepContent({ stepContent: StepContent.BridgeTx }));
+        dispatch(stepperActions.setStepContent({ stepContent: StepContent.WaitingTx })); // TODO
       } else {
         dispatch(stepperActions.setStepContent({ stepContent: StepContent.WaitingTx }));
       }

@@ -4,6 +4,7 @@ import type { ChainEntity } from '../entities/chain';
 import { infoCards } from '../../../config/info-cards';
 import type {
   AmmConfig,
+  BeefyBridgeConfig,
   BeefyZapConfig,
   BoostConfig,
   BridgeConfig,
@@ -46,6 +47,10 @@ export class ConfigAPI {
         ])
       )
     );
+  }
+
+  public async fetchBeefyBridgeConfig(): Promise<BeefyBridgeConfig> {
+    return (await import('../../../config/beefy-bridge')).default;
   }
 
   public async fetchBeefyZapsConfig(): Promise<BeefyZapConfig[]> {

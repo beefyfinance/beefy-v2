@@ -15,7 +15,7 @@ export const BridgePage = memo(function BridgePage() {
 
   React.useEffect(() => {
     return () => {
-      dispatch(bridgeActions.resetForm());
+      // dispatch(bridgeActions.resetForm());
     };
   }, [dispatch]);
 

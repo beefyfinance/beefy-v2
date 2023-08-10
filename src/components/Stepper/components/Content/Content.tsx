@@ -158,6 +158,17 @@ const MintSuccessContent = memo<SuccessContentProps>(function MintSuccessContent
   );
 });
 
+const BridgeSuccessContent = memo<SuccessContentProps>(function BridgeSuccessContent({ step }) {
+  const { t } = useTranslation();
+
+  return (
+    <SuccessContentDisplay
+      title={t(`Stepper-${step.step}-Success-Title-TODO`)}
+      message={t(`Stepper-${step.step}-Success-Content-TODO`, {})}
+    />
+  );
+});
+
 const FallbackSuccessContent = memo<SuccessContentProps>(function FallbackSuccessContent({ step }) {
   const { t } = useTranslation();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
@@ -255,6 +266,7 @@ const stepToSuccessContent: StepToSuccessContent = {
   'zap-in': ZapSuccessContent,
   'zap-out': ZapSuccessContent,
   mint: MintSuccessContent,
+  bridge: BridgeSuccessContent,
 };
 
 export const SuccessContent = memo(function SuccessContent() {
