@@ -1,5 +1,34 @@
 [
   {
+    "id": "balancer-base-usdbc-axlusdc",
+    "name": "USDbC-axlUSDC",
+    "token": "USDbC-axlUSDC",
+    "tokenAddress": "0xE58cA65f418D4121d6C70d4C133E60cf6fDa363C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerBaseUSDbC-axlUSDC",
+    "earnedTokenAddress": "0x0fecaa18511E68eaB055fB37e1344e226d54D93a",
+    "earnContractAddress": "0x0fecaa18511E68eaB055fB37e1344e226d54D93a",
+    "oracle": "lps",
+    "oracleId": "balancer-base-usdbc-axlusdc",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["USDbC", "axlUSDC"],
+     "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xe58ca65f418d4121d6c70d4c133e60cf6fda363c000000000000000000000013/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xe58ca65f418d4121d6c70d4c133e60cf6fda363c000000000000000000000013/withdraw",
+    "network": "base",
+    "createdAt": 1691676608
+  },
+  {
     "id": "stargate-base-eth",
     "name": "ETH LP",
     "token": "S*SGETH",
@@ -22,7 +51,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single-lp",
+     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.balancer.fi/#/base/swap?outputCurrency=0x4200000000000000000000000000000000000006",
     "addLiquidityUrl": "https://stargate.finance/pool/ETH-BASE/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/ETH-BASE/remove",
