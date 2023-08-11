@@ -1,5 +1,27 @@
 [
   {
+    "id": "beets-eclp-wsteth-eth",
+    "name": "Gyroscope wstETH-ETH",
+    "token": "Gyroscope wstETH-ETH",
+    "tokenAddress": "0x7Ca75bdEa9dEde97F8B13C6641B768650CB83782",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooAuraOPGryowstETH-ETH",
+    "earnedTokenAddress": "0x3b4DdC7888F752a96290344a1A926E73b80423c0",
+    "earnContractAddress": "0x3b4DdC7888F752a96290344a1A926E73b80423c0",
+    "oracle": "lps",
+    "oracleId": "beets-eclp-wsteth-eth",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["wstETH", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://op.beets.fi/pool/0x7ca75bdea9dede97f8b13c6641b768650cb837820002000000000000000000d5",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0x7ca75bdea9dede97f8b13c6641b768650cb837820002000000000000000000d5",
+    "network": "optimism",
+    "createdAt": 1691762163
+  },
+  {
     "id": "uniswap-gamma-weth-op-narrow",
     "name": "ETH-OP Narrow LP",
     "token": "ETH-OP Narrow LP",
