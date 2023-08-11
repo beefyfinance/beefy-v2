@@ -11,6 +11,7 @@ import { DepositFormLoader } from '../DepositForm';
 import { transactFetchOptions } from '../../../../../data/actions/transact';
 import { WithdrawFormLoader } from '../WithdrawForm';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types';
+import { selectIsVaultRetired } from '../../../../../data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 
@@ -25,6 +26,7 @@ export const FormStep = memo(function FormStep() {
   const classes = useStyles();
   const mode = useAppSelector(selectTransactMode);
   const vaultId = useAppSelector(selectTransactVaultId);
+  const hideDeposit = useAppSelector(state => selectIsVaultRetired(state, vaultId));
   const Component = modeToComponent[mode];
   const handleModeChange = useCallback(
     (mode: string) => {
@@ -33,17 +35,18 @@ export const FormStep = memo(function FormStep() {
     [dispatch]
   );
   const modeOptions = useMemo(
-    () => [
-      { value: TransactMode[TransactMode.Deposit], label: t('Transact-Deposit') },
-      { value: TransactMode[TransactMode.Withdraw], label: t('Transact-Withdraw') },
-    ],
-    [t]
+    () =>
+      [
+        { value: TransactMode[TransactMode.Deposit], label: t('Transact-Deposit') },
+        { value: TransactMode[TransactMode.Withdraw], label: t('Transact-Withdraw') },
+      ].slice(hideDeposit ? 1 : 0),
+    [t, hideDeposit]
   );
 
   useEffect(() => {
     // only dispatches if vaultId or mode changes
     dispatch(transactFetchOptions({ vaultId, mode }));
-  }, [dispatch, mode, vaultId]);
+  }, [dispatch, mode, vaultId, handleModeChange, hideDeposit]);
 
   return (
     <div className={classes.container}>

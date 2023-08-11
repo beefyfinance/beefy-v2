@@ -1,7 +1,7 @@
 import { createAsyncThunk, miniSerializeError, nanoid } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity, VaultGov } from '../entities/vault';
-import { selectVaultById } from '../selectors/vaults';
+import { selectIsVaultPausedOrRetired, selectVaultById } from '../selectors/vaults';
 import { selectShouldInitAddressBook } from '../selectors/data-loader';
 import { fetchAddressBookAction } from './tokens';
 import { isInitialLoader } from '../reducers/data-loader-types';
@@ -58,7 +58,9 @@ export type TransactInitArgs = {
   vaultId: VaultEntity['id'];
 };
 
-export type TransactInitPayload = void;
+export type TransactInitPayload = {
+  mode: TransactMode;
+};
 
 export const transactInit = createAsyncThunk<
   TransactInitPayload,
@@ -90,6 +92,12 @@ export const transactInit = createAsyncThunk<
     }
 
     await Promise.all(loaders);
+
+    return {
+      mode: selectIsVaultPausedOrRetired(getState(), vaultId)
+        ? TransactMode.Withdraw
+        : TransactMode.Deposit,
+    };
   },
   {
     condition({ vaultId }, { getState }) {

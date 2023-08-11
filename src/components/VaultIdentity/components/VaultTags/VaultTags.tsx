@@ -72,7 +72,7 @@ const VaultEarnTag = memo<VaultEarnTagProps>(function VaultBoostTag({
 type VaultPlatformTagProps = {
   vaultId: VaultEntity['id'];
 };
-const VaultPlatformTag = memo<VaultPlatformTagProps>(function VaultPlatformTag({ vaultId }) {
+export const VaultPlatformTag = memo<VaultPlatformTagProps>(function VaultPlatformTag({ vaultId }) {
   return (
     <VaultTag>
       <VaultPlatform vaultId={vaultId} />

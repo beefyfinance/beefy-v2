@@ -81,5 +81,10 @@ export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePau
     return null;
   }, [t, i18n, status, retireReason, pauseReason]);
 
-  return message ? <AlertWarning className={className}>{message}</AlertWarning> : null;
+  return message ? (
+    <AlertWarning className={className}>
+      <p>{message}</p>
+      <p>Why not try...</p>
+    </AlertWarning>
+  ) : null;
 });

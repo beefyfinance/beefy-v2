@@ -46,6 +46,7 @@ declare module '@material-ui/core/styles/createPalette' {
       cardBg: string;
       filter: string;
     };
+    networks: Record<string, `#${string}`>;
   }
 
   export interface TypeText {
