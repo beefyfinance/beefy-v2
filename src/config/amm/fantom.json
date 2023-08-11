@@ -121,7 +121,7 @@
   },
   {
     "id": "fantom-fvm",
-    "name": "FVM",
+    "name": "Velocimeter FVM",
     "type": "solidly",
     "routerAddress": "0x2E14B53E2cB669f3A974CeaF6C735e134F3Aa9BC",
     "factoryAddress": "0x472f3C3c9608fe0aE8d702f3f8A2d12c410C881A",
