@@ -5145,7 +5145,8 @@
     "earnContractAddress": "0x7e6958dd0437F687AD54557bA1aB15E45373478f",
     "oracle": "lps",
     "oracleId": "velodrome-weth-petho",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "ripae",
     "assets": ["pETHo", "ETH"],
     "risks": [
