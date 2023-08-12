@@ -54,6 +54,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'crvUSD',
       'R',
       'GHO',
+      'bbsDAI',
     ],
   },
   polygon: {
@@ -338,6 +339,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'bbaaUSDT',
       'bbaaDAI',
       'bbaaUSD',
+      'bbaaUSDTV2',
+      'bbaaUSDCV2',
+      'bbaaDAIV2',
     ],
   },
   avax: {

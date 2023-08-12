@@ -282,7 +282,8 @@
     "earnContractAddress": "0x15C02f5064Ef62f40388E636b935486bC997B851",
     "oracle": "lps",
     "oracleId": "aura-bbaaUSD",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "aura",
     "assets": ["bbaaUSDT", "bbaaUSDC", "bbaaDAI"],
     "risks": [
@@ -392,7 +393,8 @@
     "earnContractAddress": "0x98767133bc938ed88d3FD9cD93A4f01e593fc746",
     "oracle": "lps",
     "oracleId": "balancer-wsteth-bbaaweth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["wstETH", "bbaaWETH"],
     "risks": [
@@ -541,7 +543,8 @@
     "earnContractAddress": "0xA9640CaA54E431ec21a4E14DE8dde0b05Cf034E7",
     "oracle": "lps",
     "oracleId": "balancer-reth-bbaweth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["rETH", "bbaaWETH"],
     "risks": [
