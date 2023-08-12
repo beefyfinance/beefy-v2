@@ -343,5 +343,10 @@
     "chainId": "zksync",
     "ammId": "zksync-vesync",
     "zapAddress": "0x910c12048FdbAD20E9e323f72Bd85964c9E5AE8d"
+  },
+  {
+    "chainId": "zksync",
+    "ammId": "zksync-dracula",
+    "zapAddress": "0xE9B5F175383553cA19082D0B7477f3Cb9cfDf1Bc"
   }
 ]
