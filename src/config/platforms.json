@@ -1088,5 +1088,10 @@
     "id": "bvm",
     "name": "Velocimeter BVM",
     "filter": true
+  },
+  {
+    "id": "alienbase",
+    "name": "AlienBase",
+    "filter": true
   }
 ]

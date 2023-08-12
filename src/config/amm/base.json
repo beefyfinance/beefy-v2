@@ -24,5 +24,19 @@
     "swapFeeNumerator": "3",
     "swapFeeDenominator": "10000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "base-alienbase",
+    "name": "AlienBase",
+    "type": "uniswapv2",
+    "routerAddress": "0x7f2ff89d3C45010c976Ea6bb7715DC7098AF786E",
+    "factoryAddress": "0x3E84D913803b02A4a7f027165E8cA42C14C0FdE7",
+    "pairInitHash": "0b3f33990d656dabba233ea1851a67ea79e8e7ba6f5047c090e1e608a906ef81",
+    "minimumLiquidity": "1000",
+    "mintFeeNumerator": "2",
+    "mintFeeDenominator": "1",
+    "swapFeeNumerator": "16",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
   }
 ]
