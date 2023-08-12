@@ -14,7 +14,7 @@
     "status": "active",
     "platformId": "balancer",
     "assets": ["USDbC", "axlUSDC"],
-     "risks": [
+    "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
@@ -27,6 +27,36 @@
     "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xe58ca65f418d4121d6c70d4c133e60cf6fda363c000000000000000000000013/withdraw",
     "network": "base",
     "createdAt": 1691676608
+  },
+  {
+    "id": "bvm-cbeth-weth",
+    "name": "cbETH-ETH vLP",
+    "token": "cbETH-ETH vLP",
+    "tokenAddress": "0x291CDd70257c17bC719D11531ec01C33C34A4d8b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "bvm",
+    "tokenAmmId": "base-bvm",
+    "earnedToken": "mooBVMcbETH-ETH",
+    "earnedTokenAddress": "0x9BA0F14512Ee29AbdbE2E5eA27a5D5836ef97F40",
+    "earnContractAddress": "0x9BA0F14512Ee29AbdbE2E5eA27a5D5836ef97F40",
+    "oracle": "lps",
+    "oracleId": "bvm-cbeth-weth",
+    "status": "active",
+    "platformId": "bvm",
+    "assets": ["cbETH", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x291cdd70257c17bc719d11531ec01c33c34a4d8b/0xed1e21320b0ca4e80a5c424ee4322bc9458061d7",
+    "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x291cdd70257c17bc719d11531ec01c33c34a4d8b/0xed1e21320b0ca4e80a5c424ee4322bc9458061d7",
+    "network": "base",
+    "createdAt": 1691794827
   },
   {
     "id": "stargate-base-eth",
@@ -51,7 +81,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-     "strategyTypeId": "single-lp",
+    "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.balancer.fi/#/base/swap?outputCurrency=0x4200000000000000000000000000000000000006",
     "addLiquidityUrl": "https://stargate.finance/pool/ETH-BASE/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/ETH-BASE/remove",
