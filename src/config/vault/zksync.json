@@ -21,7 +21,7 @@
     "addLiquidityUrl": "https://draculafi.xyz/liquidity/0x0F62837f7d37638210F94fa8005D0a89be083922",
     "removeLiquidityUrl": "https://draculafi.xyz/liquidity/0x0F62837f7d37638210F94fa8005D0a89be083922",
     "network": "zksync",
-    "createdAt": 1691560048
+    "createdAt": 1691865364
   },
   {
     "id": "dracula-usdc-weth",
@@ -45,7 +45,7 @@
     "addLiquidityUrl": "https://draculafi.xyz/liquidity/0xB51E60f61c48d8329843F86d861AbF50E4DC918d",
     "removeLiquidityUrl": "https://draculafi.xyz/liquidity/0xB51E60f61c48d8329843F86d861AbF50E4DC918d",
     "network": "zksync",
-    "createdAt": 1691560046
+    "createdAt": 1691865364
   },
   {
     "id": "velocore-weth-wbtc",
