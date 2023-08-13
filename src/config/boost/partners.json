@@ -1,4 +1,12 @@
 {
+  "alienbase": {
+    "text": "Alienbase is a DEX built on Base offering the best tokens worth farming for earthlings.",
+    "website": "https://app.alienbase.xyz/swap",
+    "social": {
+      "telegram": "https://t.me/+NhjwXlgSEPRhZGQx",
+      "twitter": "https://twitter.com/alienbaseDEX"
+    }
+  },
   "exactly": {
     "text": "Exactly is a decentralized, non-custodial and open-source protocol that provides an autonomous fixed and variable interest rate market enabling users to frictionlessly exchange the time value of their assets and completing the DeFi credit market.",
     "website": "https://exact.ly/",
