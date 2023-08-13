@@ -1093,5 +1093,10 @@
     "id": "alienbase",
     "name": "AlienBase",
     "filter": true
+  },
+  {
+    "id": "swapbased",
+    "name": "SwapBased",
+    "filter": true
   }
 ]

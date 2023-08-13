@@ -38,5 +38,19 @@
     "swapFeeNumerator": "16",
     "swapFeeDenominator": "10000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "base-swapbased",
+    "name": "SwapBased",
+    "type": "uniswapv2",
+    "routerAddress": "0xaaa3b1F1bd7BCc97fD1917c18ADE665C5D31F066",
+    "factoryAddress": "0x04C9f118d21e8B767D2e50C946f0cC9F6C367300",
+    "pairInitHash": "0xb64118b4e99d4a4163453838112a1695032df46c09f7f09064d4777d2767f8ea",
+    "minimumLiquidity": "1000",
+    "mintFeeNumerator": "1",
+    "mintFeeDenominator": "5",
+    "swapFeeNumerator": "3",
+    "swapFeeDenominator": "1000",
+    "getAmountOutMode": "getAmountOut"
   }
 ]
