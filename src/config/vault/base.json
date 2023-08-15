@@ -1,5 +1,35 @@
 [
   {
+    "id": "baseswap-weth-unidx",
+    "name": "UNIDX-ETH LP",
+    "token": "UNIDX-ETH LP",
+    "tokenAddress": "0x30dcc8444F8361D5CE119fC25e16AF0B583e88Fd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "tokenAmmId": "base-baseswap",
+    "earnedToken": "mooBaseSwapWETH-UNIDX",
+    "earnedTokenAddress": "0x682b7980cC93548fbc4e6CE9c7c1825CB1c36B00",
+    "earnContractAddress": "0x682b7980cC93548fbc4e6CE9c7c1825CB1c36B00",
+    "oracle": "lps",
+    "oracleId": "baseswap-weth-unidx",
+    "status": "active",
+    "platformId": "baseswap",
+    "assets": ["UNIDX", "WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "hhttps://baseswap.fi/add/0x4200000000000000000000000000000000000006/0x6B4712AE9797C199edd44F897cA09BC57628a1CF",
+    "removeLiquidityUrl": "https://baseswap.fi/remove/0x4200000000000000000000000000000000000006/0x6B4712AE9797C199edd44F897cA09BC57628a1CF",
+    "network": "base",
+    "createdAt": 1692138658
+  },
+  {
     "id": "baseswap-axlwbtc-usdbc",
     "name": "axlWBTC-USDbC LP",
     "token": "axlWBTC-USDbC LP",
