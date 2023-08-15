@@ -41,7 +41,7 @@ const mapSolidly: Record<string, typeof SolidlyPool> = {
   'base-bvm': BVMSolidlyPool,
   'zksync-velocore': VelodromeSolidlyPool,
   'zksync-vesync': VelodromeSolidlyPool,
-  'zksync-dracula': VelodromeSolidlyPool,
+  'zksync-dracula': ConeSolidlyPool,
   'kava-equilibre': VelodromeSolidlyPool,
   'arbitrum-ramses': VelodromeSolidlyPool,
   'ethereum-solidly': EthereumSolidlyPool,
