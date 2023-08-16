@@ -2,23 +2,17 @@ import type { ChangeEvent } from 'react';
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { selectFilterPlatformId } from '../../../../../data/selectors/filtered-vaults';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { selectFilterPlatforms } from '../../../../../data/selectors/platforms';
-import { Autocomplete } from '@material-ui/lab';
-import { TextField } from '@material-ui/core';
+import type { LabelSearchSelectOptionType } from '../../../../../../components/LabeledSearchSelect';
+import { LabeledSearchSelect } from '../../../../../../components/LabeledSearchSelect';
 
 export type PlatformDropdownFilterProps = {
   className?: string;
 };
 
-interface IListItem {
-  label: string;
-  value: string;
-}
-
 export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
-  function PlatformDropdownFilter({ className }) {
+  function PlatformDropdownFilter() {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const allKey = null;
@@ -36,9 +30,9 @@ export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
       ];
     }, [platforms, t]);
 
-    const value = useAppSelector(selectFilterPlatformId);
+    // const value = useAppSelector(selectFilterPlatformId);
     const handleChange = useCallback(
-      (event: ChangeEvent, option: IListItem) => {
+      (event: ChangeEvent, option: LabelSearchSelectOptionType) => {
         dispatch(
           filteredVaultsActions.setPlatformId(
             option.value === placeholderAllKey ? allKey : option.value
@@ -48,20 +42,6 @@ export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
       [dispatch]
     );
 
-    return (
-      <Autocomplete
-        disablePortal={true}
-        defaultValue={placeholderAllKey}
-        autoComplete={true}
-        getOptionLabel={(option: IListItem) => option.label}
-        closeIcon={null}
-        value={value}
-        onChange={handleChange}
-        className={className}
-        id="platforms-filter"
-        options={options}
-        renderInput={params => <TextField {...params} label="Platform" />}
-      />
-    );
+    return <LabeledSearchSelect options={options} onChange={handleChange} id="platforms" />;
   }
 );

@@ -1,0 +1,60 @@
+import type { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
+  inputWrapper: {
+    ...theme.typography['body-lg-med'],
+    backgroundColor: '#262A40',
+    border: 'solid 2px #303550',
+    borderRadius: '8px',
+    color: theme.palette.text.secondary,
+    padding: `${8 - 2}px ${16 - 2}px`,
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    '& input': {
+      ...theme.typography['body-lg-med'],
+      backgroundColor: '#262A40',
+      color: theme.palette.text.secondary,
+      height: '24px',
+      boxSizing: ' border-box',
+      padding: ' 4px 6px',
+      width: 0,
+      minWidth: '30px',
+      flexGrow: 1,
+      border: 0,
+      margin: 0,
+      outline: 0,
+    },
+  },
+  dropdown: {
+    ...theme.typography['body-lg-med'],
+    zIndex: 1000,
+    border: '2px solid #393F60',
+    borderRadius: '8px',
+    backgroundColor: '#303550',
+    padding: `${8 - 2}px 0`,
+    color: '#D0D0DA',
+    maxWidth: '100%',
+    maxHeight: '100%',
+    overflowX: 'hidden' as const,
+    overflowY: 'auto' as const,
+    minHeight: '100px',
+  },
+  dropdownItem: {
+    userSelect: 'none' as const,
+    cursor: 'pointer',
+    padding: `8px ${16 - 2}px`,
+    '&:hover': {
+      background: 'rgba(255, 255, 255, 0.16)',
+      color: '#FFF',
+    },
+    '&:active': {
+      background: 'transparent',
+      color: '#F5F5FF',
+    },
+  },
+  dropdownItemSelected: {
+    background: 'transparent',
+    color: '#F5F5FF',
+  },
+});
