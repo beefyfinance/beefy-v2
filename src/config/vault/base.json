@@ -924,5 +924,34 @@
     "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0x6fbfcf88db1aada31f34215b2a1df7fafb4883e900000000000000000000000c/withdraw",
     "network": "base",
     "createdAt": 1691168108
+  },
+  {
+    "id": "balancer-base-cbeth-weth",
+    "name": "cbETH-ETH",
+    "token": "cbETH-ETH base",
+    "tokenAddress": "0xFb4C2E6E6e27B5b4a07a36360C89EDE29bB3c9B6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalanceBasecbETH-ETH",
+    "earnedTokenAddress": "0xbc15d22EA300d0965FD8a19A04CD8525834585Ef",
+    "earnContractAddress": "0xbc15d22EA300d0965FD8a19A04CD8525834585Ef",
+    "oracle": "lps",
+    "oracleId": "balancer-base-cbeth-weth",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["cbETH", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/withdraw",
+    "network": "base",
+    "createdAt": 1692297664
   }
 ]
