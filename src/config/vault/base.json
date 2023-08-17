@@ -1,5 +1,26 @@
 [
   {
+    "id": "alienbase-alb",
+    "name": "ALB",
+    "token": "ALB",
+    "tokenAddress": "0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "alienbase",
+    "earnedToken": "mooAlienBaseALB",
+    "earnedTokenAddress": "0xbBdeAaa32CBCE61E0A2809edcAE8d1857c55A5DD",
+    "earnContractAddress": "0xbBdeAaa32CBCE61E0A2809edcAE8d1857c55A5DD",
+    "oracle": "token",
+    "oracleId": "ALB",
+    "status": "active",
+    "platformId": "alienbase",
+    "assets": ["ALB"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://app.alienbase.xyz/swap?outputCurrency=0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
+    "network": "base",
+    "createdAt": 1692289605
+  },
+  {
     "id": "baseswap-weth-unidx",
     "name": "UNIDX-ETH LP",
     "token": "UNIDX-ETH LP",
