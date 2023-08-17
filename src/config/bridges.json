@@ -22,6 +22,7 @@
   {
     "id": "celer",
     "name": "Celer cBridge",
+    "tagName": "Celer",
     "website": "https://cbridge.celer.network"
   },
   {
@@ -38,5 +39,96 @@
     "id": "wormhole",
     "name": "Wormhole",
     "website": "https://wormhole.com"
+  },
+  {
+    "id": "synapse",
+    "name": "Synapse",
+    "website": "https://www.synapseprotocol.com/"
+  },
+  {
+    "id": "threshold",
+    "name": "Threshold",
+    "website": "https://threshold.network/"
+  },
+
+  {
+    "id": "gravity",
+    "name": "Gravity",
+    "website": "https://bridge.blockscape.network/"
+  },
+  {
+    "id": "optics",
+    "name": "Optics",
+    "website": "https://optics.app/"
+  },
+  {
+    "id": "kusama",
+    "name": "Kusama",
+    "website": "https://apps.moonbeam.network/moonriver/xcm?asset=KSM"
+  },
+  {
+    "id": "bittorent",
+    "name": "Bittorent",
+    "website": "https://bttc.bittorrent.com/"
+  },
+  {
+    "id": "arbitrum-canonical",
+    "name": "Arbitrum Bridge",
+    "tagName": "Arbitrum",
+    "website": "https://bridge.arbitrum.io/"
+  },
+  {
+    "id": "avax-canonical",
+    "name": "Avax Bridge",
+    "tagName": "Avax",
+    "website": "https://core.app/bridge"
+  },
+  {
+    "id": "bsc-canonical",
+    "name": "Binance Bridge",
+    "tagName": "Binance",
+    "website": "https://www.bnbchain.org/en/bridge?ref=binance.ghost.io"
+  },
+  {
+    "id": "cronos-canonical",
+    "name": "Cronos Bridge",
+    "tagName": "Cronos",
+    "website": "https://cronos.org/bridge/"
+  },
+  {
+    "id": "metis-canonical",
+    "name": "Metis Brdige",
+    "tagName": "Metis",
+    "website": "https://bridge.metis.io/home"
+  },
+  {
+    "id": "optimism-canonical",
+    "name": "Optimism Bridge",
+    "tagName": "Optimism",
+    "website": "https://app.optimism.io/bridge"
+  },
+  {
+    "id": "polygon-canonical",
+    "name": "Polygon PoS Bridge",
+    "tagName": "Polygon PoS",
+    "website": "https://wallet.polygon.technology/polygon/bridge"
+  },
+  {
+    "id": "zksync-canonical",
+    "name": "zkSync Era Bridge",
+    "tagName": "zkSync",
+    "website": "https://bridge.zksync.io/"
+  },
+  {
+    "id": "zkevm-canonical",
+    "name": "Polygon zkEVM Bridge",
+    "tagName": "Polygon zkEVM",
+    "website": "https://wallet.polygon.technology/zkEVM-Bridge/bridge"
+  },
+  {
+    "id": "base-canonical",
+    "name": "Base Bridge",
+    "tagName": "Base",
+    "website": "https://bridge.base.org/deposit"
   }
 ]

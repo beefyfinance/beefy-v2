@@ -54,6 +54,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'crvUSD',
       'R',
       'GHO',
+      'bbsDAI',
     ],
   },
   polygon: {
@@ -184,6 +185,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'wUSDR',
       'DOLA',
       'USDT+',
+      'vUSDT',
     ],
   },
   optimism: {
@@ -337,6 +339,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'bbaaUSDT',
       'bbaaDAI',
       'bbaaUSD',
+      'bbaaUSDTV2',
+      'bbaaUSDCV2',
+      'bbaaDAIV2',
     ],
   },
   avax: {
@@ -605,7 +610,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     stableCoins: ['USDC', 'BUSD', 'wTBT'],
   },
   zkevm: {
-    new: true,
     name: 'Polygon zkEVM',
     chainId: 1101,
     rpc: ['https://zkevm-rpc.com'],
@@ -628,6 +632,31 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       type: 'standard',
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'FRAX'],
+  },
+  base: {
+    new: true,
+    name: 'Base',
+    chainId: 8453,
+    rpc: ['https://mainnet.base.org'],
+    explorerUrl: 'https://basescan.org',
+    multicallAddress: '0xbA790ec6F95D68123E772A43b314464585B311b4',
+    appMulticallContractAddress: '0x354D3d7B61230C88F5f50176d9329d13366FbC28',
+    providerName: 'Base',
+    walletSettings: {
+      chainId: `0x${parseInt('8453', 10).toString(16)}`,
+      chainName: 'Base',
+      nativeCurrency: {
+        name: 'ETH',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://mainnet.base.org'],
+      blockExplorerUrls: ['https://basescan.org/'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['USDbC', 'DAI', 'bsUSD', 'axlUSDC', 'axlUSDT', 'MIM', 'USD+', 'DAI+'],
   },
   aurora: {
     name: 'Aurora',

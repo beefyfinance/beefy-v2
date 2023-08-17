@@ -55,6 +55,26 @@
     "zapAddress": "0x149b9db9479c12841002f503099ebf5f6DafD60c"
   },
   {
+    "chainId": "base",
+    "ammId": "base-alienbase",
+    "zapAddress": "0x0e94ee9Cee1026e8cB14677966B470974b051CD5"
+  },
+  {
+    "chainId": "base",
+    "ammId": "base-baseswap",
+    "zapAddress": "0x1d6e766DcE6085dd8208F5124304BcbBc951c170"
+  },
+  {
+    "chainId": "base",
+    "ammId": "base-bvm",
+    "zapAddress": "0x5d2EF803D6e255eF4D1c66762CBc8845051B54dB"
+  },
+  {
+    "chainId": "base",
+    "ammId": "base-swapbased",
+    "zapAddress": "0xa57A7B2ca7826D5a75a891b798a893697107A5f9"
+  },
+  {
     "chainId": "bsc",
     "ammId": "bsc-pancakeswap-v2",
     "zapAddress": "0x03c509fd85d51dc7E75fa2De06276cFA147486EA"
@@ -200,6 +220,11 @@
     "zapAddress": "0xE7f943De8386F1d2BF58F3D10c0938aB4fb67c07"
   },
   {
+    "chainId": "fantom",
+    "ammId": "fantom-fvm",
+    "zapAddress": "0x632B4F51acB95137b97917780Fb219586900D540"
+  },
+  {
     "chainId": "fuse",
     "ammId": "fuse-fusefi",
     "zapAddress": "0xb0F9c6FBcfE226EEAD3AE8b019ce4666cE223a78"
@@ -328,5 +353,10 @@
     "chainId": "zksync",
     "ammId": "zksync-vesync",
     "zapAddress": "0x910c12048FdbAD20E9e323f72Bd85964c9E5AE8d"
+  },
+  {
+    "chainId": "zksync",
+    "ammId": "zksync-dracula",
+    "zapAddress": "0xE9B5F175383553cA19082D0B7477f3Cb9cfDf1Bc"
   }
 ]

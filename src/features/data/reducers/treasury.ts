@@ -59,6 +59,7 @@ const mapBalances = (
     if (
       token.assetType === 'native' ||
       token.assetType === 'validator' ||
+      token.assetType === 'concLiquidity' ||
       selectIsTokenLoadedOnChain(state, token.address, chainId)
     ) {
       totals[token.address] = {
