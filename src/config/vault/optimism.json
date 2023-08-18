@@ -246,7 +246,7 @@
     "earnContractAddress": "0xBe0eB1af5d47b118fC24987EA85a20dFa3a98303",
     "oracle": "tokens",
     "oracleId": "OP",
-    "status": "active",
+    "status": "paused",
     "platformId": "exactly",
     "assets": ["OP"],
     "risks": [
@@ -1992,7 +1992,7 @@
     "earnContractAddress": "0x1910CCeCC57869F1Ff2337dda001246B92E8418A",
     "oracle": "tokens",
     "oracleId": "wstETH",
-    "status": "active",
+    "status": "paused",
     "platformId": "exactly",
     "assets": ["wstETH"],
     "risks": [
@@ -2158,7 +2158,7 @@
     "earnContractAddress": "0xE7db4eA58560D4678DF204165D1f50d18185BC89",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "paused",
     "platformId": "exactly",
     "assets": ["USDC"],
     "risks": [
@@ -2184,7 +2184,7 @@
     "earnContractAddress": "0x0Bf7616889d0ae18382d9715eAc00a3302e9aB92",
     "oracle": "tokens",
     "oracleId": "ETH",
-    "status": "active",
+    "status": "paused",
     "platformId": "exactly",
     "assets": ["ETH"],
     "risks": [
