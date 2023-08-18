@@ -32,7 +32,7 @@
     "earnedToken": "mooAlienBaseALB",
     "earnedTokenAddress": "0xbBdeAaa32CBCE61E0A2809edcAE8d1857c55A5DD",
     "earnContractAddress": "0xbBdeAaa32CBCE61E0A2809edcAE8d1857c55A5DD",
-    "oracle": "token",
+    "oracle": "tokens",
     "oracleId": "ALB",
     "status": "active",
     "platformId": "alienbase",
