@@ -1,5 +1,27 @@
 [
   {
+    "id": "velodrome-v2-jrt-weth",
+    "name": "JRT-ETH vLP V2",
+    "token": "Moo VeloV2 JRT-ETH",
+    "tokenAddress": "0xB52b8cfbCf5c177feB99870D3E2dD02933553933",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "tokenAmmId": "optimism-velodrome-v2",
+    "earnedTokenAddress": "0x6ce45dAe799bc8A95163813496cF13A020Fdf61F",
+    "earnContractAddress": "0x6ce45dAe799bc8A95163813496cF13A020Fdf61F",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-jrt-weth",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["JRT", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x15e770B95Edd73fD96b02EcE0266247D50895E76&token1=0x4200000000000000000000000000000000000006&stable=false",
+    "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xB52b8cfbCf5c177feB99870D3E2dD02933553933",
+    "network": "optimism",
+    "createdAt": 1692389027
+  },
+  {
     "id": "beets-eclp-wsteth-eth",
     "name": "Gyroscope wstETH-ETH",
     "token": "Gyroscope wstETH-ETH",
