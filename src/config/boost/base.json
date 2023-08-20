@@ -1,18 +1,34 @@
 [
-    {
-      "id": "moo_alienbase-cbeth-weth-alienbase",
-      "poolId": "alienbase-cbeth-weth",
-      "name": "Alienbase",
-      "assets": ["cbETH", "ETH"],
-      "earnedToken": "ALB",
-      "earnedTokenDecimals": 18,
-      "earnedTokenAddress": "0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
-      "earnContractAddress": "0x01e8881ed2Fb41E0B3dF29f382fAf707a0B26969",
-      "earnedOracle": "tokens",
-      "earnedOracleId": "ALB",
-      "partnership": true,
-      "status": "active",
-      "isMooStaked": true,
-      "partners": ["alienbase"]
-    }
-  ]
+  {
+    "id": "moo_alienbase-dai-usdbc-alienbase",
+    "poolId": "alienbase-dai-usdbc",
+    "name": "Alienbase",
+    "assets": ["DAI", "USDbC"],
+    "earnedToken": "ALB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
+    "earnContractAddress": "0x819D32901DF52ac4bd513Cf28CBf0Ef3d029a6fF",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "ALB",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["alienbase"]
+  },
+  {
+    "id": "moo_alienbase-cbeth-weth-alienbase",
+    "poolId": "alienbase-cbeth-weth",
+    "name": "Alienbase",
+    "assets": ["cbETH", "ETH"],
+    "earnedToken": "ALB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
+    "earnContractAddress": "0x01e8881ed2Fb41E0B3dF29f382fAf707a0B26969",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "ALB",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["alienbase"]
+  }
+]
