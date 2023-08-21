@@ -1,4 +1,13 @@
 {
+  "tangible": {
+    "text": ".",
+    "website": "https://www.tangible.store/caviar",
+    "social": {
+      "telegram": "https://t.me/TangibleDAO",
+      "discord":"https://discord.com/invite/tMQ9WjVBuS",
+      "twitter": "https://twitter.com/tangibleDAO"
+    }
+  },
   "alienbase": {
     "text": "Alienbase is a DEX built on Base offering the best tokens worth farming for earthlings.",
     "website": "https://app.alienbase.xyz/swap",
