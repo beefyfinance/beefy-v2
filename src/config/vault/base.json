@@ -1,5 +1,28 @@
 [
   {
+    "id": "swapbased-eth-cbeth",
+    "name": "cbETH-ETH LP",
+    "token": "cbETH-ETH LP",
+    "tokenAddress": "0xA5b63920AB791234eadE3d0C23139E21bc63c2f8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapbased",
+    "tokenAmmId": "base-swapbased",
+    "earnedToken": "mooSwapBasedWETH-cbETH",
+    "earnedTokenAddress": "0xc5bc7488A165C05898688b33ef01f1D5C8EA2957",
+    "earnContractAddress": "0xc5bc7488A165C05898688b33ef01f1D5C8EA2957",
+    "oracle": "lps",
+    "oracleId": "swapbased-eth-cbeth",
+    "status": "active",
+    "platformId": "swapbased",
+    "assets": ["cbETH", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+    "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+    "network": "base",
+    "createdAt": 1692437972
+  },
+  {
     "id": "alienbase-dai-usdbc",
     "name": "DAI-USDbC LP",
     "token": "DAI-USDbC LP",
