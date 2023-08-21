@@ -326,7 +326,7 @@
     "earnContractAddress": "0x48DfFA589c0ca127C5C7B3E7250BA83FAC206309",
     "oracle": "tokens",
     "oracleId": "ETH",
-    "status": "active",
+    "status": "paused",
     "platformId": "moonwell",
     "assets": ["ETH"],
     "risks": [
