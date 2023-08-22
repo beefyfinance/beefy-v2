@@ -1,17 +1,21 @@
 import type { ChangeEvent } from 'react';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
 import { useAutocomplete } from '@material-ui/lab';
 import { Trans, useTranslation } from 'react-i18next';
+import { ExpandMore } from '@material-ui/icons';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
 interface LabeledSearchProps {
   id: string;
   onChange: (event: ChangeEvent, option: LabelSearchSelectOptionType) => void;
-  options: LabelSearchSelectOptionType[];
-  labelI18Key: string;
+  options: Record<string, string>;
+  label: string;
+  value: string;
+  className?: string;
 }
 
 export interface LabelSearchSelectOptionType {
@@ -21,12 +25,20 @@ export interface LabelSearchSelectOptionType {
 
 export const LabeledSearchSelect = memo<LabeledSearchProps>(function LabelesedSearchSelect({
   id,
+  className,
   onChange,
   options,
-  labelI18Key,
+  label,
+  value,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
+
+  const wrappedOptions: LabelSearchSelectOptionType[] = useMemo(() => {
+    return Object.keys(options).map(option => {
+      return { label: options[option], value: option };
+    });
+  }, [options]);
 
   const {
     getRootProps,
@@ -38,15 +50,32 @@ export const LabeledSearchSelect = memo<LabeledSearchProps>(function LabelesedSe
     setAnchorEl,
   } = useAutocomplete({
     id: `customized-search-select-${id}`,
-    options,
+    options: wrappedOptions,
     getOptionLabel: option => option.label,
     onChange,
+    openOnFocus: true,
+    selectOnFocus: true,
+    freeSolo: true,
   });
+
   return (
-    <div {...getRootProps()}>
-      <div ref={setAnchorEl} className={classes.inputWrapper}>
-        {!focused && t(`Platform: aaa`)}
-        <input value={null} {...getInputProps()} />
+    <div className={className} {...getRootProps()}>
+      <div className={classes.container}>
+        <div
+          ref={setAnchorEl}
+          className={clsx(classes.inputWrapper, { [classes.inputHided]: !focused })}
+        >
+          {!focused && (
+            <Trans
+              t={t}
+              i18nKey={'Search-Value-Filter'}
+              values={{ label, value }}
+              components={{ white: <span className={classes.value} /> }}
+            />
+          )}
+          <input {...getInputProps()} />
+        </div>
+        <ExpandMore className={clsx(classes.selectIcon, { [classes.openIcon]: focused })} />
       </div>
       {groupedOptions.length > 0 && (
         <ul className={classes.dropdown} {...getListboxProps()}>

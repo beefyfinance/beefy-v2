@@ -6,42 +6,55 @@ import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vau
 import { selectFilterPlatforms } from '../../../../../data/selectors/platforms';
 import type { LabelSearchSelectOptionType } from '../../../../../../components/LabeledSearchSelect';
 import { LabeledSearchSelect } from '../../../../../../components/LabeledSearchSelect';
+import { selectFilterPlatformId } from '../../../../../data/selectors/filtered-vaults';
 
 export type PlatformDropdownFilterProps = {
   className?: string;
 };
 
 export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
-  function PlatformDropdownFilter() {
+  function PlatformDropdownFilter({ className }) {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const allKey = null;
     const placeholderAllKey = '__null';
     const otherKey = 'other';
     const platforms = useAppSelector(selectFilterPlatforms);
-    const options = useMemo(() => {
-      const wrappedPlatforms = platforms.map(platform => {
-        return { label: platform.name, value: platform.id };
-      });
-      return [
-        { label: t('Filter-DropdwnDflt'), value: placeholderAllKey },
-        { label: t('Filter-Other'), value: otherKey },
-        ...wrappedPlatforms,
-      ];
-    }, [platforms, t]);
+    const options: Record<string, string> = useMemo(
+      () =>
+        Object.fromEntries([
+          [placeholderAllKey, t('Filter-DropdwnDflt')],
+          ...platforms.map(platform => [platform.id, platform.name]),
+          [otherKey, t('Filter-Other')],
+        ]),
+      [platforms, t]
+    );
 
-    // const value = useAppSelector(selectFilterPlatformId);
+    const value = useAppSelector(selectFilterPlatformId);
     const handleChange = useCallback(
       (event: ChangeEvent, option: LabelSearchSelectOptionType) => {
         dispatch(
           filteredVaultsActions.setPlatformId(
-            option.value === placeholderAllKey ? allKey : option.value
+            option?.value === placeholderAllKey ? allKey : option.value
           )
         );
       },
       [dispatch]
     );
 
-    return <LabeledSearchSelect options={options} onChange={handleChange} id="platforms" />;
+    const valueLabel = useMemo(() => {
+      return value === allKey ? t('Filter-DropdwnDflt') : options[value];
+    }, [options, t, value]);
+
+    return (
+      <LabeledSearchSelect
+        className={className}
+        label={t('Platform-Search-Filter-Label')}
+        value={valueLabel}
+        options={options}
+        onChange={handleChange}
+        id="platforms"
+      />
+    );
   }
 );

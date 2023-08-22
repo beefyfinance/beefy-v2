@@ -622,5 +622,7 @@
   "Migration-Action": "Migrate Now",
   "TokenBridge-native": "Native",
   "TokenBridge-Tooltip-native": "Token is native to {{chain}}",
-  "TokenBridge-Tooltip-bridge": "Token is bridged to {{chain}} via <website>{{bridge}}</website>"
+  "TokenBridge-Tooltip-bridge": "Token is bridged to {{chain}} via <website>{{bridge}}</website>",
+  "Search-Value-Filter": "{{label}}: <white>{{value}}</white>",
+  "Platform-Search-Filter-Label": "Platform"
 }

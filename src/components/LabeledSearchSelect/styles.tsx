@@ -1,13 +1,21 @@
 import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: '#262A40',
+    borderRadius: '8px',
+    padding: `${8 - 2}px ${16 - 2}px`,
+    border: 'solid 2px #303550',
+  },
   inputWrapper: {
     ...theme.typography['body-lg-med'],
+    flexGrow: 1,
     backgroundColor: '#262A40',
-    border: 'solid 2px #303550',
+    gap: '4px',
+    color: theme.palette.text.dark,
     borderRadius: '8px',
-    color: theme.palette.text.secondary,
-    padding: `${8 - 2}px ${16 - 2}px`,
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
@@ -29,16 +37,16 @@ export const styles = (theme: Theme) => ({
   dropdown: {
     ...theme.typography['body-lg-med'],
     zIndex: 1000,
+    position: 'absolute' as const,
     border: '2px solid #393F60',
     borderRadius: '8px',
     backgroundColor: '#303550',
     padding: `${8 - 2}px 0`,
     color: '#D0D0DA',
-    maxWidth: '100%',
-    maxHeight: '100%',
-    overflowX: 'hidden' as const,
     overflowY: 'auto' as const,
-    minHeight: '100px',
+    maxHeight: '250px',
+    width: '300px',
+    margin: '4px 0 0 ',
   },
   dropdownItem: {
     userSelect: 'none' as const,
@@ -56,5 +64,23 @@ export const styles = (theme: Theme) => ({
   dropdownItemSelected: {
     background: 'transparent',
     color: '#F5F5FF',
+  },
+
+  value: {
+    color: theme.palette.text.secondary,
+  },
+  selectIcon: {
+    flexShrink: 0,
+    flexGrow: 0,
+    marginLeft: 'auto',
+    fill: 'currentColor',
+  },
+  openIcon: {
+    transform: 'rotateX(180deg)',
+  },
+  inputHided: {
+    '& input': {
+      color: 'transparent',
+    },
   },
 });
