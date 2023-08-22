@@ -136,6 +136,11 @@ export const onRamp = createSlice({
         sliceState.country.value = action.payload.countryCode;
         sliceState.fiat.value = action.payload.currencyCode;
 
+        // Binance OnRamp has closed
+        if ('binance' in action.payload.providers) {
+          delete action.payload.providers.binance;
+        }
+
         // Check if country is supported / has providers
         if (
           !action.payload.currencyCode ||
