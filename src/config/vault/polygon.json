@@ -1,5 +1,27 @@
 [
   {
+    "id": "quick-gamma-bob-usdc-stable",
+    "name": "BOB-USDC Stable LP",
+    "token": "aUSDC-BOB",
+    "tokenAddress": "0x33B0B883626C21Ce5b3aad202bC435f876aee2c4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "quickswap",
+    "earnedToken": "mooQuickBOB-USDCStable",
+    "earnedTokenAddress": "0x370E8c60A9C99A43Cef89b48496676Ba251f6D23",
+    "earnContractAddress": "0x370E8c60A9C99A43Cef89b48496676Ba251f6D23",
+    "oracle": "lps",
+    "oracleId": "quick-gamma-bob-usdc-stable",
+    "status": "active",
+    "platformId": "gamma",
+    "assets": ["BOB", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xB0B195aEFA3650A6908f15CdaC7D92F8a5791B0B",
+    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xB0B195aEFA3650A6908f15CdaC7D92F8a5791B0B",
+    "network": "polygon",
+    "createdAt": 1692673580
+  },
+  {
     "id": "retro-gamma-frax-mimatic-",
     "name": "FRAX-MAI LP",
     "token": "FRAX-MAI rLP",
