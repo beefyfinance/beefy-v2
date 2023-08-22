@@ -66,6 +66,11 @@
   },
   {
     "chainId": "base",
+    "ammId": "base-baso",
+    "zapAddress": "0x6683B3c87913a91856c21ACF2D051dcdDf684c65"
+  },
+  {
+    "chainId": "base",
     "ammId": "base-bvm",
     "zapAddress": "0x5d2EF803D6e255eF4D1c66762CBc8845051B54dB"
   },

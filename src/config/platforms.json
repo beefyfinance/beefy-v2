@@ -1098,5 +1098,10 @@
     "id": "swapbased",
     "name": "SwapBased",
     "filter": true
+  },
+  {
+    "id": "baso",
+    "name": "Baso",
+    "filter": true
   }
 ]
