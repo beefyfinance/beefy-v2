@@ -11,7 +11,7 @@
     "earnContractAddress": "0x5679Ec6393Affe923760270a95ED1627fC4F035a",
     "oracle": "lps",
     "oracleId": "aura-r-bbsdai",
-    "status": "active",
+    "status": "eol",
     "platformId": "aura",
     "assets": ["R", "bbsDAI"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
