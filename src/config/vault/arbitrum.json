@@ -11,7 +11,8 @@
     "earnContractAddress": "0xB8E03E3573596BF15EC0d05EA3663a5674F04832",
     "oracle": "lps",
     "oracleId": "aura-reth-bbaweth-v2",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "aura",
     "assets": ["rETH", "bbaaWETHV2"],
     "risks": [
@@ -40,7 +41,8 @@
     "earnContractAddress": "0x3ADeAC216981FaE373dBab4425d83933130A9BB8",
     "oracle": "lps",
     "oracleId": "aura-wsteth-bbaweth-v2",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "aura",
     "assets": ["wstETH", "bbaaWETHV2"],
     "risks": [
@@ -69,7 +71,8 @@
     "earnContractAddress": "0x6B28BdD698d0deF4dCb705D79B6a4E0f07D2F8dE",
     "oracle": "lps",
     "oracleId": "aura-bbaaUSD-v2",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "aura",
     "assets": ["bbaaUSDTV2", "bbaaUSDCV2", "bbaaDAIV2"],
     "risks": [

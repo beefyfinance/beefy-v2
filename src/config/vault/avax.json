@@ -42,7 +42,8 @@
     "earnContractAddress": "0x6D79e3B5cdF334ffC4af2A3a451C790115914fdB",
     "oracle": "lps",
     "oracleId": "balancer-savax-bbaavavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "balancer",
     "assets": ["sAVAX", "bbaavAVAX"],
     "risks": [
@@ -71,7 +72,8 @@
     "earnContractAddress": "0xF60cc4fC9044F519bE5d6387e7052E8dEF7b5678",
     "oracle": "lps",
     "oracleId": "balancer-yyavax-bbaavavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "balancer",
     "assets": ["yyAVAX", "bbaavAVAX"],
     "risks": [
