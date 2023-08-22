@@ -3,7 +3,7 @@
     "id": "moo_pearl-usdrv3-dai-tangible",
     "poolId": "pearl-usdrv3-dai",
     "name": "Tangible",
-    "assets": ["wUSDR", "DAI"],
+    "assets": ["USDR", "DAI"],
     "tokenAddress": "0x2C6d11e756986f1537a2c71c851e9a1F7A0008b2",
     "earnedToken": "CVR",
     "earnedTokenDecimals": 18,
