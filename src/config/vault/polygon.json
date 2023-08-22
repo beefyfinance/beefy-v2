@@ -1040,7 +1040,8 @@
     "earnContractAddress": "0xf0695B22d8F416FEC35E02668aE01B9EEAF96a0D",
     "oracle": "lps",
     "oracleId": "balancer-stmatic-bbawmatic",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "balancer",
     "assets": ["stMATIC", "bbaWMATIC"],
     "risks": [
