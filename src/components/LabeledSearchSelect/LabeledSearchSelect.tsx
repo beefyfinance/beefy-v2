@@ -1,7 +1,7 @@
 import type { ChangeEvent } from 'react';
 import { memo, useMemo } from 'react';
 import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
+import { Checkbox, makeStyles } from '@material-ui/core';
 import { useAutocomplete } from '@material-ui/lab';
 import { Trans, useTranslation } from 'react-i18next';
 import { ExpandMore } from '@material-ui/icons';
@@ -11,10 +11,12 @@ const useStyles = makeStyles(styles);
 
 interface LabeledSearchProps {
   id: string;
-  onChange: (event: ChangeEvent, option: LabelSearchSelectOptionType) => void;
+  onChange: (event: ChangeEvent, options: LabelSearchSelectOptionType[]) => void;
   options: Record<string, string>;
   label: string;
   value: string;
+  selectedOptions: string[];
+  multiple?: boolean;
   className?: string;
 }
 
@@ -30,6 +32,8 @@ export const LabeledSearchSelect = memo<LabeledSearchProps>(function LabelesedSe
   options,
   label,
   value,
+  selectedOptions,
+  multiple = false,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -51,7 +55,9 @@ export const LabeledSearchSelect = memo<LabeledSearchProps>(function LabelesedSe
   } = useAutocomplete({
     id: `customized-search-select-${id}`,
     options: wrappedOptions,
-    getOptionLabel: option => option.label,
+    multiple,
+    disableCloseOnSelect: multiple,
+    getOptionLabel: (option: LabelSearchSelectOptionType) => option.label,
     onChange,
     openOnFocus: true,
     selectOnFocus: true,
@@ -79,12 +85,16 @@ export const LabeledSearchSelect = memo<LabeledSearchProps>(function LabelesedSe
       </div>
       {groupedOptions.length > 0 && (
         <ul className={classes.dropdown} {...getListboxProps()}>
-          {(groupedOptions satisfies LabelSearchSelectOptionType[]).map((option, index) => (
+          {groupedOptions.map((option, index) => (
             <li
               className={classes.dropdownItem}
               key={option.value}
               {...getOptionProps({ option, index })}
             >
+              <Checkbox
+                style={{ marginRight: 8 }}
+                checked={selectedOptions?.includes(option.value)}
+              />
               <span>{option.label}</span>
             </li>
           ))}

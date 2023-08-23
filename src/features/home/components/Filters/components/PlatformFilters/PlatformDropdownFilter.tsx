@@ -7,6 +7,7 @@ import { selectFilterPlatforms } from '../../../../../data/selectors/platforms';
 import type { LabelSearchSelectOptionType } from '../../../../../../components/LabeledSearchSelect';
 import { LabeledSearchSelect } from '../../../../../../components/LabeledSearchSelect';
 import { selectFilterPlatformId } from '../../../../../data/selectors/filtered-vaults';
+import { isEmpty } from 'lodash-es';
 
 export type PlatformDropdownFilterProps = {
   className?: string;
@@ -16,7 +17,6 @@ export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
   function PlatformDropdownFilter({ className }) {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
-    const allKey = null;
     const placeholderAllKey = '__null';
     const otherKey = 'other';
     const platforms = useAppSelector(selectFilterPlatforms);
@@ -30,21 +30,25 @@ export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
       [platforms, t]
     );
 
-    const value = useAppSelector(selectFilterPlatformId);
+    const platformsIds = useAppSelector(selectFilterPlatformId);
     const handleChange = useCallback(
-      (event: ChangeEvent, option: LabelSearchSelectOptionType) => {
-        dispatch(
-          filteredVaultsActions.setPlatformId(
-            option?.value === placeholderAllKey ? allKey : option.value
-          )
-        );
+      (event: ChangeEvent, options: LabelSearchSelectOptionType[]) => {
+        const hasNullOption = options.filter(option => {
+          option.value === placeholderAllKey;
+        });
+        const platforms = !isEmpty(hasNullOption) ? [] : options.map(option => option.value);
+        dispatch(filteredVaultsActions.setPlatformId(platforms));
       },
       [dispatch]
     );
 
     const valueLabel = useMemo(() => {
-      return value === allKey ? t('Filter-DropdwnDflt') : options[value];
-    }, [options, t, value]);
+      return isEmpty(platformsIds)
+        ? t('Filter-DropdwnDflt')
+        : platformsIds.length === 1
+        ? options[platformsIds[0]]
+        : t('Select-CountSelected', { count: platformsIds.length });
+    }, [options, t, platformsIds]);
 
     return (
       <LabeledSearchSelect
@@ -53,7 +57,9 @@ export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
         value={valueLabel}
         options={options}
         onChange={handleChange}
+        selectedOptions={platformsIds}
         id="platforms"
+        multiple={true}
       />
     );
   }

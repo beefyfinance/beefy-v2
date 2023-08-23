@@ -38,6 +38,7 @@ import type { FilteredVaultsState } from '../reducers/filtered-vaults';
 import type { PlatformEntity } from '../entities/platform';
 import { selectActiveChainIds, selectAllChainIds } from './chains';
 import { selectIsVaultIdSaved } from './saved-vaults';
+import { isEmpty } from '../../../helpers/utils';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 
@@ -50,7 +51,7 @@ export const selectFilterUserCategory = (state: BeefyState) => state.ui.filtered
 export const selectFilterVaultType = (state: BeefyState) => state.ui.filteredVaults.vaultType;
 export const selectFilterVaultCategory = (state: BeefyState) =>
   state.ui.filteredVaults.vaultCategory;
-export const selectFilterPlatformId = (state: BeefyState) => state.ui.filteredVaults.platformId;
+export const selectFilterPlatformId = (state: BeefyState) => state.ui.filteredVaults.platformIds;
 
 export const selectFilterBoolean = createCachedSelector(
   (state: BeefyState, key: KeysOfType<FilteredVaultsState, boolean>) => key,
@@ -65,7 +66,7 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.onlyPaused ? 1 : 0) +
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.onlyZappable ? 1 : 0) +
-    (filterOptions.platformId !== null ? 1 : 0) +
+    (filterOptions.platformIds !== null ? 1 : 0) +
     (filterOptions.vaultType !== 'all' ? 1 : 0) +
     (filterOptions.vaultCategory !== 'all' ? 1 : 0) +
     (filterOptions.sort !== 'default' ? 1 : 0) +
@@ -83,7 +84,7 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.onlyBoosted !== false ||
     filterOptions.onlyZappable !== false ||
     filterOptions.searchText !== '' ||
-    filterOptions.platformId !== null ||
+    filterOptions.platformIds !== null ||
     filterOptions.sort !== 'default' ||
     filterOptions.chainIds.length > 0
 );
@@ -98,7 +99,7 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.onlyBoosted !== false ||
     filterOptions.onlyZappable !== false ||
     filterOptions.searchText !== '' ||
-    filterOptions.platformId !== null ||
+    filterOptions.platformIds !== null ||
     filterOptions.chainIds.length > 0
 );
 
@@ -266,9 +267,9 @@ export const selectFilteredVaults = (state: BeefyState) => {
       return false;
     }
 
-    if (filterOptions.platformId !== null) {
+    if (!isEmpty(filterOptions.platformIds)) {
       const vaultPlatforms = selectFilterPlatformIdsForVault(state, vault);
-      if (!vaultPlatforms.includes(filterOptions.platformId)) {
+      if (!filterOptions.platformIds.some(platform => vaultPlatforms.includes(platform))) {
         return false;
       }
     }
