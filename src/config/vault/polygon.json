@@ -315,7 +315,7 @@
     "addLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0x3f69055F203861abFd5D986dC81a2eFa7c915b0c",
     "removeLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0x3f69055F203861abFd5D986dC81a2eFa7c915b0c",
     "network": "polygon",
-    "createdAt": 1691048720
+    "createdAt": 1692696251
   },
   {
     "id": "pearl-usdc-usdrv3",
@@ -339,7 +339,7 @@
     "addLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0xD17cb0f162f133e339C0BbFc18c36c357E681D6b",
     "removeLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0xD17cb0f162f133e339C0BbFc18c36c357E681D6b",
     "network": "polygon",
-    "createdAt": 1691048708
+    "createdAt": 1692696253
   },
   {
     "id": "pearl-usdrv3-dai",
@@ -363,7 +363,7 @@
     "addLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0xBD02973b441Aa83c8EecEA158b98B5984bb1036E",
     "removeLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0xBD02973b441Aa83c8EecEA158b98B5984bb1036E",
     "network": "polygon",
-    "createdAt": 1691048692
+    "createdAt": 1692696252
   },
   {
     "id": "pearl-wusdr-usdrv3",
@@ -1040,7 +1040,8 @@
     "earnContractAddress": "0xf0695B22d8F416FEC35E02668aE01B9EEAF96a0D",
     "oracle": "lps",
     "oracleId": "balancer-stmatic-bbawmatic",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "exploit",
     "platformId": "balancer",
     "assets": ["stMATIC", "bbaWMATIC"],
     "risks": [

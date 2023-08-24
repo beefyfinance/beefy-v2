@@ -1,4 +1,12 @@
 {
+  "tangible": {
+    "text": "Tangible gives Real World Assets chain operability, integrating them into powerful DeFi products built to meet market needs.",
+    "website": "https://www.tangible.store/caviar",
+    "social": {
+      "telegram": "https://t.me/TangibleDAO",
+      "twitter": "https://twitter.com/tangibleDAO"
+    }
+  },
   "alienbase": {
     "text": "Alienbase is a DEX built on Base offering the best tokens worth farming for earthlings.",
     "website": "https://app.alienbase.xyz/swap",
