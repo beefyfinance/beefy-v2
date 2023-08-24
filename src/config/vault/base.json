@@ -360,8 +360,8 @@
     "assets": ["ALB", "WETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.alienbase.xyz/add/BNB/0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
-    "removeLiquidityUrl": "https://app.alienbase.xyz/remove/BNB/0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
+    "addLiquidityUrl": "https://app.alienbase.xyz/add/WETH/0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
+    "removeLiquidityUrl": "https://app.alienbase.xyz/remove/WETH/0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
     "network": "base",
     "createdAt": 1691865365
   },
@@ -406,8 +406,8 @@
     "assets": ["WETH", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.alienbase.xyz/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/BNB",
-    "removeLiquidityUrl": "https://app.alienbase.xyz/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/BNB",
+    "addLiquidityUrl": "https://app.alienbase.xyz/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/WETH",
+    "removeLiquidityUrl": "https://app.alienbase.xyz/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/WETH",
     "network": "base",
     "createdAt": 1691865365
   },
@@ -452,8 +452,8 @@
     "assets": ["cbETH", "WETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.alienbase.xyz/add/BNB/0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
-    "removeLiquidityUrl": "https://app.alienbase.xyz/remove/BNB/0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+    "addLiquidityUrl": "https://app.alienbase.xyz/add/WETH/0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+    "removeLiquidityUrl": "https://app.alienbase.xyz/remove/WETH/0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     "network": "base",
     "createdAt": 1691865365
   },
