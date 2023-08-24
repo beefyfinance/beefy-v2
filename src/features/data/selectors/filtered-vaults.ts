@@ -30,7 +30,6 @@ import {
   selectVaultById,
   selectVaultSupportsAnyZap,
 } from './vaults';
-import escapeStringRegexp from 'escape-string-regexp';
 import { selectTokenByAddress } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import type { KeysOfType } from '../utils/types-utils';
@@ -39,6 +38,8 @@ import type { PlatformEntity } from '../entities/platform';
 import { selectActiveChainIds, selectAllChainIds } from './chains';
 import { selectIsVaultIdSaved } from './saved-vaults';
 import { isEmpty } from '../../../helpers/utils';
+import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string';
+import escapeStringRegexp from 'escape-string-regexp';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 
@@ -66,11 +67,11 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.onlyPaused ? 1 : 0) +
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.onlyZappable ? 1 : 0) +
-    (filterOptions.platformIds !== null ? 1 : 0) +
     (filterOptions.vaultType !== 'all' ? 1 : 0) +
     (filterOptions.vaultCategory !== 'all' ? 1 : 0) +
     (filterOptions.sort !== 'default' ? 1 : 0) +
-    filterOptions.chainIds.length
+    filterOptions.chainIds.length +
+    filterOptions.platformIds.length
 );
 
 export const selectHasActiveFilter = createSelector(
@@ -84,7 +85,7 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.onlyBoosted !== false ||
     filterOptions.onlyZappable !== false ||
     filterOptions.searchText !== '' ||
-    filterOptions.platformIds !== null ||
+    filterOptions.platformIds.length > 0 ||
     filterOptions.sort !== 'default' ||
     filterOptions.chainIds.length > 0
 );
@@ -99,7 +100,7 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.onlyBoosted !== false ||
     filterOptions.onlyZappable !== false ||
     filterOptions.searchText !== '' ||
-    filterOptions.platformIds !== null ||
+    filterOptions.platformIds.length > 0 ||
     filterOptions.chainIds.length > 0
 );
 
@@ -108,22 +109,9 @@ export const selectVaultCategory = createSelector(
   filterOptions => filterOptions.vaultCategory
 );
 
-function simplifySearchText(text: string) {
-  return (text || '').replace(/-/g, ' ').trim();
-}
-
-function safeSearchRegex(needle: string, caseInsensitive: boolean = true) {
-  const modifiers = `g${caseInsensitive ? 'i' : ''}`;
-  return new RegExp(escapeStringRegexp(needle), modifiers);
-}
-
 // TOKEN, WTOKEN or TOKENW
 function fuzzyTokenRegex(token: string) {
   return new RegExp(`^w?${escapeStringRegexp(token)}w?$`, 'gi');
-}
-
-function stringFoundAnywhere(haystack: string, needle: string, caseInsensitive: boolean = true) {
-  return (haystack || '').match(safeSearchRegex(needle, caseInsensitive));
 }
 
 function vaultNameMatches(vault: VaultEntity, searchText: string) {
