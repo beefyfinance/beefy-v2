@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { selectFilterPlatforms } from '../../../../../data/selectors/platforms';
-import { selectFilterPlatformId } from '../../../../../data/selectors/filtered-vaults';
+import { selectFilterPlatformIds } from '../../../../../data/selectors/filtered-vaults';
 import type { PlatformEntity } from '../../../../../data/entities/platform';
 import { LabeledSearchMultiSelect } from '../../../../../../components/LabeledSearchMultiSelect';
 
@@ -21,7 +21,7 @@ export const PlatformDropdownFilter = memo(function PlatformDropdownFilter() {
     [platforms, t]
   ) satisfies Record<string, string>;
 
-  const platformsIds = useAppSelector(selectFilterPlatformId);
+  const platformsIds = useAppSelector(selectFilterPlatformIds);
 
   const handleChange = useCallback(
     (selected: PlatformEntity['id'][]) => {

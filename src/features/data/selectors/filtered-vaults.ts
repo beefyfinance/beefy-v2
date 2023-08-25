@@ -52,7 +52,7 @@ export const selectFilterUserCategory = (state: BeefyState) => state.ui.filtered
 export const selectFilterVaultType = (state: BeefyState) => state.ui.filteredVaults.vaultType;
 export const selectFilterVaultCategory = (state: BeefyState) =>
   state.ui.filteredVaults.vaultCategory;
-export const selectFilterPlatformId = (state: BeefyState) => state.ui.filteredVaults.platformIds;
+export const selectFilterPlatformIds = (state: BeefyState) => state.ui.filteredVaults.platformIds;
 
 export const selectFilterBoolean = createCachedSelector(
   (state: BeefyState, key: KeysOfType<FilteredVaultsState, boolean>) => key,

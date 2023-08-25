@@ -49,7 +49,7 @@ export type SelectedItemProps = {
   countSelectedLabel: LabeledMultiSelectProps['countSelectedLabel'];
 };
 
-function useSortedOptions(
+export function useMultiSelectSortedOptions(
   options: LabeledMultiSelectProps['options'],
   sort: LabeledMultiSelectProps['sortOptions']
 ) {
@@ -58,7 +58,7 @@ function useSortedOptions(
       value,
       label,
     }));
-    return sort !== 'default' ? sortBy(values, sort) : values;
+    return sort !== 'default' ? sortBy(values, value => value[sort].toLowerCase()) : values;
   }, [options, sort]);
 }
 
@@ -145,7 +145,7 @@ export const LabeledMultiSelect = memo<LabeledMultiSelectProps>(function Labeled
   const allKey = 'all';
   const [isOpen, setIsOpen] = useState(false);
   const anchorEl = useRef<HTMLButtonElement | null>(null);
-  const optionsList = useSortedOptions(options, sortOptions);
+  const optionsList = useMultiSelectSortedOptions(options, sortOptions);
   const classes = useMemo<typeof baseClasses>(
     () => ({
       ...baseClasses,

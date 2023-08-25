@@ -5,6 +5,7 @@ import {
   SelectedMultiSelectItem,
   DropdownMultiSelectItem,
   DropdownMultiSelectItemLabel,
+  useMultiSelectSortedOptions,
 } from '../LabeledMultiSelect';
 import { Floating } from '../Floating';
 import { styles } from './styles';
@@ -14,21 +15,14 @@ import { ExpandMore } from '@material-ui/icons';
 import { Search } from '../Search';
 import { simplifySearchText, stringFoundAnywhere } from '../../helpers/string';
 import { useTranslation } from 'react-i18next';
-import { sortBy } from 'lodash-es';
 
 function useFilteredSortedOptions(
   options: LabeledMultiSelectProps['options'],
   sort: LabeledMultiSelectProps['sortOptions'],
   inputText: string
 ) {
+  const sortedValues = useMultiSelectSortedOptions(options, sort);
   return useMemo(() => {
-    const values = Object.entries(options).map(([value, label]) => ({
-      value,
-      label,
-    }));
-
-    const sortedValues = sort !== 'default' ? sortBy(values, sort) : values;
-
     if (inputText.length > 2) {
       return sortedValues.filter(option => {
         if (stringFoundAnywhere(simplifySearchText(option.label), inputText)) {
@@ -36,9 +30,8 @@ function useFilteredSortedOptions(
         }
       });
     }
-
     return sortedValues;
-  }, [inputText, options, sort]);
+  }, [inputText, sortedValues]);
 }
 
 const useStyles = makeStyles(styles);
@@ -78,15 +71,18 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
 
     const handleClose = useCallback(() => {
       setIsOpen(false);
-    }, []);
+    }, [setIsOpen]);
 
-    const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-      setInputText(event.target.value.toLocaleLowerCase());
-    }, []);
+    const handleInputChange = useCallback(
+      (event: ChangeEvent<HTMLInputElement>) => {
+        setInputText(event.target.value.toLocaleLowerCase());
+      },
+      [setInputText]
+    );
 
     const handleClearInput = useCallback(() => {
       setInputText('');
-    }, []);
+    }, [setInputText]);
 
     const handleChange = useCallback(
       changedValue => {
