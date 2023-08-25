@@ -213,9 +213,9 @@ function selectFilterPlatformIdsForVault(state: BeefyState, vault: VaultEntity):
 }
 
 const selectPlatformIdForFilter = createCachedSelector(
-  (state: BeefyState) => state.entities.platforms.filterIds,
+  (state: BeefyState) => state.entities.platforms.allIds,
   (state: BeefyState, platformId: PlatformEntity['id']) => platformId,
-  (filterIds, platformId) => (filterIds.includes(platformId) ? platformId : 'other')
+  (allIds, platformId) => (allIds.includes(platformId) ? platformId : 'other')
 )((state: BeefyState, platformId: PlatformEntity['id']) => platformId);
 
 // todo: use createSelector or put the result in the state to avoid re-computing these on every render

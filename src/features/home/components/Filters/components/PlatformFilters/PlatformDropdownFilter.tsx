@@ -10,15 +10,10 @@ import { LabeledSearchMultiSelect } from '../../../../../../components/LabeledSe
 export const PlatformDropdownFilter = memo(function PlatformDropdownFilter() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const otherKey = 'other';
   const platforms = useAppSelector(selectFilterPlatforms);
   const options = useMemo(
-    () =>
-      Object.fromEntries([
-        ...platforms.map(platform => [platform.id, platform.name]),
-        [otherKey, t('Filter-Other')],
-      ]),
-    [platforms, t]
+    () => Object.fromEntries([...platforms.map(platform => [platform.id, platform.name])]),
+    [platforms]
   ) satisfies Record<string, string>;
 
   const platformsIds = useAppSelector(selectFilterPlatformIds);
