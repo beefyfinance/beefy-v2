@@ -58,7 +58,7 @@ function useSortedOptions(
       value,
       label,
     }));
-    return sort === 'value' || sort === 'label' ? sortBy(values, sort) : values;
+    return sort !== 'default' ? sortBy(values, sort) : values;
   }, [options, sort]);
 }
 
@@ -177,7 +177,7 @@ export const LabeledMultiSelect = memo<LabeledMultiSelectProps>(function Labeled
     ]
   );
   const allOptionEnabled = !!allLabel;
-  const allSelected = value.length === sortOptions.length || value.length === 0;
+  const allSelected = value.length === optionsList.length || value.length === 0;
 
   const handleToggle = useCallback<MouseEventHandler<HTMLButtonElement>>(
     e => {

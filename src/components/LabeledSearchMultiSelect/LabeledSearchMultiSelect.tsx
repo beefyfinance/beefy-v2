@@ -8,30 +8,37 @@ import {
 } from '../LabeledMultiSelect';
 import { Floating } from '../Floating';
 import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
+import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import { ExpandMore } from '@material-ui/icons';
 import { Search } from '../Search';
 import { simplifySearchText, stringFoundAnywhere } from '../../helpers/string';
 import { useTranslation } from 'react-i18next';
+import { sortBy } from 'lodash-es';
 
-function useFilteredSortedOptions(options: LabeledMultiSelectProps['options'], inputText: string) {
+function useFilteredSortedOptions(
+  options: LabeledMultiSelectProps['options'],
+  sort: LabeledMultiSelectProps['sortOptions'],
+  inputText: string
+) {
   return useMemo(() => {
     const values = Object.entries(options).map(([value, label]) => ({
       value,
       label,
     }));
 
+    const sortedValues = sort !== 'default' ? sortBy(values, sort) : values;
+
     if (inputText.length > 2) {
-      return values.filter(option => {
+      return sortedValues.filter(option => {
         if (stringFoundAnywhere(simplifySearchText(option.label), inputText)) {
           return option;
         }
       });
     }
 
-    return values;
-  }, [inputText, options]);
+    return sortedValues;
+  }, [inputText, options, sort]);
 }
 
 const useStyles = makeStyles(styles);
@@ -41,7 +48,7 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
     label,
     options,
     value,
-    sortOptions,
+    sortOptions = 'default',
     allSelectedLabel = 'Select-AllSelected',
     countSelectedLabel = 'Select-CountSelected',
     noOptionsMessage = 'NoResults-NoResultsFound',
@@ -58,8 +65,8 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
     const allKey = 'all';
     const [inputText, setInputText] = useState<string>('');
     const anchorEl = useRef<HTMLButtonElement | null>(null);
-    const optionsList = useFilteredSortedOptions(options, inputText);
-    const allSelected = value.length === sortOptions?.length || value.length === 0;
+    const optionsList = useFilteredSortedOptions(options, sortOptions, inputText);
+    const allSelected = value.length === Object.keys(options).length || value.length === 0;
 
     const handleToggle = useCallback<MouseEventHandler<HTMLButtonElement>>(
       e => {
@@ -68,6 +75,10 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
       },
       [setIsOpen]
     );
+
+    const handleClose = useCallback(() => {
+      setIsOpen(false);
+    }, []);
 
     const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
       setInputText(event.target.value.toLocaleLowerCase());
@@ -98,67 +109,74 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
     }, []);
 
     return (
-      <button
-        onClick={handleToggle}
-        ref={anchorEl}
-        className={clsx(classes.select, {
-          [classes.selectBorderless]: borderless,
-          [classes.selectFullWidth]: fullWidth,
-          [classes.selectOpen]: isOpen,
-        })}
+      <ClickAwayListener
+        onClickAway={handleClose}
+        mouseEvent="onMouseDown"
+        touchEvent="onTouchStart"
       >
-        <div className={classes.selectCurrent}>
-          <div className={classes.selectLabel}>{label}</div>
-          <div className={classes.selectValue}>
-            <SelectedItemComponent
-              value={value}
-              options={options}
-              allSelected={allSelected}
-              allSelectedLabel={allSelectedLabel}
-              countSelectedLabel={countSelectedLabel}
-            />
-          </div>
-          <ExpandMore className={classes.selectIcon} />
-        </div>
-        <Floating
-          open={isOpen}
-          anchorEl={anchorEl}
-          placement="bottom-start"
-          className={classes.dropdown}
+        <button
+          onClick={handleToggle}
+          ref={anchorEl}
+          className={clsx(classes.select, {
+            [classes.selectBorderless]: borderless,
+            [classes.selectFullWidth]: fullWidth,
+            [classes.selectOpen]: isOpen,
+          })}
         >
-          <div className={classes.inputContainer}>
-            <Search
-              autoFocus={true}
-              searchText={inputText}
-              handleSearchText={handleInputChange}
-              handleClearText={handleClearInput}
-              onClick={handleAvoidClosePopUp}
-            />
-          </div>
-          {optionsList.map(({ value: optionValue, label }) => (
-            <DropdownItemComponent
-              key={optionValue}
-              onChange={handleChange}
-              label={label}
-              value={optionValue}
-              selected={value.includes(optionValue)}
-              DropdownItemLabelComponent={DropdownItemLabelComponent}
-              className={clsx(classes.dropdownItem, {
-                [classes.dropdownItemSelected]: value.includes(optionValue),
-              })}
-            />
-          ))}
-          {inputText.length > 2 && optionsList.length === 0 && (
-            <div
-              aria-disabled={true}
-              onClick={handleAvoidClosePopUp}
-              className={classes.noResultItem}
-            >
-              {t(noOptionsMessage)}
+          <div className={classes.selectCurrent}>
+            <div className={classes.selectLabel}>{label}</div>
+            <div className={classes.selectValue}>
+              <SelectedItemComponent
+                value={value}
+                options={options}
+                allSelected={allSelected}
+                allSelectedLabel={allSelectedLabel}
+                countSelectedLabel={countSelectedLabel}
+              />
             </div>
-          )}
-        </Floating>
-      </button>
+            <ExpandMore className={classes.selectIcon} />
+          </div>
+          <Floating
+            open={isOpen}
+            anchorEl={anchorEl}
+            placement="bottom-start"
+            className={classes.dropdown}
+          >
+            <div className={classes.inputContainer}>
+              <Search
+                className={classes.searchBar}
+                autoFocus={true}
+                searchText={inputText}
+                handleSearchText={handleInputChange}
+                handleClearText={handleClearInput}
+                onClick={handleAvoidClosePopUp}
+              />
+            </div>
+            {optionsList.map(({ value: optionValue, label }) => (
+              <DropdownItemComponent
+                key={optionValue}
+                onChange={handleChange}
+                label={label}
+                value={optionValue}
+                selected={value.includes(optionValue)}
+                DropdownItemLabelComponent={DropdownItemLabelComponent}
+                className={clsx(classes.dropdownItem, {
+                  [classes.dropdownItemSelected]: value.includes(optionValue),
+                })}
+              />
+            ))}
+            {inputText.length > 2 && optionsList.length === 0 && (
+              <div
+                aria-disabled={true}
+                onClick={handleAvoidClosePopUp}
+                className={classes.noResultItem}
+              >
+                {t(noOptionsMessage)}
+              </div>
+            )}
+          </Floating>
+        </button>
+      </ClickAwayListener>
     );
   }
 );

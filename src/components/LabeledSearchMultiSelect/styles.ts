@@ -100,4 +100,7 @@ export const styles = (theme: Theme) => ({
   noResultItem: {
     padding: `8px ${16 - 2}px`,
   },
+  searchBar: {
+    backgroundColor: '#1B1E31',
+  },
 });

@@ -44,7 +44,7 @@ export const Search = memo<SearchProps>(function Search({
 
   return (
     <InputBase
-      className={clsx(classes.search, className)}
+      className={clsx(className, classes.search)}
       value={searchText}
       onChange={handleSearchText}
       fullWidth={true}

@@ -10,10 +10,10 @@ export const styles = (theme: Theme) => ({
       color: theme.palette.text.dark,
       height: 'auto',
       '&:focus': {
-        color: '#F5F5FF',
+        color: theme.palette.text.primary,
       },
       '&::placeholder': {
-        color: '#8A8EA8',
+        color: theme.palette.text.dark,
         opacity: 1,
       },
     },
