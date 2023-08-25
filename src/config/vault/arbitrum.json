@@ -1986,7 +1986,7 @@
     "oracle": "lps",
     "oracleId": "balancer-wsteth-eth-v2",
     "status": "active",
-    "platformId": "balancer",
+    "platformId": "aura",
     "assets": ["wstETH", "ETH"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -2000,7 +2000,7 @@
     "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/invest",
     "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/withdraw",
     "network": "arbitrum",
-    "createdAt": 1685364888
+    "createdAt": 1692957284
   },
   {
     "id": "curve-arb-f-fraxbp",
@@ -2883,7 +2883,7 @@
     "oracle": "lps",
     "oracleId": "balancer-magic-usdc",
     "status": "active",
-    "platformId": "balancer",
+    "platformId": "aura",
     "assets": ["MAGIC", "USDCe"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -2897,7 +2897,7 @@
     "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/invest",
     "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/withdraw",
     "network": "arbitrum",
-    "createdAt": 1685364888
+    "createdAt": 1692957284
   },
   {
     "id": "stargate-arb-usdc",
