@@ -12,7 +12,7 @@ export const PlatformDropdownFilter = memo(function PlatformDropdownFilter() {
   const dispatch = useAppDispatch();
   const platforms = useAppSelector(selectFilterPlatforms);
   const options = useMemo(
-    () => Object.fromEntries([...platforms.map(platform => [platform.id, platform.name])]),
+    () => Object.fromEntries(platforms.map(platform => [platform.id, platform.name])),
     [platforms]
   ) satisfies Record<string, string>;
 

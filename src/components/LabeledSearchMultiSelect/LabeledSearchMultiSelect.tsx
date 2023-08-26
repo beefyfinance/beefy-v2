@@ -1,6 +1,6 @@
 import type { ChangeEvent, MouseEventHandler } from 'react';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
-import type { LabeledMultiSelectProps } from '../LabeledMultiSelect';
+import type { DropdownItemProps, LabeledMultiSelectProps } from '../LabeledMultiSelect';
 import {
   SelectedMultiSelectItem,
   DropdownMultiSelectItem,
@@ -84,7 +84,7 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
       setInputText('');
     }, [setInputText]);
 
-    const handleChange = useCallback(
+    const handleChange = useCallback<DropdownItemProps['onChange']>(
       changedValue => {
         if (changedValue === allKey) {
           onChange(Object.keys(options));
@@ -110,28 +110,30 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
         mouseEvent="onMouseDown"
         touchEvent="onTouchStart"
       >
-        <button
-          onClick={handleToggle}
-          ref={anchorEl}
-          className={clsx(classes.select, {
-            [classes.selectBorderless]: borderless,
-            [classes.selectFullWidth]: fullWidth,
-            [classes.selectOpen]: isOpen,
-          })}
-        >
-          <div className={classes.selectCurrent}>
-            <div className={classes.selectLabel}>{label}</div>
-            <div className={classes.selectValue}>
-              <SelectedItemComponent
-                value={value}
-                options={options}
-                allSelected={allSelected}
-                allSelectedLabel={allSelectedLabel}
-                countSelectedLabel={countSelectedLabel}
-              />
+        <div>
+          <button
+            onClick={handleToggle}
+            ref={anchorEl}
+            className={clsx(classes.select, {
+              [classes.selectBorderless]: borderless,
+              [classes.selectFullWidth]: fullWidth,
+              [classes.selectOpen]: isOpen,
+            })}
+          >
+            <div className={classes.selectCurrent}>
+              <div className={classes.selectLabel}>{label}</div>
+              <div className={classes.selectValue}>
+                <SelectedItemComponent
+                  value={value}
+                  options={options}
+                  allSelected={allSelected}
+                  allSelectedLabel={allSelectedLabel}
+                  countSelectedLabel={countSelectedLabel}
+                />
+              </div>
+              <ExpandMore className={classes.selectIcon} />
             </div>
-            <ExpandMore className={classes.selectIcon} />
-          </div>
+          </button>
           <Floating
             open={isOpen}
             anchorEl={anchorEl}
@@ -171,7 +173,7 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
               </div>
             )}
           </Floating>
-        </button>
+        </div>
       </ClickAwayListener>
     );
   }
