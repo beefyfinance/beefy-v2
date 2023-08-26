@@ -134,7 +134,7 @@
     "addLiquidityUrl": "https://www.fvm.exchange/liquidity/0xdb0f33978b5366191c42bb9a7b7d886cb714df65/0xc4651123dfa925715636fe76b90c034cc4d38539",
     "removeLiquidityUrl": "https://www.fvm.exchange/liquidity/0xdb0f33978b5366191c42bb9a7b7d886cb714df65/0xc4651123dfa925715636fe76b90c034cc4d38539",
     "network": "fantom",
-    "createdAt": 1692917440
+    "createdAt": 1693040960
   },
   {
     "id": "fvm-lzusdc-frax",
@@ -158,31 +158,7 @@
     "addLiquidityUrl": "https://www.fvm.exchange/liquidity/0x9746c3614307e937a1c82de1c9ff2be30fce6712/0xf5f52dd351a4193c8aa56563bf20f18693a5c091",
     "removeLiquidityUrl": "https://www.fvm.exchange/liquidity/0x9746c3614307e937a1c82de1c9ff2be30fce6712/0xf5f52dd351a4193c8aa56563bf20f18693a5c091",
     "network": "fantom",
-    "createdAt": 1692917440
-  },
-  {
-    "id": "fvm-wftm-scream",
-    "name": "SCREAM-FTM vLP",
-    "token": "SCREAM-FTM vLP",
-    "tokenAddress": "0xebd8Bf837EC2448608E34Fa450e28d79dAb84b9f",
-    "tokenDecimals": 18,
-    "tokenProviderId": "fvm",
-    "tokenAmmId": "fantom-fvm",
-    "earnedToken": "mooFVMSCREAM-FTM",
-    "earnedTokenAddress": "0xa9ebE1d6A419E16553AA31B5B11a5ea870c44a7a",
-    "earnContractAddress": "0xa9ebE1d6A419E16553AA31B5B11a5ea870c44a7a",
-    "oracle": "lps",
-    "oracleId": "fvm-wftm-scream",
-    "status": "active",
-    "platformId": "fvm",
-    "assets": ["SCREAM", "FTM"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.fvm.exchange/swap",
-    "addLiquidityUrl": "https://www.fvm.exchange/liquidity/0xebd8bf837ec2448608e34fa450e28d79dab84b9f/0x051ee4773f244d57934bb72b071669349141edce",
-    "removeLiquidityUrl": "https://www.fvm.exchange/liquidity/0xebd8bf837ec2448608e34fa450e28d79dab84b9f/0x051ee4773f244d57934bb72b071669349141edce",
-    "network": "fantom",
-    "createdAt": 1692917440
+    "createdAt": 1693040960
   },
   {
     "id": "fvm-fvm-wftm",
