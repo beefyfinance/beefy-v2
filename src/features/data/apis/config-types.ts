@@ -270,7 +270,6 @@ export type StrategyTypeConfig = {
 export type PlatformConfig = {
   id: string;
   name: string;
-  filter: boolean;
 };
 
 export interface TokenHoldingConfig {

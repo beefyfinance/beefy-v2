@@ -56,16 +56,15 @@ export const styles = (theme: Theme) => ({
   },
   extendedFilters: {
     color: '#F5F5FF',
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '16px',
   },
   shownVaultsCount: {
     width: '100%',
   },
   checkbox: {
     width: '100%',
-    marginTop: '16px',
-    '& + $select': {
-      marginTop: '24px',
-    },
   },
   select: {
     width: '100%',
