@@ -20,6 +20,7 @@ export type LabeledMultiSelectProps = LabeledSelectCommonProps & {
   allLabel?: string;
   allSelectedLabel?: string;
   countSelectedLabel?: string;
+  noOptionsMessage?: string;
   onChange: (value: string[]) => void;
   SelectedItemComponent?: FC<SelectedItemProps>;
   DropdownItemComponent?: FC<DropdownItemProps>;
@@ -48,7 +49,7 @@ export type SelectedItemProps = {
   countSelectedLabel: LabeledMultiSelectProps['countSelectedLabel'];
 };
 
-function useSortedOptions(
+export function useMultiSelectSortedOptions(
   options: LabeledMultiSelectProps['options'],
   sort: LabeledMultiSelectProps['sortOptions']
 ) {
@@ -57,17 +58,17 @@ function useSortedOptions(
       value,
       label,
     }));
-    return sort === 'value' || sort === 'label' ? sortBy(values, sort) : values;
+    return sort !== 'default' ? sortBy(values, value => value[sort].toLowerCase()) : values;
   }, [options, sort]);
 }
 
-const DropdownItem = memo<DropdownItemProps>(function DropdownItem({
+export const DropdownMultiSelectItem = memo<DropdownItemProps>(function DropdownItem({
   label,
   value,
   onChange,
   className,
   selected,
-  DropdownItemLabelComponent = DropdownItemLabel,
+  DropdownItemLabelComponent = DropdownMultiSelectItemLabel,
 }) {
   const handleChange = useCallback<LabelledCheckboxProps['onChange']>(() => {
     onChange(value);
@@ -83,11 +84,13 @@ const DropdownItem = memo<DropdownItemProps>(function DropdownItem({
   );
 });
 
-const DropdownItemLabel = memo<DropdownItemLabelProps>(function DropdownItemLabel({ label }) {
-  return <>{label}</>;
-});
+export const DropdownMultiSelectItemLabel = memo<DropdownItemLabelProps>(
+  function DropdownItemLabel({ label }) {
+    return <>{label}</>;
+  }
+);
 
-const SelectedItem = memo<SelectedItemProps>(function SelectedItem({
+export const SelectedMultiSelectItem = memo<SelectedItemProps>(function SelectedItem({
   value,
   options,
   allSelected,
@@ -120,9 +123,9 @@ export const LabeledMultiSelect = memo<LabeledMultiSelectProps>(function Labeled
   sortOptions = 'default',
   fullWidth = false,
   borderless = false,
-  SelectedItemComponent = SelectedItem,
-  DropdownItemComponent = DropdownItem,
-  DropdownItemLabelComponent = DropdownItemLabel,
+  SelectedItemComponent = SelectedMultiSelectItem,
+  DropdownItemComponent = DropdownMultiSelectItem,
+  DropdownItemLabelComponent = DropdownMultiSelectItemLabel,
   selectClass,
   selectCurrentClass,
   selectLabelClass,
@@ -142,7 +145,7 @@ export const LabeledMultiSelect = memo<LabeledMultiSelectProps>(function Labeled
   const allKey = 'all';
   const [isOpen, setIsOpen] = useState(false);
   const anchorEl = useRef<HTMLButtonElement | null>(null);
-  const optionsList = useSortedOptions(options, sortOptions);
+  const optionsList = useMultiSelectSortedOptions(options, sortOptions);
   const classes = useMemo<typeof baseClasses>(
     () => ({
       ...baseClasses,
@@ -174,7 +177,7 @@ export const LabeledMultiSelect = memo<LabeledMultiSelectProps>(function Labeled
     ]
   );
   const allOptionEnabled = !!allLabel;
-  const allSelected = value.length === sortOptions.length || value.length === 0;
+  const allSelected = value.length === optionsList.length || value.length === 0;
 
   const handleToggle = useCallback<MouseEventHandler<HTMLButtonElement>>(
     e => {
