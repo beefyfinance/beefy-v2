@@ -1,8 +1,8 @@
 [
   {
     "id": "velodrome-v2-wsteth-pendle",
-    "name": "wstETH-Pendle vLP v2",
-    "token": "wstETH-Pendle vLP v2",
+    "name": "wstETH-PENDLE vLP v2",
+    "token": "wstETH-PENDLE vLP v2",
     "tokenAddress": "0x7c9a7243F6A359781996822A141A28DC48AA258b",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
