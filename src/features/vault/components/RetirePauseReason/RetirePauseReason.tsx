@@ -10,6 +10,13 @@ export type RetirePauseReasonProps = {
   className?: string;
 };
 
+const ScreamTx = {
+  'scream-tusd':
+    'https://ftmscan.com/tx/0x28a3991946cba505a406e912c2544ede2c19c1fde8b425451e229bd3ae5b8df2 ',
+  'scream-frax':
+    'https://ftmscan.com/tx/0x6bcb68dd92e1500e82a7f22ea7c17858a68c065eb4b4402d273885ccc8a6dc0f',
+};
+
 export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePauseReason({
   vaultId,
   className,
@@ -53,6 +60,23 @@ export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePau
                 }}
               />
             );
+          } else if (reasonCode === 'scream') {
+            return (
+              <Trans
+                t={t}
+                i18nKey={maybeKey}
+                components={{
+                  tx: <a href={ScreamTx[vaultId]} target={'_blank'} rel={'noopener'} />,
+                  plan: (
+                    <a
+                      href="https://snapshot.org/#/screamsh.eth/proposal/0xcbf4a9d1c951a141a2fa806f7c7e6c4b2fea7db5952aee9e1dcc68b1c11adff9"
+                      target={'_blank'}
+                      rel={'noopener'}
+                    />
+                  ),
+                }}
+              />
+            );
           } else if (reasonCode === 'bevelo') {
             return (
               <Trans
@@ -79,7 +103,7 @@ export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePau
     }
 
     return null;
-  }, [t, i18n, status, retireReason, pauseReason]);
+  }, [status, retireReason, pauseReason, t, i18n, vaultId]);
 
   return message ? <AlertWarning className={className}>{message}</AlertWarning> : null;
 });
