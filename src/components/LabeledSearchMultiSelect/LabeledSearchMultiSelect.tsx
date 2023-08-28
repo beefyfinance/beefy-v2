@@ -41,6 +41,7 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
     label,
     options,
     value,
+    placement = 'bottom-start',
     sortOptions = 'default',
     allSelectedLabel = 'Select-AllSelected',
     countSelectedLabel = 'Select-CountSelected',
@@ -137,13 +138,12 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
           <Floating
             open={isOpen}
             anchorEl={anchorEl}
-            placement="bottom-start"
+            placement={placement}
             className={classes.dropdown}
           >
             <div className={classes.inputContainer}>
               <Search
                 className={classes.searchBar}
-                autoFocus={true}
                 searchText={inputText}
                 handleSearchText={handleInputChange}
                 handleClearText={handleClearInput}

@@ -6,8 +6,13 @@ import { selectFilterPlatforms } from '../../../../../data/selectors/platforms';
 import { selectFilterPlatformIds } from '../../../../../data/selectors/filtered-vaults';
 import type { PlatformEntity } from '../../../../../data/entities/platform';
 import { LabeledSearchMultiSelect } from '../../../../../../components/LabeledSearchMultiSelect';
+import type { LabeledSelectCommonProps } from '../../../../../../components/LabeledSelect';
 
-export const PlatformDropdownFilter = memo(function PlatformDropdownFilter() {
+export const PlatformDropdownFilter = memo(function PlatformDropdownFilter({
+  placement,
+}: {
+  placement?: LabeledSelectCommonProps['placement'];
+}) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const platforms = useAppSelector(selectFilterPlatforms);
@@ -37,6 +42,7 @@ export const PlatformDropdownFilter = memo(function PlatformDropdownFilter() {
       options={options}
       sortOptions="label"
       fullWidth={true}
+      placement={placement}
     />
   );
 });
