@@ -1,51 +1,42 @@
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { selectFilterPlatformId } from '../../../../../data/selectors/filtered-vaults';
-import type { ToggleButtonsProps } from '../../../../../../components/ToggleButtons';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
-import { LabeledSelect } from '../../../../../../components/LabeledSelect';
 import { selectFilterPlatforms } from '../../../../../data/selectors/platforms';
+import { selectFilterPlatformIds } from '../../../../../data/selectors/filtered-vaults';
+import type { PlatformEntity } from '../../../../../data/entities/platform';
+import { LabeledSearchMultiSelect } from '../../../../../../components/LabeledSearchMultiSelect';
 
-export type PlatformDropdownFilterProps = {
-  className?: string;
-};
-export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
-  function PlatformDropdownFilter({ className }) {
-    const { t } = useTranslation();
-    const dispatch = useAppDispatch();
-    const allKey = null;
-    const placeholderAllKey = '__null';
-    const otherKey = 'other';
-    const platforms = useAppSelector(selectFilterPlatforms);
-    const options: Record<string, string> = useMemo(
-      () =>
-        Object.fromEntries([
-          [placeholderAllKey, t('Filter-DropdwnDflt')],
-          ...platforms.map(platform => [platform.id, platform.name]),
-          [otherKey, t('Filter-Other')],
-        ]),
-      [platforms, t]
-    );
-    const value = useAppSelector(selectFilterPlatformId);
-    const handleChange = useCallback<ToggleButtonsProps['onChange']>(
-      value => {
-        dispatch(filteredVaultsActions.setPlatformId(value === placeholderAllKey ? allKey : value));
-      },
-      [dispatch, placeholderAllKey, allKey]
-    );
+export const PlatformDropdownFilter = memo(function PlatformDropdownFilter() {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const platforms = useAppSelector(selectFilterPlatforms);
+  const options = useMemo(
+    () => Object.fromEntries(platforms.map(platform => [platform.id, platform.name])),
+    [platforms]
+  ) satisfies Record<string, string>;
 
-    return (
-      <LabeledSelect
-        label={t('Filter-Platform')}
-        value={value === allKey ? placeholderAllKey : value}
-        options={options}
-        onChange={handleChange}
-        selectClass={className}
-        fullWidth={false}
-        sortOptions="label"
-        defaultValue={placeholderAllKey}
-      />
-    );
-  }
-);
+  const platformsIds = useAppSelector(selectFilterPlatformIds);
+
+  const handleChange = useCallback(
+    (selected: PlatformEntity['id'][]) => {
+      dispatch(
+        filteredVaultsActions.setPlatformIds(
+          selected.length === platformsIds.length ? [] : selected
+        )
+      );
+    },
+    [dispatch, platformsIds]
+  );
+
+  return (
+    <LabeledSearchMultiSelect
+      label={t('Filter-Platform')}
+      onChange={handleChange}
+      value={platformsIds}
+      options={options}
+      sortOptions="label"
+      fullWidth={true}
+    />
+  );
+});

@@ -168,7 +168,8 @@
       "USX",
       "wUSDR",
       "MLP",
-      "DAI+"
+      "DAI+",
+      "PENDLE"
     ],
     "blockedVaults": ["aavev3-op-eth", "exactly-supply-eth"]
   },
