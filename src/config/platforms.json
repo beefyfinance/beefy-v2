@@ -877,6 +877,12 @@
   },
   {
     "id": "swapbased",
-    "name": "SwapBased"
+    "name": "SwapBased",
+    "filter": true
+  },
+  {
+    "id": "baso",
+    "name": "Baso",
+    "filter": true
   }
 ]
