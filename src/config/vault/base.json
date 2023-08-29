@@ -73,7 +73,7 @@
     "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x110d58483e45b78a040fe052943a2ff4885d8cf5/0xe5ec7089c18b713c5e958258b1fb96c811fabc43",
     "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x110d58483e45b78a040fe052943a2ff4885d8cf5/0xe5ec7089c18b713c5e958258b1fb96c811fabc43",
     "network": "base",
-    "createdAt": 1693269457
+    "createdAt": 1693352053
   },
   {
     "id": "bvm-dai+-usdbc",
@@ -103,7 +103,7 @@
     "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x42731e7774cf1b389fe2d9552bbdd6e4bb05e42b/0x32d077840235ab8fb340fddc0ecf29971a576235",
     "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x42731e7774cf1b389fe2d9552bbdd6e4bb05e42b/0x32d077840235ab8fb340fddc0ecf29971a576235",
     "network": "base",
-    "createdAt": 1693269457
+    "createdAt": 1693352053
   },
   {
     "id": "swapbased-eth-cbeth",
