@@ -65,7 +65,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#303550',
     padding: `${8 - 2}px 0`,
     color: '#D0D0DA',
-    maxhHeight: '300px',
+    maxHeight: '250px',
     overflowX: 'hidden' as const,
     overflowY: 'auto' as const,
   },

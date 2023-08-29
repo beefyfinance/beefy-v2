@@ -33,6 +33,8 @@ export type LabeledSelectCommonProps = {
   dropdownAutoWidth?: boolean;
   dropdownAutoHeight?: boolean;
   dropdownAutoHide?: boolean;
+  dropdownFlip?: boolean;
+  dropdownShift?: boolean;
 };
 
 export type LabeledSelectProps = LabeledSelectCommonProps & {

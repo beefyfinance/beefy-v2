@@ -52,6 +52,9 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
     onChange,
     fullWidth = false,
     borderless = false,
+    dropdownAutoHeight = false,
+    dropdownShift = true,
+    dropdownFlip = true,
   }) {
     const { t } = useTranslation();
     const classes = useStyles();
@@ -140,6 +143,9 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
             anchorEl={anchorEl}
             placement={placement}
             className={classes.dropdown}
+            autoHeight={dropdownAutoHeight}
+            flip={dropdownFlip}
+            shift={dropdownShift}
           >
             <div className={classes.inputContainer}>
               <Search

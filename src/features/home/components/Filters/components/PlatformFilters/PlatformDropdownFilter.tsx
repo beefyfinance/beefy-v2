@@ -10,8 +10,12 @@ import type { LabeledSelectCommonProps } from '../../../../../../components/Labe
 
 export const PlatformDropdownFilter = memo(function PlatformDropdownFilter({
   placement,
+  dropDownShift,
+  dropDownFlip,
 }: {
   placement?: LabeledSelectCommonProps['placement'];
+  dropDownShift?: LabeledSelectCommonProps['dropdownShift'];
+  dropDownFlip?: LabeledSelectCommonProps['dropdownFlip'];
 }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -43,6 +47,8 @@ export const PlatformDropdownFilter = memo(function PlatformDropdownFilter({
       sortOptions="label"
       fullWidth={true}
       placement={placement}
+      dropdownFlip={dropDownFlip}
+      dropdownShift={dropDownShift}
     />
   );
 });
