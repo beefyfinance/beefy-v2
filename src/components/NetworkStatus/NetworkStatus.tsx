@@ -153,10 +153,12 @@ export const NetworkStatus = memo(function NetworkStatus({
 
 const ConnectedChain = memo(function ConnectedChain({ chainId }: { chainId: ChainEntity['id'] }) {
   const chain = useAppSelector(state => selectChainById(state, chainId));
+  const classes = useStyles();
+
   return (
     <>
       <img alt={chainId} src={getNetworkSrc(chainId)} />
-      {chain.name}
+      <div className={classes.textOverflow}>{chain.name}</div>
     </>
   );
 });

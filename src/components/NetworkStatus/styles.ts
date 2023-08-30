@@ -83,7 +83,7 @@ export const styles = (theme: Theme) => ({
     border: '2px solid #30354F',
     borderRadius: '8px',
     marginTop: '4px',
-    minWidth: '270px',
+    minWidth: '280px',
     zIndex: 999,
   },
   titleContainer: {
@@ -147,5 +147,10 @@ export const styles = (theme: Theme) => ({
     '& img': {
       height: '24px',
     },
+  },
+  textOverflow: {
+    whiteSpace: 'nowrap' as const,
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
   },
 });
