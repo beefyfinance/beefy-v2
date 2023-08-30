@@ -8,11 +8,11 @@ import { chainRpcs } from './common/config';
 import vaultABI from '../src/config/abi/vault.json';
 import stratABI from '../src/config/abi/strategy.json';
 import erc20ABI from '../src/config/abi/erc20.json';
-import { AbiItem } from 'web3-utils';
+import type { AbiItem } from 'web3-utils';
 
 let vaultsFile = './src/config/vault/$chain.json';
 
-async function vaultData(chain, vaultAddress) {
+async function vaultData(chain, vaultAddress, id) {
   const web3 = new Web3(chainRpcs[chain]);
   const abi = [...vaultABI, ...stratABI];
   const vaultContract = new web3.eth.Contract(abi as AbiItem[], vaultAddress);
@@ -43,10 +43,11 @@ async function vaultData(chain, vaultAddress) {
       ? 'pancakeswap'
       : params.mooToken.startsWith('mooThena')
       ? 'thena'
-      : 'XXX';
+      : id.substring(0, id.indexOf('-'));
   const platform = params.mooToken.startsWith('mooConvex') ? 'convex' : provider;
+  const ammId = `${chain}-${platform}`;
 
-  return { ...params, ...token, ...{ provider, platform } };
+  return { ...params, ...token, ...{ provider, platform, ammId } };
 }
 
 async function generateVault() {
@@ -55,7 +56,7 @@ async function generateVault() {
   const id = process.argv[4];
   vaultsFile = vaultsFile.replace('$chain', chain);
 
-  const vault = await vaultData(chain, vaultAddress);
+  const vault = await vaultData(chain, vaultAddress, id);
 
   const newVault = {
     id: id,
@@ -64,6 +65,7 @@ async function generateVault() {
     tokenAddress: vault.want,
     tokenDecimals: Number(vault.tokenDecimals),
     tokenProviderId: vault.provider,
+    tokenAmmId: vault.ammId,
     earnedToken: vault.mooToken,
     earnedTokenAddress: vaultAddress,
     earnContractAddress: vaultAddress,
