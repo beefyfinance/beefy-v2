@@ -52,7 +52,7 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
     onChange,
     fullWidth = false,
     borderless = false,
-    dropdownAutoHeight = false,
+    dropdownAutoHeight = true,
     dropdownShift = true,
     dropdownFlip = true,
   }) {
