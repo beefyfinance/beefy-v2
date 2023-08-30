@@ -1447,38 +1447,6 @@
     "createdAt": 1682334773
   },
   {
-    "id": "thena-frax-fxs",
-    "name": "FRAX-FXS vLP",
-    "token": "FRAX-FXS vLP",
-    "tokenAddress": "0x3c9BD1f914D6F0e0CD27a1F77e120c061D1FDbEd",
-    "tokenDecimals": 18,
-    "tokenProviderId": "thena",
-    "tokenAmmId": "bsc-thena",
-    "earnedToken": "mooThenaFRAX-FXS",
-    "earnedTokenAddress": "0xC06eF6610860072da361F90437E3aF8b1195d0c9",
-    "earnContractAddress": "0xC06eF6610860072da361F90437E3aF8b1195d0c9",
-    "oracle": "lps",
-    "oracleId": "thena-frax-fxs",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "thena",
-    "assets": ["FRAX", "FXS"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "PARTIAL_COLLAT_ALGO_STABLECOIN",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
-    "network": "bsc",
-    "createdAt": 1673783906
-  },
-  {
     "id": "thena-wbnb-ankr",
     "name": "ANKR-BNB vLP",
     "token": "ANKR-BNB vLP",
