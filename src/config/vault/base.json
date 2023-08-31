@@ -159,7 +159,7 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x940181a94a35a4569e4529a3cdfb74e38fd98631&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693445079
+    "createdAt": 1693496020
   },
   {
     "id": "aerodrome-mai-usdbc",
