@@ -660,7 +660,18 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
-    stableCoins: ['USDbC', 'DAI', 'bsUSD', 'axlUSDC', 'axlUSDT', 'MIM', 'USD+', 'DAI+'],
+    stableCoins: [
+      'USDbC',
+      'DAI',
+      'bsUSD',
+      'axlUSDC',
+      'axlUSDT',
+      'MIM',
+      'USD+',
+      'DAI+',
+      'wUSDR',
+      'MAI',
+    ],
   },
   aurora: {
     name: 'Aurora',

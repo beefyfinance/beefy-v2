@@ -1,5 +1,28 @@
 [
   {
+    "id": "aerodrome-mai-usdbc",
+    "name": "MAI-USDbC sLP",
+    "token": "sAMM-MAI/USDbC",
+    "tokenAddress": "0xf6Aec4F97623E691a9426a69BaF5501509fCa05D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "tokenAmmId": "base-aerodrome",
+    "earnedToken": "mooAeroMAI-USDbC",
+    "earnedTokenAddress": "0xCbbB6d843C57f5FCE5774c13c7464bE9D2bbA424",
+    "earnContractAddress": "0xCbbB6d843C57f5FCE5774c13c7464bE9D2bbA424",
+    "oracle": "lps",
+    "oracleId": "aerodrome-mai-usdbc",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["MAI", "USDbC"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xbf1aea8670d2528e08334083616dd9c5f3b087ae&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=true",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "createdAt": 1693473078
+  },
+  {
     "id": "aerodrome-tbtc-usdbc",
     "name": "tBTC-USDbC vLP",
     "token": "vAMM-tBTC/USDbC",
