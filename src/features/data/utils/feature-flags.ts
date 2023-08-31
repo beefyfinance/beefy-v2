@@ -132,6 +132,11 @@ export function featureFlag_logging() {
   return params.has('__logging');
 }
 
+export function featureFlag_tvlShare() {
+  const params = getSearchParams();
+  return params.has('__tvl_share');
+}
+
 export function featureFlag_replayReduxActions() {
   const isAuthorizedDomain =
     window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');

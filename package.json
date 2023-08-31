@@ -5,7 +5,7 @@
   "private": true,
   "type": "commonjs",
   "engines": {
-    "node": "16.x"
+    "node": "20.x"
   },
   "dependencies": {
     "@deficonnect/web3-connector": "^2.0.3",
