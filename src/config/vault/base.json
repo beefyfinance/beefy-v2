@@ -152,7 +152,7 @@
     "oracleId": "aerodrome-aero-usdbc",
     "status": "active",
     "platformId": "aerodrome",
-    "assets": ["AERO", "USDC"],
+    "assets": ["AERO", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://aerodrome.finance/swap?from=0x940181a94a35a4569e4529a3cdfb74e38fd98631&to=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
