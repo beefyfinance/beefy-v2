@@ -121,6 +121,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'USDR',
       'wUSDR',
       'axlUSDC',
+      'CASH',
     ],
   },
   bsc: {
@@ -612,7 +613,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   zkevm: {
     name: 'Polygon zkEVM',
     chainId: 1101,
-    rpc: ['https://zkevm-rpc.com'],
+    rpc: ['https://rpc.ankr.com/polygon_zkevm'],
     explorerUrl: 'https://zkevm.polygonscan.com/',
     multicallAddress: '0xD19ab62F83380908D65E344567378cF104cE46c2',
     appMulticallContractAddress: '0x2ec5d5e9aaf3c3f56eBeF2fC46A5af9e42810b41',
@@ -625,7 +626,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://zkevm-rpc.com'],
+      rpcUrls: ['https://rpc.ankr.com/polygon_zkevm'],
       blockExplorerUrls: ['https://zkevm.polygonscan.com/'],
     },
     gas: {
@@ -660,7 +661,18 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
-    stableCoins: ['USDbC', 'DAI', 'bsUSD', 'axlUSDC', 'axlUSDT', 'MIM', 'USD+', 'DAI+'],
+    stableCoins: [
+      'USDbC',
+      'DAI',
+      'bsUSD',
+      'axlUSDC',
+      'axlUSDT',
+      'MIM',
+      'USD+',
+      'DAI+',
+      'wUSDR',
+      'MAI',
+    ],
   },
   aurora: {
     name: 'Aurora',
