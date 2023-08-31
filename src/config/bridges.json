@@ -84,8 +84,8 @@
     "website": "https://core.app/bridge"
   },
   {
-    "id": "bsc-canonical",
-    "name": "Binance Bridge",
+    "id": "binance-peg",
+    "name": "Binance Pegged",
     "tagName": "Binance",
     "website": "https://www.bnbchain.org/en/bridge?ref=binance.ghost.io"
   },
