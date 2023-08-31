@@ -133,12 +133,12 @@
   },
   {
     "id": "hop",
-    "name": "HOP exchange",
+    "name": "HOP Exchange",
     "website": "https://app.hop.exchange"
   },
   {
     "id": "wbtc-dao",
-    "name": "WBTC",
+    "name": "WBTC Dao",
     "website": "https://wbtc.network/"
   }
 ]
