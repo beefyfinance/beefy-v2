@@ -8,47 +8,54 @@ import type { PlatformEntity } from '../../../../../data/entities/platform';
 import { LabeledSearchMultiSelect } from '../../../../../../components/LabeledSearchMultiSelect';
 import type { LabeledSelectCommonProps } from '../../../../../../components/LabeledSelect';
 
-export const PlatformDropdownFilter = memo(function PlatformDropdownFilter({
-  placement,
-  dropDownShift,
-  dropDownFlip,
-}: {
+interface PlatformDropdownFilterProps {
   placement?: LabeledSelectCommonProps['placement'];
   dropDownShift?: LabeledSelectCommonProps['dropdownShift'];
   dropDownFlip?: LabeledSelectCommonProps['dropdownFlip'];
-}) {
-  const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-  const platforms = useAppSelector(selectFilterPlatforms);
-  const options = useMemo(
-    () => Object.fromEntries(platforms.map(platform => [platform.id, platform.name])),
-    [platforms]
-  ) satisfies Record<string, string>;
+  disableAutoHeightOnFocus?: boolean;
+}
 
-  const platformsIds = useAppSelector(selectFilterPlatformIds);
+export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
+  function PlatformDropdownFilter({
+    placement,
+    dropDownFlip,
+    dropDownShift,
+    disableAutoHeightOnFocus,
+  }) {
+    const { t } = useTranslation();
+    const dispatch = useAppDispatch();
+    const platforms = useAppSelector(selectFilterPlatforms);
+    const options = useMemo(
+      () => Object.fromEntries(platforms.map(platform => [platform.id, platform.name])),
+      [platforms]
+    ) satisfies Record<string, string>;
 
-  const handleChange = useCallback(
-    (selected: PlatformEntity['id'][]) => {
-      dispatch(
-        filteredVaultsActions.setPlatformIds(
-          selected.length === platformsIds.length ? [] : selected
-        )
-      );
-    },
-    [dispatch, platformsIds]
-  );
+    const platformsIds = useAppSelector(selectFilterPlatformIds);
 
-  return (
-    <LabeledSearchMultiSelect
-      label={t('Filter-Platform')}
-      onChange={handleChange}
-      value={platformsIds}
-      options={options}
-      sortOptions="label"
-      fullWidth={true}
-      placement={placement}
-      dropdownFlip={dropDownFlip}
-      dropdownShift={dropDownShift}
-    />
-  );
-});
+    const handleChange = useCallback(
+      (selected: PlatformEntity['id'][]) => {
+        dispatch(
+          filteredVaultsActions.setPlatformIds(
+            selected.length === platformsIds.length ? [] : selected
+          )
+        );
+      },
+      [dispatch, platformsIds]
+    );
+
+    return (
+      <LabeledSearchMultiSelect
+        label={t('Filter-Platform')}
+        onChange={handleChange}
+        value={platformsIds}
+        options={options}
+        sortOptions="label"
+        fullWidth={true}
+        placement={placement}
+        dropdownFlip={dropDownFlip}
+        dropdownShift={dropDownShift}
+        disableAutoHeightOnFocus={disableAutoHeightOnFocus}
+      />
+    );
+  }
+);

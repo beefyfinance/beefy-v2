@@ -36,7 +36,11 @@ function useFilteredSortedOptions(
 
 const useStyles = makeStyles(styles);
 
-export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
+type LabeledMultiSelectSearchProps = LabeledMultiSelectProps & {
+  disableAutoHeightOnFocus?: boolean;
+};
+
+export const LabeledSearchMultiSelect = memo<LabeledMultiSelectSearchProps>(
   function LabeledSearchMultiSelect({
     label,
     options,
@@ -55,10 +59,12 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
     dropdownAutoHeight = true,
     dropdownShift = true,
     dropdownFlip = true,
+    disableAutoHeightOnFocus,
   }) {
     const { t } = useTranslation();
     const classes = useStyles();
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isFocused, setIsFocused] = useState<boolean>(false);
     const allKey = 'all';
     const [inputText, setInputText] = useState<string>('');
     const anchorEl = useRef<HTMLButtonElement | null>(null);
@@ -84,6 +90,14 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
       [setInputText]
     );
 
+    const handleFocus = useCallback(() => {
+      setIsFocused(true);
+    }, [setIsFocused]);
+
+    const handleOnBlur = useCallback(() => {
+      setIsFocused(false);
+    }, [setIsFocused]);
+
     const handleClearInput = useCallback(() => {
       setInputText('');
     }, [setInputText]);
@@ -103,6 +117,10 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
       },
       [value, options, onChange, allKey]
     );
+
+    const autoHeight = useMemo(() => {
+      return (disableAutoHeightOnFocus && isFocused) || dropdownAutoHeight;
+    }, [disableAutoHeightOnFocus, dropdownAutoHeight, isFocused]);
 
     const handleAvoidClosePopUp = useCallback<MouseEventHandler<HTMLInputElement>>(e => {
       e.stopPropagation();
@@ -143,12 +161,14 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
             anchorEl={anchorEl}
             placement={placement}
             className={classes.dropdown}
-            autoHeight={dropdownAutoHeight}
+            autoHeight={autoHeight}
             flip={dropdownFlip}
             shift={dropdownShift}
           >
             <div className={classes.inputContainer}>
               <Search
+                onFocus={handleFocus}
+                onBlur={handleOnBlur}
                 className={classes.searchBar}
                 searchText={inputText}
                 handleSearchText={handleInputChange}
