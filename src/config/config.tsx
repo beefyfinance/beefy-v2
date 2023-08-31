@@ -671,6 +671,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'DAI+',
       'wUSDR',
       'MAI',
+      'DOLA',
     ],
   },
   aurora: {
