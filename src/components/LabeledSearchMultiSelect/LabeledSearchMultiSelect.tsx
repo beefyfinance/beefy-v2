@@ -119,7 +119,11 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectSearchProps>(
     );
 
     const autoHeight = useMemo(() => {
-      return (disableAutoHeightOnFocus && isFocused) || dropdownAutoHeight;
+      if (isFocused && disableAutoHeightOnFocus) {
+        return false;
+      }
+
+      return dropdownAutoHeight;
     }, [disableAutoHeightOnFocus, dropdownAutoHeight, isFocused]);
 
     const handleAvoidClosePopUp = useCallback<MouseEventHandler<HTMLInputElement>>(e => {
@@ -164,6 +168,7 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectSearchProps>(
             autoHeight={autoHeight}
             flip={dropdownFlip}
             shift={dropdownShift}
+            autoHide={false}
           >
             <div className={classes.inputContainer}>
               <Search
