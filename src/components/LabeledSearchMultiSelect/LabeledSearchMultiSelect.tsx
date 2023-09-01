@@ -36,11 +36,7 @@ function useFilteredSortedOptions(
 
 const useStyles = makeStyles(styles);
 
-type LabeledMultiSelectSearchProps = LabeledMultiSelectProps & {
-  disableAutoHeightOnFocus?: boolean;
-};
-
-export const LabeledSearchMultiSelect = memo<LabeledMultiSelectSearchProps>(
+export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
   function LabeledSearchMultiSelect({
     label,
     options,
@@ -56,15 +52,14 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectSearchProps>(
     onChange,
     fullWidth = false,
     borderless = false,
-    dropdownAutoHeight = true,
     dropdownShift = true,
     dropdownFlip = true,
-    disableAutoHeightOnFocus,
+    dropdownAutoHide = true,
   }) {
     const { t } = useTranslation();
     const classes = useStyles();
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [isFocused, setIsFocused] = useState<boolean>(false);
+
     const allKey = 'all';
     const [inputText, setInputText] = useState<string>('');
     const anchorEl = useRef<HTMLButtonElement | null>(null);
@@ -90,14 +85,6 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectSearchProps>(
       [setInputText]
     );
 
-    const handleFocus = useCallback(() => {
-      setIsFocused(true);
-    }, [setIsFocused]);
-
-    const handleOnBlur = useCallback(() => {
-      setIsFocused(false);
-    }, [setIsFocused]);
-
     const handleClearInput = useCallback(() => {
       setInputText('');
     }, [setInputText]);
@@ -117,14 +104,6 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectSearchProps>(
       },
       [value, options, onChange, allKey]
     );
-
-    const autoHeight = useMemo(() => {
-      if (isFocused && disableAutoHeightOnFocus) {
-        return false;
-      }
-
-      return dropdownAutoHeight;
-    }, [disableAutoHeightOnFocus, dropdownAutoHeight, isFocused]);
 
     const handleAvoidClosePopUp = useCallback<MouseEventHandler<HTMLInputElement>>(e => {
       e.stopPropagation();
@@ -165,15 +144,12 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectSearchProps>(
             anchorEl={anchorEl}
             placement={placement}
             className={classes.dropdown}
-            autoHeight={autoHeight}
             flip={dropdownFlip}
             shift={dropdownShift}
-            autoHide={false}
+            autoHide={dropdownAutoHide}
           >
             <div className={classes.inputContainer}>
               <Search
-                onFocus={handleFocus}
-                onBlur={handleOnBlur}
                 className={classes.searchBar}
                 searchText={inputText}
                 handleSearchText={handleInputChange}

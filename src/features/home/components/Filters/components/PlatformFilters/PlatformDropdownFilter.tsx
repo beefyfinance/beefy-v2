@@ -12,16 +12,10 @@ interface PlatformDropdownFilterProps {
   placement?: LabeledSelectCommonProps['placement'];
   dropDownShift?: LabeledSelectCommonProps['dropdownShift'];
   dropDownFlip?: LabeledSelectCommonProps['dropdownFlip'];
-  disableAutoHeightOnFocus?: boolean;
 }
 
 export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
-  function PlatformDropdownFilter({
-    placement,
-    dropDownFlip,
-    dropDownShift,
-    disableAutoHeightOnFocus,
-  }) {
+  function PlatformDropdownFilter({ placement, dropDownFlip, dropDownShift }) {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const platforms = useAppSelector(selectFilterPlatforms);
@@ -54,7 +48,7 @@ export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
         placement={placement}
         dropdownFlip={dropDownFlip}
         dropdownShift={dropDownShift}
-        disableAutoHeightOnFocus={disableAutoHeightOnFocus}
+        dropdownAutoHide={false}
       />
     );
   }
