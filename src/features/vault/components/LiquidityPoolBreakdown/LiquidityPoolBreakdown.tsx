@@ -35,7 +35,7 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
     const { t } = useTranslation();
     const calculatedBreakdown = useCalculatedBreakdown(vault, breakdown);
     const { userBalance } = calculatedBreakdown;
-    const [tab, setTab] = useState<BreakdownMode>(userBalance.gt(BIG_ZERO) ? 'user' : 'one');
+    const [tab, setTab] = useState<BreakdownMode>(userBalance.gt(BIG_ZERO) ? 'user' : 'total');
     const [haveSwitchedTab, setHaveSwitchedTab] = useState(false);
 
     const tabs: Partial<Record<BreakdownMode, string>> = useMemo(() => {

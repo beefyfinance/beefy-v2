@@ -33,8 +33,8 @@ export const ExtendedFilters = memo<ExtendedFiltersProps>(function ExtendedFilte
         label={t('Filter-Retired')}
       />
       <CheckboxFilter className={classes.checkbox} filter="onlyPaused" label={t('Filter-Paused')} />
-      {!desktopView ? <VaultCategoryDropdownFilter className={classes.select} /> : null}
-      <PlatformDropdownFilter className={classes.select} />
+      {!desktopView ? <VaultCategoryDropdownFilter /> : null}
+      <PlatformDropdownFilter />
     </div>
   );
 });

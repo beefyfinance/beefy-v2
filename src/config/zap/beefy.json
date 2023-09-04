@@ -66,6 +66,11 @@
   },
   {
     "chainId": "base",
+    "ammId": "base-baso",
+    "zapAddress": "0x6683B3c87913a91856c21ACF2D051dcdDf684c65"
+  },
+  {
+    "chainId": "base",
     "ammId": "base-bvm",
     "zapAddress": "0x5d2EF803D6e255eF4D1c66762CBc8845051B54dB"
   },
@@ -288,6 +293,11 @@
     "chainId": "optimism",
     "ammId": "optimism-velodrome",
     "zapAddress": "0x9b50B06B81f033ca86D70F0a44F30BD7E0155737"
+  },
+  {
+    "chainId": "base",
+    "ammId": "base-aerodrome",
+    "zapAddress": "0x4d5bBce91D9bf7434Bf358C1199C8a9c33303787"
   },
   {
     "chainId": "optimism",
