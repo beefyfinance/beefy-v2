@@ -20043,7 +20043,8 @@
     "earnContractAddress": "0xf867cD98F3762D899F5F26FF5Dd62A5C566A3E0C",
     "oracle": "lps",
     "oracleId": "ellipsis-2brl",
-    "status": "active",
+    "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "dotdot",
     "assets": ["jBRL", "BRZ"],
     "risks": [
