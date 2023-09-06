@@ -1645,7 +1645,8 @@
     "earnContractAddress": "0x4D323f77c32EDdC62BF8eAbA11E5C573FD0a2ccd",
     "oracle": "lps",
     "oracleId": "sushi-arb-dpx-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["DPX", "ETH"],
     "risks": [
