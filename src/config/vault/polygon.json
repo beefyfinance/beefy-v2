@@ -2952,7 +2952,8 @@
     "earnContractAddress": "0x944A5C12cD4399ABC6883fF1ba40A14c23B2Fd37",
     "oracle": "lps",
     "oracleId": "mai-qi-matic",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "mai",
     "assets": ["QI", "MATIC"],
     "risks": [

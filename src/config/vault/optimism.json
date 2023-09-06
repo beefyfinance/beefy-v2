@@ -2901,7 +2901,7 @@
     "earnContractAddress": "0x209BA9406D5aC69c28A9a64A27932A8236dC3227",
     "oracle": "tokens",
     "oracleId": "beOPX",
-    "status": "active",
+    "status": "paused",
     "platformId": "beefy",
     "assets": ["beOPX"],
     "risks": [

@@ -1614,7 +1614,8 @@
     "earnContractAddress": "0x5A8beF2fEb83057bBCcC81cea985a94a62A86208",
     "oracle": "lps",
     "oracleId": "sushi-arb-rdpx-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["RDPX", "ETH"],
     "risks": [
