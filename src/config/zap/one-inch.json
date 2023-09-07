@@ -133,7 +133,7 @@
       "ETH",
       "WETH",
       "OP",
-      "USDC",
+      "USDCe",
       "USDT",
       "DAI",
       "MAI",
@@ -146,7 +146,7 @@
       "ETH",
       "OP",
       "BIFI",
-      "USDC",
+      "USDCe",
       "USDT",
       "DAI",
       "MAI",
@@ -181,7 +181,8 @@
       "USX",
       "wUSDR",
       "MLP",
-      "DAI+"
+      "DAI+",
+      "USDC"
     ],
     "blockedVaults": ["aavev3-op-eth", "exactly-supply-eth"]
   },
