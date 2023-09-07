@@ -85,8 +85,8 @@
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/ETH/OP",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/optimism/details/weth-op-3000-narrow",
-    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/optimism/details/weth-op-3000-narrow",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-narrow",
     "network": "optimism",
     "createdAt": 1691433584
   },
@@ -108,8 +108,8 @@
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/ETH/OP",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/optimism/details/weth-op-3000-wide",
-    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/optimism/details/weth-op-3000-wide",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-wide",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-wide",
     "network": "optimism",
     "createdAt": 1691433584
   },
@@ -292,7 +292,7 @@
     "earnContractAddress": "0xBe0eB1af5d47b118fC24987EA85a20dFa3a98303",
     "oracle": "tokens",
     "oracleId": "OP",
-    "status": "paused",
+    "status": "active",
     "platformId": "exactly",
     "assets": ["OP"],
     "risks": [
@@ -306,7 +306,7 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/OP",
     "network": "optimism",
-    "createdAt": 1690301358
+    "createdAt": 1694023422
   },
   {
     "id": "velodrome-v2-frax-op",
@@ -2038,7 +2038,7 @@
     "earnContractAddress": "0x1910CCeCC57869F1Ff2337dda001246B92E8418A",
     "oracle": "tokens",
     "oracleId": "wstETH",
-    "status": "paused",
+    "status": "active",
     "platformId": "exactly",
     "assets": ["wstETH"],
     "risks": [
@@ -2052,7 +2052,7 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/wstETH",
     "network": "optimism",
-    "createdAt": 1690301357
+    "createdAt": 1694023422
   },
   {
     "id": "velodrome-frax-usd+",
@@ -2204,7 +2204,7 @@
     "earnContractAddress": "0xE7db4eA58560D4678DF204165D1f50d18185BC89",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "paused",
+    "status": "active",
     "platformId": "exactly",
     "assets": ["USDC"],
     "risks": [
@@ -2218,7 +2218,7 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/USDC",
     "network": "optimism",
-    "createdAt": 1690301357
+    "createdAt": 1694023422
   },
   {
     "id": "exactly-supply-eth",
@@ -2230,7 +2230,7 @@
     "earnContractAddress": "0x0Bf7616889d0ae18382d9715eAc00a3302e9aB92",
     "oracle": "tokens",
     "oracleId": "ETH",
-    "status": "paused",
+    "status": "active",
     "platformId": "exactly",
     "assets": ["ETH"],
     "risks": [
@@ -2244,7 +2244,7 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/USDC/WETH",
     "network": "optimism",
-    "createdAt": 1690301357
+    "createdAt": 1694023422
   },
   {
     "id": "velodrome-frax-alusd",
@@ -2901,7 +2901,7 @@
     "earnContractAddress": "0x209BA9406D5aC69c28A9a64A27932A8236dC3227",
     "oracle": "tokens",
     "oracleId": "beOPX",
-    "status": "active",
+    "status": "paused",
     "platformId": "beefy",
     "assets": ["beOPX"],
     "risks": [
