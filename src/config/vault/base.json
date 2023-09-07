@@ -7,7 +7,7 @@
     "tokenDecimals": 18,
     "tokenProviderId": "aerodrome",
     "tokenAmmId": "base-aerodrome",
-    "earnedToken": "mooAeroWETH-DAI",
+    "earnedToken": "mooAeroUSDC-USDbC",
     "earnedTokenAddress": "0x4Fc0E7cDfe0CF92762eaf3CEE9133239A2197391",
     "earnContractAddress": "0x4Fc0E7cDfe0CF92762eaf3CEE9133239A2197391",
     "oracle": "lps",
