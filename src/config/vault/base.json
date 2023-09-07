@@ -188,7 +188,7 @@
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-4/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-4/withdraw",
     "network": "base",
-    "createdAt": 1694093277
+    "createdAt": 1694096967
   },
   {
     "id": "curve-base-4pool",
@@ -211,7 +211,7 @@
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-1/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-1/withdraw",
     "network": "base",
-    "createdAt": 1694093269
+    "createdAt": 1694096967
   },
   {
     "id": "curve-base-tricrypto",
@@ -234,7 +234,7 @@
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-tricrypto-1/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-tricrypto-1/withdraw",
     "network": "base",
-    "createdAt": 1694093257
+    "createdAt": 1694096967
   },
   {
     "id": "curve-base-cbeth",
@@ -257,7 +257,7 @@
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-1/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-1/withdraw",
     "network": "base",
-    "createdAt": 1694093130
+    "createdAt": 1694096967
   },
   {
     "id": "aerodrome-dola-mai",
