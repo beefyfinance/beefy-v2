@@ -220,7 +220,8 @@
     "earnContractAddress": "0xe4e41EBFF70BD98709D19aC787fBb3A39FE5C61D",
     "oracle": "lps",
     "oracleId": "beets-a-layered-quartet",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beethovenx",
     "assets": ["FTM", "lzUSDC", "lzWETH", "lzWBTC"],
     "risks": [
@@ -465,7 +466,8 @@
     "earnContractAddress": "0x6f37aA11f06FE9c151c8ef1C971705D2Fdfb9e27",
     "oracle": "lps",
     "oracleId": "beets-ankr-fantom-liquid-mosaic",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beethovenx",
     "assets": ["ankrFTM", "FTM"],
     "risks": [
