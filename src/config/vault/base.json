@@ -506,6 +506,36 @@
     "createdAt": 1692735752
   },
   {
+    "id": "bvm-usdc-usdbc",
+    "name": "USDC-USDbC sLP",
+    "token": "USDC-USDbC sLP",
+    "tokenAddress": "0x9F773b35c711F32E77842EC61d063c7374FE07b6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "bvm",
+    "tokenAmmId": "base-bvm",
+    "earnedToken": "mooBVMUSDC-USDbC",
+    "earnedTokenAddress": "0x6525626B897CC8E8649C8CB0c52D15527e72874C",
+    "earnContractAddress": "0x6525626B897CC8E8649C8CB0c52D15527e72874C",
+    "oracle": "lps",
+    "oracleId": "bvm-usdc-usdbc",
+    "status": "active",
+    "platformId": "bvm",
+    "assets": ["USDC", "USDbC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x9f773b35c711f32e77842ec61d063c7374fe07b6/0x500ce1cbb5327ec212b2a501f6438af0290c7485",
+    "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x9f773b35c711f32e77842ec61d063c7374fe07b6/0x500ce1cbb5327ec212b2a501f6438af0290c7485",
+    "network": "base",
+    "createdAt": 1694068320
+  },
+  {
     "id": "bvm-dai-usdbc",
     "name": "DAI-USDbC sLP",
     "token": "DAI-USDbC sLP",
