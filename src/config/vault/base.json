@@ -20,7 +20,7 @@
     "addLiquidityUrl": "https://aerodrome.finance/connect?token0=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1694040069
+    "createdAt": 1694096966
   },
   {
     "id": "aerodrome-weth-dai",
@@ -43,7 +43,191 @@
     "addLiquidityUrl": "https://aerodrome.finance/connect?token0=0x4200000000000000000000000000000000000006&token1=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1694040069
+    "createdAt": 1694096966
+  },
+  {
+    "id": "baseswap-axlwbtc-usdbc",
+    "name": "axlWBTC-USDbC LP",
+    "token": "axlWBTC-USDbC LP",
+    "tokenAddress": "0x317d373E590795e2c09D73FaD7498FC98c0A692B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "tokenAmmId": "base-baseswap",
+    "earnedToken": "mooBaseSwapaxlWBTC-USDbC",
+    "earnedTokenAddress": "0xC81C310cf5Cb1c9167808a241bBaeA7ebDFBFCFB",
+    "earnContractAddress": "0xC81C310cf5Cb1c9167808a241bBaeA7ebDFBFCFB",
+    "oracle": "lps",
+    "oracleId": "baseswap-axlwbtc-usdbc",
+    "status": "active",
+    "platformId": "baseswap",
+    "assets": ["axlWBTC", "USDbC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://baseswap.fi/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x1a35EE4640b0A3B87705B0A4B45D227Ba60Ca2ad",
+    "removeLiquidityUrl": "https://baseswap.fi/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x1a35EE4640b0A3B87705B0A4B45D227Ba60Ca2ad",
+    "network": "base",
+    "createdAt": 1693580890
+  },
+  {
+    "id": "baseswap-usd+-usdbc",
+    "name": "USD+-USDbC LP",
+    "token": "USD+-USDbC LP",
+    "tokenAddress": "0x696b4d181Eb58cD4B54a59d2Ce834184Cf7Ac31A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "tokenAmmId": "base-baseswap",
+    "earnedToken": "mooBaseSwapUSD+-USDbC",
+    "earnedTokenAddress": "0x8EF290327aD528b620df470Ab261A99E9923e6aB",
+    "earnContractAddress": "0x8EF290327aD528b620df470Ab261A99E9923e6aB",
+    "oracle": "lps",
+    "oracleId": "baseswap-usd+-usdbc",
+    "status": "active",
+    "platformId": "baseswap",
+    "assets": ["USD+", "USDbC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://baseswap.fi/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376",
+    "removeLiquidityUrl": "https://baseswap.fi/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376",
+    "network": "base",
+    "createdAt": 1693580890
+  },
+  {
+    "id": "baseswap-dai+-usd+",
+    "name": "DAI+-USD+ LP",
+    "token": "DAI+-USD+ LP",
+    "tokenAddress": "0x7Fb35b3967798cE8322cC50eF52553BC5Ee4c306",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "tokenAmmId": "base-baseswap",
+    "earnedToken": "mooBaseSwapDAI+-USD+",
+    "earnedTokenAddress": "0xd4620f3Ecc979E484831A81CAC12b76eaA0c4919",
+    "earnContractAddress": "0xd4620f3Ecc979E484831A81CAC12b76eaA0c4919",
+    "oracle": "lps",
+    "oracleId": "baseswap-dai+-usd+",
+    "status": "active",
+    "platformId": "baseswap",
+    "assets": ["DAI+", "USD+"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://baseswap.fi/add/0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376/0x65a2508C429a6078a7BC2f7dF81aB575BD9D9275",
+    "removeLiquidityUrl": "https://baseswap.fi/remove/0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376/0x65a2508C429a6078a7BC2f7dF81aB575BD9D9275",
+    "network": "base",
+    "createdAt": 1693580890
+  },
+  {
+    "id": "curve-base-crv",
+    "name": "CRV/crvUSD",
+    "token": "CRV crvUSD-f",
+    "tokenAddress": "0x6DfE79cecE4f64c1a34F48cF5802492aB595257E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "tokenAmmId": "base-curve",
+    "earnedToken": "mooCurveCRV-crvUSD",
+    "earnedTokenAddress": "0xea33CcE28b3AbcE269f7D566e1F5F0F92C2b899B",
+    "earnContractAddress": "0xea33CcE28b3AbcE269f7D566e1F5F0F92C2b899B",
+    "oracle": "lps",
+    "oracleId": "curve-base-crv",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["CRV", "crvUSD"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-4/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-4/withdraw",
+    "network": "base",
+    "createdAt": 1694093277
+  },
+  {
+    "id": "curve-base-4pool",
+    "name": "USDC/axlUSDC/crvUSD",
+    "token": "4poolUSD-f",
+    "tokenAddress": "0xf6C5F01C7F3148891ad0e19DF78743D31E390D1f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "tokenAmmId": "base-curve",
+    "earnedToken": "mooCurve4pool",
+    "earnedTokenAddress": "0xC3718d05478Edab1C40F84E8a7A65ca49D039A9f",
+    "earnContractAddress": "0xC3718d05478Edab1C40F84E8a7A65ca49D039A9f",
+    "oracle": "lps",
+    "oracleId": "curve-base-4pool",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["USDC", "USDbC", "axlUSDC", "crvUSD"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-1/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-1/withdraw",
+    "network": "base",
+    "createdAt": 1694093269
+  },
+  {
+    "id": "curve-base-tricrypto",
+    "name": "TriCrypto",
+    "token": "tricrypto",
+    "tokenAddress": "0x6e53131F68a034873b6bFA15502aF094Ef0c5854",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "tokenAmmId": "base-curve",
+    "earnedToken": "mooCurveTriCrypto",
+    "earnedTokenAddress": "0x70c958d1F28f736f21140076d82B1e1e26D5e78B",
+    "earnContractAddress": "0x70c958d1F28f736f21140076d82B1e1e26D5e78B",
+    "oracle": "lps",
+    "oracleId": "curve-base-tricrypto",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["crvUSD", "tBTC", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-tricrypto-1/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-tricrypto-1/withdraw",
+    "network": "base",
+    "createdAt": 1694093257
+  },
+  {
+    "id": "curve-base-cbeth",
+    "name": "cbETH/ETH",
+    "token": "cbeth-f",
+    "tokenAddress": "0x98244d93D42b42aB3E3A4D12A5dc0B3e7f8F32f9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "tokenAmmId": "base-curve",
+    "earnedToken": "mooCurveCbETH",
+    "earnedTokenAddress": "0xa06C351648dA44078a36c811285ee5eBE74bA089",
+    "earnContractAddress": "0xa06C351648dA44078a36c811285ee5eBE74bA089",
+    "oracle": "lps",
+    "oracleId": "curve-base-cbeth",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["cbETH", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-1/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-1/withdraw",
+    "network": "base",
+    "createdAt": 1694093130
   },
   {
     "id": "aerodrome-dola-mai",
@@ -736,7 +920,7 @@
     "addLiquidityUrl": "hhttps://baseswap.fi/add/0x4200000000000000000000000000000000000006/0x6B4712AE9797C199edd44F897cA09BC57628a1CF",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0x4200000000000000000000000000000000000006/0x6B4712AE9797C199edd44F897cA09BC57628a1CF",
     "network": "base",
-    "createdAt": 1692138658
+    "createdAt": 1693580890
   },
   {
     "id": "alienbase-dai+-usd+",
@@ -1390,7 +1574,7 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x4A3A6Dd60A34bB2Aba60D73B4C88315E9CeB6A3D",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x4A3A6Dd60A34bB2Aba60D73B4C88315E9CeB6A3D",
     "network": "base",
-    "createdAt": 1691344980
+    "createdAt": 1693580890
   },
   {
     "id": "baseswap-cbeth-weth",
@@ -1420,7 +1604,7 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0x4200000000000000000000000000000000000006/0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0x4200000000000000000000000000000000000006/0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     "network": "base",
-    "createdAt": 1691178398
+    "createdAt": 1693580890
   },
   {
     "id": "baseswap-dai-usdbc",
@@ -1450,7 +1634,7 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
     "network": "base",
-    "createdAt": 1691178398
+    "createdAt": 1693580890
   },
   {
     "id": "baseswap-weth-axlusdc",
@@ -1480,7 +1664,7 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0x4200000000000000000000000000000000000006/0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0x4200000000000000000000000000000000000006/0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "network": "base",
-    "createdAt": 1691178398
+    "createdAt": 1693580890
   },
   {
     "id": "baseswap-weth-usdbc",
@@ -1510,7 +1694,7 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0x4200000000000000000000000000000000000006/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0x4200000000000000000000000000000000000006/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "network": "base",
-    "createdAt": 1691178398
+    "createdAt": 1693580890
   },
   {
     "id": "balancer-base-eth-bbsusd",
