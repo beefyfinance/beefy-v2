@@ -1,5 +1,35 @@
 [
   {
+    "id": "baseswap-mai-usdbc",
+    "name": "MAI-USDbC LP",
+    "token": "MAI-USDbC LP",
+    "tokenAddress": "0x9e574f9aD6ca1833f60d5bB21655dd45278A6e3A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "tokenAmmId": "base-baseswap",
+    "earnedToken": "mooBaseSwapMAI-USDbC",
+    "earnedTokenAddress": "0x777d77600181C4bF32e0eEB6ffEa8C67C66bB70e",
+    "earnContractAddress": "0x777d77600181C4bF32e0eEB6ffEa8C67C66bB70e",
+    "oracle": "lps",
+    "oracleId": "baseswap-mai-usdbc",
+    "status": "active",
+    "platformId": "baseswap",
+    "assets": ["MAI", "USDbC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://baseswap.fi/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0xbf1aeA8670D2528E08334083616dD9C5F3B087aE",
+    "removeLiquidityUrl": "https://baseswap.fi/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0xbf1aeA8670D2528E08334083616dD9C5F3B087aE",
+    "network": "base",
+    "createdAt": 1693944220
+  },
+  {
     "id": "baseswap-axlwbtc-usdbc",
     "name": "axlWBTC-USDbC LP",
     "token": "axlWBTC-USDbC LP",
