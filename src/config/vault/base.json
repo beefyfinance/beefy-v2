@@ -1,5 +1,63 @@
 [
   {
+    "id": "balancer-base-usdc-usdbc-axlusdc",
+    "name": "USDC/USDbC/axlUSDC",
+    "token": "USDC/USDbC/axlUSDC Base",
+    "tokenAddress": "0x0C659734f1eEF9C63B7Ebdf78a164CDd745586Db",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerBaseUSDC/USDbC/axlUSDC",
+    "earnedTokenAddress": "0x18A86f5E00200E1Df11210579fe6CdE565112bB8",
+    "earnContractAddress": "0x18A86f5E00200E1Df11210579fe6CdE565112bB8",
+    "oracle": "lps",
+    "oracleId": "balancer-base-usdc-usdbc-axlusdc",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["USDC", "USDbC", "axlUSDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0x0c659734f1eef9c63b7ebdf78a164cdd745586db000000000000000000000046/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0x0c659734f1eef9c63b7ebdf78a164cdd745586db000000000000000000000046/withdraw",
+    "network": "base",
+    "createdAt": 1694110890
+  },
+  {
+    "id": "balancer-base-weth-reth",
+    "name": "rETH-ETH",
+    "token": "rETH-ETH Base",
+    "tokenAddress": "0xC771c1a5905420DAEc317b154EB13e4198BA97D0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerBaseWETH-rETH",
+    "earnedTokenAddress": "0x77B3B76A68B89541Cbb60d3609988376290Cb929",
+    "earnContractAddress": "0x77B3B76A68B89541Cbb60d3609988376290Cb929",
+    "oracle": "lps",
+    "oracleId": "balancer-base-weth-reth",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["rETH", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xc771c1a5905420daec317b154eb13e4198ba97d0000000000000000000000023/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xc771c1a5905420daec317b154eb13e4198ba97d0000000000000000000000023/withdraw",
+    "network": "base",
+    "createdAt": 1694110890
+  },
+  {
     "id": "aerodrome-weth-well",
     "name": "WELL-ETH vLP",
     "token": "vAMM-WETH/WELL",
@@ -1497,6 +1555,6 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/withdraw",
     "network": "base",
-    "createdAt": 1692297664
+    "createdAt": 1694110890
   }
 ]
