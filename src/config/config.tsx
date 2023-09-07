@@ -638,7 +638,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     new: true,
     name: 'Base',
     chainId: 8453,
-    rpc: ['https://mainnet.base.org'],
+    rpc: ['https://rpc.ankr.com/base'],
     explorerUrl: 'https://basescan.org',
     multicallAddress: '0xbA790ec6F95D68123E772A43b314464585B311b4',
     appMulticallContractAddress: '0x354D3d7B61230C88F5f50176d9329d13366FbC28',
@@ -651,7 +651,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://mainnet.base.org'],
+      rpcUrls: ['https://rpc.ankr.com/base'],
       blockExplorerUrls: ['https://basescan.org/'],
     },
     gas: {
@@ -673,6 +673,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'wUSDR',
       'MAI',
       'DOLA',
+      'USDC',
     ],
   },
   aurora: {
