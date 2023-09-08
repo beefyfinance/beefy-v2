@@ -1811,6 +1811,6 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/withdraw",
     "network": "base",
-    "createdAt": 1692297664
+    "createdAt": 1694131744
   }
 ]
