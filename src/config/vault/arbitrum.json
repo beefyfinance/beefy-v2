@@ -12,7 +12,7 @@
     "oracle": "lps",
     "oracleId": "balancer-usdc-dai-usdt-usdce",
     "status": "active",
-    "platformId": "balancer",
+    "platformId": "aura",
     "assets": ["USDC", "DAI", "USDT", "USDCe"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -26,7 +26,7 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x423a1323c871abc9d89eb06855bf5347048fc4a5000000000000000000000496/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x423a1323c871abc9d89eb06855bf5347048fc4a5000000000000000000000496/withdraw",
     "network": "arbitrum",
-    "createdAt": 1693226111
+    "createdAt": 1694164215
   },
   {
     "id": "balancer-weth-reth",
@@ -70,7 +70,7 @@
     "oracle": "lps",
     "oracleId": "balancer-wsteth-weth-v3",
     "status": "active",
-    "platformId": "balancer",
+    "platformId": "aura",
     "assets": ["wstETH", "ETH"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -84,7 +84,7 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x9791d590788598535278552eecd4b211bfc790cb000000000000000000000498/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x9791d590788598535278552eecd4b211bfc790cb000000000000000000000498/withdraw",
     "network": "arbitrum",
-    "createdAt": 1693226111
+    "createdAt": 1694164215
   },
   {
     "id": "aura-cbeth-wsteth-reth",
@@ -2163,7 +2163,7 @@
     "oracle": "lps",
     "oracleId": "balancer-wsteth-eth-v2",
     "status": "active",
-    "platformId": "balancer",
+    "platformId": "aura",
     "assets": ["wstETH", "ETH"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -2177,7 +2177,7 @@
     "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/invest",
     "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/withdraw",
     "network": "arbitrum",
-    "createdAt": 1685364888
+    "createdAt": 1694164215
   },
   {
     "id": "curve-arb-f-fraxbp",

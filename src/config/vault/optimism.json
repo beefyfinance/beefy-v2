@@ -4176,14 +4176,14 @@
     "oracle": "lps",
     "oracleId": "beets-rocket-fuel",
     "status": "active",
-    "platformId": "beethovenx",
+    "platformId": "aura",
     "assets": ["ETH", "rETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x4fd63966879300cafafbb35d157dc5229278ed2300020000000000000000002b",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x4fd63966879300cafafbb35d157dc5229278ed2300020000000000000000002b",
     "network": "optimism",
-    "createdAt": 1685364888
+    "createdAt": 1694164215
   },
   {
     "id": "velodrome-susd-lusd",
