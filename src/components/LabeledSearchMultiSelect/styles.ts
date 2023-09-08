@@ -65,9 +65,12 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#303550',
     padding: `${8 - 2}px 0`,
     color: '#D0D0DA',
-    maxhHeight: '300px',
+    maxHeight: '350px',
     overflowX: 'hidden' as const,
     overflowY: 'auto' as const,
+    [theme.breakpoints.only('xs')]: {
+      maxHeight: '250px',
+    },
   },
   dropdownItem: {
     display: 'flex',
