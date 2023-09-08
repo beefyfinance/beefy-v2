@@ -27,7 +27,67 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0x4200000000000000000000000000000000000006/0xd5046B976188EB40f6DE40fB527F89c05b323385",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0x4200000000000000000000000000000000000006/0xd5046B976188EB40f6DE40fB527F89c05b323385",
     "network": "base",
-    "createdAt": 1694111434
+    "createdAt": 1694180071
+  },
+  {
+    "id": "baseswap-usdc-usdbc",
+    "name": "USDC-USDbC LP",
+    "token": "USDC-USDbC LP",
+    "tokenAddress": "0xC52328d5Af54A12DA68459Ffc6D0845e91a8395F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "tokenAmmId": "base-baseswap",
+    "earnedToken": "mooBaseSwapUSDC-USDbC",
+    "earnedTokenAddress": "0xD0B67B8cA8bF17a6483cFcf39dB8e5bA0929A4cD",
+    "earnContractAddress": "0xD0B67B8cA8bF17a6483cFcf39dB8e5bA0929A4cD",
+    "oracle": "lps",
+    "oracleId": "baseswap-usdc-usdbc",
+    "status": "active",
+    "platformId": "baseswap",
+    "assets": ["USDC", "USDbC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://baseswap.fi/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "removeLiquidityUrl": "https://baseswap.fi/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "network": "base",
+    "createdAt": 1694180071
+  },
+  {
+    "id": "baseswap-weth-usdc",
+    "name": "USDC-ETH LP",
+    "token": "USDC-ETH LP",
+    "tokenAddress": "0xab067c01C7F5734da168C699Ae9d23a4512c9FdB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "tokenAmmId": "base-baseswap",
+    "earnedToken": "mooBaseSwapWETH-USDC",
+    "earnedTokenAddress": "0x408A31d0fF08a8bF2048b6d5c9AE27FF26934BB2",
+    "earnContractAddress": "0x408A31d0fF08a8bF2048b6d5c9AE27FF26934BB2",
+    "oracle": "lps",
+    "oracleId": "baseswap-weth-usdc",
+    "status": "active",
+    "platformId": "baseswap",
+    "assets": ["USDC", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://baseswap.fi/add/0x4200000000000000000000000000000000000006/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "removeLiquidityUrl": "https://baseswap.fi/remove/0x4200000000000000000000000000000000000006/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "network": "base",
+    "createdAt": 1694180071
   },
   {
     "id": "baseswap-weth-dai",
@@ -57,7 +117,7 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb/0x4200000000000000000000000000000000000006",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb/0x4200000000000000000000000000000000000006",
     "network": "base",
-    "createdAt": 1694111434
+    "createdAt": 1694180071
   },
   {
     "id": "aerodrome-usdc-usdbc",
