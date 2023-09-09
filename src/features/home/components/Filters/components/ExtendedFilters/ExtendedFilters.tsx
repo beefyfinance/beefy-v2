@@ -1,6 +1,7 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { PlatformDropdownFilter } from '../PlatformFilters';
 import { styles } from './styles';
 import { VaultCategoryDropdownFilter } from '../VaultCategoryFilters';
@@ -18,6 +19,12 @@ export const ExtendedFilters = memo<ExtendedFiltersProps>(function ExtendedFilte
   const { t } = useTranslation();
   const classes = useStyles();
 
+  const mobileView = useMediaQuery((theme: Theme) => theme.breakpoints.only('xs'), { noSsr: true });
+
+  const platformFilterPlacement = useMemo(() => {
+    return mobileView ? 'top-start' : 'bottom-start';
+  }, [mobileView]);
+
   return (
     <div className={classes.extendedFilters}>
       <ShownVaultsCount className={classes.shownVaultsCount} />
@@ -34,7 +41,7 @@ export const ExtendedFilters = memo<ExtendedFiltersProps>(function ExtendedFilte
       />
       <CheckboxFilter className={classes.checkbox} filter="onlyPaused" label={t('Filter-Paused')} />
       {!desktopView ? <VaultCategoryDropdownFilter /> : null}
-      <PlatformDropdownFilter />
+      <PlatformDropdownFilter placement={platformFilterPlacement} />
     </div>
   );
 });
