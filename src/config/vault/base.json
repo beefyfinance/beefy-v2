@@ -216,7 +216,7 @@
   },
   {
     "id": "curve-base-4pool",
-    "name": "USDC/axlUSDC/crvUSD",
+    "name": "USDC/USDbc/axlUSDC/crvUSD",
     "token": "4poolUSD-f",
     "tokenAddress": "0xf6C5F01C7F3148891ad0e19DF78743D31E390D1f",
     "tokenDecimals": 18,
