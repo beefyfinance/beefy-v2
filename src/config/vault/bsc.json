@@ -20043,8 +20043,7 @@
     "earnContractAddress": "0xf867cD98F3762D899F5F26FF5Dd62A5C566A3E0C",
     "oracle": "lps",
     "oracleId": "ellipsis-2brl",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "dotdot",
     "assets": ["jBRL", "BRZ"],
     "risks": [
@@ -20061,7 +20060,7 @@
     "addLiquidityUrl": "https://ellipsis.finance/pool/0xad51e40D8f255dba1Ad08501D6B1a6ACb7C188f3",
     "removeLiquidityUrl": "https://ellipsis.finance/pool/0xad51e40D8f255dba1Ad08501D6B1a6ACb7C188f3",
     "network": "bsc",
-    "createdAt": 1658410689
+    "createdAt": 1694193558
   },
   {
     "id": "ellipsis-3brl",
