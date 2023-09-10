@@ -1596,8 +1596,8 @@
     ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap?fromCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&fromChainId=42161&toCurrency=0x912CE59144191C1204E64559FE8253a0e49E6548&toChainId=42161",
-    "addLiquidityUrl": "https://www.sushi.com/earn/42161:0xBF6CBb1F40a542aF50839CaD01b0dc1747F11e18/add",
-    "removeLiquidityUrl": "https://www.sushi.com/earn/42161:0xBF6CBb1F40a542aF50839CaD01b0dc1747F11e18/remove",
+    "addLiquidityUrl": "https://www.sushi.com/pool/42161%3A0xbf6cbb1f40a542af50839cad01b0dc1747f11e18",
+    "removeLiquidityUrl": "https://www.sushi.com/pool/42161%3A0xbf6cbb1f40a542af50839cad01b0dc1747f11e18",
     "network": "arbitrum",
     "createdAt": 1680094464
   },
