@@ -480,7 +480,7 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://aerodrome.finance/swap?from=0x4621b7a9c75199271f773ebd9a499dbd165c3191&to=0xbf1aea8670d2528e08334083616dd9c5f3b087ae",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xbf1aea8670d2528e08334083616dd9c5f3b087ae&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xbf1aea8670d2528e08334083616dd9c5f3b087ae&token1=0x4621b7a9c75199271f773ebd9a499dbd165c3191&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "createdAt": 1694018134
