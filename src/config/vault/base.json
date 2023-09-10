@@ -1453,7 +1453,8 @@
     "earnContractAddress": "0xb58E4B1f4ba8E0c6a9f26262EE76Ea1D417E3228",
     "oracle": "lps",
     "oracleId": "balancer-base-usdbc-dai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["USDbC", "DAI"],
     "risks": [
