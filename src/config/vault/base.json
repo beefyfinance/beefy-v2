@@ -1078,7 +1078,7 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     "network": "base",
-    "createdAt": 1692437972
+    "createdAt": 1694469591
   },
   {
     "id": "alienbase-dai-usdbc",
@@ -1235,7 +1235,7 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "network": "base",
-    "createdAt": 1691938159
+    "createdAt": 1694469591
   },
   {
     "id": "swapbased-weth-axlusdc",
@@ -1258,7 +1258,7 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "network": "base",
-    "createdAt": 1691938159
+    "createdAt": 1694469591
   },
   {
     "id": "swapbased-dai-usdbc",
@@ -1281,7 +1281,7 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&currency1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&currency1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "network": "base",
-    "createdAt": 1691938159
+    "createdAt": 1694469591
   },
   {
     "id": "swapbased-usd+-usdbc",
@@ -1311,7 +1311,7 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&currency1=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&currency1=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376",
     "network": "base",
-    "createdAt": 1691938159
+    "createdAt": 1694469591
   },
   {
     "id": "swapbased-dai+-usd+",
@@ -1341,7 +1341,7 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376&currency1=0x65a2508C429a6078a7BC2f7dF81aB575BD9D9275",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376&currency1=0x65a2508C429a6078a7BC2f7dF81aB575BD9D9275",
     "network": "base",
-    "createdAt": 1691938159
+    "createdAt": 1694469591
   },
   {
     "id": "moonwell-base-usdbc",
