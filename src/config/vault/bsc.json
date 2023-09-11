@@ -4221,7 +4221,8 @@
     "earnContractAddress": "0xE2f9EC1898F8C759cD1FeeC9c035CAD8071a5d4B",
     "oracle": "lps",
     "oracleId": "yel-yel-wbnb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "apeswap",
     "assets": ["YEL", "BNB"],
     "risks": [

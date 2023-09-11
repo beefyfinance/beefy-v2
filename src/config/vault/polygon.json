@@ -1295,7 +1295,8 @@
     "earnContractAddress": "0x01a8F2E5BfB8679C82442F90e1166469a2E530c8",
     "oracle": "tokens",
     "oracleId": "MaticX",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "aave",
     "assets": ["MaticX"],
     "risks": [
