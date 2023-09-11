@@ -4811,7 +4811,8 @@
     "earnContractAddress": "0xAf9f33df60CA764307B17E62dde86e9F7090426c",
     "oracle": "tokens",
     "oracleId": "DAI.e",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "aave",
     "assets": ["DAIe"],
     "risks": [
