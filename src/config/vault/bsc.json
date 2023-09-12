@@ -13080,33 +13080,6 @@
     "createdAt": 1608060201
   },
   {
-    "id": "venus-wbnb",
-    "name": "WBNB",
-    "token": "WBNB",
-    "tokenAddress": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-    "tokenDecimals": 18,
-    "earnedToken": "mooVenusBNB",
-    "earnedTokenAddress": "0x6BE4741AB0aD233e4315a10bc783a7B923386b71",
-    "earnContractAddress": "0x6BE4741AB0aD233e4315a10bc783a7B923386b71",
-    "oracle": "tokens",
-    "oracleId": "WBNB",
-    "status": "active",
-    "platformId": "venus",
-    "assets": ["WBNB"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lending",
-    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-    "network": "bsc",
-    "createdAt": 1608060201
-  },
-  {
     "id": "venus-sxp-eol",
     "name": "SXP",
     "token": "SXP",
