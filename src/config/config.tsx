@@ -122,6 +122,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'wUSDR',
       'axlUSDC',
       'CASH',
+      'BOB',
     ],
   },
   bsc: {
@@ -233,10 +234,13 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'sEUR',
       'bbUSD+',
       'bbDAI+',
-      'wUSDR',
       'DAI+',
       'BOB',
       'wTBT',
+      'USDR',
+      'USDCe',
+      'wUSDR',
+      'omultiwUSDR',
     ],
   },
   fantom: {
