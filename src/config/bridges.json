@@ -84,8 +84,8 @@
     "website": "https://core.app/bridge"
   },
   {
-    "id": "bsc-canonical",
-    "name": "Binance Bridge",
+    "id": "binance-peg",
+    "name": "Binance Pegged",
     "tagName": "Binance",
     "website": "https://www.bnbchain.org/en/bridge?ref=binance.ghost.io"
   },
@@ -130,5 +130,15 @@
     "name": "Base Bridge",
     "tagName": "Base",
     "website": "https://bridge.base.org/deposit"
+  },
+  {
+    "id": "hop",
+    "name": "HOP Exchange",
+    "website": "https://app.hop.exchange"
+  },
+  {
+    "id": "wbtc-dao",
+    "name": "WBTC Dao",
+    "website": "https://wbtc.network/"
   }
 ]

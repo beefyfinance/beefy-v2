@@ -15,7 +15,7 @@ Official frontend repo of Beefy, The Multichain Yield Optimizer - [app.beefy.com
 
 `yarn preview` - start the app in production mode (after building)
 
-Please ensure `yarn build` completes successfully before submitting a PR. 
+Please ensure `yarn build` completes successfully before submitting a PR.
 
 ## Contribute
 

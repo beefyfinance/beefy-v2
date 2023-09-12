@@ -121,6 +121,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'USDR',
       'wUSDR',
       'axlUSDC',
+      'CASH',
     ],
   },
   bsc: {
@@ -539,7 +540,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   kava: {
     name: 'Kava',
     chainId: 2222,
-    rpc: ['https://evm2.kava.io'],
+    rpc: ['https://kava-rpc.gateway.pokt.network'],
     explorerUrl: 'https://explorer.kava.io',
     multicallAddress: '0x13C6bCC2411861A31dcDC2f990ddbe2325482222',
     appMulticallContractAddress: '0x41D44B276904561Ac51855159516FD4cB2c90968',
@@ -552,7 +553,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'KAVA',
         decimals: 18,
       },
-      rpcUrls: ['https://evm2.kava.io'],
+      rpcUrls: ['https://kava-rpc.gateway.pokt.network'],
       blockExplorerUrls: ['https://explorer.kava.io/'],
     },
     gas: {
@@ -637,7 +638,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     new: true,
     name: 'Base',
     chainId: 8453,
-    rpc: ['https://mainnet.base.org'],
+    rpc: ['https://rpc.ankr.com/base'],
     explorerUrl: 'https://basescan.org',
     multicallAddress: '0xbA790ec6F95D68123E772A43b314464585B311b4',
     appMulticallContractAddress: '0x354D3d7B61230C88F5f50176d9329d13366FbC28',
@@ -650,7 +651,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://mainnet.base.org'],
+      rpcUrls: ['https://rpc.ankr.com/base'],
       blockExplorerUrls: ['https://basescan.org/'],
     },
     gas: {
@@ -660,7 +661,21 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
-    stableCoins: ['USDbC', 'DAI', 'bsUSD', 'axlUSDC', 'axlUSDT', 'MIM', 'USD+', 'DAI+'],
+    stableCoins: [
+      'USDbC',
+      'DAI',
+      'bsUSD',
+      'axlUSDC',
+      'axlUSDT',
+      'MIM',
+      'USD+',
+      'DAI+',
+      'wUSDR',
+      'MAI',
+      'DOLA',
+      'USDC',
+      'crvUSD',
+    ],
   },
   aurora: {
     name: 'Aurora',

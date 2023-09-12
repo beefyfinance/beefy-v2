@@ -54,6 +54,18 @@
     "getAmountOutMode": "getAmountOut"
   },
   {
+    "id": "base-aerodrome",
+    "name": "Aerodrome",
+    "type": "solidly",
+    "routerAddress": "0xcF77a3Ba9A5CA399B7c97c74d54e5b1Beb874E43",
+    "factoryAddress": "not-used",
+    "pairInitHash": "not-used",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "2",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
+  },
+  {
     "id": "base-baso",
     "name": "Baso",
     "type": "solidly",
