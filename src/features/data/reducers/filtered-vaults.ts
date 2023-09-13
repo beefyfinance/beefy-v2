@@ -30,7 +30,7 @@ export type FilteredVaultsState = {
   vaultType: VaultType;
   searchText: string;
   chainIds: ChainEntity['id'][];
-  platformId: PlatformEntity['id'] | null;
+  platformIds: PlatformEntity['id'][];
   onlyRetired: boolean;
   onlyPaused: boolean;
   onlyBoosted: boolean;
@@ -47,7 +47,7 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   vaultType: 'all',
   searchText: '',
   chainIds: [],
-  platformId: null,
+  platformIds: [],
   onlyRetired: false,
   onlyPaused: false,
   onlyBoosted: false,
@@ -100,9 +100,9 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState.chainIds = action.payload;
     },
-    setPlatformId(sliceState, action: PayloadAction<FilteredVaultsState['platformId']>) {
+    setPlatformIds(sliceState, action: PayloadAction<FilteredVaultsState['platformIds']>) {
       sliceState.reseted = false;
-      sliceState.platformId = action.payload;
+      sliceState.platformIds = action.payload;
     },
     setOnlyRetired(sliceState, action: PayloadAction<FilteredVaultsState['onlyRetired']>) {
       sliceState.reseted = false;

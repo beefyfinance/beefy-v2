@@ -14,6 +14,7 @@ const useStyles = makeStyles(styles);
 export type LabeledSelectCommonProps = {
   label?: string;
   options: Record<string, string>;
+  placement?: Placement;
   sortOptions?: 'default' | 'value' | 'label';
   fullWidth?: boolean;
   borderless?: boolean;
@@ -32,6 +33,8 @@ export type LabeledSelectCommonProps = {
   dropdownAutoWidth?: boolean;
   dropdownAutoHeight?: boolean;
   dropdownAutoHide?: boolean;
+  dropdownFlip?: boolean;
+  dropdownShift?: boolean;
 };
 
 export type LabeledSelectProps = LabeledSelectCommonProps & {
@@ -41,7 +44,7 @@ export type LabeledSelectProps = LabeledSelectCommonProps & {
   SelectedItemComponent?: FC<SelectedItemProps>;
   DropdownItemComponent?: FC<DropdownItemProps>;
   DropdownItemLabelComponent?: FC<DropdownItemLabelProps>;
-  placement?: Placement;
+
   showArrow?: boolean;
 };
 

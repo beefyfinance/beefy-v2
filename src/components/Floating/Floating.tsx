@@ -1,6 +1,14 @@
 import type { MutableRefObject, ReactNode } from 'react';
 import React, { memo, useLayoutEffect, useMemo } from 'react';
-import { autoUpdate, flip, hide, offset, shift, size, useFloating } from '@floating-ui/react-dom';
+import {
+  autoUpdate,
+  flip as flipFloating,
+  hide,
+  offset,
+  shift as shiftFloating,
+  size,
+  useFloating,
+} from '@floating-ui/react-dom';
 import type { Placement } from '@floating-ui/react-dom';
 
 export type FloatingProps = {
@@ -13,6 +21,8 @@ export type FloatingProps = {
   autoWidth?: boolean;
   autoHide?: boolean;
   display?: string;
+  shift?: boolean;
+  flip?: boolean;
 };
 export const Floating = memo<FloatingProps>(function Floating({
   open = false,
@@ -24,16 +34,16 @@ export const Floating = memo<FloatingProps>(function Floating({
   autoWidth = true,
   autoHide = true,
   display = 'block',
+  shift = true,
+  flip = true,
 }) {
   const middleware = useMemo(() => {
     const middlewares = [];
-    if (autoHide) {
-      middlewares.push(hide());
-    }
+    if (autoHide) middlewares.push(hide());
 
     middlewares.push(offset(4));
-    middlewares.push(shift());
-    middlewares.push(flip());
+    if (flip) middlewares.push(flipFloating());
+    if (shift) middlewares.push(shiftFloating());
 
     if (autoWidth || autoHeight) {
       middlewares.push(
@@ -52,7 +62,7 @@ export const Floating = memo<FloatingProps>(function Floating({
       );
     }
     return middlewares;
-  }, [autoHide, autoWidth, autoHeight]);
+  }, [autoHide, flip, shift, autoWidth, autoHeight]);
   const { x, y, reference, floating, strategy, middlewareData } = useFloating({
     whileElementsMounted: autoUpdate,
     placement,

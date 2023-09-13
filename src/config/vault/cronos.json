@@ -880,7 +880,8 @@
     "earnContractAddress": "0x9E75f8298e458B76382870982788988A0799195b",
     "oracle": "lps",
     "oracleId": "liq-liq-cro",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "liquidus",
     "assets": ["LIQ", "CRO"],
     "risks": [

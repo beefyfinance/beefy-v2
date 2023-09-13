@@ -43,12 +43,14 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    * @private
    */
   private static createOnboardWalletInitializers() {
+    const requiredChainId = featureFlag_walletConnectChainId();
+
     return [
       WalletConnectionApi.createInjectedWalletsModule(),
       createWalletConnectModule({
         version: 2,
         projectId: 'af38b343e1be64b27c3e4a272cb453b9',
-        requiredChains: [featureFlag_walletConnectChainId()],
+        requiredChains: requiredChainId ? [requiredChainId] : [],
       }),
       createCoinbaseWalletModule(),
       WalletConnectionApi.createCDCWalletModule(),
@@ -125,6 +127,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       disableFontDownload: true,
       connect: {
         showSidebar: true,
+        removeWhereIsMyWalletWarning: true,
       },
       wallets: this.getOnboardWalletInitializers(),
       theme: {
