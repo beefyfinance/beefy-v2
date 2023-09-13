@@ -1,13 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
-import { getBridgeApi, getConfigApi, getWalletConnectionApiInstance } from '../apis/instances';
+import { getBridgeApi, getConfigApi } from '../apis/instances';
 import type { ChainEntity } from '../entities/chain';
-import {
-  selectCurrentChainId,
-  selectIsWalletConnected,
-  selectWalletAddress,
-} from '../selectors/wallet';
-import type { BeefyBridgeConfig } from '../apis/config-types';
+import { selectCurrentChainId, selectWalletAddress } from '../selectors/wallet';
+import type { BeefyAnyBridgeConfig, BeefyBridgeConfig } from '../apis/config-types';
 import { fetchBalanceAction } from './balance';
 import {
   selectBridgeConfigById,
@@ -26,17 +22,15 @@ import { FormStep } from '../reducers/wallet/bridge';
 import { BIG_ZERO, fromWeiString } from '../../../helpers/big-number';
 import { selectUserBalanceOfToken } from '../selectors/balance';
 import { selectChainById } from '../selectors/chains';
-import { groupBy, orderBy, partition, uniqBy } from 'lodash-es';
+import { orderBy, partition } from 'lodash-es';
 import { isFulfilledResult } from '../../../helpers/promises';
 import type { IBridgeQuote } from '../apis/bridge/providers/provider-types';
-import type { BeefyAnyBridgeConfig } from '../apis/config-types';
 import { fetchAllowanceAction } from './allowance';
 import { selectAllowanceByTokenAddress } from '../selectors/allowances';
 import type { Step } from '../reducers/wallet/stepper';
 import { walletActions } from './wallet-actions';
 import type { Namespace, TFunction } from 'react-i18next';
 import { startStepperWithSteps } from './stepper';
-import { BeefyCommonBridgeAbi } from '../../../config/abi';
 
 export type FetchBridgeConfigParams = void;
 
