@@ -20,6 +20,8 @@ export interface IBridgeQuote<T extends BeefyAnyBridgeConfig> {
   output: TokenAmount;
   fee: TokenAmount;
   allowance?: TokenAllowance;
+  gas: BigNumber;
+  timeEstimate: number;
 }
 
 export interface IBridgeProvider<T extends BeefyAnyBridgeConfig> {

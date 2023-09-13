@@ -65,7 +65,7 @@ function _Preview() {
               fullWidth={true}
               borderless={true}
             >
-              {t('Bridge-BridgeToNetwork', { network: toChain.name })}
+              {t('Bridge-Review')}
             </Button>
           ) : (
             <Button

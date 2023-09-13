@@ -34,6 +34,11 @@ export type BridgeFormState = {
   input: InputTokenAmount<TokenErc20>;
 };
 
+export type BridgeValidateState = {
+  status: 'idle' | 'pending' | 'fulfilled' | 'rejected';
+  requestId?: string;
+};
+
 export type BridgeQuoteState = {
   status: 'idle' | 'pending' | 'fulfilled' | 'rejected';
   selected: string | null;
@@ -73,6 +78,7 @@ export type BridgeState = {
   };
   bridges: BridgesMap | undefined;
   form: BridgeFormState;
+  validate: BridgeValidateState;
   quote: BridgeQuoteState;
   confirm: BridgeConfirmState;
 };
@@ -95,6 +101,10 @@ const initialBridgeState: BridgeState = {
       max: false,
       token: null,
     },
+  },
+  validate: {
+    status: 'idle',
+    requestId: undefined,
   },
   quote: {
     status: 'idle',
@@ -174,7 +184,13 @@ export const bridgeSlice = createSlice({
         sliceState.form.input.token = action.payload.token;
       }
 
-      resetQuotes(sliceState);
+      // Skip empty idle screen if we think quote validation will succeed
+      // resetQuotes(
+      //   sliceState,
+      //   action.payload.amount.gt(BIG_ZERO) && sliceState.quote.status === 'fulfilled'
+      //     ? 'pending'
+      //     : 'idle'
+      // );
     },
     selectQuote(sliceState, action: PayloadAction<{ quoteId: string }>) {
       const { quoteId } = action.payload;
@@ -232,11 +248,26 @@ export const bridgeSlice = createSlice({
         resetQuotes(sliceState);
       })
       .addCase(validateBridgeForm.pending, (sliceState, action) => {
-        resetQuotes(sliceState);
+        sliceState.validate.requestId = action.meta.requestId;
+
+        resetQuotes(sliceState, sliceState.validate.status === 'fulfilled' ? 'pending' : 'idle');
+      })
+      .addCase(validateBridgeForm.fulfilled, (sliceState, action) => {
+        if (sliceState.validate.requestId !== action.meta.requestId) {
+          return;
+        }
+
+        sliceState.validate.status = 'fulfilled';
+      })
+      .addCase(validateBridgeForm.rejected, (sliceState, action) => {
+        if (sliceState.validate.requestId !== action.meta.requestId) {
+          return;
+        }
+
+        sliceState.validate.status = 'rejected';
       })
       .addCase(quoteBridgeForm.pending, (sliceState, action) => {
-        resetQuotes(sliceState);
-        sliceState.quote.status = 'pending';
+        resetQuotes(sliceState, 'pending');
         sliceState.quote.requestId = action.meta.requestId;
       })
       .addCase(quoteBridgeForm.fulfilled, (sliceState, action) => {
@@ -285,8 +316,11 @@ export const bridgeSlice = createSlice({
   },
 });
 
-function resetQuotes(sliceState: Draft<BridgeState>) {
-  sliceState.quote.status = 'idle';
+function resetQuotes(
+  sliceState: Draft<BridgeState>,
+  status: BridgeState['quote']['status'] = 'idle'
+) {
+  sliceState.quote.status = status;
   sliceState.quote.requestId = null;
   sliceState.quote.selected = null;
   sliceState.quote.error = null;

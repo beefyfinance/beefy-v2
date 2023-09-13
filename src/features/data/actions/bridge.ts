@@ -117,9 +117,7 @@ export const initiateBridgeForm = createAsyncThunk<
 
 type ValidateBridgeFormParams = void;
 
-type ValidateBridgeFormPayload = {
-  status: 'valid' | 'invalid';
-};
+type ValidateBridgeFormPayload = void;
 
 export const validateBridgeForm = createAsyncThunk<
   ValidateBridgeFormPayload,
@@ -128,28 +126,20 @@ export const validateBridgeForm = createAsyncThunk<
 >('bridge/validateBridgeForm', async (_, { getState, dispatch }) => {
   const state = getState();
 
-  const { from, to, input } = selectBridgeFormState(state);
+  const { from, input } = selectBridgeFormState(state);
   const fromToken = selectBridgeTokenForChainId(state, from);
-  const toToken = selectBridgeTokenForChainId(state, to);
+
   const minAmount = fromWeiString('1000', fromToken.decimals);
   if (input.amount.lt(minAmount)) {
-    return {
-      status: 'invalid',
-    };
+    throw new Error(`Minimum amount is ${minAmount} ${fromToken.symbol}`);
   }
 
   const userBalance = selectUserBalanceOfToken(state, fromToken.chainId, fromToken.address);
   if (input.amount.gt(userBalance)) {
-    return {
-      status: 'invalid',
-    };
+    throw new Error('Insufficient balance');
   }
 
   dispatch(quoteBridgeForm());
-
-  return {
-    status: 'valid',
-  };
 });
 
 type QuoteBridgeFormParams = void;
@@ -245,6 +235,8 @@ export const confirmBridgeForm = createAsyncThunk<
       })
     );
   }
+
+  // TODO requote?
 
   return {
     quote,

@@ -19,36 +19,54 @@ export default {
   bridges: [
     {
       id: 'axelar',
+      explorerUrl: 'https://axelarscan.io/gmp/{{hash}}',
       chains: {
         ethereum: {
           bridge: '0xaaa751957312589Cd21B2348f6B05b8b40691eF3',
+          time: {
+            outgoing: 20,
+            incoming: 2,
+          },
           gasLimits: {
             approve: new BigNumber('70000'),
-            outgoing: new BigNumber('260000'),
-            incoming: new BigNumber('1'),
+            outgoing: new BigNumber('250000'), // ~240,814 before refunds
+            incoming: new BigNumber('170000'), // ~166,545 before refunds
           },
         },
         optimism: {
           bridge: '0xaaa751957312589Cd21B2348f6B05b8b40691eF3',
+          time: {
+            outgoing: 30,
+            incoming: 2,
+          },
           gasLimits: {
-            outgoing: new BigNumber('1'),
-            incoming: new BigNumber('180000'), // ~166,545 before refunds
+            outgoing: new BigNumber('150000'), // ~140,163 before refunds
+            incoming: new BigNumber('170000'), // ~166,545 before refunds
           },
         },
         arbitrum: {
           bridge: '0xaaa751957312589Cd21B2348f6B05b8b40691eF3',
+          time: {
+            outgoing: 20,
+            incoming: 2,
+          },
           gasLimits: {
-            outgoing: new BigNumber('1'),
-            incoming: new BigNumber('1500000'), // ~166,545 before refunds, but sequencer used 600k-1.2M gas
+            outgoing: new BigNumber('150000'), // ~142,205 before refunds
+            incoming: new BigNumber('170000'), // ~166,545 before refunds
           },
         },
       },
     },
     {
       id: 'chainlink',
+      explorerUrl: 'https://ccip.chain.link/tx/{{hash}}',
       chains: {
         ethereum: {
           bridge: '0xccccB27BB46ffE01479248EDDFb75E300DE06879',
+          time: {
+            outgoing: 0,
+            incoming: 0,
+          },
           gasLimits: {
             approve: new BigNumber('70000'),
             outgoing: new BigNumber('1'),
@@ -57,6 +75,10 @@ export default {
         },
         optimism: {
           bridge: '0xccccB27BB46ffE01479248EDDFb75E300DE06879',
+          time: {
+            outgoing: 0,
+            incoming: 0,
+          },
           gasLimits: {
             outgoing: new BigNumber('1'),
             incoming: new BigNumber('1'),
@@ -66,9 +88,14 @@ export default {
     },
     {
       id: 'layer-zero',
+      explorerUrl: 'https://layerzeroscan.com/tx/{{hash}}',
       chains: {
         ethereum: {
           bridge: '0xdddEedaBa09b08d052FaA67aCeCF36457252314f',
+          time: {
+            outgoing: 0,
+            incoming: 0,
+          },
           gasLimits: {
             approve: new BigNumber('70000'),
             outgoing: new BigNumber('1'),
@@ -77,6 +104,10 @@ export default {
         },
         optimism: {
           bridge: '0xdddEedaBa09b08d052FaA67aCeCF36457252314f',
+          time: {
+            outgoing: 0,
+            incoming: 0,
+          },
           gasLimits: {
             outgoing: new BigNumber('1'),
             incoming: new BigNumber('1'),
@@ -84,6 +115,10 @@ export default {
         },
         arbitrum: {
           bridge: '0xdddEedaBa09b08d052FaA67aCeCF36457252314f',
+          time: {
+            outgoing: 0,
+            incoming: 0,
+          },
           gasLimits: {
             outgoing: new BigNumber('1'),
             incoming: new BigNumber('1'),
@@ -96,6 +131,10 @@ export default {
       chains: {
         ethereum: {
           bridge: '0xbbb6A6474729AEB3b2c83c4acCFf96711ff88589',
+          time: {
+            outgoing: 0,
+            incoming: 0,
+          },
           gasLimits: {
             approve: new BigNumber('70000'),
             outgoing: new BigNumber('1'),
@@ -104,6 +143,10 @@ export default {
         },
         optimism: {
           bridge: '0xbbb6A6474729AEB3b2c83c4acCFf96711ff88589',
+          time: {
+            outgoing: 0,
+            incoming: 0,
+          },
           gasLimits: {
             outgoing: new BigNumber('1'),
             incoming: new BigNumber('1'),

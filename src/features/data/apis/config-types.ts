@@ -338,6 +338,13 @@ export type BaseMigrationConfig = {
 export type BeefyCommonBridgeChainConfig = {
   /** Address of our deployed bridge contract */
   bridge: string;
+  /** Time estimate displayed to user is from chain's outgoing + in chain's incoming estimates */
+  time: {
+    /** Length of time in minutes for an incoming tx to go through */
+    incoming: number;
+    /** Length of time in minutes for an outgoing tx to go through */
+    outgoing: number;
+  };
   gasLimits: {
     /** Rough gas limit for approving mooBIFI to be spent by bridge (ETH only) */
     approve?: BigNumber;
@@ -349,6 +356,9 @@ export type BeefyCommonBridgeChainConfig = {
 };
 
 export type BeefyCommonBridgeConfig = {
+  /** Url of bridge explorer, use {{hash}} for outgoing tx hash */
+  explorerUrl?: string;
+  /** Chains supported by this bridge */
   chains: Record<ChainEntity['id'], BeefyCommonBridgeChainConfig>;
 };
 

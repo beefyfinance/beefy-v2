@@ -12,20 +12,13 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg'],
     color: '#D0D0DA',
     marginTop: '32px',
-    '& p': {
-      marginTop: 0,
-      marginBottom: '1em',
-      '&:last-child': {
-        marginBottom: 0,
-      },
-    },
-    '& a': {
-      textDecoration: 'none',
-      color: theme.palette.primary.main,
-    },
+  },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.primary.main,
   },
   poweredBy: {
-    marginTop: '64px',
+    marginTop: '32px',
   },
   poweredByLabel: {
     ...theme.typography['subline-sm'],
@@ -35,7 +28,8 @@ export const styles = (theme: Theme) => ({
   poweredByLogos: {
     marginTop: '16px',
     display: 'flex',
+    flexWrap: 'wrap' as const,
     alignItems: 'center',
-    gap: '32px',
+    gap: '24px',
   },
 });

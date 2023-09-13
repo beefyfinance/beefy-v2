@@ -11,6 +11,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     gap: '16px',
+    flex: '1 0 auto',
   },
   footer: {
     marginTop: 'auto',

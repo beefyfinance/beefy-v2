@@ -6,8 +6,6 @@ import { Divider } from '../../../../../../components/Divider';
 import { formatAddressShort, formatBigDecimals } from '../../../../../../helpers/format';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
-import { walletActions } from '../../../../../data/actions/wallet-actions';
-import { selectAllowanceByTokenAddress } from '../../../../../data/selectors/allowances';
 import {
   selectBridgeConfirmQuote,
   selectBridgeConfirmStatus,
@@ -20,8 +18,6 @@ import {
 } from '../../../../../data/selectors/wallet';
 import { styles } from './styles';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
-import { stepperActions } from '../../../../../data/reducers/wallet/stepper';
-import { startStepper } from '../../../../../data/actions/stepper';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 import { performBridge } from '../../../../../data/actions/bridge';
 
