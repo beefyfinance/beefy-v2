@@ -11,7 +11,7 @@ import { getOneInchApi, getWalletConnectionApiInstance } from '../apis/instances
 import type { BoostEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
-import { isTokenNative } from '../entities/token';
+import { isTokenEqual, isTokenNative } from '../entities/token';
 import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { isStandardVault } from '../entities/vault';
 import type {
@@ -61,7 +61,7 @@ import type {
   ZapQuoteStepSwap,
 } from '../apis/transact/transact-types';
 import type { ZapEntityBeefy, ZapEntityOneInch } from '../entities/zap';
-import { BeefyLayerZeroBridgeAbi, BeefyZapOneInchAbi, ZapAbi } from '../../../config/abi';
+import { BeefyCommonBridgeAbi, BeefyZapOneInchAbi, ZapAbi } from '../../../config/abi';
 import { OneInchZapProvider } from '../apis/transact/providers/one-inch/one-inch';
 import { MultiCall } from 'eth-multicall';
 import { getPool } from '../apis/amm';
@@ -1394,10 +1394,10 @@ const burnWithdraw = (
   });
 };
 
-const bridgeViaLayerZero = (
+const bridgeViaCommonInterface = (
   input: TokenAmount,
   output: TokenAmount,
-  toLzChainId: string,
+  fee: TokenAmount,
   viaBeefyBridgeAddress: string
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -1408,16 +1408,34 @@ const bridgeViaLayerZero = (
       return;
     }
 
+    const fromChainId = input.token.chainId;
+    const toChainId = output.token.chainId;
+    const fromChain = selectChainById(state, fromChainId);
+    const toChain = selectChainById(state, toChainId);
+    const gasToken = selectChainNativeToken(state, fromChainId);
+    const inputWei = toWeiString(input.amount, input.token.decimals);
+    const feeWei = toWeiString(fee.amount, fee.token.decimals);
+
+    if (!isTokenEqual(gasToken, fee.token)) {
+      throw new Error(`Only native fee token is supported`);
+    }
+
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(BeefyLayerZeroBridgeAbi, viaBeefyBridgeAddress);
-    const inputWei = toWeiString(input.amount, input.token.decimals);
-    const feeWei = await contract.methods.bridgeCost(toLzChainId, inputWei, address).call();
-    const chainId = input.token.chainId;
-    const gasToken = selectChainNativeToken(state, chainId);
-    const chain = selectChainById(state, chainId);
-    const gasPrices = await getGasPriceOptions(chain);
-    const transaction = contract.methods.bridge(toLzChainId, inputWei, address).send({
+    const contract = new web3.eth.Contract(BeefyCommonBridgeAbi, viaBeefyBridgeAddress);
+    const gasPrices = await getGasPriceOptions(fromChain);
+
+    // debug
+    const estimate = await contract.methods
+      .bridge(toChain.networkChainId, inputWei, address)
+      .estimateGas({
+        ...gasPrices,
+        from: address,
+        value: feeWei,
+      });
+    console.log('estimate', estimate.toString(10));
+
+    const transaction = contract.methods.bridge(toChain.networkChainId, inputWei, address).send({
       ...gasPrices,
       from: address,
       value: feeWei,
@@ -1432,7 +1450,7 @@ const bridgeViaLayerZero = (
       },
       {
         walletAddress: address,
-        chainId: chainId,
+        chainId: fromChainId,
         spenderAddress: viaBeefyBridgeAddress,
         tokens: uniqBy([gasToken, input.token], 'id'),
       },
@@ -1470,7 +1488,7 @@ export const walletActions = {
   oneInchBeefInLP,
   oneInchBeefOutSingle,
   oneInchBeefOutLP,
-  bridgeViaLayerZero,
+  bridgeViaCommonInterface,
 };
 
 function captureWalletErrors<ReturnType>(

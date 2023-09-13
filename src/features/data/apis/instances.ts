@@ -19,6 +19,7 @@ import PQueue from 'p-queue';
 
 import type { IMigrationApi } from './migration/migration-types';
 import type { IBridgeApi } from './bridge/bridge-api-types';
+import type { IAxelarApi } from './axelar/axelar-types';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -187,4 +188,15 @@ export async function getBridgeApi(): Promise<IBridgeApi> {
   const { BridgeApi } = await import('./bridge/bridge-api');
   bridgeApiInstance = new BridgeApi();
   return bridgeApiInstance;
+}
+
+let axelarApiInstance: IAxelarApi | null = null;
+export async function getAxelarApi(): Promise<IAxelarApi> {
+  if (axelarApiInstance) {
+    return axelarApiInstance;
+  }
+
+  const { AxelarApi } = await import('./axelar/axelar');
+  axelarApiInstance = new AxelarApi();
+  return axelarApiInstance;
 }

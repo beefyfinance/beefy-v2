@@ -59,11 +59,12 @@ const QuoteButton = memo<QuoteButtonProps>(function QuoteButton({ quoteId, selec
 });
 
 const FulfilledQuoteSelector = memo(function FulfilledQuoteSelector() {
+  const classes = useStyles();
   const ids = useAppSelector(selectBridgeQuoteIds);
   const selectedId = useAppSelector(selectBridgeQuoteSelectedId);
 
   return (
-    <div>
+    <div className={classes.quotes}>
       {ids.map(id => (
         <QuoteButton quoteId={id} key={id} selected={selectedId === id} />
       ))}

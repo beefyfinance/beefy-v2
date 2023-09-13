@@ -115,7 +115,7 @@
   },
   {
     "inputs": [
-      { "internalType": "uint8", "name": "_dstChainId", "type": "uint8" },
+      { "internalType": "uint256", "name": "_dstChainId", "type": "uint256" },
       { "internalType": "uint256", "name": "_amount", "type": "uint256" },
       { "internalType": "address", "name": "_to", "type": "address" }
     ],
@@ -126,7 +126,7 @@
   },
   {
     "inputs": [
-      { "internalType": "uint16", "name": "_dstChainId", "type": "uint16" },
+      { "internalType": "uint256", "name": "_dstChainId", "type": "uint256" },
       { "internalType": "uint256", "name": "_amount", "type": "uint256" },
       { "internalType": "address", "name": "_to", "type": "address" }
     ],

@@ -7,12 +7,17 @@ import {
   validateBridgeForm,
 } from '../../actions/bridge';
 import type { ChainEntity } from '../../entities/chain';
-import type { BeefyAnyBridgeConfig, BeefyBridgeConfig } from '../../apis/config-types';
+import type {
+  BeefyAnyBridgeConfig,
+  BeefyBridgeConfig,
+  BeefyBridgeIdToConfig,
+} from '../../apis/config-types';
 import type { InputTokenAmount, TokenAmount } from '../../apis/transact/transact-types';
 import { isTokenEqual, TokenErc20 } from '../../entities/token';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types';
 import type { Draft } from 'immer';
+import { keyBy } from 'lodash-es';
 
 export enum FormStep {
   Loading = 1,
@@ -51,6 +56,10 @@ export type BridgeConfirmState = {
   incoming?: { hash: string; mined: boolean };
 };
 
+export type BridgesMap = {
+  [K in BeefyAnyBridgeConfig['id']]?: BeefyBridgeIdToConfig<K>;
+};
+
 export type BridgeState = {
   source: ChainEntity['id'];
   destinations: {
@@ -59,10 +68,10 @@ export type BridgeState = {
     chainToChain: Record<ChainEntity['id'], ChainEntity['id'][]>;
     chainToBridges: Record<
       ChainEntity['id'],
-      Record<ChainEntity['id'], (keyof BeefyBridgeConfig['bridges'])[]>
+      Record<ChainEntity['id'], BeefyAnyBridgeConfig['id'][]>
     >;
   };
-  bridges: BeefyBridgeConfig['bridges'] | undefined;
+  bridges: BridgesMap | undefined;
   form: BridgeFormState;
   quote: BridgeQuoteState;
   confirm: BridgeConfirmState;
@@ -187,14 +196,15 @@ export const bridgeSlice = createSlice({
         const allChains = Object.keys(config.tokens);
         const chainToBridges = allChains.reduce((allMap, chainId) => {
           allMap[chainId] = allChains.reduce((chainMap, otherChainId) => {
-            chainMap[otherChainId] = Object.keys(config.bridges).filter(bridgeId => {
-              const bridge = config.bridges[bridgeId];
-              return (
-                chainId !== otherChainId &&
-                chainId in bridge.chains &&
-                otherChainId in bridge.chains
-              );
-            });
+            chainMap[otherChainId] = config.bridges
+              .filter(bridge => {
+                return (
+                  chainId !== otherChainId &&
+                  chainId in bridge.chains &&
+                  otherChainId in bridge.chains
+                );
+              })
+              .map(bridge => bridge.id);
 
             return chainMap;
           }, {});
@@ -214,7 +224,7 @@ export const bridgeSlice = createSlice({
           }, {}),
         };
         sliceState.destinations.chainToAddress[config.source.chainId] = config.source.address;
-        sliceState.bridges = config.bridges;
+        sliceState.bridges = keyBy(config.bridges, 'id');
       })
       .addCase(initiateBridgeForm.fulfilled, (sliceState, action) => {
         const { form } = action.payload;

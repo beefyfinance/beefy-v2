@@ -15,10 +15,11 @@ export interface TokenAllowance {
 
 export interface IBridgeQuote<T extends BeefyAnyBridgeConfig> {
   readonly id: T['id'];
+  config: T;
   input: InputTokenAmount;
   output: TokenAmount;
   fee: TokenAmount;
-  allowance: TokenAllowance;
+  allowance?: TokenAllowance;
 }
 
 export interface IBridgeProvider<T extends BeefyAnyBridgeConfig> {
@@ -29,7 +30,6 @@ export interface IBridgeProvider<T extends BeefyAnyBridgeConfig> {
     from: ChainEntity,
     to: ChainEntity,
     input: InputTokenAmount<TokenErc20>,
-    walletAddress: string,
     state: BeefyState
   ): Promise<IBridgeQuote<T>>;
 

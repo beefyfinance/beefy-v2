@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
-import { getBridgeApi, getConfigApi } from '../apis/instances';
+import { getBridgeApi, getConfigApi, getWalletConnectionApiInstance } from '../apis/instances';
 import type { ChainEntity } from '../entities/chain';
 import {
   selectCurrentChainId,
@@ -26,7 +26,7 @@ import { FormStep } from '../reducers/wallet/bridge';
 import { BIG_ZERO, fromWeiString } from '../../../helpers/big-number';
 import { selectUserBalanceOfToken } from '../selectors/balance';
 import { selectChainById } from '../selectors/chains';
-import { groupBy, partition, uniqBy } from 'lodash-es';
+import { groupBy, orderBy, partition, uniqBy } from 'lodash-es';
 import { isFulfilledResult } from '../../../helpers/promises';
 import type { IBridgeQuote } from '../apis/bridge/providers/provider-types';
 import type { BeefyAnyBridgeConfig } from '../apis/config-types';
@@ -36,6 +36,7 @@ import type { Step } from '../reducers/wallet/stepper';
 import { walletActions } from './wallet-actions';
 import type { Namespace, TFunction } from 'react-i18next';
 import { startStepperWithSteps } from './stepper';
+import { BeefyCommonBridgeAbi } from '../../../config/abi';
 
 export type FetchBridgeConfigParams = void;
 
@@ -126,12 +127,6 @@ export const validateBridgeForm = createAsyncThunk<
   { state: BeefyState }
 >('bridge/validateBridgeForm', async (_, { getState, dispatch }) => {
   const state = getState();
-  const walletConnected = selectIsWalletConnected(state);
-  if (!walletConnected) {
-    return {
-      status: 'invalid',
-    };
-  }
 
   const { from, to, input } = selectBridgeFormState(state);
   const fromToken = selectBridgeTokenForChainId(state, from);
@@ -172,7 +167,6 @@ export const quoteBridgeForm = createAsyncThunk<
   const api = await getBridgeApi();
   const fromChain = selectChainById(state, from);
   const toChain = selectChainById(state, to);
-  const walletAddress = selectWalletAddress(state);
 
   const quotes = await Promise.allSettled(
     bridgeIds.map(
@@ -182,24 +176,32 @@ export const quoteBridgeForm = createAsyncThunk<
           fromChain,
           toChain,
           input,
-          walletAddress,
           state
         )
     )
   );
 
   const [fulfilled, rejected] = partition(quotes, isFulfilledResult);
-  const successfulQuotes = fulfilled
-    .map(result => result.value)
-    .filter(quote => !!quote)
-    .flat();
+  const successfulQuotes = fulfilled.map(result => result.value).filter(quote => !!quote);
 
   if (rejected.length > 0) {
-    console.warn('Some bridge quotes failed', rejected);
+    const errorBridgeIndexes = quotes
+      .map((result, i) => (result.status === 'rejected' ? i : -1))
+      .filter(i => i in bridgeIds);
+    const bridgeErrors = rejected.map((result, i) => ({
+      bridge: bridgeIds[errorBridgeIndexes[i]],
+      reason: result.reason,
+    }));
+    console.warn('Some bridge quotes failed', bridgeErrors);
   }
 
   if (successfulQuotes.length > 0) {
-    return { quotes: successfulQuotes };
+    const sortedQuotes = orderBy(
+      successfulQuotes,
+      [quote => quote.output.amount.toNumber(), quote => quote.fee.amount.toNumber()],
+      ['desc', 'asc']
+    );
+    return { quotes: sortedQuotes };
   }
 
   if (rejected.length > 0) {
@@ -228,16 +230,21 @@ export const confirmBridgeForm = createAsyncThunk<
     throw new Error('No quote found');
   }
   const walletAddress = selectWalletAddress(state);
+  if (!walletAddress) {
+    throw new Error('Not connected');
+  }
 
   // update allowances
-  dispatch(
-    fetchAllowanceAction({
-      chainId: quote.allowance.token.chainId,
-      spenderAddress: quote.allowance.spenderAddress,
-      tokens: [quote.allowance.token],
-      walletAddress,
-    })
-  );
+  if (quote.allowance) {
+    dispatch(
+      fetchAllowanceAction({
+        chainId: quote.allowance.token.chainId,
+        spenderAddress: quote.allowance.spenderAddress,
+        tokens: [quote.allowance.token],
+        walletAddress,
+      })
+    );
+  }
 
   return {
     quote,
@@ -255,22 +262,23 @@ export const performBridge = createAsyncThunk<
 >('bridge/performBridge', async ({ t }, { getState, dispatch }) => {
   const state = getState();
   const quote = selectBridgeConfirmQuote(state);
-  const tokenAllowance = selectAllowanceByTokenAddress(
-    state,
-    quote.allowance.token.chainId,
-    quote.allowance.token.address,
-    quote.allowance.spenderAddress
-  );
-
   const steps: Step[] = [];
 
-  if (tokenAllowance.isLessThan(quote.allowance.amount)) {
-    steps.push({
-      step: 'approve',
-      message: t('Vault-ApproveMsg'),
-      action: walletActions.approval(quote.allowance.token, quote.allowance.spenderAddress),
-      pending: false,
-    });
+  if (quote.allowance) {
+    const tokenAllowance = selectAllowanceByTokenAddress(
+      state,
+      quote.allowance.token.chainId,
+      quote.allowance.token.address,
+      quote.allowance.spenderAddress
+    );
+    if (tokenAllowance.isLessThan(quote.allowance.amount)) {
+      steps.push({
+        step: 'approve',
+        message: t('Vault-ApproveMsg'),
+        action: walletActions.approval(quote.allowance.token, quote.allowance.spenderAddress),
+        pending: false,
+      });
+    }
   }
 
   const api = await getBridgeApi();

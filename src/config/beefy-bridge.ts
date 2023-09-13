@@ -1,45 +1,115 @@
 import type { BeefyBridgeConfig } from '../features/data/apis/config-types';
+import BigNumber from 'bignumber.js';
 
 export default {
   source: {
-    id: 'mooBIFITest',
-    symbol: 'mooBIFI',
+    id: 'mooTest',
+    symbol: 'mooTest',
     oracleId: 'mooFantomBIFI',
-    address: '0x03360fe329F44c6B0bE4d8C89D2fd4c0151b226E',
-    chainId: 'optimism',
+    address: '0x3960f6c882d11B797bd3f574D77E339516813B5A',
+    chainId: 'ethereum',
     decimals: 18,
-    description: 'Test mooBIFI description',
+    description: 'Test BIFI description',
   },
   tokens: {
-    optimism: '0x93883DA6605A0866ac1Bc79A2FC9b895D91e890E',
-    arbitrum: '0x161A54739C7F4D601f3d6f7ed35A1387E9Eb857F',
+    ethereum: '0x3B2faF664d6cCA5248CD7f44a6538A1fFdCcF7F0',
+    optimism: '0x665E21ce21B1e7c7401647c1fb740981b270b71d',
+    arbitrum: '0x508c6cF93e7D6793d7dB8b8B01ac6752A4275d75',
   },
-  bridges: {
-    'layer-zero': {
+  bridges: [
+    {
+      id: 'axelar',
+      chains: {
+        ethereum: {
+          bridge: '0xaaa751957312589Cd21B2348f6B05b8b40691eF3',
+          gasLimits: {
+            approve: new BigNumber('70000'),
+            outgoing: new BigNumber('260000'),
+            incoming: new BigNumber('1'),
+          },
+        },
+        optimism: {
+          bridge: '0xaaa751957312589Cd21B2348f6B05b8b40691eF3',
+          gasLimits: {
+            outgoing: new BigNumber('1'),
+            incoming: new BigNumber('180000'), // ~166,545 before refunds
+          },
+        },
+        arbitrum: {
+          bridge: '0xaaa751957312589Cd21B2348f6B05b8b40691eF3',
+          gasLimits: {
+            outgoing: new BigNumber('1'),
+            incoming: new BigNumber('1500000'), // ~166,545 before refunds, but sequencer used 600k-1.2M gas
+          },
+        },
+      },
+    },
+    {
+      id: 'chainlink',
+      chains: {
+        ethereum: {
+          bridge: '0xccccB27BB46ffE01479248EDDFb75E300DE06879',
+          gasLimits: {
+            approve: new BigNumber('70000'),
+            outgoing: new BigNumber('1'),
+            incoming: new BigNumber('1'),
+          },
+        },
+        optimism: {
+          bridge: '0xccccB27BB46ffE01479248EDDFb75E300DE06879',
+          gasLimits: {
+            outgoing: new BigNumber('1'),
+            incoming: new BigNumber('1'),
+          },
+        },
+      },
+    },
+    {
       id: 'layer-zero',
       chains: {
+        ethereum: {
+          bridge: '0xdddEedaBa09b08d052FaA67aCeCF36457252314f',
+          gasLimits: {
+            approve: new BigNumber('70000'),
+            outgoing: new BigNumber('1'),
+            incoming: new BigNumber('1'),
+          },
+        },
         optimism: {
-          chainId: '111',
-          bridge: '0x0FA0F1D9d1533E4d74730aeAcf83e313d1966350',
+          bridge: '0xdddEedaBa09b08d052FaA67aCeCF36457252314f',
+          gasLimits: {
+            outgoing: new BigNumber('1'),
+            incoming: new BigNumber('1'),
+          },
         },
         arbitrum: {
-          chainId: '110',
-          bridge: '0x7B8bF990F0Af8917b1C774B49037AB04cce5A3C5',
+          bridge: '0xdddEedaBa09b08d052FaA67aCeCF36457252314f',
+          gasLimits: {
+            outgoing: new BigNumber('1'),
+            incoming: new BigNumber('1'),
+          },
         },
       },
     },
-    'layer-zero-dummy': {
-      id: 'layer-zero-dummy',
+    {
+      id: 'optimism',
       chains: {
-        optimism: {
-          chainId: '111',
-          bridge: '0x0FA0F1D9d1533E4d74730aeAcf83e313d1966350',
+        ethereum: {
+          bridge: '0xbbb6A6474729AEB3b2c83c4acCFf96711ff88589',
+          gasLimits: {
+            approve: new BigNumber('70000'),
+            outgoing: new BigNumber('1'),
+            incoming: new BigNumber('1'),
+          },
         },
-        arbitrum: {
-          chainId: '110',
-          bridge: '0x7B8bF990F0Af8917b1C774B49037AB04cce5A3C5',
+        optimism: {
+          bridge: '0xbbb6A6474729AEB3b2c83c4acCFf96711ff88589',
+          gasLimits: {
+            outgoing: new BigNumber('1'),
+            incoming: new BigNumber('1'),
+          },
         },
       },
     },
-  },
+  ],
 } as const satisfies BeefyBridgeConfig;

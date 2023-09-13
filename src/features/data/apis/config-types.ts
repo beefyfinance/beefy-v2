@@ -5,6 +5,7 @@ import type { PlatformEntity } from '../entities/platform';
 import type { StrategyTypeEntity } from '../entities/strategy-type';
 import type { AmmEntity } from '../entities/amm';
 import type { ZapFee } from './transact/transact-types';
+import type BigNumber from 'bignumber.js';
 
 export interface VaultConfig {
   id: string;
@@ -335,35 +336,54 @@ export type BaseMigrationConfig = {
   readonly icon: string;
 };
 
-export type BeefyLayerZeroBridgeConfig = {
+export type BeefyCommonBridgeChainConfig = {
+  /** Address of our deployed bridge contract */
+  bridge: string;
+  gasLimits: {
+    /** Rough gas limit for approving mooBIFI to be spent by bridge (ETH only) */
+    approve?: BigNumber;
+    /** Rough gas limit for outgoing bridge TX on source chain */
+    outgoing: BigNumber;
+    /** Rough gas limit for incoming bridge TX on destination chain */
+    incoming: BigNumber;
+  };
+};
+
+export type BeefyCommonBridgeConfig = {
+  chains: Record<ChainEntity['id'], BeefyCommonBridgeChainConfig>;
+};
+
+export type BeefyLayerZeroBridgeConfig = BeefyCommonBridgeConfig & {
   id: 'layer-zero';
-  chains: Record<
-    ChainEntity['id'],
-    {
-      /** Address of our deployed bridge contract */
-      bridge: string;
-      /** @see https://layerzero.gitbook.io/docs/technical-reference/mainnet/supported-chain-ids */
-      chainId: string;
-    }
-  >;
 };
 
-export type BeefyLayerZeroDummyBridgeConfig = {
-  id: 'layer-zero-dummy';
-  chains: Record<
-    ChainEntity['id'],
-    {
-      /** Address of our deployed bridge contract */
-      bridge: string;
-      /** @see https://layerzero.gitbook.io/docs/technical-reference/mainnet/supported-chain-ids */
-      chainId: string;
-    }
-  >;
+export type BeefyOptimismBridgeConfig = BeefyCommonBridgeConfig & {
+  id: 'optimism';
 };
 
-export type BeefyAnyBridgeConfig = BeefyLayerZeroBridgeConfig | BeefyLayerZeroDummyBridgeConfig;
+export type BeefyChainlinkBridgeConfig = BeefyCommonBridgeConfig & {
+  id: 'chainlink';
+};
+
+export type BeefyAxelarBridgeConfig = BeefyCommonBridgeConfig & {
+  id: 'axelar';
+};
+
+export type BeefyAnyBridgeConfig =
+  | BeefyLayerZeroBridgeConfig
+  | BeefyOptimismBridgeConfig
+  | BeefyChainlinkBridgeConfig
+  | BeefyAxelarBridgeConfig;
+
+export type BeefyBridgeIdToConfig<T extends BeefyAnyBridgeConfig['id']> = Extract<
+  BeefyAnyBridgeConfig,
+  { id: T }
+>;
 
 export type BeefyBridgeConfig = Readonly<{
+  /**
+   * The real token on the source chain
+   */
   source: {
     id: string;
     symbol: string;
@@ -373,9 +393,12 @@ export type BeefyBridgeConfig = Readonly<{
     decimals: number;
     description: string;
   };
+  /**
+   * xTokens per chain
+   */
   tokens: Record<ChainEntity['id'], string>;
-  bridges: {
-    'layer-zero': BeefyLayerZeroBridgeConfig;
-    'layer-zero-dummy': BeefyLayerZeroDummyBridgeConfig;
-  };
+  /**
+   * Config per bridge
+   */
+  bridges: ReadonlyArray<BeefyAnyBridgeConfig>;
 }>;

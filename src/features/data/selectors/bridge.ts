@@ -24,10 +24,8 @@ export const selectBridgeIdsFromTo = (
   to: ChainEntity['id']
 ) => state.ui.bridge.destinations.chainToBridges[from]?.[to] || [];
 
-export const selectBridgeConfigById = (
-  state: BeefyState,
-  id: string
-): BridgeState['bridges'][keyof BridgeState['bridges']] => state.ui.bridge.bridges[id];
+export const selectBridgeConfigById = (state: BeefyState, id: BeefyAnyBridgeConfig['id']) =>
+  state.ui.bridge.bridges[id];
 
 export const selectBridgeSourceChainId = (state: BeefyState) => state.ui.bridge.source;
 
