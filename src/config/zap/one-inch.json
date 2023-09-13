@@ -356,7 +356,7 @@
       "wUSDR",
       "ZBTC"
     ],
-    "blockedVaults": ["venus-bnb", "venus-wbnb"]
+    "blockedVaults": ["venus-bnb"]
   },
   {
     "zapAddress": "0x0EC0e1242547a73C6A165d3D484e384902aa33d8",
