@@ -40,7 +40,8 @@
     "earnContractAddress": "0x29554e14B823f8b7C2D84Ae0126bF56645Ad6ad1",
     "oracle": "lps",
     "oracleId": "solarbeam-wstksm-xcksm",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solarbeam",
     "assets": ["wstKSM", "xcKSM"],
     "risks": [
@@ -70,7 +71,8 @@
     "earnContractAddress": "0xE3A1B5FF0FFf63ff59e0cc22De02638FA6BE2357",
     "oracle": "lps",
     "oracleId": "solarbeam-xckbtc-wbtc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solarbeam",
     "assets": ["xcKBTC", "WBTC"],
     "risks": [
