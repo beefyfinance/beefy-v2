@@ -1194,7 +1194,7 @@
     "earnContractAddress": "0x15780E0e9618c26dA679740C43bEc76830Ff187b",
     "oracle": "lps",
     "oracleId": "convex-multibtc",
-    "status": "active",
+    "status": "eol",
     "platformId": "convex",
     "assets": ["multiBTC", "sBTC", "WBTC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
