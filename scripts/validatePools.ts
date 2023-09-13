@@ -58,8 +58,6 @@ const nonHarvestOnDepositChains = ['ethereum', 'avax'];
 
 const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddress'];
 
-const allowedEarnSameToken = new Set(['venus-wbnb']);
-
 const validPlatformIds = platforms.map(platform => platform.id);
 const validstrategyTypeIds = strategyTypes.map(strategyType => strategyType.id);
 
@@ -156,15 +154,12 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       exitCode = 1;
     }
 
-    if (uniqueEarnedToken.has(pool.earnedToken) && !allowedEarnSameToken.has(pool.id)) {
+    if (uniqueEarnedToken.has(pool.earnedToken)) {
       console.error(`Error: ${pool.id} : Pool earnedToken duplicated: ${pool.earnedToken}`);
       exitCode = 1;
     }
 
-    if (
-      uniqueEarnedTokenAddress.has(pool.earnedTokenAddress) &&
-      !allowedEarnSameToken.has(pool.id)
-    ) {
+    if (uniqueEarnedTokenAddress.has(pool.earnedTokenAddress)) {
       console.error(
         `Error: ${pool.id} : Pool earnedTokenAddress duplicated: ${pool.earnedTokenAddress}`
       );

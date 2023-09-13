@@ -49,7 +49,7 @@ BONUS:
 [ ] make tests run in CI
 [ ] Have a scenario specific to the vault page on direct access
 [ ] Add `tokenAddress` to WFTM and WMATIC tokens and remove associated hack
-[ ] Remove hack for venus-wbnb/venus-bnb
+[x] Remove hack for venus-wbnb/venus-bnb
 [ ] Create unit tests for critical business cases
 [ ] Rework error handling
 [ ] Ensure percieved performance is OK
