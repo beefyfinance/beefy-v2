@@ -1,9 +1,5 @@
 import type { IBridgeApi } from './bridge-api-types';
-import type {
-  BeefyAnyBridgeConfig,
-  BeefyBridgeConfig,
-  BeefyBridgeIdToConfig,
-} from '../config-types';
+import type { BeefyAnyBridgeConfig, BeefyBridgeIdToConfig } from '../config-types';
 import type { InputTokenAmount } from '../transact/transact-types';
 import type { IBridgeProvider, IBridgeQuote } from './providers/provider-types';
 import { LayerZeroProvider } from './providers/LayerZeroProvider';

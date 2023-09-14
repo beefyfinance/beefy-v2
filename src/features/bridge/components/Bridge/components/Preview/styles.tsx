@@ -1,6 +1,4 @@
-import type { Theme } from '@material-ui/core';
-
-export const styles = (theme: Theme) => ({
+export const styles = () => ({
   container: {
     display: 'flex',
     flexDirection: 'column' as const,

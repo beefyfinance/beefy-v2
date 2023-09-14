@@ -356,6 +356,8 @@ export type BeefyCommonBridgeChainConfig = {
 };
 
 export type BeefyCommonBridgeConfig = {
+  /** Name of bridge */
+  title: string;
   /** Url of bridge explorer, use {{hash}} for outgoing tx hash */
   explorerUrl?: string;
   /** Chains supported by this bridge */

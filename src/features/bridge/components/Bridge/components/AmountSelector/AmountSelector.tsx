@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { bridgeActions } from '../../../../../data/reducers/wallet/bridge';
 import {
   AmountInput,
-  AmountInputProps,
+  type AmountInputProps,
 } from '../../../../../vault/components/Actions/Transact/AmountInput';
 import { formatBigDecimals } from '../../../../../../helpers/format';
 import BigNumber from 'bignumber.js';
@@ -41,7 +41,7 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
         token: fromToken,
       })
     );
-  }, [dispatch, fromToken]);
+  }, [dispatch, fromToken, userBalance]);
 
   const handleChange = useCallback<AmountInputProps['onChange']>(
     (value, isMax) => {

@@ -8,11 +8,7 @@ import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance'
 import { validateBridgeForm } from '../../../../../data/actions/bridge';
 import { debounce } from 'lodash-es';
 
-type FormValidatorProps = {
-  className?: string;
-};
-
-export const FormValidator = memo<FormValidatorProps>(function FormValidator({ className }) {
+export const FormValidator = memo(function FormValidator() {
   const dispatch = useAppDispatch();
   const { from, to, input } = useAppSelector(selectBridgeFormState);
   const fromToken = useAppSelector(state => selectBridgeTokenForChainId(state, from));
@@ -22,7 +18,7 @@ export const FormValidator = memo<FormValidatorProps>(function FormValidator({ c
   );
   const inputAmount = input.amount;
   const debouncedValidate = useMemo(
-    () => debounce(() => dispatch(validateBridgeForm()), 150),
+    () => debounce(() => dispatch(validateBridgeForm()), 250),
     [dispatch]
   );
 

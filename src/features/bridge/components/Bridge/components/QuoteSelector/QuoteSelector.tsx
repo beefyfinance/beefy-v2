@@ -1,4 +1,4 @@
-import React, { memo, ReactNode, useCallback, useMemo } from 'react';
+import React, { memo, type ReactNode, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
@@ -18,6 +18,8 @@ import { MonetizationOn, Timer } from '@material-ui/icons';
 import { styles } from './styles';
 import { TextLoader } from '../../../../../../components/TextLoader';
 import type { BeefyAnyBridgeConfig } from '../../../../../data/apis/config-types';
+import { AlertError } from '../../../../../../components/Alerts';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(styles);
 
@@ -158,7 +160,33 @@ const QuotesLoading = memo(function QuotesLoading() {
 });
 
 const QuotesError = memo(function QuotesError() {
-  return <div>rejected...</div>;
+  const { t } = useTranslation();
+  return <AlertError>{t('Bridge-Quotes-Error')}</AlertError>;
+});
+
+type QuotesHolderProps = {
+  status: 'fulfilled' | 'pending';
+};
+
+const QuotesHolder = memo<QuotesHolderProps>(function QuotesHolder({ status }) {
+  const classes = useStyles();
+  const { t } = useTranslation();
+
+  return (
+    <div className={classes.quotesHolder}>
+      <div className={classes.quotesTitle}>{t('Bridge-Quotes-Title')}</div>
+      <Scrollable
+        className={classes.scrollable}
+        thumbClassName={classes.scrollableThumb}
+        topShadowClassName={classes.scrollableTopShadow}
+        bottomShadowClassName={classes.scrollableBottomShadow}
+        leftShadowClassName={classes.scrollableLeftShadow}
+        rightShadowClassName={classes.scrollableRightShadow}
+      >
+        {status === 'fulfilled' ? <Quotes /> : <QuotesLoading />}
+      </Scrollable>
+    </div>
+  );
 });
 
 type QuoteSelectorProps = {
@@ -176,20 +204,7 @@ export const QuoteSelector = memo<QuoteSelectorProps>(function QuoteSelector({ c
 
   return (
     <div className={clsx(classes.container, className)}>
-      {status === 'rejected' ? (
-        <QuotesError />
-      ) : (
-        <Scrollable
-          className={classes.scrollable}
-          thumbClassName={classes.scrollableThumb}
-          topShadowClassName={classes.scrollableTopShadow}
-          bottomShadowClassName={classes.scrollableBottomShadow}
-          leftShadowClassName={classes.scrollableLeftShadow}
-          rightShadowClassName={classes.scrollableRightShadow}
-        >
-          {status === 'fulfilled' ? <Quotes /> : <QuotesLoading />}
-        </Scrollable>
-      )}
+      {status === 'rejected' ? <QuotesError /> : <QuotesHolder status={status} />}
     </div>
   );
 });

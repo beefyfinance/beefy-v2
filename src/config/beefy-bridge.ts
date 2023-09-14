@@ -1,7 +1,7 @@
 import type { BeefyBridgeConfig } from '../features/data/apis/config-types';
 import BigNumber from 'bignumber.js';
 
-export default {
+export const beefyBridgeConfig = {
   source: {
     id: 'mooTest',
     symbol: 'mooTest',
@@ -19,6 +19,7 @@ export default {
   bridges: [
     {
       id: 'axelar',
+      title: 'Axelar',
       explorerUrl: 'https://axelarscan.io/gmp/{{hash}}',
       chains: {
         ethereum: {
@@ -59,6 +60,7 @@ export default {
     },
     {
       id: 'chainlink',
+      title: 'Chainlink',
       explorerUrl: 'https://ccip.chain.link/tx/{{hash}}',
       chains: {
         ethereum: {
@@ -88,46 +90,48 @@ export default {
     },
     {
       id: 'layer-zero',
+      title: 'LayerZero',
       explorerUrl: 'https://layerzeroscan.com/tx/{{hash}}',
       chains: {
         ethereum: {
           bridge: '0xdddEedaBa09b08d052FaA67aCeCF36457252314f',
           time: {
-            outgoing: 0,
-            incoming: 0,
+            outgoing: 1,
+            incoming: 4,
           },
           gasLimits: {
             approve: new BigNumber('70000'),
-            outgoing: new BigNumber('1'),
+            outgoing: new BigNumber('350000'), // ~347,270 before refunds
             incoming: new BigNumber('1'),
           },
         },
         optimism: {
           bridge: '0xdddEedaBa09b08d052FaA67aCeCF36457252314f',
           time: {
-            outgoing: 0,
-            incoming: 0,
+            outgoing: 1,
+            incoming: 4,
           },
           gasLimits: {
-            outgoing: new BigNumber('1'),
-            incoming: new BigNumber('1'),
+            outgoing: new BigNumber('280000'), // ~279,132 before refunds
+            incoming: new BigNumber('270000'), // ~261,283 before refunds
           },
         },
         arbitrum: {
           bridge: '0xdddEedaBa09b08d052FaA67aCeCF36457252314f',
           time: {
-            outgoing: 0,
-            incoming: 0,
+            outgoing: 1,
+            incoming: 4,
           },
           gasLimits: {
-            outgoing: new BigNumber('1'),
-            incoming: new BigNumber('1'),
+            outgoing: new BigNumber('290000'), // ~283,631 before refunds
+            incoming: new BigNumber('250000'), // ~239,127 before refunds
           },
         },
       },
     },
     {
       id: 'optimism',
+      title: 'Optimism',
       chains: {
         ethereum: {
           bridge: '0xbbb6A6474729AEB3b2c83c4acCFf96711ff88589',

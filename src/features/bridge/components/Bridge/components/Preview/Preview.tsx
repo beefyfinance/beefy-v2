@@ -26,12 +26,11 @@ function _Preview() {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const { from, to } = useAppSelector(selectBridgeFormState);
+  const { from } = useAppSelector(selectBridgeFormState);
   const currentChainId = useAppSelector(selectCurrentChainId);
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const isWalletOnFromChain = currentChainId === from;
   const fromChain = useAppSelector(state => selectChainById(state, from));
-  const toChain = useAppSelector(state => selectChainById(state, to));
   const hasSelectedQuote = useAppSelector(selectBridgeHasSelectedQuote);
   const isConfirmDisabled = !hasSelectedQuote;
 

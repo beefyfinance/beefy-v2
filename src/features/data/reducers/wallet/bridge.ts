@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction, type SerializedError } from '@reduxjs/toolkit';
 import {
   confirmBridgeForm,
   fetchBridgeConfig,
@@ -7,13 +7,9 @@ import {
   validateBridgeForm,
 } from '../../actions/bridge';
 import type { ChainEntity } from '../../entities/chain';
-import type {
-  BeefyAnyBridgeConfig,
-  BeefyBridgeConfig,
-  BeefyBridgeIdToConfig,
-} from '../../apis/config-types';
-import type { InputTokenAmount, TokenAmount } from '../../apis/transact/transact-types';
-import { isTokenEqual, TokenErc20 } from '../../entities/token';
+import type { BeefyAnyBridgeConfig, BeefyBridgeIdToConfig } from '../../apis/config-types';
+import type { InputTokenAmount } from '../../apis/transact/transact-types';
+import { isTokenEqual, type TokenErc20 } from '../../entities/token';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types';
 import type { Draft } from 'immer';
@@ -183,14 +179,6 @@ export const bridgeSlice = createSlice({
       if (!isTokenEqual(sliceState.form.input.token, action.payload.token)) {
         sliceState.form.input.token = action.payload.token;
       }
-
-      // Skip empty idle screen if we think quote validation will succeed
-      // resetQuotes(
-      //   sliceState,
-      //   action.payload.amount.gt(BIG_ZERO) && sliceState.quote.status === 'fulfilled'
-      //     ? 'pending'
-      //     : 'idle'
-      // );
     },
     selectQuote(sliceState, action: PayloadAction<{ quoteId: string }>) {
       const { quoteId } = action.payload;
@@ -250,6 +238,7 @@ export const bridgeSlice = createSlice({
       .addCase(validateBridgeForm.pending, (sliceState, action) => {
         sliceState.validate.requestId = action.meta.requestId;
 
+        // We set quote to pending status if we previously validated successfully to reduce flicker
         resetQuotes(sliceState, sliceState.validate.status === 'fulfilled' ? 'pending' : 'idle');
       })
       .addCase(validateBridgeForm.fulfilled, (sliceState, action) => {
@@ -265,6 +254,7 @@ export const bridgeSlice = createSlice({
         }
 
         sliceState.validate.status = 'rejected';
+        resetQuotes(sliceState);
       })
       .addCase(quoteBridgeForm.pending, (sliceState, action) => {
         resetQuotes(sliceState, 'pending');

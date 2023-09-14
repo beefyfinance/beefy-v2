@@ -112,7 +112,7 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
       const contract = new web3.eth.Contract(BeefyCommonBridgeAbi, bridgeAddress);
       const inputWei = toWeiString(input.amount, input.token.decimals);
 
-      const feeToken = selectChainNativeToken(state, to.id);
+      const feeToken = selectChainNativeToken(state, from.id);
       const feeWei = await contract.methods
         .bridgeCost(to.networkChainId, inputWei, config.chains[to.id].bridge)
         .call();
@@ -125,16 +125,11 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
     }
   }
 
-  async fetchBridgeStep(quote: IBridgeQuote<T>, t: TFunction, state: BeefyState): Promise<Step> {
+  async fetchBridgeStep(quote: IBridgeQuote<T>, t: TFunction, _state: BeefyState): Promise<Step> {
     return {
       step: 'bridge',
       message: t('Vault-TxnConfirm', { type: t('Bridge-noun') }),
-      action: walletActions.bridgeViaCommonInterface(
-        quote.input,
-        quote.output,
-        quote.fee,
-        quote.config.chains[quote.input.token.chainId].bridge
-      ),
+      action: walletActions.bridgeViaCommonInterface(quote),
       pending: false,
     };
   }

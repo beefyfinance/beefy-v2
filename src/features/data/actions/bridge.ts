@@ -230,16 +230,20 @@ export const confirmBridgeForm = createAsyncThunk<
     );
   }
 
-  // TODO requote?
+  // update quote
+  const api = await getBridgeApi();
+  const fromChain = selectChainById(state, quote.input.token.chainId);
+  const toChain = selectChainById(state, quote.output.token.chainId);
+  const updatedQuote = await api.fetchQuote(quote.config, fromChain, toChain, quote.input, state);
 
   return {
-    quote,
+    quote: updatedQuote,
   };
 });
 
 type PerformBridgeParams = { t: TFunction<Namespace> };
 
-type PerformBridgePayload = {};
+type PerformBridgePayload = void;
 
 export const performBridge = createAsyncThunk<
   PerformBridgePayload,
@@ -272,7 +276,3 @@ export const performBridge = createAsyncThunk<
 
   dispatch(startStepperWithSteps(steps, quote.input.token.chainId));
 });
-
-export function getBridgeTxData() {
-  //
-}

@@ -50,4 +50,8 @@ export const styles = (theme: Theme) => ({
     gap: '8px',
     marginTop: theme.spacing(3),
   },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.primary.main,
+  },
 });

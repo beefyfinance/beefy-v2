@@ -15,7 +15,7 @@ import { isTokenEqual, isTokenNative } from '../entities/token';
 import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { isStandardVault } from '../entities/vault';
 import type {
-  MandatoryAdditionalData,
+  AdditionalData,
   TrxError,
   TrxHash,
   TrxReceipt,
@@ -74,6 +74,8 @@ import type { PromiEvent } from 'web3-core';
 import type { ThunkDispatch } from 'redux-thunk';
 import { migratorUpdate } from './migrator';
 import type { MigrationConfig } from '../reducers/wallet/migration';
+import type { IBridgeQuote } from '../apis/bridge/providers/provider-types';
+import type { BeefyAnyBridgeConfig } from '../apis/config-types';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -1394,12 +1396,7 @@ const burnWithdraw = (
   });
 };
 
-const bridgeViaCommonInterface = (
-  input: TokenAmount,
-  output: TokenAmount,
-  fee: TokenAmount,
-  viaBeefyBridgeAddress: string
-) => {
+const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
@@ -1408,6 +1405,8 @@ const bridgeViaCommonInterface = (
       return;
     }
 
+    const { input, output, fee, config } = quote;
+    const viaBeefyBridgeAddress = config.chains[input.token.chainId].bridge;
     const fromChainId = input.token.chainId;
     const toChainId = output.token.chainId;
     const fromChain = selectChainById(state, fromChainId);
@@ -1417,6 +1416,7 @@ const bridgeViaCommonInterface = (
     const feeWei = toWeiString(fee.amount, fee.token.decimals);
 
     if (!isTokenEqual(gasToken, fee.token)) {
+      console.debug(gasToken, fee.token);
       throw new Error(`Only native fee token is supported`);
     }
 
@@ -1424,16 +1424,6 @@ const bridgeViaCommonInterface = (
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contract = new web3.eth.Contract(BeefyCommonBridgeAbi, viaBeefyBridgeAddress);
     const gasPrices = await getGasPriceOptions(fromChain);
-
-    // debug
-    const estimate = await contract.methods
-      .bridge(toChain.networkChainId, inputWei, address)
-      .estimateGas({
-        ...gasPrices,
-        from: address,
-        value: feeWei,
-      });
-    console.log('estimate', estimate.toString(10));
 
     const transaction = contract.methods.bridge(toChain.networkChainId, inputWei, address).send({
       ...gasPrices,
@@ -1445,8 +1435,10 @@ const bridgeViaCommonInterface = (
       dispatch,
       transaction,
       {
+        type: 'bridge',
         amount: input.amount,
         token: input.token,
+        quote: quote,
       },
       {
         walletAddress: address,
@@ -1514,10 +1506,10 @@ function captureWalletErrors<ReturnType>(
   };
 }
 
-function bindTransactionEvents<T extends MandatoryAdditionalData>(
+function bindTransactionEvents(
   dispatch: ThunkDispatch<BeefyState, unknown, Action<unknown>>,
   transaction: PromiEvent<unknown>,
-  additionalData: T,
+  additionalData: AdditionalData,
   refreshOnSuccess?: {
     walletAddress: string;
     chainId: ChainEntity['id'];

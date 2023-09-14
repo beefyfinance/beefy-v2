@@ -2,7 +2,7 @@ import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectErc20TokenByAddress } from './tokens';
-import { BridgeState, FormStep } from '../reducers/wallet/bridge';
+import { FormStep } from '../reducers/wallet/bridge';
 import type { IBridgeQuote } from '../apis/bridge/providers/provider-types';
 import type { BeefyAnyBridgeConfig } from '../apis/config-types';
 

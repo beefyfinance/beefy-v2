@@ -15,6 +15,13 @@ import { fromWeiString } from '../../../helpers/big-number';
 import { selectVaultById } from './vaults';
 import { wnativeToNative } from '../apis/transact/helpers/tokens';
 import { ZERO_ADDRESS } from '../../../helpers/addresses';
+import {
+  type BridgeAdditionalData,
+  isWalletActionBridgeSuccess,
+  isWalletActionSuccess,
+  isZapAddtionalData,
+  type WalletActionsSuccessState,
+} from '../reducers/wallet/wallet-action';
 
 export const selectStepperState = (state: BeefyState) => {
   return state.ui.stepperState;
@@ -46,6 +53,10 @@ export const selectStepperStepContent = (state: BeefyState) => {
 };
 
 export function selectMintResult(state: BeefyState) {
+  if (!isWalletActionSuccess(state.user.walletActions)) {
+    throw new Error('Not wallet action success');
+  }
+
   const { receipt, token: mintToken, amount } = state.user.walletActions.data;
   const result = {
     type: 'mint',
@@ -87,22 +98,30 @@ export function selectMintResult(state: BeefyState) {
   return result;
 }
 
+export function selectBridgeSuccess(
+  state: BeefyState
+): WalletActionsSuccessState<BridgeAdditionalData> {
+  if (isWalletActionBridgeSuccess(state.user.walletActions)) {
+    return state.user.walletActions;
+  }
+
+  throw new Error('Not bridge success');
+}
+
 export const selectStepperProgress = (state: BeefyState) => {
   const currentStep = state.ui.stepperState.currentStep;
-  const step = state.ui.stepperState.items[currentStep]?.step;
   const percentagePerStep = 100 / state.ui.stepperState.items.length;
-  const currentTxProgress =
-    /*step === 'bridge' ? selectBridgeTxProgress(state) :*/ selectStandardTxPercentage(state);
+  const currentTxProgress = selectStandardTxPercentage(state);
 
   return currentStep * percentagePerStep + percentagePerStep * currentTxProgress;
 };
 
-/*
-Each Standar Tx have 3 possible scenarios
-1- need user interaction
-2- tx mining
-3- tx mined
-*/
+/**
+ * Each Standard Tx have 3 possible scenarios
+ * 1 - need user interaction
+ * 2 - tx mining
+ * 3 - tx mined
+ */
 const selectStandardTxPercentage = (state: BeefyState) => {
   const walletActionsStateResult = state.user.walletActions.result;
   if (walletActionsStateResult === null) {
@@ -125,6 +144,13 @@ export const selectSuccessBar = (state: BeefyState) => {
 };
 
 export function selectZapReturned(state: BeefyState, type: Step['step']) {
+  if (!isWalletActionSuccess(state.user.walletActions)) {
+    return [];
+  }
+  if (!isZapAddtionalData(state.user.walletActions.data)) {
+    return [];
+  }
+
   const { receipt, vaultId, expectedTokens } = state.user.walletActions.data;
 
   if (!vaultId || !receipt || !('TokenReturned' in receipt.events)) {

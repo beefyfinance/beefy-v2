@@ -30,13 +30,13 @@ export const Bridge = memo(function Bridge() {
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
   const step = useAppSelector(selectBridgeFormStep);
   const StepComponent = stepToComponent[step];
-  const configLoaded = useAppSelector(selectIsConfigAvailable);
+  const globalConfigLoaded = useAppSelector(selectIsConfigAvailable);
 
   useEffect(() => {
-    if (configLoaded) {
+    if (globalConfigLoaded) {
       dispatch(initiateBridgeForm({ walletAddress }));
     }
-  }, [dispatch, walletAddress, configLoaded]);
+  }, [dispatch, walletAddress, globalConfigLoaded]);
 
   return (
     <div className={classes.container}>

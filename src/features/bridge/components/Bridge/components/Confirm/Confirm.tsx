@@ -23,15 +23,15 @@ import { performBridge } from '../../../../../data/actions/bridge';
 
 const useStyles = makeStyles(styles);
 
-const ConfirmLoading = memo(function () {
+const ConfirmLoading = memo(function ConfirmLoading() {
   return <div>Loading...</div>;
 });
 
-const ConfirmError = memo(function () {
+const ConfirmError = memo(function ConfirmError() {
   return <div>Error...</div>;
 });
 
-const ConfirmReady = memo(function () {
+const ConfirmReady = memo(function ConfirmReady() {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();

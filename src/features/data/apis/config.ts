@@ -50,7 +50,7 @@ export class ConfigAPI {
   }
 
   public async fetchBeefyBridgeConfig(): Promise<BeefyBridgeConfig> {
-    return (await import('../../../config/beefy-bridge')).default;
+    return (await import('../../../config/beefy-bridge')).beefyBridgeConfig;
   }
 
   public async fetchBeefyZapsConfig(): Promise<BeefyZapConfig[]> {

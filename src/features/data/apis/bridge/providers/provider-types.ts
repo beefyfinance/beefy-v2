@@ -2,7 +2,7 @@ import type { BeefyAnyBridgeConfig } from '../../config-types';
 import type { InputTokenAmount, TokenAmount } from '../../transact/transact-types';
 import type { ChainEntity } from '../../../entities/chain';
 import type { BeefyState } from '../../../../../redux-types';
-import type { TokenErc20 } from '../../../entities/token';
+import type { TokenErc20, TokenNative } from '../../../entities/token';
 import type BigNumber from 'bignumber.js';
 import type { Step } from '../../../reducers/wallet/stepper';
 import type { TFunction } from 'react-i18next';
@@ -16,9 +16,9 @@ export interface TokenAllowance {
 export interface IBridgeQuote<T extends BeefyAnyBridgeConfig> {
   readonly id: T['id'];
   config: T;
-  input: InputTokenAmount;
-  output: TokenAmount;
-  fee: TokenAmount;
+  input: InputTokenAmount<TokenErc20>;
+  output: TokenAmount<TokenErc20>;
+  fee: TokenAmount<TokenNative>;
   allowance?: TokenAllowance;
   gas: BigNumber;
   timeEstimate: number;

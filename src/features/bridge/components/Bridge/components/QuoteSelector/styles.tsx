@@ -6,12 +6,23 @@ export const styles = (theme: Theme) => ({
     flex: '1 1 auto',
     height: '100%',
     flexDirection: 'column' as const,
-    background: '#111321',
     borderRadius: '8px',
+  },
+  quotesHolder: {
+    display: 'flex',
+    flex: '1 1 auto',
+    height: '100%',
+    flexDirection: 'column' as const,
+    gap: '8px',
+  },
+  quotesTitle: {
+    ...theme.typography['subline-sm'],
+    fontWeight: 700,
+    color: theme.palette.text.disabled,
   },
   scrollable: {
     flex: '1 0 auto',
-    height: '100%',
+    background: '#111321',
     borderRadius: '8px',
     '& > div': {
       borderRadius: 'inherit',

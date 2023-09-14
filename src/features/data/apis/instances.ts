@@ -7,7 +7,6 @@ import type {
   IWalletConnectionApi,
   WalletConnectionOptions,
 } from './wallet/wallet-connection-types';
-import { BridgeApi } from './bridge/bridge-api';
 import type { IOnRampApi } from './on-ramp/on-ramp-types';
 import type { ITransactApi } from './transact/transact-types';
 import { createWeb3Instance, rateLimitWeb3Instance } from '../../../helpers/web3';
@@ -143,6 +142,7 @@ export async function getTransactApi(): Promise<ITransactApi> {
 
 const OneInchApiPromise = import('./one-inch');
 const oneInchApiCache: { [chainId: string]: IOneInchApi } = {};
+
 export async function getOneInchApi(
   chain: ChainEntity,
   oracleAddress: string
@@ -169,6 +169,7 @@ export async function getBeefyDataApi(): Promise<IBeefyDataApi> {
 }
 
 let migrationApiInstance: IMigrationApi | null = null;
+
 export async function getMigrationApi(): Promise<IMigrationApi> {
   if (migrationApiInstance) {
     return migrationApiInstance;
@@ -180,6 +181,7 @@ export async function getMigrationApi(): Promise<IMigrationApi> {
 }
 
 let bridgeApiInstance: IBridgeApi | null = null;
+
 export async function getBridgeApi(): Promise<IBridgeApi> {
   if (bridgeApiInstance) {
     return bridgeApiInstance;
@@ -191,6 +193,7 @@ export async function getBridgeApi(): Promise<IBridgeApi> {
 }
 
 let axelarApiInstance: IAxelarApi | null = null;
+
 export async function getAxelarApi(): Promise<IAxelarApi> {
   if (axelarApiInstance) {
     return axelarApiInstance;
