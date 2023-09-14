@@ -968,6 +968,36 @@
     "createdAt": 1692735752
   },
   {
+    "id": "bvm-axlusdt-axlusdc",
+    "name": "axlUSDT-axlUSDC sLP",
+    "token": "axlUSDT-axlUSDC sLP",
+    "tokenAddress": "0x59d286411E41BB0c754dC01d692C4A54Db314832",
+    "tokenDecimals": 18,
+    "tokenProviderId": "bvm",
+    "tokenAmmId": "base-bvm",
+    "earnedToken": "mooBVMaxlUSDT-axlUSDC",
+    "earnedTokenAddress": "0xDec409020325D0722Ac08fF27C7A6a375aE755DB",
+    "earnContractAddress": "0xDec409020325D0722Ac08fF27C7A6a375aE755DB",
+    "oracle": "lps",
+    "oracleId": "bvm-axlusdt-axlusdc",
+    "status": "active",
+    "platformId": "bvm",
+    "assets": ["axlUSDT", "axlUSDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x59d286411e41bb0c754dc01d692c4a54db314832/0xb65b5853aced77228654eeaf1bf80d29f230c6a7",
+    "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x59d286411e41bb0c754dc01d692c4a54db314832/0xb65b5853aced77228654eeaf1bf80d29f230c6a7",
+    "network": "base",
+    "createdAt": 1694662452
+  },
+  {
     "id": "bvm-usdc-usdbc",
     "name": "USDC-USDbC sLP",
     "token": "USDC-USDbC sLP",
