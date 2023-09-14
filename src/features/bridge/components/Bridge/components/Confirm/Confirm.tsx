@@ -1,9 +1,8 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button';
-import { Divider } from '../../../../../../components/Divider';
-import { formatAddressShort, formatBigDecimals } from '../../../../../../helpers/format';
+import { formatBigDecimals, formatBigUsd } from '../../../../../../helpers/format';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
 import {
@@ -14,21 +13,28 @@ import { selectChainById } from '../../../../../data/selectors/chains';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
-  selectWalletAddress,
 } from '../../../../../data/selectors/wallet';
 import { styles } from './styles';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 import { performBridge } from '../../../../../data/actions/bridge';
+import { AlertError } from '../../../../../../components/Alerts';
+import { TechLoader } from '../../../../../../components/TechLoader';
+import clsx from 'clsx';
+import { getBridgeProviderLogo } from '../../../../../../helpers/bridgeProviderSrc';
+import { MonetizationOn, Timer } from '@material-ui/icons';
+import { formatMinutesDuration } from '../../../../../../helpers/date';
+import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
 const ConfirmLoading = memo(function ConfirmLoading() {
-  return <div>Loading...</div>;
+  return <TechLoader />;
 });
 
 const ConfirmError = memo(function ConfirmError() {
-  return <div>Error...</div>;
+  const { t } = useTranslation();
+  return <AlertError>{t('Bridge-Confirm-Error')}</AlertError>;
 });
 
 const ConfirmReady = memo(function ConfirmReady() {
@@ -41,8 +47,19 @@ const ConfirmReady = memo(function ConfirmReady() {
   const currentChainId = useAppSelector(selectCurrentChainId);
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const isWalletOnFromChain = currentChainId === fromChain.id;
-  const walletAddress = useAppSelector(selectWalletAddress);
   const isStepping = useAppSelector(selectIsStepperStepping);
+  const timeEstimate = useMemo(() => {
+    return formatMinutesDuration(quote.timeEstimate);
+  }, [quote.timeEstimate]);
+  const tokenPrice = useAppSelector(state =>
+    selectTokenPriceByAddress(state, quote.fee.token.chainId, quote.fee.token.address)
+  );
+  const fee = useMemo(() => {
+    return `${formatBigDecimals(quote.fee.amount, 4)} ${quote.fee.token.symbol}`;
+  }, [quote.fee]);
+  const usdFee = useMemo(() => {
+    return formatBigUsd(quote.fee.amount.multipliedBy(tokenPrice));
+  }, [tokenPrice, quote.fee.amount]);
 
   const handleBridge = useCallback(() => {
     dispatch(performBridge({ t }));
@@ -58,56 +75,65 @@ const ConfirmReady = memo(function ConfirmReady() {
 
   return (
     <>
-      <div className={classes.infoContainer}>
-        <div className={classes.transferInfo}>
-          <div className={classes.label}>{t('FROM')}</div>
-          <div className={classes.networkAmount}>
-            <div className={classes.network}>
-              <img
-                className={classes.networkIcon}
-                width={20}
-                height={20}
-                alt=""
-                src={getNetworkSrc(fromChain.id)}
-              />
-              <div className={classes.networkName}>{fromChain.name}</div>
-            </div>
-            <div className={classes.amount}>
-              <div>
-                - {formatBigDecimals(quote.input.amount, quote.input.token.decimals)}{' '}
-                {quote.input.token.symbol}
-              </div>
-              <div>
-                - {formatBigDecimals(quote.fee.amount, quote.fee.token.decimals)}{' '}
-                {quote.fee.token.symbol}
-              </div>
-            </div>
+      <div className={classes.steps}>
+        <div className={clsx(classes.step, classes.stepFrom)}>
+          <div className={classes.tokenAmount}>
+            {t('Bridge-From-Send', {
+              amount: formatBigDecimals(quote.input.amount, quote.input.token.decimals),
+              token: quote.input.token.symbol,
+            })}
           </div>
-          <div className={classes.address}>
-            {t('Address')}: <span>{formatAddressShort(walletAddress)}</span>
+          <div className={classes.via}>{t('Bridge-On')}</div>
+          <div className={classes.network}>
+            <img
+              className={classes.networkIcon}
+              width={20}
+              height={20}
+              alt={fromChain.name}
+              src={getNetworkSrc(fromChain.id)}
+            />
+            <div className={classes.networkName}> {fromChain.name}</div>
           </div>
         </div>
-        <Divider />
-        <div className={classes.transferInfo}>
-          <div className={classes.label}>{t('TO')}</div>
-          <div className={classes.networkAmount}>
-            <div className={classes.network}>
-              <img
-                className={classes.networkIcon}
-                width={20}
-                height={20}
-                alt=""
-                src={getNetworkSrc(toChain.id)}
-              />
-              <div className={classes.networkName}>{toChain.name}</div>
+        <div className={clsx(classes.step, classes.stepBridge)}>
+          <div className={classes.via}>{t('Bridge-Via')}</div>
+          <div className={classes.provider}>
+            <img
+              src={getBridgeProviderLogo(quote.config.id)}
+              alt={quote.config.title}
+              height={24}
+            />
+          </div>
+          <div className={classes.providerDetails}>
+            <div className={classes.fee}>
+              <MonetizationOn className={classes.feeIcon} />
+              <div>
+                ~{fee} ({usdFee})
+              </div>
             </div>
-            <div className={classes.amount}>
-              + {formatBigDecimals(quote.output.amount, quote.output.token.decimals)}{' '}
-              {quote.output.token.symbol}
+            <div className={classes.time}>
+              <Timer className={classes.timeIcon} />
+              <div>~{timeEstimate}</div>
             </div>
           </div>
-          <div className={classes.address}>
-            {t('Address')}: <span>{formatAddressShort(walletAddress)}</span>
+        </div>
+        <div className={clsx(classes.step, classes.stepTo)}>
+          <div className={classes.tokenAmount}>
+            {t('Bridge-To-Receive', {
+              amount: formatBigDecimals(quote.input.amount, quote.input.token.decimals),
+              token: quote.input.token.symbol,
+            })}
+          </div>
+          <div className={classes.via}>{t('Bridge-On')}</div>
+          <div className={classes.network}>
+            <img
+              className={classes.networkIcon}
+              width={20}
+              height={20}
+              alt={toChain.name}
+              src={getNetworkSrc(toChain.id)}
+            />
+            <div className={classes.networkName}> {toChain.name}</div>
           </div>
         </div>
       </div>

@@ -16,10 +16,10 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     columnGap: '132px',
     rowGap: '32px',
-    gridTemplateColumns: '1fr',
+    gridTemplateColumns: 'minmax(0, 1fr)',
     gridTemplateRows: 'auto',
     [theme.breakpoints.up('md')]: {
-      gridTemplateColumns: 'minmax(0, 1fr) 400px',
+      gridTemplateColumns: 'minmax(0, 1fr) 440px',
     },
   },
 });

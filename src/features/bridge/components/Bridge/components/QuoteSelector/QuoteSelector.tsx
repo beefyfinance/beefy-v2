@@ -2,6 +2,7 @@ import React, { memo, type ReactNode, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
+  selectBridgeConfigById,
   selectBridgeFormState,
   selectBridgeIdsFromTo,
   selectBridgeQuoteById,
@@ -9,17 +10,18 @@ import {
   selectBridgeQuoteSelectedId,
   selectBridgeQuoteStatus,
 } from '../../../../../data/selectors/bridge';
-import { formatBigDecimals } from '../../../../../../helpers/format';
+import { formatBigDecimals, formatBigUsd } from '../../../../../../helpers/format';
 import { bridgeActions } from '../../../../../data/reducers/wallet/bridge';
 import clsx from 'clsx';
 import { getBridgeProviderIcon } from '../../../../../../helpers/bridgeProviderSrc';
-import { Scrollable } from '../../../../../../components/Scrollable';
 import { MonetizationOn, Timer } from '@material-ui/icons';
 import { styles } from './styles';
 import { TextLoader } from '../../../../../../components/TextLoader';
 import type { BeefyAnyBridgeConfig } from '../../../../../data/apis/config-types';
 import { AlertError } from '../../../../../../components/Alerts';
 import { useTranslation } from 'react-i18next';
+import { formatMinutesDuration } from '../../../../../../helpers/date';
+import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
@@ -40,9 +42,15 @@ const QuoteButton = memo<QuoteButtonProps>(function QuoteButton({ quoteId, selec
       dispatch(bridgeActions.selectQuote({ quoteId: quoteId }));
     }
   }, [quoteId, selected, dispatch]);
-  const providerIcon = useMemo(() => {
-    return getBridgeProviderIcon(quoteId);
-  }, [quoteId]);
+  const timeEstimate = useMemo(() => {
+    return formatMinutesDuration(quote.timeEstimate);
+  }, [quote.timeEstimate]);
+  const tokenPrice = useAppSelector(state =>
+    selectTokenPriceByAddress(state, quote.fee.token.chainId, quote.fee.token.address)
+  );
+  const usdFee = useMemo(() => {
+    return formatBigUsd(quote.fee.amount.multipliedBy(tokenPrice));
+  }, [tokenPrice, quote.fee.amount]);
 
   return (
     <button
@@ -54,41 +62,46 @@ const QuoteButton = memo<QuoteButtonProps>(function QuoteButton({ quoteId, selec
       })}
     >
       <QuoteButtonInner
-        providerIcon={
-          <img
-            src={providerIcon}
-            alt={quoteId}
-            width={32}
-            height={32}
-            className={classes.quoteProviderIcon}
-          />
-        }
+        providerId={quote.config.id}
         fee={
           <>
-            {formatBigDecimals(quote.fee.amount, 4)} {quote.fee.token.symbol}
+            ~{formatBigDecimals(quote.fee.amount, 4)} {quote.fee.token.symbol} ({usdFee})
           </>
         }
-        time={<>~{quote.timeEstimate}m</>}
+        time={<>~{timeEstimate}</>}
       />
     </button>
   );
 });
 
 type QuoteButtonInnerProps = {
-  providerIcon: ReactNode;
+  providerId: BeefyAnyBridgeConfig['id'];
   fee: ReactNode;
   time: ReactNode;
 };
 const QuoteButtonInner = memo<QuoteButtonInnerProps>(function QuoteButtonInner({
-  providerIcon,
+  providerId,
   fee,
   time,
 }) {
   const classes = useStyles();
+  const config = useAppSelector(state => selectBridgeConfigById(state, providerId));
+  const providerIcon = useMemo(() => {
+    return getBridgeProviderIcon(providerId);
+  }, [providerId]);
 
   return (
     <>
-      <div className={classes.quoteProvider}>{providerIcon}</div>
+      <div className={classes.quoteProvider}>
+        <img
+          src={providerIcon}
+          alt={providerId}
+          width={24}
+          height={24}
+          className={classes.quoteProviderIcon}
+        />
+        <div className={classes.quoteProviderTitle}>{config.title}</div>
+      </div>
       <div className={classes.quoteFee}>
         <MonetizationOn className={classes.quoteFeeIcon} />
         <div> {fee} </div>
@@ -108,22 +121,11 @@ const LoadingQuoteButton = memo<LoadingQuoteButtonProps>(function LoadingQuoteBu
   providerId,
 }) {
   const classes = useStyles();
-  const providerIcon = useMemo(() => {
-    return getBridgeProviderIcon(providerId);
-  }, [providerId]);
 
   return (
     <div className={classes.quote}>
       <QuoteButtonInner
-        providerIcon={
-          <img
-            src={providerIcon}
-            alt={providerId}
-            width={32}
-            height={32}
-            className={classes.quoteProviderIcon}
-          />
-        }
+        providerId={providerId}
         fee={<TextLoader placeholder="0.0000 ETH" />}
         time={<TextLoader placeholder="~30m" />}
       />
@@ -175,16 +177,7 @@ const QuotesHolder = memo<QuotesHolderProps>(function QuotesHolder({ status }) {
   return (
     <div className={classes.quotesHolder}>
       <div className={classes.quotesTitle}>{t('Bridge-Quotes-Title')}</div>
-      <Scrollable
-        className={classes.scrollable}
-        thumbClassName={classes.scrollableThumb}
-        topShadowClassName={classes.scrollableTopShadow}
-        bottomShadowClassName={classes.scrollableBottomShadow}
-        leftShadowClassName={classes.scrollableLeftShadow}
-        rightShadowClassName={classes.scrollableRightShadow}
-      >
-        {status === 'fulfilled' ? <Quotes /> : <QuotesLoading />}
-      </Scrollable>
+      {status === 'fulfilled' ? <Quotes /> : <QuotesLoading />}
     </div>
   );
 });
@@ -196,7 +189,6 @@ type QuoteSelectorProps = {
 export const QuoteSelector = memo<QuoteSelectorProps>(function QuoteSelector({ className }) {
   const classes = useStyles();
   const status = useAppSelector(selectBridgeQuoteStatus);
-  console.log(status);
 
   if (status === 'idle') {
     return null;

@@ -1,83 +1,98 @@
 import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
-  content: {
-    padding: '24px',
-    borderRadius: '4px',
-    backgroundColor: '#232743',
-  },
-  confirmIntro: {
-    color: theme.palette.text.secondary,
-    marginBottom: '24px',
-  },
-  transferInfo: {
-    padding: '12px',
-    backgroundColor: theme.palette.background.content,
-    borderRadius: '8px',
-  },
-  label: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
-    fontWeight: 700,
-    marginBottom: '8px',
-  },
-  networkAmount: {
+  steps: {
+    flex: '1 0 auto',
     display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: '8px',
+    flexDirection: 'column' as const,
+  },
+  step: {
+    padding: '24px',
+    backgroundColor: '#2D3153',
+    position: 'relative' as const,
+    textAlign: 'center' as const,
+    display: 'flex',
+    flexDirection: 'column' as const,
+    alignItems: 'center',
+    '&:first-child': {
+      borderRadius: '8px 8px 0 0',
+    },
+    '&:last-child': {
+      borderRadius: '0 0 8px 8px',
+    },
+    '&::after': {
+      content: '""',
+      display: 'block',
+      position: 'absolute' as const,
+      bottom: '-20px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      width: 0,
+      height: 0,
+      borderStyle: 'solid',
+      borderWidth: '20px 40px 0 40px',
+      borderColor: '#2D3153 transparent transparent transparent',
+      zIndex: 1,
+    },
+  },
+  stepFrom: {},
+  stepBridge: {
+    paddingTop: '32px',
+    backgroundColor: '#313759',
+    '&::after': {
+      borderColor: '#313759 transparent transparent transparent',
+    },
+  },
+  stepTo: {
+    paddingTop: '32px',
+    '&::after': {
+      display: 'none',
+      content: 'none',
+    },
+  },
+  tokenAmount: {},
+  via: {
+    color: theme.palette.text.dark,
   },
   network: {
     display: 'flex',
+    gap: '8px',
     alignItems: 'center',
-    ...theme.typography['body-lg-med'],
   },
   networkIcon: {
-    width: '20px',
-    height: '20px',
     display: 'block',
-    marginRight: '4px',
   },
-  networkName: {
-    color: theme.palette.text.secondary,
+  networkName: {},
+  provider: {
+    marginTop: '8px',
+    marginBottom: '8px',
   },
-  amount: {
-    color: '#999CB3',
-    fontWeight: 500,
+  providerDetails: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
   },
-  address: {
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.disabled,
-    '& span': {
-      color: theme.palette.text.secondary,
-    },
+  fee: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
   },
-  transferDetails: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    rowGap: '8px',
-    columnGap: '8px',
-    marginTop: '24px',
-    padding: '12px',
-    border: '2px solid #2D3153',
-    borderRadius: '8px',
+  feeIcon: {
+    width: '16px',
+    height: '16px',
+    fill: theme.palette.text.light,
   },
-  detailLabel: {
-    ...theme.typography['body-sm'],
-    fontWeight: 700,
-    letterSpacing: '0.5px',
-    color: '#999CB3',
-    textTransform: 'uppercase' as const,
-    whiteSpace: 'nowrap' as const,
+  time: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
   },
-  detailValue: {
-    ...theme.typography['body-sm-med'],
-    textAlign: 'right' as const,
-    color: theme.palette.text.secondary,
+  timeIcon: {
+    width: '16px',
+    height: '16px',
+    fill: theme.palette.text.light,
   },
   buttonsContainer: {
-    marginTop: '48px',
-  },
-  infoContainer: {
-    flexGrow: 1,
+    marginTop: 'auto',
   },
 });

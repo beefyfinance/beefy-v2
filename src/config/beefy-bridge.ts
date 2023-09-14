@@ -136,7 +136,7 @@ export const beefyBridgeConfig = {
         ethereum: {
           bridge: '0xbbb6A6474729AEB3b2c83c4acCFf96711ff88589',
           time: {
-            outgoing: 0,
+            outgoing: 2,
             incoming: 0,
           },
           gasLimits: {
@@ -148,12 +148,12 @@ export const beefyBridgeConfig = {
         optimism: {
           bridge: '0xbbb6A6474729AEB3b2c83c4acCFf96711ff88589',
           time: {
-            outgoing: 0,
+            outgoing: 10080,
             incoming: 0,
           },
           gasLimits: {
             outgoing: new BigNumber('1'),
-            incoming: new BigNumber('1'),
+            incoming: new BigNumber('140000'), // ~134,500 before refunds
           },
         },
       },

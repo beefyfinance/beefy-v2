@@ -328,6 +328,6 @@ export function errorToString(error: SerializedError | string) {
     : `${error?.message || error?.name || error?.code || String(error)}`;
 }
 
-export function zeroPad(value: number | undefined): string {
-  return padStart((value || 0).toString(), 2, '0');
+export function zeroPad(value: number | undefined, length: number): string {
+  return padStart((value || 0).toString(), length, '0');
 }
