@@ -4782,8 +4782,7 @@
     "earnContractAddress": "0x1B156C5c75E9dF4CAAb2a5cc5999aC58ff4F9090",
     "oracle": "tokens",
     "oracleId": "AVAX",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "aave",
     "assets": ["AVAX"],
     "risks": [
