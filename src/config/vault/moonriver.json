@@ -135,7 +135,8 @@
     "earnContractAddress": "0x78Dc4b7C7A89812fb337dD8C3B0ccB3e04E02D7C",
     "oracle": "lps",
     "oracleId": "solarbeam-wmovr-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solarbeam",
     "assets": ["MOVR", "USDC"],
     "risks": [
