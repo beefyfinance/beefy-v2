@@ -10,7 +10,9 @@ import { selectLpBreakdownByTokenAddress } from '../../features/data/selectors/t
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../helpers/big-number';
 import { InterestTooltipContent } from '../InterestTooltipContent';
-import { featureFlag_tvlShare } from '../../features/data/utils/feature-flags';
+import type { PlatformEntity } from '../../features/data/entities/platform';
+import { selectPlatformById } from '../../features/data/selectors/platforms';
+import { useAppSelector } from '../../store';
 
 export type VaultTvlStatProps = {
   vaultId: VaultEntity['id'];
@@ -59,12 +61,17 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
   return {
     label,
     value: formatBigUsd(tvl),
-    subValue: featureFlag_tvlShare()
-      ? `${formatSmallPercent(percent, 1)} / ${formatBigUsd(underlyingTvl)}`
-      : null,
+    subValue: formatBigUsd(underlyingTvl),
     blur: false,
     loading: false,
-    tooltip: <TvlShareTooltip underlyingTvl={underlyingTvl} vaultTvl={tvl} percent={percent} />,
+    tooltip: (
+      <TvlShareTooltip
+        platformId={vault.platformId}
+        underlyingTvl={underlyingTvl}
+        vaultTvl={tvl}
+        percent={percent}
+      />
+    ),
   };
 }
 
@@ -72,13 +79,16 @@ type TvlShareTooltipProps = {
   underlyingTvl: BigNumber;
   vaultTvl: BigNumber;
   percent: number;
+  platformId: PlatformEntity['id'];
 };
 
 const TvlShareTooltip = memo<TvlShareTooltipProps>(function TvlShareTooltip({
   underlyingTvl,
   vaultTvl,
   percent,
+  platformId,
 }) {
+  const platform = useAppSelector(state => selectPlatformById(state, platformId));
   const rows = useMemo(() => {
     return [
       {
@@ -88,13 +98,14 @@ const TvlShareTooltip = memo<TvlShareTooltipProps>(function TvlShareTooltip({
       {
         label: 'Vault-Breakdown-Tvl-Underlying',
         value: formatBigUsd(underlyingTvl),
+        labelTextParams: { platform: platform.name },
       },
       {
         label: 'Vault-Breakdown-Tvl-Share',
         value: formatSmallPercent(percent),
       },
     ];
-  }, [underlyingTvl, vaultTvl, percent]);
+  }, [vaultTvl, underlyingTvl, platform.name, percent]);
 
   return <InterestTooltipContent rows={rows} />;
 });

@@ -149,7 +149,7 @@
   "Vault-Breakdown-ComposablePoolDaily": "Composable Pool Daily",
   "Vault-Breakdown-BoostDaily": "Boost Daily",
   "Vault-Breakdown-Tvl-Vault": "Beefy TVL",
-  "Vault-Breakdown-Tvl-Underlying": "Underlying TVL",
+  "Vault-Breakdown-Tvl-Underlying": "{{platform}} TVL",
   "Vault-Breakdown-Tvl-Share": "Beefy Share",
   "Vault-ApproveMsg": "Approval transaction happens once per vault",
   "Vault-TxnConfirm": "Confirm wallet transaction to complete {{type}}",
