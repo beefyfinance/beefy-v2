@@ -18699,7 +18699,8 @@
     "earnContractAddress": "0xbf3fEE15ae8e41F1A63B011aba9dC9d6a732DBB0",
     "oracle": "lps",
     "oracleId": "cakev2-wbnb-ceek",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "pancakeswap",
     "assets": ["CEEK", "BNB"],
     "risks": [
