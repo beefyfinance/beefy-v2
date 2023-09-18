@@ -968,6 +968,36 @@
     "createdAt": 1692735752
   },
   {
+    "id": "bvm-axlusdt-axlusdc",
+    "name": "axlUSDT-axlUSDC sLP",
+    "token": "axlUSDT-axlUSDC sLP",
+    "tokenAddress": "0x59d286411E41BB0c754dC01d692C4A54Db314832",
+    "tokenDecimals": 18,
+    "tokenProviderId": "bvm",
+    "tokenAmmId": "base-bvm",
+    "earnedToken": "mooBVMaxlUSDT-axlUSDC",
+    "earnedTokenAddress": "0xDec409020325D0722Ac08fF27C7A6a375aE755DB",
+    "earnContractAddress": "0xDec409020325D0722Ac08fF27C7A6a375aE755DB",
+    "oracle": "lps",
+    "oracleId": "bvm-axlusdt-axlusdc",
+    "status": "active",
+    "platformId": "bvm",
+    "assets": ["axlUSDT", "axlUSDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x59d286411e41bb0c754dc01d692c4a54db314832/0xb65b5853aced77228654eeaf1bf80d29f230c6a7",
+    "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x59d286411e41bb0c754dc01d692c4a54db314832/0xb65b5853aced77228654eeaf1bf80d29f230c6a7",
+    "network": "base",
+    "createdAt": 1694662452
+  },
+  {
     "id": "bvm-usdc-usdbc",
     "name": "USDC-USDbC sLP",
     "token": "USDC-USDbC sLP",
@@ -1078,7 +1108,7 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     "network": "base",
-    "createdAt": 1692437972
+    "createdAt": 1694469591
   },
   {
     "id": "alienbase-dai-usdbc",
@@ -1235,7 +1265,7 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "network": "base",
-    "createdAt": 1691938159
+    "createdAt": 1694469591
   },
   {
     "id": "swapbased-weth-axlusdc",
@@ -1258,7 +1288,7 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "network": "base",
-    "createdAt": 1691938159
+    "createdAt": 1694469591
   },
   {
     "id": "swapbased-dai-usdbc",
@@ -1281,7 +1311,7 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&currency1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&currency1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "network": "base",
-    "createdAt": 1691938159
+    "createdAt": 1694469591
   },
   {
     "id": "swapbased-usd+-usdbc",
@@ -1311,7 +1341,7 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&currency1=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&currency1=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376",
     "network": "base",
-    "createdAt": 1691938159
+    "createdAt": 1694469591
   },
   {
     "id": "swapbased-dai+-usd+",
@@ -1341,7 +1371,7 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376&currency1=0x65a2508C429a6078a7BC2f7dF81aB575BD9D9275",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376&currency1=0x65a2508C429a6078a7BC2f7dF81aB575BD9D9275",
     "network": "base",
-    "createdAt": 1691938159
+    "createdAt": 1694469591
   },
   {
     "id": "moonwell-base-usdbc",

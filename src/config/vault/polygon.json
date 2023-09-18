@@ -1296,7 +1296,8 @@
     "earnContractAddress": "0x01a8F2E5BfB8679C82442F90e1166469a2E530c8",
     "oracle": "tokens",
     "oracleId": "MaticX",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "aave",
     "assets": ["MaticX"],
     "risks": [
@@ -2646,7 +2647,8 @@
     "earnContractAddress": "0xAA7C2879DaF8034722A0977f13c343aF0883E92e",
     "oracle": "lps",
     "oracleId": "curve-am3crv",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "curve",
     "assets": ["DAI", "USDC", "USDT"],
     "risks": [
