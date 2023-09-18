@@ -72,12 +72,10 @@ export const initiateBridgeForm = createAsyncThunk<
     chainId => chainId !== fromChainId
   )[0];
 
-  if (walletAddress) {
-    const chainId = selectCurrentChainId(state);
-    if (supportedChainIds.includes(chainId)) {
-      fromChainId = chainId;
-      toChainId = supportedChainIds.filter(chainId => chainId !== fromChainId)[0];
-    }
+  const chainId = selectCurrentChainId(state);
+  if (chainId && supportedChainIds.includes(chainId)) {
+    fromChainId = chainId;
+    toChainId = supportedChainIds.filter(chainId => chainId !== fromChainId)[0];
   }
 
   const fromToken = selectBridgeTokenForChainId(state, fromChainId);
@@ -182,8 +180,12 @@ export const quoteBridgeForm = createAsyncThunk<
   if (successfulQuotes.length > 0) {
     const sortedQuotes = orderBy(
       successfulQuotes,
-      [quote => quote.output.amount.toNumber(), quote => quote.fee.amount.toNumber()],
-      ['desc', 'asc']
+      [
+        quote => quote.output.amount.toNumber(),
+        quote => quote.timeEstimate,
+        quote => quote.fee.amount.toNumber(),
+      ],
+      ['desc', 'asc', 'asc']
     );
     return { quotes: sortedQuotes };
   }

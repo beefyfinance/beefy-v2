@@ -5,6 +5,12 @@ import { selectErc20TokenByAddress } from './tokens';
 import { FormStep } from '../reducers/wallet/bridge';
 import type { IBridgeQuote } from '../apis/bridge/providers/provider-types';
 import type { BeefyAnyBridgeConfig } from '../apis/config-types';
+import {
+  selectStepperCurrentStepData,
+  selectStepperItems,
+  selectStepperStepContent,
+} from './stepper';
+import { StepContent } from '../reducers/wallet/stepper';
 
 export const selectIsBridgeConfigLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.bridgeConfig.alreadyLoadedOnce;
@@ -77,22 +83,31 @@ export const selectBridgeHasSelectedQuote = (state: BeefyState) => {
 export const selectBridgeConfirmStatus = (state: BeefyState) => state.ui.bridge.confirm.status;
 export const selectBridgeConfirmQuote = (state: BeefyState) => state.ui.bridge.confirm.quote;
 
-export function selectBridgeState() {
-  //
-}
+export function selectBridgeTxState(state: BeefyState) {
+  const items = selectStepperItems(state);
+  if (!items.length) {
+    return { step: 'unknown', status: 'unknown' };
+  }
 
-export function selectBridgeStatus() {
-  //
-}
+  const currentItem = selectStepperCurrentStepData(state);
+  if (!currentItem) {
+    return { step: 'unknown', status: 'unknown' };
+  }
 
-export function selectBridgeTxData() {
-  //
-}
+  if (currentItem.step !== 'approve' && currentItem.step !== 'bridge') {
+    return { step: 'unknown', status: 'unknown' };
+  }
 
-export function selectBifiAddress() {
-  //
-}
+  const stepContent = selectStepperStepContent(state);
+  if (stepContent === StepContent.StartTx) {
+    return { step: currentItem.step, status: 'pending' };
+  } else if (stepContent === StepContent.WaitingTx) {
+    return { step: currentItem.step, status: 'mining' };
+  } else if (stepContent === StepContent.SuccessTx) {
+    return { step: currentItem.step, status: 'success' };
+  } else if (stepContent === StepContent.ErrorTx) {
+    return { step: currentItem.step, status: 'error' };
+  }
 
-export function selectBridgeBifiDestChainData() {
-  //
+  return { step: 'unknown', status: 'unknown' };
 }

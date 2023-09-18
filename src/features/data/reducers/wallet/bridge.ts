@@ -3,6 +3,7 @@ import {
   confirmBridgeForm,
   fetchBridgeConfig,
   initiateBridgeForm,
+  performBridge,
   quoteBridgeForm,
   validateBridgeForm,
 } from '../../actions/bridge';
@@ -19,6 +20,7 @@ export enum FormStep {
   Loading = 1,
   Preview,
   Confirm,
+  Transaction,
   SelectFromNetwork,
   SelectToNetwork,
 }
@@ -192,6 +194,11 @@ export const bridgeSlice = createSlice({
     unselectQuote(sliceState) {
       sliceState.quote.selected = null;
     },
+    restart(sliceState) {
+      resetQuotes(sliceState);
+      sliceState.form.input.amount = BIG_ZERO;
+      sliceState.form.step = FormStep.Preview;
+    },
   },
   extraReducers: builder => {
     builder
@@ -302,6 +309,9 @@ export const bridgeSlice = createSlice({
         sliceState.confirm.status = 'rejected';
         sliceState.confirm.quote = null;
         sliceState.confirm.error = action.error;
+      })
+      .addCase(performBridge.fulfilled, (sliceState, _action) => {
+        sliceState.form.step = FormStep.Transaction;
       });
   },
 });

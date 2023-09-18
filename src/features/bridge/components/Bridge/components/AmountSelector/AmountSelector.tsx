@@ -61,7 +61,7 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
       <div className={classes.labels}>
         <div className={classes.label}>{t('AMOUNT')}</div>
         <div onClick={handleMax} className={classes.balance}>
-          {t('Balance')}:{' '}
+          {t('Transact-Available')}{' '}
           <span>
             {formatBigDecimals(userBalance, 4)} {fromToken.symbol}
           </span>

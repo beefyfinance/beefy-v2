@@ -40,7 +40,7 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     gridTemplateColumns: 'minmax(0, 1fr)',
     gap: '8px',
-    padding: '16px',
+    padding: '8px',
     borderRadius: '8px',
     background: '#2E3150',
   },

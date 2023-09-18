@@ -13,6 +13,7 @@ import { SelectToChainStep } from './components/SelectToChainStep';
 import { initiateBridgeForm } from '../../../data/actions/bridge';
 import { LoadingStep } from './components/LoadingStep';
 import { selectIsConfigAvailable } from '../../../data/selectors/data-loader';
+import { TransactionStep } from './components/TransactionStep';
 
 const useStyles = makeStyles(styles);
 
@@ -20,6 +21,7 @@ const stepToComponent: Record<FormStep, FC> = {
   [FormStep.Loading]: LoadingStep,
   [FormStep.Preview]: PreviewStep,
   [FormStep.Confirm]: ConfirmStep,
+  [FormStep.Transaction]: TransactionStep,
   [FormStep.SelectFromNetwork]: SelectFromChainStep,
   [FormStep.SelectToNetwork]: SelectToChainStep,
 };

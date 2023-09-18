@@ -4,9 +4,9 @@ export const styles = (theme: Theme) => ({
   pageContainer: {
     paddingTop: 120,
     paddingBottom: 120,
-    [theme.breakpoints.down('md')]: {
-      paddingTop: 18,
-      paddingBottom: 48,
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: 32,
+      paddingBottom: 32,
     },
   },
   inner: {
@@ -21,5 +21,11 @@ export const styles = (theme: Theme) => ({
     [theme.breakpoints.up('md')]: {
       gridTemplateColumns: 'minmax(0, 1fr) 440px',
     },
+  },
+  intro: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '24px',
+    alignSelf: 'center',
   },
 });
