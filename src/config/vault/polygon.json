@@ -2647,7 +2647,8 @@
     "earnContractAddress": "0xAA7C2879DaF8034722A0977f13c343aF0883E92e",
     "oracle": "lps",
     "oracleId": "curve-am3crv",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "curve",
     "assets": ["DAI", "USDC", "USDT"],
     "risks": [

@@ -1040,7 +1040,8 @@
     "earnContractAddress": "0xe1a8EeA58D63Ea64d00365531D266C2AD1f62FC4",
     "oracle": "lps",
     "oracleId": "curve-avax-atricrypto",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "curve",
     "assets": ["DAIe", "USDCe", "USDTe", "WBTCe", "WETHe"],
     "risks": [
