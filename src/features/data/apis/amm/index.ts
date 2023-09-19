@@ -33,7 +33,7 @@ const mapSolidly: Record<string, typeof SolidlyPool> = {
   'bsc-cone': ConeSolidlyPool,
   'arbitrum-solidlizard': ConeSolidlyPool,
   'fantom-spirit-v2': SpiritSwapV2SolidlyPool,
-  'fantom-fvm': VelodromeSolidlyPool,
+  'fantom-fvm': BVMSolidlyPool,
   'optimism-velodrome': VelodromeSolidlyPool,
   'optimism-velodrome-v2': VelodromeV2SolidlyPool,
   'base-aerodrome': VelodromeV2SolidlyPool,
