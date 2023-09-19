@@ -82,7 +82,7 @@ type TvlShareTooltipProps = {
   platformId: PlatformEntity['id'];
 };
 
-const TvlShareTooltip = memo<TvlShareTooltipProps>(function TvlShareTooltip({
+export const TvlShareTooltip = memo<TvlShareTooltipProps>(function TvlShareTooltip({
   underlyingTvl,
   vaultTvl,
   percent,
