@@ -26,6 +26,6 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     gap: '24px',
-    alignSelf: 'center',
+    paddingTop: '32px',
   },
 });
