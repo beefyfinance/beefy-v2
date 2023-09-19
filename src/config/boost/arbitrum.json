@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_balancer-wsteth-weth-v3-lido-arb",
+    "poolId": "balancer-wsteth-weth-v3",
+    "name": "Lido",
+    "assets": ["wstETH", "ETH"],
+    "tokenAddress": "0x85B10228cd93A6e5E354Ff0f2c60875E8E62F65A",
+    "earnedToken": "ARB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+    "earnContractAddress": "0xcDD9438B1DBC510763B525e0dbA2435D7e52CD82",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "ARB",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["lido-eth"]
+  },
+  {
     "id": "moo_balancer-wsteth-eth-v2-lido",
     "poolId": "balancer-wsteth-eth-v2",
     "name": "Lido",
