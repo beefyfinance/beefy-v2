@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
 import type { Theme } from '@material-ui/core';
-import { IconWithTooltip, Tooltip } from '../Tooltip';
+import { IconWithTooltip, Tooltip, type TooltipProps, TRIGGERS } from '../Tooltip';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
@@ -36,6 +36,10 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
 }) {
   const classes = useStyles();
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
+  const handleTooltipClick = useCallback<TooltipProps['onClick']>(e => {
+    // don't bubble up to the link on whole row
+    e.preventDefault();
+  }, []);
 
   return (
     <div className={className}>
@@ -49,19 +53,24 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
       ) : null}
       {tooltip ? (
         <div className={contentClassName}>
-          <Tooltip triggerClass={triggerClassName} content={tooltip}>
+          <Tooltip
+            triggerClass={triggerClassName}
+            content={tooltip}
+            onClick={handleTooltipClick}
+            triggers={TRIGGERS.HOVER}
+          >
             {children}
+            {subValue && (
+              <div
+                className={clsx(classes.subValue, {
+                  [classes.blurValue]: blur,
+                  [classes.lineThroughValue]: boosted,
+                })}
+              >
+                {subValue}
+              </div>
+            )}
           </Tooltip>
-          {subValue && (
-            <div
-              className={clsx(classes.subValue, {
-                [classes.blurValue]: blur,
-                [classes.lineThroughValue]: boosted,
-              })}
-            >
-              {subValue}
-            </div>
-          )}
         </div>
       ) : (
         <div className={contentClassName}>
