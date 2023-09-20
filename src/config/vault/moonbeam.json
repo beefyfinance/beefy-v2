@@ -494,7 +494,6 @@
     ],
     "strategyTypeId": "single",
     "isGovVault": true,
-    "excluded": "moonbeam-bifi-maxi",
     "network": "moonbeam",
     "createdAt": 1623706144
   },

@@ -52,7 +52,6 @@
     ],
     "strategyTypeId": "single",
     "isGovVault": true,
-    "excluded": "fantom-bifi-maxi",
     "network": "fantom",
     "createdAt": 1623706144
   },

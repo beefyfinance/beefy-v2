@@ -54,7 +54,6 @@
     ],
     "strategyTypeId": "single",
     "isGovVault": true,
-    "excluded": "metis-bifi-maxi",
     "network": "metis",
     "createdAt": 1623706144
   },
