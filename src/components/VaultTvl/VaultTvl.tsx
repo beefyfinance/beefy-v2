@@ -24,9 +24,10 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
   if (!isLoaded) {
     return {
       label,
-      value: '-',
+      vaultTvl: BIG_ZERO,
       subValue: null,
       loading: true,
+      breakdown: null,
     };
   }
   // deposit can be moo or oracle
@@ -39,6 +40,7 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
 
   if (!breakdown) {
     return {
+      label,
       vaultTvl: tvl,
       subValue: null,
       loading: false,
@@ -51,6 +53,7 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
   const percent = underlyingTvl.gt(BIG_ZERO) ? tvl.div(underlyingTvl).toNumber() : 0;
 
   return {
+    label,
     vaultTvl: tvl,
     underlyingTvl: underlyingTvl,
     loading: !isLoaded,
@@ -60,6 +63,7 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
   };
 })(
   ({
+    label,
     vaultTvl,
     loading,
     breakdown,
@@ -67,6 +71,7 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
     platformId,
     percent,
   }: {
+    label: string;
     vaultTvl: BigNumber;
     underlyingTvl: BigNumber;
     loading: boolean;
@@ -86,7 +91,7 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
 
     return (
       <ValueBlock
-        label={t('TVL')}
+        label={t(label)}
         value={value}
         blurred={false}
         loading={loading}
