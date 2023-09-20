@@ -56,6 +56,7 @@ const oldValidFeeRecipients = {
 };
 
 const nonHarvestOnDepositChains = ['ethereum', 'avax'];
+const nonHarvestOnDepositPools = ['venus-bnb'];
 
 const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddress'];
 
@@ -404,6 +405,7 @@ const isHarvestOnDepositCorrect = (pool, chain, updates) => {
     pool.status === 'active' &&
     pool.harvestOnDeposit !== undefined &&
     !nonHarvestOnDepositChains.includes(chain) &&
+    !nonHarvestOnDepositPools.includes(pool.id) &&
     pool.harvestOnDeposit !== true
   ) {
     console.log(
