@@ -2218,37 +2218,6 @@
     "createdAt": 1677270359
   },
   {
-    "id": "kyber-arbitrum-usdc-mai",
-    "name": "MAI-USDC.e LP",
-    "token": "MAI-USDC.e arbkLP",
-    "tokenAddress": "0x6A4D5F8385Ff6E7fC4EBf6F726e12A958dAA1cba",
-    "tokenDecimals": 18,
-    "tokenProviderId": "kyber",
-    "earnedToken": "mooKyberArbMAI-USDC",
-    "earnedTokenAddress": "0x6489b78bC1B33A0cC0f6411AcD3C98175a3A41d3",
-    "earnContractAddress": "0x6489b78bC1B33A0cC0f6411AcD3C98175a3A41d3",
-    "oracle": "lps",
-    "oracleId": "kyber-arbitrum-usdc-mai",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "kyber",
-    "assets": ["MAI", "arbUSDCe"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://kyberswap.com/swap/arbitrum",
-    "addLiquidityUrl": "https://kyberswap.com/add/0x3F56e0c36d275367b8C502090EDF38289b3dEa0d/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0x6a4d5f8385ff6e7fc4ebf6f726e12a958daa1cba",
-    "removeLiquidityUrl": "https://kyberswap.com/remove/0x3F56e0c36d275367b8C502090EDF38289b3dEa0d/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0x6a4d5f8385ff6e7fc4ebf6f726e12a958daa1cba",
-    "network": "arbitrum",
-    "createdAt": 1675790593
-  },
-  {
     "id": "gns-arb-gns",
     "name": "GNS",
     "token": "GNS",
