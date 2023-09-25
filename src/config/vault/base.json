@@ -1,5 +1,28 @@
 [
   {
+    "id": "curve-base-usd+",
+    "name": "USD+/crvUSD",
+    "token": "USD+crvUSD-f",
+    "tokenAddress": "0xda3de145054ED30Ee937865D31B500505C4bDfe7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "tokenAmmId": "base-curve",
+    "earnedToken": "mooCurveUSD+crvUSD-f",
+    "earnedTokenAddress": "0x0Bc7e0B17d684Fd5c514B164185fBeAFC836e43c",
+    "earnContractAddress": "0x0Bc7e0B17d684Fd5c514B164185fBeAFC836e43c",
+    "oracle": "lps",
+    "oracleId": "curve-base-usd+",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["USD+", "crvUSD"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-2/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-2/withdraw",
+    "network": "base",
+    "createdAt": 1695635555
+  },
+  {
     "id": "baseswap-weth-bsx",
     "name": "BSX-ETH LP",
     "token": "BSX-ETH LP",
