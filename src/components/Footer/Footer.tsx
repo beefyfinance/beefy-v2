@@ -49,7 +49,7 @@ const socialLinks = [
   },
   {
     title: 'Discord',
-    path: 'https://discord.gg/yq8wfHd',
+    path: 'https://beefy.com/discord',
     Icon: IconDiscord,
   },
   {
