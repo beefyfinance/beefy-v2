@@ -3,13 +3,13 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
 import { Banner } from '../Banner';
-import SnapshotLogo from '../../../images/partners/snapshot-logo.svg';
+import Snap from '../../../images/icons/beefy-treasury.svg';
 
 const useStyles = makeStyles(styles);
 
 export const AnnouncementBanner = memo(function AnnouncementBanner() {
   const classes = useStyles();
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideBIP71Banner', false);
+  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideSnapCheckBanner', false);
 
   const closeBanner = useCallback(() => {
     setHideBanner(true);
@@ -21,27 +21,19 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
 
   return (
     <Banner
-      icon={<img alt="snapshot" src={SnapshotLogo} className={classes.icon} />}
+      icon={<img alt="snapshot" src={Snap} className={classes.icon} />}
       text={
         <>
-          New proposal is live: [BIP:71] $BIFI Migration Plan. Discuss on{' '}
+          The wait is almost over. A new era dawns. Review the{' '}
           <a
             className={classes.link}
-            href="https://discord.com/invite/beefyfinance"
+            href="https://snapshot.beefy.finance/"
             target="_blank"
             rel="noopener"
           >
-            Discord
+            $BIFI snapshot
           </a>{' '}
-          and vote on{' '}
-          <a
-            className={classes.link}
-            href="https://vote.beefy.finance/#/proposal/0x975b10f949c0ea62a53f7a3ab5aa738376422efbd7bb33712daa74b98bd4b727"
-            target="_blank"
-            rel="noopener"
-          >
-            Snapshot.
-          </a>
+          to check your allocation for the upcoming distribution.
         </>
       }
       onClose={closeBanner}
