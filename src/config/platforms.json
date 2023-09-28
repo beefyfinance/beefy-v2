@@ -888,5 +888,10 @@
     "id": "baso",
     "name": "Baso",
     "filter": true
+  },
+  {
+    "id": "kinetix",
+    "name": "Kinetix",
+    "filter": true
   }
 ]
