@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
 import React, { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonLink } from '../../../../components/Button';
@@ -9,6 +9,9 @@ import { Section } from '../../../../components/Section';
 import { styles } from './styles';
 import iconEmptyState from '../../../../images/empty-state.svg';
 import { AddressInput } from '../AddressInput';
+import type { Theme } from '@material-ui/core';
+import { isValidAddress } from '../../../../helpers/addresses';
+import { formatAddressShort } from '../../../../helpers/format';
 
 const useStyles = makeStyles(styles);
 
@@ -83,6 +86,12 @@ type ErrorProps = {
 const Error = memo<ErrorProps>(function Error({ title, text, connectedAction = 'vaults' }) {
   const classes = useStyles();
 
+  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+
+  const wrappedTitle = useMemo(() => {
+    return smDown && isValidAddress(title) ? formatAddressShort(title) : title;
+  }, [smDown, title]);
+
   return (
     <Section>
       <div className={classes.container}>
@@ -90,7 +99,7 @@ const Error = memo<ErrorProps>(function Error({ title, text, connectedAction = '
           <img className={classes.icon} src={iconEmptyState} alt="empty" />
         </div>
         <div className={classes.textContainer}>
-          <div className={classes.title}>{title}</div>
+          <div className={classes.title}>{wrappedTitle}</div>
           {text ? <div className={classes.text}>{text}</div> : null}
         </div>
         <Actions connectedAction={connectedAction} />
