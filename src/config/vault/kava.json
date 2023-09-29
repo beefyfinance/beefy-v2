@@ -13,7 +13,7 @@
     "oracleId": "kinetix-klp",
     "status": "active",
     "platformId": "kinetix",
-    "assets": ["WKAVA", "WETH", "USDT", "ATOM", "WBTC"],
+    "assets": ["WKAVA", "axlETH", "USDT", "ATOM", "axlWBTC"],
     "strategyTypeId": "klp",
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://perps.kinetix.finance/#/liquidity",
