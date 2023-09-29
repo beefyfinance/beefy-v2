@@ -8,6 +8,10 @@
     "name": "Multiple LP"
   },
   {
+    "id": "multi-lp-locked",
+    "name": "Multiple LP Locked Rewards"
+  },
+  {
     "id": "lending",
     "name": "Lending"
   },
