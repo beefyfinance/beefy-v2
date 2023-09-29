@@ -1,4 +1,12 @@
 {
+  "kinetix": {
+    "text": "Kinetix Finance is a Kava Native Hub for Next-Gen DeFi.",
+    "website": "https://kinetix.finance/",
+    "social": {
+      "discord": "https://discord.com/invite/kinetixfi",
+      "twitter": "https://twitter.com/KinetixFi"
+    }
+  },
   "retro": {
     "text": "Retro Finance is a next-generation ve(3,3) DEX on Polygon that builds a sustainable liquidity layer for protocols, LPs, and veRETRO holders.",
     "website": "https://retro.finance/",
