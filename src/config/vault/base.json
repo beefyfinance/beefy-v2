@@ -1,5 +1,28 @@
 [
   {
+    "id": "aerodrome-ovn-usd+",
+    "name": "OVN-USD+ vLP",
+    "token": "vAMM-OVN/USD+",
+    "tokenAddress": "0x61366A4e6b1DB1b85DD701f2f4BFa275EF271197",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "tokenAmmId": "base-aerodrome",
+    "earnedToken": "mooAeroOVN-USD+",
+    "earnedTokenAddress": "0x98bEAa72230788572e3e3Be58D91C232dda315d4",
+    "earnContractAddress": "0x98bEAa72230788572e3e3Be58D91C232dda315d4",
+    "oracle": "lps",
+    "oracleId": "aerodrome-ovn-usd+",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["OVN", "USD+"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xa3d1a8deb97b111454b294e2324efad13a9d8396&token1=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "createdAt": 1695980893
+  },
+  {
     "id": "curve-base-usd+",
     "name": "USD+/crvUSD",
     "token": "USD+crvUSD-f",
