@@ -1139,7 +1139,8 @@
     "earnContractAddress": "0xEaE6976C580Ca815f2D061eF1DF5C0506b62aB7A",
     "oracle": "lps",
     "oracleId": "bvm-dai+-usdbc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "bvm",
     "assets": ["DAI+", "USDbC"],
     "risks": [
@@ -1745,7 +1746,8 @@
     "earnContractAddress": "0xDE59Ca36F43Ed1fa7AB67C419fc20Be12A868712",
     "oracle": "lps",
     "oracleId": "bvm-weth-axlusdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "bvm",
     "assets": ["axlUSDC", "ETH"],
     "risks": [
@@ -1775,7 +1777,8 @@
     "earnContractAddress": "0xfe1C07a5120cEb1ab7148Ee0A680148af22332F5",
     "oracle": "lps",
     "oracleId": "bvm-usd+-usdbc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "bvm",
     "assets": ["USD+", "USDbC"],
     "risks": [

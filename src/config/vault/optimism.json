@@ -1543,7 +1543,8 @@
     "earnContractAddress": "0xFA6abeFC9B4082bE205c1Aa18DdaD7f747bDC81F",
     "oracle": "lps",
     "oracleId": "velodrome-v2-hnd-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["HND", "opUSDCe"],
     "risks": [
