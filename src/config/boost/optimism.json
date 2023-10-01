@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_velodrome-v2-ovn-usd+-op",
+    "poolId": "velodrome-v2-ovn-usd+",
+    "name": "Overnight",
+    "assets": ["OVN", "USD+"],
+    "tokenAddress": "0x366776D0709F7C49ce5ea7cF7eAEF0AB4E746cc9",
+    "earnedToken": "OP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
+    "earnContractAddress": "0x4FF6cC0717fA0Ba4e40075902ccFEea0103b3e59",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OP",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["overnight"]
+  },
+  {
     "id": "moo_curve-op-f-wsteth-lido-op",
     "poolId": "curve-op-f-wsteth",
     "name": "Lido",
