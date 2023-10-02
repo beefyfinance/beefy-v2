@@ -56,8 +56,14 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
   }
 
   const { price, totalSupply } = breakdown;
-  const underlyingTvl = new BigNumber(totalSupply).times(price);
-  const percent = underlyingTvl.gt(BIG_ZERO) ? tvl.div(underlyingTvl).toNumber() : 0;
+  let underlyingTvl = new BigNumber(totalSupply).times(price);
+  let percent = underlyingTvl.gt(BIG_ZERO) ? tvl.div(underlyingTvl).toNumber() : 0;
+
+  if (tvl.gt(underlyingTvl)) {
+    underlyingTvl = tvl;
+    percent = 1;
+  }
+
   return {
     label,
     value: formatBigUsd(tvl),
