@@ -64,22 +64,22 @@ export const beefyBridgeConfig = {
       explorerUrl: 'https://ccip.chain.link/tx/{{hash}}',
       chains: {
         ethereum: {
-          bridge: '0xccccB27BB46ffE01479248EDDFb75E300DE06879',
+          bridge: '0xcccd6EC6F4705292f07eE4a9a8F1F120963358c5',
           time: {
-            outgoing: 0,
+            outgoing: 18,
             incoming: 0,
           },
           gasLimits: {
             approve: new BigNumber('70000'),
-            outgoing: new BigNumber('1'),
+            outgoing: new BigNumber('320000'), // ~314,686 before refunds
             incoming: new BigNumber('1'),
           },
         },
         optimism: {
-          bridge: '0xccccB27BB46ffE01479248EDDFb75E300DE06879',
+          bridge: '0xcccd6EC6F4705292f07eE4a9a8F1F120963358c5',
           time: {
             outgoing: 0,
-            incoming: 0,
+            incoming: 3,
           },
           gasLimits: {
             outgoing: new BigNumber('1'),
