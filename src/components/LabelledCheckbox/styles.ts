@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     color: '#D0D0DA',
     cursor: 'pointer',
-    columnGap: '5px',
+    columnGap: '4px',
     userSelect: 'none' as const,
   },
   icon: {
