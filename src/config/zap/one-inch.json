@@ -1,5 +1,28 @@
 [
   {
+    "zapAddress": "0xd857227A428bABfa54d38E9Da6b16893eadfAd86",
+    "priceOracleAddress": "0x52cbE0f49CcdD4Dc6E9C13BAb024EABD2842045B",
+    "chainId": "base",
+    "fee": {
+      "value": 0.0005,
+      "recipient": "0x1A07DceEfeEbBA3D1873e2B92BeF190d2f11C3cB"
+    },
+    "depositFromTokens": ["ETH", "WETH", "cbETH", "USDbC", "axlUSDC", "DAI", "MIM"],
+    "withdrawToTokens": ["ETH", "cbETH", "USDbC", "axlUSDC", "DAI", "MIM"],
+    "blockedTokens": [
+      "axlWBTC",
+      "ALB",
+      "BASO",
+      "bsUSD",
+      "DAI+",
+      "USDC+",
+      "WELL",
+      "UNIDX",
+      "axlUSDT"
+    ],
+    "blockedVaults": []
+  },
+  {
     "zapAddress": "0x8d8f1E4CA4812Dc6A494D507B8CDdCa30011B428",
     "priceOracleAddress": "0xC762d56614D3411eC6fABD56cb075D904b801613",
     "chainId": "zksync",
@@ -120,7 +143,7 @@
       "ETH",
       "WETH",
       "OP",
-      "USDC",
+      "opUSDCe",
       "USDT",
       "DAI",
       "MAI",
@@ -133,7 +156,7 @@
       "ETH",
       "OP",
       "BIFI",
-      "USDC",
+      "opUSDCe",
       "USDT",
       "DAI",
       "MAI",
@@ -168,7 +191,8 @@
       "USX",
       "wUSDR",
       "MLP",
-      "DAI+"
+      "DAI+",
+      "USDC"
     ],
     "blockedVaults": ["aavev3-op-eth", "exactly-supply-eth"]
   },
@@ -239,7 +263,7 @@
       "ARB",
       "WETH",
       "USDC",
-      "USDCe",
+      "arbUSDCe",
       "USDT",
       "DAI",
       "MIM",
@@ -251,7 +275,7 @@
       "ARB",
       "BIFI",
       "USDC",
-      "USDCe",
+      "arbUSDCe",
       "USDT",
       "DAI",
       "MIM",
@@ -342,7 +366,7 @@
       "wUSDR",
       "ZBTC"
     ],
-    "blockedVaults": ["venus-bnb", "venus-wbnb"]
+    "blockedVaults": ["venus-bnb"]
   },
   {
     "zapAddress": "0x0EC0e1242547a73C6A165d3D484e384902aa33d8",

@@ -1,50 +1,54 @@
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { selectFilterPlatformId } from '../../../../../data/selectors/filtered-vaults';
-import type { ToggleButtonsProps } from '../../../../../../components/ToggleButtons';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
-import { LabeledSelect } from '../../../../../../components/LabeledSelect';
 import { selectFilterPlatforms } from '../../../../../data/selectors/platforms';
+import { selectFilterPlatformIds } from '../../../../../data/selectors/filtered-vaults';
+import type { PlatformEntity } from '../../../../../data/entities/platform';
+import { LabeledSearchMultiSelect } from '../../../../../../components/LabeledSearchMultiSelect';
+import type { LabeledSelectCommonProps } from '../../../../../../components/LabeledSelect';
 
-export type PlatformDropdownFilterProps = {
-  className?: string;
-};
+interface PlatformDropdownFilterProps {
+  placement?: LabeledSelectCommonProps['placement'];
+  dropDownShift?: LabeledSelectCommonProps['dropdownShift'];
+  dropDownFlip?: LabeledSelectCommonProps['dropdownFlip'];
+}
+
 export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
-  function PlatformDropdownFilter({ className }) {
+  function PlatformDropdownFilter({ placement, dropDownFlip, dropDownShift }) {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
-    const allKey = null;
-    const placeholderAllKey = '__null';
-    const otherKey = 'other';
     const platforms = useAppSelector(selectFilterPlatforms);
-    const options: Record<string, string> = useMemo(
-      () =>
-        Object.fromEntries([
-          [placeholderAllKey, t('Filter-DropdwnDflt')],
-          ...platforms.map(platform => [platform.id, platform.name]),
-          [otherKey, t('Filter-Other')],
-        ]),
-      [platforms, t]
-    );
-    const value = useAppSelector(selectFilterPlatformId);
-    const handleChange = useCallback<ToggleButtonsProps['onChange']>(
-      value => {
-        dispatch(filteredVaultsActions.setPlatformId(value === placeholderAllKey ? allKey : value));
+    const options = useMemo(
+      () => Object.fromEntries(platforms.map(platform => [platform.id, platform.name])),
+      [platforms]
+    ) satisfies Record<string, string>;
+
+    const platformsIds = useAppSelector(selectFilterPlatformIds);
+
+    const handleChange = useCallback(
+      (selected: PlatformEntity['id'][]) => {
+        dispatch(
+          filteredVaultsActions.setPlatformIds(
+            selected.length === platformsIds.length ? [] : selected
+          )
+        );
       },
-      [dispatch, placeholderAllKey, allKey]
+      [dispatch, platformsIds]
     );
 
     return (
-      <LabeledSelect
+      <LabeledSearchMultiSelect
         label={t('Filter-Platform')}
-        value={value === allKey ? placeholderAllKey : value}
-        options={options}
         onChange={handleChange}
-        selectClass={className}
-        fullWidth={false}
+        value={platformsIds}
+        options={options}
         sortOptions="label"
-        defaultValue={placeholderAllKey}
+        fullWidth={true}
+        placement={placement}
+        dropdownFlip={dropDownFlip}
+        dropdownShift={dropDownShift}
+        dropdownAutoHide={false}
       />
     );
   }

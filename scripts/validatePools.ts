@@ -40,6 +40,8 @@ const overrides = {
   'geist-usdc': { harvestOnDeposit: undefined },
   'geist-mim': { harvestOnDeposit: undefined },
   'pearl-wbtc-usdrv3': { harvestOnDeposit: undefined },
+  'baseswap-axlwbtc-usdbc': { harvestOnDeposit: undefined },
+  'venus-bnb': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
@@ -54,10 +56,9 @@ const oldValidFeeRecipients = {
 };
 
 const nonHarvestOnDepositChains = ['ethereum', 'avax'];
+const nonHarvestOnDepositPools = ['venus-bnb'];
 
 const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddress'];
-
-const allowedEarnSameToken = new Set(['venus-wbnb']);
 
 const validPlatformIds = platforms.map(platform => platform.id);
 const validstrategyTypeIds = strategyTypes.map(strategyType => strategyType.id);
@@ -155,15 +156,12 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       exitCode = 1;
     }
 
-    if (uniqueEarnedToken.has(pool.earnedToken) && !allowedEarnSameToken.has(pool.id)) {
+    if (uniqueEarnedToken.has(pool.earnedToken)) {
       console.error(`Error: ${pool.id} : Pool earnedToken duplicated: ${pool.earnedToken}`);
       exitCode = 1;
     }
 
-    if (
-      uniqueEarnedTokenAddress.has(pool.earnedTokenAddress) &&
-      !allowedEarnSameToken.has(pool.id)
-    ) {
+    if (uniqueEarnedTokenAddress.has(pool.earnedTokenAddress)) {
       console.error(
         `Error: ${pool.id} : Pool earnedTokenAddress duplicated: ${pool.earnedTokenAddress}`
       );
@@ -407,6 +405,7 @@ const isHarvestOnDepositCorrect = (pool, chain, updates) => {
     pool.status === 'active' &&
     pool.harvestOnDeposit !== undefined &&
     !nonHarvestOnDepositChains.includes(chain) &&
+    !nonHarvestOnDepositPools.includes(pool.id) &&
     pool.harvestOnDeposit !== true
   ) {
     console.log(

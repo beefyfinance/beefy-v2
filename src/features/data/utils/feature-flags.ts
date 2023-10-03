@@ -214,11 +214,11 @@ export function featureFlag_walletConnectChainId(): number {
   if (params.has('__wc_chain_id')) {
     const maybeId = params.get('__wc_chain_id');
     if (maybeId) {
-      const chainId = parseInt(maybeId);
+      const chainId = parseInt(maybeId, 10);
       if (chainId) {
         return chainId;
       }
     }
   }
-  return 1;
+  return undefined;
 }

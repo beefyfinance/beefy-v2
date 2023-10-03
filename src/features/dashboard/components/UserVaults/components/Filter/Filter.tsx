@@ -1,11 +1,10 @@
-import { InputBase, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import type { ChangeEvent } from 'react';
-import React, { memo, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { CloseRounded, Search as SearchIcon } from '@material-ui/icons';
+import React, { memo } from 'react';
 import { SortColumnHeader } from '../../../../../../components/SortColumnHeader';
 import { styles } from './styles';
 import type { SortedOptions } from '../../hook';
+import { Search } from '../../../../../../components/Search';
 
 const useStyles = makeStyles(styles);
 
@@ -34,46 +33,6 @@ export const Filter = memo<FilterProps>(function Filter({
       />
       <SortColumns sortOptions={sortOptions} handleSort={handleSort} />
     </div>
-  );
-});
-
-interface SearchProps {
-  handleSearchText: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
-  handleClearText: () => void;
-  searchText: string;
-}
-
-const Search = memo<SearchProps>(function Search({
-  handleSearchText,
-  searchText,
-  handleClearText,
-}) {
-  const { t } = useTranslation();
-  const classes = useStyles();
-
-  const valueLength = searchText.length;
-  const iconClass = classes.icon;
-  const icon = useMemo(() => {
-    return valueLength === 0 ? (
-      <div className={iconClass}>
-        <SearchIcon />
-      </div>
-    ) : (
-      <button onClick={handleClearText} className={iconClass}>
-        <CloseRounded />
-      </button>
-    );
-  }, [valueLength, iconClass, handleClearText]);
-
-  return (
-    <InputBase
-      className={classes.search}
-      value={searchText}
-      onChange={handleSearchText}
-      fullWidth={true}
-      endAdornment={icon}
-      placeholder={t('Filter-Search')}
-    />
   );
 });
 

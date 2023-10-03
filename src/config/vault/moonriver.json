@@ -40,7 +40,8 @@
     "earnContractAddress": "0x29554e14B823f8b7C2D84Ae0126bF56645Ad6ad1",
     "oracle": "lps",
     "oracleId": "solarbeam-wstksm-xcksm",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solarbeam",
     "assets": ["wstKSM", "xcKSM"],
     "risks": [
@@ -70,7 +71,8 @@
     "earnContractAddress": "0xE3A1B5FF0FFf63ff59e0cc22De02638FA6BE2357",
     "oracle": "lps",
     "oracleId": "solarbeam-xckbtc-wbtc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solarbeam",
     "assets": ["xcKBTC", "WBTC"],
     "risks": [
@@ -133,7 +135,8 @@
     "earnContractAddress": "0x78Dc4b7C7A89812fb337dD8C3B0ccB3e04E02D7C",
     "oracle": "lps",
     "oracleId": "solarbeam-wmovr-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solarbeam",
     "assets": ["MOVR", "USDC"],
     "risks": [
@@ -224,7 +227,8 @@
     "earnContractAddress": "0xD25c56DAbcda719F1c67fE8fc0760f8B942aC95C",
     "oracle": "lps",
     "oracleId": "solarbeam-eth-wmovr",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solarbeam",
     "assets": ["ETH", "MOVR"],
     "risks": [
@@ -1416,7 +1420,8 @@
     "earnContractAddress": "0xE7123285680632E9d17a254Ec7adf405559c1CbC",
     "oracle": "lps",
     "oracleId": "solarbeam-frax-3pool",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solarbeam",
     "assets": ["FRAX", "USDC", "BUSD", "USDT"],
     "risks": [
@@ -1509,7 +1514,8 @@
     "earnContractAddress": "0x82435D82A2ba87516827312Fc9F8BCF72CFAB602",
     "oracle": "lps",
     "oracleId": "solarbeam-3pool",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solarbeam",
     "assets": ["USDC", "BUSD", "USDT"],
     "risks": [

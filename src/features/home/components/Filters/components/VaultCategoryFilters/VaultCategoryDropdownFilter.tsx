@@ -37,7 +37,7 @@ export const VaultCategoryDropdownFilter = memo<VaultCategoryDropdownFilterProps
         options={options}
         onChange={handleChange}
         selectClass={className}
-        fullWidth={false}
+        fullWidth={true}
       />
     );
   }

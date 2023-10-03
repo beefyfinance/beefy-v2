@@ -11,7 +11,8 @@
     "earnContractAddress": "0x0d281FF551351C8b88D019ecd23481723a1cC8E3",
     "oracle": "lps",
     "oracleId": "stargate-metis-usdt",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stargate",
     "assets": ["USDT"],
     "risks": [

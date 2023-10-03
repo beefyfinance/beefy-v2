@@ -1,4 +1,28 @@
 {
+  "kinetix": {
+    "text": "Kinetix Finance is a Kava Native Hub for Next-Gen DeFi.",
+    "website": "https://kinetix.finance/",
+    "social": {
+      "discord": "https://discord.com/invite/kinetixfi",
+      "twitter": "https://twitter.com/KinetixFi"
+    }
+  },
+  "retro": {
+    "text": "Retro Finance is a next-generation ve(3,3) DEX on Polygon that builds a sustainable liquidity layer for protocols, LPs, and veRETRO holders.",
+    "website": "https://retro.finance/",
+    "social": {
+      "discord": "https://discord.gg/stabllabs",
+      "twitter": "https://twitter.com/Retro_finance"
+    }
+  },
+  "tangible": {
+    "text": "Tangible gives Real World Assets chain operability, integrating them into powerful DeFi products built to meet market needs.",
+    "website": "https://www.tangible.store/caviar",
+    "social": {
+      "telegram": "https://t.me/TangibleDAO",
+      "twitter": "https://twitter.com/tangibleDAO"
+    }
+  },
   "alienbase": {
     "text": "Alienbase is a DEX built on Base offering the best tokens worth farming for earthlings.",
     "website": "https://app.alienbase.xyz/swap",

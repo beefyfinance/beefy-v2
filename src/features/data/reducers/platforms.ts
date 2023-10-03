@@ -10,13 +10,11 @@ import type { PlatformConfig, VaultConfig } from '../apis/config-types';
  * State containing Vault infos
  */
 export type PlatformsState = NormalizedEntity<PlatformEntity> & {
-  filterIds: PlatformEntity['id'][];
   activeIds: PlatformEntity['id'][];
 };
 export const initialPlatformsState: PlatformsState = {
   byId: {},
   allIds: [],
-  filterIds: [],
   activeIds: [],
 };
 
@@ -63,10 +61,5 @@ function addPlatformToState(sliceState: Draft<PlatformsState>, platformConfig: P
     };
     sliceState.byId[platform.id] = platform;
     sliceState.allIds.push(platform.id);
-
-    // keep list of filter platforms
-    if (platformConfig.filter) {
-      sliceState.filterIds.push(platform.id);
-    }
   }
 }

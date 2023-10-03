@@ -52,5 +52,29 @@
     "swapFeeNumerator": "3",
     "swapFeeDenominator": "1000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "base-aerodrome",
+    "name": "Aerodrome",
+    "type": "solidly",
+    "routerAddress": "0xcF77a3Ba9A5CA399B7c97c74d54e5b1Beb874E43",
+    "factoryAddress": "not-used",
+    "pairInitHash": "not-used",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "2",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "base-baso",
+    "name": "Baso",
+    "type": "solidly",
+    "routerAddress": "0x5568e4F19B9063E0e0386bF66B3eeF2b65327486",
+    "factoryAddress": "0xcEFbebF0b85B1638C19b01cE2A02C262F421B07d",
+    "pairInitHash": "0x6411f9e01d7ee8f2da17300dd4b16c10b3aa9f35dabf9d57c55bc8283e8e5697",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "2",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
   }
 ]

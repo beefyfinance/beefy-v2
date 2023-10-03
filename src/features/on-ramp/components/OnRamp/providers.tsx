@@ -9,30 +9,6 @@ export type ProviderType = {
 };
 
 export const PROVIDERS: Record<string, Readonly<ProviderType>> = {
-  binance: {
-    title: 'Binance Connect',
-    useFetchUrl(quote: Quote, walletAddress?: string) {
-      const { fiatAmount, fiat, token, network, paymentMethod } = quote;
-      return useCallback(async () => {
-        const params: ApiUrlRequest = {
-          cryptoCurrency: token,
-          fiatCurrency: fiat,
-          amountType: 'fiat',
-          amount: fiatAmount,
-          network: network,
-          provider: 'binance',
-          paymentMethod: paymentMethod,
-        };
-
-        if (walletAddress) {
-          params.address = walletAddress;
-        }
-
-        const api = await getOnRampApi();
-        return await api.getUrl(params);
-      }, [fiatAmount, fiat, token, network, paymentMethod, walletAddress]);
-    },
-  },
   transak: {
     title: 'Transak',
     useFetchUrl(quote: Quote, walletAddress?: string) {
