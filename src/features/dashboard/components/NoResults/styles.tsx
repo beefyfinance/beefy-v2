@@ -28,6 +28,7 @@ export const styles = (theme: Theme) => ({
   title: {
     ...theme.typography.h3,
     color: theme.palette.text.primary,
+    textAlign: 'center' as const,
   },
   text: {
     ...theme.typography['body-lg'],
@@ -42,7 +43,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     columnGap: '8px',
-    width: '250px',
+    width: '272px',
   },
   line: {
     height: '2px',
@@ -53,7 +54,7 @@ export const styles = (theme: Theme) => ({
   btn: {
     width: '100%',
     padding: '6px 12px',
-    maxWidth: '250px',
+    maxWidth: '272px',
   },
   or: {
     ...theme.typography['subline-sm'],
