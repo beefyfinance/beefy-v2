@@ -5,11 +5,14 @@ import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
 
 export function useInitDashboard(address: string) {
   const connectedAddress = useAppSelector(selectWalletAddressIfKnown);
+  const addressBookLoaded = useAppSelector(
+    state => state.ui.dataLoader.global.addressBook.alreadyLoadedOnce
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (address && address !== connectedAddress) {
+    if (address && addressBookLoaded && address !== connectedAddress) {
       dispatch(initDashboardByAddress({ address }));
     }
-  }, [dispatch, address, connectedAddress]);
+  }, [dispatch, address, connectedAddress, addressBookLoaded]);
 }
