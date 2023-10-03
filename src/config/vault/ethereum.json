@@ -1,5 +1,27 @@
 [
   {
+    "id": "aura-gho-usdc-usdt",
+    "name": "GHO/USDC/USDT",
+    "token": "GHO/USDC/USDT",
+    "tokenAddress": "0x8353157092ED8Be69a9DF8F95af097bbF33Cb2aF",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraGHO/USDC/USDT",
+    "earnedTokenAddress": "0x234Fd76985dA4fD505DbAF7A48e119Cd5dFD5C8F",
+    "earnContractAddress": "0x234Fd76985dA4fD505DbAF7A48e119Cd5dFD5C8F",
+    "oracle": "lps",
+    "oracleId": "aura-gho-usdc-usdt",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["GHO", "USDC", "USDT"],
+    "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp-locked",
+    "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x8353157092ed8be69a9df8f95af097bbf33cb2af0000000000000000000005d9",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x8353157092ed8be69a9df8f95af097bbf33cb2af0000000000000000000005d9",
+    "network": "ethereum",
+    "createdAt": 1696338460
+  },
+  {
     "id": "aura-gyro-wsteth-eth",
     "name": "Gyroscope wstETH-ETH",
     "token": "Gyroscrope wstETH-ETH eth",

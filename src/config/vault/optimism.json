@@ -1,5 +1,27 @@
 [
   {
+    "id": "aura--op-dola-usdce",
+    "name": "DOLA-USDCe",
+    "token": "DOLA-USDCe",
+    "tokenAddress": "0xACfE9b4782910A853b68abbA60f3FD8049Ffe638",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooAuraOPDOLA/USDCe",
+    "earnedTokenAddress": "0x499e39b36c2ac771C5020E71DF1A601d422C148d",
+    "earnContractAddress": "0x499e39b36c2ac771C5020E71DF1A601d422C148d",
+    "oracle": "lps",
+    "oracleId": "aura--op-dola-usdce",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["DOLA", "opUSDCe"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://op.beets.fi/pool/0xacfe9b4782910a853b68abba60f3fd8049ffe6380000000000000000000000ff",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0xacfe9b4782910a853b68abba60f3fd8049ffe6380000000000000000000000ff",
+    "network": "optimism",
+    "createdAt": 1696338460
+  },
+  {
     "id": "velodrome-v2-ovn-usd+",
     "name": "OVN-USD+ vLP v2",
     "token": "vAMMV2-OVN/USD+",
