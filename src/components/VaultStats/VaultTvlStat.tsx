@@ -7,12 +7,12 @@ import { VaultValueStat } from '../VaultValueStat';
 import { selectVaultTvl } from '../../features/data/selectors/tvl';
 import { formatBigUsd, formatSmallPercent } from '../../helpers/format';
 import { selectLpBreakdownByTokenAddress } from '../../features/data/selectors/tokens';
-import BigNumber from 'bignumber.js';
-import { BIG_ZERO } from '../../helpers/big-number';
+import type { BigNumber } from 'bignumber.js';
 import { InterestTooltipContent } from '../InterestTooltipContent';
 import type { PlatformEntity } from '../../features/data/entities/platform';
 import { selectPlatformById } from '../../features/data/selectors/platforms';
 import { useAppSelector } from '../../store';
+import { getVaultUnderlyingTvlAndBeefySharePercent } from '../../helpers/tvl';
 
 export type VaultTvlStatProps = {
   vaultId: VaultEntity['id'];
@@ -55,14 +55,11 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
     };
   }
 
-  const { price, totalSupply } = breakdown;
-  let underlyingTvl = new BigNumber(totalSupply).times(price);
-  let percent = underlyingTvl.gt(BIG_ZERO) ? tvl.div(underlyingTvl).toNumber() : 0;
-
-  if (tvl.gt(underlyingTvl)) {
-    underlyingTvl = tvl;
-    percent = 1;
-  }
+  const { percent, underlyingTvl } = getVaultUnderlyingTvlAndBeefySharePercent(
+    breakdown.totalSupply,
+    breakdown.price,
+    tvl
+  );
 
   return {
     label,
