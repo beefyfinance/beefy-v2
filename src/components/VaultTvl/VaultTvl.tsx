@@ -9,10 +9,11 @@ import type { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { BIG_ZERO } from '../../helpers/big-number';
 import { selectLpBreakdownByTokenAddress } from '../../features/data/selectors/tokens';
-import BigNumber from 'bignumber.js';
 import type { LpData } from '../../features/data/apis/beefy/beefy-api';
 import { TvlShareTooltip } from '../VaultStats/VaultTvlStat';
 import type { PlatformEntity } from '../../features/data/entities/platform';
+import { getVaultUnderlyingTvlAndBeefySharePercent } from '../../helpers/tvl';
+import type BigNumber from 'bignumber.js';
 
 const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
   const label = 'VaultStat-TVL';
@@ -48,9 +49,11 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
     };
   }
 
-  const { price, totalSupply } = breakdown;
-  const underlyingTvl = new BigNumber(totalSupply).times(price);
-  const percent = underlyingTvl.gt(BIG_ZERO) ? tvl.div(underlyingTvl).toNumber() : 0;
+  const { percent, underlyingTvl } = getVaultUnderlyingTvlAndBeefySharePercent(
+    breakdown.totalSupply,
+    breakdown.price,
+    tvl
+  );
 
   return {
     label,
