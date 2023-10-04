@@ -23,6 +23,10 @@ import { featureFlag_walletConnectChainId } from '../../utils/feature-flags';
 import type { WalletHelpers, WalletModule } from '@web3-onboard/common/dist/types';
 import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url'; // eslint-disable-line import/no-unresolved
 
+const walletConnectImages: Record<string, string> = {
+  '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489': fireblocksLogo,
+};
+
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | null;
   protected onboardWalletInitializers: WalletInit[] | null;
@@ -52,6 +56,10 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     if (modalOptions) {
       options.qrModalOptions = modalOptions;
+    } else {
+      options.qrModalOptions = {
+        walletImages: walletConnectImages,
+      };
     }
 
     return createWalletConnectModule(options);
@@ -82,9 +90,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         },
       ],
       enableExplorer: false,
-      walletImages: {
-        '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489': fireblocksLogo,
-      },
+      walletImages: walletConnectImages,
     });
     return (helpers: WalletHelpers) => {
       const module = walletConnectInit(helpers);
