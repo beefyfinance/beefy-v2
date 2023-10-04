@@ -9,7 +9,7 @@ import Onboard from '@web3-onboard/core';
 import createInjectedWallets from '@web3-onboard/injected-wallets';
 import standardInjectedWallets from '@web3-onboard/injected-wallets/dist/wallets';
 import createCoinbaseWalletModule from '@web3-onboard/coinbase';
-import createWalletConnectModule from '@web3-onboard/walletconnect';
+import createWalletConnectModule, { type WalletConnectOptions } from '@web3-onboard/walletconnect';
 import type { ConnectOptions } from '@web3-onboard/core/dist/types';
 import type { WalletInit } from '@web3-onboard/common';
 import { createEIP1193Provider } from '@web3-onboard/common';
@@ -20,6 +20,8 @@ import appLogo from '../../../../images/bifi-logos/header-logo.svg';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
 import type { provider } from 'web3-core';
 import { featureFlag_walletConnectChainId } from '../../utils/feature-flags';
+import type { WalletHelpers, WalletModule } from '@web3-onboard/common/dist/types';
+import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url'; // eslint-disable-line import/no-unresolved
 
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | null;
@@ -38,22 +40,81 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     return this.onboardWalletInitializers;
   }
 
+  private static createWalletConnectModule(
+    modalOptions?: Extract<WalletConnectOptions, { version?: 2 }>['qrModalOptions']
+  ): WalletInit {
+    const requiredChainId = featureFlag_walletConnectChainId();
+    const options: WalletConnectOptions = {
+      version: 2,
+      projectId: 'af38b343e1be64b27c3e4a272cb453b9',
+      requiredChains: requiredChainId ? [requiredChainId] : [],
+    };
+
+    if (modalOptions) {
+      options.qrModalOptions = modalOptions;
+    }
+
+    return createWalletConnectModule(options);
+  }
+
+  private static createWalletConnectCloneModule(
+    label: WalletModule['label'],
+    getIcon?: WalletModule['getIcon']
+  ): WalletInit {
+    const walletConnectInit = WalletConnectionApi.createWalletConnectModule({
+      mobileWallets: [
+        {
+          id: '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489',
+          name: 'Fireblocks',
+          links: {
+            native: 'fireblocks-wc://',
+          },
+        },
+      ],
+      desktopWallets: [
+        {
+          id: '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489',
+          name: 'Fireblocks',
+          links: {
+            native: 'fireblocks-wc://',
+            universal: 'https://console.fireblocks.io/v2/',
+          },
+        },
+      ],
+      enableExplorer: false,
+      walletImages: {
+        '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489': fireblocksLogo,
+      },
+    });
+    return (helpers: WalletHelpers) => {
+      const module = walletConnectInit(helpers);
+      if (!module || Array.isArray(module)) {
+        throw new Error('createWalletConnectModule returned invalid module');
+      }
+
+      module.label = label;
+      if (getIcon) {
+        module.getIcon = getIcon;
+      }
+
+      return module;
+    };
+  }
+
   /**
    * Create list of wallet modules for Onboard
    * @private
    */
   private static createOnboardWalletInitializers() {
-    const requiredChainId = featureFlag_walletConnectChainId();
-
     return [
       WalletConnectionApi.createInjectedWalletsModule(),
-      createWalletConnectModule({
-        version: 2,
-        projectId: 'af38b343e1be64b27c3e4a272cb453b9',
-        requiredChains: requiredChainId ? [requiredChainId] : [],
-      }),
+      WalletConnectionApi.createWalletConnectModule(),
       createCoinbaseWalletModule(),
       WalletConnectionApi.createCDCWalletModule(),
+      WalletConnectionApi.createWalletConnectCloneModule(
+        'Fireblocks',
+        async () => (await import('../../../../images/wallets/fireblocks-transparent.svg')).default
+      ),
     ];
   }
 
