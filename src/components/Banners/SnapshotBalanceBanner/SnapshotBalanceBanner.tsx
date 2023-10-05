@@ -72,7 +72,7 @@ export const LpText = memo(function LpText({
   return (
     <>
       <div className={classes.space}>
-        {`The BIFI token migration is approaching. We strongly recommend that everyone keeps their BIFI in their wallet, on a CEX, or stakes it into the Earnings Pool. BIFI held in custom contracts (Gnosis, 3rd party staking pools, some LPs, etc.) won't be supported by the automated airdrop.`}
+        {`The BIFI token migration is approaching. We strongly recommend that everyone keeps their BIFI in their wallet, on a CEX, or stakes it into the Earnings Pool. BIFI held in custom contracts (Gnosis, 3rd party staking pools, some LPs, etc.) won't be supported by the automated distribution.`}
       </div>
       According to the{' '}
       <a
@@ -101,7 +101,7 @@ export const EveryoneText = memo(function EveryoneText() {
   const classes = useStyles();
   return (
     <>
-      {`The BIFI token migration is approaching. We strongly recommend that everyone keeps their BIFI in their wallet, on a CEX, or stakes it into the Earnings Pool. BIFI held in custom contracts (Gnosis, 3rd party staking pools, some LPs, etc.) won't be supported by the automated airdrop. Review the`}{' '}
+      {`The BIFI token migration is approaching. We strongly recommend that everyone keeps their BIFI in their wallet, on a CEX, or stakes it into the Earnings Pool. BIFI held in custom contracts (Gnosis, 3rd party staking pools, some LPs, etc.) won't be supported by the automated distribution. Review the`}{' '}
       <a
         className={classes.link}
         href="https://snapshot.beefy.finance/"
