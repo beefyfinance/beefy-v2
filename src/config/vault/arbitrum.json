@@ -1735,8 +1735,7 @@
     "earnContractAddress": "0x5A8beF2fEb83057bBCcC81cea985a94a62A86208",
     "oracle": "lps",
     "oracleId": "sushi-arb-rdpx-weth",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "sushi",
     "assets": ["RDPX", "ETH"],
     "risks": [
@@ -1752,7 +1751,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/42161:0x7418F5A2621E13c05d1EFBd71ec922070794b90a/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/42161:0x7418F5A2621E13c05d1EFBd71ec922070794b90a/remove",
     "network": "arbitrum",
-    "createdAt": 1679928307
+    "createdAt": 1696621930
   },
   {
     "id": "sushi-arb-dpx-weth",
@@ -1767,8 +1766,7 @@
     "earnContractAddress": "0x4D323f77c32EDdC62BF8eAbA11E5C573FD0a2ccd",
     "oracle": "lps",
     "oracleId": "sushi-arb-dpx-weth",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "sushi",
     "assets": ["DPX", "ETH"],
     "risks": [
@@ -1784,7 +1782,7 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/42161:0x0C1Cf6883efA1B496B01f654E247B9b419873054/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/42161:0x0C1Cf6883efA1B496B01f654E247B9b419873054/remove",
     "network": "arbitrum",
-    "createdAt": 1679928307
+    "createdAt": 1696621930
   },
   {
     "id": "sushi-arb-weth-arb",
