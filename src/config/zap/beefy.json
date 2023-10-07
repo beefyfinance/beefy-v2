@@ -76,6 +76,11 @@
   },
   {
     "chainId": "base",
+    "ammId": "base-equalizer",
+    "zapAddress": "0x73d387A6Fdd15C60409c41De68Ea2B0448C8ec89"
+  },
+  {
+    "chainId": "base",
     "ammId": "base-swapbased",
     "zapAddress": "0xa57A7B2ca7826D5a75a891b798a893697107A5f9"
   },
