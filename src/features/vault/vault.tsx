@@ -31,6 +31,7 @@ import { PnLGraphLoader } from './components/PnLGraph';
 import { VaultsStats } from './components/VaultsStats';
 import { HistoricGraphsLoader } from './components/HistoricGraph';
 import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
+import { VaultSuggestions } from './components/VaultsSuggestions';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -81,6 +82,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
       <VaultMeta vaultId={vaultId} />
       <RenBannerVault vaultId={vaultId} />
       <VaultHeader vaultId={vaultId} />
+      {vault.status !== 'active' ? <VaultSuggestions vaultId={vaultId} /> : null}
       <VaultsStats vaultId={vaultId} />
       <div className={classes.contentContainer}>
         <div className={classes.contentColumns}>

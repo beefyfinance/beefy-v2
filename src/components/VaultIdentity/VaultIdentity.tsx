@@ -17,10 +17,11 @@ import { getNetworkSrc } from '../../helpers/networkSrc';
 const useStyles = makeStyles(styles);
 
 export type VaultNameProps = {
+  className?: string;
   vaultId: VaultEntity['id'];
   isLink?: boolean;
 };
-export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, isLink }) {
+export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, className, isLink }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isBoosted = useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId));
@@ -29,10 +30,13 @@ export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, isLi
     return (
       <Link
         to={`/vault/${vaultId}`}
-        className={clsx({
-          [classes.vaultName]: true,
-          [classes.vaultNameBoosted]: isBoosted,
-        })}
+        className={clsx(
+          {
+            [classes.vaultName]: true,
+            [classes.vaultNameBoosted]: isBoosted,
+          },
+          className
+        )}
       >
         {punctuationWrap(vault.name)}
       </Link>
@@ -41,10 +45,13 @@ export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, isLi
 
   return (
     <div
-      className={clsx({
-        [classes.vaultName]: true,
-        [classes.vaultNameBoosted]: isBoosted,
-      })}
+      className={clsx(
+        {
+          [classes.vaultName]: true,
+          [classes.vaultNameBoosted]: isBoosted,
+        },
+        className
+      )}
     >
       {punctuationWrap(vault.name)}
     </div>

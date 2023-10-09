@@ -159,7 +159,7 @@ const transactSlice = createSlice({
       .addCase(transactInit.fulfilled, (sliceState, action) => {
         sliceState.vaultId = action.meta.arg.vaultId;
         sliceState.step = TransactStep.Form;
-        sliceState.mode = TransactMode.Deposit;
+        sliceState.mode = action.payload.mode;
       })
       .addCase(transactFetchOptions.pending, (sliceState, action) => {
         resetForm(sliceState);

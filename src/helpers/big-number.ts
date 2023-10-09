@@ -28,6 +28,20 @@ export function toBigNumber(input: BigNumberish): BigNumber {
   return new BigNumber(input);
 }
 
+export function toNumberUnsafe(input: BigNumber): number {
+  const number = input.toNumber();
+
+  if (isNaN(number)) {
+    return 0;
+  }
+
+  if (!isFinite(number)) {
+    return number > 0 ? Number.MAX_VALUE : Number.MIN_VALUE;
+  }
+
+  return number;
+}
+
 export function isBigNumber(value: unknown): value is BigNumber {
   return BigNumber.isBigNumber(value);
 }
