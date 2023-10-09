@@ -11,7 +11,6 @@ import { selectUserVaultDepositInDepositTokenExcludingBoosts } from '../../../..
 import type { AmountInputProps } from '../AmountInput';
 import { AmountInput } from '../AmountInput';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import { BigNumber } from 'bignumber.js';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 
@@ -39,7 +38,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
       (value, isMax) => {
         dispatch(
           transactActions.setInputAmount({
-            amount: value.decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR),
+            amount: value.decimalPlaces(depositToken.decimals),
             max: isMax,
           })
         );

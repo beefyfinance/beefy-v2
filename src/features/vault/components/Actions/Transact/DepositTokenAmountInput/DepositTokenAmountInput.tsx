@@ -11,7 +11,6 @@ import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance'
 import type { AmountInputProps } from '../AmountInput';
 import { AmountInput } from '../AmountInput';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import { BigNumber } from 'bignumber.js';
 
 const useStyles = makeStyles(styles);
 
@@ -33,7 +32,7 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
       (value, isMax) => {
         dispatch(
           transactActions.setInputAmount({
-            amount: value.decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR),
+            amount: value.decimalPlaces(depositToken.decimals),
             max: isMax,
           })
         );
