@@ -13,6 +13,7 @@ export const styles = (theme: Theme) => ({
   value: {
     ...theme.typography['body-sm'],
     color: theme.palette.text.middle,
+    textAlign: 'end' as const,
   },
   valueBoosted: {
     color: '#DB8332',

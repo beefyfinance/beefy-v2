@@ -37,7 +37,7 @@ export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAd
 };
 
 export const selectIsAnalyticsLoadedByAddress = (state: BeefyState, walletAddress: string) => {
-  return state.ui.dataLoader.timelineByAddress[walletAddress]?.alreadyLoadedOnce;
+  return state.ui.dataLoader.timelineByAddress[walletAddress]?.alreadyLoadedOnce || false;
 };
 
 export const selectVaultPnl = (
