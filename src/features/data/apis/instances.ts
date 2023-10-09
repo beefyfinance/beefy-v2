@@ -18,6 +18,7 @@ import type { IBeefyDataApi } from './beefy/beefy-data-api-types';
 import PQueue from 'p-queue';
 
 import type { IMigrationApi } from './migration/migration-types';
+import type { ISnapshotBalanceApi } from './snapshot-balance/snapshot-balance-types';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -180,4 +181,15 @@ export async function getMigrationApi(): Promise<IMigrationApi> {
   const { MigrationApi } = await import('./migration');
   migrationApiInstance = new MigrationApi();
   return migrationApiInstance;
+}
+
+let snapshotBalanceApiInstance: ISnapshotBalanceApi | null = null;
+export async function getSnapshotBalanceApi(): Promise<ISnapshotBalanceApi> {
+  if (snapshotBalanceApiInstance) {
+    return snapshotBalanceApiInstance;
+  }
+  const { SnapshotBalanceApi } = await import('./snapshot-balance/snapshot-balance');
+
+  snapshotBalanceApiInstance = new SnapshotBalanceApi();
+  return snapshotBalanceApiInstance;
 }
