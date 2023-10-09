@@ -67,23 +67,23 @@ export const beefyBridgeConfig = {
           bridge: '0xcccd6EC6F4705292f07eE4a9a8F1F120963358c5',
           time: {
             outgoing: 18,
-            incoming: 0,
+            incoming: 5,
           },
           gasLimits: {
             approve: new BigNumber('70000'),
             outgoing: new BigNumber('320000'), // ~314,686 before refunds
-            incoming: new BigNumber('1'),
+            incoming: new BigNumber('310000 '), // ~300,027 before refunds
           },
         },
         optimism: {
           bridge: '0xcccd6EC6F4705292f07eE4a9a8F1F120963358c5',
           time: {
-            outgoing: 0,
+            outgoing: 18,
             incoming: 3,
           },
           gasLimits: {
-            outgoing: new BigNumber('1'),
-            incoming: new BigNumber('1'),
+            outgoing: new BigNumber('230000'), // ~216,481 before refunds
+            incoming: new BigNumber('220000'), // ~211,298 before refunds
           },
         },
       },
