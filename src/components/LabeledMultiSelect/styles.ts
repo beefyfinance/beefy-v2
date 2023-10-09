@@ -78,9 +78,6 @@ export const styles = (theme: Theme) => ({
     userSelect: 'none' as const,
     cursor: 'pointer',
     padding: `8px ${16 - 2}px`,
-    '& svg': {
-      marginRight: '8px',
-    },
     '&:hover': {
       background: 'rgba(255, 255, 255, 0.16)',
       color: '#FFF',

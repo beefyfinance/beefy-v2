@@ -41,6 +41,8 @@ const overrides = {
   'geist-mim': { harvestOnDeposit: undefined },
   'pearl-wbtc-usdrv3': { harvestOnDeposit: undefined },
   'baseswap-axlwbtc-usdbc': { harvestOnDeposit: undefined },
+  'venus-bnb': { harvestOnDeposit: undefined },
+  'kinetix-klp': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
@@ -55,6 +57,7 @@ const oldValidFeeRecipients = {
 };
 
 const nonHarvestOnDepositChains = ['ethereum', 'avax'];
+const nonHarvestOnDepositPools = ['venus-bnb'];
 
 const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddress'];
 
@@ -403,6 +406,7 @@ const isHarvestOnDepositCorrect = (pool, chain, updates) => {
     pool.status === 'active' &&
     pool.harvestOnDeposit !== undefined &&
     !nonHarvestOnDepositChains.includes(chain) &&
+    !nonHarvestOnDepositPools.includes(pool.id) &&
     pool.harvestOnDeposit !== true
   ) {
     console.log(

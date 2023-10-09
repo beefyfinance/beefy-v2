@@ -639,7 +639,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     stableCoins: ['USDC', 'USDT', 'DAI', 'FRAX'],
   },
   base: {
-    new: true,
     name: 'Base',
     chainId: 8453,
     rpc: ['https://rpc.ankr.com/base'],

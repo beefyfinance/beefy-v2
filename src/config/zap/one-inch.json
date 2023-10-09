@@ -9,7 +9,17 @@
     },
     "depositFromTokens": ["ETH", "WETH", "cbETH", "USDbC", "axlUSDC", "DAI", "MIM"],
     "withdrawToTokens": ["ETH", "cbETH", "USDbC", "axlUSDC", "DAI", "MIM"],
-    "blockedTokens": ["axlWBTC", "ALB", "BASO", "bsUSD", "DAI+", "USDC+", "WELL", "UNIDX"],
+    "blockedTokens": [
+      "axlWBTC",
+      "ALB",
+      "BASO",
+      "bsUSD",
+      "DAI+",
+      "USDC+",
+      "WELL",
+      "UNIDX",
+      "axlUSDT"
+    ],
     "blockedVaults": []
   },
   {

@@ -227,7 +227,8 @@
     "earnContractAddress": "0xD25c56DAbcda719F1c67fE8fc0760f8B942aC95C",
     "oracle": "lps",
     "oracleId": "solarbeam-eth-wmovr",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solarbeam",
     "assets": ["ETH", "MOVR"],
     "risks": [
