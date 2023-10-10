@@ -83,7 +83,7 @@ export const LpText = memo(function LpText({
       >
         preliminary snapshot
       </a>{' '}
-      taken on September 26th, you still have {formatBigDecimals(balance)} BIFI in the{' '}
+      taken on October 9th, you still have {formatBigDecimals(balance)} BIFI in the{' '}
       <a
         className={classes.link}
         href={`https://debank.com/profile/${address}`}
