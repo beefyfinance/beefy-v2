@@ -42,8 +42,10 @@ const ArrowButton = memo(function ArrowButton() {
   }, [dispatch]);
 
   return (
-    <button className={clsx(classes.btn, classes.arrow)} onClick={handleClick}>
-      <div className={classes.arrowInner} />
+    <button className={clsx(classes.btn, classes.arrowButton)} onClick={handleClick}>
+      <div className={classes.arrow}>
+        <div className={classes.arrowInner} />
+      </div>
     </button>
   );
 });

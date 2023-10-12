@@ -30,20 +30,24 @@ export const styles = (theme: Theme) => ({
     color: '#D0D0DA',
     background: '#111321',
   },
-  arrow: {
+  arrowButton: {
     width: '24px',
     flex: '0 0 24px',
     background: '#111321',
+    '&:hover $arrow': {
+      transform: 'rotateY(180deg)',
+    },
+  },
+  arrow: {
     transition: 'transform 0.2s ease-in-out',
+    display: 'flex',
+    width: '24px',
     '&::after': {
       content: '""',
       display: 'block',
       borderLeft: '12px solid #232743',
       borderTop: '20px solid transparent',
       borderBottom: '20px solid transparent',
-    },
-    '&:hover': {
-      transform: 'rotateY(180deg)',
     },
   },
   arrowInner: {
