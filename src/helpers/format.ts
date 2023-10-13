@@ -63,7 +63,7 @@ export function formatPercent<T = string>(
   // Format output
   return num < 999
     ? `${num.toFixed(dp)}${unitToDisplay}%`
-    : numberPercent.toLocaleString('en-US', {
+    : numberPercent.toLocaleString(navigator.language, {
         maximumFractionDigits: 0,
         minimumFractionDigits: 0,
       }) + '%';
@@ -83,7 +83,7 @@ export function formatSmallPercent(
 ): string {
   return !formatZero && percent === 0
     ? '0%'
-    : (percent * 100).toLocaleString('en-US', {
+    : (percent * 100).toLocaleString(navigator.language, {
         maximumFractionDigits: maxPlaces,
         minimumFractionDigits: minPlaces,
       }) + '%';
@@ -135,7 +135,7 @@ export function formatUsd(
 
   return num < 999
     ? prefix + num.toFixed(2) + unitToDisplay
-    : value.toLocaleString('en-US', {
+    : value.toLocaleString(navigator.language, {
         style: 'currency',
         currency: 'USD',
         maximumFractionDigits: 0,
@@ -169,7 +169,7 @@ export function formatBigNumber(value: BigNumber) {
     value = value.decimalPlaces(0, BigNumber.ROUND_FLOOR);
   }
   if (order < 2 && value.abs().gte(100)) {
-    return value.toNumber().toLocaleString('en-US', {
+    return value.toNumber().toLocaleString(navigator.language, {
       maximumFractionDigits: 0,
       minimumFractionDigits: 0,
     });

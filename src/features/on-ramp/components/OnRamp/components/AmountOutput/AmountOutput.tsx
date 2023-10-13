@@ -14,7 +14,7 @@ function numberToString(value: number, maxDecimals: number): string {
     return '';
   }
 
-  return value.toLocaleString('en-US', {
+  return value.toLocaleString(navigator.language, {
     maximumFractionDigits: maxDecimals,
   });
 }

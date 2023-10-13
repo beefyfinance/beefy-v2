@@ -9,7 +9,7 @@ export const formatDateTimeTick = (tickItem: number, timebucket: TimeBucketType)
   if (timebucket === '1h_1d') {
     return format(date, 'HH:mm');
   }
-  return date.toLocaleDateString(undefined, { month: 'numeric', day: 'numeric' });
+  return date.toLocaleDateString(navigator.language, { month: 'numeric', day: 'numeric' });
 };
 
 export function formatUnderlyingTick(value: number, minMax: [number, number]) {
@@ -18,7 +18,7 @@ export function formatUnderlyingTick(value: number, minMax: [number, number]) {
   if (max >= 0.001) {
     const decimals = max > 999 ? 0 : 3;
 
-    return value.toLocaleString('en-US', {
+    return value.toLocaleString(navigator.language, {
       maximumFractionDigits: decimals,
       minimumFractionDigits: decimals,
     });

@@ -96,7 +96,9 @@ const ScreamAvailableLiquidityImpl = memo<ScreamAvailableLiquidityProps>(
         {haveUpdatedOnce ? (
           <p>
             <strong>Available liquidity:</strong>{' '}
-            {liquidity.toLocaleString('en-US', { maximumFractionDigits: depositToken.decimals })}{' '}
+            {liquidity.toLocaleString(navigator.language, {
+              maximumFractionDigits: depositToken.decimals,
+            })}{' '}
             {depositToken.symbol}
           </p>
         ) : null}

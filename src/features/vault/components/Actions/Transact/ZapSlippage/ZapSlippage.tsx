@@ -57,7 +57,7 @@ function numberToString(value: number, maxDecimals: number = 1): string {
     return '';
   }
 
-  return value.toLocaleString('en-US', {
+  return value.toLocaleString(navigator.language, {
     minimumFractionDigits: 0,
     maximumFractionDigits: maxDecimals,
     useGrouping: false,
