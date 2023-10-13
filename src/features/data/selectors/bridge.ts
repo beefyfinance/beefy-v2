@@ -11,6 +11,7 @@ import {
   selectStepperStepContent,
 } from './stepper';
 import { StepContent } from '../reducers/wallet/stepper';
+import { createSelector } from '@reduxjs/toolkit';
 
 export const selectIsBridgeConfigLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.bridgeConfig.alreadyLoadedOnce;
@@ -35,13 +36,22 @@ export const selectBridgeConfigById = (state: BeefyState, id: BeefyAnyBridgeConf
 
 export const selectBridgeSourceChainId = (state: BeefyState) => state.ui.bridge.source;
 
-export const selectBridgeSourceToken = (state: BeefyState) =>
-  selectBridgeTokenForChainId(state, selectBridgeSourceChainId(state));
-
-export const selectBridgeTokenForChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
+export const selectBridgeDepositTokenForChainId = (
+  state: BeefyState,
+  chainId: ChainEntity['id']
+) => {
   const address = state.ui.bridge.destinations.chainToAddress[chainId];
   if (!address) {
-    throw new Error(`No bridge token for chain ${chainId}`);
+    throw new Error(`No bridge deposit token for chain ${chainId}`);
+  }
+
+  return selectErc20TokenByAddress(state, chainId, address);
+};
+
+export const selectBridgeXTokenForChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
+  const address = state.ui.bridge.tokens[chainId];
+  if (!address) {
+    throw new Error(`No bridge XERC20 token for chain ${chainId}`);
   }
 
   return selectErc20TokenByAddress(state, chainId, address);
@@ -61,6 +71,14 @@ export const selectBridgeFormState = (state: BeefyState) => {
 export const selectBridgeQuoteStatus = (state: BeefyState) => state.ui.bridge.quote.status;
 
 export const selectBridgeQuoteError = (state: BeefyState) => state.ui.bridge.quote.error;
+export const selectBridgeQuoteErrorLimits = (state: BeefyState) => {
+  const error = selectBridgeQuoteError(state);
+  if (error.name === 'AllQuotesRateLimitedError' && state.ui.bridge.quote.limitError) {
+    return state.ui.bridge.quote.limitError;
+  }
+
+  return false;
+};
 
 export const selectBridgeQuoteIds = (state: BeefyState) => state.ui.bridge.quote.quotes.allIds;
 
@@ -68,6 +86,20 @@ export const selectBridgeQuoteById = (
   state: BeefyState,
   id: string
 ): IBridgeQuote<BeefyAnyBridgeConfig> => state.ui.bridge.quote.quotes.byId[id];
+
+export const selectBridgeLimitedQuoteIds = (state: BeefyState) =>
+  state.ui.bridge.quote.limitedQuotes.allIds;
+
+export const selectBridgeLimitedQuoteById = (
+  state: BeefyState,
+  id: string
+): IBridgeQuote<BeefyAnyBridgeConfig> => state.ui.bridge.quote.limitedQuotes.byId[id];
+
+export const selectAllBridgeLimitedQuotes = createSelector(
+  selectBridgeLimitedQuoteIds,
+  (state: BeefyState) => state.ui.bridge.quote.limitedQuotes.byId,
+  (ids, byId) => ids.map(id => byId[id])
+);
 
 export const selectBridgeQuoteSelectedId = (state: BeefyState) => state.ui.bridge.quote.selected;
 

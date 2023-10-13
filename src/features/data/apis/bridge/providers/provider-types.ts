@@ -22,6 +22,11 @@ export interface IBridgeQuote<T extends BeefyAnyBridgeConfig> {
   allowance?: TokenAllowance;
   gas: BigNumber;
   timeEstimate: number;
+  withinLimits: boolean;
+  limits: {
+    from: { current: BigNumber; max: BigNumber };
+    to: { current: BigNumber; max: BigNumber };
+  };
 }
 
 export interface IBridgeProvider<T extends BeefyAnyBridgeConfig> {

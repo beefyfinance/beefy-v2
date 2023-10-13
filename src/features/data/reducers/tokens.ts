@@ -179,8 +179,6 @@ export const tokensSlice = createSlice({
       );
 
       for (const [chainId, address] of Object.entries(tokens)) {
-        if (chainId === sourceToken.chainId) continue; // only add non-source tokens
-
         const token: TokenErc20 = {
           ...sourceToken,
           id: `${source.id}-${chainId}`,
@@ -188,7 +186,8 @@ export const tokensSlice = createSlice({
           address,
         };
 
-        addBridgeTokenToState(sliceState, token, true);
+        // no need to track xerc20 on source chain
+        addBridgeTokenToState(sliceState, token, chainId !== sourceToken.chainId);
       }
     });
   },

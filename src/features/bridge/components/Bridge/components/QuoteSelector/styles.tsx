@@ -65,6 +65,10 @@ export const styles = (theme: Theme) => ({
       color: '#fff',
     },
   },
+  quoteLimited: {
+    pointerEvents: 'none' as const,
+    filter: 'grayscale(100)',
+  },
   quoteProvider: {
     ...theme.typography['body-lg-med'],
     color: theme.palette.text.middle,
@@ -84,6 +88,17 @@ export const styles = (theme: Theme) => ({
     [theme.breakpoints.down('sm')]: {
       display: 'none',
     },
+  },
+  quoteLimit: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    flex: '1 0 142px',
+  },
+  quoteLimitIcon: {
+    width: '16px',
+    height: '16px',
+    fill: theme.palette.text.light,
   },
   quoteFee: {
     display: 'flex',

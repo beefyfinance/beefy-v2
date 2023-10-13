@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectBridgeFormState,
-  selectBridgeTokenForChainId,
+  selectBridgeDepositTokenForChainId,
 } from '../../../../../data/selectors/bridge';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
@@ -28,7 +28,7 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
   const dispatch = useAppDispatch();
   const classes = useStyles();
   const { from, input } = useAppSelector(selectBridgeFormState);
-  const fromToken = useAppSelector(state => selectBridgeTokenForChainId(state, from));
+  const fromToken = useAppSelector(state => selectBridgeDepositTokenForChainId(state, from));
   const userBalance = useAppSelector(state =>
     selectUserBalanceOfToken(state, fromToken.chainId, fromToken.address)
   );

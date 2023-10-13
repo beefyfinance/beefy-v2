@@ -14,12 +14,12 @@ import {
   selectBridgeQuoteSelectedId,
   selectBridgeSourceChainId,
   selectBridgeSupportedChainIds,
-  selectBridgeTokenForChainId,
+  selectBridgeDepositTokenForChainId,
   selectShouldLoadBridgeConfig,
 } from '../selectors/bridge';
 import type { BridgeFormState } from '../reducers/wallet/bridge';
 import { FormStep } from '../reducers/wallet/bridge';
-import { BIG_ZERO, fromWeiString } from '../../../helpers/big-number';
+import { BIG_ONE, BIG_ZERO, fromWeiString } from '../../../helpers/big-number';
 import { selectUserBalanceOfToken } from '../selectors/balance';
 import { selectChainById } from '../selectors/chains';
 import { orderBy, partition } from 'lodash-es';
@@ -31,6 +31,18 @@ import type { Step } from '../reducers/wallet/stepper';
 import { walletActions } from './wallet-actions';
 import type { Namespace, TFunction } from 'react-i18next';
 import { startStepperWithSteps } from './stepper';
+import BigNumber from 'bignumber.js';
+
+function getLimits(quotes: IBridgeQuote<BeefyAnyBridgeConfig>[]) {
+  const current = BigNumber.max(
+    ...quotes.map(q => BigNumber.min(q.limits.from.current, q.limits.to.current))
+  );
+  const max = BigNumber.max(...quotes.map(q => BigNumber.min(q.limits.from.max, q.limits.to.max)));
+  const wanted = quotes[0].input.amount;
+  const canWait = max.minus(current).gt(BIG_ONE) && max.gt(wanted);
+
+  return { current, max, canWait };
+}
 
 export type FetchBridgeConfigParams = void;
 
@@ -78,13 +90,16 @@ export const initiateBridgeForm = createAsyncThunk<
     toChainId = supportedChainIds.filter(chainId => chainId !== fromChainId)[0];
   }
 
-  const fromToken = selectBridgeTokenForChainId(state, fromChainId);
-  const toToken = selectBridgeTokenForChainId(state, toChainId);
+  const fromToken = selectBridgeDepositTokenForChainId(state, fromChainId);
+  const toToken = selectBridgeDepositTokenForChainId(state, toChainId);
 
   if (walletAddress) {
     for (const chainId of supportedChainIds) {
       dispatch(
-        fetchBalanceAction({ chainId, tokens: [selectBridgeTokenForChainId(state, chainId)] })
+        fetchBalanceAction({
+          chainId,
+          tokens: [selectBridgeDepositTokenForChainId(state, chainId)],
+        })
       );
     }
   }
@@ -119,7 +134,7 @@ export const validateBridgeForm = createAsyncThunk<
   const state = getState();
 
   const { from, input } = selectBridgeFormState(state);
-  const fromToken = selectBridgeTokenForChainId(state, from);
+  const fromToken = selectBridgeDepositTokenForChainId(state, from);
 
   const minAmount = fromWeiString('1000', fromToken.decimals);
   if (input.amount.lt(minAmount)) {
@@ -136,13 +151,20 @@ export const validateBridgeForm = createAsyncThunk<
 
 type QuoteBridgeFormParams = void;
 
-type QuoteBridgeFormPayload = { quotes: IBridgeQuote<BeefyAnyBridgeConfig>[] };
+type QuoteBridgeFormPayload = {
+  quotes: IBridgeQuote<BeefyAnyBridgeConfig>[];
+  limitedQuotes: IBridgeQuote<BeefyAnyBridgeConfig>[];
+};
 
 export const quoteBridgeForm = createAsyncThunk<
   QuoteBridgeFormPayload,
   QuoteBridgeFormParams,
-  { state: BeefyState }
->('bridge/quoteBridgeForm', async (_, { getState }) => {
+  {
+    state: BeefyState;
+    rejectValue: 'AllQuotesRateLimitedError';
+    rejectedMeta: { current: BigNumber; max: BigNumber; canWait: boolean };
+  }
+>('bridge/quoteBridgeForm', async (_, { getState, rejectWithValue }) => {
   const state = getState();
   const { from, to, input } = selectBridgeFormState(state);
   const bridgeIds = selectBridgeIdsFromTo(state, from, to);
@@ -187,7 +209,13 @@ export const quoteBridgeForm = createAsyncThunk<
       ],
       ['desc', 'asc', 'asc']
     );
-    return { quotes: sortedQuotes };
+    const [inLimits, outLimits] = partition(sortedQuotes, q => q.withinLimits);
+
+    if (inLimits.length === 0) {
+      throw rejectWithValue('AllQuotesRateLimitedError', getLimits(outLimits));
+    }
+
+    return { quotes: inLimits, limitedQuotes: outLimits };
   }
 
   if (rejected.length > 0) {

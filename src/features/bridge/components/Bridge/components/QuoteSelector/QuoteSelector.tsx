@@ -2,10 +2,14 @@ import React, { memo, type ReactNode, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
+  selectAllBridgeLimitedQuotes,
   selectBridgeConfigById,
   selectBridgeFormState,
   selectBridgeIdsFromTo,
+  selectBridgeLimitedQuoteById,
+  selectBridgeLimitedQuoteIds,
   selectBridgeQuoteById,
+  selectBridgeQuoteErrorLimits,
   selectBridgeQuoteIds,
   selectBridgeQuoteSelectedId,
   selectBridgeQuoteStatus,
@@ -14,7 +18,7 @@ import { formatBigDecimals, formatBigUsd } from '../../../../../../helpers/forma
 import { bridgeActions } from '../../../../../data/reducers/wallet/bridge';
 import clsx from 'clsx';
 import { getBridgeProviderIcon } from '../../../../../../helpers/bridgeProviderSrc';
-import { MonetizationOn, Timer } from '@material-ui/icons';
+import { Lock, MonetizationOn, Timer } from '@material-ui/icons';
 import { styles } from './styles';
 import { TextLoader } from '../../../../../../components/TextLoader';
 import type { BeefyAnyBridgeConfig } from '../../../../../data/apis/config-types';
@@ -22,8 +26,53 @@ import { AlertError } from '../../../../../../components/Alerts';
 import { useTranslation } from 'react-i18next';
 import { formatMinutesDuration } from '../../../../../../helpers/date';
 import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
+import BigNumber from 'bignumber.js';
+import { BIG_ONE } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
+
+type QuoteLimitedProps = {
+  quoteId: string;
+  className?: string;
+};
+
+const QuoteLimited = memo<QuoteLimitedProps>(function QuoteLimited({ quoteId }) {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const quote = useAppSelector(state => selectBridgeLimitedQuoteById(state, quoteId));
+  const providerId = quote.config.id;
+  const config = useAppSelector(state => selectBridgeConfigById(state, providerId));
+  const providerIcon = useMemo(() => {
+    return getBridgeProviderIcon(providerId);
+  }, [providerId]);
+  const limit = useMemo(() => {
+    return BigNumber.min(quote.limits.from.current, quote.limits.to.current);
+  }, [quote.limits.from, quote.limits.to]);
+
+  return (
+    <div
+      className={clsx({
+        [classes.quote]: true,
+        [classes.quoteLimited]: true,
+      })}
+    >
+      <div className={classes.quoteProvider}>
+        <img
+          src={providerIcon}
+          alt={providerId}
+          width={24}
+          height={24}
+          className={classes.quoteProviderIcon}
+        />
+        <div className={classes.quoteProviderTitle}>{config.title}</div>
+      </div>
+      <div className={classes.quoteLimit}>
+        <Lock className={classes.quoteLimitIcon} />
+        <div>{t('Bridge-Quote-RateLimited', { amount: formatBigDecimals(limit, 4) })}</div>
+      </div>
+    </div>
+  );
+});
 
 type QuoteButtonProps = {
   quoteId: string;
@@ -136,13 +185,19 @@ const LoadingQuoteButton = memo<LoadingQuoteButtonProps>(function LoadingQuoteBu
 const Quotes = memo(function Quotes() {
   const classes = useStyles();
   const ids = useAppSelector(selectBridgeQuoteIds);
+  const limitedIds = useAppSelector(selectBridgeLimitedQuoteIds);
   const selectedId = useAppSelector(selectBridgeQuoteSelectedId);
 
   return (
     <div className={classes.quotes}>
-      {ids.map(id => (
-        <QuoteButton quoteId={id} key={id} selected={selectedId === id} />
-      ))}
+      <>
+        {ids.map(id => (
+          <QuoteButton quoteId={id} key={id} selected={selectedId === id} />
+        ))}
+        {limitedIds.map(id => (
+          <QuoteLimited quoteId={id} key={id} />
+        ))}
+      </>
     </div>
   );
 });
@@ -161,8 +216,56 @@ const QuotesLoading = memo(function QuotesLoading() {
   );
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const AllLimitedError = memo(function AllLimitedError() {
+  const { t } = useTranslation();
+  const quotes = useAppSelector(selectAllBridgeLimitedQuotes);
+  const currentLimit = useMemo(() => {
+    return BigNumber.max(
+      ...quotes.map(quote => BigNumber.min(quote.limits.from.current, quote.limits.to.current))
+    );
+  }, [quotes]);
+  const maxLimit = useMemo(() => {
+    return BigNumber.max(
+      ...quotes.map(quote => BigNumber.min(quote.limits.from.max, quote.limits.to.max))
+    );
+  }, [quotes]);
+  const waitLimits = useMemo(() => {
+    const wanted = quotes[0].input.amount;
+    return maxLimit.minus(currentLimit).gt(BIG_ONE) && maxLimit.gt(wanted);
+  }, [currentLimit, maxLimit, quotes]);
+
+  return (
+    <AlertError>
+      {t(waitLimits ? 'Bridge-Quotes-AllRateLimited-Wait' : 'Bridge-Quotes-AllRateLimited', {
+        current: formatBigDecimals(currentLimit, 4),
+        max: formatBigDecimals(maxLimit, 4),
+      })}
+    </AlertError>
+  );
+});
+
 const QuotesError = memo(function QuotesError() {
   const { t } = useTranslation();
+  const errorLimits = useAppSelector(selectBridgeQuoteErrorLimits);
+
+  // Special error if all quotes were rate limited
+  if (errorLimits) {
+    return (
+      <AlertError>
+        {t(
+          errorLimits.canWait
+            ? 'Bridge-Quotes-AllRateLimited-Wait'
+            : 'Bridge-Quotes-AllRateLimited',
+          {
+            current: formatBigDecimals(errorLimits.current, 4),
+            max: formatBigDecimals(errorLimits.max, 4),
+          }
+        )}
+      </AlertError>
+    );
+  }
+
   return <AlertError>{t('Bridge-Quotes-Error')}</AlertError>;
 });
 

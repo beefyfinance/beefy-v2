@@ -14,7 +14,8 @@ import { isTokenEqual, type TokenErc20 } from '../../entities/token';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types';
 import type { Draft } from 'immer';
-import { keyBy } from 'lodash-es';
+import { keyBy, pick } from 'lodash-es';
+import type BigNumber from 'bignumber.js';
 
 export enum FormStep {
   Loading = 1,
@@ -46,7 +47,14 @@ export type BridgeQuoteState = {
       Record<IBridgeQuote<BeefyAnyBridgeConfig>['id'], IBridgeQuote<BeefyAnyBridgeConfig>>
     >;
   };
+  limitedQuotes: {
+    allIds: IBridgeQuote<BeefyAnyBridgeConfig>['id'][];
+    byId: Partial<
+      Record<IBridgeQuote<BeefyAnyBridgeConfig>['id'], IBridgeQuote<BeefyAnyBridgeConfig>>
+    >;
+  };
   error: SerializedError | null;
+  limitError?: { current: BigNumber; max: BigNumber; canWait: boolean };
   requestId: string | null;
 };
 
@@ -65,6 +73,7 @@ export type BridgesMap = {
 
 export type BridgeState = {
   source: ChainEntity['id'];
+  tokens: Record<ChainEntity['id'], string>;
   destinations: {
     allChains: ChainEntity['id'][];
     chainToAddress: Record<ChainEntity['id'], string>;
@@ -83,6 +92,7 @@ export type BridgeState = {
 
 const initialBridgeState: BridgeState = {
   source: null,
+  tokens: {},
   destinations: {
     allChains: [],
     chainToAddress: {},
@@ -108,6 +118,10 @@ const initialBridgeState: BridgeState = {
     status: 'idle',
     selected: null,
     quotes: {
+      allIds: [],
+      byId: {},
+    },
+    limitedQuotes: {
       allIds: [],
       byId: {},
     },
@@ -223,9 +237,10 @@ export const bridgeSlice = createSlice({
         }, {});
 
         sliceState.source = config.source.chainId;
+        sliceState.tokens = config.tokens;
         sliceState.destinations = {
           allChains,
-          chainToAddress: config.tokens,
+          chainToAddress: { ...config.tokens, [config.source.chainId]: config.source.address },
           chainToBridges,
           chainToChain: allChains.reduce((allMap, chainId) => {
             allMap[chainId] = allChains.filter(
@@ -234,7 +249,6 @@ export const bridgeSlice = createSlice({
             return allMap;
           }, {}),
         };
-        sliceState.destinations.chainToAddress[config.source.chainId] = config.source.address;
         sliceState.bridges = keyBy(config.bridges, 'id');
       })
       .addCase(initiateBridgeForm.fulfilled, (sliceState, action) => {
@@ -272,11 +286,8 @@ export const bridgeSlice = createSlice({
           return;
         }
         sliceState.quote.status = 'fulfilled';
-        sliceState.quote.quotes.byId = action.payload.quotes.reduce((map, quote) => {
-          map[quote.id] = quote;
-          return map;
-        }, {});
-        sliceState.quote.quotes.allIds = action.payload.quotes.map(quote => quote.id);
+        setQuotes(sliceState, 'quotes', action.payload.quotes);
+        setQuotes(sliceState, 'limitedQuotes', action.payload.limitedQuotes);
         sliceState.quote.selected = action.payload.quotes[0]?.id || null;
         sliceState.quote.error = null;
       })
@@ -287,6 +298,15 @@ export const bridgeSlice = createSlice({
         sliceState.quote.status = 'rejected';
         sliceState.quote.selected = null;
         sliceState.quote.error = action.error;
+        if (action.meta.rejectedWithValue) {
+          sliceState.quote.error = {
+            message: 'Reduce bridge amount or try again later',
+            name: action.payload,
+          };
+          sliceState.quote.limitError = pick(action.meta, ['current', 'max', 'canWait']);
+        } else {
+          sliceState.quote.limitError = undefined;
+        }
       })
       .addCase(confirmBridgeForm.pending, (sliceState, action) => {
         sliceState.confirm.status = 'pending';
@@ -315,6 +335,18 @@ export const bridgeSlice = createSlice({
       });
   },
 });
+
+function setQuotes(
+  sliceState: Draft<BridgeState>,
+  key: 'quotes' | 'limitedQuotes',
+  quotes: IBridgeQuote<BeefyAnyBridgeConfig>[]
+) {
+  sliceState.quote[key].byId = quotes.reduce((map, quote) => {
+    map[quote.id] = quote;
+    return map;
+  }, {});
+  sliceState.quote[key].allIds = quotes.map(quote => quote.id);
+}
 
 function resetQuotes(
   sliceState: Draft<BridgeState>,
