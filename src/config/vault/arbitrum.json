@@ -2974,8 +2974,7 @@
     "earnContractAddress": "0x9E75f8298e458B76382870982788988A0799195b",
     "oracle": "lps",
     "oracleId": "curve-arb-f-wsteth",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "curve",
     "assets": ["wstETH", "ETH"],
     "risks": [
