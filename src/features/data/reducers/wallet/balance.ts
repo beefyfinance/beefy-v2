@@ -26,6 +26,7 @@ import { initiateMinterForm } from '../../actions/minters';
 import { initiateBridgeForm } from '../../actions/bridge';
 import { selectMinterById } from '../../selectors/minters';
 import { BIG_ZERO } from '../../../../helpers/big-number';
+import { fetchUserSnapshotBalance } from '../../actions/snapshot-balance';
 
 /**
  * State containing user balances state
@@ -35,6 +36,12 @@ export interface BalanceState {
   // data even when the user quickly changes account
   byAddress: {
     [address: string]: {
+      //temporal : snap balance
+      snapshotBalance: {
+        lp: BigNumber;
+        excluded?: BigNumber;
+      };
+
       // quick access to all deposited vaults for this address
       // this can include gov, standard, or a boost's target vault
       depositedVaultIds: VaultEntity['id'][];
@@ -158,12 +165,40 @@ export const balanceSlice = createSlice({
         addBoostBalanceToState(state, walletState, balance.boosts);
       }
     );
+    builder.addCase(fetchUserSnapshotBalance.fulfilled, (sliceState, action) => {
+      const { balance, address } = action.payload;
+      const { lp, excluded } = Object.values(balance).reduce(
+        (total, balancePerChain) => {
+          total['lp'] = total['lp'].plus(new BigNumber(balancePerChain.lp));
+          // total['excluded'] = total['excluded'].plus(new BigNumber(chain[1].excluded));
+
+          return total;
+        },
+        {
+          lp: BIG_ZERO,
+          excluded: BIG_ZERO,
+        }
+      );
+
+      if (sliceState.byAddress[address.toLocaleLowerCase()] === undefined) {
+        sliceState.byAddress[address.toLocaleLowerCase()].snapshotBalance = {
+          lp: BIG_ZERO,
+          excluded: BIG_ZERO,
+        };
+      }
+
+      sliceState.byAddress[address.toLocaleLowerCase()].snapshotBalance = { lp, excluded };
+    });
   },
 });
 
 function getWalletState(sliceState: Draft<BalanceState>, walletAddress: string) {
   if (sliceState.byAddress[walletAddress] === undefined) {
     sliceState.byAddress[walletAddress] = {
+      snapshotBalance: {
+        lp: BIG_ZERO,
+        excluded: BIG_ZERO,
+      },
       depositedVaultIds: [],
       tokenAmount: {
         byChainId: {},

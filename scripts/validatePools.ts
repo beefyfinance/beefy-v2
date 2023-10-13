@@ -42,6 +42,7 @@ const overrides = {
   'pearl-wbtc-usdrv3': { harvestOnDeposit: undefined },
   'baseswap-axlwbtc-usdbc': { harvestOnDeposit: undefined },
   'venus-bnb': { harvestOnDeposit: undefined },
+  'kinetix-klp': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [

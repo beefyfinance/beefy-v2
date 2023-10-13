@@ -8729,7 +8729,8 @@
     "earnContractAddress": "0x6eb020663898c72F8E25958F5f7bcDC732279201",
     "oracle": "lps",
     "oracleId": "cakev2-dai-busd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "pancakeswap",
     "assets": ["DAI", "BUSD"],
     "risks": [
@@ -16876,7 +16877,8 @@
     "earnContractAddress": "0xF390114CBB24D1E258e87F274A7b840f11cb0Ac4",
     "oracle": "lps",
     "oracleId": "cakev2-raca-busd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "pancakeswap",
     "assets": ["RACA", "BUSD"],
     "risks": [
@@ -16926,38 +16928,6 @@
     "removeLiquidityUrl": "https://pancakeswap.finance/remove/0x7dEb9906BD1d77B410a56E5C23c36340Bd60C983/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     "network": "bsc",
     "createdAt": 1638426684
-  },
-  {
-    "id": "cakev2-quidd-wbnb-eol",
-    "name": "QUIDD-BNB LP",
-    "token": "QUIDD-BNB LP2",
-    "tokenAddress": "0xD6d206F59cC5a3BfA4Cc10bc8Ba140ac37Ad1C89",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pancakeswap",
-    "tokenAmmId": "bsc-pancakeswap-v2",
-    "earnedToken": "mooCakeV2QUIDD-BNB",
-    "earnedTokenAddress": "0x2Fc49fDA984333e618b4980eB97086Eb37D7C333",
-    "earnContractAddress": "0x2Fc49fDA984333e618b4980eB97086Eb37D7C333",
-    "oracle": "lps",
-    "oracleId": "cakev2-quidd-wbnb",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "pancakeswap",
-    "assets": ["QUIDD", "BNB"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x7961Ade0a767c0E5B67Dd1a1F78ba44F727642Ed",
-    "addLiquidityUrl": "https://pancakeswap.finance/add/BNB/0x7961Ade0a767c0E5B67Dd1a1F78ba44F727642Ed",
-    "removeLiquidityUrl": "https://pancakeswap.finance/remove/BNB/0x7961Ade0a767c0E5B67Dd1a1F78ba44F727642Ed",
-    "network": "bsc",
-    "createdAt": 1638804800
   },
   {
     "id": "omnifarm-usdo-busd-ot-eol",
@@ -17458,7 +17428,8 @@
     "earnContractAddress": "0xCc2ba0401799857e4e14bFEF6572f46fD5D0Ac23",
     "oracle": "lps",
     "oracleId": "cakev2-gmt-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "pancakeswap",
     "assets": ["GMT", "USDC"],
     "risks": [

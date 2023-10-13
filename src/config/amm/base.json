@@ -76,5 +76,17 @@
     "swapFeeNumerator": "2",
     "swapFeeDenominator": "10000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "base-equalizer",
+    "name": "Equalizer",
+    "type": "solidly",
+    "routerAddress": "0x2F87Bf58D5A9b2eFadE55Cdbd46153a0902be6FA",
+    "factoryAddress": "0xed8db60acc29e14bc867a497d94ca6e3ceb5ec04",
+    "pairInitHash": "0x1557974237ae49ab431fe64093fa317c802f430134bdad22d995969df5c9e8eb",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "200000000000000",
+    "swapFeeDenominator": "1000000000000000000",
+    "getAmountOutMode": "getAmountOut"
   }
 ]
