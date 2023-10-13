@@ -6,6 +6,7 @@ import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { useTranslation } from 'react-i18next';
+import { formatBigNumberSignificant } from '../../../../../../helpers/format';
 
 export const useStyles = makeStyles(styles);
 
@@ -15,22 +16,22 @@ function isValidNumberInputString(value: string): boolean {
 }
 
 function numberInputStringToNumber(value: string): BigNumber {
-  const parsedText = value.replace(/[^0-9.]+/g, '').replace(/\.$/, '');
+  const parsedText = value.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
   return new BigNumber(parsedText);
 }
 
-function numberToString(value: BigNumber, maxDecimals: number): string {
+function numberToString(value: BigNumber, tokenDecimals: number): string {
   if (value.lte(BIG_ZERO)) {
     return '';
   }
 
-  return value.decimalPlaces(maxDecimals, BigNumber.ROUND_FLOOR).toString(10);
+  return formatBigNumberSignificant(value, tokenDecimals);
 }
 
 export type AmountInputProps = {
   value: BigNumber;
   maxValue?: BigNumber;
-  maxDecimals?: number;
+  tokenDecimals?: number;
   onChange: (value: BigNumber, isMax: boolean) => void;
   error?: boolean;
   className?: string;
@@ -39,14 +40,14 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   value,
   maxValue,
   onChange,
-  maxDecimals = 2,
+  tokenDecimals = 2,
   error = false,
   className,
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const [input, setInput] = useState(() => {
-    return numberToString(value, maxDecimals);
+    return numberToString(value, tokenDecimals);
   });
 
   const handleMax = useCallback(() => {
@@ -95,7 +96,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
 
       // Can't go above max
       if (maxValue && parsedNumber.gt(maxValue)) {
-        setInput(numberToString(maxValue, maxDecimals));
+        setInput(numberToString(maxValue, tokenDecimals));
         onChange(maxValue, true);
         return;
       }
@@ -104,7 +105,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
       setInput(rawInput);
       onChange(parsedNumber, maxValue && parsedNumber.gte(maxValue));
     },
-    [setInput, maxDecimals, onChange, maxValue]
+    [setInput, tokenDecimals, onChange, maxValue]
   );
 
   const handleBlur = useCallback<InputBaseProps['onBlur']>(
@@ -119,15 +120,11 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
         setInput('');
       } else {
         const parsedNumber = numberInputStringToNumber(rawInput);
-        setInput(numberToString(parsedNumber, maxDecimals));
+        setInput(numberToString(parsedNumber, tokenDecimals));
       }
     },
-    [setInput, maxDecimals]
+    [setInput, tokenDecimals]
   );
-
-  useEffect(() => {
-    setInput(numberToString(value, maxDecimals));
-  }, [value, setInput, maxDecimals]);
 
   useEffect(() => {
     if (maxValue && value.gt(maxValue)) {

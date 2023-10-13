@@ -86,7 +86,7 @@ export const boostSlice = createSlice({
         if (value.isEqualTo(input)) return input;
         if (input === '') return '';
         if (input === '.') return `0.`;
-        return formatBigNumberSignificant(value);
+        return formatBigNumberSignificant(value, balanceToken.decimals);
       })();
 
       sliceState.formattedInput = formattedInput;

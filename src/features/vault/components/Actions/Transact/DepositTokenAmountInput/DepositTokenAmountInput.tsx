@@ -45,7 +45,7 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
         className={clsx(classes.input, className)}
         value={value}
         maxValue={userBalance}
-        maxDecimals={depositToken.decimals}
+        tokenDecimals={depositToken.decimals}
         onChange={handleChange}
       />
     );
