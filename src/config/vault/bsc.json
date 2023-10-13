@@ -8729,7 +8729,8 @@
     "earnContractAddress": "0x6eb020663898c72F8E25958F5f7bcDC732279201",
     "oracle": "lps",
     "oracleId": "cakev2-dai-busd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "pancakeswap",
     "assets": ["DAI", "BUSD"],
     "risks": [
@@ -16876,7 +16877,8 @@
     "earnContractAddress": "0xF390114CBB24D1E258e87F274A7b840f11cb0Ac4",
     "oracle": "lps",
     "oracleId": "cakev2-raca-busd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "pancakeswap",
     "assets": ["RACA", "BUSD"],
     "risks": [
@@ -17458,7 +17460,8 @@
     "earnContractAddress": "0xCc2ba0401799857e4e14bFEF6572f46fD5D0Ac23",
     "oracle": "lps",
     "oracleId": "cakev2-gmt-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "pancakeswap",
     "assets": ["GMT", "USDC"],
     "risks": [
