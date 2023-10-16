@@ -51,8 +51,9 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   });
 
   const handleMax = useCallback(() => {
+    setInput(numberToString(maxValue, tokenDecimals));
     onChange(maxValue, true);
-  }, [maxValue, onChange]);
+  }, [maxValue, onChange, tokenDecimals]);
 
   const endAdornment = useMemo(() => {
     return maxValue ? (
@@ -96,8 +97,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
 
       // Can't go above max
       if (maxValue && parsedNumber.gt(maxValue)) {
-        setInput(numberToString(maxValue, tokenDecimals));
-        onChange(maxValue, true);
+        handleMax();
         return;
       }
 
@@ -105,7 +105,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
       setInput(rawInput);
       onChange(parsedNumber, maxValue && parsedNumber.gte(maxValue));
     },
-    [setInput, tokenDecimals, onChange, maxValue]
+    [maxValue, onChange, handleMax]
   );
 
   const handleBlur = useCallback<InputBaseProps['onBlur']>(
