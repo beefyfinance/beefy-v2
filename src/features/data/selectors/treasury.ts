@@ -194,7 +194,7 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
             if (selectIsTokenStable(state, chainId, token.oracleId)) {
               totals['stables'] = (totals['stables'] || BIG_ZERO).plus(tokenBalanceUsd);
             } else {
-              const assetId = selectWrappedToNativeSymbolOrTokenSymbol(state, token.oracleId);
+              const assetId = selectWrappedToNativeSymbolOrTokenSymbol(state, token.symbol);
               totals[assetId] = (totals[token.oracleId] || BIG_ZERO).plus(tokenBalanceUsd);
             }
           }

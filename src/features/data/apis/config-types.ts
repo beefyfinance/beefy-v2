@@ -283,6 +283,7 @@ export interface TokenHoldingConfig {
   usdValue: string;
   balance: string;
   methodPath?: string;
+  symbol: string;
 }
 
 export interface VaultHoldingConfig {
