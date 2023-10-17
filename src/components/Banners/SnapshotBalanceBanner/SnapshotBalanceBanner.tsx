@@ -41,7 +41,7 @@ export const EveryoneText = memo(function EveryoneText() {
     <>
       The snapshot of old BIFI token holders across all chains was taken on October 17th at 00:00
       UTC. Any BIFI purchased after this time will not be eligible for distribution. New BIFI and
-      mooBIFI tokens will be distributed on Ethereum and Optimism on October 24th.
+      mooBIFI tokens will be distributed on Ethereum and Optimism on October 24th.{' '}
       <a
         className={classes.link}
         href="https://snapshot.beefy.finance/"
