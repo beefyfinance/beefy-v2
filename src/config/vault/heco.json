@@ -40,6 +40,7 @@
     "oracle": "tokens",
     "oracleId": "BIFI",
     "status": "eol",
+    "retireReason": "bifiV2",
     "platformId": "beefy",
     "assets": ["BIFI"],
     "risks": [
