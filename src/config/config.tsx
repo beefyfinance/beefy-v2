@@ -701,8 +701,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       blockExplorerUrls: ['https://gnosisscan.io/'],
     },
     gas: {
-      //gnosis supports eip 1559
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.6,
     },
     stableCoins: [],
   },
