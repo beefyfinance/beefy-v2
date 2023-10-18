@@ -5,6 +5,7 @@ import type { ChainEntity } from '../entities/chain';
 import type { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
 import type { BeefyVaultZapSupportResponse } from '../apis/beefy/beefy-api';
 import { featureFlag_zapSupportOverrides } from '../utils/feature-flags';
+import { mapValues } from 'lodash-es';
 
 // given the list of vaults is pulled from some api at some point
 // we use the api to create an action
@@ -16,6 +17,7 @@ export interface FulfilledAllVaultsPayload {
   };
   state: BeefyState;
 }
+
 export const fetchAllVaults = createAsyncThunk<
   FulfilledAllVaultsPayload,
   void,
@@ -29,6 +31,7 @@ export const fetchAllVaults = createAsyncThunk<
 export interface FulfilledFeaturedVaultsPayload {
   byVaultId: FeaturedVaultConfig;
 }
+
 export const fetchFeaturedVaults = createAsyncThunk<FulfilledFeaturedVaultsPayload>(
   'vaults/fetchFeaturedVaults',
   async () => {
@@ -64,7 +67,12 @@ export const fetchVaultsZapSupport = createAsyncThunk<
     }
   }
 
-  return { byVaultId: vaultsZapSupport };
+  // TODO remove this when we have the api back
+  const tempVaultsZapSupport = mapValues(vaultsZapSupport, supported =>
+    supported.filter(kind => kind !== 'oneInch')
+  );
+
+  return { byVaultId: tempVaultsZapSupport };
 });
 
 type FulfilledVaultsLastHarvestPayload = {
