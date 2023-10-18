@@ -1,8 +1,8 @@
 import type BigNumber from 'bignumber.js';
 
 export type QuoteRequest = {
-  fromTokenAddress: string;
-  toTokenAddress: string;
+  src: string;
+  dst: string;
   amount: string;
   fee?: string;
 };
@@ -16,30 +16,20 @@ export type QuoteToken = {
   tags: string[];
 };
 
-export type QuoteRoutePart = {
-  fromTokenAddress: string;
-  name: string;
-  part: number;
-  toTokenAddress: string;
-};
-
 export type QuoteResponse = {
-  estimatedGas: number;
   fromToken: QuoteToken;
-  fromTokenAmount: string;
   toToken: QuoteToken;
-  toTokenAmount: string;
-  protocols: QuoteRoutePart[][][];
+  toAmount: string;
 };
 
 export type SwapRequest = {
-  fromTokenAddress: string;
-  toTokenAddress: string;
+  src: string;
+  dst: string;
   amount: string;
-  fromAddress: string;
+  from: string;
   slippage: number;
   fee?: string;
-  referrerAddress?: string;
+  referrer?: string;
   disableEstimate?: boolean;
 };
 
@@ -54,10 +44,8 @@ export type SwapTx = {
 
 export type SwapResponse = {
   fromToken: QuoteToken;
-  fromTokenAmount: string;
   toToken: QuoteToken;
-  toTokenAmount: string;
-  protocols: string[];
+  toAmount: string;
   tx: SwapTx;
 };
 
