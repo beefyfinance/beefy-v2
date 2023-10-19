@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertWarning } from '../../../../components/Alerts';
-import type { VaultEntity } from '../../../data/entities/vault';
+import { isGovVault, type VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
 
@@ -22,20 +22,18 @@ export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePau
   className,
 }) {
   const { t, i18n } = useTranslation();
-  const { status, retireReason, pauseReason } = useAppSelector(state =>
-    selectVaultById(state, vaultId)
-  );
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   const message = useMemo(() => {
     let reason = null;
     let reasonCode = null;
 
-    if (status === 'eol') {
+    if (vault.status === 'eol') {
       reason = 'RetireReason';
-      reasonCode = retireReason;
-    } else if (status === 'paused') {
+      reasonCode = vault.retireReason;
+    } else if (vault.status === 'paused') {
       reason = 'PauseReason';
-      reasonCode = pauseReason;
+      reasonCode = vault.pauseReason;
     }
 
     if (reason) {
@@ -48,7 +46,7 @@ export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePau
             return (
               <Trans
                 t={t}
-                i18nKey={maybeKey}
+                i18nKey={isGovVault(vault) ? `${maybeKey}-gov` : maybeKey}
                 components={{
                   info: (
                     <a
@@ -103,7 +101,7 @@ export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePau
     }
 
     return null;
-  }, [status, retireReason, pauseReason, t, i18n, vaultId]);
+  }, [vault, t, i18n, vaultId]);
 
   return message ? <AlertWarning className={className}>{message}</AlertWarning> : null;
 });
