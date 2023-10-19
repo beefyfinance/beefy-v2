@@ -12,7 +12,6 @@ import { BIG_ZERO, fromWeiString, toWeiString } from '../../../../../helpers/big
 import type { BeefyState } from '../../../../../redux-types';
 import { selectChainNativeToken } from '../../../selectors/tokens';
 import {
-  selectBridgeSourceChainId,
   selectBridgeDepositTokenForChainId,
   selectBridgeXTokenForChainId,
 } from '../../../selectors/bridge';
@@ -45,7 +44,6 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
       throw new Error(`bridge '${this.id}' not available for ${from}->${to}.`);
     }
 
-    const canonicalChainId = selectBridgeSourceChainId(state);
     const { bridge: bridgeAddress } = config.chains[from.id];
     const [fee, fromLimit, toLimit] = await Promise.all([
       this.fetchBridgeFee(config, from, to, input, state),
@@ -63,12 +61,13 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
       spenderAddress: bridgeAddress,
     };
 
-    const baseQuote: IBridgeQuote<T> = {
+    return {
       id: this.id,
       input,
       output: { token: outputToken, amount: output },
       fee,
       gas,
+      allowance,
       config,
       timeEstimate: config.chains[from.id].time.outgoing + config.chains[to.id].time.incoming,
       withinLimits: input.amount.lt(fromLimit.current) && output.lt(toLimit.current),
@@ -77,8 +76,6 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
         to: toLimit,
       },
     };
-
-    return from.id === canonicalChainId ? { ...baseQuote, allowance } : baseQuote;
   }
 
   protected async fetchAmountLimit(
