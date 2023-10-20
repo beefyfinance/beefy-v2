@@ -16,7 +16,6 @@ import { AnalyticsApi } from './analytics/analytics';
 import type { IOneInchApi } from './one-inch/one-inch-types';
 import type { IBeefyDataApi } from './beefy/beefy-data-api-types';
 import PQueue from 'p-queue';
-
 import type { IMigrationApi } from './migration/migration-types';
 
 // todo: maybe don't instanciate here, idk yet

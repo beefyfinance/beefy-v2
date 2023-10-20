@@ -30,7 +30,7 @@ export type VaultProps = {
 };
 export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const isRetired = useAppSelector(state => selectIsVaultRetired(state, vaultId));
   const isPaused = useAppSelector(state => selectIsVaultPaused(state, vaultId));
   const isGov = useAppSelector(state => selectIsVaultGov(state, vaultId));
