@@ -39,7 +39,8 @@
     "earnContractAddress": "0x7fB900C14c9889A559C777D016a885995cE759Ee",
     "oracle": "tokens",
     "oracleId": "BIFI",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "bifiV2",
     "platformId": "beefy",
     "assets": ["BIFI"],
     "risks": [
