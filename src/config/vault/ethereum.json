@@ -1,5 +1,58 @@
 [
   {
+    "id": "bifi-omnipool-maxi",
+    "name": "BIFI Omnipool",
+    "token": "BIFI",
+    "tokenAddress": "0xB1F1ee126e9c96231Cc3d3fAD7C08b4cf873b1f1",
+    "tokenDecimals": 18,
+    "earnedToken": "mooBIFI",
+    "earnedTokenAddress": "0xBEEF8e0982874e0292E6C5751C5A4092b3e1BEEF",
+    "earnContractAddress": "0xBEEF8e0982874e0292E6C5751C5A4092b3e1BEEF",
+    "oracle": "tokens",
+    "oracleId": "BIFI",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["BIFI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "createdAt": 1692902591
+  },
+  {
+    "id": "bifi-omnipool",
+    "name": "BIFI Reward Pool",
+    "token": "BIFI",
+    "tokenAddress": "0xB1F1ee126e9c96231Cc3d3fAD7C08b4cf873b1f1",
+    "tokenDecimals": 18,
+    "earnedToken": "ETH",
+    "earnedTokenAddress": "0xb1F131437e314614313aAb3a3016FA05c1b0e087",
+    "earnContractAddress": "0xb1F131437e314614313aAb3a3016FA05c1b0e087",
+    "oracle": "tokens",
+    "oracleId": "BIFI",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["BIFI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "isGovVault": true,
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "createdAt": 1697819399
+  },
+  {
     "id": "convex-tricrypto-llama",
     "name": "crvUSD/tBTC/wstETH",
     "token": "crvCRVUSDTBTCWSTETH",

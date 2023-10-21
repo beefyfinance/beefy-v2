@@ -19,6 +19,7 @@ import type {
 } from './config-types';
 import { mapValues } from 'lodash-es';
 import type { MigrationConfig } from '../reducers/wallet/migration';
+import { featureFlag_isBeefyOmnipoolLive } from '../utils/feature-flags';
 
 /**
  * A class to access beefy configuration
@@ -57,11 +58,19 @@ export class ConfigAPI {
   }
 
   public async fetchAllVaults(): Promise<{ [chainId: ChainEntity['id']]: VaultConfig[] }> {
+    const isOmnipoolLive = featureFlag_isBeefyOmnipoolLive();
     return Object.fromEntries(
       await Promise.all(
         Object.keys(chainConfigs).map(async chainId => [
           chainId,
-          (await import(`../../../config/vault/${chainId}.json`)).default,
+          (
+            await import(`../../../config/vault/${chainId}.json`)
+          ).default.filter(vault =>
+            isOmnipoolLive
+              ? true
+              : vault.earnContractAddress !== '0xBEEF8e0982874e0292E6C5751C5A4092b3e1BEEF' &&
+                vault.earnContractAddress !== '0xb1F131437e314614313aAb3a3016FA05c1b0e087'
+          ),
         ])
       )
     );
