@@ -2310,7 +2310,8 @@
     "earnContractAddress": "0x48F4634c8383aF01BF71AefBC125eb582eb3C74D",
     "oracle": "tokens",
     "oracleId": "BIFI",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "bifiV2",
     "platformId": "beefy",
     "assets": ["BIFI"],
     "risks": [
@@ -2796,7 +2797,7 @@
     "oracle": "lps",
     "oracleId": "swapfish-bifi-eth",
     "status": "eol",
-    "retireReason": "tvl",
+    "retireReason": "bifiV2",
     "platformId": "swapfish",
     "assets": ["BIFI", "ETH"],
     "risks": [
@@ -2974,7 +2975,8 @@
     "earnContractAddress": "0x9E75f8298e458B76382870982788988A0799195b",
     "oracle": "lps",
     "oracleId": "curve-arb-f-wsteth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "curve",
     "assets": ["wstETH", "ETH"],
     "risks": [

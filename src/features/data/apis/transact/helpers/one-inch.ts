@@ -37,7 +37,7 @@ export function swapWithFee(request: SwapRequest, fee: ZapFee): SwapRequest {
     return {
       ...request,
       fee: (fee.value * 100).toString(),
-      referrerAddress: fee.recipient,
+      referrer: fee.recipient,
     };
   }
 
