@@ -338,6 +338,10 @@ export type BaseMigrationConfig = {
 export type BeefyCommonBridgeChainConfig = {
   /** Address of our deployed bridge contract */
   bridge: string;
+  /** Disable sending from this chain via this bridge **/
+  sendDisabled?: boolean;
+  /** Disable receiving to this chain via this bridge **/
+  receiveDisabled?: boolean;
   /** Time estimate displayed to user is from chain's outgoing + in chain's incoming estimates */
   time: {
     /** Length of time in minutes for an incoming tx to go through */

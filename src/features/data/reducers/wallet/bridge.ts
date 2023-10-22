@@ -219,14 +219,16 @@ export const bridgeSlice = createSlice({
       .addCase(fetchBridgeConfig.fulfilled, (sliceState, action) => {
         const { config } = action.payload;
         const allChains = Object.keys(config.tokens);
-        const chainToBridges = allChains.reduce((allMap, chainId) => {
-          allMap[chainId] = allChains.reduce((chainMap, otherChainId) => {
-            chainMap[otherChainId] = config.bridges
+        const chainToBridges = allChains.reduce((allMap, fromChainId) => {
+          allMap[fromChainId] = allChains.reduce((chainMap, toChainId) => {
+            chainMap[toChainId] = config.bridges
               .filter(bridge => {
                 return (
-                  chainId !== otherChainId &&
-                  chainId in bridge.chains &&
-                  otherChainId in bridge.chains
+                  fromChainId !== toChainId &&
+                  fromChainId in bridge.chains &&
+                  !bridge.chains[fromChainId].sendDisabled &&
+                  toChainId in bridge.chains &&
+                  !bridge.chains[toChainId].receiveDisabled
                 );
               })
               .map(bridge => bridge.id);

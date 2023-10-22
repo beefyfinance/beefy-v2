@@ -115,6 +115,7 @@ export const beefyBridgeConfig = {
       chains: {
         ethereum: {
           bridge: '0xbbb8971aEA2627fa2E1342bb5Bf952Ec521479f2',
+          receiveDisabled: true,
           time: {
             outgoing: 2,
             incoming: 0,
@@ -127,6 +128,7 @@ export const beefyBridgeConfig = {
         },
         optimism: {
           bridge: '0xbbb8971aEA2627fa2E1342bb5Bf952Ec521479f2',
+          sendDisabled: true,
           time: {
             outgoing: 10080,
             incoming: 0,
