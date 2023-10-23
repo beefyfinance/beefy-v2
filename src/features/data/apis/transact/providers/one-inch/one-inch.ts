@@ -358,8 +358,8 @@ export class OneInchZapProvider implements ITransactProvider {
       quoteWithFee(
         {
           amount: swapAmountInWei,
-          fromTokenAddress: swapTokenInAddress,
-          toTokenAddress: swapTokenOutAddress,
+          src: swapTokenInAddress,
+          dst: swapTokenOutAddress,
         },
         option.fee
       )
@@ -371,10 +371,6 @@ export class OneInchZapProvider implements ITransactProvider {
       );
     }
 
-    if (apiQuote.fromTokenAmount !== swapAmountInWei) {
-      throw new Error(`Quote does not cover full amount requested`);
-    }
-
     if (
       apiQuote.fromToken.address.toLowerCase() !== swapTokenInAddress.toLowerCase() ||
       apiQuote.fromToken.decimals !== swapTokenIn.decimals ||
@@ -384,7 +380,7 @@ export class OneInchZapProvider implements ITransactProvider {
       throw new Error(`Token mismatch`);
     }
 
-    const swapAmountOut = fromWeiString(apiQuote.toTokenAmount, swapTokenOut.decimals);
+    const swapAmountOut = fromWeiString(apiQuote.toAmount, swapTokenOut.decimals);
     if (swapAmountOut.lte(BIG_ZERO)) {
       throw new Error(`Quote returned zero ${swapTokenOut.symbol}`);
     }
@@ -669,8 +665,8 @@ export class OneInchZapProvider implements ITransactProvider {
         quoteWithFee(
           {
             amount: swapAmountInWei,
-            fromTokenAddress: tokenIn.address,
-            toTokenAddress: tokenOut.address,
+            src: tokenIn.address,
+            dst: tokenOut.address,
           },
           fee
         )
@@ -682,10 +678,6 @@ export class OneInchZapProvider implements ITransactProvider {
         );
       }
 
-      if (apiQuote.fromTokenAmount !== swapAmountInWei) {
-        throw new Error(`Quote does not cover full amount requested`);
-      }
-
       if (
         apiQuote.fromToken.address.toLowerCase() !== tokenIn.address.toLowerCase() ||
         apiQuote.fromToken.decimals !== tokenIn.decimals ||
@@ -695,7 +687,7 @@ export class OneInchZapProvider implements ITransactProvider {
         throw new Error(`Token mismatch`);
       }
 
-      const swapAmountOutWei = new BigNumber(apiQuote.toTokenAmount);
+      const swapAmountOutWei = new BigNumber(apiQuote.toAmount);
       if (swapAmountOutWei.lte(BIG_ZERO)) {
         throw new Error(`Quote returned zero ${tokenOut.symbol}`);
       }
@@ -1030,8 +1022,8 @@ export class OneInchZapProvider implements ITransactProvider {
       quoteWithFee(
         {
           amount: swapAmountInWei,
-          fromTokenAddress: swapTokenInAddress,
-          toTokenAddress: swapTokenOutAddress,
+          src: swapTokenInAddress,
+          dst: swapTokenOutAddress,
         },
         option.fee
       )
@@ -1043,10 +1035,6 @@ export class OneInchZapProvider implements ITransactProvider {
       );
     }
 
-    if (apiQuote.fromTokenAmount !== swapAmountInWei) {
-      throw new Error(`Quote does not cover full amount requested`);
-    }
-
     if (
       apiQuote.fromToken.address.toLowerCase() !== swapTokenInAddress.toLowerCase() ||
       apiQuote.fromToken.decimals !== swapTokenIn.decimals ||
@@ -1056,7 +1044,7 @@ export class OneInchZapProvider implements ITransactProvider {
       throw new Error(`Token mismatch`);
     }
 
-    const swapAmountOut = fromWeiString(apiQuote.toTokenAmount, swapTokenOut.decimals);
+    const swapAmountOut = fromWeiString(apiQuote.toAmount, swapTokenOut.decimals);
     if (swapAmountOut.lte(BIG_ZERO)) {
       throw new Error(`Quote returned zero ${swapTokenOut.symbol}`);
     }

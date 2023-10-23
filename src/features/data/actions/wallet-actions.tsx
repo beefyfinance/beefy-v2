@@ -386,16 +386,16 @@ const oneInchBeefInSingle = (
       swapWithFee(
         {
           disableEstimate: true, // otherwise will fail due to no allowance
-          fromAddress: zap.zapAddress,
+          from: zap.zapAddress,
           amount: swapAmountInWei,
-          fromTokenAddress: swapTokenInAddress,
-          toTokenAddress: swapTokenOutAddress,
+          src: swapTokenInAddress,
+          dst: swapTokenOutAddress,
           slippage: slippageTolerance * 100,
         },
         fee
       )
     );
-    const swapAmountOut = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
+    const swapAmountOut = fromWeiString(swapData.toAmount, swapData.toToken.decimals);
 
     // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
     if (swapAmountOut.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
@@ -478,16 +478,16 @@ const oneInchBeefInLP = (
           swapWithFee(
             {
               disableEstimate: true, // otherwise will fail due to no allowance
-              fromAddress: zap.zapAddress,
+              from: zap.zapAddress,
               amount: swapAmountInWei,
-              fromTokenAddress: swapTokenInAddress,
-              toTokenAddress: swapTokenOutAddress,
+              src: swapTokenInAddress,
+              dst: swapTokenOutAddress,
               slippage: slippageTolerance * 100,
             },
             fee
           )
         );
-        const swapAmountOut = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
+        const swapAmountOut = fromWeiString(swapData.toAmount, swapData.toToken.decimals);
 
         // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
         if (swapAmountOut.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
@@ -592,16 +592,16 @@ const oneInchBeefOutSingle = (
       swapWithFee(
         {
           disableEstimate: true, // otherwise will fail due to no allowance
-          fromAddress: zap.zapAddress,
+          from: zap.zapAddress,
           amount: swapAmountInWei,
-          fromTokenAddress: swapTokenInAddress,
-          toTokenAddress: swapTokenOutAddress,
+          src: swapTokenInAddress,
+          dst: swapTokenOutAddress,
           slippage: slippageTolerance * 100,
         },
         fee
       )
     );
-    const swapAmountOutDec = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
+    const swapAmountOutDec = fromWeiString(swapData.toAmount, swapData.toToken.decimals);
     const vaultAddress = vault.earnedTokenAddress;
 
     // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
@@ -710,16 +710,16 @@ const oneInchBeefOutLP = (
           swapWithFee(
             {
               disableEstimate: true, // otherwise will fail due to no allowance
-              fromAddress: zap.zapAddress,
+              from: zap.zapAddress,
               amount: swapAmountInWei,
-              fromTokenAddress: swapTokenInAddress,
-              toTokenAddress: swapTokenOutAddress,
+              src: swapTokenInAddress,
+              dst: swapTokenOutAddress,
               slippage: slippageTolerance * 100,
             },
             fee
           )
         );
-        const swapAmountOutDec = fromWeiString(swapData.toTokenAmount, swapData.toToken.decimals);
+        const swapAmountOutDec = fromWeiString(swapData.toAmount, swapData.toToken.decimals);
 
         // Double check output amount is within range (NOTE using slippage tolerance here: could allow 2x slippage)
         if (swapAmountOutDec.lt(swap.toAmount.multipliedBy(1 - slippageTolerance))) {
@@ -1277,13 +1277,13 @@ const mintDeposit = (
         const oneInchApi = await getOneInchApi(chain, zap.priceOracleAddress);
         const swapData = await oneInchApi.getSwap({
           disableEstimate: true, // otherwise will fail due to no allowance
-          fromAddress: minterAddress,
+          from: minterAddress,
           amount: amountInWeiString,
-          fromTokenAddress: swapInToken.address,
-          toTokenAddress: mintedToken.address,
+          src: swapInToken.address,
+          dst: mintedToken.address,
           slippage: slippageTolerance * 100,
         });
-        const amountOutWei = new BigNumber(swapData.toTokenAmount);
+        const amountOutWei = new BigNumber(swapData.toAmount);
         const amountOutWeiAfterSlippage = amountOutWei
           .multipliedBy(1 - slippageTolerance)
           .decimalPlaces(0, BigNumber.ROUND_FLOOR);
