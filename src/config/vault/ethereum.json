@@ -32,7 +32,7 @@
     "tokenAddress": "0xB1F1ee126e9c96231Cc3d3fAD7C08b4cf873b1f1",
     "tokenDecimals": 18,
     "earnedToken": "ETH",
-    "earnedTokenAddress": "0xb1F131437e314614313aAb3a3016FA05c1b0e087",
+    "earnedTokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     "earnContractAddress": "0xb1F131437e314614313aAb3a3016FA05c1b0e087",
     "oracle": "tokens",
     "oracleId": "BIFI",
