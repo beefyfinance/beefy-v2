@@ -1,7 +1,7 @@
 [
   {
-    "id": "bifi-omnipool-maxi",
-    "name": "BIFI Omnipool",
+    "id": "bifi-vault",
+    "name": "BIFI Vault",
     "token": "BIFI",
     "tokenAddress": "0xB1F1ee126e9c96231Cc3d3fAD7C08b4cf873b1f1",
     "tokenDecimals": 18,
@@ -26,8 +26,8 @@
     "createdAt": 1692902591
   },
   {
-    "id": "bifi-omnipool",
-    "name": "BIFI Reward Pool",
+    "id": "bifi-pool",
+    "name": "BIFI Pool",
     "token": "BIFI",
     "tokenAddress": "0xB1F1ee126e9c96231Cc3d3fAD7C08b4cf873b1f1",
     "tokenDecimals": 18,
