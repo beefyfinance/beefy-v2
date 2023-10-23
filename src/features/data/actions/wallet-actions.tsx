@@ -1286,7 +1286,7 @@ const mintDeposit = (
         const amountOutWei = new BigNumber(swapData.toTokenAmount);
         const amountOutWeiAfterSlippage = amountOutWei
           .multipliedBy(1 - slippageTolerance)
-          .decimalPlaces(0);
+          .decimalPlaces(0, BigNumber.ROUND_FLOOR);
         const shouldMint = amountOutWeiAfterSlippage.isLessThan(amountInWei);
 
         // mint is better

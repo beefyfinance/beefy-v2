@@ -13,6 +13,7 @@ import { AmountInput } from '../AmountInput';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
+import BigNumber from 'bignumber.js';
 
 const useStyles = makeStyles(styles);
 
@@ -38,7 +39,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
       (value, isMax) => {
         dispatch(
           transactActions.setInputAmount({
-            amount: value.decimalPlaces(depositToken.decimals),
+            amount: value.decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR),
             max: isMax,
           })
         );

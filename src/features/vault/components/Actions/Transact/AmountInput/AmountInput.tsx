@@ -16,7 +16,9 @@ function isValidNumberInputString(value: string): boolean {
 }
 
 function numberInputStringToNumber(value: string): BigNumber {
-  const parsedText = value.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
+  // Remove all anything that is not a number or a decimal point (e.g. 'abc1,234.567' -> '1234.567')
+  // then, remove any trailing decimal point (e.g. '123.' -> '123')
+  const parsedText = value.replace(/[^0-9.]+/g, '').replace(/\.$/, '');
   return new BigNumber(parsedText);
 }
 
@@ -53,7 +55,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   const handleMax = useCallback(() => {
     setInput(numberToString(maxValue, tokenDecimals));
     onChange(maxValue, true);
-  }, [maxValue, onChange, tokenDecimals]);
+  }, [maxValue, onChange, tokenDecimals, setInput]);
 
   const endAdornment = useMemo(() => {
     return maxValue ? (
