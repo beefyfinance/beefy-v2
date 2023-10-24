@@ -12,12 +12,19 @@ export type ScrollDirection = 'horizontal' | 'vertical';
 
 type ThumbProps = {
   mode: ScrollDirection;
+  className?: string;
 };
 const Thumb = memo(
-  forwardRef<HTMLDivElement, ThumbProps>(function ({ mode, ...props }, ref) {
+  forwardRef<HTMLDivElement, ThumbProps>(function ({ mode, className, ...props }, ref) {
     const classes = useStyles();
 
-    return <div {...props} ref={ref} className={clsx(classes.thumb, classes[`${mode}Thumb`])} />;
+    return (
+      <div
+        {...props}
+        ref={ref}
+        className={clsx(classes.thumb, classes[`${mode}Thumb`], className)}
+      />
+    );
   })
 );
 
@@ -52,10 +59,22 @@ export type ScrollableProps = {
   children: ReactNode;
   autoHeight?: boolean;
   className?: string;
+  shadowClassName?: string;
+  topShadowClassName?: string;
+  bottomShadowClassName?: string;
+  leftShadowClassName?: string;
+  rightShadowClassName?: string;
+  thumbClassName?: string;
 };
 export const Scrollable = memo<ScrollableProps>(function Scrollable({
   children,
   className,
+  shadowClassName,
+  topShadowClassName,
+  bottomShadowClassName,
+  leftShadowClassName,
+  rightShadowClassName,
+  thumbClassName,
   autoHeight = false,
 }) {
   const classes = useStyles();
@@ -79,28 +98,51 @@ export const Scrollable = memo<ScrollableProps>(function Scrollable({
     },
     [setShadows]
   );
+  const handleRenderThumbHorizontal = useCallback(
+    props => {
+      return renderThumbHorizontal({ ...props, className: clsx(props.className, thumbClassName) });
+    },
+    [thumbClassName]
+  );
+  const handleRenderThumbVertical = useCallback(
+    props => {
+      return renderThumbVertical({ ...props, className: clsx(props.className, thumbClassName) });
+    },
+    [thumbClassName]
+  );
 
   return (
     <div className={clsx(classes.shadowContainer, className)}>
       <ScrollContainer
-        renderThumbVertical={renderThumbVertical}
-        renderThumbHorizontal={renderThumbHorizontal}
-        renderTrackHorizontal={renderTrackHorizontal}
+        renderThumbVertical={handleRenderThumbVertical}
+        renderThumbHorizontal={handleRenderThumbHorizontal}
         renderTrackVertical={renderTrackVertical}
+        renderTrackHorizontal={renderTrackHorizontal}
         onUpdate={handleUpdate}
         autoHeight={autoHeight}
         autoHeightMax={autoHeight ? 99999999 : undefined}
       >
         {children}
       </ScrollContainer>
-      <div className={clsx(classes.shadow, classes.topShadow)} style={{ opacity: shadows.top }} />
       <div
-        className={clsx(classes.shadow, classes.bottomShadow)}
+        className={clsx(classes.shadow, classes.topShadow, shadowClassName, topShadowClassName)}
+        style={{ opacity: shadows.top }}
+      />
+      <div
+        className={clsx(
+          classes.shadow,
+          classes.bottomShadow,
+          shadowClassName,
+          bottomShadowClassName
+        )}
         style={{ opacity: shadows.bottom }}
       />
-      <div className={clsx(classes.shadow, classes.leftShadow)} style={{ opacity: shadows.left }} />
       <div
-        className={clsx(classes.shadow, classes.rightShadow)}
+        className={clsx(classes.shadow, classes.leftShadow, shadowClassName, leftShadowClassName)}
+        style={{ opacity: shadows.left }}
+      />
+      <div
+        className={clsx(classes.shadow, classes.rightShadow, shadowClassName, rightShadowClassName)}
         style={{ opacity: shadows.right }}
       />
     </div>

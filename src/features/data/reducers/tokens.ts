@@ -20,6 +20,7 @@ import { fetchAllMinters } from '../actions/minters';
 import type { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
 import type { LpData } from '../apis/beefy/beefy-api';
 import { isNativeAlternativeAddress } from '../../../helpers/addresses';
+import { fetchBridgeConfig } from '../actions/bridge';
 
 /**
  * State containing Vault infos
@@ -135,7 +136,7 @@ export const tokensSlice = createSlice({
     });
 
     // when prices are changed, update prices
-    // this could also just be a a super quick drop in replacement
+    // this could also just be a super quick drop in replacement
     // if we are OK to not use BigNumber, which I don't think we are
     builder.addCase(fetchAllPricesAction.fulfilled, (sliceState, action) => {
       for (const [oracleId, price] of Object.entries(action.payload.prices)) {
@@ -148,17 +149,96 @@ export const tokensSlice = createSlice({
       }
     });
 
-    // we have another way of finding token info
+    // tokens from addressbook
     builder.addCase(fetchAddressBookAction.fulfilled, (sliceState, action) => {
       addAddressBookToState(sliceState, action.payload);
     });
+
     builder.addCase(fetchAllAddressBookAction.fulfilled, (sliceState, action) => {
       for (const payload of action.payload) {
         addAddressBookToState(sliceState, payload);
       }
     });
+
+    // tokens from beefy bridge
+    builder.addCase(fetchBridgeConfig.fulfilled, (sliceState, action) => {
+      const {
+        config: { source, tokens },
+      } = action.payload;
+
+      const sourceToken = addBridgeTokenToState(
+        sliceState,
+        {
+          ...source,
+          type: 'erc20',
+          buyUrl: null,
+          website: null,
+          documentation: null,
+          description: null,
+        },
+        true
+      );
+
+      for (const [chainId, address] of Object.entries(tokens)) {
+        const isSourceXErc20 = chainId === sourceToken.chainId;
+
+        const token: TokenErc20 = {
+          ...sourceToken,
+          id: isSourceXErc20 ? `x${sourceToken.id}` : sourceToken.id,
+          chainId,
+          address,
+        };
+
+        // no need to track xerc20 on source chain
+        addBridgeTokenToState(sliceState, token, !isSourceXErc20);
+      }
+    });
   },
 });
+
+function addBridgeTokenToState(
+  sliceState: Draft<TokensState>,
+  token: TokenErc20,
+  trackBalance: boolean
+): TokenErc20 {
+  const chainId = token.chainId;
+  const addressLower = token.address.toLowerCase();
+
+  if (sliceState.byChainId[chainId] === undefined) {
+    sliceState.byChainId[chainId] = {
+      byId: {},
+      byAddress: {},
+      interestingBalanceTokenAddresses: [],
+      native: null,
+      wnative: null,
+    };
+  }
+
+  // If it doesn't exist then, add it
+  if (sliceState.byChainId[chainId].byAddress[addressLower] === undefined) {
+    sliceState.byChainId[chainId].byAddress[addressLower] = token;
+  }
+
+  // id => address mapping
+  if (sliceState.byChainId[chainId].byId[token.id] === undefined) {
+    sliceState.byChainId[chainId].byId[token.id] = addressLower;
+  }
+
+  // grab existing/added token
+  const stateToken = sliceState.byChainId[chainId].byAddress[addressLower];
+
+  // ensure we track balance
+  if (trackBalance) {
+    ensureInterestingToken(addressLower, chainId, sliceState);
+  }
+
+  // type-safety
+  if (isTokenErc20(stateToken)) {
+    return stateToken;
+  }
+
+  throw new Error(`Existing token ${stateToken.id} is not an ERC20 token`);
+}
 
 function addPriceToState(
   sliceState: Draft<TokensState>,

@@ -19,7 +19,6 @@ import { isGovVault, isStandardVault } from '../../entities/vault';
 import { selectAllVaultBoostIds, selectBoostById } from '../../selectors/boosts';
 import { selectAllVaultIds, selectVaultById } from '../../selectors/vaults';
 import { initiateMinterForm } from '../../actions/minters';
-import { initiateBridgeForm } from '../../actions/bridge';
 import { selectMinterById } from '../../selectors/minters';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import {
@@ -132,21 +131,6 @@ export const balanceSlice = createSlice({
       const balance = action.payload.balance;
 
       addTokenBalanceToState(walletState, minter.chainId, balance.tokens);
-      updateDepositedVaults(state, walletState, action.payload.walletAddress);
-    });
-
-    builder.addCase(initiateBridgeForm.fulfilled, (sliceState, action) => {
-      const state = action.payload.state;
-      if (!action.payload.walletAddress) {
-        return;
-      }
-
-      const walletAddress = action.payload.walletAddress.toLowerCase();
-
-      const walletState = getWalletState(sliceState, walletAddress);
-      const balance = action.payload.balance;
-
-      addTokenBalanceToState(walletState, action.payload.chainId, balance.tokens);
       updateDepositedVaults(state, walletState, action.payload.walletAddress);
     });
 

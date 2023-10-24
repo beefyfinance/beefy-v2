@@ -14,7 +14,7 @@ import { styles } from './styles';
 import { NavItem } from './components/NavItem';
 import { ReactComponent as VaultsIcon } from '../../images/icons/navigation/vault.svg';
 import { ReactComponent as DashboardIcon } from '../../images/icons/navigation/dashboard.svg';
-// import { ReactComponent as BridgeIcon } from '../../images/icons/navigation/bridge.svg';
+import { ReactComponent as BridgeIcon } from '../../images/icons/navigation/bridge.svg';
 import { ReactComponent as BuyCryptoIcon } from '../../images/icons/navigation/buy-crypto.svg';
 import { ReactComponent as DaoIcon } from '../../images/icons/navigation/dao.svg';
 import { ReactComponent as ResourcesIcon } from '../../images/icons/navigation/resources.svg';
@@ -79,7 +79,7 @@ export const Header = memo(function Header() {
             <div className={classes.flex}>
               <Hidden mdDown>
                 <NavItem title={'Header-BuyCrypto'} url="/onramp" Icon={BuyCryptoIcon} />
-                {/* <NavItem title={'Header-BridgeBifi'} url="/bridge" Icon={BridgeIcon} /> */}
+                <NavItem title={'Header-BridgeBifi'} url="/bridge" Icon={BridgeIcon} />
                 {/* <BifiPrice />*/}
               </Hidden>
               <ConnectionStatus />

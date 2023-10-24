@@ -8,6 +8,7 @@
     "node": "16.x"
   },
   "dependencies": {
+    "@axelar-network/axelarjs-sdk": "^0.13.6",
     "@deficonnect/web3-connector": "^2.0.3",
     "@ethersproject/address": "^5.4.0",
     "@ethersproject/providers": "^5.7.2",
@@ -59,7 +60,8 @@
     "@ethersproject/providers": "5.7.2",
     "rollup": "3.20.2",
     "@types/react": "18.2.15",
-    "@types/react-dom": "18.2.7"
+    "@types/react-dom": "18.2.7",
+    "@axelar-network/axelar-cgp-solidity": "6.1.0"
   },
   "scripts": {
     "start": "vite",
