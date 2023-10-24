@@ -43,6 +43,7 @@ const overrides = {
   'baseswap-axlwbtc-usdbc': { harvestOnDeposit: undefined },
   'venus-bnb': { harvestOnDeposit: undefined },
   'kinetix-klp': { harvestOnDeposit: undefined },
+  'bifi-vault': { beefyFeeRecipient: undefined }, // TODO: remove
 };
 
 const oldValidOwners = [

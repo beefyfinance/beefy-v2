@@ -4,10 +4,9 @@ import { makeStyles, Snackbar } from '@material-ui/core';
 import { isEmpty } from '../../helpers/utils';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { BridgeContent } from './components/BridgeContent';
 import {
-  selectStepperState,
   selectStepperCurrentStepData,
+  selectStepperState,
   selectStepperStepContent,
 } from '../../features/data/selectors/stepper';
 import { StepContent, stepperActions } from '../../features/data/reducers/wallet/stepper';
@@ -22,7 +21,6 @@ import { ProgressBar } from './components/PogressBar';
 const stepToComponent: Record<StepContent, FC> = {
   [StepContent.StartTx]: StepsCountContent,
   [StepContent.WaitingTx]: WaitingContent,
-  [StepContent.BridgeTx]: BridgeContent,
   [StepContent.ErrorTx]: ErrorContent,
   [StepContent.SuccessTx]: SuccessContent,
 };

@@ -7,7 +7,7 @@ import type { BridgeEntity } from '../../../data/entities/bridge';
 import clsx from 'clsx';
 import type { TooltipProps } from '../../../../components/Tooltip';
 import { Tooltip, TRIGGERS } from '../../../../components/Tooltip';
-import { getBridgeIcon } from '../../../../helpers/bridgeProviderSrc';
+import { getAssetBridgeIcon } from '../../../../helpers/assetBridgeSrc';
 import type { ChainEntity } from '../../../data/entities/chain';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
 
@@ -36,7 +36,9 @@ export type BridgeTagProps = {
 };
 export const BridgeTag = memo<BridgeTagProps>(function BridgeTag({ bridge, chain }) {
   const classes = useStyles();
-  const icon = bridge.id.includes('canonical') ? getNetworkSrc(chain.id) : getBridgeIcon(bridge.id);
+  const icon = bridge.id.includes('canonical')
+    ? getNetworkSrc(chain.id)
+    : getAssetBridgeIcon(bridge.id);
 
   return (
     <TagWithTooltip content={<BridgeTooltip bridge={bridge} chain={chain} />} group="asset-details">

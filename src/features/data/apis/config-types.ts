@@ -5,6 +5,7 @@ import type { PlatformEntity } from '../entities/platform';
 import type { StrategyTypeEntity } from '../entities/strategy-type';
 import type { AmmEntity } from '../entities/amm';
 import type { ZapFee } from './transact/transact-types';
+import type BigNumber from 'bignumber.js';
 
 export interface VaultConfig {
   id: string;
@@ -41,6 +42,8 @@ export interface VaultConfig {
   showWarning?: boolean | null;
   warning?: string | null;
   migrationIds?: string[];
+  /** Map of chain->address of bridged receipt tokens */
+  bridged?: Record<ChainEntity['id'], string>;
 }
 
 export interface FeaturedVaultConfig {
@@ -327,8 +330,91 @@ export interface BridgeConfig {
   readonly tagName?: string;
   readonly website: string;
 }
+
 export type BaseMigrationConfig = {
   readonly id: string; // eg ethereum-conic
   readonly name: string; // eg Conic Finance
   readonly icon: string;
 };
+
+export type BeefyCommonBridgeChainConfig = {
+  /** Address of our deployed bridge contract */
+  bridge: string;
+  /** Disable sending from this chain via this bridge **/
+  sendDisabled?: boolean;
+  /** Disable receiving to this chain via this bridge **/
+  receiveDisabled?: boolean;
+  /** Time estimate displayed to user is from chain's outgoing + in chain's incoming estimates */
+  time: {
+    /** Length of time in minutes for an incoming tx to go through */
+    incoming: number;
+    /** Length of time in minutes for an outgoing tx to go through */
+    outgoing: number;
+  };
+  gasLimits: {
+    /** Rough gas limit for approving mooBIFI to be spent by bridge (ETH only) */
+    approve?: BigNumber;
+    /** Rough gas limit for outgoing bridge TX on source chain */
+    outgoing: BigNumber;
+    /** Rough gas limit for incoming bridge TX on destination chain */
+    incoming: BigNumber;
+  };
+};
+
+export type BeefyCommonBridgeConfig = {
+  /** Name of bridge */
+  title: string;
+  /** Url of bridge explorer, use {{hash}} for outgoing tx hash */
+  explorerUrl?: string;
+  /** Chains supported by this bridge */
+  chains: Record<ChainEntity['id'], BeefyCommonBridgeChainConfig>;
+};
+
+export type BeefyLayerZeroBridgeConfig = BeefyCommonBridgeConfig & {
+  id: 'layer-zero';
+};
+
+export type BeefyOptimismBridgeConfig = BeefyCommonBridgeConfig & {
+  id: 'optimism';
+};
+
+export type BeefyChainlinkBridgeConfig = BeefyCommonBridgeConfig & {
+  id: 'chainlink';
+};
+
+export type BeefyAxelarBridgeConfig = BeefyCommonBridgeConfig & {
+  id: 'axelar';
+};
+
+export type BeefyAnyBridgeConfig =
+  | BeefyLayerZeroBridgeConfig
+  | BeefyOptimismBridgeConfig
+  | BeefyChainlinkBridgeConfig
+  | BeefyAxelarBridgeConfig;
+
+export type BeefyBridgeIdToConfig<T extends BeefyAnyBridgeConfig['id']> = Extract<
+  BeefyAnyBridgeConfig,
+  { id: T }
+>;
+
+export type BeefyBridgeConfig = Readonly<{
+  /**
+   * The real token on the source chain
+   */
+  source: {
+    id: string;
+    symbol: string;
+    chainId: ChainEntity['id'];
+    oracleId: string;
+    address: string;
+    decimals: number;
+  };
+  /**
+   * xTokens per chain
+   */
+  tokens: Record<ChainEntity['id'], string>;
+  /**
+   * Config per bridge
+   */
+  bridges: ReadonlyArray<BeefyAnyBridgeConfig>;
+}>;

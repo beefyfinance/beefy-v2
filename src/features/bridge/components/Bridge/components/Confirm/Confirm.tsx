@@ -1,181 +1,139 @@
-import React, { useMemo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button';
-import { Divider } from '../../../../../../components/Divider';
-import { formatAddressShort } from '../../../../../../helpers/format';
+import { formatBigDecimals, formatBigUsd } from '../../../../../../helpers/format';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { fetchAllowanceAction } from '../../../../../data/actions/allowance';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
-import { walletActions } from '../../../../../data/actions/wallet-actions';
-import { isTokenErc20 } from '../../../../../data/entities/token';
-import { selectAllowanceByTokenAddress } from '../../../../../data/selectors/allowances';
 import {
-  selectBridgeBifiDestChainData,
-  selectBridgeState,
+  selectBridgeConfirmQuote,
+  selectBridgeConfirmStatus,
 } from '../../../../../data/selectors/bridge';
 import { selectChainById } from '../../../../../data/selectors/chains';
-import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
-  selectIsWalletKnown,
-  selectWalletAddress,
 } from '../../../../../data/selectors/wallet';
 import { styles } from './styles';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
-import { stepperActions } from '../../../../../data/reducers/wallet/stepper';
-import { startStepper } from '../../../../../data/actions/stepper';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
+import { performBridge } from '../../../../../data/actions/bridge';
+import { AlertError } from '../../../../../../components/Alerts';
+import { TechLoader } from '../../../../../../components/TechLoader';
+import clsx from 'clsx';
+import { getBridgeProviderLogo } from '../../../../../../helpers/bridgeProviderSrc';
+import { MonetizationOn, Timer } from '@material-ui/icons';
+import { formatMinutesDuration } from '../../../../../../helpers/date';
+import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
-function _Confirm() {
+const ConfirmLoading = memo(function ConfirmLoading() {
+  return <TechLoader />;
+});
+
+const ConfirmError = memo(function ConfirmError() {
+  const { t } = useTranslation();
+  return <AlertError>{t('Bridge-Confirm-Error')}</AlertError>;
+});
+
+const ConfirmReady = memo(function ConfirmReady() {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
-
-  const formState = useAppSelector(selectBridgeState);
-
-  const walletAddress = useAppSelector(state =>
-    selectIsWalletKnown(state) ? selectWalletAddress(state) : null
-  );
-
+  const quote = useAppSelector(selectBridgeConfirmQuote);
+  const fromChain = useAppSelector(state => selectChainById(state, quote.input.token.chainId));
+  const toChain = useAppSelector(state => selectChainById(state, quote.output.token.chainId));
   const currentChainId = useAppSelector(selectCurrentChainId);
-
-  const isWalletOnFromChain = currentChainId === formState.fromChainId;
-
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
-
-  const fromChain = useAppSelector(state => selectChainById(state, formState.fromChainId));
-
-  const destChain = useAppSelector(state => selectChainById(state, formState.destChainId));
-
-  const destChainData = useAppSelector(state =>
-    selectBridgeBifiDestChainData(state, fromChain.id, destChain.networkChainId)
-  );
-  const fromChainData = formState.bridgeDataByChainId[fromChain.id];
-
-  const routerAddress = destChainData.DepositAddress ?? destChainData.routerToken;
-
-  const depositedToken = useAppSelector(state =>
-    selectTokenByAddress(state, formState.fromChainId, fromChainData.address)
-  );
-
+  const isWalletOnFromChain = currentChainId === fromChain.id;
   const isStepping = useAppSelector(selectIsStepperStepping);
-
-  React.useEffect(() => {
-    //need to refresh the allowance
-    if (isTokenErc20(depositedToken)) {
-      dispatch(
-        fetchAllowanceAction({
-          walletAddress: walletAddress,
-          chainId: formState.fromChainId,
-          spenderAddress: routerAddress,
-          tokens: [depositedToken],
-        })
-      );
-    }
-  }, [depositedToken, dispatch, formState.fromChainId, routerAddress, walletAddress]);
-
-  const depositTokenAllowance = useAppSelector(state =>
-    selectAllowanceByTokenAddress(
-      state,
-      formState.fromChainId,
-      fromChainData.address,
-      routerAddress
-    )
+  const timeEstimate = useMemo(() => {
+    return formatMinutesDuration(quote.timeEstimate);
+  }, [quote.timeEstimate]);
+  const tokenPrice = useAppSelector(state =>
+    selectTokenPriceByAddress(state, quote.fee.token.chainId, quote.fee.token.address)
   );
+  const fee = useMemo(() => {
+    return `${formatBigDecimals(quote.fee.amount, 4)} ${quote.fee.token.symbol}`;
+  }, [quote.fee]);
+  const usdFee = useMemo(() => {
+    return formatBigUsd(quote.fee.amount.multipliedBy(tokenPrice));
+  }, [tokenPrice, quote.fee.amount]);
 
-  const isRouter = useMemo(() => {
-    if (['swapin', 'swapout'].includes(destChainData?.type)) {
-      return false;
-    }
-    return true;
-  }, [destChainData]);
+  const handleBridge = useCallback(() => {
+    dispatch(performBridge({ t }));
+  }, [dispatch, t]);
 
-  const handleBridge = () => {
-    if (
-      depositTokenAllowance.isLessThan(formState.amount) &&
-      isRouter &&
-      depositedToken.type !== 'native'
-    ) {
-      dispatch(
-        stepperActions.addStep({
-          step: {
-            step: 'approve',
-            message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(depositedToken, routerAddress),
-            pending: false,
-          },
-        })
-      );
-    }
-
-    dispatch(
-      stepperActions.addStep({
-        step: {
-          step: 'bridge',
-          message: t('Vault-TxnConfirm', { type: t('Bridge-noun') }),
-          action: walletActions.bridge(
-            formState.fromChainId,
-            formState.destChainId,
-            routerAddress,
-            formState.amount,
-            isRouter
-          ),
-          pending: false,
-        },
-      })
-    );
-
-    dispatch(startStepper(fromChain.id));
-  };
-
-  const handleConnectWallet = () => {
+  const handleConnectWallet = useCallback(() => {
     dispatch(askForWalletConnection());
-  };
+  }, [dispatch]);
+
+  const handleNetworkChange = useCallback(() => {
+    dispatch(askForNetworkChange({ chainId: fromChain.id }));
+  }, [dispatch, fromChain]);
 
   return (
     <>
-      <div className={classes.infoContainer}>
-        <div className={classes.transferInfo}>
-          <div className={classes.label}>{t('FROM')}</div>
-          <div className={classes.networkAmount}>
-            <div className={classes.network}>
-              <img
-                className={classes.networkIcon}
-                width={20}
-                height={20}
-                alt=""
-                src={getNetworkSrc(formState.fromChainId)}
-              />
-              <div className={classes.networkName}>{fromChain.name}</div>
-            </div>
-            <div className={classes.amount}>- {formState.formattedInput} BIFI</div>
+      <div className={classes.steps}>
+        <div className={clsx(classes.step, classes.stepFrom)}>
+          <div className={classes.tokenAmount}>
+            {t('Bridge-From-Send', {
+              amount: formatBigDecimals(quote.input.amount, quote.input.token.decimals),
+              token: quote.input.token.symbol,
+            })}
           </div>
-          <div className={classes.address}>
-            {t('Address')}: <span>{formatAddressShort(walletAddress)}</span>
+          <div className={classes.via}>{t('Bridge-On')}</div>
+          <div className={classes.network}>
+            <img
+              className={classes.networkIcon}
+              width={20}
+              height={20}
+              alt={fromChain.name}
+              src={getNetworkSrc(fromChain.id)}
+            />
+            <div className={classes.networkName}> {fromChain.name}</div>
           </div>
         </div>
-        <Divider />
-        <div className={classes.transferInfo}>
-          <div className={classes.label}>{t('TO')}</div>
-          <div className={classes.networkAmount}>
-            <div className={classes.network}>
-              <img
-                className={classes.networkIcon}
-                width={20}
-                height={20}
-                alt=""
-                src={getNetworkSrc(formState.destChainId)}
-              />
-              <div className={classes.networkName}>{destChain.name}</div>
-            </div>
-            <div className={classes.amount}>+ {formState.formattedOutput} BIFI</div>
+        <div className={clsx(classes.step, classes.stepBridge)}>
+          <div className={classes.via}>{t('Bridge-Via')}</div>
+          <div className={classes.provider}>
+            <img
+              src={getBridgeProviderLogo(quote.config.id)}
+              alt={quote.config.title}
+              height={24}
+            />
           </div>
-          <div className={classes.address}>
-            {t('Address')}: <span>{formatAddressShort(walletAddress)}</span>
+          <div className={classes.providerDetails}>
+            <div className={classes.fee}>
+              <MonetizationOn className={classes.feeIcon} />
+              <div>
+                ~{fee} ({usdFee})
+              </div>
+            </div>
+            <div className={classes.time}>
+              <Timer className={classes.timeIcon} />
+              <div>~{timeEstimate}</div>
+            </div>
+          </div>
+        </div>
+        <div className={clsx(classes.step, classes.stepTo)}>
+          <div className={classes.tokenAmount}>
+            {t('Bridge-To-Receive', {
+              amount: formatBigDecimals(quote.input.amount, quote.input.token.decimals),
+              token: quote.input.token.symbol,
+            })}
+          </div>
+          <div className={classes.via}>{t('Bridge-On')}</div>
+          <div className={classes.network}>
+            <img
+              className={classes.networkIcon}
+              width={20}
+              height={20}
+              alt={toChain.name}
+              src={getNetworkSrc(toChain.id)}
+            />
+            <div className={classes.networkName}> {toChain.name}</div>
           </div>
         </div>
       </div>
@@ -193,7 +151,7 @@ function _Confirm() {
             </Button>
           ) : (
             <Button
-              onClick={() => dispatch(askForNetworkChange({ chainId: formState.fromChainId }))}
+              onClick={handleNetworkChange}
               variant="success"
               fullWidth={true}
               borderless={true}
@@ -212,23 +170,18 @@ function _Confirm() {
           </Button>
         )}
       </div>
-      <div className={classes.transferDetails}>
-        <ItemInfo title={t('Bridge-Crosschain')}>{destChainData.SwapFeeRatePerMillion}%</ItemInfo>
-        <ItemInfo title={t('Bridge-Gas')}> {destChainData.MinimumSwapFee} BIFI</ItemInfo>
-        <ItemInfo title={t('Bridge-EstimatedTime')}>3 - 30 min</ItemInfo>
-      </div>
     </>
   );
-}
+});
 
-export const Confirm = React.memo(_Confirm);
+export const Confirm = memo(function Confirm() {
+  const status = useAppSelector(selectBridgeConfirmStatus);
 
-const ItemInfo = ({ title, children }) => {
-  const classes = useStyles();
-  return (
-    <>
-      <div className={classes.detailLabel}>{title}</div>
-      <div className={classes.detailValue}>{children}</div>
-    </>
-  );
-};
+  if (status === 'pending') {
+    return <ConfirmLoading />;
+  } else if (status === 'fulfilled') {
+    return <ConfirmReady />;
+  } else {
+    return <ConfirmError />;
+  }
+});

@@ -34,7 +34,7 @@ export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, isLi
           [classes.vaultNameBoosted]: isBoosted,
         })}
       >
-        {punctuationWrap(vault.name)}
+        {punctuationWrap(vault.id === 'bifi-vault' ? `${vault.name} Vault` : vault.name)}
       </Link>
     );
   }
@@ -46,7 +46,7 @@ export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, isLi
         [classes.vaultNameBoosted]: isBoosted,
       })}
     >
-      {punctuationWrap(vault.name)}
+      {punctuationWrap(vault.id === 'bifi-vault' ? `${vault.name} Vault` : vault.name)}
     </div>
   );
 });

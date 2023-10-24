@@ -1,13 +1,21 @@
 import { createGlobLoader } from './globLoader';
-import type { BridgeEntity } from '../features/data/entities/bridge';
 
-const iconPathToUrl = import.meta.glob('../images/bridges/*.svg', {
+const iconPathToUrl = import.meta.glob('../images/bridge-providers/icons/*.svg', {
+  as: 'url',
+  eager: true,
+});
+const logoPathToUrl = import.meta.glob('../images/bridge-providers/logos/*.svg', {
   as: 'url',
   eager: true,
 });
 
-const keyToUrl = createGlobLoader(iconPathToUrl);
+const iconKeyToUrl = createGlobLoader(iconPathToUrl);
+const logoKeyToUrl = createGlobLoader(logoPathToUrl);
 
-export function getBridgeIcon(id: BridgeEntity['id']) {
-  return keyToUrl(id);
+export function getBridgeProviderIcon(provider: string) {
+  return iconKeyToUrl(provider);
+}
+
+export function getBridgeProviderLogo(provider: string) {
+  return logoKeyToUrl(provider);
 }

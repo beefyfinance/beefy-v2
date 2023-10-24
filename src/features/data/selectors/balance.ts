@@ -49,7 +49,7 @@ const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   }
 };
 
-const selectWalletBalanceByAddress = createCachedSelector(
+export const selectWalletBalanceByAddress = createCachedSelector(
   (state: BeefyState, _walletAddress: string) => state.user.balance.byAddress,
   (state: BeefyState, walletAddress: string) => walletAddress.toLocaleLowerCase(),
   (balancesByAddress, walletAddress) => balancesByAddress[walletAddress] || null
@@ -184,7 +184,7 @@ export const selectUserBalanceOfTokensIncludingBoosts = (
  * so we have to do the translation from earnedToken (mooToken) to depositToken
  * that the user deposited
  */
-export const selectStandardVaultUserBalanceInDepositTokenExcludingBoosts = (
+export const selectStandardVaultUserBalanceInDepositTokenExcludingBoostsBridged = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -207,7 +207,7 @@ export const selectStandardVaultUserBalanceInDepositTokenExcludingBoosts = (
  * so we have to do the translation from earnedToken (mooToken) to depositToken
  * that the user deposited
  */
-export const selectStandardVaultUserBalanceInDepositTokenIncludingBoosts = (
+export const selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -232,7 +232,99 @@ export const selectStandardVaultUserBalanceInDepositTokenIncludingBoosts = (
     mooTokenBalance = mooTokenBalance.plus(boostMooToken);
   }
 
+  // account for bridged mooToken
+  if (vault.bridged) {
+    for (const [chainId, tokenAddress] of Object.entries(vault.bridged)) {
+      const bridgedMooToken = selectUserBalanceOfToken(state, chainId, tokenAddress, walletAddress);
+      mooTokenBalance = mooTokenBalance.plus(bridgedMooToken);
+    }
+  }
+
   return mooAmountToOracleAmount(mooToken, depositToken, ppfs, mooTokenBalance);
+};
+
+export type StandardVaultBalanceBreakdownVault = {
+  type: 'vault';
+  id: string;
+  amount: BigNumber;
+  vaultId: VaultEntity['id'];
+};
+export type StandardVaultBalanceBreakdownBoost = {
+  type: 'boost';
+  id: string;
+  amount: BigNumber;
+  boostId: BoostEntity['id'];
+};
+export type StandardVaultBalanceBreakdownBridged = {
+  type: 'bridged';
+  id: string;
+  amount: BigNumber;
+  chainId: ChainEntity['id'];
+};
+export type StandardVaultBalanceBreakdownEntry =
+  | StandardVaultBalanceBreakdownVault
+  | StandardVaultBalanceBreakdownBoost
+  | StandardVaultBalanceBreakdownBridged;
+export type StandardVaultBalanceBreakdown = StandardVaultBalanceBreakdownEntry[];
+
+export const selectStandardVaultUserBalanceInDepositTokenBreakdown = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+): StandardVaultBalanceBreakdown => {
+  const vault = selectStandardVaultById(state, vaultId);
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+  const ppfs = selectVaultPricePerFullShare(state, vault.id);
+  const balances: StandardVaultBalanceBreakdown = [];
+
+  // direct deposit in vault
+  const mooTokenBalance = selectUserBalanceOfToken(
+    state,
+    vault.chainId,
+    mooToken.address,
+    walletAddress
+  );
+
+  if (mooTokenBalance.gt(BIG_ZERO)) {
+    balances.push({
+      type: 'vault',
+      id: `vault-${vaultId}`,
+      vaultId,
+      amount: mooAmountToOracleAmount(mooToken, depositToken, ppfs, mooTokenBalance),
+    });
+  }
+
+  // deposits in boost (even those expired)
+  const boostIds = selectAllVaultBoostIds(state, vaultId);
+  for (const boostId of boostIds) {
+    const boostMooToken = selectBoostUserBalanceInToken(state, boostId, walletAddress);
+    if (boostMooToken.gt(BIG_ZERO)) {
+      balances.push({
+        type: 'boost',
+        id: `boost-${boostId}}`,
+        boostId,
+        amount: mooAmountToOracleAmount(mooToken, depositToken, ppfs, boostMooToken),
+      });
+    }
+  }
+
+  // bridged mooToken
+  if (vault.bridged) {
+    for (const [chainId, tokenAddress] of Object.entries(vault.bridged)) {
+      const bridgedMooToken = selectUserBalanceOfToken(state, chainId, tokenAddress, walletAddress);
+      if (bridgedMooToken.gt(BIG_ZERO)) {
+        balances.push({
+          type: 'bridged',
+          id: `bridged-${chainId}`,
+          chainId,
+          amount: mooAmountToOracleAmount(mooToken, depositToken, ppfs, bridgedMooToken),
+        });
+      }
+    }
+  }
+
+  return balances;
 };
 
 export const selectGovVaultUserStakedBalanceInDepositToken = (
@@ -244,6 +336,9 @@ export const selectGovVaultUserStakedBalanceInDepositToken = (
   return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.balance || BIG_ZERO;
 };
 
+/**
+ * Includes boosts and bridged tokens
+ */
 export const selectUserVaultDepositInDepositToken = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
@@ -253,7 +348,7 @@ export const selectUserVaultDepositInDepositToken = (
   if (isGovVault(vault)) {
     return selectGovVaultUserStakedBalanceInDepositToken(state, vaultId, walletAddress);
   } else {
-    return selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(
+    return selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(
       state,
       vaultId,
       walletAddress
@@ -261,7 +356,7 @@ export const selectUserVaultDepositInDepositToken = (
   }
 };
 
-export const selectUserVaultDepositInDepositTokenExcludingBoosts = (
+export const selectUserVaultDepositInDepositTokenExcludingBoostsBridged = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -270,7 +365,7 @@ export const selectUserVaultDepositInDepositTokenExcludingBoosts = (
   if (isGovVault(vault)) {
     return selectGovVaultUserStakedBalanceInDepositToken(state, vaultId, walletAddress);
   } else {
-    return selectStandardVaultUserBalanceInDepositTokenExcludingBoosts(
+    return selectStandardVaultUserBalanceInDepositTokenExcludingBoostsBridged(
       state,
       vaultId,
       walletAddress
@@ -296,6 +391,9 @@ export const selectBoostUserRewardsInToken = (
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.rewards || BIG_ZERO;
 };
 
+/**
+ * Includes boosts and bridged tokens
+ */
 export const selectUserVaultDepositInUsd = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
@@ -444,7 +542,11 @@ export const selectUserLpBreakdownBalance = (
   const lpTotalSupplyDecimal = new BigNumber(breakdown.totalSupply);
   const userBalanceDecimal = isGovVault(vault)
     ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id, walletAddress)
-    : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id, walletAddress);
+    : selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(
+        state,
+        vault.id,
+        walletAddress
+      );
 
   const userShareOfPool = lpTotalSupplyDecimal.gt(BIG_ZERO)
     ? userBalanceDecimal.dividedBy(lpTotalSupplyDecimal)

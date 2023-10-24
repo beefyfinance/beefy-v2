@@ -59,6 +59,7 @@ export default defineConfig({
     },
   },
   resolve: {
+    preserveSymlinks: true,
     alias: [
       {
         find: /crypto-addr-codec/,
