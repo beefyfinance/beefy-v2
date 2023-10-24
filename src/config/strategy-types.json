@@ -1,5 +1,13 @@
 [
   {
+    "id": "bifi-vault",
+    "name": "BIFI Vault"
+  },
+  {
+    "id": "bifi-pool",
+    "name": "BIFI Pool"
+  },
+  {
     "id": "lp",
     "name": "Standard LP"
   },
