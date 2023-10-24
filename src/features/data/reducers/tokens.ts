@@ -489,7 +489,7 @@ function addBridgedReceiptTokensToState(
     id: `${token.id}-${chainId}`,
     chainId,
     address,
-    description: `${token.symbol} bridged from ${chain.name}. ${token.description || ''}`,
+    description: token.description || null, // we leave description null so that addressbook can fill it in
   }));
 
   for (const bridgedToken of bridgedTokens) {
