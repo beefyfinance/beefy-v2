@@ -281,14 +281,6 @@ function addTokenBalanceToState(
       walletState.tokenAmount.byChainId[chainId] = { byTokenAddress: {} };
     }
 
-    // TODO remove
-    // if (
-    //   tokenBalance.tokenAddress.toLowerCase() ===
-    //   '0xBEEF8e0982874e0292E6C5751C5A4092b3e1BEEF'.toLowerCase()
-    // ) {
-    //   continue;
-    // }
-
     // only update data if necessary
     const stateForToken =
       walletState.tokenAmount.byChainId[chainId].byTokenAddress[

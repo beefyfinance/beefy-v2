@@ -457,7 +457,6 @@ function addVaultToState(
 
       // Add bridged versions of receipt token
       if (vault.bridged) {
-        console.debug('via vault');
         addBridgedReceiptTokensToState(vault, token, chain, sliceState);
       }
     }
@@ -469,7 +468,6 @@ function addVaultToState(
     if (!vault.isGovVault && vault.bridged) {
       const token = sliceState.byChainId[chainId].byAddress[addressKey];
       if (isTokenErc20(token)) {
-        console.log('via addressbook');
         addBridgedReceiptTokensToState(vault, token, chain, sliceState);
       }
     }
