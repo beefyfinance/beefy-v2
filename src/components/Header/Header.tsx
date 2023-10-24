@@ -62,7 +62,12 @@ export const Header = memo(function Header() {
               </Link>
               <Hidden mdDown>
                 <NavItem title={'Header-Vaults'} url="/" Icon={VaultsIcon} />
-                <NavItem title={'Header-Dashboard'} url="/dashboard" Icon={DashboardIcon} />
+                <NavItem
+                  exact={false}
+                  title={'Header-Dashboard'}
+                  url="/dashboard"
+                  Icon={DashboardIcon}
+                />
                 <DropNavItem
                   title={'Header-Dao'}
                   Icon={DaoIcon}
