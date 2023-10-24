@@ -3,7 +3,7 @@ import type { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
 import { Banner } from '../Banner';
-import Token from '../../../images/icons/beefy-treasury.svg';
+import Token from '../../../images/single-assets/BIFI.png';
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: { height: '24px', width: '24px' },
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const SnapshotBalanceBanner = memo(function AnnouncementBanner() {
   const classes = useStyles();
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideSnapCheckBanner3', false);
+  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideSnapCheckBanner4', false);
 
   const closeBanner = useCallback(() => {
     setHideBanner(true);
@@ -36,29 +36,29 @@ export const SnapshotBalanceBanner = memo(function AnnouncementBanner() {
 });
 
 export const EveryoneText = memo(function EveryoneText() {
-  const classes = useStyles();
+  // const classes = useStyles();
   return (
     <>
-      The snapshot of old BIFI token holders across all chains was taken on October 17th at 00:00
-      UTC. Any BIFI purchased after this time will not be eligible for distribution. New BIFI and
-      mooBIFI tokens will be distributed on Ethereum and Optimism on October 24th.{' '}
-      <a
-        className={classes.link}
-        href="https://snapshot.beefy.finance/"
-        target="_blank"
-        rel="noopener"
-      >
-        Review your allocation
-      </a>{' '}
-      and{' '}
-      <a
-        className={classes.link}
-        target="_blank"
-        rel="noopener"
-        href="https://beefy.com/articles/migration-implementation/"
-      >
-        read more.
-      </a>
+      {
+        "The new BIFI and mooBIFI tokens have officially launched! Distribution on both Ethereum and Optimism is now complete. We've also rolled out the BIFI Pool and Vault and provided liquidity on Uniswap and Velodrome for trading. Selected CEX's should resume operations shortly."
+      }
+      {/*<a*/}
+      {/*  className={classes.link}*/}
+      {/*  href="https://snapshot.beefy.finance/"*/}
+      {/*  target="_blank"*/}
+      {/*  rel="noopener"*/}
+      {/*>*/}
+      {/*  Review your allocation*/}
+      {/*</a>{' '}*/}
+      {/*and{' '}*/}
+      {/*<a*/}
+      {/*  className={classes.link}*/}
+      {/*  target="_blank"*/}
+      {/*  rel="noopener"*/}
+      {/*  href="https://beefy.com/articles/migration-implementation/"*/}
+      {/*>*/}
+      {/*  read more.*/}
+      {/*</a>*/}
     </>
   );
 });
