@@ -24,22 +24,26 @@ import type { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
 export type VaultsState = NormalizedEntity<VaultEntity> & {
   byChainId: {
     [chainId: ChainEntity['id']]: {
-      // add quick access arrays
-      // doesn't need to be by chain but it's convenient
-      // for when we load by chain
+      /** Vaults that have status: active */
       allActiveIds: VaultEntity['id'][];
+      /** Vaults that have status: eol or paused */
       allRetiredIds: VaultEntity['id'][];
-
-      // used to find a vault by it's token for balance stuff
+      /** Vaults that have bridged receipt tokens we should track */
+      allBridgedIds: VaultEntity['id'][];
+      /** Find standard vaults by deposit token address or earned token address */
       standardVault: {
+        /** Map of standard vault ids by deposit token address */
         byDepositTokenAddress: {
           [address: string]: VaultEntity['id'][];
         };
+        /** Map of standard vault id by earned (receipt) token address */
         byEarnedTokenAddress: {
           [address: string]: VaultEntity['id'];
         };
       };
+      /** Find gov vaults by deposit token address */
       govVault: {
+        /** Map of gov vault ids by deposit token address */
         byDepositTokenAddress: {
           [address: string]: VaultEntity['id'][];
         };
@@ -222,6 +226,7 @@ function addVaultToState(
       sliceState.byChainId[vault.chainId] = {
         allActiveIds: [],
         allRetiredIds: [],
+        allBridgedIds: [],
         standardVault: {
           byEarnedTokenAddress: {},
           byDepositTokenAddress: {},
@@ -269,6 +274,7 @@ function addVaultToState(
       retireReason: apiVault.retireReason,
       pauseReason: apiVault.pauseReason,
       migrationIds: apiVault.migrationIds,
+      bridged: apiVault.bridged,
     };
     // redux toolkit uses immer by default so we can
     // directly modify the state as usual
@@ -278,6 +284,7 @@ function addVaultToState(
       sliceState.byChainId[vault.chainId] = {
         allActiveIds: [],
         allRetiredIds: [],
+        allBridgedIds: [],
         standardVault: {
           byEarnedTokenAddress: {},
           byDepositTokenAddress: {},
@@ -292,6 +299,10 @@ function addVaultToState(
       vaultState.allRetiredIds.push(vault.id);
     } else {
       vaultState.allActiveIds.push(vault.id);
+    }
+
+    if (vault.bridged) {
+      vaultState.allBridgedIds.push(vault.id);
     }
 
     if (!vaultState.standardVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()]) {

@@ -257,7 +257,7 @@ function rateLimitProvider(provider: PrivateProvider, queue: PQueue): PrivatePro
     if (provider[method]) {
       const originalMethod = provider[method].bind(provider);
       provider[method] = (payload: unknown, callback: (err: unknown, data: unknown) => unknown) => {
-        queue
+        return queue
           .add(
             () =>
               new Promise((resolve, reject) => {
@@ -270,8 +270,9 @@ function rateLimitProvider(provider: PrivateProvider, queue: PQueue): PrivatePro
                 });
               })
           )
-          .then(data => callback(null, data))
-          .catch(err => callback(err, null));
+          .then(data => Promise.resolve(callback(null, data)))
+          .catch(err => Promise.resolve(callback(err, null)))
+          .catch(err => console.error('callback threw', err));
       };
     }
   }

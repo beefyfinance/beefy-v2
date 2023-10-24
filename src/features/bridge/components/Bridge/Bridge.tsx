@@ -2,51 +2,47 @@ import type { FC } from 'react';
 import React, { memo, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
-import { useAppSelector, useAppStore } from '../../../../store';
-import {
-  selectBridgeStep,
-  selectIsBridgeLoaded,
-  selectShouldInitBridge,
-} from '../../../data/selectors/bridge';
-import { LoadingStep } from '../../../../components/LoadingStep';
-import { initBridgeForm } from '../../../data/actions/scenarios';
-import { selectIsWalletConnected, selectWalletAddress } from '../../../data/selectors/wallet';
+import { useAppDispatch, useAppSelector } from '../../../../store';
+import { selectBridgeFormStep } from '../../../data/selectors/bridge';
+import { selectWalletAddressIfKnown } from '../../../data/selectors/wallet';
 import { FormStep } from '../../../data/reducers/wallet/bridge';
 import { PreviewStep } from './components/PreviewStep';
 import { ConfirmStep } from './components/ConfirmStep';
 import { SelectFromChainStep } from './components/SelectFromChainStep';
 import { SelectToChainStep } from './components/SelectToChainStep';
+import { initiateBridgeForm } from '../../../data/actions/bridge';
+import { LoadingStep } from './components/LoadingStep';
+import { selectIsConfigAvailable } from '../../../data/selectors/data-loader';
+import { TransactionStep } from './components/TransactionStep';
 
 const useStyles = makeStyles(styles);
 
 const stepToComponent: Record<FormStep, FC> = {
+  [FormStep.Loading]: LoadingStep,
   [FormStep.Preview]: PreviewStep,
   [FormStep.Confirm]: ConfirmStep,
+  [FormStep.Transaction]: TransactionStep,
   [FormStep.SelectFromNetwork]: SelectFromChainStep,
   [FormStep.SelectToNetwork]: SelectToChainStep,
 };
 
 export const Bridge = memo(function Bridge() {
   const classes = useStyles();
-  const step = useAppSelector(selectBridgeStep);
+  const dispatch = useAppDispatch();
+  const walletAddress = useAppSelector(selectWalletAddressIfKnown);
+  const step = useAppSelector(selectBridgeFormStep);
   const StepComponent = stepToComponent[step];
-  const shouldInit = useAppSelector(selectShouldInitBridge);
-  const isLoaded = useAppSelector(selectIsBridgeLoaded);
-  const isWalletConnected = useAppSelector(selectIsWalletConnected);
-  const walletAddress = useAppSelector(state =>
-    isWalletConnected ? selectWalletAddress(state) : null
-  );
-  const store = useAppStore();
+  const globalConfigLoaded = useAppSelector(selectIsConfigAvailable);
 
   useEffect(() => {
-    if (shouldInit) {
-      initBridgeForm(store, walletAddress);
+    if (globalConfigLoaded) {
+      dispatch(initiateBridgeForm({ walletAddress }));
     }
-  }, [shouldInit, store, walletAddress]);
+  }, [dispatch, walletAddress, globalConfigLoaded]);
 
   return (
     <div className={classes.container}>
-      {isLoaded ? <StepComponent /> : <LoadingStep stepType={'bridge'} />}
+      <StepComponent />
     </div>
   );
 });

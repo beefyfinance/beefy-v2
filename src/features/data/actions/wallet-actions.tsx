@@ -6,17 +6,16 @@ import erc20Abi from '../../../config/abi/erc20.json';
 import vaultAbi from '../../../config/abi/vault.json';
 import minterAbi from '../../../config/abi/minter.json';
 import zapAbi from '../../../config/abi/zap.json';
-import bridgeAbi from '../../../config/abi/BridgeAbi.json';
 import type { BeefyState, BeefyThunk } from '../../../redux-types';
 import { getOneInchApi, getWalletConnectionApiInstance } from '../apis/instances';
 import type { BoostEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
-import { isTokenNative } from '../entities/token';
+import { isTokenEqual, isTokenNative } from '../entities/token';
 import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { isStandardVault } from '../entities/vault';
 import type {
-  MandatoryAdditionalData,
+  AdditionalData,
   TrxError,
   TrxHash,
   TrxReceipt,
@@ -62,7 +61,7 @@ import type {
   ZapQuoteStepSwap,
 } from '../apis/transact/transact-types';
 import type { ZapEntityBeefy, ZapEntityOneInch } from '../entities/zap';
-import { BeefyZapOneInchAbi, ZapAbi } from '../../../config/abi';
+import { BeefyCommonBridgeAbi, BeefyZapOneInchAbi, ZapAbi } from '../../../config/abi';
 import { OneInchZapProvider } from '../apis/transact/providers/one-inch/one-inch';
 import { MultiCall } from 'eth-multicall';
 import { getPool } from '../apis/amm';
@@ -71,11 +70,12 @@ import { WANT_TYPE } from '../apis/amm/types';
 import { getVaultWithdrawnFromContract } from '../apis/transact/helpers/vault';
 import { swapWithFee } from '../apis/transact/helpers/one-inch';
 import { selectOneInchZapByChainId } from '../selectors/zap';
-import type { DestChainEntity } from '../apis/bridge/bridge-types';
 import type { PromiEvent } from 'web3-core';
 import type { ThunkDispatch } from 'redux-thunk';
 import { migratorUpdate } from './migrator';
 import type { MigrationConfig } from '../reducers/wallet/migration';
+import type { IBridgeQuote } from '../apis/bridge/providers/provider-types';
+import type { BeefyAnyBridgeConfig } from '../apis/config-types';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -1396,13 +1396,7 @@ const burnWithdraw = (
   });
 };
 
-const bridge = (
-  chainId: ChainEntity['id'],
-  destChainId: ChainEntity['id'],
-  routerAddr: string,
-  amount: BigNumber,
-  isRouter: boolean
-) => {
+const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
@@ -1411,61 +1405,46 @@ const bridge = (
       return;
     }
 
-    const bridgeTokenData = state.ui.bridge.bridgeDataByChainId[chainId];
+    const { input, output, fee, config } = quote;
+    const viaBeefyBridgeAddress = config.chains[input.token.chainId].bridge;
+    const fromChainId = input.token.chainId;
+    const toChainId = output.token.chainId;
+    const fromChain = selectChainById(state, fromChainId);
+    const toChain = selectChainById(state, toChainId);
+    const gasToken = selectChainNativeToken(state, fromChainId);
+    const inputWei = toWeiString(input.amount, input.token.decimals);
+    const feeWei = toWeiString(fee.amount, fee.token.decimals);
 
-    const destChain = selectChainById(state, destChainId);
-    const destChainData: DestChainEntity = Object.values(
-      bridgeTokenData.destChains[destChain.networkChainId]
-    )[0];
+    if (!isTokenEqual(gasToken, fee.token)) {
+      console.debug(gasToken, fee.token);
+      throw new Error(`Only native fee token is supported`);
+    }
 
-    const bridgeToken = selectTokenByAddress(state, chainId, bridgeTokenData.address);
-    const destToken = selectTokenByAddress(state, destChainId, destChainData.address);
-
-    const gasToken = selectChainNativeToken(state, chainId);
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const chain = selectChainById(state, chainId);
-    const gasPrices = await getGasPriceOptions(chain);
+    const contract = new web3.eth.Contract(BeefyCommonBridgeAbi, viaBeefyBridgeAddress);
+    const gasPrices = await getGasPriceOptions(fromChain);
 
-    const transaction = (() => {
-      const rawAmount = convertAmountToRawNumber(amount, bridgeTokenData.decimals);
-      if (isRouter) {
-        //ROUTER CONTRACT
-        const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], routerAddr);
-
-        return bridgeTokenData.underlying
-          ? contract.methods
-              .anySwapOutUnderlying(
-                bridgeTokenData.underlying.address,
-                address,
-                rawAmount,
-                destChain.networkChainId
-              )
-              .send({ from: address, ...gasPrices })
-          : contract.methods
-              .anySwapOut(bridgeTokenData.address, address, rawAmount, destChain.networkChainId)
-              .send({ from: address, ...gasPrices });
-      } else {
-        //BIFI TOKEN CONTRACT
-        const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], bridgeTokenData.address);
-        return destChainData.type === 'swapout'
-          ? contract.methods.Swapout(rawAmount, address).send({ from: address, ...gasPrices })
-          : contract.methods.transfer(routerAddr, rawAmount).send({ from: address, ...gasPrices });
-      }
-    })();
+    const transaction = contract.methods.bridge(toChain.networkChainId, inputWei, address).send({
+      ...gasPrices,
+      from: address,
+      value: feeWei,
+    });
 
     bindTransactionEvents(
       dispatch,
       transaction,
       {
-        amount: amount,
-        token: bridgeToken,
+        type: 'bridge',
+        amount: input.amount,
+        token: input.token,
+        quote: quote,
       },
       {
         walletAddress: address,
-        chainId: chainId,
-        spenderAddress: routerAddr,
-        tokens: uniqBy([gasToken, bridgeToken, destToken], 'id'),
+        chainId: fromChainId,
+        spenderAddress: viaBeefyBridgeAddress,
+        tokens: uniqBy([gasToken, input.token], 'id'),
       },
       'bridge'
     );
@@ -1495,13 +1474,13 @@ export const walletActions = {
   unstakeBoost,
   mintDeposit,
   burnWithdraw,
-  bridge,
   resetWallet,
   migrateUnstake,
   oneInchBeefInSingle,
   oneInchBeefInLP,
   oneInchBeefOutSingle,
   oneInchBeefOutLP,
+  bridgeViaCommonInterface,
 };
 
 function captureWalletErrors<ReturnType>(
@@ -1527,10 +1506,10 @@ function captureWalletErrors<ReturnType>(
   };
 }
 
-function bindTransactionEvents<T extends MandatoryAdditionalData>(
+function bindTransactionEvents(
   dispatch: ThunkDispatch<BeefyState, unknown, Action<unknown>>,
   transaction: PromiEvent<unknown>,
-  additionalData: T,
+  additionalData: AdditionalData,
   refreshOnSuccess?: {
     walletAddress: string;
     chainId: ChainEntity['id'];
@@ -1548,7 +1527,7 @@ function bindTransactionEvents<T extends MandatoryAdditionalData>(
     .on('transactionHash', function (hash: TrxHash) {
       dispatch(createWalletActionPendingAction(hash, additionalData));
       if (step === 'bridge') {
-        dispatch(stepperActions.setStepContent({ stepContent: StepContent.BridgeTx }));
+        dispatch(stepperActions.setStepContent({ stepContent: StepContent.WaitingTx })); // TODO
       } else {
         dispatch(stepperActions.setStepContent({ stepContent: StepContent.WaitingTx }));
       }

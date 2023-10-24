@@ -1,65 +1,139 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
-import { formatBigDecimals, formatBigNumberSignificant } from '../../../../helpers/format';
-import type { BeefyState } from '../../../../redux-types';
-import { fetchBridgeChainData, initiateBridgeForm } from '../../actions/bridge';
-import type { BridgeInfoEntity } from '../../apis/bridge/bridge-types';
+import { createSlice, type PayloadAction, type SerializedError } from '@reduxjs/toolkit';
+import {
+  confirmBridgeForm,
+  fetchBridgeConfig,
+  initiateBridgeForm,
+  performBridge,
+  quoteBridgeForm,
+  validateBridgeForm,
+} from '../../actions/bridge';
 import type { ChainEntity } from '../../entities/chain';
-import { selectUserBalanceOfToken } from '../../selectors/balance';
-import { selectBridgeBifiDestChainData } from '../../selectors/bridge';
-import { selectChainById } from '../../selectors/chains';
-import { selectTokenByAddress } from '../../selectors/tokens';
+import type { BeefyAnyBridgeConfig, BeefyBridgeIdToConfig } from '../../apis/config-types';
+import type { InputTokenAmount } from '../../apis/transact/transact-types';
+import { isTokenEqual, type TokenErc20 } from '../../entities/token';
 import { BIG_ZERO } from '../../../../helpers/big-number';
-import { isEmpty } from '../../../../helpers/utils';
+import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types';
+import type { Draft } from 'immer';
+import { keyBy, pick } from 'lodash-es';
+import type BigNumber from 'bignumber.js';
 
 export enum FormStep {
-  Preview = 1,
+  Loading = 1,
+  Preview,
   Confirm,
+  Transaction,
   SelectFromNetwork,
   SelectToNetwork,
 }
 
-export interface TxStateInterface {
-  error: string | null;
-  swapTx: string | null;
-  status: 0 | 3 | 10 | 8 | 9 | 12 | 14;
-}
-//FOR MORE INFO WATCH https://github.com/anyswap/CrossChain-Router/wiki/How-to-integrate-AnySwap-Router POINT 4
+export type BridgeFormState = {
+  step: FormStep;
+  from: ChainEntity['id'];
+  to: ChainEntity['id'];
+  input: InputTokenAmount<TokenErc20>;
+};
 
-type statusType = 'idle' | 'loading' | 'confirming' | 'success' | 'error';
+export type BridgeValidateState = {
+  status: 'idle' | 'pending' | 'fulfilled' | 'rejected';
+  requestId?: string;
+};
+
+export type BridgeQuoteState = {
+  status: 'idle' | 'pending' | 'fulfilled' | 'rejected';
+  selected: string | null;
+  quotes: {
+    allIds: IBridgeQuote<BeefyAnyBridgeConfig>['id'][];
+    byId: Partial<
+      Record<IBridgeQuote<BeefyAnyBridgeConfig>['id'], IBridgeQuote<BeefyAnyBridgeConfig>>
+    >;
+  };
+  limitedQuotes: {
+    allIds: IBridgeQuote<BeefyAnyBridgeConfig>['id'][];
+    byId: Partial<
+      Record<IBridgeQuote<BeefyAnyBridgeConfig>['id'], IBridgeQuote<BeefyAnyBridgeConfig>>
+    >;
+  };
+  error: SerializedError | null;
+  limitError?: { current: BigNumber; max: BigNumber; canWait: boolean };
+  requestId: string | null;
+};
+
+export type BridgeConfirmState = {
+  status: 'idle' | 'pending' | 'fulfilled' | 'rejected';
+  requestId?: string;
+  error?: SerializedError;
+  quote?: IBridgeQuote<BeefyAnyBridgeConfig>;
+  outgoing?: { hash: string; mined: boolean };
+  incoming?: { hash: string; mined: boolean };
+};
+
+export type BridgesMap = {
+  [K in BeefyAnyBridgeConfig['id']]?: BeefyBridgeIdToConfig<K>;
+};
 
 export type BridgeState = {
-  step: FormStep;
-  fromChainId: ChainEntity['id'];
-  destChainId: ChainEntity['id'];
-  max: boolean;
-  amount: BigNumber;
-  formattedInput: string;
-  formattedOutput: string;
-  bridgeDataByChainId: {
-    [chainId: ChainEntity['id']]: BridgeInfoEntity;
+  source: ChainEntity['id'];
+  tokens: Record<ChainEntity['id'], string>;
+  destinations: {
+    allChains: ChainEntity['id'][];
+    chainToAddress: Record<ChainEntity['id'], string>;
+    chainToChain: Record<ChainEntity['id'], ChainEntity['id'][]>;
+    chainToBridges: Record<
+      ChainEntity['id'],
+      Record<ChainEntity['id'], BeefyAnyBridgeConfig['id'][]>
+    >;
   };
-  supportedChains: ChainEntity['id'][];
-  status: statusType;
-  bridgeTxData: TxStateInterface;
+  bridges: BridgesMap | undefined;
+  form: BridgeFormState;
+  validate: BridgeValidateState;
+  quote: BridgeQuoteState;
+  confirm: BridgeConfirmState;
 };
 
 const initialBridgeState: BridgeState = {
-  step: FormStep.Preview,
-  fromChainId: 'bsc',
-  destChainId: 'fantom',
-  amount: BIG_ZERO,
-  formattedInput: '',
-  formattedOutput: '',
-  max: false,
-  bridgeDataByChainId: {},
-  supportedChains: [],
-  status: 'idle',
-  bridgeTxData: {
+  source: null,
+  tokens: {},
+  destinations: {
+    allChains: [],
+    chainToAddress: {},
+    chainToChain: {},
+    chainToBridges: {},
+  },
+  bridges: undefined,
+  form: {
+    step: FormStep.Loading,
+    from: null,
+    to: null,
+    input: {
+      amount: BIG_ZERO,
+      max: false,
+      token: null,
+    },
+  },
+  validate: {
+    status: 'idle',
+    requestId: undefined,
+  },
+  quote: {
+    status: 'idle',
+    selected: null,
+    quotes: {
+      allIds: [],
+      byId: {},
+    },
+    limitedQuotes: {
+      allIds: [],
+      byId: {},
+    },
     error: null,
-    swapTx: null,
-    status: 0,
+    requestId: null,
+  },
+  confirm: {
+    status: 'idle',
+    requestId: undefined,
+    quote: undefined,
+    outgoing: undefined,
+    incoming: undefined,
   },
 };
 
@@ -67,186 +141,223 @@ export const bridgeSlice = createSlice({
   name: 'bridge',
   initialState: initialBridgeState,
   reducers: {
-    resetForm(sliceState) {
-      const bridgeData = sliceState.bridgeDataByChainId;
-      const supportedChains = sliceState.supportedChains;
-      if (isEmpty(bridgeData)) {
-        return initialBridgeState;
-      } else {
-        return { ...initialBridgeState, bridgeDataByChainId: bridgeData, supportedChains };
-      }
-    },
-    setMax(
-      sliceState,
-      action: PayloadAction<{
-        chainId: string;
-        tokenAddress: string;
-        state: BeefyState;
-      }>
-    ) {
-      const { state, chainId, tokenAddress } = action.payload;
-
-      const balance = selectUserBalanceOfToken(state, chainId, tokenAddress);
-
-      const destChain = selectChainById(state, sliceState.destChainId);
-
-      const destChainData = selectBridgeBifiDestChainData(state, chainId, destChain.networkChainId);
-
-      const formattedOutput = (() => {
-        if (balance && destChainData) {
-          const fee = balance
-            .times(new BigNumber(destChainData.SwapFeeRatePerMillion))
-            .dividedBy(100);
-          let value = balance.minus(fee);
-          if (fee.isLessThan(new BigNumber(destChainData.MinimumSwapFee))) {
-            value = balance.minus(new BigNumber(destChainData.MinimumSwapFee));
-          } else if (fee.isGreaterThan(new BigNumber(destChainData.MaximumSwapFee))) {
-            value = balance.minus(new BigNumber(destChainData.MaximumSwapFee));
-          }
-          if (!destChainData?.swapfeeon) {
-            value = balance;
-          }
-          if (value?.isGreaterThan(BIG_ZERO)) {
-            return new BigNumber(value).toFixed(4);
-          }
-          return BIG_ZERO.toFixed(2);
-        } else {
-          return BIG_ZERO.toFixed(2);
-        }
-      })();
-
-      sliceState.amount = balance;
-      sliceState.formattedInput = formatBigDecimals(balance, 4);
-      sliceState.formattedOutput = formattedOutput;
-      sliceState.max = true;
-    },
-
-    setInput(
-      sliceState,
-      action: PayloadAction<{
-        amount: string;
-        chainId: string;
-        tokenAddress: string;
-        state: BeefyState;
-      }>
-    ) {
-      const { state, chainId, tokenAddress } = action.payload;
-      const balanceToken = selectTokenByAddress(state, chainId, tokenAddress);
-
-      const destChain = selectChainById(state, sliceState.destChainId);
-
-      const destChainData = selectBridgeBifiDestChainData(state, chainId, destChain.networkChainId);
-
-      const input = action.payload.amount.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
-
-      let value = new BigNumber(input).decimalPlaces(balanceToken.decimals, BigNumber.ROUND_FLOOR);
-
-      if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
-        value = BIG_ZERO;
-      }
-
-      const balance = selectUserBalanceOfToken(state, chainId, tokenAddress);
-
-      if (value.isGreaterThanOrEqualTo(balance)) {
-        value = new BigNumber(balance);
-        sliceState.max = true;
-      } else {
-        sliceState.max = false;
-      }
-
-      const formattedInput = (() => {
-        if (value.isEqualTo(input)) return input;
-        if (input === '') return '';
-        if (input === '.') return `0.`;
-        return formatBigNumberSignificant(value, 3);
-      })();
-
-      const formattedOutput = (() => {
-        if (value && destChainData) {
-          const fee = value
-            .times(new BigNumber(destChainData.SwapFeeRatePerMillion))
-            .dividedBy(100);
-          let output = value.minus(fee);
-          if (fee.isLessThan(new BigNumber(destChainData.MinimumSwapFee))) {
-            output = value.minus(new BigNumber(destChainData.MinimumSwapFee));
-          } else if (fee.isGreaterThan(new BigNumber(destChainData.MaximumSwapFee))) {
-            output = value.minus(new BigNumber(destChainData.MaximumSwapFee));
-          }
-          if (!destChainData?.swapfeeon) {
-            output = value;
-          }
-          if (value?.isGreaterThan(BIG_ZERO)) {
-            return new BigNumber(output).toFixed(4);
-          }
-          return BIG_ZERO.toFixed(2);
-        } else {
-          return BIG_ZERO.toFixed(2);
-        }
-      })();
-
-      sliceState.formattedInput = formattedInput;
-      sliceState.formattedOutput = formattedOutput;
-      sliceState.amount = value;
-    },
-
-    setFromChain(sliceState, action: PayloadAction<{ chainId: string }>) {
-      const { chainId } = action.payload;
-
-      sliceState.amount = new BigNumber(BIG_ZERO);
-      sliceState.formattedInput = '';
-      sliceState.formattedOutput = '';
-      if (chainId === sliceState.destChainId) {
-        const oldFromChain = sliceState.fromChainId;
-        sliceState.fromChainId = chainId;
-        sliceState.destChainId = oldFromChain;
-      } else {
-        sliceState.fromChainId = chainId;
-      }
-      sliceState.step = FormStep.Preview;
-    },
-
-    setDestChain(
-      sliceState,
-      action: PayloadAction<{
-        destChainId: string;
-      }>
-    ) {
-      const { destChainId } = action.payload;
-
-      sliceState.destChainId = destChainId;
-      sliceState.step = FormStep.Preview;
-    },
-
-    setStatus(sliceState, action: PayloadAction<{ status: statusType }>) {
-      const { status } = action.payload;
-
-      sliceState.status = status;
-    },
     setStep(sliceState, action: PayloadAction<{ step: FormStep }>) {
-      sliceState.step = action.payload.step;
+      sliceState.form.step = action.payload.step;
     },
-    setBridgeTxData(sliceState, action: PayloadAction<{ txData: TxStateInterface }>) {
-      sliceState.bridgeTxData = action.payload.txData;
+    reverseDirection(sliceState) {
+      const { from, to } = sliceState.form;
+      sliceState.form.to = from;
+      sliceState.form.from = to;
+      sliceState.form.input.amount = BIG_ZERO;
+      sliceState.form.input.max = false;
+
+      resetQuotes(sliceState);
+    },
+    setFromChain(sliceState, action: PayloadAction<{ chainId: ChainEntity['id'] }>) {
+      sliceState.form.from = action.payload.chainId;
+      sliceState.form.input.amount = BIG_ZERO;
+      sliceState.form.input.max = false;
+
+      if (sliceState.form.to === action.payload.chainId) {
+        const otherChains = sliceState.destinations.allChains.filter(
+          chainId => chainId !== action.payload.chainId
+        );
+        sliceState.form.to = otherChains[0];
+      }
+
+      sliceState.form.step = FormStep.Preview;
+
+      resetQuotes(sliceState);
+    },
+    setToChain(sliceState, action: PayloadAction<{ chainId: ChainEntity['id'] }>) {
+      sliceState.form.to = action.payload.chainId;
+      sliceState.form.input.amount = BIG_ZERO;
+      sliceState.form.input.max = false;
+
+      if (sliceState.form.from === action.payload.chainId) {
+        const otherChains = sliceState.destinations.allChains.filter(
+          chainId => chainId !== action.payload.chainId
+        );
+        sliceState.form.from = otherChains[0];
+      }
+
+      sliceState.form.step = FormStep.Preview;
+
+      resetQuotes(sliceState);
+    },
+    setInputAmount(sliceState, action: PayloadAction<InputTokenAmount<TokenErc20>>) {
+      if (!sliceState.form.input.amount.isEqualTo(action.payload.amount)) {
+        sliceState.form.input.amount = action.payload.amount;
+      }
+      if (sliceState.form.input.max !== action.payload.max) {
+        sliceState.form.input.max = action.payload.max;
+      }
+      if (!isTokenEqual(sliceState.form.input.token, action.payload.token)) {
+        sliceState.form.input.token = action.payload.token;
+      }
+    },
+    selectQuote(sliceState, action: PayloadAction<{ quoteId: string }>) {
+      const { quoteId } = action.payload;
+
+      if (quoteId in sliceState.quote.quotes.byId) {
+        sliceState.quote.selected = action.payload.quoteId;
+      } else {
+        sliceState.quote.selected = null;
+      }
+    },
+    unselectQuote(sliceState) {
+      sliceState.quote.selected = null;
+    },
+    restart(sliceState) {
+      resetQuotes(sliceState);
+      sliceState.form.input.amount = BIG_ZERO;
+      sliceState.form.step = FormStep.Preview;
     },
   },
-
   extraReducers: builder => {
-    builder.addCase(initiateBridgeForm.fulfilled, (sliceState, action) => {
-      const { bridgeData, chainId, destChainId, supportedChains } = action.payload;
-      sliceState.fromChainId = chainId;
-      sliceState.destChainId = destChainId;
-      sliceState.amount = BIG_ZERO;
-      sliceState.formattedInput = '';
-      sliceState.max = false;
-      sliceState.bridgeDataByChainId[chainId] = bridgeData;
-      sliceState.supportedChains = supportedChains;
-    });
-    builder.addCase(fetchBridgeChainData.fulfilled, (sliceState, action) => {
-      const { chainId, bridgeData } = action.payload;
+    builder
+      .addCase(fetchBridgeConfig.fulfilled, (sliceState, action) => {
+        const { config } = action.payload;
+        const allChains = Object.keys(config.tokens);
+        const chainToBridges = allChains.reduce((allMap, fromChainId) => {
+          allMap[fromChainId] = allChains.reduce((chainMap, toChainId) => {
+            chainMap[toChainId] = config.bridges
+              .filter(bridge => {
+                return (
+                  fromChainId !== toChainId &&
+                  fromChainId in bridge.chains &&
+                  !bridge.chains[fromChainId].sendDisabled &&
+                  toChainId in bridge.chains &&
+                  !bridge.chains[toChainId].receiveDisabled
+                );
+              })
+              .map(bridge => bridge.id);
 
-      sliceState.bridgeDataByChainId[chainId] = bridgeData;
-    });
+            return chainMap;
+          }, {});
+          return allMap;
+        }, {});
+
+        sliceState.source = config.source.chainId;
+        sliceState.tokens = config.tokens;
+        sliceState.destinations = {
+          allChains,
+          chainToAddress: { ...config.tokens, [config.source.chainId]: config.source.address },
+          chainToBridges,
+          chainToChain: allChains.reduce((allMap, chainId) => {
+            allMap[chainId] = allChains.filter(
+              otherChainId => chainToBridges[chainId]?.[otherChainId]?.length > 0
+            );
+            return allMap;
+          }, {}),
+        };
+        sliceState.bridges = keyBy(config.bridges, 'id');
+      })
+      .addCase(initiateBridgeForm.fulfilled, (sliceState, action) => {
+        const { form } = action.payload;
+        sliceState.form = form;
+        resetQuotes(sliceState);
+      })
+      .addCase(validateBridgeForm.pending, (sliceState, action) => {
+        sliceState.validate.requestId = action.meta.requestId;
+
+        // We set quote to pending status if we previously validated successfully to reduce flicker
+        resetQuotes(sliceState, sliceState.validate.status === 'fulfilled' ? 'pending' : 'idle');
+      })
+      .addCase(validateBridgeForm.fulfilled, (sliceState, action) => {
+        if (sliceState.validate.requestId !== action.meta.requestId) {
+          return;
+        }
+
+        sliceState.validate.status = 'fulfilled';
+      })
+      .addCase(validateBridgeForm.rejected, (sliceState, action) => {
+        if (sliceState.validate.requestId !== action.meta.requestId) {
+          return;
+        }
+
+        sliceState.validate.status = 'rejected';
+        resetQuotes(sliceState);
+      })
+      .addCase(quoteBridgeForm.pending, (sliceState, action) => {
+        resetQuotes(sliceState, 'pending');
+        sliceState.quote.requestId = action.meta.requestId;
+      })
+      .addCase(quoteBridgeForm.fulfilled, (sliceState, action) => {
+        if (sliceState.quote.requestId !== action.meta.requestId) {
+          return;
+        }
+        sliceState.quote.status = 'fulfilled';
+        setQuotes(sliceState, 'quotes', action.payload.quotes);
+        setQuotes(sliceState, 'limitedQuotes', action.payload.limitedQuotes);
+        sliceState.quote.selected = action.payload.quotes[0]?.id || null;
+        sliceState.quote.error = null;
+      })
+      .addCase(quoteBridgeForm.rejected, (sliceState, action) => {
+        if (sliceState.quote.requestId !== action.meta.requestId) {
+          return;
+        }
+        sliceState.quote.status = 'rejected';
+        sliceState.quote.selected = null;
+        sliceState.quote.error = action.error;
+        if (action.meta.rejectedWithValue) {
+          sliceState.quote.error = {
+            message: 'Reduce bridge amount or try again later',
+            name: action.payload,
+          };
+          sliceState.quote.limitError = pick(action.meta, ['current', 'max', 'canWait']);
+        } else {
+          sliceState.quote.limitError = undefined;
+        }
+      })
+      .addCase(confirmBridgeForm.pending, (sliceState, action) => {
+        sliceState.confirm.status = 'pending';
+        sliceState.confirm.requestId = action.meta.requestId;
+        sliceState.confirm.error = null;
+        sliceState.form.step = FormStep.Confirm;
+      })
+      .addCase(confirmBridgeForm.fulfilled, (sliceState, action) => {
+        if (sliceState.confirm.requestId !== action.meta.requestId) {
+          return;
+        }
+        sliceState.confirm.status = 'fulfilled';
+        sliceState.confirm.quote = action.payload.quote;
+        sliceState.confirm.error = null;
+      })
+      .addCase(confirmBridgeForm.rejected, (sliceState, action) => {
+        if (sliceState.confirm.requestId !== action.meta.requestId) {
+          return;
+        }
+        sliceState.confirm.status = 'rejected';
+        sliceState.confirm.quote = null;
+        sliceState.confirm.error = action.error;
+      })
+      .addCase(performBridge.fulfilled, (sliceState, _action) => {
+        sliceState.form.step = FormStep.Transaction;
+      });
   },
 });
+
+function setQuotes(
+  sliceState: Draft<BridgeState>,
+  key: 'quotes' | 'limitedQuotes',
+  quotes: IBridgeQuote<BeefyAnyBridgeConfig>[]
+) {
+  sliceState.quote[key].byId = quotes.reduce((map, quote) => {
+    map[quote.id] = quote;
+    return map;
+  }, {});
+  sliceState.quote[key].allIds = quotes.map(quote => quote.id);
+}
+
+function resetQuotes(
+  sliceState: Draft<BridgeState>,
+  status: BridgeState['quote']['status'] = 'idle'
+) {
+  sliceState.quote.status = status;
+  sliceState.quote.requestId = null;
+  sliceState.quote.selected = null;
+  sliceState.quote.error = null;
+}
 
 export const bridgeActions = bridgeSlice.actions;

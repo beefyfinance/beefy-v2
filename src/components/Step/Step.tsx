@@ -28,7 +28,7 @@ export const Step = memo<StepProps>(function Step({
   contentClass,
   noPadding = false,
 }) {
-  const cardHeight = stepType === 'bridge' ? '658px' : '648px';
+  const cardHeight = stepType === 'bridge' ? '600px' : '648px';
 
   const classes = useStyles({ cardHeight });
 
