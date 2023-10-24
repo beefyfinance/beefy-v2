@@ -73,11 +73,15 @@ export const analyticsSlice = createSlice({
 
         const totalsKey = isBoost ? totals.byBoostId : totals.byVaultId;
 
-        const history = totalsKey[row.displayName] || [];
+        //displayName is the vaultId
+        //have to add a exception to optimis-bridge-bifi-vault since are mooBIFI transfers on Optimism Chain
+        const vaultId =
+          row.displayName === 'optimism-bridged-bifi-vault' ? 'bifi-vault' : row.displayName;
+        const history = totalsKey[vaultId] || [];
 
         history.push(row);
 
-        totalsKey[row.displayName] = history;
+        totalsKey[vaultId] = history;
       }
 
       for (const vaultId of Object.keys(totals.byVaultId)) {
