@@ -39,9 +39,10 @@ export const updateSteps = createAsyncThunk<void, void, { state: BeefyState }>(
         dispatch(stepperActions.updateCurrentStepIndex({ stepIndex: nextStep }));
         dispatch(stepperActions.setStepContent({ stepContent: StepContent.StartTx }));
       } else {
-        if (steps.items[steps.currentStep].step !== 'bridge') {
-          dispatch(stepperActions.setStepContent({ stepContent: StepContent.SuccessTx }));
-        }
+        // TODO
+        // if (steps.items[steps.currentStep].step !== 'bridge') {
+        dispatch(stepperActions.setStepContent({ stepContent: StepContent.SuccessTx }));
+        // }
       }
     }
   }

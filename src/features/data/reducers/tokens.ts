@@ -20,6 +20,7 @@ import { fetchAllMinters } from '../actions/minters';
 import type { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
 import type { LpData } from '../apis/beefy/beefy-api';
 import { isNativeAlternativeAddress } from '../../../helpers/addresses';
+import { fetchBridgeConfig } from '../actions/bridge';
 
 /**
  * State containing Vault infos
@@ -135,7 +136,7 @@ export const tokensSlice = createSlice({
     });
 
     // when prices are changed, update prices
-    // this could also just be a a super quick drop in replacement
+    // this could also just be a super quick drop in replacement
     // if we are OK to not use BigNumber, which I don't think we are
     builder.addCase(fetchAllPricesAction.fulfilled, (sliceState, action) => {
       for (const [oracleId, price] of Object.entries(action.payload.prices)) {
@@ -148,17 +149,96 @@ export const tokensSlice = createSlice({
       }
     });
 
-    // we have another way of finding token info
+    // tokens from addressbook
     builder.addCase(fetchAddressBookAction.fulfilled, (sliceState, action) => {
       addAddressBookToState(sliceState, action.payload);
     });
+
     builder.addCase(fetchAllAddressBookAction.fulfilled, (sliceState, action) => {
       for (const payload of action.payload) {
         addAddressBookToState(sliceState, payload);
       }
     });
+
+    // tokens from beefy bridge
+    builder.addCase(fetchBridgeConfig.fulfilled, (sliceState, action) => {
+      const {
+        config: { source, tokens },
+      } = action.payload;
+
+      const sourceToken = addBridgeTokenToState(
+        sliceState,
+        {
+          ...source,
+          type: 'erc20',
+          buyUrl: null,
+          website: null,
+          documentation: null,
+          description: null,
+        },
+        true
+      );
+
+      for (const [chainId, address] of Object.entries(tokens)) {
+        const isSourceXErc20 = chainId === sourceToken.chainId;
+
+        const token: TokenErc20 = {
+          ...sourceToken,
+          id: isSourceXErc20 ? `x${sourceToken.id}` : sourceToken.id,
+          chainId,
+          address,
+        };
+
+        // no need to track xerc20 on source chain
+        addBridgeTokenToState(sliceState, token, !isSourceXErc20);
+      }
+    });
   },
 });
+
+function addBridgeTokenToState(
+  sliceState: Draft<TokensState>,
+  token: TokenErc20,
+  trackBalance: boolean
+): TokenErc20 {
+  const chainId = token.chainId;
+  const addressLower = token.address.toLowerCase();
+
+  if (sliceState.byChainId[chainId] === undefined) {
+    sliceState.byChainId[chainId] = {
+      byId: {},
+      byAddress: {},
+      interestingBalanceTokenAddresses: [],
+      native: null,
+      wnative: null,
+    };
+  }
+
+  // If it doesn't exist then, add it
+  if (sliceState.byChainId[chainId].byAddress[addressLower] === undefined) {
+    sliceState.byChainId[chainId].byAddress[addressLower] = token;
+  }
+
+  // id => address mapping
+  if (sliceState.byChainId[chainId].byId[token.id] === undefined) {
+    sliceState.byChainId[chainId].byId[token.id] = addressLower;
+  }
+
+  // grab existing/added token
+  const stateToken = sliceState.byChainId[chainId].byAddress[addressLower];
+
+  // ensure we track balance
+  if (trackBalance) {
+    ensureInterestingToken(addressLower, chainId, sliceState);
+  }
+
+  // type-safety
+  if (isTokenErc20(stateToken)) {
+    return stateToken;
+  }
+
+  throw new Error(`Existing token ${stateToken.id} is not an ERC20 token`);
+}
 
 function addPriceToState(
   sliceState: Draft<TokensState>,
@@ -372,7 +452,7 @@ function addVaultToState(
     };
   }
 
-  const depositToken = getDepositTokenFromLegacyVaultConfig(selectChainById(state, chainId), vault);
+  const depositToken = getDepositTokenFromLegacyVaultConfig(chain, vault);
 
   if (sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()] === undefined) {
     sliceState.byChainId[chainId].byId[depositToken.id] = depositToken.address.toLowerCase();
@@ -435,13 +515,14 @@ function addVaultToState(
       sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
       sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
     } else {
+      // Add receipt token
       const addressKey: string = vault.earnedTokenAddress.toLowerCase();
       const token: TokenEntity = {
         id: vault.earnedToken,
         chainId: chainId,
         oracleId: vault.oracleId,
         address: vault.earnedTokenAddress,
-        decimals: 18, // TODO: not sure about that
+        decimals: 18, // receipt token always has 18 decimals
         symbol: vault.earnedToken,
         buyUrl: sliceState.byChainId[chainId].byAddress[addressKey]?.buyUrl ?? null,
         website: sliceState.byChainId[chainId].byAddress[addressKey]?.website ?? null,
@@ -449,10 +530,70 @@ function addVaultToState(
         documentation: sliceState.byChainId[chainId].byAddress[addressKey]?.documentation ?? null,
         type: 'erc20',
       };
-      // temporaryWrappedtokenFix(token);
+
       sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
       sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
       sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
+
+      // Add bridged versions of receipt token
+      if (vault.bridged) {
+        addBridgedReceiptTokensToState(vault, token, chain, sliceState);
+      }
     }
+  } else {
+    /** address book loaded first, and the vault receipt token is in the address book */
+    // make sure vault token is still tagged as an interesting address
+    ensureInterestingToken(vault.earnedTokenAddress ?? 'native', chainId, sliceState);
+    // make sure bridged tokens are added/are marked as interesting
+    if (!vault.isGovVault && vault.bridged) {
+      const token = sliceState.byChainId[chainId].byAddress[addressKey];
+      if (isTokenErc20(token)) {
+        addBridgedReceiptTokensToState(vault, token, chain, sliceState);
+      }
+    }
+  }
+}
+
+function addBridgedReceiptTokensToState(
+  vault: VaultConfig,
+  token: TokenErc20,
+  chain: ChainEntity,
+  sliceState: Draft<TokensState>
+) {
+  if (!vault.bridged) {
+    return;
+  }
+
+  const bridgedTokens = Object.entries(vault.bridged).map(([chainId, address]) => ({
+    ...token,
+    id: `${token.id}-${chainId}`,
+    chainId,
+    address,
+    description: token.description || null, // we leave description null so that addressbook can fill it in
+  }));
+
+  for (const bridgedToken of bridgedTokens) {
+    const bridgedAddressKey = bridgedToken.address.toLowerCase();
+    const existingBridgedToken =
+      sliceState.byChainId[bridgedToken.chainId].byAddress[bridgedAddressKey];
+
+    // Add bridged receipt token
+    if (!existingBridgedToken) {
+      sliceState.byChainId[bridgedToken.chainId].byId[bridgedToken.id] = bridgedAddressKey;
+      sliceState.byChainId[bridgedToken.chainId].byAddress[bridgedAddressKey] = bridgedToken;
+    }
+
+    // Make sure bridged receipt token is marked as interesting
+    ensureInterestingToken(bridgedToken.address, bridgedToken.chainId, sliceState);
+  }
+}
+
+function ensureInterestingToken(
+  address: string,
+  chainId: ChainEntity['id'],
+  sliceState: Draft<TokensState>
+) {
+  if (!sliceState.byChainId[chainId].interestingBalanceTokenAddresses.includes(address)) {
+    sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(address);
   }
 }

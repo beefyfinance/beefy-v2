@@ -39,6 +39,7 @@ export const bluechipTokens = [
   'COMP',
   'SNX',
   'BIFI',
+  'oldBIFI',
   'sarETH', //Stargate Arbitrum ETH
   'soETH', //Stargate Optimism ETH
   'sethETH', //Stargate Ethereum ETH

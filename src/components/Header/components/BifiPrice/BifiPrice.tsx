@@ -15,10 +15,11 @@ export const _BifiPrice = connect((state: BeefyState) => {
   return { beefyPrice };
 })(({ beefyPrice }: { beefyPrice: BigNumber }) => {
   const classes = useStyles();
+  // TODO link directly to BIFI swap once 1inch supports new BIFI
   return (
     <a
       className={classes.bifiPrice}
-      href="https://app.1inch.io/#/56/swap/BNB/BIFI"
+      href="https://app.1inch.io/#/1/simple/swap/ETH"
       target="_blank"
       rel="noreferrer"
     >

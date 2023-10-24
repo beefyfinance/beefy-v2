@@ -1,1 +1,1 @@
-export * from './BalanceEndAdornement';
+export * from './BalanceEndAdornment';

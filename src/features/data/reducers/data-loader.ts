@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
 import type { ActionReducerMapBuilder, AsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllAllowanceAction } from '../actions/allowance';
 import { fetchApyAction } from '../actions/apy';
 import { fetchAllBalanceAction } from '../actions/balance';
@@ -22,7 +22,7 @@ import {
 import { fetchAllZapsAction } from '../actions/zap';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters';
 import { fetchAllInfoCards } from '../actions/info-cards';
-import { initiateBridgeForm } from '../actions/bridge';
+import { fetchBridgeConfig } from '../actions/bridge';
 import { fetchPlatforms } from '../actions/platforms';
 import { fetchOnRampSupportedProviders } from '../actions/on-ramp';
 import { fetchFees } from '../actions/fees';
@@ -95,7 +95,7 @@ export const initialDataLoaderState: DataLoaderState = {
     minters: dataLoaderStateInit,
     minterForm: dataLoaderStateInit,
     infoCards: dataLoaderStateInit,
-    bridge: dataLoaderStateInit,
+    bridgeConfig: dataLoaderStateInit,
     platforms: dataLoaderStateInit,
     onRamp: dataLoaderStateInit,
     treasury: dataLoaderStateInit,
@@ -320,7 +320,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchAllInfoCards, 'infoCards', false);
     addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm', true);
     addGlobalAsyncThunkActions(builder, initiateMinterForm, 'minterForm', true);
-    addGlobalAsyncThunkActions(builder, initiateBridgeForm, 'bridge', true);
+    addGlobalAsyncThunkActions(builder, fetchBridgeConfig, 'bridgeConfig', true);
     addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps', true);
     addGlobalAsyncThunkActions(builder, fetchAllAmmsAction, 'amms', true);
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
