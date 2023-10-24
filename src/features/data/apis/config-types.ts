@@ -41,6 +41,8 @@ export interface VaultConfig {
   showWarning?: boolean | null;
   warning?: string | null;
   migrationIds?: string[];
+  /** Map of chain->address of bridged receipt tokens */
+  bridged?: Record<ChainEntity['id'], string>;
 }
 
 export interface FeaturedVaultConfig {

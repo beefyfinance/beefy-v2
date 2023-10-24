@@ -71,6 +71,8 @@ export interface VaultStandard {
   retireReason?: string;
   pauseReason?: string;
   migrationIds?: string[];
+  /** Map of chain->address of bridged receipt tokens */
+  bridged?: Record<ChainEntity['id'], string>;
 }
 
 export interface VaultGov {

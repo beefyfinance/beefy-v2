@@ -372,7 +372,7 @@ function addVaultToState(
     };
   }
 
-  const depositToken = getDepositTokenFromLegacyVaultConfig(selectChainById(state, chainId), vault);
+  const depositToken = getDepositTokenFromLegacyVaultConfig(chain, vault);
 
   if (sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()] === undefined) {
     sliceState.byChainId[chainId].byId[depositToken.id] = depositToken.address.toLowerCase();
@@ -435,13 +435,14 @@ function addVaultToState(
       sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
       sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
     } else {
+      // Add receipt token
       const addressKey: string = vault.earnedTokenAddress.toLowerCase();
       const token: TokenEntity = {
         id: vault.earnedToken,
         chainId: chainId,
         oracleId: vault.oracleId,
         address: vault.earnedTokenAddress,
-        decimals: 18, // TODO: not sure about that
+        decimals: 18, // receipt token always has 18 decimals
         symbol: vault.earnedToken,
         buyUrl: sliceState.byChainId[chainId].byAddress[addressKey]?.buyUrl ?? null,
         website: sliceState.byChainId[chainId].byAddress[addressKey]?.website ?? null,
@@ -449,10 +450,72 @@ function addVaultToState(
         documentation: sliceState.byChainId[chainId].byAddress[addressKey]?.documentation ?? null,
         type: 'erc20',
       };
-      // temporaryWrappedtokenFix(token);
+
       sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
       sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
       sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
+
+      // Add bridged versions of receipt token
+      if (vault.bridged) {
+        console.debug('via vault');
+        addBridgedReceiptTokensToState(vault, token, chain, sliceState);
+      }
     }
+  } else {
+    /** address book loaded first, and the vault receipt token is in the address book */
+    // make sure vault token is still tagged as an interesting address
+    ensureInterestingToken(vault.earnedTokenAddress ?? 'native', chainId, sliceState);
+    // make sure bridged tokens are added/are marked as interesting
+    if (!vault.isGovVault && vault.bridged) {
+      const token = sliceState.byChainId[chainId].byAddress[addressKey];
+      if (isTokenErc20(token)) {
+        console.log('via addressbook');
+        addBridgedReceiptTokensToState(vault, token, chain, sliceState);
+      }
+    }
+  }
+}
+
+function addBridgedReceiptTokensToState(
+  vault: VaultConfig,
+  token: TokenErc20,
+  chain: ChainEntity,
+  sliceState: Draft<TokensState>
+) {
+  if (!vault.bridged) {
+    return;
+  }
+
+  const bridgedTokens = Object.entries(vault.bridged).map(([chainId, address]) => ({
+    ...token,
+    id: `${token.id}-${chainId}`,
+    chainId,
+    address,
+    description: `${token.symbol} bridged from ${chain.name}. ${token.description || ''}`,
+  }));
+
+  for (const bridgedToken of bridgedTokens) {
+    const bridgedAddressKey = bridgedToken.address.toLowerCase();
+    const existingBridgedToken =
+      sliceState.byChainId[bridgedToken.chainId].byAddress[bridgedAddressKey];
+
+    // Add bridged receipt token
+    if (!existingBridgedToken) {
+      sliceState.byChainId[bridgedToken.chainId].byId[bridgedToken.id] = bridgedAddressKey;
+      sliceState.byChainId[bridgedToken.chainId].byAddress[bridgedAddressKey] = bridgedToken;
+    }
+
+    // Make sure bridged receipt token is marked as interesting
+    ensureInterestingToken(bridgedToken.address, bridgedToken.chainId, sliceState);
+  }
+}
+
+function ensureInterestingToken(
+  address: string,
+  chainId: ChainEntity['id'],
+  sliceState: Draft<TokensState>
+) {
+  if (!sliceState.byChainId[chainId].interestingBalanceTokenAddresses.includes(address)) {
+    sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(address);
   }
 }

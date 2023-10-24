@@ -41,6 +41,7 @@ export const fetchAllBalanceAction = createAsyncThunk<
   const tokens = selectAllTokenWhereUserCouldHaveBalance(state, chainId).map(address =>
     selectTokenByAddress(state, chain.id, address)
   );
+
   // maybe have a way to retrieve those easily
   const boosts = selectBoostsByChainId(state, chainId).map(boostId =>
     selectBoostById(state, boostId)

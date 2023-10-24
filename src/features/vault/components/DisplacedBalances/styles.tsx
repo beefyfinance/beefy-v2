@@ -2,13 +2,23 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   container: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '16px',
+  },
+  entries: {
     ...theme.typography['body-lg'],
     color: theme.palette.text.middle,
-    padding: '8px 12px',
+    padding: '16px',
     borderRadius: '8px',
     display: 'flex',
+    flexDirection: 'column' as const,
     gap: '8px',
-    background: '#2D3153',
+    background: '#232743',
+  },
+  entry: {
+    display: 'flex',
+    gap: '8px',
   },
   icon: {
     width: '24px',
@@ -23,5 +33,9 @@ export const styles = (theme: Theme) => ({
   tokenAmount: {
     fontWeight: theme.typography['body-lg-med'].fontWeight,
     color: '#DB8332',
+  },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.primary.main,
   },
 });

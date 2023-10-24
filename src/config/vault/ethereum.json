@@ -23,7 +23,10 @@
     ],
     "strategyTypeId": "single",
     "network": "ethereum",
-    "createdAt": 1692902591
+    "createdAt": 1698105600,
+    "bridged": {
+      "optimism": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434"
+    }
   },
   {
     "id": "bifi-pool",
@@ -50,7 +53,7 @@
     "isGovVault": true,
     "strategyTypeId": "single",
     "network": "ethereum",
-    "createdAt": 1697819399
+    "createdAt": 1698105600
   },
   {
     "id": "convex-tricrypto-llama",

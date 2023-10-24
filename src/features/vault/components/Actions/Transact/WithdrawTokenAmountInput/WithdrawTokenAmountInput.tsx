@@ -7,7 +7,7 @@ import {
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import clsx from 'clsx';
-import { selectUserVaultDepositInDepositTokenExcludingBoosts } from '../../../../../data/selectors/balance';
+import { selectUserVaultDepositInDepositTokenExcludingBoostsBridged } from '../../../../../data/selectors/balance';
 import type { AmountInputProps } from '../AmountInput';
 import { AmountInput } from '../AmountInput';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
@@ -31,7 +31,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
       selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
     );
     const userBalance = useAppSelector(state =>
-      selectUserVaultDepositInDepositTokenExcludingBoosts(state, vaultId)
+      selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId)
     );
 
     const value = useAppSelector(selectTransactInputAmount);

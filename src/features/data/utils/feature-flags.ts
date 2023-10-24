@@ -222,12 +222,3 @@ export function featureFlag_walletConnectChainId(): number {
   }
   return undefined;
 }
-
-export function featureFlag_isBeefyOmnipoolLive(): boolean {
-  const params = getSearchParams();
-  if (params.has('__is_beefy_omnipool_live')) {
-    return true;
-  }
-  // beefy omnipool is live on mainnet on the 24th of October 2023
-  return new Date().getTime() > Date.parse('2023-10-24T00:00:00.000Z');
-}

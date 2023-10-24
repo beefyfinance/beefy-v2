@@ -11,7 +11,7 @@ import {
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
-import { selectUserVaultDepositInDepositTokenExcludingBoosts } from '../../../../../data/selectors/balance';
+import { selectUserVaultDepositInDepositTokenExcludingBoostsBridged } from '../../../../../data/selectors/balance';
 import { errorToString } from '../../../../../../helpers/format';
 import { TextLoader } from '../../../../../../components/TextLoader';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
@@ -22,7 +22,6 @@ import { TransactStatus } from '../../../../../data/reducers/wallet/transact-typ
 import { WithdrawTokenAmountInput } from '../WithdrawTokenAmountInput';
 import { VaultFees } from '../VaultFees';
 import { WithdrawActions } from '../WithdrawActions';
-import { StakedInBoost } from '../StakedInboost';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
 import { WithdrawLinks } from '../WithDrawLinks';
 
@@ -35,7 +34,9 @@ const DepositedInVault = memo(function DepositedInVault() {
     vault ? selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress) : null
   );
   const balance = useAppSelector(state =>
-    vault && token ? selectUserVaultDepositInDepositTokenExcludingBoosts(state, vaultId) : null
+    vault && token
+      ? selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId)
+      : null
   );
 
   if (!vault || !token || !balance) {
@@ -73,7 +74,6 @@ export const WithdrawForm = memo(function WithdrawForm() {
 
   return (
     <>
-      <StakedInBoost className={classes.stakedInBoost} />
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
           {t(hasOptions ? 'Transact-SelectToken' : 'Transact-Withdraw')}
