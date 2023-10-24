@@ -22,7 +22,7 @@ import { DaoNavItems, ResourcesNavItems } from './list';
 import { ConnectionStatus } from './components/ConnectionStatus';
 import { DropNavItem } from './components/DropNavItem';
 import { MobileMenu } from './components/MobileMenu';
-// import { BifiPrice } from './components/BifiPrice';
+import { BifiPrice } from './components/BifiPrice';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { selectShouldInitProposals } from '../../features/data/selectors/data-loader';
 import { fetchActiveProposals } from '../../features/data/actions/proposal';
@@ -80,7 +80,7 @@ export const Header = memo(function Header() {
               <Hidden mdDown>
                 <NavItem title={'Header-BuyCrypto'} url="/onramp" Icon={BuyCryptoIcon} />
                 <NavItem title={'Header-BridgeBifi'} url="/bridge" Icon={BridgeIcon} />
-                {/* <BifiPrice />*/}
+                <BifiPrice />
               </Hidden>
               <ConnectionStatus />
               <Hidden lgUp>
