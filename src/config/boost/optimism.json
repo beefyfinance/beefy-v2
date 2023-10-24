@@ -360,7 +360,7 @@
     "id": "moo_velodrome-weth-bifi-beefy",
     "poolId": "velodrome-weth-bifi",
     "name": "Beefy",
-    "assets": ["BIFI", "ETH"],
+    "assets": ["oldBIFI", "ETH"],
     "tokenAddress": "0x3532b6f723948eF39d5DCf44C16855239aF81082",
     "earnedToken": "OP",
     "earnedTokenDecimals": 18,

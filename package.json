@@ -8,6 +8,7 @@
     "node": "16.x"
   },
   "dependencies": {
+    "@axelar-network/axelarjs-sdk": "^0.13.6",
     "@deficonnect/web3-connector": "^2.0.3",
     "@ethersproject/address": "^5.4.0",
     "@ethersproject/providers": "^5.7.2",
@@ -25,7 +26,7 @@
     "@web3-onboard/walletconnect": "^2.4.7",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
-    "blockchain-addressbook": "^0.44.25",
+    "blockchain-addressbook": "^0.44.29",
     "clsx": "^1.1.1",
     "date-fns": "^2.29.3",
     "eip-712": "^1.0.0",
@@ -59,7 +60,8 @@
     "@ethersproject/providers": "5.7.2",
     "rollup": "3.20.2",
     "@types/react": "18.2.15",
-    "@types/react-dom": "18.2.7"
+    "@types/react-dom": "18.2.7",
+    "@axelar-network/axelar-cgp-solidity": "6.1.0"
   },
   "scripts": {
     "start": "vite",

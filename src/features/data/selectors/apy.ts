@@ -4,7 +4,7 @@ import { isGovVault, isVaultActive } from '../entities/vault';
 import {
   selectAddressDepositedVaultIds,
   selectGovVaultUserStakedBalanceInDepositToken,
-  selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
+  selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged,
   selectUserVaultDepositInDepositToken,
 } from './balance';
 import { selectIsUserBalanceAvailable } from './data-loader';
@@ -59,7 +59,11 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
   for (const vault of userVaults) {
     const tokenBalance = isGovVault(vault)
       ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id, walletAddress)
-      : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id, walletAddress);
+      : selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(
+          state,
+          vault.id,
+          walletAddress
+        );
 
     if (tokenBalance.lte(BIG_ZERO)) {
       continue;

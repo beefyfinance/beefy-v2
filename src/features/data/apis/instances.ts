@@ -7,7 +7,6 @@ import type {
   IWalletConnectionApi,
   WalletConnectionOptions,
 } from './wallet/wallet-connection-types';
-import { BridgeApi } from './bridge/bridge';
 import type { IOnRampApi } from './on-ramp/on-ramp-types';
 import type { ITransactApi } from './transact/transact-types';
 import { createWeb3Instance, rateLimitWeb3Instance } from '../../../helpers/web3';
@@ -17,11 +16,12 @@ import type { IOneInchApi } from './one-inch/one-inch-types';
 import type { IBeefyDataApi } from './beefy/beefy-data-api-types';
 import PQueue from 'p-queue';
 import type { IMigrationApi } from './migration/migration-types';
+import type { IBridgeApi } from './bridge/bridge-api-types';
+import type { IAxelarApi } from './axelar/axelar-types';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
 const configApi = new ConfigAPI();
-const bridgeApi = new BridgeApi();
 const analyticsApi = new AnalyticsApi();
 
 /**
@@ -34,10 +34,6 @@ export function getBeefyApi(): BeefyAPI {
 
 export function getConfigApi(): ConfigAPI {
   return configApi;
-}
-
-export function getBridgeApi(): BridgeApi {
-  return bridgeApi;
 }
 
 export function getAnalyticsApi(): AnalyticsApi {
@@ -145,6 +141,7 @@ export async function getTransactApi(): Promise<ITransactApi> {
 
 const OneInchApiPromise = import('./one-inch');
 const oneInchApiCache: { [chainId: string]: IOneInchApi } = {};
+
 export async function getOneInchApi(
   chain: ChainEntity,
   oracleAddress: string
@@ -171,6 +168,7 @@ export async function getBeefyDataApi(): Promise<IBeefyDataApi> {
 }
 
 let migrationApiInstance: IMigrationApi | null = null;
+
 export async function getMigrationApi(): Promise<IMigrationApi> {
   if (migrationApiInstance) {
     return migrationApiInstance;
@@ -179,4 +177,28 @@ export async function getMigrationApi(): Promise<IMigrationApi> {
   const { MigrationApi } = await import('./migration');
   migrationApiInstance = new MigrationApi();
   return migrationApiInstance;
+}
+
+let bridgeApiInstance: IBridgeApi | null = null;
+
+export async function getBridgeApi(): Promise<IBridgeApi> {
+  if (bridgeApiInstance) {
+    return bridgeApiInstance;
+  }
+
+  const { BridgeApi } = await import('./bridge/bridge-api');
+  bridgeApiInstance = new BridgeApi();
+  return bridgeApiInstance;
+}
+
+let axelarApiInstance: IAxelarApi | null = null;
+
+export async function getAxelarApi(): Promise<IAxelarApi> {
+  if (axelarApiInstance) {
+    return axelarApiInstance;
+  }
+
+  const { AxelarApi } = await import('./axelar/axelar');
+  axelarApiInstance = new AxelarApi();
+  return axelarApiInstance;
 }

@@ -43,6 +43,7 @@ const overrides = {
   'baseswap-axlwbtc-usdbc': { harvestOnDeposit: undefined },
   'venus-bnb': { harvestOnDeposit: undefined },
   'kinetix-klp': { harvestOnDeposit: undefined },
+  'bifi-vault': { beefyFeeRecipient: undefined }, // TODO: remove
 };
 
 const oldValidOwners = [
@@ -54,6 +55,8 @@ const oldValidOwners = [
 const oldValidFeeRecipients = {
   canto: '0xF09d213EE8a8B159C884b276b86E08E26B3bfF75',
   kava: '0x07F29FE11FbC17876D9376E3CD6F2112e81feA6F',
+  moonriver: '0x617f12E04097F16e73934e84f35175a1B8196551',
+  moonbeam: '0x3E7F60B442CEAE0FE5e48e07EB85Cfb1Ed60e81A',
 };
 
 const nonHarvestOnDepositChains = ['ethereum', 'avax'];

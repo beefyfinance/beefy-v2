@@ -1,5 +1,10 @@
 [
   {
+    "id": "beefy",
+    "name": "Beefy Bridge",
+    "website": "https://app.beefy.com/bridge"
+  },
+  {
     "id": "axelar",
     "name": "Axelar",
     "website": "https://axelar.network"
@@ -50,7 +55,6 @@
     "name": "Threshold",
     "website": "https://threshold.network/"
   },
-
   {
     "id": "gravity",
     "name": "Gravity",

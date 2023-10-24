@@ -222,3 +222,13 @@ export function featureFlag_walletConnectChainId(): number {
   }
   return undefined;
 }
+
+export function featureFlag_simulateBridgeRateLimit(): boolean {
+  const params = getSearchParams();
+  return params.has('__simulate_bridge_rate_limit');
+}
+
+export function featureFlag_simulateAllBridgeRateLimit(): boolean {
+  const params = getSearchParams();
+  return params.has('__simulate_all_bridge_rate_limit');
+}

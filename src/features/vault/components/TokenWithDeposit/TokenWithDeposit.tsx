@@ -9,7 +9,7 @@ import type { VaultEntity } from '../../../data/entities/vault';
 import { isGovVault } from '../../../data/entities/vault';
 import {
   selectGovVaultUserStakedBalanceInDepositToken,
-  selectStandardVaultUserBalanceInDepositTokenExcludingBoosts,
+  selectStandardVaultUserBalanceInDepositTokenExcludingBoostsBridged,
 } from '../../../data/selectors/balance';
 import {
   selectIsTokenLoaded,
@@ -44,7 +44,7 @@ export function TokenWithDeposit({
   const oracleAmount = useAppSelector(state => {
     const mooTokenBalance = isGovVault(vault)
       ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
-      : selectStandardVaultUserBalanceInDepositTokenExcludingBoosts(state, vault.id);
+      : selectStandardVaultUserBalanceInDepositTokenExcludingBoostsBridged(state, vault.id);
     return mooTokenBalance;
   });
 

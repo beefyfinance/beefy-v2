@@ -5,15 +5,28 @@ import { SearchableList } from '../../../../../../components/SearchableList';
 import { Step } from '../../../../../../components/Step';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectBridgeState,
-  selectBridgeSuportedChains,
+  selectBridgeFormState,
+  selectBridgeSupportedChainIdsFrom,
 } from '../../../../../data/selectors/bridge';
 import { ListItem } from '../ListItem';
-import type { ChainEntity } from '../../../../../data/entities/chain';
 
-export const _SelectToChainStep = () => {
+const ChainSelector = memo(function ChainSelector() {
+  const dispatch = useAppDispatch();
+  const { from } = useAppSelector(selectBridgeFormState);
+  const options = useAppSelector(state => selectBridgeSupportedChainIdsFrom(state, from));
+
+  const handleSelect = useCallback(
+    (chainId: string) => {
+      dispatch(bridgeActions.setToChain({ chainId }));
+    },
+    [dispatch]
+  );
+
+  return <SearchableList options={options} onSelect={handleSelect} ItemInnerComponent={ListItem} />;
+});
+
+export const SelectToChainStep = memo(function SelectToChainStep() {
   const { t } = useTranslation();
-
   const dispatch = useAppDispatch();
 
   const handleBack = useCallback(() => {
@@ -24,31 +37,5 @@ export const _SelectToChainStep = () => {
     <Step stepType="bridge" onBack={handleBack} title={t('Bridge-ToChainStep-Title')}>
       <ChainSelector />
     </Step>
-  );
-};
-
-export const SelectToChainStep = memo(_SelectToChainStep);
-
-const ChainSelector = memo(function ChainSelector() {
-  const bridgeState = useAppSelector(selectBridgeState);
-  const options = useAppSelector(selectBridgeSuportedChains);
-
-  const filteredOptions = options.filter(
-    (chainId: ChainEntity['id']) => chainId !== bridgeState.fromChainId
-  );
-  const dispatch = useAppDispatch();
-  const handleSelect = useCallback(
-    (chainId: string) => {
-      dispatch(bridgeActions.setDestChain({ destChainId: chainId }));
-    },
-    [dispatch]
-  );
-
-  return (
-    <SearchableList
-      options={filteredOptions}
-      onSelect={handleSelect}
-      ItemInnerComponent={ListItem}
-    />
   );
 });

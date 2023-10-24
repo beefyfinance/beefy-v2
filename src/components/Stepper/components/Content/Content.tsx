@@ -6,6 +6,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import type { Step } from '../../../../features/data/reducers/wallet/stepper';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
 import {
+  selectBridgeSuccess,
   selectMintResult,
   selectStepperCurrentStep,
   selectStepperCurrentStepData,
@@ -24,6 +25,9 @@ import { ListJoin } from '../../../ListJoin';
 import iconError from '../../../../images/icons/error.svg';
 import { ShareButton } from '../../../../features/vault/components/ShareButton';
 import type { VaultEntity } from '../../../../features/data/entities/vault';
+import { isWalletActionError } from '../../../../features/data/reducers/wallet/wallet-action';
+import { selectChainById } from '../../../../features/data/selectors/chains';
+import { explorerTxUrl } from '../../../../helpers/url';
 
 const useStyles = makeStyles(styles);
 
@@ -58,6 +62,9 @@ export const ErrorContent = memo(function ErrorContent() {
   const { t } = useTranslation();
   const classes = useStyles();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
+  if (!isWalletActionError(walletActionsState)) {
+    return null;
+  }
 
   return (
     <>
@@ -158,6 +165,52 @@ const MintSuccessContent = memo<SuccessContentProps>(function MintSuccessContent
   );
 });
 
+const BridgeSuccessContent = memo<SuccessContentProps>(function BridgeSuccessContent() {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const walletAction = useAppSelector(selectBridgeSuccess);
+  const { quote, hash } = walletAction.data;
+  const bridgeExplorerUrl = quote.config.explorerUrl;
+  const fromChain = useAppSelector(state => selectChainById(state, quote.input.token.chainId));
+  const toChain = useAppSelector(state => selectChainById(state, quote.output.token.chainId));
+  const explorerUrl = useMemo(() => {
+    if (bridgeExplorerUrl) {
+      return bridgeExplorerUrl.replace('{{hash}}', hash);
+    }
+    return explorerTxUrl(fromChain, hash);
+  }, [fromChain, hash, bridgeExplorerUrl]);
+
+  return (
+    <>
+      <Title text={t('Stepper-bridge-Success-Title')} />
+      <div className={clsx(classes.content, classes.successContent)}>
+        <div className={classes.message}>
+          {t('Stepper-bridge-Success-Content', { from: fromChain.name })}
+        </div>
+        <div className={classes.messageHighlight}>
+          <Trans
+            t={t}
+            i18nKey={
+              bridgeExplorerUrl
+                ? 'Stepper-bridge-Success-Track-Incoming'
+                : 'Stepper-bridge-Success-Track-Outgoing'
+            }
+            components={{
+              Link: (
+                <a href={explorerUrl} className={classes.link} target={'_blank'} rel={'noopener'} />
+              ),
+            }}
+            values={{ to: toChain.name, from: fromChain.name, provider: quote.config.title }}
+          />
+        </div>
+      </div>
+      <div className={classes.buttons}>
+        <CloseButton />
+      </div>
+    </>
+  );
+});
+
 const FallbackSuccessContent = memo<SuccessContentProps>(function FallbackSuccessContent({ step }) {
   const { t } = useTranslation();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
@@ -255,6 +308,7 @@ const stepToSuccessContent: StepToSuccessContent = {
   'zap-in': ZapSuccessContent,
   'zap-out': ZapSuccessContent,
   mint: MintSuccessContent,
+  bridge: BridgeSuccessContent,
 };
 
 export const SuccessContent = memo(function SuccessContent() {

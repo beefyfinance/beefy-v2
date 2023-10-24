@@ -122,7 +122,7 @@
     "id": "moo_equilibre-bifi-wkava-kava",
     "poolId": "equilibre-bifi-wkava",
     "name": "Beefy",
-    "assets": ["BIFI", "KAVA"],
+    "assets": ["oldBIFI", "KAVA"],
     "tokenAddress": "0xB5d4049c2f7cf590F10e3fD0D6E0444F3a109E01",
     "earnedToken": "WKAVA",
     "earnedTokenDecimals": 18,

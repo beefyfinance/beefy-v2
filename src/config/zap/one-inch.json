@@ -44,7 +44,7 @@
       "recipient": "0x8Af5c669620B5e525CE85DB00D0c159FF6BbE983"
     },
     "depositFromTokens": ["MATIC", "WMATIC", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
-    "withdrawToTokens": ["MATIC", "BIFI", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
+    "withdrawToTokens": ["MATIC", "oldBIFI", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
     "blockedTokens": [
       "2BRZ",
       "4EUR",
@@ -93,7 +93,7 @@
       "recipient": "0xf2EeC1baC39306C0761c816d1D33cF7C9Ad6C0Fe"
     },
     "depositFromTokens": ["FTM", "WFTM", "USDC", "fUSDT", "DAI", "MIM", "MAI", "WETH", "WBTC"],
-    "withdrawToTokens": ["FTM", "BIFI", "USDC", "fUSDT", "DAI", "MIM", "MAI", "WETH", "WBTC"],
+    "withdrawToTokens": ["FTM", "oldBIFI", "USDC", "fUSDT", "DAI", "MIM", "MAI", "WETH", "WBTC"],
     "blockedTokens": [
       "alUSD",
       "ANKR",
@@ -155,7 +155,7 @@
     "withdrawToTokens": [
       "ETH",
       "OP",
-      "BIFI",
+      "oldBIFI",
       "opUSDCe",
       "USDT",
       "DAI",
@@ -219,7 +219,7 @@
     ],
     "withdrawToTokens": [
       "AVAX",
-      "BIFI",
+      "oldBIFI",
       "USDC",
       "USDCe",
       "USDT",
@@ -273,7 +273,7 @@
     "withdrawToTokens": [
       "ETH",
       "ARB",
-      "BIFI",
+      "oldBIFI",
       "USDC",
       "arbUSDCe",
       "USDT",
@@ -317,7 +317,7 @@
       "recipient": "0xf2EeC1baC39306C0761c816d1D33cF7C9Ad6C0Fe"
     },
     "depositFromTokens": ["BNB", "WBNB", "BUSD", "USDC", "USDT", "DAI", "ETH", "BTCB"],
-    "withdrawToTokens": ["BNB", "BIFI", "BUSD", "USDC", "USDT", "DAI", "ETH", "BTCB"],
+    "withdrawToTokens": ["BNB", "oldBIFI", "BUSD", "USDC", "USDT", "DAI", "ETH", "BTCB"],
     "blockedTokens": [
       "aBNBc",
       "ankrETH",
@@ -377,7 +377,7 @@
       "recipient": "0xb267d9A7ED4B9A42a852a944E6f42E787a4a1c49"
     },
     "depositFromTokens": ["ETH", "WETH", "USDC", "USDT", "WBTC"],
-    "withdrawToTokens": ["ETH", "BIFI", "USDC", "USDT", "WBTC"],
+    "withdrawToTokens": ["ETH", "oldBIFI", "USDC", "USDT", "WBTC"],
     "blockedTokens": ["MAI"],
     "blockedVaults": []
   },
@@ -399,7 +399,7 @@
       "bbaUSD",
       "bbaUSDC",
       "bbaUSDT",
-      "BIFI",
+      "oldBIFI",
       "cvxFXS",
       "frxETH",
       "INV",

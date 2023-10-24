@@ -15,6 +15,8 @@ import { BIG_ONE } from '../../../helpers/big-number';
 import { differenceWith, first, isEqual } from 'lodash-es';
 import { selectChainById } from './chains';
 
+export const selectAllVaultIds = (state: BeefyState) => state.entities.vaults.allIds;
+
 export const selectVaultById = createCachedSelector(
   (state: BeefyState) => state.entities.vaults.byId,
   (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,

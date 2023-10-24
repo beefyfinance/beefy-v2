@@ -6,7 +6,7 @@ import { isGovVault } from '../../features/data/entities/vault';
 import {
   selectGovVaultUserStakedBalanceInDepositToken,
   selectHasUserBalanceInActiveBoost,
-  selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
+  selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged,
   selectUserVaultDepositInUsd,
 } from '../../features/data/selectors/balance';
 import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
@@ -31,7 +31,7 @@ const _BoostedVaultDepositedLarge = connect(
     // deposit can be moo or oracle
     const deposit = isGovVault(vault)
       ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
-      : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
+      : selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(state, vault.id);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const hasDeposit = deposit.gt(0);
     const depositUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vaultId));
@@ -88,7 +88,7 @@ const _NonBoostedVaultDeposited = connect(
     // deposit can be moo or oracle
     const deposit = isGovVault(vault)
       ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
-      : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
+      : selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(state, vault.id);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const hasDeposit = deposit.gt(0);
     const depositUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vaultId));
