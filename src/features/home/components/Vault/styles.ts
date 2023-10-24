@@ -16,11 +16,11 @@ export const styles = (theme: Theme) => ({
       backgroundClip: 'padding-box',
     },
   },
-  vaultRetired: {
-    backgroundColor: '#1B1E31',
-  },
   vaultEarnings: {
     backgroundColor: '#322460',
+  },
+  vaultRetired: {
+    backgroundColor: '#1B1E31',
   },
   vaultInner: {
     display: 'grid',
