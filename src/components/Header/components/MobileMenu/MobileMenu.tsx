@@ -69,6 +69,7 @@ const MobileItem = memo<MobileItemProps>(function MobileItem({ item, onClick }) 
       url={item.url}
       Badge={item.Badge}
       Icon={item.Icon}
+      exact={item.exact}
     />
   );
 });

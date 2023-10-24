@@ -38,7 +38,7 @@ export const ResourcesNavItems: NavItemConfig[] = [
 
 export const MobileList: NavConfig[] = [
   { title: 'Header-Vaults', Icon: VaultsIcon, url: '/' },
-  { title: 'Header-Dashboard', Icon: DashboardIcon, url: '/dashboard' },
+  { title: 'Header-Dashboard', Icon: DashboardIcon, url: '/dashboard', exact: false },
   { title: 'Header-Dao', Icon: DaoIcon, items: DaoNavItems },
   { title: 'Header-Resources', Icon: ResourcesIcon, items: ResourcesNavItems },
   { title: 'Header-BuyCrypto', Icon: BuyCryptoIcon, url: '/onramp' },
