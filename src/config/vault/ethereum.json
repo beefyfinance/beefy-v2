@@ -53,7 +53,8 @@
     "isGovVault": true,
     "strategyTypeId": "bifi-pool",
     "network": "ethereum",
-    "createdAt": 1698105600
+    "createdAt": 1698105600,
+    "excluded": "bifi-vault"
   },
   {
     "id": "convex-tricrypto-llama",
