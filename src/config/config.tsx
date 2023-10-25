@@ -676,10 +676,10 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     new: true,
     name: 'Gnosis',
     chainId: 100,
-    rpc: ['https://rpc.ankr.com/gnosis'],
+    rpc: ['https://gnosis.oat.farm'],
     explorerUrl: 'https://gnosisscan.io',
-    multicallAddress: '0x',
-    appMulticallContractAddress: '0x',
+    multicallAddress: '0x2840463Ea288c26B66E24f92E8C704e1aB6b095c',
+    appMulticallContractAddress: '0x70Ed6174d8425332F7D9AD2d26C86902977307c0',
     providerName: 'Gnosis',
     walletSettings: {
       chainId: `0x${parseInt('100', 10).toString(16)}`,
@@ -689,15 +689,13 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'XDAI',
         decimals: 18,
       },
-      rpcUrls: ['https://rpc.ankr.com/gnosis'],
+      rpcUrls: ['https://gnosis.oat.farm'],
       blockExplorerUrls: ['https://gnosisscan.io/'],
     },
     gas: {
-      type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
+      type: 'standard',
     },
-    stableCoins: [],
+    stableCoins: ['xDAI', 'USDC', 'EURe', 'sDAI'],
   },
 
   aurora: {

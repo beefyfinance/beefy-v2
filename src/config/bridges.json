@@ -132,6 +132,12 @@
     "website": "https://bridge.base.org/deposit"
   },
   {
+    "id": "gnosis-canonical",
+    "name": "Gnosis xDAI Bridge",
+    "tagName": "Gnosis",
+    "website": "https://omni.gnosischain.com/bridge"
+  },
+  {
     "id": "hop",
     "name": "HOP Exchange",
     "website": "https://app.hop.exchange"
