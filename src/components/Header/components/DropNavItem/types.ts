@@ -7,6 +7,7 @@ type BaseNavItemProps = {
   Badge?: BadgeComponent;
   onClick?: () => void;
   className?: string;
+  exact?: boolean;
 };
 
 export type NavItemProps = BaseNavItemProps & {
