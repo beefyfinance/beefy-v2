@@ -1940,7 +1940,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "old-bifi-pool",
     "isGovVault": true,
     "excluded": "bifi-maxi",
     "buyTokenUrl": "https://app.1inch.io/#/56/swap/BNB/BIFI",
@@ -17499,7 +17499,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "old-bifi-pool",
     "isGovVault": true,
     "buyTokenUrl": "https://app.1inch.io/#/56/swap/BNB/BIFI",
     "network": "bsc",

@@ -2166,7 +2166,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "old-bifi-pool",
     "isGovVault": true,
     "network": "ethereum",
     "createdAt": 1667575514

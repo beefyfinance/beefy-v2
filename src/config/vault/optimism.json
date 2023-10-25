@@ -1948,7 +1948,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "bevelov2",
     "isGovVault": true,
     "network": "optimism",
     "createdAt": 1687996562
@@ -2980,7 +2980,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "beopx",
     "isGovVault": true,
     "excluded": "beefy-beopx",
     "network": "optimism",
@@ -4232,7 +4232,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "old-bifi-pool",
     "isGovVault": true,
     "network": "optimism",
     "createdAt": 1658491885

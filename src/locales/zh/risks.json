@@ -86,5 +86,7 @@
   "StrategyDescription-single": "金库将 {{depositToken}} 存入 {{vaultPlatform}} ，并帮您耕种以赚取更多的{{depositToken}，然后将赚取的 {{depositToken}} 存回 {{vaultPlatform}} 农场。",
   "StrategyDescription-maxi": "BIFI Maxi 金库允许用户像在收益池中一样质押他们的 BIFI，但在这里您会得到更多 BIFI 作为奖励。通过质押 BIFI，每个参与者将其在 Beefy 网络上的收入份额转化为更多的 BIFI 代币。由于 BIFI 代币不能再被铸造，奖励的 BIFI 是使用网络的原生代币（例如 {{chain}} 上的 {{nativeToken}}）在公开市场上购买的。",
   "StrategyDescription-default": "尚未添加对当前策略的描述。",
+  "StrategyDescription-Gov-old-bifi-pool": "通过在我们的 BIFI 收益池中质押您的 $BIFI，您可以分享平台的利润并赚取可观的收益 {{earnedToken}}。 您的 APY 与 Beefy 金库产生的收入成正比，然后我们会使用这些收入直接购买 $BIFI 并奖励给您 {{earnedToken}}。 您无需取消质押即可参与治理，这使它成为让您的 Beefy 声音被听到并同时获得收益的最佳方式。",
+  "StrategyDescription-Gov-beftm": "beFTM 意味着 Beefy Escrowed Fantom。该代币与FTM挂钩，可以质押于Beefy平台，并在主要去中心化交易所进行耕种。BeFTM 让质押者能够获得最大化的验证者奖励，而个人投资者在不锁定 FTM 一年的情况下通常无法获得这些奖励。",
   "xyz": "最后一行的占位符"
 }
