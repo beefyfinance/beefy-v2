@@ -43,13 +43,20 @@ const AutoNavLink = memo<AutoNavLinkProps>(function AutoNavLink({
   return <NavLink className={className} to={to} children={children} onClick={onClick} {...rest} />;
 });
 
-export const NavItem = memo<NavItemProps>(function NavItem({ url, title, Icon, Badge, onClick }) {
+export const NavItem = memo<NavItemProps>(function NavItem({
+  url,
+  title,
+  Icon,
+  Badge,
+  onClick,
+  exact = true,
+}) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
     <AutoNavLink
       activeClassName={classes.active}
-      exact={true}
+      exact={exact}
       className={classes.navLink}
       key={url}
       to={url}
@@ -73,6 +80,7 @@ export const NavItemMobile = memo<NavItemPropsMobile>(function NavItemMobile({
   className,
   onClick,
   Badge,
+  exact = true,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -80,7 +88,7 @@ export const NavItemMobile = memo<NavItemPropsMobile>(function NavItemMobile({
     <AutoNavLink
       onClick={onClick}
       activeClassName={classes.active}
-      exact={true}
+      exact={exact}
       className={clsx(classes.navLink, classes.itemMobile, className)}
       key={url}
       to={url}
