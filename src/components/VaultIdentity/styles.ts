@@ -100,4 +100,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-base': {
     backgroundColor: '#fff',
   },
+  'vaultNetwork-gnosis': {
+    backgroundColor: '#133629',
+  },
 });
