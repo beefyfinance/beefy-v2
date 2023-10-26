@@ -1,7 +1,7 @@
 [
   {
     "id": "cronos-bifi-gov",
-    "name": "BIFI Earnings Pool",
+    "name": "oldBIFI Earnings Pool",
     "token": "oldBIFI",
     "tokenAddress": "0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
     "tokenDecimals": 18,
@@ -23,7 +23,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "old-bifi-pool",
     "isGovVault": true,
     "network": "cronos",
     "createdAt": 1623706144
