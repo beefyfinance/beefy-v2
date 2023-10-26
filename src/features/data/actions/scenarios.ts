@@ -6,7 +6,7 @@ import { createFulfilledActionCapturer, poll } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
 import { fetchAllBoosts, initiateBoostForm } from './boosts';
 import { fetchChainConfigs } from './chains';
-import { fetchAllPricesAction, fetchBeefyBuybackAction } from './prices';
+import { fetchAllPricesAction } from './prices';
 import {
   fetchAllVaults,
   fetchFeaturedVaults,
@@ -66,9 +66,6 @@ export async function initHomeDataV4(store: BeefyStore) {
   setTimeout(async () => {
     // we can start fetching apy, it will arrive when it wants, nothing depends on it
     store.dispatch(fetchApyAction());
-
-    // we start fetching buyback
-    store.dispatch(fetchBeefyBuybackAction());
 
     store.dispatch(fetchFeaturedVaults());
 

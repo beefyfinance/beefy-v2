@@ -6,7 +6,6 @@ import { StatLoader } from '../../../../../components/StatLoader';
 import { styles } from './styles';
 import { selectTotalTvl } from '../../../../data/selectors/tvl';
 import { selectTotalActiveVaults } from '../../../../data/selectors/vaults';
-import { selectTotalBuybackUsdAmount } from '../../../../data/selectors/buyback';
 import { ModalTvl } from '../ModalTvl';
 import { useAppSelector } from '../../../../../store';
 import { Modal } from '../../../../../components/Modal';
@@ -19,7 +18,6 @@ export const VaultsStats = () => {
   const { t } = useTranslation();
   const totalTvl = useAppSelector(selectTotalTvl);
   const totalActiveVaults = useAppSelector(selectTotalActiveVaults);
-  const buyback = useAppSelector(selectTotalBuybackUsdAmount);
   const ValueText = ({ value }) => <>{value ? <span>{value}</span> : <StatLoader />}</>;
 
   const handleTvlModalOpen = useCallback(() => {
@@ -47,12 +45,6 @@ export const VaultsStats = () => {
         <div className={classes.label}>{t('Vaults-Title')}</div>
         <div className={classes.value}>
           <ValueText value={totalActiveVaults} />
-        </div>
-      </Box>
-      <Box className={classes.stat}>
-        <div className={classes.label}>{t('BuyBack')}</div>
-        <div className={classes.value}>
-          <ValueText value={formatBigUsd(buyback)} />
         </div>
       </Box>
       <Modal open={isTvlModalOpen} onClose={handleTvlModalClose}>

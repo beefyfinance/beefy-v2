@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type {
-  BeefyAPIBuybackResponse,
   BeefyAPILpBreakdownResponse,
   BeefyAPITokenPricesResponse,
 } from '../apis/beefy/beefy-api';
@@ -20,13 +19,5 @@ export const fetchAllPricesAction = createAsyncThunk<fetchAllPricesPayload, void
       prices,
       breakdowns,
     };
-  }
-);
-
-export const fetchBeefyBuybackAction = createAsyncThunk<BeefyAPIBuybackResponse, void>(
-  'prices/fetchBeefyBuybackAction',
-  async () => {
-    const api = getBeefyApi();
-    return api.getBuyBack();
   }
 );

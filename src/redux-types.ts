@@ -2,7 +2,6 @@ import type { AnyAction, CombinedState, EnhancedStore, MiddlewareArray } from '@
 import type { ThunkAction, ThunkMiddleware } from 'redux-thunk';
 import type { ApyState } from './features/data/reducers/apy';
 import type { BoostsState } from './features/data/reducers/boosts';
-import type { BuybackState } from './features/data/reducers/buyback';
 import type { ChainsState } from './features/data/reducers/chains';
 import type { FilteredVaultsState } from './features/data/reducers/filtered-vaults';
 import type { PartnersState } from './features/data/reducers/partners';
@@ -55,7 +54,6 @@ export interface BeefyState {
   biz: {
     tvl: TvlState;
     apy: ApyState;
-    buyback: BuybackState;
     partners: PartnersState;
     historical: HistoricalState;
   };

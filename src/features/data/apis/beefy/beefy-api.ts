@@ -1,8 +1,6 @@
 import type { AxiosInstance } from 'axios';
 import axios from 'axios';
-import BigNumber from 'bignumber.js';
 import { isString } from 'lodash-es';
-import type { ChainEntity } from '../../entities/chain';
 import type { TokenEntity } from '../../entities/token';
 import type { VaultEntity } from '../../entities/vault';
 import { mapValuesDeep } from '../../utils/array-utils';
@@ -78,11 +76,6 @@ export interface LpData {
 
 export interface BeefyAPILpBreakdownResponse {
   [vaultId: VaultEntity['id']]: LpData;
-}
-
-export interface BeefyAPIBuybackResponse {
-  // those are of type string but they represent numbers
-  [chainId: ChainEntity['id']]: { buybackTokenAmount: BigNumber; buybackUsdAmount: BigNumber };
 }
 
 export type BeefyChartDataResponse = {
@@ -167,33 +160,6 @@ export class BeefyAPI {
     });
 
     return data;
-  }
-
-  public async getBuyBack(): Promise<BeefyAPIBuybackResponse> {
-    if (featureFlag_simulateBeefyApiError('buyback')) {
-      throw new Error('Simulated beefy api error');
-    }
-
-    type ResponseType = {
-      data: {
-        [chainId: ChainEntity['id']]: {
-          buybackTokenAmount: string;
-          buybackUsdAmount: string;
-        };
-      };
-    };
-    const strRes = await this.api.get<ResponseType>('/bifibuyback', {
-      params: { _: this.getCacheBuster('long') },
-    });
-    // format result with big number as we get strings from the api
-    const res: BeefyAPIBuybackResponse = {};
-    for (const chainId in strRes.data) {
-      res[chainId] = {
-        buybackTokenAmount: new BigNumber(strRes.data[chainId].buybackTokenAmount),
-        buybackUsdAmount: new BigNumber(strRes.data[chainId].buybackUsdAmount),
-      };
-    }
-    return res;
   }
 
   /**

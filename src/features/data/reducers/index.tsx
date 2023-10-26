@@ -12,7 +12,6 @@ import { boostsSlice } from './boosts';
 import { dataLoaderSlice } from './data-loader';
 import { walletSlice } from './wallet/wallet';
 import type { BeefyState } from '../../../redux-types';
-import { buybackSlice } from './buyback';
 import { chanIdsTransform, filteredVaultsSlice, userCategoryTransform } from './filtered-vaults';
 import { platformsSlice } from './platforms';
 import { uiThemeSlice } from './ui-theme';
@@ -57,7 +56,6 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
 const bizReducer = combineReducers<BeefyState['biz']>({
   tvl: tvlSlice.reducer,
   apy: apySlice.reducer,
-  buyback: buybackSlice.reducer,
   partners: partnersSlice.reducer,
   historical: historicalSlice.reducer,
 });
