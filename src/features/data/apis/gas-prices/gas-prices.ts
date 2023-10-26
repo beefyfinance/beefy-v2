@@ -34,7 +34,7 @@ function multiplyAndClamp(
   min: BigNumber,
   max: BigNumber
 ): BigNumber {
-  return clamp(value.multipliedBy(multiplier).decimalPlaces(0), min, max);
+  return clamp(value.multipliedBy(multiplier).decimalPlaces(0, BigNumber.ROUND_FLOOR), min, max);
 }
 
 function multiplyAndClampToString(
