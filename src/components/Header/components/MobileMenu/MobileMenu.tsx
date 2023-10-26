@@ -2,7 +2,7 @@ import React, { Fragment, memo, useState } from 'react';
 import { Divider, Drawer, makeStyles } from '@material-ui/core';
 import { Close, Menu } from '@material-ui/icons';
 import { styles } from './styles';
-// import { BifiPrice } from '../BifiPrice';
+import { BifiPrice } from '../BifiPrice';
 import { NavItemMobile } from '../NavItem';
 import { useTranslation } from 'react-i18next';
 import { MobileList } from '../../list';
@@ -28,7 +28,9 @@ export const MobileMenu = memo(function MobileMenu() {
       <Drawer className={classes.bg} anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
         <div className={classes.menuContainer}>
           <div className={classes.head}>
-            <div className={classes.flex}>{/* <BifiPrice /> */}</div>
+            <div className={classes.flex}>
+              <BifiPrice />
+            </div>
             <Close className={classes.cross} onClick={handleDrawerToggle} />
           </div>
           <Divider className={classes.divider} />
