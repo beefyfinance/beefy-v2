@@ -1,5 +1,63 @@
 [
   {
+    "id": "aura-gnosis-gno-cow",
+    "name": "COW-GNO",
+    "token": "COW-GNO Gnosis",
+    "tokenAddress": "0x21d4c792Ea7E38e0D0819c2011A2b1Cb7252Bd99",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraGnosisGNO-COW",
+    "earnedTokenAddress": "0x89E1dfc9088c3d9D9050eAE7AaE2fB79369F2092",
+    "earnContractAddress": "0x89E1dfc9088c3d9D9050eAE7AaE2fB79369F2092",
+    "oracle": "lps",
+    "oracleId": "aura-gnosis-gno-cow",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["COW", "GNO"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x21d4c792ea7e38e0d0819c2011a2b1cb7252bd9900020000000000000000001e",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x21d4c792ea7e38e0d0819c2011a2b1cb7252bd9900020000000000000000001e/withdraw",
+    "network": "gnosis",
+    "createdAt": 1698338090
+  },
+  {
+    "id": "aura-gnosis-sdai-eure",
+    "name": "sDAI-EURe",
+    "token": "sDAI-EURe Gnosis",
+    "tokenAddress": "0xDd439304A77f54B1F7854751Ac1169b279591Ef7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraGnosissDAI-EURe",
+    "earnedTokenAddress": "0x3e442AF13Db47e27B48dE6Caf2708b2d180B10F9",
+    "earnContractAddress": "0x3e442AF13Db47e27B48dE6Caf2708b2d180B10F9",
+    "oracle": "lps",
+    "oracleId": "aura-gnosis-sdai-eure",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["sDAI", "EURe"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064/withdraw",
+    "network": "gnosis",
+    "createdAt": 1698338090
+  },
+  {
     "id": "aura-gnosis-wsteth-bal-aura",
     "name": "wstETH/AURA/BAL",
     "token": "wstETH/AURA/BAL Gnosis",
@@ -17,7 +75,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_NONE",
+      "IL_HIGH",
       "MCAP_SMALL",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -46,7 +104,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_NONE",
+      "IL_HIGH",
       "MCAP_SMALL",
       "AUDIT",
       "CONTRACTS_VERIFIED"
