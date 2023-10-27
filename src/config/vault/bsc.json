@@ -1331,7 +1331,8 @@
     "earnContractAddress": "0x3A2047069549100322fACaaaA4647c22fa11b296",
     "oracle": "lps",
     "oracleId": "thena-hay-usd+",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "thena",
     "assets": ["HAY", "USD+"],
     "risks": [
