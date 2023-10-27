@@ -14,6 +14,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Redirects } from './components/Redirects';
 import { Stepper } from './components/Stepper';
 import { Layout } from './components/Layout';
+import { AddTokenToWallet } from './components/AddTokenToWallet';
 
 const Home = lazy(() => import(`./features/home`));
 const Vault = lazy(() => import(`./features/vault`));
@@ -67,6 +68,7 @@ export const App = () => {
                 </Switch>
               </Suspense>
               <Stepper />
+              <AddTokenToWallet />
             </Layout>
           </Router>
         </HelmetProvider>

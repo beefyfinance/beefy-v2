@@ -36,6 +36,7 @@ import type { ResolverState } from './features/data/reducers/wallet/resolver-typ
 import type { BridgesState } from './features/data/reducers/bridges';
 import type { MigrationState } from './features/data/reducers/wallet/migration';
 import type { TooltipsState } from './features/data/reducers/tooltips';
+import type { AddToWalletState } from './features/data/reducers/add-to-wallet';
 
 export interface BeefyState {
   entities: {
@@ -80,6 +81,7 @@ export interface BeefyState {
     treasury: TreasuryState;
     savedVaults: SavedVaultsState;
     tooltips: TooltipsState;
+    addToWallet: AddToWalletState;
   };
 }
 

@@ -1,56 +1,36 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { Button } from '../../../../components/Button';
 import { LinkButton } from '../../../../components/LinkButton';
-import { useAppSelector } from '../../../../store';
-import { getSingleAssetSrc } from '../../../../helpers/singleAssetSrc';
+import { useAppDispatch, useAppSelector } from '../../../../store';
 import type { ChainEntity } from '../../../data/entities/chain';
 import type { TokenEntity } from '../../../data/entities/token';
 import { selectChainById } from '../../../data/selectors/chains';
-import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
 import { ReactComponent as PlusIcon } from '../../../../images/icons/plus.svg';
 import { styles } from './styles';
 import { explorerTokenUrl } from '../../../../helpers/url';
+import { addTokenToWalletAction } from '../../../data/actions/add-to-wallet';
 
 const useStyles = makeStyles(styles);
 
-interface AddTokenToWalletProps {
+interface RewardTokenDetailsProps {
   token: TokenEntity;
   chainId: ChainEntity['id'];
 }
 
-export const AddTokenToWallet = memo<AddTokenToWalletProps>(function AddTokenToWallet({
+export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardTokenDetails({
   token,
   chainId,
 }) {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, chainId));
-  const isWalletConnected = useAppSelector(selectIsWalletConnected);
-  const isWalletOnSameChain = useAppSelector(state => selectCurrentChainId(state) === chainId);
-
-  const addTokenToWallet = React.useCallback(async () => {
-    try {
-      await window.ethereum.request({
-        method: 'wallet_watchAsset',
-        params: {
-          type: 'ERC20',
-          options: {
-            address: token.address,
-            symbol: token.symbol,
-            decimals: token.decimals,
-            image: window.location.origin + getSingleAssetSrc(token.id, chainId),
-          },
-        },
-      });
-    } catch (error) {
-      // ignore
-    }
-  }, [chainId, token.address, token.decimals, token.id, token.symbol]);
-
-  const shouldShowAddButton = isWalletConnected && isWalletOnSameChain;
+  const addTokenToWallet = useCallback(() => {
+    dispatch(addTokenToWalletAction({ tokenAddress: token.address, chainId }));
+  }, [dispatch, chainId, token.address]);
 
   return (
     <div className={classes.container}>
@@ -59,12 +39,10 @@ export const AddTokenToWallet = memo<AddTokenToWalletProps>(function AddTokenToW
         <div className={classes.text}>{t('Earn', { symbol: token.symbol })}</div>
       </div>
       <div className={classes.buttons}>
-        {shouldShowAddButton && (
-          <Button className={classes.button} onClick={addTokenToWallet}>
-            {t('Add-To-Wallet')}
-            <PlusIcon className={classes.icon} />
-          </Button>
-        )}
+        <Button className={classes.button} onClick={addTokenToWallet}>
+          {t('Add-To-Wallet')}
+          <PlusIcon className={classes.icon} />
+        </Button>
         <LinkButton
           className={classes.linkButtonBg}
           href={explorerTokenUrl(chain, token.address)}
