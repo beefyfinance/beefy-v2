@@ -1,7 +1,6 @@
 {
   "APY": "APY",
   "TVL": "TVL",
-  "BuyBack": "每日回购",
   "DEPOSITED": "已存入",
   "WALLET": "钱包",
   "STAKED-IN": "质押于",
@@ -227,9 +226,6 @@
   "Token-NoDescrip": "无代币说明。",
   "Gov-Pool": "收益池",
   "Gov-Learn": "了解更多",
-  "Gov-Info1": "通过在我们的 BIFI 收益池中质押您的 $BIFI，您可以分享平台的利润并赚取可观的收益。",
-  "Gov-Info2": "您的 APY 与 Beefy 金库产生的收入成正比，然后我们会使用这些收入直接购买 $BIFI 并奖励给您。",
-  "Gov-Info3": "您无需取消质押即可参与治理，这使它成为让您的 Beefy 声音被听到并同时获得收益的最佳方式。",
   "Gov-How": "它是如何运作的?",
   "Stake-Staked": "已质押",
   "Stake-Rewards": "奖励",
@@ -299,6 +295,5 @@
   "Nexus-SubTitle": "Nexus Mutual",
   "Nexus-Title": "保障您的存款",
   "Nexus-Content": "Nexus Mutual 是一个基于区块链的传统保险的替代方案。成为 Mutual 会员，为您的 Beefy 仓位购买全面保险。",
-  "Nexus-Btn": "投保金库",
-  "beFTM-description": "beFTM 意味着 Beefy Escrowed Fantom。该代币与FTM挂钩，可以质押于Beefy平台，并在主要去中心化交易所进行耕种。BeFTM 让质押者能够获得最大化的验证者奖励，而个人投资者在不锁定 FTM 一年的情况下通常无法获得这些奖励。"
+  "Nexus-Btn": "投保金库"
 }

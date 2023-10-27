@@ -672,6 +672,32 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'crvUSD',
     ],
   },
+  gnosis: {
+    new: true,
+    name: 'Gnosis',
+    chainId: 100,
+    rpc: ['https://gnosis.oat.farm'],
+    explorerUrl: 'https://gnosisscan.io',
+    multicallAddress: '0x2840463Ea288c26B66E24f92E8C704e1aB6b095c',
+    appMulticallContractAddress: '0x70Ed6174d8425332F7D9AD2d26C86902977307c0',
+    providerName: 'Gnosis',
+    walletSettings: {
+      chainId: `0x${parseInt('100', 10).toString(16)}`,
+      chainName: 'Gnosis',
+      nativeCurrency: {
+        name: 'XDAI',
+        symbol: 'XDAI',
+        decimals: 18,
+      },
+      rpcUrls: ['https://gnosis.oat.farm'],
+      blockExplorerUrls: ['https://gnosisscan.io/'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['xDAI', 'USDC', 'EURe', 'sDAI'],
+  },
+
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,

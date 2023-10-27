@@ -10,11 +10,12 @@ import {
   getBoostsForChain,
   getVaultsForChain,
 } from './common/config';
+import { getStrategyIds } from './common/strategies';
 import strategyABI from '../src/config/abi/strategy.json';
 import vaultABI from '../src/config/abi/vault.json';
 import platforms from '../src/config/platforms.json';
-import strategyTypes from '../src/config/strategy-types.json';
 import type { VaultConfig } from '../src/features/data/apis/config-types';
+import partition from 'lodash/partition';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
@@ -65,7 +66,7 @@ const nonHarvestOnDepositPools = ['venus-bnb'];
 const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddress'];
 
 const validPlatformIds = platforms.map(platform => platform.id);
-const validstrategyTypeIds = strategyTypes.map(strategyType => strategyType.id);
+const { gov: validGovStrategyIds, vault: validVaultStrategyIds } = getStrategyIds();
 
 const oldFields = [
   'tokenDescription',
@@ -138,7 +139,8 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   let updates: Record<string, Record<string, any>> = {};
   let exitCode = 0;
   //Governance pools should be separately verified
-  pools = pools.filter(pool => !pool.isGovVault);
+  const [govPools, vaultPools] = partition(pools, pool => pool.isGovVault);
+  pools = vaultPools;
 
   const poolIds = new Set(pools.map(pool => pool.id));
   const uniqueEarnedToken = new Set();
@@ -180,13 +182,11 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     }
 
     if (!pool.strategyTypeId) {
-      console.error(
-        `Error: ${pool.id} : strategyTypeId missing vault strategy type; see strategy-types.json`
-      );
+      console.error(`Error: ${pool.id} : strategyTypeId missing vault strategy type`);
       exitCode = 1;
-    } else if (!validstrategyTypeIds.includes(pool.strategyTypeId)) {
+    } else if (!validVaultStrategyIds.includes(pool.strategyTypeId)) {
       console.error(
-        `Error: ${pool.id} : strategyTypeId ${pool.strategyTypeId} not present in strategy-types.json`
+        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription-${pool.strategyTypeId}" not present in locales/en/risks.json`
       );
       exitCode = 1;
     }
@@ -289,6 +289,19 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   boosts.forEach(boost => {
     if (!poolIds.has(boost.poolId)) {
       console.error(`Error: Boost ${boost.id}: Boost has non-existent pool id ${boost.poolId}.`);
+      exitCode = 1;
+    }
+  });
+
+  // Gov Pools
+  govPools.forEach(pool => {
+    if (!pool.strategyTypeId) {
+      console.error(`Error: ${pool.id} : strategyTypeId missing gov strategy type`);
+      exitCode = 1;
+    } else if (!validGovStrategyIds.includes(pool.strategyTypeId)) {
+      console.error(
+        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription-Gov-${pool.strategyTypeId}" not present in locales/en/risks.json`
+      );
       exitCode = 1;
     }
   });

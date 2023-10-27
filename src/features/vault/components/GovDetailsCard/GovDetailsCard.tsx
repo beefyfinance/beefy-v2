@@ -9,16 +9,33 @@ import { useAppSelector } from '../../../../store';
 import { LinkButton } from '../../../../components/LinkButton';
 import { selectChainById } from '../../../data/selectors/chains';
 import { explorerAddressUrl } from '../../../../helpers/url';
+import { useMemo } from 'react';
 
 const useStyles = makeStyles(styles);
 export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const depositToken = useAppSelector(state =>
+    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
+  );
   const earnedToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
   );
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
+  const i18nKeys = useMemo(
+    () => [`StrategyDescription-Gov-${vault.strategyTypeId}`, 'StrategyDescription-Gov-default'],
+    [vault]
+  );
+  const i18nVars = useMemo(
+    () => ({
+      depositToken: depositToken.symbol,
+      earnedToken: earnedToken.symbol,
+      name: vault.name,
+      ns: 'risks',
+    }),
+    [depositToken, earnedToken, vault]
+  );
 
   return (
     <Card>
@@ -30,23 +47,7 @@ export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
         />
       </CardHeader>
       <CardContent>
-        <p className={classes.text}>
-          {vaultId === 'beefy-beFTM-earnings'
-            ? t('beFTM-description')
-            : vaultId === 'beefy-beJoe-earnings'
-            ? t('beJOE-description')
-            : vaultId === 'beefy-beqi-earnings'
-            ? t('beQI-description')
-            : vaultId === 'beefy-beopx-earnings'
-            ? t('beOPX-description')
-            : vaultId === 'beefy-bevelo-v2-earnings'
-            ? t('beVELOV2-description')
-            : t('Gov-Info1') +
-              earnedToken.symbol +
-              t('Gov-Info2') +
-              earnedToken.symbol +
-              t('Gov-Info3')}
-        </p>
+        <p className={classes.text}>{t(i18nKeys, i18nVars)}</p>
       </CardContent>
     </Card>
   );

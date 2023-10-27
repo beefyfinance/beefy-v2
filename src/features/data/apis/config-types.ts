@@ -2,7 +2,6 @@ import type { VaultEntity } from '../entities/vault';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity } from '../entities/token';
 import type { PlatformEntity } from '../entities/platform';
-import type { StrategyTypeEntity } from '../entities/strategy-type';
 import type { AmmEntity } from '../entities/amm';
 import type { ZapFee } from './transact/transact-types';
 import type BigNumber from 'bignumber.js';
@@ -25,7 +24,7 @@ export interface VaultConfig {
   platformId: PlatformEntity['id'];
   assets?: TokenEntity['id'][];
   risks?: string[] | null;
-  strategyTypeId: StrategyTypeEntity['id'];
+  strategyTypeId: string;
   network: string;
   excluded?: string | null;
   isGovVault?: boolean | null;
@@ -265,11 +264,6 @@ export interface InfoCardChainConfig extends InfoCardBaseConfig {
 export type InfoCardConfig = InfoCardVaultConfig | InfoCardChainConfig;
 export type InfoCardsConfig = InfoCardConfig[];
 
-export type StrategyTypeConfig = {
-  id: string;
-  name: string;
-};
-
 export type PlatformConfig = {
   id: string;
   name: string;
@@ -286,6 +280,7 @@ export interface TokenHoldingConfig {
   usdValue: string;
   balance: string;
   methodPath?: string;
+  symbol: string;
 }
 
 export interface VaultHoldingConfig {

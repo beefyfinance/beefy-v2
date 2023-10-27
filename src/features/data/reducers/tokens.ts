@@ -537,7 +537,7 @@ function addVaultToState(
 
       // Add bridged versions of receipt token
       if (vault.bridged) {
-        addBridgedReceiptTokensToState(vault, token, chain, sliceState);
+        addBridgedReceiptTokensToState(vault, token, vault.earnedToken, sliceState);
       }
     }
   } else {
@@ -548,7 +548,7 @@ function addVaultToState(
     if (!vault.isGovVault && vault.bridged) {
       const token = sliceState.byChainId[chainId].byAddress[addressKey];
       if (isTokenErc20(token)) {
-        addBridgedReceiptTokensToState(vault, token, chain, sliceState);
+        addBridgedReceiptTokensToState(vault, token, vault.earnedToken, sliceState);
       }
     }
   }
@@ -557,7 +557,7 @@ function addVaultToState(
 function addBridgedReceiptTokensToState(
   vault: VaultConfig,
   token: TokenErc20,
-  chain: ChainEntity,
+  oracleId: string,
   sliceState: Draft<TokensState>
 ) {
   if (!vault.bridged) {
@@ -566,9 +566,10 @@ function addBridgedReceiptTokensToState(
 
   const bridgedTokens = Object.entries(vault.bridged).map(([chainId, address]) => ({
     ...token,
-    id: `${token.id}-${chainId}`,
+    id: `${token.id}`,
     chainId,
     address,
+    oracleId,
     description: token.description || null, // we leave description null so that addressbook can fill it in
   }));
 

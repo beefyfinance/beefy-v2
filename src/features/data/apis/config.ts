@@ -15,7 +15,6 @@ import type {
   OneInchZapConfig,
   PartnersConfig,
   PlatformConfig,
-  StrategyTypeConfig,
   VaultConfig,
 } from './config-types';
 import { mapValues } from 'lodash-es';
@@ -117,10 +116,6 @@ export class ConfigAPI {
 
   public async fetchAllInfoCards(): Promise<InfoCardsConfig> {
     return infoCards;
-  }
-
-  public async fetchStrategyTypes(): Promise<StrategyTypeConfig[]> {
-    return (await import('../../../config/strategy-types.json')).default;
   }
 
   public async fetchPlatforms(): Promise<PlatformConfig[]> {
