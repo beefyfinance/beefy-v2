@@ -7,7 +7,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://rpc.ankr.com/eth'],
     explorerUrl: 'https://etherscan.io',
     multicallAddress: '0x9dA9f3C6c45F1160b53D395b0A982aEEE1D212fE',
-    appMulticallContractAddress: '0xce6ef394f61918c89bDFCC53Ef4b8fB74879C2B2',
+    appMulticallContractAddress: '0x306f8F99e28cece7C091c436D817A37002e18D62',
     providerName: 'Ethereum',
     walletSettings: {
       chainId: `0x${parseInt('1', 10).toString(16)}`,
