@@ -1,5 +1,27 @@
 [
   {
+    "id": "uniswap-gamma-usdc-dai",
+    "name": "USDC-DAI LP",
+    "token": "USDC-DAI uLP",
+    "tokenAddress": "0x904135ac233e53fc1c1A5B061D34496b362489c3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooUniswapGammaUSDC-DAI",
+    "earnedTokenAddress": "0x613607386257338239E4D60ac6a8ecB3528C0fe9",
+    "earnContractAddress": "0x613607386257338239E4D60ac6a8ecB3528C0fe9",
+    "oracle": "lps",
+    "oracleId": "uniswap-gamma-usdc-dai",
+    "status": "active",
+    "platformId": "gamma",
+    "assets": ["USDC", "DAI"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-dai-100-stable",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-dai-100-stable",
+    "network": "arbitrum",
+    "createdAt": 1698588009
+  },
+  {
     "id": "uniswap-gamma-wsteth-weth",
     "name": "wstETH-ETH LP",
     "token": "wstETH-ETH uLP",
