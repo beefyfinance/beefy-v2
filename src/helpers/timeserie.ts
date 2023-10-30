@@ -41,8 +41,7 @@ export function getInvestorTimeserie(
   firstDate: Date,
   currentPpfs: BigNumber,
   currentPrice: BigNumber,
-  currentShareBalance: BigNumber,
-  vaultId: string
+  currentShareBalance: BigNumber
 ): PriceTsRow[] {
   // so, first we need to generate datetime keys for each row
   const { bucketSize: bucketSizeStr, timeRange: timeRangeStr } =
@@ -129,18 +128,13 @@ export function getInvestorTimeserie(
       currentDate = new Date(currentDate.getTime() + bucketSize);
     }
   }
-
-  const isBifiVault = vaultId === 'bifi-vault';
-
-  if ((isBifiVault && currentShareBalance.gt(0)) || !isBifiVault) {
-    pricesTs.push({
-      //round down our to the last hours, since first item of the api do the same
-      datetime: roundDownMinutes(new Date()).getTime(),
-      shareBalance: currentShareBalance.toNumber(),
-      underlyingBalance: currentShareBalance.times(currentPpfs).toNumber(),
-      usdBalance: currentShareBalance.times(currentPpfs).times(currentPrice).toNumber(),
-    });
-  }
+  pricesTs.push({
+    //round down our to the last hours, since first item of the api do the same
+    datetime: roundDownMinutes(new Date()).getTime(),
+    shareBalance: currentShareBalance.toNumber(),
+    underlyingBalance: currentShareBalance.times(currentPpfs).toNumber(),
+    usdBalance: currentShareBalance.times(currentPpfs).times(currentPrice).toNumber(),
+  });
 
   return pricesTs;
 }

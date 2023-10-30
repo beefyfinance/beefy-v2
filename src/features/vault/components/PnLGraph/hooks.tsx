@@ -140,8 +140,7 @@ export const usePnLChartData = (
         vaultLastDeposit,
         currentPpfs,
         currentOraclePrice,
-        currentMooTokenBalance,
-        vaultId
+        currentMooTokenBalance
       );
 
       if (data.length > 0) {
