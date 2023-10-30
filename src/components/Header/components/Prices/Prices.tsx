@@ -123,7 +123,7 @@ const NavToken = memo<NavTokenProps>(function NavToken({ token, className }) {
 
   return (
     <div className={clsx(classes.navToken, className)}>
-      <img alt={symbol} src={icon} height={24} className={classes.icon} />
+      <img alt={symbol} src={icon} height={24} className={classes.navIcon} />
       {formatBigUsd(price)}
     </div>
   );
@@ -217,7 +217,7 @@ const TooltipPricePerFullShare = memo(function TooltipPricePerFullShare() {
 
   return (
     <div className={classes.mooToken}>
-      1 {earnedToken.symbol} {'->'} {ppfs.toString(10)} {depositToken.symbol}
+      1 {earnedToken.symbol} {'→'} {ppfs.toString(10)} {depositToken.symbol}
     </div>
   );
 });

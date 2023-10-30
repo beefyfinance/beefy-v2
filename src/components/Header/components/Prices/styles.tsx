@@ -20,6 +20,11 @@ export const styles = (theme: Theme) => ({
       justifyContent: 'flex-start',
     },
   },
+  navIcon: {
+    display: 'block',
+    height: '24px',
+    width: '24px',
+  },
   trigger: {
     cursor: 'pointer',
     userSelect: 'none' as const,
@@ -49,8 +54,8 @@ export const styles = (theme: Theme) => ({
   },
   icon: {
     display: 'block',
-    height: '32px',
-    width: '32px',
+    height: '24px',
+    width: '24px',
   },
   tooltipContent: {
     background: '#232743',
