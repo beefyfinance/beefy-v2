@@ -1,5 +1,27 @@
 [
   {
+    "id": "sushi-base-gamma-weth-usdbc-narrow",
+    "name": "USDbC-ETH LP",
+    "token": "USDbC-ETH sgLP",
+    "tokenAddress": "0x11C4011772594c5F124a027Da35329559447853D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnedToken": "mooSushiGammaUSDbC-ETH",
+    "earnedTokenAddress": "0x34Ff4e2650E0FB7F0A780Fe56444e4575e0838B1",
+    "earnContractAddress": "0x34Ff4e2650E0FB7F0A780Fe56444e4575e0838B1",
+    "oracle": "lps",
+    "oracleId": "sushi-base-gamma-weth-usdbc-narrow",
+    "status": "active",
+    "platformId": "gamma",
+    "assets": ["USDbC", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "hhttps://app.gamma.xyz/vault/sushi/base/details/weth-usdbc-500-dynamic",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/sushi/base/details/weth-usdbc-500-dynamic",
+    "network": "base",
+    "createdAt": 1698588011
+  },
+  {
     "id": "equalizer-base-axlwbtc-weth",
     "name": "axlWBTC-ETH vLP",
     "token": "axlWBTC-ETH vLP",
