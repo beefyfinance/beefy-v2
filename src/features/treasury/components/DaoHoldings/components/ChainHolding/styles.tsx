@@ -95,4 +95,7 @@ export const styles = (theme: Theme) => ({
   'headerNetwork-base': {
     backgroundColor: 'rgba(0, 82, 255, 0.2)',
   },
+  'headerNetwork-gnosis': {
+    backgroundColor: 'rgba(19, 54, 41, 0.4)',
+  },
 });

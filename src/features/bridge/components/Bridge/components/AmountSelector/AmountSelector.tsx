@@ -71,7 +71,7 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
         className={clsx(classes.input)}
         value={input.amount}
         maxValue={userBalance}
-        maxDecimals={input.token.decimals}
+        tokenDecimals={input.token.decimals}
         onChange={handleChange}
       />
     </div>

@@ -156,16 +156,7 @@ export function featureFlag_simulateRpcError(chainId: ChainEntity['id']) {
 }
 
 export function featureFlag_simulateBeefyApiError(
-  key:
-    | 'apy'
-    | 'prices'
-    | 'lps'
-    | 'buyback'
-    | 'lpsBreakdown'
-    | 'fees'
-    | 'treasury'
-    | 'snapshot'
-    | 'zap-support'
+  key: 'apy' | 'prices' | 'lps' | 'lpsBreakdown' | 'fees' | 'treasury' | 'snapshot' | 'zap-support'
 ) {
   const isAuthorizedDomain =
     window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');

@@ -59,7 +59,7 @@ export const AssetInfo = memo<AssetInfoProps>(function AssetInfo({ chainId, toke
     <AssetContainer token={token}>
       <>
         <AssetsImage size={24} chainId={chainId} assetIds={[token.oracleId]} />
-        <AssetName name={token.oracleId} />
+        <AssetName name={token.symbol} />
       </>
     </AssetContainer>
   );

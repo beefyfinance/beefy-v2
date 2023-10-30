@@ -51,7 +51,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "old-bifi-pool",
     "isGovVault": true,
     "excluded": "fantom-bifi-maxi",
     "network": "fantom",
@@ -80,7 +80,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "beftm",
     "isGovVault": true,
     "excluded": "beefy-beFTM",
     "network": "fantom",

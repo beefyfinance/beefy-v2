@@ -493,7 +493,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "old-bifi-pool",
     "isGovVault": true,
     "excluded": "moonbeam-bifi-maxi",
     "network": "moonbeam",
