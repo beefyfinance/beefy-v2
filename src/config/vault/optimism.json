@@ -1,5 +1,27 @@
 [
   {
+    "id": "aura-op-ovn-wusd+",
+    "name": "OVN-wUSD+",
+    "token": "OVN-wUSD+",
+    "tokenAddress": "0x00b82bc5EdEa6E5E6c77635e31a1A25Aad99f881",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooAuraOPOVN-wUSD+",
+    "earnedTokenAddress": "0xEf6ac74ba097aa0661FC7bB2CF2C43f6817F4Bbb",
+    "earnContractAddress": "0xEf6ac74ba097aa0661FC7bB2CF2C43f6817F4Bbb",
+    "oracle": "lps",
+    "oracleId": "aura-op-ovn-wusd+",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["OVN", "wUSD+"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://op.beets.fi/pool/0x00b82bc5edea6e5e6c77635e31a1a25aad99f881000200000000000000000105",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0x00b82bc5edea6e5e6c77635e31a1a25aad99f881000200000000000000000105",
+    "network": "optimism",
+    "createdAt": 1698687269
+  },
+  {
     "id": "velodrome-v2-weth-moobifi",
     "name": "mooBIFI-ETH vLP V2",
     "token": "mooBIFI-ETH vLP V2",
