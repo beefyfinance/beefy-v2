@@ -674,7 +674,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     ],
   },
   gnosis: {
-    new: true,
     name: 'Gnosis',
     chainId: 100,
     rpc: ['https://gnosis.oat.farm'],
@@ -692,6 +691,31 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       },
       rpcUrls: ['https://gnosis.oat.farm'],
       blockExplorerUrls: ['https://gnosisscan.io/'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['xDAI', 'USDC', 'EURe', 'sDAI'],
+  },
+  linea: {
+    new: true,
+    name: 'Linea',
+    chainId: 59144,
+    rpc: ['https://rpc.linea.build'],
+    explorerUrl: 'https://explorer.linea.build',
+    multicallAddress: '0x0000000000000000000000000000000000000000',
+    appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
+    providerName: 'Linea',
+    walletSettings: {
+      chainId: `0x${parseInt('59144', 10).toString(16)}`,
+      chainName: 'Linea',
+      nativeCurrency: {
+        name: 'ETH',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://rpc.linea.build'],
+      blockExplorerUrls: ['https://explorer.linea.build/'],
     },
     gas: {
       type: 'standard',
