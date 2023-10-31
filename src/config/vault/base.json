@@ -16,7 +16,7 @@
     "assets": ["USDbC", "ETH"],
     "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "hhttps://app.gamma.xyz/vault/sushi/base/details/weth-usdbc-500-dynamic",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/sushi/base/details/weth-usdbc-500-dynamic",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/sushi/base/details/weth-usdbc-500-dynamic",
     "network": "base",
     "createdAt": 1698588011
@@ -1436,7 +1436,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "hhttps://baseswap.fi/add/0x4200000000000000000000000000000000000006/0x6B4712AE9797C199edd44F897cA09BC57628a1CF",
+    "addLiquidityUrl": "https://baseswap.fi/add/0x4200000000000000000000000000000000000006/0x6B4712AE9797C199edd44F897cA09BC57628a1CF",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0x4200000000000000000000000000000000000006/0x6B4712AE9797C199edd44F897cA09BC57628a1CF",
     "network": "base",
     "createdAt": 1693580890
