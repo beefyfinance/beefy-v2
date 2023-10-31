@@ -703,8 +703,8 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     chainId: 59144,
     rpc: ['https://rpc.linea.build'],
     explorerUrl: 'https://explorer.linea.build',
-    multicallAddress: '0x0000000000000000000000000000000000000000',
-    appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
+    multicallAddress: '0x', //todo
+    appMulticallContractAddress: '0x', // todo
     providerName: 'Linea',
     walletSettings: {
       chainId: `0x${parseInt('59144', 10).toString(16)}`,
@@ -720,9 +720,8 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['xDAI', 'USDC', 'EURe', 'sDAI'],
+    stableCoins: [],
   },
-
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,
