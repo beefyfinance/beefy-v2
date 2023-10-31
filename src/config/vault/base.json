@@ -2028,7 +2028,8 @@
     "earnContractAddress": "0x52B00da615B0415AAFA7E312555434E6C3F183ce",
     "oracle": "lps",
     "oracleId": "bvm-weth-usdbc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "bvm",
     "assets": ["USDbC", "ETH"],
     "risks": [
