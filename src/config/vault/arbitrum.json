@@ -1,5 +1,33 @@
 [
   {
+    "id": "compound-arbitrum-usdc",
+    "name": "USDC",
+    "token": "USDC",
+    "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    "tokenDecimals": 6,
+    "earnedToken": "mooCompoundArbUSDC",
+    "earnedTokenAddress": "0xb9A27ba529634017b12e3cbbbFFb6dB7908a8C8B",
+    "earnContractAddress": "0xb9A27ba529634017b12e3cbbbFFb6dB7908a8C8B",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "platformId": "compound",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "network": "arbitrum",
+    "createdAt": 1698772242
+  },
+  {
     "id": "sushi-gamma-magic-weth-narrow",
     "name": "MAGIC-ETH LP",
     "token": "MAGIC-ETH sgLP",

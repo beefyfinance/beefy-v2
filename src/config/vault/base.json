@@ -1,5 +1,33 @@
 [
   {
+    "id": "compound-base-usdbc",
+    "name": "USDbC",
+    "token": "USDbC",
+    "tokenAddress": "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
+    "tokenDecimals": 6,
+    "earnedToken": "mooCompoundBaseUSDbC",
+    "earnedTokenAddress": "0xD7803d3Bf95517D204CFc6211678cAb223aC4c48",
+    "earnContractAddress": "0xD7803d3Bf95517D204CFc6211678cAb223aC4c48",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "platformId": "compound",
+    "assets": ["USDbC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=base&from=0x0000000000000000000000000000000000000000&to=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
+    "network": "base",
+    "createdAt": 1698772242
+  },
+  {
     "id": "sushi-base-gamma-weth-usdbc-narrow",
     "name": "USDbC-ETH LP",
     "token": "USDbC-ETH sgLP",
@@ -1637,7 +1665,6 @@
     "token": "USDbC",
     "tokenAddress": "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "tokenDecimals": 6,
-    "tokenProviderId": "moonwell",
     "earnedToken": "mooMoonwellBaseUSDbC",
     "earnedTokenAddress": "0x6D887ab893AB867Bb379628554C7Ca7A3d6D6c1B",
     "earnContractAddress": "0x6D887ab893AB867Bb379628554C7Ca7A3d6D6c1B",
