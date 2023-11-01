@@ -341,6 +341,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'bbaaUSDTV2',
       'bbaaUSDCV2',
       'bbaaDAIV2',
+      'aArbUSDCn',
     ],
   },
   avax: {
@@ -390,6 +391,8 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'USTw',
       'USD+',
       'DOLA',
+      'aavUSDT',
+      'aavUSDC',
     ],
   },
   cronos: {
