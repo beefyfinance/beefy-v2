@@ -5,6 +5,7 @@ import {
   ProviderLabel,
 } from '@web3-onboard/injected-wallets/dist/types';
 import { createEIP1193Provider } from '@web3-onboard/common';
+import type { EIP1193Provider } from '@web3-onboard/common/dist/types';
 
 export const customInjectedWallets: InjectedWalletModule[] = [
   {
@@ -24,7 +25,7 @@ export const customInjectedWallets: InjectedWalletModule[] = [
     injectedNamespace: InjectedNameSpace.Ethereum,
     checkProviderIdentity: ({ provider }) => !!provider && !!provider['isAvalanche'],
     getIcon: async () => (await import(`../../../../images/wallets/core-wallet.svg`)).default,
-    getInterface: async () => ({ provider: window['ethereum'] }),
+    getInterface: async () => ({ provider: window['ethereum'] as unknown as EIP1193Provider }),
     platforms: ['all'],
   },
   {
@@ -32,7 +33,7 @@ export const customInjectedWallets: InjectedWalletModule[] = [
     injectedNamespace: InjectedNameSpace.Ethereum,
     checkProviderIdentity: ({ provider }) => !!provider && !!provider['isSafePal'],
     getIcon: async () => (await import(`../../../../images/wallets/safepal-wallet.svg`)).default,
-    getInterface: async () => ({ provider: window['ethereum'] }),
+    getInterface: async () => ({ provider: window['ethereum'] as unknown as EIP1193Provider }),
     platforms: ['all'],
   },
   {
@@ -45,7 +46,7 @@ export const customInjectedWallets: InjectedWalletModule[] = [
       'deficonnect' in window &&
       !provider['isDeficonnectProvider'],
     getIcon: async () => (await import(`../../../../images/wallets/crypto.png`)).default,
-    getInterface: async () => ({ provider: window['ethereum'] }),
+    getInterface: async () => ({ provider: window['ethereum'] as unknown as EIP1193Provider }),
     platforms: ['all'],
   },
   {
@@ -53,7 +54,7 @@ export const customInjectedWallets: InjectedWalletModule[] = [
     injectedNamespace: InjectedNameSpace.Ethereum,
     checkProviderIdentity: ({ provider }) => !!provider && !!provider['isMathWallet'],
     getIcon: async () => (await import(`../../../../images/wallets/math-wallet.svg`)).default,
-    getInterface: async () => ({ provider: window['ethereum'] }),
+    getInterface: async () => ({ provider: window['ethereum'] as unknown as EIP1193Provider }),
     platforms: ['all'],
   },
   {
@@ -61,7 +62,7 @@ export const customInjectedWallets: InjectedWalletModule[] = [
     injectedNamespace: InjectedNameSpace.Ethereum,
     checkProviderIdentity: ({ provider }) => !!provider && !!provider['isBitKeep'],
     getIcon: async () => (await import(`../../../../images/wallets/bitkeep-wallet.png`)).default,
-    getInterface: async () => ({ provider: window['ethereum'] }),
+    getInterface: async () => ({ provider: window['ethereum'] as unknown as EIP1193Provider }),
     platforms: ['all'],
   },
   {
@@ -70,7 +71,7 @@ export const customInjectedWallets: InjectedWalletModule[] = [
     checkProviderIdentity: ({ provider }) =>
       !!provider && !!provider['isTrust'] && !('deficonnect' in window),
     getIcon: async () => (await import(`../../../../images/wallets/trust-wallet.svg`)).default,
-    getInterface: async () => ({ provider: window['ethereum'] }),
+    getInterface: async () => ({ provider: window['ethereum'] as unknown as EIP1193Provider }),
     platforms: ['all'],
   },
 ];
