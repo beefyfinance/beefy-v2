@@ -893,5 +893,10 @@
     "id": "kinetix",
     "name": "Kinetix",
     "filter": true
+  },
+  {
+    "id": "compound",
+    "name": "Compound",
+    "filter": true
   }
 ]

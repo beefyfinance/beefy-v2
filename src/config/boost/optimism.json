@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_velodrome-v2-weth-moobifi-beefy",
+    "poolId": "velodrome-v2-weth-moobifi",
+    "name": "Beefy",
+    "assets": ["mooBIFI", "ETH"],
+    "tokenAddress": "0x57d00d036485B5fEE6A58c8763Bdc358906E6D19",
+    "earnedToken": "OP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
+    "earnContractAddress": "0xFA6B418801dfc7A33c30686d2673302141C2CBED",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OP",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["beefy"]
+  },
+  {
     "id": "moo_velodrome-v2-ovn-usd+-op",
     "poolId": "velodrome-v2-ovn-usd+",
     "name": "Overnight",

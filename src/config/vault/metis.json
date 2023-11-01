@@ -118,8 +118,8 @@
     ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
-    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
-    "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
+    "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/true",
+    "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/true",
     "network": "metis",
     "createdAt": 1664200372
   },

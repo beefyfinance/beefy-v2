@@ -14,6 +14,7 @@ import {
 import type { VaultEntity } from '../../../../../data/entities/vault';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { styles } from './styles';
+import { TokenImage } from '../../../../../../components/TokenImage/TokenImage';
 
 const useStyles = makeStyles(styles);
 
@@ -58,7 +59,7 @@ export const AssetInfo = memo<AssetInfoProps>(function AssetInfo({ chainId, toke
   return (
     <AssetContainer token={token}>
       <>
-        <AssetsImage size={24} chainId={chainId} assetIds={[token.oracleId]} />
+        <TokenImage size={24} tokenAddress={token.address} chainId={chainId} />
         <AssetName name={token.symbol} />
       </>
     </AssetContainer>
