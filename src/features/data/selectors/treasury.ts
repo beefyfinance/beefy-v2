@@ -34,9 +34,9 @@ export const selectTreasurySorted = function (state: BeefyState) {
       .reduce(
         (acc, asset) => {
           acc.usdTotal = acc.usdTotal.plus(asset.usdValue);
-          if (['token', 'native'].includes(asset.assetType)) {
+          if (['token', 'native'].includes(asset.assetType) && !asset.staked) {
             acc.liquid++;
-          } else if (asset.assetType === 'vault' || asset.assetType === 'concLiquidity') {
+          } else if (asset.staked) {
             acc.staked++;
           } else if (asset.assetType === 'validator') {
             acc.locked++;
@@ -281,12 +281,13 @@ export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
     const assetsByChainId = selectTreasuryAssetsByChainId(state, chainId);
 
     for (const token of assetsByChainId) {
+      console.log(token);
       if (isFiniteBigNumber(token.usdValue)) {
         const usdValue = new BigNumber(token.usdValue);
-        if (['token', 'native'].includes(token.assetType)) {
+        if (['token', 'native'].includes(token.assetType) && !token.staked) {
           totals['liquidAssets'] = (totals['liquidAssets'] || BIG_ZERO).plus(usdValue);
         }
-        if (['vault', 'concLiquidity'].includes(token.assetType)) {
+        if (token.staked) {
           totals['stakedAssets'] = (totals['stakedAssets'] || BIG_ZERO).plus(usdValue);
         }
         if (token.assetType === 'validator') {
