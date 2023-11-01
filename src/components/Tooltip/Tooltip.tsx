@@ -116,19 +116,22 @@ export const Tooltip = memo(
       [disabled, isOpen, onTriggerClick, triggers, setIsOpen, propagateTriggerClick]
     );
 
-    const handlePopperClick = useCallback<MouseEventHandler<HTMLDivElement>>(e => {
-      if (
-        !(typeof propagateTooltipClick === 'function'
-          ? propagateTooltipClick(e)
-          : propagateTooltipClick)
-      ) {
-        e.stopPropagation();
-      }
+    const handlePopperClick = useCallback<MouseEventHandler<HTMLDivElement>>(
+      e => {
+        if (
+          !(typeof propagateTooltipClick === 'function'
+            ? propagateTooltipClick(e)
+            : propagateTooltipClick)
+        ) {
+          e.stopPropagation();
+        }
 
-      if (onTooltipClick) {
-        onTooltipClick(e);
-      }
-    }, []);
+        if (onTooltipClick) {
+          onTooltipClick(e);
+        }
+      },
+      [onTooltipClick, propagateTooltipClick]
+    );
 
     const modifiers = useMemo(
       () => ({

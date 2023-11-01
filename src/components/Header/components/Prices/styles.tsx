@@ -61,6 +61,7 @@ export const styles = (theme: Theme) => ({
     background: '#232743',
     color: theme.palette.text.light,
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    padding: '16px',
   },
   tooltipArrow: {
     color: '#232743',
@@ -77,8 +78,9 @@ export const styles = (theme: Theme) => ({
   mooToken: {
     ...theme.typography['subline-lg'],
     textTransform: 'none' as const,
-    marginTop: '8px',
+    marginTop: '12px',
     textAlign: 'center' as const,
+    lineHeight: '1.1',
   },
   symbol: {
     ...theme.typography['body-lg-med'],
