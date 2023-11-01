@@ -243,6 +243,12 @@ const theme = createTheme(
           body: {
             backgroundColor: '#1B1E31',
           },
+          'onboard-v2': {
+            // @ts-ignore need to force above other modals
+            position: 'relative !important',
+            // @ts-ignore need to force above other modals
+            zIndex: '1400 !important',
+          },
         },
       },
       MuiInputBase: {

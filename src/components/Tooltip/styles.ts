@@ -10,6 +10,7 @@ export const styles = (theme: Theme) => ({
   arrow: {
     position: 'absolute' as const,
     zIndex: 15,
+    color: '#fff',
     '&::before': {
       content: '""',
       display: 'block',
@@ -29,14 +30,14 @@ export const styles = (theme: Theme) => ({
   tooltip: {
     minWidth: `${arrowWidth * 3}px`,
     maxWidth: 'min(100%, 350px)',
-    zIndex: 1000,
+    zIndex: 1301, // Modal is 1300
     '&[x-placement*="top"]': {
       marginBottom: `${arrowHeight}px`,
       '& $arrow': {
         bottom: `-${arrowHeight}px`,
         '&::before': {
           borderWidth: `${arrowHeight}px ${arrowWidth / 2}px 0 ${arrowWidth / 2}px`,
-          borderColor: '#fff transparent transparent transparent',
+          borderColor: 'currentColor transparent transparent transparent',
         },
       },
     },
@@ -46,7 +47,7 @@ export const styles = (theme: Theme) => ({
         top: `-${arrowHeight}px`,
         '&::before': {
           borderWidth: `0 ${arrowWidth / 2}px ${arrowHeight}px ${arrowWidth / 2}px`,
-          borderColor: 'transparent transparent #fff transparent',
+          borderColor: 'transparent transparent currentColor transparent',
         },
       },
     },
@@ -56,7 +57,7 @@ export const styles = (theme: Theme) => ({
         right: `-${arrowHeight}px`,
         '&::before': {
           borderWidth: `${arrowWidth / 2}px 0 ${arrowWidth / 2}px ${arrowHeight}px`,
-          borderColor: ' transparent transparent transparent #fff',
+          borderColor: ' transparent transparent transparent currentColor',
         },
       },
     },
@@ -66,7 +67,7 @@ export const styles = (theme: Theme) => ({
         left: `-${arrowHeight}px`,
         '&::before': {
           borderWidth: `${arrowWidth / 2}px ${arrowHeight}px ${arrowWidth / 2}px 0`,
-          borderColor: 'transparent #fff transparent transparent',
+          borderColor: 'transparent currentColor transparent transparent',
         },
       },
     },

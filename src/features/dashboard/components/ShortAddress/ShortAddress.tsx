@@ -23,8 +23,10 @@ export const ShortAddress = memo<ShortAddressProps>(function ShortAddress({
   const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'), { noSsr: true });
 
   const handleCopyAddressToClipboard = useCallback(() => {
-    setShowCopied(true);
-    navigator.clipboard.writeText(address);
+    navigator.clipboard
+      .writeText(address)
+      .then(() => setShowCopied(true))
+      .catch(e => console.error(e));
   }, [address, setShowCopied]);
 
   const shortAddressLabel = useMemo(() => {
@@ -47,7 +49,7 @@ export const ShortAddress = memo<ShortAddressProps>(function ShortAddress({
   if (address) {
     return (
       <Tooltip
-        onClick={handleCopyAddressToClipboard}
+        onTriggerClick={handleCopyAddressToClipboard}
         contentClass={classes.longAddress}
         triggerClass={classes.triggerClass}
         tooltipClass={classes.tooltipContent}

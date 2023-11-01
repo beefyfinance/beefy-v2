@@ -1,5 +1,5 @@
-import type { MouseEventHandler, ReactNode } from 'react';
 import React, { forwardRef, memo, useCallback, useMemo, useState, useId } from 'react';
+import type { MouseEventHandler, MouseEvent, ReactNode } from 'react';
 import type { PopperPlacementType } from '@material-ui/core';
 import { ClickAwayListener, makeStyles, Popper, setRef } from '@material-ui/core';
 import clsx from 'clsx';
@@ -26,7 +26,10 @@ export type TooltipProps = {
   children: ReactNode;
   content: ReactNode;
   placement?: PopperPlacementType;
-  onClick?: MouseEventHandler<HTMLDivElement>;
+  onTriggerClick?: MouseEventHandler<HTMLDivElement>;
+  propagateTriggerClick?: boolean | ((e: MouseEvent<HTMLDivElement>) => boolean);
+  onTooltipClick?: MouseEventHandler<HTMLDivElement>;
+  propagateTooltipClick?: boolean | ((e: MouseEvent<HTMLDivElement>) => boolean);
   triggerClass?: string;
   tooltipClass?: string;
   arrowClass?: string;
@@ -47,7 +50,10 @@ export const Tooltip = memo(
       contentClass,
       placement = 'top-end',
       disabled = false,
-      onClick,
+      onTriggerClick,
+      onTooltipClick,
+      propagateTriggerClick = false,
+      propagateTooltipClick = false,
       triggers = TRIGGERS.CLICK | TRIGGERS.HOVER,
       group = 'default',
     },
@@ -89,10 +95,17 @@ export const Tooltip = memo(
 
     const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
       e => {
-        e.stopPropagation();
+        if (
+          !(typeof propagateTriggerClick === 'function'
+            ? propagateTriggerClick(e)
+            : propagateTriggerClick)
+        ) {
+          e.stopPropagation();
+        }
+
         if (!disabled) {
-          if (onClick) {
-            onClick(e);
+          if (onTriggerClick) {
+            onTriggerClick(e);
           }
 
           if (!e.defaultPrevented && triggers & TRIGGERS.CLICK) {
@@ -100,12 +113,25 @@ export const Tooltip = memo(
           }
         }
       },
-      [disabled, isOpen, onClick, triggers, setIsOpen]
+      [disabled, isOpen, onTriggerClick, triggers, setIsOpen, propagateTriggerClick]
     );
 
-    const handlePopperClick = useCallback<MouseEventHandler<HTMLDivElement>>(e => {
-      e.stopPropagation();
-    }, []);
+    const handlePopperClick = useCallback<MouseEventHandler<HTMLDivElement>>(
+      e => {
+        if (
+          !(typeof propagateTooltipClick === 'function'
+            ? propagateTooltipClick(e)
+            : propagateTooltipClick)
+        ) {
+          e.stopPropagation();
+        }
+
+        if (onTooltipClick) {
+          onTooltipClick(e);
+        }
+      },
+      [onTooltipClick, propagateTooltipClick]
+    );
 
     const modifiers = useMemo(
       () => ({

@@ -10,6 +10,7 @@ import type { NavConfig, NavDropdownConfig } from '../DropNavItem/types';
 import { isNavDropdownConfig } from '../DropNavItem/types';
 import clsx from 'clsx';
 import { UnreadProposalsDot } from '../Badges/UnreadProposalsDot';
+import { Prices } from '../Prices';
 
 const useStyles = makeStyles(styles);
 
@@ -28,7 +29,9 @@ export const MobileMenu = memo(function MobileMenu() {
       <Drawer className={classes.bg} anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
         <div className={classes.menuContainer}>
           <div className={classes.head}>
-            <div className={classes.flex}>{/* <BifiPrice /> */}</div>
+            <div className={classes.flex}>
+              <Prices />
+            </div>
             <Close className={classes.cross} onClick={handleDrawerToggle} />
           </div>
           <Divider className={classes.divider} />
@@ -46,7 +49,10 @@ export const MobileMenu = memo(function MobileMenu() {
   );
 });
 
-type MobileItemProps = { item: NavConfig; onClick: () => void };
+type MobileItemProps = {
+  item: NavConfig;
+  onClick: () => void;
+};
 const MobileItem = memo<MobileItemProps>(function MobileItem({ item, onClick }) {
   if (isNavDropdownConfig(item)) {
     const NavComponent = item.MobileComponent ?? DropMobile;

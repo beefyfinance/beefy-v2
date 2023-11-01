@@ -13,7 +13,7 @@ import Twitter from '../../../../images/icons/twitter.svg';
 import Telegram from '../../../../images/icons/telegram.svg';
 import Discord from '../../../../images/icons/discord.svg';
 import { selectBoostRewardsTokenEntity } from '../../../data/selectors/balance';
-import { AddTokenToWallet } from '../AddTokenToWallet';
+import { RewardTokenDetails } from '../AddTokenToWallet';
 
 const useStyles = makeStyles(styles);
 export const BoostCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
@@ -42,7 +42,7 @@ export const BoostCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       </div>
       <CardContent>
         <div className={classes.text}>{text}</div>
-        <AddTokenToWallet token={rewardToken} chainId={boost.chainId} />
+        <RewardTokenDetails token={rewardToken} chainId={boost.chainId} />
       </CardContent>
     </div>
   );
