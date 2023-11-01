@@ -541,7 +541,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   kava: {
     name: 'Kava',
     chainId: 2222,
-    rpc: ['https://kava-pokt.nodies.app'],
+    rpc: ['https://kava-evm.publicnode.com'],
     explorerUrl: 'https://explorer.kava.io',
     multicallAddress: '0x13C6bCC2411861A31dcDC2f990ddbe2325482222',
     appMulticallContractAddress: '0x41D44B276904561Ac51855159516FD4cB2c90968',
@@ -554,7 +554,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'KAVA',
         decimals: 18,
       },
-      rpcUrls: ['https://kava-pokt.nodies.app'],
+      rpcUrls: ['https://kava-evm.publicnode.com'],
       blockExplorerUrls: ['https://explorer.kava.io/'],
     },
     gas: {
