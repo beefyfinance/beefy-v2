@@ -94,6 +94,8 @@ export const selectTreasuryAssetsByChainId = createCachedSelector(
   }
 )((state: BeefyState, chainId: ChainEntity['id']) => chainId);
 
+const bifiOracles = ['BIFI', 'mooBIFI', 'rBIFI'];
+
 export const selectTreasuryStats = (state: BeefyState) => {
   const treasury = selectTreasury(state);
   let holdings = BIG_ZERO;
@@ -105,8 +107,8 @@ export const selectTreasuryStats = (state: BeefyState) => {
       for (const token of Object.values(balancePerChain.balances)) {
         if (token) {
           let balanceInTokens = token.balance.shiftedBy(-token.decimals);
-          if (token.oracleId === 'BIFI' || token.oracleId === 'mooBIFI') {
-            beefyHeld = getBifiBalanceInTokens(state, token, beefyHeld, balanceInTokens);
+          if (bifiOracles.includes(token.oracleId)) {
+            beefyHeld = getBifiBalanceInTokens(state, token.oracleId, beefyHeld, balanceInTokens);
           }
           if (token.oracleType === 'lps') {
             const haveBreakdownData = selectHasBreakdownDataByOracleId(
@@ -127,8 +129,13 @@ export const selectTreasuryStats = (state: BeefyState) => {
                 chainId
               );
               for (const asset of assets) {
-                if (token.oracleId === 'BIFI' || token.oracleId === 'mooBIFI') {
-                  beefyHeld = getBifiBalanceInTokens(state, token, beefyHeld, balanceInTokens);
+                if (bifiOracles.includes(asset.oracleId)) {
+                  beefyHeld = getBifiBalanceInTokens(
+                    state,
+                    asset.oracleId,
+                    beefyHeld,
+                    asset.userAmount
+                  );
                 }
                 if (selectIsTokenStable(state, chainId, asset.oracleId)) {
                   stables = stables.plus(asset.userValue);
@@ -164,11 +171,11 @@ export const selectTreasuryStats = (state: BeefyState) => {
  */
 const getBifiBalanceInTokens = (
   state: BeefyState,
-  token: TreasuryHoldingEntity,
+  oracleId: TreasuryHoldingEntity['oracleId'],
   beefyHeld: BigNumber,
   balance: BigNumber
 ): BigNumber => {
-  if (token.oracleId === 'BIFI') {
+  if (oracleId === 'BIFI' || oracleId === 'rBIFI') {
     return beefyHeld.plus(balance);
   } else {
     const moobifiPpfs = selectVaultPricePerFullShare(state, 'bifi-vault');
