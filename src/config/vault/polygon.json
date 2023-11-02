@@ -1,5 +1,33 @@
 [
   {
+    "id": "compound-polygon-usdc",
+    "name": "USDC",
+    "token": "USDC",
+    "tokenAddress": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+    "tokenDecimals": 6,
+    "earnedToken": "mooCompoundBaseUSDbC",
+    "earnedTokenAddress": "0x86F371838A321F92237DaD7b8DA5c76d2c084934",
+    "earnContractAddress": "0x86F371838A321F92237DaD7b8DA5c76d2c084934",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "platformId": "compound",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=polygon&from=0x0000000000000000000000000000000000000000&to=0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    "network": "polygon",
+    "createdAt": 1698951095
+  },
+  {
     "id": "quick-gamma-weth-usdt",
     "name": "USDT-WETH LP",
     "token": "aWETH-USDT",
