@@ -11,6 +11,10 @@ import { InfoGrid } from '../InfoGrid';
 import { TokenAmount } from '../../../../../../../../components/TokenAmount';
 import { MobileStat } from '../../../MobileStat';
 import { useTranslation } from 'react-i18next';
+import { explorerTxUrl } from '../../../../../../../../helpers/url';
+import { selectChainById } from '../../../../../../../data/selectors/chains';
+import { useAppSelector } from '../../../../../../../../store';
+import { getNetworkSrc } from '../../../../../../../../helpers/networkSrc';
 
 const useStyles = makeStyles(styles);
 
@@ -20,6 +24,8 @@ interface TransactionProps {
 }
 export const Transaction = memo<TransactionProps>(function Transaction({ data, tokenDecimals }) {
   const classes = useStyles();
+  const chainId = data.source?.chain || data.chain;
+  const chain = useAppSelector(state => selectChainById(state, chainId));
   const {
     internal,
     datetime,
@@ -28,6 +34,7 @@ export const Transaction = memo<TransactionProps>(function Transaction({ data, t
     underlyingDiff,
     shareToUnderlyingPrice,
     underlyingToUsdPrice,
+    transactionHash,
   } = data;
 
   const amountClassName = useMemo(() => {
@@ -39,7 +46,23 @@ export const Transaction = memo<TransactionProps>(function Transaction({ data, t
   return (
     <Row>
       {/* Date */}
-      <div className={clsx(classes.stat, classes.textFlexStart)}>{formatISO9075(datetime)}</div>
+      <div className={clsx(classes.stat, classes.textFlexStart)}>
+        <img
+          src={getNetworkSrc(chain.id)}
+          alt={chain.name}
+          width={24}
+          height={24}
+          className={classes.network}
+        />
+        <a
+          href={explorerTxUrl(chain, transactionHash)}
+          target={'_blank'}
+          rel={'noopener'}
+          className={classes.link}
+        >
+          {formatISO9075(datetime)}
+        </a>
+      </div>
       <InfoGrid>
         {/*Amount */}
         <div className={classes.column}>
@@ -83,6 +106,8 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
+  const chainId = data.source?.chain || data.chain;
+  const chain = useAppSelector(state => selectChainById(state, chainId));
   const {
     internal,
     datetime,
@@ -92,6 +117,7 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
     shareToUnderlyingPrice,
     underlyingToUsdPrice,
     underlyingBalance,
+    transactionHash,
   } = data;
 
   const amountClassName = useMemo(() => {
@@ -120,7 +146,14 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
         } ${diff}`}</div>
         {/* Date */}
         <div className={classes.statMobile}>
-          {formatISO9075(datetime, { representation: 'date' })}
+          <a
+            href={explorerTxUrl(chain, transactionHash)}
+            target={'_blank'}
+            rel={'noopener'}
+            className={classes.link}
+          >
+            {formatISO9075(datetime, { representation: 'date' })}
+          </a>
         </div>
         <div className={clsx(classes.statMobile, classes.textDark)}>
           {formatISO9075(datetime, { representation: 'time' })}
