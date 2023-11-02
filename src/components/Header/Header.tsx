@@ -27,8 +27,8 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { selectShouldInitProposals } from '../../features/data/selectors/data-loader';
 import { fetchActiveProposals } from '../../features/data/actions/proposal';
 import { UnreadProposalsDot } from './components/Badges/UnreadProposalsDot';
-import headerLogoMobile from '../../images/bifi-logos/header-logo-notext-hw.svg';
-import headerLogoDesktop from '../../images/bifi-logos/header-logo-hw.svg';
+import headerLogoMobile from '../../images/bifi-logos/header-logo-notext.svg';
+import headerLogoDesktop from '../../images/bifi-logos/header-logo.svg';
 
 const useStyles = makeStyles(styles);
 export const Header = memo(function Header() {
