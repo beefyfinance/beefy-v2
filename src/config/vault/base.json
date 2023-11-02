@@ -1,5 +1,32 @@
 [
   {
+    "id": "compound-base-eth",
+    "name": "ETH",
+    "token": "ETH",
+    "tokenDecimals": 18,
+    "earnedToken": "mooCompoundBaseETH",
+    "earnedTokenAddress": "0x62e5B9934dCB87618CFC74B222305D16C997E8c1",
+    "earnContractAddress": "0x62e5B9934dCB87618CFC74B222305D16C997E8c1",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "platformId": "compound",
+    "assets": ["ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=base&from=0x0000000000000000000000000000000000000000&to=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
+    "network": "base",
+    "createdAt": 1698951095
+  },
+  {
     "id": "compound-base-usdbc",
     "name": "USDbC",
     "token": "USDbC",
@@ -1691,7 +1718,6 @@
     "name": "ETH",
     "token": "ETH Base",
     "tokenDecimals": 18,
-    "tokenProviderId": "moonwell",
     "earnedToken": "mooMoonwellBaseETH",
     "earnedTokenAddress": "0x48DfFA589c0ca127C5C7B3E7250BA83FAC206309",
     "earnContractAddress": "0x48DfFA589c0ca127C5C7B3E7250BA83FAC206309",
