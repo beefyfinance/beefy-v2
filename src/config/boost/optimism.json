@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_aura-op-ethereum-triplets-beefy",
+    "poolId": "aura-op-ethereum-triplets",
+    "name": "Beefy",
+    "assets": ["wstETH", "sfrxETH","rETH"],
+    "tokenAddress": "0x9236cd1Cb2df141E842F825B95f51742CC930814",
+    "earnedToken": "OP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
+    "earnContractAddress": "0x7afE3Cfe886a38Cb5d52612FCc6fBdB56D5dA666",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OP",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["beefy"]
+  },
+  {
     "id": "moo_velodrome-v2-weth-moobifi-beefy",
     "poolId": "velodrome-v2-weth-moobifi",
     "name": "Beefy",
