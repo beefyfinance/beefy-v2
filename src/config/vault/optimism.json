@@ -1,5 +1,27 @@
 [
   {
+    "id": "aura-op-ethereum-triplets",
+    "name": "Ethereum Triplets",
+    "token": "Ethereum Triplets",
+    "tokenAddress": "0x5F8893506Ddc4C271837187d14A9C87964a074Dc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooAuraOPEthereumTriplets",
+    "earnedTokenAddress": "0x9236cd1Cb2df141E842F825B95f51742CC930814",
+    "earnContractAddress": "0x9236cd1Cb2df141E842F825B95f51742CC930814",
+    "oracle": "lps",
+    "oracleId": "aura-op-ethereum-triplets",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["wstETH", "sfrxETH", "rETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://op.beets.fi/pool/0x5f8893506ddc4c271837187d14a9c87964a074dc000000000000000000000106",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0x5f8893506ddc4c271837187d14a9c87964a074dc000000000000000000000106",
+    "network": "optimism",
+    "createdAt": 1698951093
+  },
+  {
     "id": "aura-op-ovn-wusd+",
     "name": "OVN-wUSD+",
     "token": "OVN-wUSD+",

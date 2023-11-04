@@ -225,36 +225,6 @@
     "createdAt": 1682949068
   },
   {
-    "id": "solisnek-usdc-dei",
-    "name": "DEI-USDC sLP",
-    "token": "DEI-USDC sLP",
-    "tokenAddress": "0xD4df5E012D1af8F5DCeFD0612b27B5E4C51131fE",
-    "tokenDecimals": 18,
-    "tokenProviderId": "solisnek",
-    "tokenAmmId": "avax-solisnek",
-    "earnedToken": "mooSoliSnekUSDC-DEI",
-    "earnedTokenAddress": "0x7f6e2FD400f7fB43Ea8d41cc733eF45f37510C5C",
-    "earnContractAddress": "0x7f6e2FD400f7fB43Ea8d41cc733eF45f37510C5C",
-    "oracle": "lps",
-    "oracleId": "solisnek-usdc-dei",
-    "status": "eol",
-    "retireReason": "exploit",
-    "platformId": "solisnek",
-    "assets": ["DEI", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "MCAP_MICRO",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&to=0xde1e704dae0b4051e80dabb26ab6ad6c12262da0",
-    "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0xd4df5e012d1af8f5dcefd0612b27b5e4c51131fe",
-    "network": "avax",
-    "createdAt": 1682949068
-  },
-  {
     "id": "solisnek-dola-usdc",
     "name": "DOLA-USDC sLP",
     "token": "DOLA-USDC sLP",

@@ -281,6 +281,7 @@ export interface TokenHoldingConfig {
   balance: string;
   methodPath?: string;
   symbol: string;
+  staked: boolean;
 }
 
 export interface VaultHoldingConfig {
@@ -296,6 +297,7 @@ export interface VaultHoldingConfig {
   vaultId: VaultEntity['id'];
   pricePerFullShare: string;
   methodPath?: string;
+  staked: boolean;
 }
 
 export type TreasuryHoldingConfig = TokenHoldingConfig | VaultHoldingConfig;

@@ -22,10 +22,10 @@ export const useSortedAssets = (assets: TreasuryHoldingEntity[]): SortedAssetCat
   for (const token of sortedAssets) {
     //HIDE: All tokens with less than 10 usd
     if (token.usdValue.gt(10)) {
-      if (token.assetType === 'token' || token.assetType === 'native') {
+      if ((token.assetType === 'token' || token.assetType === 'native') && !token.staked) {
         list.liquidAssets.push(token);
       }
-      if (token.assetType === 'vault' || token.assetType === 'concLiquidity') {
+      if (token.staked) {
         list.stakedAssets.push(token);
       }
       if (token.assetType === 'validator') {
