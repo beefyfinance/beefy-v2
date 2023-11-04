@@ -1875,10 +1875,10 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-3.0.0.tgz#8c2b9073fe0722d48693143b0dc8448840daa3bd"
   integrity sha512-j6Z47VOmVyGMlnKXZmL0fyvWfEYtKWCA9yGZkU3FCsGZUT5lHGmvaV9JA5F2Y+010y7+ROtR3WMXIkvl/nVzqQ==
 
-"@metamask/sdk-communication-layer@0.10.1":
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.10.1.tgz#95c6a1786dcd7a64c54a8e5cbd11489aa708b074"
-  integrity sha512-lWeh1PUq114h1/44llZgBcG51uOEi5dHjnNHlcYK9Sjq/iJ4s3mp0y39DGXHEs2r6rJQRyQpryoYyPsQTF2Imw==
+"@metamask/sdk-communication-layer@0.11.1":
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.11.1.tgz#9105d82980504d52e3986e99b671366a62849959"
+  integrity sha512-3Rj1xiRIq4JC/TyGFtojKevb4oI0PKK97M5ImOKsELRALPngnUTiTxtNYRLg9Kufxn5L/QNh2cjaijzmav3KPg==
   dependencies:
     cross-fetch "^3.1.5"
     date-fns "^2.29.3"
@@ -1887,10 +1887,10 @@
     socket.io-client "^4.5.1"
     uuid "^8.3.2"
 
-"@metamask/sdk-install-modal-web@0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk-install-modal-web/-/sdk-install-modal-web-0.10.0.tgz#e2638c6fdd1ab4e42064a51d16bab8a141e7c667"
-  integrity sha512-pMZeHx7XkXljYed1WCH9ek2Z4mttmpucZl+oacRb3YnMvF+aCphfx+HXabOvnX6htFSlVvxh9djibk8ox2Z9Bg==
+"@metamask/sdk-install-modal-web@0.11.1":
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk-install-modal-web/-/sdk-install-modal-web-0.11.1.tgz#66f5f8748d4199b4de2376335dcad0f0ffe87020"
+  integrity sha512-uGVWcAl1Q8jfYtPvtvFySIkRJbT9cNjW8wVcWEj23JpmA7BAdG3VY6cXT30o9AiSXsvfbxrtoc02vk6K9V26Xw==
   dependencies:
     "@emotion/react" "^11.10.6"
     "@emotion/styled" "^11.10.6"
@@ -1900,16 +1900,16 @@
     react-dom "^18.2.0"
     react-i18next "^13.2.2"
 
-"@metamask/sdk@^0.10.1":
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.10.1.tgz#3a9d029d5b16684de59d6ee34401d1165dc1a740"
-  integrity sha512-cxTWnniZG0cmvaFxf/WAf4SqPw4lHrt16cMMiefAJAsNyL3aPUh8M26fh29EdftIhUXytT9ErNGW+Nf5V4EsCQ==
+"@metamask/sdk@^0.11.1":
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.11.2.tgz#f78e27c257297d205caf4ba96bd6a7aefc064389"
+  integrity sha512-OZr14EAzfieiUCuRShXCW+Je5V0NoK9dInpp0jZNG/hwBRXcDpvRKQKcVny0/PvCCcHx0wirVrJQBHnV84xHgw==
   dependencies:
     "@metamask/onboarding" "^1.0.1"
     "@metamask/post-message-stream" "^6.1.0"
     "@metamask/providers" "^10.2.1"
-    "@metamask/sdk-communication-layer" "0.10.1"
-    "@metamask/sdk-install-modal-web" "0.10.0"
+    "@metamask/sdk-communication-layer" "0.11.1"
+    "@metamask/sdk-install-modal-web" "0.11.1"
     "@react-native-async-storage/async-storage" "^1.17.11"
     "@types/dom-screen-wake-lock" "^1.0.0"
     bowser "^2.9.0"
@@ -1922,10 +1922,11 @@
     i18next-browser-languagedetector "^7.1.0"
     obj-multiplex "^1.0.0"
     pump "^3.0.0"
-    qrcode-terminal "^0.12.0"
+    qrcode-terminal-nooctal "^0.12.1"
     react-i18next "^13.2.2"
     react-native-webview "^11.26.0"
     readable-stream "^2.3.7"
+    rollup-plugin-visualizer "^5.9.2"
     socket.io-client "^4.5.1"
     util "^0.12.4"
     uuid "^8.3.2"
@@ -3286,21 +3287,21 @@
     joi "17.8.1"
     rxjs "^7.5.2"
 
-"@web3-onboard/injected-wallets@^2.10.8":
-  version "2.10.8"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.8.tgz#a7e500e750138c1408ac57e798c1a2ce0f15a8e0"
-  integrity sha512-qjYwwXSqYApxSS0x5oR7mBggGzhta8LF0ShdBIPl6GG2KfGN233YnSmd3GNTGxYe5RU9p0lxMBaLn82AApxr8Q==
+"@web3-onboard/injected-wallets@^2.10.9":
+  version "2.10.9"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.9.tgz#7af271d6742993ab1de13aeeea688640263d1f5d"
+  integrity sha512-Eo2BAHOaEnhufSCiqgVYT1FeNLKKmEfAEcHcxBVeANar7th8zUBhC5QyorQNwTvsFr9MOxgJe/CELcAFQJalVA==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     joi "17.9.1"
     lodash.uniqby "^4.7.0"
 
-"@web3-onboard/metamask@^2.0.1-alpha.3":
-  version "2.0.1-alpha.3"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.0.1-alpha.3.tgz#b53f78d8868fbeaa9e8637b69effb013a68cf0c2"
-  integrity sha512-bSfu+nkJ64NEol15261LJFSH4Bv8Nve/dZrnlZX649XvY9MGkMmXT9hEFL+pRDku7B9y4dB8EuVYr34uYBlKJA==
+"@web3-onboard/metamask@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.0.1.tgz#970c5c6e499b8200cb1f77797571c1c42ad98020"
+  integrity sha512-pkLAeMay/s4L9Dxr2lK/76VMNcWz4Vdp6UVgqbraQoR5gNBhH/QI8SHHgc9JoezQgpGVtD4kvxRSO8KsrVKkBA==
   dependencies:
-    "@metamask/sdk" "^0.10.1"
+    "@metamask/sdk" "^0.11.1"
     "@web3-onboard/common" "^2.3.3"
 
 "@web3-onboard/transaction-preview@^2.0.8":
@@ -8302,10 +8303,10 @@ qrcode-generator@^1.4.3:
   resolved "https://registry.yarnpkg.com/qrcode-generator/-/qrcode-generator-1.4.4.tgz#63f771224854759329a99048806a53ed278740e7"
   integrity sha512-HM7yY8O2ilqhmULxGMpcHSF1EhJJ9yBj8gvDEuZ6M+KGJ0YY2hKpnXvRD+hZPLrDVck3ExIGhmPtSdcjC+guuw==
 
-qrcode-terminal@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/qrcode-terminal/-/qrcode-terminal-0.12.0.tgz#bb5b699ef7f9f0505092a3748be4464fe71b5819"
-  integrity sha512-EXtzRZmC+YGmGlDFbXKxQiMZNwCLEO6BANKXG4iCtSIM0yqc/pappSx3RIKr4r0uh5JsBckOXeKrB3Iz7mdQpQ==
+qrcode-terminal-nooctal@^0.12.1:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/qrcode-terminal-nooctal/-/qrcode-terminal-nooctal-0.12.1.tgz#45016aca0d82b2818de7af0a06d072ad671fbe2e"
+  integrity sha512-jy/kkD0iIMDjTucB+5T6KBsnirlhegDH47vHgrj5MejchSQmi/EAMM0xMFeePgV9CJkkAapNakpVUWYgHvtdKg==
 
 qrcode@1.5.3:
   version "1.5.3"
@@ -8910,6 +8911,16 @@ rollup-plugin-visualizer@^5.9.0:
   version "5.9.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-visualizer/-/rollup-plugin-visualizer-5.9.0.tgz#013ac54fb6a9d7c9019e7eb77eced673399e5a0b"
   integrity sha512-bbDOv47+Bw4C/cgs0czZqfm8L82xOZssk4ayZjG40y9zbXclNk7YikrZTDao6p7+HDiGxrN0b65SgZiVm9k1Cg==
+  dependencies:
+    open "^8.4.0"
+    picomatch "^2.3.1"
+    source-map "^0.7.4"
+    yargs "^17.5.1"
+
+rollup-plugin-visualizer@^5.9.2:
+  version "5.9.2"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-visualizer/-/rollup-plugin-visualizer-5.9.2.tgz#f1aa2d9b1be8ebd6869223c742324897464d8891"
+  integrity sha512-waHktD5mlWrYFrhOLbti4YgQCn1uR24nYsNuXxg7LkPH8KdTXVWR9DNY1WU0QqokyMixVXJS4J04HNrVTMP01A==
   dependencies:
     open "^8.4.0"
     picomatch "^2.3.1"
