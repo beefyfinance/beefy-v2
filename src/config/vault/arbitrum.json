@@ -1,5 +1,27 @@
 [
   {
+    "id": "curve-arb-tbtc",
+    "name": "tBTC/WBTC",
+    "token": "2BTC-f",
+    "tokenAddress": "0x755D6688AD74661Add2FB29212ef9153D40fcA46",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooConvexTBTC",
+    "earnedTokenAddress": "0x728C4f7C2ff43e6c069CDA03e3c5BD48436DE40C",
+    "earnContractAddress": "0x728C4f7C2ff43e6c069CDA03e3c5BD48436DE40C",
+    "oracle": "lps",
+    "oracleId": "curve-arb-tbtc",
+    "status": "active",
+    "platformId": "convex",
+    "assets": ["tBTC", "WBTC"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-98/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-98/withdraw",
+    "network": "arbitrum",
+    "createdAt": 1699263666
+  },
+  {
     "id": "compound-arbitrum-usdc",
     "name": "USDC",
     "token": "USDC",

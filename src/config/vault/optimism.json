@@ -1,5 +1,27 @@
 [
   {
+    "id": "curve-op-tbtc",
+    "name": "tBTC/WBTC",
+    "token": "2BTC-f",
+    "tokenAddress": "0x1Dc5c0f8668a9F54ED922171d578011850ca0341",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveTBTC",
+    "earnedTokenAddress": "0x611bB2B496c9381CdcD07458b3cfC734583429f9",
+    "earnContractAddress": "0x611bB2B496c9381CdcD07458b3cfC734583429f9",
+    "oracle": "lps",
+    "oracleId": "curve-op-tbtc",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["tBTC", "WBTC"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-63/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-63/withdraw",
+    "network": "optimism",
+    "createdAt": 1699261710
+  },
+  {
     "id": "aura-op-ethereum-triplets",
     "name": "Ethereum Triplets",
     "token": "Ethereum Triplets",
