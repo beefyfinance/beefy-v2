@@ -1752,7 +1752,8 @@
     "earnContractAddress": "0x73380F4B3E6F4a8988688d1475D33CB1D46F6de0",
     "oracle": "lps",
     "oracleId": "convex-usddfraxbp",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["USDD", "FRAX", "USDC"],
     "risks": [
