@@ -14,14 +14,11 @@ export const styles = (theme: Theme) => ({
     marginBottom: 'auto',
   },
   footer: {
-    background: theme.palette.background.footer,
+    background: theme.palette.background.footerHeader,
     padding: `${theme.spacing(5)}px`,
     display: 'flex',
     flexDirection: 'column' as const,
     alignItems: 'center',
-  },
-  userOnDashboard: {
-    backgroundColor: theme.palette.background.alternativeFooterHeader,
   },
   nav: {
     display: 'flex',

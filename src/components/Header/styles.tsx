@@ -15,10 +15,7 @@ export const styles = (theme: Theme) => ({
     columnGap: theme.spacing(2),
   },
   hasPortfolio: {
-    backgroundColor: theme.palette.background.header,
-  },
-  userOnDashboard: {
-    backgroundColor: theme.palette.background.alternativeFooterHeader,
+    backgroundColor: theme.palette.background.footerHeader,
   },
   container: {
     paddingTop: '12px',

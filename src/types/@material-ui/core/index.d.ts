@@ -10,12 +10,10 @@ import type { ReactNode } from 'react';
 
 declare module '@material-ui/core/styles/createPalette' {
   export interface TypeBackground {
-    footer: string;
     light: string;
     content: string;
     contentLight: string;
-    header: string;
-    alternativeFooterHeader: string;
+    footerHeader: string;
     cta: string;
     appBG: string;
     filters: {

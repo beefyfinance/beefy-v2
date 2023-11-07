@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     gap: '8px',
-    background: '#232743',
+    background: theme.palette.background.default,
   },
   entry: {
     display: 'flex',

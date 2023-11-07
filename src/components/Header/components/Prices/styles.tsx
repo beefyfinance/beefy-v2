@@ -58,13 +58,13 @@ export const styles = (theme: Theme) => ({
     width: '24px',
   },
   tooltipContent: {
-    background: '#232743',
+    background: theme.palette.background.default,
     color: theme.palette.text.light,
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     padding: '16px',
   },
   tooltipArrow: {
-    color: '#232743',
+    color: theme.palette.background.default,
   },
   grid: {},
   tooltipTokens: {

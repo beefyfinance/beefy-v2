@@ -116,14 +116,12 @@ const theme = createTheme(
       type: 'dark',
       primary: { main: '#59A662', light: '#CDF7D2', dark: '#004708' },
       background: {
-        default: '#232743',
-        paper: '#232743',
+        default: '#242842',
+        paper: '#242842',
         light: '#313759',
         content: '#2D3153',
         contentLight: '#F4F4F4',
-        header: '#121212',
-        footer: '#121212',
-        alternativeFooterHeader: '#020203',
+        footerHeader: '#020203',
         cta: '#59A662',
         appBG: '#1B1E31',
         filters: {
@@ -223,8 +221,8 @@ const theme = createTheme(
             '--onboard-connect-header-background': '#111321',
             '--onboard-connect-header-color': '#F5F5FF',
             '--onboard-modal-color': '#F5F5FF',
-            '--onboard-modal-background': '#232743',
-            '--onboard-main-scroll-container-background': '#232743',
+            '--onboard-modal-background': '#242842',
+            '--onboard-main-scroll-container-background': '#242842',
             '--onboard-close-button-background': '#111321',
             '--onboard-close-button-color': '#8A8EA8',
             '--onboard-wallet-button-border-color': '#2D3153',
@@ -241,7 +239,7 @@ const theme = createTheme(
             '--onboard-link-color': '#999CB3',
           },
           body: {
-            backgroundColor: '#1B1E31',
+            backgroundColor: '#121420',
           },
           'onboard-v2': {
             // @ts-ignore need to force above other modals

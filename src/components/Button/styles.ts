@@ -60,8 +60,8 @@ export const styles = (theme: Theme) => ({
   },
   default: {
     color: '#F5F5FF',
-    backgroundColor: '#232743',
-    borderColor: '#232743',
+    backgroundColor: theme.palette.background.default,
+    borderColor: theme.palette.background.default,
     '&:hover': {
       color: '#F5F5FF',
       backgroundColor: '#2C3154',

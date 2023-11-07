@@ -45,14 +45,14 @@ export const styles = (theme: Theme) => ({
     '&::after': {
       content: '""',
       display: 'block',
-      borderLeft: '12px solid #232743',
+      borderLeft: '12px solid #242842',
       borderTop: '20px solid transparent',
       borderBottom: '20px solid transparent',
     },
   },
   arrowInner: {
     width: '12px',
-    background: '#232743',
+    background: theme.palette.background.default,
     '&::before': {
       content: '""',
       display: 'block',
