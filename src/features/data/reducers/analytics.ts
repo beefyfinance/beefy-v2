@@ -125,9 +125,10 @@ export const analyticsSlice = createSlice({
         const txs = byVaultId[vaultId];
         if (txs && txs.length > 1) {
           for (let i = 1; i < txs.length; ++i) {
+            const usdPerShare = txs[i].usdDiff.dividedBy(txs[i].shareDiff).absoluteValue();
             txs[i].shareBalance = txs[i - 1].shareBalance.plus(txs[i].shareDiff);
             txs[i].underlyingBalance = txs[i - 1].underlyingBalance.plus(txs[i].underlyingDiff);
-            txs[i].usdBalance = txs[i - 1].usdBalance.plus(txs[i].usdDiff);
+            txs[i].usdBalance = txs[i].shareBalance.multipliedBy(usdPerShare);
           }
         }
       });
