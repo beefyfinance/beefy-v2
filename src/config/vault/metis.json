@@ -13,7 +13,7 @@
     "oracleId": "METIS",
     "status": "active",
     "platformId": "aave",
-    "assets": ["METIS"],
+    "assets": ["WMETIS"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
