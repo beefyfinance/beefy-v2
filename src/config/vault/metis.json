@@ -1,5 +1,33 @@
 [
   {
+    "id": "aavev3-metis-metis",
+    "name": "METIS",
+    "token": "METIS",
+    "tokenAddress": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aave",
+    "earnedToken": "mooAaveMETIS",
+    "earnedTokenAddress": "0x18c10E2c181999EEdf855d2F61eC3755aAB96f70",
+    "earnContractAddress": "0x18c10E2c181999EEdf855d2F61eC3755aAB96f70",
+    "oracle": "tokens",
+    "oracleId": "METIS",
+    "status": "active",
+    "platformId": "aave",
+    "assets": ["METIS"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://hermes.maiadao.io/#/swap?outputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+    "network": "metis",
+    "createdAt": 1699441549
+  },
+  {
     "id": "stargate-metis-usdt",
     "name": "USDT LP",
     "token": "S*USDT",
