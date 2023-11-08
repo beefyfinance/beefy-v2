@@ -93,10 +93,12 @@ export const analyticsSlice = createSlice({
 
       // Modify the vault txs to use the base vault product key etc.
       // We have to sort since the timeline is not guaranteed to be in order after merge
+      const vaultIdsWithMerges = new Set<string>();
       const vaultTxsWithBridgeMerged = sortBy(
         vaultTxsIgnoringBoosts.map((tx): VaultTimelineAnalyticsEntity => {
           const base = bridgeToBaseId[tx.productKey];
           if (base) {
+            vaultIdsWithMerges.add(base.vaultId);
             return {
               ...tx,
               productKey: base.productKey,
@@ -117,6 +119,18 @@ export const analyticsSlice = createSlice({
 
       // Group txs by vault id (display name = vault id)
       const byVaultId = groupBy(vaultTxsWithBridgeMerged, tx => tx.displayName);
+
+      // Recalc balances for vaults we merged
+      vaultIdsWithMerges.forEach(vaultId => {
+        const txs = byVaultId[vaultId];
+        if (txs && txs.length > 1) {
+          for (let i = 1; i < txs.length; ++i) {
+            txs[i].shareBalance = txs[i - 1].shareBalance.plus(txs[i].shareDiff);
+            txs[i].underlyingBalance = txs[i - 1].underlyingBalance.plus(txs[i].underlyingDiff);
+            txs[i].usdBalance = txs[i - 1].usdBalance.plus(txs[i].usdDiff);
+          }
+        }
+      });
 
       sliceState.byAddress[walletAddress] = {
         timeline: { byVaultId },
