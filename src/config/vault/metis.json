@@ -2,7 +2,7 @@
   {
     "id": "aavev3-metis-metis",
     "name": "METIS",
-    "token": "METIS",
+    "token": "WMETIS",
     "tokenAddress": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
     "tokenDecimals": 18,
     "tokenProviderId": "aave",
