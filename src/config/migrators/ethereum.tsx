@@ -6,4 +6,9 @@ export const migrators = [
     name: 'Conic Finance',
     icon: 'CNC',
   },
+  {
+    id: 'ethereum-convex',
+    name: 'Convex',
+    icon: 'CVX',
+  },
 ] as const satisfies ReadonlyArray<MigrationConfig>;
