@@ -23,6 +23,7 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(2,minmax(0, 50fr))',
     columnGap: '8px',
+    position: 'relative' as const,
   },
   statMobile: {
     ...theme.typography['body-sm'],
@@ -52,5 +53,17 @@ export const styles = (theme: Theme) => ({
     whiteSpace: 'nowrap' as const,
     overflow: 'hidden',
     flexShrink: 1,
+  },
+  vaultNetwork: {
+    top: 0,
+    left: 0,
+    width: '20px',
+    height: '22px',
+    border: 'none',
+    borderBottomRightRadius: '16px',
+    '& img': {
+      width: '16px',
+      height: '16px',
+    },
   },
 });

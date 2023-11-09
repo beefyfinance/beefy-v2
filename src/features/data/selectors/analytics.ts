@@ -58,13 +58,11 @@ export const selectVaultPnl = (
   const pnl = new PnL();
   for (const row of sortedTimeline) {
     if (row.shareDiff && row.shareToUnderlyingPrice && row.underlyingToUsdPrice) {
-      if (!row.internal) {
-        pnl.addTransaction({
-          shares: row.shareDiff,
-          price: row.underlyingToUsdPrice,
-          ppfs: row.shareToUnderlyingPrice,
-        });
-      }
+      pnl.addTransaction({
+        shares: row.shareDiff,
+        price: row.underlyingToUsdPrice,
+        ppfs: row.shareToUnderlyingPrice,
+      });
     }
   }
 

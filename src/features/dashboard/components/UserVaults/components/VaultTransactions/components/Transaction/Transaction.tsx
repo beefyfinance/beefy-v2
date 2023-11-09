@@ -15,6 +15,7 @@ import { explorerTxUrl } from '../../../../../../../../helpers/url';
 import { selectChainById } from '../../../../../../../data/selectors/chains';
 import { useAppSelector } from '../../../../../../../../store';
 import { getNetworkSrc } from '../../../../../../../../helpers/networkSrc';
+import { VaultNetwork } from '../../../../../../../../components/VaultIdentity';
 
 const useStyles = makeStyles(styles);
 
@@ -27,7 +28,6 @@ export const Transaction = memo<TransactionProps>(function Transaction({ data, t
   const chainId = data.source?.chain || data.chain;
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const {
-    internal,
     datetime,
     shareBalance,
     usdBalance,
@@ -40,8 +40,6 @@ export const Transaction = memo<TransactionProps>(function Transaction({ data, t
   const amountClassName = useMemo(() => {
     return underlyingDiff.gt(BIG_ZERO) ? classes.textGreen : classes.textRed;
   }, [classes.textGreen, classes.textRed, underlyingDiff]);
-
-  if (internal) return null;
 
   return (
     <Row>
@@ -109,7 +107,6 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
   const chainId = data.source?.chain || data.chain;
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const {
-    internal,
     datetime,
     shareBalance,
     usdBalance,
@@ -136,10 +133,9 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
     return formatSignificantBigNumber(underlyingDiff, tokenDecimals, underlyingToUsdPrice, 0, 2);
   }, [underlyingDiff, tokenDecimals, underlyingToUsdPrice]);
 
-  if (internal) return null;
-
   return (
     <RowMobile className={classes.gridMobile}>
+      <VaultNetwork className={classes.vaultNetwork} chainId={chainId} />
       <InfoGrid>
         <div className={clsx(amountClassName, classes.statMobile)}>{`${
           underlyingDiff.gt(BIG_ZERO) ? ' +' : ''
