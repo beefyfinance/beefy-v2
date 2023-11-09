@@ -82,10 +82,12 @@ export const selectTreasuryAssetsByChainId = createCachedSelector(
       for (const token of Object.values(address.balances)) {
         if (!isFiniteBigNumber(token.usdValue)) continue;
 
-        vaults[token.address] = {
+        const key = token.assetType === 'validator' ? 'validator' : token.address;
+
+        vaults[key] = {
           ...token,
-          usdValue: (vaults[token.address]?.usdValue || BIG_ZERO).plus(token.usdValue),
-          balance: (vaults[token.address]?.balance || BIG_ZERO).plus(token.balance),
+          usdValue: (vaults[key]?.usdValue || BIG_ZERO).plus(token.usdValue),
+          balance: (vaults[key]?.balance || BIG_ZERO).plus(token.balance),
         };
       }
     }
@@ -319,7 +321,7 @@ export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
     selectTreasuryHoldingsByChainId(state, chainId),
   treasury => {
     return Object.values(treasury)
-      .filter(wallet => wallet.name !== 'validator')
+      .filter(wallet => !wallet.name.includes('validator'))
       .map(wallet => {
         return {
           address: wallet.address,
