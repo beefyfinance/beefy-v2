@@ -57,7 +57,7 @@ export const initDashboardByAddress = createAsyncThunk<
   for (const chainId of chains) {
     dispatch(fetchAllBalanceAction({ chainId, walletAddress: lowerCaseAddress }));
   }
-  dispatch(fetchWalletTimeline({ address }));
+  dispatch(fetchWalletTimeline({ address: lowerCaseAddress }));
 
   return { address: lowerCaseAddress };
 });

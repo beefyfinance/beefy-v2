@@ -541,7 +541,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   kava: {
     name: 'Kava',
     chainId: 2222,
-    rpc: ['https://kava-evm.publicnode.com'],
+    rpc: ['https://evm2.kava.io'],
     explorerUrl: 'https://explorer.kava.io',
     multicallAddress: '0x13C6bCC2411861A31dcDC2f990ddbe2325482222',
     appMulticallContractAddress: '0x41D44B276904561Ac51855159516FD4cB2c90968',
@@ -554,7 +554,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'KAVA',
         decimals: 18,
       },
-      rpcUrls: ['https://kava-evm.publicnode.com'],
+      rpcUrls: ['https://evm2.kava.io'],
       blockExplorerUrls: ['https://explorer.kava.io/'],
     },
     gas: {
@@ -614,7 +614,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   zkevm: {
     name: 'Polygon zkEVM',
     chainId: 1101,
-    rpc: ['https://polygon-zkevm.blockpi.network/v1/rpc/public'],
+    rpc: ['https://zkevm-rpc.com'],
     explorerUrl: 'https://zkevm.polygonscan.com/',
     multicallAddress: '0xD19ab62F83380908D65E344567378cF104cE46c2',
     appMulticallContractAddress: '0x2ec5d5e9aaf3c3f56eBeF2fC46A5af9e42810b41',
@@ -627,7 +627,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://polygon-zkevm.blockpi.network/v1/rpc/public'],
+      rpcUrls: ['https://zkevm-rpc.com'],
       blockExplorerUrls: ['https://zkevm.polygonscan.com/'],
     },
     gas: {
