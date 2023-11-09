@@ -10,6 +10,7 @@ import type { VaultEntity } from '../entities/vault';
 import type { Draft } from 'immer';
 import { groupBy, partition, sortBy } from 'lodash-es';
 import { selectAllVaultsWithBridgedVersion } from '../selectors/vaults';
+import { BIG_ZERO } from '../../../helpers/big-number';
 
 type StatusType = 'idle' | 'pending' | 'fulfilled' | 'rejected';
 
@@ -125,10 +126,22 @@ export const analyticsSlice = createSlice({
         const txs = byVaultId[vaultId];
         if (txs && txs.length > 1) {
           for (let i = 1; i < txs.length; ++i) {
-            const usdPerShare = txs[i].usdDiff.dividedBy(txs[i].shareDiff).absoluteValue();
             txs[i].shareBalance = txs[i - 1].shareBalance.plus(txs[i].shareDiff);
-            txs[i].underlyingBalance = txs[i - 1].underlyingBalance.plus(txs[i].underlyingDiff);
-            txs[i].usdBalance = txs[i].shareBalance.multipliedBy(usdPerShare);
+
+            const underlyingPerShare = txs[i].shareDiff.isZero()
+              ? BIG_ZERO
+              : txs[i].underlyingDiff.dividedBy(txs[i].shareDiff).absoluteValue();
+            txs[i].underlyingBalance = txs[i].shareBalance.multipliedBy(underlyingPerShare);
+
+            // usd can be null if price was missing
+            if (txs[i].usdDiff) {
+              const usdPerShare = txs[i].shareDiff.isZero()
+                ? BIG_ZERO
+                : txs[i].usdDiff.dividedBy(txs[i].shareDiff).absoluteValue();
+              txs[i].usdBalance = txs[i].shareBalance.multipliedBy(usdPerShare);
+            } else {
+              txs[i].usdBalance = txs[i - 1].usdBalance;
+            }
           }
         }
       });
