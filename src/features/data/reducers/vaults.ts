@@ -22,6 +22,9 @@ import type { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
  * State containing Vault infos
  */
 export type VaultsState = NormalizedEntity<VaultEntity> & {
+  /** Vaults that have bridged receipt tokens we should track */
+  allBridgedIds: VaultEntity['id'][];
+
   byChainId: {
     [chainId: ChainEntity['id']]: {
       /** Vaults that have status: active */
@@ -91,6 +94,7 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
 export const initialVaultsState: VaultsState = {
   byId: {},
   allIds: [],
+  allBridgedIds: [],
   byChainId: {},
   contractData: { byVaultId: {} },
   featuredVaults: {},
@@ -304,6 +308,7 @@ function addVaultToState(
 
     if (vault.bridged) {
       vaultState.allBridgedIds.push(vault.id);
+      sliceState.allBridgedIds.push(vault.id);
     }
 
     if (!vaultState.standardVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()]) {

@@ -4,7 +4,7 @@ import type { BoostEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token';
 import type { VaultEntity, VaultGov } from '../entities/vault';
-import { isGovVault } from '../entities/vault';
+import { isGovVault, isStandardVault } from '../entities/vault';
 import { selectActiveVaultBoostIds, selectAllVaultBoostIds, selectBoostById } from './boosts';
 import { createCachedSelector } from 're-reselect';
 import {
@@ -159,7 +159,7 @@ export const selectUserBalanceOfToken = (
   );
 };
 
-export const selectUserBalanceOfTokensIncludingBoosts = (
+export const selectUserBalanceOfTokensIncludingBoostsBridged = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   chainId: ChainEntity['id'],
@@ -167,6 +167,7 @@ export const selectUserBalanceOfTokensIncludingBoosts = (
   walletAddress?: string
 ) => {
   //first we get mootokens
+  const vault = selectVaultById(state, vaultId);
   let mooTokenBalance = selectUserBalanceOfToken(state, chainId, tokenAddress, walletAddress);
 
   // we also need to account for deposits in boost (even those expired)
@@ -174,6 +175,14 @@ export const selectUserBalanceOfTokensIncludingBoosts = (
   for (const boostId of boostIds) {
     const boostMooToken = selectBoostUserBalanceInToken(state, boostId, walletAddress);
     mooTokenBalance = mooTokenBalance.plus(boostMooToken);
+  }
+
+  // account for bridged mooToken
+  if (isStandardVault(vault) && vault.bridged) {
+    for (const [chainId, tokenAddress] of Object.entries(vault.bridged)) {
+      const bridgedMooToken = selectUserBalanceOfToken(state, chainId, tokenAddress, walletAddress);
+      mooTokenBalance = mooTokenBalance.plus(bridgedMooToken);
+    }
   }
 
   return mooTokenBalance;

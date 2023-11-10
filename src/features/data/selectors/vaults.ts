@@ -5,6 +5,7 @@ import type { TokenEntity } from '../entities/token';
 import type { VaultEntity, VaultGov } from '../entities/vault';
 import {
   isGovVault,
+  isStandardVault,
   isVaultPaused,
   isVaultPausedOrRetired,
   isVaultRetired,
@@ -71,11 +72,11 @@ export const selectGovVaultById = (state: BeefyState, vaultId: VaultEntity['id']
 
 export const selectStandardVaultById = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
-  standarVault => {
-    if (isGovVault(standarVault)) {
-      throw new Error(`selectStandardVaultById: Vault ${standarVault.id} is not a standard vault`);
+  standardVault => {
+    if (!isStandardVault(standardVault)) {
+      throw new Error(`selectStandardVaultById: Vault ${standardVault.id} is not a standard vault`);
     }
-    return standarVault;
+    return standardVault;
   }
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
@@ -283,3 +284,9 @@ export const selectVaultLastHarvestByVaultId = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
   (lastHarvestById, vaultId) => lastHarvestById[vaultId] || 0
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectAllVaultIdsWithBridgedVersion = (state: BeefyState) =>
+  state.entities.vaults.allBridgedIds;
+
+export const selectAllVaultsWithBridgedVersion = (state: BeefyState) =>
+  state.entities.vaults.allBridgedIds.map(id => selectStandardVaultById(state, id));
