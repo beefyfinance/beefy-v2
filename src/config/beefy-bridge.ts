@@ -46,37 +46,37 @@ export const beefyBridgeConfig = {
         },
       },
     },
-    // {
-    //   id: 'chainlink',
-    //   title: 'Chainlink',
-    //   explorerUrl: 'https://ccip.chain.link/tx/{{hash}}',
-    //   chains: {
-    //     ethereum: {
-    //       bridge: '0xcccEa7Fe84272995664369334351Fe344E2732aE',
-    //       time: {
-    //         outgoing: 18,
-    //         incoming: 5,
-    //       },
-    //       gasLimits: {
-    //         approve: new BigNumber('70000'),
-    //         outgoing: new BigNumber('320000'), // ~314,686 before refunds
-    //         incoming: new BigNumber('310000 '), // ~300,027 before refunds
-    //       },
-    //     },
-    //     optimism: {
-    //       bridge: '0xcccEa7Fe84272995664369334351Fe344E2732aE',
-    //       time: {
-    //         outgoing: 18,
-    //         incoming: 3,
-    //       },
-    //       gasLimits: {
-    //         approve: new BigNumber('70000'),
-    //         outgoing: new BigNumber('230000'), // ~216,481 before refunds
-    //         incoming: new BigNumber('220000'), // ~211,298 before refunds
-    //       },
-    //     },
-    //   },
-    // },
+    {
+      id: 'chainlink',
+      title: 'Chainlink',
+      explorerUrl: 'https://ccip.chain.link/tx/{{hash}}',
+      chains: {
+        ethereum: {
+          bridge: '0xcccEa7Fe84272995664369334351Fe344E2732aE',
+          time: {
+            outgoing: 18,
+            incoming: 5,
+          },
+          gasLimits: {
+            approve: new BigNumber('70000'),
+            outgoing: new BigNumber('320000'), // ~314,686 before refunds
+            incoming: new BigNumber('310000 '), // ~300,027 before refunds
+          },
+        },
+        optimism: {
+          bridge: '0xcccEa7Fe84272995664369334351Fe344E2732aE',
+          time: {
+            outgoing: 18,
+            incoming: 3,
+          },
+          gasLimits: {
+            approve: new BigNumber('70000'),
+            outgoing: new BigNumber('230000'), // ~216,481 before refunds
+            incoming: new BigNumber('220000'), // ~211,298 before refunds
+          },
+        },
+      },
+    },
     {
       id: 'layer-zero',
       title: 'LayerZero',
