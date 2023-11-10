@@ -2314,7 +2314,8 @@
     "earnContractAddress": "0x93Ef3F1d8652c94D08AeB3ac3F4Cd890923290B3",
     "oracle": "lps",
     "oracleId": "solidlizard-ageur-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "solidlizard",
     "assets": ["agEUR", "arbUSDCe"],
     "risks": [
