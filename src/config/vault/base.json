@@ -1,5 +1,28 @@
 [
   {
+    "id": "curve-base-eusd",
+    "name": "eUSD/crvUSD",
+    "token": "eUSDcrvUSD-f",
+    "tokenAddress": "0x798D81d60966d2E909468d87e7e4b6A8DAFB1C36",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "tokenAmmId": "base-curve",
+    "earnedToken": "mooCurveEUSD",
+    "earnedTokenAddress": "0x5464Ff2073Bf61a510005e1Fa7190A86Bb58d797",
+    "earnContractAddress": "0x5464Ff2073Bf61a510005e1Fa7190A86Bb58d797",
+    "oracle": "lps",
+    "oracleId": "curve-base-eusd",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["eUSD", "crvUSD"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-12/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-12/withdraw",
+    "network": "base",
+    "createdAt": 1699600982
+  },
+  {
     "id": "aerodrome-hyusd-eusd",
     "name": "hyUSD-eUSD vLP",
     "token": "vAMM-hyUSD-eUSD",
