@@ -395,6 +395,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'aavUSDC',
       'eUSD',
       'hyUSD',
+      'EURC',
     ],
   },
   cronos: {
