@@ -677,6 +677,8 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'DOLA',
       'USDC',
       'crvUSD',
+      'eUSD',
+      'hyUSD',
     ],
   },
   gnosis: {
