@@ -33,7 +33,7 @@
     "name": "AVAX-USDC APT",
     "token": "AVAX-USDC APT",
     "tokenAddress": "0x32833a12ed3Fd5120429FB01564c98ce3C60FC1d",
-    "tokenDecimals": 12,
+    "tokenDecimals": 24,
     "tokenProviderId": "traderjoe",
     "earnedToken": "mooJoeAVAX-USDC",
     "earnedTokenAddress": "0x595786A3848B1de66C6056C87BA91977935fBC46",
