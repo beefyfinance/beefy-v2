@@ -282,6 +282,7 @@ export interface TokenHoldingConfig {
   methodPath?: string;
   symbol: string;
   staked: boolean;
+  id?: string;
 }
 
 export interface VaultHoldingConfig {
