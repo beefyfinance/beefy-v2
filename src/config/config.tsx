@@ -685,7 +685,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     ],
   },
   gnosis: {
-    new: true,
     name: 'Gnosis',
     chainId: 100,
     rpc: ['https://gnosis.oat.farm'],
