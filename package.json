@@ -75,6 +75,7 @@
     "migratePlatform": "ts-node ./scripts/migratePlatform.ts",
     "checkOneInchLiquidity": "ts-node -r dotenv/config ./scripts/checkOneInchLiquidity.ts",
     "setVaultUrls": "ts-node -r dotenv/config ./scripts/setVaultUrls.ts && prettier --write ./src/config/vault/*.json",
+    "checkVaultTokenDecimals": "ts-node -r dotenv/config ./scripts/checkVaultTokenDecimals.ts && prettier --write ./src/config/vault/*.json",
     "addAmmsToVaults": "ts-node -r dotenv/config ./scripts/addAmmsToVaults.ts && prettier --write ./src/config/vault/*.json",
     "prepare": "husky install",
     "tsc": "tsc",

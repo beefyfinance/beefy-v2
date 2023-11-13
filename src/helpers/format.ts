@@ -174,7 +174,7 @@ export function formatBigNumber(value: BigNumber) {
       minimumFractionDigits: 0,
     });
   }
-  const units = ['', 'k', 'M', 'B', 'T'];
+  const units = ['', 'k', 'M', 'B', 'T', 'Q'];
 
   return value.shiftedBy(-order * 3).toFixed(2) + units[order];
 }
