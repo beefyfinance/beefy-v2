@@ -153,6 +153,7 @@ export const selectIsBeefyToken = (_: BeefyState, tokenId: TokenEntity['id']) =>
     'binSPIRIT',
     'beVELO',
     'beOPX',
+    'mooBIFI',
   ].includes(tokenId);
 };
 
