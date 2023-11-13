@@ -393,8 +393,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'DOLA',
       'aavUSDT',
       'aavUSDC',
-      'eUSD',
-      'hyUSD',
       'EURC',
     ],
   },
