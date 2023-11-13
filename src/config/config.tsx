@@ -236,6 +236,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'wTBT',
       'opUSDCe',
       'wUSD+',
+      'USDR',
+      'wUSDR',
+      'omultiwUSDR',
     ],
   },
   fantom: {
@@ -677,6 +680,8 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'crvUSD',
       'eUSD',
       'hyUSD',
+      'USDR',
+      'wUSDR',
     ],
   },
   gnosis: {
@@ -702,7 +707,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['xDAI', 'USDC', 'EURe', 'sDAI'],
+    stableCoins: ['xDAI', 'EURe', 'USDC', 'USDT', 'sDAI'],
   },
 
   aurora: {
