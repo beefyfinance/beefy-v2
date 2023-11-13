@@ -150,5 +150,11 @@
     "id": "wbtc-dao",
     "name": "WBTC Dao",
     "website": "https://wbtc.network/"
+  },
+  {
+    "id": "ibc",
+    "name": "Inter-Blockchain Communication",
+    "tagName": "IBC",
+    "website": "https://ibc.cosmos.network/main"
   }
 ]
