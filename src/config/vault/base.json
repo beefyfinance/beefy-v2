@@ -1,8 +1,8 @@
 [
   {
     "id": "aerodrome-aero-wsteth",
-    "name": "ETH-wstETH vLP",
-    "token": "vAMM-WETH-wstETH",
+    "name": "AERO-wstETH vLP",
+    "token": "vAMM-AERO-wstETH",
     "tokenAddress": "0x82a0c1a0d4EF0c0cA3cFDA3AD1AA78309Cc6139b",
     "tokenDecimals": 18,
     "tokenProviderId": "aerodrome",
