@@ -270,6 +270,7 @@ export type PlatformConfig = {
 };
 
 export interface TokenHoldingConfig {
+  id: string;
   name: string;
   address: string;
   decimals: number;
@@ -282,10 +283,11 @@ export interface TokenHoldingConfig {
   methodPath?: string;
   symbol: string;
   staked: boolean;
-  id?: string;
+  numberId?: string;
 }
 
 export interface VaultHoldingConfig {
+  id: string;
   name: string;
   address: string;
   decimals: number;

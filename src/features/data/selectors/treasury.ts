@@ -327,7 +327,7 @@ export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
       if (wallet.name.includes('validator')) {
         if (chain.id === 'ethereum') {
           const allValidatorsIds = Object.values(wallet.balances).map(
-            (validator: TokenHoldingEntity) => validator.id
+            (validator: TokenHoldingEntity) => validator.numberId
           );
           return {
             address: wallet.address,
@@ -338,7 +338,7 @@ export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
         return {
           address: wallet.address,
           name: 'validator',
-          url: explorerAddressUrl(chain, wallet.balances[`${chain.id}-validator`].methodPath),
+          url: explorerAddressUrl(chain, Object.values(wallet.balances)[0].methodPath),
         };
       }
       return {
