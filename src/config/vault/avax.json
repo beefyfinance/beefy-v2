@@ -1295,7 +1295,8 @@
     "earnContractAddress": "0x3D81A269E05e6057e4dF9E2D76E254E65a65Eb66",
     "oracle": "lps",
     "oracleId": "joe-joe-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "traderjoe",
     "assets": ["JOE", "AVAX"],
     "risks": [
@@ -2118,7 +2119,8 @@
     "earnContractAddress": "0x808D5f0A62336917Da14fA9A10E9575B1040f71c",
     "oracle": "tokens",
     "oracleId": "PNG",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "pangolin",
     "assets": ["PNG"],
     "risks": [

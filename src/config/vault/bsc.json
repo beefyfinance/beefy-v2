@@ -1781,7 +1781,8 @@
     "earnContractAddress": "0x1c94779aD700cd4a0681e516fFA3d5Ba6d8B3d3c",
     "oracle": "lps",
     "oracleId": "thena-usdc-busd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "thena",
     "assets": ["USDC", "BUSD"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -3863,7 +3864,8 @@
     "earnContractAddress": "0x21403739A1Dc0e3ceC70CBD5ceaE78fF25F102a4",
     "oracle": "tokens",
     "oracleId": "PACOCA",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "pacoca",
     "assets": ["PACOCA"],
     "risks": [
@@ -20078,7 +20080,7 @@
     "earnContractAddress": "0xf867cD98F3762D899F5F26FF5Dd62A5C566A3E0C",
     "oracle": "lps",
     "oracleId": "ellipsis-2brl",
-    "status": "active",
+    "status": "eol",
     "platformId": "dotdot",
     "assets": ["jBRL", "BRZ"],
     "risks": [
