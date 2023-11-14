@@ -25,6 +25,9 @@ const overrides = {
   'venus-bnb': { harvestOnDeposit: undefined },
   'kinetix-klp': { harvestOnDeposit: undefined },
   'bifi-vault': { beefyFeeRecipient: undefined }, // TODO: remove
+  'convex-t': { beefyFeeRecipient: undefined }, // TODO: remove
+  'convex-cnc': { beefyFeeRecipient: undefined }, // TODO: remove
+  'convex-steth': { beefyFeeRecipient: undefined }, // TODO: remove
 };
 
 const oldValidOwners = [
