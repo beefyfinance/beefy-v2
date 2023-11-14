@@ -5,7 +5,7 @@
     "chainId": "base",
     "fee": {
       "value": 0.0005,
-      "recipient": "0x1A07DceEfeEbBA3D1873e2B92BeF190d2f11C3cB"
+      "recipient": "0x88D19A03C429029901d917510f8f582D2E5F803B"
     },
     "depositFromTokens": ["ETH", "WETH", "cbETH", "USDbC", "axlUSDC", "DAI", "MIM"],
     "withdrawToTokens": ["ETH", "cbETH", "USDbC", "axlUSDC", "DAI", "MIM"],
