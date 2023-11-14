@@ -1,6 +1,4 @@
 {
-  "bifi-vault": true,
-  "bifi-pool": true,
   "stargate-polygon-usdt": true,
   "balancer-zkevm-wsteth-reth": true,
   "balancer-tbtc-weth": true,
