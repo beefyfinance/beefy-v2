@@ -331,7 +331,7 @@ export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
           );
           return {
             address: wallet.address,
-            name: 'validator',
+            name: 'validators',
             url: 'https://beaconcha.in/dashboard?validators=' + allValidatorsIds.join(','),
           };
         }
