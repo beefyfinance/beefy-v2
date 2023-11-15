@@ -9,6 +9,7 @@ import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { selectUserDepositedVaultIds } from './balance';
 import { selectWalletAddress } from './wallet';
+import { selectIsConfigAvailable } from './data-loader';
 
 export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], address?: string) =>
@@ -21,6 +22,10 @@ export const selectUserDepositedTimelineByVaultId = createCachedSelector(
 
 export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAddress: string) => {
   if (!walletAddress) {
+    return false;
+  }
+
+  if (!selectIsConfigAvailable(state)) {
     return false;
   }
 

@@ -18,7 +18,9 @@ export interface AnalyticsState {
   byAddress: {
     [address: string]: {
       timeline: {
-        byVaultId: { [vaultId: VaultEntity['id']]: VaultTimelineAnalyticsEntity[] };
+        byVaultId: {
+          [vaultId: VaultEntity['id']]: VaultTimelineAnalyticsEntity[];
+        };
       };
       shareToUnderlying: {
         byVaultId: {
@@ -52,6 +54,12 @@ const initialState: AnalyticsState = {
   byAddress: {},
 };
 
+type BaseVault = {
+  productKey: string;
+  vaultId: string;
+  chainId: string;
+};
+
 export const analyticsSlice = createSlice({
   name: 'analytics',
   initialState: initialState,
@@ -67,34 +75,32 @@ export const analyticsSlice = createSlice({
       );
       // Grab all the tx hashes from the boost txs, and filter out any vault txs that have the same hash
       const boostTxHashes = new Set(boostTxs.map(tx => tx.transactionHash));
-      const vaultTxsIgnoringBoosts = vaultTxs.filter(tx => !boostTxHashes.has(tx.transactionHash));
+      const vaultIdsWithMerges = new Set<string>();
+      const vaultTxsIgnoringBoosts = vaultTxs.filter(tx => {
+        if (boostTxHashes.has(tx.transactionHash)) {
+          vaultIdsWithMerges.add(tx.displayName);
+          return false;
+        }
+        return true;
+      });
 
       // Build a map of bridge vaults to their base vaults
       const bridgeVaultIds = selectAllVaultsWithBridgedVersion(state);
-      const bridgeToBaseId = bridgeVaultIds.reduce(
-        (
-          accum: Record<string, { productKey: string; vaultId: string; chainId: string }>,
-          vault
-        ) => {
-          if (vault.bridged) {
-            for (const [chainId, address] of Object.entries(vault.bridged)) {
-              accum[`beefy:vault:${chainId}:${address.toLowerCase()}`] = {
-                vaultId: vault.id,
-                chainId: vault.chainId,
-                productKey: `beefy:vault:${
-                  vault.chainId
-                }:${vault.earnContractAddress.toLowerCase()}`,
-              };
-            }
+      const bridgeToBaseId = bridgeVaultIds.reduce((accum: Record<string, BaseVault>, vault) => {
+        if (vault.bridged) {
+          for (const [chainId, address] of Object.entries(vault.bridged)) {
+            accum[`beefy:vault:${chainId}:${address.toLowerCase()}`] = {
+              vaultId: vault.id,
+              chainId: vault.chainId,
+              productKey: `beefy:vault:${vault.chainId}:${vault.earnContractAddress.toLowerCase()}`,
+            };
           }
-          return accum;
-        },
-        {}
-      );
+        }
+        return accum;
+      }, {});
 
       // Modify the vault txs to use the base vault product key etc.
       // We have to sort since the timeline is not guaranteed to be in order after merge
-      const vaultIdsWithMerges = new Set<string>();
       const vaultTxsWithBridgeMerged = sortBy(
         vaultTxsIgnoringBoosts.map((tx): VaultTimelineAnalyticsEntity => {
           const base = bridgeToBaseId[tx.productKey];
@@ -121,7 +127,7 @@ export const analyticsSlice = createSlice({
       // Group txs by vault id (display name = vault id)
       const byVaultId = groupBy(vaultTxsWithBridgeMerged, tx => tx.displayName);
 
-      // Recalc balances for vaults we merged
+      // Recalc balances for vaults we merged (boosts and bridge vaults)
       vaultIdsWithMerges.forEach(vaultId => {
         const txs = byVaultId[vaultId];
         if (txs && txs.length > 1) {
