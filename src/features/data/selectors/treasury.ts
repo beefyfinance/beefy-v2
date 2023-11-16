@@ -3,7 +3,7 @@ import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO, isFiniteBigNumber } from '../../../helpers/big-number';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
-import type { TreasuryHoldingEntity } from '../entities/treasury';
+import type { TokenHoldingEntity, TreasuryHoldingEntity } from '../entities/treasury';
 import { isVaultHoldingEntity } from '../entities/treasury';
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectLpBreakdownBalance } from './balance';
@@ -15,6 +15,7 @@ import {
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens';
 import { selectIsVaultStable, selectVaultPricePerFullShare } from './vaults';
+import { explorerAddressUrl } from '../../../helpers/url';
 
 export const selectIsTreasuryLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.treasury.alreadyLoadedOnce;
@@ -319,14 +320,32 @@ export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
 export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id']) =>
     selectTreasuryHoldingsByChainId(state, chainId),
-  treasury => {
-    return Object.values(treasury)
-      .filter(wallet => !wallet.name.includes('validator'))
-      .map(wallet => {
+  (state: BeefyState, chainId: ChainEntity['id']) => selectChainById(state, chainId),
+
+  (treasury, chain) => {
+    return Object.values(treasury).map(wallet => {
+      if (wallet.name.includes('validator')) {
+        if (chain.id === 'ethereum') {
+          const allValidatorsIds = Object.values(wallet.balances).map(
+            (validator: TokenHoldingEntity) => validator.numberId
+          );
+          return {
+            address: wallet.address,
+            name: 'validators',
+            url: 'https://beaconcha.in/dashboard?validators=' + allValidatorsIds.join(','),
+          };
+        }
         return {
           address: wallet.address,
-          name: wallet.name,
+          name: 'validator',
+          url: explorerAddressUrl(chain, Object.values(wallet.balances)[0].methodPath),
         };
-      });
+      }
+      return {
+        address: wallet.address,
+        name: wallet.name,
+        url: explorerAddressUrl(chain, wallet.address),
+      };
+    });
   }
 )((state: BeefyState, chainId: ChainEntity['id']) => chainId);
