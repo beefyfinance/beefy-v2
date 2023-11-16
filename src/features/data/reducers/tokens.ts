@@ -315,9 +315,6 @@ function addAddressBookToState(
       // native tokens are preloaded when chain configs load
       const existingToken = sliceState.byChainId[chainId].byAddress['native'];
 
-      // Addressbook is source of truth for oracle ids
-      existingToken.oracleId = token.oracleId;
-
       // Add missing information
       existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
       existingToken.description = existingToken.description || token.description;
