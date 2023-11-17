@@ -64,7 +64,7 @@ const socialLinks = [
   },
   {
     title: 'Debank',
-    path: 'https://debank.com/official-account/110448',
+    path: 'https://debank.com/official/Beefy',
     Icon: IconDebank,
   },
 ];
