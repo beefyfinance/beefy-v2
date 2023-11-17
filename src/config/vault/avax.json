@@ -101,7 +101,8 @@
     "earnContractAddress": "0x43Fe0a9F84f00a3Dbb65F2077669AA40e3f5C1f5",
     "oracle": "lps",
     "oracleId": "balancer-avax-usdc-eurc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "default",
     "platformId": "balancer",
     "assets": ["USDC", "EURC"],
     "risks": [
