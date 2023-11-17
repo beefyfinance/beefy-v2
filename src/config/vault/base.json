@@ -151,7 +151,7 @@
     "earnedTokenAddress": "0xD7803d3Bf95517D204CFc6211678cAb223aC4c48",
     "earnContractAddress": "0xD7803d3Bf95517D204CFc6211678cAb223aC4c48",
     "oracle": "tokens",
-    "oracleId": "USDC",
+    "oracleId": "USDbC",
     "status": "active",
     "platformId": "compound",
     "assets": ["USDbC"],
