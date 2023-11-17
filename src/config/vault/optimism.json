@@ -1,5 +1,28 @@
 [
   {
+    "id": "velodrome-v2-wsteth-velo",
+    "name": "wstETH-VELO vLP",
+    "token": "vAMM-wstETH-VELO",
+    "tokenAddress": "0xCa72114b86Ac6d7Ab8D583c0E94C9A7DE7540610",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "tokenAmmId": "optimism-velodrome-v2",
+    "earnedToken": "mooVeloV2wstETH-VELO",
+    "earnedTokenAddress": "0x039af31d546938876F38A5452ea844Eca7c4fC30",
+    "earnContractAddress": "0x039af31d546938876F38A5452ea844Eca7c4fC30",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-wsteth-velo",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["VELOV2", "wstETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1f32b1c2345538c0c6f582fcb022739c4a194ebb&token1=0x9560e827af36c94d2ac33a39bce1fe78631088db&stable=false",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw",
+    "network": "optimism",
+    "createdAt": 1700173968
+  },
+  {
     "id": "curve-op-tbtc",
     "name": "tBTC/WBTC",
     "token": "2BTC-f",

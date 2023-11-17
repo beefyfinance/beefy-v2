@@ -22,12 +22,8 @@ const overrides = {
   'bifi-maxi': { stratOwner: undefined }, // harvester 0xDe30
   'beltv2-4belt': { vaultOwner: undefined }, // moonpot deployer
   'baseswap-axlwbtc-usdbc': { harvestOnDeposit: undefined },
-  'venus-bnb': { harvestOnDeposit: undefined },
   'kinetix-klp': { harvestOnDeposit: undefined },
   'bifi-vault': { beefyFeeRecipient: undefined }, // TODO: remove
-  'convex-t': { beefyFeeRecipient: undefined }, // TODO: remove
-  'convex-cnc': { beefyFeeRecipient: undefined }, // TODO: remove
-  'convex-steth': { beefyFeeRecipient: undefined }, // TODO: remove
 };
 
 const oldValidOwners = [
