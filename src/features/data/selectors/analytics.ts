@@ -9,6 +9,7 @@ import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { selectUserDepositedVaultIds } from './balance';
 import { selectWalletAddress } from './wallet';
+import { selectIsConfigAvailable } from './data-loader';
 
 export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], address?: string) =>
@@ -16,20 +17,33 @@ export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], _address?: string) => state.user.analytics,
   (state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId,
   (walletAddress, analyticsState, vaultId) =>
-    analyticsState.byAddress[walletAddress?.toLocaleLowerCase()]?.timeline.byVaultId[vaultId] || []
+    analyticsState.byAddress[walletAddress?.toLowerCase()]?.timeline.byVaultId[vaultId] || []
 )((state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
 
 export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAddress: string) => {
-  const dataByAddress = state.ui.dataLoader.byAddress[walletAddress?.toLocaleLowerCase()];
+  if (!walletAddress) {
+    return false;
+  }
 
-  const timelineLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
+  if (!selectIsConfigAvailable(state)) {
+    return false;
+  }
 
-  if (timelineLoaded) {
-    for (const chainId of Object.values(dataByAddress.byChainId)) {
-      if (chainId.balance.alreadyLoadedOnce && chainId.balance.status === 'fulfilled') {
-        // if any chain has already loaded, then  data is available
-        return true;
-      }
+  const addressLower = walletAddress.toLowerCase();
+  const timelineLoaded = selectIsAnalyticsLoadedByAddress(state, addressLower);
+  if (!timelineLoaded) {
+    return false;
+  }
+
+  const dataByAddress = state.ui.dataLoader.byAddress[addressLower];
+  if (!dataByAddress) {
+    return false;
+  }
+
+  for (const chainId of Object.values(dataByAddress.byChainId)) {
+    if (chainId.balance.alreadyLoadedOnce && chainId.balance.status === 'fulfilled') {
+      // if any chain has already loaded, then  data is available
+      return true;
     }
   }
 
@@ -58,13 +72,11 @@ export const selectVaultPnl = (
   const pnl = new PnL();
   for (const row of sortedTimeline) {
     if (row.shareDiff && row.shareToUnderlyingPrice && row.underlyingToUsdPrice) {
-      if (!row.internal) {
-        pnl.addTransaction({
-          shares: row.shareDiff,
-          price: row.underlyingToUsdPrice,
-          ppfs: row.shareToUnderlyingPrice,
-        });
-      }
+      pnl.addTransaction({
+        shares: row.shareDiff,
+        price: row.underlyingToUsdPrice,
+        ppfs: row.shareToUnderlyingPrice,
+      });
     }
   }
 
@@ -147,9 +159,8 @@ export const selectUnderlyingToUsdTimebucketByVaultId = (
 ) => {
   const walletAddress = address || selectWalletAddress(state);
   return (
-    state.user.analytics.byAddress[walletAddress?.toLocaleLowerCase()]?.underlyingToUsd.byVaultId[
-      vaultId
-    ]?.byTimebucket[timebucket] || {
+    state.user.analytics.byAddress[walletAddress?.toLowerCase()]?.underlyingToUsd.byVaultId[vaultId]
+      ?.byTimebucket[timebucket] || {
       data: [],
       status: 'idle',
     }

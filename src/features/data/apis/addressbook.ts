@@ -7,12 +7,12 @@ interface AddressBookTokenConfig {
   symbol: string;
   address: string;
   chainId: number;
+  oracleId: string;
   decimals: number;
   logoURI?: string;
   website?: string;
   description?: string;
   documentation?: string;
-  oracleId?: string;
   bridge?: string;
 }
 
@@ -45,7 +45,7 @@ export const getChainAddressBook = memoize(
         agg[tokenId] = {
           id: wnative.symbol,
           chainId: chain.id,
-          oracleId: tokenId,
+          oracleId: wnative.oracleId,
           address: bookToken.address,
           decimals: bookToken.decimals,
           symbol: bookToken.symbol,
@@ -61,7 +61,7 @@ export const getChainAddressBook = memoize(
           agg[tokenId] = {
             id: tokenId,
             chainId: chain.id,
-            oracleId: tokenId,
+            oracleId: bookToken.oracleId,
             address: bookToken.address,
             decimals: bookToken.decimals,
             symbol: nativeSymbol,
@@ -75,7 +75,7 @@ export const getChainAddressBook = memoize(
           agg[tokenId] = {
             id: tokenId,
             chainId: chain.id,
-            oracleId: tokenId,
+            oracleId: bookToken.oracleId,
             address: 'native',
             decimals: bookToken.decimals,
             symbol: nativeSymbol,
@@ -90,7 +90,7 @@ export const getChainAddressBook = memoize(
         agg[tokenId] = {
           id: tokenId,
           chainId: chain.id,
-          oracleId: bookToken.oracleId ?? tokenId,
+          oracleId: bookToken.oracleId,
           address: bookToken.address,
           decimals: bookToken.decimals,
           symbol: bookToken.symbol,

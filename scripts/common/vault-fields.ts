@@ -20,6 +20,7 @@ const FIELD_ORDER = [
   'pauseReason',
   'platformId',
   'assets',
+  'migrationIds',
   'risks',
   'strategyTypeId',
   'isGovVault',

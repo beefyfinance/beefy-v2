@@ -19,30 +19,9 @@ import partition from 'lodash/partition';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
-  'blizzard-xblzd-bnb-old-eol': { keeper: undefined },
-  'blizzard-xblzd-busd-old-eol': { keeper: undefined },
-  'heco-bifi-maxi': { beefyFeeRecipient: undefined }, // 0x0
-  'polygon-bifi-maxi': { beefyFeeRecipient: undefined }, // 0x0
-  'avax-bifi-maxi': { beefyFeeRecipient: undefined }, // 0x0
   'bifi-maxi': { stratOwner: undefined }, // harvester 0xDe30
   'beltv2-4belt': { vaultOwner: undefined }, // moonpot deployer
-  'cronos-bifi-maxi': { beefyFeeRecipient: undefined }, // 0x0
-  'metis-bifi-maxi': { beefyFeeRecipient: undefined }, // 0x0
-  'aurora-bifi-maxi': { beefyFeeRecipient: undefined }, // 0x0
-  'fuse-bifi-maxi': { beefyFeeRecipient: undefined }, // 0x0
-  'moonbeam-bifi-maxi': { beefyFeeRecipient: undefined }, // 0x0
-  'scream-frax': { vaultOwner: undefined }, // Rescue
-  'baby-sol-bnb': { beefyFeeRecipient: undefined }, // 0x0
-  'sicle-grape-mim': { beefyFeeRecipient: undefined },
-  'geist-crv': { harvestOnDeposit: undefined },
-  'geist-ftm': { harvestOnDeposit: undefined },
-  'geist-wbtc': { harvestOnDeposit: undefined },
-  'geist-eth': { harvestOnDeposit: undefined },
-  'geist-usdc': { harvestOnDeposit: undefined },
-  'geist-mim': { harvestOnDeposit: undefined },
-  'pearl-wbtc-usdrv3': { harvestOnDeposit: undefined },
   'baseswap-axlwbtc-usdbc': { harvestOnDeposit: undefined },
-  'venus-bnb': { harvestOnDeposit: undefined },
   'kinetix-klp': { harvestOnDeposit: undefined },
   'bifi-vault': { beefyFeeRecipient: undefined }, // TODO: remove
 };

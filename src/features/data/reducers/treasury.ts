@@ -62,7 +62,8 @@ const mapBalances = (
       token.assetType === 'concLiquidity' ||
       selectIsTokenLoadedOnChain(state, token.address, chainId)
     ) {
-      totals[token.address] = {
+      const key = token.assetType === 'validator' ? token.id : token.address;
+      totals[key] = {
         ...token,
         usdValue: new BigNumber(token.usdValue),
         balance: new BigNumber(token.balance),

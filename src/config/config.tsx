@@ -52,6 +52,8 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'eUSD',
       'lvUSD',
       'crvUSD',
+      'sDAI',
+      'sFRAX',
       'R',
       'GHO',
       'bbsDAI',
@@ -236,6 +238,9 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'wTBT',
       'opUSDCe',
       'wUSD+',
+      'USDR',
+      'wUSDR',
+      'omultiwUSDR',
     ],
   },
   fantom: {
@@ -342,6 +347,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'bbaaUSDCV2',
       'bbaaDAIV2',
       'aArbUSDCn',
+      'cArbUSDCv3',
     ],
   },
   avax: {
@@ -393,6 +399,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'DOLA',
       'aavUSDT',
       'aavUSDC',
+      'EURC',
     ],
   },
   cronos: {
@@ -517,7 +524,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   fuse: {
     name: 'Fuse',
     chainId: 122,
-    rpc: ['https://rpc.fuse.io'],
+    rpc: ['https://fuse.liquify.com'],
     explorerUrl: 'https://explorer.fuse.io',
     multicallAddress: '0x4f22BD7CE44b0e0B2681A28e300A7285319de3a0',
     appMulticallContractAddress: '0x504A5F167BE8014b1d5CBDd993f3Bb34F95E70B2',
@@ -530,7 +537,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'FUSE',
         decimals: 18,
       },
-      rpcUrls: ['https://rpc.fuse.io'],
+      rpcUrls: ['https://fuse.liquify.com'],
       blockExplorerUrls: ['https://explorer.fuse.io/'],
     },
     gas: {
@@ -541,7 +548,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   kava: {
     name: 'Kava',
     chainId: 2222,
-    rpc: ['https://kava-evm.publicnode.com'],
+    rpc: ['https://evm2.kava.io'],
     explorerUrl: 'https://explorer.kava.io',
     multicallAddress: '0x13C6bCC2411861A31dcDC2f990ddbe2325482222',
     appMulticallContractAddress: '0x41D44B276904561Ac51855159516FD4cB2c90968',
@@ -554,7 +561,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'KAVA',
         decimals: 18,
       },
-      rpcUrls: ['https://kava-evm.publicnode.com'],
+      rpcUrls: ['https://evm2.kava.io'],
       blockExplorerUrls: ['https://explorer.kava.io/'],
     },
     gas: {
@@ -614,7 +621,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   zkevm: {
     name: 'Polygon zkEVM',
     chainId: 1101,
-    rpc: ['https://polygon-zkevm.blockpi.network/v1/rpc/public'],
+    rpc: ['https://zkevm-rpc.com'],
     explorerUrl: 'https://zkevm.polygonscan.com/',
     multicallAddress: '0xD19ab62F83380908D65E344567378cF104cE46c2',
     appMulticallContractAddress: '0x2ec5d5e9aaf3c3f56eBeF2fC46A5af9e42810b41',
@@ -627,7 +634,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://polygon-zkevm.blockpi.network/v1/rpc/public'],
+      rpcUrls: ['https://zkevm-rpc.com'],
       blockExplorerUrls: ['https://zkevm.polygonscan.com/'],
     },
     gas: {
@@ -674,10 +681,13 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'DOLA',
       'USDC',
       'crvUSD',
+      'eUSD',
+      'hyUSD',
+      'USDR',
+      'wUSDR',
     ],
   },
   gnosis: {
-    new: true,
     name: 'Gnosis',
     chainId: 100,
     rpc: ['https://gnosis.oat.farm'],
@@ -699,7 +709,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['xDAI', 'USDC', 'EURe', 'sDAI'],
+    stableCoins: ['xDAI', 'EURe', 'USDC', 'USDT', 'sDAI'],
   },
 
   aurora: {

@@ -1,17 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type BigNumber from 'bignumber.js';
-import { BIG_ZERO } from '../../../helpers/big-number';
 import {
-  fetchWalletTimeline,
   fetchShareToUnderlying,
   fetchUnderlyingToUsd,
+  fetchWalletTimeline,
 } from '../actions/analytics';
 import type { ApiProductPriceRow, TimeBucketType } from '../apis/analytics/analytics-types';
 import type { VaultTimelineAnalyticsEntity } from '../entities/analytics';
-import type { BoostEntity } from '../entities/boost';
 import type { VaultEntity } from '../entities/vault';
-import { selectAllVaultBoostIds } from '../selectors/boosts';
 import type { Draft } from 'immer';
+import { groupBy, partition, sortBy } from 'lodash-es';
+import { selectAllVaultsWithBridgedVersion } from '../selectors/vaults';
+import { BIG_ZERO } from '../../../helpers/big-number';
 
 type StatusType = 'idle' | 'pending' | 'fulfilled' | 'rejected';
 
@@ -19,8 +18,9 @@ export interface AnalyticsState {
   byAddress: {
     [address: string]: {
       timeline: {
-        byVaultId: { [vaultId: VaultEntity['id']]: VaultTimelineAnalyticsEntity[] };
-        byBoostId: { [boostId: BoostEntity['id']]: VaultTimelineAnalyticsEntity[] };
+        byVaultId: {
+          [vaultId: VaultEntity['id']]: VaultTimelineAnalyticsEntity[];
+        };
       };
       shareToUnderlying: {
         byVaultId: {
@@ -54,6 +54,12 @@ const initialState: AnalyticsState = {
   byAddress: {},
 };
 
+type BaseVault = {
+  productKey: string;
+  vaultId: string;
+  chainId: string;
+};
+
 export const analyticsSlice = createSlice({
   name: 'analytics',
   initialState: initialState,
@@ -61,73 +67,93 @@ export const analyticsSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(fetchWalletTimeline.fulfilled, (sliceState, action) => {
       const { timeline, state } = action.payload;
-      const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
+      const walletAddress = action.payload.walletAddress.toLowerCase();
 
-      const totals = {
-        byBoostId: {},
-        byVaultId: {},
-      };
+      // Separate out all boost txs
+      const [boostTxs, vaultTxs] = partition(timeline, tx =>
+        tx.productKey.startsWith('beefy:boost')
+      );
+      // Grab all the tx hashes from the boost txs, and filter out any vault txs that have the same hash
+      const boostTxHashes = new Set(boostTxs.map(tx => tx.transactionHash));
+      const vaultIdsWithMerges = new Set<string>();
+      const vaultTxsIgnoringBoosts = vaultTxs.filter(tx => {
+        if (boostTxHashes.has(tx.transactionHash)) {
+          vaultIdsWithMerges.add(tx.displayName);
+          return false;
+        }
+        return true;
+      });
 
-      for (const row of timeline) {
-        const isBoost = row.productKey.startsWith('beefy:boost');
+      // Build a map of bridge vaults to their base vaults
+      const bridgeVaultIds = selectAllVaultsWithBridgedVersion(state);
+      const bridgeToBaseId = bridgeVaultIds.reduce((accum: Record<string, BaseVault>, vault) => {
+        if (vault.bridged) {
+          for (const [chainId, address] of Object.entries(vault.bridged)) {
+            accum[`beefy:vault:${chainId}:${address.toLowerCase()}`] = {
+              vaultId: vault.id,
+              chainId: vault.chainId,
+              productKey: `beefy:vault:${vault.chainId}:${vault.earnContractAddress.toLowerCase()}`,
+            };
+          }
+        }
+        return accum;
+      }, {});
 
-        const totalsKey = isBoost ? totals.byBoostId : totals.byVaultId;
+      // Modify the vault txs to use the base vault product key etc.
+      // We have to sort since the timeline is not guaranteed to be in order after merge
+      const vaultTxsWithBridgeMerged = sortBy(
+        vaultTxsIgnoringBoosts.map((tx): VaultTimelineAnalyticsEntity => {
+          const base = bridgeToBaseId[tx.productKey];
+          if (base) {
+            vaultIdsWithMerges.add(base.vaultId);
+            return {
+              ...tx,
+              productKey: base.productKey,
+              displayName: base.vaultId,
+              chain: base.chainId,
+              source: {
+                productKey: tx.productKey,
+                displayName: tx.displayName,
+                chain: tx.chain,
+              },
+            };
+          }
 
-        const history = totalsKey[row.displayName] || [];
+          return tx;
+        }),
+        tx => tx.datetime.getTime()
+      );
 
-        history.push(row);
+      // Group txs by vault id (display name = vault id)
+      const byVaultId = groupBy(vaultTxsWithBridgeMerged, tx => tx.displayName);
 
-        totalsKey[row.displayName] = history;
-      }
+      // Recalc balances for vaults we merged (boosts and bridge vaults)
+      vaultIdsWithMerges.forEach(vaultId => {
+        const txs = byVaultId[vaultId];
+        if (txs && txs.length > 1) {
+          for (let i = 1; i < txs.length; ++i) {
+            txs[i].shareBalance = txs[i - 1].shareBalance.plus(txs[i].shareDiff);
 
-      for (const vaultId of Object.keys(totals.byVaultId)) {
-        const boostIds = selectAllVaultBoostIds(state, vaultId);
+            const underlyingPerShare = txs[i].shareDiff.isZero()
+              ? BIG_ZERO
+              : txs[i].underlyingDiff.dividedBy(txs[i].shareDiff).absoluteValue();
+            txs[i].underlyingBalance = txs[i].shareBalance.multipliedBy(underlyingPerShare);
 
-        const boostTxHashes = new Set();
-        const boostKeys: Set<string> = new Set();
-        const boostTransactionsByDate: Record<number, VaultTimelineAnalyticsEntity> = {};
-
-        for (const boostId of boostIds) {
-          const boostTimeline: VaultTimelineAnalyticsEntity[] = totals.byBoostId[boostId];
-          if (boostTimeline) {
-            for (const itemTimeline of boostTimeline) {
-              boostKeys.add(itemTimeline.productKey);
-              boostTxHashes.add(
-                `${itemTimeline.datetime.toString()}-${itemTimeline.shareDiff.abs().toString()}`
-              );
-              boostTransactionsByDate[itemTimeline.datetime.getTime()] = itemTimeline;
+            // usd can be null if price was missing
+            if (txs[i].usdDiff) {
+              const usdPerShare = txs[i].shareDiff.isZero()
+                ? BIG_ZERO
+                : txs[i].usdDiff.dividedBy(txs[i].shareDiff).absoluteValue();
+              txs[i].usdBalance = txs[i].shareBalance.multipliedBy(usdPerShare);
+            } else {
+              txs[i].usdBalance = txs[i - 1].usdBalance;
             }
           }
         }
-
-        const vaultTimeline = totals.byVaultId[vaultId];
-
-        const partialBoostBalances: Record<string, BigNumber> = Array.from(boostKeys).reduce(
-          (accum, cur) => ({ ...accum, [cur]: BIG_ZERO }),
-          {}
-        );
-        for (const itemTimeline of vaultTimeline) {
-          const boostData = boostTransactionsByDate[itemTimeline.datetime.getTime()];
-          if (boostData) {
-            partialBoostBalances[boostData.productKey] = boostData.shareBalance;
-          }
-
-          const txHash = `${itemTimeline.datetime.toString()}-${itemTimeline.shareDiff
-            .abs()
-            .toString()}`;
-
-          if (boostTxHashes.has(txHash)) {
-            itemTimeline.internal = true;
-          }
-
-          itemTimeline.shareBalance = itemTimeline.shareBalance.plus(
-            Object.values(partialBoostBalances).reduce((tot, cur) => tot.plus(cur), BIG_ZERO)
-          );
-        }
-      }
+      });
 
       sliceState.byAddress[walletAddress] = {
-        timeline: { ...totals },
+        timeline: { byVaultId },
         shareToUnderlying: {
           byVaultId: {},
         },

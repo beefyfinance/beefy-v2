@@ -228,38 +228,6 @@
     "createdAt": 1680297022
   },
   {
-    "id": "velocimeterv2-busd-note",
-    "name": "BUSD-NOTE V2 sLP",
-    "token": "BUSD-NOTE V2 vsLP",
-    "tokenAddress": "0x006B764F1a38dd173Bbb9b73beF095De68E81571",
-    "tokenDecimals": 18,
-    "tokenProviderId": "velocimeter",
-    "tokenAmmId": "canto-velocimeter",
-    "earnedToken": "mooVelocimeterV2BUSD-NOTE",
-    "earnedTokenAddress": "0xA1ACe0c6dCA813AeA161433B69EF72d88a57903e",
-    "earnContractAddress": "0xA1ACe0c6dCA813AeA161433B69EF72d88a57903e",
-    "oracle": "lps",
-    "oracleId": "velocimeterv2-busd-note",
-    "status": "eol",
-    "retireReason": "tvl",
-    "platformId": "velocimeter",
-    "assets": ["BUSD", "NOTE"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MEDIUM",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.velocimeter.xyz/swap",
-    "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
-    "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
-    "network": "canto",
-    "createdAt": 1680297022
-  },
-  {
     "id": "velocimeterv2-multibtc-flow",
     "name": "FLOW-multiBTC V2 vLP",
     "token": "FLOW-multiBTC V2 vvLP",

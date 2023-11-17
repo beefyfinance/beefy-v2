@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, FormControl, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { connect } from 'react-redux';
@@ -6,10 +6,10 @@ import { useTranslation } from 'react-i18next';
 import { StatLoader } from '../../../StatLoader';
 import { useTheme } from '@material-ui/core/styles';
 import {
-  selectWalletAddress,
   selectIsBalanceHidden,
   selectIsWalletConnected,
   selectIsWalletKnown,
+  selectWalletAddress,
 } from '../../../../features/data/selectors/wallet';
 import type { BeefyState } from '../../../../redux-types';
 import {
@@ -20,7 +20,6 @@ import { selectIsWalletPending } from '../../../../features/data/selectors/data-
 import clsx from 'clsx';
 import { useAppDispatch } from '../../../../store';
 import { formatAddressShort, formatDomain } from '../../../../helpers/format';
-import { fetchWalletTimeline } from '../../../../features/data/actions/analytics';
 import { useResolveAddress } from '../../../../features/data/hooks/resolver';
 import { isFulfilledStatus } from '../../../../features/data/reducers/wallet/resolver-types';
 
@@ -64,12 +63,6 @@ export const WalletContainer = connect((state: BeefyState) => {
       autoComplete: 'off',
       onClick: handleWalletConnect,
     };
-
-    useEffect(() => {
-      if (walletAddress) {
-        dispatch(fetchWalletTimeline({ address: walletAddress }));
-      }
-    }, [dispatch, walletAddress]);
 
     return (
       <Box

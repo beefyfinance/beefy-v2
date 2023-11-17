@@ -247,6 +247,12 @@ const theme = createTheme(
             // @ts-ignore need to force above other modals
             zIndex: '1400 !important',
           },
+          'wcm-modal, #cryptoconnect-extension': {
+            // @ts-ignore need to force above other modals
+            position: 'relative !important',
+            // @ts-ignore need to force above other modals
+            zIndex: '1500 !important',
+          },
         },
       },
       MuiInputBase: {

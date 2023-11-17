@@ -31,6 +31,7 @@ import { selectMinterById } from '../selectors/minters';
 import { fetchPlatforms } from './platforms';
 import { selectAllChainIds } from '../selectors/chains';
 import { fetchBridges } from './bridges';
+import { fetchWalletTimeline } from './analytics';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 
@@ -114,6 +115,12 @@ export async function initHomeDataV4(store: BeefyStore) {
 
   // before doing anything else, we need our prices
   await pricesPromise;
+
+  // pnl timeline
+  if (selectIsWalletKnown(store.getState())) {
+    const walletAddress = selectWalletAddress(store.getState());
+    await store.dispatch(fetchWalletTimeline({ address: walletAddress }));
+  }
 
   for (const chain of chains) {
     // run in an async block se we don't wait for a slow chain
