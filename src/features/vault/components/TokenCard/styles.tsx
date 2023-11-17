@@ -35,4 +35,5 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.secondary,
     marginTop: '16px',
   },
+  price: {},
 });

@@ -11,13 +11,18 @@ import {
   selectIsAddressBookLoaded,
   selectShouldInitAddressBook,
 } from '../../../data/selectors/data-loader';
-import { selectIsTokenLoaded, selectTokenById } from '../../../data/selectors/tokens';
+import {
+  selectIsTokenLoaded,
+  selectTokenById,
+  selectTokenPriceByTokenOracleId,
+} from '../../../data/selectors/tokens';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { selectBridgeByIdIfKnown } from '../../../data/selectors/bridges';
 import { BridgeTag, NativeTag } from '../BridgeTag';
 import { explorerTokenUrl } from '../../../../helpers/url';
+import { formatBigUsd } from '../../../../helpers/format';
 
 const useStyles = makeStyles(styles);
 
@@ -27,6 +32,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
   const chain = useAppSelector(state => selectChainById(state, token.chainId));
   const isErc20 = isTokenErc20(token);
   const isNative = isTokenNative(token) || (isErc20 && token.bridge === 'native');
+  const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, token.oracleId));
   const bridge = useAppSelector(state =>
     isErc20 && token.bridge && !isNative ? selectBridgeByIdIfKnown(state, token.bridge) : undefined
   );
@@ -41,6 +47,11 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
             <NativeTag chain={chain} />
           ) : bridge ? (
             <BridgeTag bridge={bridge} chain={chain} />
+          ) : null}
+          {price ? (
+            <div className={classes.price} data-oracle-id={token.oracleId}>
+              {formatBigUsd(price)}
+            </div>
           ) : null}
         </div>
         <div className={classes.buttonsContainer}>
