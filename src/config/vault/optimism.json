@@ -14,7 +14,7 @@
     "oracleId": "velodrome-v2-wsteth-velo",
     "status": "active",
     "platformId": "velodrome",
-    "assets": ["AERO", "wstETH"],
+    "assets": ["VELOV2", "wstETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1f32b1c2345538c0c6f582fcb022739c4a194ebb&token1=0x9560e827af36c94d2ac33a39bce1fe78631088db&stable=false",
