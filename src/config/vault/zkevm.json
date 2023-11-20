@@ -245,7 +245,8 @@
     "earnContractAddress": "0x906e60166A4B185016e53597fA12FBB1424e47d7",
     "oracle": "lps",
     "oracleId": "balancer-zkevm-wsteth-reth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["wstETH", "rETH"],
     "risks": [
