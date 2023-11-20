@@ -1,67 +1,19 @@
-import { memo, useEffect } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { selectTokenPriceByTokenOracleId } from '../../features/data/selectors/tokens';
+import { selectPriceWithChange } from '../../features/data/selectors/tokens';
 import { formatBigUsd, formatPercent } from '../../helpers/format';
 import BigNumber from 'bignumber.js';
-import {
-  selectHistoricalPriceBucketData,
-  selectHistoricalPriceBucketIsLoaded,
-  selectHistoricalPriceBucketStatus,
-} from '../../features/data/selectors/historical';
 import { fetchHistoricalPrices } from '../../features/data/actions/historical';
 import type { ApiTimeBucket } from '../../features/data/apis/beefy/beefy-data-api-types';
-import { orderBy } from 'lodash-es';
 import { BIG_ZERO } from '../../helpers/big-number';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import { TrendingDown, TrendingFlat, TrendingUp } from '@material-ui/icons';
-import { Tooltip } from '../Tooltip';
-import { format, fromUnixTime } from 'date-fns';
+import { Tooltip, type TooltipProps } from '../Tooltip';
+import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import type { BeefyState } from '../../redux-types';
-import { createCachedSelector } from 're-reselect';
 
 const useStyles = makeStyles(styles);
-
-const selectPriceWithChange = createCachedSelector(
-  (state: BeefyState, oracleId: string, _bucket: ApiTimeBucket) =>
-    selectTokenPriceByTokenOracleId(state, oracleId),
-  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
-    selectHistoricalPriceBucketStatus(state, oracleId, bucket),
-  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
-    selectHistoricalPriceBucketIsLoaded(state, oracleId, bucket),
-  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
-    selectHistoricalPriceBucketData(state, oracleId, bucket),
-  (price, status, loaded, data) => {
-    if (!price) {
-      return {
-        price: undefined,
-        shouldLoad: false,
-        previousPrice: undefined,
-        previousDate: undefined,
-      };
-    }
-
-    if (!loaded && status === 'idle') {
-      return { price, shouldLoad: true, previousPrice: undefined, previousDate: undefined };
-    }
-
-    if (!loaded || !data || data.length === 0) {
-      return { price, shouldLoad: false, previousPrice: undefined, previousDate: undefined };
-    }
-
-    const oneDayAgo = Math.floor((Date.now() - 1000 * 60 * 60 * 24) / 1000);
-    const oneDayAgoPricePoint = orderBy(data, 't', 'asc').find(point => point.t > oneDayAgo);
-    if (!oneDayAgoPricePoint || !oneDayAgoPricePoint.v) {
-      return { price, shouldLoad: false, previousPrice: undefined, previousDate: undefined };
-    }
-
-    const previousPrice = new BigNumber(oneDayAgoPricePoint.v);
-    const previousDate = fromUnixTime(oneDayAgoPricePoint.t);
-    return { price, shouldLoad: false, previousPrice, previousDate };
-  }
-)((_state: BeefyState, oracleId: string, bucket: ApiTimeBucket) => `${oracleId}-${bucket}`);
 
 export type PriceWithChangeProps = {
   oracleId: string;
@@ -92,7 +44,14 @@ export const PriceWithChange = memo<PriceWithChangeProps>(function PriceWithChan
     return <WithoutChange price={price} className={className} />;
   }
 
-  return <WithChange price={price} previousPrice={previousPrice} previousDate={previousDate} />;
+  return (
+    <WithChange
+      price={price}
+      previousPrice={previousPrice}
+      previousDate={previousDate}
+      className={className}
+    />
+  );
 });
 
 type WithoutChangeProps = {
@@ -130,15 +89,19 @@ const WithChange = memo<WithChangeProps>(function WithChange({
   const percentChange = diffAbs.div(previousPrice);
   const isPositive = diff.gt(BIG_ZERO);
   const isNegative = diff.lt(BIG_ZERO);
-  const Icon = isPositive ? TrendingUp : isNegative ? TrendingDown : TrendingFlat;
   const tooltipContent = t(`Price-Change-${isPositive ? 'Up' : isNegative ? 'Down' : 'Flat'}`, {
     change: formatBigUsd(diffAbs),
     date: format(previousDate, 'MMM d, yyyy h:mm a'),
   });
+  const handleTooltipClick = useCallback<TooltipProps['onTriggerClick']>(e => {
+    // don't bubble up to the link on whole row
+    e.preventDefault();
+  }, []);
 
   return (
     <Tooltip
       content={tooltipContent}
+      onTriggerClick={handleTooltipClick}
       triggerClass={clsx({
         [classes.priceWithChange]: true,
         [className]: true,
@@ -153,7 +116,6 @@ const WithChange = memo<WithChangeProps>(function WithChange({
           {isPositive ? '+' : isNegative ? '-' : ''}
           {formatPercent(percentChange, 2)}
         </div>
-        <Icon className={classes.changeIcon} />
       </div>
     </Tooltip>
   );

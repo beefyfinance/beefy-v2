@@ -33,10 +33,6 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.dark,
   },
   changeValue: {},
-  changeIcon: {
-    fill: 'currentColor',
-    width: '0.75em',
-  },
   positive: {
     '& $change': {
       color: '#509658',

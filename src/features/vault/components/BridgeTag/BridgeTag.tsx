@@ -15,15 +15,16 @@ const useStyles = makeStyles(styles);
 
 export type NativeTagProps = {
   chain: ChainEntity;
+  className?: string;
 };
 
-export const NativeTag = memo<NativeTagProps>(function NativeTag({ chain }) {
+export const NativeTag = memo<NativeTagProps>(function NativeTag({ chain, className }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const icon = getNetworkSrc(chain.id);
 
   return (
-    <TagWithTooltip content={<NativeTooltip chain={chain} />} group="asset-details">
+    <TagWithTooltip content={<NativeTooltip chain={chain} />} className={className}>
       {icon ? <img src={icon} alt={chain.name} className={classes.icon} width={24} /> : null}
       {t('TokenBridge-native')}
     </TagWithTooltip>
@@ -33,15 +34,16 @@ export const NativeTag = memo<NativeTagProps>(function NativeTag({ chain }) {
 export type BridgeTagProps = {
   bridge: BridgeEntity;
   chain: ChainEntity;
+  className?: string;
 };
-export const BridgeTag = memo<BridgeTagProps>(function BridgeTag({ bridge, chain }) {
+export const BridgeTag = memo<BridgeTagProps>(function BridgeTag({ bridge, chain, className }) {
   const classes = useStyles();
   const icon = bridge.id.includes('canonical')
     ? getNetworkSrc(chain.id)
     : getAssetBridgeIcon(bridge.id);
 
   return (
-    <TagWithTooltip content={<BridgeTooltip bridge={bridge} chain={chain} />} group="asset-details">
+    <TagWithTooltip content={<BridgeTooltip bridge={bridge} chain={chain} />} className={className}>
       {icon ? <img src={icon} alt={bridge.name} className={classes.icon} width={24} /> : null}
       {bridge.tagName}
     </TagWithTooltip>

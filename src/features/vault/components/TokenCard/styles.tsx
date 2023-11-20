@@ -8,32 +8,63 @@ export const styles = (theme: Theme) => ({
   },
   titleContainer: {
     display: 'flex',
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column' as const,
-      rowGap: '16px',
+    columnGap: '8px',
+    rowGap: '16px',
+    flexWrap: 'wrap' as const,
+    [theme.breakpoints.up('sm')]: {
+      '& $assetIconSymbol': {
+        order: 1,
+        flexGrow: 0,
+      },
+      '& $assetBridgePrice': {
+        flexGrow: 1,
+        order: 2,
+      },
+      '& $assetLinks': {
+        order: 3,
+      },
+    },
+    [theme.breakpoints.up('xl')]: {
+      '& $assetLinkText': {
+        display: 'inline',
+      },
     },
   },
-  title: {
-    ...theme.typography['body-lg-med'],
+  assetIconSymbol: {
     display: 'flex',
+    flexWrap: 'nowrap' as const,
+    alignItems: 'center',
+    gap: '8px',
+    flexGrow: 1,
+  },
+  assetIcon: {},
+  assetSymbol: {
+    ...theme.typography['body-lg-med'],
+    flexGrow: 1,
+  },
+  assetBridgePrice: {
+    display: 'flex',
+    flexWrap: 'nowrap' as const,
     alignItems: 'center',
     gap: '8px',
   },
-  buttonsContainer: {
+  assetBridge: {},
+  assetPrice: {},
+  assetLinks: {
     display: 'flex',
+    flexWrap: 'nowrap' as const,
     alignItems: 'center',
-    flexWrap: 'wrap' as const,
-    rowGap: '8px',
-    columnGap: '8px',
-    marginLeft: 'auto',
-    [theme.breakpoints.down('sm')]: {
-      marginLeft: '0',
-    },
+    gap: '8px',
   },
+  assetLinkText: {
+    display: 'none',
+  },
+  assetWebsite: {},
+  assetContract: {},
+  assetDocumentation: {},
   description: {
     ...theme.typography['body-lg'],
     color: theme.palette.text.secondary,
     marginTop: '16px',
   },
-  price: {},
 });

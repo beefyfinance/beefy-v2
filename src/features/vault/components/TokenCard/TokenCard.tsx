@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { LinkButton } from '../../../../components/LinkButton';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
 import type { ChainEntity } from '../../../data/entities/chain';
 import type { TokenEntity } from '../../../data/entities/token';
@@ -19,6 +18,8 @@ import { selectBridgeByIdIfKnown } from '../../../data/selectors/bridges';
 import { BridgeTag, NativeTag } from '../BridgeTag';
 import { explorerTokenUrl } from '../../../../helpers/url';
 import { PriceWithChange } from '../../../../components/PriceWithChange/PriceWithChange';
+import { IconButton } from '../../../../components/IconButton/IconButton';
+import { Code, Language, MenuBook } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
@@ -35,30 +36,51 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
   return (
     <div className={classes.container}>
       <div className={classes.titleContainer}>
-        <div className={classes.title}>
-          <AssetsImage assetIds={[token.id]} chainId={chain.id} size={24} />
-          <span>{token.symbol}</span>
-          {isNative ? (
-            <NativeTag chain={chain} />
-          ) : bridge ? (
-            <BridgeTag bridge={bridge} chain={chain} />
-          ) : null}
-          <PriceWithChange oracleId={token.oracleId} />
+        <div className={classes.assetIconSymbol}>
+          <AssetsImage
+            assetIds={[token.id]}
+            chainId={chain.id}
+            size={24}
+            className={classes.assetIcon}
+          />
+          <div className={classes.assetSymbol}>{token.symbol}</div>
         </div>
-        <div className={classes.buttonsContainer}>
+        <div className={classes.assetLinks}>
           {token.website && (
-            <LinkButton hideIconOnMobile={true} href={token.website} text={t('Token-Site')} />
+            <IconButton
+              Icon={Language}
+              text={t('Token-Site')}
+              href={token.website}
+              className={classes.assetWebsite}
+              textClassName={classes.assetLinkText}
+            />
           )}
           {isErc20 && (
-            <LinkButton
-              hideIconOnMobile={true}
+            <IconButton
+              Icon={Code}
               href={explorerTokenUrl(chain, token.address)}
               text={t('Token-Contract')}
+              className={classes.assetContract}
+              textClassName={classes.assetLinkText}
             />
           )}
           {token.documentation && (
-            <LinkButton hideIconOnMobile={true} href={token.documentation} text={t('Token-Docs')} />
+            <IconButton
+              Icon={MenuBook}
+              href={token.documentation}
+              text={t('Token-Docs')}
+              className={classes.assetDocumentation}
+              textClassName={classes.assetLinkText}
+            />
           )}
+        </div>
+        <div className={classes.assetBridgePrice}>
+          {isNative ? (
+            <NativeTag chain={chain} className={classes.assetBridge} />
+          ) : bridge ? (
+            <BridgeTag bridge={bridge} chain={chain} className={classes.assetBridge} />
+          ) : null}
+          <PriceWithChange oracleId={token.oracleId} className={classes.assetPrice} />
         </div>
       </div>
       <div className={classes.description}>
