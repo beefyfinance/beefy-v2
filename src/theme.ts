@@ -121,11 +121,10 @@ const theme = createTheme(
         light: '#313759',
         content: '#2D3153',
         contentLight: '#F4F4F4',
-        header: '#121212',
-        footer: '#121212',
-        alternativeFooterHeader: '#020203',
+        header: '#020203',
+        footer: '#020203',
         cta: '#59A662',
-        appBG: '#1B1E31',
+        appBG: '#121420', // #1B1E31
         filters: {
           active: '#4C5480',
           inactive: '#262A40',

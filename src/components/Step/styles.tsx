@@ -2,7 +2,7 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   container: {
-    background: '#232743',
+    background: '#1B1E31',
     borderRadius: '12px',
     width: '100%',
     height: props => props.cardHeight,

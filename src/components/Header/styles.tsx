@@ -17,9 +17,6 @@ export const styles = (theme: Theme) => ({
   hasPortfolio: {
     backgroundColor: theme.palette.background.header,
   },
-  userOnDashboard: {
-    backgroundColor: theme.palette.background.alternativeFooterHeader,
-  },
   container: {
     paddingTop: '12px',
     paddingBottom: '12px',

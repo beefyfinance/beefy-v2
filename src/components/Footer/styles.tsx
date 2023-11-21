@@ -20,9 +20,6 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     alignItems: 'center',
   },
-  userOnDashboard: {
-    backgroundColor: theme.palette.background.alternativeFooterHeader,
-  },
   nav: {
     display: 'flex',
     flexDirection: 'row' as const,
