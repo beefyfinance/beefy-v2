@@ -3104,7 +3104,7 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "singular",
-    "assets": ["SING", "USDTe"],
+    "assets": ["aSING", "USDTe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xf9a075c9647e91410bf6c402bdf166e1540f67f0",
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xc7198437980c041c805a1edcba50c1ce5db95118/0xf9a075c9647e91410bf6c402bdf166e1540f67f0",
