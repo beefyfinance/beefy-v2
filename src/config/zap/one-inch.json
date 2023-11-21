@@ -302,7 +302,7 @@
     "chainId": "bsc",
     "fee": {
       "value": 0.0005,
-      "recipient": "0xf2EeC1baC39306C0761c816d1D33cF7C9Ad6C0Fe"
+      "recipient": "0x234f7F81434e340910A84F45F8e89D07fa86611A"
     },
     "depositFromTokens": ["BNB", "WBNB", "BUSD", "USDC", "USDT", "DAI", "ETH", "BTCB"],
     "withdrawToTokens": ["BNB", "BUSD", "USDC", "USDT", "DAI", "ETH", "BTCB"],

@@ -2627,7 +2627,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "velodrome",
-    "assets": ["multiWUSDR", "opUSDCe"],
+    "assets": ["omultiwUSDR", "opUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
