@@ -1,4 +1,6 @@
-export const styles = () => ({
+import type { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   search: {
     color: theme.palette.text.secondary,
     background: '#1B1E31',
