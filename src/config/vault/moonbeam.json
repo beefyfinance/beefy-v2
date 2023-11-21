@@ -291,7 +291,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "stellaswap",
-    "assets": ["ETHwh", "GLMR"],
+    "assets": ["WETHwh", "GLMR"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
