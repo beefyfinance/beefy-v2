@@ -2190,7 +2190,8 @@
     "earnContractAddress": "0xAD16eD82CD6a60a907203D7f6d065ce19F80D9a3",
     "oracle": "lps",
     "oracleId": "bvm-dai+-usd+",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "bvm",
     "assets": ["DAI+", "USD+"],
     "risks": [
