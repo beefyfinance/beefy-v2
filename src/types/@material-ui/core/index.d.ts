@@ -15,7 +15,6 @@ declare module '@material-ui/core/styles/createPalette' {
     content: string;
     contentLight: string;
     header: string;
-    alternativeFooterHeader: string;
     cta: string;
     appBG: string;
     filters: {
