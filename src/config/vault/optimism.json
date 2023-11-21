@@ -3790,7 +3790,7 @@
     "addLiquidityUrl": "https://op.beets.fi/pool/0x7b50775383d3d6f0215a8f290f2c9e2eebbeceb200020000000000000000008b",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x7b50775383d3d6f0215a8f290f2c9e2eebbeceb200020000000000000000008b",
     "network": "optimism",
-    "createdAt": 1698407894
+    "createdAt": 1700600674
   },
   {
     "id": "beets-helter-skelter",

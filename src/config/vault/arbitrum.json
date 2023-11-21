@@ -919,7 +919,7 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xade4a71bb62bec25154cfc7e6ff49a513b491e81000000000000000000000497/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xade4a71bb62bec25154cfc7e6ff49a513b491e81000000000000000000000497/withdraw",
     "network": "arbitrum",
-    "createdAt": 1698407894
+    "createdAt": 1700600674
   },
   {
     "id": "balancer-wsteth-weth-v3",
@@ -3939,7 +3939,7 @@
     "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/invest",
     "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/withdraw",
     "network": "arbitrum",
-    "createdAt": 1698407894
+    "createdAt": 1700600674
   },
   {
     "id": "stargate-arb-usdc",
