@@ -1,7 +1,7 @@
 export const styles = () => ({
   search: {
     color: '#D0D0DA',
-    background: '#1B1E31',
+    background: '#07080D',
     borderRadius: '8px',
     '& .MuiInputBase-input': {
       padding: '8px 16px',
