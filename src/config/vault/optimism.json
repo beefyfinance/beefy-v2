@@ -3783,14 +3783,14 @@
     "oracle": "lps",
     "oracleId": "beets-shanghai-shakedown",
     "status": "active",
-    "platformId": "beethovenx",
+    "platformId": "aura",
     "assets": ["wstETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x7b50775383d3d6f0215a8f290f2c9e2eebbeceb200020000000000000000008b",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x7b50775383d3d6f0215a8f290f2c9e2eebbeceb200020000000000000000008b",
     "network": "optimism",
-    "createdAt": 1688037722
+    "createdAt": 1698407894
   },
   {
     "id": "beets-helter-skelter",
