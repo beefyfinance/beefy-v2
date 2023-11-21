@@ -84,10 +84,10 @@ export const styles = (theme: Theme) => ({
     },
     '&:active': {
       background: 'transparent',
-      color: '#F5F5FF',
+      color: theme.palette.text.primary,
     },
   },
   dropdownItemSelected: {
-    color: '#F5F5FF',
+    color: theme.palette.text.primary,
   },
 });

@@ -2,7 +2,7 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   input: {
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     background: '#111321',
     borderRadius: '8px',
     width: '100%',
@@ -26,7 +26,7 @@ export const styles = (theme: Theme) => ({
   max: {
     ...theme.typography['subline-sm'],
     color: theme.palette.text.light,
-    backgroundColor: '#363B63',
+    backgroundColor: theme.palette.background.v2.border,
     border: 'none',
     boxShadow: 'none',
     outline: 'none',

@@ -30,7 +30,7 @@ export const styles = (theme: Theme) => ({
   },
   inWallet: {
     ...theme.typography['body-lg'],
-    color: '#999CB3',
+    color: theme.palette.text.disabled,
   },
   hideDust: {
     textAlign: 'right' as const,

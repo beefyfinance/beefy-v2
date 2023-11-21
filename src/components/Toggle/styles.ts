@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   label: {
     ...theme.typography['subline-sm'],
     position: 'relative' as const,
-    color: '#999CB3',
+    color: theme.palette.text.disabled,
     display: 'inline-flex',
     alignItems: 'center',
     gap: '8px',

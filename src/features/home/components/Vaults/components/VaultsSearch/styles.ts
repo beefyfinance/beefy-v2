@@ -10,7 +10,7 @@ export const styles = (theme: Theme) => ({
       color: theme.palette.text.secondary,
       height: 'auto',
       '&:focus': {
-        color: '#F5F5FF',
+        color: theme.palette.text.primary,
       },
       '&::placeholder': {
         color: theme.palette.text.disabled,

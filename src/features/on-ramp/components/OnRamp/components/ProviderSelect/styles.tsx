@@ -9,15 +9,15 @@ export const styles = (theme: Theme) => ({
   },
   label: {
     ...theme.typography['subline-sm'],
-    color: '#999CB3',
+    color: theme.palette.text.disabled,
   },
   button: {
     ...theme.typography['body-lg-med'],
     display: 'flex',
     alignItems: 'center',
     width: '100%',
-    color: '#D0D0DA',
-    background: '#363B63',
+    color: theme.palette.text.secondary,
+    background: theme.palette.background.v2.border,
     padding: '8px 12px',
     border: 'none',
     borderRadius: '8px',
@@ -47,12 +47,12 @@ export const styles = (theme: Theme) => ({
   },
   rate: {
     ...theme.typography['body-sm'],
-    color: '#999CB3',
+    color: theme.palette.text.disabled,
     marginRight: '8px',
   },
   arrow: {
     marginLeft: 'auto',
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     height: '24px',
   },
 });

@@ -10,7 +10,7 @@ export const styles = (theme: Theme) => ({
     outline: 'none',
     '&:focus-visible, &.active': {
       outline: 'none',
-      backgroundColor: '#363B63',
+      backgroundColor: theme.palette.background.v2.border,
     },
     [theme.breakpoints.down('md')]: {
       padding: '10px',

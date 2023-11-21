@@ -15,11 +15,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   title: {
     ...theme.typography['h3'],
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
   },
   text: {
     ...theme.typography['body-lg'],
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
   },
 }));
 

@@ -25,12 +25,12 @@ export const styles = (theme: Theme) => ({
   },
   title: {
     ...theme.typography.h3,
-    color: '#F5F5FF',
+    color: theme.palette.text.primary,
     marginTop: '24px',
   },
   content: {
     ...theme.typography['body-lg'],
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     marginTop: '24px',
   },
 });

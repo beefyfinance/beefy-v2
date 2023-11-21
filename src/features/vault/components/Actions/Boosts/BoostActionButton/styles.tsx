@@ -18,7 +18,7 @@ export const styles = (theme: Theme) => ({
   iconButton: {
     padding: 0,
     '& .MuiSvgIcon-root': {
-      fill: '#999CB3',
+      fill: theme.palette.text.disabled,
     },
     '&:hover': {
       backgroundColor: 'transparent' as const,
@@ -64,7 +64,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   input: {
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     background: '#1B1E31',
     borderRadius: '8px',
     width: '100%',
@@ -73,10 +73,10 @@ export const styles = (theme: Theme) => ({
     '& .MuiInputBase-input': {
       ...theme.typography['h3'],
       padding: `${8 - 2}px 16px`,
-      color: '#D0D0DA',
+      color: theme.palette.text.secondary,
       height: 'auto',
       '&:focus': {
-        color: '#F5F5FF',
+        color: theme.palette.text.primary,
       },
       '&::placeholder': {
         color: theme.palette.text.secondary,

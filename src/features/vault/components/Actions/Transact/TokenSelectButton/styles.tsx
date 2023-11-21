@@ -1,4 +1,6 @@
-export const styles = () => ({
+import type { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   button: {
     padding: '8px 12px',
     margin: 0,
@@ -26,6 +28,6 @@ export const styles = () => ({
   iconMore: {
     flexShrink: 0,
     flexGrow: 0,
-    fill: '#D0D0DA',
+    fill: theme.palette.text.secondary,
   },
 });

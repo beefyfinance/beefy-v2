@@ -96,7 +96,7 @@ export const styles = (theme: Theme) => ({
     border: `none`,
     color: theme.palette.text.light,
     textDecoration: 'none',
-    backgroundColor: '#363B63',
+    backgroundColor: theme.palette.background.v2.border,
     boxShadow: 'none',
     outline: 'none',
     cursor: 'pointer',

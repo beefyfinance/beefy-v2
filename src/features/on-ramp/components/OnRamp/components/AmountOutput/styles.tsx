@@ -2,7 +2,7 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   input: {
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     background: '#1B1E31',
     borderRadius: '8px',
     width: '100%',
@@ -11,11 +11,11 @@ export const styles = (theme: Theme) => ({
     '& .MuiInputBase-input': {
       ...theme.typography['h2'],
       padding: '8px 16px',
-      color: '#D0D0DA',
+      color: theme.palette.text.secondary,
       height: 'auto',
       cursor: 'default',
       '&:focus': {
-        color: '#F5F5FF',
+        color: theme.palette.text.primary,
       },
       '&::placeholder': {
         color: theme.palette.text.disabled,
@@ -38,7 +38,7 @@ export const styles = (theme: Theme) => ({
     lineHeight: 'inherit',
     display: 'flex',
     alignItems: 'center',
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     flexShrink: 0,
     width: '24px',
     height: '24px',

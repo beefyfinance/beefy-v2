@@ -35,10 +35,10 @@ export const styles = (theme: Theme) => ({
   },
   header: {
     ...theme.typography['subline-sm'],
-    color: '#999CB3',
+    color: theme.palette.text.disabled,
   },
   footer: {
-    backgroundColor: '#363B63',
+    backgroundColor: theme.palette.background.v2.border,
     borderBottomLeftRadius: '8px',
     borderBottomRightRadius: '8px',
     [theme.breakpoints.up('lg')]: {

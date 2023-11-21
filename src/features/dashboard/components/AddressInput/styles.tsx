@@ -2,7 +2,7 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   search: {
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     background: '#1B1E31',
     borderRadius: '8px',
     '&.Mui-focused': {
@@ -17,10 +17,10 @@ export const styles = (theme: Theme) => ({
       minWidth: '200px',
       transition: '0.2s ease-in-out',
       padding: '8px 16px',
-      color: '#D0D0DA',
+      color: theme.palette.text.secondary,
       height: 'auto',
       '&:focus': {
-        color: '#F5F5FF',
+        color: theme.palette.text.primary,
       },
       '&::placeholder': {
         color: theme.palette.text.disabled,

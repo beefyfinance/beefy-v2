@@ -21,6 +21,6 @@ export const styles = (theme: Theme) => ({
     },
   },
   titleIcon: {
-    fill: '#999CB3',
+    fill: theme.palette.text.disabled,
   },
 });

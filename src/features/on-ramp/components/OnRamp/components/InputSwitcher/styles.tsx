@@ -1,4 +1,6 @@
-export const styles = () => ({
+import type { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   switcher: {
     display: 'flex',
     alignItems: 'center',
@@ -21,8 +23,8 @@ export const styles = () => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: '#F5F5FF',
-    background: '#363B63',
+    color: theme.palette.text.primary,
+    background: theme.palette.background.v2.border,
     border: 'none',
     borderRadius: '50%',
     boxShadow: 'none',
@@ -35,6 +37,6 @@ export const styles = () => ({
   icon: {
     width: 15,
     height: 13,
-    fill: '#F5F5FF',
+    fill: theme.palette.text.primary,
   },
 });

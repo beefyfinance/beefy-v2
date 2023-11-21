@@ -3,7 +3,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   button: {
     ...theme.typography['body-lg-med'],
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     background: 'transparent',
     border: 'none',
     boxShadow: 'none',
@@ -15,14 +15,14 @@ export const styles = (theme: Theme) => ({
     whiteSpace: 'nowrap' as const,
     cursor: 'pointer' as const,
     '&:hover, &:focus-visible': {
-      color: '#F5F5FF',
+      color: theme.palette.text.primary,
       '& $arrow': {
-        color: '#D0D0DA',
+        color: theme.palette.text.secondary,
       },
     },
   },
   arrow: {
-    color: '#999CB3',
+    color: theme.palette.text.disabled,
     height: '24px',
   },
 });

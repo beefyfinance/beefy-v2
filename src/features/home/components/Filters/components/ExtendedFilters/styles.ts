@@ -23,7 +23,7 @@ export const styles = (theme: Theme) => ({
   sidebarHeader: {
     ...theme.typography['h2'],
     backgroundColor: '#111321',
-    color: '#F5F5FF',
+    color: theme.palette.text.primary,
     padding: '24px',
     flexGrow: 0,
     flexShrink: 0,
@@ -39,7 +39,7 @@ export const styles = (theme: Theme) => ({
     border: 0,
     boxShadow: 'none',
     background: 'transparent',
-    color: '#999CB3',
+    color: theme.palette.text.disabled,
     cursor: 'pointer',
   },
   sidebarMain: {
@@ -55,7 +55,7 @@ export const styles = (theme: Theme) => ({
     flexShrink: 0,
   },
   extendedFilters: {
-    color: '#F5F5FF',
+    color: theme.palette.text.primary,
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '16px',

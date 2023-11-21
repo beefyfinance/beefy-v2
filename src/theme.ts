@@ -153,7 +153,7 @@ const theme = createTheme(
           searchBg: '#07080D',
           contentPrimary: '#242842',
           contentSecondary: '#1B1E32',
-          contentLight: '#303550',
+          contentLight: '#303550', //#363B63 try what
         },
       },
       text: {

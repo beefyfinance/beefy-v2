@@ -27,7 +27,7 @@ export const styles = (theme: Theme) => ({
     boxShadow: 'none',
     outline: 'none',
     cursor: 'pointer' as const,
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     background: '#111321',
   },
   arrowButton: {

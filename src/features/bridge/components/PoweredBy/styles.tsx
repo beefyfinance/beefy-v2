@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   poweredBy: {},
   poweredByLabel: {
     ...theme.typography['subline-sm'],
-    color: '#999CB3',
+    color: theme.palette.text.disabled,
   },
   poweredByLogos: {
     marginTop: '16px',

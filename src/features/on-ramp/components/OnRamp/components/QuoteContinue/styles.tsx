@@ -1,4 +1,6 @@
-export const styles = () => ({
+import type { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   container: {
     display: 'flex',
     width: '100%',
@@ -6,7 +8,7 @@ export const styles = () => ({
     rowGap: '24px',
   },
   arrow: {
-    color: '#999CB3',
+    color: theme.palette.text.disabled,
     height: '24px',
   },
 });

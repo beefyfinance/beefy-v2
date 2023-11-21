@@ -19,7 +19,7 @@ export const styles = (theme: Theme) => ({
   },
   checked: {
     '& $icon': {
-      color: '#F5F5FF',
+      color: theme.palette.text.primary,
     },
   },
 });

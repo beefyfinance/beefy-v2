@@ -1,14 +1,16 @@
-export const styles = () => ({
+import type { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   search: {
-    color: '#D0D0DA',
-    background: '#1B1E31',
+    color: theme.palette.text.secondary,
+    background: theme.palette.background.v2.searchBg,
     borderRadius: '8px',
     '& .MuiInputBase-input': {
       padding: '8px 16px',
-      color: '#D0D0DA',
+      color: theme.palette.text.secondary,
       height: 'auto',
       '&:focus': {
-        color: '#F5F5FF',
+        color: theme.palette.text.primary,
       },
       '&::placeholder': {
         color: theme.palette.text.disabled,
@@ -25,7 +27,7 @@ export const styles = () => ({
     lineHeight: 'inherit',
     display: 'flex',
     alignItems: 'center',
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     flexShrink: 0,
     width: '24px',
     height: '24px',

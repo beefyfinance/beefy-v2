@@ -3,12 +3,12 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   label: {
     ...theme.typography['subline-sm'],
-    color: '#999CB3',
+    color: theme.palette.text.disabled,
     marginBottom: '8px',
   },
   network: {
     ...theme.typography['subline-sm'],
-    color: '#999CB3',
+    color: theme.palette.text.disabled,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
@@ -19,7 +19,7 @@ export const styles = (theme: Theme) => ({
   },
   networkButton: {
     ...theme.typography['subline-sm'],
-    color: '#999CB3',
+    color: theme.palette.text.disabled,
     display: 'flex',
     alignItems: 'center',
     background: 'transparent',
@@ -30,7 +30,7 @@ export const styles = (theme: Theme) => ({
     padding: 0,
     cursor: 'pointer' as const,
     '&:hover, &:focus-visible': {
-      color: '#D0D0DA',
+      color: theme.palette.text.secondary,
     },
   },
   networkIcon: {

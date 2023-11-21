@@ -32,6 +32,6 @@ export const styles = (theme: Theme) => ({
     display: 'block',
   },
   sortIconHighlight: {
-    fill: '#F5F5FF',
+    fill: theme.palette.text.primary,
   },
 });
