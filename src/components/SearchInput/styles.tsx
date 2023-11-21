@@ -11,7 +11,7 @@ export const styles = () => ({
         color: '#F5F5FF',
       },
       '&::placeholder': {
-        color: '#8A8EA8',
+        color: theme.palette.text.disabled,
         opacity: 1,
       },
     },

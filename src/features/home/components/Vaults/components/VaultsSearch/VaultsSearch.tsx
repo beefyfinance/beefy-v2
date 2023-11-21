@@ -1,21 +1,19 @@
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { InputBase, makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+// import { makeStyles } from '@material-ui/core';
+// import { styles } from './styles';
 import { selectFilterSearchText } from '../../../../../data/selectors/filtered-vaults';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { debounce } from 'lodash-es';
-import { useTranslation } from 'react-i18next';
-import { CloseRounded, Search } from '@material-ui/icons';
+import {} from '@material-ui/icons';
+import { Search } from '../../../../../../components/Search';
 
-const useStyles = makeStyles(styles);
+// const useStyles = makeStyles(styles);
 
 export const VaultsSearch = memo(function VaultsHeader() {
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
   const searchText = useAppSelector(selectFilterSearchText);
   const [value, setValue] = useState(searchText);
-  const classes = useStyles();
 
   const setFilter = useMemo(
     () => debounce(value => dispatch(filteredVaultsActions.setSearchText(value)), 200),
@@ -42,28 +40,7 @@ export const VaultsSearch = memo(function VaultsHeader() {
     }
   }, [searchText, setValue]);
 
-  const valueLength = value.length;
-  const iconClass = classes.icon;
-  const icon = useMemo(() => {
-    return valueLength === 0 ? (
-      <div className={iconClass}>
-        <Search />
-      </div>
-    ) : (
-      <button onClick={handleClear} className={iconClass}>
-        <CloseRounded />
-      </button>
-    );
-  }, [valueLength, handleClear, iconClass]);
-
   return (
-    <InputBase
-      className={classes.search}
-      value={value}
-      onChange={handleChange}
-      fullWidth={true}
-      endAdornment={icon}
-      placeholder={t('Filter-Search')}
-    />
+    <Search searchText={value} handleClearText={handleClear} handleSearchText={handleChange} />
   );
 });

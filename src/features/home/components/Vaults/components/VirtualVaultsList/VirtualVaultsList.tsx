@@ -1,4 +1,4 @@
-import { useMediaQuery } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
 import type { Theme } from '@material-ui/core';
 import type { CSSProperties } from 'react';
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -6,6 +6,20 @@ import { debounce } from 'lodash-es';
 import { useInView } from 'react-intersection-observer';
 import { Vault } from '../../../Vault';
 import type { VaultEntity } from '../../../../../data/entities/vault';
+
+const useStyles = makeStyles(() => ({
+  container: {
+    display: 'grid',
+    gridTemplateColumns: 'minmax(0, 1fr)',
+    rowGap: '2px',
+    marginTop: '2px',
+    '& div:last-child': {
+      '& .lastBorderRadius': {
+        borderRadius: '0px 0px 8px 8px',
+      },
+    },
+  },
+}));
 
 function useVaultHeightEstimate() {
   const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'), { noSsr: true });
@@ -48,6 +62,7 @@ type VirtualVaultsListProps = {
 export const VirtualVaultsList = memo<VirtualVaultsListProps>(function VirtualVaultsList({
   vaultIds,
 }) {
+  const classes = useStyles();
   const totalVaults = vaultIds.length;
   const minBatchSize = 10;
   const [renderCount, setRenderCount] = useState(minBatchSize);
@@ -65,7 +80,7 @@ export const VirtualVaultsList = memo<VirtualVaultsListProps>(function VirtualVa
       borderBottomRightRadius: '8px',
       backgroundSize: `100% ${vaultHeightEstimate}px`,
       backgroundRepeat: 'repeat-y',
-      backgroundImage: `linear-gradient(to bottom, #2D3153 0px, #2D3153 ${
+      backgroundImage: `linear-gradient(to bottom, #242842 0px, #242842 ${
         vaultHeightEstimate - 2
       }px,  #363B63 ${vaultHeightEstimate - 2}px, #363B63 100%)`,
     };
@@ -137,7 +152,7 @@ export const VirtualVaultsList = memo<VirtualVaultsListProps>(function VirtualVa
 
   return (
     <>
-      <div ref={containerRef}>
+      <div className={classes.container} ref={containerRef}>
         {renderVaultIds.map(vaultId => (
           <Vault vaultId={vaultId} key={vaultId} />
         ))}

@@ -150,7 +150,6 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
           >
             <div className={classes.inputContainer}>
               <Search
-                className={classes.searchBar}
                 searchText={inputText}
                 handleSearchText={handleInputChange}
                 handleClearText={handleClearInput}

@@ -47,7 +47,7 @@ const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ModalTvl({ 
         <CardHeader className={classes.header}>
           <CardTitle titleClassName={classes.title} title={t('TVL-bychain')} />
           <IconButton className={classes.closeIcon} onClick={close} aria-label="settings">
-            <CloseIcon htmlColor="#8A8EA8" />
+            <CloseIcon htmlColor="#D0D0DA" />
           </IconButton>
         </CardHeader>
         <CardContent className={classes.content}>

@@ -3,7 +3,7 @@ export const styles = (theme: Theme) => ({
   container: {
     width: '100%',
     padding: '16px 24px',
-    backgroundColor: theme.palette.background.v2.cardBg,
+    backgroundColor: theme.palette.background.v2.contentPrimary,
     borderRadius: '8px',
     display: 'grid',
     rowGap: '16px',

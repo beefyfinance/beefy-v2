@@ -1,3 +1,5 @@
 export const styles = () => ({
-  vaultsList: {},
+  vaultsList: {
+    marginTop: '2px',
+  },
 });

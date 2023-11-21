@@ -23,10 +23,10 @@ export const styles = (theme: Theme) => ({
     flexShrink: 1,
     flexGrow: 1,
     minWidth: 0,
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     wordBreak: 'break-word' as const,
     '& a': {
-      color: '#D0D0DA',
+      color: theme.palette.text.secondary,
     },
     '& p:first-child': {
       marginTop: 0,

@@ -8,7 +8,7 @@ export const styles = () => ({
     '&::before, &::after': {
       content: '""',
       display: 'block',
-      background: '#2D3153',
+      background: '#242842',
       height: '2px',
       width: '1px',
       flexShrink: '0',

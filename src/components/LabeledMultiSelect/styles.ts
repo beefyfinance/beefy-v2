@@ -4,11 +4,11 @@ export const styles = (theme: Theme) => ({
   select: {
     ...theme.typography['body-lg-med'],
     backgroundColor: '#262A40',
-    border: 'solid 2px #303550',
+    border: `solid 2px ${theme.palette.background.v2.border}`,
     borderRadius: '8px',
     minWidth: 0,
     width: 'fit-content',
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     padding: `${8 - 2}px ${16 - 2}px`,
     cursor: 'pointer',
     userSelect: 'none' as const,
@@ -25,7 +25,7 @@ export const styles = (theme: Theme) => ({
   selectLabel: {
     flexShrink: 0,
     flexGrow: 0,
-    color: '#8A8EA8',
+    color: theme.palette.text.disabled,
     marginRight: '4px',
   },
   selectValue: {
@@ -43,7 +43,7 @@ export const styles = (theme: Theme) => ({
     flexShrink: 0,
     flexGrow: 0,
     marginLeft: 'auto',
-    fill: '#D0D0DA',
+    fill: theme.palette.text.secondary,
   },
   selectFullWidth: {
     width: '100%',
@@ -62,9 +62,9 @@ export const styles = (theme: Theme) => ({
     zIndex: 1000,
     border: '2px solid #393F60',
     borderRadius: '8px',
-    backgroundColor: '#303550',
+    backgroundColor: theme.palette.background.v2.contentLight,
     padding: `${8 - 2}px 0`,
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     maxWidth: '100%',
     maxHeight: '100%',
     overflowX: 'hidden' as const,

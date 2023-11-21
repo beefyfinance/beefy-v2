@@ -1,15 +1,10 @@
 import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
-  container: {
-    padding: theme.spacing(3),
-    backgroundColor: theme.palette.background.default,
-    borderRadius: '12px',
-  },
   containerBoost: {
     padding: theme.spacing(3),
     borderRadius: '12px',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.v2.cardHeader,
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '16px',
@@ -19,7 +14,7 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     rowGap: '16px',
     padding: '24px',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.v2.cardHeader,
     borderRadius: '12px',
     marginTop: theme.spacing(3),
   },
@@ -52,7 +47,7 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
     columnGap: '16px',
-    backgroundColor: '#2D3153',
+    backgroundColor: '#242842',
     padding: '12px',
     borderRadius: '8px',
   },

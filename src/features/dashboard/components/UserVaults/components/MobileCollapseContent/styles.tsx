@@ -9,7 +9,7 @@ export const styles = (theme: Theme) => ({
   },
   toggleContainer: {
     padding: '16px',
-    backgroundColor: theme.palette.background.appBG,
+    backgroundColor: theme.palette.background.v2.contentSecondary,
     display: 'flex',
     justifyContent: 'center',
   },

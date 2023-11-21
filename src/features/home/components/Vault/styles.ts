@@ -6,7 +6,6 @@ export const styles = (theme: Theme) => ({
     position: 'relative' as const,
     color: '#9595B2',
     background: theme.palette.background.vaults.default,
-    borderBottom: 'solid 2px #363B63',
     padding: '24px',
     textDecoration: 'none',
     '&:last-child': {

@@ -4,16 +4,16 @@ export const styles = (theme: Theme) => ({
   buttons: {
     display: 'flex',
     width: 'fit-content',
-    border: 'solid 2px #303550',
+    border: `solid 2px ${theme.palette.background.v2.border}`,
     borderRadius: '8px',
-    backgroundColor: '#262A40',
+    backgroundColor: theme.palette.background.v2.contentPrimary,
   },
   fullWidth: {
     width: '100%',
   },
   button: {
     ...theme.typography['body-lg-med'],
-    color: '#8A8EA8',
+    color: theme.palette.text.disabled,
     backgroundColor: 'inherit',
     border: 'none',
     borderRadius: '6px',
@@ -24,7 +24,7 @@ export const styles = (theme: Theme) => ({
     flexGrow: 1,
     flexShrink: 0,
     '&:hover': {
-      color: '#D0D0DA',
+      color: theme.palette.text.secondary,
       boxShadow: 'none',
     },
     '&:active, &:hover:active': {
@@ -45,7 +45,7 @@ export const styles = (theme: Theme) => ({
     '& $button': {
       padding: '0 12px',
       '&:hover': {
-        color: '#D0D0DA',
+        color: theme.palette.text.secondary,
         backgroundColor: 'transparent',
       },
       '&:active, &:hover:active': {
@@ -68,7 +68,7 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     rowGap: '8px',
     padding: `12px`,
-    backgroundColor: '#303550',
+    backgroundColor: theme.palette.background.v2.contentLight,
     borderRadius: '8px',
     marginTop: '8px',
     marginLeft: '4px',

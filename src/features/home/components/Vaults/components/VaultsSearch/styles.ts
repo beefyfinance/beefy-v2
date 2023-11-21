@@ -1,17 +1,17 @@
 export const styles = () => ({
   search: {
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     background: '#1B1E31',
     borderRadius: '8px',
     '& .MuiInputBase-input': {
       padding: '8px 16px',
-      color: '#D0D0DA',
+      color: theme.palette.text.secondary,
       height: 'auto',
       '&:focus': {
         color: '#F5F5FF',
       },
       '&::placeholder': {
-        color: '#8A8EA8',
+        color: theme.palette.text.disabled,
         opacity: 1,
       },
     },
@@ -25,7 +25,7 @@ export const styles = () => ({
     lineHeight: 'inherit',
     display: 'flex',
     alignItems: 'center',
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     flexShrink: 0,
     width: '24px',
     height: '24px',

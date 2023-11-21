@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     display: 'flex',
     alignItems: 'center',
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     cursor: 'pointer',
     columnGap: '4px',
     userSelect: 'none' as const,

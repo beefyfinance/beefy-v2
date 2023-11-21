@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   container: {
     padding: 24,
     borderRadius: '12px',
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.v2.cardHeader,
   },
   content: {
     padding: 16,

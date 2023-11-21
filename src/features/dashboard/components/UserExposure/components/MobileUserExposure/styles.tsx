@@ -2,7 +2,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   container: {
     width: '100%',
-    backgroundColor: theme.palette.background.v2.cardBg,
+    backgroundColor: theme.palette.background.v2.contentPrimary,
     borderRadius: '8px',
     display: 'grid',
     padding: '16px',

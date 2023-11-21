@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   container: {
     padding: 12,
     borderRadius: '8px',
-    backgroundColor: '#2D3153',
+    backgroundColor: '#242842',
   },
   title: {
     display: 'flex',
@@ -79,7 +79,7 @@ export const styles = (theme: Theme) => ({
         color: '#F5F5FF',
       },
       '&::placeholder': {
-        color: '#8A8EA8',
+        color: theme.palette.text.secondary,
         opacity: 1,
       },
     },

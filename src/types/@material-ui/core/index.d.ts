@@ -12,7 +12,6 @@ declare module '@material-ui/core/styles/createPalette' {
   export interface TypeBackground {
     light: string;
     content: string;
-    contentLight: string;
     footerHeader: string;
     cta: string;
     appBG: string;
@@ -20,7 +19,6 @@ declare module '@material-ui/core/styles/createPalette' {
       active: string;
       inactive: string;
       outline: string;
-      footer: string;
     };
     vaults: {
       default: string;
@@ -41,8 +39,13 @@ declare module '@material-ui/core/styles/createPalette' {
     v2: {
       summaryCard: string;
       iconBg: string;
-      cardBg: string;
+      contentPrimary: string;
       filter: string;
+      contentSecondary: string;
+      cardHeader: string;
+      border: string;
+      searchBg: string;
+      contentLight: string;
     };
   }
 

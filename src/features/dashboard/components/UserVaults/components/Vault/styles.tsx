@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     position: 'relative' as const,
     color: '#9595B2',
-    background: theme.palette.background.v2.cardBg,
+    background: theme.palette.background.v2.contentPrimary,
     padding: '24px 16px',
     textDecoration: 'none',
     '&:last-child': {
@@ -38,7 +38,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '16px',
-    backgroundColor: theme.palette.background.appBG,
+    backgroundColor: theme.palette.background.v2.contentSecondary,
     padding: '16px 24px',
     marginTop: '2px',
     [theme.breakpoints.down('md')]: {
@@ -56,7 +56,7 @@ export const styles = (theme: Theme) => ({
   },
   toggleContainer: {
     padding: '16px',
-    backgroundColor: theme.palette.background.appBG,
+    backgroundColor: theme.palette.background.v2.contentSecondary,
     display: 'flex',
     justifyContent: 'center',
   },

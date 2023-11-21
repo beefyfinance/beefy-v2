@@ -3,7 +3,7 @@ export const styles = (theme: Theme) => ({
   container: {
     padding: '16px 24px',
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.v2.cardBg,
+    backgroundColor: theme.palette.background.v2.contentPrimary,
     [theme.breakpoints.down('md')]: {
       padding: '16px',
     },

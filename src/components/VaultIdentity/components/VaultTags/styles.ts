@@ -11,7 +11,7 @@ export const styles = (theme: Theme) => ({
   },
   vaultTag: {
     ...theme.typography['subline-sm'],
-    color: '#D0D0DA',
+    color: theme.palette.text.secondary,
     backgroundColor: '#4C5480',
     padding: '2px 8px',
     borderRadius: '4px',

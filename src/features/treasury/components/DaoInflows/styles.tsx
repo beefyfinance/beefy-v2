@@ -17,7 +17,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     padding: '12px',
     columnGap: '8px',
-    backgroundColor: theme.palette.background.v2.cardBg,
+    backgroundColor: theme.palette.background.v2.contentPrimary,
     borderRadius: '4px',
     alignItems: 'center',
   },

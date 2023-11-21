@@ -1,7 +1,7 @@
 import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   container: {
-    backgroundColor: theme.palette.background.v2.cardBg,
+    backgroundColor: theme.palette.background.v2.contentPrimary,
     padding: '24px',
     display: 'flex',
     flexDirection: 'column' as const,
@@ -48,7 +48,7 @@ export const styles = (theme: Theme) => ({
   line: {
     height: '2px',
     width: '100%',
-    backgroundColor: '#2D3153',
+    backgroundColor: '#242842',
     borderRadius: '8px',
   },
   btn: {

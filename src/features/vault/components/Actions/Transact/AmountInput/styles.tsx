@@ -38,9 +38,9 @@ export const styles = (theme: Theme) => ({
     cursor: 'pointer',
     marginRight: '8px',
     '&:disabled': {
-      color: '#8A8EA8',
+      color: theme.palette.text.disabled,
       backgroundColor: '#262A40',
-      borderColor: '#303550',
+      borderColor: theme.palette.background.v2.contentLight,
       opacity: 0.4,
     },
   },

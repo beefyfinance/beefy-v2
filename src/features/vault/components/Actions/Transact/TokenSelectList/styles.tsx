@@ -50,6 +50,6 @@ export const styles = (theme: Theme) => ({
   noResults: {
     padding: '8px 12px',
     borderRadius: '8px',
-    background: '#2D3153',
+    background: '#242842',
   },
 });

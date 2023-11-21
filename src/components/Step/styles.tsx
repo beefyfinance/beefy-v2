@@ -2,7 +2,7 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   container: {
-    background: theme.palette.background.default,
+    background: theme.palette.background.v2.contentPrimary,
     borderRadius: '12px',
     width: '100%',
     height: props => props.cardHeight,
@@ -11,8 +11,8 @@ export const styles = (theme: Theme) => ({
   },
   titleBar: {
     ...theme.typography['body-lg-med'],
-    color: '#D0D0DA',
-    background: '#111321',
+    color: theme.palette.text.secondary,
+    background: theme.palette.background.v2.cardHeader,
     padding: '24px',
     borderTopLeftRadius: '12px',
     borderTopRightRadius: '12px',

@@ -19,7 +19,7 @@ export const styles = (theme: Theme) => ({
     rowGap: '16px',
     padding: '24px',
     borderRadius: '12px 12px 0 0',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.v2.cardHeader,
   },
   socials: {
     display: 'flex',
