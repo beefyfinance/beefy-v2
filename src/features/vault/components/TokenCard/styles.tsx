@@ -24,7 +24,7 @@ export const styles = (theme: Theme) => ({
         order: 3,
       },
     },
-    [theme.breakpoints.up('xl')]: {
+    [theme.breakpoints.up('lg')]: {
       '& $assetLinkText': {
         display: 'inline',
       },

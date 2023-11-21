@@ -2,6 +2,7 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   link: {
+    ...theme.typography['body-lg'],
     display: 'inline-flex',
     flexDirection: 'row' as const,
     justifyContent: 'center',
@@ -19,5 +20,8 @@ export const styles = (theme: Theme) => ({
     },
   },
   text: {},
-  icon: {},
+  icon: {
+    padding: '4px 0',
+    height: '24px',
+  },
 });

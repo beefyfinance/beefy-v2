@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   priceWithChange: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
-    padding: '2px 8px',
+    padding: '4px 8px',
     background: theme.palette.background.vaults.defaultOutline,
     color: theme.palette.text.middle,
     display: 'inline-flex',

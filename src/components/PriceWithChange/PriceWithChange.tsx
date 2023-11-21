@@ -94,7 +94,7 @@ const WithChange = memo<WithChangeProps>(function WithChange({
     date: format(previousDate, 'MMM d, yyyy h:mm a'),
   });
   const handleTooltipClick = useCallback<TooltipProps['onTriggerClick']>(e => {
-    // don't bubble up to the link on whole row
+    // don't bubble up
     e.preventDefault();
   }, []);
 

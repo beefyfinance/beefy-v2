@@ -5,20 +5,22 @@ import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
-export type IconButtonProps = {
+export type IconButtonLinkProps = {
   href: string;
   text: string;
   Icon: FunctionComponent<SVGProps<SVGSVGElement> & { title?: string }>;
   className?: string;
   textClassName?: string;
+  iconClassName?: string;
 };
 
-export const IconButton = memo<IconButtonProps>(function IconButton({
+export const IconButtonLink = memo<IconButtonLinkProps>(function IconButtonLink({
   href,
   text,
   Icon,
   className,
   textClassName,
+  iconClassName,
 }) {
   const classes = useStyles();
   return (
@@ -29,7 +31,7 @@ export const IconButton = memo<IconButtonProps>(function IconButton({
       title={text}
       rel="noopener noreferrer"
     >
-      <Icon className={classes.icon} />
+      <Icon className={clsx(classes.icon, iconClassName)} />
       <span className={clsx(classes.text, textClassName)}>{text}</span>
     </a>
   );

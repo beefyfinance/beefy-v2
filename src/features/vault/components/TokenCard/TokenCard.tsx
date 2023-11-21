@@ -18,7 +18,7 @@ import { selectBridgeByIdIfKnown } from '../../../data/selectors/bridges';
 import { BridgeTag, NativeTag } from '../BridgeTag';
 import { explorerTokenUrl } from '../../../../helpers/url';
 import { PriceWithChange } from '../../../../components/PriceWithChange/PriceWithChange';
-import { IconButton } from '../../../../components/IconButton/IconButton';
+import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink';
 import { Code, Language, MenuBook } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
@@ -47,7 +47,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
         </div>
         <div className={classes.assetLinks}>
           {token.website && (
-            <IconButton
+            <IconButtonLink
               Icon={Language}
               text={t('Token-Site')}
               href={token.website}
@@ -56,7 +56,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
             />
           )}
           {isErc20 && (
-            <IconButton
+            <IconButtonLink
               Icon={Code}
               href={explorerTokenUrl(chain, token.address)}
               text={t('Token-Contract')}
@@ -65,7 +65,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
             />
           )}
           {token.documentation && (
-            <IconButton
+            <IconButtonLink
               Icon={MenuBook}
               href={token.documentation}
               text={t('Token-Docs')}
