@@ -20,24 +20,24 @@ export const styles = (theme: Theme) => ({
   disconnected: {
     display: 'flex',
     justifyContent: 'center',
-    background: theme.palette.background.cta,
+    background: theme.palette.background.v2.cta,
     '& $address': {
       color: theme.palette.text.primary,
       textOverflow: 'clip',
     },
   },
   known: {
-    border: `2px solid #D19847`,
+    border: `2px solid ${theme.palette.background.v2.indicators.warning}`,
     '& $address': {
       color: theme.palette.text.secondary,
     },
     '&:hover': {
-      borderColor: '#3F466D',
+      borderColor: theme.palette.background.v2.contentLight,
     },
   },
   connected: {
     borderColor: theme.palette.background.cta,
-    backgroundColor: '#242737',
+    backgroundColor: theme.palette.background.v2.contentDark,
   },
   loading: {
     paddingTop: '4px',

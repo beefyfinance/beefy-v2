@@ -1,14 +1,9 @@
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
-// import { makeStyles } from '@material-ui/core';
-// import { styles } from './styles';
 import { selectFilterSearchText } from '../../../../../data/selectors/filtered-vaults';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { debounce } from 'lodash-es';
-import {} from '@material-ui/icons';
 import { Search } from '../../../../../../components/Search';
-
-// const useStyles = makeStyles(styles);
 
 export const VaultsSearch = memo(function VaultsHeader() {
   const dispatch = useAppDispatch();

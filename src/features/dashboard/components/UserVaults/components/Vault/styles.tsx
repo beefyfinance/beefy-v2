@@ -38,7 +38,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '16px',
-    backgroundColor: theme.palette.background.v2.contentSecondary,
+    backgroundColor: theme.palette.background.v2.contentDark,
     padding: '16px 24px',
     marginTop: '2px',
     [theme.breakpoints.down('md')]: {
@@ -56,7 +56,7 @@ export const styles = (theme: Theme) => ({
   },
   toggleContainer: {
     padding: '16px',
-    backgroundColor: theme.palette.background.v2.contentSecondary,
+    backgroundColor: theme.palette.background.v2.contentDark,
     display: 'flex',
     justifyContent: 'center',
   },

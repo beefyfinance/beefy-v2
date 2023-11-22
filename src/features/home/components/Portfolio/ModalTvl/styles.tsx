@@ -29,9 +29,8 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: '18px 24px',
-    background: theme.palette.background.vaults.inactive,
     borderRadius: '10px 10px 0px 0px ',
-    borderBottom: '2px solid #373c68',
+    borderBottom: `2px solid ${theme.palette.background.v2.contentLight}`,
   },
   title: {
     color: theme.palette.text.primary,
@@ -42,7 +41,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   content: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.v2.contentPrimary,
     borderRadius: '0 0 12px 12px',
     padding: '24px',
     minHeight: '200px',
@@ -78,7 +77,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     padding: theme.spacing(1),
     borderRadius: '4px',
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: theme.palette.background.v2.contentLight,
   },
   chainText: {
     ...theme.typography['subline-sm'],

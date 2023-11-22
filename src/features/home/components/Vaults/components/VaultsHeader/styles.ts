@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => ({
     rowGap: '16px',
     width: '100%',
     color: '#9595B2',
-    background: theme.palette.background.default,
+    background: theme.palette.background.v2.contentPrimary,
     padding: '24px',
     gridTemplateColumns: '1fr',
     alignItems: 'center',

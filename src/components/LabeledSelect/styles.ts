@@ -3,8 +3,8 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   select: {
     ...theme.typography['body-lg-med'],
-    backgroundColor: '#262A40',
-    border: `solid 2px ${theme.palette.background.v2.border}`,
+    backgroundColor: theme.palette.background.v2.contentDark,
+    border: `solid 2px ${theme.palette.background.v2.contentPrimary}`,
     borderRadius: '8px',
     minWidth: 0,
     width: 'fit-content',

@@ -4,9 +4,9 @@ export const styles = (theme: Theme) => ({
   buttons: {
     display: 'flex',
     width: 'fit-content',
-    border: `solid 2px ${theme.palette.background.v2.border}`,
+    border: `solid 2px ${theme.palette.background.v2.contentPrimary}`,
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.v2.contentPrimary,
+    backgroundColor: theme.palette.background.v2.contentDark,
   },
   fullWidth: {
     width: '100%',
@@ -34,10 +34,10 @@ export const styles = (theme: Theme) => ({
   selected: {
     pointerEvents: 'none' as const,
     color: theme.palette.text.primary,
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
+    backgroundColor: theme.palette.background.v2.button,
     '&:hover': {
       color: theme.palette.text.primary,
-      backgroundColor: theme.palette.background.vaults.defaultOutline,
+      backgroundColor: theme.palette.background.v2.button,
     },
   },
   untogglable: {

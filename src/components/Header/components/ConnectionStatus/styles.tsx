@@ -1,11 +1,13 @@
-export const styles = () => ({
+import type { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   container: {
     display: 'flex',
-    backgroundColor: '#242737',
+    backgroundColor: theme.palette.background.v2.contentDark,
     alignItems: 'center',
     borderRadius: '8px',
   },
   open: {
-    backgroundColor: '#30354F',
+    backgroundColor: theme.palette.background.v2.contentLight,
   },
 });

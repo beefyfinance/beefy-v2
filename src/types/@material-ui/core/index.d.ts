@@ -22,12 +22,9 @@ declare module '@material-ui/core/styles/createPalette' {
     };
     vaults: {
       default: string;
-      defaultOutline: string;
-      boostOutline: string;
       gov: string;
-      govOutline: string;
+      boost: string;
       inactive: string;
-      inactiveOutline: string;
     };
     snackbars: {
       bg: string;
@@ -37,15 +34,24 @@ declare module '@material-ui/core/styles/createPalette' {
       error: string;
     };
     v2: {
+      cta: string;
+      footerHeader: string;
+      appBg: string;
       summaryCard: string;
       iconBg: string;
       contentPrimary: string;
-      filter: string;
-      contentSecondary: string;
+      contentDark: string;
       cardHeader: string;
       border: string;
       searchBg: string;
       contentLight: string;
+      button: string;
+      indicators: {
+        loading: string;
+        warning: string;
+        error: string;
+        success: string;
+      };
     };
   }
 

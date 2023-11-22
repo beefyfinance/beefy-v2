@@ -100,12 +100,11 @@ export const styles = (theme: Theme) => ({
   },
   filter: {
     color: theme.palette.text.disabled,
-    backgroundColor: theme.palette.background.v2.contentPrimary,
-    borderColor: theme.palette.background.v2.contentLight,
+    backgroundColor: theme.palette.background.v2.contentDark,
+    borderColor: theme.palette.background.v2.contentPrimary,
     '&:hover': {
       color: theme.palette.text.secondary,
-      backgroundColor: theme.palette.background.v2.contentPrimary,
-      borderColor: theme.palette.background.v2.contentLight,
+      backgroundColor: theme.palette.background.v2.contentDark,
     },
     '&:active, &$active': {
       color: theme.palette.text.primary,
@@ -114,8 +113,7 @@ export const styles = (theme: Theme) => ({
     },
     '&:disabled': {
       color: theme.palette.text.secondary,
-      backgroundColor: theme.palette.background.v2.contentPrimary,
-      borderColor: theme.palette.background.v2.contentLight,
+      borderColor: theme.palette.background.v2.contentPrimary,
       opacity: 0.4,
     },
   },

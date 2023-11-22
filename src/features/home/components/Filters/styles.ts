@@ -56,5 +56,9 @@ export const styles = (theme: Theme) => ({
       flexGrow: 0,
       flexShrink: 0,
     },
+    '&:disabled': {
+      backgroundColor: theme.palette.background.v2.contentDark,
+      opacity: 0.4,
+    },
   },
 });

@@ -23,10 +23,11 @@ export const styles = (theme: Theme) => ({
   },
   vaultNetwork: {
     position: 'absolute' as const,
-    top: '0px',
-    left: '0px',
-    width: '26px',
-    height: '26px',
+    top: '-2px',
+    left: '-2px',
+    width: '28px',
+    height: '28px',
+    border: `solid 2px ${theme.palette.background.v2.contentDark}`,
     borderBottomRightRadius: '16px',
     '& img': {
       width: '22px',

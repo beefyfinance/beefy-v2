@@ -114,7 +114,7 @@ const theme = createTheme(
   withCustomBreakpoints({
     palette: {
       type: 'dark',
-      primary: { main: '#59A662', light: '#CDF7D2', dark: '#004708' },
+      primary: { main: '#4DB258', light: '#CDF7D2', dark: '#004708' },
       background: {
         default: '#242842',
         paper: '#242842',
@@ -130,12 +130,9 @@ const theme = createTheme(
         },
         vaults: {
           default: '#242842',
-          defaultOutline: '#363B63',
-          boostOutline: '#DB8332',
           gov: '#342763',
-          govOutline: '#42477B',
+          boost: '#DB8332',
           inactive: '#111321',
-          inactiveOutline: '#762C2C',
         },
         snackbars: {
           bg: '#FFF',
@@ -145,15 +142,24 @@ const theme = createTheme(
           error: '#DC2C10',
         },
         v2: {
+          cta: '#4DB258',
+          footerHeader: '#020203',
+          appBg: '#121420',
           summaryCard: '#121421',
           iconBg: 'rgba(92, 112, 214, 0.2)',
-          filter: '#1B1E32',
-          cardHeader: '#1B1E32',
+          cardHeader: '#1C1E32',
           border: '#363B63',
           searchBg: '#07080D',
           contentPrimary: '#242842',
-          contentSecondary: '#1B1E32',
-          contentLight: '#303550', //#363B63 try what
+          contentDark: '#1B1E32',
+          contentLight: '#2D3153',
+          button: '#363B63',
+          indicators: {
+            loading: '#D6D05D',
+            warning: '#D19847',
+            error: '#DA5932',
+            success: '#4DB258',
+          },
         },
       },
       text: {

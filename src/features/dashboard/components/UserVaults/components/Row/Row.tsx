@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   rowMobileContainer: {
     padding: '16px',
-    backgroundColor: theme.palette.background.v2.contentSecondary,
+    backgroundColor: theme.palette.background.v2.contentDark,
   },
 }));
 

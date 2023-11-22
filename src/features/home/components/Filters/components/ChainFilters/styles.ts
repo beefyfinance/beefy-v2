@@ -20,7 +20,7 @@ export const styles = (theme: Theme) => ({
     flexGrow: 1,
     flexShrink: 0,
     padding: `${12 - 2}px 0`,
-    border: `solid 2px ${theme.palette.background.v2.border}`,
+    border: `solid 2px ${theme.palette.background.v2.contentPrimary}`,
     borderRadius: '6px',
     cursor: 'pointer',
     '&:not($selected) $icon': {
@@ -28,16 +28,16 @@ export const styles = (theme: Theme) => ({
         fill: '#2E324C',
       },
       '& .fg': {
-        fill: '#1B1E31',
+        fill: theme.palette.background.v2.appBg,
       },
     },
   },
   selected: {
-    backgroundColor: theme.palette.background.v2.contentPrimary,
+    backgroundColor: theme.palette.background.v2.contentDark,
   },
   tooltip: {
     ...theme.typography['body-lg-med'],
-    // background: theme.palette.background.filters.outline,
+    background: theme.palette.background.v2.contentLight,
     padding: '8px 12px',
     borderRadius: '4px',
     color: theme.palette.text.disabled,
