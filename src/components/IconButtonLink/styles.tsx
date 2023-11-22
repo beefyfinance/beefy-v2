@@ -23,5 +23,6 @@ export const styles = (theme: Theme) => ({
   icon: {
     padding: '4px 0',
     height: '24px',
+    width: '16px',
   },
 });
