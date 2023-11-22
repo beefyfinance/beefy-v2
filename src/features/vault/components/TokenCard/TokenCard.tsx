@@ -19,7 +19,7 @@ import { BridgeTag, NativeTag } from '../BridgeTag';
 import { explorerTokenUrl } from '../../../../helpers/url';
 import { PriceWithChange } from '../../../../components/PriceWithChange/PriceWithChange';
 import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink';
-import { Code, Language, MenuBook } from '@material-ui/icons';
+import { Code, OpenInNew, Description } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
@@ -48,7 +48,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
         <div className={classes.assetLinks}>
           {token.website && (
             <IconButtonLink
-              Icon={Language}
+              Icon={OpenInNew}
               text={t('Token-Site')}
               href={token.website}
               className={classes.assetWebsite}
@@ -66,7 +66,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
           )}
           {token.documentation && (
             <IconButtonLink
-              Icon={MenuBook}
+              Icon={Description}
               href={token.documentation}
               text={t('Token-Docs')}
               className={classes.assetDocumentation}
