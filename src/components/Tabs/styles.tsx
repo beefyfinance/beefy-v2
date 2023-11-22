@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
   tabs: {
     backgroundColor: theme.palette.background.default,
     borderRadius: 8,
-    border: `2px solid ${theme.palette.background.vaults.defaultOutline}`,
+    border: `2px solid ${theme.palette.background.v2.contentLight}`,
     '& .MuiTabs-indicator': {
       display: 'none' as const,
       color: 'transparent',
@@ -17,7 +17,7 @@ export const styles = (theme: Theme) => ({
       color: theme.palette.text.disabled,
     },
     '& .Mui-selected': {
-      backgroundColor: theme.palette.background.vaults.defaultOutline,
+      backgroundColor: theme.palette.background.v2.contentLight,
       borderRadius: 4,
       color: theme.palette.text.primary,
       padding: '5px',

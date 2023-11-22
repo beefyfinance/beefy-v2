@@ -10,7 +10,7 @@ export const styles = (theme: Theme) => ({
     padding: '16px',
     borderRadius: '12px',
     '&:Hover': {
-      backgroundColor: theme.palette.background.vaults.defaultOutline,
+      backgroundColor: theme.palette.background.v2.contentLight,
     },
   },
   title: {

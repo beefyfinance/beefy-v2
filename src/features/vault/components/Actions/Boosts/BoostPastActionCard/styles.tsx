@@ -28,7 +28,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   button: {
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
+    backgroundColor: theme.palette.background.v2.contentLight,
     '&:Hover': {
       backgroundColor: '#272B4A',
     },

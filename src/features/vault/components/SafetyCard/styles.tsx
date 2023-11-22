@@ -60,7 +60,7 @@ export const styles = (theme: Theme) => ({
   },
   howItWorksContainer: {
     padding: 16,
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
+    backgroundColor: theme.palette.background.v2.contentLight,
   },
   titleClassName: {
     ...theme.typography['body-lg-med'],

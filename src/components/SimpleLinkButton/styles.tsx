@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     textDecoration: 'none',
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
+    backgroundColor: theme.palette.background.v2.contentLight,
     padding: '2px 8px',
     borderRadius: '4px',
     color: theme.palette.text.secondary,

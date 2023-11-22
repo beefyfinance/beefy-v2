@@ -87,7 +87,7 @@ export const styles = (theme: Theme) => ({
     '& .MuiButton-root': {
       ...theme.typography['subline-sm'],
       color: theme.palette.text.primary,
-      backgroundColor: theme.palette.background.vaults.defaultOutline,
+      backgroundColor: theme.palette.background.v2.contentLight,
       borderRadius: '4px',
       margin: 0,
       padding: '6px 12px',

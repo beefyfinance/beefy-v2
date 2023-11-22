@@ -43,7 +43,7 @@ export const styles = (theme: Theme) => ({
     rowGap: '16px',
   },
   button: {
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
+    backgroundColor: theme.palette.background.v2.contentLight,
     '&:Hover': {
       backgroundColor: '#272B4A',
     },
@@ -57,7 +57,7 @@ export const styles = (theme: Theme) => ({
     padding: '2px 6px',
     borderRadius: '4px',
     marginRight: `${8 - 2}px`,
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
+    backgroundColor: theme.palette.background.v2.contentLight,
     borderColor: 'transparent' as const,
     '&:disabled': {
       borderColor: 'transparent' as const,

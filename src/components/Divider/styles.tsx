@@ -16,7 +16,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    background: theme.palette.background.vaults.defaultOutline,
+    background: theme.palette.background.v2.contentLight,
     borderRadius: '100%',
     margin: '0 12px',
     height: '24px',

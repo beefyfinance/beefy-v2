@@ -15,7 +15,7 @@ export const styles = (theme: Theme) => ({
     marginLeft: '8px',
   },
   orange: {
-    color: theme.palette.background.vaults.boostOutline,
+    color: theme.palette.background.vaults.boost,
   },
   inputContainer: {
     paddingTop: '24px',
@@ -35,7 +35,7 @@ export const styles = (theme: Theme) => ({
     '& .MuiButton-root': {
       ...theme.typography['subline-sm'],
       color: theme.palette.text.primary,
-      backgroundColor: theme.palette.background.vaults.defaultOutline,
+      backgroundColor: theme.palette.background.v2.button,
       borderRadius: '4px',
       margin: 0,
       padding: '6px 12px',

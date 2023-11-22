@@ -11,7 +11,7 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg'],
     textDecoration: 'none',
     color: theme.palette.text.secondary,
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
+    backgroundColor: theme.palette.background.v2.contentLight,
     borderRadius: '4px',
     transition: 'color 0.2s',
     padding: '2px 8px',

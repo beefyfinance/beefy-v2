@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => ({
     flexWrap: 'wrap' as const,
     rowGap: '16px',
     borderRadius: '12px',
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
+    backgroundColor: theme.palette.background.v2.contentLight,
     padding: '16px',
   },
   text: {

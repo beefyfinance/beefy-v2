@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['subline-sm'],
     fontWeight: 700,
     padding: '2px 8px',
-    background: theme.palette.background.vaults.defaultOutline,
+    background: theme.palette.background.v2.contentLight,
     color: theme.palette.text.middle,
     display: 'flex',
     gap: '4px',
