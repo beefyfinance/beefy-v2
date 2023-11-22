@@ -645,7 +645,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   base: {
     name: 'Base',
     chainId: 8453,
-    rpc: ['https://rpc.ankr.com/base'],
+    rpc: ['https://mainnet.base.org'],
     explorerUrl: 'https://basescan.org',
     multicallAddress: '0xbA790ec6F95D68123E772A43b314464585B311b4',
     appMulticallContractAddress: '0x354D3d7B61230C88F5f50176d9329d13366FbC28',
