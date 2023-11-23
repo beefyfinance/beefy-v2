@@ -1,4 +1,12 @@
 {
+  "stafi": {
+    "text": "Users can stake PoS tokens through StaFi and receive rTokens in return, which are available for trading, while still earning staking rewards. rToken is a synthetic staking derivative issued by StaFi to users when users stake PoS tokens through StaFi rToken App",
+    "website": "https://www.stafi.io/",
+    "social": {
+      "telegram": "",
+      "twitter": ""
+    }
+  },
   "thales": {
     "text": "Thales is an Ethereum protocol that allows the creation of peer-to-peer parimutuel markets that anyone can join. This building block is the foundation of novel on-chain initiatives, from a platform for AMM-based positional markets to immersive gamified experiences, and much more.",
     "website": "https://thalesmarket.io/",
@@ -6,7 +14,7 @@
       "discord": "https://discord.com/invite/rB3AWKwACM",
       "twitter": "https://twitter.com/ThalesMarket"
     }
-  }, 
+  },
   "lyra": {
     "text": "Lyra is an option automated market maker (AMM) that allows traders to buy and sell options on cryptocurrencies against a pool of liquidity.",
     "website": "https://app.lyra.finance/",

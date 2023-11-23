@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_thena-gamma-bnb-rbnb-stafi",
+    "poolId": "thena-gamma-bnb-rbnb",
+    "name": "StaFi",
+    "assets": ["BNB", "rBNB"],
+    "tokenAddress": "0x7E53e117B1C7eC252526Fbb1A414849Eaa31727D",
+    "earnedToken": "FIS",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xF4bafAEAE73a4A7C8b6479970075e91e641fB1FC",
+    "earnContractAddress": "0x8fF0bb679F5906eaBfE41711b160996C74fE0706",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "FIS",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["stafi"]
+  },
+  {
     "id": "moo_thena-gamma-bnbx-bnb-stader",
     "poolId": "thena-gamma-bnbx-bnb",
     "name": "Stader",
