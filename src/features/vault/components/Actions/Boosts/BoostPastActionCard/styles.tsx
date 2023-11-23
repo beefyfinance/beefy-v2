@@ -28,12 +28,6 @@ export const styles = (theme: Theme) => ({
     },
   },
   button: {
-    color: theme.palette.text.secondary,
-    backgroundColor: theme.palette.background.vaults.boost,
-    '&:Hover': {
-      color: theme.palette.text.primary,
-      backgroundColor: theme.palette.background.vaults.boost,
-    },
     '&:disabled': {
       borderColor: 'transparent' as const,
     },

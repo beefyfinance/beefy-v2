@@ -93,7 +93,7 @@ export const styles = (theme: Theme) => ({
   },
   buttonList: {
     ...theme.typography['body-lg-med'],
-    color: '#848BAD',
+    color: theme.palette.text.disabled,
     backgroundColor: 'inherit',
     border: 'none',
     padding: 0,

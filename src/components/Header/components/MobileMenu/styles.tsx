@@ -3,7 +3,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   bg: {
     '& .MuiDrawer-paper': {
-      backgroundColor: '#0F0F0F',
+      backgroundColor: theme.palette.background.v2.footerHeader,
     },
   },
   toggleDrawer: {
@@ -40,7 +40,7 @@ export const styles = (theme: Theme) => ({
     columnGap: '24px',
   },
   divider: {
-    backgroundColor: '#1A1C28',
+    backgroundColor: theme.palette.background.v2.contentDark,
     height: '2px',
   },
   itemTitle: {

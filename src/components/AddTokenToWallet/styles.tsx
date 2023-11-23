@@ -28,9 +28,9 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     padding: '18px 24px',
-    background: theme.palette.background.vaults.inactive,
+    background: theme.palette.background.v2.contentDark,
     borderRadius: '10px 10px 0px 0px ',
-    borderBottom: '2px solid #373c68',
+    borderBottom: `2px solid ${theme.palette.background.v2.border}`,
   },
   cardIcon: {
     marginRight: '8px',
@@ -45,7 +45,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   cardContent: {
-    backgroundColor: theme.palette.background.paper,
+    background: theme.palette.background.v2.contentPrimary,
     borderRadius: '0 0 12px 12px',
     padding: '24px',
     minHeight: '200px',
@@ -68,7 +68,7 @@ export const styles = (theme: Theme) => ({
   copyTextInput: {
     ...theme.typography['body-lg'],
     lineHeight: '20px',
-    background: '#111321',
+    background: theme.palette.background.v2.searchBg,
     border: 'none',
     boxShadow: 'none',
     outline: 'none',

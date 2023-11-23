@@ -28,7 +28,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: theme.palette.background.v2.button,
     [theme.breakpoints.up('lg')]: {
       height: '16px',
       width: '16px',

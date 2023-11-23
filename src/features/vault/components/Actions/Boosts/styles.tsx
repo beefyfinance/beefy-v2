@@ -65,7 +65,6 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.secondary,
   },
   button: {
-    backgroundColor: theme.palette.background.vaults.boost,
     borderRadius: '8px',
   },
 });

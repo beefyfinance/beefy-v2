@@ -52,7 +52,7 @@ export const styles = (theme: Theme) => ({
   },
   arrowInner: {
     width: '12px',
-    background: theme.palette.background.default,
+    background: theme.palette.background.v2.contentPrimary,
     '&::before': {
       content: '""',
       display: 'block',

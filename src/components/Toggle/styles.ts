@@ -19,7 +19,7 @@ export const styles = (theme: Theme) => ({
   },
   channel: {
     position: 'relative' as const,
-    background: '#0F0F0F',
+    background: theme.palette.background.v2.contentDark,
     width: '44px',
     height: '24px',
     borderRadius: '40px',
@@ -31,11 +31,11 @@ export const styles = (theme: Theme) => ({
     width: '20px',
     height: '20px',
     borderRadius: '50%',
-    background: '#313759',
+    background: theme.palette.background.v2.contentLight,
     transition: 'background-color 0.4s ease, left 0.4s ease',
   },
   dotChecked: {
-    backgroundColor: '#59A662',
+    backgroundColor: theme.palette.primary.main,
     left: '22px',
   },
 });

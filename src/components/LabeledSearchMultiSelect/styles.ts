@@ -81,7 +81,7 @@ export const styles = (theme: Theme) => ({
     padding: `8px ${16 - 2}px`,
     '&:hover': {
       background: 'rgba(255, 255, 255, 0.16)',
-      color: '#FFF',
+      color: theme.palette.text.primary,
     },
     '&:active': {
       background: 'transparent',

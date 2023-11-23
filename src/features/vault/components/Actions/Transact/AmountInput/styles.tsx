@@ -3,7 +3,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   input: {
     color: theme.palette.text.secondary,
-    background: '#111321',
+    background: theme.palette.background.v2.searchBg,
     borderRadius: '8px',
     width: '100%',
     display: 'flex',
@@ -21,7 +21,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   error: {
-    borderColor: '#D15347',
+    borderColor: theme.palette.background.v2.indicators.warning,
   },
   max: {
     ...theme.typography['subline-sm'],

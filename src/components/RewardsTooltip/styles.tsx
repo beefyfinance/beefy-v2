@@ -11,7 +11,7 @@ export const styles = (theme: Theme) => ({
   tooltipTitle: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
-    color: '#73768C',
+    color: theme.palette.text.tooltips,
   },
   rewardsContainer: {
     display: 'flex',
@@ -25,6 +25,6 @@ export const styles = (theme: Theme) => ({
   usdPrice: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
-    color: '#73768C',
+    color: theme.palette.text.tooltips,
   },
 });

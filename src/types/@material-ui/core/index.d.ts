@@ -10,21 +10,12 @@ import type { ReactNode } from 'react';
 
 declare module '@material-ui/core/styles/createPalette' {
   export interface TypeBackground {
-    light: string;
-    content: string;
-    footerHeader: string;
-    cta: string;
-    appBG: string;
-    filters: {
-      active: string;
-      inactive: string;
-      outline: string;
-    };
     vaults: {
       default: string;
       gov: string;
       boost: string;
       inactive: string;
+      boostLight: string;
     };
     snackbars: {
       bg: string;
@@ -70,6 +61,8 @@ declare module '@material-ui/core/styles/createPalette' {
     dark: string;
     middle: string;
     light: string;
+    tooltips: string;
+    tooltipsValue: string;
   }
 }
 

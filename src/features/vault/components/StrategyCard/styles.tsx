@@ -28,9 +28,7 @@ export const styles = (theme: Theme) => ({
       marginBottom: 0,
     },
   },
-  apysContainer: {
-    marginBottom: '32px',
-  },
+  apysContainer: {},
   apyTitle: {
     ...theme.typography['h3'],
     color: theme.palette.text.secondary,

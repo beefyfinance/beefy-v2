@@ -58,12 +58,7 @@ const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ModalTvl({ 
               ))}
             </div>
           </div>
-          <Button
-            onClick={close}
-            variant="success"
-            fullWidth={true}
-            className={classes.closeButton}
-          >
+          <Button onClick={close} fullWidth={true} className={classes.closeButton}>
             {t('Close')}
           </Button>
         </CardContent>

@@ -16,7 +16,7 @@ export const styles = (theme: Theme) => ({
     padding: '24px',
     borderTopLeftRadius: '12px',
     borderTopRightRadius: '12px',
-    borderBottom: 'solid 2px #363B63',
+    borderBottom: `solid 2px ${theme.palette.background.v2.border}`,
     display: 'flex',
     columnGap: '12px',
     alignItems: 'center',

@@ -13,7 +13,7 @@ export const styles = (theme: Theme) => ({
     filter: 'blur(.5rem)',
   },
   boostedValue: {
-    color: '#DB8332',
+    color: theme.palette.background.vaults.boost,
   },
   lineThroughValue: {
     textDecoration: 'line-through',

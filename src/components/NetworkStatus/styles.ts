@@ -129,7 +129,7 @@ export const styles = (theme: Theme) => ({
     height: '16px',
     width: '2px',
     borderRadius: '3px',
-    backgroundColor: '#30354F',
+    backgroundColor: theme.palette.background.v2.contentLight,
   },
   chain: {
     display: 'flex',

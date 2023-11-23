@@ -8,7 +8,7 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'flex-start',
     minHeight: '100vh',
     width: '100%',
-    backgroundColor: theme.palette.background.appBG,
+    backgroundColor: theme.palette.background.v2.appBg,
   },
   top: {
     flex: '0 0 auto',

@@ -11,7 +11,7 @@ export const styles = (theme: Theme) => ({
     userSelect: 'none' as const,
   },
   icon: {
-    color: '#848BAD',
+    color: theme.palette.text.disabled,
   },
   label: {
     display: 'flex',

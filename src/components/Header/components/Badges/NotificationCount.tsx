@@ -5,8 +5,8 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles((theme: Theme) => ({
   badge: {
     ...theme.typography['body-sm'],
-    backgroundColor: '#D15347',
-    color: '#fff',
+    backgroundColor: theme.palette.background.v2.indicators.warning,
+    color: theme.palette.text.primary,
     pointerEvents: 'none',
     marginLeft: '6px',
     borderRadius: '100%',

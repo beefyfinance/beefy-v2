@@ -58,14 +58,24 @@ export const styles = (theme: Theme) => ({
       padding: `${paddings.sm.y}px ${paddings.sm.x}px`,
     },
   },
-  default: {
+  boost: {
     color: theme.palette.text.primary,
-    backgroundColor: theme.palette.background.default,
-    borderColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.vaults.boost,
+    borderColor: theme.palette.background.vaults.boost,
     '&:hover': {
       color: theme.palette.text.primary,
-      backgroundColor: '#2C3154',
-      borderColor: '#2C3154',
+      backgroundColor: theme.palette.background.vaults.boostLight,
+      borderColor: theme.palette.background.vaults.boostLight,
+    },
+  },
+  default: {
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.background.v2.button,
+    borderColor: theme.palette.background.v2.button,
+    '&:hover': {
+      color: theme.palette.text.primary,
+      backgroundColor: theme.palette.background.v2.buttonHover,
+      borderColor: theme.palette.background.v2.buttonHover,
     },
   },
   middle: {
@@ -74,28 +84,28 @@ export const styles = (theme: Theme) => ({
     borderColor: '#242842',
     '&:hover': {
       color: theme.palette.text.primary,
-      backgroundColor: theme.palette.background.v2.border,
-      borderColor: theme.palette.background.v2.border,
+      backgroundColor: theme.palette.background.v2.button,
+      borderColor: theme.palette.background.v2.button,
     },
   },
   light: {
     color: theme.palette.text.primary,
-    backgroundColor: theme.palette.background.v2.border,
-    borderColor: theme.palette.background.v2.border,
+    backgroundColor: theme.palette.background.v2.button,
+    borderColor: theme.palette.background.v2.button,
     '&:hover': {
       color: theme.palette.text.primary,
-      backgroundColor: '#3F4574',
-      borderColor: '#3F4574',
+      backgroundColor: theme.palette.background.v2.buttonHover,
+      borderColor: theme.palette.background.v2.buttonHover,
     },
   },
   success: {
     color: theme.palette.text.primary,
-    backgroundColor: theme.palette.background.v2.cta,
-    borderColor: theme.palette.background.v2.cta,
+    backgroundColor: theme.palette.primary.main,
+    borderColor: theme.palette.primary.main,
     '&:hover': {
       color: theme.palette.text.primary,
-      backgroundColor: '#68a871',
-      borderColor: '#68a871',
+      backgroundColor: theme.palette.primary.light,
+      borderColor: theme.palette.primary.light,
     },
   },
   filter: {

@@ -38,13 +38,13 @@ export const styles = (theme: Theme) => ({
   warning: {
     backgroundColor: 'rgba(209, 152, 71, 0.15)',
     '& $icon': {
-      fill: '#D19847',
+      fill: theme.palette.background.v2.indicators.warning,
     },
   },
   error: {
     backgroundColor: 'rgba(209, 83, 71, 0.15)',
     '& $icon': {
-      fill: '#D15347',
+      fill: theme.palette.background.v2.indicators.error,
     },
   },
 });

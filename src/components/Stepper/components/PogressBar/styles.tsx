@@ -5,7 +5,7 @@ const baseProgressBar = {
   height: '100%',
   transitionTimingFunction: 'ease-in',
   transition: '0.3s',
-  backgroundColor: '#59A662',
+  backgroundColor: '#4DB258',
 };
 
 export const styles = (theme: Theme) => ({

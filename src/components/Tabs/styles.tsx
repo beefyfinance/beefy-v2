@@ -3,7 +3,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   container: {},
   tabs: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.v2.button,
     borderRadius: 8,
     border: `2px solid ${theme.palette.background.v2.contentLight}`,
     '& .MuiTabs-indicator': {

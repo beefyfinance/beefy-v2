@@ -36,7 +36,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   connected: {
-    borderColor: theme.palette.background.cta,
+    borderColor: theme.palette.background.v2.cta,
     backgroundColor: theme.palette.background.v2.contentDark,
   },
   loading: {

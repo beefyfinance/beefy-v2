@@ -51,7 +51,7 @@ export const styles = (theme: Theme) => ({
     height: '64px',
     width: '2px',
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: theme.palette.background.v2.contentLight,
     [theme.breakpoints.down('md')]: {
       display: 'none',
     },

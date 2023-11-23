@@ -7,8 +7,8 @@ import clsx from 'clsx';
 const useStyles = makeStyles((theme: Theme) => ({
   badge: {
     ...theme.typography['body-sm'],
-    backgroundColor: '#D15347',
-    color: '#fff',
+    backgroundColor: theme.palette.background.v2.indicators.error,
+    color: theme.palette.text.primary,
     padding: '0',
     borderRadius: '100%',
     height: '8px',
