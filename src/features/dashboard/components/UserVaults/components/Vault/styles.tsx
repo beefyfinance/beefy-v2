@@ -46,13 +46,13 @@ export const styles = (theme: Theme) => ({
     },
   },
   vaultEarnings: {
-    backgroundColor: '#322460',
+    backgroundColor: theme.palette.background.vaults.gov,
   },
   vaultPaused: {
     backgroundColor: 'rgba(209, 83, 71, 0.05)',
   },
   vaultRetired: {
-    backgroundColor: '#242032',
+    backgroundColor: theme.palette.background.vaults.inactive,
   },
   toggleContainer: {
     padding: '16px',

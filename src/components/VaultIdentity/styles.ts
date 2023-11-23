@@ -19,7 +19,7 @@ export const styles = (theme: Theme) => ({
     textDecoration: 'none' as const,
   },
   vaultNameBoosted: {
-    color: '#DB8332',
+    color: theme.palette.background.vaults.boost,
   },
   vaultNetwork: {
     position: 'absolute' as const,

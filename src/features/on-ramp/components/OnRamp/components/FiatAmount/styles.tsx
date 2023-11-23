@@ -8,7 +8,7 @@ export const styles = (theme: Theme) => ({
   },
   error: {
     ...theme.typography['body-sm-med'],
-    color: '#D15347',
+    color: theme.palette.background.v2.indicators.error,
     marginTop: '8px',
   },
 });

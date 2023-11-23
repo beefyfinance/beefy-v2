@@ -28,7 +28,10 @@ export const styles = (theme: Theme) => ({
     height: '100%',
     width: props => props.stablesPercentage,
     borderRadius: props => (props.stablesPercentage === '100%' ? '80px' : '80px 0px 0px 80px'),
-    borderRight: props => (props.stablesPercentage === '100%' ? 'none' : '2px solid #242842'),
+    borderRight: props =>
+      props.stablesPercentage === '100%'
+        ? 'none'
+        : `2px solid ${theme.palette.background.v2.contentPrimary}`,
     backgroundColor: '#3D5CF5',
   },
   legendContainer: {

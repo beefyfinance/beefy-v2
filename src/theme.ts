@@ -239,7 +239,7 @@ const theme = createTheme(
             '--onboard-wallet-button-color-hover': '#fff',
             '--onboard-wallet-app-icon-border-color': '#fff',
             '--onboard-wallet-app-icon-background-transparent': '#fff',
-            '--onboard-connect-sidebar-background': '#121212',
+            '--onboard-connect-sidebar-background': '#020203',
             '--onboard-connect-sidebar-color': '#F5F5FF',
             '--onboard-connect-sidebar-progress-color': '#68BE71',
             '--onboard-connect-sidebar-progress-background': '#4DB258',

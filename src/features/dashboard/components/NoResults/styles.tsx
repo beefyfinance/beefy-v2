@@ -48,7 +48,7 @@ export const styles = (theme: Theme) => ({
   line: {
     height: '2px',
     width: '100%',
-    backgroundColor: '#242842',
+    backgroundColor: theme.palette.background.v2.contentLight,
     borderRadius: '8px',
   },
   btn: {
@@ -63,5 +63,8 @@ export const styles = (theme: Theme) => ({
   center: {
     display: 'flex',
     justifyContent: 'center',
+  },
+  search: {
+    backgroundColor: theme.palette.background.v2.searchBg,
   },
 });

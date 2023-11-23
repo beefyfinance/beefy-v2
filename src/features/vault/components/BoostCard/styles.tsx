@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => ({
   },
   boostedBy: {
     ...theme.typography['h2'],
-    color: '#DB8332',
+    color: theme.palette.background.vaults.boost,
     flexGrow: 1,
     '& span': {
       color: theme.palette.text.primary,

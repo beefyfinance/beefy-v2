@@ -20,7 +20,7 @@ export const styles = (theme: Theme) => ({
   },
   rewardsText: {
     ...theme.typography['body-lg-med'],
-    color: '#363C63',
+    color: theme.palette.text.tooltipsValue,
   },
   usdPrice: {
     ...theme.typography['subline-sm'],

@@ -3,7 +3,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   search: {
     color: theme.palette.text.secondary,
-    background: '#1B1E31',
+    background: theme.palette.background.v2.contentPrimary,
     borderRadius: '8px',
     '&.Mui-focused': {
       '& .MuiInputBase-input': {

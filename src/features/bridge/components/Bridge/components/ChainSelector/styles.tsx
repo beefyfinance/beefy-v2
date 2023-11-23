@@ -15,7 +15,7 @@ export const styles = (theme: Theme) => ({
   buttons: {
     display: 'flex',
     padding: '0 8px',
-    background: '#111321',
+    background: theme.palette.background.v2.searchBg,
     borderRadius: '8px',
   },
   btn: {
@@ -28,12 +28,12 @@ export const styles = (theme: Theme) => ({
     outline: 'none',
     cursor: 'pointer' as const,
     color: theme.palette.text.secondary,
-    background: '#111321',
+    background: theme.palette.background.v2.searchBg,
   },
   arrowButton: {
     width: '24px',
     flex: '0 0 24px',
-    background: '#111321',
+    background: theme.palette.background.v2.searchBg,
     '&:hover $arrow': {
       transform: 'rotateY(180deg)',
     },
@@ -45,7 +45,7 @@ export const styles = (theme: Theme) => ({
     '&::after': {
       content: '""',
       display: 'block',
-      borderLeft: '12px solid #242842',
+      borderLeft: `12px solid ${theme.palette.background.v2.contentPrimary}`,
       borderTop: '20px solid transparent',
       borderBottom: '20px solid transparent',
     },
@@ -56,7 +56,7 @@ export const styles = (theme: Theme) => ({
     '&::before': {
       content: '""',
       display: 'block',
-      borderLeft: '12px solid #111321',
+      borderLeft: `12px solid ${theme.palette.background.v2.searchBg}`,
       borderTop: '20px solid transparent',
       borderBottom: '20px solid transparent',
     },

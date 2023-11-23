@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     padding: '16px 24px',
     gridTemplateColumns: 'repeat(2,minmax(0,1fr))',
-    backgroundColor: '#1B1E32',
+    backgroundColor: theme.palette.background.v2.contentDark,
     '& div': {
       ...theme.typography['subline-sm'],
       color: theme.palette.text.disabled,
@@ -25,7 +25,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   assetTypes: {
-    backgroundColor: '#1B1E31',
+    backgroundColor: theme.palette.background.v2.contentDark,
     padding: '8px 16px',
     ...theme.typography['subline-sm'],
     color: theme.palette.text.disabled,

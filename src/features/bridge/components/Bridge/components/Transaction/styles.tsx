@@ -8,7 +8,7 @@ export const styles = (theme: Theme) => ({
   },
   step: {
     padding: '24px',
-    backgroundColor: '#242842',
+    backgroundColor: theme.palette.background.v2.contentPrimary,
     position: 'relative' as const,
     textAlign: 'center' as const,
     display: 'flex',
@@ -31,7 +31,7 @@ export const styles = (theme: Theme) => ({
       height: 0,
       borderStyle: 'solid',
       borderWidth: '20px 40px 0 40px',
-      borderColor: '#242842 transparent transparent transparent',
+      borderColor: `${theme.palette.background.v2.contentPrimary} transparent transparent transparent`,
       zIndex: 1,
     },
   },

@@ -3,11 +3,11 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   input: {
     color: theme.palette.text.secondary,
-    background: '#1B1E31',
+    background: theme.palette.background.v2.searchBg,
     borderRadius: '8px',
     width: '100%',
     display: 'flex',
-    border: 'solid 2px #1B1E31',
+    border: `solid 2px ${theme.palette.background.v2.searchBg}`,
     '& .MuiInputBase-input': {
       ...theme.typography['h2'],
       padding: `${8 - 2}px 16px`,
@@ -23,7 +23,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   error: {
-    borderColor: '#D15347',
+    borderColor: theme.palette.background.v2.indicators.error,
   },
   icon: {
     background: 'transparent',

@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     position: 'relative' as const,
     color: theme.palette.text.secondary,
-    background: '#111321',
+    background: theme.palette.background.v2.contentDark,
     padding: '16px 24px',
     borderTopLeftRadius: '12px',
     borderTopRightRadius: '12px',

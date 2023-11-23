@@ -22,7 +22,7 @@ export const styles = (theme: Theme) => ({
   },
   sidebarHeader: {
     ...theme.typography['h2'],
-    backgroundColor: '#111321',
+    backgroundColor: theme.palette.background.v2.contentDark,
     color: theme.palette.text.primary,
     padding: '24px',
     flexGrow: 0,

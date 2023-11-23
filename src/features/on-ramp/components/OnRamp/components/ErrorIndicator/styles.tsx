@@ -20,7 +20,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
   },
   icon: {
-    color: '#D15347',
+    color: theme.palette.background.v2.indicators.error,
     fontSize: '30px',
   },
   title: {

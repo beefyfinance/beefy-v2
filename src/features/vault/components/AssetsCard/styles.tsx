@@ -15,7 +15,7 @@ export const styles = (theme: Theme) => ({
   },
   content: {
     ...theme.typography['body-lg'],
-    color: '#272B4A',
+    color: theme.palette.text.tooltips,
     padding: '12px 16px',
     background: '#fff',
     borderRadius: '8px',

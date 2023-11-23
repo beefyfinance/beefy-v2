@@ -3,7 +3,7 @@ export const styles = () => ({
     color: '#59A662',
   },
   negative: {
-    color: '#D15347',
+    color: theme.palette.background.v2.indicators.error,
   },
   changes: {
     display: 'flex',

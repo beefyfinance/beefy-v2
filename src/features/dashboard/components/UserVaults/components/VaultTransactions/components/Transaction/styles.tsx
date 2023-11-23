@@ -39,7 +39,7 @@ export const styles = (theme: Theme) => ({
     display: 'block',
   },
   textRed: {
-    color: '#D15347',
+    color: theme.palette.background.v2.indicators.error,
   },
   textGreen: {
     color: theme.palette.primary.main,

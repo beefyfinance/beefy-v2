@@ -25,7 +25,7 @@ export const styles = (theme: Theme) => ({
   },
   title: {
     ...theme.typography['h2'],
-    color: '#E88225',
+    color: theme.palette.background.vaults.boost,
     display: 'flex',
     alignItems: 'center',
   },

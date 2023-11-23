@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   asset: {
     display: 'grid',
     padding: '16px 24px',
-    backgroundColor: '#242842',
+    backgroundColor: theme.palette.background.v2.contentPrimary,
     gridTemplateColumns: 'repeat(2,minmax(0,1fr))',
     [theme.breakpoints.down('md')]: {
       padding: '16px',

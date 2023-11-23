@@ -39,7 +39,7 @@ export const styles = (theme: Theme) => ({
     marginRight: '8px',
     '&:disabled': {
       color: theme.palette.text.disabled,
-      backgroundColor: '#262A40',
+      backgroundColor: theme.palette.background.v2.button,
       borderColor: theme.palette.background.v2.contentLight,
       opacity: 0.4,
     },

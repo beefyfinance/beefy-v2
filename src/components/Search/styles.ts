@@ -27,7 +27,7 @@ export const styles = (theme: Theme) => ({
     lineHeight: 'inherit',
     display: 'flex',
     alignItems: 'center',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.disabled,
     flexShrink: 0,
     width: '24px',
     height: '24px',

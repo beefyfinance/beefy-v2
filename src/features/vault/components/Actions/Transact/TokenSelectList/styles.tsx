@@ -15,7 +15,7 @@ export const styles = (theme: Theme) => ({
     margin: '0 0 24px 0',
   },
   searchInput: {
-    background: '#111321',
+    background: theme.palette.background.v2.searchBg,
   },
   chainSelector: {
     padding: '0 24px',
@@ -50,6 +50,6 @@ export const styles = (theme: Theme) => ({
   noResults: {
     padding: '8px 12px',
     borderRadius: '8px',
-    background: '#242842',
+    background: theme.palette.background.v2.contentLight,
   },
 });
