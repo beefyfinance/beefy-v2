@@ -55,6 +55,7 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
     dropdownShift = true,
     dropdownFlip = true,
     dropdownAutoHide = true,
+    selectClass,
   }) {
     const { t } = useTranslation();
     const classes = useStyles();
@@ -119,7 +120,7 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
           <button
             onClick={handleToggle}
             ref={anchorEl}
-            className={clsx(classes.select, {
+            className={clsx(classes.select, selectClass, {
               [classes.selectBorderless]: borderless,
               [classes.selectFullWidth]: fullWidth,
               [classes.selectOpen]: isOpen,

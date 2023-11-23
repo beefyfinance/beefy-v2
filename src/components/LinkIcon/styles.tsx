@@ -8,7 +8,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     textDecoration: 'none',
     color: theme.palette.text.secondary,
-    backgroundColor: theme.palette.background.v2.contentLight,
+    backgroundColor: theme.palette.background.v2.button,
     padding: '2px 8px',
     borderRadius: '4px',
     '&:hover': {

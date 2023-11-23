@@ -82,14 +82,14 @@ export const styles = (theme: Theme) => ({
   divider: {
     marginRight: theme.spacing(3),
     width: 2,
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: theme.palette.background.v2.button,
     [theme.breakpoints.down('sm')]: {
       marginRight: theme.spacing(2.5),
     },
   },
   divider1: {
     width: 2,
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: theme.palette.background.v2.button,
     marginLeft: theme.spacing(3),
     [theme.breakpoints.down('md')]: {
       marginLeft: 0,

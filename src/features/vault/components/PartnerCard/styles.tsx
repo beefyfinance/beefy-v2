@@ -6,11 +6,11 @@ export const styles = (theme: Theme) => ({
   },
   container: {
     marginTop: '16px',
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: theme.palette.background.v2.contentLight,
     padding: '16px',
     borderRadius: '12px',
     '&:Hover': {
-      backgroundColor: theme.palette.background.v2.contentLight,
+      backgroundColor: theme.palette.background.v2.button,
     },
   },
   title: {

@@ -29,12 +29,12 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg'],
     padding: '2px 8px',
     borderRadius: '4px',
-    backgroundColor: '#484F84',
+    backgroundColor: theme.palette.background.v2.button,
     borderColor: 'transparent' as const,
     color: theme.palette.text.secondary,
     '&:hover': {
       color: theme.palette.text.primary,
-      backgroundColor: '#3F466D',
+      backgroundColor: theme.palette.background.v2.buttonHover,
       borderColor: 'transparent' as const,
       transition: 'color 0.1s',
     },
@@ -44,8 +44,5 @@ export const styles = (theme: Theme) => ({
     '&:hover': {
       fill: theme.palette.text.primary,
     },
-  },
-  linkButtonBg: {
-    backgroundColor: '#484F84',
   },
 });

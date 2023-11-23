@@ -11,7 +11,7 @@ export const styles = (theme: Theme) => ({
     marginLeft: '8px',
   },
   expiredBoostContainer: {
-    background: theme.palette.background.content,
+    background: theme.palette.background.v2.contentLight,
     borderRadius: '8px',
     padding: '12px',
   },
@@ -28,9 +28,11 @@ export const styles = (theme: Theme) => ({
     },
   },
   button: {
-    backgroundColor: theme.palette.background.v2.contentLight,
+    color: theme.palette.text.secondary,
+    backgroundColor: theme.palette.background.vaults.boost,
     '&:Hover': {
-      backgroundColor: '#272B4A',
+      color: theme.palette.text.primary,
+      backgroundColor: theme.palette.background.vaults.boost,
     },
     '&:disabled': {
       borderColor: 'transparent' as const,

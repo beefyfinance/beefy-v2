@@ -10,13 +10,13 @@ export const styles = (theme: Theme) => ({
   },
   tabs: {
     marginTop: '16px',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: 'transparent',
     [theme.breakpoints.up('sm')]: {
       marginTop: 0,
     },
   },
   layout: {
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: theme.palette.background.v2.contentPrimary,
     borderRadius: '0 0 12px 12px',
     [theme.breakpoints.up('lg')]: {
       display: 'grid',

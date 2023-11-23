@@ -11,12 +11,6 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'center',
     cursor: 'pointer',
     backgroundColor: 'transparent',
-    '&.open': {
-      backgroundColor: '#30354F',
-      '& $line': {
-        backgroundColor: '#434A6F',
-      },
-    },
     padding: '0px 16px',
   },
   circle: {

@@ -73,7 +73,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#242842',
     borderColor: '#242842',
     '&:hover': {
-      color: '#FFFFFF',
+      color: theme.palette.text.primary,
       backgroundColor: theme.palette.background.v2.border,
       borderColor: theme.palette.background.v2.border,
     },
@@ -89,11 +89,11 @@ export const styles = (theme: Theme) => ({
     },
   },
   success: {
-    color: '#FFFFFF',
-    backgroundColor: '#59A662',
-    borderColor: '#59A662',
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.background.v2.cta,
+    borderColor: theme.palette.background.v2.cta,
     '&:hover': {
-      color: '#FFFFFF',
+      color: theme.palette.text.primary,
       backgroundColor: '#68a871',
       borderColor: '#68a871',
     },
@@ -108,7 +108,7 @@ export const styles = (theme: Theme) => ({
     },
     '&:active, &$active': {
       color: theme.palette.text.primary,
-      backgroundColor: theme.palette.background.v2.contentLight,
+      backgroundColor: theme.palette.background.v2.button,
       borderColor: theme.palette.background.v2.contentLight,
     },
     '&:disabled': {

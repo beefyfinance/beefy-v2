@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   containerBoost: {
     padding: theme.spacing(3),
     borderRadius: '12px',
-    backgroundColor: theme.palette.background.v2.cardHeader,
+    backgroundColor: theme.palette.background.v2.contentPrimary,
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '16px',
@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     rowGap: '16px',
     padding: '24px',
-    backgroundColor: theme.palette.background.v2.cardHeader,
+    backgroundColor: theme.palette.background.v2.contentPrimary,
     borderRadius: '12px',
     marginTop: theme.spacing(3),
   },
@@ -47,7 +47,7 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
     columnGap: '16px',
-    backgroundColor: '#242842',
+    backgroundColor: theme.palette.background.v2.contentLight,
     padding: '12px',
     borderRadius: '8px',
   },
@@ -65,7 +65,7 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.secondary,
   },
   button: {
-    backgroundColor: theme.palette.background.v2.contentLight,
+    backgroundColor: theme.palette.background.vaults.boost,
     borderRadius: '8px',
   },
 });

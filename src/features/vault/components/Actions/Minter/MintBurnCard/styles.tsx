@@ -2,11 +2,11 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   header: {
-    backgroundColor: '#272B4A',
+    backgroundColor: theme.palette.background.v2.contentDark,
     borderRadius: '12px',
   },
   tabs: {
-    backgroundColor: theme.palette.background.vaults.inactive,
+    backgroundColor: theme.palette.background.v2.contentDark,
     borderTopLeftRadius: '12px',
     borderTopRightRadius: '12px',
     display: 'grid',
@@ -31,13 +31,13 @@ export const styles = (theme: Theme) => ({
     },
   },
   selected: {
-    color: `${theme.palette.text.primary}`,
+    color: theme.palette.text.primary,
     borderBottom: `solid 2px ${theme.palette.text.disabled}`,
   },
   cardContent: {
     display: 'flex',
     flexDirection: 'column' as const,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.v2.contentPrimary,
     borderRadius: '0 0 12px 12px',
     padding: '24px',
   },
@@ -49,12 +49,9 @@ export const styles = (theme: Theme) => ({
   },
   btn: {
     color: theme.palette.text.primary,
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.background.v2.button,
     padding: '12px 24px',
     borderRadius: '8px',
-    '&:hover': {
-      backgroundColor: '#389D44',
-    },
     '&.Mui-disabled': {
       backgroundColor: 'rgba(255, 255, 255, 0.2)',
     },
@@ -73,7 +70,7 @@ export const styles = (theme: Theme) => ({
     margin: '24px 0',
     '& .MuiPaper-root': {
       position: 'relative' as const,
-      backgroundColor: theme.palette.background.vaults.inactive,
+      backgroundColor: theme.palette.background.v2.searchBg,
       borderRadius: '8px',
       padding: 0,
       margin: 0,
@@ -87,7 +84,7 @@ export const styles = (theme: Theme) => ({
     '& .MuiButton-root': {
       ...theme.typography['subline-sm'],
       color: theme.palette.text.primary,
-      backgroundColor: theme.palette.background.v2.contentLight,
+      backgroundColor: theme.palette.background.v2.button,
       borderRadius: '4px',
       margin: 0,
       padding: '6px 12px',
@@ -128,7 +125,7 @@ export const styles = (theme: Theme) => ({
   line: {
     height: '2px',
     width: '100%',
-    backgroundColor: theme.palette.background.vaults.default,
+    backgroundColor: theme.palette.background.v2.contentLight,
     borderRadius: '8px',
   },
   boxReminder: {
@@ -137,7 +134,7 @@ export const styles = (theme: Theme) => ({
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
     borderRadius: theme.spacing(0.5),
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: theme.palette.background.v2.contentLight,
   },
   boxReserves: {
     ...theme.typography['subline-lg'],
@@ -146,7 +143,7 @@ export const styles = (theme: Theme) => ({
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
     borderRadius: theme.spacing(0.5),
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: theme.palette.background.v2.contentLight,
   },
   reservesText: {
     color: theme.palette.text.disabled,

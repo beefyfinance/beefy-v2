@@ -79,7 +79,6 @@ export interface DataLoaderState {
     addressBook: LoaderState;
     minters: LoaderState;
     minterForm: LoaderState;
-    infoCards: LoaderState;
     bridgeConfig: LoaderState;
     platforms: LoaderState;
     onRamp: LoaderState;

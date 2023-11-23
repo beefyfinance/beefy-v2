@@ -46,6 +46,13 @@ declare module '@material-ui/core/styles/createPalette' {
       searchBg: string;
       contentLight: string;
       button: string;
+      buttonHover: string;
+      tags: {
+        boost: string;
+        earnings: string;
+        retired: string;
+        paused: string;
+      };
       indicators: {
         loading: string;
         warning: string;

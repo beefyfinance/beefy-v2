@@ -18,7 +18,6 @@ import type { ZapsState } from './features/data/reducers/zaps';
 import type { BoostState } from './features/data/reducers/wallet/boost';
 import type { MintersState } from './features/data/reducers/minters';
 import type { Action } from 'redux';
-import type { InfoCardsState } from './features/data/reducers/info-cards';
 import type { BridgeState } from './features/data/reducers/wallet/bridge';
 import type { OnRampTypes } from './features/data/reducers/on-ramp-types';
 import type { DataLoaderState } from './features/data/reducers/data-loader-types';
@@ -48,7 +47,6 @@ export interface BeefyState {
     zaps: ZapsState;
     amms: AmmsState;
     minters: MintersState;
-    infoCards: InfoCardsState;
     proposals: ProposalsState;
     bridges: BridgesState;
   };

@@ -60,9 +60,9 @@ export const styles = (theme: Theme) => ({
   dropdown: {
     ...theme.typography['body-lg-med'],
     zIndex: 1000,
-    border: '2px solid #393F60',
+    border: `2px solid ${theme.palette.background.v2.contentLight}`,
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.v2.contentLight,
+    backgroundColor: theme.palette.background.v2.contentPrimary,
     padding: `${8 - 2}px 0`,
     color: theme.palette.text.secondary,
     maxWidth: '100%',

@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   container: {
     padding: 12,
     borderRadius: '8px',
-    backgroundColor: '#242842',
+    backgroundColor: theme.palette.background.v2.contentLight,
   },
   title: {
     display: 'flex',
@@ -43,9 +43,11 @@ export const styles = (theme: Theme) => ({
     rowGap: '16px',
   },
   button: {
-    backgroundColor: theme.palette.background.v2.contentLight,
+    color: theme.palette.text.secondary,
+    backgroundColor: theme.palette.background.vaults.boost,
     '&:Hover': {
-      backgroundColor: '#272B4A',
+      color: theme.palette.text.primary,
+      backgroundColor: theme.palette.background.vaults.boost,
     },
     '&:disabled': {
       borderColor: 'transparent' as const,
@@ -57,7 +59,7 @@ export const styles = (theme: Theme) => ({
     padding: '2px 6px',
     borderRadius: '4px',
     marginRight: `${8 - 2}px`,
-    backgroundColor: theme.palette.background.v2.contentLight,
+    backgroundColor: theme.palette.background.v2.button,
     borderColor: 'transparent' as const,
     '&:disabled': {
       borderColor: 'transparent' as const,
@@ -65,11 +67,11 @@ export const styles = (theme: Theme) => ({
   },
   input: {
     color: theme.palette.text.secondary,
-    background: '#1B1E31',
+    background: theme.palette.background.v2.searchBg,
     borderRadius: '8px',
     width: '100%',
     display: 'flex',
-    border: 'solid 2px #1B1E31',
+    border: `solid 2px ${theme.palette.background.v2.searchBg}`,
     '& .MuiInputBase-input': {
       ...theme.typography['h3'],
       padding: `${8 - 2}px 16px`,

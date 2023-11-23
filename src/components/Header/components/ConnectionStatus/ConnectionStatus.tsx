@@ -1,7 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
 import React, { memo, Suspense, useRef } from 'react';
-import { useAppSelector } from '../../../../store';
 
 import { NetworkStatus } from '../../../NetworkStatus';
 import { styles } from './styles';
@@ -13,10 +11,9 @@ const useStyles = makeStyles(styles);
 
 export const ConnectionStatus = memo(function ConnectionStatus() {
   const classes = useStyles();
-  const open = useAppSelector(state => state.ui.dataLoader.statusIndicator.open);
   const anchorEl = useRef();
   return (
-    <div ref={anchorEl} className={clsx(classes.container, { [classes.open]: open })}>
+    <div ref={anchorEl} className={classes.container}>
       <NetworkStatus anchorEl={anchorEl} />
       <div>
         <Suspense fallback={<>...</>}>
