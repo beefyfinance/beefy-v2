@@ -12,7 +12,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
-    columnGap: theme.spacing(2),
+    columnGap: '16px',
   },
   hasPortfolio: {
     backgroundColor: theme.palette.background.v2.footerHeader,

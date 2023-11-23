@@ -2,7 +2,7 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   containerBoost: {
-    padding: theme.spacing(3),
+    padding: '24px',
     borderRadius: '12px',
     backgroundColor: theme.palette.background.v2.contentPrimary,
     display: 'flex',
@@ -16,7 +16,7 @@ export const styles = (theme: Theme) => ({
     padding: '24px',
     backgroundColor: theme.palette.background.v2.contentPrimary,
     borderRadius: '12px',
-    marginTop: theme.spacing(3),
+    marginTop: '24px',
   },
   boostImg: {
     width: 30,

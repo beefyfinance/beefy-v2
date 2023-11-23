@@ -11,7 +11,7 @@ export const styles = theme => ({
   stat: {
     paddingTop: 0,
     paddingBottom: 0,
-    marginRight: theme.spacing(4),
+    marginRight: '32px',
     [theme.breakpoints.down('sm')]: {
       margin: '8px 24px 8px 0px',
     },
@@ -36,7 +36,7 @@ export const styles = theme => ({
     },
   },
   icon: {
-    marginLeft: theme.spacing(0.5),
+    marginLeft: '4px',
     cursor: 'pointer',
     display: 'block',
   },

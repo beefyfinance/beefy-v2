@@ -70,12 +70,12 @@ export const styles = (theme: Theme) => ({
     },
   },
   closeButton: {
-    marginTop: theme.spacing(4),
+    marginTop: '32px',
   },
   chain: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(1),
+    padding: '8px',
     borderRadius: '4px',
     backgroundColor: theme.palette.background.v2.contentLight,
   },

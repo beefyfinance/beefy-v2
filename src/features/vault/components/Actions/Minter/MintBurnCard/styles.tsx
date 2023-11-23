@@ -58,13 +58,13 @@ export const styles = (theme: Theme) => ({
   },
   info: {
     display: 'flex',
-    marginBottom: theme.spacing(2),
+    marginBottom: '16px',
   },
   info2: {
-    marginBottom: theme.spacing(3),
+    marginBottom: '24px',
   },
   item: {
-    marginRight: theme.spacing(4),
+    marginRight: '32px',
   },
   inputContainer: {
     margin: '24px 0',
@@ -105,7 +105,7 @@ export const styles = (theme: Theme) => ({
   balances: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginBottom: theme.spacing(1),
+    marginBottom: '8px',
   },
   label: {
     ...theme.typography['subline-sm'],
@@ -131,29 +131,29 @@ export const styles = (theme: Theme) => ({
   boxReminder: {
     display: 'flex',
     flexWrap: 'wrap' as const,
-    marginTop: theme.spacing(2),
-    padding: theme.spacing(2),
-    borderRadius: theme.spacing(0.5),
+    marginTop: '16px',
+    padding: '16px',
+    borderRadius: '4px',
     backgroundColor: theme.palette.background.v2.contentLight,
   },
   boxReserves: {
     ...theme.typography['subline-lg'],
     display: 'flex',
     flexWrap: 'wrap' as const,
-    marginTop: theme.spacing(2),
-    padding: theme.spacing(2),
-    borderRadius: theme.spacing(0.5),
+    marginTop: '16px',
+    padding: '16px',
+    borderRadius: '4px',
     backgroundColor: theme.palette.background.v2.contentLight,
   },
   reservesText: {
     color: theme.palette.text.disabled,
-    marginRight: theme.spacing(0.5),
+    marginRight: '4px',
   },
   amountReserves: {
-    marginLeft: theme.spacing(0.5),
+    marginLeft: '4px',
     color: theme.palette.text.secondary,
   },
   noReserves: {
-    marginTop: theme.spacing(2),
+    marginTop: '16px',
   },
 });

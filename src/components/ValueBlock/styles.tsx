@@ -31,7 +31,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
   },
   tooltipHolder: {
-    marginLeft: theme.spacing(0.5),
+    marginLeft: '4px',
   },
   noTextContentLoader: {
     paddingTop: '3px',

@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   customDivider: {
     display: 'flex',
     alignItems: 'center',
-    margin: `${theme.spacing(2)}px 0px`,
+    margin: '16pxpx 0px',
   },
   line: {
     height: '2px',

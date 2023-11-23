@@ -73,7 +73,7 @@ export const styles = (theme: Theme) => ({
   },
   depositTokenContainer: {
     width: 'calc(100% + 11px)',
-    marginBottom: theme.spacing(1.5),
+    marginBottom: '12px',
     '& .MuiTypography-root': {
       width: '100%',
     },
@@ -102,7 +102,7 @@ export const styles = (theme: Theme) => ({
   },
   zapPromotion: {
     color: theme.palette.text.secondary,
-    marginBottom: theme.spacing(1.5),
+    marginBottom: '12px',
   },
   assetsDivider: {
     display: 'grid',

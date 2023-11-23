@@ -5,8 +5,8 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'row' as const,
     flexWrap: 'nowrap' as const,
-    columnGap: theme.spacing(2),
-    rowGap: theme.spacing(2),
+    columnGap: '16px',
+    rowGap: '16px',
   },
   icon: {
     width: '24px',

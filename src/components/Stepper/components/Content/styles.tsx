@@ -8,7 +8,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: 'rgba(219, 50, 50, 0.1)',
   },
   content: {
-    marginTop: theme.spacing(1.5),
+    marginTop: '12px',
     padding: '16px',
     borderRadius: '4px',
   },
@@ -28,18 +28,18 @@ export const styles = (theme: Theme) => ({
   friendlyMessage: {
     ...theme.typography['body-lg-med'],
     color: theme.palette.background.snackbars.text,
-    marginBottom: theme.spacing(2),
+    marginBottom: '16px',
   },
   closeBtn: {},
   rememberContainer: {
-    marginTop: theme.spacing(2),
+    marginTop: '16px',
   },
   dustContainer: {
-    marginTop: theme.spacing(2),
+    marginTop: '16px',
   },
   icon: {
     height: '20px',
-    marginRight: theme.spacing(1),
+    marginRight: '8px',
   },
   buttons: {
     display: 'grid',
@@ -48,7 +48,7 @@ export const styles = (theme: Theme) => ({
     width: '100%',
     alignItems: 'center',
     gap: '8px',
-    marginTop: theme.spacing(3),
+    marginTop: '24px',
   },
   link: {
     textDecoration: 'none',

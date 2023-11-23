@@ -15,7 +15,7 @@ export const styles = (theme: Theme) => ({
   },
   footer: {
     background: theme.palette.background.v2.footerHeader,
-    padding: `${theme.spacing(5)}px`,
+    padding: '40px',
     display: 'flex',
     flexDirection: 'column' as const,
     alignItems: 'center',
@@ -26,14 +26,14 @@ export const styles = (theme: Theme) => ({
     flexWrap: 'wrap' as const,
     justifyContent: 'center',
     padding: '0',
-    margin: `0 ${theme.spacing(3) / -2}px ${theme.spacing(3) / -2}px ${theme.spacing(3) / -2}px`,
+    margin: `0 ${24 / -2}px ${24 / -2}px ${24 / -2}px`,
     listStyle: 'none',
     '& + $nav': {
-      marginTop: `${theme.spacing(4)}px`,
+      marginTop: '32px',
     },
   },
   navItem: {
-    margin: `0 ${theme.spacing(3) / 2}px ${theme.spacing(3) / 2}px ${theme.spacing(3) / 2}px`,
+    margin: `0 ${24 / 2}px ${24 / 2}px ${24 / 2}px`,
   },
   navLink: {
     ...theme.typography['body-lg-med'],

@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => ({
   stat: {
     paddingTop: 0,
     paddingBottom: 0,
-    marginRight: theme.spacing(4),
+    marginRight: '32px',
     [theme.breakpoints.down('sm')]: {
       margin: '8px 24px 8px 0px',
     },

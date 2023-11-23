@@ -48,9 +48,9 @@ export const styles = (theme: Theme) => ({
     width: '33%',
     paddingTop: 0,
     paddingBottom: 0,
-    marginRight: theme.spacing(4),
+    marginRight: '32px',
     [theme.breakpoints.down('md')]: {
-      marginRight: theme.spacing(2),
+      marginRight: '16px',
     },
   },
   stat1: {
@@ -60,7 +60,7 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'flex-end',
     [theme.breakpoints.down('md')]: {
       marginLeft: 0,
-      marginRight: theme.spacing(4),
+      marginRight: '32px',
       justifyContent: 'flex-start',
     },
   },
@@ -80,20 +80,20 @@ export const styles = (theme: Theme) => ({
     },
   },
   divider: {
-    marginRight: theme.spacing(3),
+    marginRight: '24px',
     width: 2,
     backgroundColor: theme.palette.background.v2.button,
     [theme.breakpoints.down('sm')]: {
-      marginRight: theme.spacing(2.5),
+      marginRight: '20px',
     },
   },
   divider1: {
     width: 2,
     backgroundColor: theme.palette.background.v2.button,
-    marginLeft: theme.spacing(3),
+    marginLeft: '24px',
     [theme.breakpoints.down('md')]: {
       marginLeft: 0,
-      marginRight: theme.spacing(2.5),
+      marginRight: '20px',
     },
   },
 });

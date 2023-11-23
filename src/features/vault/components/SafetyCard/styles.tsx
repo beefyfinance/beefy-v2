@@ -33,7 +33,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
   },
   notes: {
-    marginTop: theme.spacing(2),
+    marginTop: '16px',
     '& p': {
       margin: '0 0 12px 0',
       color: theme.palette.text.secondary,
@@ -53,10 +53,10 @@ export const styles = (theme: Theme) => ({
   safetyLabel: {
     ...theme.typography.h2,
     color: theme.palette.text.primary,
-    marginRight: theme.spacing(2),
+    marginRight: '16px',
   },
   tooltipHolder: {
-    marginLeft: theme.spacing(0.5),
+    marginLeft: '4px',
   },
   howItWorksContainer: {
     padding: 16,
