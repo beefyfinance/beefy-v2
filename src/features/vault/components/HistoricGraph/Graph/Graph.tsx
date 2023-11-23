@@ -24,6 +24,8 @@ import type { LineTogglesState } from '../LineToggles';
 import { TooltipContent } from '../TooltipContent';
 import { useChartData } from './useChartData';
 import { styles } from './styles';
+import { useAppSelector } from '../../../../../store';
+import { selectVaultById } from '../../../../data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 
@@ -37,6 +39,8 @@ export type ChartProp = {
 export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, bucket, toggles }) {
   const classes = useStyles();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const vaultType = vault.isGovVault ? 'gov' : 'standard';
   const { min, max, avg, data } = useChartData(stat, vaultId, oracleId, bucket);
 
   const chartMargin = useMemo(() => {
@@ -68,9 +72,10 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
         toggles={toggles}
         valueFormatter={yTickFormatter}
         avg={avg}
+        vaultType={vaultType}
       />
     ),
-    [stat, bucket, toggles, yTickFormatter, avg]
+    [stat, bucket, toggles, yTickFormatter, avg, vaultType]
   );
 
   return (
