@@ -1,6 +1,8 @@
-export const styles = () => ({
+import type { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   positive: {
-    color: '#59A662',
+    color: theme.palette.primary.main,
   },
   negative: {
     color: theme.palette.background.v2.indicators.error,
