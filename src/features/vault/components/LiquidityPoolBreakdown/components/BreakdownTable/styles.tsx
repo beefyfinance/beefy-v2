@@ -2,10 +2,10 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   table: {
-    display: 'flex',
-    flexDirection: 'column' as const,
+    display: 'grid',
+    gridTemplateColumns: 'minmax(0, 1fr)',
     justifyContent: 'center',
-    background: theme.palette.background.v2.contentLight,
+    background: theme.palette.background.v2.contentPrimary,
     borderBottomLeftRadius: '8px',
     borderBottomRightRadius: '8px',
     [theme.breakpoints.up('lg')]: {
@@ -35,7 +35,6 @@ export const styles = (theme: Theme) => ({
   header: {
     ...theme.typography['subline-sm'],
     color: theme.palette.text.disabled,
-    height: '100%',
   },
   footer: {
     backgroundColor: theme.palette.background.v2.contentLight,

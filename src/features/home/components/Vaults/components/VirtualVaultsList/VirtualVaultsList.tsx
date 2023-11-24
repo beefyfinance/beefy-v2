@@ -11,11 +11,6 @@ const useStyles = makeStyles(() => ({
   container: {
     display: 'grid',
     gridTemplateColumns: 'minmax(0, 1fr)',
-    '& div:last-child': {
-      '& .lastBorderRadius': {
-        borderRadius: '0px 0px 8px 8px',
-      },
-    },
   },
 }));
 
@@ -80,7 +75,7 @@ export const VirtualVaultsList = memo<VirtualVaultsListProps>(function VirtualVa
       backgroundRepeat: 'repeat-y',
       backgroundImage: `linear-gradient(to bottom, #242842 0px, #242842 ${
         vaultHeightEstimate - 2
-      }px,  #363B63 ${vaultHeightEstimate - 2}px, #363B63 100%)`,
+      }px,  #242842 ${vaultHeightEstimate - 2}px, #242842 100%)`,
     };
   }, [remainingVaults, vaultHeightEstimate]);
 

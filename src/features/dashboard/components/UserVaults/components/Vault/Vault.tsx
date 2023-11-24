@@ -72,7 +72,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
           [classes.vaultEarnings]: isGov,
           [classes.vaultPaused]: isPaused,
           [classes.vaultRetired]: isRetired,
-          lastBorderRadius: true,
+          vault: true,
         })}
       >
         <div className={classes.vaultInner}>

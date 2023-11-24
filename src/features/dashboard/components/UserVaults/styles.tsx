@@ -5,8 +5,9 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     gridTemplateColumns: 'minmax(0, 1fr)',
     '& div:last-child': {
-      '& .lastBorderRadius': {
+      '& .vault': {
         borderRadius: '0px 0px 8px 8px',
+        borderBottom: 0,
       },
     },
   },

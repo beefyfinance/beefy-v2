@@ -32,7 +32,7 @@ export const styles = (theme: Theme) => ({
     zIndex: 10000,
   },
   dropdownInner: {
-    backgroundColor: theme.palette.background.v2.border,
+    backgroundColor: theme.palette.background.v2.contentPrimary,
     display: 'flex',
     flexDirection: 'column' as const,
     gap: '16px',
