@@ -19,7 +19,8 @@ import { BridgeTag, NativeTag } from '../BridgeTag';
 import { explorerTokenUrl } from '../../../../helpers/url';
 import { PriceWithChange } from '../../../../components/PriceWithChange/PriceWithChange';
 import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink';
-import { Code, OpenInNew, Description } from '@material-ui/icons';
+import { Code, Link } from '@material-ui/icons';
+import { ReactComponent as DocsIcon } from '../../../../images/icons/navigation/docs.svg';
 
 const useStyles = makeStyles(styles);
 
@@ -48,7 +49,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
         <div className={classes.assetLinks}>
           {token.website && (
             <IconButtonLink
-              Icon={OpenInNew}
+              Icon={Link}
               text={t('Token-Site')}
               href={token.website}
               className={classes.assetWebsite}
@@ -66,7 +67,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
           )}
           {token.documentation && (
             <IconButtonLink
-              Icon={Description}
+              Icon={DocsIcon}
               href={token.documentation}
               text={t('Token-Docs')}
               className={classes.assetDocumentation}
