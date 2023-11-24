@@ -9,6 +9,7 @@ export const styles = (theme: Theme) => ({
     width: '100%',
     columnGap: '8px',
     backgroundClip: 'padding-box',
+    borderBottom: `solid 2px ${theme.palette.background.v2.contentDark}`,
     gridTemplateColumns: 'minmax(0, 30fr) minmax(0, 70fr)',
     [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: 'minmax(0, 70fr) minmax(0, 30fr)',

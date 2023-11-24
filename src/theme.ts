@@ -120,7 +120,7 @@ const theme = createTheme(
           default: '#242842',
           gov: '#342763',
           boost: '#DB8332',
-          inactive: '#111321',
+          inactive: '#242032',
           boostLight: '#E5A66B',
         },
         snackbars: {

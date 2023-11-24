@@ -66,4 +66,10 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     color: theme.palette.text.primary,
   },
+  up: {
+    fill: theme.palette.primary.main,
+  },
+  down: {
+    fill: theme.palette.background.v2.indicators.error,
+  },
 });

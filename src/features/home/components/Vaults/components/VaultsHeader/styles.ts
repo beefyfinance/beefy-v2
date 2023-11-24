@@ -8,7 +8,7 @@ export const styles = (theme: Theme) => ({
     width: '100%',
     color: theme.palette.text.disabled,
     background: theme.palette.background.v2.contentDark,
-    padding: '24px',
+    padding: '16px',
     gridTemplateColumns: '1fr',
     alignItems: 'center',
     borderTopLeftRadius: '8px',

@@ -8,6 +8,7 @@ export const styles = (theme: Theme) => ({
     background: theme.palette.background.v2.contentPrimary,
     padding: '24px 16px',
     textDecoration: 'none',
+    borderBottom: `solid 2px ${theme.palette.background.v2.contentDark}`,
     '&:last-child': {
       borderBottom: 0,
       borderBottomLeftRadius: '8px',
@@ -26,13 +27,6 @@ export const styles = (theme: Theme) => ({
     [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: 'minmax(0, 80fr) minmax(0, 20fr)',
     },
-  },
-  network: {
-    border: 'none',
-    top: 0,
-    left: 0,
-    width: '26px',
-    height: '26px',
   },
   collapseInner: {
     display: 'flex',
@@ -59,9 +53,6 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.v2.contentDark,
     display: 'flex',
     justifyContent: 'center',
-  },
-  activeClassName: {
-    backgroundColor: theme.palette.primary.main,
   },
   buttonText: {
     ...theme.typography['body-sm-med'],
