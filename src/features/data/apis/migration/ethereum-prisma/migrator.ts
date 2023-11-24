@@ -9,21 +9,14 @@ import { toWei } from '../../../../../helpers/big-number';
 import type { AbiItem } from 'web3-utils';
 import type Web3 from 'web3';
 import { buildExecute, buildFetchBalance } from '../utils';
+import { selectWalletAddress } from '../../../selectors/wallet';
 
-const id = 'ethereum-convex';
+const id = 'ethereum-prisma';
 
 function getStakingAddress(vault: VaultEntity, web3: Web3, state: BeefyState): Promise<string> {
   const strategyAddress = selectVaultStrategyAddress(state, vault.id);
-  const strategy = new web3.eth.Contract(ConvexStrategyAbi, strategyAddress);
-  if (vault.assetIds.length === 1) {
-    if (vault.assetIds[0] == 'cvxCRV') {
-      return strategy.methods.stakedCvxCrv().call();
-    } else {
-      return strategy.methods.staking().call();
-    }
-  } else {
-    return strategy.methods.rewardPool().call();
-  }
+  const strategy = new web3.eth.Contract(StrategyAbi, strategyAddress);
+  return strategy.methods.rewardPool().call();
 }
 
 async function getBalance(
@@ -38,33 +31,15 @@ async function getBalance(
 }
 
 async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, state: BeefyState) {
+  const wallet = selectWalletAddress(state);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const amountInWei = toWei(amount, depositToken.decimals);
   const stakingAddress = await getStakingAddress(vault, web3, state);
-  const convexStaking = new web3.eth.Contract(ConvexAbi, stakingAddress);
-
-  if (vault.assetIds.length === 1) {
-    return convexStaking.methods.withdraw(amountInWei.toString(10));
-  } else {
-    return convexStaking.methods.withdrawAllAndUnwrap(true);
-  }
+  const staking = new web3.eth.Contract(StakingAbi, stakingAddress);
+  return staking.methods.withdraw(wallet, amountInWei.toString(10));
 }
 
-const ConvexStrategyAbi: AbiItem[] = [
-  {
-    inputs: [],
-    name: 'stakedCvxCrv',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'staking',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
+const StrategyAbi: AbiItem[] = [
   {
     inputs: [],
     name: 'rewardPool',
@@ -74,18 +49,14 @@ const ConvexStrategyAbi: AbiItem[] = [
   },
 ];
 
-const ConvexAbi: AbiItem[] = [
+const StakingAbi: AbiItem[] = [
   {
-    inputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
+    inputs: [
+      { internalType: 'address', name: 'receiver', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+    ],
     name: 'withdraw',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'bool', name: 'claim', type: 'bool' }],
-    name: 'withdrawAllAndUnwrap',
-    outputs: [],
+    outputs: [{ name: '', type: 'bool' }],
     stateMutability: 'nonpayable',
     type: 'function',
   },
