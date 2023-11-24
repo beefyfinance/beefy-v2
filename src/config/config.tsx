@@ -52,6 +52,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'eUSD',
       'lvUSD',
       'crvUSD',
+      'mkUSD',
       'sDAI',
       'sFRAX',
       'R',

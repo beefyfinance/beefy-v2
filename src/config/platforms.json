@@ -8,6 +8,10 @@
     "name": "BabySwap"
   },
   {
+    "id": "prisma",
+    "name": "Prisma"
+  },
+  {
     "id": "conic",
     "name": "Conic Finance"
   },
