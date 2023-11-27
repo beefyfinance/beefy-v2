@@ -284,6 +284,7 @@
   "Graph-price": "Price",
   "Graph-tvl": "TVL",
   "Graph-apy": "APY",
+  "Graph-gov-apy": "APR",
   "Graph-1Day": "1D",
   "Graph-1Week": "1W",
   "Graph-1Month": "1M",
