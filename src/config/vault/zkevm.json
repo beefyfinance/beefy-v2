@@ -1,7 +1,7 @@
 [
   {
     "id": "balancer-zkevm-gyro-reth-eth",
-    "name": "rETH-ETH Gyro",
+    "name": "Gyroscope rETH-ETH",
     "token": "rETH-ETH Gyro zkevm",
     "tokenAddress": "0xb1557CFEA06De5a1601a7F0cCF3b515EF431A50d",
     "tokenDecimals": 18,
