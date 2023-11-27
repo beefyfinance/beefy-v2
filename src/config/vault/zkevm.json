@@ -1,5 +1,34 @@
 [
   {
+    "id": "balancer-zkevm-gyro-reth-eth",
+    "name": "Gyroscope rETH-ETH",
+    "token": "rETH-ETH Gyro zkevm",
+    "tokenAddress": "0xb1557CFEA06De5a1601a7F0cCF3b515EF431A50d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerGyrorETH-ETH",
+    "earnedTokenAddress": "0xae20768099625130b2659D805B448ECe5ff998FD",
+    "earnContractAddress": "0xae20768099625130b2659D805B448ECe5ff998FD",
+    "oracle": "lps",
+    "oracleId": "balancer-zkevm-gyro-reth-eth",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["rETH", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gyro.finance/pools/polygonzkevm/e-clp/0xb1557cfea06de5a1601a7f0ccf3b515ef431a50d/join/",
+    "removeLiquidityUrl": "https://app.gyro.finance/pools/polygonzkevm/e-clp/0xb1557cfea06de5a1601a7f0ccf3b515ef431a50d/exit/",
+    "network": "zkevm",
+    "createdAt": 1701092834
+  },
+  {
     "id": "quick-gamma-zk-weth-quick",
     "name": "QUICK-ETH LP",
     "token": "aQUICK-ETH zkevm",
@@ -245,8 +274,7 @@
     "earnContractAddress": "0x906e60166A4B185016e53597fA12FBB1424e47d7",
     "oracle": "lps",
     "oracleId": "balancer-zkevm-wsteth-reth",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "balancer",
     "assets": ["wstETH", "rETH"],
     "risks": [
@@ -261,7 +289,7 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0xdf725fde6e89981fb30d9bf999841ac2c160b512000000000000000000000010/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0xdf725fde6e89981fb30d9bf999841ac2c160b512000000000000000000000010/withdraw",
     "network": "zkevm",
-    "createdAt": 1689280073
+    "createdAt": 1701092834
   },
   {
     "id": "balancer-zkevm-wsteth-eth",

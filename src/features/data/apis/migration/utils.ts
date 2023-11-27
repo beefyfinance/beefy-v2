@@ -1,5 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { MigratorExecuteProps } from './migration-types';
+import type {
+  CommonMigrationUpdateFulfilledPayload,
+  MigratorExecuteProps,
+  MigratorUpdateProps,
+} from './migration-types';
 import type { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
 import { selectTokenByAddress } from '../../selectors/tokens';
@@ -10,12 +14,47 @@ import { startStepperWithSteps } from '../../actions/stepper';
 import { isTokenErc20 } from '../../entities/token';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances';
 import type { VaultEntity } from '../../entities/vault';
-import type BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
+import type Web3 from 'web3';
+import { selectChainById } from '../../selectors/chains';
+import { getWalletConnectionApiInstance, getWeb3Instance } from '../instances';
+
+export function buildFetchBalance(
+  id: string,
+  fetchBalance: (
+    vault: VaultEntity,
+    web3: Web3,
+    walletAddress: string,
+    state: BeefyState
+  ) => Promise<string>
+) {
+  return createAsyncThunk<
+    CommonMigrationUpdateFulfilledPayload,
+    MigratorUpdateProps,
+    { state: BeefyState }
+  >(`migration/${id}/update`, async ({ vaultId, walletAddress }, { getState }) => {
+    const state = getState();
+    const vault = selectVaultById(state, vaultId);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const chain = selectChainById(state, vault.chainId);
+    const web3 = await getWeb3Instance(chain);
+
+    const balance = await fetchBalance(vault, web3, walletAddress, state);
+    const fixedBalance = new BigNumber(balance).shiftedBy(-depositToken.decimals);
+    console.debug(id, vault.id, fixedBalance.toNumber());
+    return { vaultId, walletAddress, balance: fixedBalance, migrationId: id };
+  });
+}
 
 export function buildExecute(
   id: string,
-  // eslint-disable-next-line
-  unstakeCall: (vault: VaultEntity, amount: BigNumber, state: BeefyState) => Promise<any>
+  unstakeCall: (
+    vault: VaultEntity,
+    web3: Web3,
+    amount: BigNumber,
+    state: BeefyState
+    // eslint-disable-next-line
+  ) => Promise<any>
 ) {
   return createAsyncThunk<void, MigratorExecuteProps, { state: BeefyState }>(
     `migration/${id}/execute`,
@@ -24,9 +63,11 @@ export function buildExecute(
       const state = getState();
       const vault = selectVaultById(state, vaultId);
       const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+      const walletApi = await getWalletConnectionApiInstance();
+      const web3 = await walletApi.getConnectedWeb3Instance();
       const { balance } = selectUserBalanceToMigrateByVaultId(state, vaultId, migrationId);
 
-      const call = await unstakeCall(vault, balance, state);
+      const call = await unstakeCall(vault, web3, balance, state);
 
       steps.push({
         step: 'migration',

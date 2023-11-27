@@ -9,6 +9,16 @@ import { selectIsAddressBookLoaded } from './data-loader';
 import type { VaultEntity } from '../entities/vault';
 import { createCachedSelector } from 're-reselect';
 import { selectVaultById } from './vaults';
+import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
+import {
+  selectHistoricalPriceBucketData,
+  selectHistoricalPriceBucketIsLoaded,
+  selectHistoricalPriceBucketStatus,
+} from './historical';
+import { orderBy } from 'lodash-es';
+import BigNumber from 'bignumber.js';
+import { fromUnixTime, sub } from 'date-fns';
+import { TIME_BUCKETS } from '../../vault/components/HistoricGraph/utils';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -278,3 +288,42 @@ export const selectWrappedToNativeSymbolOrTokenSymbol = createCachedSelector(
     return wrappedToNativeSymbolMap.has(symbol) ? wrappedToNativeSymbolMap.get(symbol) : symbol;
   }
 )((state: BeefyState, symbol: string) => symbol);
+export const selectPriceWithChange = createCachedSelector(
+  (state: BeefyState, oracleId: string, _bucket: ApiTimeBucket) =>
+    selectTokenPriceByTokenOracleId(state, oracleId),
+  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
+    selectHistoricalPriceBucketStatus(state, oracleId, bucket),
+  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
+    selectHistoricalPriceBucketIsLoaded(state, oracleId, bucket),
+  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
+    selectHistoricalPriceBucketData(state, oracleId, bucket),
+  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) => TIME_BUCKETS[bucket].range,
+  (price, status, loaded, data, range) => {
+    if (!price) {
+      return {
+        price: undefined,
+        shouldLoad: false,
+        previousPrice: undefined,
+        previousDate: undefined,
+      };
+    }
+
+    if (!loaded && status === 'idle') {
+      return { price, shouldLoad: true, previousPrice: undefined, previousDate: undefined };
+    }
+
+    if (!loaded || !data || data.length === 0) {
+      return { price, shouldLoad: false, previousPrice: undefined, previousDate: undefined };
+    }
+
+    const oneRangeAgo = Math.floor(sub(new Date(), range).getTime() / 1000);
+    const oneDayAgoPricePoint = orderBy(data, 't', 'asc').find(point => point.t > oneRangeAgo);
+    if (!oneDayAgoPricePoint || !oneDayAgoPricePoint.v) {
+      return { price, shouldLoad: false, previousPrice: undefined, previousDate: undefined };
+    }
+
+    const previousPrice = new BigNumber(oneDayAgoPricePoint.v);
+    const previousDate = fromUnixTime(oneDayAgoPricePoint.t);
+    return { price, shouldLoad: false, previousPrice, previousDate };
+  }
+)((_state: BeefyState, oracleId: string, bucket: ApiTimeBucket) => `${oracleId}-${bucket}`);

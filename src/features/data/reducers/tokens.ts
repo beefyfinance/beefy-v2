@@ -313,8 +313,9 @@ function addAddressBookToState(
   for (const [addressBookId, token] of Object.entries(addressBookPayload.addressBook)) {
     if (isTokenNative(token)) {
       // native tokens are preloaded when chain configs load
-      //Just load description missing data from local config
       const existingToken = sliceState.byChainId[chainId].byAddress['native'];
+
+      // Add missing information
       existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
       existingToken.description = existingToken.description || token.description;
       existingToken.website = existingToken.website || token.website;
@@ -329,6 +330,17 @@ function addAddressBookToState(
       sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
     } else {
       const existingToken = sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()];
+
+      // Addressbook is source of truth for oracle ids
+      if (token.oracleId) {
+        existingToken.oracleId = token.oracleId;
+      } else {
+        console.error(
+          `[Addressbook] ${existingToken.id}/${existingToken.address}/${existingToken.chainId} has no oracleId`
+        );
+      }
+
+      // Add missing information
       existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
       existingToken.description = existingToken.description || token.description;
       existingToken.website = existingToken.website || token.website;
@@ -359,7 +371,9 @@ function addBoostToState(
   }
 
   const tokenAddress = getBoostTokenAddressFromLegacyConfig(apiBoost);
-  if (sliceState.byChainId[chainId].byAddress[tokenAddress.toLowerCase()] === undefined) {
+  const addressKey = tokenAddress.toLowerCase();
+  // Add if it does not exist already
+  if (sliceState.byChainId[chainId].byAddress[addressKey] === undefined) {
     const token: TokenEntity = {
       id: apiBoost.earnedToken,
       chainId: chainId,
@@ -374,7 +388,7 @@ function addBoostToState(
       documentation: null,
     };
     sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
-    sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
+    sliceState.byChainId[chainId].byAddress[addressKey] = token;
     sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
   }
 }
@@ -395,10 +409,10 @@ function addMinterToState(
   }
 
   for (const sourceToken of [apiMinter.depositToken, apiMinter.mintedToken]) {
-    if (
-      sliceState.byChainId[chainId].byAddress[sourceToken.contractAddress.toLowerCase()] ===
-      undefined
-    ) {
+    const addressKey =
+      sourceToken.type === 'erc20' ? sourceToken.contractAddress.toLowerCase() : 'native';
+    // Add if it does not exist already
+    if (sliceState.byChainId[chainId].byAddress[addressKey] === undefined) {
       const token: TokenEntity =
         sourceToken.type === 'erc20'
           ? {
@@ -429,7 +443,7 @@ function addMinterToState(
             };
 
       sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
-      sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
+      sliceState.byChainId[chainId].byAddress[addressKey] = token;
       sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
     }
   }
@@ -453,23 +467,20 @@ function addVaultToState(
   }
 
   const depositToken = getDepositTokenFromLegacyVaultConfig(chain, vault);
+  const depositAddressKey = depositToken.address.toLowerCase();
+  const existingDepositToken = sliceState.byChainId[chainId].byAddress[depositAddressKey];
 
-  if (sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()] === undefined) {
-    sliceState.byChainId[chainId].byId[depositToken.id] = depositToken.address.toLowerCase();
+  if (existingDepositToken === undefined) {
+    // Add the token
+    sliceState.byChainId[chainId].byId[depositToken.id] = depositAddressKey;
     sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(depositToken.address);
-    sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()] = depositToken;
+    sliceState.byChainId[chainId].byAddress[depositAddressKey] = depositToken;
   } else {
-    // Vault oracleId takes precedence over address book oracleId
-    sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()].oracleId =
-      depositToken.oracleId;
-  }
-
-  if (
-    sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()].providerId ===
-    undefined
-  ) {
-    sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()].providerId =
-      depositToken.providerId;
+    // Only add missing information
+    // Note: we no longer overwrite oracleId as addressbook is now source of truth
+    if (!existingDepositToken.providerId) {
+      existingDepositToken.providerId = depositToken.providerId;
+    }
   }
 
   // add earned token data

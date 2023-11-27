@@ -11,6 +11,8 @@ export const styles = (theme: Theme) => ({
     gap: '4px',
     alignItems: 'center',
     borderRadius: '4px',
+    whiteSpace: 'nowrap' as const,
+    lineHeight: '24px',
     '&:hover': {
       background: theme.palette.background.buttons.buttonHover,
       cursor: 'pointer',
