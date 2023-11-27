@@ -143,8 +143,9 @@ export const selectShareToUnderlyingTimebucketByVaultId = (
 ) => {
   const walletAddress = address || selectWalletAddress(state);
   return (
-    state.user.analytics.byAddress[walletAddress]?.shareToUnderlying.byVaultId[vaultId]
-      ?.byTimebucket[timebucket] || {
+    state.user.analytics.byAddress[walletAddress?.toLowerCase()]?.shareToUnderlying.byVaultId[
+      vaultId
+    ]?.byTimebucket[timebucket] || {
       data: [],
       status: 'idle',
     }
