@@ -63,7 +63,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: 'rgba(180, 249, 186, 0.2)',
   },
   'headerNetwork-metis': {
-    backgroundColor: 'rgba(0, 218, 204, 0.2)',
+    backgroundColor: 'rgba(0, 207, 255, 0.4)',
   },
   'headerNetwork-aurora': {
     backgroundColor: 'rgba(112, 212, 75, 0.2)',

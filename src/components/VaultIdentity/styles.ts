@@ -68,7 +68,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#B4F9BA',
   },
   'vaultNetwork-metis': {
-    backgroundColor: '#00dacc',
+    backgroundColor: '#00CFFF',
   },
   'vaultNetwork-aurora': {
     backgroundColor: '#70d44b',
