@@ -18,7 +18,7 @@ export const styles = (theme: Theme) => ({
     height: 96,
     display: 'flex',
     justifyContent: 'flex-start',
-    backgroundColor: theme.palette.background.v2.cardHeader,
+    backgroundColor: theme.palette.background.cardHeader,
     borderRadius: '8px',
     padding: '16px 24px',
     [theme.breakpoints.down('md')]: {
@@ -34,7 +34,7 @@ export const styles = (theme: Theme) => ({
     flexWrap: 'nowrap' as const,
     justifyContent: 'flex-end',
     textAlign: 'end' as const,
-    backgroundColor: theme.palette.background.v2.cardHeader,
+    backgroundColor: theme.palette.background.cardHeader,
     borderRadius: '8px',
     padding: '16px 24px',
     [theme.breakpoints.down('md')]: {
@@ -82,14 +82,14 @@ export const styles = (theme: Theme) => ({
   divider: {
     marginRight: '24px',
     width: 2,
-    backgroundColor: theme.palette.background.v2.button,
+    backgroundColor: theme.palette.background.buttons.button,
     [theme.breakpoints.down('sm')]: {
       marginRight: '20px',
     },
   },
   divider1: {
     width: 2,
-    backgroundColor: theme.palette.background.v2.button,
+    backgroundColor: theme.palette.background.buttons.button,
     marginLeft: '24px',
     [theme.breakpoints.down('md')]: {
       marginLeft: 0,

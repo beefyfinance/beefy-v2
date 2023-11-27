@@ -9,13 +9,13 @@ export const styles = (theme: Theme) => ({
   label: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     flex: '1 1 40%',
   },
   buttons: {
     display: 'flex',
     padding: '0 8px',
-    background: theme.palette.background.v2.searchBg,
+    background: theme.palette.background.searchInputBg,
     borderRadius: '8px',
   },
   btn: {
@@ -27,13 +27,13 @@ export const styles = (theme: Theme) => ({
     boxShadow: 'none',
     outline: 'none',
     cursor: 'pointer' as const,
-    color: theme.palette.text.secondary,
-    background: theme.palette.background.v2.searchBg,
+    color: theme.palette.text.middle,
+    background: theme.palette.background.searchInputBg,
   },
   arrowButton: {
     width: '24px',
     flex: '0 0 24px',
-    background: theme.palette.background.v2.searchBg,
+    background: theme.palette.background.searchInputBg,
     '&:hover $arrow': {
       transform: 'rotateY(180deg)',
     },
@@ -45,18 +45,18 @@ export const styles = (theme: Theme) => ({
     '&::after': {
       content: '""',
       display: 'block',
-      borderLeft: `12px solid ${theme.palette.background.v2.contentPrimary}`,
+      borderLeft: `12px solid ${theme.palette.background.contentPrimary}`,
       borderTop: '20px solid transparent',
       borderBottom: '20px solid transparent',
     },
   },
   arrowInner: {
     width: '12px',
-    background: theme.palette.background.v2.contentPrimary,
+    background: theme.palette.background.contentPrimary,
     '&::before': {
       content: '""',
       display: 'block',
-      borderLeft: `12px solid ${theme.palette.background.v2.searchBg}`,
+      borderLeft: `12px solid ${theme.palette.background.searchInputBg}`,
       borderTop: '20px solid transparent',
       borderBottom: '20px solid transparent',
     },

@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => ({
     width: '100%',
   },
   arrow: {
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     height: '24px',
   },
 });

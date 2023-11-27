@@ -14,10 +14,10 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     padding: '16px 24px',
     gridTemplateColumns: 'repeat(2,minmax(0,1fr))',
-    backgroundColor: theme.palette.background.v2.contentDark,
+    backgroundColor: theme.palette.background.contentDark,
     '& div': {
       ...theme.typography['subline-sm'],
-      color: theme.palette.text.disabled,
+      color: theme.palette.text.dark,
       fontWeight: 700,
     },
     [theme.breakpoints.down('md')]: {
@@ -25,10 +25,10 @@ export const styles = (theme: Theme) => ({
     },
   },
   assetTypes: {
-    backgroundColor: theme.palette.background.v2.contentDark,
+    backgroundColor: theme.palette.background.contentDark,
     padding: '8px 16px',
     ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     fontWeight: 700,
   },
   sortColumn: {

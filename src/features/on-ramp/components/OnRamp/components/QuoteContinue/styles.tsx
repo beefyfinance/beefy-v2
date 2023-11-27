@@ -8,7 +8,7 @@ export const styles = (theme: Theme) => ({
     rowGap: '24px',
   },
   arrow: {
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     height: '24px',
   },
 });

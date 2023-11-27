@@ -10,53 +10,50 @@ import type { ReactNode } from 'react';
 
 declare module '@material-ui/core/styles/createPalette' {
   export interface TypeBackground {
+    cta: string;
+    footerHeader: string;
+    appBg: string;
+    summaryCard: string;
+    iconBg: string;
+    contentPrimary: string;
+    contentDark: string;
+    cardHeader: string;
+    border: string;
+    searchInputBg: string;
+    contentLight: string;
+    buttons: {
+      button: string;
+      buttonHover: string;
+      boost: string;
+      boostHover: string;
+    };
     vaults: {
       default: string;
       gov: string;
       boost: string;
       inactive: string;
-      boostLight: string;
     };
-    snackbars: {
+    txsModal: {
       bg: string;
       bgLine: string;
-      bgBtn: string;
       text: string;
       error: string;
     };
-    v2: {
-      cta: string;
-      footerHeader: string;
-      appBg: string;
-      summaryCard: string;
-      iconBg: string;
-      contentPrimary: string;
-      contentDark: string;
-      cardHeader: string;
-      border: string;
-      searchBg: string;
-      contentLight: string;
-      button: string;
-      buttonHover: string;
-      tags: {
-        boost: string;
-        earnings: string;
-        retired: string;
-        paused: string;
-      };
-      indicators: {
-        loading: string;
-        warning: string;
-        error: string;
-        success: string;
-      };
+    tags: {
+      boost: string;
+      earnings: string;
+      retired: string;
+      paused: string;
+    };
+    indicators: {
+      loading: string;
+      warning: string;
+      error: string;
+      success: string;
     };
   }
 
   export interface TypeText {
-    primary: string;
-    secondary: string;
-    disabled: string;
     hint: string;
     dark: string;
     middle: string;

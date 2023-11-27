@@ -2,7 +2,7 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   text: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     marginBottom: '24px',
   },
   boostedBy: {
@@ -10,7 +10,7 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.background.vaults.boost,
     flexGrow: 1,
     '& span': {
-      color: theme.palette.text.primary,
+      color: theme.palette.text.light,
     },
   },
   header: {
@@ -19,7 +19,7 @@ export const styles = (theme: Theme) => ({
     rowGap: '16px',
     padding: '24px',
     borderRadius: '12px 12px 0 0',
-    backgroundColor: theme.palette.background.v2.cardHeader,
+    backgroundColor: theme.palette.background.cardHeader,
   },
   socials: {
     display: 'flex',

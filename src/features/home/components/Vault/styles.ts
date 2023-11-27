@@ -4,9 +4,9 @@ export const styles = (theme: Theme) => ({
   vault: {
     display: 'block',
     position: 'relative' as const,
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     background: theme.palette.background.vaults.default,
-    borderBottom: `solid 2px ${theme.palette.background.v2.contentDark}`,
+    borderBottom: `solid 2px ${theme.palette.background.contentDark}`,
     padding: '24px',
     textDecoration: 'none',
     '&:last-child': {

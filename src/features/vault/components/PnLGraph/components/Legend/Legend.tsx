@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   legendItem: {
     ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     display: 'flex',
     columnGap: '8px',
     alignItems: 'center',

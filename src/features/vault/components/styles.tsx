@@ -3,7 +3,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   balanceText: {
     ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     marginBottom: '4px',
   },
   stakedInValue: {
@@ -34,8 +34,8 @@ export const styles = (theme: Theme) => ({
     },
     '& .MuiButton-root': {
       ...theme.typography['subline-sm'],
-      color: theme.palette.text.primary,
-      backgroundColor: theme.palette.background.v2.button,
+      color: theme.palette.text.light,
+      backgroundColor: theme.palette.background.buttons.button,
       borderRadius: '4px',
       margin: 0,
       padding: '6px 12px',
@@ -54,7 +54,7 @@ export const styles = (theme: Theme) => ({
     left: '12px',
   },
   btnSubmit: {
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
     backgroundColor: theme.palette.primary.main,
     padding: '12px 24px',
     borderRadius: '8px',
@@ -98,10 +98,10 @@ export const styles = (theme: Theme) => ({
     },
   },
   assetCount: {
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
   },
   zapPromotion: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     marginBottom: '12px',
   },
   assetsDivider: {

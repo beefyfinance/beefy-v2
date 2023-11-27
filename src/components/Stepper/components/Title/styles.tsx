@@ -3,7 +3,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   title: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.background.snackbars.text,
+    color: theme.palette.background.txsModal.text,
     display: 'flex',
     alignItems: 'center',
   },

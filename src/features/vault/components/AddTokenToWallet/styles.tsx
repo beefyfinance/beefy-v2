@@ -6,12 +6,12 @@ export const styles = (theme: Theme) => ({
     flexWrap: 'wrap' as const,
     rowGap: '16px',
     borderRadius: '12px',
-    backgroundColor: theme.palette.background.v2.contentLight,
+    backgroundColor: theme.palette.background.contentLight,
     padding: '16px',
   },
   text: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
     marginLeft: '8px',
   },
   token: {
@@ -29,12 +29,12 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg'],
     padding: '2px 8px',
     borderRadius: '4px',
-    backgroundColor: theme.palette.background.v2.button,
+    backgroundColor: theme.palette.background.buttons.button,
     borderColor: 'transparent' as const,
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     '&:hover': {
-      color: theme.palette.text.primary,
-      backgroundColor: theme.palette.background.v2.buttonHover,
+      color: theme.palette.text.light,
+      backgroundColor: theme.palette.background.buttons.buttonHover,
       borderColor: 'transparent' as const,
       transition: 'color 0.1s',
     },
@@ -42,7 +42,7 @@ export const styles = (theme: Theme) => ({
   icon: {
     marginLeft: '4px',
     '&:hover': {
-      fill: theme.palette.text.primary,
+      fill: theme.palette.text.light,
     },
   },
 });

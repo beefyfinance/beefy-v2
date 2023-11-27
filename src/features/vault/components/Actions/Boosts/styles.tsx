@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   containerBoost: {
     padding: '24px',
     borderRadius: '12px',
-    backgroundColor: theme.palette.background.v2.contentPrimary,
+    backgroundColor: theme.palette.background.contentPrimary,
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '16px',
@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     rowGap: '16px',
     padding: '24px',
-    backgroundColor: theme.palette.background.v2.contentPrimary,
+    backgroundColor: theme.palette.background.contentPrimary,
     borderRadius: '12px',
     marginTop: '24px',
   },
@@ -33,7 +33,7 @@ export const styles = (theme: Theme) => ({
     color: '#fff',
   },
   titleTooltipTrigger: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     fontSize: '20px',
     width: '20px',
     height: '20px',
@@ -47,7 +47,7 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
     columnGap: '16px',
-    backgroundColor: theme.palette.background.v2.contentLight,
+    backgroundColor: theme.palette.background.contentLight,
     padding: '12px',
     borderRadius: '8px',
   },
@@ -58,11 +58,11 @@ export const styles = (theme: Theme) => ({
   },
   boostStatLabel: {
     ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
   },
   boostStatValue: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
   button: {
     borderRadius: '8px',

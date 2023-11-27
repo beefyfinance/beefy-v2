@@ -12,7 +12,7 @@ export const styles = (theme: Theme) => ({
       position: 'absolute' as const,
       top: 'calc(50% - 1px)',
       height: '2px',
-      background: theme.palette.background.v2.contentLight,
+      background: theme.palette.background.contentLight,
       width: 'calc((100% - 48px)/2)',
     },
     '&::before': {
@@ -23,7 +23,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   arrow: {
-    fill: theme.palette.background.v2.contentLight,
+    fill: theme.palette.background.contentLight,
     width: '15px',
     height: '18px',
   },

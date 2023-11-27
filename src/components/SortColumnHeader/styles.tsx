@@ -3,7 +3,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   sortColumn: {
     ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     display: 'flex',
     alignItems: 'center' as const,
     justifyContent: 'flex-end' as const,
@@ -32,6 +32,6 @@ export const styles = (theme: Theme) => ({
     display: 'block',
   },
   sortIconHighlight: {
-    fill: theme.palette.text.primary,
+    fill: theme.palette.text.light,
   },
 });

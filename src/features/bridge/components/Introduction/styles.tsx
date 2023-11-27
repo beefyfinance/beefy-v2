@@ -6,12 +6,12 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['h1'],
     fontSize: '45px',
     lineHeight: '56px',
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
     marginTop: 0,
   },
   text: {
     ...theme.typography['body-lg'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
   link: {
     textDecoration: 'none',

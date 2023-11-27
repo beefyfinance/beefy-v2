@@ -8,7 +8,7 @@ export const styles = (theme: Theme) => ({
     gridTemplateColumns: 'repeat(6, minmax(0, 1fr))',
   },
   sortDropdown: {
-    backgroundColor: theme.palette.background.v2.searchBg,
+    backgroundColor: theme.palette.background.searchInputBg,
     [theme.breakpoints.up('md')]: {
       width: '200px',
       maxWidth: '100%',

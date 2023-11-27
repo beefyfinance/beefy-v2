@@ -28,15 +28,15 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     padding: '18px 24px',
-    background: theme.palette.background.v2.contentDark,
+    background: theme.palette.background.contentDark,
     borderRadius: '10px 10px 0px 0px ',
-    borderBottom: `2px solid ${theme.palette.background.v2.border}`,
+    borderBottom: `2px solid ${theme.palette.background.border}`,
   },
   cardIcon: {
     marginRight: '8px',
   },
   cardTitle: {
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
     marginRight: 'auto',
   },
   closeButton: {
@@ -45,7 +45,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   cardContent: {
-    background: theme.palette.background.v2.contentPrimary,
+    background: theme.palette.background.contentPrimary,
     borderRadius: '0 0 12px 12px',
     padding: '24px',
     minHeight: '200px',
@@ -68,7 +68,7 @@ export const styles = (theme: Theme) => ({
   copyTextInput: {
     ...theme.typography['body-lg'],
     lineHeight: '20px',
-    background: theme.palette.background.v2.searchBg,
+    background: theme.palette.background.searchInputBg,
     border: 'none',
     boxShadow: 'none',
     outline: 'none',

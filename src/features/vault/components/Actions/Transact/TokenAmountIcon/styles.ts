@@ -2,7 +2,7 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   holder: {
-    background: theme.palette.background.v2.contentLight,
+    background: theme.palette.background.contentLight,
     borderRadius: '8px',
     padding: '8px 12px',
     display: 'flex',

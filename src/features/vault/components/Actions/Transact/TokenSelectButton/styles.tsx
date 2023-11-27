@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => ({
     border: 'none',
     boxShadow: 'none',
     outline: 'none',
-    background: theme.palette.background.v2.searchBg,
+    background: theme.palette.background.searchInputBg,
     borderRadius: '8px',
     display: 'flex',
     alignItems: 'center',
@@ -28,6 +28,6 @@ export const styles = (theme: Theme) => ({
   iconMore: {
     flexShrink: 0,
     flexGrow: 0,
-    fill: theme.palette.text.secondary,
+    fill: theme.palette.text.middle,
   },
 });

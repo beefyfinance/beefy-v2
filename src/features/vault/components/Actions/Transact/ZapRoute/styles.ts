@@ -9,11 +9,11 @@ export const styles = (theme: Theme) => ({
   },
   routeHolder: {
     borderRadius: '8px',
-    border: `solid 2px ${theme.palette.background.v2.contentLight}`,
+    border: `solid 2px ${theme.palette.background.contentLight}`,
     overflow: 'hidden' as const,
   },
   routeHeader: {
-    background: theme.palette.background.v2.contentLight,
+    background: theme.palette.background.contentLight,
     padding: '8px 12px',
     display: 'flex',
     justifyContent: 'space-between',

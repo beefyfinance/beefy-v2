@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     width: '100%',
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     background: 'transparent',
     border: 'none',
     boxShadow: 'none',
@@ -16,7 +16,7 @@ export const styles = (theme: Theme) => ({
     userSelect: 'none' as const,
     outline: 'none',
     '&:hover, &:focus-visible': {
-      color: theme.palette.text.secondary,
+      color: theme.palette.text.middle,
       '& $arrow': {
         color: '#fff',
       },
@@ -33,7 +33,7 @@ export const styles = (theme: Theme) => ({
   balance: {},
   arrow: {
     marginLeft: '12px',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     height: '24px',
   },
 });

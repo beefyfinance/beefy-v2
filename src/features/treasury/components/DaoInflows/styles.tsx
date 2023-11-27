@@ -17,7 +17,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     padding: '12px',
     columnGap: '8px',
-    backgroundColor: theme.palette.background.v2.contentPrimary,
+    backgroundColor: theme.palette.background.contentPrimary,
     borderRadius: '4px',
     alignItems: 'center',
   },
@@ -26,10 +26,10 @@ export const styles = (theme: Theme) => ({
   },
   chainText: {
     ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
   },
   chainValue: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
 });

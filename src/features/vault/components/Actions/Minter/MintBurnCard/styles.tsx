@@ -2,11 +2,11 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   header: {
-    backgroundColor: theme.palette.background.v2.contentDark,
+    backgroundColor: theme.palette.background.contentDark,
     borderRadius: '12px',
   },
   tabs: {
-    backgroundColor: theme.palette.background.v2.contentDark,
+    backgroundColor: theme.palette.background.contentDark,
     borderTopLeftRadius: '12px',
     borderTopRightRadius: '12px',
     display: 'grid',
@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => ({
   },
   tab: {
     borderBottom: 'solid 2px transparent',
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     background: 'none',
     padding: 0,
     margin: 0,
@@ -31,13 +31,13 @@ export const styles = (theme: Theme) => ({
     },
   },
   selected: {
-    color: theme.palette.text.primary,
-    borderBottom: `solid 2px ${theme.palette.text.disabled}`,
+    color: theme.palette.text.light,
+    borderBottom: `solid 2px ${theme.palette.text.dark}`,
   },
   cardContent: {
     display: 'flex',
     flexDirection: 'column' as const,
-    backgroundColor: theme.palette.background.v2.contentPrimary,
+    backgroundColor: theme.palette.background.contentPrimary,
     borderRadius: '0 0 12px 12px',
     padding: '24px',
   },
@@ -45,11 +45,11 @@ export const styles = (theme: Theme) => ({
     height: '50px',
   },
   content: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
   btn: {
-    color: theme.palette.text.primary,
-    backgroundColor: theme.palette.background.v2.button,
+    color: theme.palette.text.light,
+    backgroundColor: theme.palette.background.buttons.button,
     padding: '12px 24px',
     borderRadius: '8px',
     '&.Mui-disabled': {
@@ -70,7 +70,7 @@ export const styles = (theme: Theme) => ({
     margin: '24px 0',
     '& .MuiPaper-root': {
       position: 'relative' as const,
-      backgroundColor: theme.palette.background.v2.searchBg,
+      backgroundColor: theme.palette.background.searchInputBg,
       borderRadius: '8px',
       padding: 0,
       margin: 0,
@@ -83,8 +83,8 @@ export const styles = (theme: Theme) => ({
     },
     '& .MuiButton-root': {
       ...theme.typography['subline-sm'],
-      color: theme.palette.text.primary,
-      backgroundColor: theme.palette.background.v2.button,
+      color: theme.palette.text.light,
+      backgroundColor: theme.palette.background.buttons.button,
       borderRadius: '4px',
       margin: 0,
       padding: '6px 12px',
@@ -109,11 +109,11 @@ export const styles = (theme: Theme) => ({
   },
   label: {
     ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
   },
   value: {
     ...theme.typography['body-sm'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
   customDivider: {
     display: 'flex',
@@ -125,7 +125,7 @@ export const styles = (theme: Theme) => ({
   line: {
     height: '2px',
     width: '100%',
-    backgroundColor: theme.palette.background.v2.contentLight,
+    backgroundColor: theme.palette.background.contentLight,
     borderRadius: '8px',
   },
   boxReminder: {
@@ -134,7 +134,7 @@ export const styles = (theme: Theme) => ({
     marginTop: '16px',
     padding: '16px',
     borderRadius: '4px',
-    backgroundColor: theme.palette.background.v2.contentLight,
+    backgroundColor: theme.palette.background.contentLight,
   },
   boxReserves: {
     ...theme.typography['subline-lg'],
@@ -143,15 +143,15 @@ export const styles = (theme: Theme) => ({
     marginTop: '16px',
     padding: '16px',
     borderRadius: '4px',
-    backgroundColor: theme.palette.background.v2.contentLight,
+    backgroundColor: theme.palette.background.contentLight,
   },
   reservesText: {
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     marginRight: '4px',
   },
   amountReserves: {
     marginLeft: '4px',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
   noReserves: {
     marginTop: '16px',

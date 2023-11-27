@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.primary.main,
   },
   negative: {
-    color: theme.palette.background.v2.indicators.error,
+    color: theme.palette.background.indicators.error,
   },
   changes: {
     display: 'flex',

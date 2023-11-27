@@ -7,7 +7,7 @@ import React, { memo } from 'react';
 const useStyles = makeStyles((theme: Theme) => ({
   rowContainer: {
     display: 'grid',
-    backgroundColor: theme.palette.background.v2.contentPrimary,
+    backgroundColor: theme.palette.background.contentPrimary,
     padding: '16px',
     gridTemplateColumns: 'minmax(0, 30fr) minmax(0, 70fr)',
     columnGap: '16px',
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   rowMobileContainer: {
     padding: '16px',
-    backgroundColor: theme.palette.background.v2.contentDark,
+    backgroundColor: theme.palette.background.contentDark,
   },
 }));
 

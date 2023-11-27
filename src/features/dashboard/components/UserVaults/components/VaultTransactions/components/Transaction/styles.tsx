@@ -3,7 +3,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   stat: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     overflow: 'hidden',
     whiteSpace: 'nowrap' as const,
     textOverflow: 'ellipsis',
@@ -27,7 +27,7 @@ export const styles = (theme: Theme) => ({
   },
   statMobile: {
     ...theme.typography['body-sm'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
   network: {
     display: 'block',
@@ -39,7 +39,7 @@ export const styles = (theme: Theme) => ({
     display: 'block',
   },
   textRed: {
-    color: theme.palette.background.v2.indicators.error,
+    color: theme.palette.background.indicators.error,
   },
   textGreen: {
     color: theme.palette.primary.main,

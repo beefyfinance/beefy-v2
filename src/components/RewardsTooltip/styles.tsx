@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     columnGap: '4px',
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
   tooltipTitle: {
     ...theme.typography['subline-sm'],

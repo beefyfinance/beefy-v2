@@ -15,7 +15,7 @@ export const styles = (theme: Theme) => ({
     columnGap: '16px',
   },
   hasPortfolio: {
-    backgroundColor: theme.palette.background.v2.footerHeader,
+    backgroundColor: theme.palette.background.footerHeader,
   },
   container: {
     paddingTop: '12px',

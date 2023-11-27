@@ -8,13 +8,13 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'flex-start',
     minHeight: '100vh',
     width: '100%',
-    backgroundColor: theme.palette.background.v2.appBg,
+    backgroundColor: theme.palette.background.appBg,
   },
   wrapperTop: {
     marginBottom: 'auto',
   },
   footer: {
-    background: theme.palette.background.v2.footerHeader,
+    background: theme.palette.background.footerHeader,
     padding: '40px',
     display: 'flex',
     flexDirection: 'column' as const,
@@ -39,7 +39,7 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     display: 'block',
     textDecoration: 'none',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     '& svg': {
       display: 'block',
       fill: 'currentColor',
@@ -47,7 +47,7 @@ export const styles = (theme: Theme) => ({
       height: '24px',
     },
     '&:hover': {
-      color: theme.palette.text.primary,
+      color: theme.palette.text.light,
     },
   },
 });

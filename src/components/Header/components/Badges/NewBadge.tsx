@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   badge: {
     ...theme.typography['body-sm'],
     backgroundColor: theme.palette.primary.main,
-    color: theme.palette.background.v2.footerHeader,
+    color: theme.palette.background.footerHeader,
     padding: '0px 6px',
     borderRadius: '10px',
     height: '20px',

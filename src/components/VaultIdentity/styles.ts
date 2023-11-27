@@ -15,7 +15,7 @@ export const styles = (theme: Theme) => ({
   },
   vaultName: {
     ...theme.typography['h3'],
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
     textDecoration: 'none' as const,
   },
   vaultNameBoosted: {
@@ -27,7 +27,7 @@ export const styles = (theme: Theme) => ({
     left: '-2px',
     width: '28px',
     height: '28px',
-    border: `solid 2px ${theme.palette.background.v2.contentDark}`,
+    border: `solid 2px ${theme.palette.background.contentDark}`,
     borderBottomRightRadius: '16px',
     '& img': {
       width: '22px',

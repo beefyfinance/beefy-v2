@@ -15,6 +15,6 @@ export const styles = (theme: Theme) => ({
   },
   text: {
     ...theme.typography['subline-lg'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
   },
 });

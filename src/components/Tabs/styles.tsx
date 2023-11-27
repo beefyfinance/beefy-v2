@@ -3,9 +3,9 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   container: {},
   tabs: {
-    backgroundColor: theme.palette.background.v2.button,
+    backgroundColor: theme.palette.background.buttons.button,
     borderRadius: 8,
-    border: `2px solid ${theme.palette.background.v2.contentLight}`,
+    border: `2px solid ${theme.palette.background.contentLight}`,
     '& .MuiTabs-indicator': {
       display: 'none' as const,
       color: 'transparent',
@@ -14,12 +14,12 @@ export const styles = (theme: Theme) => ({
       minWidth: 70,
     },
     '& .MuiTab-textColorPrimary': {
-      color: theme.palette.text.disabled,
+      color: theme.palette.text.dark,
     },
     '& .Mui-selected': {
-      backgroundColor: theme.palette.background.v2.contentLight,
+      backgroundColor: theme.palette.background.contentLight,
       borderRadius: 4,
-      color: theme.palette.text.primary,
+      color: theme.palette.text.light,
       padding: '5px',
     },
   },
@@ -33,10 +33,10 @@ export const styles = (theme: Theme) => ({
       padding: '0 12',
     },
     '& .MuiTab-textColorPrimary': {
-      color: theme.palette.text.disabled,
+      color: theme.palette.text.dark,
     },
     '& .Mui-selected': {
-      color: theme.palette.text.primary,
+      color: theme.palette.text.light,
     },
   },
 });

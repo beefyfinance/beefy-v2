@@ -27,11 +27,11 @@ export const styles = (theme: Theme) => ({
   },
   label: {
     ...theme.typography['body-sm-med'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     textTransform: 'capitalize' as const,
     '& span': {
       ...theme.typography['body-sm'],
-      color: theme.palette.text.disabled,
+      color: theme.palette.text.dark,
       marginLeft: '4px',
     },
     [theme.breakpoints.down('xs')]: {

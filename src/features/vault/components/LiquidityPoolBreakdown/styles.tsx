@@ -16,7 +16,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   layout: {
-    backgroundColor: theme.palette.background.v2.contentPrimary,
+    backgroundColor: theme.palette.background.contentPrimary,
     borderRadius: '0 0 12px 12px',
     [theme.breakpoints.up('lg')]: {
       display: 'grid',

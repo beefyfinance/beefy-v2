@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     padding: '16px 0px',
     '& text': {
       ...theme.typography['subline-sm'],
-      fill: theme.palette.text.disabled,
+      fill: theme.palette.text.dark,
       '&.recharts-cartesian-axis-tick-value': {
         textTransform: 'initial',
       },

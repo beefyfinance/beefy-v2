@@ -18,12 +18,12 @@ export const styles = (theme: Theme) => ({
   },
   rate: {
     ...theme.typography['body-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     marginRight: '8px',
   },
   arrow: {
     marginLeft: 'auto',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     height: '24px',
   },
 });

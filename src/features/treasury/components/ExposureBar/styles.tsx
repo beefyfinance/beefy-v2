@@ -17,7 +17,7 @@ export const styles = (theme: Theme) => ({
   },
   barItem: {
     height: '100%',
-    borderRight: `2px solid ${theme.palette.background.v2.contentPrimary}`,
+    borderRight: `2px solid ${theme.palette.background.contentPrimary}`,
   },
   '@keyframes fadeInOut': {
     from: {

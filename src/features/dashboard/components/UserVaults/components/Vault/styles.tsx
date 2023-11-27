@@ -5,10 +5,10 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     position: 'relative' as const,
     color: '#9595B2',
-    background: theme.palette.background.v2.contentPrimary,
+    background: theme.palette.background.contentPrimary,
     padding: '24px 16px',
     textDecoration: 'none',
-    borderBottom: `solid 2px ${theme.palette.background.v2.contentDark}`,
+    borderBottom: `solid 2px ${theme.palette.background.contentDark}`,
     '&:last-child': {
       borderBottom: 0,
       borderBottomLeftRadius: '8px',
@@ -32,7 +32,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '16px',
-    backgroundColor: theme.palette.background.v2.contentDark,
+    backgroundColor: theme.palette.background.contentDark,
     padding: '16px 24px',
     marginTop: '2px',
     [theme.breakpoints.down('md')]: {
@@ -50,7 +50,7 @@ export const styles = (theme: Theme) => ({
   },
   toggleContainer: {
     padding: '16px',
-    backgroundColor: theme.palette.background.v2.contentDark,
+    backgroundColor: theme.palette.background.contentDark,
     display: 'flex',
     justifyContent: 'center',
   },

@@ -21,7 +21,7 @@ export const styles = (theme: Theme) => ({
   },
   text: {},
   cross: {
-    fill: theme.palette.text.secondary,
+    fill: theme.palette.text.middle,
     '&:hover': {
       cursor: 'pointer',
     },

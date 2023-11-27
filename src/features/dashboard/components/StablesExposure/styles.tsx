@@ -3,7 +3,7 @@ export const styles = (theme: Theme) => ({
   container: {
     width: '100%',
     padding: '16px 24px',
-    backgroundColor: theme.palette.background.v2.contentPrimary,
+    backgroundColor: theme.palette.background.contentPrimary,
     borderRadius: '8px',
     display: 'grid',
     rowGap: '16px',
@@ -16,7 +16,7 @@ export const styles = (theme: Theme) => ({
   },
   title: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
   },
   bar: {
     height: '12px',
@@ -31,7 +31,7 @@ export const styles = (theme: Theme) => ({
     borderRight: props =>
       props.stablesPercentage === '100%'
         ? 'none'
-        : `2px solid ${theme.palette.background.v2.contentPrimary}`,
+        : `2px solid ${theme.palette.background.contentPrimary}`,
     backgroundColor: '#3D5CF5',
   },
   legendContainer: {
@@ -50,11 +50,11 @@ export const styles = (theme: Theme) => ({
   },
   label: {
     ...theme.typography['body-sm-med'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     textTransform: 'capitalize' as const,
     '& span': {
       ...theme.typography['body-sm'],
-      color: theme.palette.text.disabled,
+      color: theme.palette.text.dark,
       marginLeft: '4px',
     },
   },

@@ -12,7 +12,7 @@ export const styles = (theme: Theme) => ({
   topBar: {
     height: '10px',
     borderRadius: '4px 4px 0 0',
-    backgroundColor: theme.palette.background.snackbars.bgLine,
+    backgroundColor: theme.palette.background.txsModal.bgLine,
     flexShrink: 0,
     flexGrow: 0,
   },
@@ -25,7 +25,7 @@ export const styles = (theme: Theme) => ({
   errorBar: {
     ...baseProgressBar,
     width: '100%',
-    backgroundColor: theme.palette.background.snackbars.error,
+    backgroundColor: theme.palette.background.txsModal.error,
     borderRadius: '4px 4px 0 0',
   },
   successBar: {

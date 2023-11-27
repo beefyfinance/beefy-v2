@@ -9,17 +9,17 @@ export const styles = (theme: Theme) => ({
   label: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     flex: '1 1 40%',
   },
   balance: {
     ...theme.typography['body-sm'],
     cursor: 'pointer',
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     '& span': {
       paddingLeft: '4px',
       fontWeight: theme.typography['body-sm-med'].fontWeight,
-      color: theme.palette.text.secondary,
+      color: theme.palette.text.middle,
     },
   },
   input: {},

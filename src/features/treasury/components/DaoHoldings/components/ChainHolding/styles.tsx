@@ -12,7 +12,7 @@ export const styles = (theme: Theme) => ({
     columnGap: '12px',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: theme.palette.background.v2.contentLight,
+    backgroundColor: theme.palette.background.contentLight,
     borderRadius: '8px 8px 0px 0px',
 
     [theme.breakpoints.down('md')]: {
@@ -27,8 +27,8 @@ export const styles = (theme: Theme) => ({
     columnGap: '12px',
     alignItems: 'center',
   },
-  chainName: { color: theme.palette.text.primary },
-  usdValue: { color: theme.palette.text.primary },
+  chainName: { color: theme.palette.text.light },
+  usdValue: { color: theme.palette.text.light },
   'headerNetwork-bsc': {
     backgroundColor: 'rgba(240, 185, 11, 0.2)',
   },

@@ -23,10 +23,10 @@ export const styles = (theme: Theme) => ({
     flexShrink: 1,
     flexGrow: 1,
     minWidth: 0,
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     wordBreak: 'break-word' as const,
     '& a': {
-      color: theme.palette.text.secondary,
+      color: theme.palette.text.middle,
     },
     '& p:first-child': {
       marginTop: 0,
@@ -38,13 +38,13 @@ export const styles = (theme: Theme) => ({
   warning: {
     backgroundColor: 'rgba(209, 152, 71, 0.15)',
     '& $icon': {
-      fill: theme.palette.background.v2.indicators.warning,
+      fill: theme.palette.background.indicators.warning,
     },
   },
   error: {
     backgroundColor: 'rgba(209, 83, 71, 0.15)',
     '& $icon': {
-      fill: theme.palette.background.v2.indicators.error,
+      fill: theme.palette.background.indicators.error,
     },
   },
 });

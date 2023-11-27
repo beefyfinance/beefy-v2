@@ -11,7 +11,7 @@ export const styles = (theme: Theme) => ({
     cursor: 'pointer' as const,
     display: 'flex',
     alignItems: 'center',
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
   },
   flag: {
     marginRight: '8px',

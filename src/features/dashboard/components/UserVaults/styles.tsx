@@ -13,6 +13,6 @@ export const styles = (theme: Theme) => ({
   },
   vaultsContainer: {
     borderRadius: '12px',
-    border: `solid 2px ${theme.palette.background.v2.contentDark}`,
+    border: `solid 2px ${theme.palette.background.contentDark}`,
   },
 });

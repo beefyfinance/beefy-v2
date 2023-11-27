@@ -13,13 +13,13 @@ export const styles = (theme: Theme) => ({
     borderRadius: '4px',
   },
   message: {
-    color: theme.palette.background.snackbars.text,
+    color: theme.palette.background.txsModal.text,
     '& span': {
       fontWeight: theme.typography['body-lg-med'].fontWeight,
     },
   },
   messageHighlight: {
-    color: theme.palette.background.snackbars.text,
+    color: theme.palette.background.txsModal.text,
     fontWeight: theme.typography['body-lg-med'].fontWeight,
     '$message + &': {
       marginTop: '16px',
@@ -27,7 +27,7 @@ export const styles = (theme: Theme) => ({
   },
   friendlyMessage: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.background.snackbars.text,
+    color: theme.palette.background.txsModal.text,
     marginBottom: '16px',
   },
   closeBtn: {},

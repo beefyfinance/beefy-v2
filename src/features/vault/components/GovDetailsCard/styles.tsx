@@ -3,7 +3,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   text: {
     margin: '0 0 32px 0',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     '&:last-child': {
       marginBottom: 0,
     },

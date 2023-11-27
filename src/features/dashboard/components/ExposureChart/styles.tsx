@@ -3,7 +3,7 @@ export const styles = (theme: Theme) => ({
   container: {
     padding: '16px 24px',
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.v2.contentPrimary,
+    backgroundColor: theme.palette.background.contentPrimary,
     [theme.breakpoints.down('md')]: {
       padding: '16px',
     },
@@ -22,7 +22,7 @@ export const styles = (theme: Theme) => ({
   },
   title: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     marginBottom: '24px',
   },
 });

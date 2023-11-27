@@ -18,12 +18,12 @@ export const styles = theme => ({
   },
   value: {
     ...theme.typography['h2'],
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
   },
   label: {
     ...theme.typography['subline-lg'],
     display: 'inline-flex',
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
   },
   obscured: {
     color: '#424866',

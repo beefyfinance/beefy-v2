@@ -4,16 +4,16 @@ export const styles = (theme: Theme) => ({
   buttons: {
     display: 'flex',
     width: 'fit-content',
-    border: `solid 2px ${theme.palette.background.v2.contentPrimary}`,
+    border: `solid 2px ${theme.palette.background.contentPrimary}`,
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.v2.contentDark,
+    backgroundColor: theme.palette.background.contentDark,
   },
   fullWidth: {
     width: '100%',
   },
   button: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     backgroundColor: 'inherit',
     border: 'none',
     borderRadius: '6px',
@@ -24,20 +24,20 @@ export const styles = (theme: Theme) => ({
     flexGrow: 1,
     flexShrink: 0,
     '&:hover': {
-      color: theme.palette.text.secondary,
+      color: theme.palette.text.middle,
       boxShadow: 'none',
     },
     '&:active, &:hover:active': {
-      color: theme.palette.text.primary,
+      color: theme.palette.text.light,
     },
   },
   selected: {
     pointerEvents: 'none' as const,
-    color: theme.palette.text.primary,
-    backgroundColor: theme.palette.background.v2.button,
+    color: theme.palette.text.light,
+    backgroundColor: theme.palette.background.buttons.button,
     '&:hover': {
-      color: theme.palette.text.primary,
-      backgroundColor: theme.palette.background.v2.button,
+      color: theme.palette.text.light,
+      backgroundColor: theme.palette.background.buttons.button,
     },
   },
   untogglable: {
@@ -45,19 +45,19 @@ export const styles = (theme: Theme) => ({
     '& $button': {
       padding: '0 12px',
       '&:hover': {
-        color: theme.palette.text.secondary,
+        color: theme.palette.text.middle,
         backgroundColor: 'transparent',
       },
       '&:active, &:hover:active': {
-        color: theme.palette.text.primary,
+        color: theme.palette.text.light,
         backgroundColor: 'transparent',
       },
       '&$selected': {
         pointerEvents: 'all' as const,
-        color: theme.palette.text.primary,
+        color: theme.palette.text.light,
         backgroundColor: 'transparent',
         '&:hover': {
-          color: theme.palette.text.primary,
+          color: theme.palette.text.light,
           backgroundColor: 'transparent',
         },
       },
@@ -68,7 +68,7 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     rowGap: '8px',
     padding: `12px`,
-    backgroundColor: theme.palette.background.v2.contentLight,
+    backgroundColor: theme.palette.background.contentLight,
     borderRadius: '8px',
     marginTop: '8px',
     marginLeft: '4px',
@@ -80,8 +80,8 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.dark,
     fill: theme.palette.text.dark,
     '&:hover': {
-      color: theme.palette.text.primary,
-      fill: theme.palette.text.primary,
+      color: theme.palette.text.light,
+      fill: theme.palette.text.light,
       cursor: 'pointer',
     },
   },
@@ -89,21 +89,21 @@ export const styles = (theme: Theme) => ({
     height: '20px',
   },
   iconActive: {
-    fill: theme.palette.text.primary,
+    fill: theme.palette.text.light,
   },
   buttonList: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     backgroundColor: 'inherit',
     border: 'none',
     padding: 0,
     textAlign: 'start' as const,
     '&:hover': {
-      color: theme.palette.text.primary,
+      color: theme.palette.text.light,
       cursor: 'pointer',
     },
   },
   selectedList: {
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
   },
 });

@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   container: {
     padding: 24,
     borderRadius: '12px',
-    backgroundColor: theme.palette.background.v2.contentPrimary,
+    backgroundColor: theme.palette.background.contentPrimary,
   },
   content: {
     padding: 16,
@@ -21,6 +21,6 @@ export const styles = (theme: Theme) => ({
     },
   },
   titleIcon: {
-    fill: theme.palette.text.disabled,
+    fill: theme.palette.text.dark,
   },
 });

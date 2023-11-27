@@ -6,16 +6,16 @@ export const styles = (theme: Theme) => ({
   },
   container: {
     marginTop: '16px',
-    backgroundColor: theme.palette.background.v2.contentLight,
+    backgroundColor: theme.palette.background.contentLight,
     padding: '16px',
     borderRadius: '12px',
     '&:Hover': {
-      backgroundColor: theme.palette.background.v2.button,
+      backgroundColor: theme.palette.background.buttons.button,
     },
   },
   title: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
     display: 'flex',
   },
   icon: {
@@ -26,6 +26,6 @@ export const styles = (theme: Theme) => ({
   content: {
     marginTop: '16px',
     ...theme.typography['body-lg'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
 });

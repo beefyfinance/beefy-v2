@@ -26,7 +26,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     '& .MuiSvgIcon-root': {
       fontSize: 'inherit',
     },
