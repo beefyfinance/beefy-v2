@@ -15,11 +15,11 @@ export const styles = (theme: Theme) => ({
   },
   vaultName: {
     ...theme.typography['h3'],
-    color: '#F5F5FF',
+    color: theme.palette.text.light,
     textDecoration: 'none' as const,
   },
   vaultNameBoosted: {
-    color: '#DB8332',
+    color: theme.palette.background.vaults.boost,
   },
   vaultNetwork: {
     position: 'absolute' as const,
@@ -27,7 +27,7 @@ export const styles = (theme: Theme) => ({
     left: '-2px',
     width: '28px',
     height: '28px',
-    border: 'solid 2px #363B63',
+    border: `solid 2px ${theme.palette.background.contentDark}`,
     borderBottomRightRadius: '16px',
     '& img': {
       width: '22px',

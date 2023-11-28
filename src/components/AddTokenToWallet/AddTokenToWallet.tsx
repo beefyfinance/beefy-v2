@@ -176,7 +176,7 @@ export const AddTokenToWallet = memo(function AddTokenToWallet() {
             <CardHeader className={classes.cardHeader}>
               {status === 'fulfilled' ? <FulfilledCardTitle /> : <PendingCardTitle />}
               <IconButton onClick={handleClose} aria-label="close" className={classes.closeButton}>
-                <CloseIcon htmlColor="#8A8EA8" />
+                <CloseIcon htmlColor="#999CB3" />
               </IconButton>
             </CardHeader>
             <CardContent className={classes.cardContent}>

@@ -6,12 +6,12 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     columnGap: '4px',
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
   tooltipTitle: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
-    color: '#73768C',
+    color: theme.palette.text.tooltips,
   },
   rewardsContainer: {
     display: 'flex',
@@ -20,11 +20,11 @@ export const styles = (theme: Theme) => ({
   },
   rewardsText: {
     ...theme.typography['body-lg-med'],
-    color: '#363C63',
+    color: theme.palette.text.tooltipsValue,
   },
   usdPrice: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
-    color: '#73768C',
+    color: theme.palette.text.tooltips,
   },
 });

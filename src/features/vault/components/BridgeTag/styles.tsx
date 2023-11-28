@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['subline-sm'],
     fontWeight: 700,
     padding: '2px 8px',
-    background: theme.palette.background.vaults.defaultOutline,
+    background: theme.palette.background.buttons.button,
     color: theme.palette.text.middle,
     display: 'flex',
     gap: '4px',
@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => ({
     whiteSpace: 'nowrap' as const,
     lineHeight: '24px',
     '&:hover': {
-      background: theme.palette.background.filters.active,
+      background: theme.palette.background.buttons.buttonHover,
       cursor: 'pointer',
     },
   },

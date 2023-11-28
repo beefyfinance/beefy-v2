@@ -5,7 +5,6 @@ import { formattedTotalApy } from '../../../../helpers/format';
 import { LinkButton } from '../../../../components/LinkButton';
 import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { styles } from './styles';
-import shield from './shield.svg';
 import { StrategyDescription } from './StrategyDescription';
 import { selectVaultTotalApy } from '../../../data/selectors/apy';
 import type { VaultEntity } from '../../../data/entities/vault';
@@ -28,7 +27,6 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const formatted = formattedTotalApy(values, <StatLoader />);
   const stratAddr = useAppSelector(state => selectVaultStrategyAddress(state, vaultId));
   const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
-  const isVaultAudited = vault.risks.includes('AUDIT');
   const showApy = shouldVaultShowInterest(vault);
 
   if (isGovVault(vault)) {
@@ -100,18 +98,6 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
             </div>
           </div>
         ) : null}
-        <div className={classes.audits}>
-          {isVaultAudited ? (
-            <div className={classes.audit}>
-              <img alt="Audited" src={shield} className={classes.auditIcon} />
-              <div className={classes.auditLabel}>{t('Vault-Auditd')}</div>
-            </div>
-          ) : null}
-          <div className={classes.audit}>
-            <img alt="Community Audited" src={shield} className={classes.auditIcon} />
-            <div className={classes.auditLabel}>{t('Vault-AuditdCommunity')}</div>
-          </div>
-        </div>
       </CardContent>
     </Card>
   );

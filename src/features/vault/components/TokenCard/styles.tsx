@@ -2,7 +2,7 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   container: {
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: theme.palette.background.contentLight,
     padding: '16px',
     borderRadius: '12px',
   },
@@ -64,7 +64,7 @@ export const styles = (theme: Theme) => ({
   assetDocumentation: {},
   description: {
     ...theme.typography['body-lg'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     marginTop: '16px',
   },
 });

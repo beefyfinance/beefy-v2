@@ -18,7 +18,7 @@ export const styles = (theme: Theme) => ({
   quotesTitle: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
   },
 
   scrollableThumb: {
@@ -40,15 +40,15 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     gridTemplateColumns: 'minmax(0, 1fr)',
     gap: '8px',
-    padding: '8px',
+    padding: '12px',
     borderRadius: '8px',
-    background: '#2E3150',
+    background: theme.palette.background.contentLight,
   },
   quote: {
     ...theme.typography['body-sm'],
     color: theme.palette.text.dark,
     border: 'none',
-    background: '#373B60',
+    background: theme.palette.background.buttons.button,
     boxShadow: 'none',
     outline: 'none',
     display: 'flex',
@@ -123,7 +123,7 @@ export const styles = (theme: Theme) => ({
     fill: theme.palette.text.light,
   },
   quoteButtonSelected: {
-    background: '#232741',
+    background: theme.palette.background.contentPrimary,
     color: theme.palette.text.light,
     cursor: 'default' as const,
     pointerEvents: 'none' as const,

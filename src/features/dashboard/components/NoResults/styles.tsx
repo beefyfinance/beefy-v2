@@ -1,7 +1,7 @@
 import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   container: {
-    backgroundColor: theme.palette.background.v2.cardBg,
+    backgroundColor: theme.palette.background.contentPrimary,
     padding: '24px',
     display: 'flex',
     flexDirection: 'column' as const,
@@ -27,12 +27,12 @@ export const styles = (theme: Theme) => ({
   },
   title: {
     ...theme.typography.h3,
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
     textAlign: 'center' as const,
   },
   text: {
     ...theme.typography['body-lg'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     textAlign: 'center' as const,
   },
   actionsContainer: {
@@ -48,7 +48,7 @@ export const styles = (theme: Theme) => ({
   line: {
     height: '2px',
     width: '100%',
-    backgroundColor: '#2D3153',
+    backgroundColor: theme.palette.background.contentLight,
     borderRadius: '8px',
   },
   btn: {
@@ -58,10 +58,13 @@ export const styles = (theme: Theme) => ({
   },
   or: {
     ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
   },
   center: {
     display: 'flex',
     justifyContent: 'center',
+  },
+  search: {
+    backgroundColor: theme.palette.background.searchInputBg,
   },
 });

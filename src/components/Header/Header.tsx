@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   AppBar,
   Box,
@@ -32,9 +32,6 @@ import headerLogoDesktop from '../../images/bifi-logos/header-logo.svg';
 
 const useStyles = makeStyles(styles);
 export const Header = memo(function Header() {
-  const location = useLocation();
-  const isOnDashboard =
-    location.pathname.includes('dashboard') || location.pathname.includes('treasury');
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width: 500px)', { noSsr: true });
   const dispatch = useAppDispatch();
@@ -48,12 +45,7 @@ export const Header = memo(function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        className={clsx([classes.navHeader, classes.hasPortfolio], {
-          [classes.userOnDashboard]: isOnDashboard,
-        })}
-        position="static"
-      >
+      <AppBar className={clsx([classes.navHeader, classes.hasPortfolio])} position="static">
         <Container className={classes.container} maxWidth="lg">
           <Toolbar className={classes.content} disableGutters={true}>
             <div className={classes.flex}>

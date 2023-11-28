@@ -10,7 +10,7 @@ export const styles = (theme: Theme) => ({
     outline: 'none',
     '&:focus-visible, &.active': {
       outline: 'none',
-      backgroundColor: '#363B63',
+      backgroundColor: theme.palette.background.border,
     },
   },
   mobileAlternative: {
@@ -32,7 +32,7 @@ export const styles = (theme: Theme) => ({
     zIndex: 10000,
   },
   dropdownInner: {
-    backgroundColor: '#363B63',
+    backgroundColor: theme.palette.background.contentPrimary,
     display: 'flex',
     flexDirection: 'column' as const,
     gap: '16px',

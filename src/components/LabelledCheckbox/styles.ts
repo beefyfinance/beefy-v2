@@ -5,13 +5,13 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     display: 'flex',
     alignItems: 'center',
-    color: '#D0D0DA',
+    color: theme.palette.text.middle,
     cursor: 'pointer',
     columnGap: '4px',
     userSelect: 'none' as const,
   },
   icon: {
-    color: '#848BAD',
+    color: theme.palette.text.dark,
   },
   label: {
     display: 'flex',
@@ -19,7 +19,7 @@ export const styles = (theme: Theme) => ({
   },
   checked: {
     '& $icon': {
-      color: '#F5F5FF',
+      color: theme.palette.text.light,
     },
   },
 });

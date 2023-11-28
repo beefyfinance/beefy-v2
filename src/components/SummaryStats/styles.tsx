@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => ({
     columnGap: '16px',
     padding: '16px',
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.v2.summaryCard,
+    backgroundColor: theme.palette.background.summaryCard,
     alignItems: 'center',
     [theme.breakpoints.down('xs')]: {
       columnGap: '8px',
@@ -25,7 +25,7 @@ export const styles = (theme: Theme) => ({
   },
   iconContainer: {
     borderRadius: '130px',
-    backgroundColor: theme.palette.background.v2.iconBg,
+    backgroundColor: theme.palette.background.iconBg,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -45,7 +45,7 @@ export const styles = (theme: Theme) => ({
   title: {
     ...theme.typography['subline-lg'],
     fontWeight: 700,
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     [theme.breakpoints.down('xs')]: {
       ...theme.typography['body-sm'],
       fontWeight: 700,
@@ -55,7 +55,7 @@ export const styles = (theme: Theme) => ({
   },
   value: {
     ...theme.typography.h1,
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     [theme.breakpoints.down('xs')]: {
       ...theme.typography['body-lg-med'],
     },

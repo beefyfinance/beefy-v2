@@ -21,6 +21,7 @@ export type UserVaultsProps = {
 
 export const UserVaults = memo<UserVaultsProps>(function UserVaults({ address }) {
   const { t } = useTranslation();
+  const classes = useStyles();
 
   const {
     sortedFilteredVaults,
@@ -39,15 +40,17 @@ export const UserVaults = memo<UserVaultsProps>(function UserVaults({ address })
 
   return (
     <Section title={t('Dashboard-Your-Vaults-Title')} subTitle={t(subTitle)}>
-      <Filter
-        sortOptions={sortedOptions}
-        handleSort={handleSort}
-        handleSearchText={handleSearchText}
-        searchText={searchText}
-        handleClearText={handleClearText}
-      />
-      {sortedFilteredVaults.length === 0 ? <NoVaults /> : null}
-      <VirtualList address={address} vaults={sortedFilteredVaults} />
+      <div className={classes.vaultsContainer}>
+        <Filter
+          sortOptions={sortedOptions}
+          handleSort={handleSort}
+          handleSearchText={handleSearchText}
+          searchText={searchText}
+          handleClearText={handleClearText}
+        />
+        {sortedFilteredVaults.length === 0 ? <NoVaults /> : null}
+        <VirtualList address={address} vaults={sortedFilteredVaults} />
+      </div>
     </Section>
   );
 });

@@ -6,11 +6,11 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['h1'],
     fontSize: '45px',
     lineHeight: '56px',
-    color: '#F5F5FF',
+    color: theme.palette.text.light,
   },
   text: {
     ...theme.typography['body-lg'],
-    color: '#D0D0DA',
+    color: theme.palette.text.middle,
     marginTop: '32px',
     '& p': {
       marginTop: 0,
@@ -25,7 +25,7 @@ export const styles = (theme: Theme) => ({
   },
   poweredByLabel: {
     ...theme.typography['subline-sm'],
-    color: '#999CB3',
+    color: theme.palette.text.dark,
     marginTop: '32px',
   },
   poweredByLogos: {

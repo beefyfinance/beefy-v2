@@ -234,36 +234,6 @@ export interface MinterConfig {
   canZapInWithOneInch?: boolean;
 }
 
-export interface InfoCardConfigContent {
-  heading?: string;
-  text: string;
-}
-
-export interface InfoCardConfigAction {
-  type: 'code' | 'link';
-  text: string;
-  url: string;
-}
-
-export interface InfoCardBaseConfig {
-  id: string;
-  supertitle?: string;
-  title: string;
-  actions?: InfoCardConfigAction[];
-  content: InfoCardConfigContent[];
-}
-
-export interface InfoCardVaultConfig extends InfoCardBaseConfig {
-  vaultIds?: VaultEntity['id'][];
-}
-
-export interface InfoCardChainConfig extends InfoCardBaseConfig {
-  chainIds?: ChainEntity['id'][];
-}
-
-export type InfoCardConfig = InfoCardVaultConfig | InfoCardChainConfig;
-export type InfoCardsConfig = InfoCardConfig[];
-
 export type PlatformConfig = {
   id: string;
   name: string;

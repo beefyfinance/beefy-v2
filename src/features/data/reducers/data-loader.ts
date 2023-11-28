@@ -21,7 +21,6 @@ import {
 } from '../actions/wallet';
 import { fetchAllZapsAction } from '../actions/zap';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters';
-import { fetchAllInfoCards } from '../actions/info-cards';
 import { fetchBridgeConfig } from '../actions/bridge';
 import { fetchPlatforms } from '../actions/platforms';
 import { fetchOnRampSupportedProviders } from '../actions/on-ramp';
@@ -94,7 +93,6 @@ export const initialDataLoaderState: DataLoaderState = {
     addressBook: dataLoaderStateInit,
     minters: dataLoaderStateInit,
     minterForm: dataLoaderStateInit,
-    infoCards: dataLoaderStateInit,
     bridgeConfig: dataLoaderStateInit,
     platforms: dataLoaderStateInit,
     onRamp: dataLoaderStateInit,
@@ -317,7 +315,6 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchFees, 'fees', true);
     addGlobalAsyncThunkActions(builder, fetchAllMinters, 'minters', false);
     addGlobalAsyncThunkActions(builder, fetchAllMigrators, 'migrators', false);
-    addGlobalAsyncThunkActions(builder, fetchAllInfoCards, 'infoCards', false);
     addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm', true);
     addGlobalAsyncThunkActions(builder, initiateMinterForm, 'minterForm', true);
     addGlobalAsyncThunkActions(builder, fetchBridgeConfig, 'bridgeConfig', true);

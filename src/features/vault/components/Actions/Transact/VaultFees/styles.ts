@@ -2,7 +2,7 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   container: {
-    border: 'solid 2px #2D3153',
+    border: `solid 2px ${theme.palette.background.border}`,
     borderRadius: '8px',
     padding: '12px',
   },

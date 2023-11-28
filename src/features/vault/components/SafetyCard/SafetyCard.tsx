@@ -13,6 +13,7 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
 import { Collapsable } from '../../../../components/Collapsable';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -34,9 +35,17 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
                 <div className={classes.riskRow}>
                   <div className={classes.infoContainer}>
                     {RISKS[risk].score <= 0 ? (
-                      <img alt="Positive score" src={up} className={classes.arrow} />
+                      <img
+                        alt="Positive score"
+                        src={up}
+                        className={clsx(classes.arrow, classes.up)}
+                      />
                     ) : (
-                      <img alt="Negative score" src={down} className={classes.arrow} />
+                      <img
+                        alt="Negative score"
+                        src={down}
+                        className={clsx(classes.arrow, classes.down)}
+                      />
                     )}
                     <div>
                       <div className={classes.moreInfoContainer}>

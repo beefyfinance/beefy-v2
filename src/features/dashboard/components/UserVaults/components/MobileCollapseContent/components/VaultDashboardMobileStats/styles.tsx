@@ -16,7 +16,7 @@ export const styles = (theme: Theme) => ({
     textAlign: 'end' as const,
   },
   valueBoosted: {
-    color: '#DB8332',
+    color: theme.palette.background.vaults.boost,
   },
   valueContainer: {
     display: 'flex',

@@ -43,11 +43,7 @@ export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardT
           {t('Add-To-Wallet')}
           <PlusIcon className={classes.icon} />
         </Button>
-        <LinkButton
-          className={classes.linkButtonBg}
-          href={explorerTokenUrl(chain, token.address)}
-          text={t('Explorer')}
-        />
+        <LinkButton href={explorerTokenUrl(chain, token.address)} text={t('Explorer')} />
       </div>
     </div>
   );

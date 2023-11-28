@@ -34,7 +34,7 @@ export function TransactionLink() {
       href={explorerTxUrl(chain, hash)}
       target="_blank"
     >
-      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" fontSize="inherit" />}
+      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#4DB258" fontSize="inherit" />}
     </Button>
   );
 }

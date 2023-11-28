@@ -28,12 +28,7 @@ export const SaveButton = memo<SaveButtonProps>(function SaveButton({ vaultId, c
   }, [dispatch, vaultId]);
 
   return (
-    <Button
-      borderless={true}
-      className={clsx(classes.shareButton, className)}
-      onClick={handleSave}
-      variant="middle"
-    >
+    <Button borderless={true} className={clsx(classes.shareButton, className)} onClick={handleSave}>
       {isSaved ? (
         <Bookmark className={classes.icon} />
       ) : (

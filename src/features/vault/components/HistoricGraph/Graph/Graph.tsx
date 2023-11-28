@@ -101,10 +101,10 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
           />
           <Tooltip content={tooltipContentCreator} wrapperStyle={{ outline: 'none' }} />
           {toggles.movingAverage ? (
-            <Area dataKey="ma" stroke="#4F93C4" strokeWidth={1.5} fill="none" />
+            <Area dataKey="ma" stroke="#5C70D6" strokeWidth={1.5} fill="none" />
           ) : null}
           {toggles.average ? (
-            <ReferenceLine y={avg} stroke="#59A662" strokeWidth={1.5} strokeDasharray="3 3" />
+            <ReferenceLine y={avg} stroke="#4DB258" strokeWidth={1.5} strokeDasharray="3 3" />
           ) : null}
           <YAxis
             dataKey="v"
