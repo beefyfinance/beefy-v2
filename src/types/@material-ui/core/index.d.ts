@@ -17,7 +17,6 @@ declare module '@material-ui/core/styles/createPalette' {
     iconBg: string;
     contentPrimary: string;
     contentDark: string;
-    cardHeader: string;
     border: string;
     searchInputBg: string;
     contentLight: string;
