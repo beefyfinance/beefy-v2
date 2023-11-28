@@ -3376,7 +3376,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "multi-lp",
+    "strategyTypeId": "single",
     "addLiquidityUrl": "https://belt.fi/",
     "removeLiquidityUrl": "https://belt.fi/pools",
     "network": "bsc",
@@ -3497,7 +3497,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "multi-lp",
+    "strategyTypeId": "single",
     "addLiquidityUrl": "https://belt.fi/",
     "removeLiquidityUrl": "https://belt.fi/pools",
     "network": "bsc",
@@ -3526,7 +3526,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "multi-lp",
+    "strategyTypeId": "single",
     "addLiquidityUrl": "https://belt.fi/",
     "removeLiquidityUrl": "https://belt.fi/pools",
     "network": "bsc",
