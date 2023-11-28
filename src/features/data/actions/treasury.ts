@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi } from '../apis/instances';
-import type { TreasuryConfig } from '../apis/config-types';
+import type { TreasuryCompleteBreakdownConfig } from '../apis/config-types';
 import { selectActiveChainIds } from '../selectors/chains';
 import type { ChainEntity } from '../entities/chain';
 
 export interface FetchTreasuryFulfilledPayload {
   activeChainIds: ChainEntity['id'][];
-  data: TreasuryConfig;
+  data: TreasuryCompleteBreakdownConfig;
   state: BeefyState;
 }
 
