@@ -16,7 +16,7 @@
     "platformId": "velodrome",
     "assets": ["VELOV2", "wstETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
+    "strategyTypeId": "lp",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1f32b1c2345538c0c6f582fcb022739c4a194ebb&token1=0x9560e827af36c94d2ac33a39bce1fe78631088db&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw",
     "network": "optimism",
@@ -195,7 +195,7 @@
     "platformId": "velodrome",
     "assets": ["OVN", "USD+"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
+    "strategyTypeId": "lp",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x3b08fcd15280e7b5a6e404c4abb87f7c774d1b2e&token1=0x73cb180bf0521828d8849bc8cf2b920918e23032&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x844D7d2fCa6786Be7De6721AabdfF6957ACE73a0",
     "network": "optimism",
@@ -505,7 +505,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/OP",
     "network": "optimism",
     "createdAt": 1694023422
@@ -2318,7 +2318,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/USDCe",
     "network": "optimism",
     "createdAt": 1694023422
@@ -2344,7 +2344,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/USDCe/WETH",
     "network": "optimism",
     "createdAt": 1694023422
@@ -5346,7 +5346,7 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "strategyTypeId": "lp",
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-0/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-0/withdraw",
     "network": "optimism",

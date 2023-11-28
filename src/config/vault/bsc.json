@@ -14,7 +14,7 @@
     "status": "active",
     "platformId": "gamma",
     "assets": ["BNB", "rBNB"],
-    "strategyTypeId": "multi-lp",
+    "strategyTypeId": "managed-conc-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://thena.fi/add?type=gamma&address=0x3513292a2e0e0c6fb0a82196d7ed8eb499fe5772",
     "removeLiquidityUrl": "https://thena.fi/add?type=gamma&address=0x3513292a2e0e0c6fb0a82196d7ed8eb499fe5772",
@@ -3376,7 +3376,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://belt.fi/",
     "removeLiquidityUrl": "https://belt.fi/pools",
     "network": "bsc",
@@ -3497,7 +3497,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://belt.fi/",
     "removeLiquidityUrl": "https://belt.fi/pools",
     "network": "bsc",
@@ -3526,7 +3526,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://belt.fi/",
     "removeLiquidityUrl": "https://belt.fi/pools",
     "network": "bsc",
