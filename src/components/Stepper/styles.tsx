@@ -17,7 +17,7 @@ export const styles = (theme: Theme) => ({
     minHeight: 0,
   },
   contentContainer: {
-    backgroundColor: theme.palette.background.snackbars.bg,
+    backgroundColor: theme.palette.background.txsModal.bg,
     borderRadius: '0 0 4px 4px',
     padding: '12px 16px',
     minHeight: 0,

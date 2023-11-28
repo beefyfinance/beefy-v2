@@ -75,7 +75,7 @@ export const NetworkStatus = memo(function NetworkStatus({
 
   return (
     <>
-      <button className={clsx({ [classes.container]: true, open: open })} onClick={handleToggle}>
+      <button className={classes.container} onClick={handleToggle}>
         <div className={clsx(classes.circle, colorClasses)}>
           <div className={pulseClassName} />
           <div className={pulseClassName} />

@@ -195,15 +195,16 @@ export function ActiveBoost({ boostId, title }: { boostId: BoostEntity['id']; ti
                   onClick={handleClaim}
                   fullWidth={true}
                   borderless={true}
+                  variant="boost"
                 >
                   {t('Boost-Button-Withdraw')}
                 </Button>
                 <Button
                   disabled={isStepping || (boostBalance.isZero() && boostPendingRewards.isZero())}
-                  className={classes.button}
                   onClick={() => handleExit(boost)}
                   fullWidth={true}
                   borderless={true}
+                  variant="boost"
                 >
                   {t('Boost-Button-Claim-Unstake')}
                 </Button>

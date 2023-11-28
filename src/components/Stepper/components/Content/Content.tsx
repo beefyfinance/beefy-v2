@@ -94,7 +94,6 @@ export const ErrorContent = memo(function ErrorContent() {
 
 export const CloseButton = memo(function CloseButton() {
   const { t } = useTranslation();
-  const classes = useStyles();
   const dispatch = useAppDispatch();
 
   const handleClose = React.useCallback(() => {
@@ -103,13 +102,7 @@ export const CloseButton = memo(function CloseButton() {
   }, [dispatch]);
 
   return (
-    <Button
-      borderless={true}
-      fullWidth={true}
-      variant="middle"
-      className={classes.closeBtn}
-      onClick={handleClose}
-    >
+    <Button borderless={true} fullWidth={true} variant="default" onClick={handleClose}>
       {t('Transactn-Close')}
     </Button>
   );

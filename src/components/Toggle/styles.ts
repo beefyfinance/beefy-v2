@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   label: {
     ...theme.typography['subline-sm'],
     position: 'relative' as const,
-    color: '#999CB3',
+    color: theme.palette.text.dark,
     display: 'inline-flex',
     alignItems: 'center',
     gap: '8px',
@@ -19,7 +19,7 @@ export const styles = (theme: Theme) => ({
   },
   channel: {
     position: 'relative' as const,
-    background: '#0F0F0F',
+    background: theme.palette.background.contentDark,
     width: '44px',
     height: '24px',
     borderRadius: '40px',
@@ -31,11 +31,11 @@ export const styles = (theme: Theme) => ({
     width: '20px',
     height: '20px',
     borderRadius: '50%',
-    background: '#313759',
+    background: theme.palette.background.contentLight,
     transition: 'background-color 0.4s ease, left 0.4s ease',
   },
   dotChecked: {
-    backgroundColor: '#59A662',
+    backgroundColor: theme.palette.primary.main,
     left: '22px',
   },
 });

@@ -3,20 +3,20 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   popover: {
     padding: '16px',
-    background: theme.palette.type === 'dark' ? '#FFF' : '#272B4A',
-    border: theme.palette.type === 'dark' ? '2px solid #E5E5E5' : '2px solid #A69885',
+    background: '#FFF',
+    border: '2px solid #FFF',
     filter: 'drop-shadow(0px 0px 40px #0A0F2B)',
     borderRadius: '10px',
     margin: '15px auto',
     maxWidth: '350px',
     minWidth: '250px',
     textAlign: 'left' as const,
-    color: theme.palette.type === 'dark' ? '#565B81' : '#A69885',
+    color: theme.palette.text.tooltipsValue,
   },
   trigger: {
     display: 'flex',
     alignItems: 'center',
-    background: theme.palette.type === 'dark' ? ' #272B4A' : '#6E675D',
+    background: theme.palette.text.tooltips,
     color: '#fff',
     '&:hover': {
       cursor: 'pointer',
@@ -26,7 +26,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: '#8585A6',
+    color: theme.palette.text.dark,
     '& .MuiSvgIcon-root': {
       fontSize: 'inherit',
     },
@@ -36,7 +36,7 @@ export const styles = (theme: Theme) => ({
   },
   title: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.type === 'dark' ? '#272B4A' : '#A69885',
+    color: theme.palette.text.tooltips,
     marginBottom: '8px',
   },
   size_sm: {
@@ -85,17 +85,11 @@ export const styles = (theme: Theme) => ({
       '&:before': {
         marginTop: '-4px',
         borderWidth: '12px',
-        borderColor:
-          theme.palette.type === 'dark'
-            ? '#FFF transparent transparent transparent'
-            : 'transparent transparent transparent transparent',
+        borderColor: '#FFF transparent transparent transparent',
       },
       '&:after': {
         borderWidth: '12px',
-        borderColor:
-          theme.palette.type === 'dark'
-            ? 'transparent transparent transparent transparent'
-            : 'transparent transparent #A69885 transparent',
+        borderColor: 'transparent transparent transparent transparent',
       },
     },
     '&[x-placement*="bottom"] span': {
@@ -105,17 +99,11 @@ export const styles = (theme: Theme) => ({
       '&:before': {
         top: 4,
         borderWidth: '12px',
-        borderColor:
-          theme.palette.type === 'dark'
-            ? 'transparent transparent #FFF transparent'
-            : 'transparent transparent transparent transparent',
+        borderColor: 'transparent transparent #FFF transparent',
       },
       '&:after': {
         borderWidth: '12px',
-        borderColor:
-          theme.palette.type === 'dark'
-            ? 'transparent transparent transparent transparent'
-            : 'transparent transparent #A69885 transparent',
+        borderColor: 'transparent transparent transparent transparent',
       },
     },
     '&[x-placement*="end"] span': {

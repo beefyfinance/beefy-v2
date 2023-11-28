@@ -12,7 +12,7 @@ export const styles = (theme: Theme) => ({
   },
   label: {
     ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     textAlign: 'left' as const,
     [theme.breakpoints.up('md')]: {
       textAlign: 'center' as const,
@@ -20,7 +20,7 @@ export const styles = (theme: Theme) => ({
   },
   price: {
     ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     whiteSpace: 'nowrap' as const,
   },
   blurred: {
@@ -31,7 +31,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
   },
   tooltipHolder: {
-    marginLeft: theme.spacing(0.5),
+    marginLeft: '4px',
   },
   noTextContentLoader: {
     paddingTop: '3px',

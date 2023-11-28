@@ -17,7 +17,6 @@ import type { VaultEntity } from '../data/entities/vault';
 import { isGovVault } from '../data/entities/vault';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { TechLoader } from '../../components/TechLoader';
-import { InfoCards } from './components/InfoCards/InfoCards';
 import { VaultMeta } from './components/VaultMeta';
 import { useAppSelector } from '../../store';
 import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdown';
@@ -101,7 +100,6 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
             <LiquidityPoolBreakdownLoader vaultId={vaultId} />
             <SafetyCard vaultId={vaultId} />
             {!isGovVault(vault) ? <StrategyCard vaultId={vaultId} /> : null}
-            <InfoCards chainId={vault.chainId} vaultId={vault.id} />
             <AssetsCard vaultId={vault.id} />
             <Hidden mdUp>
               <InsuranceCards vaultId={vaultId} />

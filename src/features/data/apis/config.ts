@@ -1,7 +1,6 @@
 import { config as chainConfigs } from '../../../config/config';
 import { Insurace, Nexus, QiDao } from '../../../helpers/partners';
 import type { ChainEntity } from '../entities/chain';
-import { infoCards } from '../../../config/info-cards';
 import type {
   AmmConfig,
   BeefyBridgeConfig,
@@ -10,7 +9,6 @@ import type {
   BridgeConfig,
   ChainConfig,
   FeaturedVaultConfig,
-  InfoCardsConfig,
   MinterConfig,
   OneInchZapConfig,
   PartnersConfig,
@@ -112,10 +110,6 @@ export class ConfigAPI {
         ])
       )
     );
-  }
-
-  public async fetchAllInfoCards(): Promise<InfoCardsConfig> {
-    return infoCards;
   }
 
   public async fetchPlatforms(): Promise<PlatformConfig[]> {

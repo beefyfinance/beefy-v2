@@ -3,7 +3,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   content: {
     ...theme.typography['body-lg'],
-    color: '#272B4A',
+    color: theme.palette.text.tooltips,
     padding: '12px 16px',
     minWidth: '250px',
     background: '#fff',

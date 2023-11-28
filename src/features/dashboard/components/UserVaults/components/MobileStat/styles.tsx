@@ -6,13 +6,13 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     columnGap: '8px',
     ...theme.typography['body-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     '& div': {},
     [theme.breakpoints.down('md')]: {
       justifyContent: 'space-between',
     },
   },
   value: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
 });

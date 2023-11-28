@@ -2,8 +2,8 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   input: {
-    color: '#D0D0DA',
-    background: '#111321',
+    color: theme.palette.text.middle,
+    background: theme.palette.background.searchInputBg,
     borderRadius: '8px',
     width: '100%',
     display: 'flex',
@@ -21,12 +21,12 @@ export const styles = (theme: Theme) => ({
     },
   },
   error: {
-    borderColor: '#D15347',
+    borderColor: theme.palette.background.indicators.warning,
   },
   max: {
     ...theme.typography['subline-sm'],
     color: theme.palette.text.light,
-    backgroundColor: '#363B63',
+    backgroundColor: theme.palette.background.border,
     border: 'none',
     boxShadow: 'none',
     outline: 'none',
@@ -38,9 +38,9 @@ export const styles = (theme: Theme) => ({
     cursor: 'pointer',
     marginRight: '8px',
     '&:disabled': {
-      color: '#8A8EA8',
-      backgroundColor: '#262A40',
-      borderColor: '#303550',
+      color: theme.palette.text.dark,
+      backgroundColor: theme.palette.background.buttons.button,
+      borderColor: theme.palette.background.contentLight,
       opacity: 0.4,
     },
   },

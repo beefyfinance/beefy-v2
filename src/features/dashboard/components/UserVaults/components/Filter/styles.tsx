@@ -2,13 +2,14 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   container: {
-    backgroundColor: theme.palette.background.v2.filter,
+    backgroundColor: theme.palette.background.contentDark,
     borderRadius: '8px 8px 0px 0px',
     padding: '16px',
     display: 'grid',
     width: '100%',
     columnGap: '8px',
     backgroundClip: 'padding-box',
+    borderBottom: `solid 2px ${theme.palette.background.contentDark}`,
     gridTemplateColumns: 'minmax(0, 30fr) minmax(0, 70fr)',
     [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: 'minmax(0, 70fr) minmax(0, 30fr)',

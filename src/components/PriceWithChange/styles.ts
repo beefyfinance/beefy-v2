@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['subline-sm'],
     fontWeight: 700,
     padding: '4px 8px',
-    background: theme.palette.background.vaults.defaultOutline,
+    background: theme.palette.background.buttons.button,
     color: theme.palette.text.middle,
     display: 'inline-flex',
     alignItems: 'center',
@@ -18,7 +18,7 @@ export const styles = (theme: Theme) => ({
   tooltipTrigger: {
     cursor: 'pointer',
     '&:hover': {
-      background: theme.palette.background.filters.active,
+      background: theme.palette.background.buttons.buttonHover,
       cursor: 'pointer',
     },
   },

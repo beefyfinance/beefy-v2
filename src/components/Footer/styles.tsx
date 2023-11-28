@@ -8,20 +8,17 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'flex-start',
     minHeight: '100vh',
     width: '100%',
-    backgroundColor: theme.palette.background.appBG,
+    backgroundColor: theme.palette.background.appBg,
   },
   wrapperTop: {
     marginBottom: 'auto',
   },
   footer: {
-    background: theme.palette.background.footer,
-    padding: `${theme.spacing(5)}px`,
+    background: theme.palette.background.footerHeader,
+    padding: '40px',
     display: 'flex',
     flexDirection: 'column' as const,
     alignItems: 'center',
-  },
-  userOnDashboard: {
-    backgroundColor: theme.palette.background.alternativeFooterHeader,
   },
   nav: {
     display: 'flex',
@@ -29,20 +26,20 @@ export const styles = (theme: Theme) => ({
     flexWrap: 'wrap' as const,
     justifyContent: 'center',
     padding: '0',
-    margin: `0 ${theme.spacing(3) / -2}px ${theme.spacing(3) / -2}px ${theme.spacing(3) / -2}px`,
+    margin: `0 ${24 / -2}px ${24 / -2}px ${24 / -2}px`,
     listStyle: 'none',
     '& + $nav': {
-      marginTop: `${theme.spacing(4)}px`,
+      marginTop: '32px',
     },
   },
   navItem: {
-    margin: `0 ${theme.spacing(3) / 2}px ${theme.spacing(3) / 2}px ${theme.spacing(3) / 2}px`,
+    margin: `0 ${24 / 2}px ${24 / 2}px ${24 / 2}px`,
   },
   navLink: {
     ...theme.typography['body-lg-med'],
     display: 'block',
     textDecoration: 'none',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     '& svg': {
       display: 'block',
       fill: 'currentColor',
@@ -50,7 +47,7 @@ export const styles = (theme: Theme) => ({
       height: '24px',
     },
     '&:hover': {
-      color: theme.palette.text.primary,
+      color: theme.palette.text.light,
     },
   },
 });

@@ -5,13 +5,13 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     borderRadius: '12px',
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: theme.palette.background.contentPrimary,
   },
   header: {
     display: 'flex',
     alignItems: 'center',
     columnGap: '16px',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.contentDark,
     borderRadius: '12px 12px 0px 0px ',
     padding: '24px',
   },
@@ -21,12 +21,12 @@ export const styles = (theme: Theme) => ({
   subTitle: {
     ...theme.typography['subline-lg'],
     fontWeight: 700,
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
   },
   title: {
     ...theme.typography.h3,
     fontWeight: 500,
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
   },
   content: {
     display: 'flex',
