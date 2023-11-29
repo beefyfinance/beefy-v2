@@ -6,6 +6,10 @@ import type { VaultEntity } from '../../entities/vault';
 import { mapValuesDeep } from '../../utils/array-utils';
 import { featureFlag_simulateBeefyApiError } from '../../utils/feature-flags';
 import type { TreasuryConfig } from '../config-types';
+import type { ChainEntity } from '../../entities/chain';
+
+export const API_URL = import.meta.env.VITE_API_URL || 'https://api.beefy.finance';
+export const API_ZAP_URL = import.meta.env.VITE_API_ZAP_URL || `${API_URL}/zap`;
 
 export type ApyPerformanceFeeData = {
   total: number;
@@ -78,12 +82,6 @@ export interface BeefyAPILpBreakdownResponse {
   [vaultId: VaultEntity['id']]: LpData;
 }
 
-export type BeefyChartDataResponse = {
-  name: string;
-  ts: string;
-  v: number;
-}[];
-
 type BeefyApiVaultLastHarvestResponse = Record<string, number>;
 
 export type BeefySnapshotProposal = {
@@ -96,7 +94,13 @@ export type BeefySnapshotProposal = {
 };
 export type BeefySnapshotActiveResponse = BeefySnapshotProposal[];
 
-export type BeefyVaultZapSupportResponse = Record<string, ('beefy' | 'oneInch')[]>;
+export type ZapAggregatorTokenSupportResponse = {
+  [chainId: ChainEntity['id']]: {
+    [tokenAddress: TokenEntity['address']]: {
+      [provider: string]: boolean;
+    };
+  };
+};
 
 export class BeefyAPI {
   public api: AxiosInstance;
@@ -104,7 +108,7 @@ export class BeefyAPI {
   constructor() {
     // this could be mocked by passing mock axios to the constructor
     this.api = axios.create({
-      baseURL: import.meta.env.VITE_API_URL || 'https://api.beefy.finance',
+      baseURL: API_URL,
       timeout: 30 * 1000,
     });
   }
@@ -185,15 +189,23 @@ export class BeefyAPI {
     return res.data;
   }
 
-  public async getVaultZapSupport(): Promise<BeefyVaultZapSupportResponse> {
+  public async getZapAggregatorTokenSupport(): Promise<ZapAggregatorTokenSupportResponse> {
     if (featureFlag_simulateBeefyApiError('zap-support')) {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get<BeefyVaultZapSupportResponse>('/vaults/zap-support', {
+    const res = await this.api.get<ZapAggregatorTokenSupportResponse>(`${API_ZAP_URL}/swaps`, {
       params: { _: this.getCacheBuster('short') },
     });
-    return res.data;
+
+    // Handle api->app chain id
+    const data = res.data;
+    if ('one' in data) {
+      data['harmony'] = data['one'];
+      delete data['one'];
+    }
+
+    return data;
   }
 
   public async getTreasury(): Promise<TreasuryConfig> {

@@ -1,34 +1,107 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAllZapsAction } from '../actions/zap';
 import type { ChainEntity } from '../entities/chain';
-import type { ZapEntityBeefy, ZapEntityOneInch } from '../entities/zap';
-import type { AmmEntity } from '../entities/amm';
+import type { AmmEntity, SwapAggregatorEntity, ZapEntity } from '../entities/zap';
+import type { VaultEntity } from '../entities/vault';
+import type { TokenEntity } from '../entities/token';
+import {
+  calculateZapAvailabilityAction,
+  fetchZapAggregatorTokenSupportAction,
+  fetchZapAmmsAction,
+  fetchZapConfigsAction,
+  fetchZapSwapAggregatorsAction,
+} from '../actions/zap';
+import { fetchAllVaults } from '../actions/vaults';
 
-/**
- * State containing Vault infos
- */
 export type ZapsState = {
-  beefy: {
+  /**
+   * Beefy zap contract config for each chain
+   */
+  zaps: {
     byChainId: {
-      [chainId: ChainEntity['id']]: ZapEntityBeefy[];
-    };
-    byAmmId: {
-      [ammId: AmmEntity['id']]: ZapEntityBeefy;
+      [chainId: ChainEntity['id']]: ZapEntity;
     };
   };
-  oneInch: {
+  /**
+   * Swap aggregator configs for each chain
+   */
+  aggregators: {
+    byId: {
+      [aggregatorId: string]: SwapAggregatorEntity;
+    };
     byChainId: {
-      [chainId: ChainEntity['id']]: ZapEntityOneInch;
+      [chainId: ChainEntity['id']]: {
+        byType: {
+          [aggregatorType in SwapAggregatorEntity['type']]?: SwapAggregatorEntity['id'];
+        };
+      };
+    };
+  };
+  /**
+   * AMM configs for each chain
+   */
+  amms: {
+    byId: {
+      [ammId: AmmEntity['id']]: AmmEntity;
+    };
+    byChainId: {
+      [chainId: ChainEntity['id']]: AmmEntity[];
+    };
+  };
+  /**
+   * Token support for each swap aggregator
+   */
+  swaps: {
+    byChainId: {
+      [chainId: ChainEntity['id']]: {
+        byProvider: {
+          [providerId: string]: TokenEntity['address'][];
+        };
+        byAddress: {
+          [address: string]: string[];
+        };
+      };
+    };
+  };
+  /**
+   * Vault zap support
+   */
+  vaults: {
+    byId: {
+      [vaultId: VaultEntity['id']]: boolean;
+    };
+  };
+  /**
+   * Token scores for UI sorting
+   */
+  tokens: {
+    byChainId: {
+      [chainId: ChainEntity['id']]: {
+        scoreById: Record<string, number>;
+      };
     };
   };
 };
+
 const initialZapsState: ZapsState = {
-  beefy: {
+  zaps: {
     byChainId: {},
-    byAmmId: {},
   },
-  oneInch: {
+  aggregators: {
+    byId: {},
     byChainId: {},
+  },
+  amms: {
+    byId: {},
+    byChainId: {},
+  },
+  swaps: {
+    byChainId: {},
+  },
+  tokens: {
+    byChainId: {},
+  },
+  vaults: {
+    byId: {},
   },
 };
 
@@ -39,36 +112,105 @@ export const zapsSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    builder.addCase(fetchAllZapsAction.fulfilled, (sliceState, action) => {
-      for (const zap of action.payload.beefy) {
-        const typedZap: ZapEntityBeefy = {
-          type: 'beefy',
-          ...zap,
-        };
-
-        if (!(zap.ammId in sliceState.beefy.byAmmId)) {
-          sliceState.beefy.byAmmId[zap.ammId] = typedZap;
-
-          if (!(zap.chainId in sliceState.beefy.byChainId)) {
-            sliceState.beefy.byChainId[zap.chainId] = [];
+    builder
+      .addCase(fetchZapConfigsAction.fulfilled, (sliceState, action) => {
+        for (const zap of action.payload.zaps) {
+          sliceState.zaps.byChainId[zap.chainId] = zap;
+        }
+      })
+      .addCase(fetchZapSwapAggregatorsAction.fulfilled, (sliceState, action) => {
+        for (const aggregator of action.payload.aggregators) {
+          // Aggregator
+          sliceState.aggregators.byId[aggregator.id] = aggregator;
+          if (!(aggregator.chainId in sliceState.aggregators.byChainId)) {
+            sliceState.aggregators.byChainId[aggregator.chainId] = { byType: {} };
           }
 
-          sliceState.beefy.byChainId[zap.chainId].push(typedZap);
-        } else {
-          console.warn(`Ignoring duplicate beefy zap for amm ${zap.ammId}`);
-        }
-      }
+          if (!(aggregator.type in sliceState.aggregators.byChainId[aggregator.chainId].byType)) {
+            sliceState.aggregators.byChainId[aggregator.chainId].byType[aggregator.type] =
+              aggregator.id;
+          } else {
+            console.warn(
+              `Ignoring duplicate aggregator type ${aggregator.type} for chain ${aggregator.chainId}`
+            );
+          }
 
-      for (const zap of action.payload.oneInch) {
-        if (!(zap.chainId in sliceState.oneInch.byChainId)) {
-          sliceState.oneInch.byChainId[zap.chainId] = {
-            type: 'one-inch',
-            ...zap,
-          };
-        } else {
-          console.warn(`Ignoring duplicate 1inch zap for chain ${zap.chainId}`);
+          // Priority Tokens
+          if (!(aggregator.chainId in sliceState.tokens.byChainId)) {
+            sliceState.tokens.byChainId[aggregator.chainId] = { scoreById: {} };
+            for (const tokenId of aggregator.priorityTokens) {
+              sliceState.tokens.byChainId[aggregator.chainId].scoreById[tokenId] =
+                (sliceState.tokens.byChainId[aggregator.chainId].scoreById[tokenId] || 0) + 1;
+            }
+          }
         }
-      }
-    });
+      })
+      .addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
+        // Start with any vault with a zap config being available
+        sliceState.vaults.byId = Object.values(action.payload.byChainId)
+          .flat()
+          .reduce((acc, vault) => {
+            if (vault.type === 'standard' && vault.zaps?.length > 0) {
+              acc[vault.id] = true;
+            }
+            return acc;
+          }, {} as Record<VaultEntity['id'], boolean>);
+      })
+      .addCase(fetchZapAmmsAction.fulfilled, (sliceState, action) => {
+        for (const [chainId, amms] of Object.entries(action.payload.byChainId)) {
+          sliceState.amms.byChainId[chainId] = amms;
+
+          for (const amm of amms) {
+            if (!(amm.id in sliceState.amms.byId)) {
+              sliceState.amms.byId[amm.id] = amm;
+            } else {
+              console.warn(`Duplicate amm id ${amm.id}`);
+            }
+          }
+        }
+      })
+      .addCase(fetchZapAggregatorTokenSupportAction.fulfilled, (sliceState, action) => {
+        for (const [chainId, swapSupport] of Object.entries(action.payload)) {
+          if (!sliceState.swaps.byChainId[chainId]) {
+            sliceState.swaps.byChainId[chainId] = { byProvider: {}, byAddress: {} };
+          }
+
+          sliceState.swaps.byChainId[chainId].byProvider = Object.entries(swapSupport).reduce(
+            (acc, [address, providers]) => {
+              for (const [provider, supported] of Object.entries(providers)) {
+                if (supported) {
+                  if (!acc[provider]) {
+                    acc[provider] = [];
+                  }
+                  acc[provider].push(address);
+                }
+              }
+              return acc;
+            },
+            {} as Record<string, string[]>
+          );
+
+          sliceState.swaps.byChainId[chainId].byAddress = Object.entries(swapSupport).reduce(
+            (acc, [address, providers]) => {
+              const supported = Object.entries(providers)
+                .filter(([_, supported]) => supported)
+                .map(([provider, _]) => provider);
+              if (supported.length) {
+                acc[address.toLowerCase()] = supported;
+              }
+
+              return acc;
+            },
+            {} as Record<string, string[]>
+          );
+        }
+      })
+      .addCase(calculateZapAvailabilityAction.fulfilled, (sliceState, action) => {
+        // Later we have data to know if a vault actually supports zaps (i.e. a swap aggregator is available for its tokens)
+        sliceState.vaults.byId = action.payload.vaultIds.reduce((acc, vaultId) => {
+          acc[vaultId] = true;
+          return acc;
+        }, {} as Record<VaultEntity['id'], boolean>);
+      });
   },
 });

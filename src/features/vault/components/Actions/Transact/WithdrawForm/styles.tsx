@@ -17,6 +17,9 @@ export const styles = (theme: Theme) => ({
   selectLabel: {
     ...theme.typography['body-lg'],
     color: theme.palette.text.dark,
+    display: 'flex',
+    alignItems: 'baseline',
+    gap: '4px',
   },
   availableLabel: {
     ...theme.typography['body-sm'],

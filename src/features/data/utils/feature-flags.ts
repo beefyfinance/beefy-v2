@@ -13,6 +13,9 @@ function getSearchParams(): URLSearchParams {
   return searchParamsCache;
 }
 
+export const isDevelopment = import.meta.env.DEV;
+export const isProduction = import.meta.env.PROD;
+
 export function featureFlag_getContractDataApiImplem():
   | 'eth-multicall'
   | 'new-multicall'
@@ -175,31 +178,6 @@ export function featureFlag_breakpoints() {
   return params.has('__breakpoints');
 }
 
-type ZapOverrides = {
-  beefy: 'all' | string[];
-  oneInch: 'all' | string[];
-};
-export function featureFlag_zapSupportOverrides(): ZapOverrides {
-  const params = getSearchParams();
-  const overrides: ZapOverrides = {
-    beefy: [],
-    oneInch: [],
-  };
-  for (const kind of ['beefy', 'oneInch'] as const) {
-    const key = `__${kind}_zap_support`;
-    if (params.has(key)) {
-      const enabled = params.get(key);
-      if (enabled === 'all') {
-        overrides[kind] = 'all';
-      } else {
-        overrides[kind] = enabled.split(',');
-      }
-    }
-  }
-
-  return overrides;
-}
-
 export function featureFlag_walletConnectChainId(): number {
   const params = getSearchParams();
   if (params.has('__wc_chain_id')) {
@@ -222,4 +200,42 @@ export function featureFlag_simulateBridgeRateLimit(): boolean {
 export function featureFlag_simulateAllBridgeRateLimit(): boolean {
   const params = getSearchParams();
   return params.has('__simulate_all_bridge_rate_limit');
+}
+
+export function featureFlag_oneInchSupport(): { chainId: string; tokenAddress: string }[] {
+  const params = getSearchParams();
+  if (params.has('__oneinch_support')) {
+    return params
+      .get('__oneinch_support')
+      .split(',')
+      .map(s => {
+        const [chainId, tokenAddress] = s.split(':');
+        return { chainId, tokenAddress };
+      });
+  }
+  return [];
+}
+
+export function featureFlag_kyberSwapSupport(): { chainId: string; tokenAddress: string }[] {
+  const params = getSearchParams();
+  if (params.has('__kyber_support')) {
+    return params
+      .get('__kyber_support')
+      .split(',')
+      .map(s => {
+        const [chainId, tokenAddress] = s.split(':');
+        return { chainId, tokenAddress };
+      });
+  }
+  return [];
+}
+
+export function featureFlag_disableOneInch(): boolean {
+  const params = getSearchParams();
+  return params.has('__disable_one_inch');
+}
+
+export function featureFlag_disableKyber(): boolean {
+  const params = getSearchParams();
+  return params.has('__disable_kyber');
 }

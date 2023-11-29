@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
-import { getWalletConnectionApiInstance } from '../apis/instances';
+import { getWalletConnectionApi } from '../apis/instances';
 import type { ChainEntity } from '../entities/chain';
 import {
   accountHasChanged,
@@ -22,7 +22,7 @@ export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
     const chains = selectAllChains(state);
 
     // instantiate and do the proper piping between both worlds
-    await getWalletConnectionApiInstance({
+    await getWalletConnectionApi({
       chains,
       onConnect: (chainId, address) =>
         dispatch(userDidConnect({ chainId, address: featureFlag_walletAddressOverride(address) })),
@@ -67,7 +67,7 @@ export const tryToAutoReconnect = createAsyncThunk<void, void, { state: BeefySta
   async (_, { getState }) => {
     const state = getState();
     if (!selectIsWalletConnected(state)) {
-      const walletConnection = await getWalletConnectionApiInstance();
+      const walletConnection = await getWalletConnectionApi();
       await walletConnection.tryToAutoReconnect();
     }
   }
@@ -77,7 +77,7 @@ export const askForWalletConnection = createAsyncThunk(
   'wallet/askForWalletConnection',
   async () => {
     try {
-      const walletConnection = await getWalletConnectionApiInstance();
+      const walletConnection = await getWalletConnectionApi();
       await walletConnection.askUserToConnectIfNeeded();
     } catch (err) {
       console.error('askForWalletConnection', err);
@@ -87,14 +87,14 @@ export const askForWalletConnection = createAsyncThunk(
 );
 
 export const doDisconnectWallet = createAsyncThunk('wallet/doDisconnectWallet', async () => {
-  const walletConnection = await getWalletConnectionApiInstance();
+  const walletConnection = await getWalletConnectionApi();
   await walletConnection.disconnect();
 });
 
 export const askForNetworkChange = createAsyncThunk<void, { chainId: ChainEntity['id'] }>(
   'wallet/askForNetworkChange',
   async ({ chainId }) => {
-    const walletConnection = await getWalletConnectionApiInstance();
+    const walletConnection = await getWalletConnectionApi();
     await walletConnection.askUserForChainChange(chainId);
   }
 );

@@ -9,10 +9,9 @@ import {
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactSelectedChainId,
-  selectTransactSelectedTokenAddresses,
+  selectTransactSelected,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
-import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import { errorToString } from '../../../../../../helpers/format';
 import { TextLoader } from '../../../../../../components/TextLoader';
@@ -27,23 +26,20 @@ import { VaultFees } from '../VaultFees';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { RetirePauseReason } from '../../../RetirePauseReason';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
+import zapIcon from '../../../../../../images/icons/zap.svg';
 
 const useStyles = makeStyles(styles);
 
 const SelectedInWallet = memo(function SelectedInWallet() {
   const chainId = useAppSelector(selectTransactSelectedChainId);
-  const tokenAddresses = useAppSelector(selectTransactSelectedTokenAddresses);
+  const selection = useAppSelector(selectTransactSelected);
+  const token = selection?.tokens?.[0];
 
-  const token = useAppSelector(state =>
-    tokenAddresses.length && chainId
-      ? selectTokenByAddress(state, chainId, tokenAddresses[0])
-      : undefined
-  );
   const balance = useAppSelector(state =>
     token ? selectUserBalanceOfToken(state, token.chainId, token.address) : undefined
   );
 
-  if (!chainId || !tokenAddresses.length || !token || !balance) {
+  if (!chainId || !selection || !token || !balance) {
     return <TextLoader placeholder="0.0000000 BNB-BIFI" />;
   }
 
@@ -84,6 +80,7 @@ export const DepositForm = memo(function DepositForm() {
     <>
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
+          {hasOptions ? <img src={zapIcon} alt="Zap" height={12} /> : null}
           {t(hasOptions ? 'Transact-SelectToken' : 'Transact-Deposit')}
         </div>
         <div className={classes.availableLabel}>

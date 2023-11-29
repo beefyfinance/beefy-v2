@@ -1,18 +1,15 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { useAppSelector } from '../../../../../../store';
-import {
-  selectTransactOptionById,
-  selectTransactSelectedQuote,
-} from '../../../../../data/selectors/transact';
-import type { ZapOption } from '../../../../../data/apis/transact/transact-types';
+import { selectTransactSelectedQuote } from '../../../../../data/selectors/transact';
+import type { ZapQuote } from '../../../../../data/apis/transact/transact-types';
 import { isZapFeeDiscounted, isZapQuote } from '../../../../../data/apis/transact/transact-types';
 import { Value } from './Value';
 import { Label } from './Label';
 import { useTranslation } from 'react-i18next';
 import { LabelTooltip } from './LabelTooltip';
 import { formatSmallPercent } from '../../../../../../helpers/format';
-import { makeStyles } from '@material-ui/core';
 import type { Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
   original: {
@@ -36,36 +33,22 @@ export const MaybeZapFees = memo(function MaybeZapFees() {
     return null;
   }
 
-  return <ZapFees optionId={quote.optionId} />;
+  return <ZapFees quote={quote} />;
 });
 
 type ZapFeesProps = {
-  optionId: ZapOption['id'];
+  quote: ZapQuote;
 };
-const ZapFees = memo<ZapFeesProps>(function ZapFees({ optionId }) {
-  const { t, i18n } = useTranslation();
-  // we can assert the option is a ZapOption because we pass an optionId from a ZapQuote
-  const option = useAppSelector(state => selectTransactOptionById(state, optionId)) as ZapOption;
+const ZapFees = memo<ZapFeesProps>(function ZapFees({ quote }) {
+  const { t } = useTranslation();
   const classes = useStyles();
-  const providerId = option.providerId;
-  const fee = option.fee;
+  const { fee } = quote;
   const hasDiscountFee = isZapFeeDiscounted(fee);
-  const content = useMemo(() => {
-    const hierarchy = hasDiscountFee
-      ? [
-          `Transact-Fee-Zap-Explainer-Discount-${providerId}`,
-          `Transact-Fee-Zap-Explainer-${providerId}`,
-        ]
-      : `Transact-Fee-Zap-Explainer-${providerId}`;
-
-    return i18n.exists(hierarchy) ? t(hierarchy) : undefined;
-  }, [t, i18n, providerId, hasDiscountFee]);
 
   return (
     <>
       <Label>
-        {t('Transact-Fee-Zap')}{' '}
-        <LabelTooltip title={t('Transact-Fee-Zap-Explainer')} content={content} />
+        {t('Transact-Fee-Zap')} <LabelTooltip title={t('Transact-Fee-Zap-Explainer')} />
       </Label>
       <Value>
         {hasDiscountFee ? (

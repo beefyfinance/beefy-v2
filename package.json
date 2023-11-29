@@ -5,7 +5,7 @@
   "private": true,
   "type": "commonjs",
   "engines": {
-    "node": "16.x"
+    "node": "20.x"
   },
   "dependencies": {
     "@axelar-network/axelarjs-sdk": "^0.13.6",
@@ -73,10 +73,10 @@
     "launchpool": "ts-node ./scripts/launchpool.ts",
     "vault": "ts-node ./scripts/addVault.ts",
     "migratePlatform": "ts-node ./scripts/migratePlatform.ts",
-    "checkOneInchLiquidity": "ts-node -r dotenv/config ./scripts/checkOneInchLiquidity.ts",
     "setVaultUrls": "ts-node -r dotenv/config ./scripts/setVaultUrls.ts && prettier --write ./src/config/vault/*.json",
+    "migrateZapV3": "ts-node -r dotenv/config ./scripts/migrateVaultFilesForZapV3.ts && prettier --write ./src/config/vault/*.json",
     "checkVaultTokenDecimals": "ts-node -r dotenv/config ./scripts/checkVaultTokenDecimals.ts && prettier --write ./src/config/vault/*.json",
-    "addAmmsToVaults": "ts-node -r dotenv/config ./scripts/addAmmsToVaults.ts && prettier --write ./src/config/vault/*.json",
+    "makeExcludeConfig": "ts-node -r dotenv/config ./scripts/makeExcludeConfig.ts",
     "prepare": "husky install",
     "tsc": "tsc",
     "tsc-watch": "tsc --watch",
@@ -102,7 +102,7 @@
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
-    "@types/node": "^16.18.23",
+    "@types/node": "^20.10.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@types/react-router-dom": "^5.3.3",

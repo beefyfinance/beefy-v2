@@ -19,7 +19,12 @@ import {
   doDisconnectWallet,
   initWallet,
 } from '../actions/wallet';
-import { fetchAllZapsAction } from '../actions/zap';
+import {
+  fetchZapSwapAggregatorsAction,
+  fetchZapConfigsAction,
+  fetchZapAggregatorTokenSupportAction,
+  fetchZapAmmsAction,
+} from '../actions/zap';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters';
 import { fetchBridgeConfig } from '../actions/bridge';
 import { fetchPlatforms } from '../actions/platforms';
@@ -32,7 +37,6 @@ import type {
   LoaderState,
 } from './data-loader-types';
 import { errorToString } from '../../../helpers/format';
-import { fetchAllAmmsAction } from '../actions/amm';
 import { fetchTreasury } from '../actions/treasury';
 import type { fetchWalletTimelineFulfilled } from '../actions/analytics';
 import { fetchWalletTimeline } from '../actions/analytics';
@@ -85,8 +89,10 @@ export const initialDataLoaderState: DataLoaderState = {
     lastHarvests: dataLoaderStateInit,
     fees: dataLoaderStateInit,
     wallet: dataLoaderStateInit,
-    amms: dataLoaderStateInit,
-    zaps: dataLoaderStateInit,
+    zapAmms: dataLoaderStateInit,
+    zapConfigs: dataLoaderStateInit,
+    zapSwapAggregators: dataLoaderStateInit,
+    zapAggregatorTokenSupport: dataLoaderStateInit,
     depositForm: dataLoaderStateInit,
     withdrawForm: dataLoaderStateInit,
     boostForm: dataLoaderStateInit,
@@ -318,8 +324,15 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm', true);
     addGlobalAsyncThunkActions(builder, initiateMinterForm, 'minterForm', true);
     addGlobalAsyncThunkActions(builder, fetchBridgeConfig, 'bridgeConfig', true);
-    addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps', true);
-    addGlobalAsyncThunkActions(builder, fetchAllAmmsAction, 'amms', true);
+    addGlobalAsyncThunkActions(builder, fetchZapConfigsAction, 'zapConfigs', true);
+    addGlobalAsyncThunkActions(builder, fetchZapSwapAggregatorsAction, 'zapSwapAggregators', true);
+    addGlobalAsyncThunkActions(
+      builder,
+      fetchZapAggregatorTokenSupportAction,
+      'zapAggregatorTokenSupport',
+      true
+    );
+    addGlobalAsyncThunkActions(builder, fetchZapAmmsAction, 'zapAmms', true);
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
     addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms', true);
     addGlobalAsyncThunkActions(builder, fetchBridges, 'bridges', true);

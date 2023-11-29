@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectTransactNumTokens,
-  selectTransactSelectedTokens,
+  selectTransactSelected,
 } from '../../../../../data/selectors/transact';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import clsx from 'clsx';
@@ -23,7 +23,7 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
 }) {
   const dispatch = useAppDispatch();
   const classes = useStyles();
-  const selectedTokens = useAppSelector(selectTransactSelectedTokens);
+  const selection = useAppSelector(selectTransactSelected);
   const numTokenOptions = useAppSelector(selectTransactNumTokens);
   const multipleOptions = numTokenOptions > 1;
 
@@ -36,7 +36,7 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
       onClick={multipleOptions ? handleClick : undefined}
       className={clsx(classes.button, className, { [classes.buttonMore]: multipleOptions })}
     >
-      <TokensImage tokens={selectedTokens} className={classes.iconAssets} />
+      <TokensImage tokens={selection.tokens} className={classes.iconAssets} />
       {multipleOptions ? <ExpandMore className={classes.iconMore} /> : null}
     </button>
   );

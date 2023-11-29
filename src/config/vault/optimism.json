@@ -2,11 +2,11 @@
   {
     "id": "velodrome-v2-wsteth-velo",
     "name": "wstETH-VELO vLP",
+    "type": "standard",
     "token": "vAMM-wstETH-VELO",
     "tokenAddress": "0xCa72114b86Ac6d7Ab8D583c0E94C9A7DE7540610",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2wstETH-VELO",
     "earnedTokenAddress": "0x039af31d546938876F38A5452ea844Eca7c4fC30",
     "earnContractAddress": "0x039af31d546938876F38A5452ea844Eca7c4fC30",
@@ -20,11 +20,18 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1f32b1c2345538c0c6f582fcb022739c4a194ebb&token1=0x9560e827af36c94d2ac33a39bce1fe78631088db&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw",
     "network": "optimism",
-    "createdAt": 1700173968
+    "createdAt": 1700173968,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "curve-op-tbtc",
     "name": "tBTC/WBTC",
+    "type": "standard",
     "token": "2BTC-f",
     "tokenAddress": "0x1Dc5c0f8668a9F54ED922171d578011850ca0341",
     "tokenDecimals": 18,
@@ -47,6 +54,7 @@
   {
     "id": "aura-op-ethereum-triplets",
     "name": "Ethereum Triplets",
+    "type": "standard",
     "token": "Ethereum Triplets",
     "tokenAddress": "0x5F8893506Ddc4C271837187d14A9C87964a074Dc",
     "tokenDecimals": 18,
@@ -69,6 +77,7 @@
   {
     "id": "aura-op-ovn-wusd+",
     "name": "OVN-wUSD+",
+    "type": "standard",
     "token": "OVN-wUSD+",
     "tokenAddress": "0x00b82bc5EdEa6E5E6c77635e31a1A25Aad99f881",
     "tokenDecimals": 18,
@@ -91,11 +100,11 @@
   {
     "id": "velodrome-v2-weth-moobifi",
     "name": "mooBIFI-ETH vLP V2",
+    "type": "standard",
     "token": "mooBIFI-ETH vLP V2",
     "tokenAddress": "0x6Ed6Df1C23C51cb7Cc67a348cC8d9E6108EA3BFE",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2mooBIFI-ETH",
     "earnedTokenAddress": "0x57d00d036485B5fEE6A58c8763Bdc358906E6D19",
     "earnContractAddress": "0x57d00d036485B5fEE6A58c8763Bdc358906E6D19",
@@ -110,11 +119,18 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xc55e93c62874d8100dbd2dfe307edc1036ad5434&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x6Ed6Df1C23C51cb7Cc67a348cC8d9E6108EA3BFE",
     "network": "optimism",
-    "createdAt": 1698188042
+    "createdAt": 1698188042,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "aura-op-reth-ankreth",
     "name": "rETH-ankrETH",
+    "type": "standard",
     "token": "rETH-ankrETH",
     "tokenAddress": "0x004700ba0a4f5f22e1E78a277fCA55e36F47E09C",
     "tokenDecimals": 18,
@@ -137,6 +153,7 @@
   {
     "id": "aura-op-usdc-usdce-usdt-dai",
     "name": "USDC/USDCe/USDT/DAI",
+    "type": "standard",
     "token": "USDC/USDCe/USDT/DAI",
     "tokenAddress": "0x9Da11Ff60bfc5aF527f58fd61679c3AC98d040d9",
     "tokenDecimals": 18,
@@ -159,6 +176,7 @@
   {
     "id": "aura--op-dola-usdce",
     "name": "DOLA-USDCe",
+    "type": "standard",
     "token": "DOLA-USDCe",
     "tokenAddress": "0xACfE9b4782910A853b68abbA60f3FD8049Ffe638",
     "tokenDecimals": 18,
@@ -181,11 +199,11 @@
   {
     "id": "velodrome-v2-ovn-usd+",
     "name": "OVN-USD+ vLP v2",
+    "type": "standard",
     "token": "vAMMV2-OVN/USD+",
     "tokenAddress": "0x844D7d2fCa6786Be7De6721AabdfF6957ACE73a0",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2_OVN-USD+",
     "earnedTokenAddress": "0x366776D0709F7C49ce5ea7cF7eAEF0AB4E746cc9",
     "earnContractAddress": "0x366776D0709F7C49ce5ea7cF7eAEF0AB4E746cc9",
@@ -199,16 +217,22 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x3b08fcd15280e7b5a6e404c4abb87f7c774d1b2e&token1=0x73cb180bf0521828d8849bc8cf2b920918e23032&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x844D7d2fCa6786Be7De6721AabdfF6957ACE73a0",
     "network": "optimism",
-    "createdAt": 1695979179
+    "createdAt": 1695979179,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-wsteth-pendle",
     "name": "wstETH-PENDLE vLP v2",
+    "type": "standard",
     "token": "wstETH-PENDLE vLP v2",
     "tokenAddress": "0x7c9a7243F6A359781996822A141A28DC48AA258b",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2wstETHPENDLE",
     "earnedTokenAddress": "0x82EDb0Cb1Ec84b267A90c8A8f6aCc09aAE8857f9",
     "earnContractAddress": "0x82EDb0Cb1Ec84b267A90c8A8f6aCc09aAE8857f9",
@@ -223,16 +247,22 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb&token1=0xBC7B1Ff1c6989f006a1185318eD4E7b5796e66E1&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x7c9a7243F6A359781996822A141A28DC48AA258b",
     "network": "optimism",
-    "createdAt": 1693005457
+    "createdAt": 1693005457,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-jrt-weth",
     "name": "JRT-ETH vLP V2",
+    "type": "standard",
     "token": "Moo VeloV2 JRT-ETH",
     "tokenAddress": "0xB52b8cfbCf5c177feB99870D3E2dD02933553933",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedTokenAddress": "0x6ce45dAe799bc8A95163813496cF13A020Fdf61F",
     "earnContractAddress": "0x6ce45dAe799bc8A95163813496cF13A020Fdf61F",
     "oracle": "lps",
@@ -245,11 +275,18 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x15e770B95Edd73fD96b02EcE0266247D50895E76&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xB52b8cfbCf5c177feB99870D3E2dD02933553933",
     "network": "optimism",
-    "createdAt": 1692389027
+    "createdAt": 1692389027,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "beets-eclp-wsteth-eth",
     "name": "Gyroscope wstETH-ETH",
+    "type": "standard",
     "token": "Gyroscope wstETH-ETH",
     "tokenAddress": "0x7Ca75bdEa9dEde97F8B13C6641B768650CB83782",
     "tokenDecimals": 18,
@@ -272,6 +309,7 @@
   {
     "id": "uniswap-gamma-weth-op-narrow",
     "name": "ETH-OP Narrow LP",
+    "type": "standard",
     "token": "ETH-OP Narrow LP",
     "tokenAddress": "0xbcFa4cfA97f74a6AbF80b9901569BBc8654F4315",
     "tokenDecimals": 18,
@@ -295,6 +333,7 @@
   {
     "id": "uniswap-gamma-weth-op-wide",
     "name": "ETH-OP Wide LP",
+    "type": "standard",
     "token": "ETH-OP Wide LP",
     "tokenAddress": "0x8480199E5D711399ABB4D51bDa329E064c89ad77",
     "tokenDecimals": 18,
@@ -318,11 +357,11 @@
   {
     "id": "velodrome-v2-weth-hop",
     "name": "HOP-ETH vLP V2",
+    "type": "standard",
     "token": "HOP-ETH vLP V2",
     "tokenAddress": "0x0e88a5bfF34d39DA66bdD32B82dC89a32D7Bb6c9",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2WETH-HOP",
     "earnedTokenAddress": "0xCe6A02C3456f2518D5F02002ecEFFFDc4539247f",
     "earnContractAddress": "0xCe6A02C3456f2518D5F02002ecEFFFDc4539247f",
@@ -337,16 +376,22 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xc5102fe9359fd9a28f877a67e36b0f050d81a3cc&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x0e88a5bfF34d39DA66bdD32B82dC89a32D7Bb6c9",
     "network": "optimism",
-    "createdAt": 1691417919
+    "createdAt": 1691417919,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usdc-wusdr",
     "name": "USDCe-wUSDR vLP V2",
+    "type": "standard",
     "token": "USDCe-wUSDR vLP V2",
     "tokenAddress": "0x95a05D06Decf8e1Eb93aE09B612FbD342F2F9E2E",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2USDC-wUSDR",
     "earnedTokenAddress": "0xcAa74e50428bDC4Af6A7Ead65fFFf77F0D231E80",
     "earnContractAddress": "0xcAa74e50428bDC4Af6A7Ead65fFFf77F0D231E80",
@@ -361,16 +406,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x7f5c764cbc14f9669b88837ca1490cca17c31607&token1=0xc03b43d492d904406db2d7d57e67c7e8234ba752&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x95a05D06Decf8e1Eb93aE09B612FbD342F2F9E2E",
     "network": "optimism",
-    "createdAt": 1691190913
+    "createdAt": 1691190913,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-unidx-weth-v2",
     "name": "UNIDX-ETH vLP V2",
+    "type": "standard",
     "token": "UNIDX-ETH vLP V2",
     "tokenAddress": "0x9269F5199B01B7B7Dd38321B85c3F34EE3f28F7F",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2UNIDX-ETHV2",
     "earnedTokenAddress": "0x5be32a688E37A0D924727882B33cfCC56Bd738BC",
     "earnContractAddress": "0x5be32a688E37A0D924727882B33cfCC56Bd738BC",
@@ -385,16 +436,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x28b42698caf46b4b012cf38b6c75867e0762186d&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x9269F5199B01B7B7Dd38321B85c3F34EE3f28F7F",
     "network": "optimism",
-    "createdAt": 1690458996
+    "createdAt": 1690458996,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-unidx-dai-v2",
     "name": "UNIDX-DAI vLP V2",
+    "type": "standard",
     "token": "UNIDX-DAI vLP V2",
     "tokenAddress": "0xFc233aD094C8c9C245BDEA891DfEe2d7F9e632c4",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2UNIDX-DAIV2",
     "earnedTokenAddress": "0xF95e138d13df1125F0D6F6826F94EFdb67EA54aa",
     "earnContractAddress": "0xF95e138d13df1125F0D6F6826F94EFdb67EA54aa",
@@ -409,16 +466,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x28b42698caf46b4b012cf38b6c75867e0762186d&token1=0xda10009cbd5d07dd0cecc66161fc93d7c9000da1&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xFc233aD094C8c9C245BDEA891DfEe2d7F9e632c4",
     "network": "optimism",
-    "createdAt": 1690458996
+    "createdAt": 1690458996,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-wbtc-tbtc",
     "name": "tBTC-WBTC sLP V2",
+    "type": "standard",
     "token": "tBTC-WBTC sLP V2",
     "tokenAddress": "0x6e57B9E54ea043a829584B22182ad22bF446926C",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2WBTC-tBTC",
     "earnedTokenAddress": "0xfE1C64D42B7d6554Cc2ACD0D74e2983a2dE4A62f",
     "earnContractAddress": "0xfE1C64D42B7d6554Cc2ACD0D74e2983a2dE4A62f",
@@ -433,16 +496,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x68f180fcce6836688e9084f035309e29bf0a2095&token1=0x6c84a8f1c29108f47a79964b5fe888d4f4d0de40&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x6e57B9E54ea043a829584B22182ad22bF446926C",
     "network": "optimism",
-    "createdAt": 1690458996
+    "createdAt": 1690458996,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-weth-tbtc",
     "name": "tBTC-ETH vLP V2",
+    "type": "standard",
     "token": "tBTC-ETH vLP V2",
     "tokenAddress": "0xadBB23Bcc3C1B9810491897cb0690Cf645B858b1",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2ETH-tBTC",
     "earnedTokenAddress": "0xfd3B30e3145069e272E6144A9d1F3EED0fCCb2f9",
     "earnContractAddress": "0xfd3B30e3145069e272E6144A9d1F3EED0fCCb2f9",
@@ -457,16 +526,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x6c84a8f1c29108f47a79964b5fe888d4f4d0de40&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xadBB23Bcc3C1B9810491897cb0690Cf645B858b1",
     "network": "optimism",
-    "createdAt": 1690458996
+    "createdAt": 1690458996,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-exa-weth",
     "name": "EXA-WETH vLP V2",
+    "type": "standard",
     "token": "EXA-WETH vLP V2",
     "tokenAddress": "0xf3C45b45223Df6071a478851B9C17e0630fDf535",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2EXA-WETH",
     "earnedTokenAddress": "0xdD84190aF336Ee2831eea88B6783958e8F269de9",
     "earnContractAddress": "0xdD84190aF336Ee2831eea88B6783958e8F269de9",
@@ -481,11 +556,18 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x1e925De1c68ef83bD98eE3E130eF14a50309C01B&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xf3C45b45223Df6071a478851B9C17e0630fDf535",
     "network": "optimism",
-    "createdAt": 1690549768
+    "createdAt": 1690549768,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "exactly-supply-op",
     "name": "OP",
+    "type": "standard",
     "token": "OP",
     "tokenAddress": "0x4200000000000000000000000000000000000042",
     "tokenDecimals": 18,
@@ -508,16 +590,21 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/OP",
     "network": "optimism",
-    "createdAt": 1694023422
+    "createdAt": 1694023422,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-frax-op",
     "name": "OP-FRAX vLP V2",
+    "type": "standard",
     "token": "OP-FRAX vLP V2",
     "tokenAddress": "0xe9b168fa9409EaFFa07679196c7568317baf80eD",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2OP-FRAX",
     "earnedTokenAddress": "0x2598E7959640C2e5DD8A5c5c6634d3Cf9D05b54F",
     "earnContractAddress": "0x2598E7959640C2e5DD8A5c5c6634d3Cf9D05b54F",
@@ -540,16 +627,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000042&token1=0x2e3d870790dc77a83dd1d18184acc7439a53f475&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xe9b168fa9409EaFFa07679196c7568317baf80eD",
     "network": "optimism",
-    "createdAt": 1689918804
+    "createdAt": 1689918804,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-op-frxeth",
     "name": "OP-frxETH vLP V2",
+    "type": "standard",
     "token": "OP-frxETH vLP V2",
     "tokenAddress": "0x2fE304b407c7fAb2a3c10962F14dB751468a4f5b",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2OP-frxETH",
     "earnedTokenAddress": "0x1B9eb90884F3566AE923366B65a49B1E30cbcE28",
     "earnContractAddress": "0x1B9eb90884F3566AE923366B65a49B1E30cbcE28",
@@ -571,16 +664,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000042&token1=0x6806411765af15bddd26f8f544a34cc40cb9838b&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x2fE304b407c7fAb2a3c10962F14dB751468a4f5b",
     "network": "optimism",
-    "createdAt": 1689918804
+    "createdAt": 1689918804,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-susd-lusd",
     "name": "sUSD-LUSD sLP V2",
+    "type": "standard",
     "token": "sUSD-LUSD sLP V2",
     "tokenAddress": "0x3B375bA61920551217f5944F4F5d8a63989A438e",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2sUSD-LUSD",
     "earnedTokenAddress": "0x699Da70F4928033EbC3B929b0Fc022dD348D7846",
     "earnContractAddress": "0x699Da70F4928033EbC3B929b0Fc022dD348D7846",
@@ -602,16 +701,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9&token1=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x3B375bA61920551217f5944F4F5d8a63989A438e",
     "network": "optimism",
-    "createdAt": 1689918804
+    "createdAt": 1689918804,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-weth-velo",
     "name": "VELO-ETH vLP V2",
+    "type": "standard",
     "token": "VELO-ETH vLP V2",
     "tokenAddress": "0x58e6433A6903886E440Ddf519eCC573c4046a6b2",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2VELO-ETH",
     "earnedTokenAddress": "0x6C8E91f43AAB94Ee43e834517548d1b8aF6dD7CB",
     "earnContractAddress": "0x6C8E91f43AAB94Ee43e834517548d1b8aF6dD7CB",
@@ -626,16 +731,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x9560e827af36c94d2ac33a39bce1fe78631088db&token1=eth&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x58e6433A6903886E440Ddf519eCC573c4046a6b2",
     "network": "optimism",
-    "createdAt": 1689918804
+    "createdAt": 1689918804,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usd+-lusd",
     "name": "USD+-LUSD sLP V2",
+    "type": "standard",
     "token": "USD+-LUSD sLP V2",
     "tokenAddress": "0x37e7D30CC180A750C83D68ED0C2511dA10694d63",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2USD+-LUSD",
     "earnedTokenAddress": "0xb2668f1d9f31065ae45Cc59dA13Cf0e79A2683aB",
     "earnContractAddress": "0xb2668f1d9f31065ae45Cc59dA13Cf0e79A2683aB",
@@ -657,16 +768,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x73cb180bf0521828d8849bc8cf2b920918e23032&token1=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x37e7D30CC180A750C83D68ED0C2511dA10694d63",
     "network": "optimism",
-    "createdAt": 1689918804
+    "createdAt": 1689918804,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-thales-weth",
     "name": "THALES-ETH vLP V2",
+    "type": "standard",
     "token": "THALES-ETH vLP V2",
     "tokenAddress": "0xDFF90E4A6c229565f25337B1DB9fA12f6d8cB118",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2THALES-ETH",
     "earnedTokenAddress": "0x78636Ec86510C66f4B60620473a4F71F09DffA9e",
     "earnContractAddress": "0x78636Ec86510C66f4B60620473a4F71F09DffA9e",
@@ -681,11 +798,18 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x217d47011b23bb961eb6d93ca9945b7501a5bb11&token1=eth&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xDFF90E4A6c229565f25337B1DB9fA12f6d8cB118",
     "network": "optimism",
-    "createdAt": 1689918804
+    "createdAt": 1689918804,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "hop-op-susd",
     "name": "sUSD LP",
+    "type": "standard",
     "token": "sUSD-hsUSD LP",
     "tokenAddress": "0xBD08972Cef7C9a5A046C9Ef13C9c3CE13739B8d6",
     "tokenDecimals": 18,
@@ -718,11 +842,11 @@
   {
     "id": "velodrome-v2-weth-unidx",
     "name": "WETH-multiUNIDX vLP V2",
+    "type": "standard",
     "token": "WETH-multiUNIDX vLP V2",
     "tokenAddress": "0xE39120b27e5bfeC953524402C2e261763c76519E",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVelodromeV2WETH-UNIDX",
     "earnedTokenAddress": "0x1f029e18226398e9a7503a8c154a9952Cb387550",
     "earnContractAddress": "0x1f029e18226398e9a7503a8c154a9952Cb387550",
@@ -738,16 +862,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x5d47bAbA0d66083C52009271faF3F50DCc01023C&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xE39120b27e5bfeC953524402C2e261763c76519E",
     "network": "optimism",
-    "createdAt": 1688210133
+    "createdAt": 1688210133,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usdc-ageur",
     "name": "agEUR-USDCe vLP V2",
+    "type": "standard",
     "token": "agEUR-USDCe vLP V2",
     "tokenAddress": "0x4BE2CBE40521279b8fc561e65Bb842bf73ec3a80",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVelodromeV2agEUR-USDCe",
     "earnedTokenAddress": "0x738CDf563C41aAF8aA350D0a3c24bF614FfD75dC",
     "earnContractAddress": "0x738CDf563C41aAF8aA350D0a3c24bF614FfD75dC",
@@ -769,16 +899,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x7F5c764cBc14f9669B88837ca1490cCa17c31607&token1=0x9485aca5bbBE1667AD97c7fE7C4531a624C8b1ED&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x4BE2CBE40521279b8fc561e65Bb842bf73ec3a80",
     "network": "optimism",
-    "createdAt": 1688210852
+    "createdAt": 1688210852,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usd+-dai+",
     "name": "USD+-DAI+ sLP V2",
+    "type": "standard",
     "token": "USD+-DAI+ sLP V2",
     "tokenAddress": "0x667002F9DC61ebcBA8Ee1Cbeb2ad04060388f223",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVelodromeV2USD+-DAI+",
     "earnedTokenAddress": "0x0414BA5d3991a7B901d4e3f18b694a62414aC7Db",
     "earnContractAddress": "0x0414BA5d3991a7B901d4e3f18b694a62414aC7Db",
@@ -800,16 +936,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x5d47bAbA0d66083C52009271faF3F50DCc01023C&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x667002F9DC61ebcBA8Ee1Cbeb2ad04060388f223",
     "network": "optimism",
-    "createdAt": 1688203289
+    "createdAt": 1688203289,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-jeur-ageur",
     "name": "jEUR-agEUR sLP V2",
+    "type": "standard",
     "token": "jEUR-agEUR sLP V2",
     "tokenAddress": "0x3DD9556a521d6e57bE480c94da102fedf0429aba",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2jEUR-agEUR",
     "earnedTokenAddress": "0x6B47afc8bf3b2e013b5e9178e8015Cc620983b51",
     "earnContractAddress": "0x6B47afc8bf3b2e013b5e9178e8015Cc620983b51",
@@ -831,16 +973,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x79AF5dd14e855823FA3E9ECAcdF001D99647d043&token1=0x9485aca5bbBE1667AD97c7fE7C4531a624C8b1ED&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x3DD9556a521d6e57bE480c94da102fedf0429aba",
     "network": "optimism",
-    "createdAt": 1688104101
+    "createdAt": 1688104101,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-frax-usdc",
     "name": "FRAX-USDCe sLP V2",
+    "type": "standard",
     "token": "FRAX-USDCe sLP V2",
     "tokenAddress": "0x8542DD4744edEa38b8a9306268b08F4D26d38581",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2FRAX-USDCe",
     "earnedTokenAddress": "0x797c35a8032CE0A8dFcA308ac1b2276359cd463b",
     "earnContractAddress": "0x797c35a8032CE0A8dFcA308ac1b2276359cd463b",
@@ -862,16 +1010,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x2E3D870790dC77A83DD1d18184Acc7439A53f475&token1=0x7F5c764cBc14f9669B88837ca1490cCa17c31607&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x8542DD4744edEa38b8a9306268b08F4D26d38581",
     "network": "optimism",
-    "createdAt": 1688104100
+    "createdAt": 1688104100,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-frax-mai",
     "name": "FRAX-MAI sLP V2",
+    "type": "standard",
     "token": "FRAX-MAI sLP V2",
     "tokenAddress": "0xc37a0a37664aeB3848f98C5dD5d7AE286A1E9Ebd",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2FRAX-MAI",
     "earnedTokenAddress": "0x0980C3171E32c4508f614ceC15A3819B6cCf372c",
     "earnContractAddress": "0x0980C3171E32c4508f614ceC15A3819B6cCf372c",
@@ -892,16 +1046,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x2E3D870790dC77A83DD1d18184Acc7439A53f475&token1=0xdFA46478F9e5EA86d57387849598dbFB2e964b02&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xc37a0a37664aeB3848f98C5dD5d7AE286A1E9Ebd",
     "network": "optimism",
-    "createdAt": 1688104099
+    "createdAt": 1688104099,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usdc-mta",
     "name": "MTA-USDCe vLP V2",
+    "type": "standard",
     "token": "MTA-USDCe vLP V2",
     "tokenAddress": "0x8453cc52F2108fF9D1636B6A108dB06Ac137B72F",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2USDC-MTA",
     "earnedTokenAddress": "0xb379AB37f2e7d4A0d2479c09d637bD6B20E1354d",
     "earnContractAddress": "0xb379AB37f2e7d4A0d2479c09d637bD6B20E1354d",
@@ -916,16 +1076,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x929b939f8524c3be977af57a4a0ad3fb1e374b50&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x8453cc52F2108fF9D1636B6A108dB06Ac137B72F",
     "network": "optimism",
-    "createdAt": 1688104098
+    "createdAt": 1688104098,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-weth-aelin",
     "name": "AELIN-ETH vLP V2",
+    "type": "standard",
     "token": "AELIN-ETH vLP V2",
     "tokenAddress": "0x5DA5e8a46D435D619A12086620Bc77bF7fB043E5",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2AELIN-ETH",
     "earnedTokenAddress": "0x28E0f491dBB32efAc69c1b2B793A1025Ef90320D",
     "earnContractAddress": "0x28E0f491dBB32efAc69c1b2B793A1025Ef90320D",
@@ -941,16 +1107,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=eth&token1=0x61baadcf22d2565b0f471b291c475db5555e0b76&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x5DA5e8a46D435D619A12086620Bc77bF7fB043E5",
     "network": "optimism",
-    "createdAt": 1688104098
+    "createdAt": 1688104098,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-unidx-dai",
     "name": "multiUNIDX-DAI vLP V2",
+    "type": "standard",
     "token": "multiUNIDX-DAI vLP V2",
     "tokenAddress": "0xc0a0adF5E3b07e383C2c1533B2f0878A3195C622",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2UNIDX-DAI",
     "earnedTokenAddress": "0xf8b26185Ebb6C839b39C9B4e4B4C91edC4dA09d8",
     "earnContractAddress": "0xf8b26185Ebb6C839b39C9B4e4B4C91edC4dA09d8",
@@ -966,16 +1138,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x5d47baba0d66083c52009271faf3f50dcc01023c&token1=0xda10009cbd5d07dd0cecc66161fc93d7c9000da1&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xc0a0adF5E3b07e383C2c1533B2f0878A3195C622",
     "network": "optimism",
-    "createdAt": 1688104098
+    "createdAt": 1688104098,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usdc-wtbt",
     "name": "wTBT-USDCe vLP V2",
+    "type": "standard",
     "token": "wTBT-USDCe vLP V2",
     "tokenAddress": "0x5e6E17F745fF620E87324b7c6ec672B5743BD0B4",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2USDC-wTBT",
     "earnedTokenAddress": "0xdc54C0C57deD2A7788C6F49D151B9b0AC5d62BAB",
     "earnContractAddress": "0xdc54C0C57deD2A7788C6F49D151B9b0AC5d62BAB",
@@ -997,16 +1175,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0xdb4ea87ff83eb1c80b8976fc47731da6a31d35e5&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x5e6E17F745fF620E87324b7c6ec672B5743BD0B4",
     "network": "optimism",
-    "createdAt": 1688104098
+    "createdAt": 1688104098,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usdc-snx",
     "name": "SNX-USDCe vLP V2",
+    "type": "standard",
     "token": "SNX-USDCe vLP V2",
     "tokenAddress": "0x71d53B5B7141E1ec9A3Fc9Cc48b4766102d14A4A",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2SNX-USDCe",
     "earnedTokenAddress": "0x4CdD06C73bC42980A6d59A13854f710eF5fa07EF",
     "earnContractAddress": "0x4CdD06C73bC42980A6d59A13854f710eF5fa07EF",
@@ -1021,16 +1205,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x8700daec35af8ff88c16bdf0418774cb3d7599b4&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x71d53B5B7141E1ec9A3Fc9Cc48b4766102d14A4A",
     "network": "optimism",
-    "createdAt": 1688104098
+    "createdAt": 1688104098,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-wsteth-ldo",
     "name": "wstETH-LDO vLP V2",
+    "type": "standard",
     "token": "wstETH-LDO vLP V2",
     "tokenAddress": "0xC5c247580A4A6E4d3811c0DA6215057aaC480bAc",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2wstETH-LDO",
     "earnedTokenAddress": "0x935A64d0825D86c1ca57Fe8f270e635AC1a0878A",
     "earnContractAddress": "0x935A64d0825D86c1ca57Fe8f270e635AC1a0878A",
@@ -1045,16 +1235,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x1f32b1c2345538c0c6f582fcb022739c4a194ebb&token1=0xfdb794692724153d1488ccdbe0c56c252596735f&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xC5c247580A4A6E4d3811c0DA6215057aaC480bAc",
     "network": "optimism",
-    "createdAt": 1688096352
+    "createdAt": 1688096352,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-weth-lusd",
     "name": "LUSD-ETH vLP V2",
+    "type": "standard",
     "token": "LUSD-ETH vLP V2",
     "tokenAddress": "0x6387765fFA609aB9A1dA1B16C455548Bfed7CbEA",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2LUSD-ETH",
     "earnedTokenAddress": "0xc02DD405F37009609bD5ad8667825323aB72fD47",
     "earnContractAddress": "0xc02DD405F37009609bD5ad8667825323aB72fD47",
@@ -1069,16 +1265,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=eth&token1=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x6387765fFA609aB9A1dA1B16C455548Bfed7CbEA",
     "network": "optimism",
-    "createdAt": 1688096352
+    "createdAt": 1688096352,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-sonne-usdc",
     "name": "SONNE-USDCe vLP V2",
+    "type": "standard",
     "token": "SONNE-USDCe vLP V2",
     "tokenAddress": "0x4E60495550071693bc8bDfFC40033d278157EAC7",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2SONNE-USDCe",
     "earnedTokenAddress": "0x642F04eCAa00D443fBf2de2AaC9A9e0ACfA4FCE7",
     "earnContractAddress": "0x642F04eCAa00D443fBf2de2AaC9A9e0ACfA4FCE7",
@@ -1093,16 +1295,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x1db2466d9f5e10d7090e7152b68d62703a2245f0&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x4E60495550071693bc8bDfFC40033d278157EAC7",
     "network": "optimism",
-    "createdAt": 1688096352
+    "createdAt": 1688096352,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-weth-seth",
     "name": "sETH-ETH sLP V2",
+    "type": "standard",
     "token": "sETH-ETH sLP V2",
     "tokenAddress": "0x5e5A37445FadeB71f23514Ae7d675Ffc644e5E5A",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2sETH-ETH",
     "earnedTokenAddress": "0x600e9d1b98FACD709a18dA5a61da96BcDEE608b7",
     "earnContractAddress": "0x600e9d1b98FACD709a18dA5a61da96BcDEE608b7",
@@ -1117,16 +1325,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=eth&token1=0xe405de8f52ba7559f9df3c368500b6e6ae6cee49&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x5e5A37445FadeB71f23514Ae7d675Ffc644e5E5A",
     "network": "optimism",
-    "createdAt": 1688096352
+    "createdAt": 1688096352,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usdc-dai",
     "name": "DAI-USDCe sLP V2",
+    "type": "standard",
     "token": "DAI-USDCe sLP V2",
     "tokenAddress": "0x19715771E30c93915A5bbDa134d782b81A820076",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2DAI-USDCe",
     "earnedTokenAddress": "0x7c2967C20B03a8004ea81e86Ac1847D00e7B4CD1",
     "earnContractAddress": "0x7c2967C20B03a8004ea81e86Ac1847D00e7B4CD1",
@@ -1147,16 +1361,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0xda10009cbd5d07dd0cecc66161fc93d7c9000da1&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x19715771e30c93915a5bbda134d782b81a820076",
     "network": "optimism",
-    "createdAt": 1688079945
+    "createdAt": 1688079945,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usdc-susd",
     "name": "sUSD-USDCe sLP V2",
+    "type": "standard",
     "token": "sUSD-USDCe sLP V2",
     "tokenAddress": "0x6d5BA400640226e24b50214d2bBb3D4Db8e6e15a",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2sUSD-USDCe",
     "earnedTokenAddress": "0x182fe51442C7D65360eD1511f30be6261c2C20C1",
     "earnContractAddress": "0x182fe51442C7D65360eD1511f30be6261c2C20C1",
@@ -1177,16 +1397,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x6d5ba400640226e24b50214d2bbb3d4db8e6e15a",
     "network": "optimism",
-    "createdAt": 1688079945
+    "createdAt": 1688079945,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-weth-op",
     "name": "OP-ETH vLP V2",
+    "type": "standard",
     "token": "OP-ETH vLP V2",
     "tokenAddress": "0xd25711EdfBf747efCE181442Cc1D8F5F8fc8a0D3",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2OP-ETH",
     "earnedTokenAddress": "0x00557e194B717dCfEbaE6222091C5F806DF99698",
     "earnContractAddress": "0x00557e194B717dCfEbaE6222091C5F806DF99698",
@@ -1201,16 +1427,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000042&token1=eth&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xd25711edfbf747efce181442cc1d8f5f8fc8a0d3",
     "network": "optimism",
-    "createdAt": 1688079945
+    "createdAt": 1688079945,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usdc-lusd",
     "name": "LUSD-USDCe sLP V2",
+    "type": "standard",
     "token": "LUSD-USDCe sLP V2",
     "tokenAddress": "0xf04458f7B21265b80FC340dE7Ee598e24485c5bB",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2LUSD-USDCe",
     "earnedTokenAddress": "0x972F747285c2f32699CEFFEbdcF2Ae74F4b58D0c",
     "earnContractAddress": "0x972F747285c2f32699CEFFEbdcF2Ae74F4b58D0c",
@@ -1231,16 +1463,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xf04458f7b21265b80fc340de7ee598e24485c5bb",
     "network": "optimism",
-    "createdAt": 1688079945
+    "createdAt": 1688079945,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-frax-dola",
     "name": "DOLA-FRAX sLP V2",
+    "type": "standard",
     "token": "DOLA-FRAX sLP V2",
     "tokenAddress": "0x1f8b46abe1EAbF5A60CbBB5Fb2e4a6A46fA0b6e6",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2DOLA-FRAX",
     "earnedTokenAddress": "0x1973ef31F2A82B3f73b8C9Ee1c440615084d5242",
     "earnContractAddress": "0x1973ef31F2A82B3f73b8C9Ee1c440615084d5242",
@@ -1262,16 +1500,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x8ae125e8653821e851f12a49f7765db9a9ce7384&token1=0x2e3d870790dc77a83dd1d18184acc7439a53f475&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x1f8b46abe1eabf5a60cbbb5fb2e4a6a46fa0b6e6",
     "network": "optimism",
-    "createdAt": 1688079945
+    "createdAt": 1688079945,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usd+-usdc",
     "name": "USD+-USDCe sLP V2",
+    "type": "standard",
     "token": "USD+-USDCe sLP V2",
     "tokenAddress": "0xd95E98fc33670dC033424E7Aa0578D742D00f9C7",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2USD+-USDCe",
     "earnedTokenAddress": "0x2bC96f9e07Edc7F1aA9Aa26E85dc7dd30ACe59a6",
     "earnContractAddress": "0x2bC96f9e07Edc7F1aA9Aa26E85dc7dd30ACe59a6",
@@ -1293,16 +1537,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x73cb180bf0521828d8849bc8cf2b920918e23032&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xd95e98fc33670dc033424e7aa0578d742d00f9c7",
     "network": "optimism",
-    "createdAt": 1688079945
+    "createdAt": 1688079945,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-lusd-dai",
     "name": "LUSD-DAI sLP V2",
+    "type": "standard",
     "token": "LUSD-DAI sLP V2",
     "tokenAddress": "0x0D0F65C63E379263f7CE2713dd012180681D0dc5",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2LUSD-DAI",
     "earnedTokenAddress": "0x79A6D8D80578B4934a80Fc6ACcCB454805ce2028",
     "earnContractAddress": "0x79A6D8D80578B4934a80Fc6ACcCB454805ce2028",
@@ -1323,16 +1573,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&token1=0xda10009cbd5d07dd0cecc66161fc93d7c9000da1&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x0d0f65c63e379263f7ce2713dd012180681d0dc5",
     "network": "optimism",
-    "createdAt": 1688065628
+    "createdAt": 1688065628,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-frax-alusd",
     "name": "alUSD-FRAX sLP V2",
+    "type": "standard",
     "token": "alUSD-FRAX sLP V2",
     "tokenAddress": "0xaF03f51DE7a0E62BF061F6Fc3931cF79166B0a29",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2alUSD-FRAX",
     "earnedTokenAddress": "0x9a02ab83e5139Ae8d4c6a9711D20b90DBC50c9f0",
     "earnContractAddress": "0x9a02ab83e5139Ae8d4c6a9711D20b90DBC50c9f0",
@@ -1354,16 +1610,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0xcb8fa9a76b8e203d8c3797bf438d8fb81ea3326a&token1=0x2e3d870790dc77a83dd1d18184acc7439a53f475&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xaf03f51de7a0e62bf061f6fc3931cf79166b0a29",
     "network": "optimism",
-    "createdAt": 1688065628
+    "createdAt": 1688065628,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-aleth-frxeth",
     "name": "alETH-frxETH sLP V2",
+    "type": "standard",
     "token": "alETH-frxETH sLP V2",
     "tokenAddress": "0x1AD06Ca54de04DBe9e2817F4C13eCB406DCbeAf0",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2alETH-frxETH",
     "earnedTokenAddress": "0x100Cd460D7f549B4cc2Ed35d4ff20ac71B377C96",
     "earnContractAddress": "0x100Cd460D7f549B4cc2Ed35d4ff20ac71B377C96",
@@ -1385,16 +1647,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x3e29d3a9316dab217754d13b28646b76607c5f04&token1=0x6806411765af15bddd26f8f544a34cc40cb9838b&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x1ad06ca54de04dbe9e2817f4c13ecb406dcbeaf0",
     "network": "optimism",
-    "createdAt": 1688065628
+    "createdAt": 1688065628,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-frax-usd+",
     "name": "USD+-FRAX sLP V2",
+    "type": "standard",
     "token": "USD+-FRAX sLP V2",
     "tokenAddress": "0xD330841EF9527E3Bd0abc28a230C7cA8dec9423B",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2USD+-FRAX",
     "earnedTokenAddress": "0xBE6D47EE7661Eda239Aa5d927fb84Da6Fac25eE4",
     "earnContractAddress": "0xBE6D47EE7661Eda239Aa5d927fb84Da6Fac25eE4",
@@ -1416,16 +1684,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x73cb180bf0521828d8849bc8cf2b920918e23032&token1=0x2e3d870790dc77a83dd1d18184acc7439a53f475&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xd330841ef9527e3bd0abc28a230c7ca8dec9423b",
     "network": "optimism",
-    "createdAt": 1688065628
+    "createdAt": 1688065628,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-weth-reth",
     "name": "rETH-ETH vLP V2",
+    "type": "standard",
     "token": "rETH-ETH vLP V2",
     "tokenAddress": "0x7e0F65FAB1524dA9E2E5711D160541cf1199912E",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVelodromeV2rETH-ETH",
     "earnedTokenAddress": "0xD5bc7210867B2D4152E38e69A6cd41b7b917833f",
     "earnContractAddress": "0xD5bc7210867B2D4152E38e69A6cd41b7b917833f",
@@ -1440,16 +1714,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x9bcef72be871e61ed4fbbc7630889bee758eb81d&token1=eth&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x7e0f65fab1524da9e2e5711d160541cf1199912e",
     "network": "optimism",
-    "createdAt": 1688067767
+    "createdAt": 1688067767,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-wsteth-weth",
     "name": "wstETH-ETH vLP V2",
+    "type": "standard",
     "token": "wstETH-ETH vLP V2",
     "tokenAddress": "0x6dA98Bde0068d10DDD11b468b197eA97D96F96Bc",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2wstETH-WETH",
     "earnedTokenAddress": "0x54214d0C7772eb6f71ED4De294b3f809691005C9",
     "earnContractAddress": "0x54214d0C7772eb6f71ED4De294b3f809691005C9",
@@ -1471,16 +1751,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x1f32b1c2345538c0c6f582fcb022739c4a194ebb&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x6da98bde0068d10ddd11b468b197ea97d96f96bc",
     "network": "optimism",
-    "createdAt": 1688065647
+    "createdAt": 1688065647,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-wsteth-op",
     "name": "wstETH-OP vLP V2",
+    "type": "standard",
     "token": "wstETH-OP vLP V2",
     "tokenAddress": "0x7178F61694ba9109205B8d6F686282307625e62D",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2wstETH-OP",
     "earnedTokenAddress": "0x65F4e00687f4059E4A9bF8E4338dbC9f0292fe2A",
     "earnContractAddress": "0x65F4e00687f4059E4A9bF8E4338dbC9f0292fe2A",
@@ -1502,16 +1788,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x1f32b1c2345538c0c6f582fcb022739c4a194ebb&token1=0x4200000000000000000000000000000000000042&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x7178f61694ba9109205b8d6f686282307625e62d",
     "network": "optimism",
-    "createdAt": 1688067735
+    "createdAt": 1688067735,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-dola-mai",
     "name": "DOLA-MAI sLP V2",
+    "type": "standard",
     "token": "DOLA-MAI sLP V2",
     "tokenAddress": "0xBE418771bC91F75C4d2BcE1d5E2b7286F50992da",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2DOLA-MAI",
     "earnedTokenAddress": "0x35775aA87b4CA1c04a6c579c90cE9add09247958",
     "earnContractAddress": "0x35775aA87b4CA1c04a6c579c90cE9add09247958",
@@ -1533,16 +1825,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x8ae125e8653821e851f12a49f7765db9a9ce7384&token1=0xdfa46478f9e5ea86d57387849598dbfb2e964b02&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xbe418771bc91f75c4d2bce1d5e2b7286f50992da",
     "network": "optimism",
-    "createdAt": 1688058796
+    "createdAt": 1688058796,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-op-velo",
     "name": "VELO-OP vLP V2",
+    "type": "standard",
     "token": "VELO-OP vLP V2",
     "tokenAddress": "0xe9581d0F1A628B038fC8B2a7F5A7d904f0e2f937",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2OP-VELO",
     "earnedTokenAddress": "0x04c4a21D7439eD05fd33469565541bF6464F7157",
     "earnContractAddress": "0x04c4a21D7439eD05fd33469565541bF6464F7157",
@@ -1564,16 +1862,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x9560e827af36c94d2ac33a39bce1fe78631088db&token1=0x4200000000000000000000000000000000000042&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xe9581d0f1a628b038fc8b2a7f5a7d904f0e2f937",
     "network": "optimism",
-    "createdAt": 1688040374
+    "createdAt": 1688040374,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usdc-alusd",
     "name": "alUSD-USDCe sLP V2",
+    "type": "standard",
     "token": "alUSD-USDCe sLP V2",
     "tokenAddress": "0x4d7959d17B9710BE87e3657e69d946914221BB88",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2USDC-alUSD",
     "earnedTokenAddress": "0x8a21Ea69300Fe56ee19fE974e9791a212114573F",
     "earnContractAddress": "0x8a21Ea69300Fe56ee19fE974e9791a212114573F",
@@ -1596,16 +1900,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0xcb8fa9a76b8e203d8c3797bf438d8fb81ea3326a&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x4d7959d17b9710be87e3657e69d946914221bb88",
     "network": "optimism",
-    "createdAt": 1688040373
+    "createdAt": 1688040373,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-aleth-weth",
     "name": "alETH-ETH sLP V2",
+    "type": "standard",
     "token": "alETH-ETH sLP V2",
     "tokenAddress": "0xa1055762336F92b4B8d2eDC032A0Ce45ead6280a",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2alETH-WETH",
     "earnedTokenAddress": "0x1A1F0Db1050D1cAD52eEB72371EbFD7716b53a2f",
     "earnContractAddress": "0x1A1F0Db1050D1cAD52eEB72371EbFD7716b53a2f",
@@ -1628,16 +1938,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x3e29d3a9316dab217754d13b28646b76607c5f04&token1=0x4200000000000000000000000000000000000006&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xa1055762336f92b4b8d2edc032a0ce45ead6280a",
     "network": "optimism",
-    "createdAt": 1688040372
+    "createdAt": 1688040372,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-hnd-usdc",
     "name": "HND-USDCe vLP V2",
+    "type": "standard",
     "token": "HND-USDCe vLP V2",
     "tokenAddress": "0x6B95147a8d2c7f480C0CF7288FCf268400CE9970",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2HND-USDCe",
     "earnedTokenAddress": "0xFA6abeFC9B4082bE205c1Aa18DdaD7f747bDC81F",
     "earnContractAddress": "0xFA6abeFC9B4082bE205c1Aa18DdaD7f747bDC81F",
@@ -1660,16 +1976,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x10010078a54396f62c96df8532dc2b4847d47ed3&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x6b95147a8d2c7f480c0cf7288fcf268400ce9970",
     "network": "optimism",
-    "createdAt": 1688040371
+    "createdAt": 1688040371,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-weth-kwenta",
     "name": "KWENTA-ETH vLP V2",
+    "type": "standard",
     "token": "KWENTA-ETH vLP V2",
     "tokenAddress": "0x8F47041aDbeF5BF321c9F63A0660326614ab6B60",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2KWENTA-ETH",
     "earnedTokenAddress": "0x9B280aD674d35008482F94a673f8017B961C29F6",
     "earnContractAddress": "0x9B280aD674d35008482F94a673f8017B961C29F6",
@@ -1684,16 +2006,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x920cf626a271321c151d027030d5d08af699456b&token1=eth&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x8f47041adbef5bf321c9f63a0660326614ab6b60",
     "network": "optimism",
-    "createdAt": 1688037724
+    "createdAt": 1688037724,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-thales-usdc",
     "name": "THALES-USDCe vLP V2",
+    "type": "standard",
     "token": "THALES-USDCe vLP V2",
     "tokenAddress": "0xE5F28Fc43Bb40CDF7202ebe406793815b6f07FbD",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2THALES-USDCe",
     "earnedTokenAddress": "0xa85F2DeBc911c54414f99103123965c94e351873",
     "earnContractAddress": "0xa85F2DeBc911c54414f99103123965c94e351873",
@@ -1708,16 +2036,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x217d47011b23bb961eb6d93ca9945b7501a5bb11&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xe5f28fc43bb40cdf7202ebe406793815b6f07fbd",
     "network": "optimism",
-    "createdAt": 1688037724
+    "createdAt": 1688037724,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-lyra-usdc",
     "name": "LYRA-USDCe vLP V2",
+    "type": "standard",
     "token": "LYRA-USDCe vLP V2",
     "tokenAddress": "0xDB61f9B480f0a8B817811cFAA89A1c219c355224",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2LYRA-USDCe",
     "earnedTokenAddress": "0x669fBdda8553edeAEdd7272391aC966a8AABEC21",
     "earnContractAddress": "0x669fBdda8553edeAEdd7272391aC966a8AABEC21",
@@ -1732,16 +2066,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x50c5725949a6f0c72e6c4a641f24049a917db0cb&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xdb61f9b480f0a8b817811cfaa89a1c219c355224",
     "network": "optimism",
-    "createdAt": 1688037724
+    "createdAt": 1688037724,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-wusdr-usdc",
     "name": "wUSDR-USDCe vLP V2",
+    "type": "standard",
     "token": "wUSDR-USDCe vLP V2",
     "tokenAddress": "0x77b6d0279c9cEF559Ef7c32c31d9a5d8Acb664FE",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2wUSDR-USDCe",
     "earnedTokenAddress": "0xD9E277eA320C53dE06C535f0D922A76a68CB9A9C",
     "earnContractAddress": "0xD9E277eA320C53dE06C535f0D922A76a68CB9A9C",
@@ -1756,16 +2096,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x340fe1d898eccaad394e2ba0fc1f93d27c7b717a&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x77b6d0279c9cef559ef7c32c31d9a5d8acb664fe",
     "network": "optimism",
-    "createdAt": 1688037724
+    "createdAt": 1688037724,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-stg-usdc",
     "name": "STG-USDCe vLP V2",
+    "type": "standard",
     "token": "STG-USDCe vLP V2",
     "tokenAddress": "0x56770b94279539416855fe29Ef14b26438B5e421",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2STG-USDCe",
     "earnedTokenAddress": "0xD09B5a0650d68Aae6B1666eE5E770a383d29A97C",
     "earnContractAddress": "0xD09B5a0650d68Aae6B1666eE5E770a383d29A97C",
@@ -1780,16 +2126,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x296f55f8fb28e498b858d0bcda06d955b2cb3f97&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x56770b94279539416855fe29ef14b26438b5e421",
     "network": "optimism",
-    "createdAt": 1688037724
+    "createdAt": 1688037724,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-op-usdc",
     "name": "OP-USDCe vLP V2",
+    "type": "standard",
     "token": "OP-USDCe vLP V2",
     "tokenAddress": "0x0df083de449F75691fc5A36477a6f3284C269108",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2OP-USDCe",
     "earnedTokenAddress": "0x52cC5B5CB98C9a7fb8cCe7d4b4e8F41E26ce04a8",
     "earnContractAddress": "0x52cC5B5CB98C9a7fb8cCe7d4b4e8F41E26ce04a8",
@@ -1804,16 +2156,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000042&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x0df083de449f75691fc5a36477a6f3284c269108",
     "network": "optimism",
-    "createdAt": 1688037724
+    "createdAt": 1688037724,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usd+-dola",
     "name": "USD+-DOLA sLP V2",
+    "type": "standard",
     "token": "USD+-DOLA sLP V2",
     "tokenAddress": "0x0b28C2e41058EDc7D66c516c617b664Ea86eeC5d",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2USD+-DOLA",
     "earnedTokenAddress": "0xbe7dC3d2457BBff03943d962F7E4cEE34DFBA69d",
     "earnContractAddress": "0xbe7dC3d2457BBff03943d962F7E4cEE34DFBA69d",
@@ -1828,16 +2186,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x73cb180bf0521828d8849bc8cf2b920918e23032&token1=0x8ae125e8653821e851f12a49f7765db9a9ce7384&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x0b28c2e41058edc7d66c516c617b664ea86eec5d",
     "network": "optimism",
-    "createdAt": 1688037724
+    "createdAt": 1688037724,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usdt-lusd",
     "name": "LUSD-USDT sLP V2",
+    "type": "standard",
     "token": "LUSD-USDT sLP V2",
     "tokenAddress": "0xe8B8bfF1E415258eb3d5FA8DeeE9C38406e609cd",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2LUSD-USDT",
     "earnedTokenAddress": "0x6Fb45a8183660F30EA1c6cDFDDBFdC7ef7925801",
     "earnContractAddress": "0x6Fb45a8183660F30EA1c6cDFDDBFdC7ef7925801",
@@ -1858,16 +2222,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&token1=0x94b008aa00579c1307b0ef2c499ad98a8ce58e58&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xe8b8bff1e415258eb3d5fa8deee9c38406e609cd",
     "network": "optimism",
-    "createdAt": 1688037724
+    "createdAt": 1688037724,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usdc-mai",
     "name": "MAI-USDCe sLP V2",
+    "type": "standard",
     "token": "MAI-USDCe sLP V2",
     "tokenAddress": "0xE54e4020d1C3afDB312095D90054103E68fe34B0",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2MAI-USDCe",
     "earnedTokenAddress": "0xef8D6dDE0a0f0CCdaDB678366a94D93f1C449689",
     "earnContractAddress": "0xef8D6dDE0a0f0CCdaDB678366a94D93f1C449689",
@@ -1882,16 +2252,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0xdfa46478f9e5ea86d57387849598dbfb2e964b02&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xe54e4020d1c3afdb312095d90054103e68fe34b0",
     "network": "optimism",
-    "createdAt": 1688037723
+    "createdAt": 1688037723,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usdc-dola",
     "name": "DOLA-USDCe sLP V2",
+    "type": "standard",
     "token": "DOLA-USDCe sLP V2",
     "tokenAddress": "0xB720FBC32d60BB6dcc955Be86b98D8fD3c4bA645",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2DOLA-USDCe",
     "earnedTokenAddress": "0x453f61390ce6DfB668bbF4D93E58c94BB0ae81f3",
     "earnContractAddress": "0x453f61390ce6DfB668bbF4D93E58c94BB0ae81f3",
@@ -1906,16 +2282,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x8ae125e8653821e851f12a49f7765db9a9ce7384&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xb720fbc32d60bb6dcc955be86b98d8fd3c4ba645",
     "network": "optimism",
-    "createdAt": 1688037723
+    "createdAt": 1688037723,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-weth-usdc",
     "name": "ETH-USDCe vLP V2",
+    "type": "standard",
     "token": "ETH-USDCe vLP V2",
     "tokenAddress": "0x0493Bf8b6DBB159Ce2Db2E0E8403E753Abd1235b",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2WETH-USDCe",
     "earnedTokenAddress": "0x28bAF22c85D146101198D1883281a83cBe063329",
     "earnContractAddress": "0x28bAF22c85D146101198D1883281a83cBe063329",
@@ -1930,16 +2312,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=eth&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x0493bf8b6dbb159ce2db2e0e8403e753abd1235b",
     "network": "optimism",
-    "createdAt": 1688037723
+    "createdAt": 1688037723,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usdc-velo",
     "name": "VELO-USDCe vLP V2",
+    "type": "standard",
     "token": "VELO-USDCe vLP V2",
     "tokenAddress": "0x8134A2fDC127549480865fB8E5A9E8A8a95a54c5",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2VELO-USDCe",
     "earnedTokenAddress": "0x746c19A336A3131fD85D3AB5F16576b1b047F512",
     "earnContractAddress": "0x746c19A336A3131fD85D3AB5F16576b1b047F512",
@@ -1954,11 +2342,18 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x9560e827af36c94d2ac33a39bce1fe78631088db&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x8134a2fdc127549480865fb8e5a9e8a8a95a54c5",
     "network": "optimism",
-    "createdAt": 1688037723
+    "createdAt": 1688037723,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "beefy-bevelo-v2-earnings",
     "name": "beVELO Migration Pool",
+    "type": "gov",
     "token": "beVELO",
     "tokenAddress": "0xfDeFFc7Ad816BF7867C642dF7eBC2CC5554ec265",
     "tokenDecimals": 18,
@@ -1980,18 +2375,17 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "bevelov2",
-    "isGovVault": true,
     "network": "optimism",
     "createdAt": 1687996562
   },
   {
     "id": "velodrome-v2-weth-bifi",
     "name": "oldBIFI-ETH vLP V2",
+    "type": "standard",
     "token": "oldBIFI-ETH vLP V2",
     "tokenAddress": "0x1cdfAe29a66b39C30Eb2b090a2dbba562026e9FF",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2ETH-oldBIFI",
     "earnedTokenAddress": "0xA86b4C3EC8C765A8073b4034281131Aa2735409E",
     "earnContractAddress": "0xA86b4C3EC8C765A8073b4034281131Aa2735409E",
@@ -2007,16 +2401,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x4e720dd3ac5cfe1e1fbde4935f386bb1c66f4642&token1=eth&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x1cdfae29a66b39c30eb2b090a2dbba562026e9ff",
     "network": "optimism",
-    "createdAt": 1688039323
+    "createdAt": 1688039323,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-op-bifi",
     "name": "oldBIFI-OP vLP V2",
+    "type": "standard",
     "token": "oldBIFI-OP vLP V2",
     "tokenAddress": "0xe0A1467A9d86d9F433496c48c6831c0142464CE6",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2OP-oldBIFI",
     "earnedTokenAddress": "0xE91cf9c187e1dE875B6feeB15DD4e3a89C1d021D",
     "earnContractAddress": "0xE91cf9c187e1dE875B6feeB15DD4e3a89C1d021D",
@@ -2032,16 +2432,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x4e720dd3ac5cfe1e1fbde4935f386bb1c66f4642&token1=0x4200000000000000000000000000000000000042&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xe0a1467a9d86d9f433496c48c6831c0142464ce6",
     "network": "optimism",
-    "createdAt": 1688039323
+    "createdAt": 1688039323,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-weth-frxeth",
     "name": "frxETH-ETH sLP V2",
+    "type": "standard",
     "token": "frxETH-ETH sLP V2",
     "tokenAddress": "0x3f42Dc59DC4dF5cD607163bC620168f7FF7aB970",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2ETH-frxETH",
     "earnedTokenAddress": "0x06E0A84c71dBD037c618CCf90798474E0e6f9C91",
     "earnContractAddress": "0x06E0A84c71dBD037c618CCf90798474E0e6f9C91",
@@ -2056,16 +2462,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x6806411765af15bddd26f8f544a34cc40cb9838b&token1=eth&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x3f42dc59dc4df5cd607163bc620168f7ff7ab970",
     "network": "optimism",
-    "createdAt": 1688039323
+    "createdAt": 1688039323,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-sfrxeth-frxeth",
     "name": "sfrxETH-frxETH sLP V2",
+    "type": "standard",
     "token": "sfrxETH-frxETH sLP V2",
     "tokenAddress": "0xFF5318f81Dd791e92d51b8A54fA3538832D2890D",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2sfrxETH-frxETH",
     "earnedTokenAddress": "0x88F72d1f49Ea88f86fc52bebB0c1d0Ef232AE483",
     "earnContractAddress": "0x88F72d1f49Ea88f86fc52bebB0c1d0Ef232AE483",
@@ -2080,16 +2492,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x484c2d6e3cdd945a8b2df735e079178c1036578c&token1=0x6806411765af15bddd26f8f544a34cc40cb9838b&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xff5318f81dd791e92d51b8a54fa3538832d2890d",
     "network": "optimism",
-    "createdAt": 1688039323
+    "createdAt": 1688039323,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-usdc-usdt",
     "name": "USDCe-USDT sLP V2",
+    "type": "standard",
     "token": "USDCe-USDT sLP V2",
     "tokenAddress": "0x2B47C794c3789f499D8A54Ec12f949EeCCE8bA16",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2USDC-USDT",
     "earnedTokenAddress": "0x8aD01c3a425987c508A69149185383BAf6F47534",
     "earnContractAddress": "0x8aD01c3a425987c508A69149185383BAf6F47534",
@@ -2104,16 +2522,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x7f5c764cbc14f9669b88837ca1490cca17c31607&token1=0x94b008aa00579c1307b0ef2c499ad98a8ce58e58&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0x2b47c794c3789f499d8a54ec12f949eecce8ba16",
     "network": "optimism",
-    "createdAt": 1688039323
+    "createdAt": 1688039323,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-alusd-mai",
     "name": "alUSD-MAI sLP V2",
+    "type": "standard",
     "token": "alUSD-MAI sLP V2",
     "tokenAddress": "0xfA09479d72E2b3f8B6dF63399772237Ad6658D76",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2alUSD-MAI",
     "earnedTokenAddress": "0xf659Fe930eEa70Bc49B6DD53d828CBaD12673a2a",
     "earnContractAddress": "0xf659Fe930eEa70Bc49B6DD53d828CBaD12673a2a",
@@ -2128,16 +2552,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0xcb8fa9a76b8e203d8c3797bf438d8fb81ea3326a&token1=0xdfa46478f9e5ea86d57387849598dbfb2e964b02&stable=true",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xfa09479d72e2b3f8b6df63399772237ad6658d76",
     "network": "optimism",
-    "createdAt": 1688039323
+    "createdAt": 1688039323,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-op-ageur",
     "name": "agEUR-OP vLP V2",
+    "type": "standard",
     "token": "agEUR-OP vLP V2",
     "tokenAddress": "0xeFe139aa71b674168f5823360A824B3714f2718D",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome-v2",
     "earnedToken": "mooVeloV2OP-agEUR",
     "earnedTokenAddress": "0x20881a4f1d09c0ec1305D84012bba8E0C97b3951",
     "earnContractAddress": "0x20881a4f1d09c0ec1305D84012bba8E0C97b3951",
@@ -2152,11 +2582,18 @@
     "addLiquidityUrl": "https://app.velodrome.finance/deposit?token0=0x9485aca5bbbe1667ad97c7fe7c4531a624c8b1ed&token1=0x4200000000000000000000000000000000000042&stable=false",
     "removeLiquidityUrl": "https://app.velodrome.finance/withdraw?pair=0xefe139aa71b674168f5823360a824b3714f2718d",
     "network": "optimism",
-    "createdAt": 1688039323
+    "createdAt": 1688039323,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "exactly-supply-wsteth",
     "name": "wstETH",
+    "type": "standard",
     "token": "wstETH",
     "tokenAddress": "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
     "tokenDecimals": 18,
@@ -2180,16 +2617,21 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/wstETH",
     "network": "optimism",
-    "createdAt": 1694023422
+    "createdAt": 1694023422,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "velodrome-frax-usd+",
     "name": "USD+-FRAX sLP",
+    "type": "standard",
     "token": "USD+-FRAX sLP",
     "tokenAddress": "0x947A96B025C70497DbC0D095D966f3B59a675a70",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeUSD+-FRAX",
     "earnedTokenAddress": "0x44CB9241eb013C436bC241096Af0b02BeA0516eE",
     "earnContractAddress": "0x44CB9241eb013C436bC241096Af0b02BeA0516eE",
@@ -2212,16 +2654,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x947A96B025C70497DbC0D095D966f3B59a675a70",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x947A96B025C70497DbC0D095D966f3B59a675a70",
     "network": "optimism",
-    "createdAt": 1685588249
+    "createdAt": 1685588249,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdc-mta",
     "name": "MTA-USDCe vLP",
+    "type": "standard",
     "token": "MTA-USDCe vLP",
     "tokenAddress": "0x66a8bD7cCfD52bfb5bC838d149FBa78e6920303F",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeMTA-USDCe",
     "earnedTokenAddress": "0x48f4De3081Cb342B3aF051b0557E0b192F44Da9B",
     "earnContractAddress": "0x48f4De3081Cb342B3aF051b0557E0b192F44Da9B",
@@ -2237,16 +2685,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x66a8bD7cCfD52bfb5bC838d149FBa78e6920303F",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x66a8bD7cCfD52bfb5bC838d149FBa78e6920303F",
     "network": "optimism",
-    "createdAt": 1684761395
+    "createdAt": 1684761395,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdc-wtbt",
     "name": "wTBT-USDCe vLP",
+    "type": "standard",
     "token": "wTBT-USDCe vLP",
     "tokenAddress": "0xb81df7a1E7404c6c1dbcaC503a9412b7A926F62E",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromewTBT-USDCe",
     "earnedTokenAddress": "0x7827A9C91B6e3D5543d62616cb56e21A3f6F17C8",
     "earnContractAddress": "0x7827A9C91B6e3D5543d62616cb56e21A3f6F17C8",
@@ -2269,16 +2723,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xb81df7a1E7404c6c1dbcaC503a9412b7A926F62E",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xb81df7a1E7404c6c1dbcaC503a9412b7A926F62E",
     "network": "optimism",
-    "createdAt": 1684761395
+    "createdAt": 1684761395,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-stg-usdc",
     "name": "STG-USDCe vLP",
+    "type": "standard",
     "token": "STG-USDCe vLP",
     "tokenAddress": "0x7892d498F22c9393385F4A798788126F7090d2CC",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeSTG-USDCe",
     "earnedTokenAddress": "0xc9916A2eD8B07F46ae60288CEBA1f8Bd31f02804",
     "earnContractAddress": "0xc9916A2eD8B07F46ae60288CEBA1f8Bd31f02804",
@@ -2294,11 +2754,18 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x7892d498F22c9393385F4A798788126F7090d2CC",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x7892d498F22c9393385F4A798788126F7090d2CC",
     "network": "optimism",
-    "createdAt": 1684761395
+    "createdAt": 1684761395,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "exactly-supply-usdc",
     "name": "USDCe",
+    "type": "standard",
     "token": "USDCe",
     "tokenAddress": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
     "tokenDecimals": 6,
@@ -2321,11 +2788,17 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/USDCe",
     "network": "optimism",
-    "createdAt": 1694023422
+    "createdAt": 1694023422,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "exactly-supply-eth",
     "name": "ETH",
+    "type": "standard",
     "token": "ETH",
     "tokenDecimals": 18,
     "earnedToken": "mooExactlySupplyETH",
@@ -2347,16 +2820,21 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/USDCe/WETH",
     "network": "optimism",
-    "createdAt": 1694023422
+    "createdAt": 1694023422,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "velodrome-usd+-dai+",
     "name": "USD+-DAI+ sLP",
+    "type": "standard",
     "token": "USD+-DAI+ sLP",
     "tokenAddress": "0x69C28d5BbE392eF48C0dC347C575023dAf0CD243",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeUSD+-DAI+",
     "earnedTokenAddress": "0xE82A0fE3Cf39d8f43CBeb202242eECB8b00B15AB",
     "earnContractAddress": "0xE82A0fE3Cf39d8f43CBeb202242eECB8b00B15AB",
@@ -2378,11 +2856,18 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x69C28d5BbE392eF48C0dC347C575023dAf0CD243",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x69C28d5BbE392eF48C0dC347C575023dAf0CD243",
     "network": "optimism",
-    "createdAt": 1680535940
+    "createdAt": 1680535940,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "beets-overnight-pulse-v2",
     "name": "Overnight Pulse Act II",
+    "type": "standard",
     "token": "Overnight Pulse Act II",
     "tokenAddress": "0x43da214fab3315aA6c02e0B8f2BfB7Ef2E3C60A5",
     "tokenDecimals": 18,
@@ -2413,6 +2898,7 @@
   {
     "id": "mmy-op-mlp",
     "name": "MLP",
+    "type": "standard",
     "token": "MLP",
     "tokenAddress": "0xB280D03909Cc18640621955Cb3bC30948DF2Fa9a",
     "tokenDecimals": 18,
@@ -2442,6 +2928,7 @@
   {
     "id": "curve-op-f-mim",
     "name": "MIM/DAI/USDCe/USDT",
+    "type": "standard",
     "token": "mim3CRV-f",
     "tokenAddress": "0x810D1AaA4Cd8F21c23bB648F2dfb9DC232A01F09",
     "tokenDecimals": 18,
@@ -2464,11 +2951,11 @@
   {
     "id": "velodrome-weth-unidx",
     "name": "WETH-multiUNIDX vLP",
+    "type": "standard",
     "token": "WETH-multiUNIDX vLP",
     "tokenAddress": "0x9f611290d537840BDAb9f32C408ACBebe83b07B5",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeWETH-UNIDX",
     "earnedTokenAddress": "0x1DC922eC981c20F707afd67e13128c9b755B5Dd7",
     "earnContractAddress": "0x1DC922eC981c20F707afd67e13128c9b755B5Dd7",
@@ -2484,16 +2971,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9f611290d537840BDAb9f32C408ACBebe83b07B5",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9f611290d537840BDAb9f32C408ACBebe83b07B5",
     "network": "optimism",
-    "createdAt": 1679849813
+    "createdAt": 1679849813,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdt-lusd",
     "name": "LUSD-USDT sLP",
+    "type": "standard",
     "token": "LUSD-USDT sLP",
     "tokenAddress": "0x91F3FCE37992d608673140034A134F4612B82118",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeLUSD-USDT",
     "earnedTokenAddress": "0xeDc39807F6518822A2885519a20C40cEE0A44437",
     "earnContractAddress": "0xeDc39807F6518822A2885519a20C40cEE0A44437",
@@ -2515,16 +3008,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x91F3FCE37992d608673140034A134F4612B82118",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x91F3FCE37992d608673140034A134F4612B82118",
     "network": "optimism",
-    "createdAt": 1679530696
+    "createdAt": 1679530696,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-lusd-dai",
     "name": "LUSD-DAI sLP",
+    "type": "standard",
     "token": "LUSD-DAI sLP",
     "tokenAddress": "0xF12BA676F9045BD76f8280BF249CBe8D209276e2",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeLUSD-DAI",
     "earnedTokenAddress": "0xBeB4B16A58E3003A3617216073a05D1454315a98",
     "earnContractAddress": "0xBeB4B16A58E3003A3617216073a05D1454315a98",
@@ -2546,16 +3045,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xF12BA676F9045BD76f8280BF249CBe8D209276e2",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xF12BA676F9045BD76f8280BF249CBe8D209276e2",
     "network": "optimism",
-    "createdAt": 1679543463
+    "createdAt": 1679543463,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-frax-dola",
     "name": "DOLA-FRAX sLP",
+    "type": "standard",
     "token": "DOLA-FRAX sLP",
     "tokenAddress": "0xD29DE64c1a9Dd3e829A7345BE1E9c32a9414541f",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeDOLA-FRAX",
     "earnedTokenAddress": "0xe282AD2480fFD8e34454C56c4360E5ba3240a429",
     "earnContractAddress": "0xe282AD2480fFD8e34454C56c4360E5ba3240a429",
@@ -2578,16 +3083,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xD29DE64c1a9Dd3e829A7345BE1E9c32a9414541f",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xD29DE64c1a9Dd3e829A7345BE1E9c32a9414541f",
     "network": "optimism",
-    "createdAt": 1678985453
+    "createdAt": 1678985453,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-dola-mai",
     "name": "DOLA-MAI sLP",
+    "type": "standard",
     "token": "DOLA-MAI sLP",
     "tokenAddress": "0x21950a0cA249A0ef3d182338c86c8C066B24D801",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeDOLA-MAI",
     "earnedTokenAddress": "0xa9913D2DA71768CD13eA75B05D9E91A3120E2f08",
     "earnContractAddress": "0xa9913D2DA71768CD13eA75B05D9E91A3120E2f08",
@@ -2610,16 +3121,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x21950a0cA249A0ef3d182338c86c8C066B24D801",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x21950a0cA249A0ef3d182338c86c8C066B24D801",
     "network": "optimism",
-    "createdAt": 1678382699
+    "createdAt": 1678382699,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-wusdr-usdc",
     "name": "wUSDR-USDCe vLP",
+    "type": "standard",
     "token": "wUSDR-USDCe vLP",
     "tokenAddress": "0x48dce63BacF1C7C839cFa7d4F871ad17c0D30D38",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromewUSDR-USDCe",
     "earnedTokenAddress": "0xfb2DA05f62Ad4e7074813C12fdd62380c6D8c199",
     "earnContractAddress": "0xfb2DA05f62Ad4e7074813C12fdd62380c6D8c199",
@@ -2642,16 +3159,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x48dce63BacF1C7C839cFa7d4F871ad17c0D30D38",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x48dce63BacF1C7C839cFa7d4F871ad17c0D30D38",
     "network": "optimism",
-    "createdAt": 1677179159
+    "createdAt": 1677179159,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-bevelo-velo",
     "name": "beVELO-VELO sLP",
+    "type": "standard",
     "token": "beVELO-VELO sLP",
     "tokenAddress": "0xC6c7B143295b2920DA41369e9627245FaB8c1CcE",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromebeVELO-VELO",
     "earnedTokenAddress": "0x8a06B28e639BB0BA5be958F4388786C6413d8188",
     "earnContractAddress": "0x8a06B28e639BB0BA5be958F4388786C6413d8188",
@@ -2667,16 +3190,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xC6c7B143295b2920DA41369e9627245FaB8c1CcE",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xC6c7B143295b2920DA41369e9627245FaB8c1CcE",
     "network": "optimism",
-    "createdAt": 1677115178
+    "createdAt": 1677115178,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-sfrxeth-frxeth",
     "name": "sfrxETH-frxETH sLP",
+    "type": "standard",
     "token": "sfrxETH-frxETH sLP",
     "tokenAddress": "0xeB676aE691df237aC09a0f7410123A714D84afb3",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromesfrxETH-frxETH",
     "earnedTokenAddress": "0xFb806C7D711f6F48b23F682cB73eE2e020a84425",
     "earnContractAddress": "0xFb806C7D711f6F48b23F682cB73eE2e020a84425",
@@ -2692,16 +3221,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xeB676aE691df237aC09a0f7410123A714D84afb3",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xeB676aE691df237aC09a0f7410123A714D84afb3",
     "network": "optimism",
-    "createdAt": 1676926172
+    "createdAt": 1676926172,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-weth-wsteth",
     "name": "wstETH-ETH vLP",
+    "type": "standard",
     "token": "wstETH-ETH vLP",
     "tokenAddress": "0xc6C1E8399C1c33a3f1959f2f77349D74a373345c",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromewstETH-ETH",
     "earnedTokenAddress": "0xca39e63E3b798D5A3f44CA56A123E3FCc29ad598",
     "earnContractAddress": "0xca39e63E3b798D5A3f44CA56A123E3FCc29ad598",
@@ -2717,16 +3252,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xc6C1E8399C1c33a3f1959f2f77349D74a373345c",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xc6C1E8399C1c33a3f1959f2f77349D74a373345c",
     "network": "optimism",
-    "createdAt": 1675896222
+    "createdAt": 1675896222,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-reth-weth",
     "name": "rETH-ETH vLP",
+    "type": "standard",
     "token": "rETH-ETH vLP",
     "tokenAddress": "0x985612ff2C9409174FedcFf23d4F4761AF124F88",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromerETH-ETH",
     "earnedTokenAddress": "0xef38118dEC20cf7c279F63bf3D9386a7886f1Fb8",
     "earnContractAddress": "0xef38118dEC20cf7c279F63bf3D9386a7886f1Fb8",
@@ -2742,16 +3283,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x985612ff2C9409174FedcFf23d4F4761AF124F88",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x985612ff2C9409174FedcFf23d4F4761AF124F88",
     "network": "optimism",
-    "createdAt": 1675896343
+    "createdAt": 1675896343,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdt-mai",
     "name": "USDT-MAI sLP",
+    "type": "standard",
     "token": "USDT-MAI sLP",
     "tokenAddress": "0x4AB66eED0b39F9d229A1281468a4482515dB0709",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeUSDT-MAI",
     "earnedTokenAddress": "0x92FdBDCEB0267DbeA576cB29322c2aF2352CDC7F",
     "earnContractAddress": "0x92FdBDCEB0267DbeA576cB29322c2aF2352CDC7F",
@@ -2774,16 +3321,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x4AB66eED0b39F9d229A1281468a4482515dB0709",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x4AB66eED0b39F9d229A1281468a4482515dB0709",
     "network": "optimism",
-    "createdAt": 1675891871
+    "createdAt": 1675891871,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-alusd-mai-samm",
     "name": "alUSD-MAI sLP",
+    "type": "standard",
     "token": "alUSD-MAI sLP",
     "tokenAddress": "0x16E7e0960A74b0eA3E61118a0C0EaE8f83D43d7C",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodrome-alUSD-MAI-sAMM",
     "earnedTokenAddress": "0x13Fe3533ECD933CEaedB0092a7e3be55141f36c8",
     "earnContractAddress": "0x13Fe3533ECD933CEaedB0092a7e3be55141f36c8",
@@ -2806,11 +3359,18 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x16E7e0960A74b0eA3E61118a0C0EaE8f83D43d7C",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x16E7e0960A74b0eA3E61118a0C0EaE8f83D43d7C",
     "network": "optimism",
-    "createdAt": 1675891871
+    "createdAt": 1675891871,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "kyber-optimism-usdc-mai",
     "name": "MAI-USDCe LP",
+    "type": "standard",
     "token": "MAI-USDCe opkLP",
     "tokenAddress": "0xC2995a065106b5c5c738B2320387460eBd12c12D",
     "tokenDecimals": 18,
@@ -2842,6 +3402,7 @@
   {
     "id": "stargate-op-dai",
     "name": "DAI LP",
+    "type": "standard",
     "token": "S*DAI",
     "tokenAddress": "0x165137624F1f692e69659f944BF69DE02874ee27",
     "tokenDecimals": 6,
@@ -2871,6 +3432,7 @@
   {
     "id": "stargate-op-frax",
     "name": "FRAX LP",
+    "type": "standard",
     "token": "S*FRAX",
     "tokenAddress": "0x368605D9C6243A80903b9e326f1Cddde088B8924",
     "tokenDecimals": 6,
@@ -2901,6 +3463,7 @@
   {
     "id": "beefy-beopx",
     "name": "beOPX",
+    "type": "standard",
     "token": "beOPX",
     "tokenAddress": "0xEDFBeC807304951785b581dB401fDf76b4bAd1b0",
     "tokenDecimals": 18,
@@ -2929,6 +3492,7 @@
   {
     "id": "beefy-beopx-earnings",
     "name": "beOPX Earnings Pool",
+    "type": "gov",
     "token": "beOpx",
     "tokenAddress": "0xEDFBeC807304951785b581dB401fDf76b4bAd1b0",
     "tokenDecimals": 18,
@@ -2951,7 +3515,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "beopx",
-    "isGovVault": true,
     "excluded": "beefy-beopx",
     "network": "optimism",
     "createdAt": 1671735523
@@ -2959,11 +3522,11 @@
   {
     "id": "velodrome-weth-frxeth",
     "name": "frxETH-ETH sLP",
+    "type": "standard",
     "token": "frxETH-ETH sLP",
     "tokenAddress": "0x63642a192BAb08B09A70a997bb35B36b9286B01e",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeETH-frxETH",
     "earnedTokenAddress": "0x1b620BE62788e940b4c4ae6Df933c50981AcAB80",
     "earnContractAddress": "0x1b620BE62788e940b4c4ae6Df933c50981AcAB80",
@@ -2979,16 +3542,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x63642a192BAb08B09A70a997bb35B36b9286B01e",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x63642a192BAb08B09A70a997bb35B36b9286B01e",
     "network": "optimism",
-    "createdAt": 1675525207
+    "createdAt": 1675525207,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-alusd-mai",
     "name": "alUSD-MAI vLP",
+    "type": "standard",
     "token": "alUSD-MAI vLP",
     "tokenAddress": "0xa8FeDB4A8194E21Cf775ce868a865242e4e45151",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromealUSD-MAI",
     "earnedTokenAddress": "0x53fA4D07c62EBcbBB043654480C7C0AB7b5876C4",
     "earnContractAddress": "0x53fA4D07c62EBcbBB043654480C7C0AB7b5876C4",
@@ -3011,16 +3580,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xa8FeDB4A8194E21Cf775ce868a865242e4e45151",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xa8FeDB4A8194E21Cf775ce868a865242e4e45151",
     "network": "optimism",
-    "createdAt": 1675436590
+    "createdAt": 1675436590,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-dai-mai",
     "name": "DAI-MAI sLP",
+    "type": "standard",
     "token": "DAI-MAI sLP",
     "tokenAddress": "0xFfb4fD14e840abD3EBd6Cd026332B2302948A3fc",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeDAI-MAI",
     "earnedTokenAddress": "0x0f21607f78Ee4bdd6895A7517851531B03C2c58a",
     "earnContractAddress": "0x0f21607f78Ee4bdd6895A7517851531B03C2c58a",
@@ -3043,16 +3618,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xFfb4fD14e840abD3EBd6Cd026332B2302948A3fc",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xFfb4fD14e840abD3EBd6Cd026332B2302948A3fc",
     "network": "optimism",
-    "createdAt": 1675341832
+    "createdAt": 1675341832,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usd+-dola",
     "name": "USD+-DOLA sLP",
+    "type": "standard",
     "token": "USD+-DOLA sLP",
     "tokenAddress": "0xa99817d2d286C894F8f3888096A5616d06F20d46",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeUSD+-DOLA",
     "earnedTokenAddress": "0x60bBDf88bd2DbAA645D6CF8Ae67d2F4aDA2658F1",
     "earnContractAddress": "0x60bBDf88bd2DbAA645D6CF8Ae67d2F4aDA2658F1",
@@ -3075,16 +3656,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xa99817d2d286C894F8f3888096A5616d06F20d46",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xa99817d2d286C894F8f3888096A5616d06F20d46",
     "network": "optimism",
-    "createdAt": 1675341832
+    "createdAt": 1675341832,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-wsteth-usdc",
     "name": "wstETH-USDCe vLP",
+    "type": "standard",
     "token": "wstETH-USDCe vLP",
     "tokenAddress": "0x794299137282e5D3Af56616624Ab918D1b2BeCF3",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelowstETH-USDCe",
     "earnedTokenAddress": "0xbBa5840e22af2DD87f76281988475bE87EaA864D",
     "earnContractAddress": "0xbBa5840e22af2DD87f76281988475bE87EaA864D",
@@ -3100,16 +3687,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x794299137282e5D3Af56616624Ab918D1b2BeCF3",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x794299137282e5D3Af56616624Ab918D1b2BeCF3",
     "network": "optimism",
-    "createdAt": 1674847402
+    "createdAt": 1674847402,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-wsteth-op",
     "name": "wstETH-OP vLP",
+    "type": "standard",
     "token": "wstETH-OP vLP",
     "tokenAddress": "0x3905870E647c97Cb9C8D99Db24384f480531B5b9",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelowstETH-OP",
     "earnedTokenAddress": "0x4a6F75A5A996F16D467e3452DC9ED4BFFcB4DD4b",
     "earnContractAddress": "0x4a6F75A5A996F16D467e3452DC9ED4BFFcB4DD4b",
@@ -3124,16 +3717,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x3905870E647c97Cb9C8D99Db24384f480531B5b9",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x3905870E647c97Cb9C8D99Db24384f480531B5b9",
     "network": "optimism",
-    "createdAt": 1674850871
+    "createdAt": 1674850871,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-wsteth-seth",
     "name": "wstETH-sETH sLP",
+    "type": "standard",
     "token": "wstETH-sETH sLP",
     "tokenAddress": "0xB343dae0E7fe28c16EC5dCa64cB0C1ac5F4690AC",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelowstETH-sETH",
     "earnedTokenAddress": "0x816aF3b6dc3E92ea0D95A20BEB1c8E989be8041c",
     "earnContractAddress": "0x816aF3b6dc3E92ea0D95A20BEB1c8E989be8041c",
@@ -3149,16 +3748,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xB343dae0E7fe28c16EC5dCa64cB0C1ac5F4690AC",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xB343dae0E7fe28c16EC5dCa64cB0C1ac5F4690AC",
     "network": "optimism",
-    "createdAt": 1675354581
+    "createdAt": 1675354581,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-jeur-seur",
     "name": "jEUR-sEUR sLP",
+    "type": "standard",
     "token": "jEUR-sEUR sLP",
     "tokenAddress": "0x9905f635c656208f4725f3EB51fb762D8041FD50",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelojEUR-sEUR",
     "earnedTokenAddress": "0x7179262B6D65E649168108494345dEe743c8b751",
     "earnContractAddress": "0x7179262B6D65E649168108494345dEe743c8b751",
@@ -3181,16 +3786,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9905f635c656208f4725f3EB51fb762D8041FD50",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9905f635c656208f4725f3EB51fb762D8041FD50",
     "network": "optimism",
-    "createdAt": 1674180481
+    "createdAt": 1674180481,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-unidx-dai",
     "name": "multiUNIDX-DAI vLP",
+    "type": "standard",
     "token": "multiUNIDX-DAI vLP",
     "tokenAddress": "0x83E33607e808A0693DF2F803b41291caC5a51e58",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVeloUNIDX-DAI",
     "earnedTokenAddress": "0xF38bC4596F919Bd80D5aaaEb41694eb66E7A08D3",
     "earnContractAddress": "0xF38bC4596F919Bd80D5aaaEb41694eb66E7A08D3",
@@ -3206,16 +3817,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x83E33607e808A0693DF2F803b41291caC5a51e58",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x83E33607e808A0693DF2F803b41291caC5a51e58",
     "network": "optimism",
-    "createdAt": 1672282535
+    "createdAt": 1672282535,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-weth-lusd",
     "name": "LUSD-ETH vLP",
+    "type": "standard",
     "token": "LUSD-ETH vLP",
     "tokenAddress": "0x91e0fC1E4D32cC62C4f9Bc11aCa5f3a159483d31",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVeloLUSD-ETH",
     "earnedTokenAddress": "0x628bA6829DeE5a5bA4fBca63B068a2Cd8b85690C",
     "earnContractAddress": "0x628bA6829DeE5a5bA4fBca63B068a2Cd8b85690C",
@@ -3231,16 +3848,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x91e0fC1E4D32cC62C4f9Bc11aCa5f3a159483d31",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x91e0fC1E4D32cC62C4f9Bc11aCa5f3a159483d31",
     "network": "optimism",
-    "createdAt": 1672282535
+    "createdAt": 1672282535,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-weth-kwenta",
     "name": "KWENTA-ETH vLP",
+    "type": "standard",
     "token": "KWENTA-ETH vLP",
     "tokenAddress": "0xd65c1120DDF79F827b925C505949E02c5A0D6236",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVeloKWENTA-ETH",
     "earnedTokenAddress": "0xE6d06Fb38B5Ad2257e2cfA76feE5f1044534fa3D",
     "earnContractAddress": "0xE6d06Fb38B5Ad2257e2cfA76feE5f1044534fa3D",
@@ -3256,16 +3879,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xd65c1120DDF79F827b925C505949E02c5A0D6236",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xd65c1120DDF79F827b925C505949E02c5A0D6236",
     "network": "optimism",
-    "createdAt": 1671717603
+    "createdAt": 1671717603,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-thales-weth",
     "name": "THALES-ETH vLP",
+    "type": "standard",
     "token": "THALES-ETH vLP",
     "tokenAddress": "0x6Fe429de4284B7625CAC1FCaACFa1D705ac9ec28",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVeloTHALES-ETH",
     "earnedTokenAddress": "0x6b26E16250BBD1B38DB5769c3E9D9723d4d6F8ab",
     "earnContractAddress": "0x6b26E16250BBD1B38DB5769c3E9D9723d4d6F8ab",
@@ -3281,16 +3910,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x6Fe429de4284B7625CAC1FCaACFa1D705ac9ec28",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x6Fe429de4284B7625CAC1FCaACFa1D705ac9ec28",
     "network": "optimism",
-    "createdAt": 1671717603
+    "createdAt": 1671717603,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdc-usdt",
     "name": "USDT-USDCe sLP",
+    "type": "standard",
     "token": "USDT-USDCe sLP",
     "tokenAddress": "0xe08d427724d8a2673FE0bE3A81b7db17BE835B36",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVeloUSDC-USDT",
     "earnedTokenAddress": "0x0495a700407975b2641Fa61Aef5Ccd0106F525Cc",
     "earnContractAddress": "0x0495a700407975b2641Fa61Aef5Ccd0106F525Cc",
@@ -3306,16 +3941,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xe08d427724d8a2673FE0bE3A81b7db17BE835B36",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xe08d427724d8a2673FE0bE3A81b7db17BE835B36",
     "network": "optimism",
-    "createdAt": 1670479365
+    "createdAt": 1670479365,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdc-usx",
     "name": "USX-USDCe sLP",
+    "type": "standard",
     "token": "USX-USDCe sLP",
     "tokenAddress": "0x5edac6B8EA08d535c01981D75B3361481C0EE999",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVeloUSDC-USX",
     "earnedTokenAddress": "0xb5CC2092d3e6b270707E8B1E7588a469B65eb613",
     "earnContractAddress": "0xb5CC2092d3e6b270707E8B1E7588a469B65eb613",
@@ -3338,11 +3979,18 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x5edac6B8EA08d535c01981D75B3361481C0EE999",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x5edac6B8EA08d535c01981D75B3361481C0EE999",
     "network": "optimism",
-    "createdAt": 1670479365
+    "createdAt": 1670479365,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "opx-olp",
     "name": "OLP",
+    "type": "standard",
     "token": "fOLP",
     "tokenAddress": "0x2a1DA94AFd3BE55e9Ca4697d1013D1c557Eefff1",
     "tokenDecimals": 18,
@@ -3373,6 +4021,7 @@
   {
     "id": "curve-op-f-wsteth",
     "name": "wstETH-ETH",
+    "type": "standard",
     "token": "wstETHCRV",
     "tokenAddress": "0xEfDE221f306152971D8e9f181bFe998447975810",
     "tokenDecimals": 18,
@@ -3403,6 +4052,7 @@
   {
     "id": "hop-op-snx",
     "name": "SNX LP",
+    "type": "standard",
     "token": "SNX-hSNX LP",
     "tokenAddress": "0xe63337211DdE2569C348D9B3A0acb5637CFa8aB3",
     "tokenDecimals": 18,
@@ -3434,6 +4084,7 @@
   {
     "id": "hop-op-eth",
     "name": "ETH LP",
+    "type": "standard",
     "token": "ETH-hETH LP",
     "tokenAddress": "0x5C2048094bAaDe483D0b1DA85c3Da6200A88a849",
     "tokenDecimals": 18,
@@ -3464,6 +4115,7 @@
   {
     "id": "hop-op-usdc",
     "name": "USDCe LP",
+    "type": "standard",
     "token": "USDCe-hUSDC LP",
     "tokenAddress": "0x2e17b8193566345a2Dd467183526dEdc42d2d5A8",
     "tokenDecimals": 18,
@@ -3494,6 +4146,7 @@
   {
     "id": "hop-op-dai",
     "name": "DAI LP",
+    "type": "standard",
     "token": "DAI-hDAI LP",
     "tokenAddress": "0x22D63A26c730d49e5Eab461E4f5De1D8BdF89C92",
     "tokenDecimals": 18,
@@ -3524,6 +4177,7 @@
   {
     "id": "hop-op-usdt",
     "name": "USDT LP",
+    "type": "standard",
     "token": "USDT-hUSDT LP",
     "tokenAddress": "0xF753A50fc755c6622BBCAa0f59F0522f264F006e",
     "tokenDecimals": 18,
@@ -3554,11 +4208,11 @@
   {
     "id": "velodrome-weth-reth",
     "name": "rETH-ETH sLP",
+    "type": "standard",
     "token": "rETH-ETH sLP",
     "tokenAddress": "0x69F795e2d9249021798645d784229e5bec2a5a25",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelorETH-ETH",
     "earnedTokenAddress": "0xf3616427a475d89A2Da770a91D51fc2ea4304027",
     "earnContractAddress": "0xf3616427a475d89A2Da770a91D51fc2ea4304027",
@@ -3574,16 +4228,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x69F795e2d9249021798645d784229e5bec2a5a25",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x69F795e2d9249021798645d784229e5bec2a5a25",
     "network": "optimism",
-    "createdAt": 1668704939
+    "createdAt": 1668704939,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-wsteth-ldo",
     "name": "wstETH-LDO vLP",
+    "type": "standard",
     "token": "wstETH-LDO vLP",
     "tokenAddress": "0xfEdd5A17D009DCB28DEaC39094A2aA5b601DC4a3",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelowstETH-LDO",
     "earnedTokenAddress": "0xdFd25571eC749cA396462222D3f4c5B3A79c1A81",
     "earnContractAddress": "0xdFd25571eC749cA396462222D3f4c5B3A79c1A81",
@@ -3599,16 +4259,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xfEdd5A17D009DCB28DEaC39094A2aA5b601DC4a3",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xfEdd5A17D009DCB28DEaC39094A2aA5b601DC4a3",
     "network": "optimism",
-    "createdAt": 1668704938
+    "createdAt": 1668704938,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-wsteth-usd+",
     "name": "wstETH-USD+ vLP",
+    "type": "standard",
     "token": "wstETH-USD+ vLP",
     "tokenAddress": "0x98dc12979A34EE2F7099B1cBD65f9080c5a3284F",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelowstETH-USD+",
     "earnedTokenAddress": "0x8Aa528b1F60170DA1eC0882bA3b3b09D7F4c4AD1",
     "earnContractAddress": "0x8Aa528b1F60170DA1eC0882bA3b3b09D7F4c4AD1",
@@ -3631,16 +4297,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x98dc12979A34EE2F7099B1cBD65f9080c5a3284F",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x98dc12979A34EE2F7099B1cBD65f9080c5a3284F",
     "network": "optimism",
-    "createdAt": 1668704937
+    "createdAt": 1668704937,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-op-mai",
     "name": "MAI-OP vLP",
+    "type": "standard",
     "token": "MAI-OP vLP",
     "tokenAddress": "0x8fbC13969B03B58E0ac50B19E4aEdd4DFf8554a1",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVeloMAI-OP",
     "earnedTokenAddress": "0xa0b33f5e893A95675d8D59A4abba3A16E2727f0f",
     "earnContractAddress": "0xa0b33f5e893A95675d8D59A4abba3A16E2727f0f",
@@ -3663,16 +4335,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x8fbC13969B03B58E0ac50B19E4aEdd4DFf8554a1",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x8fbC13969B03B58E0ac50B19E4aEdd4DFf8554a1",
     "network": "optimism",
-    "createdAt": 1668704936
+    "createdAt": 1668704936,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-weth-hop",
     "name": "ETH-HOP vLP",
+    "type": "standard",
     "token": "ETH-HOP vLP",
     "tokenAddress": "0xCC441718F7F50d55F497fd37E3f3f3fe4789cf6b",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVeloWETH-HOP",
     "earnedTokenAddress": "0x3a00d6D1D8fC0eD0cf481A8Eb835f1c1B8760708",
     "earnContractAddress": "0x3a00d6D1D8fC0eD0cf481A8Eb835f1c1B8760708",
@@ -3688,11 +4366,18 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xCC441718F7F50d55F497fd37E3f3f3fe4789cf6b",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xCC441718F7F50d55F497fd37E3f3f3fe4789cf6b",
     "network": "optimism",
-    "createdAt": 1666954558
+    "createdAt": 1666954558,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "optimism-bifi-maxi",
     "name": "oldBIFI Maxi",
+    "type": "standard",
     "token": "oldBIFI",
     "tokenAddress": "0x4E720DD3Ac5CFe1e1fbDE4935f386Bb1C66F4642",
     "tokenDecimals": 18,
@@ -3721,6 +4406,7 @@
   {
     "id": "beefy-bevelo",
     "name": "beVELO",
+    "type": "standard",
     "token": "beVELO",
     "tokenAddress": "0xfDeFFc7Ad816BF7867C642dF7eBC2CC5554ec265",
     "tokenDecimals": 18,
@@ -3749,11 +4435,11 @@
   {
     "id": "velodrome-wsteth-weth",
     "name": "wstETH-ETH sLP",
+    "type": "standard",
     "token": "wstETH-ETH sLP",
     "tokenAddress": "0xBf205335De602ac38244F112d712ab04CB59A498",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelowstETH-ETH",
     "earnedTokenAddress": "0xcAdC68d5834898D54929E694eD19e833e0117694",
     "earnContractAddress": "0xcAdC68d5834898D54929E694eD19e833e0117694",
@@ -3768,11 +4454,18 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xBf205335De602ac38244F112d712ab04CB59A498",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xBf205335De602ac38244F112d712ab04CB59A498",
     "network": "optimism",
-    "createdAt": 1665617208
+    "createdAt": 1665617208,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "beets-shanghai-shakedown",
     "name": "Shanghai Shakedown",
+    "type": "standard",
     "token": "Shanghai Shakedown",
     "tokenAddress": "0x7B50775383d3D6f0215A8F290f2C9e2eEBBEceb2",
     "tokenDecimals": 18,
@@ -3795,6 +4488,7 @@
   {
     "id": "beets-helter-skelter",
     "name": "Helter Skelter",
+    "type": "standard",
     "token": "Helter Skelter",
     "tokenAddress": "0x899F737750db562b88c1E412eE1902980D3a4844",
     "tokenDecimals": 18,
@@ -3818,6 +4512,7 @@
   {
     "id": "beets-overnight-pulse",
     "name": "Overnight Pulse",
+    "type": "standard",
     "token": "Overnight Pulse",
     "tokenAddress": "0xb1C9aC57594e9B1EC0f3787D9f6744EF4CB0A024",
     "tokenDecimals": 18,
@@ -3848,6 +4543,7 @@
   {
     "id": "beets-yellow-submarine",
     "name": "Yellow Submarine, Our Yield Machine",
+    "type": "standard",
     "token": "Yellow Submarine, Our Yield Machine",
     "tokenAddress": "0x981Fb05B738e981aC532a99e77170ECb4Bc27AEF",
     "tokenDecimals": 18,
@@ -3871,11 +4567,11 @@
   {
     "id": "velodrome-usdc-mim",
     "name": "MIM-USDCe sLP",
+    "type": "standard",
     "token": "MIM-USDCe sLP",
     "tokenAddress": "0x29A20cA4968d756C7D0922a7064a1A56f4624e9a",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVeloUSDC-MIM",
     "earnedTokenAddress": "0x6992333E5df2364eB1b6CF14DC0c86EB0865D6E2",
     "earnContractAddress": "0x6992333E5df2364eB1b6CF14DC0c86EB0865D6E2",
@@ -3897,16 +4593,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x29A20cA4968d756C7D0922a7064a1A56f4624e9a",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x29A20cA4968d756C7D0922a7064a1A56f4624e9a",
     "network": "optimism",
-    "createdAt": 1665023322
+    "createdAt": 1665023322,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-weth-bifi",
     "name": "oldBIFI-ETH vLP",
+    "type": "standard",
     "token": "oldBIFI-ETH vLP",
     "tokenAddress": "0x17d99c78F1AA7870ab30FB3E93b2fE9F6502d192",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVeloETH-oldBIFI",
     "earnedTokenAddress": "0x3532b6f723948eF39d5DCf44C16855239aF81082",
     "earnContractAddress": "0x3532b6f723948eF39d5DCf44C16855239aF81082",
@@ -3922,16 +4624,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x17d99c78F1AA7870ab30FB3E93b2fE9F6502d192",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x17d99c78F1AA7870ab30FB3E93b2fE9F6502d192",
     "network": "optimism",
-    "createdAt": 1665023322
+    "createdAt": 1665023322,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usd+-lusd",
     "name": "USD+-LUSD sLP",
+    "type": "standard",
     "token": "USD+-LUSD sLP",
     "tokenAddress": "0x8a9Cd3dce710e90177B4332C108E159a15736A0F",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVeloUSD+-LUSD",
     "earnedTokenAddress": "0x3b6eD6A53a9a357a397fbc7A04C96BA8B4AEBed2",
     "earnContractAddress": "0x3b6eD6A53a9a357a397fbc7A04C96BA8B4AEBed2",
@@ -3953,16 +4661,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x8a9Cd3dce710e90177B4332C108E159a15736A0F",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x8a9Cd3dce710e90177B4332C108E159a15736A0F",
     "network": "optimism",
-    "createdAt": 1664540189
+    "createdAt": 1664540189,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-sonne-usdc",
     "name": "SONNE-USDCe vLP",
+    "type": "standard",
     "token": "SONNE-USDCe vLP",
     "tokenAddress": "0xc899C4D73ED8dF2eAd1543AB915888B0Bf7d57a2",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVeloSONNE-USDCe",
     "earnedTokenAddress": "0x5D946a0eFeA185df89520ec0bee29d0c3295C447",
     "earnContractAddress": "0x5D946a0eFeA185df89520ec0bee29d0c3295C447",
@@ -3977,16 +4691,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xc899C4D73ED8dF2eAd1543AB915888B0Bf7d57a2",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xc899C4D73ED8dF2eAd1543AB915888B0Bf7d57a2",
     "network": "optimism",
-    "createdAt": 1664749297
+    "createdAt": 1664749297,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-jeur-ageur",
     "name": "jEUR-agEUR sLP",
+    "type": "standard",
     "token": "jEUR-agEUR sLP",
     "tokenAddress": "0x050D6Dbc73F6993A29e1327846117C4F5Fc7D68E",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromejEUR-agEUR",
     "earnedTokenAddress": "0x9f7eD443F5C89b6F2D4FA361d55594e0387DbF57",
     "earnContractAddress": "0x9f7eD443F5C89b6F2D4FA361d55594e0387DbF57",
@@ -4009,16 +4729,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x050D6Dbc73F6993A29e1327846117C4F5Fc7D68E",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x050D6Dbc73F6993A29e1327846117C4F5Fc7D68E",
     "network": "optimism",
-    "createdAt": 1663910717
+    "createdAt": 1663910717,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-op-bifi",
     "name": "oldBIFI-OP vLP",
+    "type": "standard",
     "token": "oldBIFI-OP vLP",
     "tokenAddress": "0x81f638E5d063618Fc5f6a976E48e9B803b3240C0",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelooldBIFI-OP",
     "earnedTokenAddress": "0x0234Ed3eD84639e930e7e49Be557e2Ed83BDe32e",
     "earnContractAddress": "0x0234Ed3eD84639e930e7e49Be557e2Ed83BDe32e",
@@ -4034,16 +4760,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x81f638E5d063618Fc5f6a976E48e9B803b3240C0",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x81f638E5d063618Fc5f6a976E48e9B803b3240C0",
     "network": "optimism",
-    "createdAt": 1663091479
+    "createdAt": 1663091479,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-frax-op",
     "name": "FRAX-OP vLP",
+    "type": "standard",
     "token": "FRAX-OP vLP",
     "tokenAddress": "0x986d353A3700530BE4e75794830f57e657bc68cB",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeFRAX-OP",
     "earnedTokenAddress": "0x4EfF281247576EC156D7271C46d9EF0F43c6c265",
     "earnContractAddress": "0x4EfF281247576EC156D7271C46d9EF0F43c6c265",
@@ -4066,16 +4798,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x986d353A3700530BE4e75794830f57e657bc68cB",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x986d353A3700530BE4e75794830f57e657bc68cB",
     "network": "optimism",
-    "createdAt": 1663344353
+    "createdAt": 1663344353,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdc-tusd",
     "name": "TUSD-USDCe sLP",
+    "type": "standard",
     "token": "TUSD-USDCe sLP",
     "tokenAddress": "0xA4549B89A39f76d9D28415474aeD7d06Ec9935fe",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVeloTUSD-USDCe",
     "earnedTokenAddress": "0x01Bff9F1b56c76A619327f681a734c48daA80E74",
     "earnContractAddress": "0x01Bff9F1b56c76A619327f681a734c48daA80E74",
@@ -4091,16 +4829,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xA4549B89A39f76d9D28415474aeD7d06Ec9935fe",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xA4549B89A39f76d9D28415474aeD7d06Ec9935fe",
     "network": "optimism",
-    "createdAt": 1663811140
+    "createdAt": 1663811140,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdp-usdc",
     "name": "USD+-USDCe sLP",
+    "type": "standard",
     "token": "USD+-USDCe sLP",
     "tokenAddress": "0x67124355cCE2Ad7A8eA283E990612eBe12730175",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeUSDP-USDCe",
     "earnedTokenAddress": "0xE7a6563073244044936734536c9fdfAa0B8583Cd",
     "earnContractAddress": "0xE7a6563073244044936734536c9fdfAa0B8583Cd",
@@ -4123,16 +4867,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x67124355cCE2Ad7A8eA283E990612eBe12730175",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x67124355cCE2Ad7A8eA283E990612eBe12730175",
     "network": "optimism",
-    "createdAt": 1663344352
+    "createdAt": 1663344352,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-ageur-mai",
     "name": "agEUR-MAI vLP",
+    "type": "standard",
     "token": "agEUR-MAI vLP",
     "tokenAddress": "0x389d9aeA762fd5F9FBD4434D8E11295F15097B67",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeagEUR-MAI",
     "earnedTokenAddress": "0x4609a582cB1e36B328A9479CCd3FB152cEF76b22",
     "earnContractAddress": "0x4609a582cB1e36B328A9479CCd3FB152cEF76b22",
@@ -4155,16 +4905,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x389d9aeA762fd5F9FBD4434D8E11295F15097B67",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x389d9aeA762fd5F9FBD4434D8E11295F15097B67",
     "network": "optimism",
-    "createdAt": 1662659522
+    "createdAt": 1662659522,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-snx-usdc",
     "name": "SNX-USDCe vLP",
+    "type": "standard",
     "token": "SNX-USDCe vLP",
     "tokenAddress": "0x9056EB7Ca982a5Dd65A584189994e6a27318067D",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeSNX-USDCe",
     "earnedTokenAddress": "0x48B3EdF0D7412B11c232BD9A5114B590B7F28134",
     "earnContractAddress": "0x48B3EdF0D7412B11c232BD9A5114B590B7F28134",
@@ -4179,11 +4935,18 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9056EB7Ca982a5Dd65A584189994e6a27318067D",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9056EB7Ca982a5Dd65A584189994e6a27318067D",
     "network": "optimism",
-    "createdAt": 1662145826
+    "createdAt": 1662145826,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "optimism-bifi-gov",
     "name": "oldBIFI Earnings Pool",
+    "type": "gov",
     "token": "oldBIFI",
     "tokenAddress": "0x4E720DD3Ac5CFe1e1fbDE4935f386Bb1C66F4642",
     "tokenDecimals": 18,
@@ -4206,13 +4969,13 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "old-bifi-pool",
-    "isGovVault": true,
     "network": "optimism",
     "createdAt": 1658491885
   },
   {
     "id": "beets-rocket-fuel",
     "name": "Rocket Fuel",
+    "type": "standard",
     "token": "Rocket Fuel",
     "tokenAddress": "0x4Fd63966879300caFafBB35D157dC5229278Ed23",
     "tokenDecimals": 18,
@@ -4235,11 +4998,11 @@
   {
     "id": "velodrome-susd-lusd",
     "name": "sUSD-LUSD sLP",
+    "type": "standard",
     "token": "sUSD-LUSD sLP",
     "tokenAddress": "0x0D693eFd716021878D5979FaB4Cf8f6c1b7ce450",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelosUSD-LUSD",
     "earnedTokenAddress": "0xaf9DD4c1d755402868fFE2A0B7C0E8a6664a0f2F",
     "earnContractAddress": "0xaf9DD4c1d755402868fFE2A0B7C0E8a6664a0f2F",
@@ -4262,16 +5025,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x0D693eFd716021878D5979FaB4Cf8f6c1b7ce450",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x0D693eFd716021878D5979FaB4Cf8f6c1b7ce450",
     "network": "optimism",
-    "createdAt": 1661450076
+    "createdAt": 1661450076,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-lusd-mai",
     "name": "MAI-LUSD sLP",
+    "type": "standard",
     "token": "MAI-LUSD sLP",
     "tokenAddress": "0x88835Af27c7A22BdED54033c5FAD482a913981BC",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVeloMAI-LUSD",
     "earnedTokenAddress": "0x5edF6B341F73F9782c9AfD105fE3fFF6BD84d2E8",
     "earnContractAddress": "0x5edF6B341F73F9782c9AfD105fE3fFF6BD84d2E8",
@@ -4294,11 +5063,18 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x88835Af27c7A22BdED54033c5FAD482a913981BC",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x88835Af27c7A22BdED54033c5FAD482a913981BC",
     "network": "optimism",
-    "createdAt": 1661450077
+    "createdAt": 1661450077,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "aavev3-op-wbtc",
     "name": "WBTC",
+    "type": "standard",
     "token": "WBTC",
     "tokenAddress": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
     "tokenDecimals": 8,
@@ -4323,11 +5099,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://op.beets.fi/#/trade",
     "network": "optimism",
-    "createdAt": 1659634988
+    "createdAt": 1659634988,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "aavev3-op-dai",
     "name": "DAI",
+    "type": "standard",
     "token": "DAI",
     "tokenAddress": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
     "tokenDecimals": 18,
@@ -4353,11 +5135,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
-    "createdAt": 1659634987
+    "createdAt": 1659634987,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "aavev3-op-usdc",
     "name": "USDCe",
+    "type": "standard",
     "token": "USDCe",
     "tokenAddress": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
     "tokenDecimals": 6,
@@ -4382,11 +5170,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
-    "createdAt": 1659634986
+    "createdAt": 1659634986,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "aavev3-op-eth",
     "name": "ETH",
+    "type": "standard",
     "token": "ETH",
     "tokenDecimals": 18,
     "earnedToken": "mooAaveOpETH",
@@ -4410,16 +5204,21 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
-    "createdAt": 1659634985
+    "createdAt": 1659634985,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "velodrome-op-l2dao",
     "name": "L2DAO-OP vLP",
+    "type": "standard",
     "token": "L2DAO-OP vLP",
     "tokenAddress": "0xfc77e39De40E54F820E313039207DC850E4C9E60",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeL2DAO-OP",
     "earnedTokenAddress": "0x0521b9C8d92D39D0cAbE7Bb3DCAd72D474eCDC7b",
     "earnContractAddress": "0x0521b9C8d92D39D0cAbE7Bb3DCAd72D474eCDC7b",
@@ -4435,16 +5234,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xfc77e39De40E54F820E313039207DC850E4C9E60",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xfc77e39De40E54F820E313039207DC850E4C9E60",
     "network": "optimism",
-    "createdAt": 1659469377
+    "createdAt": 1659469377,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdc-ageur",
     "name": "agEUR-USDCe vLP",
+    "type": "standard",
     "token": "agEUR-USDCe vLP",
     "tokenAddress": "0x7866C6072B09539fC0FDE82963846b80203d7beb",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeagEUR-USDCe",
     "earnedTokenAddress": "0xe900d8b8F562CEB2B56b944Dabf64d285b1faFcA",
     "earnContractAddress": "0xe900d8b8F562CEB2B56b944Dabf64d285b1faFcA",
@@ -4467,16 +5272,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x7866C6072B09539fC0FDE82963846b80203d7beb",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x7866C6072B09539fC0FDE82963846b80203d7beb",
     "network": "optimism",
-    "createdAt": 1659469376
+    "createdAt": 1659469376,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-weth-aelin",
     "name": "AELIN-ETH vLP",
+    "type": "standard",
     "token": "AELIN-ETH vLP",
     "tokenAddress": "0x3EEc44e94ee86ce79f34Bb26dc3CdbbEe18d6d17",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeAELIN-ETH",
     "earnedTokenAddress": "0x1a00E13cd8CbC61C8c342AFD46592F4234172005",
     "earnContractAddress": "0x1a00E13cd8CbC61C8c342AFD46592F4234172005",
@@ -4492,16 +5303,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x3EEc44e94ee86ce79f34Bb26dc3CdbbEe18d6d17",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x3EEc44e94ee86ce79f34Bb26dc3CdbbEe18d6d17",
     "network": "optimism",
-    "createdAt": 1659469375
+    "createdAt": 1659469375,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-susd-dai",
     "name": "sUSD-DAI sLP",
+    "type": "standard",
     "token": "sUSD-DAI sLP",
     "tokenAddress": "0xEc24EB97cEc2F0F6A2D61254990B0f163BbbFe1d",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromesUSD-DAI",
     "earnedTokenAddress": "0x00aCFD3420CD652500F5bA1B90Ac7C19F694c5c3",
     "earnContractAddress": "0x00aCFD3420CD652500F5bA1B90Ac7C19F694c5c3",
@@ -4524,16 +5341,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xEc24EB97cEc2F0F6A2D61254990B0f163BbbFe1d",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xEc24EB97cEc2F0F6A2D61254990B0f163BbbFe1d",
     "network": "optimism",
-    "createdAt": 1657897430
+    "createdAt": 1657897430,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-aleth-weth",
     "name": "alETH-ETH sLP",
+    "type": "standard",
     "token": "alETH-ETH sLP",
     "tokenAddress": "0x6fD5BEe1Ddb4dbBB0b7368B080Ab99b8BA765902",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromealETH-ETH",
     "earnedTokenAddress": "0xf46346DE9c2E5e652FcC37695D3dEC3D672C45BA",
     "earnContractAddress": "0xf46346DE9c2E5e652FcC37695D3dEC3D672C45BA",
@@ -4556,16 +5379,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x6fD5BEe1Ddb4dbBB0b7368B080Ab99b8BA765902",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x6fD5BEe1Ddb4dbBB0b7368B080Ab99b8BA765902",
     "network": "optimism",
-    "createdAt": 1657895221
+    "createdAt": 1657895221,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdc-dola",
     "name": "DOLA-USDCe sLP",
+    "type": "standard",
     "token": "DOLA-USDCe sLP",
     "tokenAddress": "0x6C5019D345Ec05004A7E7B0623A91a0D9B8D590d",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeUSDC-DOLA",
     "earnedTokenAddress": "0xa8fd81A0ec43841b64cDAE13F1F6816108fD37FF",
     "earnContractAddress": "0xa8fd81A0ec43841b64cDAE13F1F6816108fD37FF",
@@ -4587,16 +5416,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x6C5019D345Ec05004A7E7B0623A91a0D9B8D590d",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x6C5019D345Ec05004A7E7B0623A91a0D9B8D590d",
     "network": "optimism",
-    "createdAt": 1657895221
+    "createdAt": 1657895221,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdc-alusd",
     "name": "alUSD-USDCe sLP",
+    "type": "standard",
     "token": "alUSD-USDCe sLP",
     "tokenAddress": "0xe75a3f4Bf99882aD9f8aeBAB2115873315425D00",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeusdc-alUSD",
     "earnedTokenAddress": "0x3246893C1F8c1Bf928121094ea4558c7B93Bdc9A",
     "earnContractAddress": "0x3246893C1F8c1Bf928121094ea4558c7B93Bdc9A",
@@ -4619,16 +5454,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xe75a3f4Bf99882aD9f8aeBAB2115873315425D00",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xe75a3f4Bf99882aD9f8aeBAB2115873315425D00",
     "network": "optimism",
-    "createdAt": 1657894234
+    "createdAt": 1657894234,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-velo-op",
     "name": "VELO-OP vLP",
+    "type": "standard",
     "token": "VELO-OP vLP",
     "tokenAddress": "0xFFD74EF185989BFF8752c818A53a47FC45388F08",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeVELO-OP",
     "earnedTokenAddress": "0x499287C138Aed9A107d748dDfd53668d104378B1",
     "earnContractAddress": "0x499287C138Aed9A107d748dDfd53668d104378B1",
@@ -4643,16 +5484,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xFFD74EF185989BFF8752c818A53a47FC45388F08",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xFFD74EF185989BFF8752c818A53a47FC45388F08",
     "network": "optimism",
-    "createdAt": 1657893236
+    "createdAt": 1657893236,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-weth-dola",
     "name": "DOLA-ETH vLP",
+    "type": "standard",
     "token": "DOLA-ETH vLP",
     "tokenAddress": "0x43Ce87A1ad20277b78CAE52C7bCD5FC82A297551",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeETH-DOLA",
     "earnedTokenAddress": "0x5d871aB3171DaaF1991e9715FBcEE5fa34390CFa",
     "earnContractAddress": "0x5d871aB3171DaaF1991e9715FBcEE5fa34390CFa",
@@ -4675,16 +5522,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x43Ce87A1ad20277b78CAE52C7bCD5FC82A297551",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x43Ce87A1ad20277b78CAE52C7bCD5FC82A297551",
     "network": "optimism",
-    "createdAt": 1657892646
+    "createdAt": 1657892646,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-op-dai",
     "name": "OP-DAI vLP",
+    "type": "standard",
     "token": "OP-DAI vLP",
     "tokenAddress": "0x43C3f2d0aA0EbC433d654BB6ebf67F0C03f8D8d9",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeOP-DAI",
     "earnedTokenAddress": "0xE9831AEfCf8c35ba3f99239391B19eba05336c10",
     "earnContractAddress": "0xE9831AEfCf8c35ba3f99239391B19eba05336c10",
@@ -4707,16 +5560,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x43C3f2d0aA0EbC433d654BB6ebf67F0C03f8D8d9",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x43C3f2d0aA0EbC433d654BB6ebf67F0C03f8D8d9",
     "network": "optimism",
-    "createdAt": 1657891846
+    "createdAt": 1657891846,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-hnd-usdc",
     "name": "HND-USDCe vLP",
+    "type": "standard",
     "token": "HND-USDCe vLP",
     "tokenAddress": "0x588443c932b45F47e936b969eB5AA6b5Fd4F3369",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeHND-USDCe",
     "earnedTokenAddress": "0xFC7a31e1C5C3846D36E49223fae905E28315c1e0",
     "earnContractAddress": "0xFC7a31e1C5C3846D36E49223fae905E28315c1e0",
@@ -4732,16 +5591,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x588443c932b45F47e936b969eB5AA6b5Fd4F3369",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x588443c932b45F47e936b969eB5AA6b5Fd4F3369",
     "network": "optimism",
-    "createdAt": 1657891042
+    "createdAt": 1657891042,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-weth-snx",
     "name": "SNX-ETH vLP",
+    "type": "standard",
     "token": "SNX-ETH vLP",
     "tokenAddress": "0xffB6c35960b23989037C8c391faCebC8a17De970",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeETH-SNX",
     "earnedTokenAddress": "0x40324434a0b53dd1ED167Ba30dcB6B4bd7a9536d",
     "earnContractAddress": "0x40324434a0b53dd1ED167Ba30dcB6B4bd7a9536d",
@@ -4757,16 +5622,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xffB6c35960b23989037C8c391faCebC8a17De970",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xffB6c35960b23989037C8c391faCebC8a17De970",
     "network": "optimism",
-    "createdAt": 1657889921
+    "createdAt": 1657889921,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-wbtc-usdc",
     "name": "WBTC-USDCe vLP",
+    "type": "standard",
     "token": "WBTC-USDCe vLP",
     "tokenAddress": "0x4C8B195d33c6F95A8262D56Ede793611ee7b5AAD",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeWBTC-USDCe",
     "earnedTokenAddress": "0x7e240c368272Da4BFD77bF5DD0151c8CB57aB609",
     "earnContractAddress": "0x7e240c368272Da4BFD77bF5DD0151c8CB57aB609",
@@ -4782,16 +5653,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x4C8B195d33c6F95A8262D56Ede793611ee7b5AAD",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x4C8B195d33c6F95A8262D56Ede793611ee7b5AAD",
     "network": "optimism",
-    "createdAt": 1657556188
+    "createdAt": 1657556188,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdc-perp",
     "name": "PERP-USDCe vLP",
+    "type": "standard",
     "token": "PERP-USDCe vLP",
     "tokenAddress": "0x9C8a59934fbA9aF82674EFf5D13a24e7c7E7A1f1",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromePERP-USDCe",
     "earnedTokenAddress": "0x0Fb22A54A749C3bABeEd908e04A99d27725A2FAe",
     "earnContractAddress": "0x0Fb22A54A749C3bABeEd908e04A99d27725A2FAe",
@@ -4807,16 +5684,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9C8a59934fbA9aF82674EFf5D13a24e7c7E7A1f1",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9C8a59934fbA9aF82674EFf5D13a24e7c7E7A1f1",
     "network": "optimism",
-    "createdAt": 1657556187
+    "createdAt": 1657556187,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-lyra-usdc",
     "name": "LYRA-USDCe vLP",
+    "type": "standard",
     "token": "LYRA-USDCe vLP",
     "tokenAddress": "0xDEE1856D7B75Abf4C1bDf986da4e1C6c7864d640",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeLYRA-USDCe",
     "earnedTokenAddress": "0x48Ae9C58AF01b3Ddd522fC3E161ac4318964c4EE",
     "earnContractAddress": "0x48Ae9C58AF01b3Ddd522fC3E161ac4318964c4EE",
@@ -4831,16 +5714,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xDEE1856D7B75Abf4C1bDf986da4e1C6c7864d640",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xDEE1856D7B75Abf4C1bDf986da4e1C6c7864d640",
     "network": "optimism",
-    "createdAt": 1657556186
+    "createdAt": 1657556186,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-thales-usdc",
     "name": "THALES-USDCe vLP",
+    "type": "standard",
     "token": "THALES-USDCe vLP",
     "tokenAddress": "0x9355292f66552ea5717B274d27EEFc8254011d83",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeTHALES-USDCe",
     "earnedTokenAddress": "0x32B2ff41E72ee243C8835BD44476375afe3A38bB",
     "earnContractAddress": "0x32B2ff41E72ee243C8835BD44476375afe3A38bB",
@@ -4856,16 +5745,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9355292f66552ea5717B274d27EEFc8254011d83",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9355292f66552ea5717B274d27EEFc8254011d83",
     "network": "optimism",
-    "createdAt": 1657556185
+    "createdAt": 1657556185,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-frax-fxs",
     "name": "FXS-FRAX vLP",
+    "type": "standard",
     "token": "FXS-FRAX vLP",
     "tokenAddress": "0xE2EA57FDF87624f4384EF6Da5f3844e8E9e5d878",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeFXS-FRAX",
     "earnedTokenAddress": "0x70e793220761418A18fEbcc556eFb24a45DA123C",
     "earnContractAddress": "0x70e793220761418A18fEbcc556eFb24a45DA123C",
@@ -4888,11 +5783,18 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xE2EA57FDF87624f4384EF6Da5f3844e8E9e5d878",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xE2EA57FDF87624f4384EF6Da5f3844e8E9e5d878",
     "network": "optimism",
-    "createdAt": 1657556184
+    "createdAt": 1657556184,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "stargate-op-usdc",
     "name": "USDCe LP",
+    "type": "standard",
     "token": "S*USDCe",
     "tokenAddress": "0xDecC0c09c3B5f6e92EF4184125D5648a66E35298",
     "tokenDecimals": 6,
@@ -4923,6 +5825,7 @@
   {
     "id": "stargate-op-eth",
     "name": "ETH LP",
+    "type": "standard",
     "token": "S*ETH",
     "tokenAddress": "0xd22363e3762cA7339569F3d33EADe20127D5F98C",
     "tokenDecimals": 18,
@@ -4953,11 +5856,11 @@
   {
     "id": "velodrome-velo-weth",
     "name": "VELO-ETH vLP",
+    "type": "standard",
     "token": "VELO-ETH vLP",
     "tokenAddress": "0x06141423DCF1A5a4C137039063aC873cDC1E363A",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeVELO-ETH",
     "earnedTokenAddress": "0x448423356726dd7dC168e714C80adDb077f83738",
     "earnContractAddress": "0x448423356726dd7dC168e714C80adDb077f83738",
@@ -4972,16 +5875,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x06141423DCF1A5a4C137039063aC873cDC1E363A",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x06141423DCF1A5a4C137039063aC873cDC1E363A",
     "network": "optimism",
-    "createdAt": 1657018688
+    "createdAt": 1657018688,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-weth-op",
     "name": "OP-ETH vLP",
+    "type": "standard",
     "token": "OP-ETH vLP",
     "tokenAddress": "0xcdd41009E74bD1AE4F7B2EeCF892e4bC718b9302",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeOP-ETH",
     "earnedTokenAddress": "0xC9737c178d327b410068a1d0ae2D30ef8e428754",
     "earnContractAddress": "0xC9737c178d327b410068a1d0ae2D30ef8e428754",
@@ -4996,16 +5905,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xcdd41009E74bD1AE4F7B2EeCF892e4bC718b9302",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xcdd41009E74bD1AE4F7B2EeCF892e4bC718b9302",
     "network": "optimism",
-    "createdAt": 1657018687
+    "createdAt": 1657018687,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-weth-usdc",
     "name": "ETH-USDCe vLP",
+    "type": "standard",
     "token": "ETH-USDCe vLP",
     "tokenAddress": "0x79c912FEF520be002c2B6e57EC4324e260f38E50",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeETH-USDCe",
     "earnedTokenAddress": "0xB708038C1b4cF9f91CcB918DAD1B9fD757ADa5C1",
     "earnContractAddress": "0xB708038C1b4cF9f91CcB918DAD1B9fD757ADa5C1",
@@ -5020,16 +5935,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x79c912FEF520be002c2B6e57EC4324e260f38E50",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x79c912FEF520be002c2B6e57EC4324e260f38E50",
     "network": "optimism",
-    "createdAt": 1657018686
+    "createdAt": 1657018686,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdc-lusd",
     "name": "LUSD-USDCe sLP",
+    "type": "standard",
     "token": "LUSD-USDCe sLP",
     "tokenAddress": "0x207AddB05C548F262219f6bFC6e11c02d0f7fDbe",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeLUSD-USDCe",
     "earnedTokenAddress": "0xFF504594eDd93E09309d5EAB775e7c35f642931B",
     "earnContractAddress": "0xFF504594eDd93E09309d5EAB775e7c35f642931B",
@@ -5050,16 +5971,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x207AddB05C548F262219f6bFC6e11c02d0f7fDbe",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x207AddB05C548F262219f6bFC6e11c02d0f7fDbe",
     "network": "optimism",
-    "createdAt": 1657018685
+    "createdAt": 1657018685,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-frax-usdc",
     "name": "FRAX-USDCe sLP",
+    "type": "standard",
     "token": "FRAX-USDCe sLP",
     "tokenAddress": "0xAdF902b11e4ad36B227B84d856B229258b0b0465",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeFRAX-USDCe",
     "earnedTokenAddress": "0x587c3e2e17c59b09B120fc2D27E0eAd6edD2C71D",
     "earnContractAddress": "0x587c3e2e17c59b09B120fc2D27E0eAd6edD2C71D",
@@ -5082,16 +6009,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xAdF902b11e4ad36B227B84d856B229258b0b0465",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xAdF902b11e4ad36B227B84d856B229258b0b0465",
     "network": "optimism",
-    "createdAt": 1657018684
+    "createdAt": 1657018684,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-weth-seth",
     "name": "sETH-ETH sLP",
+    "type": "standard",
     "token": "sETH-ETH sLP",
     "tokenAddress": "0xFd7FddFc0A729eCF45fB6B12fA3B71A575E1966F",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromesETH-ETH",
     "earnedTokenAddress": "0xf92129fE0923d766C2540796d4eA31Ff9FF65522",
     "earnContractAddress": "0xf92129fE0923d766C2540796d4eA31Ff9FF65522",
@@ -5106,16 +6039,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xFd7FddFc0A729eCF45fB6B12fA3B71A575E1966F",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xFd7FddFc0A729eCF45fB6B12fA3B71A575E1966F",
     "network": "optimism",
-    "createdAt": 1657018684
+    "createdAt": 1657018684,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdc-dai",
     "name": "DAI-USDCe sLP",
+    "type": "standard",
     "token": "DAI-USDCe sLP",
     "tokenAddress": "0x4F7ebc19844259386DBdDB7b2eB759eeFc6F8353",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeDAI-USDCe",
     "earnedTokenAddress": "0x43F6De3D9fB0D5EED93d7E7E14A8A526B98f8A58",
     "earnContractAddress": "0x43F6De3D9fB0D5EED93d7E7E14A8A526B98f8A58",
@@ -5136,16 +6075,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x4F7ebc19844259386DBdDB7b2eB759eeFc6F8353",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x4F7ebc19844259386DBdDB7b2eB759eeFc6F8353",
     "network": "optimism",
-    "createdAt": 1657018683
+    "createdAt": 1657018683,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdc-mai",
     "name": "MAI-USDCe sLP",
+    "type": "standard",
     "token": "MAI-USDCe sLP",
     "tokenAddress": "0xd62C9D8a3D4fd98b27CaaEfE3571782a3aF0a737",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeMAI-USDCe",
     "earnedTokenAddress": "0x01D9cfB8a9D43013a1FdC925640412D8d2D900F0",
     "earnContractAddress": "0x01D9cfB8a9D43013a1FdC925640412D8d2D900F0",
@@ -5167,16 +6112,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xd62C9D8a3D4fd98b27CaaEfE3571782a3aF0a737",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xd62C9D8a3D4fd98b27CaaEfE3571782a3aF0a737",
     "network": "optimism",
-    "createdAt": 1657018681
+    "createdAt": 1657018681,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-usdc-susd",
     "name": "sUSD-USDCe sLP",
+    "type": "standard",
     "token": "sUSD-USDCe sLP",
     "tokenAddress": "0xd16232ad60188B68076a235c65d692090caba155",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromesUSD-USDCe",
     "earnedTokenAddress": "0x2232455bf4622002c1416153EE59fd32B239863B",
     "earnContractAddress": "0x2232455bf4622002c1416153EE59fd32B239863B",
@@ -5197,16 +6148,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xd16232ad60188B68076a235c65d692090caba155",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xd16232ad60188B68076a235c65d692090caba155",
     "network": "optimism",
-    "createdAt": 1657018680
+    "createdAt": 1657018680,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "ripae-weth-petho",
     "name": "pETHo-ETH sLP",
+    "type": "standard",
     "token": "pETHo-ETH sLP",
     "tokenAddress": "0x20d33fF7880f65a3554bBEE9C4E9BF79812C6ef6",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooRipaePETHo-ETH",
     "earnedTokenAddress": "0x7e6958dd0437F687AD54557bA1aB15E45373478f",
     "earnContractAddress": "0x7e6958dd0437F687AD54557bA1aB15E45373478f",
@@ -5230,16 +6187,22 @@
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
-    "createdAt": 1660565619
+    "createdAt": 1660565619,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "ripae-weth-setho",
     "name": "sETHo-ETH vLP",
+    "type": "standard",
     "token": "sETHo-ETH vLP",
     "tokenAddress": "0x9629a694C041f3b10cE974DC37eF4dD4596c4F54",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooRipaesETHo-ETH",
     "earnedTokenAddress": "0x3a847E91d632C72A8247727CC09C63a6847f70b4",
     "earnContractAddress": "0x3a847E91d632C72A8247727CC09C63a6847f70b4",
@@ -5262,11 +6225,18 @@
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "removeLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "network": "optimism",
-    "createdAt": 1660565619
+    "createdAt": 1660565619,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "curve-op-f-seth",
     "name": "sETH/ETH",
+    "type": "standard",
     "token": "sETH-f",
     "tokenAddress": "0x7Bc5728BC2b59B45a58d9A576E2Ffc5f0505B35E",
     "tokenDecimals": 18,
@@ -5296,6 +6266,7 @@
   {
     "id": "curve-op-f-sbtc",
     "name": "sBTC/WBTC",
+    "type": "standard",
     "token": "sBTC-f",
     "tokenAddress": "0x9F2fE3500B1a7E285FDc337acacE94c480e00130",
     "tokenDecimals": 18,
@@ -5325,6 +6296,7 @@
   {
     "id": "curve-op-f-susd",
     "name": "sUSD/DAI/USDCe/USDT",
+    "type": "standard",
     "token": "sUSD3CRV-f",
     "tokenAddress": "0x061b87122Ed14b9526A813209C8a59a633257bAb",
     "tokenDecimals": 18,
@@ -5355,11 +6327,11 @@
   {
     "id": "velodrome-op-usdc",
     "name": "OP-USDCe vLP",
+    "type": "standard",
     "token": "OP-USDCe vLP",
     "tokenAddress": "0x47029bc8f5CBe3b464004E87eF9c9419a48018cd",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeOP-USDCe",
     "earnedTokenAddress": "0x613f54c8836FD2C09B910869AC9d4de5e49Db1d8",
     "earnContractAddress": "0x613f54c8836FD2C09B910869AC9d4de5e49Db1d8",
@@ -5374,16 +6346,22 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x47029bc8f5CBe3b464004E87eF9c9419a48018cd",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x47029bc8f5CBe3b464004E87eF9c9419a48018cd",
     "network": "optimism",
-    "createdAt": 1656705591
+    "createdAt": 1656705591,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "velodrome-velo-usdc",
     "name": "VELO-USDCe vLP",
+    "type": "standard",
     "token": "VELO-USDCe vLP",
     "tokenAddress": "0xe8537b6FF1039CB9eD0B71713f697DDbaDBb717d",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "tokenAmmId": "optimism-velodrome",
     "earnedToken": "mooVelodromeVELO-USDCe",
     "earnedTokenAddress": "0x81F2F132465Ffb4B3C5d11f3d94582cC5c281c04",
     "earnContractAddress": "0x81F2F132465Ffb4B3C5d11f3d94582cC5c281c04",
@@ -5398,11 +6376,18 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xe8537b6FF1039CB9eD0B71713f697DDbaDBb717d",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xe8537b6FF1039CB9eD0B71713f697DDbaDBb717d",
     "network": "optimism",
-    "createdAt": 1656705590
+    "createdAt": 1656705590,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome"
+      }
+    ]
   },
   {
     "id": "beets-happy-road",
     "name": "Happy Road",
+    "type": "standard",
     "token": "Happy Road",
     "tokenAddress": "0x39965c9dAb5448482Cf7e002F583c812Ceb53046",
     "tokenDecimals": 18,
@@ -5425,6 +6410,7 @@
   {
     "id": "beets-lennons-long",
     "name": "Lennon's Long",
+    "type": "standard",
     "token": "Lennon's Long",
     "tokenAddress": "0x5028497af0c9a54ea8C6D42a054c0341B9fc6168",
     "tokenDecimals": 18,
@@ -5448,6 +6434,7 @@
   {
     "id": "beets-all-you-need-is-love",
     "name": "All You Need Is Love",
+    "type": "standard",
     "token": "All You Need Is Love",
     "tokenAddress": "0xd6E5824b54f64CE6f1161210bc17eeBfFC77E031",
     "tokenDecimals": 18,

@@ -1,26 +1,120 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
-import { getConfigApi } from '../apis/instances';
-import type { BeefyZapConfig, OneInchZapConfig } from '../apis/config-types';
+import { getBeefyApi, getConfigApi, getTransactApi } from '../apis/instances';
+import type { AmmConfig, SwapAggregatorConfig, ZapConfig } from '../apis/config-types';
+import { ZERO_ADDRESS } from '../../../helpers/addresses';
+import { selectAllStandardVaultsByChainId } from '../selectors/vaults';
+import { isFulfilledResult } from '../../../helpers/promises';
+import type { VaultEntity } from '../entities/vault';
+import type { ZapAggregatorTokenSupportResponse } from '../apis/beefy/beefy-api';
+import { featureFlag_kyberSwapSupport, featureFlag_oneInchSupport } from '../utils/feature-flags';
+import type { ChainEntity } from '../entities/chain';
 
 interface FetchAllZapsFulfilledPayload {
-  beefy: BeefyZapConfig[];
-  oneInch: OneInchZapConfig[];
+  zaps: ZapConfig[];
 }
 
-export const fetchAllZapsAction = createAsyncThunk<
+export const fetchZapConfigsAction = createAsyncThunk<
   FetchAllZapsFulfilledPayload,
   void,
   { state: BeefyState }
->('zap/fetchAllZapsAction', async () => {
-  const api = getConfigApi();
-  const [beefy, oneInch] = await Promise.all([
-    api.fetchBeefyZapsConfig(),
-    api.fetchOneInchZapsConfig(),
-  ]);
+>('zap/fetchConfigs', async () => {
+  const api = await getConfigApi();
+  const zaps = await api.fetchZapConfigs();
+
+  return { zaps: zaps.filter(zap => zap.router !== ZERO_ADDRESS) };
+});
+
+interface FetchAllSwapAggregatorsFulfilledPayload {
+  aggregators: SwapAggregatorConfig[];
+}
+
+export const fetchZapSwapAggregatorsAction = createAsyncThunk<
+  FetchAllSwapAggregatorsFulfilledPayload,
+  void,
+  { state: BeefyState }
+>('zap/fetchSwapAggregators', async () => {
+  const api = await getConfigApi();
+  const aggregators = await api.fetchZapSwapAggregators();
+
+  return { aggregators };
+});
+
+export type CalculateZapAvailabilityFulfilledPayload = {
+  vaultIds: VaultEntity['id'][];
+};
+
+export const calculateZapAvailabilityAction = createAsyncThunk<
+  CalculateZapAvailabilityFulfilledPayload,
+  void,
+  { state: BeefyState }
+>('zap/calculateZapAvailability', async (_, { getState }) => {
+  const state = getState();
+  const chainIds = Object.keys(state.entities.zaps.zaps.byChainId);
+  const vaults = chainIds
+    .flatMap(chainId => selectAllStandardVaultsByChainId(state, chainId))
+    .filter(v => v.zaps?.length > 0);
+  const api = await getTransactApi();
+  const hasZap = await Promise.allSettled(vaults.map(v => api.fetchVaultHasZap(v.id, getState)));
 
   return {
-    beefy,
-    oneInch,
+    vaultIds: vaults
+      .filter((v, i) => {
+        const result = hasZap[i];
+        if (isFulfilledResult(result)) {
+          return result.value;
+        }
+        return false;
+      })
+      .map(v => v.id),
   };
+});
+
+export type FetchZapAggregatorTokenSupportFulfilledPayload = ZapAggregatorTokenSupportResponse;
+
+export const fetchZapAggregatorTokenSupportAction = createAsyncThunk<
+  FetchZapAggregatorTokenSupportFulfilledPayload,
+  void,
+  { state: BeefyState }
+>('zap/fetchAggregatorTokenSupport', async () => {
+  const api = await getBeefyApi();
+  const supportByChain = await api.getZapAggregatorTokenSupport();
+
+  // For testing
+  const extraSupport = {
+    'one-inch': featureFlag_oneInchSupport(),
+    kyber: featureFlag_kyberSwapSupport(),
+  };
+
+  for (const [key, support] of Object.entries(extraSupport)) {
+    if (support.length) {
+      for (const { chainId, tokenAddress } of support) {
+        if (!supportByChain[chainId]) {
+          supportByChain[chainId] = {};
+        }
+        if (!supportByChain[chainId][tokenAddress]) {
+          supportByChain[chainId][tokenAddress] = {};
+        }
+        supportByChain[chainId][tokenAddress][key] = true;
+      }
+    }
+  }
+
+  return supportByChain;
+});
+
+export interface FetchZapAmmsFulfilledPayload {
+  byChainId: {
+    [chainId: ChainEntity['id']]: AmmConfig[];
+  };
+}
+
+export const fetchZapAmmsAction = createAsyncThunk<
+  FetchZapAmmsFulfilledPayload,
+  void,
+  { state: BeefyState }
+>('zap/fetchAmms', async () => {
+  const api = await getConfigApi();
+  const amms = await api.fetchZapAmms();
+  return { byChainId: amms };
 });
