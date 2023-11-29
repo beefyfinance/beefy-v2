@@ -2,6 +2,7 @@
   {
     "id": "celo-bifi-gov",
     "name": "oldBIFI Earnings Pool",
+    "type": "gov",
     "token": "oldBIFI",
     "tokenAddress": "0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C",
     "tokenDecimals": 18,
@@ -24,13 +25,13 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "old-bifi-pool",
-    "isGovVault": true,
     "network": "celo",
     "createdAt": 1623706144
   },
   {
     "id": "curve-celo-3pool",
     "name": "cUSD/USDC/USDT",
+    "type": "standard",
     "token": "cUSD3Pool-f",
     "tokenAddress": "0x32fD7e563c6521Ab4D59CE3277bcfBe3317CFd63",
     "tokenDecimals": 18,
@@ -61,6 +62,7 @@
   {
     "id": "celo-bifi-maxi",
     "name": "oldBIFI Maxi",
+    "type": "standard",
     "token": "oldBIFI",
     "tokenAddress": "0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C",
     "tokenDecimals": 18,
@@ -89,6 +91,7 @@
   {
     "id": "sushi-celo-weth-usdt",
     "name": "USDT-WETH LP",
+    "type": "standard",
     "token": "USDT-WETH LPv2",
     "tokenAddress": "0xC77398cfb7B0F7ab42baFC02ABc20A69CE8cEf7f",
     "tokenDecimals": 18,
@@ -120,6 +123,7 @@
   {
     "id": "sushi-celo-weth-daiv2",
     "name": "DAI-WETH LP",
+    "type": "standard",
     "token": "DAI-WETH LPv2",
     "tokenAddress": "0xCCd9d850eF40f19566cd8df950765E9A1a0B9Ef2",
     "tokenDecimals": 18,
@@ -152,6 +156,7 @@
   {
     "id": "sushi-celo-cusd-usdc",
     "name": "cUSD-USDC LP",
+    "type": "standard",
     "token": "cUSD-USDC LPv2",
     "tokenAddress": "0xA364EdE5590B46E618527d7535506743D978bBF2",
     "tokenDecimals": 18,
@@ -183,6 +188,7 @@
   {
     "id": "sushi-celo-wethv2-celo",
     "name": "CELO-WETH LP",
+    "type": "standard",
     "token": "CELO-WETH LPv2",
     "tokenAddress": "0x517f717f0AE11efc2AF8943071B66d77DfaFc9fC",
     "tokenDecimals": 18,
@@ -214,6 +220,7 @@
   {
     "id": "sushi-celo-wethv2-cusd",
     "name": "cUSD-WETH LP",
+    "type": "standard",
     "token": "cUSD-WETH LPv2",
     "tokenAddress": "0x93887e0fA9F6C375b2765a6fE885593F16f077f9",
     "tokenDecimals": 18,
@@ -245,6 +252,7 @@
   {
     "id": "sushi-celo-cusd-ceurv2",
     "name": "cUSD-cEUR LP",
+    "type": "standard",
     "token": "cUSD-cEUR LPv2",
     "tokenAddress": "0x0b655E7D966CB27998af94AA5719ab7BFe07D3b3",
     "tokenDecimals": 18,
@@ -276,6 +284,7 @@
   {
     "id": "sushi-celo-celo-weth-eol",
     "name": "CELO-WETH LP",
+    "type": "standard",
     "token": "CELO-WETH LP",
     "tokenAddress": "0x38F3c44552a3F6E4D21C8c328cE4904DA766D12f",
     "tokenDecimals": 18,
@@ -307,6 +316,7 @@
   {
     "id": "sushi-celo-cusd-dai-eol",
     "name": "cUSD-DAI LP",
+    "type": "standard",
     "token": "cUSD-DAI LP",
     "tokenAddress": "0x850197dd5A4865324291d7B5745622A8cd732BCb",
     "tokenDecimals": 18,
@@ -339,6 +349,7 @@
   {
     "id": "sushi-celo-ceur-weth-eol",
     "name": "cEUR-WETH LP",
+    "type": "standard",
     "token": "cEUR-WETH LP",
     "tokenAddress": "0xfED4f77af916B62CB073aD7AD2b2C1794c939023",
     "tokenDecimals": 18,
@@ -370,6 +381,7 @@
   {
     "id": "sushi-celo-cusd-ceur-eol",
     "name": "cUSD-cEUR LP",
+    "type": "standard",
     "token": "cUSD-cEUR LP",
     "tokenAddress": "0x0b655E7D966CB27998af94AA5719ab7BFe07D3b3",
     "tokenDecimals": 18,
@@ -401,6 +413,7 @@
   {
     "id": "sushi-celo-celo-mobi-eol",
     "name": "CELO-MOBI LP",
+    "type": "standard",
     "token": "CELO-MOBI LPv2",
     "tokenAddress": "0x8ecDed81A2AbF3b7e724978060739edBeb01b24F",
     "tokenDecimals": 18,

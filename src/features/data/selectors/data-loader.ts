@@ -7,7 +7,7 @@ import { selectVaultById } from './vaults';
 import { createCachedSelector } from 're-reselect';
 import { isInitialLoader, isPending } from '../reducers/data-loader-types';
 
-const selectIsPriceAvailable = (state: BeefyState) =>
+export const selectIsPriceAvailable = (state: BeefyState) =>
   state.ui.dataLoader.global.prices.alreadyLoadedOnce;
 
 export const selectIsConfigAvailable = (state: BeefyState) =>
@@ -78,3 +78,9 @@ export const selectIsAddressBookLoaded = (state: BeefyState, chainId: ChainEntit
 export const selectShouldInitProposals = (state: BeefyState) => {
   return isInitialLoader(state.ui.dataLoader.global.proposals);
 };
+
+export const selectIsZapLoaded = (state: BeefyState) =>
+  state.ui.dataLoader.global.zapConfigs.alreadyLoadedOnce &&
+  state.ui.dataLoader.global.zapSwapAggregators.alreadyLoadedOnce &&
+  state.ui.dataLoader.global.zapAggregatorTokenSupport.alreadyLoadedOnce &&
+  state.ui.dataLoader.global.zapAmms.alreadyLoadedOnce;

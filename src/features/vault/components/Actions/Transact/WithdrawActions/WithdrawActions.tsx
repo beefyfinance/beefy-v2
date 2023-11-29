@@ -5,7 +5,6 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { Button } from '../../../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectTransactOptionById,
   selectTransactQuoteStatus,
   selectTransactSelectedQuote,
   selectTransactVaultId,
@@ -15,11 +14,11 @@ import {
   selectIsWalletConnected,
 } from '../../../../../data/selectors/wallet';
 import type {
-  GovVaultQuote,
+  GovVaultWithdrawQuote,
   TransactOption,
   TransactQuote,
 } from '../../../../../data/apis/transact/transact-types';
-import { isGovVaultQuote } from '../../../../../data/apis/transact/transact-types';
+import { isGovVaultWithdrawQuote } from '../../../../../data/apis/transact/transact-types';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 import { PriceImpactNotice } from '../PriceImpactNotice';
 import { transactSteps, transactStepsClaimGov } from '../../../../../data/actions/transact';
@@ -51,9 +50,7 @@ export const WithdrawActions = memo(function WithdrawActions() {
 export const WithdrawActionsStandard = memo(function WithdrawActionsStandard() {
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuote);
-  const option = useAppSelector(state =>
-    quote ? selectTransactOptionById(state, quote.optionId) : null
-  );
+  const option = quote ? quote.option : null;
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const connectedChainId = useAppSelector(selectCurrentChainId);
 
@@ -78,14 +75,11 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
   const vault = useAppSelector(state => selectGovVaultById(state, vaultId));
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuote);
-  const option = useAppSelector(state =>
-    quote ? selectTransactOptionById(state, quote.optionId) : null
-  );
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const connectedChainId = useAppSelector(selectCurrentChainId);
   const isVaultChain = connectedChainId === vault.chainId;
   const showWithdraw =
-    option && quote && isGovVaultQuote(quote) && quoteStatus === TransactStatus.Fulfilled;
+    quote && isGovVaultWithdrawQuote(quote) && quoteStatus === TransactStatus.Fulfilled;
 
   if (!isWalletConnected) {
     return <ActionConnect />;
@@ -99,7 +93,7 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
   return (
     <>
       {showWithdraw ? (
-        <ActionClaimWithdraw quote={quote} option={option} vault={vault} />
+        <ActionClaimWithdraw quote={quote} vault={vault} />
       ) : (
         <div className={classes.buttons}>
           <ActionWithdrawDisabled />
@@ -177,18 +171,17 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ optio
 });
 
 type ActionClaimWithdrawProps = {
-  option: TransactOption;
-  quote: GovVaultQuote;
+  quote: GovVaultWithdrawQuote;
   vault: VaultGov;
 } & ActionButtonProps;
 const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimWithdraw({
-  option,
   quote,
   vault,
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
+  const option = quote.option;
   const [isDisabledByPriceImpact, setIsDisabledByPriceImpact] = useState(false);
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const isTxInProgress = useAppSelector(selectIsStepperStepping);

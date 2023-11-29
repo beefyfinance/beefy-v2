@@ -38,7 +38,7 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
           stat={stat}
           availableStats={availableStats}
           onChange={setStat}
-          type={vault.isGovVault ? 'gov' : 'standard'}
+          type={vault.type}
         />
       </CardHeader>
       <CardContent className={classes.content}>

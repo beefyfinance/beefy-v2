@@ -28,7 +28,7 @@ export const styles = (theme: Theme) => ({
       flexShrink: 0,
     },
   },
-  vaultType: {
+  assetType: {
     width: '100%',
     [theme.breakpoints.up('md')]: {
       width: 'fit-content',

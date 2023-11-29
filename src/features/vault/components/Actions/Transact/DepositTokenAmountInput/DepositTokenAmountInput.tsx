@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectTransactInputAmount,
-  selectTransactSelectedTokens,
+  selectTransactSelected,
 } from '../../../../../data/selectors/transact';
 import clsx from 'clsx';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
@@ -23,8 +23,8 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
   function DepositTokenAmountInput({ className }) {
     const dispatch = useAppDispatch();
     const classes = useStyles();
-    const selectedTokens = useAppSelector(selectTransactSelectedTokens);
-    const depositToken = selectedTokens[0]; // TODO univ3; only 1 deposit token supported
+    const selection = useAppSelector(selectTransactSelected);
+    const depositToken = selection.tokens[0]; // TODO univ3; only 1 deposit token supported
     const userBalance = useAppSelector(state =>
       selectUserBalanceOfToken(state, depositToken.chainId, depositToken.address)
     );

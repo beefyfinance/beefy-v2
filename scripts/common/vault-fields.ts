@@ -1,14 +1,15 @@
-import { VaultConfig } from '../../src/features/data/apis/config-types';
+import type { VaultConfig } from '../../src/features/data/apis/config-types';
 import { sortKeys } from './utils';
 
 const FIELD_ORDER = [
   'id',
   'name',
+  'type',
   'token',
   'tokenAddress',
   'tokenDecimals',
   'tokenProviderId',
-  'tokenAmmId',
+  'zap',
   'earnedToken',
   'earnedTokenAddress',
   'earnedTokenDecimals',
@@ -46,6 +47,6 @@ function compareFieldKey(a: string, b: string) {
   return aOrder - bOrder;
 }
 
-export function sortVaultKeys(vault: VaultConfig & { tokenAmmId?: string }) {
-  return sortKeys(vault as any, compareFieldKey);
+export function sortVaultKeys(vault: VaultConfig): VaultConfig {
+  return sortKeys(vault, compareFieldKey);
 }

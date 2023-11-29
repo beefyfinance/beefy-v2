@@ -14,7 +14,7 @@ export const fetchApyAction = createAsyncThunk<
   void,
   { state: BeefyState }
 >('prices/fetchApy', async (_, { getState }) => {
-  const api = getBeefyApi();
+  const api = await getBeefyApi();
   const prices = await api.getApyBreakdown();
   return { data: prices, state: getState() };
 });

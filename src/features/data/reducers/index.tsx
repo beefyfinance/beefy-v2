@@ -25,7 +25,6 @@ import { onRamp } from './on-ramp';
 import { feesSlice } from './fees';
 import { transactReducer } from './wallet/transact';
 import { stepperSlice } from './wallet/stepper';
-import { ammsSlice } from './amms';
 import { treasurySlice } from './treasury';
 import { analyticsSlice } from './analytics';
 import { proposalsSlice } from './proposals';
@@ -47,7 +46,6 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
   fees: feesSlice.reducer,
   platforms: platformsSlice.reducer,
   zaps: zapsSlice.reducer,
-  amms: ammsSlice.reducer,
   minters: mintersSlice.reducer,
   proposals: proposalsSlice.reducer,
   bridges: bridgesSlice.reducer,
