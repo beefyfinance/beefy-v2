@@ -15,6 +15,7 @@
     "status": "active",
     "platformId": "gamma",
     "assets": ["BNB", "rBNB"],
+    "strategyTypeId": "managed-conc-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://thena.fi/add?type=gamma&address=0x3513292a2e0e0c6fb0a82196d7ed8eb499fe5772",
