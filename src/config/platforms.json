@@ -912,5 +912,10 @@
     "id": "bril",
     "name": "Bril",
     "filter": true
+  },
+  {
+    "id": "silo",
+    "name": "Silo",
+    "filter": true
   }
 ]
