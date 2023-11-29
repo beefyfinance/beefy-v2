@@ -3,10 +3,13 @@ import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 import BigNumber from 'bignumber.js';
 import { isEmpty, isValidChecksumAddress, maybeChecksumAddress } from './common/utils';
+import { getVaultsIntegrity } from './common/exclude';
 import {
+  addressBookToAppId,
   chainIds,
   chainRpcs,
   excludeChains,
+  excludedChainIds,
   getBoostsForChain,
   getVaultsForChain,
 } from './common/config';
@@ -65,10 +68,55 @@ const oldFields = [
 
 const validatePools = async () => {
   let exitCode = 0;
-
   let updates = {};
-
   const uniquePoolId = new Set();
+
+  if (excludedChainIds.length > 0) {
+    console.warn(`*** Excluded chains: ${excludedChainIds.join(', ')} ***`);
+    const integrities = await Promise.all(
+      excludedChainIds.map(chainId => getVaultsIntegrity(chainId))
+    );
+    excludedChainIds.forEach((chainId, i) => {
+      const integrityNow = integrities[i];
+      const integrityThen = excludeChains[chainId];
+
+      if (!integrityThen) {
+        console.error(`Missing integrity data for excluded chain ${chainId}`);
+        exitCode = 1;
+        return;
+      }
+
+      if (!integrityNow) {
+        console.error(`Failed to perform integrity check for excluded chain ${chainId}`);
+        exitCode = 1;
+        return;
+      }
+
+      if (integrityNow.count !== integrityThen.count) {
+        console.error(
+          `Vault count changed for excluded chain ${chainId}: ${integrityThen.count} -> ${integrityNow.count}`
+        );
+        exitCode = 1;
+        return;
+      }
+
+      if (integrityNow.hash !== integrityThen.hash) {
+        console.error(
+          `Vault hash changed for excluded chain ${chainId}: ${integrityThen.hash} -> ${integrityNow.hash}`
+        );
+        exitCode = 1;
+        return;
+      }
+
+      console.log(`Excluded chain ${chainId} integrity check passed`);
+    });
+
+    if (exitCode != 0) {
+      console.error('*** Excluded chain integrity check failed ***');
+      console.error('If you removed a vault, update excludeChains in scripts/common/config.ts');
+      return exitCode;
+    }
+  }
 
   let promises = [];
   for (const chainId of chainIds) {
@@ -85,8 +133,8 @@ const validatePools = async () => {
   // Helpful data structures to correct addresses.
   console.log('Required updates.', JSON.stringify(updates));
 
-  if (excludeChains.length > 0) {
-    console.warn(`*** Excluded chains: ${excludeChains.join(', ')} ***`);
+  if (excludedChainIds.length > 0) {
+    console.warn(`*** Excluded chains: ${excludedChainIds.join(', ')} ***`);
   }
 
   return exitCode;
@@ -95,24 +143,6 @@ const validatePools = async () => {
 const validateSingleChain = async (chainId, uniquePoolId) => {
   let [pools, boosts] = await Promise.all([getVaultsForChain(chainId), getBoostsForChain(chainId)]);
 
-  if (chainId === 'one') {
-    if (pools.length === 22) {
-      console.log('Skip Harmony validation');
-      return { chainId, exitCode: 0, updates: {} };
-    } else {
-      console.error(`Error: New Harmony pool added without validation`);
-      return { chainId, exitCode: 1, updates: 'New Harmony pool added without validation' };
-    }
-  }
-  if (chainId === 'fuse') {
-    if (pools.length === 28) {
-      console.log('Skip Fuse validation');
-      return { chainId, exitCode: 0, updates: {} };
-    } else {
-      console.error(`Error: New Fuse pool added without validation`);
-      return { chainId, exitCode: 1, updates: 'New Fuse pool added without validation' };
-    }
-  }
   console.log(`Validating ${pools.length} pools in ${chainId}...`);
 
   let updates: Record<string, Record<string, any>> = {};
@@ -207,8 +237,10 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     if (!pool.network) {
       console.error(`Error: ${pool.id} : Missing network`);
       exitCode = 1;
-    } else if (pool.network !== chainId) {
-      console.error(`Error: ${pool.id} : Network mismatch ${pool.network} != ${chainId}`);
+    } else if (pool.network !== addressBookToAppId(chainId)) {
+      console.error(
+        `Error: ${pool.id} : Network mismatch ${pool.network} != ${addressBookToAppId(chainId)}`
+      );
       exitCode = 1;
     }
 
