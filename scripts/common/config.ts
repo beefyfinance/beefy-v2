@@ -1,7 +1,6 @@
 import { config } from '../../src/config/config';
 import lodash from 'lodash';
-import { getChainAddressBook } from '../../src/features/data/apis/addressbook';
-import {
+import type {
   AmmConfig,
   BoostConfig,
   MinterConfig,
@@ -13,11 +12,29 @@ const chainConfigs = Object.fromEntries(
   Object.entries(config).map(([chainId, chainConfig]) => [appToAddressBookId(chainId), chainConfig])
 );
 
-/** What chains to exclude from chainIds array and thus any validation */
-export const excludeChains: string[] = ['heco'];
+/**
+ * What chains to exclude from chainIds array and thus any validation
+ * Use `yarn makeExcludeConfig chain` to generate the hash
+ * Key must be the addressbook/api chain id, not app chain id (i.e. use one over harmony)
+ * */
+export const excludeChains: Record<string, { count: number; hash: string }> = {
+  heco: {
+    count: 35,
+    hash: '0x9b0d945a620022e303085619428f8476b0815be63de66c381985b1600a6ed424',
+  },
+  one: {
+    count: 22,
+    hash: '0x90ed7bc48e41fcefe008e61a93d8ef4bb9ffc10929e098c2e9963ddf64beadf8',
+  },
+  fuse: {
+    count: 28,
+    hash: '0x684a1f39fbb159ed063810479c1d0fcc8c9dfbc200238442582e9916becf660e',
+  },
+};
 
+export const excludedChainIds = Object.keys(excludeChains);
 export const allChainIds: string[] = Object.keys(chainConfigs);
-export const chainIds: string[] = allChainIds.filter(chainId => !excludeChains.includes(chainId));
+export const chainIds: string[] = allChainIds.filter(chainId => !(chainId in excludeChains));
 export const chainRpcs: Record<string, string> = Object.fromEntries(
   allChainIds.map(chainId => [
     chainId,
@@ -27,6 +44,7 @@ export const chainRpcs: Record<string, string> = Object.fromEntries(
 );
 
 const vaultsByChainId = {};
+
 export async function getVaultsForChain(chainId: string): Promise<VaultConfig[]> {
   const id = addressBookToAppId(chainId);
 
@@ -38,6 +56,7 @@ export async function getVaultsForChain(chainId: string): Promise<VaultConfig[]>
 }
 
 const boostsByChainId = {};
+
 export async function getBoostsForChain(chainId: string): Promise<BoostConfig[]> {
   const id = addressBookToAppId(chainId);
 
@@ -49,6 +68,7 @@ export async function getBoostsForChain(chainId: string): Promise<BoostConfig[]>
 }
 
 const ammsByChainId = {};
+
 export async function getAmmsForChain(chainId: string): Promise<AmmConfig[]> {
   const id = addressBookToAppId(chainId);
 
@@ -60,6 +80,7 @@ export async function getAmmsForChain(chainId: string): Promise<AmmConfig[]> {
 }
 
 const mintersByChainId = {};
+
 export async function getMintersForChain(chainId: string): Promise<MinterConfig[]> {
   const id = addressBookToAppId(chainId);
 
