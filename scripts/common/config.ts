@@ -30,6 +30,10 @@ export const excludeChains: Record<string, { count: number; hash: string }> = {
     count: 28,
     hash: '0x684a1f39fbb159ed063810479c1d0fcc8c9dfbc200238442582e9916becf660e',
   },
+  emerald: {
+    count: 10,
+    hash: '0x8bc8e4abf4228c9dcf41bf674a325cddfc0956bad8af1c4d6a57a340057fcd67',
+  },
 };
 
 export const excludedChainIds = Object.keys(excludeChains);
