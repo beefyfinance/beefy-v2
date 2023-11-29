@@ -51,7 +51,7 @@ export const TokenAmountIcon = memo<TokenAmountIconProps>(function TokenAmountIc
           minShortPlaces={4}
         />
       }
-      value={formatBigUsd(valueInUsd)}
+      value={`~${formatBigUsd(valueInUsd)}`}
       tokenSymbol={token.symbol}
       tokenIcon={
         <TokenImage chainId={token.chainId} tokenAddress={token.address} className={classes.icon} />
@@ -69,7 +69,7 @@ export const TokenAmountIconLoader = memo<TokenAmountIconLoaderProps>(
       <TokenAmountIconComponent
         className={className}
         amount={<TextLoader placeholder="1234.5678" />}
-        value={<TextLoader placeholder="$1245.56" />}
+        value={<TextLoader placeholder="~$1245.56" />}
         tokenSymbol={<TextLoader placeholder="ABC-XYZ LP" />}
         tokenIcon={<IconLoader size={32} />}
       />

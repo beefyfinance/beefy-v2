@@ -7,7 +7,7 @@ import { styles } from './styles';
 import { VaultCategoryDropdownFilter } from '../VaultCategoryFilters';
 import { CheckboxFilter } from '../CheckboxFilter';
 import { ShownVaultsCount } from './ShownVaultsCount';
-import { VaultTypeDropdownFilter } from '../VaultTypeFilters';
+import { AssetTypeDropdownFilter } from '../AssetTypeFilters';
 
 const useStyles = makeStyles(styles);
 
@@ -44,7 +44,7 @@ export const ExtendedFilters = memo<ExtendedFiltersProps>(function ExtendedFilte
       {!desktopView ? (
         <>
           <VaultCategoryDropdownFilter className={classes.selector} />
-          <VaultTypeDropdownFilter className={classes.selector} />
+          <AssetTypeDropdownFilter className={classes.selector} />
         </>
       ) : null}
 

@@ -288,6 +288,7 @@ export const selectWrappedToNativeSymbolOrTokenSymbol = createCachedSelector(
     return wrappedToNativeSymbolMap.has(symbol) ? wrappedToNativeSymbolMap.get(symbol) : symbol;
   }
 )((state: BeefyState, symbol: string) => symbol);
+
 export const selectPriceWithChange = createCachedSelector(
   (state: BeefyState, oracleId: string, _bucket: ApiTimeBucket) =>
     selectTokenPriceByTokenOracleId(state, oracleId),
@@ -327,3 +328,31 @@ export const selectPriceWithChange = createCachedSelector(
     return { price, shouldLoad: false, previousPrice, previousDate };
   }
 )((_state: BeefyState, oracleId: string, bucket: ApiTimeBucket) => `${oracleId}-${bucket}`);
+
+export const selectSupportedSwapTokenAddressesForChainAggregator = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  providerId: string
+) => {
+  return state.entities.zaps.swaps.byChainId[chainId]?.byProvider[providerId] || [];
+};
+
+export const selectSupportedSwapTokensForChainAggregator = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  providerId: string
+) => {
+  return selectSupportedSwapTokenAddressesForChainAggregator(state, chainId, providerId)
+    .map(address => selectTokenByAddressOrNull(state, chainId, address))
+    .filter(v => !!v);
+};
+
+export const selectSupportedSwapTokensForChainAggregatorHavingPrice = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  providerId: string
+) => {
+  return selectSupportedSwapTokensForChainAggregator(state, chainId, providerId).filter(token =>
+    selectTokenPriceByTokenOracleId(state, token.oracleId).gt(BIG_ZERO)
+  );
+};

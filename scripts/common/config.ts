@@ -77,7 +77,7 @@ export async function getAmmsForChain(chainId: string): Promise<AmmConfig[]> {
   const id = addressBookToAppId(chainId);
 
   if (!(id in ammsByChainId)) {
-    ammsByChainId[id] = (await import(`../../src/config/amm/${id}.json`)).default;
+    ammsByChainId[id] = (await import(`../../src/config/zap/amm/${id}.json`)).default;
   }
 
   return ammsByChainId[id];

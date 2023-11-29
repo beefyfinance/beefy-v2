@@ -1,9 +1,12 @@
 import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token';
 import { isTokenEqual, isTokenNative } from '../../../entities/token';
 import { sortBy } from 'lodash-es';
+import { uniqBy } from 'lodash';
+import type { ChainEntity } from '../../../entities/chain';
+import type { TokenAmount } from '../transact-types';
 
 /**
- * Returns wnative if token is native with an address of 'native'
+ * Returns wnative if token is native
  * Otherwise returns token
  * Note: Only valid when token/wnative are on the same chain
  */
@@ -33,6 +36,8 @@ export function wnativeToNative(
 
 /**
  * Swaps any native tokens to their wrapped version for use in LPs
+ * Assumes LPs only use wrapped tokens
+ * Used as vault assets sometimes have native listed when they should be wrapped
  */
 export function tokensToLp(tokens: TokenEntity[], wnative: TokenErc20): TokenErc20[] {
   return sortTokens(tokens.map(token => nativeToWNative(token, wnative)));
@@ -40,9 +45,9 @@ export function tokensToLp(tokens: TokenEntity[], wnative: TokenErc20): TokenErc
 
 /**
  * Ensures WNATIVE and NATIVE is in list, if either one of them are already
- * All beefy zap-ins allow either, and will automatically wrap the native
+ * Used in zaps so user can pick either native or wrapped when either is part of an LP
  */
-export function tokensToZapIn(
+export function includeNativeAndWrapped(
   tokens: TokenEntity[],
   wnative: TokenErc20,
   native: TokenNative
@@ -65,36 +70,48 @@ export function tokensToZapIn(
 }
 
 /**
- * Removes WNATIVE from list and replaces with NATIVE
- * All beefy zap-outs unwrap WNATIVE before being sent to user
- */
-export function tokensToZapWithdraw(
-  tokens: TokenEntity[],
-  wnative: TokenErc20,
-  native: TokenNative
-): TokenEntity[] {
-  const withoutWrapped = tokens.filter(token => token.address !== wnative.address);
-  const wrappedWasRemoved = withoutWrapped.length < tokens.length;
-
-  if (wrappedWasRemoved) {
-    const hasNative = tokens.find(
-      token => token.type === 'native' && token.address === native.address
-    );
-    if (!hasNative) {
-      withoutWrapped.unshift(native);
-    }
-  }
-
-  return withoutWrapped;
-}
-
-/**
- * Sorts tokens by their address
+ * Sorts tokens by their lowercase address
  */
 export function sortTokens<T extends TokenEntity>(tokens: T[]): T[] {
   return sortBy(tokens, token => token.address.toLowerCase());
 }
 
+/**
+ * Sorts addresses lowercase alphabetically
+ */
 export function sortTokenAddresses(addresses: TokenEntity['address'][]): TokenEntity['address'][] {
   return sortBy(addresses, address => address.toLowerCase());
+}
+
+/**
+ * Returns list of unique tokens by chainId and address
+ */
+export function uniqueTokens(tokens: TokenEntity[]): TokenEntity[] {
+  return uniqBy(tokens, token => `${token.chainId}-${token.address.toLowerCase()}`);
+}
+
+/**
+ * Merges multiple lists of tokens into a single unique list
+ */
+export function mergeTokenLists(...lists: TokenEntity[][]): TokenEntity[] {
+  return uniqueTokens(lists.flat());
+}
+
+/**
+ * Returns true if all tokens are different from each other
+ */
+export function allTokensAreDistinct(inputs: TokenEntity[]): boolean {
+  return inputs.every((input, i) => inputs.findIndex(other => isTokenEqual(input, other)) === i);
+}
+
+/**
+ * Returns true for chains where native and wnative balances are treated as one
+ * (Chains where there is no need to wrap or unwrap)
+ */
+export function nativeAndWrappedAreSame(chainId: ChainEntity['id']) {
+  return ['metis', 'celo'].includes(chainId);
+}
+
+export function pickTokens(...inputs: TokenAmount[][]): TokenEntity[] {
+  return uniqueTokens(inputs.flat().map(({ token }) => token));
 }

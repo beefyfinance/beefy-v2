@@ -2,6 +2,7 @@
   {
     "id": "heco-bifi-maxi",
     "name": "oldBIFI Maxi",
+    "type": "standard",
     "token": "oldBIFI",
     "tokenAddress": "0x765277EebeCA2e31912C9946eAe1021199B39C61",
     "tokenDecimals": 18,
@@ -30,6 +31,7 @@
   {
     "id": "heco-bifi-gov",
     "name": "oldBIFI Earnings Pool",
+    "type": "gov",
     "token": "oldBIFI",
     "tokenAddress": "0x765277EebeCA2e31912C9946eAe1021199B39C61",
     "tokenDecimals": 18,
@@ -52,7 +54,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "old-bifi-pool",
-    "isGovVault": true,
     "excluded": "heco-bifi-maxi",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71edc38d189767582c38a3145b5873052c3e47a&outputCurrency=0x765277eebeca2e31912c9946eae1021199b39c61",
     "network": "heco",
@@ -61,6 +62,7 @@
   {
     "id": "lendhub-eth",
     "name": "ETH",
+    "type": "standard",
     "token": "ETH",
     "tokenAddress": "0x64FF637fB478863B7468bc97D30a5bF3A428a1fD",
     "tokenDecimals": 18,
@@ -81,6 +83,7 @@
   {
     "id": "mdex-shib-usdt",
     "name": "SHIB-USDT LP",
+    "type": "standard",
     "token": "SHIB-USDT LP",
     "tokenAddress": "0x1c85dD9E5FeE4c40786bd6278255D977946A364b",
     "tokenDecimals": 18,
@@ -103,6 +106,7 @@
   {
     "id": "mdex-bifi-usdt",
     "name": "oldBIFI-USDT LP",
+    "type": "standard",
     "token": "oldBIFI-USDT LP",
     "tokenAddress": "0xe6F7b06ad8B93A21f78E4aCD59f2dac169eA704B",
     "tokenDecimals": 18,
@@ -134,6 +138,7 @@
   {
     "id": "hfi-hfi-ht-eol",
     "name": "HFI-HT LP",
+    "type": "standard",
     "token": "HFI-HT LP",
     "tokenAddress": "0x0bcCa165E0b6BD92C01c582A822Dc2c87eac4BEC",
     "tokenDecimals": 18,
@@ -157,6 +162,7 @@
   {
     "id": "hfi-hfi-husd-eol",
     "name": "HFI-HUSD LP",
+    "type": "standard",
     "token": "HFI-HUSD LP",
     "tokenAddress": "0x8e5A5186c282252c1298c9e3fFB3F944416108f7",
     "tokenDecimals": 18,
@@ -179,6 +185,7 @@
   {
     "id": "lava-lava-eol",
     "name": "LAVA",
+    "type": "standard",
     "token": "LAVA",
     "tokenAddress": "0x56f95662E71f30b333b456439248c6dE589082a4",
     "tokenDecimals": 18,
@@ -198,6 +205,7 @@
   {
     "id": "lava-lava-usdt-eol",
     "name": "LAVA-USDT LP",
+    "type": "standard",
     "token": "LAVA-USDT LP",
     "tokenAddress": "0x3f15F2075Aa11bE4757Aa522d133c0DbC7E878Ce",
     "tokenDecimals": 18,
@@ -220,6 +228,7 @@
   {
     "id": "lava-lava-wht-eol",
     "name": "LAVA-WHT LP",
+    "type": "standard",
     "token": "LAVA-WHT LP",
     "tokenAddress": "0xcA65940b931272833307245c0D56aD86087e80a4",
     "tokenDecimals": 18,
@@ -242,6 +251,7 @@
   {
     "id": "mdex-husd-usdt",
     "name": "HUSD-USDT LP",
+    "type": "standard",
     "token": "HUSD-USDT LP",
     "tokenAddress": "0xdff86B408284dff30A7CAD7688fEdB465734501C",
     "tokenDecimals": 18,
@@ -265,6 +275,7 @@
   {
     "id": "mdex-hdot-usdt",
     "name": "HDOT-USDT LP",
+    "type": "standard",
     "token": "HDOT-USDT LP",
     "tokenAddress": "0x5484ab0DF3E51187f83F7f6b1a13f7a7Ee98C368",
     "tokenDecimals": 18,
@@ -287,6 +298,7 @@
   {
     "id": "mdex-hfil-usdt",
     "name": "HFIL-USDT LP",
+    "type": "standard",
     "token": "HFIL-USDT LP",
     "tokenAddress": "0x600072aF0470d9Ed1D83885D03d17368943fF22A",
     "tokenDecimals": 18,
@@ -309,6 +321,7 @@
   {
     "id": "mdex-hpt-usdt",
     "name": "HPT-USDT LP",
+    "type": "standard",
     "token": "HPT-USDT LP",
     "tokenAddress": "0xdE5b574925EE475c41b99a7591EC43E92dCD2fc1",
     "tokenDecimals": 18,
@@ -331,6 +344,7 @@
   {
     "id": "mdex-aave-usdt",
     "name": "AAVE-USDT LP",
+    "type": "standard",
     "token": "AAVE-USDT LP",
     "tokenAddress": "0xfAfeAafeFc5F92F22415506e78D9AB1E33C03257",
     "tokenDecimals": 18,
@@ -354,6 +368,7 @@
   {
     "id": "mdex-snx-usdt",
     "name": "SNX-USDT LP",
+    "type": "standard",
     "token": "SNX-USDT LP",
     "tokenAddress": "0xc7A4C808a29fc8Cd3A8a6848f7F18bED9924C692",
     "tokenDecimals": 18,
@@ -377,6 +392,7 @@
   {
     "id": "mdex-link-usdt",
     "name": "LINK-USDT LP",
+    "type": "standard",
     "token": "LINK-USDT LP",
     "tokenAddress": "0x52a342015BAa2496A90A9bB6069D7692564132e6",
     "tokenDecimals": 18,
@@ -399,6 +415,7 @@
   {
     "id": "mdex-bal-usdt",
     "name": "BAL-USDT LP",
+    "type": "standard",
     "token": "BAL-USDT LP",
     "tokenAddress": "0xB6A77CDD31771A4F439622aA36b20cb53C19868C",
     "tokenDecimals": 18,
@@ -422,6 +439,7 @@
   {
     "id": "mdex-yfi-usdt",
     "name": "YFI-USDT LP",
+    "type": "standard",
     "token": "YFI-USDT LP",
     "tokenAddress": "0x64Af3564C6D6BEc5883358c560211EcD0f8d1AC7",
     "tokenDecimals": 18,
@@ -444,6 +462,7 @@
   {
     "id": "mdex-mdx-usdt",
     "name": "MDX-USDT LP",
+    "type": "standard",
     "token": "MDX-USDT LP",
     "tokenAddress": "0x615E6285c5944540fd8bd921c9c8c56739Fd1E13",
     "tokenDecimals": 18,
@@ -466,6 +485,7 @@
   {
     "id": "mdex-mdx-wht",
     "name": "MDX-WHT LP",
+    "type": "standard",
     "token": "MDX-WHT LP",
     "tokenAddress": "0x6Dd2993B50b365c707718b0807fC4e344c072eC2",
     "tokenDecimals": 18,
@@ -488,6 +508,7 @@
   {
     "id": "mdex-wht-usdt",
     "name": "WHT-USDT LP",
+    "type": "standard",
     "token": "WHT-USDT LP",
     "tokenAddress": "0x499B6E03749B4bAF95F9E70EeD5355b138EA6C31",
     "tokenDecimals": 18,
@@ -510,6 +531,7 @@
   {
     "id": "lendhub-btc-eol",
     "name": "HBTC",
+    "type": "standard",
     "token": "HBTC",
     "tokenAddress": "0x66a79D23E58475D2738179Ca52cd0b41d73f0BEa",
     "tokenDecimals": 18,
@@ -530,6 +552,7 @@
   {
     "id": "lendhub-dot-eol",
     "name": "HDOT",
+    "type": "standard",
     "token": "HDOT",
     "tokenAddress": "0xA2c49cEe16a5E5bDEFDe931107dc1fae9f7773E3",
     "tokenDecimals": 18,
@@ -550,6 +573,7 @@
   {
     "id": "lendhub-lhb-wht-eol",
     "name": "LHB-WHT LP",
+    "type": "standard",
     "token": "LHB-WHT LP",
     "tokenAddress": "0x8c31344A6cdadEA60715d06b55790F21d967d8D2",
     "tokenDecimals": 18,
@@ -573,6 +597,7 @@
   {
     "id": "lendhub-lhb-usdt-eol",
     "name": "LHB-USDT LP",
+    "type": "standard",
     "token": "LHB-USDT LP",
     "tokenAddress": "0x023f375a51Af8645D7446ba5942BAeDc53B0582D",
     "tokenDecimals": 18,
@@ -596,6 +621,7 @@
   {
     "id": "mdex-mdx-eol",
     "name": "MDX",
+    "type": "standard",
     "token": "MDX",
     "tokenAddress": "0x25D2e80cB6B86881Fd7e07dd263Fb79f4AbE033c",
     "tokenDecimals": 18,
@@ -616,6 +642,7 @@
   {
     "id": "mdex-hbtc-wht-eol",
     "name": "HBTC-WHT LP",
+    "type": "standard",
     "token": "HBTC-WHT LP",
     "tokenAddress": "0xBFff969A85e355eE0851b019Dba1e87C7780F40d",
     "tokenDecimals": 18,
@@ -639,6 +666,7 @@
   {
     "id": "mdex-eth-wht-eol",
     "name": "ETH-WHT LP",
+    "type": "standard",
     "token": "ETH-WHT LP",
     "tokenAddress": "0x53E458aD1CFEB9582736db6BdE9aF89948e3bc3d",
     "tokenDecimals": 18,
@@ -662,6 +690,7 @@
   {
     "id": "mdex-hltc-usdt-eol",
     "name": "HLTC-USDT LP",
+    "type": "standard",
     "token": "HTLC-USDT LP",
     "tokenAddress": "0x060B4bfcE16D15A943ec83C56C87940613e162eB",
     "tokenDecimals": 18,
@@ -685,6 +714,7 @@
   {
     "id": "mdex-hbch-usdt-eol",
     "name": "HBCH-USDT LP",
+    "type": "standard",
     "token": "HBCH-USDT LP",
     "tokenAddress": "0x1f0eC8e0096e145f2bf2Cb4950Ed7b52d1cbd35f",
     "tokenDecimals": 18,
@@ -708,6 +738,7 @@
   {
     "id": "mdex-lhb-usdt-eol",
     "name": "LHB-USDT LP",
+    "type": "standard",
     "token": "LHB-USDT LP",
     "tokenAddress": "0x023f375a51Af8645D7446ba5942BAeDc53B0582D",
     "tokenDecimals": 18,
@@ -731,6 +762,7 @@
   {
     "id": "mdex-uni-usdt-eol",
     "name": "UNI-USDT LP",
+    "type": "standard",
     "token": "UNI-USDT LP",
     "tokenAddress": "0x84455d880af684eb29997B82832dd71EF29c1354",
     "tokenDecimals": 18,
@@ -754,6 +786,7 @@
   {
     "id": "mdex-hbtc-usdt-eol",
     "name": "HBTC-USDT LP",
+    "type": "standard",
     "token": "HBTC-USDT LP",
     "tokenAddress": "0xFBe7b74623e4be82279027a286fa3A5b5280F77c",
     "tokenDecimals": 18,
@@ -777,6 +810,7 @@
   {
     "id": "mdex-eth-usdt-eol",
     "name": "ETH-USDT LP",
+    "type": "standard",
     "token": "ETH-USDT LP",
     "tokenAddress": "0x78C90d3f8A64474982417cDB490E840c01E516D4",
     "tokenDecimals": 18,

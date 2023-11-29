@@ -5,7 +5,7 @@ import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectTransactVaultId,
-  selectTransactWithdrawTokensForChain,
+  selectTransactWithdrawSelectionsForChainWithBalances,
 } from '../../../../../data/selectors/transact';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { SearchInput } from '../../../../../../components/SearchInput';
@@ -32,7 +32,7 @@ export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
     const [selectedChain] = useState(vault.chainId);
     const [search, setSearch] = useState('');
     const optionsForChain = useAppSelector(state =>
-      selectTransactWithdrawTokensForChain(state, selectedChain)
+      selectTransactWithdrawSelectionsForChainWithBalances(state, selectedChain)
     );
     const filteredOptionsForChain = useMemo(() => {
       let options = optionsForChain;
@@ -51,10 +51,10 @@ export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
     }, [optionsForChain, search]);
     // const hasMultipleChains = availableChains.length > 1;
     const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
-      tokenId => {
+      selectionId => {
         dispatch(
-          transactActions.selectToken({
-            tokensId: tokenId,
+          transactActions.selectSelection({
+            selectionId: selectionId,
             resetInput: false,
           })
         );
@@ -74,8 +74,9 @@ export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
               filteredOptionsForChain.map(option => (
                 <ListItem
                   key={option.id}
-                  tokenId={option.id}
+                  selectionId={option.id}
                   tokens={option.tokens}
+                  balance={option.balance}
                   chainId={selectedChain}
                   onSelect={handleTokenSelect}
                 />

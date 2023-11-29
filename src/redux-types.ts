@@ -24,7 +24,6 @@ import type { DataLoaderState } from './features/data/reducers/data-loader-types
 import type { FeesState } from './features/data/reducers/fees';
 import type { StepperState } from './features/data/reducers/wallet/stepper';
 import type { TransactState } from './features/data/reducers/wallet/transact-types';
-import type { AmmsState } from './features/data/reducers/amms';
 import type { TreasuryState } from './features/data/reducers/treasury';
 import type { AnalyticsState } from './features/data/reducers/analytics';
 import type { ProposalsState } from './features/data/reducers/proposals';
@@ -45,7 +44,6 @@ export interface BeefyState {
     fees: FeesState;
     platforms: PlatformsState;
     zaps: ZapsState;
-    amms: AmmsState;
     minters: MintersState;
     proposals: ProposalsState;
     bridges: BridgesState;
@@ -94,3 +92,5 @@ export type BeefyThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+
+export type GetStateFn = () => BeefyState;

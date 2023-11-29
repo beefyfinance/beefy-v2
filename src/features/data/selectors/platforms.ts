@@ -17,6 +17,17 @@ export const selectPlatformById = createCachedSelector(
   }
 )((state: BeefyState, platformId: PlatformEntity['id']) => platformId);
 
+export const selectPlatformByIdOrUndefined = createCachedSelector(
+  // get a tiny bit of the data
+  (state: BeefyState) => state.entities.platforms.byId,
+  // get the user passed ID
+  (_: BeefyState, platformId: PlatformEntity['id']) => platformId,
+  // last function receives previous function outputs as parameters
+  (byId, platformId) => {
+    return byId[platformId];
+  }
+)((state: BeefyState, platformId: PlatformEntity['id']) => platformId);
+
 export const selectAllPlatforms = createSelector(
   (state: BeefyState) => state.entities.platforms.allIds,
   (state: BeefyState) => state.entities.platforms.byId,

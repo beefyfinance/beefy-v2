@@ -50,21 +50,23 @@ const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddres
 const validPlatformIds = platforms.map(platform => platform.id);
 const { gov: validGovStrategyIds, vault: validVaultStrategyIds } = getStrategyIds();
 
-const oldFields = [
-  'tokenDescription',
-  'tokenDescriptionUrl',
-  'pricePerFullShare',
-  'tvl',
-  'oraclePrice',
-  'platform',
-  'stratType',
-  'logo',
-  'depositsPaused',
-  'withdrawalFee',
-  'updatedFees',
-  'mintTokenUrl',
-  'callFee',
-];
+const oldFields = {
+  tokenDescription: 'Use addressbook',
+  tokenDescriptionUrl: 'Use addressbook',
+  pricePerFullShare: 'Not required',
+  tvl: 'Not required',
+  oraclePrice: 'Not required',
+  platform: 'Use platformId',
+  stratType: 'Use strategyTypeId',
+  logo: 'Not required',
+  depositsPaused: 'Use status: paused',
+  withdrawalFee: 'Not required (use api)',
+  updatedFees: 'Not required',
+  mintTokenUrl: 'Use minters config',
+  callFee: 'Not required (use api)',
+  tokenAmmId: 'Use zap: VaultZapConfig if needed',
+  isGovVault: 'Use type: gov',
+};
 
 const validatePools = async () => {
   let exitCode = 0;
@@ -148,7 +150,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   let updates: Record<string, Record<string, any>> = {};
   let exitCode = 0;
   //Governance pools should be separately verified
-  const [govPools, vaultPools] = partition(pools, pool => pool.isGovVault);
+  const [govPools, vaultPools] = partition(pools, pool => pool.type === 'gov');
   pools = vaultPools;
 
   const poolIds = new Set(pools.map(pool => pool.id));
@@ -245,11 +247,12 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     }
 
     // Old fields we no longer need
-    const fieldsToDelete = oldFields.filter(field => field in pool);
+    const fieldsToDelete = Object.keys(oldFields).filter(field => field in pool);
     if (fieldsToDelete.length) {
       console.error(
         `Error: ${pool.id} : These fields are no longer needed: ${fieldsToDelete.join(', ')}`
       );
+      fieldsToDelete.forEach(field => console.log(`\t${field}: '${oldFields[field]}',`));
       exitCode = 1;
     }
 

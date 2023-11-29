@@ -2,6 +2,7 @@
   {
     "id": "cronos-bifi-gov",
     "name": "oldBIFI Earnings Pool",
+    "type": "gov",
     "token": "oldBIFI",
     "tokenAddress": "0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
     "tokenDecimals": 18,
@@ -24,13 +25,13 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "old-bifi-pool",
-    "isGovVault": true,
     "network": "cronos",
     "createdAt": 1623706144
   },
   {
     "id": "vvs-vvs",
     "name": "VVS",
+    "type": "standard",
     "token": "VVS",
     "tokenAddress": "0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     "tokenDecimals": 18,
@@ -58,11 +59,11 @@
   {
     "id": "vvs-usdc-busd",
     "name": "BUSD-USDC LP",
+    "type": "standard",
     "token": "BUSD-USDC LP",
     "tokenAddress": "0x792Df67276615d6E85e36497c4514b7b102Af4A9",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsBUSD-USDC",
     "earnedTokenAddress": "0xb8792531D7B6416987A375Bd5945Bb9d6295A809",
     "earnContractAddress": "0xb8792531D7B6416987A375Bd5945Bb9d6295A809",
@@ -85,16 +86,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/0xC74D59A548ecf7fc1754bb7810D716E9Ac3e3AE5/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "removeLiquidityUrl": "https://vvs.finance/remove/0xC74D59A548ecf7fc1754bb7810D716E9Ac3e3AE5/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1665023337
+    "createdAt": 1665023337,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "vvs-vvs-usdc",
     "name": "VVS-USDC",
+    "type": "standard",
     "token": "VVS-USDC LP",
     "tokenAddress": "0x814920D1b8007207db6cB5a2dD92bF0b082BDBa1",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsVVS-USDC",
     "earnedTokenAddress": "0x78757cdC2124A34aC5382602a95B4776D6111549",
     "earnContractAddress": "0x78757cdC2124A34aC5382602a95B4776D6111549",
@@ -116,16 +123,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     "removeLiquidityUrl": "https://vvs.finance/remove/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     "network": "cronos",
-    "createdAt": 1637045279
+    "createdAt": 1637045279,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "vvs-vvs-cro",
     "name": "VVS-CRO",
+    "type": "standard",
     "token": "VVS-CRO LP",
     "tokenAddress": "0xbf62c67eA509E86F07c8c69d0286C0636C50270b",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsVVS-CRO",
     "earnedTokenAddress": "0x2fbB1caF6271A14b13F3432f3aB2D6aF102560fA",
     "earnContractAddress": "0x2fbB1caF6271A14b13F3432f3aB2D6aF102560fA",
@@ -147,16 +160,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     "network": "cronos",
-    "createdAt": 1637045228
+    "createdAt": 1637045228,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "vvs-cro-eth",
     "name": "CRO-ETH",
+    "type": "standard",
     "token": "CRO-ETH LP",
     "tokenAddress": "0xA111C17f8B8303280d3EB01BBcd61000AA7F39F9",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsCRO-ETH",
     "earnedTokenAddress": "0xB5F0fF997BEc850b11792ed07b2B5AbDEa869B84",
     "earnContractAddress": "0xB5F0fF997BEc850b11792ed07b2B5AbDEa869B84",
@@ -178,16 +197,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "network": "cronos",
-    "createdAt": 1637043985
+    "createdAt": 1637043985,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "vvs-cro-btc",
     "name": "CRO-BTC",
+    "type": "standard",
     "token": "CRO-BTC LP",
     "tokenAddress": "0x8F09fFf247B8fDB80461E5Cf5E82dD1aE2EBd6d7",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsCRO-BTC",
     "earnedTokenAddress": "0x25DE69dA4469A96974FaE79d0C41366A63317FDC",
     "earnContractAddress": "0x25DE69dA4469A96974FaE79d0C41366A63317FDC",
@@ -209,16 +234,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52",
     "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52",
     "network": "cronos",
-    "createdAt": 1637045082
+    "createdAt": 1637045082,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "vvs-cro-shib",
     "name": "SHIB-CRO",
+    "type": "standard",
     "token": "SHIB-CRO LP",
     "tokenAddress": "0xc9eA98736dbC94FAA91AbF9F4aD1eb41e7fb40f4",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsCRO-SHIB",
     "earnedTokenAddress": "0x65BF4169Df9De114c7222cf23cCF012305e58bd0",
     "earnContractAddress": "0x65BF4169Df9De114c7222cf23cCF012305e58bd0",
@@ -240,16 +271,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xbED48612BC69fA1CaB67052b42a95FB30C1bcFee",
     "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0xbED48612BC69fA1CaB67052b42a95FB30C1bcFee",
     "network": "cronos",
-    "createdAt": 1637576058
+    "createdAt": 1637576058,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "vvs-vvs-usdt",
     "name": "VVS-USDT",
+    "type": "standard",
     "token": "VVS-USDT LP",
     "tokenAddress": "0x280aCAD550B2d3Ba63C8cbff51b503Ea41a1c61B",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsVVS-USDT",
     "earnedTokenAddress": "0x2425d707a5C63ff5De83eB78f63e06c3f6eEaA1c",
     "earnContractAddress": "0x2425d707a5C63ff5De83eB78f63e06c3f6eEaA1c",
@@ -271,16 +308,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "removeLiquidityUrl": "https://vvs.finance/remove/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "network": "cronos",
-    "createdAt": 1637322635
+    "createdAt": 1637322635,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "vvs-usdt-usdc",
     "name": "USDT-USDC",
+    "type": "standard",
     "token": "USDT-USDC LP",
     "tokenAddress": "0x39cC0E14795A8e6e9D02A21091b81FE0d61D82f9",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsUSDT-USDC",
     "earnedTokenAddress": "0xB38D32336538559Ce6680952B0Be4917ed015c39",
     "earnContractAddress": "0xB38D32336538559Ce6680952B0Be4917ed015c39",
@@ -302,11 +345,18 @@
     "addLiquidityUrl": "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "removeLiquidityUrl": "https://vvs.finance/remove/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "network": "cronos",
-    "createdAt": 1637151567
+    "createdAt": 1637151567,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "crona-crona",
     "name": "CRONA",
+    "type": "standard",
     "token": "CRONA",
     "tokenAddress": "0xadbd1231fb360047525BEdF962581F3eee7b49fe",
     "tokenDecimals": 18,
@@ -335,11 +385,11 @@
   {
     "id": "crona-cro-crona",
     "name": "CRONA-CRO",
+    "type": "standard",
     "token": "CRONA-CRO LP",
     "tokenAddress": "0xeD75347fFBe08d5cce4858C70Df4dB4Bbe8532a0",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooCronaCRO-CRONA",
     "earnedTokenAddress": "0x8a3030e494a9c0FF12F46D0ce3F1a610dCe9B2eD",
     "earnContractAddress": "0x8a3030e494a9c0FF12F46D0ce3F1a610dCe9B2eD",
@@ -362,16 +412,22 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xadbd1231fb360047525BEdF962581F3eee7b49fe",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/CRO/0xadbd1231fb360047525BEdF962581F3eee7b49fe",
     "network": "cronos",
-    "createdAt": 1637138260
+    "createdAt": 1637138260,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "crona-cro-usdc",
     "name": "USDC-CRO",
+    "type": "standard",
     "token": "USDC-CRO LP",
     "tokenAddress": "0x0625A68D25d304aed698c806267a4e369e8Eb12a",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooCronaCRO-USDC",
     "earnedTokenAddress": "0x8920E4d28Cd2DF033a18803d2081662b3b30B40b",
     "earnContractAddress": "0x8920E4d28Cd2DF033a18803d2081662b3b30B40b",
@@ -394,16 +450,22 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1637146470
+    "createdAt": 1637146470,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "crona-cro-usdt",
     "name": "USDT-CRO",
+    "type": "standard",
     "token": "USDT-CRO LP",
     "tokenAddress": "0x19Dd1683e8c5F6Cc338C1438f2D25EBb4e0b0b08",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooCronaCRO-USDT",
     "earnedTokenAddress": "0xdc036Ab31d2f105E15c1896f88D13B7bcF3e9292",
     "earnContractAddress": "0xdc036Ab31d2f105E15c1896f88D13B7bcF3e9292",
@@ -426,11 +488,18 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1637147878
+    "createdAt": 1637147878,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "crona-usdt-busd",
     "name": "BUSD-USDT",
+    "type": "standard",
     "token": "BUSD-USDT LP",
     "tokenAddress": "0x503d56B2f535784B7f2bcD6581F7e1b46DC0e60c",
     "tokenDecimals": 18,
@@ -462,11 +531,11 @@
   {
     "id": "crona-usdt-usdc",
     "name": "USDC-USDT",
+    "type": "standard",
     "token": "USDC-USDT LP",
     "tokenAddress": "0x968fE4C06fdD503E278d89d5dFe29935A111476C",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooCronaUSDT-USDC",
     "earnedTokenAddress": "0x3586DaCe267C48436ED12BFdF665C2E63DEeb199",
     "earnContractAddress": "0x3586DaCe267C48436ED12BFdF665C2E63DEeb199",
@@ -489,11 +558,18 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/0x66e428c3f67a68878562e79A0234c1F83c208770/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1637164857
+    "createdAt": 1637164857,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "cronos-bifi-maxi",
     "name": "oldBIFI Maxi",
+    "type": "standard",
     "token": "oldBIFI",
     "tokenAddress": "0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
     "tokenDecimals": 18,
@@ -522,11 +598,11 @@
   {
     "id": "vvs-cro-usdt",
     "name": "CRO-USDT",
+    "type": "standard",
     "token": "CRO-USDT LP",
     "tokenAddress": "0x3d2180DB9E1B909f35C398BC39EF36108C0FC8c3",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsCRO-USDT",
     "earnedTokenAddress": "0x3bDA6f10af7911F40C761eE7B1607ECe9ee99Aa4",
     "earnContractAddress": "0x3bDA6f10af7911F40C761eE7B1607ECe9ee99Aa4",
@@ -548,16 +624,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "network": "cronos",
-    "createdAt": 1637834160
+    "createdAt": 1637834160,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "vvs-cro-usdc",
     "name": "CRO-USDC",
+    "type": "standard",
     "token": "CRO-USDC LP",
     "tokenAddress": "0xe61Db569E231B3f5530168Aa2C9D50246525b6d6",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsCRO-USDC",
     "earnedTokenAddress": "0x6bBdC5cacB4e72884432E3d63745cc8e7A4392Ca",
     "earnContractAddress": "0x6bBdC5cacB4e72884432E3d63745cc8e7A4392Ca",
@@ -579,16 +661,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1637656647
+    "createdAt": 1637656647,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "crona-crona-usdc",
     "name": "CRONA-USDC",
+    "type": "standard",
     "token": "CRONA-USDC CLP",
     "tokenAddress": "0x482E0eEb877091cfca439D131321bDE23ddf9bB5",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooCronaCRONA-USDC",
     "earnedTokenAddress": "0x91B712FAb398Fa1f16Bc0B43D41bB3EEC0d73045",
     "earnContractAddress": "0x91B712FAb398Fa1f16Bc0B43D41bB3EEC0d73045",
@@ -611,16 +699,22 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/0xadbd1231fb360047525BEdF962581F3eee7b49fe/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/0xadbd1231fb360047525BEdF962581F3eee7b49fe/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1638062854
+    "createdAt": 1638062854,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "crona-usdt-crona",
     "name": "CRONA-USDT",
+    "type": "standard",
     "token": "CRONA-USDT CLP",
     "tokenAddress": "0x0427F9C304b0028f67A5fD61ffdD613186c1894B",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooCronaUSDT-CRONA",
     "earnedTokenAddress": "0xedEb044BC7Ce11Dfa436CFA8Be43e6eB0d601814",
     "earnContractAddress": "0xedEb044BC7Ce11Dfa436CFA8Be43e6eB0d601814",
@@ -643,16 +737,22 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/0xadbd1231fb360047525BEdF962581F3eee7b49fe/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/0xadbd1231fb360047525BEdF962581F3eee7b49fe/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "network": "cronos",
-    "createdAt": 1638063529
+    "createdAt": 1638063529,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "crona-usdc-dai",
     "name": "USDC-DAI",
+    "type": "standard",
     "token": "USDC-DAI CLP",
     "tokenAddress": "0xaEbaFDbe975DB0bfbF4e95a6493CB93d02cc86aE",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooCronaUSDC-DAI",
     "earnedTokenAddress": "0x0DEc64E574D1C5bc15bbFc88E6D35B8c829c1396",
     "earnContractAddress": "0x0DEc64E574D1C5bc15bbFc88E6D35B8c829c1396",
@@ -676,16 +776,22 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     "network": "cronos",
-    "createdAt": 1638064120
+    "createdAt": 1638064120,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "vvs-cro-dai",
     "name": "CRO-DAI",
+    "type": "standard",
     "token": "CRO-DAI LP",
     "tokenAddress": "0x3Eb9FF92e19b73235A393000C176c8bb150F1B20",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsCRO-DAI",
     "earnedTokenAddress": "0x3979ed0a99C63A8be8E031cfF0226A07421D524B",
     "earnContractAddress": "0x3979ed0a99C63A8be8E031cfF0226A07421D524B",
@@ -709,16 +815,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     "network": "cronos",
-    "createdAt": 1638173103
+    "createdAt": 1638173103,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "vvs-cro-doge",
     "name": "DOGE-CRO",
+    "type": "standard",
     "token": "DOGE-CRO LP",
     "tokenAddress": "0x2A560f2312CB56327AD5D65a03F1bfEC10b62075",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsCRO-DOGE",
     "earnedTokenAddress": "0x56E899E56F6B8635B4A01b724db23674a64A7231",
     "earnContractAddress": "0x56E899E56F6B8635B4A01b724db23674a64A7231",
@@ -740,16 +852,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x1a8E39ae59e5556B56b76fCBA98d22c9ae557396",
     "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0x1a8E39ae59e5556B56b76fCBA98d22c9ae557396",
     "network": "cronos",
-    "createdAt": 1639476244
+    "createdAt": 1639476244,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "crona-wbtc-eth",
     "name": "WBTC-ETH",
+    "type": "standard",
     "token": "WBTC-ETH CLP",
     "tokenAddress": "0x285a569EDD6210a0410883d2E29471A6B0c7790d",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooCronaWBTC-ETH",
     "earnedTokenAddress": "0xE138F2c7D4262b3f4009a8c254872bB6d57A39d0",
     "earnContractAddress": "0xE138F2c7D4262b3f4009a8c254872bB6d57A39d0",
@@ -772,16 +890,22 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/0x062E66477Faf219F25D27dCED647BF57C3107d52/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/0x062E66477Faf219F25D27dCED647BF57C3107d52/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "network": "cronos",
-    "createdAt": 1639425411
+    "createdAt": 1639425411,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "crona-usdc-eth",
     "name": "ETH-USDC",
+    "type": "standard",
     "token": "ETH-USDC CLP",
     "tokenAddress": "0x5cc953f278bf6908B2632c65D6a202D6fd1370f9",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooCronaUSDC-ETH",
     "earnedTokenAddress": "0xB28785D75bcC71e84A1300B488F0DB0b4277C81b",
     "earnContractAddress": "0xB28785D75bcC71e84A1300B488F0DB0b4277C81b",
@@ -804,16 +928,22 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "network": "cronos",
-    "createdAt": 1639129150
+    "createdAt": 1639129150,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "crona-usdt-matic-eol",
     "name": "MATIC-USDT",
+    "type": "standard",
     "token": "MATIC-USDT LP",
     "tokenAddress": "0x394080F7c770771B6EE4f4649bC477F0676ceA5C",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooCronaUSDT-MATIC",
     "earnedTokenAddress": "0xbFBF98294243ff91e6B8dDcAD5eeB107e3677481",
     "earnContractAddress": "0xbFBF98294243ff91e6B8dDcAD5eeB107e3677481",
@@ -836,16 +966,22 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/0x66e428c3f67a68878562e79A0234c1F83c208770/0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055",
     "network": "cronos",
-    "createdAt": 1637155684
+    "createdAt": 1637155684,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "vvs-cro-atom",
     "name": "ATOM-CRO",
+    "type": "standard",
     "token": "ATOM-CRO LP",
     "tokenAddress": "0x9e5bd780dff875Dd85848a65549791445AE25De0",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsCRO-ATOM",
     "earnedTokenAddress": "0x36ca23aa859dd66486619ae7150C842F035a5c51",
     "earnContractAddress": "0x36ca23aa859dd66486619ae7150C842F035a5c51",
@@ -867,16 +1003,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xB888d8Dd1733d72681b30c00ee76BDE93ae7aa93",
     "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0xB888d8Dd1733d72681b30c00ee76BDE93ae7aa93",
     "network": "cronos",
-    "createdAt": 1639730963
+    "createdAt": 1639730963,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "liq-liq-cro",
     "name": "LIQ-CRO",
+    "type": "standard",
     "token": "LIQ-CRO LP",
     "tokenAddress": "0x3295007761C290741B6b363b86dF9ba3467F0754",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooLiquidusLIQ-CRO",
     "earnedTokenAddress": "0x9E75f8298e458B76382870982788988A0799195b",
     "earnContractAddress": "0x9E75f8298e458B76382870982788988A0799195b",
@@ -899,16 +1041,22 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xABd380327Fe66724FFDa91A87c772FB8D00bE488",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/CRO/0xABd380327Fe66724FFDa91A87c772FB8D00bE488",
     "network": "cronos",
-    "createdAt": 1640159132
+    "createdAt": 1640159132,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "crona-cro-dai-eol",
     "name": "DAI-CRO",
+    "type": "standard",
     "token": "DAI-CRO LP",
     "tokenAddress": "0xDA2FC0fE4B03deFf09Fd8CFb92d14e7ebC1F9690",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooCronaCRO-DAI",
     "earnedTokenAddress": "0x38002A6456D995AAc598bf59049151631D37689F",
     "earnContractAddress": "0x38002A6456D995AAc598bf59049151631D37689F",
@@ -932,16 +1080,22 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     "network": "cronos",
-    "createdAt": 1637152288
+    "createdAt": 1637152288,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "vvs-tonic-cro",
     "name": "TONIC-CRO",
+    "type": "standard",
     "token": "TONIC-CRO LP",
     "tokenAddress": "0x4B377121d968Bf7a62D51B96523d59506e7c2BF0",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsTONIC-CRO",
     "earnedTokenAddress": "0xF498483a3603DcA611eb5142f06632037217cEF9",
     "earnContractAddress": "0xF498483a3603DcA611eb5142f06632037217cEF9",
@@ -963,16 +1117,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     "network": "cronos",
-    "createdAt": 1641552219
+    "createdAt": 1641552219,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "crona-cro-eth-eol",
     "name": "ETH-CRO",
+    "type": "standard",
     "token": "ETH-CRO LP",
     "tokenAddress": "0x8232aA9C3EFf79cd845FcDa109B461849Bf1Be83",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooCronaCRO-ETH",
     "earnedTokenAddress": "0x40324434a0b53dd1ED167Ba30dcB6B4bd7a9536d",
     "earnContractAddress": "0x40324434a0b53dd1ED167Ba30dcB6B4bd7a9536d",
@@ -995,16 +1155,22 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/CRO/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "network": "cronos",
-    "createdAt": 1637149838
+    "createdAt": 1637149838,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "crona-usdt-ftm-eol",
     "name": "FTM-USDT",
+    "type": "standard",
     "token": "FTM-USDT LP",
     "tokenAddress": "0xDee7A79bb414FFB248EF4d4c5560AdC91F547F41",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooCronaUSDT-FTM",
     "earnedTokenAddress": "0xc07E03eE5E7c61F7EeCB5FF6FaBE2eA307433bD7",
     "earnContractAddress": "0xc07E03eE5E7c61F7EeCB5FF6FaBE2eA307433bD7",
@@ -1027,16 +1193,22 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/0x66e428c3f67a68878562e79A0234c1F83c208770/0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
     "network": "cronos",
-    "createdAt": 1637162500
+    "createdAt": 1637162500,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "vvs-cro-bifi-eol",
     "name": "oldBIFI-CRO",
+    "type": "standard",
     "token": "oldBIFI-CRO LP",
     "tokenAddress": "0x1803E360393A472beC6E1A688BDF7048d3076b1A",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsCRO-oldBIFI",
     "earnedTokenAddress": "0xc1Ef52C61f3981EB615B4f7d2365c2Ec75abc5a4",
     "earnContractAddress": "0xc1Ef52C61f3981EB615B4f7d2365c2Ec75abc5a4",
@@ -1059,16 +1231,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
     "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
     "network": "cronos",
-    "createdAt": 1638782855
+    "createdAt": 1638782855,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "dark-dark-cro",
     "name": "DARK-CRO",
+    "type": "standard",
     "token": "DARK-CRO LP",
     "tokenAddress": "0xA4AA24B8e855052071Df60E174219e6c8FEe45a3",
     "tokenDecimals": 18,
     "tokenProviderId": "mmf",
-    "tokenAmmId": "cronos-mmf",
     "earnedToken": "mooDarkDARK-CRO",
     "earnedTokenAddress": "0x393170e58e2cD0E65Ef4F2b995Fbce1D6B112DFf",
     "earnContractAddress": "0x393170e58e2cD0E65Ef4F2b995Fbce1D6B112DFf",
@@ -1091,16 +1269,22 @@
     "buyTokenUrl": "https://mm.finance/swap?outputCurrency=0x83b2AC8642aE46FC2823Bc959fFEB3c1742c48B5",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0x83b2AC8642aE46FC2823Bc959fFEB3c1742c48B5",
     "network": "cronos",
-    "createdAt": 1644921724
+    "createdAt": 1644921724,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-mmf"
+      }
+    ]
   },
   {
     "id": "dark-sky-cro",
     "name": "SKY-CRO",
+    "type": "standard",
     "token": "SKY-CRO LP",
     "tokenAddress": "0xaA0845EE17e4f1D4F3A8c22cB1e8102baCf56a77",
     "tokenDecimals": 18,
     "tokenProviderId": "mmf",
-    "tokenAmmId": "cronos-mmf",
     "earnedToken": "mooDarkSKY-CRO",
     "earnedTokenAddress": "0xf79dDeC4E4f1c8578BA0DE006574db5cE71889bB",
     "earnContractAddress": "0xf79dDeC4E4f1c8578BA0DE006574db5cE71889bB",
@@ -1122,11 +1306,18 @@
     "buyTokenUrl": "https://mm.finance/swap?outputCurrency=0x9D3BBb0e988D9Fb2d55d07Fe471Be2266AD9c81c",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0x9D3BBb0e988D9Fb2d55d07Fe471Be2266AD9c81c",
     "network": "cronos",
-    "createdAt": 1644921724
+    "createdAt": 1644921724,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-mmf"
+      }
+    ]
   },
   {
     "id": "crona-busd-bnb-eol",
     "name": "BNB-BUSD",
+    "type": "standard",
     "token": "BNB-BUSD CLP",
     "tokenAddress": "0xe8B18116040acf83D6e1f873375adF61103AB45c",
     "tokenDecimals": 18,
@@ -1158,11 +1349,11 @@
   {
     "id": "crona-wbtc-cro-eol",
     "name": "WBTC-CRO",
+    "type": "standard",
     "token": "WBTC-CRO LP",
     "tokenAddress": "0xb4684F52867dC0dDe6F931fBf6eA66Ce94666860",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooCronaWBTC-CRO",
     "earnedTokenAddress": "0xc7024B02a3C3893C482F5DD03193CFD1DBEC604f",
     "earnContractAddress": "0xc7024B02a3C3893C482F5DD03193CFD1DBEC604f",
@@ -1185,16 +1376,22 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52",
     "network": "cronos",
-    "createdAt": 1637150470
+    "createdAt": 1637150470,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "vvs-tonic-usdc-eol",
     "name": "TONIC-USDC",
+    "type": "standard",
     "token": "TONIC-USDC LP",
     "tokenAddress": "0x2f12D47Fe49B907d7a5Df8159C1CE665187F15c4",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsTONIC-USDC",
     "earnedTokenAddress": "0x15c0a37ee6fDA217f0f10dC88df02e7A52e377CA",
     "earnContractAddress": "0x15c0a37ee6fDA217f0f10dC88df02e7A52e377CA",
@@ -1217,16 +1414,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     "removeLiquidityUrl": "https://vvs.finance/remove/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     "network": "cronos",
-    "createdAt": 1640161565
+    "createdAt": 1640161565,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "crona-wbtc-usdc-eol",
     "name": "WBTC-USDC",
+    "type": "standard",
     "token": "WBTC-USDC CLP",
     "tokenAddress": "0xea7fc6A39B0d0344e1662E6ABF2FEcD19Bf3D029",
     "tokenDecimals": 18,
     "tokenProviderId": "cronaswap",
-    "tokenAmmId": "cronos-cronaswap",
     "earnedToken": "mooCronaWBTC-USDC",
     "earnedTokenAddress": "0xa0c108B0f66B8c9390F250e6519F53BDa468358F",
     "earnContractAddress": "0xa0c108B0f66B8c9390F250e6519F53BDa468358F",
@@ -1249,16 +1452,22 @@
     "addLiquidityUrl": "https://app.cronaswap.org/add/0x062E66477Faf219F25D27dCED647BF57C3107d52/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "removeLiquidityUrl": "https://app.cronaswap.org/remove/0x062E66477Faf219F25D27dCED647BF57C3107d52/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1639127958
+    "createdAt": 1639127958,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-cronaswap"
+      }
+    ]
   },
   {
     "id": "vvs-ali-cro-eol",
     "name": "ALI-CRO",
+    "type": "standard",
     "token": "ALI-CRO LP",
     "tokenAddress": "0x78082d9Dee5FDD53dF3b16292077Ee2F6D31F7DE",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsCRO-ALI",
     "earnedTokenAddress": "0xA314Eaab5cF91dc994965634fCa614797DE97986",
     "earnContractAddress": "0xA314Eaab5cF91dc994965634fCa614797DE97986",
@@ -1281,16 +1490,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x45C135C1CDCE8d25A3B729A28659561385C52671",
     "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0x45C135C1CDCE8d25A3B729A28659561385C52671",
     "network": "cronos",
-    "createdAt": 1649324095
+    "createdAt": 1649324095,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "vvs-vvs-versa",
     "name": "VVS-VERSA",
+    "type": "standard",
     "token": "VVS-VERSA LP",
     "tokenAddress": "0xD7F3d8035cd7BD5aD5E43Fa4E1d4DcA12e133FdD",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsVVS-VERSA",
     "earnedTokenAddress": "0x87C8feb9CCc28f2A35C6Db0C5E492fC13D604fF5",
     "earnContractAddress": "0x87C8feb9CCc28f2A35C6Db0C5E492fC13D604fF5",
@@ -1313,16 +1528,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x00D7699b71290094CcB1a5884cD835bD65a78c17",
     "removeLiquidityUrl": "https://vvs.finance/remove/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x00D7699b71290094CcB1a5884cD835bD65a78c17",
     "network": "cronos",
-    "createdAt": 1650020388
+    "createdAt": 1650020388,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "vvs-vvs-tonic",
     "name": "VVS-TONIC",
+    "type": "standard",
     "token": "VVS-TONIC LP",
     "tokenAddress": "0xA922530960A1F94828A7E132EC1BA95717ED1eab",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsVVS-TONIC",
     "earnedTokenAddress": "0xf3A68b859c361B9F516127674F648A37ad115942",
     "earnContractAddress": "0xf3A68b859c361B9F516127674F648A37ad115942",
@@ -1345,16 +1566,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     "removeLiquidityUrl": "https://vvs.finance/remove/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     "network": "cronos",
-    "createdAt": 1649959970
+    "createdAt": 1649959970,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "vvs-fer-vvs",
     "name": "VVS-FER",
+    "type": "standard",
     "token": "VVS-FER LP",
     "tokenAddress": "0x72eFd454bBFEca458e909B99FAACBC116880b54D",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsFER-VVS",
     "earnedTokenAddress": "0xfF333D0A4C1CDC5E2d9f8a2B2c73d0BA9368224a",
     "earnContractAddress": "0xfF333D0A4C1CDC5E2d9f8a2B2c73d0BA9368224a",
@@ -1377,16 +1604,22 @@
     "addLiquidityUrl": "https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x39bC1e38c842C60775Ce37566D03B41A7A66C782",
     "removeLiquidityUrl": "https://vvs.finance/remove/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x39bC1e38c842C60775Ce37566D03B41A7A66C782",
     "network": "cronos",
-    "createdAt": 1656705593
+    "createdAt": 1656705593,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "ripae-pcro-cro",
     "name": "pCRO-CRO",
+    "type": "standard",
     "token": "pCRO-CRO LP",
     "tokenAddress": "0xB0dC8B777DD82a951D688f8E5Dc4EBcB42D57C75",
     "tokenDecimals": 18,
     "tokenProviderId": "mmf",
-    "tokenAmmId": "cronos-mmf",
     "earnedToken": "mooRipaepCRO-CRO",
     "earnedTokenAddress": "0xa252f912646566df76Dfac6Efe5f69bd771Eb497",
     "earnContractAddress": "0xa252f912646566df76Dfac6Efe5f69bd771Eb497",
@@ -1409,16 +1642,22 @@
     "buyTokenUrl": " https://mm.finance/swap?outputCurrency=0xA5e6a847f79BA19AAF41b8e1B2e6C4741234C6b7",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0xA5e6a847f79BA19AAF41b8e1B2e6C4741234C6b7",
     "network": "cronos",
-    "createdAt": 1657602778
+    "createdAt": 1657602778,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-mmf"
+      }
+    ]
   },
   {
     "id": "ripae-scro-cro",
     "name": "sCRO-CRO",
+    "type": "standard",
     "token": "sCRO-CRO LP",
     "tokenAddress": "0xBa11E930e37721c91ea55fAA7BC2EcEfA05D1436",
     "tokenDecimals": 18,
     "tokenProviderId": "mmf",
-    "tokenAmmId": "cronos-mmf",
     "earnedToken": "mooRipaesCRO-CRO",
     "earnedTokenAddress": "0xEaa2Ce6351d803456235809D82357ED8D23E8502",
     "earnContractAddress": "0xEaa2Ce6351d803456235809D82357ED8D23E8502",
@@ -1440,16 +1679,22 @@
     "buyTokenUrl": " https://mm.finance/swap?outputCurrency=0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
     "network": "cronos",
-    "createdAt": 1657602778
+    "createdAt": 1657602778,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-mmf"
+      }
+    ]
   },
   {
     "id": "vvs-cro-fira",
     "name": "FIRA-CRO LP",
+    "type": "standard",
     "token": "FIRA-CRO LP",
     "tokenAddress": "0x689E7BA5170001aC887965a5Db1C9Ce932c93462",
     "tokenDecimals": 18,
     "tokenProviderId": "vvs",
-    "tokenAmmId": "cronos-vvs",
     "earnedToken": "mooVvsCRO-FIRA",
     "earnedTokenAddress": "0x8d49e7F962D6815c71a5F7Aa60599EdF393Bad44",
     "earnContractAddress": "0x8d49e7F962D6815c71a5F7Aa60599EdF393Bad44",
@@ -1472,11 +1717,18 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x7ABa852082b6F763E13010CA33B5D9Ea4EeE2983",
     "removeLiquidityUrl": "https://vvs.finance/remove/CRO/0x7ABa852082b6F763E13010CA33B5D9Ea4EeE2983",
     "network": "cronos",
-    "createdAt": 1662489253
+    "createdAt": 1662489253,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "cronos-vvs"
+      }
+    ]
   },
   {
     "id": "ferro-2fer",
     "name": "USDC/USDT",
+    "type": "standard",
     "token": "2FER",
     "tokenAddress": "0xD05a67bB1e9684E8DDD19D0Bb6A713b4BEFC2C03",
     "tokenDecimals": 18,
@@ -1506,6 +1758,7 @@
   {
     "id": "ferro-3fer",
     "name": "DAI/USDC/USDT",
+    "type": "standard",
     "token": "3FER",
     "tokenAddress": "0x71923713685770D04d69d103008aafFeeBC31BDe",
     "tokenDecimals": 18,

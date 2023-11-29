@@ -13,13 +13,15 @@ import { StepContent, stepperActions } from '../../features/data/reducers/wallet
 import {
   ErrorContent,
   StepsCountContent,
+  StepsStartContent,
   SuccessContent,
   WaitingContent,
 } from './components/Content';
 import { ProgressBar } from './components/PogressBar';
 
 const stepToComponent: Record<StepContent, FC> = {
-  [StepContent.StartTx]: StepsCountContent,
+  [StepContent.StartTx]: StepsStartContent,
+  [StepContent.WalletTx]: StepsCountContent,
   [StepContent.WaitingTx]: WaitingContent,
   [StepContent.ErrorTx]: ErrorContent,
   [StepContent.SuccessTx]: SuccessContent,

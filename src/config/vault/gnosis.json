@@ -2,6 +2,7 @@
   {
     "id": "aura-gnosis-wsteth-cow",
     "name": "wstETH-COW",
+    "type": "standard",
     "token": "wstETH-COW Gnosis",
     "tokenAddress": "0x4cdABE9E07ca393943AcFB9286bBbd0D0a310Ff6",
     "tokenDecimals": 18,
@@ -31,6 +32,7 @@
   {
     "id": "aura-gnosis-wsteth-sdai",
     "name": "wstETH-sDAI",
+    "type": "standard",
     "token": "wstETH-sDAI Gnosis",
     "tokenAddress": "0xBc2acf5E821c5c9f8667A36bB1131dAd26Ed64F9",
     "tokenDecimals": 18,
@@ -60,6 +62,7 @@
   {
     "id": "aura-gnosis-sdai-usdt-usdc",
     "name": "USDC/USDT/sDAI",
+    "type": "standard",
     "token": "USDC/USDT/sDAI Gnosis",
     "tokenAddress": "0x7644fA5D0eA14FcF3E813Fdf93ca9544f8567655",
     "tokenDecimals": 18,
@@ -89,6 +92,7 @@
   {
     "id": "aura-gnosis-gno-cow",
     "name": "COW-GNO",
+    "type": "standard",
     "token": "COW-GNO Gnosis",
     "tokenAddress": "0x21d4c792Ea7E38e0D0819c2011A2b1Cb7252Bd99",
     "tokenDecimals": 18,
@@ -118,6 +122,7 @@
   {
     "id": "aura-gnosis-sdai-eure",
     "name": "sDAI-EURe",
+    "type": "standard",
     "token": "sDAI-EURe Gnosis",
     "tokenAddress": "0xDd439304A77f54B1F7854751Ac1169b279591Ef7",
     "tokenDecimals": 18,
@@ -147,6 +152,7 @@
   {
     "id": "aura-gnosis-wsteth-bal-aura",
     "name": "wstETH/AURA/BAL",
+    "type": "standard",
     "token": "wstETH/AURA/BAL Gnosis",
     "tokenAddress": "0x00dF7f58e1Cf932eBe5f54De5970Fb2Bdf0ef06D",
     "tokenDecimals": 18,
@@ -176,6 +182,7 @@
   {
     "id": "aura-gnosis-wsteth-gno",
     "name": "wstETH-GNO",
+    "type": "standard",
     "token": "wstETH-GNO Gnosis",
     "tokenAddress": "0x4683e340a8049261057D5aB1b29C8d840E75695e",
     "tokenDecimals": 18,
@@ -205,6 +212,7 @@
   {
     "id": "aura-gnosis-wsteth-weth",
     "name": "wstETH-ETH",
+    "type": "standard",
     "token": "wstETH-ETH Gnosis",
     "tokenAddress": "0xbAd20c15A773bf03ab973302F61FAbceA5101f0A",
     "tokenDecimals": 18,

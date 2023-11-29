@@ -40,7 +40,7 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
   const classes = useStyles();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const vaultType = vault.isGovVault ? 'gov' : 'standard';
+  const vaultType = vault.type;
   const { min, max, avg, data } = useChartData(stat, vaultId, oracleId, bucket);
 
   const chartMargin = useMemo(() => {

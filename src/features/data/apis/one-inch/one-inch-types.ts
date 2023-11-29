@@ -1,5 +1,3 @@
-import type BigNumber from 'bignumber.js';
-
 export type QuoteRequest = {
   src: string;
   dst: string;
@@ -49,16 +47,8 @@ export type SwapResponse = {
   tx: SwapTx;
 };
 
-export type PriceRequest = {
-  tokenAddresses: string[];
-};
-
-export type PriceResponse = Record<string, BigNumber>;
-
 export interface IOneInchApi {
   getQuote(request: QuoteRequest): Promise<QuoteResponse>;
 
   getSwap(request: SwapRequest): Promise<SwapResponse>;
-
-  getPriceInNative(request: PriceRequest): Promise<PriceResponse>;
 }
