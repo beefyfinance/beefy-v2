@@ -1390,36 +1390,6 @@
     "createdAt": 1691411422
   },
   {
-    "id": "chronos-weth-lqty",
-    "name": "ETH-LQTY vLP",
-    "type": "standard",
-    "token": "vAMM-WETH/LQTY",
-    "tokenAddress": "0x393c93f8133bc89db3177D6e10182Efd4129D0d1",
-    "tokenDecimals": 18,
-    "tokenProviderId": "chronos",
-    "earnedToken": "mooChronos_ETH-LQTY",
-    "earnedTokenAddress": "0xaFF7267b1f7e72298927AeA0562c2a0a5B9dA72c",
-    "earnContractAddress": "0xaFF7267b1f7e72298927AeA0562c2a0a5B9dA72c",
-    "oracle": "lps",
-    "oracleId": "chronos-weth-lqty",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "chronos",
-    "assets": ["ETH", "LQTY"],
-    "risks": ["COMPLEXITY_LOW", "IL_LARGE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0x393c93f8133bc89db3177D6e10182Efd4129D0d1",
-    "removeLiquidityUrl": "https://app.chronos.exchange/liquidity/0x393c93f8133bc89db3177D6e10182Efd4129D0d1",
-    "network": "arbitrum",
-    "createdAt": 1689957428,
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "arbitrum-chronos"
-      }
-    ]
-  },
-  {
     "id": "chronos-arb-usdc.e",
     "name": "ARB-USDC.e vLP",
     "type": "standard",
