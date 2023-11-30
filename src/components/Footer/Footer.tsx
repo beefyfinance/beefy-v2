@@ -31,6 +31,10 @@ const navLinks = [
     title: 'Footer-MediaKit',
     path: 'https://beefy.com/media-kit/',
   },
+  {
+    title: 'Footer-Partners',
+    path: 'https://beefy.com/partners/',
+  },
 ];
 
 const socialLinks = [
