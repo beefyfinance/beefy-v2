@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => ({
     gridTemplateColumns: 'repeat(4,minmax(0,1fr))',
     padding: '16px 24px',
     borderRadius: '12px 12px 0px 0px',
-    backgroundColor: theme.palette.background.cardHeader,
+    backgroundColor: theme.palette.background.contentDark,
     gap: '8px',
     [theme.breakpoints.down('md')]: {
       padding: '16px',

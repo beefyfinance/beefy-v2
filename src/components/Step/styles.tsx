@@ -12,7 +12,7 @@ export const styles = (theme: Theme) => ({
   titleBar: {
     ...theme.typography['body-lg-med'],
     color: theme.palette.text.middle,
-    background: theme.palette.background.cardHeader,
+    background: theme.palette.background.contentDark,
     padding: '24px',
     borderTopLeftRadius: '12px',
     borderTopRightRadius: '12px',
