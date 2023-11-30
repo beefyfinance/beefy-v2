@@ -24,6 +24,7 @@ import { VaultFees } from '../VaultFees';
 import { WithdrawActions } from '../WithdrawActions';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
 import { WithdrawLinks } from '../WithDrawLinks';
+import zapIcon from '../../../../../../images/icons/zap.svg';
 
 const useStyles = makeStyles(styles);
 
@@ -76,6 +77,7 @@ export const WithdrawForm = memo(function WithdrawForm() {
     <>
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
+          {hasOptions ? <img src={zapIcon} alt="Zap" height={12} /> : null}
           {t(hasOptions ? 'Transact-SelectToken' : 'Transact-Withdraw')}
         </div>
         <div className={classes.availableLabel}>

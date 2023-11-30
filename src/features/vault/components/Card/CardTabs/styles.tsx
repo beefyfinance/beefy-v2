@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     borderRadius: '12px 12px 0 0',
     display: 'flex',
     width: '100%',
-    background: theme.palette.background.cardHeader,
+    background: theme.palette.background.contentDark,
   },
   tab: {
     ...theme.typography['body-lg-med'],

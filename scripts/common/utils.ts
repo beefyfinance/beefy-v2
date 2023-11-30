@@ -116,9 +116,11 @@ export function splitMax(input: string, delim: string, max: number): string[] {
   return [...parts.slice(0, max - 1), parts.slice(max - 1).join(delim)];
 }
 
-export function sortKeys<T>(
-  obj: Record<string, T>,
-  sortFn: (a: string, b: string) => number
-): Record<string, T> {
-  return Object.fromEntries(Object.entries(obj).sort((a, b) => sortFn(a[0], b[0])));
+export function sortKeys<T extends object>(obj: T, sortFn: (a: keyof T, b: keyof T) => number): T {
+  const keys = Object.keys(obj) as (keyof T)[];
+  keys.sort(sortFn);
+  return keys.reduce((newObj, key) => {
+    newObj[key] = obj[key];
+    return newObj;
+  }, {} as T);
 }

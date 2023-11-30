@@ -1,0 +1,92 @@
+[
+  {
+    "chainId": "ethereum",
+    "router": "0xD6F475E999740ABb206F1E1D37d91F1bDC537E18",
+    "manager": "0x99449c03F3AE23F8187AA697d30e667886Ef0914"
+  },
+  {
+    "chainId": "polygon",
+    "router": "0x68c5c0C23f396c6079B42Cad9C0B1dcE3614284F",
+    "manager": "0x4BA7fF86dDda3E479895da6e60145d34c5b5b317"
+  },
+  {
+    "chainId": "bsc",
+    "router": "0x7199DFea25044060B08156E5cff98223195f2297",
+    "manager": "0x0054019D3048960ae3D6740F97e7c202bF49beE0"
+  },
+  {
+    "chainId": "optimism",
+    "router": "0x91456757198FA14b9fA23f265Eee8Ee8AFfDdbc2",
+    "manager": "0xaFa91974E148c3cc4a39dF42CcAA4c378a5BE8E0"
+  },
+  {
+    "chainId": "fantom",
+    "router": "0x525D2d753bBaB2dE52e25f057Ba04123330E460f",
+    "manager": "0x26528428F53869FE5cd62fc2651Ad4e7d50EdaF7"
+  },
+  {
+    "chainId": "arbitrum",
+    "router": "0x52A7436dEA377cD39d51AB6c60C7b4c36A3b0AD2",
+    "manager": "0x9244A4a53BE3Ac4456B121bee2c5c61e1849D5d7"
+  },
+  {
+    "chainId": "avax",
+    "router": "0x12C34f5bBc00e6BeF4BF5C82a15F15F35Ef6D5F1",
+    "manager": "0x2Df67bC3830C6668D3043A3dCb4E0C220F6DF700"
+  },
+  {
+    "chainId": "cronos",
+    "router": "0x227c3B9f9c1dD74c4240EFb364102B6bBDBeE3C8",
+    "manager": "0x29265e6eF461cb7C91be92447772A2ad9586624b"
+  },
+  {
+    "chainId": "moonbeam",
+    "router": "0x67626718777795cD11940358E56e89b316315eE3",
+    "manager": "0x126b18f5f988e95c71E58c131efD20A9eC1d752b"
+  },
+  {
+    "chainId": "moonriver",
+    "router": "0x919471ca72093350d4159aa712132dA7E4175752",
+    "manager": "0x3703613a7E6f07B1ea6567AFd911bec20F1e2879"
+  },
+  {
+    "chainId": "metis",
+    "router": "0xDBad28672fD60c4609EE6B26dF2b8cB93DE12afe",
+    "manager": "0x33a3d6400a7167a12467f81e989d0c853dccb728"
+  },
+  {
+    "chainId": "fuse",
+    "router": "0xE0eC89807B964eD41CB2D6Df2365DD6DD78c6fda",
+    "manager": "0x17c898CAdB1517318e7BA55B7aBD7806415Ad43b"
+  },
+  {
+    "chainId": "kava",
+    "router": "0x87FfB7314f30F13de6ccb4Ff86C29FA05A7BBe9B",
+    "manager": "0x6ea7BBa5c7C5FFcb6D53a08EA920B6C470Fb9e6e"
+  },
+  {
+    "chainId": "canto",
+    "router": "0xeEEDDA17b8D5f1A5658eCe7d247b08741725B961",
+    "manager": "0x7b850cDe775692A2Cf8E68D13935e34fB7c31e44"
+  },
+  {
+    "chainId": "zksync",
+    "router": "0x0d94b404D9C738246e1E8322Fef8e0E7bf412597",
+    "manager": "0xe2B33147fA72f316D587d673CD58dE2b276157C9"
+  },
+  {
+    "chainId": "zkevm",
+    "router": "0x1DEF2c354bcFa4d1A8F40c4c33Ef7d27DB4109cA",
+    "manager": "0x8c73abdcc50A045D2203316EE6D92aD57BBD442c"
+  },
+  {
+    "chainId": "base",
+    "router": "0x7ba517A2036872E5aD1472C83be4c0a9C23A8b3C",
+    "manager": "0xA3808862694017b71744acc83d63A39d2c32fc2A"
+  },
+  {
+    "chainId": "gnosis",
+    "router": "0x9C18deE5290925f596fbEfee2f6745b640f3A4C6",
+    "manager": "0x1b2310b1704B0a67ab00F07209974c5736C11856"
+  }
+]

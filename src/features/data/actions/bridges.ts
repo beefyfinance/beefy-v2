@@ -7,7 +7,7 @@ export type FetchBridgesPayload = BridgeConfig[];
 export const fetchBridges = createAsyncThunk<FetchBridgesPayload>(
   'bridges/fetchBridges',
   async () => {
-    const api = getConfigApi();
+    const api = await getConfigApi();
     return await api.fetchBridges();
   }
 );

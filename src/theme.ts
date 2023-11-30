@@ -121,7 +121,6 @@ const theme = createTheme(
         appBg: '#121420',
         summaryCard: '#121421',
         iconBg: 'rgba(92, 112, 214, 0.2)',
-        cardHeader: '#1C1E32',
         border: '#363B63',
         searchInputBg: '#121420',
         contentPrimary: '#242842',

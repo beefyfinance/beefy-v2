@@ -55,7 +55,7 @@ export const fetchBridgeConfig = createAsyncThunk<
   FetchBridgeConfigParams,
   { state: BeefyState }
 >('bridge/fetchBridgeConfig', async () => {
-  const api = getConfigApi();
+  const api = await getConfigApi();
   return { config: await api.fetchBeefyBridgeConfig() };
 });
 

@@ -71,8 +71,10 @@ export interface DataLoaderState {
     fees: LoaderState;
     boosts: LoaderState;
     wallet: LoaderState;
-    amms: LoaderState;
-    zaps: LoaderState;
+    zapAmms: LoaderState;
+    zapConfigs: LoaderState;
+    zapSwapAggregators: LoaderState;
+    zapAggregatorTokenSupport: LoaderState;
     depositForm: LoaderState;
     withdrawForm: LoaderState;
     boostForm: LoaderState;

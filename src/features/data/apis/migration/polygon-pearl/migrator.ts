@@ -10,7 +10,7 @@ import BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { selectVaultById } from '../../../selectors/vaults';
 import { selectChainById } from '../../../selectors/chains';
-import { getWalletConnectionApiInstance, getWeb3Instance } from '../../instances';
+import { getWalletConnectionApi, getWeb3Instance } from '../../instances';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import { selectUserBalanceToMigrateByVaultId } from '../../../selectors/migration';
 import { SolidlyGaugeAbi, SolidlyVoterAbi } from '../../../../../config/abi';
@@ -52,7 +52,7 @@ async function unstakeCall(
   // eslint-disable-next-line
 ): Promise<any> {
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const walletApi = await getWalletConnectionApiInstance();
+  const walletApi = await getWalletConnectionApi();
   const web3 = await walletApi.getConnectedWeb3Instance();
 
   const voter = new web3.eth.Contract(SolidlyVoterAbi, PEARL_VOTER);

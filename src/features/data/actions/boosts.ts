@@ -21,7 +21,7 @@ export interface FulfilledAllBoostsPayload {
 export const fetchAllBoosts = createAsyncThunk<FulfilledAllBoostsPayload>(
   'boosts/fetchAllBoosts',
   async () => {
-    const api = getConfigApi();
+    const api = await getConfigApi();
     return api.fetchAllBoosts();
   }
 );

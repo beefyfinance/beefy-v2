@@ -2,6 +2,7 @@
   {
     "id": "aavev3-metis-metis",
     "name": "METIS",
+    "type": "standard",
     "token": "WMETIS",
     "tokenAddress": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
     "tokenDecimals": 18,
@@ -30,6 +31,7 @@
   {
     "id": "stargate-metis-usdt",
     "name": "USDT LP",
+    "type": "standard",
     "token": "S*USDT",
     "tokenAddress": "0x2b60473a7C41Deb80EDdaafD5560e963440eb632",
     "tokenDecimals": 6,
@@ -60,6 +62,7 @@
   {
     "id": "metis-bifi-gov",
     "name": "oldBIFI Earnings Pool",
+    "type": "gov",
     "token": "oldBIFI",
     "tokenAddress": "0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
     "tokenDecimals": 18,
@@ -82,7 +85,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "old-bifi-pool",
-    "isGovVault": true,
     "excluded": "metis-bifi-maxi",
     "network": "metis",
     "createdAt": 1623706144
@@ -90,11 +92,11 @@
   {
     "id": "hermes-m.dai-m.usdc",
     "name": "m.DAI-m.USDC sLP",
+    "type": "standard",
     "token": "m.DAI-m.USDC sLP",
     "tokenAddress": "0x5E985F09c6700FAebAaD4AedC07FA6e218A7ca04",
     "tokenDecimals": 18,
     "tokenProviderId": "hermes",
-    "tokenAmmId": "metis-hermes",
     "earnedToken": "mooHermesm.DAI-m.USDC",
     "earnedTokenAddress": "0x587895668a5db7B3b43F51b9F92460D5BbFD8D89",
     "earnContractAddress": "0x587895668a5db7B3b43F51b9F92460D5BbFD8D89",
@@ -118,16 +120,22 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x4c078361FC9BbB78DF910800A991C7c3DD2F6ce0/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0x4c078361FC9BbB78DF910800A991C7c3DD2F6ce0/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "network": "metis",
-    "createdAt": 1664200373
+    "createdAt": 1664200373,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "metis-hermes"
+      }
+    ]
   },
   {
     "id": "hermes-m.usdt-m.usdc",
     "name": "m.USDT-m.USDC sLP",
+    "type": "standard",
     "token": "m.USDT-m.USDC sLP",
     "tokenAddress": "0xc7C7509D1A192F00C806A0793e5946aae7266D6a",
     "tokenDecimals": 18,
     "tokenProviderId": "hermes",
-    "tokenAmmId": "metis-hermes",
     "earnedToken": "mooHermesm.USDT-m.USDC",
     "earnedTokenAddress": "0xa9Fd735728d65a3D786bE9fEFeCF400d23F46907",
     "earnContractAddress": "0xa9Fd735728d65a3D786bE9fEFeCF400d23F46907",
@@ -149,16 +157,22 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/true",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/true",
     "network": "metis",
-    "createdAt": 1664200372
+    "createdAt": 1664200372,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "metis-hermes"
+      }
+    ]
   },
   {
     "id": "hermes-hermes-metis",
     "name": "HERMES-METIS vLP",
+    "type": "standard",
     "token": "HERMES-METIS vLP",
     "tokenAddress": "0x191Aa0E43d6DDac6797EcB1cB6c63cC55474Eb59",
     "tokenDecimals": 18,
     "tokenProviderId": "hermes",
-    "tokenAmmId": "metis-hermes",
     "earnedToken": "mooHermesHERMES-METIS",
     "earnedTokenAddress": "0xdF1251486F7F894eA521A6e9584A2683C16487f0",
     "earnContractAddress": "0xdF1251486F7F894eA521A6e9584A2683C16487f0",
@@ -180,16 +194,22 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0xb27BbeaACA2C00d6258C3118BAB6b5B6975161c8/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0xb27BbeaACA2C00d6258C3118BAB6b5B6975161c8/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
     "network": "metis",
-    "createdAt": 1664200371
+    "createdAt": 1664200371,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "metis-hermes"
+      }
+    ]
   },
   {
     "id": "hermes-metis-m.usdc",
     "name": "METIS-m.USDC vLP",
+    "type": "standard",
     "token": "METIS-m.USDC vLP",
     "tokenAddress": "0x5ab390084812E145b619ECAA8671d39174a1a6d1",
     "tokenDecimals": 18,
     "tokenProviderId": "hermes",
-    "tokenAmmId": "metis-hermes",
     "earnedToken": "mooHermesMETIS-m.USDC",
     "earnedTokenAddress": "0x40324434a0b53dd1ED167Ba30dcB6B4bd7a9536d",
     "earnContractAddress": "0x40324434a0b53dd1ED167Ba30dcB6B4bd7a9536d",
@@ -211,16 +231,22 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "network": "metis",
-    "createdAt": 1664200370
+    "createdAt": 1664200370,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "metis-hermes"
+      }
+    ]
   },
   {
     "id": "hermes-maia-m.usdc",
     "name": "MAIA-m.USDC vLP",
+    "type": "standard",
     "token": "MAIA-m.USDC vLP",
     "tokenAddress": "0xa3E8e7EB4649fFC6f3cBE42B4C2ECf6625d3e802",
     "tokenDecimals": 18,
     "tokenProviderId": "hermes",
-    "tokenAmmId": "metis-hermes",
     "earnedToken": "mooHermesMAIA-m.USDC",
     "earnedTokenAddress": "0xb555E8822B53740aAdbEC49eAc8D6ca7fe6E2548",
     "earnContractAddress": "0xb555E8822B53740aAdbEC49eAc8D6ca7fe6E2548",
@@ -242,16 +268,22 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x72c232D56542Ba082592DEE7C77b1C6CFA758BCD/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0x72c232D56542Ba082592DEE7C77b1C6CFA758BCD/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "network": "metis",
-    "createdAt": 1664200369
+    "createdAt": 1664200369,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "metis-hermes"
+      }
+    ]
   },
   {
     "id": "hermes-weth-metis",
     "name": "WETH-METIS vLP",
+    "type": "standard",
     "token": "WETH-METIS vLP",
     "tokenAddress": "0xC6195F95F4e7d9f28185b7b420c31f8cD8915b33",
     "tokenDecimals": 18,
     "tokenProviderId": "hermes",
-    "tokenAmmId": "metis-hermes",
     "earnedToken": "mooHermesWETH-METIS",
     "earnedTokenAddress": "0x8645c2Cb8fd3B3a18619b125cB68eA4Cc5eA1999",
     "earnContractAddress": "0x8645c2Cb8fd3B3a18619b125cB68eA4Cc5eA1999",
@@ -273,16 +305,22 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x420000000000000000000000000000000000000A/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0x420000000000000000000000000000000000000A/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
     "network": "metis",
-    "createdAt": 1664200368
+    "createdAt": 1664200368,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "metis-hermes"
+      }
+    ]
   },
   {
     "id": "hermes-weth-m.usdc",
     "name": "WETH-m.USDC vLP",
+    "type": "standard",
     "token": "WETH-m.USDC vLP",
     "tokenAddress": "0xEfFEC28996aAff6D55B6D108a46446d45C3a2E71",
     "tokenDecimals": 18,
     "tokenProviderId": "hermes",
-    "tokenAmmId": "metis-hermes",
     "earnedToken": "mooHermesWETH-m.USDC",
     "earnedTokenAddress": "0x2059d4aBaA418aD228Dc1D25027BAd1F7fF9f21e",
     "earnContractAddress": "0x2059d4aBaA418aD228Dc1D25027BAd1F7fF9f21e",
@@ -304,16 +342,22 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "network": "metis",
-    "createdAt": 1664200367
+    "createdAt": 1664200367,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "metis-hermes"
+      }
+    ]
   },
   {
     "id": "hermes-hum-metis",
     "name": "HUM-METIS vLP",
+    "type": "standard",
     "token": "HUM-METIS vLP",
     "tokenAddress": "0xda76ACeB65167174c777B768521910F4B8534C23",
     "tokenDecimals": 18,
     "tokenProviderId": "hermes",
-    "tokenAmmId": "metis-hermes",
     "earnedToken": "mooHermesHUM-METIS",
     "earnedTokenAddress": "0xbFBF98294243ff91e6B8dDcAD5eeB107e3677481",
     "earnContractAddress": "0xbFBF98294243ff91e6B8dDcAD5eeB107e3677481",
@@ -335,16 +379,22 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x4aAC94985cD83be30164DfE7e9AF7C054D7d2121/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0x4aAC94985cD83be30164DfE7e9AF7C054D7d2121/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
     "network": "metis",
-    "createdAt": 1664200366
+    "createdAt": 1664200366,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "metis-hermes"
+      }
+    ]
   },
   {
     "id": "netswap-nett-m.usdt",
     "name": "m.USDT-NETT LP",
+    "type": "standard",
     "token": "m.USDT-NETT LP",
     "tokenAddress": "0x7D02ab940d7dD2B771e59633bBC1ed6EC2b99Af1",
     "tokenDecimals": 18,
     "tokenProviderId": "netswap",
-    "tokenAmmId": "metis-netswap",
     "earnedToken": "mooNetswapm.USDT-NETT",
     "earnedTokenAddress": "0x29C4C22eC7dF7e936Cb3e6C4A7E5eAE751C7d86B",
     "earnContractAddress": "0x29C4C22eC7dF7e936Cb3e6C4A7E5eAE751C7d86B",
@@ -367,16 +417,22 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xbb06dca3ae6887fabf931640f67cab3e3a16f4dc",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xbb06dca3ae6887fabf931640f67cab3e3a16f4dc",
     "network": "metis",
-    "createdAt": 1642356425
+    "createdAt": 1642356425,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-netswap"
+      }
+    ]
   },
   {
     "id": "netswap-nett-metis",
     "name": "METIS-NETT LP",
+    "type": "standard",
     "token": "METIS-NETT LP",
     "tokenAddress": "0x60312d4EbBF3617d3D33841906b5868A86931Cbd",
     "tokenDecimals": 18,
     "tokenProviderId": "netswap",
-    "tokenAmmId": "metis-netswap",
     "earnedToken": "mooNetswapMETIS-NETT",
     "earnedTokenAddress": "0xC96b496F78d1a45D9cec6d628a75614ed230D6D4",
     "earnContractAddress": "0xC96b496F78d1a45D9cec6d628a75614ed230D6D4",
@@ -398,16 +454,22 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
     "network": "metis",
-    "createdAt": 1642362780
+    "createdAt": 1642362780,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-netswap"
+      }
+    ]
   },
   {
     "id": "netswap-nett-m.usdc",
     "name": "m.USDC-NETT LP",
+    "type": "standard",
     "token": "m.USDC-NETT LP",
     "tokenAddress": "0x0724d37522585E87d27C802728E824862Dc72861",
     "tokenDecimals": 18,
     "tokenProviderId": "netswap",
-    "tokenAmmId": "metis-netswap",
     "earnedToken": "mooNetswapmUSDC-NETT",
     "earnedTokenAddress": "0x89E6F4dba7337F123D9915ADF2B61B8d8c2bCA31",
     "earnContractAddress": "0x89E6F4dba7337F123D9915ADF2B61B8d8c2bCA31",
@@ -430,16 +492,22 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
-    "createdAt": 1642363788
+    "createdAt": 1642363788,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-netswap"
+      }
+    ]
   },
   {
     "id": "netswap-weth-nett",
     "name": "WETH-NETT LP",
+    "type": "standard",
     "token": "WETH-NETT LP",
     "tokenAddress": "0xC8aE82A0ab6AdA2062B812827E1556c0fa448dd0",
     "tokenDecimals": 18,
     "tokenProviderId": "netswap",
-    "tokenAmmId": "metis-netswap",
     "earnedToken": "mooNetswapWETH-NETT",
     "earnedTokenAddress": "0x3DD36E64784FDAEe7BD202c78322a0d8EB1BB32b",
     "earnContractAddress": "0x3DD36E64784FDAEe7BD202c78322a0d8EB1BB32b",
@@ -462,16 +530,22 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0x420000000000000000000000000000000000000A",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0x420000000000000000000000000000000000000A",
     "network": "metis",
-    "createdAt": 1642363913
+    "createdAt": 1642363913,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-netswap"
+      }
+    ]
   },
   {
     "id": "netswap-weth-metis",
     "name": "WETH-METIS LP",
+    "type": "standard",
     "token": "WETH-METIS LP",
     "tokenAddress": "0x59051B5F5172b69E66869048Dc69D35dB0B3610d",
     "tokenDecimals": 18,
     "tokenProviderId": "netswap",
-    "tokenAmmId": "metis-netswap",
     "earnedToken": "mooNetswapWETH-METIS",
     "earnedTokenAddress": "0xB84486eA8B34C65cD3bf3DeeB6990AA0a27a2EaF",
     "earnContractAddress": "0xB84486eA8B34C65cD3bf3DeeB6990AA0a27a2EaF",
@@ -493,16 +567,22 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0x420000000000000000000000000000000000000A",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0x420000000000000000000000000000000000000A",
     "network": "metis",
-    "createdAt": 1642364450
+    "createdAt": 1642364450,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-netswap"
+      }
+    ]
   },
   {
     "id": "netswap-metis-m.usdc",
     "name": "m.USDC-METIS LP",
+    "type": "standard",
     "token": "m.USDC-METIS LP",
     "tokenAddress": "0x5Ae3ee7fBB3Cb28C17e7ADc3a6Ae605ae2465091",
     "tokenDecimals": 18,
     "tokenProviderId": "netswap",
-    "tokenAmmId": "metis-netswap",
     "earnedToken": "mooNetswapm.USDC-METIS",
     "earnedTokenAddress": "0xD602655aAF104106E880221b124A20891f769dE1",
     "earnContractAddress": "0xD602655aAF104106E880221b124A20891f769dE1",
@@ -524,16 +604,22 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
-    "createdAt": 1642365277
+    "createdAt": 1642365277,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-netswap"
+      }
+    ]
   },
   {
     "id": "netswap-weth-m.usdc",
     "name": "m.USDC-WETH LP",
+    "type": "standard",
     "token": "m.USDC-WETH LP",
     "tokenAddress": "0xF5988809ac97C65121e2c34f5D49558e3D12C253",
     "tokenDecimals": 18,
     "tokenProviderId": "netswap",
-    "tokenAmmId": "metis-netswap",
     "earnedToken": "mooNetswapm.USDC-WETH",
     "earnedTokenAddress": "0x85f287c860f02bAc3aE5023eFb547b6B7Aa4D9eD",
     "earnContractAddress": "0x85f287c860f02bAc3aE5023eFb547b6B7Aa4D9eD",
@@ -556,16 +642,22 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
-    "createdAt": 1642365777
+    "createdAt": 1642365777,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-netswap"
+      }
+    ]
   },
   {
     "id": "netswap-m.usdt-m.usdc",
     "name": "m.USDC-m.USDT LP",
+    "type": "standard",
     "token": "m.USDC-m.USDT LP",
     "tokenAddress": "0x1caD5f8f5D4C0AD49646B2565CC0cA725E4280EA",
     "tokenDecimals": 18,
     "tokenProviderId": "netswap",
-    "tokenAmmId": "metis-netswap",
     "earnedToken": "mooNetswapm.USDC-m.USDT",
     "earnedTokenAddress": "0x2dC73D17Ae01De6D49aab45668601591FF283dee",
     "earnContractAddress": "0x2dC73D17Ae01De6D49aab45668601591FF283dee",
@@ -587,11 +679,18 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
-    "createdAt": 1642365937
+    "createdAt": 1642365937,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-netswap"
+      }
+    ]
   },
   {
     "id": "metis-bifi-maxi",
     "name": "oldBIFI Maxi",
+    "type": "standard",
     "token": "oldBIFI",
     "tokenAddress": "0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
     "tokenDecimals": 18,
@@ -620,11 +719,11 @@
   {
     "id": "tethys-tethys-metis",
     "name": "TETHYS-METIS LP",
+    "type": "standard",
     "token": "TETHYS-METIS TLP",
     "tokenAddress": "0xc9b290FF37fA53272e9D71A0B13a444010aF4497",
     "tokenDecimals": 18,
     "tokenProviderId": "tethys",
-    "tokenAmmId": "metis-tethys",
     "earnedToken": "mooTethysTETHYS-METIS",
     "earnedTokenAddress": "0xC8ca2254bCBA3aD8511Faff54e0b9941D0424502",
     "earnContractAddress": "0xC8ca2254bCBA3aD8511Faff54e0b9941D0424502",
@@ -647,16 +746,22 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0x69fdb77064ec5c84FA2F21072973eB28441F43F3",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0x69fdb77064ec5c84FA2F21072973eB28441F43F3",
     "network": "metis",
-    "createdAt": 1642623428
+    "createdAt": 1642623428,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-tethys"
+      }
+    ]
   },
   {
     "id": "tethys-m.usdt-metis",
     "name": "m.USDT-METIS LP",
+    "type": "standard",
     "token": "m.USDT-METIS TLP",
     "tokenAddress": "0x8121113eB9952086deC3113690Af0538BB5506fd",
     "tokenDecimals": 18,
     "tokenProviderId": "tethys",
-    "tokenAmmId": "metis-tethys",
     "earnedToken": "mooTethysm.USDT-METIS",
     "earnedTokenAddress": "0x462066c67A729572668B6CF79151c0ed67734D91",
     "earnContractAddress": "0x462066c67A729572668B6CF79151c0ed67734D91",
@@ -679,16 +784,22 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "network": "metis",
-    "createdAt": 1642623639
+    "createdAt": 1642623639,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-tethys"
+      }
+    ]
   },
   {
     "id": "tethys-metis-m.usdc",
     "name": "m.USDC-METIS LP",
+    "type": "standard",
     "token": "m.USDC-METIS TLP",
     "tokenAddress": "0xDd7dF3522a49e6e1127bf1A1d3bAEa3bc100583B",
     "tokenDecimals": 18,
     "tokenProviderId": "tethys",
-    "tokenAmmId": "metis-tethys",
     "earnedToken": "mooTethysm.USDC-METIS",
     "earnedTokenAddress": "0x2d04969ED7D1b186797C44dF5F5634Eb9C89aF6b",
     "earnContractAddress": "0x2d04969ED7D1b186797C44dF5F5634Eb9C89aF6b",
@@ -711,16 +822,22 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
-    "createdAt": 1642623846
+    "createdAt": 1642623846,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-tethys"
+      }
+    ]
   },
   {
     "id": "tethys-weth-metis",
     "name": "WETH-METIS LP",
+    "type": "standard",
     "token": "WETH-METIS TLP",
     "tokenAddress": "0xEE5adB5b0DfC51029Aca5Ad4Bc684Ad676b307F7",
     "tokenDecimals": 18,
     "tokenProviderId": "tethys",
-    "tokenAmmId": "metis-tethys",
     "earnedToken": "mooTethysWETH-METIS",
     "earnedTokenAddress": "0xbb8155672A297dE54E6E87d0755F03bd60B7f166",
     "earnContractAddress": "0xbb8155672A297dE54E6E87d0755F03bd60B7f166",
@@ -743,16 +860,22 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0x420000000000000000000000000000000000000A",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0x420000000000000000000000000000000000000A",
     "network": "metis",
-    "createdAt": 1642624056
+    "createdAt": 1642624056,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-tethys"
+      }
+    ]
   },
   {
     "id": "tethys-m.usdc-m.usdt",
     "name": "m.USDC-m.USDT LP",
+    "type": "standard",
     "token": "m.USDC-m.USDT TLP",
     "tokenAddress": "0x6c4768d4b3acD4a3fF01F179FaffDaEbe084D12D",
     "tokenDecimals": 18,
     "tokenProviderId": "tethys",
-    "tokenAmmId": "metis-tethys",
     "earnedToken": "mooTethysm.USDC - m.USDT",
     "earnedTokenAddress": "0xc674cf138415244041d512Edf1c7943D99dD229F",
     "earnContractAddress": "0xc674cf138415244041d512Edf1c7943D99dD229F",
@@ -775,16 +898,22 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "network": "metis",
-    "createdAt": 1644871173
+    "createdAt": 1644871173,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-tethys"
+      }
+    ]
   },
   {
     "id": "netswap-wbtc-metis",
     "name": "WBTC-METIS",
+    "type": "standard",
     "token": "WBTC-METIS LP",
     "tokenAddress": "0xE0cc462fe369146BAef2306EC6B4BF26704eE84e",
     "tokenDecimals": 18,
     "tokenProviderId": "netswap",
-    "tokenAmmId": "metis-netswap",
     "earnedToken": "mooNetswapWBTC-METIS",
     "earnedTokenAddress": "0x4e9E8A5Ce321cE0a380c1CEab388c673180AF657",
     "earnContractAddress": "0x4e9E8A5Ce321cE0a380c1CEab388c673180AF657",
@@ -807,16 +936,22 @@
     "addLiquidityUrl": "https://netswap.io/#/add/METIS/0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
     "removeLiquidityUrl": "https://netswap.io/#/remove/METIS/0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
     "network": "metis",
-    "createdAt": 1645533903
+    "createdAt": 1645533903,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-netswap"
+      }
+    ]
   },
   {
     "id": "tethys-wbtc-metis",
     "name": "WBTC-METIS",
+    "type": "standard",
     "token": "WBTC-METIS TLP",
     "tokenAddress": "0xA0081C6D591c53Ae651bD71B8d90C83C1F1106C2",
     "tokenDecimals": 18,
     "tokenProviderId": "tethys",
-    "tokenAmmId": "metis-tethys",
     "earnedToken": "mooTethysWBTC-METIS",
     "earnedTokenAddress": "0x0FB94775d16e14627678391D24E4576fdA05E3ed",
     "earnContractAddress": "0x0FB94775d16e14627678391D24E4576fdA05E3ed",
@@ -839,16 +974,22 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
     "network": "metis",
-    "createdAt": 1645526396
+    "createdAt": 1645526396,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-tethys"
+      }
+    ]
   },
   {
     "id": "netswap-byte-m.usdc",
     "name": "BYTE-m.USDC LP",
+    "type": "standard",
     "token": "BYTE-m.USDC LP",
     "tokenAddress": "0x3Ab6be89ED5A0d4FDD412c246F5e6DdD250Dd45c",
     "tokenDecimals": 18,
     "tokenProviderId": "netswap",
-    "tokenAmmId": "metis-netswap",
     "earnedToken": "mooNetswapBYTE-m.USDC",
     "earnedTokenAddress": "0xbFF1EF9e84121f7CaEd2416b1c1B8aE81715F96a",
     "earnContractAddress": "0xbFF1EF9e84121f7CaEd2416b1c1B8aE81715F96a",
@@ -871,16 +1012,22 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0x721532bC0dA5ffaeB0a6A45fB24271E8098629A7/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0x721532bC0dA5ffaeB0a6A45fB24271E8098629A7/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
-    "createdAt": 1647532435
+    "createdAt": 1647532435,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-netswap"
+      }
+    ]
   },
   {
     "id": "tethys-rftm-metis",
     "name": "rFTM-METIS LP",
+    "type": "standard",
     "token": "rFTM-METIS LP",
     "tokenAddress": "0x74Ca39F7aB9B685B8eA8c4ab19E7Ab6b474Dd22D",
     "tokenDecimals": 18,
     "tokenProviderId": "tethys",
-    "tokenAmmId": "metis-tethys",
     "earnedToken": "mooTethysFTM-METIS",
     "earnedTokenAddress": "0x55Dd65993cB918cdA55eA02FCc6D417A364833d9",
     "earnContractAddress": "0x55Dd65993cB918cdA55eA02FCc6D417A364833d9",
@@ -903,16 +1050,22 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xa9109271abcf0C4106Ab7366B4eDB34405947eED",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xa9109271abcf0C4106Ab7366B4eDB34405947eED",
     "network": "metis",
-    "createdAt": 1647625639
+    "createdAt": 1647625639,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-tethys"
+      }
+    ]
   },
   {
     "id": "tethys-metis-ravax",
     "name": "rAVAX-METIS LP",
+    "type": "standard",
     "token": "rAVAX-METIS TLP",
     "tokenAddress": "0x3Ca47677e7D8796e6470307Ad15c1fBFd43f0D6F",
     "tokenDecimals": 18,
     "tokenProviderId": "tethys",
-    "tokenAmmId": "metis-tethys",
     "earnedToken": "mooTethysAVAX-METIS",
     "earnedTokenAddress": "0x45703CED1880604745Cfc8A98E727F70fFB08674",
     "earnContractAddress": "0x45703CED1880604745Cfc8A98E727F70fFB08674",
@@ -935,16 +1088,22 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xE253E0CeA0CDD43d9628567d097052B33F98D611",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xE253E0CeA0CDD43d9628567d097052B33F98D611",
     "network": "metis",
-    "createdAt": 1647625860
+    "createdAt": 1647625860,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-tethys"
+      }
+    ]
   },
   {
     "id": "tethys-dai-metis",
     "name": "DAI-METIS LP",
+    "type": "standard",
     "token": "DAI-METIS LP",
     "tokenAddress": "0xCc15d8f93be780aD78fD1A016fB0F15F2543b5Dc",
     "tokenDecimals": 18,
     "tokenProviderId": "tethys",
-    "tokenAmmId": "metis-tethys",
     "earnedToken": "mooTethysDAI-METIS",
     "earnedTokenAddress": "0xfE118360BEAc5c2ac9dA77D2366b8738bBFeb2d9",
     "earnContractAddress": "0xfE118360BEAc5c2ac9dA77D2366b8738bBFeb2d9",
@@ -968,16 +1127,22 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0x4651B38e7ec14BB3db731369BFE5B08F2466Bd0A",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0x4651B38e7ec14BB3db731369BFE5B08F2466Bd0A",
     "network": "metis",
-    "createdAt": 1647626163
+    "createdAt": 1647626163,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-tethys"
+      }
+    ]
   },
   {
     "id": "netswap-bnb-nett-eol",
     "name": "BNB-NETT LP",
+    "type": "standard",
     "token": "BNB-NETT LP",
     "tokenAddress": "0x3bF77b9192579826f260Bc48F2214Dfba840fcE5",
     "tokenDecimals": 18,
     "tokenProviderId": "netswap",
-    "tokenAmmId": "metis-netswap",
     "earnedToken": "mooNetswapBNB-NETT",
     "earnedTokenAddress": "0x92EB8b4A8fF3df4A610BC59D1e704550dBB978DE",
     "earnContractAddress": "0x92EB8b4A8fF3df4A610BC59D1e704550dBB978DE",
@@ -1000,16 +1165,22 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0x2692BE44A6E38B698731fDDf417d060f0d20A0cB",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0x2692BE44A6E38B698731fDDf417d060f0d20A0cB",
     "network": "metis",
-    "createdAt": 1642364144
+    "createdAt": 1642364144,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-netswap"
+      }
+    ]
   },
   {
     "id": "netswap-m.usdt-metis-eol",
     "name": "m.USDT-METIS LP",
+    "type": "standard",
     "token": "m.USDT-METIS LP",
     "tokenAddress": "0x3D60aFEcf67e6ba950b499137A72478B2CA7c5A1",
     "tokenDecimals": 18,
     "tokenProviderId": "netswap",
-    "tokenAmmId": "metis-netswap",
     "earnedToken": "mooNetswapm.USDT-METIS",
     "earnedTokenAddress": "0x085bf6f912A42D0d8Ed53D4998b07F9A535315f0",
     "earnContractAddress": "0x085bf6f912A42D0d8Ed53D4998b07F9A535315f0",
@@ -1032,6 +1203,12 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "network": "metis",
-    "createdAt": 1642365041
+    "createdAt": 1642365041,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "metis-netswap"
+      }
+    ]
   }
 ]

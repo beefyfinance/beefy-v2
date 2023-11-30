@@ -486,7 +486,7 @@ function addVaultToState(
   // add earned token data
   const addressKey = vault.earnedTokenAddress ? vault.earnedTokenAddress.toLowerCase() : 'native';
   if (sliceState.byChainId[chainId].byAddress[addressKey] === undefined) {
-    if (vault.isGovVault) {
+    if (vault.type === 'gov') {
       const addressKey =
         vault.earnedToken === sliceState.byChainId[chainId].native
           ? 'native'
@@ -556,7 +556,7 @@ function addVaultToState(
     // make sure vault token is still tagged as an interesting address
     ensureInterestingToken(vault.earnedTokenAddress ?? 'native', chainId, sliceState);
     // make sure bridged tokens are added/are marked as interesting
-    if (!vault.isGovVault && vault.bridged) {
+    if (vault.type !== 'gov' && vault.bridged) {
       const token = sliceState.byChainId[chainId].byAddress[addressKey];
       if (isTokenErc20(token)) {
         addBridgedReceiptTokensToState(vault, token, vault.earnedToken, sliceState);

@@ -17,7 +17,7 @@ import type { VaultEntity } from '../../entities/vault';
 import BigNumber from 'bignumber.js';
 import type Web3 from 'web3';
 import { selectChainById } from '../../selectors/chains';
-import { getWalletConnectionApiInstance, getWeb3Instance } from '../instances';
+import { getWalletConnectionApi, getWeb3Instance } from '../instances';
 
 export function buildFetchBalance(
   id: string,
@@ -63,7 +63,7 @@ export function buildExecute(
       const state = getState();
       const vault = selectVaultById(state, vaultId);
       const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-      const walletApi = await getWalletConnectionApiInstance();
+      const walletApi = await getWalletConnectionApi();
       const web3 = await walletApi.getConnectedWeb3Instance();
       const { balance } = selectUserBalanceToMigrateByVaultId(state, vaultId, migrationId);
 

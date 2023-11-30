@@ -8,6 +8,7 @@ import type { VaultEntity } from '../../entities/vault';
 
 export enum StepContent {
   StartTx = 1,
+  WalletTx,
   WaitingTx,
   ErrorTx,
   SuccessTx,

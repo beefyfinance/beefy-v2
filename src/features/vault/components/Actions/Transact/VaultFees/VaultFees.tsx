@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core';
 import { Trans, useTranslation } from 'react-i18next';
-import { selectVaultDepositFee } from '../../../../../data/selectors/vaults';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
 import { memo } from 'react';
@@ -26,7 +25,6 @@ export const VaultFees = memo<VaultFeesProps>(function VaultFees({ className }) 
   const vaultId = useAppSelector(selectTransactVaultId);
   const fees = useAppSelector(state => selectFeesByVaultId(state, vaultId));
   const areFeesLoaded = useAppSelector(selectAreFeesLoaded);
-  const deposit = useAppSelector(state => selectVaultDepositFee(state, vaultId));
 
   return (
     <div className={clsx(classes.container, className)}>
@@ -37,11 +35,7 @@ export const VaultFees = memo<VaultFeesProps>(function VaultFees({ className }) 
         <Value>
           {areFeesLoaded ? (
             fees ? (
-              fees.deposit !== undefined ? (
-                formatPercent(fees.deposit, 2, '0%')
-              ) : (
-                deposit
-              )
+              formatPercent(fees.deposit ?? 0, 2, '0%')
             ) : (
               '?'
             )

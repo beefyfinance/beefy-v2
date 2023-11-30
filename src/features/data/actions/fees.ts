@@ -8,7 +8,7 @@ export type FetchFeesFulfilledPayload = ApyFeeData;
 export const fetchFees = createAsyncThunk<FetchFeesFulfilledPayload, void, { state: BeefyState }>(
   'fees/fetchFees',
   async () => {
-    const api = getBeefyApi();
+    const api = await getBeefyApi();
     return await api.getFees();
   }
 );

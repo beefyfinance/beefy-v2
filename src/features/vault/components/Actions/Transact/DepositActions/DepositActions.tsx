@@ -5,7 +5,6 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { Button } from '../../../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectTransactOptionById,
   selectTransactQuoteStatus,
   selectTransactSelectedQuote,
 } from '../../../../../data/selectors/transact';
@@ -37,9 +36,7 @@ export type DepositActionsProps = {
 export const DepositActions = memo<DepositActionsProps>(function DepositActions({ className }) {
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuote);
-  const option = useAppSelector(state =>
-    quote ? selectTransactOptionById(state, quote.optionId) : null
-  );
+  const option = quote ? quote.option : null;
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const connectedChainId = useAppSelector(selectCurrentChainId);
 

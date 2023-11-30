@@ -52,7 +52,7 @@ export const fetchActiveProposals = createAsyncThunk<
   void,
   { state: BeefyState }
 >('proposals/fetchActive', async () => {
-  const api = getBeefyApi();
+  const api = await getBeefyApi();
   const proposals = await api.getActiveProposals();
   const read = getReadProposals();
 

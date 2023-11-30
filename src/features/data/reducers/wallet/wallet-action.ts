@@ -140,6 +140,16 @@ export const walletActionsReducer = (
   }
 };
 
+export function createWalletActionResetAction() {
+  return {
+    type: WALLET_ACTION_RESET,
+    payload: {
+      result: null,
+      data: null,
+    },
+  };
+}
+
 export function createWalletActionErrorAction(
   error: TrxError,
   additionalData: AdditionalData
