@@ -17,6 +17,8 @@ const FIELD_ORDER = [
   'oracle',
   'oracleId',
   'status',
+  'createdAt',
+  'eolAt',
   'retireReason',
   'pauseReason',
   'platformId',
@@ -35,7 +37,6 @@ const FIELD_ORDER = [
   'showWarning',
   'warning',
   'network',
-  'createdAt',
 ].reduce((fields: {}, field, i) => {
   fields[field] = i + 1;
   return fields;

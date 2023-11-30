@@ -30,7 +30,8 @@ export interface VaultConfig {
   network: string;
   excluded?: string | null;
   callFee?: number | null;
-  createdAt?: number | null;
+  createdAt: number;
+  eolAt?: number | undefined;
   addLiquidityUrl?: string | null;
   buyTokenUrl?: string | null;
   retireReason?: string | null;

@@ -13,6 +13,8 @@
     "oracle": "lps",
     "oracleId": "yuzu-wrose-wbtc",
     "status": "eol",
+    "createdAt": 1662707497,
+    "eolAt": 1691070855,
     "retireReason": "tvl",
     "platformId": "yuzuswap",
     "assets": ["WBTC", "ROSE"],
@@ -29,7 +31,6 @@
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818",
     "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818",
     "network": "emerald",
-    "createdAt": 1662707497,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -51,6 +52,8 @@
     "oracle": "lps",
     "oracleId": "yuzu-ceusdc-yuzu",
     "status": "eol",
+    "createdAt": 1652382925,
+    "eolAt": 1680336147,
     "retireReason": "tvl",
     "platformId": "yuzuswap",
     "assets": ["ceUSDC", "YUZU"],
@@ -67,7 +70,6 @@
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c/0xf02b3e437304892105992512539F769423a515Cb",
     "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c/0xf02b3e437304892105992512539F769423a515Cb",
     "network": "emerald",
-    "createdAt": 1652382925,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -89,6 +91,8 @@
     "oracle": "lps",
     "oracleId": "yuzu-wrose-weth",
     "status": "eol",
+    "createdAt": 1652382924,
+    "eolAt": 1691070855,
     "retireReason": "tvl",
     "platformId": "yuzuswap",
     "assets": ["WETH", "ROSE"],
@@ -105,7 +109,6 @@
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x3223f17957Ba502cbe71401D55A0DB26E5F7c68F/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733",
     "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x3223f17957Ba502cbe71401D55A0DB26E5F7c68F/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733",
     "network": "emerald",
-    "createdAt": 1652382924,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -127,6 +130,8 @@
     "oracle": "lps",
     "oracleId": "yuzu-usdt-yuzu",
     "status": "eol",
+    "createdAt": 1652382923,
+    "eolAt": 1691070855,
     "retireReason": "tvl",
     "platformId": "yuzuswap",
     "assets": ["USDT", "YUZU"],
@@ -143,7 +148,6 @@
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0xdC19A122e268128B5eE20366299fc7b5b199C8e3/0xf02b3e437304892105992512539F769423a515Cb",
     "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0xdC19A122e268128B5eE20366299fc7b5b199C8e3/0xf02b3e437304892105992512539F769423a515Cb",
     "network": "emerald",
-    "createdAt": 1652382923,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -165,6 +169,8 @@
     "oracle": "lps",
     "oracleId": "yuzu-wrose-yuzu",
     "status": "eol",
+    "createdAt": 1652382922,
+    "eolAt": 1691070855,
     "retireReason": "tvl",
     "platformId": "yuzuswap",
     "assets": ["YUZU", "ROSE"],
@@ -181,7 +187,6 @@
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xf02b3e437304892105992512539F769423a515Cb",
     "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xf02b3e437304892105992512539F769423a515Cb",
     "network": "emerald",
-    "createdAt": 1652382922,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -203,6 +208,8 @@
     "oracle": "lps",
     "oracleId": "yuzu-wrose-usdt",
     "status": "eol",
+    "createdAt": 1652382921,
+    "eolAt": 1691070855,
     "retireReason": "tvl",
     "platformId": "yuzuswap",
     "assets": ["USDT", "ROSE"],
@@ -219,7 +226,6 @@
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xdC19A122e268128B5eE20366299fc7b5b199C8e3",
     "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xdC19A122e268128B5eE20366299fc7b5b199C8e3",
     "network": "emerald",
-    "createdAt": 1652382921,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -241,6 +247,8 @@
     "oracle": "lps",
     "oracleId": "yuzu-ceusdc-usdt",
     "status": "eol",
+    "createdAt": 1653320563,
+    "eolAt": 1691070855,
     "retireReason": "tvl",
     "platformId": "yuzuswap",
     "assets": ["ceUSDC", "USDT"],
@@ -257,7 +265,6 @@
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c/0xdC19A122e268128B5eE20366299fc7b5b199C8e3",
     "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c/0xdC19A122e268128B5eE20366299fc7b5b199C8e3",
     "network": "emerald",
-    "createdAt": 1653320563,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -279,6 +286,8 @@
     "oracle": "lps",
     "oracleId": "valley-usdt-vs",
     "status": "eol",
+    "createdAt": 1653356245,
+    "eolAt": 1656336514,
     "retireReason": "default",
     "platformId": "valleyswap",
     "assets": ["VS", "evoUSDT"],
@@ -294,8 +303,7 @@
     "buyTokenUrl": "https://dex.valleyswap.com/#/swap?outputCurrency=0xBC033203796CC2C8C543a5aAe93a9a643320433D",
     "addLiquidityUrl": "https://dex.valleyswap.com/#/add/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B/0xBC033203796CC2C8C543a5aAe93a9a643320433D",
     "removeLiquidityUrl": "https://dex.valleyswap.com/#/remove/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B/0xBC033203796CC2C8C543a5aAe93a9a643320433D",
-    "network": "emerald",
-    "createdAt": 1653356245
+    "network": "emerald"
   },
   {
     "id": "valley-usdt-usdc-pause",
@@ -311,6 +319,8 @@
     "oracle": "lps",
     "oracleId": "valley-usdt-usdc",
     "status": "eol",
+    "createdAt": 1653001065,
+    "eolAt": 1656336514,
     "retireReason": "default",
     "platformId": "valleyswap",
     "assets": ["evoUSDC", "evoUSDT"],
@@ -326,8 +336,7 @@
     "buyTokenUrl": "https://dex.valleyswap.com/#/swap?outputCurrency=0x94fbfFe5698DB6f54d6Ca524DbE673a7729014Be",
     "addLiquidityUrl": "https://dex.valleyswap.com/#/add/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B/0x94fbfFe5698DB6f54d6Ca524DbE673a7729014Be",
     "removeLiquidityUrl": "https://dex.valleyswap.com/#/remove/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B/0x94fbfFe5698DB6f54d6Ca524DbE673a7729014Be",
-    "network": "emerald",
-    "createdAt": 1653001065
+    "network": "emerald"
   },
   {
     "id": "valley-btc-usdt-pause",
@@ -343,6 +352,8 @@
     "oracle": "lps",
     "oracleId": "valley-btc-usdt",
     "status": "eol",
+    "createdAt": 1653071210,
+    "eolAt": 1656336514,
     "retireReason": "default",
     "platformId": "valleyswap",
     "assets": ["evoBTC", "evoUSDT"],
@@ -358,7 +369,6 @@
     "buyTokenUrl": "https://dex.valleyswap.com/#/swap?outputCurrency=0x010CDf0Db2737f9407F8CFcb4dCaECA4dE54c815",
     "addLiquidityUrl": "https://dex.valleyswap.com/#/add/0x010CDf0Db2737f9407F8CFcb4dCaECA4dE54c815/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B",
     "removeLiquidityUrl": "https://dex.valleyswap.com/#/remove/0x010CDf0Db2737f9407F8CFcb4dCaECA4dE54c815/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B",
-    "network": "emerald",
-    "createdAt": 1653071210
+    "network": "emerald"
   }
 ]

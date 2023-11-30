@@ -13,6 +13,7 @@
     "oracle": "tokens",
     "oracleId": "METIS",
     "status": "active",
+    "createdAt": 1699441549,
     "platformId": "aave",
     "assets": ["METIS"],
     "risks": [
@@ -25,8 +26,7 @@
     ],
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?outputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
-    "network": "metis",
-    "createdAt": 1699441549
+    "network": "metis"
   },
   {
     "id": "stargate-metis-usdt",
@@ -42,6 +42,8 @@
     "oracle": "lps",
     "oracleId": "stargate-metis-usdt",
     "status": "eol",
+    "createdAt": 1675694667,
+    "eolAt": 1694605850,
     "retireReason": "rewards",
     "platformId": "stargate",
     "assets": ["USDT"],
@@ -56,8 +58,7 @@
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "addLiquidityUrl": "https://stargate.finance/pool/USDT-METIS",
-    "network": "metis",
-    "createdAt": 1675694667
+    "network": "metis"
   },
   {
     "id": "metis-bifi-gov",
@@ -73,6 +74,8 @@
     "oracle": "tokens",
     "oracleId": "oldBIFI",
     "status": "eol",
+    "createdAt": 1623706144,
+    "eolAt": 1697567756,
     "retireReason": "bifiV2",
     "platformId": "beefy",
     "assets": ["oldBIFI"],
@@ -86,8 +89,7 @@
     ],
     "strategyTypeId": "old-bifi-pool",
     "excluded": "metis-bifi-maxi",
-    "network": "metis",
-    "createdAt": 1623706144
+    "network": "metis"
   },
   {
     "id": "hermes-m.dai-m.usdc",
@@ -103,6 +105,8 @@
     "oracle": "lps",
     "oracleId": "hermes-m.dai-m.usdc",
     "status": "eol",
+    "createdAt": 1664200373,
+    "eolAt": 1685639823,
     "retireReason": "rewards",
     "platformId": "hermes",
     "assets": ["mDAI", "mUSDC"],
@@ -120,7 +124,6 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x4c078361FC9BbB78DF910800A991C7c3DD2F6ce0/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0x4c078361FC9BbB78DF910800A991C7c3DD2F6ce0/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "network": "metis",
-    "createdAt": 1664200373,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -142,6 +145,7 @@
     "oracle": "lps",
     "oracleId": "hermes-m.usdt-m.usdc",
     "status": "active",
+    "createdAt": 1664200372,
     "platformId": "hermes",
     "assets": ["mUSDT", "mUSDC"],
     "risks": [
@@ -157,7 +161,6 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/true",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/true",
     "network": "metis",
-    "createdAt": 1664200372,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -179,6 +182,7 @@
     "oracle": "lps",
     "oracleId": "hermes-hermes-metis",
     "status": "active",
+    "createdAt": 1664200371,
     "platformId": "hermes",
     "assets": ["HERMES", "METIS"],
     "risks": [
@@ -194,7 +198,6 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0xb27BbeaACA2C00d6258C3118BAB6b5B6975161c8/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0xb27BbeaACA2C00d6258C3118BAB6b5B6975161c8/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
     "network": "metis",
-    "createdAt": 1664200371,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -216,6 +219,7 @@
     "oracle": "lps",
     "oracleId": "hermes-metis-m.usdc",
     "status": "active",
+    "createdAt": 1664200370,
     "platformId": "hermes",
     "assets": ["METIS", "mUSDC"],
     "risks": [
@@ -231,7 +235,6 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "network": "metis",
-    "createdAt": 1664200370,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -253,6 +256,7 @@
     "oracle": "lps",
     "oracleId": "hermes-maia-m.usdc",
     "status": "active",
+    "createdAt": 1664200369,
     "platformId": "hermes",
     "assets": ["MAIA", "mUSDC"],
     "risks": [
@@ -268,7 +272,6 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x72c232D56542Ba082592DEE7C77b1C6CFA758BCD/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0x72c232D56542Ba082592DEE7C77b1C6CFA758BCD/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "network": "metis",
-    "createdAt": 1664200369,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -290,6 +293,7 @@
     "oracle": "lps",
     "oracleId": "hermes-weth-metis",
     "status": "active",
+    "createdAt": 1664200368,
     "platformId": "hermes",
     "assets": ["WETH", "METIS"],
     "risks": [
@@ -305,7 +309,6 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x420000000000000000000000000000000000000A/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0x420000000000000000000000000000000000000A/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
     "network": "metis",
-    "createdAt": 1664200368,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -327,6 +330,7 @@
     "oracle": "lps",
     "oracleId": "hermes-weth-m.usdc",
     "status": "active",
+    "createdAt": 1664200367,
     "platformId": "hermes",
     "assets": ["WETH", "mUSDC"],
     "risks": [
@@ -342,7 +346,6 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "network": "metis",
-    "createdAt": 1664200367,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -364,6 +367,7 @@
     "oracle": "lps",
     "oracleId": "hermes-hum-metis",
     "status": "active",
+    "createdAt": 1664200366,
     "platformId": "hermes",
     "assets": ["HUM", "METIS"],
     "risks": [
@@ -379,7 +383,6 @@
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x4aAC94985cD83be30164DfE7e9AF7C054D7d2121/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
     "removeLiquidityUrl": "https://hermes.maiadao.io/#/remove/0x4aAC94985cD83be30164DfE7e9AF7C054D7d2121/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/false",
     "network": "metis",
-    "createdAt": 1664200366,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -401,6 +404,8 @@
     "oracle": "lps",
     "oracleId": "netswap-nett-m.usdt",
     "status": "eol",
+    "createdAt": 1642356425,
+    "eolAt": 1655486707,
     "retireReason": "rewards",
     "platformId": "netswap",
     "assets": ["mUSDT", "NETT"],
@@ -417,7 +422,6 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xbb06dca3ae6887fabf931640f67cab3e3a16f4dc",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xbb06dca3ae6887fabf931640f67cab3e3a16f4dc",
     "network": "metis",
-    "createdAt": 1642356425,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -439,6 +443,7 @@
     "oracle": "lps",
     "oracleId": "netswap-nett-metis",
     "status": "active",
+    "createdAt": 1642362780,
     "platformId": "netswap",
     "assets": ["METIS", "NETT"],
     "risks": [
@@ -454,7 +459,6 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
     "network": "metis",
-    "createdAt": 1642362780,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -476,6 +480,8 @@
     "oracle": "lps",
     "oracleId": "netswap-nett-m.usdc",
     "status": "eol",
+    "createdAt": 1642363788,
+    "eolAt": 1655486707,
     "retireReason": "rewards",
     "platformId": "netswap",
     "assets": ["mUSDC", "NETT"],
@@ -492,7 +498,6 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
-    "createdAt": 1642363788,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -514,6 +519,8 @@
     "oracle": "lps",
     "oracleId": "netswap-weth-nett",
     "status": "eol",
+    "createdAt": 1642363913,
+    "eolAt": 1655486707,
     "retireReason": "rewards",
     "platformId": "netswap",
     "assets": ["WETH", "NETT"],
@@ -530,7 +537,6 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0x420000000000000000000000000000000000000A",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0x420000000000000000000000000000000000000A",
     "network": "metis",
-    "createdAt": 1642363913,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -552,6 +558,7 @@
     "oracle": "lps",
     "oracleId": "netswap-weth-metis",
     "status": "active",
+    "createdAt": 1642364450,
     "platformId": "netswap",
     "assets": ["WETH", "METIS"],
     "risks": [
@@ -567,7 +574,6 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0x420000000000000000000000000000000000000A",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0x420000000000000000000000000000000000000A",
     "network": "metis",
-    "createdAt": 1642364450,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -589,6 +595,7 @@
     "oracle": "lps",
     "oracleId": "netswap-metis-m.usdc",
     "status": "active",
+    "createdAt": 1642365277,
     "platformId": "netswap",
     "assets": ["mUSDC", "METIS"],
     "risks": [
@@ -604,7 +611,6 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
-    "createdAt": 1642365277,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -626,6 +632,8 @@
     "oracle": "lps",
     "oracleId": "netswap-weth-m.usdc",
     "status": "eol",
+    "createdAt": 1642365777,
+    "eolAt": 1690624926,
     "retireReason": "exploit",
     "platformId": "netswap",
     "assets": ["mUSDC", "WETH"],
@@ -642,7 +650,6 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
-    "createdAt": 1642365777,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -664,6 +671,7 @@
     "oracle": "lps",
     "oracleId": "netswap-m.usdt-m.usdc",
     "status": "active",
+    "createdAt": 1642365937,
     "platformId": "netswap",
     "assets": ["mUSDC", "mUSDT"],
     "risks": [
@@ -679,7 +687,6 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
-    "createdAt": 1642365937,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -700,6 +707,8 @@
     "oracle": "tokens",
     "oracleId": "oldBIFI",
     "status": "eol",
+    "createdAt": 1642600646,
+    "eolAt": 1689087437,
     "retireReason": "bifiV2",
     "platformId": "beefy",
     "assets": ["oldBIFI"],
@@ -713,8 +722,7 @@
     ],
     "strategyTypeId": "maxi",
     "buyTokenUrl": "https://netswap.io/#/swap?outputCurrency=0xe6801928061cdbe32ac5ad0634427e140efd05f9",
-    "network": "metis",
-    "createdAt": 1642600646
+    "network": "metis"
   },
   {
     "id": "tethys-tethys-metis",
@@ -730,6 +738,8 @@
     "oracle": "lps",
     "oracleId": "tethys-tethys-metis",
     "status": "eol",
+    "createdAt": 1642623428,
+    "eolAt": 1672936013,
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["TETHYS", "METIS"],
@@ -746,7 +756,6 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0x69fdb77064ec5c84FA2F21072973eB28441F43F3",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0x69fdb77064ec5c84FA2F21072973eB28441F43F3",
     "network": "metis",
-    "createdAt": 1642623428,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -768,6 +777,8 @@
     "oracle": "lps",
     "oracleId": "tethys-m.usdt-metis",
     "status": "eol",
+    "createdAt": 1642623639,
+    "eolAt": 1657620389,
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["mUSDT", "METIS"],
@@ -784,7 +795,6 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "network": "metis",
-    "createdAt": 1642623639,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -806,6 +816,8 @@
     "oracle": "lps",
     "oracleId": "tethys-metis-m.usdc",
     "status": "eol",
+    "createdAt": 1642623846,
+    "eolAt": 1672936013,
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["mUSDC", "METIS"],
@@ -822,7 +834,6 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
-    "createdAt": 1642623846,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -844,6 +855,8 @@
     "oracle": "lps",
     "oracleId": "tethys-weth-metis",
     "status": "eol",
+    "createdAt": 1642624056,
+    "eolAt": 1672936013,
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["WETH", "METIS"],
@@ -860,7 +873,6 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0x420000000000000000000000000000000000000A",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0x420000000000000000000000000000000000000A",
     "network": "metis",
-    "createdAt": 1642624056,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -882,6 +894,8 @@
     "oracle": "lps",
     "oracleId": "tethys-m.usdc-m.usdt",
     "status": "eol",
+    "createdAt": 1644871173,
+    "eolAt": 1659773332,
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["mUSDC", "mUSDT"],
@@ -898,7 +912,6 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "network": "metis",
-    "createdAt": 1644871173,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -920,6 +933,8 @@
     "oracle": "lps",
     "oracleId": "netswap-wbtc-metis",
     "status": "eol",
+    "createdAt": 1645533903,
+    "eolAt": 1655486707,
     "retireReason": "rewards",
     "platformId": "netswap",
     "assets": ["WBTC", "METIS"],
@@ -936,7 +951,6 @@
     "addLiquidityUrl": "https://netswap.io/#/add/METIS/0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
     "removeLiquidityUrl": "https://netswap.io/#/remove/METIS/0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
     "network": "metis",
-    "createdAt": 1645533903,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -958,6 +972,8 @@
     "oracle": "lps",
     "oracleId": "tethys-wbtc-metis",
     "status": "eol",
+    "createdAt": 1645526396,
+    "eolAt": 1657620389,
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["WBTC", "METIS"],
@@ -974,7 +990,6 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
     "network": "metis",
-    "createdAt": 1645526396,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -996,6 +1011,8 @@
     "oracle": "lps",
     "oracleId": "netswap-byte-m.usdc",
     "status": "eol",
+    "createdAt": 1647532435,
+    "eolAt": 1683906986,
     "retireReason": "rewards",
     "platformId": "netswap",
     "assets": ["BYTE", "mUSDC"],
@@ -1012,7 +1029,6 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0x721532bC0dA5ffaeB0a6A45fB24271E8098629A7/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0x721532bC0dA5ffaeB0a6A45fB24271E8098629A7/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
-    "createdAt": 1647532435,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1034,6 +1050,8 @@
     "oracle": "lps",
     "oracleId": "tethys-rftm-metis",
     "status": "eol",
+    "createdAt": 1647625639,
+    "eolAt": 1657620389,
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["FTM", "METIS"],
@@ -1050,7 +1068,6 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xa9109271abcf0C4106Ab7366B4eDB34405947eED",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xa9109271abcf0C4106Ab7366B4eDB34405947eED",
     "network": "metis",
-    "createdAt": 1647625639,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1072,6 +1089,8 @@
     "oracle": "lps",
     "oracleId": "tethys-metis-ravax",
     "status": "eol",
+    "createdAt": 1647625860,
+    "eolAt": 1657620389,
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["AVAX", "METIS"],
@@ -1088,7 +1107,6 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xE253E0CeA0CDD43d9628567d097052B33F98D611",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xE253E0CeA0CDD43d9628567d097052B33F98D611",
     "network": "metis",
-    "createdAt": 1647625860,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1110,6 +1128,8 @@
     "oracle": "lps",
     "oracleId": "tethys-dai-metis",
     "status": "eol",
+    "createdAt": 1647626163,
+    "eolAt": 1657620389,
     "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["DAI", "METIS"],
@@ -1127,7 +1147,6 @@
     "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0x4651B38e7ec14BB3db731369BFE5B08F2466Bd0A",
     "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0x4651B38e7ec14BB3db731369BFE5B08F2466Bd0A",
     "network": "metis",
-    "createdAt": 1647626163,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1149,6 +1168,8 @@
     "oracle": "lps",
     "oracleId": "netswap-bnb-nett",
     "status": "eol",
+    "createdAt": 1642364144,
+    "eolAt": 1654097535,
     "retireReason": "rewards",
     "platformId": "netswap",
     "assets": ["BNB", "NETT"],
@@ -1165,7 +1186,6 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0x2692BE44A6E38B698731fDDf417d060f0d20A0cB",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278/0x2692BE44A6E38B698731fDDf417d060f0d20A0cB",
     "network": "metis",
-    "createdAt": 1642364144,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1187,6 +1207,8 @@
     "oracle": "lps",
     "oracleId": "netswap-m.usdt-metis",
     "status": "eol",
+    "createdAt": 1642365041,
+    "eolAt": 1654097535,
     "retireReason": "rewards",
     "platformId": "netswap",
     "assets": ["mUSDT", "METIS"],
@@ -1203,7 +1225,6 @@
     "addLiquidityUrl": "https://netswap.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "network": "metis",
-    "createdAt": 1642365041,
     "zaps": [
       {
         "strategyId": "uniswap-v2",

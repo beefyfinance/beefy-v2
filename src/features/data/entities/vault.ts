@@ -67,6 +67,7 @@ export interface VaultStandard {
   depositFee: number;
 
   createdAt: number;
+  eolAt?: number;
 
   retireReason?: string;
   pauseReason?: string;
@@ -128,6 +129,7 @@ export interface VaultGov {
   depositFee: number;
 
   createdAt: number;
+  eolAt?: number;
 
   retireReason?: string;
   pauseReason?: string;

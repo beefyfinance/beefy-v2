@@ -199,6 +199,7 @@ function addVaultToState(
       removeLiquidityUrl: null,
       depositFee: apiVault.depositFee ?? 0,
       createdAt: apiVault.createdAt ?? 0,
+      eolAt: apiVault.eolAt ?? 0,
       retireReason: apiVault.retireReason,
       pauseReason: apiVault.pauseReason,
     };
@@ -257,6 +258,7 @@ function addVaultToState(
       removeLiquidityUrl: apiVault.removeLiquidityUrl || null,
       depositFee: apiVault.depositFee ?? 0,
       createdAt: apiVault.createdAt ?? 0,
+      eolAt: apiVault.eolAt ?? 0,
       retireReason: apiVault.retireReason,
       pauseReason: apiVault.pauseReason,
       migrationIds: apiVault.migrationIds,

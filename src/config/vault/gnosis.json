@@ -13,6 +13,7 @@
     "oracle": "lps",
     "oracleId": "aura-gnosis-wsteth-cow",
     "status": "active",
+    "createdAt": 1699446018,
     "platformId": "aura",
     "assets": ["wstETH", "COW"],
     "risks": [
@@ -26,8 +27,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x4cdabe9e07ca393943acfb9286bbbd0d0a310ff600020000000000000000005c",
     "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x4cdabe9e07ca393943acfb9286bbbd0d0a310ff600020000000000000000005c/withdraw",
-    "network": "gnosis",
-    "createdAt": 1699446018
+    "network": "gnosis"
   },
   {
     "id": "aura-gnosis-wsteth-sdai",
@@ -43,6 +43,7 @@
     "oracle": "lps",
     "oracleId": "aura-gnosis-wsteth-sdai",
     "status": "active",
+    "createdAt": 1699446018,
     "platformId": "aura",
     "assets": ["wstETH", "sDAI"],
     "risks": [
@@ -56,8 +57,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xbc2acf5e821c5c9f8667a36bb1131dad26ed64f9000200000000000000000063",
     "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xbc2acf5e821c5c9f8667a36bb1131dad26ed64f9000200000000000000000063/withdraw",
-    "network": "gnosis",
-    "createdAt": 1699446018
+    "network": "gnosis"
   },
   {
     "id": "aura-gnosis-sdai-usdt-usdc",
@@ -73,6 +73,7 @@
     "oracle": "lps",
     "oracleId": "aura-gnosis-sdai-usdt-usdc",
     "status": "active",
+    "createdAt": 1699446018,
     "platformId": "aura",
     "assets": ["USDC", "USDT", "sDAI"],
     "risks": [
@@ -86,8 +87,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066",
     "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066/withdraw",
-    "network": "gnosis",
-    "createdAt": 1699446018
+    "network": "gnosis"
   },
   {
     "id": "aura-gnosis-gno-cow",
@@ -103,6 +103,7 @@
     "oracle": "lps",
     "oracleId": "aura-gnosis-gno-cow",
     "status": "active",
+    "createdAt": 1698338090,
     "platformId": "aura",
     "assets": ["COW", "GNO"],
     "risks": [
@@ -116,8 +117,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x21d4c792ea7e38e0d0819c2011a2b1cb7252bd9900020000000000000000001e",
     "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x21d4c792ea7e38e0d0819c2011a2b1cb7252bd9900020000000000000000001e/withdraw",
-    "network": "gnosis",
-    "createdAt": 1698338090
+    "network": "gnosis"
   },
   {
     "id": "aura-gnosis-sdai-eure",
@@ -133,6 +133,7 @@
     "oracle": "lps",
     "oracleId": "aura-gnosis-sdai-eure",
     "status": "active",
+    "createdAt": 1698338090,
     "platformId": "aura",
     "assets": ["sDAI", "EURe"],
     "risks": [
@@ -146,8 +147,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064",
     "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064/withdraw",
-    "network": "gnosis",
-    "createdAt": 1698338090
+    "network": "gnosis"
   },
   {
     "id": "aura-gnosis-wsteth-bal-aura",
@@ -163,6 +163,7 @@
     "oracle": "lps",
     "oracleId": "aura-gnosis-wsteth-bal-aura",
     "status": "active",
+    "createdAt": 1698264180,
     "platformId": "aura",
     "assets": ["wstETH", "BAL", "AURA"],
     "risks": [
@@ -176,8 +177,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x00df7f58e1cf932ebe5f54de5970fb2bdf0ef06d00010000000000000000005b",
     "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x00df7f58e1cf932ebe5f54de5970fb2bdf0ef06d00010000000000000000005b/withdraw",
-    "network": "gnosis",
-    "createdAt": 1698264180
+    "network": "gnosis"
   },
   {
     "id": "aura-gnosis-wsteth-gno",
@@ -193,6 +193,7 @@
     "oracle": "lps",
     "oracleId": "aura-gnosis-wsteth-gno",
     "status": "active",
+    "createdAt": 1698264180,
     "platformId": "aura",
     "assets": ["wstETH", "GNO"],
     "risks": [
@@ -206,8 +207,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x4683e340a8049261057d5ab1b29c8d840e75695e00020000000000000000005a",
     "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x4683e340a8049261057d5ab1b29c8d840e75695e00020000000000000000005a/withdraw",
-    "network": "gnosis",
-    "createdAt": 1698264180
+    "network": "gnosis"
   },
   {
     "id": "aura-gnosis-wsteth-weth",
@@ -223,6 +223,7 @@
     "oracle": "lps",
     "oracleId": "aura-gnosis-wsteth-weth",
     "status": "active",
+    "createdAt": 1698264180,
     "platformId": "aura",
     "assets": ["wstETH", "WETH"],
     "risks": [
@@ -236,7 +237,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034",
     "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034/withdraw",
-    "network": "gnosis",
-    "createdAt": 1698264180
+    "network": "gnosis"
   }
 ]

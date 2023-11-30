@@ -236,6 +236,16 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       exitCode = 1;
     }
 
+    if (pool.status === 'eol') {
+      if (!pool.eolAt) {
+        console.error(`Error: ${pool.id} : Pool eolAt timestamp missing`);
+        exitCode = 1;
+      } else if (typeof pool.eolAt !== 'number' || isNaN(pool.eolAt) || !isFinite(pool.eolAt)) {
+        console.error(`Error: ${pool.id} : Pool eolAt timestamp wrong type, should be a number`);
+        exitCode = 1;
+      }
+    }
+
     if (!pool.network) {
       console.error(`Error: ${pool.id} : Missing network`);
       exitCode = 1;

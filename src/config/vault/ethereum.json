@@ -12,15 +12,15 @@
     "oracle": "lps",
     "oracleId": "prisma-cvxprisma",
     "status": "active",
+    "createdAt": 1701336860,
     "platformId": "prisma",
     "assets": ["cvxPRISMA", "PRISMA"],
     "migrationIds": ["ethereum-prisma"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-371/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-371/withdraw",
-    "network": "ethereum",
-    "createdAt": 1701336860
+    "network": "ethereum"
   },
   {
     "id": "prisma-mkusd-usdc",
@@ -35,15 +35,15 @@
     "oracle": "lps",
     "oracleId": "prisma-mkusd-usdc",
     "status": "active",
+    "createdAt": 1701336444,
     "platformId": "prisma",
     "assets": ["mkUSD", "USDC"],
     "migrationIds": ["ethereum-prisma"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-17/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-17/withdraw",
-    "network": "ethereum",
-    "createdAt": 1701336444
+    "network": "ethereum"
   },
   {
     "id": "prisma-mkusd-fraxbp",
@@ -59,6 +59,7 @@
     "oracle": "lps",
     "oracleId": "prisma-mkusd-fraxbp",
     "status": "active",
+    "createdAt": 1700728622,
     "platformId": "prisma",
     "assets": ["mkUSD", "FRAX", "USDC"],
     "migrationIds": ["ethereum-prisma"],
@@ -66,8 +67,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-342/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-342/withdraw",
-    "network": "ethereum",
-    "createdAt": 1700728622
+    "network": "ethereum"
   },
   {
     "id": "prisma-mkusd-crvusd",
@@ -83,6 +83,7 @@
     "oracle": "lps",
     "oracleId": "prisma-mkusd-crvusd",
     "status": "active",
+    "createdAt": 1700728264,
     "platformId": "prisma",
     "assets": ["mkUSD", "crvUSD"],
     "migrationIds": ["ethereum-prisma"],
@@ -90,8 +91,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-17/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-17/withdraw",
-    "network": "ethereum",
-    "createdAt": 1700728264
+    "network": "ethereum"
   },
   {
     "id": "prisma-prisma-eth",
@@ -107,6 +107,7 @@
     "oracle": "lps",
     "oracleId": "prisma-prisma-eth",
     "status": "active",
+    "createdAt": 1700728623,
     "platformId": "prisma",
     "assets": ["PRISMA", "ETH"],
     "migrationIds": ["ethereum-prisma"],
@@ -114,8 +115,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-333/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-333/withdraw",
-    "network": "ethereum",
-    "createdAt": 1700728623
+    "network": "ethereum"
   },
   {
     "id": "curve-crvusd-sdai",
@@ -131,6 +131,7 @@
     "oracle": "lps",
     "oracleId": "curve-crvusd-sdai",
     "status": "active",
+    "createdAt": 1700039034,
     "platformId": "curve",
     "assets": ["crvUSD", "sDAI"],
     "migrationIds": ["ethereum-convex"],
@@ -138,8 +139,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-27/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-27/withdraw",
-    "network": "ethereum",
-    "createdAt": 1700039034
+    "network": "ethereum"
   },
   {
     "id": "convex-trylsd",
@@ -155,6 +155,7 @@
     "oracle": "lps",
     "oracleId": "convex-trylsd",
     "status": "active",
+    "createdAt": 1700038635,
     "platformId": "convex",
     "assets": ["wstETH", "rETH", "sfrxETH"],
     "migrationIds": ["ethereum-convex"],
@@ -162,8 +163,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-14/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-14/withdraw",
-    "network": "ethereum",
-    "createdAt": 1700038635
+    "network": "ethereum"
   },
   {
     "id": "compound-mainnet-eth",
@@ -177,6 +177,7 @@
     "oracle": "tokens",
     "oracleId": "ETH",
     "status": "active",
+    "createdAt": 1699615970,
     "platformId": "compound",
     "assets": ["ETH"],
     "risks": [
@@ -191,7 +192,6 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://swap.defillama.com/?chain=ethereum&from=0x0000000000000000000000000000000000000000&to=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
     "network": "ethereum",
-    "createdAt": 1699615970,
     "zaps": [
       {
         "strategyId": "single"
@@ -211,6 +211,7 @@
     "oracle": "tokens",
     "oracleId": "USDC",
     "status": "active",
+    "createdAt": 1699615970,
     "platformId": "compound",
     "assets": ["USDC"],
     "risks": [
@@ -225,7 +226,6 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://swap.defillama.com/?chain=ethereum&from=0x0000000000000000000000000000000000000000&to=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
     "network": "ethereum",
-    "createdAt": 1699615970,
     "zaps": [
       {
         "strategyId": "single"
@@ -246,14 +246,14 @@
     "oracle": "lps",
     "oracleId": "uniswap-eth-gamma-reth-weth",
     "status": "active",
+    "createdAt": 1698319634,
     "platformId": "gamma",
     "assets": ["rETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/ethereum/details/reth-weth-500-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/ethereum/details/reth-weth-500-pegged-price",
-    "network": "ethereum",
-    "createdAt": 1698319634
+    "network": "ethereum"
   },
   {
     "id": "bifi-vault",
@@ -268,6 +268,7 @@
     "oracle": "tokens",
     "oracleId": "BIFI",
     "status": "active",
+    "createdAt": 1698105600,
     "platformId": "beefy",
     "assets": ["BIFI"],
     "risks": [
@@ -280,7 +281,6 @@
     ],
     "strategyTypeId": "bifi-vault",
     "network": "ethereum",
-    "createdAt": 1698105600,
     "bridged": {
       "optimism": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434"
     },
@@ -303,6 +303,7 @@
     "oracle": "tokens",
     "oracleId": "BIFI",
     "status": "active",
+    "createdAt": 1698105600,
     "platformId": "beefy",
     "assets": ["BIFI"],
     "risks": [
@@ -315,8 +316,7 @@
     ],
     "strategyTypeId": "bifi-pool",
     "excluded": "bifi-vault",
-    "network": "ethereum",
-    "createdAt": 1698105600
+    "network": "ethereum"
   },
   {
     "id": "convex-tricrypto-llama",
@@ -332,6 +332,7 @@
     "oracle": "lps",
     "oracleId": "convex-tricrypto-llama",
     "status": "active",
+    "createdAt": 1697183927,
     "platformId": "convex",
     "assets": ["crvUSD", "tBTC", "wstETH"],
     "migrationIds": ["ethereum-convex"],
@@ -339,8 +340,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-2/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-2/withdraw",
-    "network": "ethereum",
-    "createdAt": 1697183927
+    "network": "ethereum"
   },
   {
     "id": "aura-gho-usdc-usdt",
@@ -356,14 +356,14 @@
     "oracle": "lps",
     "oracleId": "aura-gho-usdc-usdt",
     "status": "active",
+    "createdAt": 1696338460,
     "platformId": "aura",
     "assets": ["GHO", "USDC", "USDT"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x8353157092ed8be69a9df8f95af097bbf33cb2af0000000000000000000005d9",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x8353157092ed8be69a9df8f95af097bbf33cb2af0000000000000000000005d9",
-    "network": "ethereum",
-    "createdAt": 1696338460
+    "network": "ethereum"
   },
   {
     "id": "aura-gyro-wsteth-eth",
@@ -379,14 +379,14 @@
     "oracle": "lps",
     "oracleId": "aura-gyro-wsteth-eth",
     "status": "active",
+    "createdAt": 1696000037,
     "platformId": "aura",
     "assets": ["wstETH", "ETH"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://app.gyro.finance/pools/ethereum/e-clp/0xf01b0684C98CD7aDA480BFDF6e43876422fa1Fc1/",
     "removeLiquidityUrl": "https://app.gyro.finance/pools/ethereum/e-clp/0xf01b0684C98CD7aDA480BFDF6e43876422fa1Fc1/",
-    "network": "ethereum",
-    "createdAt": 1696000037
+    "network": "ethereum"
   },
   {
     "id": "aura-gyro-wsteth-cbeth",
@@ -402,14 +402,14 @@
     "oracle": "lps",
     "oracleId": "aura-gyro-wsteth-cbeth",
     "status": "active",
+    "createdAt": 1696000037,
     "platformId": "aura",
     "assets": ["wstETH", "cbETH"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://app.gyro.finance/pools/ethereum/e-clp/0xf7a826d47c8e02835d94fb0aa40f0cc9505cb134/",
     "removeLiquidityUrl": "https://app.gyro.finance/pools/ethereum/e-clp/0xf7a826d47c8e02835d94fb0aa40f0cc9505cb134/",
-    "network": "ethereum",
-    "createdAt": 1696000037
+    "network": "ethereum"
   },
   {
     "id": "aura-r-bbsdai",
@@ -425,14 +425,15 @@
     "oracle": "lps",
     "oracleId": "aura-r-bbsdai",
     "status": "eol",
+    "createdAt": 1691494927,
+    "eolAt": 1692706264,
     "platformId": "aura",
     "assets": ["R", "bbsDAI"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xbf2ef8bdc2fc0f3203b3a01778e3ec5009aeef3300000000000000000000058d/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xbf2ef8bdc2fc0f3203b3a01778e3ec5009aeef3300000000000000000000058d/withdraw",
-    "network": "ethereum",
-    "createdAt": 1691494927
+    "network": "ethereum"
   },
   {
     "id": "aura-gho-lusd",
@@ -448,14 +449,14 @@
     "oracle": "lps",
     "oracleId": "aura-gho-lusd",
     "status": "active",
+    "createdAt": 1690822557,
     "platformId": "aura",
     "assets": ["GHO", "LUSD"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x3fa8c89704e5d07565444009e5d9e624b40be813000000000000000000000599/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x3fa8c89704e5d07565444009e5d9e624b40be813000000000000000000000599/withdraw",
-    "network": "ethereum",
-    "createdAt": 1690822557
+    "network": "ethereum"
   },
   {
     "id": "aura-gho-bbausd",
@@ -471,6 +472,8 @@
     "oracle": "lps",
     "oracleId": "aura-gho-bbausd",
     "status": "eol",
+    "createdAt": 1690822557,
+    "eolAt": 1692719625,
     "retireReason": "exploit",
     "platformId": "aura",
     "assets": ["GHO", "bbaUSD"],
@@ -478,8 +481,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xc2b021133d1b0cf07dba696fd5dd89338428225b000000000000000000000598/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xc2b021133d1b0cf07dba696fd5dd89338428225b000000000000000000000598/withdraw",
-    "network": "ethereum",
-    "createdAt": 1690822557
+    "network": "ethereum"
   },
   {
     "id": "aura-ethx-bbaeth",
@@ -495,6 +497,8 @@
     "oracle": "lps",
     "oracleId": "aura-ethx-bbaeth",
     "status": "eol",
+    "createdAt": 1690822557,
+    "eolAt": 1692719625,
     "retireReason": "exploit",
     "platformId": "aura",
     "assets": ["ETHx", "bbaETH"],
@@ -502,8 +506,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x4cbde5c4b4b53ebe4af4adb85404725985406163000000000000000000000595/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x4cbde5c4b4b53ebe4af4adb85404725985406163000000000000000000000595/withdraw",
-    "network": "ethereum",
-    "createdAt": 1690822557
+    "network": "ethereum"
   },
   {
     "id": "aura-wsteth-reth-sfrxeth-v3",
@@ -519,14 +522,14 @@
     "oracle": "lps",
     "oracleId": "aura-wsteth-reth-sfrxeth-v3",
     "status": "active",
+    "createdAt": 1690822557,
     "platformId": "aura",
     "assets": ["wstETH", "rETH", "sfrxETH"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x42ed016f826165c2e5976fe5bc3df540c5ad0af700000000000000000000058b/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x42ed016f826165c2e5976fe5bc3df540c5ad0af700000000000000000000058b/withdraw",
-    "network": "ethereum",
-    "createdAt": 1690822557
+    "network": "ethereum"
   },
   {
     "id": "conic-eth",
@@ -542,14 +545,15 @@
     "oracle": "lps",
     "oracleId": "conic-eth",
     "status": "eol",
+    "createdAt": 1689155486,
+    "eolAt": 1691754615,
     "retireReason": "rewards",
     "platformId": "conic",
     "assets": ["ETH"],
     "migrationIds": ["ethereum-conic"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "network": "ethereum",
-    "createdAt": 1689155486
+    "network": "ethereum"
   },
   {
     "id": "conic-crvusd",
@@ -565,14 +569,15 @@
     "oracle": "lps",
     "oracleId": "conic-crvusd",
     "status": "eol",
+    "createdAt": 1687857044,
+    "eolAt": 1691754615,
     "retireReason": "rewards",
     "platformId": "conic",
     "assets": ["crvUSD"],
     "migrationIds": ["ethereum-conic"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "network": "ethereum",
-    "createdAt": 1687857044
+    "network": "ethereum"
   },
   {
     "id": "conic-usdc",
@@ -588,14 +593,15 @@
     "oracle": "lps",
     "oracleId": "conic-usdc",
     "status": "eol",
+    "createdAt": 1687855007,
+    "eolAt": 1691754615,
     "retireReason": "rewards",
     "platformId": "conic",
     "assets": ["USDC"],
     "migrationIds": ["ethereum-conic"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "network": "ethereum",
-    "createdAt": 1687855007
+    "network": "ethereum"
   },
   {
     "id": "convex-tricrypto-usdc",
@@ -611,6 +617,7 @@
     "oracle": "lps",
     "oracleId": "convex-tricrypto-usdc",
     "status": "active",
+    "createdAt": 1687161060,
     "platformId": "convex",
     "assets": ["USDC", "WBTC", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -618,8 +625,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-0/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-0/withdraw",
-    "network": "ethereum",
-    "createdAt": 1687161060
+    "network": "ethereum"
   },
   {
     "id": "convex-oeth",
@@ -635,6 +641,7 @@
     "oracle": "lps",
     "oracleId": "convex-oeth",
     "status": "active",
+    "createdAt": 1687161061,
     "platformId": "convex",
     "assets": ["OETH", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -642,8 +649,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-298/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-298/withdraw",
-    "network": "ethereum",
-    "createdAt": 1687161061
+    "network": "ethereum"
   },
   {
     "id": "aura-r-wsteth",
@@ -659,6 +665,8 @@
     "oracle": "lps",
     "oracleId": "aura-r-wsteth",
     "status": "eol",
+    "createdAt": 1685985894,
+    "eolAt": 1695146858,
     "retireReason": "rewards",
     "platformId": "aura",
     "assets": ["R", "wstETH"],
@@ -673,8 +681,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x380aabe019ed2a9c2d632b51eddd30fd804d0fad000200000000000000000554/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x380aabe019ed2a9c2d632b51eddd30fd804d0fad000200000000000000000554/withdraw",
-    "network": "ethereum",
-    "createdAt": 1685985894
+    "network": "ethereum"
   },
   {
     "id": "aura-r-dai",
@@ -690,6 +697,7 @@
     "oracle": "lps",
     "oracleId": "aura-r-dai",
     "status": "paused",
+    "createdAt": 1685985894,
     "platformId": "aura",
     "assets": ["R", "DAI"],
     "risks": [
@@ -703,8 +711,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x20a61b948e33879ce7f23e535cc7baa3bc66c5a9000000000000000000000555/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x20a61b948e33879ce7f23e535cc7baa3bc66c5a9000000000000000000000555/withdraw",
-    "network": "ethereum",
-    "createdAt": 1685985894
+    "network": "ethereum"
   },
   {
     "id": "aura-wbeth-wsteth",
@@ -720,6 +727,8 @@
     "oracle": "lps",
     "oracleId": "aura-wbeth-wsteth",
     "status": "eol",
+    "createdAt": 1685636136,
+    "eolAt": 1695146858,
     "retireReason": "rewards",
     "platformId": "aura",
     "assets": ["wBETH", "wstETH"],
@@ -727,8 +736,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x2e848426aec6dbf2260535a5bea048ed94d9ff3d000000000000000000000536/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x2e848426aec6dbf2260535a5bea048ed94d9ff3d000000000000000000000536/withdraw",
-    "network": "ethereum",
-    "createdAt": 1685636136
+    "network": "ethereum"
   },
   {
     "id": "convex-wbeth",
@@ -744,6 +752,7 @@
     "oracle": "lps",
     "oracleId": "convex-wbeth",
     "status": "active",
+    "createdAt": 1685011917,
     "platformId": "convex",
     "assets": ["wBETH", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -751,8 +760,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/wbeth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/wbeth/withdraw",
-    "network": "ethereum",
-    "createdAt": 1685011917
+    "network": "ethereum"
   },
   {
     "id": "ape-ape",
@@ -767,12 +775,12 @@
     "oracle": "tokens",
     "oracleId": "APE",
     "status": "active",
+    "createdAt": 1684833624,
     "platformId": "ape",
     "assets": ["APE"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
     "network": "ethereum",
-    "createdAt": 1684833624,
     "zaps": [
       {
         "strategyId": "single"
@@ -793,6 +801,7 @@
     "oracle": "lps",
     "oracleId": "convex-t",
     "status": "active",
+    "createdAt": 1683622692,
     "platformId": "convex",
     "assets": ["T", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -800,8 +809,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/teth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/teth/withdraw",
-    "network": "ethereum",
-    "createdAt": 1683622692
+    "network": "ethereum"
   },
   {
     "id": "convex-tbtc",
@@ -817,6 +825,8 @@
     "oracle": "lps",
     "oracleId": "convex-tbtc",
     "status": "eol",
+    "createdAt": 1683622674,
+    "eolAt": 1698574248,
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["tBTC", "sBTC", "WBTC"],
@@ -825,8 +835,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-247/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-247/withdraw",
-    "network": "ethereum",
-    "createdAt": 1683622674
+    "network": "ethereum"
   },
   {
     "id": "curve-lvusd",
@@ -842,6 +851,8 @@
     "oracle": "lps",
     "oracleId": "curve-lvusd",
     "status": "eol",
+    "createdAt": 1682932828,
+    "eolAt": 1691754615,
     "retireReason": "rewards",
     "platformId": "curve",
     "assets": ["lvUSD", "DAI", "USDC", "USDT"],
@@ -849,8 +860,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-268/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-268/withdraw",
-    "network": "ethereum",
-    "createdAt": 1682932828
+    "network": "ethereum"
   },
   {
     "id": "convex-staked-cvxFPIS",
@@ -866,6 +876,7 @@
     "oracle": "tokens",
     "oracleId": "cvxFPIS",
     "status": "active",
+    "createdAt": 1679559921,
     "platformId": "convex",
     "assets": ["cvxFPIS"],
     "migrationIds": ["ethereum-convex"],
@@ -873,7 +884,6 @@
     "strategyTypeId": "single",
     "addLiquidityUrl": "https://frax.convexfinance.com/",
     "network": "ethereum",
-    "createdAt": 1679559921,
     "zaps": [
       {
         "strategyId": "single"
@@ -894,14 +904,14 @@
     "oracle": "tokens",
     "oracleId": "cvxFXS",
     "status": "active",
+    "createdAt": 1679559922,
     "platformId": "convex",
     "assets": ["cvxFXS"],
     "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
     "addLiquidityUrl": "https://frax.convexfinance.com/",
-    "network": "ethereum",
-    "createdAt": 1679559922
+    "network": "ethereum"
   },
   {
     "id": "convex-cvxcrv",
@@ -917,6 +927,7 @@
     "oracle": "lps",
     "oracleId": "convex-cvxcrv",
     "status": "active",
+    "createdAt": 1679559923,
     "platformId": "convex",
     "assets": ["cvxCRV", "CRV"],
     "migrationIds": ["ethereum-convex"],
@@ -924,8 +935,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-283/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-283/withdraw",
-    "network": "ethereum",
-    "createdAt": 1679559923
+    "network": "ethereum"
   },
   {
     "id": "ethereum-bifi-maxi",
@@ -940,6 +950,8 @@
     "oracle": "tokens",
     "oracleId": "oldBIFI",
     "status": "eol",
+    "createdAt": 1679403789,
+    "eolAt": 1689087437,
     "retireReason": "bifiV2",
     "platformId": "beefy",
     "assets": ["oldBIFI"],
@@ -953,8 +965,7 @@
     ],
     "strategyTypeId": "maxi",
     "buyTokenUrl": "https://app.1inch.io/#/1/simple/swap/WETH/BIFI_2",
-    "network": "ethereum",
-    "createdAt": 1679403789
+    "network": "ethereum"
   },
   {
     "id": "convex-cnc",
@@ -970,6 +981,7 @@
     "oracle": "lps",
     "oracleId": "convex-cnc",
     "status": "active",
+    "createdAt": 1678861510,
     "platformId": "convex",
     "assets": ["CNC", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -977,8 +989,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-45/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-45/withdraw",
-    "network": "ethereum",
-    "createdAt": 1678861510
+    "network": "ethereum"
   },
   {
     "id": "convex-ctr",
@@ -994,6 +1005,7 @@
     "oracle": "lps",
     "oracleId": "convex-ctr",
     "status": "active",
+    "createdAt": 1678861498,
     "platformId": "convex",
     "assets": ["CTR", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -1001,8 +1013,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-151/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-151/withdraw",
-    "network": "ethereum",
-    "createdAt": 1678861498
+    "network": "ethereum"
   },
   {
     "id": "convex-matic",
@@ -1018,6 +1029,8 @@
     "oracle": "lps",
     "oracleId": "convex-matic",
     "status": "eol",
+    "createdAt": 1678783539,
+    "eolAt": 1695146858,
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["MATIC", "ETH"],
@@ -1026,8 +1039,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-184/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-184/withdraw",
-    "network": "ethereum",
-    "createdAt": 1678783539
+    "network": "ethereum"
   },
   {
     "id": "convex-reth",
@@ -1043,6 +1055,7 @@
     "oracle": "lps",
     "oracleId": "convex-reth",
     "status": "active",
+    "createdAt": 1678783526,
     "platformId": "convex",
     "assets": ["rETH", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -1050,8 +1063,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-210/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-210/withdraw",
-    "network": "ethereum",
-    "createdAt": 1678783526
+    "network": "ethereum"
   },
   {
     "id": "verse-weth-usdt",
@@ -1067,6 +1079,8 @@
     "oracle": "lps",
     "oracleId": "verse-weth-usdt",
     "status": "eol",
+    "createdAt": 1679145308,
+    "eolAt": 1696930682,
     "retireReason": "tvl",
     "platformId": "verse",
     "assets": ["ETH", "USDT"],
@@ -1074,7 +1088,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://verse.bitcoin.com/pools/",
     "network": "ethereum",
-    "createdAt": 1679145308,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1096,6 +1109,8 @@
     "oracle": "lps",
     "oracleId": "verse-wbtc-usdc",
     "status": "eol",
+    "createdAt": 1678475051,
+    "eolAt": 1699980381,
     "retireReason": "tvl",
     "platformId": "verse",
     "assets": ["WBTC", "USDC"],
@@ -1103,7 +1118,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://verse.bitcoin.com/pools/",
     "network": "ethereum",
-    "createdAt": 1678475051,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1125,6 +1139,8 @@
     "oracle": "lps",
     "oracleId": "verse-wbtc-weth",
     "status": "eol",
+    "createdAt": 1678475051,
+    "eolAt": 1697816149,
     "retireReason": "rewards",
     "platformId": "verse",
     "assets": ["WBTC", "ETH"],
@@ -1132,7 +1148,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://verse.bitcoin.com/pools/",
     "network": "ethereum",
-    "createdAt": 1678475051,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1154,13 +1169,13 @@
     "oracle": "lps",
     "oracleId": "verse-dai-weth",
     "status": "active",
+    "createdAt": 1678475051,
     "platformId": "verse",
     "assets": ["DAI", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://verse.bitcoin.com/pools/",
     "network": "ethereum",
-    "createdAt": 1678475051,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1182,13 +1197,13 @@
     "oracle": "lps",
     "oracleId": "verse-verse-weth",
     "status": "active",
+    "createdAt": 1678475051,
     "platformId": "verse",
     "assets": ["VERSE", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://verse.bitcoin.com/pools/",
     "network": "ethereum",
-    "createdAt": 1678475051,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1210,13 +1225,13 @@
     "oracle": "lps",
     "oracleId": "verse-usdc-weth",
     "status": "active",
+    "createdAt": 1678475051,
     "platformId": "verse",
     "assets": ["USDC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_HIGH", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://verse.bitcoin.com/pools/",
     "network": "ethereum",
-    "createdAt": 1678475051,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1238,6 +1253,7 @@
     "oracle": "lps",
     "oracleId": "convex-ldo",
     "status": "active",
+    "createdAt": 1677063182,
     "platformId": "convex",
     "assets": ["LDO", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -1245,8 +1261,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-204/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-204/withdraw",
-    "network": "ethereum",
-    "createdAt": 1677063182
+    "network": "ethereum"
   },
   {
     "id": "convex-clev",
@@ -1262,6 +1277,7 @@
     "oracle": "lps",
     "oracleId": "convex-clev",
     "status": "active",
+    "createdAt": 1677063176,
     "platformId": "convex",
     "assets": ["CLEV", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -1269,8 +1285,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-140/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-140/withdraw",
-    "network": "ethereum",
-    "createdAt": 1677063176
+    "network": "ethereum"
   },
   {
     "id": "convex-clevcvx",
@@ -1286,6 +1301,7 @@
     "oracle": "lps",
     "oracleId": "convex-clevcvx",
     "status": "active",
+    "createdAt": 1677063038,
     "platformId": "convex",
     "assets": ["clevCVX", "CVX"],
     "migrationIds": ["ethereum-convex"],
@@ -1293,8 +1309,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-209/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-209/withdraw",
-    "network": "ethereum",
-    "createdAt": 1677063038
+    "network": "ethereum"
   },
   {
     "id": "convex-ycrv",
@@ -1310,6 +1325,8 @@
     "oracle": "lps",
     "oracleId": "convex-ycrv",
     "status": "eol",
+    "createdAt": 1677062886,
+    "eolAt": 1691754615,
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["yCRV", "CRV"],
@@ -1318,8 +1335,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-192/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-192/withdraw",
-    "network": "ethereum",
-    "createdAt": 1677062886
+    "network": "ethereum"
   },
   {
     "id": "convex-tusd",
@@ -1335,6 +1351,8 @@
     "oracle": "lps",
     "oracleId": "convex-tusd",
     "status": "eol",
+    "createdAt": 1677062754,
+    "eolAt": 1699980381,
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["TUSD", "DAI", "USDC", "USDT"],
@@ -1343,8 +1361,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/tusd/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/tusd/withdraw",
-    "network": "ethereum",
-    "createdAt": 1677062754
+    "network": "ethereum"
   },
   {
     "id": "synapse-syn-weth",
@@ -1360,6 +1377,8 @@
     "oracle": "lps",
     "oracleId": "synapse-syn-weth",
     "status": "eol",
+    "createdAt": 1687499387,
+    "eolAt": 1698574248,
     "retireReason": "rewards",
     "platformId": "synapse",
     "assets": ["SYN", "ETH"],
@@ -1368,7 +1387,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/eth:0x4A86C01d67965f8cB3d0AAA2c655705E64097C31/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/eth:0x4A86C01d67965f8cB3d0AAA2c655705E64097C31/remove",
     "network": "ethereum",
-    "createdAt": 1687499387,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1390,6 +1408,8 @@
     "oracle": "lps",
     "oracleId": "aura-wsteth-reth-sfrxeth-v2",
     "status": "eol",
+    "createdAt": 1676899352,
+    "eolAt": 1691754615,
     "retireReason": "rewards",
     "platformId": "aura",
     "assets": ["wstETH", "rETH", "sfrxETH"],
@@ -1397,8 +1417,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x5aee1e99fe86960377de9f88689616916d5dcabe000000000000000000000467/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x5aee1e99fe86960377de9f88689616916d5dcabe000000000000000000000467/withdraw",
-    "network": "ethereum",
-    "createdAt": 1676899352
+    "network": "ethereum"
   },
   {
     "id": "convex-staked-cvxCRV",
@@ -1413,6 +1432,7 @@
     "oracle": "tokens",
     "oracleId": "cvxCRV",
     "status": "active",
+    "createdAt": 1674713148,
     "platformId": "convex",
     "assets": ["cvxCRV"],
     "migrationIds": ["ethereum-convex"],
@@ -1420,7 +1440,6 @@
     "strategyTypeId": "single",
     "addLiquidityUrl": "https://www.convexfinance.com/stake",
     "network": "ethereum",
-    "createdAt": 1674713148,
     "zaps": [
       {
         "strategyId": "single"
@@ -1441,6 +1460,8 @@
     "oracle": "lps",
     "oracleId": "monolith-bifi-weth",
     "status": "eol",
+    "createdAt": 1676382228,
+    "eolAt": 1689007467,
     "retireReason": "bifiV2",
     "platformId": "solidly",
     "assets": ["oldBIFI", "ETH"],
@@ -1448,7 +1469,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676382228,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1470,6 +1490,8 @@
     "oracle": "lps",
     "oracleId": "monolith-mosolid-weth",
     "status": "eol",
+    "createdAt": 1676382228,
+    "eolAt": 1679218536,
     "retireReason": "rewards",
     "platformId": "solidly",
     "assets": ["moSOLID", "ETH"],
@@ -1477,7 +1499,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676382228,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1499,6 +1520,8 @@
     "oracle": "lps",
     "oracleId": "monolith-solid-weth",
     "status": "eol",
+    "createdAt": 1676382228,
+    "eolAt": 1696060775,
     "retireReason": "rewards",
     "platformId": "solidly",
     "assets": ["SOLID", "ETH"],
@@ -1506,7 +1529,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676382228,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1528,6 +1550,8 @@
     "oracle": "lps",
     "oracleId": "monolith-frxeth-weth",
     "status": "eol",
+    "createdAt": 1676382228,
+    "eolAt": 1691431139,
     "retireReason": "rewards",
     "platformId": "solidly",
     "assets": ["frxETH", "ETH"],
@@ -1535,7 +1559,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676382228,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1557,6 +1580,8 @@
     "oracle": "lps",
     "oracleId": "monolith-frax-usdt",
     "status": "eol",
+    "createdAt": 1676382228,
+    "eolAt": 1680018611,
     "retireReason": "tvl",
     "platformId": "solidly",
     "assets": ["FRAX", "USDT"],
@@ -1570,7 +1595,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676382228,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1592,6 +1616,8 @@
     "oracle": "lps",
     "oracleId": "monolith-usdc-usdt",
     "status": "eol",
+    "createdAt": 1676382228,
+    "eolAt": 1690813823,
     "retireReason": "rewards",
     "platformId": "solidly",
     "assets": ["USDC", "USDT"],
@@ -1599,7 +1625,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676382228,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1621,6 +1646,8 @@
     "oracle": "lps",
     "oracleId": "monolith-usdc-weth",
     "status": "eol",
+    "createdAt": 1676382228,
+    "eolAt": 1684742133,
     "retireReason": "tvl",
     "platformId": "solidly",
     "assets": ["USDC", "ETH"],
@@ -1628,7 +1655,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676382228,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1650,6 +1676,8 @@
     "oracle": "lps",
     "oracleId": "monolith-blur-weth",
     "status": "eol",
+    "createdAt": 1676461428,
+    "eolAt": 1686563142,
     "retireReason": "tvl",
     "platformId": "solidly",
     "assets": ["BLUR", "ETH"],
@@ -1657,7 +1685,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676461428,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1679,6 +1706,7 @@
     "oracle": "lps",
     "oracleId": "sushi-mainnet-usdc-weth",
     "status": "active",
+    "createdAt": 1674075066,
     "platformId": "sushi",
     "assets": ["WETH", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1686,7 +1714,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/eth:0x397ff1542f962076d0bfe58ea045ffa2d347aca0/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/eth:0x397ff1542f962076d0bfe58ea045ffa2d347aca0/remove",
     "network": "ethereum",
-    "createdAt": 1674075066,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1708,6 +1735,8 @@
     "oracle": "lps",
     "oracleId": "sushi-mainnet-sushi-weth",
     "status": "eol",
+    "createdAt": 1674075066,
+    "eolAt": 1695146858,
     "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["SUSHI", "WETH"],
@@ -1716,7 +1745,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/eth:0x795065dcc9f64b5614c407a6efdc400da6221fb0/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/eth:0x795065dcc9f64b5614c407a6efdc400da6221fb0/remove",
     "network": "ethereum",
-    "createdAt": 1674075066,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1738,6 +1766,7 @@
     "oracle": "lps",
     "oracleId": "sushi-mainnet-ldo-weth",
     "status": "active",
+    "createdAt": 1674075066,
     "platformId": "sushi",
     "assets": ["LDO", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1745,7 +1774,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/eth:0xc558f600b34a5f69dd2f0d06cb8a88d829b7420a/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/eth:0xc558f600b34a5f69dd2f0d06cb8a88d829b7420a/remove",
     "network": "ethereum",
-    "createdAt": 1674075066,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1767,6 +1795,8 @@
     "oracle": "lps",
     "oracleId": "convex-sbtc2",
     "status": "eol",
+    "createdAt": 1672819877,
+    "eolAt": 1696060775,
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["sBTC", "WBTC"],
@@ -1775,8 +1805,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/sbtc2/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/sbtc2/withdraw",
-    "network": "ethereum",
-    "createdAt": 1672819877
+    "network": "ethereum"
   },
   {
     "id": "convex-multibtc",
@@ -1792,6 +1821,8 @@
     "oracle": "lps",
     "oracleId": "convex-multibtc",
     "status": "eol",
+    "createdAt": 1672819857,
+    "eolAt": 1694443783,
     "platformId": "convex",
     "assets": ["multiBTC", "sBTC", "WBTC"],
     "migrationIds": ["ethereum-convex"],
@@ -1799,8 +1830,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-245/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-245/withdraw",
-    "network": "ethereum",
-    "createdAt": 1672819857
+    "network": "ethereum"
   },
   {
     "id": "convex-cvxfxs",
@@ -1816,6 +1846,8 @@
     "oracle": "lps",
     "oracleId": "convex-cvxfxs",
     "status": "eol",
+    "createdAt": 1672819878,
+    "eolAt": 1695146858,
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["cvxFXS", "FXS"],
@@ -1824,8 +1856,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-18/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-18/withdraw",
-    "network": "ethereum",
-    "createdAt": 1672819878
+    "network": "ethereum"
   },
   {
     "id": "convex-cvxeth",
@@ -1841,6 +1872,7 @@
     "oracle": "lps",
     "oracleId": "convex-cvxeth",
     "status": "active",
+    "createdAt": 1669805289,
     "platformId": "convex",
     "assets": ["CVX", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -1848,8 +1880,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/cvxeth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/cvxeth/withdraw",
-    "network": "ethereum",
-    "createdAt": 1669805289
+    "network": "ethereum"
   },
   {
     "id": "convex-geareth",
@@ -1865,6 +1896,7 @@
     "oracle": "lps",
     "oracleId": "convex-geareth",
     "status": "active",
+    "createdAt": 1675457175,
     "platformId": "convex",
     "assets": ["GEAR", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -1872,8 +1904,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-192/deposit/",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-192/withdraw/",
-    "network": "ethereum",
-    "createdAt": 1675457175
+    "network": "ethereum"
   },
   {
     "id": "convex-crveth",
@@ -1889,6 +1920,8 @@
     "oracle": "lps",
     "oracleId": "convex-crveth",
     "status": "eol",
+    "createdAt": 1669805267,
+    "eolAt": 1691160640,
     "platformId": "convex",
     "assets": ["CRV", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -1896,8 +1929,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/crveth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/crveth/withdraw",
-    "network": "ethereum",
-    "createdAt": 1669805267
+    "network": "ethereum"
   },
   {
     "id": "convex-frxeth",
@@ -1913,6 +1945,7 @@
     "oracle": "lps",
     "oracleId": "convex-frxeth",
     "status": "active",
+    "createdAt": 1669188341,
     "platformId": "convex",
     "assets": ["frxETH", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -1920,8 +1953,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/frxeth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/frxeth/withdraw",
-    "network": "ethereum",
-    "createdAt": 1669188341
+    "network": "ethereum"
   },
   {
     "id": "convex-seth",
@@ -1937,6 +1969,8 @@
     "oracle": "lps",
     "oracleId": "convex-seth",
     "status": "eol",
+    "createdAt": 1669188329,
+    "eolAt": 1695146858,
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["sETH", "ETH"],
@@ -1945,8 +1979,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/seth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/seth/withdraw",
-    "network": "ethereum",
-    "createdAt": 1669188329
+    "network": "ethereum"
   },
   {
     "id": "convex-cbeth",
@@ -1962,6 +1995,7 @@
     "oracle": "lps",
     "oracleId": "convex-cbeth",
     "status": "active",
+    "createdAt": 1669187174,
     "platformId": "convex",
     "assets": ["cbETH", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -1969,8 +2003,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-91/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-91/withdraw",
-    "network": "ethereum",
-    "createdAt": 1669187174
+    "network": "ethereum"
   },
   {
     "id": "aura-aura-weth",
@@ -1986,14 +2019,14 @@
     "oracle": "lps",
     "oracleId": "aura-aura-weth",
     "status": "active",
+    "createdAt": 1687443962,
     "platformId": "aura",
     "assets": ["AURA", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xcfca23ca9ca720b6e98e3eb9b6aa0ffc4a5c08b9000200000000000000000274/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xcfca23ca9ca720b6e98e3eb9b6aa0ffc4a5c08b9000200000000000000000274/withdraw",
-    "network": "ethereum",
-    "createdAt": 1687443962
+    "network": "ethereum"
   },
   {
     "id": "aura-aurabal-balbpt",
@@ -2009,14 +2042,14 @@
     "oracle": "lps",
     "oracleId": "aura-aurabal-balbpt",
     "status": "active",
+    "createdAt": 1687443962,
     "platformId": "aura",
     "assets": ["auraBAL", "BAL-WETH-80-20"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x3dd0843a028c86e0b760b1a76929d1c5ef93a2dd000200000000000000000249/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x3dd0843a028c86e0b760b1a76929d1c5ef93a2dd000200000000000000000249/withdraw",
-    "network": "ethereum",
-    "createdAt": 1687443962
+    "network": "ethereum"
   },
   {
     "id": "aura-dola-usdc",
@@ -2032,6 +2065,8 @@
     "oracle": "lps",
     "oracleId": "aura-dola-usdc",
     "status": "eol",
+    "createdAt": 1675886350,
+    "eolAt": 1695146858,
     "retireReason": "rewards",
     "platformId": "aura",
     "assets": ["DOLA", "USDC"],
@@ -2046,8 +2081,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xff4ce5aaab5a627bf82f4a571ab1ce94aa365ea6000200000000000000000426/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xff4ce5aaab5a627bf82f4a571ab1ce94aa365ea6000200000000000000000426/withdraw",
-    "network": "ethereum",
-    "createdAt": 1675886350
+    "network": "ethereum"
   },
   {
     "id": "aura-inv-dola",
@@ -2063,6 +2097,8 @@
     "oracle": "lps",
     "oracleId": "aura-inv-dola",
     "status": "eol",
+    "createdAt": 1669662662,
+    "eolAt": 1671223121,
     "retireReason": "tvl",
     "platformId": "aura",
     "assets": ["INV", "DOLA"],
@@ -2077,8 +2113,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x441b8a1980f2f2e43a9397099d15cc2fe6d3625000020000000000000000035f/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x441b8a1980f2f2e43a9397099d15cc2fe6d3625000020000000000000000035f/withdraw",
-    "network": "ethereum",
-    "createdAt": 1669662662
+    "network": "ethereum"
   },
   {
     "id": "aura-wsteth-reth-sfrxeth",
@@ -2094,14 +2129,15 @@
     "oracle": "lps",
     "oracleId": "aura-wsteth-reth-sfrxeth",
     "status": "eol",
+    "createdAt": 1671240920,
+    "eolAt": 1678471331,
     "platformId": "aura",
     "assets": ["wstETH", "rETH", "sfrxETH"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x8e85e97ed19c0fa13b2549309965291fbbc0048b0000000000000000000003ba/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x8e85e97ed19c0fa13b2549309965291fbbc0048b0000000000000000000003ba/withdraw",
-    "network": "ethereum",
-    "createdAt": 1671240920
+    "network": "ethereum"
   },
   {
     "id": "aura-aurabal",
@@ -2117,14 +2153,14 @@
     "oracle": "tokens",
     "oracleId": "auraBAL",
     "status": "active",
+    "createdAt": 1668604067,
     "platformId": "aura",
     "assets": ["auraBAL"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
     "addLiquidityUrl": "https://app.aura.finance/",
     "removeLiquidityUrl": "https://app.aura.finance/",
-    "network": "ethereum",
-    "createdAt": 1668604067
+    "network": "ethereum"
   },
   {
     "id": "convex-usdd",
@@ -2140,6 +2176,7 @@
     "oracle": "lps",
     "oracleId": "convex-usdd",
     "status": "active",
+    "createdAt": 1668510000,
     "platformId": "convex",
     "assets": ["USDD", "DAI", "USDC", "USDT"],
     "migrationIds": ["ethereum-convex"],
@@ -2154,8 +2191,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-116/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-116/withdraw",
-    "network": "ethereum",
-    "createdAt": 1668510000
+    "network": "ethereum"
   },
   {
     "id": "convex-usddfraxbp",
@@ -2171,6 +2207,8 @@
     "oracle": "lps",
     "oracleId": "convex-usddfraxbp",
     "status": "eol",
+    "createdAt": 1668510000,
+    "eolAt": 1699192515,
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["USDD", "FRAX", "USDC"],
@@ -2186,8 +2224,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-135/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-135/withdraw",
-    "network": "ethereum",
-    "createdAt": 1668510000
+    "network": "ethereum"
   },
   {
     "id": "convex-dolafraxbp",
@@ -2203,6 +2240,7 @@
     "oracle": "lps",
     "oracleId": "convex-dolafraxbp",
     "status": "active",
+    "createdAt": 1668510000,
     "platformId": "convex",
     "assets": ["DOLA", "FRAX", "USDC"],
     "migrationIds": ["ethereum-convex"],
@@ -2217,8 +2255,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-176/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-176/withdraw",
-    "network": "ethereum",
-    "createdAt": 1668510000
+    "network": "ethereum"
   },
   {
     "id": "convex-apeusdfraxbp",
@@ -2234,6 +2271,8 @@
     "oracle": "lps",
     "oracleId": "convex-apeusdfraxbp",
     "status": "eol",
+    "createdAt": 1667906072,
+    "eolAt": 1691160640,
     "platformId": "convex",
     "assets": ["ApeUSD", "FRAX", "USDC"],
     "migrationIds": ["ethereum-convex"],
@@ -2248,8 +2287,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-138/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-138/withdraw",
-    "network": "ethereum",
-    "createdAt": 1667906072
+    "network": "ethereum"
   },
   {
     "id": "convex-mim",
@@ -2265,6 +2303,7 @@
     "oracle": "lps",
     "oracleId": "convex-mim",
     "status": "active",
+    "createdAt": 1667906071,
     "platformId": "convex",
     "assets": ["MIM", "DAI", "USDC", "USDT"],
     "migrationIds": ["ethereum-convex"],
@@ -2279,8 +2318,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/mim/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/mim/withdraw",
-    "network": "ethereum",
-    "createdAt": 1667906071
+    "network": "ethereum"
   },
   {
     "id": "convex-tricrypto2",
@@ -2296,6 +2334,7 @@
     "oracle": "lps",
     "oracleId": "convex-tricrypto2",
     "status": "active",
+    "createdAt": 1667906070,
     "platformId": "convex",
     "assets": ["USDT", "WBTC", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -2303,8 +2342,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/tricrypto2/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/tricrypto2/withdraw",
-    "network": "ethereum",
-    "createdAt": 1667906070
+    "network": "ethereum"
   },
   {
     "id": "convex-aleth",
@@ -2320,6 +2358,8 @@
     "oracle": "lps",
     "oracleId": "convex-aleth",
     "status": "eol",
+    "createdAt": 1667906070,
+    "eolAt": 1691160640,
     "platformId": "convex",
     "assets": ["alETH", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -2327,8 +2367,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-38/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-38/withdraw",
-    "network": "ethereum",
-    "createdAt": 1667906070
+    "network": "ethereum"
   },
   {
     "id": "convex-steth",
@@ -2344,6 +2383,7 @@
     "oracle": "lps",
     "oracleId": "convex-steth",
     "status": "active",
+    "createdAt": 1667828510,
     "platformId": "convex",
     "assets": ["stETH", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -2351,8 +2391,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/steth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/steth/withdraw",
-    "network": "ethereum",
-    "createdAt": 1667828510
+    "network": "ethereum"
   },
   {
     "id": "convex-peth",
@@ -2368,6 +2407,8 @@
     "oracle": "lps",
     "oracleId": "convex-peth",
     "status": "eol",
+    "createdAt": 1667828509,
+    "eolAt": 1691160640,
     "platformId": "convex",
     "assets": ["pETH", "ETH"],
     "migrationIds": ["ethereum-convex"],
@@ -2382,8 +2423,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-194/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-194/withdraw",
-    "network": "ethereum",
-    "createdAt": 1667828509
+    "network": "ethereum"
   },
   {
     "id": "convex-fraxusdc",
@@ -2399,6 +2439,7 @@
     "oracle": "lps",
     "oracleId": "convex-fraxusdc",
     "status": "active",
+    "createdAt": 1667828508,
     "platformId": "convex",
     "assets": ["FRAX", "USDC"],
     "migrationIds": ["ethereum-convex"],
@@ -2413,8 +2454,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/fraxusdc/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/fraxusdc/withdraw",
-    "network": "ethereum",
-    "createdAt": 1667828508
+    "network": "ethereum"
   },
   {
     "id": "convex-frax",
@@ -2430,6 +2470,7 @@
     "oracle": "lps",
     "oracleId": "convex-frax",
     "status": "active",
+    "createdAt": 1667828508,
     "platformId": "convex",
     "assets": ["FRAX", "DAI", "USDC", "USDT"],
     "migrationIds": ["ethereum-convex"],
@@ -2444,8 +2485,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/frax/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/frax/withdraw",
-    "network": "ethereum",
-    "createdAt": 1667828508
+    "network": "ethereum"
   },
   {
     "id": "stargate-eth-usdc",
@@ -2461,6 +2501,7 @@
     "oracle": "lps",
     "oracleId": "stargate-eth-usdc",
     "status": "active",
+    "createdAt": 1667598053,
     "platformId": "stargate",
     "assets": ["USDC"],
     "risks": [
@@ -2475,8 +2516,7 @@
     "buyTokenUrl": "https://app.1inch.io/#/1/unified/swap/ETH/USDC",
     "addLiquidityUrl": "https://stargate.finance/pool/USDC-ETH/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/USDC-ETH/remove",
-    "network": "ethereum",
-    "createdAt": 1667598053
+    "network": "ethereum"
   },
   {
     "id": "stargate-eth-usdt",
@@ -2492,6 +2532,7 @@
     "oracle": "lps",
     "oracleId": "stargate-eth-usdt",
     "status": "active",
+    "createdAt": 1667598052,
     "platformId": "stargate",
     "assets": ["USDT"],
     "risks": [
@@ -2506,8 +2547,7 @@
     "buyTokenUrl": "https://app.1inch.io/#/1/unified/swap/ETH/USDT",
     "addLiquidityUrl": "https://stargate.finance/pool/USDT-ETH/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/USDT-ETH/remove",
-    "network": "ethereum",
-    "createdAt": 1667598052
+    "network": "ethereum"
   },
   {
     "id": "stargate-eth-eth",
@@ -2523,6 +2563,7 @@
     "oracle": "lps",
     "oracleId": "stargate-eth-eth",
     "status": "active",
+    "createdAt": 1667598051,
     "platformId": "stargate",
     "assets": ["ETH"],
     "risks": [
@@ -2537,8 +2578,7 @@
     "buyTokenUrl": "https://app.1inch.io/#/1/unified/swap/USDC/ETH",
     "addLiquidityUrl": "https://stargate.finance/pool/eth-eth/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/eth-eth/remove",
-    "network": "ethereum",
-    "createdAt": 1667598051
+    "network": "ethereum"
   },
   {
     "id": "aura-reth-weth",
@@ -2554,14 +2594,14 @@
     "oracle": "lps",
     "oracleId": "aura-reth-weth",
     "status": "active",
+    "createdAt": 1687443962,
     "platformId": "aura",
     "assets": ["rETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/pool/0x1e19cf2d73a72ef1332c882f20534b6519be0276000200000000000000000112/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/pool/0x1e19cf2d73a72ef1332c882f20534b6519be0276000200000000000000000112/withdraw",
-    "network": "ethereum",
-    "createdAt": 1687443962
+    "network": "ethereum"
   },
   {
     "id": "aura-wsteth-eth",
@@ -2577,6 +2617,8 @@
     "oracle": "lps",
     "oracleId": "aura-wsteth-eth",
     "status": "eol",
+    "createdAt": 1687443962,
+    "eolAt": 1698574248,
     "retireReason": "rewards",
     "platformId": "aura",
     "assets": ["wstETH", "ETH"],
@@ -2584,8 +2626,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/pool/0x32296969ef14eb0c6d29669c550d4a0449130230000200000000000000000080/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/pool/0x32296969ef14eb0c6d29669c550d4a0449130230000200000000000000000080/withdraw",
-    "network": "ethereum",
-    "createdAt": 1687443962
+    "network": "ethereum"
   },
   {
     "id": "aura-bbausd",
@@ -2601,6 +2642,8 @@
     "oracle": "lps",
     "oracleId": "aura-bbausd",
     "status": "eol",
+    "createdAt": 1667575514,
+    "eolAt": 1671223121,
     "retireReason": "tvl",
     "platformId": "aura",
     "assets": ["bbaUSDT", "bbaUSDC", "bbaDAI"],
@@ -2608,8 +2651,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/pool/0xa13a9247ea42d743238089903570127dda72fe4400000000000000000000035d/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/pool/0xa13a9247ea42d743238089903570127dda72fe4400000000000000000000035d/withdraw",
-    "network": "ethereum",
-    "createdAt": 1667575514
+    "network": "ethereum"
   },
   {
     "id": "ethereum-bifi-gov",
@@ -2625,6 +2667,8 @@
     "oracle": "tokens",
     "oracleId": "oldBIFI",
     "status": "eol",
+    "createdAt": 1667575514,
+    "eolAt": 1697567756,
     "retireReason": "bifiV2",
     "platformId": "beefy",
     "assets": ["oldBIFI"],
@@ -2637,8 +2681,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "old-bifi-pool",
-    "network": "ethereum",
-    "createdAt": 1667575514
+    "network": "ethereum"
   },
   {
     "id": "aura-sd-weth",
@@ -2654,14 +2697,14 @@
     "oracle": "lps",
     "oracleId": "aura-sd-weth",
     "status": "active",
+    "createdAt": 1681476399,
     "platformId": "aura",
     "assets": ["SD", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xe4010ef5e37dc23154680f23c4a0d48bfca91687000200000000000000000432/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xe4010ef5e37dc23154680f23c4a0d48bfca91687000200000000000000000432/withdraw",
-    "network": "ethereum",
-    "createdAt": 1681476399
+    "network": "ethereum"
   },
   {
     "id": "aura-ohm-dai",
@@ -2677,6 +2720,8 @@
     "oracle": "lps",
     "oracleId": "aura-ohm-dai",
     "status": "eol",
+    "createdAt": 1681408024,
+    "eolAt": 1691754615,
     "retireReason": "rewards",
     "platformId": "aura",
     "assets": ["OHM", "DAI"],
@@ -2684,8 +2729,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x76fcf0e8c7ff37a47a799fa2cd4c13cde0d981c90002000000000000000003d2/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x76fcf0e8c7ff37a47a799fa2cd4c13cde0d981c90002000000000000000003d2/withdraw",
-    "network": "ethereum",
-    "createdAt": 1681408024
+    "network": "ethereum"
   },
   {
     "id": "aura-ohm-wsteth",
@@ -2701,6 +2745,8 @@
     "oracle": "lps",
     "oracleId": "aura-ohm-wsteth",
     "status": "eol",
+    "createdAt": 1681580387,
+    "eolAt": 1691754615,
     "retireReason": "rewards",
     "platformId": "aura",
     "assets": ["OHM", "wstETH"],
@@ -2708,7 +2754,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xd4f79ca0ac83192693bce4699d0c10c66aa6cf0f00020000000000000000047e/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xd4f79ca0ac83192693bce4699d0c10c66aa6cf0f00020000000000000000047e/withdraw",
-    "network": "ethereum",
-    "createdAt": 1681580387
+    "network": "ethereum"
   }
 ]
