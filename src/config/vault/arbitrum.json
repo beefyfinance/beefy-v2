@@ -1,5 +1,102 @@
 [
   {
+    "id": "silo-eth-wsteth",
+    "name": "ETH",
+    "type": "standard",
+    "token": "ETH",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloETH",
+    "earnedTokenAddress": "0x6443ac40DcD204739b8127F1aaec53071bBca7DF",
+    "earnContractAddress": "0x6443ac40DcD204739b8127F1aaec53071bBca7DF",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "createdAt": 1701264310,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "silo-usdc-wsteth",
+    "name": "USDC.e",
+    "type": "standard",
+    "token": "USDC.e",
+    "tokenAddress": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "tokenDecimals": 8,
+    "earnedToken": "mooSiloUSDC.e",
+    "earnedTokenAddress": "0x0da5EF5F02B8156a9a191d080369E420243C4501",
+    "earnContractAddress": "0x0da5EF5F02B8156a9a191d080369E420243C4501",
+    "oracle": "tokens",
+    "oracleId": "arbUSDCe",
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["arbUSDCe"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "network": "arbitrum",
+    "createdAt": 1701264310,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "silo-wbtc",
+    "name": "WBTC",
+    "type": "standard",
+    "token": "WBTC",
+    "tokenAddress": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+    "tokenDecimals": 8,
+    "earnedToken": "mooSiloWBTC",
+    "earnedTokenAddress": "0x7F8e1980f545F839422094EF9A0C1F38B3d2F60C",
+    "earnContractAddress": "0x7F8e1980f545F839422094EF9A0C1F38B3d2F60C",
+    "oracle": "tokens",
+    "oracleId": "WBTC",
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["WBTC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "network": "arbitrum",
+    "createdAt": 1701264310,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "silo-arb",
     "name": "ARB",
     "type": "standard",
