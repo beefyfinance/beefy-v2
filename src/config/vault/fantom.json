@@ -1,5 +1,36 @@
 [
   {
+    "id": "stargate-fantom-lzusdc",
+    "name": "lzUSDC LP",
+    "type": "standard",
+    "token": "S*lzUSDC",
+    "tokenAddress": "0xc647CE76ec30033Aa319d472Ae9f4462068f2AD7",
+    "tokenDecimals": 6,
+    "tokenProviderId": "stargate",
+    "earnedToken": "mooStargatelzUSDC",
+    "earnedTokenAddress": "0x56d19aD7D5178878480739aCbD4536Df3e1ce946",
+    "earnContractAddress": "0x56d19aD7D5178878480739aCbD4536Df3e1ce946",
+    "oracle": "lps",
+    "oracleId": "stargate-fantom-lzusdc",
+    "status": "active",
+    "platformId": "stargate",
+    "assets": ["lzUSDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single-lp",
+    "buyTokenUrl": "https://v2.spooky.fi/#/swap?outputCurrency=0x28a92dde19D9989F39A49905d7C9C2FAc7799bDf",
+    "addLiquidityUrl": "https://stargate.finance/farm/USDC-FANTOM/add",
+    "removeLiquidityUrl": "https://stargate.finance/farm/USDC-FANTOM/remove",
+    "network": "fantom",
+    "createdAt": 1701358575
+  },
+  {
     "id": "fantom-bifi-maxi",
     "name": "oldBIFI Maxi",
     "type": "standard",
