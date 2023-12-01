@@ -1,5 +1,28 @@
 [
   {
+    "id": "aura-arb-ovn-wusd+",
+    "name": "OVN-wUSD+",
+    "type": "standard",
+    "token": "OVN-wUSD+",
+    "tokenAddress": "0x85Ec6ae01624aE0d2a04D0Ffaad3A25884C7d0f3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraArbOVN-wUSD+",
+    "earnedTokenAddress": "0x43f92A2b1567Dc99db4ac6d6421E8B705e742BB1",
+    "earnContractAddress": "0x43f92A2b1567Dc99db4ac6d6421E8B705e742BB1",
+    "oracle": "lps",
+    "oracleId": "aura-arb-ovn-wusd+",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["OVN", "wUSD+"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x85ec6ae01624ae0d2a04d0ffaad3a25884c7d0f30002000000000000000004b6/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x85ec6ae01624ae0d2a04d0ffaad3a25884c7d0f30002000000000000000004b6/withdraw",
+    "network": "arbitrum",
+    "createdAt": 1701444777
+  },
+  {
     "id": "silo-eth-wsteth",
     "name": "ETH",
     "type": "standard",
