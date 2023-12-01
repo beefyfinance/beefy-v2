@@ -27,6 +27,10 @@ export const selectTreasury = (state: BeefyState) => {
   return state.ui.treasury.byChainId;
 };
 
+export const selectMMAssets = (state: BeefyState) => {
+  return state.ui.treasury.byMarketMakerId;
+};
+
 export const selectTreasurySorted = function (state: BeefyState) {
   const treasuryPerChain = Object.keys(selectTreasury(state)).map(chainId => {
     const assets = selectTreasuryAssetsByChainId(state, chainId);
@@ -101,17 +105,21 @@ const bifiOracles = ['BIFI', 'mooBIFI', 'rBIFI'];
 
 export const selectTreasuryStats = (state: BeefyState) => {
   const treasury = selectTreasury(state);
+  const marketMakerHoldings = selectMMAssets(state);
   let holdings = BIG_ZERO;
   const holdingAssets = new Set();
   let beefyHeld = BIG_ZERO;
   let stables = BIG_ZERO;
+
   for (const [chainId, balances] of Object.entries(treasury)) {
     for (const balancePerChain of Object.values(balances)) {
       for (const token of Object.values(balancePerChain.balances)) {
         if (token) {
           let balanceInTokens = token.balance.shiftedBy(-token.decimals);
           if (bifiOracles.includes(token.oracleId)) {
-            beefyHeld = getBifiBalanceInTokens(state, token.oracleId, beefyHeld, balanceInTokens);
+            beefyHeld = beefyHeld.plus(
+              getBifiBalanceInTokens(state, token.oracleId, beefyHeld, balanceInTokens)
+            );
           }
 
           if (token.oracleType === 'lps') {
@@ -135,11 +143,8 @@ export const selectTreasuryStats = (state: BeefyState) => {
               );
               for (const asset of assets) {
                 if (bifiOracles.includes(asset.oracleId)) {
-                  beefyHeld = getBifiBalanceInTokens(
-                    state,
-                    asset.oracleId,
-                    beefyHeld,
-                    asset.userAmount
+                  beefyHeld = beefyHeld.plus(
+                    getBifiBalanceInTokens(state, asset.oracleId, beefyHeld, asset.userAmount)
                   );
                 }
                 if (selectIsTokenStable(state, chainId, asset.oracleId)) {
@@ -189,6 +194,25 @@ export const selectTreasuryStats = (state: BeefyState) => {
     }
   }
 
+  for (const exchangeData of Object.values(marketMakerHoldings)) {
+    for (const exchangeHoldings of Object.values(exchangeData)) {
+      for (const holding of Object.values(exchangeHoldings)) {
+        if (holding) {
+          if (holding.oracleId === 'BIFI') {
+            beefyHeld = beefyHeld.plus(holding.balance);
+          }
+          if (selectIsTokenStable(state, 'ethereum', holding.oracleId)) {
+            stables = stables.plus(holding.usdValue);
+          }
+          if (isFiniteBigNumber(holding.usdValue)) {
+            holdings = holdings.plus(holding.usdValue);
+          }
+          holdingAssets.add(holding.symbol);
+        }
+      }
+    }
+  }
+
   return { holdings, assets: holdingAssets.size, beefyHeld, stables };
 };
 
@@ -207,10 +231,10 @@ const getBifiBalanceInTokens = (
   balance: BigNumber
 ): BigNumber => {
   if (oracleId === 'BIFI' || oracleId === 'rBIFI') {
-    return beefyHeld.plus(balance);
+    return balance;
   } else {
     const moobifiPpfs = selectVaultPricePerFullShare(state, 'bifi-vault');
-    return beefyHeld.plus(balance.times(moobifiPpfs));
+    return balance.times(moobifiPpfs);
   }
 };
 
