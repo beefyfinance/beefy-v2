@@ -13,7 +13,7 @@ import { ListJoin } from '../../../../../../../../components/ListJoin';
 const useStyles = makeStyles(styles);
 
 export type ListItemProps = {
-  tokenId: string;
+  selectionId: string;
   tokens: TokenEntity[];
   balance?: BigNumber;
   chainId: ChainEntity['id'];
@@ -21,14 +21,14 @@ export type ListItemProps = {
   className?: string;
 };
 export const ListItem = memo<ListItemProps>(function ListItem({
-  tokenId,
+  selectionId,
   tokens,
   balance,
   className,
   onSelect,
 }) {
   const classes = useStyles();
-  const handleClick = useCallback(() => onSelect(tokenId), [onSelect, tokenId]);
+  const handleClick = useCallback(() => onSelect(selectionId), [onSelect, selectionId]);
   const tokenSymbols = useMemo(() => tokens.map(token => token.symbol), [tokens]);
 
   return (

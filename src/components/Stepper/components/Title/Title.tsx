@@ -25,7 +25,7 @@ export const Title = memo<TitleProps>(function Title({ text }) {
     <div className={classes.titleContainer}>
       <div className={classes.title}>{text}</div>
       <IconButton className={classes.closeIcon} onClick={handleClose}>
-        <CloseRoundedIcon fontSize="small" htmlColor="#8A8EA8" />
+        <CloseRoundedIcon fontSize="small" htmlColor="#D0D0DA" />
       </IconButton>
     </div>
   );

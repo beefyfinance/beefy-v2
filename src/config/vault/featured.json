@@ -1,6 +1,6 @@
 {
   "stargate-polygon-usdt": true,
-  "balancer-zkevm-wsteth-reth": true,
+  "aura-op-ethereum-triplets": true,
   "balancer-tbtc-weth": true,
   "velodrome-v2-weth-op": true,
   "convex-tricrypto-usdc": true,

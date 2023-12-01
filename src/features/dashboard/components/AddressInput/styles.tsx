@@ -2,8 +2,8 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   search: {
-    color: '#D0D0DA',
-    background: '#1B1E31',
+    color: theme.palette.text.middle,
+    background: theme.palette.background.searchInputBg,
     borderRadius: '8px',
     '&.Mui-focused': {
       '& .MuiInputBase-input': {
@@ -17,13 +17,13 @@ export const styles = (theme: Theme) => ({
       minWidth: '200px',
       transition: '0.2s ease-in-out',
       padding: '8px 16px',
-      color: '#D0D0DA',
+      color: theme.palette.text.middle,
       height: 'auto',
       '&:focus': {
-        color: '#F5F5FF',
+        color: theme.palette.text.light,
       },
       '&::placeholder': {
-        color: '#8A8EA8',
+        color: theme.palette.text.dark,
         opacity: 1,
       },
     },
@@ -53,10 +53,10 @@ export const styles = (theme: Theme) => ({
     },
   },
   activeIcon: {
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
   },
   disabledIcon: {
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
   },
   flex: {
     display: 'flex',

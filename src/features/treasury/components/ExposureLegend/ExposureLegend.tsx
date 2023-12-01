@@ -4,6 +4,7 @@ import React, { memo } from 'react';
 import { formatPercent } from '../../../../helpers/format';
 import type { BaseEntry } from '../../../data/utils/array-utils';
 import { styles } from './styles';
+import { CHART_COLORS } from '../../../../helpers/charts';
 
 const useStyles = makeStyles(styles);
 
@@ -11,8 +12,6 @@ interface ExposureLegendProps {
   data: BaseEntry[];
   formatter?: (s: string) => string;
 }
-
-const COLORS = ['#5C70D6', '#5C99D6', '#5CC2D6', '#5CD6AD', '#70D65C', '#1e9c05'];
 
 export const ExposureLegend = memo<ExposureLegendProps>(function ExposureLegend({
   data,
@@ -24,7 +23,7 @@ export const ExposureLegend = memo<ExposureLegendProps>(function ExposureLegend(
       {Object.values(data).map((item, i) => {
         return (
           <div key={item.key} className={classes.legendItem}>
-            <div className={classes.square} style={{ backgroundColor: COLORS[i] }} />
+            <div className={classes.square} style={{ backgroundColor: CHART_COLORS[i] }} />
             <Label item={item} formatter={formatter} />
           </div>
         );

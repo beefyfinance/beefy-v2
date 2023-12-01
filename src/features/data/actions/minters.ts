@@ -25,7 +25,7 @@ export const fetchAllMinters = createAsyncThunk<
   void,
   { state: BeefyState }
 >('minters/fetchAllMinters', async (_, { getState }) => {
-  const api = getConfigApi();
+  const api = await getConfigApi();
   const minters = await api.fetchAllMinters();
   return { byChainId: minters, state: getState() };
 });

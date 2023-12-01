@@ -17,7 +17,7 @@ export const fetchTreasury = createAsyncThunk<
   { state: BeefyState }
 >('treasury/fetchTreasury', async (_, { getState }) => {
   const state = getState();
-  const api = getBeefyApi();
+  const api = await getBeefyApi();
 
   const activeChainIds = selectActiveChainIds(state);
   const data = await api.getTreasury();

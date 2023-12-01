@@ -18,11 +18,11 @@ export const styles = (theme: Theme) => ({
   },
   risk: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     marginRight: 8,
   },
   riskCategory: {
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
   },
   infoContainer: {
     display: 'flex',
@@ -33,10 +33,10 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
   },
   notes: {
-    marginTop: theme.spacing(2),
+    marginTop: '16px',
     '& p': {
       margin: '0 0 12px 0',
-      color: theme.palette.text.secondary,
+      color: theme.palette.text.middle,
     },
     '& p:last-child': {
       marginBottom: 0,
@@ -52,18 +52,24 @@ export const styles = (theme: Theme) => ({
   },
   safetyLabel: {
     ...theme.typography.h2,
-    color: theme.palette.text.primary,
-    marginRight: theme.spacing(2),
+    color: theme.palette.text.light,
+    marginRight: '16px',
   },
   tooltipHolder: {
-    marginLeft: theme.spacing(0.5),
+    marginLeft: '4px',
   },
   howItWorksContainer: {
     padding: 16,
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
+    backgroundColor: theme.palette.background.contentLight,
   },
   titleClassName: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
+  },
+  up: {
+    fill: theme.palette.primary.main,
+  },
+  down: {
+    fill: theme.palette.background.indicators.error,
   },
 });

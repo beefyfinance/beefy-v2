@@ -12,7 +12,7 @@ export type fetchAllPricesPayload = {
 export const fetchAllPricesAction = createAsyncThunk<fetchAllPricesPayload, void>(
   'prices/fetchAllPricesAction',
   async () => {
-    const api = getBeefyApi();
+    const api = await getBeefyApi();
     const [prices, breakdowns] = await Promise.all([api.getPrices(), api.getLpsBreakdown()]);
 
     return {

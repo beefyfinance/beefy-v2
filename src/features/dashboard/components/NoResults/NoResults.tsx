@@ -149,7 +149,7 @@ const Actions = memo<ActionProps>(function Actions({ connectedAction }) {
         )}
       </div>
       <Divider />
-      <AddressInput />
+      <AddressInput className={classes.search} />
     </div>
   );
 });

@@ -5,12 +5,12 @@ export const styles = (theme: Theme) => ({
     borderRadius: '12px 12px 0 0',
     display: 'flex',
     width: '100%',
-    background: '#111321',
+    background: theme.palette.background.contentDark,
   },
   tab: {
     ...theme.typography['body-lg-med'],
     position: 'relative' as const,
-    color: '#999CB3',
+    color: theme.palette.text.dark,
     background: 'transparent',
     flexBasis: '1px',
     flexGrow: 1,
@@ -29,7 +29,7 @@ export const styles = (theme: Theme) => ({
       bottom: 0,
       right: 0,
       height: '2px',
-      background: '#363B63',
+      background: theme.palette.background.border,
     },
     '&:first-child': {
       borderRadius: '12px 0 0 0',
@@ -39,11 +39,11 @@ export const styles = (theme: Theme) => ({
     },
   },
   selectedTab: {
-    color: '#F5F5FF',
+    color: theme.palette.text.light,
     cursor: 'default' as const,
     pointerEvents: 'none' as const,
     '&::after': {
-      backgroundColor: '#999CB3',
+      backgroundColor: theme.palette.text.dark,
     },
   },
 });

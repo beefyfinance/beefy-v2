@@ -1,21 +1,20 @@
 import { config as chainConfigs } from '../../../config/config';
 import { Insurace, Nexus, QiDao } from '../../../helpers/partners';
 import type { ChainEntity } from '../entities/chain';
-import { infoCards } from '../../../config/info-cards';
 import type {
   AmmConfig,
   BeefyBridgeConfig,
-  BeefyZapConfig,
   BoostConfig,
   BridgeConfig,
   ChainConfig,
   FeaturedVaultConfig,
-  InfoCardsConfig,
   MinterConfig,
-  OneInchZapConfig,
   PartnersConfig,
   PlatformConfig,
+  SwapAggregatorConfig,
+  SwapAggregatorConfigLoose,
   VaultConfig,
+  ZapConfig,
 } from './config-types';
 import { mapValues } from 'lodash-es';
 import type { MigrationConfig } from '../reducers/wallet/migration';
@@ -37,12 +36,12 @@ export class ConfigAPI {
     return { QiDao, Insurace, Nexus };
   }
 
-  public async fetchAmmsConfig(): Promise<{ [chainId: ChainEntity['id']]: AmmConfig[] }> {
+  public async fetchZapAmms(): Promise<{ [chainId: ChainEntity['id']]: AmmConfig[] }> {
     return Object.fromEntries(
       await Promise.all(
         Object.keys(chainConfigs).map(async chainId => [
           chainId,
-          (await import(`../../../config/amm/${chainId}.json`)).default,
+          (await import(`../../../config/zap/amm/${chainId}.json`)).default,
         ])
       )
     );
@@ -52,12 +51,15 @@ export class ConfigAPI {
     return (await import('../../../config/beefy-bridge')).beefyBridgeConfig;
   }
 
-  public async fetchBeefyZapsConfig(): Promise<BeefyZapConfig[]> {
-    return (await import('../../../config/zap/beefy')).zaps;
+  public async fetchZapSwapAggregators(): Promise<SwapAggregatorConfig[]> {
+    const config: SwapAggregatorConfigLoose[] = (
+      await import('../../../config/zap/swap-aggregators.json')
+    ).default; // json types are wide
+    return config as SwapAggregatorConfig[];
   }
 
-  public async fetchOneInchZapsConfig(): Promise<OneInchZapConfig[]> {
-    return (await import('../../../config/zap/one-inch')).zaps;
+  public async fetchZapConfigs(): Promise<ZapConfig[]> {
+    return (await import('../../../config/zap/zaps.json')).default;
   }
 
   public async fetchAllVaults(): Promise<{ [chainId: ChainEntity['id']]: VaultConfig[] }> {
@@ -112,10 +114,6 @@ export class ConfigAPI {
         ])
       )
     );
-  }
-
-  public async fetchAllInfoCards(): Promise<InfoCardsConfig> {
-    return infoCards;
   }
 
   public async fetchPlatforms(): Promise<PlatformConfig[]> {

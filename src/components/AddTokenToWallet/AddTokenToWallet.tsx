@@ -20,7 +20,7 @@ import {
   selectIsWalletConnected,
 } from '../../features/data/selectors/wallet';
 import { askForNetworkChange, askForWalletConnection } from '../../features/data/actions/wallet';
-import { getWalletConnectionApiInstance } from '../../features/data/apis/instances';
+import { getWalletConnectionApi } from '../../features/data/apis/instances';
 import { Button } from '../Button';
 import { selectChainById } from '../../features/data/selectors/chains';
 
@@ -74,7 +74,7 @@ const Fulfilled = memo(function Fulfilled() {
 
   const handleAddToken = useCallback(() => {
     const perform = async () => {
-      const walletApi = await getWalletConnectionApiInstance();
+      const walletApi = await getWalletConnectionApi();
       const web3 = await walletApi.getConnectedWeb3Instance();
       if (typeof web3.currentProvider === 'object' && 'request' in web3.currentProvider) {
         await web3.currentProvider?.request({
@@ -176,7 +176,7 @@ export const AddTokenToWallet = memo(function AddTokenToWallet() {
             <CardHeader className={classes.cardHeader}>
               {status === 'fulfilled' ? <FulfilledCardTitle /> : <PendingCardTitle />}
               <IconButton onClick={handleClose} aria-label="close" className={classes.closeButton}>
-                <CloseIcon htmlColor="#8A8EA8" />
+                <CloseIcon htmlColor="#999CB3" />
               </IconButton>
             </CardHeader>
             <CardContent className={classes.cardContent}>

@@ -1,7 +1,38 @@
 [
   {
+    "id": "balancer-zkevm-gyro-reth-eth",
+    "name": "Gyroscope rETH-ETH",
+    "type": "standard",
+    "token": "rETH-ETH Gyro zkevm",
+    "tokenAddress": "0xb1557CFEA06De5a1601a7F0cCF3b515EF431A50d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerGyrorETH-ETH",
+    "earnedTokenAddress": "0xae20768099625130b2659D805B448ECe5ff998FD",
+    "earnContractAddress": "0xae20768099625130b2659D805B448ECe5ff998FD",
+    "oracle": "lps",
+    "oracleId": "balancer-zkevm-gyro-reth-eth",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["rETH", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gyro.finance/pools/polygonzkevm/e-clp/0xb1557cfea06de5a1601a7f0ccf3b515ef431a50d/join/",
+    "removeLiquidityUrl": "https://app.gyro.finance/pools/polygonzkevm/e-clp/0xb1557cfea06de5a1601a7f0ccf3b515ef431a50d/exit/",
+    "network": "zkevm",
+    "createdAt": 1701092834
+  },
+  {
     "id": "quick-gamma-zk-weth-quick",
     "name": "QUICK-ETH LP",
+    "type": "standard",
     "token": "aQUICK-ETH zkevm",
     "tokenAddress": "0x686CFe074dD4ac97caC25f37552178b422041a1a",
     "tokenDecimals": 18,
@@ -24,6 +55,7 @@
   {
     "id": "quick-gamma-zk-link-weth",
     "name": "LINK-ETH LP",
+    "type": "standard",
     "token": "aLINK-ETH zkevm",
     "tokenAddress": "0xECfA9CD134E77f573b079378940A4Be944993F17",
     "tokenDecimals": 18,
@@ -46,6 +78,7 @@
   {
     "id": "quick-gamma-zk-weth-aave",
     "name": "AAVE-ETH LP",
+    "type": "standard",
     "token": "aAAVE-ETH zkevm",
     "tokenAddress": "0x06895D6f6680E5e8301604D5E0483A3655C547B8",
     "tokenDecimals": 18,
@@ -68,6 +101,7 @@
   {
     "id": "quick-gamma-zk-crv-weth",
     "name": "CRV-ETH LP",
+    "type": "standard",
     "token": "aCRV-ETH zkevm",
     "tokenAddress": "0xbAAA5a2D780C5914FB1BAD0Ea6Cbf7B99589d6FE",
     "tokenDecimals": 18,
@@ -90,6 +124,7 @@
   {
     "id": "quick-zk-qlp",
     "name": "QLP",
+    "type": "standard",
     "token": "QLP",
     "tokenAddress": "0x973ae30Cb49986E1D3BdCAB4d40B96fEA5baBE84",
     "tokenDecimals": 18,
@@ -119,6 +154,7 @@
   {
     "id": "quick-gamma-zk-weth-matic-narrow",
     "name": "MATIC-ETH Narrow LP",
+    "type": "standard",
     "token": "aMATIC-ETH zkevm",
     "tokenAddress": "0x2f39293C9eD046822c014143fB18d5ae0479bE93",
     "tokenDecimals": 18,
@@ -141,6 +177,7 @@
   {
     "id": "quick-gamma-zk-usdt-usdc",
     "name": "USDC-USDT Stable LP",
+    "type": "standard",
     "token": "aUSDC-USDT zkevm",
     "tokenAddress": "0x145d55aE4848f9782eFCAC785A655E3e5DcE1bCD",
     "tokenDecimals": 18,
@@ -163,6 +200,7 @@
   {
     "id": "quick-gamma-zk-weth-wbtc-narrow",
     "name": "ETH-WBTC Narrow LP",
+    "type": "standard",
     "token": "aETH-WBTC zkevm",
     "tokenAddress": "0x1cc4eE0cB063e9db36E51F5d67218ff1f8dbfA0f",
     "tokenDecimals": 18,
@@ -185,6 +223,7 @@
   {
     "id": "quick-gamma-zk-weth-usdc-narrow",
     "name": "USDC-ETH Narrow LP",
+    "type": "standard",
     "token": "aETH-USDC zkevm",
     "tokenAddress": "0x04c6b11E1Ffe1F1032BD62adb343C9D07767489c",
     "tokenDecimals": 18,
@@ -207,6 +246,7 @@
   {
     "id": "balancer-zkevm-reth-eth",
     "name": "rETH-ETH",
+    "type": "standard",
     "token": "rETH-ETH zkevm",
     "tokenAddress": "0x1d0A8a31CDb04efAC3153237526Fb15cc65A2520",
     "tokenDecimals": 18,
@@ -236,6 +276,7 @@
   {
     "id": "balancer-zkevm-wsteth-reth",
     "name": "wstETH-rETH",
+    "type": "standard",
     "token": "wstETH-rETH zkevm",
     "tokenAddress": "0xDF725FdE6E89981Fb30D9bF999841aC2C160b512",
     "tokenDecimals": 18,
@@ -245,8 +286,7 @@
     "earnContractAddress": "0x906e60166A4B185016e53597fA12FBB1424e47d7",
     "oracle": "lps",
     "oracleId": "balancer-zkevm-wsteth-reth",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "balancer",
     "assets": ["wstETH", "rETH"],
     "risks": [
@@ -261,11 +301,12 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0xdf725fde6e89981fb30d9bf999841ac2c160b512000000000000000000000010/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0xdf725fde6e89981fb30d9bf999841ac2c160b512000000000000000000000010/withdraw",
     "network": "zkevm",
-    "createdAt": 1689280073
+    "createdAt": 1701092834
   },
   {
     "id": "balancer-zkevm-wsteth-eth",
     "name": "wstETH-ETH",
+    "type": "standard",
     "token": "wstETH-ETH zkevm",
     "tokenAddress": "0xe1F2c039a68A216dE6DD427Be6c60dEcf405762A",
     "tokenDecimals": 18,

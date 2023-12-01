@@ -1,4 +1,6 @@
-export const styles = () => ({
+import type { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   fiatAdornment: {
     background: 'transparent',
     padding: 0,
@@ -9,7 +11,7 @@ export const styles = () => ({
     cursor: 'pointer' as const,
     display: 'flex',
     alignItems: 'center',
-    color: '#F5F5FF',
+    color: theme.palette.text.light,
   },
   flag: {
     marginRight: '8px',

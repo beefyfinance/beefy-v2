@@ -16,7 +16,7 @@ import {
 
 const useStyles = makeStyles(styles);
 
-export const AddressInput = memo(function AddressInput() {
+export const AddressInput = memo(function AddressInput({ className }: { className?: string }) {
   const [userInput, setUserInput] = useState<string>('');
   const [inputMode, setInputMode] = useState<'address' | 'domain'>('address');
   const resolverStatus = useResolveDomain(inputMode === 'domain' ? userInput : '');
@@ -100,7 +100,7 @@ export const AddressInput = memo(function AddressInput() {
     <>
       <InputBase
         ref={anchorEl}
-        className={clsx(classes.search, { [classes.active]: userInput.length !== 0 })}
+        className={clsx(classes.search, className, { [classes.active]: userInput.length !== 0 })}
         value={userInput}
         onChange={handleChange}
         onFocus={handleFocus}

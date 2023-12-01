@@ -10,7 +10,7 @@ export const styles = (theme: Theme) => ({
     outline: 'none',
     '&:focus-visible, &.active': {
       outline: 'none',
-      backgroundColor: '#363B63',
+      backgroundColor: theme.palette.background.border,
     },
     [theme.breakpoints.down('md')]: {
       padding: '10px',
@@ -28,7 +28,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: theme.palette.background.buttons.button,
     [theme.breakpoints.up('lg')]: {
       height: '16px',
       width: '16px',

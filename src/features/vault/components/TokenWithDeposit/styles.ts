@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
   },
   assetCount: {},
 });

@@ -2,7 +2,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   container: {
     width: '100%',
-    backgroundColor: theme.palette.background.v2.cardBg,
+    backgroundColor: theme.palette.background.contentPrimary,
     borderRadius: '8px',
     display: 'grid',
     padding: '16px',
@@ -12,15 +12,15 @@ export const styles = (theme: Theme) => ({
   },
   option: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     whiteSpace: 'nowrap' as const,
     '&:hover': {
-      color: theme.palette.text.primary,
+      color: theme.palette.text.light,
       cursor: 'pointer',
     },
   },
   active: {
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
   },
   optionsContainer: {
     display: 'flex',

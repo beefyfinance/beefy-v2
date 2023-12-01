@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     paddingLeft: 0,
     paddingRight: 0,
     background: 'transparent',
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
   },
   flex: {
     display: 'flex',

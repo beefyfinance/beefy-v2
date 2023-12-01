@@ -125,7 +125,6 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
           active: isOpen,
           [classes.mobileAlternative]: mobileAlternative,
         })}
-        variant="middle"
         ref={anchorEl}
         onClick={handleOpen}
         active={isOpen}

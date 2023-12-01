@@ -23,17 +23,15 @@ export const styles = (theme: Theme) => ({
   text: {
     margin: '0 0 32px 0',
     whiteSpace: 'pre-line' as const,
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     '&:last-child': {
       marginBottom: 0,
     },
   },
-  apysContainer: {
-    marginBottom: '32px',
-  },
+  apysContainer: {},
   apyTitle: {
     ...theme.typography['h3'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     marginBottom: '8px',
   },
   apys: {
@@ -44,11 +42,11 @@ export const styles = (theme: Theme) => ({
   apy: {},
   apyLabel: {
     ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
   },
   apyValue: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
   audits: {
     display: 'flex',
@@ -63,9 +61,9 @@ export const styles = (theme: Theme) => ({
   },
   auditLabel: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
   detailsLink: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
 });

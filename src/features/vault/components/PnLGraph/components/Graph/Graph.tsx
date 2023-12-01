@@ -127,7 +127,7 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
             yAxisId="underliying"
             strokeWidth={1.5}
             dataKey="underlyingBalance"
-            stroke="#59A662"
+            stroke="#4DB258"
             dot={false}
             type="linear"
           />
@@ -135,12 +135,12 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
             yAxisId="usd"
             strokeWidth={1.5}
             dataKey="usdBalance"
-            stroke="#5C99D6"
+            stroke="#5C70D6"
             dot={false}
             type="linear"
           />
           <YAxis
-            stroke="#59A662"
+            stroke="#4DB258"
             strokeWidth={1.5}
             tickFormatter={underlyingTickFormatter}
             yAxisId="underliying"
@@ -149,7 +149,7 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
             mirror={true}
           />
           <YAxis
-            stroke="#5C99D6"
+            stroke="#5C70D6"
             orientation="right"
             strokeWidth={1.5}
             tickFormatter={formatUsdTick}

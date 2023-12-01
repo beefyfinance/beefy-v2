@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     columnGap: '4px',
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     '& .MuiBadge-root': {
       padding: '0px 12px 0px 0px',
       verticalAlign: 'initial',
@@ -14,11 +14,11 @@ export const styles = (theme: Theme) => ({
     },
     '&:hover': {
       cursor: 'pointer',
-      color: theme.palette.text.primary,
+      color: theme.palette.text.light,
     },
   },
   active: {
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
     '& $arrow': {
       transform: 'rotateX(180deg)',
     },
@@ -32,8 +32,8 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     rowGap: '12px',
     padding: `8px`,
-    border: '2px solid #30354F',
-    backgroundColor: '#242737',
+    border: `2px solid ${theme.palette.background.contentDark}`,
+    backgroundColor: theme.palette.background.searchInputBg,
     borderRadius: '4px',
     marginLeft: '-8px',
   },

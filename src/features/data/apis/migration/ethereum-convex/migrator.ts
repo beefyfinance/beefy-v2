@@ -1,21 +1,14 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import type {
-  CommonMigrationUpdateFulfilledPayload,
-  Migrator,
-  MigratorUpdateProps,
-} from '../migration-types';
+import type { Migrator } from '../migration-types';
 import type { VaultEntity } from '../../../entities/vault';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
-import { selectVaultById, selectVaultStrategyAddress } from '../../../selectors/vaults';
-import { selectChainById } from '../../../selectors/chains';
-import { getWalletConnectionApiInstance, getWeb3Instance } from '../../instances';
+import { selectVaultStrategyAddress } from '../../../selectors/vaults';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import { ERC20Abi } from '../../../../../config/abi';
 import { toWei } from '../../../../../helpers/big-number';
 import type { AbiItem } from 'web3-utils';
 import type Web3 from 'web3';
-import { buildExecute } from '../utils';
+import { buildExecute, buildFetchBalance } from '../utils';
 
 const id = 'ethereum-convex';
 
@@ -33,38 +26,22 @@ function getStakingAddress(vault: VaultEntity, web3: Web3, state: BeefyState): P
   }
 }
 
-const fetchStakedBalance = createAsyncThunk<
-  CommonMigrationUpdateFulfilledPayload,
-  MigratorUpdateProps,
-  { state: BeefyState }
->(`migration/${id}/update`, async ({ vaultId, walletAddress }, { getState }) => {
-  const state = getState();
-  const vault = selectVaultById(state, vaultId);
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const chain = selectChainById(state, vault.chainId);
-  const web3 = await getWeb3Instance(chain);
-
-  const stakingAddress = await getStakingAddress(vault, web3, state);
-  const convexStaking = new web3.eth.Contract(ERC20Abi, stakingAddress);
-  const balance = await convexStaking.methods.balanceOf(walletAddress).call();
-
-  const fixedBalance = new BigNumber(balance).shiftedBy(-depositToken.decimals);
-  return { vaultId, walletAddress, balance: fixedBalance, migrationId: id };
-});
-
-async function unstakeCall(
+async function getBalance(
   vault: VaultEntity,
-  amount: BigNumber,
+  web3: Web3,
+  walletAddress: string,
   state: BeefyState
-  // eslint-disable-next-line
-): Promise<any> {
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const walletApi = await getWalletConnectionApiInstance();
-  const web3 = await walletApi.getConnectedWeb3Instance();
+): Promise<string> {
+  const stakingAddress = await getStakingAddress(vault, web3, state);
+  const staking = new web3.eth.Contract(ERC20Abi, stakingAddress);
+  return staking.methods.balanceOf(walletAddress).call();
+}
 
+async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, state: BeefyState) {
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const amountInWei = toWei(amount, depositToken.decimals);
   const stakingAddress = await getStakingAddress(vault, web3, state);
   const convexStaking = new web3.eth.Contract(ConvexAbi, stakingAddress);
-  const amountInWei = toWei(amount, depositToken.decimals);
 
   if (vault.assetIds.length === 1) {
     return convexStaking.methods.withdraw(amountInWei.toString(10));
@@ -115,6 +92,6 @@ const ConvexAbi: AbiItem[] = [
 ];
 
 export const migrator: Migrator = {
-  update: fetchStakedBalance,
+  update: buildFetchBalance(id, getBalance),
   execute: buildExecute(id, unstakeCall),
 };

@@ -1,9 +1,5 @@
 import type { Theme } from '@material-ui/core';
 
-const loadingColor = '#D6D05C';
-const warningColor = '#D19847';
-const successColor = '#59A662';
-
 export const styles = (theme: Theme) => ({
   container: {
     height: '40px',
@@ -15,12 +11,6 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'center',
     cursor: 'pointer',
     backgroundColor: 'transparent',
-    '&.open': {
-      backgroundColor: '#30354F',
-      '& $line': {
-        backgroundColor: '#434A6F',
-      },
-    },
     padding: '0px 16px',
   },
   circle: {
@@ -28,13 +18,13 @@ export const styles = (theme: Theme) => ({
     height: '12px',
     borderRadius: '30px',
     '&.loading': {
-      backgroundColor: loadingColor,
+      backgroundColor: theme.palette.background.indicators.loading,
     },
     '&.success': {
-      backgroundColor: successColor,
+      backgroundColor: theme.palette.background.indicators.success,
     },
     '&.warning': {
-      backgroundColor: warningColor,
+      backgroundColor: theme.palette.background.indicators.warning,
     },
     position: 'relative' as const, // to position pulse circles
   },
@@ -52,13 +42,13 @@ export const styles = (theme: Theme) => ({
     opacity: 0,
     animation: '$scaleIn 4s infinite cubic-bezier(.36, .11, .89, .32)',
     '&.loading': {
-      backgroundColor: loadingColor,
+      backgroundColor: theme.palette.background.indicators.loading,
     },
     '&.success': {
-      backgroundColor: successColor,
+      backgroundColor: theme.palette.background.indicators.success,
     },
     '&.warning': {
-      backgroundColor: warningColor,
+      backgroundColor: theme.palette.background.indicators.warning,
     },
     '&.notLoading': {
       display: 'none',
@@ -79,8 +69,8 @@ export const styles = (theme: Theme) => ({
   dropdown: {
     display: 'flex',
     flexDirection: 'column' as const,
-    backgroundColor: '#242737',
-    border: '2px solid #30354F',
+    backgroundColor: theme.palette.background.contentPrimary,
+    border: `solid 2px ${theme.palette.background.contentDark}`,
     borderRadius: '8px',
     marginTop: '4px',
     minWidth: '280px',
@@ -88,12 +78,12 @@ export const styles = (theme: Theme) => ({
   },
   titleContainer: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: `${12 - 2}px`,
-    backgroundColor: '#30354F',
+    backgroundColor: theme.palette.background.contentDark,
   },
   title: {
     display: 'flex',
@@ -104,9 +94,9 @@ export const styles = (theme: Theme) => ({
     },
   },
   cross: {
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     '&:hover': {
-      color: theme.palette.text.primary,
+      color: theme.palette.text.light,
       cursor: 'pointer',
     },
   },
@@ -116,11 +106,11 @@ export const styles = (theme: Theme) => ({
   contentTitle: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
   },
   popoverLine: {
     ...theme.typography['body-sm'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -139,7 +129,7 @@ export const styles = (theme: Theme) => ({
     height: '16px',
     width: '2px',
     borderRadius: '3px',
-    backgroundColor: '#30354F',
+    backgroundColor: theme.palette.background.contentLight,
   },
   chain: {
     display: 'flex',

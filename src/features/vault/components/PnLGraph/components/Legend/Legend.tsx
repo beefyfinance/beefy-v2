@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   legendItem: {
     ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     display: 'flex',
     columnGap: '8px',
     alignItems: 'center',
@@ -47,7 +47,7 @@ export const Legend = memo<LegendProps>(function Legend({ vaultId }) {
   return (
     <div className={classes.items}>
       <LegendItem
-        color="#59A662"
+        color="#4DB258"
         text={t(
           isSingleAssetVault ? 'pnl-graph-legend-amount-single' : 'pnl-graph-legend-amount-lp',
           {
@@ -55,7 +55,7 @@ export const Legend = memo<LegendProps>(function Legend({ vaultId }) {
           }
         )}
       />
-      <LegendItem color="#5C99D6" text={t('pnl-graph-legend-usd')} />
+      <LegendItem color="#5C70D6" text={t('pnl-graph-legend-usd')} />
     </div>
   );
 });

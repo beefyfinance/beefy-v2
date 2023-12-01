@@ -28,8 +28,32 @@ import type { VaultEntity } from '../../../../features/data/entities/vault';
 import { isWalletActionError } from '../../../../features/data/reducers/wallet/wallet-action';
 import { selectChainById } from '../../../../features/data/selectors/chains';
 import { explorerTxUrl } from '../../../../helpers/url';
+import { CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
+
+export const StepsStartContent = memo(function StepsStartContent() {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const currentStepData = useAppSelector(selectStepperCurrentStepData);
+  const currentStep = useAppSelector(selectStepperCurrentStep);
+  const stepperItems = useAppSelector(selectStepperItems);
+
+  return (
+    <>
+      <Title text={t('Transactn-Confirmed', { currentStep, totalTxs: stepperItems.length })} />
+      <div className={classes.message}>
+        {currentStepData ? (
+          <>
+            <CircularProgress size={16} /> {t(`Stepper-${currentStepData.step}-Building-Content`)}
+          </>
+        ) : (
+          currentStepData?.message || '...'
+        )}
+      </div>
+    </>
+  );
+});
 
 export const StepsCountContent = memo(function StepsCountContent() {
   const { t } = useTranslation();
@@ -94,7 +118,6 @@ export const ErrorContent = memo(function ErrorContent() {
 
 export const CloseButton = memo(function CloseButton() {
   const { t } = useTranslation();
-  const classes = useStyles();
   const dispatch = useAppDispatch();
 
   const handleClose = React.useCallback(() => {
@@ -103,13 +126,7 @@ export const CloseButton = memo(function CloseButton() {
   }, [dispatch]);
 
   return (
-    <Button
-      borderless={true}
-      fullWidth={true}
-      variant="middle"
-      className={classes.closeBtn}
-      onClick={handleClose}
-    >
+    <Button borderless={true} fullWidth={true} variant="default" onClick={handleClose}>
       {t('Transactn-Close')}
     </Button>
   );

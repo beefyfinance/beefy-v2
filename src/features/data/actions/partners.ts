@@ -5,7 +5,7 @@ import type { PartnersConfig } from '../apis/config-types';
 export const fetchPartnersConfig = createAsyncThunk<PartnersConfig>(
   'vaults/fetchPartnersConfig',
   async () => {
-    const api = getConfigApi();
+    const api = await getConfigApi();
     return api.fetchPartnersConfig();
   }
 );

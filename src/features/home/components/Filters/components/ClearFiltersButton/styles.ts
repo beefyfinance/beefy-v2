@@ -21,7 +21,7 @@ export const styles = (theme: Theme) => ({
       alignItems: 'center',
       flexShrink: 0,
       flexGrow: 0,
-      backgroundColor: '#DB5932',
+      backgroundColor: theme.palette.background.indicators.error,
       width: '20px',
       height: '20px',
       borderRadius: '50%',
