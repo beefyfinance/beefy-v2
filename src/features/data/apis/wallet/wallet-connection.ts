@@ -21,7 +21,7 @@ import appLogo from '../../../../images/bifi-logos/header-logo.svg';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
 import type { provider } from 'web3-core';
 import { featureFlag_walletConnectChainId } from '../../utils/feature-flags';
-import type { WalletHelpers, WalletModule } from '@web3-onboard/common/dist/types';
+import type { WalletHelpers } from '@web3-onboard/common/dist/types';
 import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url'; // eslint-disable-line import/no-unresolved
 import type { WalletConnectOptions } from '@web3-onboard/walletconnect/dist/types';
 
@@ -67,10 +67,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     return createWalletConnectModule(options);
   }
 
-  private static createWalletConnectCloneModule(
-    label: WalletModule['label'],
-    getIcon?: WalletModule['getIcon']
-  ): WalletInit {
+  private static createWalletConnectFireblocksModule(): WalletInit {
     const walletConnectInit = WalletConnectionApi.createWalletConnectModule({
       mobileWallets: [
         {
@@ -95,16 +92,16 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       enableExplorer: false,
       walletImages: walletConnectImages,
     });
+
     return (helpers: WalletHelpers) => {
       const module = walletConnectInit(helpers);
       if (!module || Array.isArray(module)) {
         throw new Error('createWalletConnectModule returned invalid module');
       }
 
-      module.label = label;
-      if (getIcon) {
-        module.getIcon = getIcon;
-      }
+      module.label = 'Fireblocks';
+      module.getIcon = async () =>
+        (await import('../../../../images/wallets/fireblocks-transparent.svg')).default;
 
       return module;
     };
@@ -135,10 +132,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       WalletConnectionApi.createMetamaskModule(),
       createCoinbaseWalletModule(),
       WalletConnectionApi.createCDCWalletModule(),
-      WalletConnectionApi.createWalletConnectCloneModule(
-        'Fireblocks',
-        async () => (await import('../../../../images/wallets/fireblocks-transparent.svg')).default
-      ),
+      WalletConnectionApi.createWalletConnectFireblocksModule(),
     ];
   }
 

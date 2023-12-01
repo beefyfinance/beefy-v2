@@ -14,6 +14,8 @@ import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 import { selectIsWalletConnected } from '../selectors/wallet';
 import { fetchWalletTimeline } from './analytics';
 import { fetchAllBalanceAction } from './balance';
+import { createWalletActionResetAction } from '../reducers/wallet/wallet-action';
+import { stepperActions } from '../reducers/wallet/stepper';
 
 export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
   'wallet/initWallet',
@@ -37,7 +39,11 @@ export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
             address: featureFlag_walletAddressOverride(address),
           })
         ),
-      onWalletDisconnected: () => dispatch(walletHasDisconnected()),
+      onWalletDisconnected: () => {
+        dispatch(createWalletActionResetAction());
+        dispatch(stepperActions.reset());
+        dispatch(walletHasDisconnected());
+      },
     });
 
     setTimeout(async () => {
