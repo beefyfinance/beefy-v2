@@ -349,7 +349,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'bbaaDAIV2',
       'aArbUSDCn',
       'cArbUSDCv3',
-      'wUSD+',
+      'arbwUSD+',
     ],
   },
   avax: {
