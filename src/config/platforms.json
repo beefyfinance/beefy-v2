@@ -8,6 +8,10 @@
     "name": "BabySwap"
   },
   {
+    "id": "prisma",
+    "name": "Prisma"
+  },
+  {
     "id": "conic",
     "name": "Conic Finance"
   },
@@ -907,6 +911,11 @@
   {
     "id": "bril",
     "name": "Bril",
+    "filter": true
+  },
+  {
+    "id": "silo",
+    "name": "Silo",
     "filter": true
   }
 ]

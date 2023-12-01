@@ -30,7 +30,7 @@ export const styles = (theme: Theme) => ({
   refreshIcon: {
     width: '24px',
     height: '24px',
-    fill: '#59A662',
+    fill: theme.palette.primary.main,
     position: 'relative' as const,
     zIndex: 2,
   },

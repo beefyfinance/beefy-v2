@@ -7,7 +7,7 @@ export type FetchPlatformsPayload = PlatformConfig[];
 export const fetchPlatforms = createAsyncThunk<FetchPlatformsPayload>(
   'platforms/fetchPlatforms',
   async () => {
-    const api = getConfigApi();
+    const api = await getConfigApi();
     return await api.fetchPlatforms();
   }
 );

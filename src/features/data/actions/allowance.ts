@@ -8,7 +8,7 @@ import type { VaultGov, VaultStandard } from '../entities/vault';
 import { isGovVault } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
-import { selectVaultByChainId, selectVaultById } from '../selectors/vaults';
+import { selectVaultIdsByChainId, selectVaultById } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 
 interface ActionParams {
@@ -36,7 +36,7 @@ export const fetchAllAllowanceAction = createAsyncThunk<
   const boosts = selectBoostsByChainId(state, chainId).map(vaultId =>
     selectBoostById(state, vaultId)
   );
-  const allVaults = selectVaultByChainId(state, chainId).map(vaultId =>
+  const allVaults = selectVaultIdsByChainId(state, chainId).map(vaultId =>
     selectVaultById(state, vaultId)
   );
   const standardVaults: VaultStandard[] = [];

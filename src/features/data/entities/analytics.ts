@@ -21,5 +21,9 @@ type VTACOptionalBigNumber = ChangeTypeOfKeys<
 type VTACWithDateTime = ChangeTypeOfKeys<VTACOptionalBigNumber, 'datetime', Date>;
 
 export type VaultTimelineAnalyticsEntity = VTACWithDateTime & {
-  internal?: boolean;
+  source?: {
+    productKey: string;
+    displayName: string;
+    chain: string;
+  };
 };

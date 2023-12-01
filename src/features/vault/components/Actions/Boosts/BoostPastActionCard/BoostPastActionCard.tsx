@@ -73,9 +73,9 @@ export const BoostPastActionCard = memo<BoostPastCardActionCardProps>(function B
       <Button
         onClick={() => handleExit(boost)}
         disabled={isStepping}
-        className={classes.button}
         fullWidth={true}
         borderless={true}
+        variant="boost"
       >
         {t('Boost-Button-Claim-Unstake')}
       </Button>

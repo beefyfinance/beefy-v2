@@ -5,8 +5,8 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'row' as const,
     flexWrap: 'nowrap' as const,
-    columnGap: theme.spacing(2),
-    rowGap: theme.spacing(2),
+    columnGap: '16px',
+    rowGap: '16px',
   },
   icon: {
     width: '24px',
@@ -20,7 +20,7 @@ export const styles = (theme: Theme) => ({
     flexGrow: 1,
     flexShrink: 0,
     padding: `${12 - 2}px 0`,
-    border: `solid 2px ${theme.palette.background.filters.outline}`,
+    border: `solid 2px ${theme.palette.background.contentPrimary}`,
     borderRadius: '6px',
     cursor: 'pointer',
     '&:not($selected) $icon': {
@@ -28,19 +28,19 @@ export const styles = (theme: Theme) => ({
         fill: '#2E324C',
       },
       '& .fg': {
-        fill: '#1B1E31',
+        fill: theme.palette.background.appBg,
       },
     },
   },
   selected: {
-    backgroundColor: theme.palette.background.filters.inactive,
+    backgroundColor: theme.palette.background.contentDark,
   },
   tooltip: {
     ...theme.typography['body-lg-med'],
-    background: theme.palette.background.filters.outline,
+    background: theme.palette.background.contentLight,
     padding: '8px 12px',
     borderRadius: '4px',
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     margin: '4px 0',
   },
   iconWithChain: {

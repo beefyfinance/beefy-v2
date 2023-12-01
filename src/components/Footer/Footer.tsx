@@ -9,9 +9,6 @@ import { ReactComponent as IconTwitter } from '../../images/socials/twitter.svg'
 import { ReactComponent as IconReddit } from '../../images/socials/reddit.svg';
 import { ReactComponent as IconDebank } from '../../images/socials/debank.svg';
 
-import clsx from 'clsx';
-import { useLocation } from 'react-router';
-
 // Re-using header translations, allowing overwrite with footer specific ones
 const navLinks = [
   {
@@ -64,7 +61,7 @@ const socialLinks = [
   },
   {
     title: 'Debank',
-    path: 'https://debank.com/official-account/110448',
+    path: 'https://debank.com/official/Beefy',
     Icon: IconDebank,
   },
 ];
@@ -75,12 +72,8 @@ export const Footer = memo(function Footer() {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const location = useLocation();
-  const isOnDashboard =
-    location.pathname.includes('dashboard') || location.pathname.includes('treasury');
-
   return (
-    <div className={clsx(classes.footer, { [classes.userOnDashboard]: isOnDashboard })}>
+    <div className={classes.footer}>
       <ul className={classes.nav}>
         {navLinks.map(({ title, path }) => (
           <li key={path} className={classes.navItem}>

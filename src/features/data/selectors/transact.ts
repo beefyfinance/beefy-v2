@@ -1,13 +1,14 @@
 import type { BeefyState } from '../../../redux-types';
 import { createSelector } from '@reduxjs/toolkit';
 import type { ChainEntity } from '../entities/chain';
-import { first } from 'lodash-es';
-import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
+import { first, orderBy } from 'lodash-es';
+import { selectTokenPriceByAddress } from './tokens';
 import { selectWalletAddressIfKnown } from './wallet';
 import { selectUserBalanceOfToken } from './balance';
 import type { TokenAmount, TransactOption, TransactQuote } from '../apis/transact/transact-types';
 import BigNumber from 'bignumber.js';
 import { TransactStatus } from '../reducers/wallet/transact-types';
+import { BIG_ZERO } from '../../../helpers/big-number';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) => state.ui.transact.vaultId;
@@ -30,8 +31,8 @@ export const selectTransactInputMax = (state: BeefyState) => state.ui.transact.i
 
 export const selectTransactSelectedChainId = (state: BeefyState) =>
   state.ui.transact.selectedChainId;
-export const selectTransactSelectedTokensId = (state: BeefyState) =>
-  state.ui.transact.selectedTokensId;
+export const selectTransactSelectedSelectionId = (state: BeefyState) =>
+  state.ui.transact.selectedSelectionId;
 export const selectTransactSelectedQuoteId = (state: BeefyState) =>
   state.ui.transact.selectedQuoteId;
 
@@ -59,61 +60,79 @@ export const selectTransactQuotes = createSelector(
   (ids, byQuoteId) => ids.map(id => byQuoteId[id])
 );
 
-export const selectTransactTokensIdTokenAddresses = createSelector(
-  (state: BeefyState, tokensId: TransactOption['tokensId']) => tokensId,
-  (state: BeefyState) => state.ui.transact.tokens.byTokensId,
-  (tokensId, byTokensId) => byTokensId[tokensId] || []
+export const selectTransactSelectionById = createSelector(
+  (state: BeefyState, selectionId: TransactOption['selectionId']) => selectionId,
+  (state: BeefyState) => state.ui.transact.selections.bySelectionId,
+  (selectionId, bySelectionId) => bySelectionId[selectionId] || undefined
 );
 
-export const selectTransactTokensIdTokens = createSelector(
-  (state: BeefyState) => selectTransactSelectedChainId(state),
-  (state: BeefyState, tokensId: TransactOption['tokensId']) =>
-    selectTransactTokensIdTokenAddresses(state, tokensId),
-  (state: BeefyState) => state.entities.tokens.byChainId,
-  (chainId, tokenAddresses, byChainId) =>
-    tokenAddresses.map(address => byChainId[chainId].byAddress[address.toLowerCase()])
-);
-
-export const selectTransactSelectedTokenAddresses = createSelector(
-  (state: BeefyState) => selectTransactSelectedTokensId(state),
-  (state: BeefyState) => state.ui.transact.tokens.byTokensId,
-  (tokensId, byTokensId) => byTokensId[tokensId] || []
-);
-
-export const selectTransactSelectedTokens = createSelector(
-  (state: BeefyState) => selectTransactSelectedChainId(state),
-  (state: BeefyState) => selectTransactSelectedTokenAddresses(state),
-  (state: BeefyState) => state.entities.tokens.byChainId,
-  (chainId, tokenAddresses, byChainId) =>
-    tokenAddresses.map(address => byChainId[chainId].byAddress[address.toLowerCase()])
+export const selectTransactSelected = createSelector(
+  (state: BeefyState) => selectTransactSelectedSelectionId(state),
+  (state: BeefyState) => state.ui.transact.selections.bySelectionId,
+  (selectionId, bySelectionId) => bySelectionId[selectionId] || undefined
 );
 
 export const selectTransactTokenChains = (state: BeefyState) =>
-  state.ui.transact.tokens.allChainIds;
+  state.ui.transact.selections.allChainIds;
 
 export const selectTransactNumTokens = (state: BeefyState) =>
-  state.ui.transact.tokens.allTokensIds.length;
+  state.ui.transact.selections.allSelectionIds.length;
 
-export const selectTransactWithdrawTokensForChain = (
+export const selectTransactWithdrawSelectionsForChain = (
   state: BeefyState,
   chainId: ChainEntity['id']
 ) => {
-  const tokensForChain = state.ui.transact.tokens.byChainId[chainId];
-  const options = tokensForChain.map(tokensId => ({
-    tokensId: tokensId,
-    tokenAddresses: state.ui.transact.tokens.byTokensId[tokensId],
+  const selectionsForChain = state.ui.transact.selections.byChainId[chainId];
+
+  return selectionsForChain.map(
+    selectionId => state.ui.transact.selections.bySelectionId[selectionId]
+  );
+};
+
+export const selectTransactWithdrawSelectionsForChainWithBalances = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  walletAddress?: string
+) => {
+  if (!walletAddress) {
+    walletAddress = selectWalletAddressIfKnown(state);
+  }
+
+  const selections = selectTransactWithdrawSelectionsForChain(state, chainId).map(selection => ({
+    ...selection,
+    balanceValue: BIG_ZERO,
+    balance: undefined,
   }));
 
-  return options.map(option => {
-    const tokens = option.tokenAddresses.map(address =>
-      selectTokenByAddress(state, chainId, address)
-    );
+  if (!walletAddress) {
+    return selections;
+  }
 
-    return {
-      id: option.tokensId,
-      tokens,
-    };
-  });
+  return orderBy(
+    selections.map(selection => {
+      if (selection.tokens.length === 1) {
+        const token = selection.tokens[0];
+        const price = selectTokenPriceByAddress(state, token.chainId, token.address);
+        const balance = selectUserBalanceOfToken(
+          state,
+          token.chainId,
+          token.address,
+          walletAddress
+        );
+
+        return {
+          ...selection,
+          balance,
+          price,
+          balanceValue: balance.multipliedBy(price),
+        };
+      }
+
+      return selection;
+    }),
+    [o => o.order, o => o.balanceValue.toNumber()],
+    ['asc', 'desc']
+  );
 };
 
 export const selectTransactDepositTokensForChainIdWithBalances = (
@@ -121,32 +140,35 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
   chainId: ChainEntity['id']
 ) => {
   const walletAddress = selectWalletAddressIfKnown(state);
-  const tokensForChain = state.ui.transact.tokens.byChainId[chainId];
+  const selectionsForChain = state.ui.transact.selections.byChainId[chainId];
+  const options = selectionsForChain.map(
+    selectionId => state.ui.transact.selections.bySelectionId[selectionId]
+  );
 
-  // We can just take the first option, as we only care about the token, not the option at this stage
-  const options = tokensForChain.map(tokensId => ({
-    tokensId: tokensId,
-    tokenAddresses: state.ui.transact.tokens.byTokensId[tokensId],
-  }));
+  return orderBy(
+    options
+      .filter(option => option.tokens.length === 1) // can only deposit 1 token
+      .map(option => {
+        const tokens = option.tokens;
+        const token = first(tokens);
+        const balance = selectUserBalanceOfToken(
+          state,
+          token.chainId,
+          token.address,
+          walletAddress
+        );
+        const price = selectTokenPriceByAddress(state, token.chainId, token.address);
 
-  return options
-    .filter(option => option.tokenAddresses.length === 1) // can only deposit 1 token
-    .map(option => {
-      const tokens = option.tokenAddresses.map(address =>
-        selectTokenByAddress(state, chainId, address)
-      );
-      const token = first(tokens);
-      const balance = selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress);
-      const price = selectTokenPriceByAddress(state, token.chainId, token.address);
-
-      return {
-        id: option.tokensId,
-        tokens,
-        balance,
-        price,
-        balanceValue: balance.multipliedBy(price),
-      };
-    });
+        return {
+          ...option,
+          balance,
+          price,
+          balanceValue: balance.multipliedBy(price),
+        };
+      }),
+    [o => o.order, o => o.balanceValue.toNumber()],
+    ['asc', 'desc']
+  );
 };
 
 export const selectTransactOptionById = createSelector(
@@ -155,14 +177,15 @@ export const selectTransactOptionById = createSelector(
   (optionId, byOptionId): TransactOption => byOptionId[optionId]
 );
 
-export const selectTransactOptionIdsForTokensId = createSelector(
-  (state: BeefyState, tokensId: string) => tokensId,
-  (state: BeefyState) => state.ui.transact.options.byTokensId,
-  (tokensId, byTokensId) => byTokensId[tokensId]
+export const selectTransactOptionIdsForSelectionId = createSelector(
+  (state: BeefyState, selectionId: string) => selectionId,
+  (state: BeefyState) => state.ui.transact.options.bySelectionId,
+  (selectionId, bySelectionId) => bySelectionId[selectionId]
 );
 
-export const selectTransactOptionsForTokensId = createSelector(
-  (state: BeefyState, tokensId: string) => selectTransactOptionIdsForTokensId(state, tokensId),
+export const selectTransactOptionsForSelectionId = createSelector(
+  (state: BeefyState, selectionId: string) =>
+    selectTransactOptionIdsForSelectionId(state, selectionId),
   (state: BeefyState) => state.ui.transact.options.byOptionId,
   (optionIds, byOptionId) => optionIds.map(id => byOptionId[id])
 );

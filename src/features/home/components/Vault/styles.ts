@@ -4,9 +4,9 @@ export const styles = (theme: Theme) => ({
   vault: {
     display: 'block',
     position: 'relative' as const,
-    color: '#9595B2',
+    color: theme.palette.text.dark,
     background: theme.palette.background.vaults.default,
-    borderBottom: 'solid 2px #363B63',
+    borderBottom: `solid 2px ${theme.palette.background.contentDark}`,
     padding: '24px',
     textDecoration: 'none',
     '&:last-child': {
@@ -17,10 +17,10 @@ export const styles = (theme: Theme) => ({
     },
   },
   vaultEarnings: {
-    backgroundColor: '#322460',
+    backgroundColor: theme.palette.background.vaults.gov,
   },
   vaultRetired: {
-    backgroundColor: '#1B1E31',
+    backgroundColor: theme.palette.background.vaults.inactive,
   },
   vaultInner: {
     display: 'grid',

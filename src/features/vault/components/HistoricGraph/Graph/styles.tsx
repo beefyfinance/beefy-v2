@@ -10,7 +10,7 @@ export const styles = (theme: Theme) => ({
   graph: {
     '& text': {
       ...theme.typography['subline-sm'],
-      fill: theme.palette.text.disabled,
+      fill: theme.palette.text.dark,
     },
     '& .recharts-yAxis': {
       '& .recharts-cartesian-axis-tick': {

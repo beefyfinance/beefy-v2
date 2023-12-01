@@ -11,11 +11,11 @@ export const styles = (theme: Theme) => ({
   },
   title: {
     ...theme.typography.h3,
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
   subTitle: {
     ...theme.typography['body-lg'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     marginTop: '8px',
   },
 });

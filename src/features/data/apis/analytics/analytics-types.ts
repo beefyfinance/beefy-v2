@@ -1,11 +1,13 @@
 import type BigNumber from 'bignumber.js';
 
 export interface TimelineAnalyticsConfig {
-  chain: string;
   datetime: string;
-  display_name: string;
-  is_eol: boolean;
   product_key: string;
+  display_name: string;
+  chain: string;
+  is_eol: boolean;
+  is_dashboard_eol: boolean;
+  transaction_hash: string;
   share_balance: number;
   share_diff: number;
   share_to_underlying_price: number;

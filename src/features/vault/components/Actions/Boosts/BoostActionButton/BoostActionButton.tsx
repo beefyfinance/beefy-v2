@@ -194,10 +194,10 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
           />
           <Button
             borderless={true}
-            className={classes.button}
             onClick={handleAction}
             fullWidth={true}
             disabled={isDisabled}
+            variant="boost"
           >
             {t(isStake ? 'Boost-Button-Stake' : 'Boost-Button-Unstake')}
           </Button>

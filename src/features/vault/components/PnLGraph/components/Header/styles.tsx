@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => ({
     gridTemplateColumns: 'repeat(4,minmax(0,1fr))',
     padding: '16px 24px',
     borderRadius: '12px 12px 0px 0px',
-    backgroundColor: '#232743',
+    backgroundColor: theme.palette.background.contentDark,
     gap: '8px',
     [theme.breakpoints.down('md')]: {
       padding: '16px',
@@ -22,7 +22,7 @@ export const styles = (theme: Theme) => ({
   },
   label: {
     ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     textTransform: 'uppercase' as const,
     fontWeight: 700,
   },
@@ -31,12 +31,12 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     columnGap: '4px',
     ...theme.typography.h3,
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     fontWeight: 500,
     '& span': {
       textDecoration: 'none',
       ...theme.typography['subline-sm'],
-      color: theme.palette.text.disabled,
+      color: theme.palette.text.dark,
       fontWeight: 700,
     },
   },
@@ -45,13 +45,13 @@ export const styles = (theme: Theme) => ({
   },
   subValue: {
     ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
   },
   border: {
     height: '64px',
     width: '2px',
     borderRadius: '8px',
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: theme.palette.background.contentLight,
     [theme.breakpoints.down('md')]: {
       display: 'none',
     },
@@ -70,7 +70,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     columnGap: '4px',
     '& svg': {
-      color: theme.palette.text.disabled,
+      color: theme.palette.text.dark,
       height: '16px',
       width: '16px',
       '&:hover': {

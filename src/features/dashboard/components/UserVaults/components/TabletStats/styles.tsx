@@ -11,6 +11,6 @@ export const styles = (theme: Theme) => ({
     },
   },
   boostText: {
-    color: '#DB8332',
+    color: theme.palette.background.vaults.boost,
   },
 });

@@ -8,6 +8,7 @@ import type {
   ConicMigrationData,
 } from '../../apis/migration/ethereum-conic/types';
 import type { CommonMigrationUpdateFulfilledAction } from '../../apis/migration/migration-types';
+import { migrators } from '../../apis/migration';
 
 export type MigrationConfig = ConicMigrationConfig;
 
@@ -45,7 +46,7 @@ export const migrationSlice = createSlice({
       }
     });
 
-    handleCommonMigratorsUpdate(builder, ['ethereum-conic', 'polygon-pearl']);
+    handleCommonMigratorsUpdate(builder, migrators);
   },
 });
 

@@ -2,11 +2,10 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   table: {
-    display: 'flex',
-    flexDirection: 'column' as const,
+    display: 'grid',
+    gridTemplateColumns: 'minmax(0, 1fr)',
     justifyContent: 'center',
-    backgroundImage:
-      'linear-gradient(to bottom, #2D3153 0%, #2D3153 50%, #363B63 50%, #363B63 100%)',
+    background: theme.palette.background.contentPrimary,
     borderBottomLeftRadius: '8px',
     borderBottomRightRadius: '8px',
     [theme.breakpoints.up('lg')]: {
@@ -19,11 +18,11 @@ export const styles = (theme: Theme) => ({
     textOverflow: 'ellipsis',
   },
   row: {
-    backgroundColor: '#2D3153',
+    backgroundColor: theme.palette.background.contentPrimary,
     display: 'grid',
     gridTemplateColumns: '35fr 35fr 30fr',
     padding: '16px 24px',
-    borderBottom: 'solid 2px #363B63',
+    borderBottom: `solid 2px ${theme.palette.background.border}`,
     alignItems: 'center',
     columnGap: '16px',
     '&:last-child': {
@@ -35,10 +34,10 @@ export const styles = (theme: Theme) => ({
   },
   header: {
     ...theme.typography['subline-sm'],
-    color: '#999CB3',
+    color: theme.palette.text.dark,
   },
   footer: {
-    backgroundColor: '#363B63',
+    backgroundColor: theme.palette.background.contentLight,
     borderBottomLeftRadius: '8px',
     borderBottomRightRadius: '8px',
     [theme.breakpoints.up('lg')]: {

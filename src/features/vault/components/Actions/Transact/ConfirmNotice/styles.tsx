@@ -1,9 +1,11 @@
-export const styles = () => ({
+import type { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   positive: {
-    color: '#59A662',
+    color: theme.palette.primary.main,
   },
   negative: {
-    color: '#D15347',
+    color: theme.palette.background.indicators.error,
   },
   changes: {
     display: 'flex',

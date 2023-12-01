@@ -12,7 +12,7 @@ export const styles = (theme: Theme) => ({
     margin: 'auto 0 2px 4px',
   },
   bar: {
-    backgroundColor: theme.palette.text.disabled,
+    backgroundColor: theme.palette.text.dark,
     width: '5px',
     borderRadius: '1px',
     '& + $bar': {

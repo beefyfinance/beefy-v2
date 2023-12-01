@@ -18,7 +18,7 @@ export const styles = (theme: Theme) => ({
   },
   title: {
     ...theme.typography['h1'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     margin: '0 0 0 12px',
   },
   labelsHolder: {
@@ -33,9 +33,9 @@ export const styles = (theme: Theme) => ({
   },
   platformLabel: {
     ...theme.typography['subline-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     '& span': {
-      color: theme.palette.text.primary,
+      color: theme.palette.text.light,
       textTransform: 'uppercase' as const,
     },
   },

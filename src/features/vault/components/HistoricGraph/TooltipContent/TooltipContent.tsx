@@ -17,6 +17,7 @@ export type TooltipContentProps = TooltipProps<number, string> & {
   toggles: LineTogglesState;
   valueFormatter: (value: number) => string;
   avg: number;
+  vaultType: 'standard' | 'gov';
 };
 
 export const TooltipContent = memo<TooltipContentProps>(function TooltipContent({
@@ -27,6 +28,7 @@ export const TooltipContent = memo<TooltipContentProps>(function TooltipContent(
   toggles,
   valueFormatter,
   avg,
+  vaultType,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -46,7 +48,7 @@ export const TooltipContent = memo<TooltipContentProps>(function TooltipContent(
         {format(fromUnixTime(timestamp), 'MMM d, yyyy h:mm a')}
       </div>
       <div className={classes.grid}>
-        <div className={classes.label}>{t(`Graph-${stat}`)}:</div>
+        <div className={classes.label}>{t([`Graph-${vaultType}-${stat}`, `Graph-${stat}`])}:</div>
         <div className={classes.value}>{valueFormatter(value)}</div>
         {toggles.average ? (
           <>

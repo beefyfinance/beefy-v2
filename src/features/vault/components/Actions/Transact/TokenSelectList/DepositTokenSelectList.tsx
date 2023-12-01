@@ -62,8 +62,8 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
     const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
       tokenId => {
         dispatch(
-          transactActions.selectToken({
-            tokensId: tokenId,
+          transactActions.selectSelection({
+            selectionId: tokenId,
             resetInput: true,
           })
         );
@@ -99,7 +99,7 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
               filteredOptionsForChain.map(option => (
                 <ListItem
                   key={option.id}
-                  tokenId={option.id}
+                  selectionId={option.id}
                   tokens={option.tokens}
                   balance={option.balance}
                   chainId={selectedChain}

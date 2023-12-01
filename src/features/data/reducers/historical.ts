@@ -1,6 +1,6 @@
 import type { ApiRange, ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
-import { createSlice } from '@reduxjs/toolkit';
 import type { SerializedError } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchHistoricalApys,
   fetchHistoricalPrices,
@@ -27,6 +27,12 @@ const initialState: HistoricalState = {
     byVaultId: {},
   },
 };
+
+const initialTimeBucketsState = (): TimeBucketsState => ({
+  availableTimebuckets: mapValues(TIME_BUCKETS, () => false),
+  loadedTimebuckets: mapValues(TIME_BUCKETS, () => false),
+  byTimebucket: {},
+});
 
 export const historicalSlice = createSlice({
   name: 'historical',
@@ -57,14 +63,14 @@ export const historicalSlice = createSlice({
           ranges,
         };
 
-        initTimeBuckets(state, oracleId, vaultId);
+        initAllTimeBuckets(state, oracleId, vaultId);
         state.apys.byVaultId[vaultId].availableTimebuckets = getBucketsFromRange(ranges.apys);
         state.tvls.byVaultId[vaultId].availableTimebuckets = getBucketsFromRange(ranges.tvls);
         state.prices.byOracleId[oracleId].availableTimebuckets = getBucketsFromRange(ranges.prices);
       })
       .addCase(fetchHistoricalApys.pending, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
-        setTimebucketPending(state.apys.byVaultId[vaultId], bucket);
+        setTimebucketPending(getOrInitTimeBucketFor('apys', vaultId, state), bucket);
       })
       .addCase(fetchHistoricalApys.rejected, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
@@ -76,7 +82,7 @@ export const historicalSlice = createSlice({
       })
       .addCase(fetchHistoricalTvls.pending, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
-        setTimebucketPending(state.tvls.byVaultId[vaultId], bucket);
+        setTimebucketPending(getOrInitTimeBucketFor('tvls', vaultId, state), bucket);
       })
       .addCase(fetchHistoricalTvls.rejected, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
@@ -88,7 +94,7 @@ export const historicalSlice = createSlice({
       })
       .addCase(fetchHistoricalPrices.pending, (state, action) => {
         const { oracleId, bucket } = action.meta.arg;
-        setTimebucketPending(state.prices.byOracleId[oracleId], bucket);
+        setTimebucketPending(getOrInitTimeBucketFor('prices', oracleId, state), bucket);
       })
       .addCase(fetchHistoricalPrices.rejected, (state, action) => {
         const { oracleId, bucket } = action.meta.arg;
@@ -100,6 +106,18 @@ export const historicalSlice = createSlice({
       });
   },
 });
+
+function getOrInitTimeBucketFor(
+  key: 'tvls' | 'prices' | 'apys',
+  oracleOrVaultId: string,
+  state: Draft<HistoricalState>
+): Draft<TimeBucketsState> {
+  const subKey = key === 'prices' ? 'byOracleId' : 'byVaultId';
+  if (!state[key][subKey][oracleOrVaultId]) {
+    state[key][subKey][oracleOrVaultId] = initialTimeBucketsState();
+  }
+  return state[key][subKey][oracleOrVaultId];
+}
 
 function setTimebucketPending(state: Draft<TimeBucketsState>, bucket: ApiTimeBucket) {
   if (bucket in state.byTimebucket) {
@@ -132,31 +150,17 @@ function setTimebucketFulfilled(
   state.loadedTimebuckets[bucket] = data.length > 0;
 }
 
-function initTimeBuckets(state: Draft<HistoricalState>, oracleId: string, vaultId: string) {
-  const unavailableBuckets = mapValues(TIME_BUCKETS, () => false);
-
+function initAllTimeBuckets(state: Draft<HistoricalState>, oracleId: string, vaultId: string) {
   if (!(oracleId in state.prices.byOracleId)) {
-    state.prices.byOracleId[oracleId] = {
-      availableTimebuckets: { ...unavailableBuckets },
-      loadedTimebuckets: { ...unavailableBuckets },
-      byTimebucket: {},
-    };
+    state.prices.byOracleId[oracleId] = initialTimeBucketsState();
   }
 
   if (!(vaultId in state.apys.byVaultId)) {
-    state.apys.byVaultId[vaultId] = {
-      availableTimebuckets: { ...unavailableBuckets },
-      loadedTimebuckets: { ...unavailableBuckets },
-      byTimebucket: {},
-    };
+    state.apys.byVaultId[vaultId] = initialTimeBucketsState();
   }
 
   if (!(vaultId in state.tvls.byVaultId)) {
-    state.tvls.byVaultId[vaultId] = {
-      availableTimebuckets: { ...unavailableBuckets },
-      loadedTimebuckets: { ...unavailableBuckets },
-      byTimebucket: {},
-    };
+    state.tvls.byVaultId[vaultId] = initialTimeBucketsState();
   }
 }
 

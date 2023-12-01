@@ -51,6 +51,7 @@ export default defineConfig({
   },
   build: {
     outDir: 'build',
+    assetsInlineLimit: 0,
     commonjsOptions: {
       transformMixedEsModules: true,
     },

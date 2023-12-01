@@ -12,7 +12,7 @@ import {
   selectTransactQuoteStatus,
   selectTransactSelectedChainId,
   selectTransactSelectedQuote,
-  selectTransactSelectedTokensId,
+  selectTransactSelectedSelectionId,
 } from '../../../../../data/selectors/transact';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { transactFetchQuotesIfNeeded } from '../../../../../data/actions/transact';
@@ -41,7 +41,7 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   const inputAmount = useAppSelector(selectTransactInputAmount);
   const inputMax = useAppSelector(selectTransactInputMax);
   const chainId = useAppSelector(selectTransactSelectedChainId);
-  const tokensId = useAppSelector(selectTransactSelectedTokensId);
+  const selectionid = useAppSelector(selectTransactSelectedSelectionId);
   const status = useAppSelector(selectTransactQuoteStatus);
   const debouncedFetchQuotes = useMemo(
     () =>
@@ -61,7 +61,7 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
 
   useEffect(() => {
     debouncedFetchQuotes(dispatch, inputAmount);
-  }, [dispatch, mode, chainId, tokensId, inputAmount, inputMax, debouncedFetchQuotes]);
+  }, [dispatch, mode, chainId, selectionid, inputAmount, inputMax, debouncedFetchQuotes]);
 
   if (status === TransactStatus.Idle) {
     return null;
@@ -98,6 +98,7 @@ const QuoteLoading = memo(function QuoteLoading() {
 });
 
 const QuoteLoaded = memo(function QuoteLoaded() {
+  const { t } = useTranslation();
   const classes = useStyles();
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isZap = isZapQuote(quote);
@@ -114,6 +115,21 @@ const QuoteLoaded = memo(function QuoteLoaded() {
           />
         ))}
       </div>
+      {quote.returned.length ? (
+        <div className={classes.returned}>
+          <div className={classes.returnedTitle}>{t('Transact-Returned')}</div>
+          <div className={classes.tokenAmounts}>
+            {quote.returned.map(({ token, amount }) => (
+              <TokenAmountIcon
+                key={token.address}
+                amount={amount}
+                chainId={token.chainId}
+                tokenAddress={token.address}
+              />
+            ))}
+          </div>
+        </div>
+      ) : null}
       {isZap ? (
         <>
           <ZapRoute quote={quote} className={classes.route} />

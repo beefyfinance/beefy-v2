@@ -1,7 +1,841 @@
 [
   {
+    "id": "silo-eth-wsteth",
+    "name": "ETH",
+    "type": "standard",
+    "token": "ETH",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloETH",
+    "earnedTokenAddress": "0x6443ac40DcD204739b8127F1aaec53071bBca7DF",
+    "earnContractAddress": "0x6443ac40DcD204739b8127F1aaec53071bBca7DF",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "createdAt": 1701264310,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "silo-usdc-wsteth",
+    "name": "USDC.e",
+    "type": "standard",
+    "token": "USDC.e",
+    "tokenAddress": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "tokenDecimals": 8,
+    "earnedToken": "mooSiloUSDC.e",
+    "earnedTokenAddress": "0x0da5EF5F02B8156a9a191d080369E420243C4501",
+    "earnContractAddress": "0x0da5EF5F02B8156a9a191d080369E420243C4501",
+    "oracle": "tokens",
+    "oracleId": "arbUSDCe",
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["arbUSDCe"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "network": "arbitrum",
+    "createdAt": 1701264310,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "silo-wbtc",
+    "name": "WBTC",
+    "type": "standard",
+    "token": "WBTC",
+    "tokenAddress": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+    "tokenDecimals": 8,
+    "earnedToken": "mooSiloWBTC",
+    "earnedTokenAddress": "0x7F8e1980f545F839422094EF9A0C1F38B3d2F60C",
+    "earnContractAddress": "0x7F8e1980f545F839422094EF9A0C1F38B3d2F60C",
+    "oracle": "tokens",
+    "oracleId": "WBTC",
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["WBTC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "network": "arbitrum",
+    "createdAt": 1701264310,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "silo-arb",
+    "name": "ARB",
+    "type": "standard",
+    "token": "ARB",
+    "tokenAddress": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloARB",
+    "earnedTokenAddress": "0x0cF50B7F39e6C6dcEE7D917Ad39C56D1aa52C871",
+    "earnContractAddress": "0x0cF50B7F39e6C6dcEE7D917Ad39C56D1aa52C871",
+    "oracle": "tokens",
+    "oracleId": "ARB",
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["ARB"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "network": "arbitrum",
+    "createdAt": 1701264310,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "silo-wsteth",
+    "name": "wstETH",
+    "type": "standard",
+    "token": "wstETH",
+    "tokenAddress": "0x5979D7b546E38E414F7E9822514be443A4800529",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSilowstETH",
+    "earnedTokenAddress": "0x1479D74919F957771EDcB7e0C0A7ED6AA365bd33",
+    "earnContractAddress": "0x1479D74919F957771EDcB7e0C0A7ED6AA365bd33",
+    "oracle": "tokens",
+    "oracleId": "wstETH",
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["wstETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0x5979d7b546e38e414f7e9822514be443a4800529",
+    "network": "arbitrum",
+    "createdAt": 1701264310,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "silo-reth",
+    "name": "rETH",
+    "type": "standard",
+    "token": "rETH",
+    "tokenAddress": "0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSilorETH",
+    "earnedTokenAddress": "0xcA39178E035869DE8C8848594319357222118ae6",
+    "earnContractAddress": "0xcA39178E035869DE8C8848594319357222118ae6",
+    "oracle": "tokens",
+    "oracleId": "rETH",
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["rETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0xec70dcb4a1efa46b8f2d97c310c9c4790ba5ffa8",
+    "network": "arbitrum",
+    "createdAt": 1701264310,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "pancake-gamma-arb-weth",
+    "name": "ARB-ETH LP",
+    "type": "standard",
+    "token": "ARB-ETH pgLP",
+    "tokenAddress": "0xdaB1dA56965B1aaaBE38774E8B74C3Ade8fc439E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooPancakeGammaARB-ETH",
+    "earnedTokenAddress": "0xcFc20A8Db1b3a075bA0880ec91842403c85056c3",
+    "earnContractAddress": "0xcFc20A8Db1b3a075bA0880ec91842403c85056c3",
+    "oracle": "lps",
+    "oracleId": "pancake-gamma-arb-weth",
+    "status": "active",
+    "platformId": "gamma",
+    "assets": ["ARB", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/cake/arbitrum/details/weth-arb-500-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/cake/arbitrum/details/weth-arb-500-narrow",
+    "network": "arbitrum",
+    "createdAt": 1701130264
+  },
+  {
+    "id": "gmx-arb-wbtc-usdc",
+    "name": "WBTC-USDC GM",
+    "type": "standard",
+    "token": "WBTC-USDC GM",
+    "tokenAddress": "0x47c031236e19d024b42f8AE6780E44A573170703",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gmx",
+    "earnedToken": "mooGmxWBTCb-USDC",
+    "earnedTokenAddress": "0xBE62C3b16789901066F882D94EF356f9C6aac414",
+    "earnContractAddress": "0xBE62C3b16789901066F882D94EF356f9C6aac414",
+    "oracle": "lps",
+    "oracleId": "gmx-arb-wbtc-usdc",
+    "status": "active",
+    "platformId": "gmx",
+    "assets": ["WBTC", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "gmx-gm",
+    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "network": "arbitrum",
+    "createdAt": 1700568258
+  },
+  {
+    "id": "gmx-arb-weth-usdc",
+    "name": "WETH-USDC GM",
+    "type": "standard",
+    "token": "WETH-USDC GM",
+    "tokenAddress": "0x70d95587d40A2caf56bd97485aB3Eec10Bee6336",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gmx",
+    "earnedToken": "mooGmxWETH-USDC",
+    "earnedTokenAddress": "0xfb1Ea0ec3F727Cb62E0c8884d0Ae9aBAb32986ED",
+    "earnContractAddress": "0xfb1Ea0ec3F727Cb62E0c8884d0Ae9aBAb32986ED",
+    "oracle": "lps",
+    "oracleId": "gmx-arb-weth-usdc",
+    "status": "active",
+    "platformId": "gmx",
+    "assets": ["WETH", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "gmx-gm",
+    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "network": "arbitrum",
+    "createdAt": 1700568258
+  },
+  {
+    "id": "gmx-arb-arb-usdc",
+    "name": "ARB-USDC GM",
+    "type": "standard",
+    "token": "ARB-USDC GM",
+    "tokenAddress": "0xC25cEf6061Cf5dE5eb761b50E4743c1F5D7E5407",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gmx",
+    "earnedToken": "mooGmxARB-USDC",
+    "earnedTokenAddress": "0x56849a2632B29593fEF937aEAF397abE1368d2C9",
+    "earnContractAddress": "0x56849a2632B29593fEF937aEAF397abE1368d2C9",
+    "oracle": "lps",
+    "oracleId": "gmx-arb-arb-usdc",
+    "status": "active",
+    "platformId": "gmx",
+    "assets": ["ARB", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "gmx-gm",
+    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "network": "arbitrum",
+    "createdAt": 1700568258
+  },
+  {
+    "id": "gmx-arb-link-usdc",
+    "name": "LINK-USDC GM",
+    "type": "standard",
+    "token": "LINK-USDC GM",
+    "tokenAddress": "0x7f1fa204bb700853D36994DA19F830b6Ad18455C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gmx",
+    "earnedToken": "mooGmxLINK-USDC",
+    "earnedTokenAddress": "0xf3C483077c0202c2bc004E139B2e78e6e0f72593",
+    "earnContractAddress": "0xf3C483077c0202c2bc004E139B2e78e6e0f72593",
+    "oracle": "lps",
+    "oracleId": "gmx-arb-link-usdc",
+    "status": "active",
+    "platformId": "gmx",
+    "assets": ["LINK", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "gmx-gm",
+    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "network": "arbitrum",
+    "createdAt": 1700568258
+  },
+  {
+    "id": "gmx-arb-sol-usdc",
+    "name": "SOL-USDC GM",
+    "type": "standard",
+    "token": "SOL-USDC GM",
+    "tokenAddress": "0x09400D9DB990D5ed3f35D7be61DfAEB900Af03C9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gmx",
+    "earnedToken": "mooGmxSOL-USDC",
+    "earnedTokenAddress": "0x2fb0f56e3127818F1d36CB02D38bEE21Eeb0dC78",
+    "earnContractAddress": "0x2fb0f56e3127818F1d36CB02D38bEE21Eeb0dC78",
+    "oracle": "lps",
+    "oracleId": "gmx-arb-sol-usdc",
+    "status": "active",
+    "platformId": "gmx",
+    "assets": ["SOL", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "gmx-gm",
+    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "network": "arbitrum",
+    "createdAt": 1700568258
+  },
+  {
+    "id": "gmx-arb-usdc-usdce",
+    "name": "USDC-USDC.e GM",
+    "type": "standard",
+    "token": "USDC-USDC.e GM",
+    "tokenAddress": "0x9C2433dFD71096C435Be9465220BB2B189375eA7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gmx",
+    "earnedToken": "mooGmxUSDC-USDCe",
+    "earnedTokenAddress": "0xAc8EE83FF7093dEaA4F62fDddD19242E1Fa14C32",
+    "earnContractAddress": "0xAc8EE83FF7093dEaA4F62fDddD19242E1Fa14C32",
+    "oracle": "lps",
+    "oracleId": "gmx-arb-usdc-usdce",
+    "status": "active",
+    "platformId": "gmx",
+    "assets": ["USDC", "arbUSDCe"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "gmx-gm",
+    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "network": "arbitrum",
+    "createdAt": 1700568258
+  },
+  {
+    "id": "gmx-arb-usdc-usdt",
+    "name": "USDC-USDT GM",
+    "type": "standard",
+    "token": "USDC-USDT GM",
+    "tokenAddress": "0xB686BcB112660343E6d15BDb65297e110C8311c4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gmx",
+    "earnedToken": "mooGmxUSDC-USDT",
+    "earnedTokenAddress": "0xF5Ad4526f40B358D96E3d3460E9e38616046ceA7",
+    "earnContractAddress": "0xF5Ad4526f40B358D96E3d3460E9e38616046ceA7",
+    "oracle": "lps",
+    "oracleId": "gmx-arb-usdc-usdt",
+    "status": "active",
+    "platformId": "gmx",
+    "assets": ["USDC", "USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "gmx-gm",
+    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "network": "arbitrum",
+    "createdAt": 1700568258
+  },
+  {
+    "id": "gmx-arb-usdc-dai",
+    "name": "USDC-DAI GM",
+    "type": "standard",
+    "token": "USDC-DAI GM",
+    "tokenAddress": "0xe2fEDb9e6139a182B98e7C2688ccFa3e9A53c665",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gmx",
+    "earnedToken": "mooGmxUSDC-DAI",
+    "earnedTokenAddress": "0x7dE133d98151658baAE3d1Ad94B883C452c87e79",
+    "earnContractAddress": "0x7dE133d98151658baAE3d1Ad94B883C452c87e79",
+    "oracle": "lps",
+    "oracleId": "gmx-arb-usdc-dai",
+    "status": "active",
+    "platformId": "gmx",
+    "assets": ["USDC", "DAI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "gmx-gm",
+    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "network": "arbitrum",
+    "createdAt": 1700568258
+  },
+  {
+    "id": "gmx-arb-ltc-usdc",
+    "name": "LTC-USDC GM",
+    "type": "standard",
+    "token": "LTC-USDC GM",
+    "tokenAddress": "0xD9535bB5f58A1a75032416F2dFe7880C30575a41",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gmx",
+    "earnedToken": "mooGmxLTC-USDC",
+    "earnedTokenAddress": "0x6aEE64C2B41A05F55b883BB85473e8aeF7E98510",
+    "earnContractAddress": "0x6aEE64C2B41A05F55b883BB85473e8aeF7E98510",
+    "oracle": "lps",
+    "oracleId": "gmx-arb-ltc-usdc",
+    "status": "active",
+    "platformId": "gmx",
+    "assets": ["LTC", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "gmx-gm",
+    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "network": "arbitrum",
+    "createdAt": 1700568258
+  },
+  {
+    "id": "gmx-arb-xrp-usdc",
+    "name": "XRP-USDC GM",
+    "type": "standard",
+    "token": "XRP-USDC GM",
+    "tokenAddress": "0x0CCB4fAa6f1F1B30911619f1184082aB4E25813c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gmx",
+    "earnedToken": "mooGmxXRP-USDC",
+    "earnedTokenAddress": "0xCBE8989dA57e1061f18825406d961714A03E36a6",
+    "earnContractAddress": "0xCBE8989dA57e1061f18825406d961714A03E36a6",
+    "oracle": "lps",
+    "oracleId": "gmx-arb-xrp-usdc",
+    "status": "active",
+    "platformId": "gmx",
+    "assets": ["XRP", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "gmx-gm",
+    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "network": "arbitrum",
+    "createdAt": 1700568258
+  },
+  {
+    "id": "gmx-arb-doge-usdc",
+    "name": "DOGE-USDC GM",
+    "type": "standard",
+    "token": "DOGE-USDC GM",
+    "tokenAddress": "0x6853EA96FF216fAb11D2d930CE3C508556A4bdc4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gmx",
+    "earnedToken": "mooGmxDOGE-USDC",
+    "earnedTokenAddress": "0xC41afF01E4167ffCA5160Ab0173086183F773dfD",
+    "earnContractAddress": "0xC41afF01E4167ffCA5160Ab0173086183F773dfD",
+    "oracle": "lps",
+    "oracleId": "gmx-arb-doge-usdc",
+    "status": "active",
+    "platformId": "gmx",
+    "assets": ["DOGE", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "gmx-gm",
+    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "network": "arbitrum",
+    "createdAt": 1700568258
+  },
+  {
+    "id": "gmx-arb-uni-usdc",
+    "name": "UNI-USDC GM",
+    "type": "standard",
+    "token": "UNI-USDC GM",
+    "tokenAddress": "0xc7Abb2C5f3BF3CEB389dF0Eecd6120D451170B50",
+    "tokenDecimals": 18,
+    "tokenProviderId": "gmx",
+    "earnedToken": "mooGmxUNI-USDC",
+    "earnedTokenAddress": "0x6699395FA0a7a3a345D790BD83AB564301B3f302",
+    "earnContractAddress": "0x6699395FA0a7a3a345D790BD83AB564301B3f302",
+    "oracle": "lps",
+    "oracleId": "gmx-arb-uni-usdc",
+    "status": "active",
+    "platformId": "gmx",
+    "assets": ["UNI", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "gmx-gm",
+    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
+    "network": "arbitrum",
+    "createdAt": 1700568258
+  },
+  {
+    "id": "uniswap-gamma-arb-usdc.e",
+    "name": "ARB-USDC.e LP",
+    "type": "standard",
+    "token": "ARB-USDC.e uLP",
+    "tokenAddress": "0x5F4cED6237BBB278b693a2b46d3ef1f45ba27ea9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooUniswapGammaARB-USDC.e",
+    "earnedTokenAddress": "0xf6D58e0CC337556b14aE0eC4170eDDE4577A1D44",
+    "earnContractAddress": "0xf6D58e0CC337556b14aE0eC4170eDDE4577A1D44",
+    "oracle": "lps",
+    "oracleId": "uniswap-gamma-arb-usdc.e",
+    "status": "active",
+    "platformId": "gamma",
+    "assets": ["ARB", "arbUSDCe"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/arb-usdc.e-500-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/arb-usdc.e-500-narrow",
+    "network": "arbitrum",
+    "createdAt": 1700065262
+  },
+  {
+    "id": "uniswap-gamma-arb-usdt",
+    "name": "ARB-USDT LP",
+    "type": "standard",
+    "token": "ARB-USDT uLP",
+    "tokenAddress": "0x95375694685E39997828Ed5B17f30f0A3eD90537",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooUniswapGammaARB-USDT",
+    "earnedTokenAddress": "0x1512FD4D1Bcc7959eEFD1672116d9E41CdcBc688",
+    "earnContractAddress": "0x1512FD4D1Bcc7959eEFD1672116d9E41CdcBc688",
+    "oracle": "lps",
+    "oracleId": "uniswap-gamma-arb-usdt",
+    "status": "active",
+    "platformId": "gamma",
+    "assets": ["ARB", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/arb-usdt-500-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/arb-usdt-500-narrow",
+    "network": "arbitrum",
+    "createdAt": 1700065262
+  },
+  {
+    "id": "uniswap-gamma-gns-weth",
+    "name": "GNS-ETH LP",
+    "type": "standard",
+    "token": "GNS-ETH uLP",
+    "tokenAddress": "0xF66DA0f517c6f5431c77f4d0525EbC4b3bb40578",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooUniswapGammaGNS-ETH",
+    "earnedTokenAddress": "0x5a58b846DC39a57c33b0bf521fe74cf3A10B669B",
+    "earnContractAddress": "0x5a58b846DC39a57c33b0bf521fe74cf3A10B669B",
+    "oracle": "lps",
+    "oracleId": "uniswap-gamma-gns-weth",
+    "status": "active",
+    "platformId": "gamma",
+    "assets": ["GNS", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-weth-3000-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-weth-3000-narrow",
+    "network": "arbitrum",
+    "createdAt": 1700065262
+  },
+  {
+    "id": "uniswap-gamma-rdnt-weth",
+    "name": "RDNT-ETH LP",
+    "type": "standard",
+    "token": "RDNT-ETH uLP",
+    "tokenAddress": "0x2BCBDD577616357464CFe307Bc67F9e820A66e80",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooUniswapGammaRDNT-ETH",
+    "earnedTokenAddress": "0xE978105cC52EF19F1540351B3B7792CB8bFeAD78",
+    "earnContractAddress": "0xE978105cC52EF19F1540351B3B7792CB8bFeAD78",
+    "oracle": "lps",
+    "oracleId": "uniswap-gamma-rdnt-weth",
+    "status": "active",
+    "platformId": "gamma",
+    "assets": ["RDNT", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/rdnt-weth-3000-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/rdnt-weth-3000-narrow",
+    "network": "arbitrum",
+    "createdAt": 1700065262
+  },
+  {
+    "id": "uniswap-gamma-weth-link",
+    "name": "LINK-ETH LP",
+    "type": "standard",
+    "token": "LINK-ETH uLP",
+    "tokenAddress": "0xfA392dbefd2d5ec891eF5aEB87397A89843a8260",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooUniswapGammaLINK-ETH",
+    "earnedTokenAddress": "0xbFd18CBC1030DB694C6cEE3DD00d38E58FfE0102",
+    "earnContractAddress": "0xbFd18CBC1030DB694C6cEE3DD00d38E58FfE0102",
+    "oracle": "lps",
+    "oracleId": "uniswap-gamma-weth-link",
+    "status": "active",
+    "platformId": "gamma",
+    "assets": ["LINK", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/weth-link-3000-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/weth-link-3000-narrow",
+    "network": "arbitrum",
+    "createdAt": 1700065262
+  },
+  {
+    "id": "uniswap-gamma-usdc-link",
+    "name": "LINK-USDC LP",
+    "type": "standard",
+    "token": "LINK-USDC uLP",
+    "tokenAddress": "0xf8b645c32F660f5c997ED250f264cA4a0E7A5967",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooUniswapGammaLINK-USDC",
+    "earnedTokenAddress": "0x748070c4ada122262598206D4c59A1d837Aa8F25",
+    "earnContractAddress": "0x748070c4ada122262598206D4c59A1d837Aa8F25",
+    "oracle": "lps",
+    "oracleId": "uniswap-gamma-usdc-link",
+    "status": "active",
+    "platformId": "gamma",
+    "assets": ["LINK", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-link-500-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-link-500-narrow",
+    "network": "arbitrum",
+    "createdAt": 1700065262
+  },
+  {
+    "id": "joe-auto-wbtc-weth",
+    "name": "WBTC-ETH APT",
+    "type": "standard",
+    "token": "WBTC-ETH APT",
+    "tokenAddress": "0xea9f1AB0ccdb6BaF36ce8567D65f354f2945F0DA",
+    "tokenDecimals": 24,
+    "tokenProviderId": "traderjoe",
+    "earnedToken": "mooJoeAutoPoolWBTC-ETH",
+    "earnedTokenAddress": "0x9790e09d26F73Ee888dFC387b4D9AaB79e88F280",
+    "earnContractAddress": "0x9790e09d26F73Ee888dFC387b4D9AaB79e88F280",
+    "oracle": "lps",
+    "oracleId": "joe-auto-wbtc-weth",
+    "status": "active",
+    "platformId": "traderjoe",
+    "assets": ["WBTC", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://traderjoexyz.com/arbitrum/vault/0xea9f1AB0ccdb6BaF36ce8567D65f354f2945F0DA",
+    "removeLiquidityUrl": "https://traderjoexyz.com/arbitrum/vault/0xea9f1AB0ccdb6BaF36ce8567D65f354f2945F0DA",
+    "network": "arbitrum",
+    "createdAt": 1699756642
+  },
+  {
+    "id": "joe-auto-arb-weth",
+    "name": "ARB-ETH APT",
+    "type": "standard",
+    "token": "ARB-ETH APT",
+    "tokenAddress": "0xa37eF01065E0328b50A85256E159b9aaed196e05",
+    "tokenDecimals": 24,
+    "tokenProviderId": "traderjoe",
+    "earnedToken": "mooJoeAutoPoolARB-ETH",
+    "earnedTokenAddress": "0x1e9B8542617757c71B045444b19104Ad75560Ec1",
+    "earnContractAddress": "0x1e9B8542617757c71B045444b19104Ad75560Ec1",
+    "oracle": "lps",
+    "oracleId": "joe-auto-arb-weth",
+    "status": "active",
+    "platformId": "traderjoe",
+    "assets": ["ARB", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://traderjoexyz.com/arbitrum/vault/0xa37eF01065E0328b50A85256E159b9aaed196e05",
+    "removeLiquidityUrl": "https://traderjoexyz.com/arbitrum/vault/0xa37eF01065E0328b50A85256E159b9aaed196e05",
+    "network": "arbitrum",
+    "createdAt": 1699756642
+  },
+  {
+    "id": "joe-auto-weth-usdc",
+    "name": "ETH-USDC APT",
+    "type": "standard",
+    "token": "ETH-USDC APT",
+    "tokenAddress": "0x5FB31318E9A82EfCaA2cfEFBaCF63e85f4dFF2F1",
+    "tokenDecimals": 12,
+    "tokenProviderId": "traderjoe",
+    "earnedToken": "mooJoeAutoPoolWETH-USDC",
+    "earnedTokenAddress": "0xc452eedb65fb95BB1C3aB0dC0f9363E77f636189",
+    "earnContractAddress": "0xc452eedb65fb95BB1C3aB0dC0f9363E77f636189",
+    "oracle": "lps",
+    "oracleId": "joe-auto-weth-usdc",
+    "status": "active",
+    "platformId": "traderjoe",
+    "assets": ["WETH", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://traderjoexyz.com/arbitrum/vault/0x5fb31318e9a82efcaa2cfefbacf63e85f4dff2f1",
+    "removeLiquidityUrl": "https://traderjoexyz.com/arbitrum/vault/0x5fb31318e9a82efcaa2cfefbacf63e85f4dff2f1",
+    "network": "arbitrum",
+    "createdAt": 1699756642
+  },
+  {
+    "id": "curve-arb-tbtc",
+    "name": "tBTC/WBTC",
+    "type": "standard",
+    "token": "2BTC-f",
+    "tokenAddress": "0x755D6688AD74661Add2FB29212ef9153D40fcA46",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooConvexTBTC",
+    "earnedTokenAddress": "0x728C4f7C2ff43e6c069CDA03e3c5BD48436DE40C",
+    "earnContractAddress": "0x728C4f7C2ff43e6c069CDA03e3c5BD48436DE40C",
+    "oracle": "lps",
+    "oracleId": "curve-arb-tbtc",
+    "status": "active",
+    "platformId": "convex",
+    "assets": ["tBTC", "WBTC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-98/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-98/withdraw",
+    "network": "arbitrum",
+    "createdAt": 1699263666
+  },
+  {
     "id": "compound-arbitrum-usdc",
     "name": "USDC",
+    "type": "standard",
     "token": "USDC",
     "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
     "tokenDecimals": 6,
@@ -25,11 +859,17 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0xaf88d065e77c8cc2239327c5edb3a432268e5831",
     "network": "arbitrum",
-    "createdAt": 1698772242
+    "createdAt": 1698772242,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "sushi-gamma-magic-weth-narrow",
     "name": "MAGIC-ETH LP",
+    "type": "standard",
     "token": "MAGIC-ETH sgLP",
     "tokenAddress": "0x79bB33f681bd70eb1bbe640000b130Bcb6d126d0",
     "tokenDecimals": 18,
@@ -42,8 +882,8 @@
     "status": "active",
     "platformId": "gamma",
     "assets": ["MAGIC", "ETH"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/magic-weth-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/magic-weth-3000-narrow",
     "network": "arbitrum",
@@ -52,6 +892,7 @@
   {
     "id": "sushi-gamma-weth-arb-narrow",
     "name": "ARB-ETH LP",
+    "type": "standard",
     "token": "ARB-ETH sgLP",
     "tokenAddress": "0x2FD6FD1E3f1fE24cC1422D22e62884A4528d1A24",
     "tokenDecimals": 18,
@@ -64,8 +905,8 @@
     "status": "active",
     "platformId": "gamma",
     "assets": ["ARB", "ETH"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/weth-arb-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/weth-arb-3000-narrow",
     "network": "arbitrum",
@@ -74,6 +915,7 @@
   {
     "id": "sushi-gamma-weth-sushi-narrow",
     "name": "SUSHI-ETH LP",
+    "type": "standard",
     "token": "SUSHI-ETH sgLP",
     "tokenAddress": "0xc7BB5F253f4a8E5E69F9B0B26CC475D2FD581479",
     "tokenDecimals": 18,
@@ -86,8 +928,8 @@
     "status": "active",
     "platformId": "gamma",
     "assets": ["SUSHI", "ETH"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/weth-sushi-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/weth-sushi-3000-narrow",
     "network": "arbitrum",
@@ -96,6 +938,7 @@
   {
     "id": "sushi-gamma-weth-usdc-narrow",
     "name": "USDC.e-ETH LP",
+    "type": "standard",
     "token": "USDC.e-ETH sgLP",
     "tokenAddress": "0x61c4daa8F7009cC39b3E7A9b8bd722413C29E676",
     "tokenDecimals": 18,
@@ -108,8 +951,8 @@
     "status": "active",
     "platformId": "gamma",
     "assets": ["USDCe", "ETH"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/weth-usdc.e-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/weth-usdc.e-500-narrow",
     "network": "arbitrum",
@@ -118,6 +961,7 @@
   {
     "id": "uniswap-gamma-usdc-dai",
     "name": "USDC-DAI LP",
+    "type": "standard",
     "token": "USDC-DAI uLP",
     "tokenAddress": "0x904135ac233e53fc1c1A5B061D34496b362489c3",
     "tokenDecimals": 18,
@@ -130,8 +974,8 @@
     "status": "active",
     "platformId": "gamma",
     "assets": ["USDC", "DAI"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-dai-100-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-dai-100-stable",
     "network": "arbitrum",
@@ -140,6 +984,7 @@
   {
     "id": "uniswap-gamma-wsteth-weth",
     "name": "wstETH-ETH LP",
+    "type": "standard",
     "token": "wstETH-ETH uLP",
     "tokenAddress": "0x998C07827578C83949a6b755Dd3416fDFD98a75E",
     "tokenDecimals": 18,
@@ -152,8 +997,8 @@
     "status": "active",
     "platformId": "gamma",
     "assets": ["wstETH", "ETH"],
-    "strategyTypeId": "managed-conc-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/wsteth-weth-100-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/wsteth-weth-100-pegged-price",
     "network": "arbitrum",
@@ -162,6 +1007,7 @@
   {
     "id": "uniswap-gamma-usdc-usdt",
     "name": "USDC-USDT LP",
+    "type": "standard",
     "token": "USDC-USDT uLP",
     "tokenAddress": "0x91Ed9458359d0C7Bc03cFE21a58C905fD64402b3",
     "tokenDecimals": 18,
@@ -175,8 +1021,8 @@
     "retireReason": "rewards",
     "platformId": "gamma",
     "assets": ["USDC", "USDT"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-usdt-100-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-usdt-100-stable",
     "network": "arbitrum",
@@ -185,6 +1031,7 @@
   {
     "id": "uniswap-gamma-btc.b-weth",
     "name": "BTC.b-ETH LP",
+    "type": "standard",
     "token": "BTC.b-ETH uLP",
     "tokenAddress": "0x3344A88855E8242DED86aF2F874c8928F6Ad7BbA",
     "tokenDecimals": 18,
@@ -197,8 +1044,8 @@
     "status": "active",
     "platformId": "gamma",
     "assets": ["BTCb", "ETH"],
-    "strategyTypeId": "managed-conc-lp",
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/btcb-weth-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/btcb-weth-3000-narrow",
     "network": "arbitrum",
@@ -207,6 +1054,7 @@
   {
     "id": "uniswap-gamma-magic-weth",
     "name": "MAGIC-ETH LP",
+    "type": "standard",
     "token": "MAGIC-ETH uLP",
     "tokenAddress": "0x9F0166a37A511d2D6647864Dd0abDc1Ef6699a0C",
     "tokenDecimals": 18,
@@ -219,8 +1067,8 @@
     "status": "active",
     "platformId": "gamma",
     "assets": ["MAGIC", "ETH"],
-    "strategyTypeId": "managed-conc-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/magic-weth-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/magic-weth-3000-narrow",
     "network": "arbitrum",
@@ -229,6 +1077,7 @@
   {
     "id": "uniswap-gamma-weth-reth",
     "name": "rETH-ETH LP",
+    "type": "standard",
     "token": "rETH-ETH uLP",
     "tokenAddress": "0xf21Df991cAaFeBc242C7e5BE17892d3B0453bc0F",
     "tokenDecimals": 18,
@@ -241,8 +1090,8 @@
     "status": "active",
     "platformId": "gamma",
     "assets": ["rETH", "ETH"],
-    "strategyTypeId": "managed-conc-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/weth-reth-500-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/weth-reth-500-pegged-price",
     "network": "arbitrum",
@@ -251,6 +1100,7 @@
   {
     "id": "uniswap-gamma-rdpx-weth",
     "name": "RDPX-ETH LP",
+    "type": "standard",
     "token": "RDPX-ETH uLP",
     "tokenAddress": "0xc3E878fACb776B1A453fC70576c8FefB8ed39Fb1",
     "tokenDecimals": 18,
@@ -264,8 +1114,8 @@
     "retireReason": "rewards",
     "platformId": "gamma",
     "assets": ["RDPX", "ETH"],
-    "strategyTypeId": "managed-conc-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/rdpx-weth-10000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/rdpx-weth-10000-narrow",
     "network": "arbitrum",
@@ -274,6 +1124,7 @@
   {
     "id": "balancer-usdc-dai-usdt-usdce",
     "name": "USDC/DAI/USDT/USDC.e",
+    "type": "standard",
     "token": "USDC/DAI/USDT/USDC.e Arb",
     "tokenAddress": "0x423A1323c871aBC9d89EB06855bF5347048Fc4A5",
     "tokenDecimals": 18,
@@ -303,6 +1154,7 @@
   {
     "id": "balancer-weth-reth",
     "name": "rETH-ETH",
+    "type": "standard",
     "token": "rETH-ETH Arb",
     "tokenAddress": "0xadE4A71BB62bEc25154CFc7e6ff49A513B491E81",
     "tokenDecimals": 18,
@@ -313,7 +1165,7 @@
     "oracle": "lps",
     "oracleId": "balancer-weth-reth",
     "status": "active",
-    "platformId": "balancer",
+    "platformId": "aura",
     "assets": ["rETH", "ETH"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -327,11 +1179,12 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xade4a71bb62bec25154cfc7e6ff49a513b491e81000000000000000000000497/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xade4a71bb62bec25154cfc7e6ff49a513b491e81000000000000000000000497/withdraw",
     "network": "arbitrum",
-    "createdAt": 1693226111
+    "createdAt": 1700600674
   },
   {
     "id": "balancer-wsteth-weth-v3",
     "name": "wstETH-ETH V3",
+    "type": "standard",
     "token": "wstETH-ETH V3 Arb",
     "tokenAddress": "0x9791d590788598535278552EEcD4b211bFc790CB",
     "tokenDecimals": 18,
@@ -361,6 +1214,7 @@
   {
     "id": "aura-cbeth-wsteth-reth",
     "name": "cbETH/wstETH/rETH",
+    "type": "standard",
     "token": "cbETH/wstETH/rETH Arb",
     "tokenAddress": "0x4a2F6Ae7F3e5D715689530873ec35593Dc28951B",
     "tokenDecimals": 18,
@@ -390,6 +1244,7 @@
   {
     "id": "aura-wsteth-ankreth",
     "name": "wstETH-ankrETH",
+    "type": "standard",
     "token": "wstETH-ankrETH Arb",
     "tokenAddress": "0x3FD4954a851eaD144c2FF72B1f5a38Ea5976Bd54",
     "tokenDecimals": 18,
@@ -419,6 +1274,7 @@
   {
     "id": "aura-rdnt-weth",
     "name": "RDNT-WETH",
+    "type": "standard",
     "token": "RDNT-WETH Arb",
     "tokenAddress": "0x32dF62dc3aEd2cD6224193052Ce665DC18165841",
     "tokenDecimals": 18,
@@ -448,6 +1304,7 @@
   {
     "id": "aura-reth-bbaweth-v2",
     "name": "rETH-bbaWETH V2",
+    "type": "standard",
     "token": "rETH-bbaWETH V2 Arb",
     "tokenAddress": "0xBe0f30217BE1e981aDD883848D0773A86d2d2CD4",
     "tokenDecimals": 18,
@@ -478,6 +1335,7 @@
   {
     "id": "aura-wsteth-bbaweth-v2",
     "name": "wstETH-bbaWETH V2",
+    "type": "standard",
     "token": "wstETH-bbaWETH V2 Arb",
     "tokenAddress": "0x45C4D1376943Ab28802B995aCfFC04903Eb5223f",
     "tokenDecimals": 18,
@@ -508,6 +1366,7 @@
   {
     "id": "aura-bbaaUSD-v2",
     "name": "bbaUSD V2",
+    "type": "standard",
     "token": "bbaaUSD V2",
     "tokenAddress": "0xc6EeE8cb7643eC2F05F46d569e9eC8EF8b41b389",
     "tokenDecimals": 18,
@@ -538,6 +1397,7 @@
   {
     "id": "aura-aurabal-wsteth",
     "name": "auraBAL-wstETH",
+    "type": "standard",
     "token": "auraBAL-wstETH Arb",
     "tokenAddress": "0xc7FA3A3527435720f0e2a4c1378335324dd4F9b3",
     "tokenDecimals": 18,
@@ -567,6 +1427,7 @@
   {
     "id": "aura-dola-usdc-v2",
     "name": "DOLA-USDC",
+    "type": "standard",
     "token": "DOLA-USDC Arb",
     "tokenAddress": "0x8bc65Eed474D1A00555825c91FeAb6A8255C2107",
     "tokenDecimals": 18,
@@ -596,6 +1457,7 @@
   {
     "id": "joe-auto-weth-usdc.e",
     "name": "ETH-USDC.e APT",
+    "type": "standard",
     "token": "ETH-USDC.e APT",
     "tokenAddress": "0xFd421D60905d2f7caBd49e6A5703A3499367B8F4",
     "tokenDecimals": 12,
@@ -605,7 +1467,8 @@
     "earnContractAddress": "0xeD29730F9FF29ea50D63462D8EC84307d36b8954",
     "oracle": "lps",
     "oracleId": "joe-auto-weth-usdc.e",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "traderjoe",
     "assets": ["WETH", "arbUSDCe"],
     "risks": [
@@ -624,37 +1487,13 @@
     "createdAt": 1691411422
   },
   {
-    "id": "chronos-weth-lqty",
-    "name": "ETH-LQTY vLP",
-    "token": "vAMM-WETH/LQTY",
-    "tokenAddress": "0x393c93f8133bc89db3177D6e10182Efd4129D0d1",
-    "tokenDecimals": 18,
-    "tokenProviderId": "chronos",
-    "tokenAmmId": "arbitrum-chronos",
-    "earnedToken": "mooChronos_ETH-LQTY",
-    "earnedTokenAddress": "0xaFF7267b1f7e72298927AeA0562c2a0a5B9dA72c",
-    "earnContractAddress": "0xaFF7267b1f7e72298927AeA0562c2a0a5B9dA72c",
-    "oracle": "lps",
-    "oracleId": "chronos-weth-lqty",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "chronos",
-    "assets": ["ETH", "LQTY"],
-    "strategyTypeId": "multi-lp",
-    "risks": ["COMPLEXITY_LOW", "IL_LARGE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0x393c93f8133bc89db3177D6e10182Efd4129D0d1",
-    "removeLiquidityUrl": "https://app.chronos.exchange/liquidity/0x393c93f8133bc89db3177D6e10182Efd4129D0d1",
-    "network": "arbitrum",
-    "createdAt": 1689957428
-  },
-  {
     "id": "chronos-arb-usdc.e",
     "name": "ARB-USDC.e vLP",
+    "type": "standard",
     "token": "vAMM-ARB/USDC",
     "tokenAddress": "0xd302119B5C46d504D0b3534312e56eC321976251",
     "tokenDecimals": 18,
     "tokenProviderId": "chronos",
-    "tokenAmmId": "arbitrum-chronos",
     "earnedToken": "mooChronos_ARB-USDC.e",
     "earnedTokenAddress": "0xF41d768d8D5c218e1a392e40a4C7ac38d9135400",
     "earnContractAddress": "0xF41d768d8D5c218e1a392e40a4C7ac38d9135400",
@@ -664,16 +1503,23 @@
     "retireReason": "rewards",
     "platformId": "chronos",
     "assets": ["ARB", "arbUSDCe"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0xd302119B5C46d504D0b3534312e56eC321976251",
     "removeLiquidityUrl": "https://app.chronos.exchange/liquidity/0xd302119B5C46d504D0b3534312e56eC321976251",
     "network": "arbitrum",
-    "createdAt": 1689957428
+    "createdAt": 1689957428,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-chronos"
+      }
+    ]
   },
   {
     "id": "aura-bbaaUSD",
     "name": "bbaUSD",
+    "type": "standard",
     "token": "bbaaUSD",
     "tokenAddress": "0xEE02583596AEE94ccCB7e8ccd3921d955f17982A",
     "tokenDecimals": 18,
@@ -704,6 +1550,7 @@
   {
     "id": "balancer-tbtc-wbtc",
     "name": "tBTC-WBTC",
+    "type": "standard",
     "token": "tBTC-WBTC",
     "tokenAddress": "0x542F16DA0efB162D20bF4358EfA095B70A100f9E",
     "tokenDecimals": 18,
@@ -733,6 +1580,7 @@
   {
     "id": "balancer-tbtc-weth",
     "name": "tBTC-WETH",
+    "type": "standard",
     "token": "tBTC-WETH",
     "tokenAddress": "0xc9f52540976385A84BF416903e1Ca3983c539E34",
     "tokenDecimals": 18,
@@ -762,11 +1610,11 @@
   {
     "id": "ramses-frxeth-sfrxeth",
     "name": "sfrxETH-frxETH sLP",
+    "type": "standard",
     "token": "sfrxETH-frxETH sLP",
     "tokenAddress": "0xf166fF5CD771923D4d4fb870403Afc6F13DD2D02",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsessfrxETH-frxETH",
     "earnedTokenAddress": "0xB0bAf134e4aAe5AeC078226329c0933806D202ff",
     "earnContractAddress": "0xB0bAf134e4aAe5AeC078226329c0933806D202ff",
@@ -781,11 +1629,18 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x95aB45875cFFdba1E5f451B950bC2E42c0053f39&to=0x178412e79c25968a32e89b11f63B33F733770c2A",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0xf166fF5CD771923D4d4fb870403Afc6F13DD2D02",
     "network": "arbitrum",
-    "createdAt": 1686117843
+    "createdAt": 1686117843,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "balancer-wsteth-bbaaweth",
     "name": "wstETH-bbaWETH",
+    "type": "standard",
     "token": "wstETH-bbaWETH Arbitrum",
     "tokenAddress": "0x5A7f39435fD9c381e4932fa2047C9a5136A5E3E7",
     "tokenDecimals": 18,
@@ -816,11 +1671,11 @@
   {
     "id": "chronos-weth-usdc",
     "name": "ETH-USDC.e vLP",
+    "type": "standard",
     "token": "vAMM-WETH/USDC.e",
     "tokenAddress": "0xA2F1C1B52E1b7223825552343297Dc68a29ABecC",
     "tokenDecimals": 18,
     "tokenProviderId": "chronos",
-    "tokenAmmId": "arbitrum-chronos",
     "earnedToken": "mooChronos_WETH-USDC",
     "earnedTokenAddress": "0xb60dEc93cc7376C446aF29e6B0591c479Aa5fb96",
     "earnContractAddress": "0xb60dEc93cc7376C446aF29e6B0591c479Aa5fb96",
@@ -835,16 +1690,22 @@
     "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0xA2F1C1B52E1b7223825552343297Dc68a29ABecC",
     "removeLiquidityUrl": "https://app.chronos.exchange/liquidity/0xA2F1C1B52E1b7223825552343297Dc68a29ABecC",
     "network": "arbitrum",
-    "createdAt": 1684228390
+    "createdAt": 1684228390,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-chronos"
+      }
+    ]
   },
   {
     "id": "chronos-weth-arb",
     "name": "ETH-ARB vLP",
+    "type": "standard",
     "token": "vAMM-WETH/ARB",
     "tokenAddress": "0xafE909b1A5ed90d36f9eE1490fCB855645C00EB3",
     "tokenDecimals": 18,
     "tokenProviderId": "chronos",
-    "tokenAmmId": "arbitrum-chronos",
     "earnedToken": "mooChronos_WETH-ARB",
     "earnedTokenAddress": "0xaEEdaA39df693e4c06B9d30471E9848C34b70f5c",
     "earnContractAddress": "0xaEEdaA39df693e4c06B9d30471E9848C34b70f5c",
@@ -859,16 +1720,22 @@
     "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0xafE909b1A5ed90d36f9eE1490fCB855645C00EB3",
     "removeLiquidityUrl": "https://app.chronos.exchange/liquidity/0xafE909b1A5ed90d36f9eE1490fCB855645C00EB3",
     "network": "arbitrum",
-    "createdAt": 1684228366
+    "createdAt": 1684228366,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-chronos"
+      }
+    ]
   },
   {
     "id": "chronos-wusdr-usdc",
     "name": "wUSDR-USDC.e vLP",
+    "type": "standard",
     "token": "vAMM-wUSDR/USDC.e",
     "tokenAddress": "0x278f76df86EfdcbE0f2573AE54e917505621E312",
     "tokenDecimals": 18,
     "tokenProviderId": "chronos",
-    "tokenAmmId": "arbitrum-chronos",
     "earnedToken": "mooChronos_wUSDR-USDC",
     "earnedTokenAddress": "0xA5fc91bE851AdAbA6db55A60FEc68716dC46C6CE",
     "earnContractAddress": "0xA5fc91bE851AdAbA6db55A60FEc68716dC46C6CE",
@@ -883,16 +1750,22 @@
     "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0x278f76df86EfdcbE0f2573AE54e917505621E312",
     "removeLiquidityUrl": "https://app.chronos.exchange/liquidity/0x278f76df86EfdcbE0f2573AE54e917505621E312",
     "network": "arbitrum",
-    "createdAt": 1684143581
+    "createdAt": 1684143581,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-chronos"
+      }
+    ]
   },
   {
     "id": "ramses-eth-ram",
     "name": "RAM-ETH vLP",
+    "type": "standard",
     "token": "RAM-ETH vLP",
     "tokenAddress": "0x1E50482e9185D9DAC418768D14b2F2AC2b4DAF39",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesETH-RAM",
     "earnedTokenAddress": "0x80bF63798a0656F3f63Ca5e00c748Ef897b66B5b",
     "earnContractAddress": "0x80bF63798a0656F3f63Ca5e00c748Ef897b66B5b",
@@ -907,11 +1780,18 @@
     "buyTokenUrl": "https://beta.ramses.exchange/swap",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x1E50482e9185D9DAC418768D14b2F2AC2b4DAF39",
     "network": "arbitrum",
-    "createdAt": 1683029533
+    "createdAt": 1683029533,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "balancer-reth-bbaweth",
     "name": "rETH-bbaWETH",
+    "type": "standard",
     "token": "rETH-bbaWETH",
     "tokenAddress": "0xCba9Ff45cfB9cE238AfDE32b0148Eb82CbE63562",
     "tokenDecimals": 18,
@@ -942,11 +1822,11 @@
   {
     "id": "arbidex-arb-usdc",
     "name": "ARB-USDC.e LP",
+    "type": "standard",
     "token": "ARB-USDC.e LP",
     "tokenAddress": "0xD65Ef54B1ff5D9a452B32Ac0c304d1674F761061",
     "tokenDecimals": 18,
     "tokenProviderId": "arbidex",
-    "tokenAmmId": "arbitrum-arbidex",
     "earnedToken": "mooArbidexARB-USDC",
     "earnedTokenAddress": "0x698610AdFf053f6bAc0D1800780A3FCf6b16C31f",
     "earnContractAddress": "0x698610AdFf053f6bAc0D1800780A3FCf6b16C31f",
@@ -961,11 +1841,80 @@
     "buyTokenUrl": "https://arbidex.fi/swap/",
     "addLiquidityUrl": "https://arbidex.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0x912CE59144191C1204E64559FE8253a0e49E6548/",
     "network": "arbitrum",
-    "createdAt": 1682622717
+    "createdAt": 1682622717,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-arbidex"
+      }
+    ]
+  },
+  {
+    "id": "hop-arb-reth",
+    "name": "rETH LP",
+    "type": "standard",
+    "token": "rETH-hrETH LP",
+    "tokenAddress": "0xbBA837dFFB3eCf4638D200F11B8c691eA641AdCb",
+    "tokenDecimals": 18,
+    "tokenProviderId": "hop",
+    "earnedToken": "mooHoprETH",
+    "earnedTokenAddress": "0xBA5b570e7f07de432DeE25B4C2732e7087CE458C",
+    "earnContractAddress": "0xBA5b570e7f07de432DeE25B4C2732e7087CE458C",
+    "oracle": "lps",
+    "oracleId": "hop-arb-reth",
+    "status": "active",
+    "platformId": "hop",
+    "assets": ["rETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single-lp",
+    "buyTokenUrl": "https://app.1inch.io/#/42161/simple/swap/ETH/rETH",
+    "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=rETH&sourceNetwork=arbitrum",
+    "removeLiquidityUrl": "https://app.hop.exchange/#/pool/withdraw?token=rETH&sourceNetwork=arbitrum",
+    "network": "arbitrum",
+    "createdAt": 1700502775
+  },
+  {
+    "id": "hop-arb-magic",
+    "name": "MAGIC LP",
+    "type": "standard",
+    "token": "MAGIC-hMAGIC LP",
+    "tokenAddress": "0x163A9E12787dBFa2836caa549aE02ed67F73e7C2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "hop",
+    "earnedToken": "mooHopMAGIC",
+    "earnedTokenAddress": "0xC348ee7C8D2c39292B3826fe30f995bd6FacB61F",
+    "earnContractAddress": "0xC348ee7C8D2c39292B3826fe30f995bd6FacB61F",
+    "oracle": "lps",
+    "oracleId": "hop-arb-magic",
+    "status": "active",
+    "platformId": "hop",
+    "assets": ["MAGIC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single-lp",
+    "buyTokenUrl": "https://www.sushi.com/swap?chainId=42161&token0=NATIVE&token1=0x539bdE0d7Dbd336b79148AA742883198BBF60342",
+    "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=MAGIC&sourceNetwork=arbitrum",
+    "removeLiquidityUrl": "https://app.hop.exchange/#/pool/withdraw?token=MAGIC&sourceNetwork=arbitrum",
+    "network": "arbitrum",
+    "createdAt": 1700502775
   },
   {
     "id": "hop-arb-eth",
     "name": "ETH LP",
+    "type": "standard",
     "token": "ETH-hETH LP",
     "tokenAddress": "0x59745774Ed5EfF903e615F5A2282Cae03484985a",
     "tokenDecimals": 18,
@@ -996,6 +1945,7 @@
   {
     "id": "hop-arb-usdc",
     "name": "USDC.e LP",
+    "type": "standard",
     "token": "USDC.e-hUSDC LP",
     "tokenAddress": "0xB67c014FA700E69681a673876eb8BAFAA36BFf71",
     "tokenDecimals": 18,
@@ -1026,6 +1976,7 @@
   {
     "id": "hop-arb-dai",
     "name": "DAI LP",
+    "type": "standard",
     "token": "DAI-hDAI LP",
     "tokenAddress": "0x68f5d998F00bB2460511021741D098c05721d8fF",
     "tokenDecimals": 18,
@@ -1056,6 +2007,7 @@
   {
     "id": "hop-arb-usdt",
     "name": "USDT LP",
+    "type": "standard",
     "token": "USDT-hUSDT LP",
     "tokenAddress": "0xCe3B19D820CB8B9ae370E423B0a329c4314335fE",
     "tokenDecimals": 18,
@@ -1086,11 +2038,11 @@
   {
     "id": "ramses-frax-fxs",
     "name": "FRAX-FXS vLP",
+    "type": "standard",
     "token": "FRAX-FXS vLP",
     "tokenAddress": "0xa45Cbd521ED745F6C856C89F8dBB583bD1591fC2",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesFRAX-FXS",
     "earnedTokenAddress": "0xf13A3355B052dC4e689D00f0A4124f89BA2d3AC8",
     "earnContractAddress": "0xf13A3355B052dC4e689D00f0A4124f89BA2d3AC8",
@@ -1112,16 +2064,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F&to=0x9d2F299715D94d8A7E6F5eaa8E654E8c74a988A7",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0xa45Cbd521ED745F6C856C89F8dBB583bD1591fC2",
     "network": "arbitrum",
-    "createdAt": 1680280353
+    "createdAt": 1680280353,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-gns-eth",
     "name": "GNS-ETH vLP",
+    "type": "standard",
     "token": "GNS-ETH vLP",
     "tokenAddress": "0x63583Dd543c4DC519f191C567d416F4Ef6a2A4ef",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesGNS-ETH",
     "earnedTokenAddress": "0xdB23d1ef07554d61C5E28348A48bE5D85EA89A1B",
     "earnContractAddress": "0xdB23d1ef07554d61C5E28348A48bE5D85EA89A1B",
@@ -1136,16 +2094,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=ETH&to=0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x63583Dd543c4DC519f191C567d416F4Ef6a2A4ef",
     "network": "arbitrum",
-    "createdAt": 1680280353
+    "createdAt": 1680280353,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-lusd-lqty",
     "name": "LQTY-LUSD vLP",
+    "type": "standard",
     "token": "LQTY-LUSD vLP",
     "tokenAddress": "0x0f9a90636C778F6a583F7d2212E4921715Af4900",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesLUSD-LQTY",
     "earnedTokenAddress": "0x1C83E83Ab71B7BF7ca3c5865f241E006Caf1Fe7D",
     "earnContractAddress": "0x1C83E83Ab71B7BF7ca3c5865f241E006Caf1Fe7D",
@@ -1167,16 +2131,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x93b346b6BC2548dA6A1E7d98E9a421B42541425b&to=0xfb9E5D956D889D91a82737B9bFCDaC1DCE3e1449",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x0f9a90636C778F6a583F7d2212E4921715Af4900",
     "network": "arbitrum",
-    "createdAt": 1680280353
+    "createdAt": 1680280353,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-frax-dola",
     "name": "FRAX-DOLA sLP",
+    "type": "standard",
     "token": "FRAX-DOLA sLP",
     "tokenAddress": "0x1850e96550d6716d43bA4d7DF815FfC32bD0d03e",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesFRAX-DOLA",
     "earnedTokenAddress": "0xA0a941F4b52D50f4E41e4a7547307B3191ABf600",
     "earnContractAddress": "0xA0a941F4b52D50f4E41e4a7547307B3191ABf600",
@@ -1198,16 +2168,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F&to=0x6A7661795C374c0bFC635934efAddFf3A7Ee23b6",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x1850e96550d6716d43bA4d7DF815FfC32bD0d03e",
     "network": "arbitrum",
-    "createdAt": 1680280353
+    "createdAt": 1680280353,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-mai-dola",
     "name": "MAI-DOLA sLP",
+    "type": "standard",
     "token": "MAI-DOLA sLP",
     "tokenAddress": "0x052f7890E50fb5b921BCAb3B10B79a58A3B9d40f",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesMAI-DOLA",
     "earnedTokenAddress": "0x37cd9c63ED22F309B2fD20AEb0463cc50fCf142e",
     "earnContractAddress": "0x37cd9c63ED22F309B2fD20AEb0463cc50fCf142e",
@@ -1229,16 +2205,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x3F56e0c36d275367b8C502090EDF38289b3dEa0d&to=0x6A7661795C374c0bFC635934efAddFf3A7Ee23b6",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x052f7890E50fb5b921BCAb3B10B79a58A3B9d40f",
     "network": "arbitrum",
-    "createdAt": 1680280353
+    "createdAt": 1680280353,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-mai-gdai",
     "name": "MAI-gDAI sLP",
+    "type": "standard",
     "token": "MAI-gDAI sLP",
     "tokenAddress": "0xeeFD88a21Cf767737a956Bb98c3E0368E12594Cd",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesMAI-gDAI",
     "earnedTokenAddress": "0xfa650F9916b3385f933e87E5dB21329c0f492A21",
     "earnContractAddress": "0xfa650F9916b3385f933e87E5dB21329c0f492A21",
@@ -1260,16 +2242,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x3F56e0c36d275367b8C502090EDF38289b3dEa0d&to=0xd85E038593d7A098614721EaE955EC2022B9B91B",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0xeeFD88a21Cf767737a956Bb98c3E0368E12594Cd",
     "network": "arbitrum",
-    "createdAt": 1680280353
+    "createdAt": 1680280353,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-frax-dei",
     "name": "FRAX-DEI sLP",
+    "type": "standard",
     "token": "FRAX-DEI sLP",
     "tokenAddress": "0x43fFC1291c2CC69cc5E4b12f8017AAAa696932e6",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesFRAX-DEI",
     "earnedTokenAddress": "0x87c2644d34019157eD3C85336936B6e6B67fa9B2",
     "earnContractAddress": "0x87c2644d34019157eD3C85336936B6e6B67fa9B2",
@@ -1290,16 +2278,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F&to=0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x43fFC1291c2CC69cc5E4b12f8017AAAa696932e6",
     "network": "arbitrum",
-    "createdAt": 1680280353
+    "createdAt": 1680280353,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-eth-arb",
     "name": "ARB-ETH vLP",
+    "type": "standard",
     "token": "ARB-ETH vLP",
     "tokenAddress": "0x275F7112e3900FdF3c9532d749Dd4985790e7933",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesETH-ARB",
     "earnedTokenAddress": "0x4329Ad0540eb59Eb9B5E93A2C4808ec13D14e645",
     "earnContractAddress": "0x4329Ad0540eb59Eb9B5E93A2C4808ec13D14e645",
@@ -1314,16 +2308,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=ETH&to=0x912ce59144191c1204e64559fe8253a0e49e6548",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x275f7112e3900fdf3c9532d749dd4985790e7933",
     "network": "arbitrum",
-    "createdAt": 1680100045
+    "createdAt": 1680100045,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-arb-usdc",
     "name": "ARB-USDC.e vLP",
+    "type": "standard",
     "token": "ARB-USDC.e vLP",
     "tokenAddress": "0xba9f17ca67d1C8416Bb9b132D50232191e27B45e",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesARB-USDC",
     "earnedTokenAddress": "0xd7A7Be0F4536eEb07af48A87266D4295d251dcDC",
     "earnContractAddress": "0xd7A7Be0F4536eEb07af48A87266D4295d251dcDC",
@@ -1338,16 +2338,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&to=0x912ce59144191c1204e64559fe8253a0e49e6548",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0xba9f17ca67d1C8416Bb9b132D50232191e27B45e",
     "network": "arbitrum",
-    "createdAt": 1680100045
+    "createdAt": 1680100045,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-arb-usdt",
     "name": "ARB-USDT vLP",
+    "type": "standard",
     "token": "ARB-USDT vLP",
     "tokenAddress": "0x159d1E96a39B3bd85a08D0E852c9e0560B268Ecd",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesARB-USDT",
     "earnedTokenAddress": "0xd80288Bd97A22E15C87DCaC06fCbbE182336A1F4",
     "earnContractAddress": "0xd80288Bd97A22E15C87DCaC06fCbbE182336A1F4",
@@ -1362,16 +2368,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9&to=0x912ce59144191c1204e64559fe8253a0e49e6548",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x159d1E96a39B3bd85a08D0E852c9e0560B268Ecd",
     "network": "arbitrum",
-    "createdAt": 1680100045
+    "createdAt": 1680100045,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-eth-usdt",
     "name": "ETH-USDT vLP",
+    "type": "standard",
     "token": "ETH-USDT vLP",
     "tokenAddress": "0x7E0A6013B8f15209491e021e394271b9D3Ee5B68",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesETH-USDT",
     "earnedTokenAddress": "0x587c2A304bBb25FCCBE4325D266c3FacC5365422",
     "earnContractAddress": "0x587c2A304bBb25FCCBE4325D266c3FacC5365422",
@@ -1386,16 +2398,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=ETH&to=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x7E0A6013B8f15209491e021e394271b9D3Ee5B68",
     "network": "arbitrum",
-    "createdAt": 1680100045
+    "createdAt": 1680100045,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-rdnt-eth",
     "name": "RDNT-ETH vLP",
+    "type": "standard",
     "token": "RDNT-ETH vLP",
     "tokenAddress": "0xB1406B8344Cd65dBe9f304938C0ECF2209F54D18",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesRDNT-ETH",
     "earnedTokenAddress": "0xF650BC780EF243F98Fcf906C43f1B6b3F1Fa036f",
     "earnContractAddress": "0xF650BC780EF243F98Fcf906C43f1B6b3F1Fa036f",
@@ -1410,40 +2428,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=ETH&to=0x3082CC23568eA640225c2467653dB90e9250AaA0",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0xB1406B8344Cd65dBe9f304938C0ECF2209F54D18",
     "network": "arbitrum",
-    "createdAt": 1680100045
-  },
-  {
-    "id": "ramses-frax-mai",
-    "name": "FRAX-MAI sLP",
-    "token": "FRAX-MAI sLP",
-    "tokenAddress": "0x3F6253767208aAf70071d563403C8023809d52FF",
-    "tokenDecimals": 18,
-    "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
-    "earnedToken": "mooRamsesFRAX-MAI",
-    "earnedTokenAddress": "0xdE6FbfB149a290efE4c70A23DF770B268D2839Eb",
-    "earnContractAddress": "0xdE6FbfB149a290efE4c70A23DF770B268D2839Eb",
-    "oracle": "lps",
-    "oracleId": "ramses-frax-mai",
-    "status": "eol",
-    "retireReason": "tvl",
-    "platformId": "ramses",
-    "assets": ["FRAX", "MAI"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F&to=0x3F56e0c36d275367b8C502090EDF38289b3dEa0d",
-    "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x3F6253767208aAf70071d563403C8023809d52FF",
-    "network": "arbitrum",
-    "createdAt": 1680100045
+    "createdAt": 1680100045,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-frxeth-eth",
     "name": "frxETH-ETH sLP",
+    "type": "standard",
     "token": "frxETH-ETH sLP",
     "tokenAddress": "0x3932192dE4f17DFB94Be031a8458E215A44BF560",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesfrxETH-ETH",
     "earnedTokenAddress": "0xe28ed3A8FE92fc7Ad6078bAB28B1A34aEFfE857f",
     "earnContractAddress": "0xe28ed3A8FE92fc7Ad6078bAB28B1A34aEFfE857f",
@@ -1458,16 +2458,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=ETH&to=0x178412e79c25968a32e89b11f63B33F733770c2A",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x3932192dE4f17DFB94Be031a8458E215A44BF560",
     "network": "arbitrum",
-    "createdAt": 1680100045
+    "createdAt": 1680100045,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-usd+-dai+",
     "name": "USD+-DAI+ sLP",
+    "type": "standard",
     "token": "USD+-DAI+ sLP",
     "tokenAddress": "0xeb9153afBAa3A6cFbd4fcE39988Cea786d3F62bb",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesUSD+-DAI+",
     "earnedTokenAddress": "0xe165D2bb15510E382Ca40E9ecBA359911241EdCc",
     "earnContractAddress": "0xe165D2bb15510E382Ca40E9ecBA359911241EdCc",
@@ -1482,16 +2488,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65&to=0xeb8E93A0c7504Bffd8A8fFa56CD754c63aAeBFe8",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0xeb9153afBAa3A6cFbd4fcE39988Cea786d3F62bb",
     "network": "arbitrum",
-    "createdAt": 1680100045
+    "createdAt": 1680100045,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-lusd-dei",
     "name": "LUSD-DEI sLP",
+    "type": "standard",
     "token": "LUSD-DEI sLP",
     "tokenAddress": "0x6b18AE9225011eaf4A7e52f1069fB66462406bF0",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesLUSD-DEI",
     "earnedTokenAddress": "0x315a3674711bc1A41A4b6993c5780d23EaE034Db",
     "earnContractAddress": "0x315a3674711bc1A41A4b6993c5780d23EaE034Db",
@@ -1506,16 +2518,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x93b346b6BC2548dA6A1E7d98E9a421B42541425b&to=0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x6b18AE9225011eaf4A7e52f1069fB66462406bF0",
     "network": "arbitrum",
-    "createdAt": 1680100045
+    "createdAt": 1680100045,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-eth-bifi",
     "name": "oldBIFI-ETH vLP",
+    "type": "standard",
     "token": "oldBIFI-ETH vLP",
     "tokenAddress": "0xf9C642d206e7974d7d01758568D3e30019c7F022",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesETH-oldBIFI",
     "earnedTokenAddress": "0x92269f54eB301c62bcfB408623aBaD4124D3660A",
     "earnContractAddress": "0x92269f54eB301c62bcfB408623aBaD4124D3660A",
@@ -1530,16 +2548,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0x99c409e5f62e4bd2ac142f17cafb6810b8f0baae",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0xf9c642d206e7974d7d01758568d3e30019c7f022",
     "network": "arbitrum",
-    "createdAt": 1680096692
+    "createdAt": 1680096692,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-eth-usdc",
     "name": "ETH-USDC.e vLP",
+    "type": "standard",
     "token": "ETH-USDC.e vLP",
     "tokenAddress": "0x5513a48F3692Df1d9C793eeaB1349146B2140386",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesETH-USDC",
     "earnedTokenAddress": "0x01EB576CABBd03188BbF2099e4c3bB50A1Db2E0E",
     "earnContractAddress": "0x01EB576CABBd03188BbF2099e4c3bB50A1Db2E0E",
@@ -1554,16 +2578,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x5513a48f3692df1d9c793eeab1349146b2140386",
     "network": "arbitrum",
-    "createdAt": 1680096691
+    "createdAt": 1680096691,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-magic-eth",
     "name": "MAGIC-ETH vLP",
+    "type": "standard",
     "token": "MAGIC-ETH vLP",
     "tokenAddress": "0x040DA64a9347c9786069EEe1D191a1B9062EdC0F",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesMAGIC-ETH",
     "earnedTokenAddress": "0x45193aAB979BCcb8f3A86160A99469371ABA2F5F",
     "earnContractAddress": "0x45193aAB979BCcb8f3A86160A99469371ABA2F5F",
@@ -1578,16 +2608,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0x539bde0d7dbd336b79148aa742883198bbf60342",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x040da64a9347c9786069eee1d191a1b9062edc0f",
     "network": "arbitrum",
-    "createdAt": 1680096690
+    "createdAt": 1680096690,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-eth-lqty",
     "name": "LQTY-ETH vLP",
+    "type": "standard",
     "token": "LQTY-ETH vLP",
     "tokenAddress": "0x8e78F0F6D116f94252D3bcD73d8Ade63D415C1bf",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesETH-LQTY",
     "earnedTokenAddress": "0x3d0f0691c4030eC665085a15fA97c5231383E836",
     "earnContractAddress": "0x3d0f0691c4030eC665085a15fA97c5231383E836",
@@ -1602,16 +2638,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0xfb9e5d956d889d91a82737b9bfcdac1dce3e1449",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x8e78f0f6d116f94252d3bcd73d8ade63d415c1bf",
     "network": "arbitrum",
-    "createdAt": 1680096688
+    "createdAt": 1680096688,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-eth-deus",
     "name": "DEUS-ETH vLP",
+    "type": "standard",
     "token": "DEUS-ETH vLP",
     "tokenAddress": "0x93D98B4Caac02385a0ae7caaeADC805F48553F76",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesETH-DEUS",
     "earnedTokenAddress": "0xDac678274F51A316BC79dfC153A9820f6e84F0CC",
     "earnContractAddress": "0xDac678274F51A316BC79dfC153A9820f6e84F0CC",
@@ -1626,16 +2668,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0xde5ed76e7c05ec5e4572cfc88d1acea165109e44",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x93d98b4caac02385a0ae7caaeadc805f48553f76",
     "network": "arbitrum",
-    "createdAt": 1680096687
+    "createdAt": 1680096687,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-l2dao-eth",
     "name": "L2DAO-ETH vLP",
+    "type": "standard",
     "token": "L2DAO-ETH vLP",
     "tokenAddress": "0x7A492402BfE4362a17db3C38B04d17545e08A396",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesL2DAO-ETH",
     "earnedTokenAddress": "0xE15f35F9567Cc129240b93feB7Afa45231b40Af7",
     "earnContractAddress": "0xE15f35F9567Cc129240b93feB7Afa45231b40Af7",
@@ -1650,16 +2698,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0x2cab3abfc1670d1a452df502e216a66883cdf079",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x7a492402bfe4362a17db3c38b04d17545e08a396",
     "network": "arbitrum",
-    "createdAt": 1680096686
+    "createdAt": 1680096686,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-dola-usdc",
     "name": "DOLA-USDC.e sLP",
+    "type": "standard",
     "token": "DOLA-USDC.e sLP",
     "tokenAddress": "0xDd8b120DdaE0F19b922324012816F2F3Ce529BF8",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesDOLA-USDC",
     "earnedTokenAddress": "0x8e37AeDFEac826ED7647283a2632A27Ad85B0909",
     "earnContractAddress": "0x8e37AeDFEac826ED7647283a2632A27Ad85B0909",
@@ -1681,16 +2735,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0x6a7661795c374c0bfc635934efaddff3a7ee23b6",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0xdd8b120ddae0f19b922324012816f2f3ce529bf8",
     "network": "arbitrum",
-    "createdAt": 1680096685
+    "createdAt": 1680096685,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-dei-usdc",
     "name": "DEI-USDC.e sLP",
+    "type": "standard",
     "token": "DEI-USDC.e sLP",
     "tokenAddress": "0x7052992202c4308e64880d56b3f30a483371DB6b",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesDEI-USDC",
     "earnedTokenAddress": "0xc496b3691d9A6Cded3cff9a3BEDaD512B0D0270F",
     "earnContractAddress": "0xc496b3691d9A6Cded3cff9a3BEDaD512B0D0270F",
@@ -1711,16 +2771,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0xde1e704dae0b4051e80dabb26ab6ad6c12262da0",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x7052992202c4308e64880d56b3f30a483371db6b",
     "network": "arbitrum",
-    "createdAt": 1680096684
+    "createdAt": 1680096684,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-frax-usdc",
     "name": "FRAX-USDC.e sLP",
+    "type": "standard",
     "token": "FRAX-USDC.e sLP",
     "tokenAddress": "0xfE3b6dD9457e13b2F44B9356E55Fc5e6248B27Ba",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesFRAX-USDC",
     "earnedTokenAddress": "0xE4E42035f6D641C6712E18E4E0B7ac6d62f1467E",
     "earnContractAddress": "0xE4E42035f6D641C6712E18E4E0B7ac6d62f1467E",
@@ -1742,16 +2808,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0xfe3b6dd9457e13b2f44b9356e55fc5e6248b27ba",
     "network": "arbitrum",
-    "createdAt": 1680096683
+    "createdAt": 1680096683,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-usdt-usdc",
     "name": "USDT-USDC.e sLP",
+    "type": "standard",
     "token": "USDT-USDC.e sLP",
     "tokenAddress": "0xe25c248Ee2D3D5B428F1388659964446b4d78599",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesUSDT-USDC",
     "earnedTokenAddress": "0x5227Fb4d13f8d0C081A4DBA58395822fA725053C",
     "earnContractAddress": "0x5227Fb4d13f8d0C081A4DBA58395822fA725053C",
@@ -1766,16 +2838,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0xff970a61a04b1ca14834a43f5de4533ebddb5cc8&to=0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0xe25c248ee2d3d5b428f1388659964446b4d78599",
     "network": "arbitrum",
-    "createdAt": 1680096682
+    "createdAt": 1680096682,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-mim-usdc",
     "name": "MIM-USDC.e sLP",
+    "type": "standard",
     "token": "MIM-USDC.e sLP",
     "tokenAddress": "0x7E9e5F35EC3e95AEb58B7E7b218cC334a1f8Bf28",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesMIM-USDC",
     "earnedTokenAddress": "0x667168ef0a78909AB5a456229619a0c3dc905A4F",
     "earnContractAddress": "0x667168ef0a78909AB5a456229619a0c3dc905A4F",
@@ -1797,16 +2875,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0xff970a61a04b1ca14834a43f5de4533ebddb5cc8&to=0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x7e9e5f35ec3e95aeb58b7e7b218cc334a1f8bf28",
     "network": "arbitrum",
-    "createdAt": 1680096681
+    "createdAt": 1680096681,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "ramses-mai-usdc",
     "name": "MAI-USDC.e sLP",
+    "type": "standard",
     "token": "MAI-USDC.e sLP",
     "tokenAddress": "0x3c6eF5Ed8ad5DF0d5e3D05C6e607c60F987fB735",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
-    "tokenAmmId": "arbitrum-ramses",
     "earnedToken": "mooRamsesMAI-USDC",
     "earnedTokenAddress": "0xa7fC98760331409c1FC0177dECF083cE9d5aed87",
     "earnContractAddress": "0xa7fC98760331409c1FC0177dECF083cE9d5aed87",
@@ -1828,16 +2912,22 @@
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0xff970a61a04b1ca14834a43f5de4533ebddb5cc8&to=0x3f56e0c36d275367b8c502090edf38289b3dea0d",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x3c6ef5ed8ad5df0d5e3d05c6e607c60f987fb735",
     "network": "arbitrum",
-    "createdAt": 1680096680
+    "createdAt": 1680096680,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
   },
   {
     "id": "sushi-arb-weth-arb-2",
     "name": "ARB-ETH LP V2",
+    "type": "standard",
     "token": "ARB-ETH LP V2",
     "tokenAddress": "0xBF6CBb1F40a542aF50839CaD01b0dc1747F11e18",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "arbitrum-sushi",
     "earnedToken": "mooSushiARB-ETHV2",
     "earnedTokenAddress": "0x994Ff2ab544D00aD4EC0380a1Be8F75f4EC47Cf9",
     "earnContractAddress": "0x994Ff2ab544D00aD4EC0380a1Be8F75f4EC47Cf9",
@@ -1859,22 +2949,29 @@
     "addLiquidityUrl": "https://www.sushi.com/pool/42161%3A0xbf6cbb1f40a542af50839cad01b0dc1747f11e18",
     "removeLiquidityUrl": "https://www.sushi.com/pool/42161%3A0xbf6cbb1f40a542af50839cad01b0dc1747f11e18",
     "network": "arbitrum",
-    "createdAt": 1680094464
+    "createdAt": 1680094464,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-sushi"
+      }
+    ]
   },
   {
     "id": "sushi-arb-rdpx-weth",
     "name": "RDPX-ETH LP",
+    "type": "standard",
     "token": "RDPX-ETH LP",
     "tokenAddress": "0x7418F5A2621E13c05d1EFBd71ec922070794b90a",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "arbitrum-sushi",
     "earnedToken": "mooSushiRDPX-ETH",
     "earnedTokenAddress": "0x5A8beF2fEb83057bBCcC81cea985a94a62A86208",
     "earnContractAddress": "0x5A8beF2fEb83057bBCcC81cea985a94a62A86208",
     "oracle": "lps",
     "oracleId": "sushi-arb-rdpx-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["RDPX", "ETH"],
     "risks": [
@@ -1890,16 +2987,22 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/42161:0x7418F5A2621E13c05d1EFBd71ec922070794b90a/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/42161:0x7418F5A2621E13c05d1EFBd71ec922070794b90a/remove",
     "network": "arbitrum",
-    "createdAt": 1696621930
+    "createdAt": 1696621930,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-sushi"
+      }
+    ]
   },
   {
     "id": "sushi-arb-dpx-weth",
     "name": "DPX-ETH LP",
+    "type": "standard",
     "token": "DPX-ETH LP",
     "tokenAddress": "0x0C1Cf6883efA1B496B01f654E247B9b419873054",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "arbitrum-sushi",
     "earnedToken": "mooSushiDPX-ETH",
     "earnedTokenAddress": "0x4D323f77c32EDdC62BF8eAbA11E5C573FD0a2ccd",
     "earnContractAddress": "0x4D323f77c32EDdC62BF8eAbA11E5C573FD0a2ccd",
@@ -1921,11 +3024,18 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/42161:0x0C1Cf6883efA1B496B01f654E247B9b419873054/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/42161:0x0C1Cf6883efA1B496B01f654E247B9b419873054/remove",
     "network": "arbitrum",
-    "createdAt": 1696621930
+    "createdAt": 1696621930,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-sushi"
+      }
+    ]
   },
   {
     "id": "sushi-arb-weth-arb",
     "name": "ARB-ETH LP",
+    "type": "standard",
     "token": "ARB-ETH LP",
     "tokenAddress": "0xf3f54a80Cf28d44a0d097c4a67c4c04Eb30da0b5",
     "tokenDecimals": 18,
@@ -1957,11 +3067,11 @@
   {
     "id": "solidlizard-weth-arb",
     "name": "ARB-ETH vLP",
+    "type": "standard",
     "token": "ARB-ETH vLP",
     "tokenAddress": "0xCeD06c9330B02C378C31c7b12570B1C38AbfcEA6",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
-    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardARB-ETH",
     "earnedTokenAddress": "0xFCb0101503f399B4752E5160ccd5EcE3a71719bd",
     "earnContractAddress": "0xFCb0101503f399B4752E5160ccd5EcE3a71719bd",
@@ -1976,16 +3086,22 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0xCeD06c9330B02C378C31c7b12570B1C38AbfcEA6",
     "network": "arbitrum",
-    "createdAt": 1679594787
+    "createdAt": 1679594787,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-solidlizard"
+      }
+    ]
   },
   {
     "id": "solidlizard-arb-usdc",
     "name": "ARB-USDC.e vLP",
+    "type": "standard",
     "token": "ARB-USDC.e vLP",
     "tokenAddress": "0x9cB911Cbb270cAE0d132689cE11c2c52aB2DedBC",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
-    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardARB-USDC",
     "earnedTokenAddress": "0x0594Ec32240C78e056304b4A60f48a67c69179b4",
     "earnContractAddress": "0x0594Ec32240C78e056304b4A60f48a67c69179b4",
@@ -2000,16 +3116,22 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0x9cB911Cbb270cAE0d132689cE11c2c52aB2DedBC",
     "network": "arbitrum",
-    "createdAt": 1679594787
+    "createdAt": 1679594787,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-solidlizard"
+      }
+    ]
   },
   {
     "id": "solidlizard-mai-usdc",
     "name": "MAI-USDC.e sLP",
+    "type": "standard",
     "token": "MAI-USDC.e sLP",
     "tokenAddress": "0xb2E5Cbe39C92AfB14Cb8DBAdCC138Ea4A8614BAe",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
-    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardMAI-USDC",
     "earnedTokenAddress": "0xd2E694748f149118475d01216DF24Dc673FE031A",
     "earnContractAddress": "0xd2E694748f149118475d01216DF24Dc673FE031A",
@@ -2032,16 +3154,22 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0xb2E5Cbe39C92AfB14Cb8DBAdCC138Ea4A8614BAe",
     "network": "arbitrum",
-    "createdAt": 1679559921
+    "createdAt": 1679559921,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-solidlizard"
+      }
+    ]
   },
   {
     "id": "solidlizard-sliz-usdc",
     "name": "SLIZ-USDC.e vLP",
+    "type": "standard",
     "token": "SLIZ-USDC.e vLP",
     "tokenAddress": "0x9E7fB82fdF08a6aAba760A81F0A64602Af045d2a",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
-    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardSLIZ-USDC",
     "earnedTokenAddress": "0x9D8C4034BE31fA2704589dcB05DCdDA09Be322B4",
     "earnContractAddress": "0x9D8C4034BE31fA2704589dcB05DCdDA09Be322B4",
@@ -2057,16 +3185,22 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0x9E7fB82fdF08a6aAba760A81F0A64602Af045d2a",
     "network": "arbitrum",
-    "createdAt": 1679559921
+    "createdAt": 1679559921,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-solidlizard"
+      }
+    ]
   },
   {
     "id": "solidlizard-lusd-usdc",
     "name": "LUSD-USDC.e sLP",
+    "type": "standard",
     "token": "LUSD-USDC.e sLP",
     "tokenAddress": "0xB1E9b823295B3C69ac651C05D987B67189ff20AD",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
-    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardLUSD-USDC",
     "earnedTokenAddress": "0xC1bfe1b2cFbFc97e3f6bdb3162132dDfbAe4927F",
     "earnContractAddress": "0xC1bfe1b2cFbFc97e3f6bdb3162132dDfbAe4927F",
@@ -2089,16 +3223,22 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
-    "createdAt": 1677861237
+    "createdAt": 1677861237,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-solidlizard"
+      }
+    ]
   },
   {
     "id": "solidlizard-jrt-weth",
     "name": "JRT-ETH vLP",
+    "type": "standard",
     "token": "JRT-ETH vLP",
     "tokenAddress": "0x769fDe1b25a48Ea6D25F3e34F7de0f3C593cc841",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
-    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardJRT-ETH",
     "earnedTokenAddress": "0xf6145699E652EdDc001f0c43F5F1C6A967206f62",
     "earnContractAddress": "0xf6145699E652EdDc001f0c43F5F1C6A967206f62",
@@ -2114,16 +3254,22 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0x769fDe1b25a48Ea6D25F3e34F7de0f3C593cc841",
     "network": "arbitrum",
-    "createdAt": 1677525078
+    "createdAt": 1677525078,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-solidlizard"
+      }
+    ]
   },
   {
     "id": "solidlizard-lusd-usdt",
     "name": "LUSD-USDT sLP",
+    "type": "standard",
     "token": "LUSD-USDT sLP",
     "tokenAddress": "0x76306492D938aE46df657C006e642B4D31Dc6bd9",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
-    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardLUSD-USDT",
     "earnedTokenAddress": "0x69952AC1415deeE04eFD14e3A9Ca6d657635Ff37",
     "earnContractAddress": "0x69952AC1415deeE04eFD14e3A9Ca6d657635Ff37",
@@ -2146,16 +3292,22 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0x76306492D938aE46df657C006e642B4D31Dc6bd9",
     "network": "arbitrum",
-    "createdAt": 1677525078
+    "createdAt": 1677525078,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-solidlizard"
+      }
+    ]
   },
   {
     "id": "solidlizard-lusd-dai",
     "name": "LUSD-DAI sLP",
+    "type": "standard",
     "token": "LUSD-DAI sLP",
     "tokenAddress": "0x99fe59026A627e03ff34B9F2FA08bA70d7a703f9",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
-    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardLUSD-DAI",
     "earnedTokenAddress": "0x138BB1ffbae2Cc1970873E4404452Cf6FAEcA12f",
     "earnContractAddress": "0x138BB1ffbae2Cc1970873E4404452Cf6FAEcA12f",
@@ -2178,22 +3330,29 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0x99fe59026A627e03ff34B9F2FA08bA70d7a703f9",
     "network": "arbitrum",
-    "createdAt": 1677525078
+    "createdAt": 1677525078,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-solidlizard"
+      }
+    ]
   },
   {
     "id": "solidlizard-wbtc-weth",
     "name": "BTC-ETH vLP",
+    "type": "standard",
     "token": "BTC-ETH vLP",
     "tokenAddress": "0xd9D611c6943585bc0e18E51034AF8fa28778F7Da",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
-    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardWBTC-WETH",
     "earnedTokenAddress": "0x70258F17223f65A33904a87392941712d7D7b9D3",
     "earnContractAddress": "0x70258F17223f65A33904a87392941712d7D7b9D3",
     "oracle": "lps",
     "oracleId": "solidlizard-wbtc-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "solidlizard",
     "assets": ["WBTC", "WETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2202,16 +3361,22 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0xd9d611c6943585bc0e18e51034af8fa28778f7da",
     "network": "arbitrum",
-    "createdAt": 1677323003
+    "createdAt": 1677323003,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-solidlizard"
+      }
+    ]
   },
   {
     "id": "solidlizard-dai-usdc",
     "name": "DAI-USDC.e sLP",
+    "type": "standard",
     "token": "DAI-USDC.e sLP",
     "tokenAddress": "0x07d7F291e731A41D3F0EA4F1AE5b6d920ffb3Fe0",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
-    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardDAI-USDC",
     "earnedTokenAddress": "0xF79851437fd88a569527e6da012e04098509b637",
     "earnContractAddress": "0xF79851437fd88a569527e6da012e04098509b637",
@@ -2226,16 +3391,22 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0x07d7F291e731A41D3F0EA4F1AE5b6d920ffb3Fe0",
     "network": "arbitrum",
-    "createdAt": 1677320488
+    "createdAt": 1677320488,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-solidlizard"
+      }
+    ]
   },
   {
     "id": "solidlizard-dai-usdt",
     "name": "DAI-USDT sLP",
+    "type": "standard",
     "token": "DAI-USDT sLP",
     "tokenAddress": "0x15b9D20bcaa4f65d9004D2BEBAc4058445FD5285",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
-    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardDAI-USDT",
     "earnedTokenAddress": "0x19fA5a820FE5B7C6D2a1Ae0d030c88773BA02ba9",
     "earnContractAddress": "0x19fA5a820FE5B7C6D2a1Ae0d030c88773BA02ba9",
@@ -2251,16 +3422,22 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0x15b9D20bcaa4f65d9004D2BEBAc4058445FD5285",
     "network": "arbitrum",
-    "createdAt": 1677320616
+    "createdAt": 1677320616,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-solidlizard"
+      }
+    ]
   },
   {
     "id": "solidlizard-sliz-weth",
     "name": "SLIZ-ETH vLP",
+    "type": "standard",
     "token": "SLIZ-ETH vLP",
     "tokenAddress": "0x751F3B8ca139bC1F3482b193297485f14208826a",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
-    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardSLIZ-WETH",
     "earnedTokenAddress": "0x5b65FB9f2C095A2EC311c4e13ef478D4BE0EC492",
     "earnContractAddress": "0x5b65FB9f2C095A2EC311c4e13ef478D4BE0EC492",
@@ -2275,22 +3452,29 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0x751F3B8ca139bC1F3482b193297485f14208826a",
     "network": "arbitrum",
-    "createdAt": 1677686779
+    "createdAt": 1677686779,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-solidlizard"
+      }
+    ]
   },
   {
     "id": "solidlizard-ageur-usdc",
     "name": "agEUR-USDC.e vLP",
+    "type": "standard",
     "token": "agEUR-USDC.e vLP",
     "tokenAddress": "0x5cd95bc186E41419e6B48a0153833C8105781292",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
-    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardAGEUR-USDC",
     "earnedTokenAddress": "0x93Ef3F1d8652c94D08AeB3ac3F4Cd890923290B3",
     "earnContractAddress": "0x93Ef3F1d8652c94D08AeB3ac3F4Cd890923290B3",
     "oracle": "lps",
     "oracleId": "solidlizard-ageur-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "solidlizard",
     "assets": ["agEUR", "arbUSDCe"],
     "risks": [
@@ -2306,16 +3490,22 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0x5cd95bc186E41419e6B48a0153833C8105781292",
     "network": "arbitrum",
-    "createdAt": 1677323473
+    "createdAt": 1677323473,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-solidlizard"
+      }
+    ]
   },
   {
     "id": "solidlizard-weth-usdc",
     "name": "ETH-USDC.e vLP",
+    "type": "standard",
     "token": "ETH-USDC.e vLP",
     "tokenAddress": "0xe20F93279fF3538b1ad70D11bA160755625e3400",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
-    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardWETH-USDC",
     "earnedTokenAddress": "0xB2DefC5c3A69abe2B681C714b080A892825B2073",
     "earnContractAddress": "0xB2DefC5c3A69abe2B681C714b080A892825B2073",
@@ -2330,16 +3520,22 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0xe20F93279fF3538b1ad70D11bA160755625e3400",
     "network": "arbitrum",
-    "createdAt": 1677273152
+    "createdAt": 1677273152,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-solidlizard"
+      }
+    ]
   },
   {
     "id": "solidlizard-usdt-usdc",
     "name": "USDT-USDC.e sLP",
+    "type": "standard",
     "token": "USDT-USDC.e sLP",
     "tokenAddress": "0xC9dF93497B1852552F2200701cE58C236cC0378C",
     "tokenDecimals": 18,
     "tokenProviderId": "solidlizard",
-    "tokenAmmId": "arbitrum-solidlizard",
     "earnedToken": "mooSolidLizardUSDC-USDT",
     "earnedTokenAddress": "0x6d944C69A38f1caB3CfaC6FaD09e26aDD6F53864",
     "earnContractAddress": "0x6d944C69A38f1caB3CfaC6FaD09e26aDD6F53864",
@@ -2355,11 +3551,18 @@
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0xC9dF93497B1852552F2200701cE58C236cC0378C",
     "network": "arbitrum",
-    "createdAt": 1677270359
+    "createdAt": 1677270359,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-solidlizard"
+      }
+    ]
   },
   {
     "id": "gns-arb-gns",
     "name": "GNS",
+    "type": "standard",
     "token": "GNS",
     "tokenAddress": "0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
     "tokenDecimals": 18,
@@ -2376,11 +3579,17 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/42161/simple/swap/USDC/0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
     "network": "arbitrum",
-    "createdAt": 1675436269
+    "createdAt": 1675436269,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "balancer-wsteth-eth-v2",
     "name": "wstETH-ETH V2",
+    "type": "standard",
     "token": "wstETH-ETH V2",
     "tokenAddress": "0x36bf227d6BaC96e2aB1EbB5492ECec69C691943f",
     "tokenDecimals": 18,
@@ -2411,6 +3620,7 @@
   {
     "id": "curve-arb-f-fraxbp",
     "name": "FRAX/USDC.e",
+    "type": "standard",
     "token": "FRAXBP-f",
     "tokenAddress": "0xC9B8a3FDECB9D5b218d02555a8Baf332E5B740d5",
     "tokenDecimals": 18,
@@ -2420,8 +3630,7 @@
     "earnContractAddress": "0x63934e5aBA120f2BAE2418711Ef0f20F7DB26CD2",
     "oracle": "lps",
     "oracleId": "curve-arb-f-fraxbp",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "convex",
     "assets": ["FRAX", "arbUSDCe"],
     "risks": [
@@ -2441,6 +3650,7 @@
   {
     "id": "arbi-bifi-gov",
     "name": "oldBIFI Earnings Pool",
+    "type": "gov",
     "token": "oldBIFI",
     "tokenAddress": "0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
     "tokenDecimals": 18,
@@ -2463,7 +3673,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "old-bifi-pool",
-    "isGovVault": true,
     "excluded": "arbi-bifi-maxi",
     "network": "arbitrum",
     "createdAt": 1623706144
@@ -2471,11 +3680,11 @@
   {
     "id": "swapfish-ageur-usdc",
     "name": "agEUR-USDC.e LP",
+    "type": "standard",
     "token": "agEUR-USDC.e LP",
     "tokenAddress": "0x78d9B037Fb873AfCf4e3E466aDfAfa8A5258CdaD",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooSwapFishagEUR-USDC",
     "earnedTokenAddress": "0xf17B12CC054675387f06d4DF78F30C0AF317Cd04",
     "earnContractAddress": "0xf17B12CC054675387f06d4DF78F30C0AF317Cd04",
@@ -2499,16 +3708,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0xFA5Ed56A203466CbBC2430a43c66b9D8723528E7/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0xFA5Ed56A203466CbBC2430a43c66b9D8723528E7/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
-    "createdAt": 1674210748
+    "createdAt": 1674210748,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-tusd-usdc",
     "name": "TUSD-USDC.e LP",
+    "type": "standard",
     "token": "TUSD-USDC.e LP",
     "tokenAddress": "0xFc0F4F60F6BcF32a6c5847C2dc1E590e39A45993",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooSwapFishTUSD-USDC",
     "earnedTokenAddress": "0xFDe0773E2a685f3Ec3CCa4E67Bdc95d07d2e9c8E",
     "earnContractAddress": "0xFDe0773E2a685f3Ec3CCa4E67Bdc95d07d2e9c8E",
@@ -2531,16 +3746,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0x4D15a3A2286D883AF0AA1B3f21367843FAc63E07/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0x4D15a3A2286D883AF0AA1B3f21367843FAc63E07/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
-    "createdAt": 1674210748
+    "createdAt": 1674210748,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-usdd-usdc",
     "name": "USDD-USDC.e LP",
+    "type": "standard",
     "token": "USDD-USDC.e LP",
     "tokenAddress": "0xc6c8F9E95d7BB6492e5E1957a1CC1367f2f0B282",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooSwapFishUSDD-USDC",
     "earnedTokenAddress": "0x1b2EF72BDD9AdDfA9103761BA841443FF597CFe6",
     "earnContractAddress": "0x1b2EF72BDD9AdDfA9103761BA841443FF597CFe6",
@@ -2564,16 +3785,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0x680447595e8b7b3Aa1B43beB9f6098C79ac2Ab3f/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0x680447595e8b7b3Aa1B43beB9f6098C79ac2Ab3f/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
-    "createdAt": 1674210748
+    "createdAt": 1674210748,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-mai-weth",
     "name": "MAI-ETH LP",
+    "type": "standard",
     "token": "MAI-ETH LP",
     "tokenAddress": "0x28A13285e9F647a07e9BbE10A5549aeB559e09cB",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFishMAI-ETH",
     "earnedTokenAddress": "0x3af3563Ba5C68EB7DCbAdd2dF0FcE4CC9818e75c",
     "earnContractAddress": "0x3af3563Ba5C68EB7DCbAdd2dF0FcE4CC9818e75c",
@@ -2597,16 +3824,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0x3F56e0c36d275367b8C502090EDF38289b3dEa0d/ETH",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0x3F56e0c36d275367b8C502090EDF38289b3dEa0d/ETH",
     "network": "arbitrum",
-    "createdAt": 1670618636
+    "createdAt": 1670618636,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-mai-usdc",
     "name": "MAI-USDC.e LP",
+    "type": "standard",
     "token": "MAI-USDC.e LP",
     "tokenAddress": "0xbF90e103FFAdcaBcE03d42Ed921FF7a5c0b764eB",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFishMAI-USDC",
     "earnedTokenAddress": "0x965637E84B451baDc3E7d90989F9639D1c1A3242",
     "earnContractAddress": "0x965637E84B451baDc3E7d90989F9639D1c1A3242",
@@ -2630,16 +3863,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0x3F56e0c36d275367b8C502090EDF38289b3dEa0d/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0x3F56e0c36d275367b8C502090EDF38289b3dEa0d/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
-    "createdAt": 1670618636
+    "createdAt": 1670618636,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-vst-weth",
     "name": "VST-ETH LP",
+    "type": "standard",
     "token": "VST-ETH LP",
     "tokenAddress": "0xE1e8C58FfD8C22392aA9e67AcCD1911628C27B80",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFishVST-ETH",
     "earnedTokenAddress": "0x55bcfEB93bfBc6b4D7339Da7284f4C7f5358bA51",
     "earnContractAddress": "0x55bcfEB93bfBc6b4D7339Da7284f4C7f5358bA51",
@@ -2663,16 +3902,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0x64343594Ab9b56e99087BfA6F2335Db24c2d1F17/ETH",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0x64343594Ab9b56e99087BfA6F2335Db24c2d1F17/ETH",
     "network": "arbitrum",
-    "createdAt": 1670618636
+    "createdAt": 1670618636,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-vst-usdc",
     "name": "VST-USDC.e LP",
+    "type": "standard",
     "token": "VST-USDC.e LP",
     "tokenAddress": "0x6832EF9928a7AD3F887e34D4F9f70A3CEed0C1b4",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFishVST-USDC",
     "earnedTokenAddress": "0x53d21768d5f45607D0557A38f59b4A61f4CfD51E",
     "earnContractAddress": "0x53d21768d5f45607D0557A38f59b4A61f4CfD51E",
@@ -2696,16 +3941,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0x64343594Ab9b56e99087BfA6F2335Db24c2d1F17/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0x64343594Ab9b56e99087BfA6F2335Db24c2d1F17/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
-    "createdAt": 1670618636
+    "createdAt": 1670618636,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-usx-usdc",
     "name": "USX-USDC.e LP",
+    "type": "standard",
     "token": "USX-USDC.e LP",
     "tokenAddress": "0x53001d6FaA0B6be4f1F27e0272EAb3A35090E6d0",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFishUSX-USDC",
     "earnedTokenAddress": "0xE2fC3CB368C6Cde774C1f42eE543513AD104Db13",
     "earnContractAddress": "0xE2fC3CB368C6Cde774C1f42eE543513AD104Db13",
@@ -2729,16 +3980,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0x641441c631e2F909700d2f41FD87F0aA6A6b4EDb/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0x641441c631e2F909700d2f41FD87F0aA6A6b4EDb/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
-    "createdAt": 1670618636
+    "createdAt": 1670618636,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-fish-eth",
     "name": "FISH-ETH LP",
+    "type": "standard",
     "token": "FISH-ETH LP",
     "tokenAddress": "0xE0a0ede95abe2072Cc2091d5C193FD86F740E057",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFishFISH-WETH",
     "earnedTokenAddress": "0x26854016eac6362B6e3C7963cE7e13CAcfb7BD86",
     "earnContractAddress": "0x26854016eac6362B6e3C7963cE7e13CAcfb7BD86",
@@ -2761,16 +4018,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/ETH/0xb348B87b23D5977E2948E6f36ca07E1EC94d7328",
     "removeLiquidityUrl": "https://swapfish.fi/remove/ETH/0xb348B87b23D5977E2948E6f36ca07E1EC94d7328",
     "network": "arbitrum",
-    "createdAt": 1670457671
+    "createdAt": 1670457671,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-frax-usdc",
     "name": "FRAX-USDC.e LP",
+    "type": "standard",
     "token": "FRAX-USDC.e LP",
     "tokenAddress": "0x85710698eB1fB588aF3996a268e73938795Bf558",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFishFRAX-USDC",
     "earnedTokenAddress": "0xBD1b9288491C41D029A0d1806E2a5795938a3Abf",
     "earnContractAddress": "0xBD1b9288491C41D029A0d1806E2a5795938a3Abf",
@@ -2793,16 +4056,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
-    "createdAt": 1670443644
+    "createdAt": 1670443644,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-mim-usdc",
     "name": "MIM-USDC.e LP",
+    "type": "standard",
     "token": "MIM-USDC.e LP",
     "tokenAddress": "0x23d7CB985B5b23d83E5c2eb04074649aF1d488bf",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFishMIM-USDC",
     "earnedTokenAddress": "0x8f6ea594bAADA4cA19CB055eEE8996e3bb260B55",
     "earnContractAddress": "0x8f6ea594bAADA4cA19CB055eEE8996e3bb260B55",
@@ -2825,16 +4094,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
-    "createdAt": 1670443644
+    "createdAt": 1670443644,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-wbtc-weth",
     "name": "WBTC-ETH LP",
+    "type": "standard",
     "token": "WBTC-ETH LP",
     "tokenAddress": "0xf7C6FFA90E8f240481234fb3fe9E8F60df74ED87",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFishBTC-ETH",
     "earnedTokenAddress": "0x96e23B0d217894b8dA9e149F0Ca1A97b9B7C77b2",
     "earnContractAddress": "0x96e23B0d217894b8dA9e149F0Ca1A97b9B7C77b2",
@@ -2857,16 +4132,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f/ETH",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f/ETH",
     "network": "arbitrum",
-    "createdAt": 1670443644
+    "createdAt": 1670443644,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-weth-usdc",
     "name": "ETH-USDC.e LP",
+    "type": "standard",
     "token": "ETH-USDC.e LP",
     "tokenAddress": "0x8Bc2Cd9DAB840231A0Dab5B747b8A6085c4eA459",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFishETH-USDC",
     "earnedTokenAddress": "0x6E2DCebF8C14c72329f224A26EdfD547d3c3E09c",
     "earnContractAddress": "0x6E2DCebF8C14c72329f224A26EdfD547d3c3E09c",
@@ -2889,16 +4170,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/ETH/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "removeLiquidityUrl": "https://swapfish.fi/remove/ETH/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
-    "createdAt": 1670443644
+    "createdAt": 1670443644,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-gmx-usdc",
     "name": "GMX-USDC.e LP",
+    "type": "standard",
     "token": "GMX-USDC.e LP",
     "tokenAddress": "0xB2A72A9FA965adE9bD21b1a60d29ccCE5E2C5A62",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFishGMX-USDC",
     "earnedTokenAddress": "0xB1bFc21bEE2b2DDA4728481dbF52eDC3b9F5Fb79",
     "earnContractAddress": "0xB1bFc21bEE2b2DDA4728481dbF52eDC3b9F5Fb79",
@@ -2921,16 +4208,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
-    "createdAt": 1670446708
+    "createdAt": 1670446708,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-bifi-eth",
     "name": "oldBIFI-ETH LP",
+    "type": "standard",
     "token": "oldBIFI-ETH LP",
     "tokenAddress": "0x6716Ed27F13161cE3374f0D2cC8cEF181681e5Eb",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFisholdBIFI-WETH",
     "earnedTokenAddress": "0x6138fae8c4A97F68CCAe16d6CeEA6535510fB1e4",
     "earnContractAddress": "0x6138fae8c4A97F68CCAe16d6CeEA6535510fB1e4",
@@ -2953,11 +4246,18 @@
     "addLiquidityUrl": "https://swapfish.fi/add/ETH/0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
     "removeLiquidityUrl": "https://swapfish.fi/remove/ETH/0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
     "network": "arbitrum",
-    "createdAt": 1670249514
+    "createdAt": 1670249514,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-fish",
     "name": "FISH",
+    "type": "standard",
     "token": "FISH",
     "tokenAddress": "0xb348B87b23D5977E2948E6f36ca07E1EC94d7328",
     "tokenDecimals": 18,
@@ -2966,7 +4266,8 @@
     "earnContractAddress": "0xd319b477131c789857EA3a2CC5F04C9ddAa1F207",
     "oracle": "tokens",
     "oracleId": "SWAPFISH",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "swapfish",
     "assets": ["FISH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -2978,11 +4279,11 @@
   {
     "id": "swapfish-fish-usdc",
     "name": "FISH-USDC.e LP",
+    "type": "standard",
     "token": "FISH-USDC.e LP",
     "tokenAddress": "0x570Eab8422160840ce3b7b2BE4c71D657659868f",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFishFISH-USDC",
     "earnedTokenAddress": "0xE63aCEbE35265896cC6E8BdB8eCC0640a1807141",
     "earnContractAddress": "0xE63aCEbE35265896cC6E8BdB8eCC0640a1807141",
@@ -3005,16 +4306,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0xb348B87b23D5977E2948E6f36ca07E1EC94d7328/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0xb348B87b23D5977E2948E6f36ca07E1EC94d7328/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
-    "createdAt": 1670231942
+    "createdAt": 1670231942,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-wsteth-eth",
     "name": "wstETH-ETH LP",
+    "type": "standard",
     "token": "wstETH-ETH LP",
     "tokenAddress": "0xe263353986a4638144c41E44cEBAc9d0A76ECab3",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFishWSTETH-ETH",
     "earnedTokenAddress": "0xf6Dc553658eAcA3f58fF46B612b0A75a86e38431",
     "earnContractAddress": "0xf6Dc553658eAcA3f58fF46B612b0A75a86e38431",
@@ -3037,16 +4344,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0x5979D7b546E38E414F7E9822514be443A4800529/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0x5979D7b546E38E414F7E9822514be443A4800529/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
     "network": "arbitrum",
-    "createdAt": 1670231942
+    "createdAt": 1670231942,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-usdt-usdc",
     "name": "USDT-USDC.e LP",
+    "type": "standard",
     "token": "USDT-USDC.e LP",
     "tokenAddress": "0x106AE154e4c24b6e11E70cfee7E075B14a182244",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFishUSDT-USDC",
     "earnedTokenAddress": "0x2Aa134990140f9B558f4127Af267f5240C1fB2B1",
     "earnContractAddress": "0x2Aa134990140f9B558f4127Af267f5240C1fB2B1",
@@ -3069,16 +4382,22 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
     "network": "arbitrum",
-    "createdAt": 1670231942
+    "createdAt": 1670231942,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "swapfish-dai-usdc",
     "name": "DAI-USDC.e LP",
+    "type": "standard",
     "token": "DAI-USDC.e LP",
     "tokenAddress": "0x978DE910e7645fA7861aF89a156D3c86ad09Db79",
     "tokenDecimals": 18,
     "tokenProviderId": "swapfish",
-    "tokenAmmId": "arbitrum-swapfish",
     "earnedToken": "mooFishDAI-USDC",
     "earnedTokenAddress": "0x9B40e357937bCE323B1eB3832173B3D028520708",
     "earnContractAddress": "0x9B40e357937bCE323B1eB3832173B3D028520708",
@@ -3101,11 +4420,18 @@
     "addLiquidityUrl": "https://swapfish.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
     "removeLiquidityUrl": "https://swapfish.fi/remove/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
     "network": "arbitrum",
-    "createdAt": 1670116603
+    "createdAt": 1670116603,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-swapfish"
+      }
+    ]
   },
   {
     "id": "curve-arb-f-wsteth",
     "name": "wstETH-ETH",
+    "type": "standard",
     "token": "wstETHCRV",
     "tokenAddress": "0xDbcD16e622c95AcB2650b38eC799f76BFC557a0b",
     "tokenDecimals": 18,
@@ -3136,6 +4462,7 @@
   {
     "id": "gmx-arb-glp",
     "name": "GLP",
+    "type": "standard",
     "token": "GLP",
     "tokenAddress": "0x5402B5F40310bDED796c7D0F3FF6683f5C0cFfdf",
     "tokenDecimals": 18,
@@ -3165,6 +4492,7 @@
   {
     "id": "gmx-arb-gmx",
     "name": "GMX",
+    "type": "standard",
     "token": "GMX",
     "tokenAddress": "0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a",
     "tokenDecimals": 18,
@@ -3188,11 +4516,17 @@
     "strategyTypeId": "glp-gmx",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/GMX",
     "network": "arbitrum",
-    "createdAt": 1666793248
+    "createdAt": 1666793248,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "stargate-arb-eth",
     "name": "ETH LP",
+    "type": "standard",
     "token": "S*ETH",
     "tokenAddress": "0x915A55e36A01285A14f05dE6e81ED9cE89772f8e",
     "tokenDecimals": 18,
@@ -3223,6 +4557,7 @@
   {
     "id": "balancer-wsteth-eth",
     "name": "wstETH-ETH",
+    "type": "standard",
     "token": "wstETH-ETH",
     "tokenAddress": "0xFB5e6d0c1DfeD2BA000fBC040Ab8DF3615AC329c",
     "tokenDecimals": 18,
@@ -3253,6 +4588,7 @@
   {
     "id": "balancer-wsteth-usdc",
     "name": "wstETH-USDC.e",
+    "type": "standard",
     "token": "wstETH-USDC.e",
     "tokenAddress": "0x178E029173417b1F9C8bC16DCeC6f697bC323746",
     "tokenDecimals": 18,
@@ -3283,6 +4619,7 @@
   {
     "id": "balancer-magic-usdc",
     "name": "MAGIC-USDC.e",
+    "type": "standard",
     "token": "MAGIC-USDC.e",
     "tokenAddress": "0xb3028Ca124B80CFE6E9CA57B70eF2F0CCC41eBd4",
     "tokenDecimals": 18,
@@ -3292,9 +4629,8 @@
     "earnContractAddress": "0x14555A3dD091AA0bd4657591B843eA4C2F83e6ef",
     "oracle": "lps",
     "oracleId": "balancer-magic-usdc",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "balancer",
+    "status": "active",
+    "platformId": "aura",
     "assets": ["MAGIC", "arbUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -3308,11 +4644,12 @@
     "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/invest",
     "removeLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/withdraw",
     "network": "arbitrum",
-    "createdAt": 1685364888
+    "createdAt": 1700600674
   },
   {
     "id": "stargate-arb-usdc",
     "name": "USDC.e LP",
+    "type": "standard",
     "token": "S*USDC.e",
     "tokenAddress": "0x892785f33CdeE22A30AEF750F285E18c18040c3e",
     "tokenDecimals": 6,
@@ -3343,6 +4680,7 @@
   {
     "id": "stargate-arb-usdt",
     "name": "USDT LP",
+    "type": "standard",
     "token": "S*USDT",
     "tokenAddress": "0xB6CfcF89a7B22988bfC96632aC2A9D6daB60d641",
     "tokenDecimals": 6,
@@ -3373,11 +4711,11 @@
   {
     "id": "radiant-rdnt-weth",
     "name": "RDNT-ETH",
+    "type": "standard",
     "token": "RDNT-ETH LP",
     "tokenAddress": "0x24704aFF49645D32655A76Df6d407E02d146dAfC",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "arbitrum-sushi",
     "earnedToken": "mooRadiantRDNT-ETH",
     "earnedTokenAddress": "0xC14844Ac5C0e7e96f678c75308d3Fde1Fa36e22f",
     "earnContractAddress": "0xC14844Ac5C0e7e96f678c75308d3Fde1Fa36e22f",
@@ -3400,16 +4738,22 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0x24704aff49645d32655a76df6d407e02d146dafc/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0x24704aff49645d32655a76df6d407e02d146dafc/remove",
     "network": "arbitrum",
-    "createdAt": 1658991540
+    "createdAt": 1658991540,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-sushi"
+      }
+    ]
   },
   {
     "id": "ripae-seth-weth",
     "name": "sETH-ETH",
+    "type": "standard",
     "token": "sETH-ETH LP",
     "tokenAddress": "0x89A3A5b03f705A10443fB0A93f19F6cBB7ca191A",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "arbitrum-sushi",
     "earnedToken": "mooPaeWETHsETH",
     "earnedTokenAddress": "0xB8ff233d024277b0E188A478C18e9263330A1B51",
     "earnContractAddress": "0xB8ff233d024277b0E188A478C18e9263330A1B51",
@@ -3432,16 +4776,22 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0x89a3a5b03f705a10443fb0a93f19f6cbb7ca191a/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0x89a3a5b03f705a10443fb0a93f19f6cbb7ca191a/remove",
     "network": "arbitrum",
-    "createdAt": 1658444532
+    "createdAt": 1658444532,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-sushi"
+      }
+    ]
   },
   {
     "id": "ripae-peth-weth",
     "name": "pETH-ETH",
+    "type": "standard",
     "token": "pETH-ETH LP",
     "tokenAddress": "0xB54B196E9FeCcF364c2281da1E11BC498cB5c1C1",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "arbitrum-sushi",
     "earnedToken": "mooPaeWETHpETH",
     "earnedTokenAddress": "0x0B7EA1b9fBC9860f4A508E9d0Dde04f2552d2ADE",
     "earnContractAddress": "0x0B7EA1b9fBC9860f4A508E9d0Dde04f2552d2ADE",
@@ -3465,11 +4815,18 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0xb54b196e9feccf364c2281da1e11bc498cb5c1c1/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0xb54b196e9feccf364c2281da1e11bc498cb5c1c1/remove",
     "network": "arbitrum",
-    "createdAt": 1658431125
+    "createdAt": 1658431125,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-sushi"
+      }
+    ]
   },
   {
     "id": "balancer-wbtc-eth-usdc",
     "name": "WBTC/WETH/USDC.e",
+    "type": "standard",
     "token": "WBTC/WETH/USDC.e",
     "tokenAddress": "0x64541216bAFFFEec8ea535BB71Fbc927831d0595",
     "tokenDecimals": 18,
@@ -3500,6 +4857,7 @@
   {
     "id": "spell-mim-crv",
     "name": "MIM/USDC.e/USDT",
+    "type": "standard",
     "token": "MIM2CRV",
     "tokenAddress": "0x30dF229cefa463e991e29D42DB0bae2e122B2AC7",
     "tokenDecimals": 18,
@@ -3530,11 +4888,11 @@
   {
     "id": "sushi-arb-spell-weth",
     "name": "SPELL-ETH LP",
+    "type": "standard",
     "token": "SPELL-ETH LP",
     "tokenAddress": "0x8f93Eaae544e8f5EB077A1e09C1554067d9e2CA8",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "arbitrum-sushi",
     "earnedToken": "mooSushiSPELL-WETH",
     "earnedTokenAddress": "0x149f3dDeB5FF9bE7342D07C35D6dA19Df3F790af",
     "earnContractAddress": "0x149f3dDeB5FF9bE7342D07C35D6dA19Df3F790af",
@@ -3557,16 +4915,22 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0x8f93eaae544e8f5eb077a1e09c1554067d9e2ca8/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0x8f93eaae544e8f5eb077a1e09c1554067d9e2ca8/remove",
     "network": "arbitrum",
-    "createdAt": 1632254179
+    "createdAt": 1632254179,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-sushi"
+      }
+    ]
   },
   {
     "id": "sushi-arb-weth-mim",
     "name": "MIM-ETH LP",
+    "type": "standard",
     "token": "MIM-ETH LP",
     "tokenAddress": "0xb6DD51D5425861C808Fd60827Ab6CFBfFE604959",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "arbitrum-sushi",
     "earnedToken": "mooSushiMIM-WETH",
     "earnedTokenAddress": "0x80514CfB7cb438F1f997Ab62fFD1314c1a1c0f12",
     "earnContractAddress": "0x80514CfB7cb438F1f997Ab62fFD1314c1a1c0f12",
@@ -3590,16 +4954,22 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0xb6dd51d5425861c808fd60827ab6cfbffe604959/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0xb6dd51d5425861c808fd60827ab6cfbffe604959/remove",
     "network": "arbitrum",
-    "createdAt": 1632254301
+    "createdAt": 1632254301,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-sushi"
+      }
+    ]
   },
   {
     "id": "sushi-arb-eth-usdc",
     "name": "USDC.e-ETH LP",
+    "type": "standard",
     "token": "USDC.e-ETH LP",
     "tokenAddress": "0x905dfCD5649217c42684f23958568e533C711Aa3",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "arbitrum-sushi",
     "earnedToken": "mooSushiWETH-USDC",
     "earnedTokenAddress": "0x07Db98358D58Ba9bE90cd0A18cd86AF807ac3B4E",
     "earnContractAddress": "0x07Db98358D58Ba9bE90cd0A18cd86AF807ac3B4E",
@@ -3621,11 +4991,18 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0x905dfcd5649217c42684f23958568e533c711aa3/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0x905dfcd5649217c42684f23958568e533c711aa3/remove",
     "network": "arbitrum",
-    "createdAt": 1632243592
+    "createdAt": 1632243592,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-sushi"
+      }
+    ]
   },
   {
     "id": "curve-arb-tricrypto",
     "name": "TriCrypto",
+    "type": "standard",
     "token": "crv3crypto",
     "tokenAddress": "0x8e0B8c8BB9db49a46697F3a5Bb8A308e744821D2",
     "tokenDecimals": 18,
@@ -3656,6 +5033,7 @@
   {
     "id": "curve-arb-2pool",
     "name": "USDC.e/USDT",
+    "type": "standard",
     "token": "2CRV",
     "tokenAddress": "0x7f90122BF0700F9E7e1F688fe926940E8839F353",
     "tokenDecimals": 18,
@@ -3685,6 +5063,7 @@
   {
     "id": "curve-arb-ren",
     "name": "WBTC/renBTC",
+    "type": "standard",
     "token": "btcCRV",
     "tokenAddress": "0x3E01dD8a5E1fb3481F0F589056b428Fc308AF0Fb",
     "tokenDecimals": 18,
@@ -3715,11 +5094,11 @@
   {
     "id": "sushi-arb-wbtc-weth",
     "name": "WBTC-ETH LP",
+    "type": "standard",
     "token": "WBTC-ETH LP",
     "tokenAddress": "0x515e252b2b5c22b4b2b6Df66c2eBeeA871AA4d69",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "arbitrum-sushi",
     "earnedToken": "mooSushiWBTC-WETH",
     "earnedTokenAddress": "0xfcDD5a02C611ba6Fe2802f885281500EC95805d7",
     "earnContractAddress": "0xfcDD5a02C611ba6Fe2802f885281500EC95805d7",
@@ -3742,16 +5121,22 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0x515e252b2b5c22b4b2b6df66c2ebeea871aa4d69/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0x515e252b2b5c22b4b2b6df66c2ebeea871aa4d69/remove",
     "network": "arbitrum",
-    "createdAt": 1632169397
+    "createdAt": 1632169397,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-sushi"
+      }
+    ]
   },
   {
     "id": "sushi-arb-sushi-eth",
     "name": "SUSHI-ETH LP",
+    "type": "standard",
     "token": "SUSHI-ETH LP",
     "tokenAddress": "0x3221022e37029923aCe4235D812273C5A42C322d",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "arbitrum-sushi",
     "earnedToken": "mooSushiSUSHI-WETH",
     "earnedTokenAddress": "0xBa5041B1c06e8c9cFb5dDB4b82BdC52E41EA5FC5",
     "earnContractAddress": "0xBa5041B1c06e8c9cFb5dDB4b82BdC52E41EA5FC5",
@@ -3774,16 +5159,22 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0x3221022e37029923ace4235d812273c5a42c322d/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0x3221022e37029923ace4235d812273c5a42c322d/remove",
     "network": "arbitrum",
-    "createdAt": 1632173780
+    "createdAt": 1632173780,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-sushi"
+      }
+    ]
   },
   {
     "id": "sushi-arb-weth-usdt",
     "name": "USDT-ETH LP",
+    "type": "standard",
     "token": "USDT-ETH LP",
     "tokenAddress": "0xCB0E5bFa72bBb4d16AB5aA0c60601c438F04b4ad",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "arbitrum-sushi",
     "earnedToken": "mooSushiUSDT-WETH",
     "earnedTokenAddress": "0xE99c8A590c98c7Ae9FB3B7ecbC115D2eBD533B50",
     "earnContractAddress": "0xE99c8A590c98c7Ae9FB3B7ecbC115D2eBD533B50",
@@ -3806,11 +5197,18 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0xcb0e5bfa72bbb4d16ab5aa0c60601c438f04b4ad/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0xcb0e5bfa72bbb4d16ab5aa0c60601c438f04b4ad/remove",
     "network": "arbitrum",
-    "createdAt": 1632173316
+    "createdAt": 1632173316,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-sushi"
+      }
+    ]
   },
   {
     "id": "arbi-bifi-maxi",
     "name": "oldBIFI Maxi",
+    "type": "standard",
     "token": "oldBIFI",
     "tokenAddress": "0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
     "tokenDecimals": 18,
@@ -3839,11 +5237,11 @@
   {
     "id": "sushi-arb-magic-weth",
     "name": "MAGIC-ETH LP",
+    "type": "standard",
     "token": "MAGIC-ETH LP",
     "tokenAddress": "0xB7E50106A5bd3Cf21AF210A755F9C8740890A8c9",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "arbitrum-sushi",
     "earnedToken": "mooSushiMAGIC-ETH",
     "earnedTokenAddress": "0x8cbaAC87FDD9Bb6C3FdB5b3C870b2443D0284fa6",
     "earnContractAddress": "0x8cbaAC87FDD9Bb6C3FdB5b3C870b2443D0284fa6",
@@ -3865,16 +5263,22 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0xb7e50106a5bd3cf21af210a755f9c8740890a8c9/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0xb7e50106a5bd3cf21af210a755f9c8740890a8c9/remove",
     "network": "arbitrum",
-    "createdAt": 1639146591
+    "createdAt": 1639146591,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-sushi"
+      }
+    ]
   },
   {
     "id": "sushi-arb-weth-gohm",
     "name": "gOHM-ETH LP",
+    "type": "standard",
     "token": "gOHM-ETH LP",
     "tokenAddress": "0xaa5bD49f2162ffdC15634c87A77AC67bD51C6a6D",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "arbitrum-sushi",
     "earnedToken": "mooSushigOHM-ETH",
     "earnedTokenAddress": "0xD295d690b9BF17bd217B94BC50C12729762C1862",
     "earnContractAddress": "0xD295d690b9BF17bd217B94BC50C12729762C1862",
@@ -3897,16 +5301,22 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0xaa5bd49f2162ffdc15634c87a77ac67bd51c6a6d/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0xaa5bd49f2162ffdc15634c87a77ac67bd51c6a6d/remove",
     "network": "arbitrum",
-    "createdAt": 1639146342
+    "createdAt": 1639146342,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-sushi"
+      }
+    ]
   },
   {
     "id": "sushi-arb-weth-link-eol",
     "name": "LINK-ETH LP",
+    "type": "standard",
     "token": "LINK-ETH LP",
     "tokenAddress": "0x7050A8908E2a60899D8788015148241f0993a3FD",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "arbitrum-sushi",
     "earnedToken": "mooSushiWETH-LINK",
     "earnedTokenAddress": "0xf785Ef43A082C85ABbe19CA888f91748AA604ac5",
     "earnContractAddress": "0xf785Ef43A082C85ABbe19CA888f91748AA604ac5",
@@ -3929,6 +5339,12 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/arb1:0x7050a8908e2a60899d8788015148241f0993a3fd/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/arb1:0x7050a8908e2a60899d8788015148241f0993a3fd/remove",
     "network": "arbitrum",
-    "createdAt": 1632249714
+    "createdAt": 1632249714,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "arbitrum-sushi"
+      }
+    ]
   }
 ]

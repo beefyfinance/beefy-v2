@@ -20,17 +20,17 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
   },
   icon: {
-    color: '#D15347',
+    color: theme.palette.background.indicators.error,
     fontSize: '30px',
   },
   title: {
     ...theme.typography.h3,
-    color: '#F5F5FF',
+    color: theme.palette.text.light,
     marginTop: '24px',
   },
   content: {
     ...theme.typography['body-lg'],
-    color: '#D0D0DA',
+    color: theme.palette.text.middle,
     marginTop: '24px',
   },
 });

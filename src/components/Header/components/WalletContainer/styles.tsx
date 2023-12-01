@@ -22,22 +22,22 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'center',
     background: theme.palette.background.cta,
     '& $address': {
-      color: theme.palette.text.primary,
+      color: theme.palette.text.light,
       textOverflow: 'clip',
     },
   },
   known: {
-    border: `2px solid #D19847`,
+    border: `2px solid ${theme.palette.background.indicators.warning}`,
     '& $address': {
-      color: theme.palette.text.secondary,
+      color: theme.palette.text.middle,
     },
     '&:hover': {
-      borderColor: '#3F466D',
+      borderColor: theme.palette.background.contentLight,
     },
   },
   connected: {
     borderColor: theme.palette.background.cta,
-    backgroundColor: '#242737',
+    backgroundColor: theme.palette.background.contentDark,
   },
   loading: {
     paddingTop: '4px',

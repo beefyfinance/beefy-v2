@@ -1,5 +1,6 @@
 import type BigNumber from 'bignumber.js';
 import type { ShapeWithLabel } from 'eth-multicall';
+import type { ZapStepRequest, ZapStepResponse } from '../transact/zap/types';
 
 export type SwapResult = {
   amountIn: BigNumber;
@@ -46,10 +47,25 @@ export type SwapFeeParams = {
 };
 
 export interface IPool {
+  readonly type: string;
+
+  getOptimalSwapAmount(fullAmountIn: BigNumber, tokenIn: string): BigNumber;
+
   swap(amountIn: BigNumber, tokenIn: string, updateReserves?: boolean): SwapResult;
+
   addLiquidity(amountA: BigNumber, tokenA: string, amountB: BigNumber): AddLiquidityResult;
+
   removeLiquidity(amount: BigNumber, updateReserves?: boolean): RemoveLiquidityResult;
+
   getAddLiquidityRatio(amountIn: BigNumber): AddLiquidityRatio;
+
   updateAllData(otherCalls?: ShapeWithLabel[][]): Promise<unknown[][]>;
+
   getWantType(): WANT_TYPE;
+
+  getZapSwap(request: ZapStepRequest): Promise<ZapStepResponse>;
+
+  getZapAddLiquidity(request: ZapStepRequest): Promise<ZapStepResponse>;
+
+  getZapRemoveLiquidity(request: ZapStepRequest): Promise<ZapStepResponse>;
 }

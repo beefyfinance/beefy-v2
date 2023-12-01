@@ -6,11 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { Floating } from '../../../../components/Floating';
 import { useAppSelector } from '../../../../store';
 import type { ChainEntity } from '../../../data/entities/chain';
-import { selectChainById } from '../../../data/selectors/chains';
 import { selectTreasuryWalletAddressesByChainId } from '../../../data/selectors/treasury';
 import { styles } from './styles';
 import iconExternalLink from '../../../../images/icons/external-link.svg';
-import { explorerAddressUrl } from '../../../../helpers/url';
 
 const useStyles = makeStyles(styles);
 
@@ -22,7 +20,6 @@ export const ExplorerLinks = memo<ExplorerLinkProps>(function ExplorerLinks({ ch
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);
   const anchorEl = useRef<HTMLDivElement | null>(null);
-  const chain = useAppSelector(state => selectChainById(state, chainId));
   const wallets = useAppSelector(state => selectTreasuryWalletAddressesByChainId(state, chainId));
 
   const handleToggle = useCallback<MouseEventHandler<HTMLDivElement>>(
@@ -52,7 +49,7 @@ export const ExplorerLinks = memo<ExplorerLinkProps>(function ExplorerLinks({ ch
             return (
               <a
                 key={wallet.address}
-                href={explorerAddressUrl(chain, wallet.address)}
+                href={wallet.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={classes.item}

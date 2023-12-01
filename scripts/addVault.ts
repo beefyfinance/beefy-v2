@@ -65,7 +65,6 @@ async function generateVault() {
     tokenAddress: vault.want,
     tokenDecimals: Number(vault.tokenDecimals),
     tokenProviderId: vault.provider,
-    tokenAmmId: vault.ammId,
     earnedToken: vault.mooToken,
     earnedTokenAddress: vaultAddress,
     earnContractAddress: vaultAddress,

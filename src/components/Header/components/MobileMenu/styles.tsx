@@ -3,7 +3,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   bg: {
     '& .MuiDrawer-paper': {
-      backgroundColor: '#0F0F0F',
+      backgroundColor: theme.palette.background.footerHeader,
     },
   },
   toggleDrawer: {
@@ -11,7 +11,7 @@ export const styles = (theme: Theme) => ({
     padding: '3px',
     border: 0,
     boxShadow: 'none',
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
     fontSize: '30px',
     position: 'relative' as const,
   },
@@ -40,13 +40,13 @@ export const styles = (theme: Theme) => ({
     columnGap: '24px',
   },
   divider: {
-    backgroundColor: '#1A1C28',
+    backgroundColor: theme.palette.background.contentDark,
     height: '2px',
   },
   itemTitle: {
     display: 'flex',
     columnGap: '8px',
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     '& .MuiBadge-root': {
       padding: '0px 12px 0px 0px',
       verticalAlign: 'initial',
@@ -66,9 +66,9 @@ export const styles = (theme: Theme) => ({
     padding: '16px 16px 16px 32px',
   },
   cross: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     '&:hover': {
-      color: theme.palette.text.primary,
+      color: theme.palette.text.light,
       cursor: 'pointer',
     },
   },

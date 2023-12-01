@@ -72,11 +72,11 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
           [classes.vaultEarnings]: isGov,
           [classes.vaultPaused]: isPaused,
           [classes.vaultRetired]: isRetired,
-          lastBorderRadius: true,
+          vault: true,
         })}
       >
         <div className={classes.vaultInner}>
-          <VaultIdentity isLink={true} networkClassName={classes.network} vaultId={vaultId} />
+          <VaultIdentity isLink={true} vaultId={vaultId} />
           <VaultDashboardStats vaultId={vaultId} address={address} />
         </div>
       </div>
@@ -87,12 +87,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
           <>
             {hasAnalyticsData && (
               <div className={classes.toggleContainer}>
-                <ToggleButtons
-                  selectedClass={classes.activeClassName}
-                  value={listComponent}
-                  onChange={handleChange}
-                  options={options}
-                />
+                <ToggleButtons value={listComponent} onChange={handleChange} options={options} />
               </div>
             )}
             <div className={classes.collapseInner}>
