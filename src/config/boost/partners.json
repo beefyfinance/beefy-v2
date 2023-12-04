@@ -8,7 +8,7 @@
     }
   },
   "jarvis-angle": {
-    "text": "The token jEUR is a multi-collateralized synthetic token tracking the price of the Euro. Issued by the Jarvis Network, jEUR is built on the top of UMA and Chainlink to provide users with safe and stable onchain access to their favourite fiat currencies.    The second token in the LP is agEUR, is an over-collateralized synthetic stablecoin which is pegged to the value of the Euro. The token is issued by Angle, a decentralized, capital-efficient and over-collateralized stablecoins protocol that allows users to access debt pegged to their preferred fiat currencies.",
+    "text": "The first token in the LP is jEUR, a multi-collateralized synthetic token tracking the price of the Euro. Issued by the Jarvis Network, jEUR is built on the top of UMA and Chainlink to provide users with safe and stable onchain access to their favourite fiat currencies. The second token in the LP is agEUR, an over-collateralized synthetic stablecoin which is pegged to the value of the Euro. The token is issued by Angle, a decentralized, capital-efficient and over-collateralized stablecoins protocol that allows users to access debt pegged to their preferred fiat currencies.",
     "website": "",
     "social": {
       "discord": "",
