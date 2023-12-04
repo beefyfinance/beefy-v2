@@ -34,12 +34,12 @@ const VaultBoostTag = memo<VaultBoostTagProps>(function VaultBoostTag({ boostId 
   const { t } = useTranslation();
   const boost = useAppSelector(state => selectBoostById(state, boostId));
   const { isOverflowing, ref } = useIsOverflowingHorizontally();
-  const { icon } = boost;
-  const iconSrc = useMemo(() => (icon ? getBoostIconSrc(icon) : undefined), [icon]);
+  const { tagIcon, tagText, name } = boost;
+  const iconSrc = useMemo(() => (tagIcon ? getBoostIconSrc(tagIcon) : undefined), [tagIcon]);
 
   return (
     <VaultTagWithTooltip
-      content={<BasicTooltipContent title={t('VaultTag-PartnerBoost', { partner: boost.name })} />}
+      content={<BasicTooltipContent title={t('VaultTag-PartnerBoost', { partner: name })} />}
       placement="bottom"
       disabled={!isOverflowing}
       className={classes.vaultTagBoost}
@@ -50,7 +50,7 @@ const VaultBoostTag = memo<VaultBoostTagProps>(function VaultBoostTag({ boostId 
       ) : (
         <>{'\uD83D\uDD25 '}</>
       )}
-      {t('VaultTag-PartnerBoost', { partner: boost.name })}
+      {tagText ? tagText : t('VaultTag-PartnerBoost', { partner: name })}
     </VaultTagWithTooltip>
   );
 });

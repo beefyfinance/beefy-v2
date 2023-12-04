@@ -119,7 +119,7 @@ export const tokensSlice = createSlice({
 
     // when boost list is fetched, add all new tokens
     builder.addCase(fetchAllBoosts.fulfilled, (sliceState, action) => {
-      for (const [chainId, boosts] of Object.entries(action.payload)) {
+      for (const [chainId, boosts] of Object.entries(action.payload.boostsByChainId)) {
         for (const boost of boosts) {
           addBoostToState(sliceState, chainId, boost);
         }

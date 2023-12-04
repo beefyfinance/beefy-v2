@@ -1,13 +1,13 @@
 import type { ChainEntity } from './chain';
-import type { PartnerEntity } from './partner';
 import type { TokenEntity } from './token';
 import type { VaultEntity } from './vault';
+import type { BoostCampaignConfig, BoostPartnerConfig } from '../apis/config-types';
 
-// TODO: WIP
 export interface BoostEntity {
   id: string;
   name: string;
-  icon: string | undefined;
+  tagIcon: string | undefined;
+  tagText: string | undefined;
 
   // a boost always works on top of a vault, so it has a poolId that is an id for a vault
   vaultId: VaultEntity['id'];
@@ -34,5 +34,15 @@ export interface BoostEntity {
    */
   assets: TokenEntity['id'][];
 
-  partnerIds: PartnerEntity['id'][];
+  partnerIds: BoostPartnerEntity['id'][];
+
+  campaignId: BoostCampaignEntity['id'] | undefined;
 }
+
+export type BoostPartnerEntity = BoostPartnerConfig & {
+  id: string;
+};
+
+export type BoostCampaignEntity = BoostCampaignConfig & {
+  id: string;
+};
