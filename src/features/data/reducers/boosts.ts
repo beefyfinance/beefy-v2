@@ -193,7 +193,7 @@ function addBoostToState(
     assets: apiBoost.assets,
     earnedTokenAddress: apiBoost.earnedTokenAddress,
     earnContractAddress: apiBoost.earnContractAddress,
-    logo: apiBoost.logo,
+    icon: apiBoost.icon || undefined,
     name: apiBoost.name,
     partnerIds: apiBoost.partners ? apiBoost.partners.map(p => p.website) : [],
     vaultId: apiBoost.poolId,

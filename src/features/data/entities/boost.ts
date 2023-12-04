@@ -7,7 +7,7 @@ import type { VaultEntity } from './vault';
 export interface BoostEntity {
   id: string;
   name: string;
-  logo: string | null;
+  icon: string | undefined;
 
   // a boost always works on top of a vault, so it has a poolId that is an id for a vault
   vaultId: VaultEntity['id'];

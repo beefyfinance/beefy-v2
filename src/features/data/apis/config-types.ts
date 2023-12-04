@@ -73,6 +73,7 @@ export interface BoostConfig {
   id: string;
   poolId: string;
   name: string;
+  icon?: string;
   assets?: string[] | null;
   earnedToken: string;
   earnedTokenDecimals: number;
@@ -84,7 +85,6 @@ export interface BoostConfig {
   status: string;
   isMooStaked: boolean;
   partners?: BoostPartnerConfig[] | null;
-  logo?: string | null;
   fixedStatus?: boolean | null;
 }
 

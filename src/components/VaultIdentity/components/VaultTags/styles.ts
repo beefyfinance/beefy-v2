@@ -28,6 +28,13 @@ export const styles = (theme: Theme) => ({
   vaultTagBoost: {
     backgroundColor: theme.palette.background.tags.boost,
   },
+  vaultTagBoostIcon: {
+    width: '12px',
+    height: '20px',
+    padding: '4px 0',
+    marginRight: '4px',
+    verticalAlign: 'bottom',
+  },
   vaultTagRetired: {
     backgroundColor: theme.palette.background.tags.retired,
   },
