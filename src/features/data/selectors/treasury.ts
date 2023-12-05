@@ -34,7 +34,7 @@ export const selectMMAssets = (state: BeefyState) => {
 export const selectTreasurySorted = function (state: BeefyState) {
   const treasuryPerChain = Object.keys(selectTreasury(state)).map(chainId => {
     const assets = selectTreasuryAssetsByChainId(state, chainId);
-    return assets
+    const reducedAssets = assets
       .filter(asset => asset.usdValue.gte(10))
       .reduce(
         (acc, asset) => {
@@ -50,15 +50,54 @@ export const selectTreasurySorted = function (state: BeefyState) {
         },
         { usdTotal: BIG_ZERO, liquid: 0, staked: 0, locked: 0, chainId }
       );
+    return {
+      usdTotal: reducedAssets.usdTotal,
+      categoryCount:
+        (reducedAssets.liquid > 0 ? 1 : 0) +
+        (reducedAssets.staked > 0 ? 1 : 0) +
+        (reducedAssets.locked > 0 ? 1 : 0),
+      assetCount: reducedAssets.liquid + reducedAssets.staked + reducedAssets.locked,
+      type: 'chain',
+      id: chainId,
+    };
+  });
+
+  const treasuryPerMM = Object.keys(selectMMAssets(state)).map(mmId => {
+    const mmHoldings = selectTreasuryHoldingsByMMId(state, mmId);
+    let exchanges = 0;
+    let assetCount = 0;
+    let usdTotal = BIG_ZERO;
+    Object.entries(mmHoldings).forEach(([_, exchangeAssets]) => {
+      const filteredAssets = Object.values(exchangeAssets).filter(asset => asset.usdValue.gte(10));
+      if (filteredAssets.length > 0) {
+        filteredAssets.forEach(asset => {
+          usdTotal = usdTotal.plus(asset.usdValue);
+        });
+        exchanges++;
+        assetCount += filteredAssets.length;
+      }
+    });
+    return {
+      usdTotal,
+      categoryCount: exchanges,
+      assetCount,
+      type: 'mm',
+      id: mmId,
+    };
   });
 
   return treasuryPerChain
-    .filter(chain => chain.liquid + chain.staked + chain.locked > 0)
+    .concat(treasuryPerMM)
+    .filter(chain => chain.categoryCount > 0)
     .sort((a, b) => b.usdTotal.comparedTo(a.usdTotal));
 };
 
 export const selectTreasuryHoldingsByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
   return state.ui.treasury.byChainId[chainId];
+};
+
+export const selectTreasuryHoldingsByMMId = (state: BeefyState, mmId: string) => {
+  return state.ui.treasury.byMarketMakerId[mmId];
 };
 
 export const selectTreasuryBalanceByChainId = createCachedSelector(
@@ -71,11 +110,25 @@ export const selectTreasuryBalanceByChainId = createCachedSelector(
           totals = totals.plus(token.usdValue);
         }
       }
-
       return totals;
     }, BIG_ZERO);
   }
 )((state: BeefyState, chainId: ChainEntity['id']) => chainId);
+
+export const selectTreasuryBalanceByMMId = createCachedSelector(
+  (state: BeefyState, mmId: string) => selectTreasuryHoldingsByMMId(state, mmId),
+  treasuryByMMId => {
+    return Object.values(treasuryByMMId).reduce((totals, tokens) => {
+      for (const token of Object.values(tokens)) {
+        if (isFiniteBigNumber(token.usdValue)) {
+          totals = totals.plus(token.usdValue);
+        }
+      }
+
+      return totals;
+    }, BIG_ZERO);
+  }
+)((state: BeefyState, mmId: string) => mmId);
 
 export const selectTreasuryAssetsByChainId = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id']) =>

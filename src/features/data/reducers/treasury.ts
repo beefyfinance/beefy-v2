@@ -15,9 +15,7 @@ interface AddressHolding {
 }
 
 interface ExchangeHolding {
-  balances: {
-    [tokenId: string]: MarketMakerHoldingEntity;
-  };
+  [tokenId: string]: MarketMakerHoldingEntity;
 }
 
 export interface TreasuryState {

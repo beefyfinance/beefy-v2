@@ -1,10 +1,18 @@
 import { sortBy } from 'lodash-es';
-import type { TreasuryHoldingEntity } from '../../../../../data/entities/treasury';
+import type {
+  MarketMakerHoldingEntity,
+  TreasuryHoldingEntity,
+} from '../../../../../data/entities/treasury';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 type SortedAssetCategories = {
-  stakedAssets: TreasuryHoldingEntity[];
-  liquidAssets: TreasuryHoldingEntity[];
-  lockedAssets: TreasuryHoldingEntity[];
+  staked: TreasuryHoldingEntity[];
+  liquid: TreasuryHoldingEntity[];
+  locked: TreasuryHoldingEntity[];
+};
+
+type SortedMMAssets = {
+  [exchange: string]: MarketMakerHoldingEntity[];
 };
 
 export const useSortedAssets = (assets: TreasuryHoldingEntity[]): SortedAssetCategories => {
@@ -14,25 +22,49 @@ export const useSortedAssets = (assets: TreasuryHoldingEntity[]): SortedAssetCat
   });
 
   const list: SortedAssetCategories = {
-    stakedAssets: [],
-    liquidAssets: [],
-    lockedAssets: [],
+    staked: [],
+    liquid: [],
+    locked: [],
   };
 
   for (const token of sortedAssets) {
     //HIDE: All tokens with less than 10 usd
     if (token.usdValue.gt(10)) {
       if ((token.assetType === 'token' || token.assetType === 'native') && !token.staked) {
-        list.liquidAssets.push(token);
+        list.liquid.push(token);
       }
       if (token.staked) {
-        list.stakedAssets.push(token);
+        list.staked.push(token);
       }
       if (token.assetType === 'validator') {
-        list.lockedAssets.push(token);
+        list.locked.push(token);
       }
     }
   }
 
   return list;
+};
+
+export const useSortedMMHoldings = (exchanges: {
+  [exchangeId: string]: { [address: string]: MarketMakerHoldingEntity };
+}): SortedMMAssets => {
+  const exchangeBalances = {};
+  for (const [exchangeId, exchangeHoldings] of Object.entries(exchanges)) {
+    exchangeBalances[exchangeId] = BIG_ZERO;
+    Object.values(exchangeHoldings).forEach(holding => {
+      exchangeBalances[exchangeId] = exchangeBalances[exchangeId].plus(holding.usdValue);
+    });
+  }
+
+  const sortedKeys = Object.keys(exchangeBalances).sort((a, b) =>
+    exchangeBalances[b].minus(exchangeBalances[a]).toNumber()
+  );
+  const sortedMMHoldings: SortedMMAssets = {};
+  sortedKeys.forEach(exchangeId => {
+    sortedMMHoldings[exchangeId] = Object.values(exchanges[exchangeId]).sort((a, b) =>
+      b.usdValue.minus(a.usdValue).toNumber()
+    );
+  });
+
+  return sortedMMHoldings;
 };
