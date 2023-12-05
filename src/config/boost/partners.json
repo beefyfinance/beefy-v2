@@ -8,13 +8,13 @@
       "twitter": "https://twitter.com/TheTNetwork"
     }
   },
-  "jarvis-angle": {
-    "title": "Jarvis",
-    "text": "The first token in the LP is jEUR, a multi-collateralized synthetic token tracking the price of the Euro. Issued by the Jarvis Network, jEUR is built on the top of UMA and Chainlink to provide users with safe and stable onchain access to their favourite fiat currencies. The second token in the LP is agEUR, an over-collateralized synthetic stablecoin which is pegged to the value of the Euro. The token is issued by Angle, a decentralized, capital-efficient and over-collateralized stablecoins protocol that allows users to access debt pegged to their preferred fiat currencies.",
-    "website": "",
+  "angle": {
+    "title": "Angle",
+    "text": "Angle is a decentralized, capital efficient and over-collateralized stablecoin protocol composed of smart contracts running on open blockchains.",
+    "website": "https://angle.money/",
     "social": {
-      "discord": "",
-      "twitter": ""
+      "discord": "https://discord.gg/5Af6xum9bc",
+      "twitter": "https://twitter.com/AngleProtocol"
     }
   },
   "stafi": {
@@ -1072,8 +1072,8 @@
     }
   },
   "jarvis": {
-    "title": "Jarvis Network",
-    "text": "Jarvis Network is a set of protocols and applications to bring DeFi to everyone. Its first protocol, Synthereum, pioneers a capital efficient manner to issue and exchange synthetic fiat currencies on Ethereum and Polygon. Called jFIAT, these stablecoins are redeemable for USDC at the oracle price, making them stable and liquid.",
+    "title": "Jarvis",
+    "text": "jFIATs are over-collateralized, stable and liquid on-chain fiat currencies that anyone can use to gain exposure to many fiat currencies, access liquidity, credit, yield and other financial services.",
     "website": "https://jarvis.network/",
     "social": {
       "telegram": "https://t.me/jarvisnetwork",
