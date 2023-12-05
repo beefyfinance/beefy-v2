@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { VaultTag, VaultTagWithTooltip } from './VaultTag';
@@ -22,6 +22,7 @@ import {
 } from '../../../../features/data/entities/vault';
 import { VaultPlatform } from '../../../VaultPlatform';
 import { selectVaultById } from '../../../../features/data/selectors/vaults';
+import { getBoostIconSrc } from '../../../../helpers/boostIconSrc';
 
 const useStyles = makeStyles(styles);
 
@@ -33,17 +34,23 @@ const VaultBoostTag = memo<VaultBoostTagProps>(function VaultBoostTag({ boostId 
   const { t } = useTranslation();
   const boost = useAppSelector(state => selectBoostById(state, boostId));
   const { isOverflowing, ref } = useIsOverflowingHorizontally();
+  const { tagIcon, tagText, name } = boost;
+  const iconSrc = useMemo(() => (tagIcon ? getBoostIconSrc(tagIcon) : undefined), [tagIcon]);
 
   return (
     <VaultTagWithTooltip
-      content={<BasicTooltipContent title={t('VaultTag-PartnerBoost', { partner: boost.name })} />}
+      content={<BasicTooltipContent title={t('VaultTag-PartnerBoost', { partner: name })} />}
       placement="bottom"
       disabled={!isOverflowing}
       className={classes.vaultTagBoost}
       ref={ref}
     >
-      {'\uD83D\uDD25 '}
-      {t('VaultTag-PartnerBoost', { partner: boost.name })}
+      {iconSrc ? (
+        <img src={iconSrc} alt="" className={classes.vaultTagBoostIcon} width={12} height={12} />
+      ) : (
+        <>{'\uD83D\uDD25 '}</>
+      )}
+      {tagText ? tagText : t('VaultTag-PartnerBoost', { partner: name })}
     </VaultTagWithTooltip>
   );
 });

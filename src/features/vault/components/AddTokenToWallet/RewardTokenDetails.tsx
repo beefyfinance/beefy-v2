@@ -12,17 +12,20 @@ import { ReactComponent as PlusIcon } from '../../../../images/icons/plus.svg';
 import { styles } from './styles';
 import { explorerTokenUrl } from '../../../../helpers/url';
 import { addTokenToWalletAction } from '../../../data/actions/add-to-wallet';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
 interface RewardTokenDetailsProps {
   token: TokenEntity;
   chainId: ChainEntity['id'];
+  className?: string;
 }
 
 export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardTokenDetails({
   token,
   chainId,
+  className,
 }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -33,7 +36,7 @@ export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardT
   }, [dispatch, chainId, token.address]);
 
   return (
-    <div className={classes.container}>
+    <div className={clsx(classes.container, className)}>
       <div className={classes.token}>
         <AssetsImage size={24} chainId={chainId} assetIds={[token.id]} />{' '}
         <div className={classes.text}>{t('Earn', { symbol: token.symbol })}</div>
