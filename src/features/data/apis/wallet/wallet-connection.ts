@@ -9,7 +9,7 @@ import Onboard from '@web3-onboard/core';
 import createInjectedWallets from '@web3-onboard/injected-wallets';
 import standardInjectedWallets from '@web3-onboard/injected-wallets/dist/wallets';
 import createCoinbaseWalletModule from '@web3-onboard/coinbase';
-import createWalletConnectModule, { type WalletConnectOptions } from '@web3-onboard/walletconnect';
+import createWalletConnectModule from '@web3-onboard/walletconnect';
 import type { ConnectOptions } from '@web3-onboard/core/dist/types';
 import type { WalletInit } from '@web3-onboard/common';
 import { createEIP1193Provider } from '@web3-onboard/common';
@@ -21,6 +21,7 @@ import { getNetworkSrc } from '../../../../helpers/networkSrc';
 import type { provider } from 'web3-core';
 import { featureFlag_walletConnectChainId } from '../../utils/feature-flags';
 import type { WalletHelpers, WalletModule } from '@web3-onboard/common/dist/types';
+import type { WalletConnectOptions } from '@web3-onboard/walletconnect/dist/types';
 import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url'; // eslint-disable-line import/no-unresolved
 
 const walletConnectImages: Record<string, string> = {
@@ -45,11 +46,11 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   }
 
   private static createWalletConnectModule(
-    modalOptions?: Extract<WalletConnectOptions, { version?: 2 }>['qrModalOptions']
+    modalOptions?: WalletConnectOptions['qrModalOptions']
   ): WalletInit {
     const requiredChainId = featureFlag_walletConnectChainId();
     const options: WalletConnectOptions = {
-      version: 2,
+      dappUrl: 'https://app.beefy.com',
       projectId: 'af38b343e1be64b27c3e4a272cb453b9',
       requiredChains: requiredChainId ? [requiredChainId] : [],
     };
@@ -65,10 +66,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     return createWalletConnectModule(options);
   }
 
-  private static createWalletConnectCloneModule(
-    label: WalletModule['label'],
-    getIcon?: WalletModule['getIcon']
-  ): WalletInit {
+  private static createWalletConnectCloneModule(): WalletInit {
     const walletConnectInit = WalletConnectionApi.createWalletConnectModule({
       mobileWallets: [
         {
@@ -76,6 +74,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
           name: 'Fireblocks',
           links: {
             native: 'fireblocks-wc://',
+            universal: 'https://console.fireblocks.io/v2/',
           },
         },
       ],
@@ -98,10 +97,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         throw new Error('createWalletConnectModule returned invalid module');
       }
 
-      module.label = label;
-      if (getIcon) {
-        module.getIcon = getIcon;
-      }
+      module.label = 'Fireblocks';
+      module.getIcon = async () =>
+        (await import('../../../../images/wallets/fireblocks-transparent.svg')).default;
 
       return module;
     };
@@ -117,10 +115,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       WalletConnectionApi.createWalletConnectModule(),
       createCoinbaseWalletModule(),
       WalletConnectionApi.createCDCWalletModule(),
-      WalletConnectionApi.createWalletConnectCloneModule(
-        'Fireblocks',
-        async () => (await import('../../../../images/wallets/fireblocks-transparent.svg')).default
-      ),
+      WalletConnectionApi.createWalletConnectCloneModule(),
     ];
   }
 
