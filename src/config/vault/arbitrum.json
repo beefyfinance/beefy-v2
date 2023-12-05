@@ -4883,7 +4883,7 @@
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-0/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-0/withdraw",
     "network": "arbitrum",
-    "createdAt": 1633276273
+    "createdAt": 1701769111
   },
   {
     "id": "sushi-arb-spell-weth",

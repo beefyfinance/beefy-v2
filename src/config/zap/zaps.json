@@ -16,8 +16,8 @@
   },
   {
     "chainId": "optimism",
-    "router": "0x91456757198FA14b9fA23f265Eee8Ee8AFfDdbc2",
-    "manager": "0xaFa91974E148c3cc4a39dF42CcAA4c378a5BE8E0"
+    "router": "0xE82343A116d2179F197111D92f9B53611B43C01c",
+    "manager": "0x5a32F67C5eD74dc1b2e031b1bc2c3E965073424F"
   },
   {
     "chainId": "fantom",
