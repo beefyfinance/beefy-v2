@@ -20,7 +20,7 @@ import appLogo from '../../../../images/bifi-logos/header-logo.svg';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
 import type { provider } from 'web3-core';
 import { featureFlag_walletConnectChainId } from '../../utils/feature-flags';
-import type { WalletHelpers, WalletModule } from '@web3-onboard/common/dist/types';
+import type { WalletHelpers } from '@web3-onboard/common/dist/types';
 import type { WalletConnectOptions } from '@web3-onboard/walletconnect/dist/types';
 import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url'; // eslint-disable-line import/no-unresolved
 
