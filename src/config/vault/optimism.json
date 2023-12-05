@@ -1,5 +1,135 @@
 [
   {
+    "id": "sonne-op-usdc",
+    "name": "USDCe",
+    "type": "standard",
+    "token": "USDCe",
+    "tokenAddress": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+    "tokenDecimals": 6,
+    "tokenProviderId": "sonne",
+    "earnedToken": "mooSonneUSDC",
+    "earnedTokenAddress": "0xcAAeaa835332B5bdB54c1753f4334f53021df7ea",
+    "earnContractAddress": "0xcAAeaa835332B5bdB54c1753f4334f53021df7ea",
+    "oracle": "tokens",
+    "oracleId": "opUSDCe",
+    "status": "active",
+    "platformId": "sonne",
+    "assets": ["opUSDCe"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "createdAt": 1701787116,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "sonne-op-usdt",
+    "name": "USDT",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+    "tokenDecimals": 6,
+    "tokenProviderId": "sonne",
+    "earnedToken": "mooSonneUSDT",
+    "earnedTokenAddress": "0x6f09487B60108c14fAE003531C431eEB326Db0ec",
+    "earnContractAddress": "0x6f09487B60108c14fAE003531C431eEB326Db0ec",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "platformId": "sonne",
+    "assets": ["USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "createdAt": 1701787116,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "sonne-op-dai",
+    "name": "DAI",
+    "type": "standard",
+    "token": "DAI",
+    "tokenAddress": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sonne",
+    "earnedToken": "mooSonneDAI",
+    "earnedTokenAddress": "0x51007e51e8174eedEa7cB620768A483678433cC8",
+    "earnContractAddress": "0x51007e51e8174eedEa7cB620768A483678433cC8",
+    "oracle": "tokens",
+    "oracleId": "DAI",
+    "status": "active",
+    "platformId": "sonne",
+    "assets": ["DAI"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "createdAt": 1701787116,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "sonne-op-susd",
+    "name": "sUSD",
+    "type": "standard",
+    "token": "sUSD",
+    "tokenAddress": "0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sonne",
+    "earnedToken": "mooSonnesUSD",
+    "earnedTokenAddress": "0x1035bBb2b882541D582F808E666578aD3ABb48e6",
+    "earnContractAddress": "0x1035bBb2b882541D582F808E666578aD3ABb48e6",
+    "oracle": "tokens",
+    "oracleId": "sUSD",
+    "status": "active",
+    "platformId": "sonne",
+    "assets": ["sUSD"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "createdAt": 1701787116,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "sonne-op-lusd",
+    "name": "LUSD",
+    "type": "standard",
+    "token": "LUSD",
+    "tokenAddress": "0xc40F949F8a4e094D1b49a23ea9241D289B7b2819",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sonne",
+    "earnedToken": "mooSonneLUSD",
+    "earnedTokenAddress": "0x6310961C5Ab148f93EDeac0cD1a14cDdEDFa9D32",
+    "earnContractAddress": "0x6310961C5Ab148f93EDeac0cD1a14cDdEDFa9D32",
+    "oracle": "tokens",
+    "oracleId": "LUSD",
+    "status": "active",
+    "platformId": "sonne",
+    "assets": ["LUSD"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "createdAt": 1701787116,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "velodrome-v2-wsteth-velo",
     "name": "wstETH-VELO vLP",
     "type": "standard",
