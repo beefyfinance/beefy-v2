@@ -11,6 +11,7 @@ import { isNavDropdownConfig } from '../DropNavItem/types';
 import clsx from 'clsx';
 import { UnreadProposalsDot } from '../Badges/UnreadProposalsDot';
 import { Prices } from '../Prices';
+import { UnreadArticlesDot } from '../Badges/UnreadArticlesDot';
 
 const useStyles = makeStyles(styles);
 
@@ -25,6 +26,7 @@ export const MobileMenu = memo(function MobileMenu() {
       <button aria-label="menu" onClick={handleDrawerToggle} className={classes.toggleDrawer}>
         <Menu fontSize="inherit" className={classes.toggleDrawerIcon} />
         <UnreadProposalsDot className={classes.toggleDrawNotification} />
+        <UnreadArticlesDot className={classes.toggleDrawNotification} />
       </button>
       <Drawer className={classes.bg} anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
         <div className={classes.menuContainer}>

@@ -43,6 +43,7 @@ import { fetchWalletTimeline } from '../actions/analytics';
 import { fetchActiveProposals } from '../actions/proposal';
 import { fetchBridges } from '../actions/bridges';
 import { fetchAllMigrators } from '../actions/migrator';
+import { fetchArticles } from '../actions/articles';
 
 const dataLoaderStateInit: LoaderState = {
   alreadyLoadedOnce: false,
@@ -107,6 +108,7 @@ export const initialDataLoaderState: DataLoaderState = {
     proposals: dataLoaderStateInit,
     bridges: dataLoaderStateInit,
     migrators: dataLoaderStateInit,
+    articles: dataLoaderStateInit,
   },
   byChainId: {},
   byAddress: {},
@@ -339,6 +341,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchOnRampSupportedProviders, 'onRamp', true);
     addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury', true);
     addGlobalAsyncThunkActions(builder, fetchActiveProposals, 'proposals', false);
+    addGlobalAsyncThunkActions(builder, fetchArticles, 'articles', false);
     addByChainAsyncThunkActions(
       builder,
       fetchAllContractDataByChainAction,

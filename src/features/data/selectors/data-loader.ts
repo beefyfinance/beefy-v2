@@ -79,6 +79,10 @@ export const selectShouldInitProposals = (state: BeefyState) => {
   return isInitialLoader(state.ui.dataLoader.global.proposals);
 };
 
+export const selectShouldInitArticles = (state: BeefyState) => {
+  return isInitialLoader(state.ui.dataLoader.global.articles);
+};
+
 export const selectIsZapLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.zapConfigs.alreadyLoadedOnce &&
   state.ui.dataLoader.global.zapSwapAggregators.alreadyLoadedOnce &&

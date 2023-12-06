@@ -37,6 +37,7 @@ import { bridgesSlice } from './bridges';
 import { migrationSlice } from './wallet/migration';
 import { tooltipsSlice } from './tooltips';
 import { addToWalletSlice } from './add-to-wallet';
+import { articlesSlice } from './articles';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -49,6 +50,10 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
   minters: mintersSlice.reducer,
   proposals: proposalsSlice.reducer,
   bridges: bridgesSlice.reducer,
+  articles: persistReducer(
+    { key: 'articles', storage, whitelist: ['readedArticlesById'] },
+    articlesSlice.reducer
+  ),
 });
 const bizReducer = combineReducers<BeefyState['biz']>({
   tvl: tvlSlice.reducer,

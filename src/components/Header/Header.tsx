@@ -24,24 +24,36 @@ import { DropNavItem } from './components/DropNavItem';
 import { MobileMenu } from './components/MobileMenu';
 import { Prices } from './components/Prices';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { selectShouldInitProposals } from '../../features/data/selectors/data-loader';
+import {
+  selectShouldInitArticles,
+  selectShouldInitProposals,
+} from '../../features/data/selectors/data-loader';
 import { fetchActiveProposals } from '../../features/data/actions/proposal';
 import { UnreadProposalsDot } from './components/Badges/UnreadProposalsDot';
 import headerLogoMobile from '../../images/bifi-logos/header-logo-notext.svg';
 import headerLogoDesktop from '../../images/bifi-logos/header-logo.svg';
+import { UnreadArticlesDot } from './components/Badges/UnreadArticlesDot';
+import { fetchArticles } from '../../features/data/actions/articles';
 
 const useStyles = makeStyles(styles);
 export const Header = memo(function Header() {
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width: 500px)', { noSsr: true });
   const dispatch = useAppDispatch();
-  const shouldLoad = useAppSelector(selectShouldInitProposals);
+  const shouldLoadProposals = useAppSelector(selectShouldInitProposals);
+  const shoudLoadArticles = useAppSelector(selectShouldInitArticles);
 
   useEffect(() => {
-    if (shouldLoad) {
+    if (shouldLoadProposals) {
       dispatch(fetchActiveProposals());
     }
-  }, [dispatch, shouldLoad]);
+  }, [dispatch, shouldLoadProposals]);
+
+  useEffect(() => {
+    if (shoudLoadArticles) {
+      dispatch(fetchArticles());
+    }
+  }, [dispatch, shoudLoadArticles]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -70,6 +82,7 @@ export const Header = memo(function Header() {
                   title={'Header-Resources'}
                   Icon={ResourcesIcon}
                   items={ResourcesNavItems}
+                  Badge={UnreadArticlesDot}
                 />
               </Hidden>
             </div>
