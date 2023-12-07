@@ -15,7 +15,9 @@ function useTreasuryColumns(numColumns: number) {
 
   return useMemo(() => {
     if (numColumns === 1) {
-      return [sortedTreasury.map(chainTreasury => chainTreasury.id)];
+      return [
+        sortedTreasury.map(chainTreasury => ({ id: chainTreasury.id, type: chainTreasury.type })),
+      ];
     }
 
     const heights = new Array(numColumns).fill(0);
