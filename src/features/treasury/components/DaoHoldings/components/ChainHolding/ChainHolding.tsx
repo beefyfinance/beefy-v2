@@ -50,13 +50,13 @@ export const ChainHolding = memo<ChainHoldingProps>(function ChainHolding({ chai
 export const MMHolding = memo<MMHoldingProps>(function MMHolding({ mmId }) {
   const classes = useStyles();
   const totalUsd = useAppSelector(state => selectTreasuryBalanceByMMId(state, mmId));
-
   return (
     <div className={classes.container}>
-      <div className={clsx(classes.title, classes[`headerMM-${mmId}`])}>
-        <div className={classes.nameContainer}>
+      <div className={clsx(classes.title, classes[`headerMM-${mmId.toLowerCase()}`])}>
+        <div className={classes.mmNameContainer}>
           <img className={classes.icon} src={getPartnerSrc(mmId)} alt={mmId} />
-          <div className={classes.chainName}>{mmId}</div>
+          <div className={classes.mmName}>{mmId}</div>
+          <div className={classes.marketMakerAnnotation}>MM</div>
         </div>
         <div className={classes.usdValue}>{formatBigUsd(totalUsd)}</div>
       </div>

@@ -69,9 +69,9 @@ export const treasurySlice = createSlice({
               balance: new BigNumber(token.balance),
             };
           }
-          items[exchangeId] = tokens;
+          items[mapMMAndExchangeIds(exchangeId)] = tokens;
         }
-        sliceState.byMarketMakerId[marketMakerId] = items;
+        sliceState.byMarketMakerId[mapMMAndExchangeIds(marketMakerId)] = items;
       }
     });
   },
@@ -102,4 +102,14 @@ const mapBalances = (
 
     return totals;
   }, {} as Record<string, TreasuryHoldingEntity>);
+};
+
+const ID_MAPPINGS = {
+  system9: 'System9',
+  binance: 'Binance',
+  cryptodotcom: 'Crypto.com',
+};
+
+const mapMMAndExchangeIds = (id: string) => {
+  return ID_MAPPINGS[id] ?? id;
 };

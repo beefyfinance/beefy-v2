@@ -19,13 +19,26 @@ export const styles = (theme: Theme) => ({
       padding: '16px',
     },
   },
+  marketMakerAnnotation: {
+    position: 'relative',
+    bottom: '0.5em',
+    fontSize: '0.5em',
+  },
   icon: {
     height: '32px',
+  },
+  mmNameContainer: {
+    display: 'flex',
+    alignItems: 'center',
   },
   nameContainer: {
     display: 'flex',
     columnGap: '12px',
     alignItems: 'center',
+  },
+  mmName: {
+    color: theme.palette.text.light,
+    paddingLeft: '12px',
   },
   chainName: { color: theme.palette.text.light },
   usdValue: { color: theme.palette.text.light },

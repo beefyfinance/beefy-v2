@@ -251,16 +251,16 @@ export const selectTreasuryStats = (state: BeefyState) => {
     for (const exchangeHoldings of Object.values(exchangeData)) {
       for (const holding of Object.values(exchangeHoldings)) {
         if (holding) {
-          if (holding.oracleId === 'BIFI') {
-            beefyHeld = beefyHeld.plus(holding.balance);
-          }
-          if (selectIsTokenStable(state, 'ethereum', holding.oracleId)) {
-            stables = stables.plus(holding.usdValue);
-          }
           if (isFiniteBigNumber(holding.usdValue)) {
+            if (holding.oracleId === 'BIFI') {
+              beefyHeld = beefyHeld.plus(holding.balance);
+            }
+            if (selectIsTokenStable(state, 'ethereum', holding.oracleId)) {
+              stables = stables.plus(holding.usdValue);
+            }
             holdings = holdings.plus(holding.usdValue);
+            holdingAssets.add(holding.symbol);
           }
-          holdingAssets.add(holding.symbol);
         }
       }
     }
