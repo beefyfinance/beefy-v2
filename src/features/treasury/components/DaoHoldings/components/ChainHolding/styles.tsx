@@ -20,7 +20,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   marketMakerAnnotation: {
-    position: 'relative',
+    position: 'relative' as const,
     bottom: '0.5em',
     fontSize: '0.5em',
   },

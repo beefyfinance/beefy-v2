@@ -171,7 +171,7 @@ export const selectTreasuryStats = (state: BeefyState) => {
           let balanceInTokens = token.balance.shiftedBy(-token.decimals);
           if (bifiOracles.includes(token.oracleId)) {
             beefyHeld = beefyHeld.plus(
-              getBifiBalanceInTokens(state, token.oracleId, beefyHeld, balanceInTokens)
+              getBifiBalanceInTokens(state, token.oracleId, balanceInTokens)
             );
           }
 
@@ -197,7 +197,7 @@ export const selectTreasuryStats = (state: BeefyState) => {
               for (const asset of assets) {
                 if (bifiOracles.includes(asset.oracleId)) {
                   beefyHeld = beefyHeld.plus(
-                    getBifiBalanceInTokens(state, asset.oracleId, beefyHeld, asset.userAmount)
+                    getBifiBalanceInTokens(state, asset.oracleId, asset.userAmount)
                   );
                 }
                 if (selectIsTokenStable(state, chainId, asset.oracleId)) {
@@ -280,7 +280,6 @@ export const selectTreasuryStats = (state: BeefyState) => {
 const getBifiBalanceInTokens = (
   state: BeefyState,
   oracleId: TreasuryHoldingEntity['oracleId'],
-  beefyHeld: BigNumber,
   balance: BigNumber
 ): BigNumber => {
   if (oracleId === 'BIFI' || oracleId === 'rBIFI') {
@@ -293,6 +292,8 @@ const getBifiBalanceInTokens = (
 
 export const selectTreasuryTokensExposure = (state: BeefyState) => {
   const treasury = selectTreasury(state);
+  const mmHoldings = selectMMAssets(state);
+
   const exposure = Object.entries(treasury).reduce((totals, [chainId, wallets]) => {
     for (const wallet of Object.values(wallets)) {
       for (const token of Object.values(wallet.balances)) {
@@ -343,6 +344,23 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
     return totals;
   }, {} as Record<string, BigNumber>);
 
+  Object.values(mmHoldings).forEach(mmData => {
+    Object.values(mmData).forEach(exchange => {
+      Object.values(exchange).forEach(holding => {
+        if (isFiniteBigNumber(holding.usdValue)) {
+          if (selectIsTokenStable(state, 'ethereum', holding.oracleId)) {
+            exposure['stables'] = (exposure['stables'] || BIG_ZERO).plus(holding.usdValue);
+          } else {
+            const assetId = holding.symbol
+              ? selectWrappedToNativeSymbolOrTokenSymbol(state, holding.symbol)
+              : holding.name;
+            exposure[assetId] = (exposure[assetId] || BIG_ZERO).plus(holding.usdValue);
+          }
+        }
+      });
+    });
+  });
+
   const treasuryValue = Object.keys(exposure).reduce(
     (cur, tot) => exposure[tot].plus(cur),
     BIG_ZERO
@@ -361,12 +379,18 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
 
 export const selectTreasuryExposureByChain = (state: BeefyState) => {
   const treasury = selectTreasury(state);
+  const mmHoldings = selectMMAssets(state);
 
   const chains: Record<string, BigNumber> = {};
 
   for (const chainId of Object.keys(treasury)) {
     const totalUsdPerChain = selectTreasuryBalanceByChainId(state, chainId);
     chains[chainId] = totalUsdPerChain;
+  }
+
+  for (const mmId of Object.keys(mmHoldings)) {
+    const totalUsdPerMM = selectTreasuryBalanceByMMId(state, mmId);
+    chains['ethereum'] = (chains.ethereum || BIG_ZERO).plus(totalUsdPerMM);
   }
 
   const totalTreasury = Object.keys(chains).reduce((cur, tot) => chains[tot].plus(cur), BIG_ZERO);
@@ -386,6 +410,7 @@ export const selectTreasuryExposureByChain = (state: BeefyState) => {
 
 export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
   const treasury = selectTreasury(state);
+  const mmHoldings = selectMMAssets(state);
 
   const exposure = Object.keys(treasury).reduce((totals, chainId) => {
     const assetsByChainId = selectTreasuryAssetsByChainId(state, chainId);
@@ -407,10 +432,13 @@ export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
     return totals;
   }, {} as Record<string, BigNumber>);
 
-  const totalTreasury = Object.keys(exposure).reduce(
-    (cur, tot) => exposure[tot].plus(cur),
-    BIG_ZERO
-  );
+  const totalMM = Object.keys(mmHoldings).reduce((totals, mmId) => {
+    return totals.plus(selectTreasuryBalanceByMMId(state, mmId));
+  }, BIG_ZERO);
+
+  const totalTreasury = Object.keys(exposure)
+    .reduce((cur, tot) => exposure[tot].plus(cur), BIG_ZERO)
+    .plus(totalMM);
 
   const treasuryExposureByAvailability = Object.keys(exposure).map(key => {
     return {
@@ -418,6 +446,12 @@ export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
       value: exposure[key],
       percentage: exposure[key].dividedBy(totalTreasury).toNumber(),
     };
+  });
+
+  treasuryExposureByAvailability.push({
+    key: 'managed',
+    value: totalMM,
+    percentage: totalMM.dividedBy(totalTreasury).toNumber(),
   });
 
   return treasuryExposureByAvailability;
