@@ -15,6 +15,9 @@ import clsx from 'clsx';
 import { ExplorerLinks } from '../../../ExplorerLinks';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 import { getPartnerSrc } from '../../../../../../helpers/partnerSrc';
+import { Tooltip } from '../../../../../../components/Tooltip';
+import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(styles);
 
@@ -49,6 +52,8 @@ export const ChainHolding = memo<ChainHoldingProps>(function ChainHolding({ chai
 
 export const MMHolding = memo<MMHoldingProps>(function MMHolding({ mmId }) {
   const classes = useStyles();
+  const { t } = useTranslation();
+
   const totalUsd = useAppSelector(state => selectTreasuryBalanceByMMId(state, mmId));
   return (
     <div className={classes.container}>
@@ -56,7 +61,12 @@ export const MMHolding = memo<MMHoldingProps>(function MMHolding({ mmId }) {
         <div className={classes.mmNameContainer}>
           <img className={classes.icon} src={getPartnerSrc(mmId)} alt={mmId} />
           <div className={classes.mmName}>{mmId}</div>
-          <div className={classes.marketMakerAnnotation}>MM</div>
+          <Tooltip
+            content={<BasicTooltipContent title={t('MarketMaker-Managed')} />}
+            placement="top"
+          >
+            <div className={classes.marketMakerAnnotation}>MM</div>
+          </Tooltip>
         </div>
         <div className={classes.usdValue}>{formatBigUsd(totalUsd)}</div>
       </div>
