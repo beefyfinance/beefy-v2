@@ -61,9 +61,9 @@ export const useSortedMMHoldings = (exchanges: {
   );
   const sortedMMHoldings: SortedMMAssets = {};
   sortedKeys.forEach(exchangeId => {
-    sortedMMHoldings[exchangeId] = Object.values(exchanges[exchangeId]).sort((a, b) =>
-      b.usdValue.minus(a.usdValue).toNumber()
-    );
+    sortedMMHoldings[exchangeId] = Object.values(exchanges[exchangeId])
+      .filter(holding => holding.usdValue.gt(10))
+      .sort((a, b) => b.usdValue.minus(a.usdValue).toNumber());
   });
 
   return sortedMMHoldings;
