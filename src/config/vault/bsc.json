@@ -3915,7 +3915,8 @@
     "earnContractAddress": "0x55669f1c00D55F55bA1E736A23cEE54877D922Be",
     "oracle": "tokens",
     "oracleId": "NFTY",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "nfty",
     "assets": ["NFTY"],
     "risks": [
