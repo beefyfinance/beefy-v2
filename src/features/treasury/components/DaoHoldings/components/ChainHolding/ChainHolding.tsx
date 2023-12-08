@@ -59,7 +59,7 @@ export const MMHolding = memo<MMHoldingProps>(function MMHolding({ mmId }) {
     <div className={classes.container}>
       <div className={clsx(classes.title, classes[`headerMM-${mmId.toLowerCase()}`])}>
         <div className={classes.mmNameContainer}>
-          <img className={classes.icon} src={getPartnerSrc(mmId)} alt={mmId} />
+          <img className={classes.icon} src={getPartnerSrc(mmId.toLowerCase())} alt={mmId} />
           <div className={classes.mmName}>{mmId}</div>
           <Tooltip
             content={<BasicTooltipContent title={t('MarketMaker-Managed')} />}
