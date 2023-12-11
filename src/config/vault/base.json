@@ -1,5 +1,130 @@
 [
   {
+    "id": "sonne-base-usdbc",
+    "name": "USDbC",
+    "type": "standard",
+    "token": "USDbC",
+    "tokenAddress": "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
+    "tokenDecimals": 6,
+    "earnedToken": "mooSonneUSDbC",
+    "earnedTokenAddress": "0xdDBb254169e61bd51ea9FC91921Ad48081709c91",
+    "earnContractAddress": "0xdDBb254169e61bd51ea9FC91921Ad48081709c91",
+    "oracle": "tokens",
+    "oracleId": "USDbC",
+    "status": "active",
+    "platformId": "sonne",
+    "assets": ["USDbC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "base",
+    "createdAt": 1701787116,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "sonne-base-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "tokenDecimals": 6,
+    "earnedToken": "mooSonneUSDC",
+    "earnedTokenAddress": "0x692909d98b839b26961134731E126668E763B4D6",
+    "earnContractAddress": "0x692909d98b839b26961134731E126668E763B4D6",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "platformId": "sonne",
+    "assets": ["USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "base",
+    "createdAt": 1701787116,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "sonne-base-dai",
+    "name": "DAI",
+    "type": "standard",
+    "token": "DAI",
+    "tokenAddress": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSonneDAI",
+    "earnedTokenAddress": "0xBbB0a77Dab33f3c2E09c54e424ecF32357e3EFd1",
+    "earnContractAddress": "0xBbB0a77Dab33f3c2E09c54e424ecF32357e3EFd1",
+    "oracle": "tokens",
+    "oracleId": "DAI",
+    "status": "active",
+    "platformId": "sonne",
+    "assets": ["DAI"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "base",
+    "createdAt": 1701787116,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "sonne-base-weth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0x4200000000000000000000000000000000000006",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSonneWETH",
+    "earnedTokenAddress": "0xD28e73F3b178a63C9ddAF9ae149094a2374124c0",
+    "earnContractAddress": "0xD28e73F3b178a63C9ddAF9ae149094a2374124c0",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "platformId": "sonne",
+    "assets": ["WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "base",
+    "createdAt": 1701787116,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "sonne-base-cbeth",
+    "name": "cbETH",
+    "type": "standard",
+    "token": "cbETH",
+    "tokenAddress": "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSonnecbETH",
+    "earnedTokenAddress": "0x5ee4AFa2994d99991F34a4742a0F0865a1594c24",
+    "earnContractAddress": "0x5ee4AFa2994d99991F34a4742a0F0865a1594c24",
+    "oracle": "tokens",
+    "oracleId": "cbETH",
+    "status": "active",
+    "platformId": "sonne",
+    "assets": ["cbETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "base",
+    "createdAt": 1701787116,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-axlusdc",
     "name": "ETH-axlUSDC vLP",
     "type": "standard",
@@ -733,7 +858,8 @@
     "earnContractAddress": "0x3673339459D46BE8364124F06e751Dfeb06fEf2e",
     "oracle": "lps",
     "oracleId": "aerodrome-dola-usd+",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "aerodrome",
     "assets": ["DOLA", "USD+"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -1662,7 +1788,8 @@
     "earnContractAddress": "0x962861c70D26EFb8f7eb425578EC7609DE9912bE",
     "oracle": "lps",
     "oracleId": "baso-mim-usdbc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "baso",
     "assets": ["MIM", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],

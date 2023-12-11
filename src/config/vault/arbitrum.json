@@ -1,5 +1,28 @@
 [
   {
+    "id": "aura-arb-ovn-wusd+",
+    "name": "OVN-wUSD+",
+    "type": "standard",
+    "token": "OVN-wUSD+",
+    "tokenAddress": "0x85Ec6ae01624aE0d2a04D0Ffaad3A25884C7d0f3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraArbOVN-wUSD+",
+    "earnedTokenAddress": "0x43f92A2b1567Dc99db4ac6d6421E8B705e742BB1",
+    "earnContractAddress": "0x43f92A2b1567Dc99db4ac6d6421E8B705e742BB1",
+    "oracle": "lps",
+    "oracleId": "aura-arb-ovn-wusd+",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["OVN", "arbwUSD+"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x85ec6ae01624ae0d2a04d0ffaad3a25884c7d0f30002000000000000000004b6/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x85ec6ae01624ae0d2a04d0ffaad3a25884c7d0f30002000000000000000004b6/withdraw",
+    "network": "arbitrum",
+    "createdAt": 1702153240
+  },
+  {
     "id": "silo-eth-wsteth",
     "name": "ETH",
     "type": "standard",
@@ -2933,7 +2956,8 @@
     "earnContractAddress": "0x994Ff2ab544D00aD4EC0380a1Be8F75f4EC47Cf9",
     "oracle": "lps",
     "oracleId": "sushi-arb-weth-arb-2",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["ARB", "ETH"],
     "risks": [
@@ -3008,7 +3032,8 @@
     "earnContractAddress": "0x4D323f77c32EDdC62BF8eAbA11E5C573FD0a2ccd",
     "oracle": "lps",
     "oracleId": "sushi-arb-dpx-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["DPX", "ETH"],
     "risks": [
@@ -4883,7 +4908,7 @@
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-0/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-0/withdraw",
     "network": "arbitrum",
-    "createdAt": 1633276273
+    "createdAt": 1701769111
   },
   {
     "id": "sushi-arb-spell-weth",
@@ -4975,7 +5000,8 @@
     "earnContractAddress": "0x07Db98358D58Ba9bE90cd0A18cd86AF807ac3B4E",
     "oracle": "lps",
     "oracleId": "sushi-arb-eth-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["arbUSDCe", "ETH"],
     "risks": [

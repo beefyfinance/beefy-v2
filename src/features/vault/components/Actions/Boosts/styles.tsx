@@ -16,7 +16,6 @@ export const styles = (theme: Theme) => ({
     padding: '24px',
     backgroundColor: theme.palette.background.contentPrimary,
     borderRadius: '12px',
-    marginTop: '24px',
   },
   boostImg: {
     width: 30,

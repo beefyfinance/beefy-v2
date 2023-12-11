@@ -24,10 +24,10 @@ export const Treasury = memo(function Treasury() {
   const vaultsLoaded = useAppSelector(state => state.ui.dataLoader.global.vaults.alreadyLoadedOnce);
 
   useEffect(() => {
-    if (shouldInit) {
+    if (shouldInit && isAddressBookLoaded && vaultsLoaded) {
       dispatch(fetchTreasury());
     }
-  }, [dispatch, shouldInit]);
+  }, [dispatch, shouldInit, isAddressBookLoaded, vaultsLoaded]);
 
   if (!isLoaded || !isAddressBookLoaded || !vaultsLoaded) {
     return <TechLoader text={t('Treasury-Loading')} />;

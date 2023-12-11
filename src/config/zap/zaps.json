@@ -6,87 +6,87 @@
   },
   {
     "chainId": "polygon",
-    "router": "0x68c5c0C23f396c6079B42Cad9C0B1dcE3614284F",
-    "manager": "0x4BA7fF86dDda3E479895da6e60145d34c5b5b317"
+    "router": "0xE90053b8136f18206fcf4F48E0C3B6AeD9b1aD71",
+    "manager": "0x2813223eCCE2E3A270C6162fDc56Be4414EcdbF6"
   },
   {
     "chainId": "bsc",
-    "router": "0x7199DFea25044060B08156E5cff98223195f2297",
-    "manager": "0x0054019D3048960ae3D6740F97e7c202bF49beE0"
+    "router": "0x1C482130A1205213ad130404221Dc9b5350Fe4BD",
+    "manager": "0xc2B9c646Bd36CBbC6D0d700991663F5D092CC79f"
   },
   {
     "chainId": "optimism",
-    "router": "0x91456757198FA14b9fA23f265Eee8Ee8AFfDdbc2",
-    "manager": "0xaFa91974E148c3cc4a39dF42CcAA4c378a5BE8E0"
+    "router": "0xE82343A116d2179F197111D92f9B53611B43C01c",
+    "manager": "0x5a32F67C5eD74dc1b2e031b1bc2c3E965073424F"
   },
   {
     "chainId": "fantom",
-    "router": "0x525D2d753bBaB2dE52e25f057Ba04123330E460f",
-    "manager": "0x26528428F53869FE5cd62fc2651Ad4e7d50EdaF7"
+    "router": "0x13761d473fF1478957ADb80CB4E58e0AF76d2C51",
+    "manager": "0x0F10ef4aFbc2a8081307e5b4D017141FD3fCfb7d"
   },
   {
     "chainId": "arbitrum",
-    "router": "0x52A7436dEA377cD39d51AB6c60C7b4c36A3b0AD2",
-    "manager": "0x9244A4a53BE3Ac4456B121bee2c5c61e1849D5d7"
+    "router": "0xf49F7bB6F4F50d272A0914a671895c4384696E5A",
+    "manager": "0x3395BDAE49853Bc7Ab9377d2A93f42BC3A18680e"
   },
   {
     "chainId": "avax",
-    "router": "0x12C34f5bBc00e6BeF4BF5C82a15F15F35Ef6D5F1",
-    "manager": "0x2Df67bC3830C6668D3043A3dCb4E0C220F6DF700"
+    "router": "0x2E72e1436F1a2B2e0d2fa4394Ac06857c7b281B3",
+    "manager": "0x7B86a441D1482BCF326658CEe9b6f189cd4297ff"
   },
   {
     "chainId": "cronos",
-    "router": "0x227c3B9f9c1dD74c4240EFb364102B6bBDBeE3C8",
-    "manager": "0x29265e6eF461cb7C91be92447772A2ad9586624b"
+    "router": "0xED9d262985E18710DDDAC0dfC10a3f900679063B",
+    "manager": "0x3feB5C7b553119f06109f991504F467f646caE43"
   },
   {
     "chainId": "moonbeam",
-    "router": "0x67626718777795cD11940358E56e89b316315eE3",
-    "manager": "0x126b18f5f988e95c71E58c131efD20A9eC1d752b"
+    "router": "0xEC6eEDbe6B006E1cFA2e22Cb46a132888bFc62D8",
+    "manager": "0x384257e94dcbBDfD7a5EF23AD4E7b4B9E6FcF1F5"
   },
   {
     "chainId": "moonriver",
-    "router": "0x919471ca72093350d4159aa712132dA7E4175752",
-    "manager": "0x3703613a7E6f07B1ea6567AFd911bec20F1e2879"
+    "router": "0x57Be6EE3642EA9F6aFad527c73c4f7ACEe7cBD9C",
+    "manager": "0x6995c6FA2538C0261a5127e5E23b4e42b97Db04D"
   },
   {
     "chainId": "metis",
-    "router": "0xDBad28672fD60c4609EE6B26dF2b8cB93DE12afe",
-    "manager": "0x33a3d6400a7167a12467f81e989d0c853dccb728"
+    "router": "0x718591BF31ac44Be363D4900ea1fA6F355fc58dc",
+    "manager": "0x9F9F46aD541aFe75731D956f525e0a4d866F32E0"
   },
   {
     "chainId": "fuse",
-    "router": "0xE0eC89807B964eD41CB2D6Df2365DD6DD78c6fda",
-    "manager": "0x17c898CAdB1517318e7BA55B7aBD7806415Ad43b"
+    "router": "0xd3DFCD52001D0662DFA8A9eEa5C3379BA0b4452C",
+    "manager": "0x957803E12453B5881c9A543fF305a3151c9DdaC9"
   },
   {
     "chainId": "kava",
-    "router": "0x87FfB7314f30F13de6ccb4Ff86C29FA05A7BBe9B",
-    "manager": "0x6ea7BBa5c7C5FFcb6D53a08EA920B6C470Fb9e6e"
+    "router": "0x6f66F246Bb436B6f4E66A992C2218b57cD906109",
+    "manager": "0xD3D46FF34cD495d5B91b8F3C5C552E81E5e3eab5"
   },
   {
     "chainId": "canto",
-    "router": "0xeEEDDA17b8D5f1A5658eCe7d247b08741725B961",
-    "manager": "0x7b850cDe775692A2Cf8E68D13935e34fB7c31e44"
+    "router": "0xFF529D914449459ecc443aF359e4fB4E3497176c",
+    "manager": "0xdb4E95b5B7bFC858FED1976082853eA74e3706e7"
   },
   {
     "chainId": "zksync",
-    "router": "0x0d94b404D9C738246e1E8322Fef8e0E7bf412597",
-    "manager": "0xe2B33147fA72f316D587d673CD58dE2b276157C9"
+    "router": "0x744A1Ca08f0787bFF426cA3A734711EAc2772675",
+    "manager": "0xAD579b6c9F0b66101806957018B7D965c6B1fa92"
   },
   {
     "chainId": "zkevm",
-    "router": "0x1DEF2c354bcFa4d1A8F40c4c33Ef7d27DB4109cA",
-    "manager": "0x8c73abdcc50A045D2203316EE6D92aD57BBD442c"
+    "router": "0xE3d8531f197540e7b09D102107Eef46C4da13aC6",
+    "manager": "0x0930B420E375B0d210BfC51B26808cb9d2a33CB7"
   },
   {
     "chainId": "base",
-    "router": "0x7ba517A2036872E5aD1472C83be4c0a9C23A8b3C",
-    "manager": "0xA3808862694017b71744acc83d63A39d2c32fc2A"
+    "router": "0x6F19Da51d488926C007B9eBaa5968291a2eC6a63",
+    "manager": "0x3fBD1da78369864c67d62c242d30983d6900c0f0"
   },
   {
     "chainId": "gnosis",
-    "router": "0x9C18deE5290925f596fbEfee2f6745b640f3A4C6",
-    "manager": "0x1b2310b1704B0a67ab00F07209974c5736C11856"
+    "router": "0x992Ccc9D9b8b76310E044660E96171116820F019",
+    "manager": "0xA59BB0da9565e03f53AeFC94fcC205c52Fc925B7"
   }
 ]

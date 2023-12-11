@@ -1,6 +1,5 @@
 import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity } from '../entities/vault';
-import { selectBoostById, selectPreStakeOrActiveBoostIds } from './boosts';
 import { selectVaultById } from './vaults';
 
 export const selectIsVaultQidao = (state: BeefyState, vaultId: VaultEntity['id']) => {
@@ -22,15 +21,4 @@ export const selectIsVaultBinSpirit = (state: BeefyState, vaultId: VaultEntity['
 export const selectIsBeFTM = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
   return vault.id === 'beefy-beFTM';
-};
-
-export const selectBoostedVaultMainPartner = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const boostIds = selectPreStakeOrActiveBoostIds(state, vaultId);
-  const boost = selectBoostById(state, boostIds[0]);
-  const partner = state.biz.partners.byId[boost.partnerIds[0]];
-  return partner;
-};
-
-export const selectPartnerById = (state: BeefyState, partnerId: string) => {
-  return state.biz.partners.byId[partnerId];
 };

@@ -4,7 +4,9 @@ import type { ChainEntity } from '../entities/chain';
 import type {
   AmmConfig,
   BeefyBridgeConfig,
+  BoostCampaignConfig,
   BoostConfig,
+  BoostPartnerConfig,
   BridgeConfig,
   ChainConfig,
   FeaturedVaultConfig,
@@ -73,23 +75,36 @@ export class ConfigAPI {
     );
   }
 
-  public async fetchAllBoosts(): Promise<{ [chainId: ChainEntity['id']]: BoostConfig[] }> {
-    const partnersById = (await import(`../../../config/boost/partners.json`)).default;
+  public async fetchAllBoosts(): Promise<{
+    boostsByChainId: Record<ChainEntity['id'], BoostConfig[]>;
+    partnersById: Record<string, BoostPartnerConfig>;
+    campaignsById: Record<string, BoostCampaignConfig>;
+  }> {
+    const [partnersById, campaignsById, ...boostsPerChain] = (
+      await Promise.all([
+        import(`../../../config/boost/partners.json`),
+        import(`../../../config/boost/campaigns.json`),
+        ...Object.keys(chainConfigs).map(
+          async chainId => import(`../../../config/boost/${chainId}.json`)
+        ),
+      ])
+    ).map(i => i.default);
+
     const boosts = Object.fromEntries(
       await Promise.all(
-        Object.keys(chainConfigs).map(async chainId => [
-          chainId,
-          (await import(`../../../config/boost/${chainId}.json`)).default,
-        ])
+        Object.keys(chainConfigs).map(async (chainId, i) => [chainId, boostsPerChain[i]])
       )
     );
 
-    return mapValues(boosts, boosts =>
+    const boostsByChainId = mapValues(boosts, boosts =>
       boosts.map(boost => ({
         ...boost,
-        partners: (boost.partners || []).map(partnerId => partnersById[partnerId]),
+        partners: (boost.partners || []).filter(id => !!partnersById[id]),
+        campaign: boost.campaign && campaignsById[boost.campaign] ? boost.campaign : undefined,
       }))
     );
+
+    return { boostsByChainId, partnersById, campaignsById };
   }
 
   public async fetchAllMinters(): Promise<{ [chainId: ChainEntity['id']]: MinterConfig[] }> {

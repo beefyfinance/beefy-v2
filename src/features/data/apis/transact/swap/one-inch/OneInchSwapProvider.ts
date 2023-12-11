@@ -47,7 +47,7 @@ export class OneInchSwapProvider implements ISwapProvider {
       src: this.getTokenAddress(request.fromToken),
       dst: this.getTokenAddress(request.toToken),
       amount: toWeiString(request.fromAmount, request.fromToken.decimals),
-      fee: config.fee.value.toString(10),
+      fee: (config.fee.value * 100).toString(10), // convert to % (0.0005 -> 0.05%)
     });
 
     return {
@@ -74,9 +74,9 @@ export class OneInchSwapProvider implements ISwapProvider {
       src: this.getTokenAddress(quote.fromToken),
       dst: this.getTokenAddress(quote.toToken),
       amount: toWeiString(quote.fromAmount, quote.fromToken.decimals),
-      slippage: request.slippage * 100,
+      slippage: request.slippage * 100, // convert to % (0.01 -> 1%)
       disableEstimate: true,
-      fee: config.fee.value.toString(10),
+      fee: (config.fee.value * 100).toString(10), // convert to % (0.0005 -> 0.05%)
       referrer: config.fee.recipient,
     });
 

@@ -5,7 +5,7 @@ import type { TokenEntity } from '../../entities/token';
 import type { VaultEntity } from '../../entities/vault';
 import { mapValuesDeep } from '../../utils/array-utils';
 import { featureFlag_simulateBeefyApiError } from '../../utils/feature-flags';
-import type { TreasuryConfig } from '../config-types';
+import type { TreasuryCompleteBreakdownConfig } from '../config-types';
 import type { ChainEntity } from '../../entities/chain';
 
 export const API_URL = import.meta.env.VITE_API_URL || 'https://api.beefy.finance';
@@ -208,12 +208,12 @@ export class BeefyAPI {
     return data;
   }
 
-  public async getTreasury(): Promise<TreasuryConfig> {
+  public async getTreasury(): Promise<TreasuryCompleteBreakdownConfig> {
     if (featureFlag_simulateBeefyApiError('treasury')) {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get<TreasuryConfig>('/treasury', {
+    const res = await this.api.get<TreasuryCompleteBreakdownConfig>('/treasury/complete', {
       params: { _: this.getCacheBuster('short') },
     });
     return res.data;

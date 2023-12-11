@@ -11,6 +11,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.buttons.button,
     padding: '2px 8px',
     borderRadius: '4px',
+    height: '32px',
     '&:hover': {
       color: theme.palette.text.light,
       backgroundColor: '#3F466D',
@@ -18,4 +19,8 @@ export const styles = (theme: Theme) => ({
     },
   },
   icon: {},
+  svgIcon: {
+    width: '16px',
+    height: '16px',
+  },
 });

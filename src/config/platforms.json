@@ -917,5 +917,10 @@
     "id": "silo",
     "name": "Silo",
     "filter": true
+  },
+  {
+    "id": "sonne",
+    "name": "Sonne",
+    "filter": true
   }
 ]

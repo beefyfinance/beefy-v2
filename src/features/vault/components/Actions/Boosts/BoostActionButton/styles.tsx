@@ -31,9 +31,9 @@ export const styles = (theme: Theme) => ({
   },
   balance: {
     ...theme.typography['body-sm'],
-    color: theme.palette.text.middle,
+    color: theme.palette.text.dark,
     '& span': {
-      color: theme.palette.text.dark,
+      color: theme.palette.text.middle,
     },
   },
   actions: {

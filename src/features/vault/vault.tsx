@@ -25,7 +25,7 @@ import { InsuranceCards } from './components/InsuranceCards';
 import { LeverageCards } from './components/LeverageCards';
 import { Actions } from './components/Actions';
 import { VaultHeader } from './components/VaultHeader';
-import { RenBannerVault } from '../../components/Banners/RenBanner';
+import { BusdBannerVault } from '../../components/Banners/BusdBanner';
 import { PnLGraphLoader } from './components/PnLGraph';
 import { VaultsStats } from './components/VaultsStats';
 import { HistoricGraphsLoader } from './components/HistoricGraph';
@@ -78,7 +78,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
   return (
     <Container maxWidth="lg" className={classes.page}>
       <VaultMeta vaultId={vaultId} />
-      <RenBannerVault vaultId={vaultId} />
+      <BusdBannerVault vaultId={vaultId} />
       <VaultHeader vaultId={vaultId} />
       <VaultsStats vaultId={vaultId} />
       <div className={classes.contentContainer}>

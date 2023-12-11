@@ -11,9 +11,9 @@ import { Banner } from '../Banner';
 
 const useStyles = makeStyles(styles);
 
-const RenBanner = memo(function RenBanner() {
+const BusdBanner = memo(function BusdBanner() {
   const classes = useStyles();
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideRenBanner', false);
+  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideBusdBanner', false);
 
   const closeBanner = useCallback(() => {
     setHideBanner(true);
@@ -25,14 +25,16 @@ const RenBanner = memo(function RenBanner() {
 
   return (
     <Banner
-      icon={<AssetsImage chainId={'polygon'} assetIds={['renBTC']} className={classes.icon} />}
+      icon={<AssetsImage chainId={'bsc'} assetIds={['BUSD']} className={classes.icon} />}
       text={
         <>
-          RenProject has advised users to bridge back assets such as renBTC to their respective
-          native chains as Ren 1.0 will be sunset by 20th December 2022.{' '}
+          The issuer of BUSD, Paxos, has halted the minting of new tokens, and Binance plans to
+          cease support for BUSD by December 15th. Beefy users are encouraged to withdraw and
+          convert their BUSD tokens into other available assets. BUSD vaults will remain active on
+          Beefy until liquidity, incentives, or TVL falls below the specified thresholds.{' '}
           <a
             className={classes.link}
-            href="https://medium.com/renproject/moving-on-from-alameda-da62a823ce93"
+            href="https://paxos.com/2023/02/13/paxos-will-halt-minting-new-busd-tokens/"
             target="_blank"
             rel="noopener"
           >
@@ -45,15 +47,15 @@ const RenBanner = memo(function RenBanner() {
   );
 });
 
-export const RenBannerHome = memo(function RenBannerHome() {
-  const vaultIds = useAppSelector(state => selectUserDepositedVaultIdsForAsset(state, 'renBTC'));
-  return vaultIds.length ? <RenBanner /> : null;
+export const BusdBannerHome = memo(function BusdBannerHome() {
+  const vaultIds = useAppSelector(state => selectUserDepositedVaultIdsForAsset(state, 'BUSD'));
+  return vaultIds.length ? <BusdBanner /> : null;
 });
 
-export type RenBannerVaultProps = {
+export type BusdBannerVaultProps = {
   vaultId: VaultEntity['id'];
 };
-export const RenBannerVault = memo<RenBannerVaultProps>(function RenBannerVault({ vaultId }) {
+export const BusdBannerVault = memo<BusdBannerVaultProps>(function BusdBannerVault({ vaultId }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  return vault.assetIds.includes('renBTC') ? <RenBanner /> : null;
+  return vault.assetIds.includes('BUSD') ? <BusdBanner /> : null;
 });

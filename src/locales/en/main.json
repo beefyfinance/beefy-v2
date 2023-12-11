@@ -25,12 +25,14 @@
   "Header-Docs": "Docs",
   "Header-Audit": "Audit",
   "Header-MediaKit": "Media Kit",
+  "Header-Partnerts": "Partners",
   "Header-PlatformDashboard": "Platform Dashboard",
   "Header-Treasury": "Treasury",
   "Header-Badge-New": "New",
   "Footer-Audit": "Audit",
   "Footer-MediaKit": "Media Kit",
   "Footer-Stats": "Stats",
+  "Footer-Partners": "Partners",
   "Portfolio-Portfolio": "Portfolio",
   "Portfolio-BalanceShow": "Show Balance",
   "Portfolio-BalanceHide": "Hide Balance",
@@ -207,6 +209,7 @@
   "Boost-PartnerLink-telegram": "Telegram",
   "Boost-PartnerLink-twitter": "Twitter",
   "Boost-PartnerLink-discord": "Discord",
+  "Boost-learn-more": "Learn More",
   "Pool-Apr": "Pool APR",
   "Pool-AprDaily": "Pool Daily APR",
   "Network-Change": "Switch to {{network}}",
@@ -654,5 +657,6 @@
   "Migration-Action": "Migrate Now",
   "TokenBridge-native": "Native",
   "TokenBridge-Tooltip-native": "Token is native to {{chain}}",
-  "TokenBridge-Tooltip-bridge": "Token is bridged to {{chain}} via <website>{{bridge}}</website>"
+  "TokenBridge-Tooltip-bridge": "Token is bridged to {{chain}} via <website>{{bridge}}</website>",
+  "MarketMaker-Managed": "Funds being managed by a Market Maker"
 }

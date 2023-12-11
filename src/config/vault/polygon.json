@@ -1171,37 +1171,6 @@
     "createdAt": 1686917464
   },
   {
-    "id": "pearl-weth-usdr",
-    "name": "WETH-USDR vLP",
-    "type": "standard",
-    "token": "vAMM-WETH/USDR",
-    "tokenAddress": "0x6B3aA71C74042e113Bd0b055224d70a131334761",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pearl",
-    "earnedToken": "mooPearlETH-USDR",
-    "earnedTokenAddress": "0x3eEcd5FeD0900451A95537De7F3543cA4Ed926a7",
-    "earnContractAddress": "0x3eEcd5FeD0900451A95537De7F3543cA4Ed926a7",
-    "oracle": "lps",
-    "oracleId": "pearl-weth-usdr",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "pearl",
-    "assets": ["ETH", "multiUSDR"],
-    "migrationIds": ["polygon-pearl"],
-    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0x6B3aA71C74042e113Bd0b055224d70a131334761",
-    "removeLiquidityUrl": "https://v1.pearl.exchange/liquidity/manage/0x6B3aA71C74042e113Bd0b055224d70a131334761",
-    "network": "polygon",
-    "createdAt": 1686901380,
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "polygon-pearl"
-      }
-    ]
-  },
-  {
     "id": "pearl-matic-usdr",
     "name": "MATIC-USDR vLP",
     "type": "standard",
