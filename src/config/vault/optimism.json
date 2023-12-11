@@ -1,7 +1,7 @@
 [
   {
     "id": "velodrome-v2-next-usdc",
-    "name": "NEXT-USDCe vLP",
+    "name": "NEXT-USDC.e vLP",
     "type": "standard",
     "token": "vAMM-NEXT-USDCe",
     "tokenAddress": "0x1e7c5572B3D5942Cf5dabf61f5Ba3FbC6B65e921",

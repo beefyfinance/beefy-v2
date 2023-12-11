@@ -20,7 +20,7 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x85ec6ae01624ae0d2a04d0ffaad3a25884c7d0f30002000000000000000004b6/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x85ec6ae01624ae0d2a04d0ffaad3a25884c7d0f30002000000000000000004b6/withdraw",
     "network": "arbitrum",
-    "createdAt": 1701444777
+    "createdAt": 1702153240
   },
   {
     "id": "silo-eth-wsteth",
