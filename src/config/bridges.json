@@ -156,5 +156,10 @@
     "name": "Inter-Blockchain Communication",
     "tagName": "IBC",
     "website": "https://ibc.cosmos.network/main"
+  },
+  {
+    "id": "connext",
+    "name": "Connext",
+    "website": "https://www.connext.network"
   }
 ]
