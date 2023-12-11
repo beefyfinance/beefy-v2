@@ -37,12 +37,12 @@ export const Assets = memo<AssetsProps>(function Assets({ chainId }) {
       {Object.keys(chainAssetTypes).map(
         assetType =>
           sortedAssets[assetType].length > 0 && (
-            <div key={assetType}>
+            <React.Fragment key={assetType}>
               <div className={classes.assetTypes}>{t(chainAssetTypes[assetType])}</div>
               {sortedAssets[assetType].map(token => {
                 return <AssetInfo key={token.address} chainId={chainId} token={token} />;
               })}
-            </div>
+            </React.Fragment>
           )
       )}
     </div>
@@ -60,12 +60,12 @@ export const MMAssets = memo<AssetsProps>(function MMAssets({ mmId }) {
       {Object.keys(sortedAssetsByExchange).map(
         exchangeId =>
           sortedAssetsByExchange[exchangeId].length > 0 && (
-            <div key={exchangeId}>
+            <React.Fragment key={exchangeId}>
               <div className={classes.assetTypes}>{exchangeId.toUpperCase()}</div>
               {sortedAssetsByExchange[exchangeId].map((token, index) => {
                 return <AssetInfoMM key={token.symbol + index} holding={token} />;
               })}
-            </div>
+            </React.Fragment>
           )
       )}
     </div>
