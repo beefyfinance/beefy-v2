@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { RenBannerHome } from '../../../../components/Banners/RenBanner';
+import { BusdBannerHome } from '../../../../components/Banners/BusdBanner';
 import { Container, makeStyles } from '@material-ui/core';
 // import { AnnouncementBanner } from '../../../../components/Banners/AnnouncementBanner';
 
@@ -20,7 +20,7 @@ export const Banners = memo<BannersProps>(function Banners() {
 
   return (
     <Container maxWidth="lg" className={classes.banners}>
-      <RenBannerHome />
+      <BusdBannerHome />
       {/* <AnnouncementBanner /> */}
     </Container>
   );
