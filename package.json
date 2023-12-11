@@ -76,6 +76,7 @@
     "setVaultUrls": "ts-node -r dotenv/config ./scripts/setVaultUrls.ts && prettier --write ./src/config/vault/*.json",
     "migrateZapV3": "ts-node -r dotenv/config ./scripts/migrateVaultFilesForZapV3.ts && prettier --write ./src/config/vault/*.json",
     "checkVaultTokenDecimals": "ts-node -r dotenv/config ./scripts/checkVaultTokenDecimals.ts && prettier --write ./src/config/vault/*.json",
+    "checkZapAddresses": "ts-node -r dotenv/config ./scripts/checkZapAddresses.ts",
     "makeExcludeConfig": "ts-node -r dotenv/config ./scripts/makeExcludeConfig.ts",
     "prepare": "husky install",
     "tsc": "tsc",
