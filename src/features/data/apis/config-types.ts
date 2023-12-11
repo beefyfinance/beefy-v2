@@ -319,6 +319,29 @@ export type TreasuryConfig = {
   };
 };
 
+export type MarketMakerHoldingConfig = {
+  symbol: string;
+  name: string;
+  oracleId: string;
+  oracleType: 'tokens' | 'lps';
+  usdValue: string;
+  balance: string;
+  price: number;
+};
+
+export type MarketMakerConfig = {
+  [marketMakerId: string]: {
+    [exchange: string]: {
+      [tokenId: string]: MarketMakerHoldingConfig;
+    };
+  };
+};
+
+export type TreasuryCompleteBreakdownConfig = {
+  treasury: TreasuryConfig;
+  marketMaker: MarketMakerConfig;
+};
+
 export interface BridgeConfig {
   readonly id: string;
   readonly name: string;
