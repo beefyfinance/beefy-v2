@@ -75,6 +75,9 @@ export const analyticsSlice = createSlice({
       );
       // Grab all the tx hashes from the boost txs, and filter out any vault txs that have the same hash
       const boostTxHashes = new Set(boostTxs.map(tx => tx.transactionHash));
+      boostTxHashes.delete(undefined);
+      boostTxHashes.delete(null);
+
       const vaultIdsWithMerges = new Set<string>();
       const vaultTxsIgnoringBoosts = vaultTxs.filter(tx => {
         if (boostTxHashes.has(tx.transactionHash)) {
