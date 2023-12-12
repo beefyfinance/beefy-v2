@@ -11,7 +11,7 @@ export const styles = (theme: Theme) => ({
     minHeight: 'inherit',
   },
   icon: {
-    marginBottom: '24px',
+    marginBottom: '16px',
   },
   text: {
     ...theme.typography['subline-lg'],
