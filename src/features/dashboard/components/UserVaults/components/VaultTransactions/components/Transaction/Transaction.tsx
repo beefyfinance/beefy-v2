@@ -23,6 +23,7 @@ interface TransactionProps {
   data: VaultTimelineAnalyticsEntity;
   tokenDecimals: number;
 }
+
 export const Transaction = memo<TransactionProps>(function Transaction({ data, tokenDecimals }) {
   const classes = useStyles();
   const chainId = data.source?.chain || data.chain;
@@ -52,14 +53,18 @@ export const Transaction = memo<TransactionProps>(function Transaction({ data, t
           height={24}
           className={classes.network}
         />
-        <a
-          href={explorerTxUrl(chain, transactionHash)}
-          target={'_blank'}
-          rel={'noopener'}
-          className={classes.link}
-        >
-          {formatISO9075(datetime)}
-        </a>
+        {transactionHash ? (
+          <a
+            href={explorerTxUrl(chain, transactionHash)}
+            target={'_blank'}
+            rel={'noopener'}
+            className={classes.link}
+          >
+            {formatISO9075(datetime)}
+          </a>
+        ) : (
+          formatISO9075(datetime)
+        )}
       </div>
       <InfoGrid>
         {/*Amount */}
@@ -142,14 +147,18 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
         } ${diff}`}</div>
         {/* Date */}
         <div className={classes.statMobile}>
-          <a
-            href={explorerTxUrl(chain, transactionHash)}
-            target={'_blank'}
-            rel={'noopener'}
-            className={classes.link}
-          >
-            {formatISO9075(datetime, { representation: 'date' })}
-          </a>
+          {transactionHash ? (
+            <a
+              href={explorerTxUrl(chain, transactionHash)}
+              target={'_blank'}
+              rel={'noopener'}
+              className={classes.link}
+            >
+              {formatISO9075(datetime, { representation: 'date' })}
+            </a>
+          ) : (
+            formatISO9075(datetime, { representation: 'date' })
+          )}
         </div>
         <div className={clsx(classes.statMobile, classes.textDark)}>
           {formatISO9075(datetime, { representation: 'time' })}
