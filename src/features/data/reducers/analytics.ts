@@ -73,14 +73,12 @@ export const analyticsSlice = createSlice({
       const [boostTxs, vaultTxs] = partition(timeline, tx =>
         tx.productKey.startsWith('beefy:boost')
       );
-      // Grab all the tx hashes from the boost txs, and filter out any vault txs that have the same hash
-      const boostTxHashes = new Set(boostTxs.map(tx => tx.transactionHash));
-      boostTxHashes.delete(undefined);
-      boostTxHashes.delete(null);
 
+      // Grab all the tx hashes from the boost txs, and filter out any vault txs that have the same hash
+      const boostTxIds = new Set(boostTxs.map(tx => tx.transactionId));
       const vaultIdsWithMerges = new Set<string>();
       const vaultTxsIgnoringBoosts = vaultTxs.filter(tx => {
-        if (boostTxHashes.has(tx.transactionHash)) {
+        if (boostTxIds.has(tx.transactionId)) {
           vaultIdsWithMerges.add(tx.displayName);
           return false;
         }

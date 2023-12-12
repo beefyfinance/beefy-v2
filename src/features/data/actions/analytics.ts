@@ -3,7 +3,11 @@ import type { BeefyState } from '../../../redux-types';
 import { getAnalyticsApi } from '../apis/instances';
 import type { VaultTimelineAnalyticsEntity } from '../entities/analytics';
 import BigNumber from 'bignumber.js';
-import type { AnalyticsPriceResponse, TimeBucketType } from '../apis/analytics/analytics-types';
+import type {
+  AnalyticsPriceResponse,
+  TimeBucketType,
+  TimelineAnalyticsConfig,
+} from '../apis/analytics/analytics-types';
 import type { VaultEntity } from '../entities/vault';
 import { isFiniteNumber } from '../../../helpers/number';
 
@@ -11,6 +15,16 @@ export interface fetchWalletTimelineFulfilled {
   timeline: VaultTimelineAnalyticsEntity[];
   walletAddress: string;
   state: BeefyState;
+}
+
+function makeTransactionId(config: TimelineAnalyticsConfig): string {
+  if (config.transaction_hash) {
+    return config.transaction_hash;
+  }
+
+  // old data doesn't have transaction_hash so we try to make an id that is the same for a given vault/boost tx
+  const shareDiff = new BigNumber(config.share_diff);
+  return `${config.chain}-${config.datetime}-${shareDiff.absoluteValue().toString(10)}`;
 }
 
 export const fetchWalletTimeline = createAsyncThunk<
@@ -24,6 +38,7 @@ export const fetchWalletTimeline = createAsyncThunk<
 
   const timeline = userTimeline.map((row): VaultTimelineAnalyticsEntity => {
     return {
+      transactionId: makeTransactionId(row), // old data doesn't have transaction_hash
       datetime: new Date(row.datetime),
       productKey: row.product_key,
       displayName: row.display_name,
