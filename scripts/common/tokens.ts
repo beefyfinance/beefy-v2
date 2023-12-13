@@ -4,7 +4,7 @@ import {
   getMintersForChain,
   getVaultsForChain,
 } from './config';
-import { ChainAddressBook, getChainAddressBook } from './addressbook';
+import { getChainAddressBook } from './addressbook';
 import { chainsByAppId } from './chains';
 import type { ChainEntity } from '../../src/features/data/entities/chain';
 import {
