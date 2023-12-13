@@ -10,10 +10,10 @@ import { styles } from './styles';
 import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet';
 import { useTranslation } from 'react-i18next';
 import { selectIsUserBalanceAvailable } from '../../../../../data/selectors/data-loader';
-import { Loader } from '../../../../../../components/Loader';
 import { askForWalletConnection, doDisconnectWallet } from '../../../../../data/actions/wallet';
 import { Button } from '../../../../../../components/Button';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
+import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
 
 const useStyles = makeStyles(styles);
 
@@ -76,7 +76,7 @@ const LoadingMessage = memo(function LoadingMessage() {
   const classes = useStyles();
   return (
     <div className={classes.message}>
-      <Loader />
+      <LoadingIndicator />
     </div>
   );
 });
