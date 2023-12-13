@@ -33,7 +33,7 @@ import { UnreadProposalsDot } from './components/Badges/UnreadProposalsDot';
 import headerLogoMobile from '../../images/bifi-logos/header-logo-notext.svg';
 import headerLogoDesktop from '../../images/bifi-logos/header-logo.svg';
 import { UnreadArticlesDot } from './components/Badges/UnreadArticlesDot';
-import { fetchArticles } from '../../features/data/actions/articles';
+import { fetchLastArticle } from '../../features/data/actions/articles';
 
 const useStyles = makeStyles(styles);
 export const Header = memo(function Header() {
@@ -51,7 +51,7 @@ export const Header = memo(function Header() {
 
   useEffect(() => {
     if (shoudLoadArticles) {
-      dispatch(fetchArticles());
+      dispatch(fetchLastArticle());
     }
   }, [dispatch, shoudLoadArticles]);
 

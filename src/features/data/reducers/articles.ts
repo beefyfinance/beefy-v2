@@ -1,17 +1,17 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchArticles } from '../actions/articles';
+import { fetchLastArticle } from '../actions/articles';
 import type { BeefyArticleConfig } from '../apis/beefy/beefy-api';
 
-type ArticleEntity = BeefyArticleConfig & { id: string };
+type ArticleEntity = BeefyArticleConfig;
 
 export type articlesState = {
-  allArticles: ArticleEntity[];
+  lastArticle: ArticleEntity | null;
   readedArticlesById: Record<ArticleEntity['id'], boolean>;
 };
 
 const initialArticlesState: articlesState = {
-  allArticles: [],
+  lastArticle: null,
   readedArticlesById: {},
 };
 
@@ -27,15 +27,8 @@ export const articlesSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(fetchArticles.fulfilled, (sliceState, action) => {
-      const articles = action.payload;
-
-      const allArticles = [];
-      for (const [id, article] of Object.entries(articles)) {
-        allArticles.push({ id, ...article });
-      }
-
-      sliceState.allArticles = allArticles;
+    builder.addCase(fetchLastArticle.fulfilled, (sliceState, action) => {
+      sliceState.lastArticle = { ...action.payload, date: 1702498233 };
     });
   },
 });
