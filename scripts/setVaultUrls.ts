@@ -5,6 +5,7 @@ import { allChainIds, AppChainId } from './common/chains';
 import { sortVaultKeys } from './common/vault-fields';
 import type { VaultConfig } from '../src/features/data/apis/config-types';
 import { getTokenById } from './common/tokens';
+import { TokenEntity } from '../src/features/data/entities/token';
 
 const WARN_MISSING_ASSET_ON_ACTIVE_VAULTS_ONLY: boolean = true;
 
@@ -28,8 +29,21 @@ type ProviderConfigWithCondition = ProviderUrls & {
 /**
  * {lp} - LP token address
  * {tokenN} - n-th address from vault assets[]; 'native' is replaced by native token symbol for that chain
+ * {tokenN:wrapped} - n-th address from vault assets[]; 'native' is replaced by wrapped native token address for that chain
+ * Adding :lower to any of the above will lowercase the result (e.g. {token0:lower})
  */
 const URLS: ChainProviderUrls = {
+  bsc: {
+    pancakeswap: [
+      {
+        condition: (vault: VaultConfig) => vault.id.startsWith('cakev2-'),
+        buyTokenUrl:
+          'https://pancakeswap.finance/swap?inputCurrency={token0}&outputCurrency={token1}',
+        addLiquidityUrl: 'https://pancakeswap.finance/v2/add/{token0}/{token1}',
+        removeLiquidityUrl: 'https://pancakeswap.finance/v2/remove/{token0}/{token1}',
+      },
+    ],
+  },
   fantom: {
     wigoswap: {
       addLiquidityUrl: 'https://wigoswap.io/add/{token0}/{token1}',
@@ -53,25 +67,27 @@ const URLS: ChainProviderUrls = {
       {
         condition: (vault: VaultConfig) =>
           vault.id.startsWith('velodrome-') && !vault.id.startsWith('velodrome-v2-'),
-        buyTokenUrl: 'https://app.velodrome.finance/swap?from={token0}&to={token1}',
+        buyTokenUrl: 'https://velodrome.finance/swap?from={token0}&to={token1}',
         addLiquidityUrl: 'https://v1.velodrome.finance/liquidity/manage?address={lp}',
         removeLiquidityUrl: 'https://v1.velodrome.finance/liquidity/manage?address={lp}',
       },
       {
         condition: (vault: VaultConfig) =>
           vault.id.startsWith('velodrome-v2-') && vault.token.includes(' sLP'),
-        buyTokenUrl: 'https://app.velodrome.finance/swap?from={token0:lower}&to={token1:lower}',
+        buyTokenUrl:
+          'https://velodrome.finance/swap?from={token0:wrapped:lower}&to={token1:wrapped:lower}',
         addLiquidityUrl:
-          'https://app.velodrome.finance/deposit?token0={token0:lower}&token1={token1:lower}&stable=true',
-        removeLiquidityUrl: 'https://app.velodrome.finance/withdraw?pair={lp:lower}',
+          'https://velodrome.finance/deposit?token0={token0:wrapped:lower}&token1={token1:wrapped:lower}&stable=true',
+        removeLiquidityUrl: 'https://velodrome.finance/withdraw?pool={lp:lower}',
       },
       {
         condition: (vault: VaultConfig) =>
           vault.id.startsWith('velodrome-v2-') && vault.token.includes(' vLP'),
-        buyTokenUrl: 'https://app.velodrome.finance/swap?from={token0:lower}&to={token1:lower}',
+        buyTokenUrl:
+          'https://velodrome.finance/swap?from={token0:wrapped:lower}&to={token1:wrapped:lower}',
         addLiquidityUrl:
-          'https://app.velodrome.finance/deposit?token0={token0:lower}&token1={token1:lower}&stable=false',
-        removeLiquidityUrl: 'https://app.velodrome.finance/withdraw?pair={lp:lower}',
+          'https://velodrome.finance/deposit?token0={token0:wrapped:lower}&token1={token1:wrapped:lower}&stable=false',
+        removeLiquidityUrl: 'https://velodrome.finance/withdraw?pool={lp:lower}',
       },
     ],
   },
@@ -113,7 +129,10 @@ function replaceUrlsForVault(
   });
 }
 
-async function getUrlsForVault(vault: VaultConfig): Promise<ProviderUrls | undefined> {
+async function getUrlsForVault(
+  vault: VaultConfig,
+  wnative: TokenEntity
+): Promise<ProviderUrls | undefined> {
   if (vault.tokenAddress && vault.tokenProviderId) {
     const replacements = {
       lp: vault.tokenAddress,
@@ -134,7 +153,10 @@ async function getUrlsForVault(vault: VaultConfig): Promise<ProviderUrls | undef
       }
 
       replacements[`token${i}`] = token.address === 'native' ? token.symbol : token.address;
+      replacements[`token${i}:wrapped`] =
+        token.address === 'native' ? wnative.address : token.address;
       replacements[`token${i}:lower`] = replacements[`token${i}`].toLowerCase();
+      replacements[`token${i}:wrapped:lower`] = replacements[`token${i}:wrapped`].toLowerCase();
     }
 
     return replaceUrlsForVault(vault, replacements);
@@ -145,11 +167,12 @@ async function getUrlsForVault(vault: VaultConfig): Promise<ProviderUrls | undef
 
 async function getModifiedConfig(chainId: AppChainId) {
   const vaults = await getVaultsForChain(chainId);
+  const wnative = await getTokenById('wnative', chainId);
 
   return Promise.all(
     vaults.map(async vault => {
       if (vault.tokenAddress && vault.tokenProviderId) {
-        const urls = await getUrlsForVault(vault);
+        const urls = await getUrlsForVault(vault, wnative);
         if (urls) {
           for (const [key, url] of Object.entries(urls)) {
             if (vault[key] !== url) {
