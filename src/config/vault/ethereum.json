@@ -1,5 +1,38 @@
 [
   {
+    "id": "silo-crvusd",
+    "name": "crvUSD",
+    "type": "standard",
+    "token": "crvUSD",
+    "tokenAddress": "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSilocrvUSD",
+    "earnedTokenAddress": "0xF62847E9A9dD2e7c0480B25AB99E71b7C1da6CED",
+    "earnContractAddress": "0xF62847E9A9dD2e7c0480B25AB99E71b7C1da6CED",
+    "oracle": "tokens",
+    "oracleId": "crvUSD",
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["crvUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=ethereum&from=0x0000000000000000000000000000000000000000&to=0xf939e0a03fb07f59a73314e73794be0e57ac1b4e",
+    "network": "ethereum",
+    "createdAt": 1702476802,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "prisma-cvxprisma",
     "name": "cvxPRISMA/PRISMA",
     "token": "cvxprismlp-f",
@@ -1739,7 +1772,7 @@
     "oracle": "lps",
     "oracleId": "sushi-mainnet-ldo-weth",
     "status": "eol",
-    "retireReason":"rewards",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["LDO", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],

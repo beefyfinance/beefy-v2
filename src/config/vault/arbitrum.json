@@ -59,7 +59,7 @@
     "type": "standard",
     "token": "USDC.e",
     "tokenAddress": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
-    "tokenDecimals": 8,
+    "tokenDecimals": 6,
     "earnedToken": "mooSiloUSDC.e",
     "earnedTokenAddress": "0x0da5EF5F02B8156a9a191d080369E420243C4501",
     "earnContractAddress": "0x0da5EF5F02B8156a9a191d080369E420243C4501",
