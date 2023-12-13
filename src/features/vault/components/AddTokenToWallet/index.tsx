@@ -1,1 +1,1 @@
-export * from './AddTokenToWallet';
+export * from './RewardTokenDetails';

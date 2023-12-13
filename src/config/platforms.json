@@ -8,6 +8,10 @@
     "name": "BabySwap"
   },
   {
+    "id": "prisma",
+    "name": "Prisma"
+  },
+  {
     "id": "conic",
     "name": "Conic Finance"
   },
@@ -892,6 +896,31 @@
   {
     "id": "kinetix",
     "name": "Kinetix",
+    "filter": true
+  },
+  {
+    "id": "compound",
+    "name": "Compound",
+    "filter": true
+  },
+  {
+    "id": "ichi",
+    "name": "Ichi",
+    "filter": true
+  },
+  {
+    "id": "bril",
+    "name": "Bril",
+    "filter": true
+  },
+  {
+    "id": "silo",
+    "name": "Silo",
+    "filter": true
+  },
+  {
+    "id": "sonne",
+    "name": "Sonne",
     "filter": true
   }
 ]

@@ -15,7 +15,7 @@ export const styles = (theme: Theme) => ({
     margin: '0 0 24px 0',
   },
   searchInput: {
-    background: '#111321',
+    background: theme.palette.background.searchInputBg,
   },
   chainSelector: {
     padding: '0 24px',
@@ -30,7 +30,7 @@ export const styles = (theme: Theme) => ({
   },
   inWallet: {
     ...theme.typography['body-lg'],
-    color: '#999CB3',
+    color: theme.palette.text.dark,
   },
   hideDust: {
     textAlign: 'right' as const,
@@ -50,6 +50,6 @@ export const styles = (theme: Theme) => ({
   noResults: {
     padding: '8px 12px',
     borderRadius: '8px',
-    background: '#2D3153',
+    background: theme.palette.background.contentLight,
   },
 });

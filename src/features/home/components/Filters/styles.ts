@@ -28,7 +28,7 @@ export const styles = (theme: Theme) => ({
       flexShrink: 0,
     },
   },
-  vaultType: {
+  assetType: {
     width: '100%',
     [theme.breakpoints.up('md')]: {
       width: 'fit-content',
@@ -55,6 +55,10 @@ export const styles = (theme: Theme) => ({
       flexBasis: 'auto',
       flexGrow: 0,
       flexShrink: 0,
+    },
+    '&:disabled': {
+      backgroundColor: theme.palette.background.contentDark,
+      opacity: 0.4,
     },
   },
 });

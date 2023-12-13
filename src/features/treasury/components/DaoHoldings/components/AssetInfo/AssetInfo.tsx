@@ -9,17 +9,23 @@ import { useAppSelector } from '../../../../../../store';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import {
   isVaultHoldingEntity,
+  type MarketMakerHoldingEntity,
   type TreasuryHoldingEntity,
 } from '../../../../../data/entities/treasury';
 import type { VaultEntity } from '../../../../../data/entities/vault';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { styles } from './styles';
+import { TokenImage } from '../../../../../../components/TokenImage/TokenImage';
 
 const useStyles = makeStyles(styles);
 
 interface AssetInfoProps {
   chainId: ChainEntity['id'];
   token: TreasuryHoldingEntity;
+}
+
+interface MMAssetInfoProps {
+  holding: MarketMakerHoldingEntity;
 }
 
 export const AssetInfo = memo<AssetInfoProps>(function AssetInfo({ chainId, token }) {
@@ -58,7 +64,7 @@ export const AssetInfo = memo<AssetInfoProps>(function AssetInfo({ chainId, toke
   return (
     <AssetContainer token={token}>
       <>
-        <AssetsImage size={24} chainId={chainId} assetIds={[token.oracleId]} />
+        <TokenImage size={24} tokenAddress={token.address} chainId={chainId} />
         <AssetName name={token.symbol} />
       </>
     </AssetContainer>
@@ -138,4 +144,36 @@ export const AssetName = memo<AssetNameProps>(function AssetName({ name }) {
   }
 
   return <div>{name}</div>;
+});
+
+// MM Assets
+export const AssetInfoMM = memo<MMAssetInfoProps>(function AssetInfoMM({ holding }) {
+  return (
+    <MMAssetContainer holding={holding}>
+      <>
+        <AssetsImage chainId={'ethereum'} size={24} assetIds={[holding.symbol]} />
+        <AssetName name={holding.symbol} />
+      </>
+    </MMAssetContainer>
+  );
+});
+
+type MMAssetContainerProps = PropsWithChildren<{
+  holding: MarketMakerHoldingEntity;
+}>;
+
+const MMAssetContainer = memo<MMAssetContainerProps>(function AssetContainer({
+  holding,
+  children,
+}) {
+  const classes = useStyles();
+  return (
+    <div className={classes.asset}>
+      <div className={classes.assetFlex}>{children}</div>
+      <div>
+        <div className={classes.value}>{holding.balance.toFixed(2)}</div>
+        <div className={classes.subValue}>{formatBigUsd(holding.usdValue)}</div>
+      </div>
+    </div>
+  );
 });

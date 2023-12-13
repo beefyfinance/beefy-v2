@@ -22,13 +22,15 @@ export const fetchWalletTimeline = createAsyncThunk<
 
   const userTimeline = await api.getWalletTimeline(address);
 
-  const timeline = userTimeline.map(row => {
+  const timeline = userTimeline.map((row): VaultTimelineAnalyticsEntity => {
     return {
-      chain: row.chain,
       datetime: new Date(row.datetime),
-      displayName: row.display_name,
-      isEol: row.is_eol,
       productKey: row.product_key,
+      displayName: row.display_name,
+      chain: row.chain,
+      isEol: row.is_eol,
+      isDashboardEol: row.is_dashboard_eol,
+      transactionHash: row.transaction_hash,
       shareBalance: new BigNumber(row.share_balance),
       shareDiff: new BigNumber(row.share_diff),
       shareToUnderlyingPrice: new BigNumber(row.share_to_underlying_price),

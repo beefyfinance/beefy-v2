@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => ({
   },
   labelText: {
     ...theme.typography['subline-sm'],
-    color: '#9595B2',
+    color: theme.palette.text.dark,
   },
   tooltipTrigger: {
     width: '16px',
@@ -27,7 +27,7 @@ export const styles = (theme: Theme) => ({
     filter: 'blur(.5rem)',
   },
   boostedValue: {
-    color: '#DB8332',
+    color: theme.palette.background.vaults.boost,
   },
   lineThroughValue: {
     textDecoration: 'line-through',

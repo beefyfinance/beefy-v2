@@ -4,12 +4,12 @@ export const styles = (theme: Theme) => ({
   container: {
     padding: 12,
     borderRadius: '8px',
-    backgroundColor: '#2D3153',
+    backgroundColor: theme.palette.background.contentLight,
   },
   title: {
     display: 'flex',
     ...theme.typography['body-lg'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     alignItems: 'center',
     '&:Hover': {
       cursor: 'pointer ' as const,
@@ -18,7 +18,7 @@ export const styles = (theme: Theme) => ({
   iconButton: {
     padding: 0,
     '& .MuiSvgIcon-root': {
-      fill: '#999CB3',
+      fill: theme.palette.text.dark,
     },
     '&:hover': {
       backgroundColor: 'transparent' as const,
@@ -31,9 +31,9 @@ export const styles = (theme: Theme) => ({
   },
   balance: {
     ...theme.typography['body-sm'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.dark,
     '& span': {
-      color: theme.palette.text.disabled,
+      color: theme.palette.text.middle,
     },
   },
   actions: {
@@ -43,10 +43,6 @@ export const styles = (theme: Theme) => ({
     rowGap: '16px',
   },
   button: {
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
-    '&:Hover': {
-      backgroundColor: '#272B4A',
-    },
     '&:disabled': {
       borderColor: 'transparent' as const,
     },
@@ -57,29 +53,29 @@ export const styles = (theme: Theme) => ({
     padding: '2px 6px',
     borderRadius: '4px',
     marginRight: `${8 - 2}px`,
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
+    backgroundColor: theme.palette.background.buttons.button,
     borderColor: 'transparent' as const,
     '&:disabled': {
       borderColor: 'transparent' as const,
     },
   },
   input: {
-    color: '#D0D0DA',
-    background: '#1B1E31',
+    color: theme.palette.text.middle,
+    background: theme.palette.background.searchInputBg,
     borderRadius: '8px',
     width: '100%',
     display: 'flex',
-    border: 'solid 2px #1B1E31',
+    border: `solid 2px ${theme.palette.background.searchInputBg}`,
     '& .MuiInputBase-input': {
       ...theme.typography['h3'],
       padding: `${8 - 2}px 16px`,
-      color: '#D0D0DA',
+      color: theme.palette.text.middle,
       height: 'auto',
       '&:focus': {
-        color: '#F5F5FF',
+        color: theme.palette.text.light,
       },
       '&::placeholder': {
-        color: '#8A8EA8',
+        color: theme.palette.text.middle,
         opacity: 1,
       },
     },

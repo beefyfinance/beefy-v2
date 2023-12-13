@@ -9,22 +9,26 @@ import { selectBoostById } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
 import { selectErc20TokenByAddress } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
-import type { BoostConfig } from '../apis/config-types';
+import type { BoostCampaignConfig, BoostConfig, BoostPartnerConfig } from '../apis/config-types';
 
 // given the list of vaults is pulled from some api at some point
 // we use the api to create an action
 // this action should return just enough data for the state to work with
 
 export interface FulfilledAllBoostsPayload {
-  [chainId: ChainEntity['id']]: BoostConfig[];
+  boostsByChainId: Record<ChainEntity['id'], BoostConfig[]>;
+  partnersById: Record<string, BoostPartnerConfig>;
+  campaignsById: Record<string, BoostCampaignConfig>;
 }
+
 export const fetchAllBoosts = createAsyncThunk<FulfilledAllBoostsPayload>(
   'boosts/fetchAllBoosts',
   async () => {
-    const api = getConfigApi();
+    const api = await getConfigApi();
     return api.fetchAllBoosts();
   }
 );
+
 interface InitBoostFormParams {
   boostId: BoostEntity['id'];
   mode: 'stake' | 'unstake';
@@ -43,6 +47,7 @@ interface InitBoostFormPayload {
   // reducers below need to access the state
   state: BeefyState;
 }
+
 export const initiateBoostForm = createAsyncThunk<
   InitBoostFormPayload,
   InitBoostFormParams,

@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { Draft } from 'immer';
-import { isEqual } from 'lodash-es';
+import { isEqual, mapValues } from 'lodash-es';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
-import type { BoostEntity } from '../entities/boost';
+import type { BoostCampaignEntity, BoostEntity, BoostPartnerEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { VaultEntity } from '../entities/vault';
 import type { NormalizedEntity } from '../utils/normalized-entity';
@@ -42,6 +42,14 @@ export type BoostsState = NormalizedEntity<BoostEntity> & {
   contractState: {
     [boostId: BoostEntity['id']]: BoostContractState;
   };
+  partners: {
+    allIds: BoostPartnerEntity['id'][];
+    byId: Record<BoostPartnerEntity['id'], BoostPartnerEntity>;
+  };
+  campaigns: {
+    allIds: BoostCampaignEntity['id'][];
+    byId: Record<BoostCampaignEntity['id'], BoostCampaignEntity>;
+  };
 };
 
 export const initialBoostsState: BoostsState = {
@@ -50,6 +58,14 @@ export const initialBoostsState: BoostsState = {
   byVaultId: {},
   byChainId: {},
   contractState: {},
+  partners: {
+    allIds: [],
+    byId: {},
+  },
+  campaigns: {
+    allIds: [],
+    byId: {},
+  },
 };
 
 export const boostsSlice = createSlice({
@@ -61,18 +77,31 @@ export const boostsSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    // when boost list is fetched, add all new tokens
     builder.addCase(fetchAllBoosts.fulfilled, (sliceState, action) => {
-      for (const [chainId, boosts] of Object.entries(action.payload)) {
+      for (const [chainId, boosts] of Object.entries(action.payload.boostsByChainId)) {
         for (const boost of boosts) {
           addBoostToState(sliceState, chainId, boost);
         }
       }
+
+      sliceState.partners.allIds = Object.keys(action.payload.partnersById);
+      sliceState.partners.byId = mapValues(action.payload.partnersById, (config, key) => ({
+        id: key,
+        ...config,
+      }));
+
+      sliceState.campaigns.allIds = Object.keys(action.payload.campaignsById);
+      sliceState.campaigns.byId = mapValues(action.payload.campaignsById, (config, key) => ({
+        id: key,
+        ...config,
+      }));
     });
+
     // handle period finish data
     builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
       addContractDataToState(sliceState, action.payload.data);
     });
+
     builder.addCase(
       reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
       (sliceState, action) => {
@@ -193,9 +222,11 @@ function addBoostToState(
     assets: apiBoost.assets,
     earnedTokenAddress: apiBoost.earnedTokenAddress,
     earnContractAddress: apiBoost.earnContractAddress,
-    logo: apiBoost.logo,
+    tagIcon: apiBoost.tagIcon || undefined,
+    tagText: apiBoost.tagText || undefined,
     name: apiBoost.name,
-    partnerIds: apiBoost.partners ? apiBoost.partners.map(p => p.website) : [],
+    partnerIds: apiBoost.partners?.length ? apiBoost.partners : [],
+    campaignId: apiBoost.campaign ? apiBoost.campaign : undefined,
     vaultId: apiBoost.poolId,
   };
   sliceState.byId[boost.id] = boost;

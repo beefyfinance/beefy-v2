@@ -7,11 +7,11 @@ export const styles = (theme: Theme) => ({
   },
   expiredBoostName: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.primary,
+    color: theme.palette.text.light,
     marginLeft: '8px',
   },
   expiredBoostContainer: {
-    background: theme.palette.background.content,
+    background: theme.palette.background.contentLight,
     borderRadius: '8px',
     padding: '12px',
   },
@@ -22,16 +22,12 @@ export const styles = (theme: Theme) => ({
   },
   balance: {
     ...theme.typography['body-sm'],
-    color: theme.palette.text.disabled,
+    color: theme.palette.text.dark,
     '& span': {
-      color: theme.palette.text.secondary,
+      color: theme.palette.text.middle,
     },
   },
   button: {
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
-    '&:Hover': {
-      backgroundColor: '#272B4A',
-    },
     '&:disabled': {
       borderColor: 'transparent' as const,
     },

@@ -39,10 +39,10 @@ export const styles = (theme: Theme) => ({
   },
   excessSlippage: {},
   warning: {
-    color: '#D19847',
+    color: theme.palette.background.indicators.warning,
   },
   danger: {
-    color: '#D15347',
+    color: theme.palette.background.indicators.error,
   },
   icon: {},
   selector: {
@@ -76,7 +76,7 @@ export const styles = (theme: Theme) => ({
     outline: 'none',
     textTransform: 'none' as const,
     '&:hover': {
-      backgroundColor: '#2D3153',
+      backgroundColor: theme.palette.background.contentLight,
     },
   },
   button: {
@@ -84,7 +84,7 @@ export const styles = (theme: Theme) => ({
   },
   selected: {
     color: theme.palette.text.light,
-    backgroundColor: '#2D3153',
+    backgroundColor: theme.palette.background.contentLight,
   },
   custom: {
     width: '5em',

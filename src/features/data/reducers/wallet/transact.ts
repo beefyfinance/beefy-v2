@@ -1,7 +1,7 @@
 import type { BigNumber } from 'bignumber.js';
 import { first } from 'lodash-es';
-import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction, SerializedError } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { transactFetchOptions, transactFetchQuotes, transactInit } from '../../actions/transact';
 import type {
   QuoteOutputTokenAmountChange,
@@ -13,14 +13,14 @@ import { BIG_ZERO } from '../../../../helpers/big-number';
 import type {
   TransactOptions,
   TransactQuotes,
+  TransactSelections,
   TransactState,
-  TransactTokens,
 } from './transact-types';
 import { TransactMode, TransactStatus, TransactStep } from './transact-types';
 
-const initialTransactTokens: TransactTokens = {
-  allTokensIds: [],
-  byTokensId: {},
+const initialTransactTokens: TransactSelections = {
+  allSelectionIds: [],
+  bySelectionId: {},
   allChainIds: [],
   byChainId: {},
 };
@@ -33,7 +33,7 @@ const initialTransactOptions: TransactOptions = {
   error: null,
   allOptionIds: [],
   byOptionId: {},
-  byTokensId: {},
+  bySelectionId: {},
 };
 
 const initialTransactQuotes: TransactQuotes = {
@@ -54,14 +54,14 @@ const initialTransactConfirm = {
 const initialTransactState: TransactState = {
   vaultId: null,
   selectedChainId: null,
-  selectedTokensId: null,
+  selectedSelectionId: null,
   selectedQuoteId: null,
-  swapSlippage: 0.01, // 1%s
+  swapSlippage: 0.01, // 1% default
   inputAmount: BIG_ZERO,
   inputMax: false,
   mode: TransactMode.Deposit,
   step: TransactStep.Form,
-  tokens: initialTransactTokens,
+  selections: initialTransactTokens,
   options: initialTransactOptions,
   quotes: initialTransactQuotes,
   migrateQuotes: initialTransactQuotes,
@@ -80,8 +80,11 @@ const transactSlice = createSlice({
     switchStep(sliceState, action: PayloadAction<TransactStep>) {
       sliceState.step = action.payload;
     },
-    selectToken(sliceState, action: PayloadAction<{ tokensId: string; resetInput: boolean }>) {
-      sliceState.selectedTokensId = action.payload.tokensId;
+    selectSelection(
+      sliceState,
+      action: PayloadAction<{ selectionId: string; resetInput: boolean }>
+    ) {
+      sliceState.selectedSelectionId = action.payload.selectionId;
       sliceState.step = TransactStep.Form;
       if (action.payload.resetInput) {
         sliceState.inputAmount = BIG_ZERO;
@@ -172,6 +175,7 @@ const transactSlice = createSlice({
         if (sliceState.options.requestId === action.meta.requestId) {
           sliceState.options.status = TransactStatus.Rejected;
           sliceState.options.error = action.error;
+          console.error(action.error);
         }
       })
       .addCase(transactFetchOptions.fulfilled, (sliceState, action) => {
@@ -181,7 +185,7 @@ const transactSlice = createSlice({
           addOptionsToState(sliceState, action.payload.options);
 
           const defaultOption = first(action.payload.options);
-          sliceState.selectedTokensId = defaultOption.tokensId;
+          sliceState.selectedSelectionId = defaultOption.selectionId;
           sliceState.selectedChainId = defaultOption.chainId;
         }
       })
@@ -194,6 +198,7 @@ const transactSlice = createSlice({
         if (sliceState.quotes.requestId === action.meta.requestId) {
           sliceState.quotes.status = TransactStatus.Rejected;
           sliceState.quotes.error = action.error;
+          console.error(action.error);
         }
       })
       .addCase(transactFetchQuotes.fulfilled, (sliceState, action) => {
@@ -218,7 +223,7 @@ const transactSlice = createSlice({
 
 function resetForm(sliceState: Draft<TransactState>) {
   sliceState.selectedChainId = null;
-  sliceState.selectedTokensId = null;
+  sliceState.selectedSelectionId = null;
   sliceState.inputAmount = BIG_ZERO;
   sliceState.inputMax = false;
 
@@ -226,12 +231,12 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.options.error = null;
   sliceState.options.allOptionIds = [];
   sliceState.options.byOptionId = {};
-  sliceState.options.byTokensId = {};
+  sliceState.options.bySelectionId = {};
 
-  sliceState.tokens.allTokensIds = [];
-  sliceState.tokens.allChainIds = [];
-  sliceState.tokens.byTokensId = {};
-  sliceState.tokens.byChainId = {};
+  sliceState.selections.allSelectionIds = [];
+  sliceState.selections.allChainIds = [];
+  sliceState.selections.bySelectionId = {};
+  sliceState.selections.byChainId = {};
 
   resetQuotes(sliceState);
   sliceState.migrateQuotes = initialTransactQuotes;
@@ -278,25 +283,30 @@ function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOp
     sliceState.options.byOptionId[option.id] = option;
     sliceState.options.allOptionIds.push(option.id);
 
-    // Add tokensId -> optionId[] mapping
-    if (!(option.tokensId in sliceState.options.byTokensId)) {
-      sliceState.options.byTokensId[option.tokensId] = [option.id];
+    // Add selectionId -> optionId[] mapping
+    if (!(option.selectionId in sliceState.options.bySelectionId)) {
+      sliceState.options.bySelectionId[option.selectionId] = [option.id];
     } else {
-      sliceState.options.byTokensId[option.tokensId].push(option.id);
+      sliceState.options.bySelectionId[option.selectionId].push(option.id);
     }
 
-    // Add tokensId -> address[] mapping
-    if (!(option.tokensId in sliceState.tokens.byTokensId)) {
-      sliceState.tokens.byTokensId[option.tokensId] = option.tokenAddresses;
-      sliceState.tokens.allTokensIds.push(option.tokensId);
+    // Add selectionId -> address[] mapping
+    if (!(option.selectionId in sliceState.selections.bySelectionId)) {
+      sliceState.selections.bySelectionId[option.selectionId] = {
+        id: option.selectionId,
+        tokens: option.mode === TransactMode.Deposit ? option.inputs : option.wantedOutputs,
+        order: option.selectionOrder,
+      };
+
+      sliceState.selections.allSelectionIds.push(option.selectionId);
     }
 
-    // Add chainId -> tokensId[] mapping
-    if (!(option.chainId in sliceState.tokens.byChainId)) {
-      sliceState.tokens.byChainId[option.chainId] = [option.tokensId];
-      sliceState.tokens.allChainIds.push(option.chainId);
-    } else if (!sliceState.tokens.byChainId[option.chainId].includes(option.tokensId)) {
-      sliceState.tokens.byChainId[option.chainId].push(option.tokensId);
+    // Add chainId -> selectionId[] mapping
+    if (!(option.chainId in sliceState.selections.byChainId)) {
+      sliceState.selections.byChainId[option.chainId] = [option.selectionId];
+      sliceState.selections.allChainIds.push(option.chainId);
+    } else if (!sliceState.selections.byChainId[option.chainId].includes(option.selectionId)) {
+      sliceState.selections.byChainId[option.chainId].push(option.selectionId);
     }
   }
 }

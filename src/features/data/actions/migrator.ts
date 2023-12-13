@@ -18,7 +18,7 @@ export const fetchAllMigrators = createAsyncThunk<
   void,
   { state: BeefyState }
 >('migration/fetchAllMigrators', async (_, { getState }) => {
-  const api = getConfigApi();
+  const api = await getConfigApi();
   const migrators = await api.fetchAllMigrators();
   return { byChainId: migrators, state: getState() };
 });

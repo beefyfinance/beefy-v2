@@ -3,8 +3,8 @@ import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO, isFiniteBigNumber } from '../../../helpers/big-number';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
-import type { TreasuryHoldingEntity } from '../entities/treasury';
-import { isVaultHoldingEntity } from '../entities/treasury';
+import type { TokenHoldingEntity, TreasuryHoldingEntity } from '../entities/treasury';
+import { isTokenHoldingEntity, isVaultHoldingEntity } from '../entities/treasury';
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectLpBreakdownBalance } from './balance';
 import { selectChainById } from './chains';
@@ -14,7 +14,8 @@ import {
   selectHasBreakdownDataByOracleId,
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens';
-import { selectIsVaultStable, selectVaultPricePerFullShare } from './vaults';
+import { selectIsVaultStable, selectVaultById, selectVaultPricePerFullShare } from './vaults';
+import { explorerAddressUrl } from '../../../helpers/url';
 
 export const selectIsTreasuryLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.treasury.alreadyLoadedOnce;
@@ -26,17 +27,21 @@ export const selectTreasury = (state: BeefyState) => {
   return state.ui.treasury.byChainId;
 };
 
+export const selectMMAssets = (state: BeefyState) => {
+  return state.ui.treasury.byMarketMakerId;
+};
+
 export const selectTreasurySorted = function (state: BeefyState) {
   const treasuryPerChain = Object.keys(selectTreasury(state)).map(chainId => {
     const assets = selectTreasuryAssetsByChainId(state, chainId);
-    return assets
+    const reducedAssets = assets
       .filter(asset => asset.usdValue.gte(10))
       .reduce(
         (acc, asset) => {
           acc.usdTotal = acc.usdTotal.plus(asset.usdValue);
-          if (['token', 'native'].includes(asset.assetType)) {
+          if (['token', 'native'].includes(asset.assetType) && !asset.staked) {
             acc.liquid++;
-          } else if (asset.assetType === 'vault' || asset.assetType === 'concLiquidity') {
+          } else if (asset.staked) {
             acc.staked++;
           } else if (asset.assetType === 'validator') {
             acc.locked++;
@@ -45,15 +50,54 @@ export const selectTreasurySorted = function (state: BeefyState) {
         },
         { usdTotal: BIG_ZERO, liquid: 0, staked: 0, locked: 0, chainId }
       );
+    return {
+      usdTotal: reducedAssets.usdTotal,
+      categoryCount:
+        (reducedAssets.liquid > 0 ? 1 : 0) +
+        (reducedAssets.staked > 0 ? 1 : 0) +
+        (reducedAssets.locked > 0 ? 1 : 0),
+      assetCount: reducedAssets.liquid + reducedAssets.staked + reducedAssets.locked,
+      type: 'chain',
+      id: chainId,
+    };
+  });
+
+  const treasuryPerMM = Object.keys(selectMMAssets(state)).map(mmId => {
+    const mmHoldings = selectTreasuryHoldingsByMMId(state, mmId);
+    let exchanges = 0;
+    let assetCount = 0;
+    let usdTotal = BIG_ZERO;
+    Object.entries(mmHoldings).forEach(([_, exchangeAssets]) => {
+      const filteredAssets = Object.values(exchangeAssets).filter(asset => asset.usdValue.gte(10));
+      if (filteredAssets.length > 0) {
+        filteredAssets.forEach(asset => {
+          usdTotal = usdTotal.plus(asset.usdValue);
+        });
+        exchanges++;
+        assetCount += filteredAssets.length;
+      }
+    });
+    return {
+      usdTotal,
+      categoryCount: exchanges,
+      assetCount,
+      type: 'mm',
+      id: mmId,
+    };
   });
 
   return treasuryPerChain
-    .filter(chain => chain.liquid + chain.staked + chain.locked > 0)
+    .concat(treasuryPerMM)
+    .filter(chain => chain.categoryCount > 0)
     .sort((a, b) => b.usdTotal.comparedTo(a.usdTotal));
 };
 
 export const selectTreasuryHoldingsByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
   return state.ui.treasury.byChainId[chainId];
+};
+
+export const selectTreasuryHoldingsByMMId = (state: BeefyState, mmId: string) => {
+  return state.ui.treasury.byMarketMakerId[mmId];
 };
 
 export const selectTreasuryBalanceByChainId = createCachedSelector(
@@ -66,11 +110,25 @@ export const selectTreasuryBalanceByChainId = createCachedSelector(
           totals = totals.plus(token.usdValue);
         }
       }
-
       return totals;
     }, BIG_ZERO);
   }
 )((state: BeefyState, chainId: ChainEntity['id']) => chainId);
+
+export const selectTreasuryBalanceByMMId = createCachedSelector(
+  (state: BeefyState, mmId: string) => selectTreasuryHoldingsByMMId(state, mmId),
+  treasuryByMMId => {
+    return Object.values(treasuryByMMId).reduce((totals, tokens) => {
+      for (const token of Object.values(tokens)) {
+        if (isFiniteBigNumber(token.usdValue)) {
+          totals = totals.plus(token.usdValue);
+        }
+      }
+
+      return totals;
+    }, BIG_ZERO);
+  }
+)((state: BeefyState, mmId: string) => mmId);
 
 export const selectTreasuryAssetsByChainId = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id']) =>
@@ -82,10 +140,12 @@ export const selectTreasuryAssetsByChainId = createCachedSelector(
       for (const token of Object.values(address.balances)) {
         if (!isFiniteBigNumber(token.usdValue)) continue;
 
-        vaults[token.address] = {
+        const key = token.assetType === 'validator' ? 'validator' : token.address;
+
+        vaults[key] = {
           ...token,
-          usdValue: (vaults[token.address]?.usdValue || BIG_ZERO).plus(token.usdValue),
-          balance: (vaults[token.address]?.balance || BIG_ZERO).plus(token.balance),
+          usdValue: (vaults[key]?.usdValue || BIG_ZERO).plus(token.usdValue),
+          balance: (vaults[key]?.balance || BIG_ZERO).plus(token.balance),
         };
       }
     }
@@ -94,26 +154,34 @@ export const selectTreasuryAssetsByChainId = createCachedSelector(
   }
 )((state: BeefyState, chainId: ChainEntity['id']) => chainId);
 
+const bifiOracles = ['BIFI', 'mooBIFI', 'rBIFI'];
+
 export const selectTreasuryStats = (state: BeefyState) => {
   const treasury = selectTreasury(state);
+  const marketMakerHoldings = selectMMAssets(state);
   let holdings = BIG_ZERO;
-  const assets = [];
+  const holdingAssets = new Set();
   let beefyHeld = BIG_ZERO;
   let stables = BIG_ZERO;
+
   for (const [chainId, balances] of Object.entries(treasury)) {
     for (const balancePerChain of Object.values(balances)) {
       for (const token of Object.values(balancePerChain.balances)) {
         if (token) {
           let balanceInTokens = token.balance.shiftedBy(-token.decimals);
-          if (token.oracleId === 'BIFI' || token.oracleId === 'mooBIFI') {
-            beefyHeld = getBifiBalanceInTokens(state, token, beefyHeld, balanceInTokens);
+          if (bifiOracles.includes(token.oracleId)) {
+            beefyHeld = beefyHeld.plus(
+              getBifiBalanceInTokens(state, token.oracleId, balanceInTokens)
+            );
           }
+
           if (token.oracleType === 'lps') {
             const haveBreakdownData = selectHasBreakdownDataByOracleId(
               state,
               token.oracleId,
               chainId
             );
+
             if (haveBreakdownData) {
               if (isVaultHoldingEntity(token)) {
                 const ppfs = token.pricePerFullShare.shiftedBy(-18); // ppfs always need to be shifted by 18e
@@ -127,31 +195,78 @@ export const selectTreasuryStats = (state: BeefyState) => {
                 chainId
               );
               for (const asset of assets) {
-                if (token.oracleId === 'BIFI' || token.oracleId === 'mooBIFI') {
-                  beefyHeld = getBifiBalanceInTokens(state, token, beefyHeld, balanceInTokens);
+                if (bifiOracles.includes(asset.oracleId)) {
+                  beefyHeld = beefyHeld.plus(
+                    getBifiBalanceInTokens(state, asset.oracleId, asset.userAmount)
+                  );
                 }
                 if (selectIsTokenStable(state, chainId, asset.oracleId)) {
                   stables = stables.plus(asset.userValue);
                 }
+                if (asset.userValue.gt(100)) {
+                  const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, asset.symbol);
+                  holdingAssets.add(symbol);
+                }
+              }
+            }
+
+            if (isVaultHoldingEntity(token)) {
+              if (token.usdValue.gt(10)) {
+                const vault = selectVaultById(state, token.vaultId);
+
+                for (const assetId of vault.assetIds) {
+                  const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, assetId);
+                  holdingAssets.add(symbol);
+                }
+              }
+
+              if (selectIsVaultStable(state, token.vaultId)) {
+                stables = stables.plus(token.usdValue);
               }
             }
           }
+
           if (isFiniteBigNumber(token.usdValue)) {
-            const tokenUsdValue = token.usdValue;
-            holdings = holdings.plus(tokenUsdValue);
-            if (isVaultHoldingEntity(token) && selectIsVaultStable(state, token.vaultId)) {
-              stables = stables.plus(tokenUsdValue);
-            } else if (selectIsTokenStable(state, chainId, token.oracleId)) {
-              stables = stables.plus(tokenUsdValue);
+            if (selectIsTokenStable(state, chainId, token.oracleId)) {
+              stables = stables.plus(token.usdValue);
+            }
+
+            if (isTokenHoldingEntity(token) && token.usdValue.gt(10)) {
+              const symbol = token.symbol
+                ? selectWrappedToNativeSymbolOrTokenSymbol(state, token.symbol)
+                : token.name;
+              holdingAssets.add(symbol);
             }
           }
-          assets.push(token.name);
+
+          if (isFiniteBigNumber(token.usdValue)) {
+            holdings = holdings.plus(token.usdValue);
+          }
         }
       }
     }
   }
 
-  return { holdings, assets: new Set(assets).size, beefyHeld, stables };
+  for (const exchangeData of Object.values(marketMakerHoldings)) {
+    for (const exchangeHoldings of Object.values(exchangeData)) {
+      for (const holding of Object.values(exchangeHoldings)) {
+        if (holding) {
+          if (isFiniteBigNumber(holding.usdValue)) {
+            if (holding.oracleId === 'BIFI') {
+              beefyHeld = beefyHeld.plus(holding.balance);
+            }
+            if (selectIsTokenStable(state, 'ethereum', holding.oracleId)) {
+              stables = stables.plus(holding.usdValue);
+            }
+            holdings = holdings.plus(holding.usdValue);
+            holdingAssets.add(holding.symbol);
+          }
+        }
+      }
+    }
+  }
+
+  return { holdings, assets: holdingAssets.size, beefyHeld, stables };
 };
 
 /**
@@ -164,20 +279,21 @@ export const selectTreasuryStats = (state: BeefyState) => {
  */
 const getBifiBalanceInTokens = (
   state: BeefyState,
-  token: TreasuryHoldingEntity,
-  beefyHeld: BigNumber,
+  oracleId: TreasuryHoldingEntity['oracleId'],
   balance: BigNumber
 ): BigNumber => {
-  if (token.oracleId === 'BIFI') {
-    return beefyHeld.plus(balance);
+  if (oracleId === 'BIFI' || oracleId === 'rBIFI') {
+    return balance;
   } else {
     const moobifiPpfs = selectVaultPricePerFullShare(state, 'bifi-vault');
-    return beefyHeld.plus(balance.times(moobifiPpfs));
+    return balance.times(moobifiPpfs);
   }
 };
 
 export const selectTreasuryTokensExposure = (state: BeefyState) => {
   const treasury = selectTreasury(state);
+  const mmHoldings = selectMMAssets(state);
+
   const exposure = Object.entries(treasury).reduce((totals, [chainId, wallets]) => {
     for (const wallet of Object.values(wallets)) {
       for (const token of Object.values(wallet.balances)) {
@@ -216,7 +332,9 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
             if (selectIsTokenStable(state, chainId, token.oracleId)) {
               totals['stables'] = (totals['stables'] || BIG_ZERO).plus(tokenBalanceUsd);
             } else {
-              const assetId = selectWrappedToNativeSymbolOrTokenSymbol(state, token.symbol);
+              const assetId = token.symbol
+                ? selectWrappedToNativeSymbolOrTokenSymbol(state, token.symbol)
+                : token.name;
               totals[assetId] = (totals[assetId] || BIG_ZERO).plus(tokenBalanceUsd);
             }
           }
@@ -225,6 +343,23 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
     }
     return totals;
   }, {} as Record<string, BigNumber>);
+
+  Object.values(mmHoldings).forEach(mmData => {
+    Object.values(mmData).forEach(exchange => {
+      Object.values(exchange).forEach(holding => {
+        if (isFiniteBigNumber(holding.usdValue)) {
+          if (selectIsTokenStable(state, 'ethereum', holding.oracleId)) {
+            exposure['stables'] = (exposure['stables'] || BIG_ZERO).plus(holding.usdValue);
+          } else {
+            const assetId = holding.symbol
+              ? selectWrappedToNativeSymbolOrTokenSymbol(state, holding.symbol)
+              : holding.name;
+            exposure[assetId] = (exposure[assetId] || BIG_ZERO).plus(holding.usdValue);
+          }
+        }
+      });
+    });
+  });
 
   const treasuryValue = Object.keys(exposure).reduce(
     (cur, tot) => exposure[tot].plus(cur),
@@ -244,12 +379,18 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
 
 export const selectTreasuryExposureByChain = (state: BeefyState) => {
   const treasury = selectTreasury(state);
+  const mmHoldings = selectMMAssets(state);
 
   const chains: Record<string, BigNumber> = {};
 
   for (const chainId of Object.keys(treasury)) {
     const totalUsdPerChain = selectTreasuryBalanceByChainId(state, chainId);
     chains[chainId] = totalUsdPerChain;
+  }
+
+  for (const mmId of Object.keys(mmHoldings)) {
+    const totalUsdPerMM = selectTreasuryBalanceByMMId(state, mmId);
+    chains['ethereum'] = (chains.ethereum || BIG_ZERO).plus(totalUsdPerMM);
   }
 
   const totalTreasury = Object.keys(chains).reduce((cur, tot) => chains[tot].plus(cur), BIG_ZERO);
@@ -269,6 +410,7 @@ export const selectTreasuryExposureByChain = (state: BeefyState) => {
 
 export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
   const treasury = selectTreasury(state);
+  const mmHoldings = selectMMAssets(state);
 
   const exposure = Object.keys(treasury).reduce((totals, chainId) => {
     const assetsByChainId = selectTreasuryAssetsByChainId(state, chainId);
@@ -276,10 +418,10 @@ export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
     for (const token of assetsByChainId) {
       if (isFiniteBigNumber(token.usdValue)) {
         const usdValue = new BigNumber(token.usdValue);
-        if (['token', 'native'].includes(token.assetType)) {
+        if (['token', 'native'].includes(token.assetType) && !token.staked) {
           totals['liquidAssets'] = (totals['liquidAssets'] || BIG_ZERO).plus(usdValue);
         }
-        if (['vault', 'concLiquidity'].includes(token.assetType)) {
+        if (token.staked) {
           totals['stakedAssets'] = (totals['stakedAssets'] || BIG_ZERO).plus(usdValue);
         }
         if (token.assetType === 'validator') {
@@ -290,10 +432,13 @@ export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
     return totals;
   }, {} as Record<string, BigNumber>);
 
-  const totalTreasury = Object.keys(exposure).reduce(
-    (cur, tot) => exposure[tot].plus(cur),
-    BIG_ZERO
-  );
+  const totalMM = Object.keys(mmHoldings).reduce((totals, mmId) => {
+    return totals.plus(selectTreasuryBalanceByMMId(state, mmId));
+  }, BIG_ZERO);
+
+  const totalTreasury = Object.keys(exposure)
+    .reduce((cur, tot) => exposure[tot].plus(cur), BIG_ZERO)
+    .plus(totalMM);
 
   const treasuryExposureByAvailability = Object.keys(exposure).map(key => {
     return {
@@ -303,20 +448,44 @@ export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
     };
   });
 
+  treasuryExposureByAvailability.push({
+    key: 'managed',
+    value: totalMM,
+    percentage: totalMM.dividedBy(totalTreasury).toNumber(),
+  });
+
   return treasuryExposureByAvailability;
 };
 
 export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id']) =>
     selectTreasuryHoldingsByChainId(state, chainId),
-  treasury => {
-    return Object.values(treasury)
-      .filter(wallet => wallet.name !== 'validator')
-      .map(wallet => {
+  (state: BeefyState, chainId: ChainEntity['id']) => selectChainById(state, chainId),
+
+  (treasury, chain) => {
+    return Object.values(treasury).map(wallet => {
+      if (wallet.name.includes('validator')) {
+        if (chain.id === 'ethereum') {
+          const allValidatorsIds = Object.values(wallet.balances).map(
+            (validator: TokenHoldingEntity) => validator.numberId
+          );
+          return {
+            address: wallet.address,
+            name: 'validators',
+            url: 'https://beaconcha.in/dashboard?validators=' + allValidatorsIds.join(','),
+          };
+        }
         return {
           address: wallet.address,
-          name: wallet.name,
+          name: 'validator',
+          url: explorerAddressUrl(chain, Object.values(wallet.balances)[0].methodPath),
         };
-      });
+      }
+      return {
+        address: wallet.address,
+        name: wallet.name,
+        url: explorerAddressUrl(chain, wallet.address),
+      };
+    });
   }
 )((state: BeefyState, chainId: ChainEntity['id']) => chainId);

@@ -16,7 +16,7 @@ import {
   selectDepositTokenByVaultId,
   selectTokenPriceByAddress,
 } from '../../../data/selectors/tokens';
-import { selectUserBalanceOfTokensIncludingBoosts } from '../../../data/selectors/balance';
+import { selectUserBalanceOfTokensIncludingBoostsBridged } from '../../../data/selectors/balance';
 import { fetchShareToUnderlying, fetchUnderlyingToUsd } from '../../../data/actions/analytics';
 import { selectWalletAddress } from '../../../data/selectors/wallet';
 
@@ -44,7 +44,7 @@ export const usePnLChartData = (
     selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const currentMooTokenBalance = useAppSelector(state =>
-    selectUserBalanceOfTokensIncludingBoosts(
+    selectUserBalanceOfTokensIncludingBoostsBridged(
       state,
       vault.id,
       vault.chainId,

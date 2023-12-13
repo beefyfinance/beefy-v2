@@ -36,7 +36,7 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
 }) {
   const classes = useStyles();
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
-  const handleTooltipClick = useCallback<TooltipProps['onClick']>(e => {
+  const handleTooltipClick = useCallback<TooltipProps['onTriggerClick']>(e => {
     // don't bubble up to the link on whole row
     e.preventDefault();
   }, []);
@@ -56,7 +56,7 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
           <Tooltip
             triggerClass={triggerClassName}
             content={tooltip}
-            onClick={handleTooltipClick}
+            onTriggerClick={handleTooltipClick}
             triggers={TRIGGERS.HOVER}
           >
             {children}

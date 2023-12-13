@@ -8,7 +8,7 @@ export const styles = (theme: Theme) => ({
   },
   step: {
     padding: '24px',
-    backgroundColor: '#2D3153',
+    backgroundColor: theme.palette.background.contentLight,
     position: 'relative' as const,
     textAlign: 'center' as const,
     display: 'flex',
@@ -31,16 +31,16 @@ export const styles = (theme: Theme) => ({
       height: 0,
       borderStyle: 'solid',
       borderWidth: '20px 40px 0 40px',
-      borderColor: '#2D3153 transparent transparent transparent',
+      borderColor: `${theme.palette.background.contentLight} transparent transparent transparent`,
       zIndex: 1,
     },
   },
   stepFrom: {},
   stepBridge: {
     paddingTop: '32px',
-    backgroundColor: '#313759',
+    backgroundColor: theme.palette.background.buttons.button,
     '&::after': {
-      borderColor: '#313759 transparent transparent transparent',
+      borderColor: `${theme.palette.background.buttons.button} transparent transparent transparent`,
     },
   },
   stepTo: {

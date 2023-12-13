@@ -1,7 +1,274 @@
 [
   {
+    "id": "silo-crvusd",
+    "name": "crvUSD",
+    "type": "standard",
+    "token": "crvUSD",
+    "tokenAddress": "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSilocrvUSD",
+    "earnedTokenAddress": "0xF62847E9A9dD2e7c0480B25AB99E71b7C1da6CED",
+    "earnContractAddress": "0xF62847E9A9dD2e7c0480B25AB99E71b7C1da6CED",
+    "oracle": "tokens",
+    "oracleId": "crvUSD",
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["crvUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=ethereum&from=0x0000000000000000000000000000000000000000&to=0xf939e0a03fb07f59a73314e73794be0e57ac1b4e",
+    "network": "ethereum",
+    "createdAt": 1702476802,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "prisma-cvxprisma",
+    "name": "cvxPRISMA/PRISMA",
+    "token": "cvxprismlp-f",
+    "tokenAddress": "0x3b21C2868B6028CfB38Ff86127eF22E68d16d53B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "prisma",
+    "earnedToken": "mooPrismaCvxPRISMA-PRISMA",
+    "earnedTokenAddress": "0x190951D3951F08Dd9DFe8557E146f09c3f90102E",
+    "earnContractAddress": "0x190951D3951F08Dd9DFe8557E146f09c3f90102E",
+    "oracle": "lps",
+    "oracleId": "prisma-cvxprisma",
+    "status": "active",
+    "platformId": "prisma",
+    "assets": ["cvxPRISMA", "PRISMA"],
+    "migrationIds": ["ethereum-prisma"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-371/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-371/withdraw",
+    "network": "ethereum",
+    "createdAt": 1701336860
+  },
+  {
+    "id": "prisma-mkusd-usdc",
+    "name": "mkUSD/USDC",
+    "token": "mkUSDUSDC",
+    "tokenAddress": "0xF980B4A4194694913Af231De69AB4593f5E0fCDc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooPrismaMKUSD-USDC",
+    "earnedTokenAddress": "0x7E0977F71d62E2d993e2dC68E086A7752FF0652d",
+    "earnContractAddress": "0x7E0977F71d62E2d993e2dC68E086A7752FF0652d",
+    "oracle": "lps",
+    "oracleId": "prisma-mkusd-usdc",
+    "status": "active",
+    "platformId": "prisma",
+    "assets": ["mkUSD", "USDC"],
+    "migrationIds": ["ethereum-prisma"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-17/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-17/withdraw",
+    "network": "ethereum",
+    "createdAt": 1701336444
+  },
+  {
+    "id": "prisma-mkusd-fraxbp",
+    "name": "mkUSD/FRAX/USDC",
+    "type": "standard",
+    "token": "mkUSD3CRV-f",
+    "tokenAddress": "0x0CFe5C777A7438C9Dd8Add53ed671cEc7A5FAeE5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooPrismaMKUSD-FraxBP",
+    "earnedTokenAddress": "0xfe494Acd28dfC989A4B6853eF8D1495a1d43F2E0",
+    "earnContractAddress": "0xfe494Acd28dfC989A4B6853eF8D1495a1d43F2E0",
+    "oracle": "lps",
+    "oracleId": "prisma-mkusd-fraxbp",
+    "status": "active",
+    "platformId": "prisma",
+    "assets": ["mkUSD", "FRAX", "USDC"],
+    "migrationIds": ["ethereum-prisma"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-342/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-342/withdraw",
+    "network": "ethereum",
+    "createdAt": 1700728622
+  },
+  {
+    "id": "prisma-mkusd-crvusd",
+    "name": "mkUSD/crvUSD",
+    "type": "standard",
+    "token": "mkcrvUSD-f",
+    "tokenAddress": "0x3de254A0f838a844F727fee81040e0FA7884B935",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooPrismaMKUSD-crvUSD",
+    "earnedTokenAddress": "0x1899221899E2d1e38BD6d64Dc55E71EA8e90B43B",
+    "earnContractAddress": "0x1899221899E2d1e38BD6d64Dc55E71EA8e90B43B",
+    "oracle": "lps",
+    "oracleId": "prisma-mkusd-crvusd",
+    "status": "active",
+    "platformId": "prisma",
+    "assets": ["mkUSD", "crvUSD"],
+    "migrationIds": ["ethereum-prisma"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-17/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-17/withdraw",
+    "network": "ethereum",
+    "createdAt": 1700728264
+  },
+  {
+    "id": "prisma-prisma-eth",
+    "name": "PRISMA/ETH",
+    "type": "standard",
+    "token": "PRISMAETH-f",
+    "tokenAddress": "0xb34e1a3D07f9D180Bc2FDb9Fd90B8994423e33c1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooPrismaPRISMA-ETH",
+    "earnedTokenAddress": "0xF1eEc85f30fb1a4F4f53CF14090df1F619CA6474",
+    "earnContractAddress": "0xF1eEc85f30fb1a4F4f53CF14090df1F619CA6474",
+    "oracle": "lps",
+    "oracleId": "prisma-prisma-eth",
+    "status": "active",
+    "platformId": "prisma",
+    "assets": ["PRISMA", "ETH"],
+    "migrationIds": ["ethereum-prisma"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-333/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-333/withdraw",
+    "network": "ethereum",
+    "createdAt": 1700728623
+  },
+  {
+    "id": "curve-crvusd-sdai",
+    "name": "crvUSD/sDAI",
+    "type": "standard",
+    "token": "crvsDAI-f",
+    "tokenAddress": "0x1539c2461d7432cc114b0903f1824079BfCA2C92",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurve_crvUSD-sDAI",
+    "earnedTokenAddress": "0x37925b6319cD41014583A6476a7a1d52Ea404b2f",
+    "earnContractAddress": "0x37925b6319cD41014583A6476a7a1d52Ea404b2f",
+    "oracle": "lps",
+    "oracleId": "curve-crvusd-sdai",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["crvUSD", "sDAI"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-27/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-27/withdraw",
+    "network": "ethereum",
+    "createdAt": 1700039034
+  },
+  {
+    "id": "convex-trylsd",
+    "name": "wstETH/rETH/sfrxETH",
+    "type": "standard",
+    "token": "TryLSD",
+    "tokenAddress": "0x2570f1bD5D2735314FC102eb12Fc1aFe9e6E7193",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooConvexTryLSD",
+    "earnedTokenAddress": "0x7D02B28e5632fc027B9FCC27701e2A8965683f95",
+    "earnContractAddress": "0x7D02B28e5632fc027B9FCC27701e2A8965683f95",
+    "oracle": "lps",
+    "oracleId": "convex-trylsd",
+    "status": "active",
+    "platformId": "convex",
+    "assets": ["wstETH", "rETH", "sfrxETH"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-14/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-14/withdraw",
+    "network": "ethereum",
+    "createdAt": 1700038635
+  },
+  {
+    "id": "compound-mainnet-eth",
+    "name": "ETH",
+    "type": "standard",
+    "token": "ETH",
+    "tokenDecimals": 18,
+    "earnedToken": "mooCompoundETH",
+    "earnedTokenAddress": "0xa95a7C9413B562f8D0581b91eC9d51A4FB5baB7e",
+    "earnContractAddress": "0xa95a7C9413B562f8D0581b91eC9d51A4FB5baB7e",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "platformId": "compound",
+    "assets": ["ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=ethereum&from=0x0000000000000000000000000000000000000000&to=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    "network": "ethereum",
+    "createdAt": 1699615970,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "compound-mainnet-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "tokenDecimals": 6,
+    "earnedToken": "mooCompoundUSDC",
+    "earnedTokenAddress": "0xb0018cfD5739912318Cc27d7a68a233F826DCE0b",
+    "earnContractAddress": "0xb0018cfD5739912318Cc27d7a68a233F826DCE0b",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "platformId": "compound",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=ethereum&from=0x0000000000000000000000000000000000000000&to=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "network": "ethereum",
+    "createdAt": 1699615970,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "uniswap-eth-gamma-reth-weth",
     "name": "rETH-ETH LP",
+    "type": "standard",
     "token": "rETH-ETH uLP",
     "tokenAddress": "0xa8076aE31e4B6c64D07b1Ed27889924a962a70d3",
     "tokenDecimals": 18,
@@ -14,8 +281,8 @@
     "status": "active",
     "platformId": "gamma",
     "assets": ["rETH", "ETH"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/ethereum/details/reth-weth-500-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/ethereum/details/reth-weth-500-pegged-price",
     "network": "ethereum",
@@ -24,6 +291,7 @@
   {
     "id": "bifi-vault",
     "name": "BIFI",
+    "type": "standard",
     "token": "BIFI",
     "tokenAddress": "0xB1F1ee126e9c96231Cc3d3fAD7C08b4cf873b1f1",
     "tokenDecimals": 18,
@@ -48,11 +316,17 @@
     "createdAt": 1698105600,
     "bridged": {
       "optimism": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434"
-    }
+    },
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "bifi-pool",
     "name": "BIFI Pool",
+    "type": "gov",
     "token": "BIFI",
     "tokenAddress": "0xB1F1ee126e9c96231Cc3d3fAD7C08b4cf873b1f1",
     "tokenDecimals": 18,
@@ -72,20 +346,19 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "isGovVault": true,
     "strategyTypeId": "bifi-pool",
+    "excluded": "bifi-vault",
     "network": "ethereum",
-    "createdAt": 1698105600,
-    "excluded": "bifi-vault"
+    "createdAt": 1698105600
   },
   {
     "id": "convex-tricrypto-llama",
     "name": "crvUSD/tBTC/wstETH",
+    "type": "standard",
     "token": "crvCRVUSDTBTCWSTETH",
     "tokenAddress": "0x2889302a794dA87fBF1D6Db415C1492194663D13",
     "tokenDecimals": 18,
     "tokenProviderId": "curve",
-    "tokenAmmId": "ethereum-convex",
     "earnedToken": "mooConvexTriCryptoLLAMA",
     "earnedTokenAddress": "0xBcaeC95a49D50F7336fC08017343Ddd8ED239A52",
     "earnContractAddress": "0xBcaeC95a49D50F7336fC08017343Ddd8ED239A52",
@@ -94,8 +367,9 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["crvUSD", "tBTC", "wstETH"],
-    "strategyTypeId": "multi-lp",
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-2/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-2/withdraw",
     "network": "ethereum",
@@ -104,6 +378,7 @@
   {
     "id": "aura-gho-usdc-usdt",
     "name": "GHO/USDC/USDT",
+    "type": "standard",
     "token": "GHO/USDC/USDT",
     "tokenAddress": "0x8353157092ED8Be69a9DF8F95af097bbF33Cb2aF",
     "tokenDecimals": 18,
@@ -126,6 +401,7 @@
   {
     "id": "aura-gyro-wsteth-eth",
     "name": "Gyroscope wstETH-ETH",
+    "type": "standard",
     "token": "Gyroscrope wstETH-ETH eth",
     "tokenAddress": "0xf01b0684C98CD7aDA480BFDF6e43876422fa1Fc1",
     "tokenDecimals": 18,
@@ -148,6 +424,7 @@
   {
     "id": "aura-gyro-wsteth-cbeth",
     "name": "Gyroscope wstETH-cbETH",
+    "type": "standard",
     "token": "Gyroscrope wstETH-cbETH",
     "tokenAddress": "0xF7A826D47c8E02835D94fb0Aa40F0cC9505cb134",
     "tokenDecimals": 18,
@@ -170,6 +447,7 @@
   {
     "id": "aura-r-bbsdai",
     "name": "R-bbsDAI",
+    "type": "standard",
     "token": "R-bbsDAI",
     "tokenAddress": "0xbF2ef8bDC2fC0F3203B3a01778E3ec5009AEEf33",
     "tokenDecimals": 18,
@@ -192,6 +470,7 @@
   {
     "id": "aura-gho-lusd",
     "name": "GHO-LUSD",
+    "type": "standard",
     "token": "GHO-LUSD",
     "tokenAddress": "0x3FA8C89704e5d07565444009e5d9e624B40Be813",
     "tokenDecimals": 18,
@@ -201,7 +480,8 @@
     "earnContractAddress": "0x06c1e90eeb34e7Fa6d78B8E58348Ae15C1a615E4",
     "oracle": "lps",
     "oracleId": "aura-gho-lusd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "aura",
     "assets": ["GHO", "LUSD"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -214,6 +494,7 @@
   {
     "id": "aura-gho-bbausd",
     "name": "GHO-bbaUSD",
+    "type": "standard",
     "token": "GHO-bbaUSD",
     "tokenAddress": "0xc2B021133D1b0cF07dba696fd5DD89338428225B",
     "tokenDecimals": 18,
@@ -237,6 +518,7 @@
   {
     "id": "aura-ethx-bbaeth",
     "name": "ETHx-bbaWETH",
+    "type": "standard",
     "token": "ETHx-bbaWETH",
     "tokenAddress": "0x4CbdE5C4B4B53EBE4aF4adB85404725985406163",
     "tokenDecimals": 18,
@@ -260,6 +542,7 @@
   {
     "id": "aura-wsteth-reth-sfrxeth-v3",
     "name": "wstETH/rETH/sfrxETH V3",
+    "type": "standard",
     "token": "wstETH/rETH/sfrxETH V3",
     "tokenAddress": "0x42ED016F826165C2e5976fe5bC3df540C5aD0Af7",
     "tokenDecimals": 18,
@@ -282,11 +565,11 @@
   {
     "id": "conic-eth",
     "name": "ETH LP",
+    "type": "standard",
     "token": "cncETH",
     "tokenAddress": "0x3565A68666FD3A6361F06f84637E805b727b4A47",
     "tokenDecimals": 18,
     "tokenProviderId": "conic",
-    "tokenAmmId": "ethereum-conic",
     "earnedToken": "mooConicETH",
     "earnedTokenAddress": "0x865500c065287B6727d31ddD9BAc8e959bBB809F",
     "earnContractAddress": "0x865500c065287B6727d31ddD9BAc8e959bBB809F",
@@ -297,19 +580,19 @@
     "platformId": "conic",
     "assets": ["ETH"],
     "migrationIds": ["ethereum-conic"],
-    "strategyTypeId": "single-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single-lp",
     "network": "ethereum",
     "createdAt": 1689155486
   },
   {
     "id": "conic-crvusd",
     "name": "crvUSD LP",
+    "type": "standard",
     "token": "conicCRVUSD-LP",
     "tokenAddress": "0xB569bD86ba2429fd2D8D288b40f17EBe1d0f478f",
     "tokenDecimals": 18,
     "tokenProviderId": "conic",
-    "tokenAmmId": "ethereum-conic",
     "earnedToken": "mooConicCrvUSD",
     "earnedTokenAddress": "0x6282FCa35943faBE45d6056F3751b3cf2Bf4504E",
     "earnContractAddress": "0x6282FCa35943faBE45d6056F3751b3cf2Bf4504E",
@@ -328,11 +611,11 @@
   {
     "id": "conic-usdc",
     "name": "USDC LP",
+    "type": "standard",
     "token": "conicUSDC-LP",
     "tokenAddress": "0x472fCC880F01B32C55F1fB55F58f7bD930dE1944",
     "tokenDecimals": 6,
     "tokenProviderId": "conic",
-    "tokenAmmId": "ethereum-conic",
     "earnedToken": "mooConicUSDC",
     "earnedTokenAddress": "0x2Af5feB31803BF806b6516EED4b10aC6767cb125",
     "earnContractAddress": "0x2Af5feB31803BF806b6516EED4b10aC6767cb125",
@@ -351,6 +634,7 @@
   {
     "id": "convex-tricrypto-usdc",
     "name": "TriCryptoUSDC",
+    "type": "standard",
     "token": "crvUSDCWBTCWETH",
     "tokenAddress": "0x7F86Bf177Dd4F3494b841a37e810A34dD56c829B",
     "tokenDecimals": 18,
@@ -363,6 +647,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["USDC", "WBTC", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-0/deposit",
@@ -373,6 +658,7 @@
   {
     "id": "convex-oeth",
     "name": "OETH/ETH",
+    "type": "standard",
     "token": "OETHCRV-f",
     "tokenAddress": "0x94B17476A93b3262d87B9a326965D1E91f9c13E7",
     "tokenDecimals": 18,
@@ -385,6 +671,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["OETH", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-298/deposit",
@@ -395,6 +682,7 @@
   {
     "id": "aura-r-wsteth",
     "name": "R-wstETH",
+    "type": "standard",
     "token": "R-wstETH",
     "tokenAddress": "0x380aAbE019ed2a9C2d632b51eDDD30fd804d0fAD",
     "tokenDecimals": 18,
@@ -425,6 +713,7 @@
   {
     "id": "aura-r-dai",
     "name": "R-DAI",
+    "type": "standard",
     "token": "R-DAI",
     "tokenAddress": "0x20a61B948E33879ce7F23e535CC7BAA3BC66c5a9",
     "tokenDecimals": 18,
@@ -434,7 +723,7 @@
     "earnContractAddress": "0xBE2bD093B8F342e060E79Fad6059B1057F016Ba4",
     "oracle": "lps",
     "oracleId": "aura-r-dai",
-    "status": "active",
+    "status": "paused",
     "platformId": "aura",
     "assets": ["R", "DAI"],
     "risks": [
@@ -454,6 +743,7 @@
   {
     "id": "aura-wbeth-wsteth",
     "name": "wBETH-wstETH",
+    "type": "standard",
     "token": "wBETH-wstETH",
     "tokenAddress": "0x2E848426AEc6dbF2260535a5bEa048ed94d9FF3D",
     "tokenDecimals": 18,
@@ -477,6 +767,7 @@
   {
     "id": "convex-wbeth",
     "name": "wBETH/ETH",
+    "type": "standard",
     "token": "ETHwBETHCRV",
     "tokenAddress": "0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
     "tokenDecimals": 18,
@@ -489,6 +780,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["wBETH", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/wbeth/deposit",
@@ -499,6 +791,7 @@
   {
     "id": "ape-ape",
     "name": "APE",
+    "type": "standard",
     "token": "APE",
     "tokenAddress": "0x4d224452801ACEd8B2F0aebE155379bb5D594381",
     "tokenDecimals": 18,
@@ -513,11 +806,17 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
     "network": "ethereum",
-    "createdAt": 1684833624
+    "createdAt": 1684833624,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "convex-t",
     "name": "T/ETH",
+    "type": "standard",
     "token": "crvTETH",
     "tokenAddress": "0xCb08717451aaE9EF950a2524E33B6DCaBA60147B",
     "tokenDecimals": 18,
@@ -527,10 +826,10 @@
     "earnContractAddress": "0x03D0F88aDc096259b49079073aED693Ba5f425EE",
     "oracle": "lps",
     "oracleId": "convex-t",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "convex",
     "assets": ["T", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_SMALL", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/teth/deposit",
@@ -541,6 +840,7 @@
   {
     "id": "convex-tbtc",
     "name": "tBTC/sBTC/wBTC",
+    "type": "standard",
     "token": "TBTCSBTC23CRV-f",
     "tokenAddress": "0xF95AAa7EBB1620e46221B73588502960Ef63dBa0",
     "tokenDecimals": 18,
@@ -554,6 +854,7 @@
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["tBTC", "sBTC", "WBTC"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-247/deposit",
@@ -564,6 +865,7 @@
   {
     "id": "curve-lvusd",
     "name": "lvUSD/DAI/USDC/USDT",
+    "type": "standard",
     "token": "3CRVlvUSD3CRV-f",
     "tokenAddress": "0xe9123CBC5d1EA65301D417193c40A72Ac8D53501",
     "tokenDecimals": 18,
@@ -587,6 +889,7 @@
   {
     "id": "convex-staked-cvxFPIS",
     "name": "cvxFPIS",
+    "type": "standard",
     "token": "cvxFPIS",
     "tokenAddress": "0xa2847348b58CEd0cA58d23c7e9106A49f1427Df6",
     "tokenDecimals": 18,
@@ -599,15 +902,22 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["cvxFPIS"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
     "addLiquidityUrl": "https://frax.convexfinance.com/",
     "network": "ethereum",
-    "createdAt": 1679559921
+    "createdAt": 1679559921,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "convex-staked-cvxFXS",
     "name": "cvxFXS",
+    "type": "standard",
     "token": "cvxFXS",
     "tokenAddress": "0xFEEf77d3f69374f66429C91d732A244f074bdf74",
     "tokenDecimals": 18,
@@ -620,6 +930,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["cvxFXS"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
     "addLiquidityUrl": "https://frax.convexfinance.com/",
@@ -629,6 +940,7 @@
   {
     "id": "convex-cvxcrv",
     "name": "cvxCRV/CRV",
+    "type": "standard",
     "token": "cvxcrv-crv-f",
     "tokenAddress": "0x971add32Ea87f10bD192671630be3BE8A11b8623",
     "tokenDecimals": 18,
@@ -641,6 +953,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["cvxCRV", "CRV"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-283/deposit",
@@ -651,6 +964,7 @@
   {
     "id": "ethereum-bifi-maxi",
     "name": "oldBIFI Maxi",
+    "type": "standard",
     "token": "oldBIFI",
     "tokenAddress": "0x5870700f1272a1AdbB87C3140bD770880a95e55D",
     "tokenDecimals": 18,
@@ -679,6 +993,7 @@
   {
     "id": "convex-cnc",
     "name": "CNC/ETH",
+    "type": "standard",
     "token": "CNCETH-f",
     "tokenAddress": "0xF9835375f6b268743Ea0a54d742Aa156947f8C06",
     "tokenDecimals": 18,
@@ -688,10 +1003,10 @@
     "earnContractAddress": "0xD6F5BEF9b63bf648EeA43b80B480BE653138D116",
     "oracle": "lps",
     "oracleId": "convex-cnc",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "convex",
     "assets": ["CNC", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_SMALL", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-45/deposit",
@@ -702,6 +1017,7 @@
   {
     "id": "convex-ctr",
     "name": "CTR/ETH",
+    "type": "standard",
     "token": "CTRETH-f",
     "tokenAddress": "0x3f0e7916681452D23Cd36B1281457DA721F2E5dF",
     "tokenDecimals": 18,
@@ -711,10 +1027,10 @@
     "earnContractAddress": "0xa6b53563a13de4C443FC4fd60d7127Ad54924cd3",
     "oracle": "lps",
     "oracleId": "convex-ctr",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "convex",
     "assets": ["CTR", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_SMALL", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-151/deposit",
@@ -725,6 +1041,7 @@
   {
     "id": "convex-matic",
     "name": "MATIC/ETH",
+    "type": "standard",
     "token": "ETH-MATIC-f",
     "tokenAddress": "0xD8eb58D76aF99547333cfEeb6a0f9bd1A63b6492",
     "tokenDecimals": 18,
@@ -738,6 +1055,7 @@
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["MATIC", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_SMALL", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-184/deposit",
@@ -748,6 +1066,7 @@
   {
     "id": "convex-reth",
     "name": "rETH/ETH",
+    "type": "standard",
     "token": "rETH-f",
     "tokenAddress": "0x6c38cE8984a890F5e46e6dF6117C26b3F1EcfC9C",
     "tokenDecimals": 18,
@@ -760,6 +1079,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["rETH", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-210/deposit",
@@ -770,11 +1090,11 @@
   {
     "id": "verse-weth-usdt",
     "name": "ETH-USDT LP",
+    "type": "standard",
     "token": "ETH-USDT LP",
     "tokenAddress": "0x362DdD14F69924ebBF9066dDD2AE7C171cF6d098",
     "tokenDecimals": 18,
     "tokenProviderId": "verse",
-    "tokenAmmId": "ethereum-verse",
     "earnedToken": "mooVerseETH-USDT",
     "earnedTokenAddress": "0x9d7b626cb1c07f63A46a8337111b65D6Cb4B8a58",
     "earnContractAddress": "0x9d7b626cb1c07f63A46a8337111b65D6Cb4B8a58",
@@ -788,38 +1108,51 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://verse.bitcoin.com/pools/",
     "network": "ethereum",
-    "createdAt": 1679145308
+    "createdAt": 1679145308,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "ethereum-verse"
+      }
+    ]
   },
   {
     "id": "verse-wbtc-usdc",
     "name": "WBTC-USDC LP",
+    "type": "standard",
     "token": "WBTC-USDC LP",
     "tokenAddress": "0xF3f82bC165a83425e81b8f2858D786E41ab21671",
     "tokenDecimals": 18,
     "tokenProviderId": "verse",
-    "tokenAmmId": "ethereum-verse",
     "earnedToken": "mooVerseWBTC-USDC",
     "earnedTokenAddress": "0xd9800EeF1756f156E025859eE0DBE6E5f6a6428b",
     "earnContractAddress": "0xd9800EeF1756f156E025859eE0DBE6E5f6a6428b",
     "oracle": "lps",
     "oracleId": "verse-wbtc-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "verse",
     "assets": ["WBTC", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://verse.bitcoin.com/pools/",
     "network": "ethereum",
-    "createdAt": 1678475051
+    "createdAt": 1678475051,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "ethereum-verse"
+      }
+    ]
   },
   {
     "id": "verse-wbtc-weth",
     "name": "WBTC-ETH LP",
+    "type": "standard",
     "token": "WBTC-ETH LP",
     "tokenAddress": "0xeaCADc656c9394fb09af25AeBc0897fDfFe484A1",
     "tokenDecimals": 18,
     "tokenProviderId": "verse",
-    "tokenAmmId": "ethereum-verse",
     "earnedToken": "mooVerseWBTC-ETH",
     "earnedTokenAddress": "0x047c41817954b51309a2bd6f60e47bC115C23f1F",
     "earnContractAddress": "0x047c41817954b51309a2bd6f60e47bC115C23f1F",
@@ -833,16 +1166,22 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://verse.bitcoin.com/pools/",
     "network": "ethereum",
-    "createdAt": 1678475051
+    "createdAt": 1678475051,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "ethereum-verse"
+      }
+    ]
   },
   {
     "id": "verse-dai-weth",
     "name": "DAI-ETH LP",
+    "type": "standard",
     "token": "DAI-ETH LP",
     "tokenAddress": "0x682831244b0E97946ABC52Cb1893Cce398De3A35",
     "tokenDecimals": 18,
     "tokenProviderId": "verse",
-    "tokenAmmId": "ethereum-verse",
     "earnedToken": "mooVerseDAI-ETH",
     "earnedTokenAddress": "0x3f80F7aE80F54DDB31B1211e7d03CF24fCBB8334",
     "earnContractAddress": "0x3f80F7aE80F54DDB31B1211e7d03CF24fCBB8334",
@@ -855,16 +1194,22 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://verse.bitcoin.com/pools/",
     "network": "ethereum",
-    "createdAt": 1678475051
+    "createdAt": 1678475051,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "ethereum-verse"
+      }
+    ]
   },
   {
     "id": "verse-verse-weth",
     "name": "VERSE-ETH LP",
+    "type": "standard",
     "token": "VERSE-ETH LP",
     "tokenAddress": "0x845C0179060362f071FF5C7f1D2703617a480F3e",
     "tokenDecimals": 18,
     "tokenProviderId": "verse",
-    "tokenAmmId": "ethereum-verse",
     "earnedToken": "mooVerseVERSE-ETH",
     "earnedTokenAddress": "0x445BE44783b9B04B27d23b87eD69985aBAb1BeF3",
     "earnContractAddress": "0x445BE44783b9B04B27d23b87eD69985aBAb1BeF3",
@@ -877,16 +1222,22 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://verse.bitcoin.com/pools/",
     "network": "ethereum",
-    "createdAt": 1678475051
+    "createdAt": 1678475051,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "ethereum-verse"
+      }
+    ]
   },
   {
     "id": "verse-usdc-weth",
     "name": "USDC-ETH LP",
+    "type": "standard",
     "token": "USDC-ETH LP",
     "tokenAddress": "0x6E1fbeeABA87BAe1100d95f8340dc27aD7C8427b",
     "tokenDecimals": 18,
     "tokenProviderId": "verse",
-    "tokenAmmId": "ethereum-verse",
     "earnedToken": "mooVerseUSDC-ETH",
     "earnedTokenAddress": "0x8785e892e6C7f1BcE907680cE35B580EEA7Fb24c",
     "earnContractAddress": "0x8785e892e6C7f1BcE907680cE35B580EEA7Fb24c",
@@ -899,11 +1250,18 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://verse.bitcoin.com/pools/",
     "network": "ethereum",
-    "createdAt": 1678475051
+    "createdAt": 1678475051,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "ethereum-verse"
+      }
+    ]
   },
   {
     "id": "convex-ldo",
     "name": "LDO/ETH",
+    "type": "standard",
     "token": "LDOETH-f",
     "tokenAddress": "0xb79565c01b7Ae53618d9B847b9443aAf4f9011e7",
     "tokenDecimals": 18,
@@ -916,6 +1274,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["LDO", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-204/deposit",
@@ -926,6 +1285,7 @@
   {
     "id": "convex-clev",
     "name": "CLEV/ETH",
+    "type": "standard",
     "token": "CLEVETH-f",
     "tokenAddress": "0x6C280dB098dB673d30d5B34eC04B6387185D3620",
     "tokenDecimals": 18,
@@ -938,6 +1298,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["CLEV", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-140/deposit",
@@ -948,6 +1309,7 @@
   {
     "id": "convex-clevcvx",
     "name": "clevCVX/CVX",
+    "type": "standard",
     "token": "clevCVX-f",
     "tokenAddress": "0xF9078Fb962A7D13F55d40d49C8AA6472aBD1A5a6",
     "tokenDecimals": 18,
@@ -960,6 +1322,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["clevCVX", "CVX"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-209/deposit",
@@ -970,6 +1333,7 @@
   {
     "id": "convex-ycrv",
     "name": "yCRV/CRV",
+    "type": "standard",
     "token": "yCRV-f",
     "tokenAddress": "0x453D92C7d4263201C69aACfaf589Ed14202d83a4",
     "tokenDecimals": 18,
@@ -983,6 +1347,7 @@
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["yCRV", "CRV"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-192/deposit",
@@ -993,6 +1358,7 @@
   {
     "id": "convex-tusd",
     "name": "TUSD/DAI/USDC/USDT",
+    "type": "standard",
     "token": "TUSD3CRV-f",
     "tokenAddress": "0xEcd5e75AFb02eFa118AF914515D6521aaBd189F1",
     "tokenDecimals": 18,
@@ -1002,9 +1368,11 @@
     "earnContractAddress": "0x49b562bDcd28dB124f6bA51DEB8Ca483563c067a",
     "oracle": "lps",
     "oracleId": "convex-tusd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["TUSD", "DAI", "USDC", "USDT"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/tusd/deposit",
@@ -1015,11 +1383,11 @@
   {
     "id": "synapse-syn-weth",
     "name": "SYN-ETH sLP",
+    "type": "standard",
     "token": "SYN-ETH sLP",
     "tokenAddress": "0x4A86C01d67965f8cB3d0AAA2c655705E64097C31",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "ethereum-sushi",
     "earnedToken": "mooSynapseLPETH-SYN",
     "earnedTokenAddress": "0xE0686bBfeCE4861a731A8445E83826090441F1fc",
     "earnContractAddress": "0xE0686bBfeCE4861a731A8445E83826090441F1fc",
@@ -1034,11 +1402,18 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/eth:0x4A86C01d67965f8cB3d0AAA2c655705E64097C31/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/eth:0x4A86C01d67965f8cB3d0AAA2c655705E64097C31/remove",
     "network": "ethereum",
-    "createdAt": 1687499387
+    "createdAt": 1687499387,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "ethereum-sushi"
+      }
+    ]
   },
   {
     "id": "aura-wsteth-reth-sfrxeth-v2",
     "name": "wstETH/rETH/sfrxETH V2",
+    "type": "standard",
     "token": "wstETH/rETH/sfrxETH V2",
     "tokenAddress": "0x5aEe1e99fE86960377DE9f88689616916D5DcaBe",
     "tokenDecimals": 18,
@@ -1062,6 +1437,7 @@
   {
     "id": "convex-staked-cvxCRV",
     "name": "cvxCRV",
+    "type": "standard",
     "token": "cvxCRV",
     "tokenAddress": "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7",
     "tokenDecimals": 18,
@@ -1073,20 +1449,26 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["cvxCRV"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
     "addLiquidityUrl": "https://www.convexfinance.com/stake",
     "network": "ethereum",
-    "createdAt": 1674713148
+    "createdAt": 1674713148,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "monolith-bifi-weth",
     "name": "oldBIFI-ETH vLP",
+    "type": "standard",
     "token": "oldBIFI-ETH vLP",
     "tokenAddress": "0x0346638feF4694629425336c3297Bd0537fa7b43",
     "tokenDecimals": 18,
     "tokenProviderId": "solidly",
-    "tokenAmmId": "ethereum-solidly",
     "earnedToken": "mooMonolitholdBIFI-ETH",
     "earnedTokenAddress": "0x6660fd0a97Af41c6A7b29450D3532FeDdBe0478A",
     "earnContractAddress": "0x6660fd0a97Af41c6A7b29450D3532FeDdBe0478A",
@@ -1100,16 +1482,22 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676382228
+    "createdAt": 1676382228,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "ethereum-solidly"
+      }
+    ]
   },
   {
     "id": "monolith-mosolid-weth",
     "name": "moSOLID-ETH vLP",
+    "type": "standard",
     "token": "moSOLID-ETH vLP",
     "tokenAddress": "0xf5E4b5f58703582Ad142B15E6c303dbB3CF7dE8a",
     "tokenDecimals": 18,
     "tokenProviderId": "solidly",
-    "tokenAmmId": "ethereum-solidly",
     "earnedToken": "mooMonolithmoSOLID-ETH",
     "earnedTokenAddress": "0xAf59cca8d658fe89e83d78D1d39125E3F4b2a529",
     "earnContractAddress": "0xAf59cca8d658fe89e83d78D1d39125E3F4b2a529",
@@ -1123,16 +1511,22 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676382228
+    "createdAt": 1676382228,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "ethereum-solidly"
+      }
+    ]
   },
   {
     "id": "monolith-solid-weth",
     "name": "SOLID-ETH vLP",
+    "type": "standard",
     "token": "SOLID-ETH vLP",
     "tokenAddress": "0x642431623AE5d73C19fC931aAeA0d4677303880c",
     "tokenDecimals": 18,
     "tokenProviderId": "solidly",
-    "tokenAmmId": "ethereum-solidly",
     "earnedToken": "mooMonolithSOLID-ETH",
     "earnedTokenAddress": "0xB9911AB699FD781efDA446e7FD995d375B437c8B",
     "earnContractAddress": "0xB9911AB699FD781efDA446e7FD995d375B437c8B",
@@ -1146,16 +1540,22 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676382228
+    "createdAt": 1676382228,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "ethereum-solidly"
+      }
+    ]
   },
   {
     "id": "monolith-frxeth-weth",
     "name": "frxETH-ETH sLP",
+    "type": "standard",
     "token": "frxETH-ETH sLP",
     "tokenAddress": "0x4E30fc7ccD2dF3ddCA39a69d2085334Ee63b9c96",
     "tokenDecimals": 18,
     "tokenProviderId": "solidly",
-    "tokenAmmId": "ethereum-solidly",
     "earnedToken": "mooMonolithfrxETH-ETH",
     "earnedTokenAddress": "0xcAa51337D91d61E0575f3892Cfc6B243a335C0f4",
     "earnContractAddress": "0xcAa51337D91d61E0575f3892Cfc6B243a335C0f4",
@@ -1169,16 +1569,22 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676382228
+    "createdAt": 1676382228,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "ethereum-solidly"
+      }
+    ]
   },
   {
     "id": "monolith-frax-usdt",
     "name": "FRAX-USDT sLP",
+    "type": "standard",
     "token": "FRAX-USDT sLP",
     "tokenAddress": "0x97F088b0175A7319059d8e705286aA035077d624",
     "tokenDecimals": 18,
     "tokenProviderId": "solidly",
-    "tokenAmmId": "ethereum-solidly",
     "earnedToken": "mooMonolithFRAX-USDT",
     "earnedTokenAddress": "0xeb5A443d4b4deF6f81C0Ef0B66Af5168a34A7f38",
     "earnContractAddress": "0xeb5A443d4b4deF6f81C0Ef0B66Af5168a34A7f38",
@@ -1198,16 +1604,22 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676382228
+    "createdAt": 1676382228,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "ethereum-solidly"
+      }
+    ]
   },
   {
     "id": "monolith-usdc-usdt",
     "name": "USDC-USDT sLP",
+    "type": "standard",
     "token": "USDC-USDT sLP",
     "tokenAddress": "0x63A65a174Cc725824188940255aD41c371F28F28",
     "tokenDecimals": 18,
     "tokenProviderId": "solidly",
-    "tokenAmmId": "ethereum-solidly",
     "earnedToken": "mooMonolithUSDC-USDT",
     "earnedTokenAddress": "0xDe9aEC2f40c7Bc783974122Ef84c7f1F237F46Dd",
     "earnContractAddress": "0xDe9aEC2f40c7Bc783974122Ef84c7f1F237F46Dd",
@@ -1221,16 +1633,22 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676382228
+    "createdAt": 1676382228,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "ethereum-solidly"
+      }
+    ]
   },
   {
     "id": "monolith-usdc-weth",
     "name": "USDC-ETH vLP",
+    "type": "standard",
     "token": "USDC-ETH vLP",
     "tokenAddress": "0xcD452c162dA7761f08F656B8e5eDe3A385981378",
     "tokenDecimals": 18,
     "tokenProviderId": "solidly",
-    "tokenAmmId": "ethereum-solidly",
     "earnedToken": "mooMonolithUSDC-ETH",
     "earnedTokenAddress": "0x842B8091dD92A1BB590527B95B9a2915C73BA491",
     "earnContractAddress": "0x842B8091dD92A1BB590527B95B9a2915C73BA491",
@@ -1244,16 +1662,22 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676382228
+    "createdAt": 1676382228,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "ethereum-solidly"
+      }
+    ]
   },
   {
     "id": "monolith-blur-weth",
     "name": "BLUR-ETH vLP",
+    "type": "standard",
     "token": "BLUR-ETH vLP",
     "tokenAddress": "0x48187E512F5338F06222AC574576744129736eFD",
     "tokenDecimals": 18,
     "tokenProviderId": "solidly",
-    "tokenAmmId": "ethereum-solidly",
     "earnedToken": "mooSolidlyBLUR-ETH",
     "earnedTokenAddress": "0x941E1dEAc6c58391b266AB849cB7368d6a60910E",
     "earnContractAddress": "0x941E1dEAc6c58391b266AB849cB7368d6a60910E",
@@ -1267,16 +1691,22 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://solidly.com/liquidity",
     "network": "ethereum",
-    "createdAt": 1676461428
+    "createdAt": 1676461428,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "ethereum-solidly"
+      }
+    ]
   },
   {
     "id": "sushi-mainnet-usdc-weth",
     "name": "ETH-USDC LP",
+    "type": "standard",
     "token": "ETH-USDC LP",
     "tokenAddress": "0x397FF1542f962076d0BFE58eA045FfA2d347ACa0",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "ethereum-sushi",
     "earnedToken": "mooSushiETH-USDC",
     "earnedTokenAddress": "0x61F96CA5c79c9753C93244c73f1d4b4a90c1aC8c",
     "earnContractAddress": "0x61F96CA5c79c9753C93244c73f1d4b4a90c1aC8c",
@@ -1290,16 +1720,22 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/eth:0x397ff1542f962076d0bfe58ea045ffa2d347aca0/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/eth:0x397ff1542f962076d0bfe58ea045ffa2d347aca0/remove",
     "network": "ethereum",
-    "createdAt": 1674075066
+    "createdAt": 1674075066,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "ethereum-sushi"
+      }
+    ]
   },
   {
     "id": "sushi-mainnet-sushi-weth",
     "name": "SUSHI-ETH LP",
+    "type": "standard",
     "token": "SUSHI-ETH LP",
     "tokenAddress": "0x795065dCc9f64b5614C407a6EFDC400DA6221FB0",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "ethereum-sushi",
     "earnedToken": "mooSushiSUSHI-ETH",
     "earnedTokenAddress": "0xE010B164E54735Bb6401c426E9b4Dc16949c00B8",
     "earnContractAddress": "0xE010B164E54735Bb6401c426E9b4Dc16949c00B8",
@@ -1314,22 +1750,29 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/eth:0x795065dcc9f64b5614c407a6efdc400da6221fb0/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/eth:0x795065dcc9f64b5614c407a6efdc400da6221fb0/remove",
     "network": "ethereum",
-    "createdAt": 1674075066
+    "createdAt": 1674075066,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "ethereum-sushi"
+      }
+    ]
   },
   {
     "id": "sushi-mainnet-ldo-weth",
     "name": "LDO-ETH LP",
+    "type": "standard",
     "token": "LDO-ETH LP",
     "tokenAddress": "0xC558F600B34A5f69dD2f0D06Cb8A88d829B7420a",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
-    "tokenAmmId": "ethereum-sushi",
     "earnedToken": "mooSushiLDO-ETH",
     "earnedTokenAddress": "0x4742c355711a2790b17CC0Fe48035a1AF9C22432",
     "earnContractAddress": "0x4742c355711a2790b17CC0Fe48035a1AF9C22432",
     "oracle": "lps",
     "oracleId": "sushi-mainnet-ldo-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "sushi",
     "assets": ["LDO", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1337,11 +1780,18 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/eth:0xc558f600b34a5f69dd2f0d06cb8a88d829b7420a/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/eth:0xc558f600b34a5f69dd2f0d06cb8a88d829b7420a/remove",
     "network": "ethereum",
-    "createdAt": 1674075066
+    "createdAt": 1674075066,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "ethereum-sushi"
+      }
+    ]
   },
   {
     "id": "convex-sbtc2",
     "name": "sBTC/WBTC",
+    "type": "standard",
     "token": "crvWSBTC",
     "tokenAddress": "0x051d7e5609917Bd9b73f04BAc0DED8Dd46a74301",
     "tokenDecimals": 18,
@@ -1355,6 +1805,7 @@
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["sBTC", "WBTC"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/sbtc2/deposit",
@@ -1365,6 +1816,7 @@
   {
     "id": "convex-multibtc",
     "name": "multiBTC/sBTC/WBTC",
+    "type": "standard",
     "token": "multibtc3CRV-f",
     "tokenAddress": "0x2863a328A0B7fC6040f11614FA0728587DB8e353",
     "tokenDecimals": 18,
@@ -1377,6 +1829,7 @@
     "status": "eol",
     "platformId": "convex",
     "assets": ["multiBTC", "sBTC", "WBTC"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-245/deposit",
@@ -1387,6 +1840,7 @@
   {
     "id": "convex-cvxfxs",
     "name": "cvxFXS/FXS",
+    "type": "standard",
     "token": "cvxFXSFXS-f",
     "tokenAddress": "0xF3A43307DcAFa93275993862Aae628fCB50dC768",
     "tokenDecimals": 18,
@@ -1400,6 +1854,7 @@
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["cvxFXS", "FXS"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-18/deposit",
@@ -1410,6 +1865,7 @@
   {
     "id": "convex-cvxeth",
     "name": "CVX-ETH",
+    "type": "standard",
     "token": "crvCVXETH",
     "tokenAddress": "0x3A283D9c08E8b55966afb64C515f5143cf907611",
     "tokenDecimals": 18,
@@ -1422,6 +1878,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["CVX", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/cvxeth/deposit",
@@ -1432,6 +1889,7 @@
   {
     "id": "convex-geareth",
     "name": "GEAR-ETH",
+    "type": "standard",
     "token": "crvGEARETH",
     "tokenAddress": "0x5Be6C45e2d074fAa20700C49aDA3E88a1cc0025d",
     "tokenDecimals": 18,
@@ -1444,6 +1902,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["GEAR", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-192/deposit/",
@@ -1454,6 +1913,7 @@
   {
     "id": "convex-crveth",
     "name": "CRV-ETH",
+    "type": "standard",
     "token": "crvCRVETH",
     "tokenAddress": "0xEd4064f376cB8d68F770FB1Ff088a3d0F3FF5c4d",
     "tokenDecimals": 18,
@@ -1466,6 +1926,7 @@
     "status": "eol",
     "platformId": "convex",
     "assets": ["CRV", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/crveth/deposit",
@@ -1476,6 +1937,7 @@
   {
     "id": "convex-frxeth",
     "name": "frxETH/ETH",
+    "type": "standard",
     "token": "frxETHCRV",
     "tokenAddress": "0xf43211935C781D5ca1a41d2041F397B8A7366C7A",
     "tokenDecimals": 18,
@@ -1488,6 +1950,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["frxETH", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/frxeth/deposit",
@@ -1498,6 +1961,7 @@
   {
     "id": "convex-seth",
     "name": "sETH/ETH",
+    "type": "standard",
     "token": "eCRV",
     "tokenAddress": "0xA3D87FffcE63B53E0d54fAa1cc983B7eB0b74A9c",
     "tokenDecimals": 18,
@@ -1511,6 +1975,7 @@
     "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["sETH", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/seth/deposit",
@@ -1521,6 +1986,7 @@
   {
     "id": "convex-cbeth",
     "name": "cbETH/ETH",
+    "type": "standard",
     "token": "cbETH/ETH-f",
     "tokenAddress": "0x5b6C539b224014A09B3388e51CaAA8e354c959C8",
     "tokenDecimals": 18,
@@ -1533,6 +1999,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["cbETH", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-91/deposit",
@@ -1543,6 +2010,7 @@
   {
     "id": "aura-aura-weth",
     "name": "AURA-WETH",
+    "type": "standard",
     "token": "AURA-WETH",
     "tokenAddress": "0xCfCA23cA9CA720B6E98E3Eb9B6aa0fFC4a5C08B9",
     "tokenDecimals": 18,
@@ -1565,6 +2033,7 @@
   {
     "id": "aura-aurabal-balbpt",
     "name": "auraBAL-BAL/WETH(80-20)",
+    "type": "standard",
     "token": "auraBAL-BAL/WETH(80-20)",
     "tokenAddress": "0x3dd0843A028C86e0b760b1A76929d1C5Ef93a2dd",
     "tokenDecimals": 18,
@@ -1585,31 +2054,9 @@
     "createdAt": 1687443962
   },
   {
-    "id": "aura-cbeth-wsteth-v2",
-    "name": "cbETH-wstETH V2",
-    "token": "cbETH-wstETH V2",
-    "tokenAddress": "0x9c6d47Ff73e0F5E51BE5FD53236e3F595C5793F2",
-    "tokenDecimals": 18,
-    "tokenProviderId": "balancer",
-    "earnedToken": "mooAuracbETH-wstETHV2",
-    "earnedTokenAddress": "0xE79BB6F246a8493AC1D45926ab835FCCCDc32C78",
-    "earnContractAddress": "0xE79BB6F246a8493AC1D45926ab835FCCCDc32C78",
-    "oracle": "lps",
-    "oracleId": "aura-cbeth-wsteth-v2",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "aura",
-    "assets": ["cbETH", "wstETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x9c6d47ff73e0f5e51be5fd53236e3f595c5793f200020000000000000000042c/invest",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x9c6d47ff73e0f5e51be5fd53236e3f595c5793f200020000000000000000042c/withdraw",
-    "network": "ethereum",
-    "createdAt": 1675886350
-  },
-  {
     "id": "aura-dola-usdc",
     "name": "DOLA-USDC",
+    "type": "standard",
     "token": "DOLA-USDC",
     "tokenAddress": "0xFf4ce5AAAb5a627bf82f4A571AB1cE94Aa365eA6",
     "tokenDecimals": 18,
@@ -1640,6 +2087,7 @@
   {
     "id": "aura-inv-dola",
     "name": "INV-DOLA",
+    "type": "standard",
     "token": "INV-DOLA",
     "tokenAddress": "0x441b8a1980f2F2E43A9397099d15CC2Fe6D36250",
     "tokenDecimals": 18,
@@ -1670,6 +2118,7 @@
   {
     "id": "aura-wsteth-reth-sfrxeth",
     "name": "wstETH/rETH/sfrxETH",
+    "type": "standard",
     "token": "wstETH/rETH/sfrxETH",
     "tokenAddress": "0x8e85e97ed19C0fa13B2549309965291fbbc0048b",
     "tokenDecimals": 18,
@@ -1692,6 +2141,7 @@
   {
     "id": "aura-aurabal",
     "name": "auraBAL",
+    "type": "standard",
     "token": "auraBAL",
     "tokenAddress": "0x616e8BfA43F920657B3497DBf40D6b1A02D4608d",
     "tokenDecimals": 18,
@@ -1714,6 +2164,7 @@
   {
     "id": "convex-usdd",
     "name": "USDD/DAI/USDC/USDT",
+    "type": "standard",
     "token": "USDD3CRV3CRV-f",
     "tokenAddress": "0xe6b5CC1B4b47305c58392CE3D359B10282FC36Ea",
     "tokenDecimals": 18,
@@ -1726,6 +2177,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["USDD", "DAI", "USDC", "USDT"],
+    "migrationIds": ["ethereum-convex"],
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -1743,6 +2195,7 @@
   {
     "id": "convex-usddfraxbp",
     "name": "USDD/FRAX/USDC",
+    "type": "standard",
     "token": "USDDFRAXBP3CRV-f",
     "tokenAddress": "0x4606326b4Db89373F5377C316d3b0F6e55Bc6A20",
     "tokenDecimals": 18,
@@ -1752,9 +2205,11 @@
     "earnContractAddress": "0x73380F4B3E6F4a8988688d1475D33CB1D46F6de0",
     "oracle": "lps",
     "oracleId": "convex-usddfraxbp",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "convex",
     "assets": ["USDD", "FRAX", "USDC"],
+    "migrationIds": ["ethereum-convex"],
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -1772,6 +2227,7 @@
   {
     "id": "convex-dolafraxbp",
     "name": "DOLA/FRAX/USDC",
+    "type": "standard",
     "token": "DOLAFRAXBP3CRV-f",
     "tokenAddress": "0xE57180685E3348589E9521aa53Af0BCD497E884d",
     "tokenDecimals": 18,
@@ -1784,6 +2240,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["DOLA", "FRAX", "USDC"],
+    "migrationIds": ["ethereum-convex"],
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -1801,6 +2258,7 @@
   {
     "id": "convex-apeusdfraxbp",
     "name": "ApeUSD/FRAX/USDC",
+    "type": "standard",
     "token": "APEUSDBP3CRV-f",
     "tokenAddress": "0x04b727C7e246CA70d496ecF52E6b6280f3c8077D",
     "tokenDecimals": 18,
@@ -1813,6 +2271,7 @@
     "status": "eol",
     "platformId": "convex",
     "assets": ["ApeUSD", "FRAX", "USDC"],
+    "migrationIds": ["ethereum-convex"],
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -1830,6 +2289,7 @@
   {
     "id": "convex-mim",
     "name": "MIM/DAI/USDC/USDT",
+    "type": "standard",
     "token": "MIM-3LP3CRV-f",
     "tokenAddress": "0x5a6A4D54456819380173272A5E8E9B9904BdF41B",
     "tokenDecimals": 18,
@@ -1842,6 +2302,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["MIM", "DAI", "USDC", "USDT"],
+    "migrationIds": ["ethereum-convex"],
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -1859,6 +2320,7 @@
   {
     "id": "convex-tricrypto2",
     "name": "TriCrypto",
+    "type": "standard",
     "token": "crv3crypto",
     "tokenAddress": "0xc4AD29ba4B3c580e6D59105FFf484999997675Ff",
     "tokenDecimals": 18,
@@ -1871,6 +2333,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["USDT", "WBTC", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/tricrypto2/deposit",
@@ -1881,6 +2344,7 @@
   {
     "id": "convex-aleth",
     "name": "alETH/ETH",
+    "type": "standard",
     "token": "alETH+ETH-f",
     "tokenAddress": "0xC4C319E2D4d66CcA4464C0c2B32c9Bd23ebe784e",
     "tokenDecimals": 18,
@@ -1893,6 +2357,7 @@
     "status": "eol",
     "platformId": "convex",
     "assets": ["alETH", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-38/deposit",
@@ -1903,6 +2368,7 @@
   {
     "id": "convex-steth",
     "name": "stETH/ETH",
+    "type": "standard",
     "token": "steCRV",
     "tokenAddress": "0x06325440D014e39736583c165C2963BA99fAf14E",
     "tokenDecimals": 18,
@@ -1912,10 +2378,10 @@
     "earnContractAddress": "0xa7739fd3d12ac7F16D8329AF3Ee407e19De10D8D",
     "oracle": "lps",
     "oracleId": "convex-steth",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "convex",
     "assets": ["stETH", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/steth/deposit",
@@ -1926,6 +2392,7 @@
   {
     "id": "convex-peth",
     "name": "pETH/ETH",
+    "type": "standard",
     "token": "pETH-ETH-f",
     "tokenAddress": "0x9848482da3Ee3076165ce6497eDA906E66bB85C5",
     "tokenDecimals": 18,
@@ -1938,6 +2405,7 @@
     "status": "eol",
     "platformId": "convex",
     "assets": ["pETH", "ETH"],
+    "migrationIds": ["ethereum-convex"],
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -1955,6 +2423,7 @@
   {
     "id": "convex-fraxusdc",
     "name": "FRAX/USDC",
+    "type": "standard",
     "token": "crvFRAX",
     "tokenAddress": "0x3175Df0976dFA876431C2E9eE6Bc45b65d3473CC",
     "tokenDecimals": 18,
@@ -1967,6 +2436,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["FRAX", "USDC"],
+    "migrationIds": ["ethereum-convex"],
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -1984,6 +2454,7 @@
   {
     "id": "convex-frax",
     "name": "FRAX/DAI/USDC/USDT",
+    "type": "standard",
     "token": "FRAX3CRV",
     "tokenAddress": "0xd632f22692FaC7611d2AA1C0D552930D43CAEd3B",
     "tokenDecimals": 18,
@@ -1996,6 +2467,7 @@
     "status": "active",
     "platformId": "convex",
     "assets": ["FRAX", "DAI", "USDC", "USDT"],
+    "migrationIds": ["ethereum-convex"],
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -2013,6 +2485,7 @@
   {
     "id": "stargate-eth-usdc",
     "name": "USDC LP",
+    "type": "standard",
     "token": "S*USDC",
     "tokenAddress": "0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56",
     "tokenDecimals": 6,
@@ -2043,6 +2516,7 @@
   {
     "id": "stargate-eth-usdt",
     "name": "USDT LP",
+    "type": "standard",
     "token": "S*USDT",
     "tokenAddress": "0x38EA452219524Bb87e18dE1C24D3bB59510BD783",
     "tokenDecimals": 6,
@@ -2073,6 +2547,7 @@
   {
     "id": "stargate-eth-eth",
     "name": "ETH LP",
+    "type": "standard",
     "token": "S*ETH",
     "tokenAddress": "0x101816545F6bd2b1076434B54383a1E633390A2E",
     "tokenDecimals": 18,
@@ -2103,6 +2578,7 @@
   {
     "id": "aura-reth-weth",
     "name": "rETH-ETH",
+    "type": "standard",
     "token": "rETH-ETH",
     "tokenAddress": "0x1E19CF2D73a72Ef1332C882F20534B6519Be0276",
     "tokenDecimals": 18,
@@ -2125,6 +2601,7 @@
   {
     "id": "aura-wsteth-eth",
     "name": "wstETH-ETH",
+    "type": "standard",
     "token": "wstETH-ETH",
     "tokenAddress": "0x32296969Ef14EB0c6d29669C550D4a0449130230",
     "tokenDecimals": 18,
@@ -2148,6 +2625,7 @@
   {
     "id": "aura-bbausd",
     "name": "Balancer Boosted USD (bb-a-USD)",
+    "type": "standard",
     "token": "bbaUSD",
     "tokenAddress": "0xA13a9247ea42D743238089903570127DdA72fE44",
     "tokenDecimals": 18,
@@ -2171,6 +2649,7 @@
   {
     "id": "ethereum-bifi-gov",
     "name": "oldBIFI Earnings Pool",
+    "type": "gov",
     "token": "oldBIFI",
     "tokenAddress": "0x5870700f1272a1AdbB87C3140bD770880a95e55D",
     "tokenDecimals": 18,
@@ -2193,13 +2672,13 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "old-bifi-pool",
-    "isGovVault": true,
     "network": "ethereum",
     "createdAt": 1667575514
   },
   {
     "id": "aura-sd-weth",
     "name": "SD-ETH",
+    "type": "standard",
     "token": "SD-ETH",
     "tokenAddress": "0xE4010EF5E37dc23154680f23c4A0d48BFca91687",
     "tokenDecimals": 18,
@@ -2222,6 +2701,7 @@
   {
     "id": "aura-ohm-dai",
     "name": "OHM-DAI",
+    "type": "standard",
     "token": "OHM-DAI",
     "tokenAddress": "0x76FCf0e8C7Ff37A47a799FA2cd4c13cDe0D981C9",
     "tokenDecimals": 18,
@@ -2245,6 +2725,7 @@
   {
     "id": "aura-ohm-wsteth",
     "name": "OHM-wstETH",
+    "type": "standard",
     "token": "OHM-wstETH",
     "tokenAddress": "0xd4f79CA0Ac83192693bce4699d0c10C66Aa6Cf0F",
     "tokenDecimals": 18,

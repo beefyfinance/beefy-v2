@@ -20,13 +20,11 @@ import { zapsSlice } from './zaps';
 import { walletActionsReducer } from './wallet/wallet-action';
 import { boostSlice } from './wallet/boost';
 import { mintersSlice } from './minters';
-import { infoCardsSlice } from './info-cards';
 import { bridgeSlice } from './wallet/bridge';
 import { onRamp } from './on-ramp';
 import { feesSlice } from './fees';
 import { transactReducer } from './wallet/transact';
 import { stepperSlice } from './wallet/stepper';
-import { ammsSlice } from './amms';
 import { treasurySlice } from './treasury';
 import { analyticsSlice } from './analytics';
 import { proposalsSlice } from './proposals';
@@ -38,6 +36,7 @@ import { resolverReducer } from './wallet/resolver';
 import { bridgesSlice } from './bridges';
 import { migrationSlice } from './wallet/migration';
 import { tooltipsSlice } from './tooltips';
+import { addToWalletSlice } from './add-to-wallet';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -47,9 +46,7 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
   fees: feesSlice.reducer,
   platforms: platformsSlice.reducer,
   zaps: zapsSlice.reducer,
-  amms: ammsSlice.reducer,
   minters: mintersSlice.reducer,
-  infoCards: infoCardsSlice.reducer,
   proposals: proposalsSlice.reducer,
   bridges: bridgesSlice.reducer,
 });
@@ -90,6 +87,7 @@ const uiReducer = combineReducers<BeefyState['ui']>({
   stepperState: stepperSlice.reducer as Reducer<BeefyState['ui']['stepperState'], AnyAction>,
   treasury: treasurySlice.reducer,
   tooltips: tooltipsSlice.reducer,
+  addToWallet: addToWalletSlice.reducer,
 });
 
 export const rootReducer = combineReducers<BeefyState>({

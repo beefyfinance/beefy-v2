@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   AppBar,
   Box,
@@ -22,7 +22,7 @@ import { DaoNavItems, ResourcesNavItems } from './list';
 import { ConnectionStatus } from './components/ConnectionStatus';
 import { DropNavItem } from './components/DropNavItem';
 import { MobileMenu } from './components/MobileMenu';
-import { BifiPrice } from './components/BifiPrice';
+import { Prices } from './components/Prices';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { selectShouldInitProposals } from '../../features/data/selectors/data-loader';
 import { fetchActiveProposals } from '../../features/data/actions/proposal';
@@ -32,9 +32,6 @@ import headerLogoDesktop from '../../images/bifi-logos/header-logo.svg';
 
 const useStyles = makeStyles(styles);
 export const Header = memo(function Header() {
-  const location = useLocation();
-  const isOnDashboard =
-    location.pathname.includes('dashboard') || location.pathname.includes('treasury');
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width: 500px)', { noSsr: true });
   const dispatch = useAppDispatch();
@@ -48,12 +45,7 @@ export const Header = memo(function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        className={clsx([classes.navHeader, classes.hasPortfolio], {
-          [classes.userOnDashboard]: isOnDashboard,
-        })}
-        position="static"
-      >
+      <AppBar className={clsx([classes.navHeader, classes.hasPortfolio])} position="static">
         <Container className={classes.container} maxWidth="lg">
           <Toolbar className={classes.content} disableGutters={true}>
             <div className={classes.flex}>
@@ -85,7 +77,7 @@ export const Header = memo(function Header() {
               <Hidden mdDown>
                 <NavItem title={'Header-BuyCrypto'} url="/onramp" Icon={BuyCryptoIcon} />
                 <NavItem title={'Header-BridgeBifi'} url="/bridge" Icon={BridgeIcon} />
-                <BifiPrice />
+                <Prices />
               </Hidden>
               <ConnectionStatus />
               <Hidden lgUp>

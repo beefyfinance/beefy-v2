@@ -9,7 +9,7 @@ import { formatBigNumberSignificant, formatBigUsd } from '../../../../../../help
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
     ...theme.typography['body-lg'],
-    color: '#272B4A',
+    color: theme.palette.text.tooltips,
     padding: '12px 16px',
     minWidth: '250px',
     background: '#fff',

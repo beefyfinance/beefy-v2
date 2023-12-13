@@ -4,8 +4,7 @@
  */
 export interface PartnerEntity {
   id: string;
-  logo: string;
-  background: string;
+  title: string;
   text: string;
   website: string;
   social: {
@@ -13,5 +12,4 @@ export interface PartnerEntity {
     twitter?: string | null;
     discord?: string | null;
   };
-  logoNight?: string | null;
 }

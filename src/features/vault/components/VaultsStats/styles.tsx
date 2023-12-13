@@ -18,7 +18,7 @@ export const styles = (theme: Theme) => ({
     height: 96,
     display: 'flex',
     justifyContent: 'flex-start',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.contentDark,
     borderRadius: '8px',
     padding: '16px 24px',
     [theme.breakpoints.down('md')]: {
@@ -34,7 +34,7 @@ export const styles = (theme: Theme) => ({
     flexWrap: 'nowrap' as const,
     justifyContent: 'flex-end',
     textAlign: 'end' as const,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.contentDark,
     borderRadius: '8px',
     padding: '16px 24px',
     [theme.breakpoints.down('md')]: {
@@ -48,9 +48,9 @@ export const styles = (theme: Theme) => ({
     width: '33%',
     paddingTop: 0,
     paddingBottom: 0,
-    marginRight: theme.spacing(4),
+    marginRight: '32px',
     [theme.breakpoints.down('md')]: {
-      marginRight: theme.spacing(2),
+      marginRight: '16px',
     },
   },
   stat1: {
@@ -60,7 +60,7 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'flex-end',
     [theme.breakpoints.down('md')]: {
       marginLeft: 0,
-      marginRight: theme.spacing(4),
+      marginRight: '32px',
       justifyContent: 'flex-start',
     },
   },
@@ -80,20 +80,20 @@ export const styles = (theme: Theme) => ({
     },
   },
   divider: {
-    marginRight: theme.spacing(3),
+    marginRight: '24px',
     width: 2,
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: theme.palette.background.buttons.button,
     [theme.breakpoints.down('sm')]: {
-      marginRight: theme.spacing(2.5),
+      marginRight: '20px',
     },
   },
   divider1: {
     width: 2,
-    backgroundColor: theme.palette.background.content,
-    marginLeft: theme.spacing(3),
+    backgroundColor: theme.palette.background.buttons.button,
+    marginLeft: '24px',
     [theme.breakpoints.down('md')]: {
       marginLeft: 0,
-      marginRight: theme.spacing(2.5),
+      marginRight: '20px',
     },
   },
 });

@@ -23,7 +23,7 @@ export const styles = theme => ({
   },
   title: {
     ...theme.typography['h3'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     display: 'flex',
     alignItems: 'center',
     marginBottom: '12px',

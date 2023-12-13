@@ -9,17 +9,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: 'column' as const,
     rowGap: '4px',
     padding: '24px',
-    background: theme.palette.background.v2.cardBg,
+    background: theme.palette.background.contentPrimary,
     borderRadius: '0px 0px 8px 8px',
     marginTop: '2px',
   },
   title: {
     ...theme.typography['h3'],
-    color: '#D0D0DA',
+    color: theme.palette.text.middle,
   },
   text: {
     ...theme.typography['body-lg'],
-    color: '#D0D0DA',
+    color: theme.palette.text.middle,
   },
 }));
 

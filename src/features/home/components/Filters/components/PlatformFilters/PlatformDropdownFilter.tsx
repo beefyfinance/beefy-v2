@@ -12,10 +12,11 @@ interface PlatformDropdownFilterProps {
   placement?: LabeledSelectCommonProps['placement'];
   dropDownShift?: LabeledSelectCommonProps['dropdownShift'];
   dropDownFlip?: LabeledSelectCommonProps['dropdownFlip'];
+  className?: string;
 }
 
 export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
-  function PlatformDropdownFilter({ placement, dropDownFlip, dropDownShift }) {
+  function PlatformDropdownFilter({ placement, dropDownFlip, dropDownShift, className }) {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const platforms = useAppSelector(selectFilterPlatforms);
@@ -39,6 +40,7 @@ export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
 
     return (
       <LabeledSearchMultiSelect
+        selectClass={className}
         label={t('Filter-Platform')}
         onChange={handleChange}
         value={platformsIds}

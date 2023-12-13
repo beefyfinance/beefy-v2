@@ -2,9 +2,10 @@ import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity } from '../entities/token';
-import type { VaultEntity, VaultGov } from '../entities/vault';
+import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
   isGovVault,
+  isStandardVault,
   isVaultPaused,
   isVaultPausedOrRetired,
   isVaultRetired,
@@ -71,20 +72,19 @@ export const selectGovVaultById = (state: BeefyState, vaultId: VaultEntity['id']
 
 export const selectStandardVaultById = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
-  standarVault => {
-    if (isGovVault(standarVault)) {
-      throw new Error(`selectStandardVaultById: Vault ${standarVault.id} is not a standard vault`);
+  standardVault => {
+    if (!isStandardVault(standardVault)) {
+      throw new Error(`selectStandardVaultById: Vault ${standardVault.id} is not a standard vault`);
     }
-    return standarVault;
+    return standardVault;
   }
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectVaultByChainId = createSelector(
+export const selectVaultIdsByChainId = createSelector(
   // get a tiny bit of the data
   (state: BeefyState, chainId: ChainEntity['id']) => state.entities.vaults.byChainId[chainId],
   // last function receives previous function outputs as parameters
-  vaultsChainId =>
-    vaultsChainId ? vaultsChainId.allActiveIds.concat(vaultsChainId.allRetiredIds) : []
+  vaultsChainId => (vaultsChainId ? vaultsChainId.allIds : [])
 );
 
 export const selectVaultPricePerFullShare = createSelector(
@@ -98,11 +98,14 @@ export const selectVaultStrategyAddress = (state: BeefyState, vaultId: VaultEnti
 
 export const selectAllGovVaultsByChainId = createSelector(
   (state: BeefyState) => state.entities.vaults.byId,
-  selectVaultByChainId,
-  (byIds, vaultIds): VaultGov[] => {
-    const allVaults = vaultIds.map(id => byIds[id]);
-    return allVaults.filter(isGovVault) as VaultGov[];
-  }
+  selectVaultIdsByChainId,
+  (byIds, vaultIds): VaultGov[] => vaultIds.map(id => byIds[id]).filter(isGovVault)
+);
+
+export const selectAllStandardVaultsByChainId = createSelector(
+  (state: BeefyState) => state.entities.vaults.byId,
+  selectVaultIdsByChainId,
+  (byIds, vaultIds): VaultStandard[] => vaultIds.map(id => byIds[id]).filter(isStandardVault)
 );
 
 export const selectStandardVaultIdsByDepositTokenAddress = createCachedSelector(
@@ -234,52 +237,17 @@ export const selectVaultName = createCachedSelector(
   (vault: VaultEntity) => vault.name
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectVaultDepositFee = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.byId[vaultId].depositFee,
-  (fee: string) => fee || '0%'
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
-
-export const selectVaultSupportsAnyZap = createCachedSelector(
-  (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.vaults.zapSupportById,
-  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  (zapSupportById, vaultId) => {
-    const zapSupport = zapSupportById[vaultId];
-    if (zapSupport === undefined) {
-      return false;
-    }
-
-    return zapSupport.beefy || zapSupport.oneInch;
-  }
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
-
-export const selectVaultSupportsBeefyZap = createCachedSelector(
-  (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.vaults.zapSupportById,
-  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  (zapSupportById, vaultId) => {
-    const zapSupport = zapSupportById[vaultId];
-    if (zapSupport === undefined) {
-      return false;
-    }
-
-    return zapSupport.beefy;
-  }
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
-
-export const selectVaultSupportsOneInchZap = createCachedSelector(
-  (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.vaults.zapSupportById,
-  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  (zapSupportById, vaultId) => {
-    const zapSupport = zapSupportById[vaultId];
-    if (zapSupport === undefined) {
-      return false;
-    }
-
-    return zapSupport.oneInch;
-  }
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+export const selectVaultDepositFee = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  state.entities.vaults.byId[vaultId].depositFee;
 
 export const selectVaultLastHarvestByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.vaults.lastHarvestById,
   (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
   (lastHarvestById, vaultId) => lastHarvestById[vaultId] || 0
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectAllVaultIdsWithBridgedVersion = (state: BeefyState) =>
+  state.entities.vaults.allBridgedIds;
+
+export const selectAllVaultsWithBridgedVersion = (state: BeefyState) =>
+  state.entities.vaults.allBridgedIds.map(id => selectStandardVaultById(state, id));

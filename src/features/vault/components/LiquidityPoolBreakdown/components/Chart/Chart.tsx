@@ -94,7 +94,7 @@ export const Chart = memo<ChartProps>(function Chart({ assets }) {
           activeIndex={activeIndex}
         >
           {assets.map(asset => (
-            <Cell key={asset.address} fill={asset.color} stroke={'#2D3153'} strokeWidth={3} />
+            <Cell key={asset.address} fill={asset.color} stroke={'#242842'} strokeWidth={3} />
           ))}
         </Pie>
       </PieChart>

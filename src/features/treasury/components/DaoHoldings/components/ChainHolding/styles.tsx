@@ -12,23 +12,36 @@ export const styles = (theme: Theme) => ({
     columnGap: '12px',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#242842',
+    backgroundColor: theme.palette.background.contentLight,
     borderRadius: '8px 8px 0px 0px',
 
     [theme.breakpoints.down('md')]: {
       padding: '16px',
     },
   },
+  marketMakerAnnotation: {
+    position: 'relative' as const,
+    bottom: '0.5em',
+    fontSize: '0.5em',
+  },
   icon: {
     height: '32px',
+  },
+  mmNameContainer: {
+    display: 'flex',
+    alignItems: 'center',
   },
   nameContainer: {
     display: 'flex',
     columnGap: '12px',
     alignItems: 'center',
   },
-  chainName: { color: theme.palette.text.primary },
-  usdValue: { color: theme.palette.text.primary },
+  mmName: {
+    color: theme.palette.text.light,
+    paddingLeft: '12px',
+  },
+  chainName: { color: theme.palette.text.light },
+  usdValue: { color: theme.palette.text.light },
   'headerNetwork-bsc': {
     backgroundColor: 'rgba(240, 185, 11, 0.2)',
   },
@@ -63,7 +76,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: 'rgba(180, 249, 186, 0.2)',
   },
   'headerNetwork-metis': {
-    backgroundColor: 'rgba(0, 218, 204, 0.2)',
+    backgroundColor: 'rgba(0, 207, 255, 0.4)',
   },
   'headerNetwork-aurora': {
     backgroundColor: 'rgba(112, 212, 75, 0.2)',
@@ -100,5 +113,8 @@ export const styles = (theme: Theme) => ({
   },
   'headerNetwork-linea': {
     backgroundColor: 'rgba(18, 18, 18, 0.2)',
+  },
+  'headerMM-system9': {
+    backgroundColor: 'rgba(243, 243, 200, 0.5)',
   },
 });

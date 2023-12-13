@@ -3,7 +3,9 @@ import type { VaultEntity } from '../../../data/entities/vault';
 import { Transact } from './Transact/Transact';
 import { Boosts } from './Boosts';
 import { Minters } from './Minter';
+import { TransactDebugger } from './Transact/TransactDebugger';
 import { Migration } from '../Migation';
+import { isDevelopment } from '../../../data/utils/feature-flags';
 import { DisplacedBalances } from '../DisplacedBalances';
 
 export type ActionsProps = {
@@ -12,6 +14,7 @@ export type ActionsProps = {
 export const Actions = memo<ActionsProps>(function Actions({ vaultId }) {
   return (
     <>
+      {isDevelopment ? <TransactDebugger /> : null}
       <Migration vaultId={vaultId} />
       <DisplacedBalances vaultId={vaultId} />
       <Transact vaultId={vaultId} />

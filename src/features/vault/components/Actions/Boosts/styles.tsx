@@ -1,15 +1,10 @@
 import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
-  container: {
-    padding: theme.spacing(3),
-    backgroundColor: theme.palette.background.default,
-    borderRadius: '12px',
-  },
   containerBoost: {
-    padding: theme.spacing(3),
+    padding: '24px',
     borderRadius: '12px',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.contentPrimary,
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '16px',
@@ -19,9 +14,8 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     rowGap: '16px',
     padding: '24px',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.contentPrimary,
     borderRadius: '12px',
-    marginTop: theme.spacing(3),
   },
   boostImg: {
     width: 30,
@@ -30,7 +24,7 @@ export const styles = (theme: Theme) => ({
   },
   title: {
     ...theme.typography['h2'],
-    color: '#E88225',
+    color: theme.palette.background.vaults.boost,
     display: 'flex',
     alignItems: 'center',
   },
@@ -38,7 +32,7 @@ export const styles = (theme: Theme) => ({
     color: '#fff',
   },
   titleTooltipTrigger: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     fontSize: '20px',
     width: '20px',
     height: '20px',
@@ -52,7 +46,7 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
     columnGap: '16px',
-    backgroundColor: '#2D3153',
+    backgroundColor: theme.palette.background.contentLight,
     padding: '12px',
     borderRadius: '8px',
   },
@@ -63,14 +57,13 @@ export const styles = (theme: Theme) => ({
   },
   boostStatLabel: {
     ...theme.typography['subline-sm'],
-    color: '#999CB3',
+    color: theme.palette.text.dark,
   },
   boostStatValue: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
   },
   button: {
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
     borderRadius: '8px',
   },
 });

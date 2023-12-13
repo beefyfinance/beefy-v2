@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     gap: '8px',
-    background: '#232743',
+    background: theme.palette.background.contentPrimary,
   },
   entry: {
     display: 'flex',
@@ -32,7 +32,7 @@ export const styles = (theme: Theme) => ({
   },
   tokenAmount: {
     fontWeight: theme.typography['body-lg-med'].fontWeight,
-    color: '#DB8332',
+    color: theme.palette.background.vaults.boost,
   },
   link: {
     textDecoration: 'none',

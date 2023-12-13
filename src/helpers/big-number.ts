@@ -84,3 +84,15 @@ export function isFiniteBigNumber(value: unknown): value is BigNumber {
 export function compareBigNumber(a: BigNumber, b: BigNumber): number {
   return a.comparedTo(b);
 }
+
+export function orderByBigNumber<T>(
+  items: T[],
+  extractor: (item: T) => BigNumber,
+  direction: 'asc' | 'desc' = 'asc'
+): T[] {
+  return [...items].sort(
+    direction === 'asc'
+      ? (a, b) => compareBigNumber(extractor(a), extractor(b))
+      : (a, b) => compareBigNumber(extractor(b), extractor(a))
+  );
+}

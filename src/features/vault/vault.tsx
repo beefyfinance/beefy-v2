@@ -17,7 +17,6 @@ import type { VaultEntity } from '../data/entities/vault';
 import { isGovVault } from '../data/entities/vault';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { TechLoader } from '../../components/TechLoader';
-import { InfoCards } from './components/InfoCards/InfoCards';
 import { VaultMeta } from './components/VaultMeta';
 import { useAppSelector } from '../../store';
 import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdown';
@@ -26,7 +25,7 @@ import { InsuranceCards } from './components/InsuranceCards';
 import { LeverageCards } from './components/LeverageCards';
 import { Actions } from './components/Actions';
 import { VaultHeader } from './components/VaultHeader';
-import { RenBannerVault } from '../../components/Banners/RenBanner';
+import { BusdBannerVault } from '../../components/Banners/BusdBanner';
 import { PnLGraphLoader } from './components/PnLGraph';
 import { VaultsStats } from './components/VaultsStats';
 import { HistoricGraphsLoader } from './components/HistoricGraph';
@@ -79,7 +78,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
   return (
     <Container maxWidth="lg" className={classes.page}>
       <VaultMeta vaultId={vaultId} />
-      <RenBannerVault vaultId={vaultId} />
+      <BusdBannerVault vaultId={vaultId} />
       <VaultHeader vaultId={vaultId} />
       <VaultsStats vaultId={vaultId} />
       <div className={classes.contentContainer}>
@@ -97,11 +96,10 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
             {!isGovVault(vault) ? (
               <PnLGraphLoader vaultId={vaultId} address={walletAddress} />
             ) : null}
-            {!isGovVault(vault) ? <HistoricGraphsLoader vaultId={vaultId} /> : null}
+            <HistoricGraphsLoader vaultId={vaultId} />
             <LiquidityPoolBreakdownLoader vaultId={vaultId} />
             <SafetyCard vaultId={vaultId} />
             {!isGovVault(vault) ? <StrategyCard vaultId={vaultId} /> : null}
-            <InfoCards chainId={vault.chainId} vaultId={vault.id} />
             <AssetsCard vaultId={vault.id} />
             <Hidden mdUp>
               <InsuranceCards vaultId={vaultId} />

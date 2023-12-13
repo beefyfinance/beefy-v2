@@ -1,7 +1,132 @@
 [
   {
+    "id": "joe-auto-wavax-weth.e",
+    "name": "WETH.e-AVAX APT",
+    "type": "standard",
+    "token": "WETH.e-AVAX APT",
+    "tokenAddress": "0x6178dE6E552055862CF5c56310763EeC0145688d",
+    "tokenDecimals": 24,
+    "tokenProviderId": "traderjoe",
+    "earnedToken": "mooJoeAutoPoolWETH.e-AVAX",
+    "earnedTokenAddress": "0x5aE855220A971210575717CBC2F44fE8a1568b71",
+    "earnContractAddress": "0x5aE855220A971210575717CBC2F44fE8a1568b71",
+    "oracle": "lps",
+    "oracleId": "joe-auto-wavax-weth.e",
+    "status": "active",
+    "platformId": "traderjoe",
+    "assets": ["WETHe", "AVAX"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x6178dE6E552055862CF5c56310763EeC0145688d",
+    "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x6178dE6E552055862CF5c56310763EeC0145688d",
+    "network": "avax",
+    "createdAt": 1699756643
+  },
+  {
+    "id": "joe-auto-wavax-btcb",
+    "name": "BTC.b-AVAX APT",
+    "type": "standard",
+    "token": "BTC.b-AVAX APT",
+    "tokenAddress": "0x1C739A43606794849750C50bC7C43FBbDAcdf801",
+    "tokenDecimals": 24,
+    "tokenProviderId": "traderjoe",
+    "earnedToken": "mooJoeAutoPoolBTC.b-AVAX",
+    "earnedTokenAddress": "0xd4DFf7C63701f32Ad040e7A81a1404B3D164A841",
+    "earnContractAddress": "0xd4DFf7C63701f32Ad040e7A81a1404B3D164A841",
+    "oracle": "lps",
+    "oracleId": "joe-auto-wavax-btcb",
+    "status": "active",
+    "platformId": "traderjoe",
+    "assets": ["BTCb", "AVAX"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x1C739A43606794849750C50bC7C43FBbDAcdf801",
+    "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x1C739A43606794849750C50bC7C43FBbDAcdf801",
+    "network": "avax",
+    "createdAt": 1699756643
+  },
+  {
+    "id": "joe-auto-usdc-eurc",
+    "name": "USDC-EURC APT",
+    "type": "standard",
+    "token": "USDC-EURC APT",
+    "tokenAddress": "0x052AF5B8aC73082D8c4C8202bB21F4531A51DC73",
+    "tokenDecimals": 12,
+    "tokenProviderId": "traderjoe",
+    "earnedToken": "mooJoeAutoPoolUSDC-EURC",
+    "earnedTokenAddress": "0x7AF92Ab6e5a8cC5A8aaA95DD0f78abbC676F8229",
+    "earnContractAddress": "0x7AF92Ab6e5a8cC5A8aaA95DD0f78abbC676F8229",
+    "oracle": "lps",
+    "oracleId": "joe-auto-usdc-eurc",
+    "status": "active",
+    "platformId": "traderjoe",
+    "assets": ["EURC", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x052AF5B8aC73082D8c4C8202bB21F4531A51DC73",
+    "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x052AF5B8aC73082D8c4C8202bB21F4531A51DC73",
+    "network": "avax",
+    "createdAt": 1699756643
+  },
+  {
+    "id": "balancer-avax-usdc-eurc",
+    "name": "USDC-EURC",
+    "type": "standard",
+    "token": "USDC-EURC",
+    "tokenAddress": "0x55bEC22f8f6C69137cEAf284d9B441Db1B9bFedc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerUSDC-EURC",
+    "earnedTokenAddress": "0x43Fe0a9F84f00a3Dbb65F2077669AA40e3f5C1f5",
+    "earnContractAddress": "0x43Fe0a9F84f00a3Dbb65F2077669AA40e3f5C1f5",
+    "oracle": "lps",
+    "oracleId": "balancer-avax-usdc-eurc",
+    "status": "eol",
+    "retireReason": "default",
+    "platformId": "balancer",
+    "assets": ["USDC", "EURC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.xave.co/#/pool",
+    "removeLiquidityUrl": "https://app.xave.co/#/pool",
+    "network": "avax",
+    "createdAt": 1699715901
+  },
+  {
     "id": "joe-auto-wavax-usdc",
     "name": "AVAX-USDC APT",
+    "type": "standard",
     "token": "AVAX-USDC APT",
     "tokenAddress": "0x32833a12ed3Fd5120429FB01564c98ce3C60FC1d",
     "tokenDecimals": 12,
@@ -33,6 +158,7 @@
   {
     "id": "balancer-savax-bbaavavax",
     "name": "sAVAX-bbaAVAX",
+    "type": "standard",
     "token": "sAVAX-bbaAVAX",
     "tokenAddress": "0xA154009870E9B6431305F19b09F9cfD7284d4E7A",
     "tokenDecimals": 18,
@@ -63,6 +189,7 @@
   {
     "id": "balancer-yyavax-bbaavavax",
     "name": "yyAVAX-bbaAVAX",
+    "type": "standard",
     "token": "yyAVAX-bbaAVAX",
     "tokenAddress": "0xEcE571847897fD61E764D455DC15cf1cD9dE8d6F",
     "tokenDecimals": 18,
@@ -93,11 +220,11 @@
   {
     "id": "solisnek-usdt-usdc",
     "name": "USDT-USDC sLP",
+    "type": "standard",
     "token": "USDT-USDC sLP",
     "tokenAddress": "0x1CF7F397af73F6206055C69205fC9cb7D69187A0",
     "tokenDecimals": 18,
     "tokenProviderId": "solisnek",
-    "tokenAmmId": "avax-solisnek",
     "earnedToken": "mooSoliSnekUSDT-USDC",
     "earnedTokenAddress": "0x90A1F633D6eB460E591c3B3640721D78eCD238b2",
     "earnContractAddress": "0x90A1F633D6eB460E591c3B3640721D78eCD238b2",
@@ -112,16 +239,22 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7&to=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x1CF7F397af73F6206055C69205fC9cb7D69187A0",
     "network": "avax",
-    "createdAt": 1686258272
+    "createdAt": 1686258272,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-solisnek"
+      }
+    ]
   },
   {
     "id": "solisnek-wavax-bifi",
     "name": "oldBIFI-AVAX vLP",
+    "type": "standard",
     "token": "oldBIFI-AVAX vLP",
     "tokenAddress": "0xd45c4da6987cc1067E9eE8481D42AbEeD9167689",
     "tokenDecimals": 18,
     "tokenProviderId": "solisnek",
-    "tokenAmmId": "avax-solisnek",
     "earnedToken": "mooSoliSnekAVAX-oldBIFI",
     "earnedTokenAddress": "0xEb9fA821E4Af94B8BE3d2e523150B4c9B173431e",
     "earnContractAddress": "0xEb9fA821E4Af94B8BE3d2e523150B4c9B173431e",
@@ -136,16 +269,22 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=AVAX&to=0xd6070ae98b8069de6b494332d1a1a81b6179d960",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0xd45c4da6987cc1067e9ee8481d42abeed9167689",
     "network": "avax",
-    "createdAt": 1682949068
+    "createdAt": 1682949068,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-solisnek"
+      }
+    ]
   },
   {
     "id": "solisnek-wavax-usdc",
     "name": "AVAX-USDC vLP",
+    "type": "standard",
     "token": "AVAX-USDC vLP",
     "tokenAddress": "0xDF214f497BeCA7f550a74CEB89240FB185CE19b4",
     "tokenDecimals": 18,
     "tokenProviderId": "solisnek",
-    "tokenAmmId": "avax-solisnek",
     "earnedToken": "mooSoliSnekAVAX-USDC",
     "earnedTokenAddress": "0x1B52DEad89eAD6b56Dba592F2D85b190B7872730",
     "earnContractAddress": "0x1B52DEad89eAD6b56Dba592F2D85b190B7872730",
@@ -160,16 +299,22 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=AVAX&to=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0xDF214f497BeCA7f550a74CEB89240FB185CE19b4",
     "network": "avax",
-    "createdAt": 1682949068
+    "createdAt": 1682949068,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-solisnek"
+      }
+    ]
   },
   {
     "id": "solisnek-mai-usdc",
     "name": "MAI-USDC sLP",
+    "type": "standard",
     "token": "MAI-USDC sLP",
     "tokenAddress": "0x39D7Fa4567f1E989c04867FC8D7D6882A1Bdfb75",
     "tokenDecimals": 18,
     "tokenProviderId": "solisnek",
-    "tokenAmmId": "avax-solisnek",
     "earnedToken": "mooSoliSnekMAI-USDC",
     "earnedTokenAddress": "0x074407236cD8F13F2c7efaf1A10BAb9F6AE6DA80",
     "earnContractAddress": "0x074407236cD8F13F2c7efaf1A10BAb9F6AE6DA80",
@@ -191,16 +336,22 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&to=0x5c49b268c9841AFF1Cc3B0a418ff5c3442eE3F3b",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x39d7fa4567f1e989c04867fc8d7d6882a1bdfb75",
     "network": "avax",
-    "createdAt": 1682949068
+    "createdAt": 1682949068,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-solisnek"
+      }
+    ]
   },
   {
     "id": "solisnek-mai-frax",
     "name": "MAI-FRAX sLP",
+    "type": "standard",
     "token": "MAI-FRAX sLP",
     "tokenAddress": "0xE4fF38cee745BF42Df9239Abe671b7bc637E9b4D",
     "tokenDecimals": 18,
     "tokenProviderId": "solisnek",
-    "tokenAmmId": "avax-solisnek",
     "earnedToken": "mooSoliSnekMAI-FRAX",
     "earnedTokenAddress": "0xC2272afba34f7BA14364b6e83dFDF966E2DE3D45",
     "earnContractAddress": "0xC2272afba34f7BA14364b6e83dFDF966E2DE3D45",
@@ -222,46 +373,22 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xD24C2Ad096400B6FBcd2ad8B24E7acBc21A1da64&to=0x5c49b268c9841AFF1Cc3B0a418ff5c3442eE3F3b",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0xe4ff38cee745bf42df9239abe671b7bc637e9b4d",
     "network": "avax",
-    "createdAt": 1682949068
-  },
-  {
-    "id": "solisnek-usdc-dei",
-    "name": "DEI-USDC sLP",
-    "token": "DEI-USDC sLP",
-    "tokenAddress": "0xD4df5E012D1af8F5DCeFD0612b27B5E4C51131fE",
-    "tokenDecimals": 18,
-    "tokenProviderId": "solisnek",
-    "tokenAmmId": "avax-solisnek",
-    "earnedToken": "mooSoliSnekUSDC-DEI",
-    "earnedTokenAddress": "0x7f6e2FD400f7fB43Ea8d41cc733eF45f37510C5C",
-    "earnContractAddress": "0x7f6e2FD400f7fB43Ea8d41cc733eF45f37510C5C",
-    "oracle": "lps",
-    "oracleId": "solisnek-usdc-dei",
-    "status": "eol",
-    "retireReason": "exploit",
-    "platformId": "solisnek",
-    "assets": ["DEI", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "MCAP_MICRO",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&to=0xde1e704dae0b4051e80dabb26ab6ad6c12262da0",
-    "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0xd4df5e012d1af8f5dcefd0612b27b5e4c51131fe",
-    "network": "avax",
-    "createdAt": 1682949068
+    "createdAt": 1682949068,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-solisnek"
+      }
+    ]
   },
   {
     "id": "solisnek-dola-usdc",
     "name": "DOLA-USDC sLP",
+    "type": "standard",
     "token": "DOLA-USDC sLP",
     "tokenAddress": "0x7680D9F07f80B11A7a96E4443398245D917998e6",
     "tokenDecimals": 18,
     "tokenProviderId": "solisnek",
-    "tokenAmmId": "avax-solisnek",
     "earnedToken": "mooSoliSnekDOLA-USDC",
     "earnedTokenAddress": "0xE2455bf6d70DAF37368743334D1000939f608916",
     "earnContractAddress": "0xE2455bf6d70DAF37368743334D1000939f608916",
@@ -283,16 +410,22 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&to=0x221743dc9e954be4f86844649bf19b43d6f8366d",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x7680d9f07f80b11a7a96e4443398245d917998e6",
     "network": "avax",
-    "createdAt": 1682949068
+    "createdAt": 1682949068,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-solisnek"
+      }
+    ]
   },
   {
     "id": "solisnek-btc.b-wbtc.e",
     "name": "BTC.b-WBTC.e sLP",
+    "type": "standard",
     "token": "BTC.b-WBTC.e sLP",
     "tokenAddress": "0xaDb32De92151D0769d214445B6D8B905CFF17CCF",
     "tokenDecimals": 18,
     "tokenProviderId": "solisnek",
-    "tokenAmmId": "avax-solisnek",
     "earnedToken": "mooSoliSnekBTC.b-WBTC.e",
     "earnedTokenAddress": "0x79AB83fC0a2598521f0756E5Ac572426bc8EC5FB",
     "earnContractAddress": "0x79AB83fC0a2598521f0756E5Ac572426bc8EC5FB",
@@ -307,16 +440,22 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0x152b9d0fdc40c096757f570a51e494bd4b943e50&to=0x50b7545627a5162F82A992c33b87aDc75187B218",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0xadb32de92151d0769d214445b6d8b905cff17ccf",
     "network": "avax",
-    "createdAt": 1682949068
+    "createdAt": 1682949068,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-solisnek"
+      }
+    ]
   },
   {
     "id": "solisnek-usdc.e-usdc",
     "name": "USDC.e-USDC sLP",
+    "type": "standard",
     "token": "USDC.e-USDC sLP",
     "tokenAddress": "0x6Ee94Bba2658c4dE8bE091c005F62D36b28463aE",
     "tokenDecimals": 18,
     "tokenProviderId": "solisnek",
-    "tokenAmmId": "avax-solisnek",
     "earnedToken": "mooSoliSnekUSDC.e-USDC",
     "earnedTokenAddress": "0x6546A4dfc2e1E5d413F1DA6872662AaE555B42b6",
     "earnContractAddress": "0x6546A4dfc2e1E5d413F1DA6872662AaE555B42b6",
@@ -331,16 +470,22 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&to=0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x6ee94bba2658c4de8be091c005f62d36b28463ae",
     "network": "avax",
-    "createdAt": 1682949068
+    "createdAt": 1682949068,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-solisnek"
+      }
+    ]
   },
   {
     "id": "solisnek-usdc-frax",
     "name": "FRAX-USDC sLP",
+    "type": "standard",
     "token": "FRAX-USDC sLP",
     "tokenAddress": "0x01d806052D1D3926b4456567144375B192bF41b7",
     "tokenDecimals": 18,
     "tokenProviderId": "solisnek",
-    "tokenAmmId": "avax-solisnek",
     "earnedToken": "mooSoliSnekUSDC-FRAX",
     "earnedTokenAddress": "0xbc51abd90ab9e8BEf94fA65794f4Fd74eEC464C6",
     "earnContractAddress": "0xbc51abd90ab9e8BEf94fA65794f4Fd74eEC464C6",
@@ -362,16 +507,22 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&to=0xD24C2Ad096400B6FBcd2ad8B24E7acBc21A1da64",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x01d806052d1d3926b4456567144375b192bf41b7",
     "network": "avax",
-    "createdAt": 1682949068
+    "createdAt": 1682949068,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-solisnek"
+      }
+    ]
   },
   {
     "id": "solisnek-weth.e-wavax",
     "name": "WETH.e-AVAX vLP",
+    "type": "standard",
     "token": "WETH.e-AVAX vLP",
     "tokenAddress": "0x8D2D4464CB5c65Cbda6188d6c7653e0A3ad28828",
     "tokenDecimals": 18,
     "tokenProviderId": "solisnek",
-    "tokenAmmId": "avax-solisnek",
     "earnedToken": "mooSoliSnekWETH.e-WAVAX",
     "earnedTokenAddress": "0x14892d0377D877E0411aECba9e5A0b6Db09dd930",
     "earnContractAddress": "0x14892d0377D877E0411aECba9e5A0b6Db09dd930",
@@ -386,22 +537,29 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=AVAX&to=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x8d2d4464cb5c65cbda6188d6c7653e0a3ad28828",
     "network": "avax",
-    "createdAt": 1682949068
+    "createdAt": 1682949068,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-solisnek"
+      }
+    ]
   },
   {
     "id": "solisnek-btc.b-wavax",
     "name": "BTC.b-AVAX vLP",
+    "type": "standard",
     "token": "BTC.b-AVAX vLP",
     "tokenAddress": "0x3b7FE0276915bbe081C178D68be472286F501D59",
     "tokenDecimals": 18,
     "tokenProviderId": "solisnek",
-    "tokenAmmId": "avax-solisnek",
     "earnedToken": "mooSoliSnekBTC.b-WAVAX",
     "earnedTokenAddress": "0x1A290C4Ff9C25B36e82fafa7C5491331b8F9b8Cf",
     "earnContractAddress": "0x1A290C4Ff9C25B36e82fafa7C5491331b8F9b8Cf",
     "oracle": "lps",
     "oracleId": "solisnek-btc.b-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "solisnek",
     "assets": ["BTCb", "AVAX"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -409,16 +567,22 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=AVAX&to=0x152b9d0fdc40c096757f570a51e494bd4b943e50",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x3b7fe0276915bbe081c178d68be472286f501d59",
     "network": "avax",
-    "createdAt": 1682949068
+    "createdAt": 1682949068,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-solisnek"
+      }
+    ]
   },
   {
     "id": "solisnek-wavax-deus",
     "name": "DEUS-AVAX vLP",
+    "type": "standard",
     "token": "DEUS-AVAX vLP",
     "tokenAddress": "0x81d230D1A8A9dB0Ca319a346C1412383F8AF4764",
     "tokenDecimals": 18,
     "tokenProviderId": "solisnek",
-    "tokenAmmId": "avax-solisnek",
     "earnedToken": "mooSoliSnekAVAX-DEUS",
     "earnedTokenAddress": "0x5A2D3D6D21Fa219D1C549B3D0e070E05D98011af",
     "earnContractAddress": "0x5A2D3D6D21Fa219D1C549B3D0e070E05D98011af",
@@ -433,11 +597,18 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=AVAX&to=0xde5ed76e7c05ec5e4572cfc88d1acea165109e44",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x81d230d1a8a9db0ca319a346c1412383f8af4764",
     "network": "avax",
-    "createdAt": 1682949068
+    "createdAt": 1682949068,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-solisnek"
+      }
+    ]
   },
   {
     "id": "avax-bifi-maxi",
     "name": "oldBIFI Maxi",
+    "type": "standard",
     "token": "oldBIFI",
     "tokenAddress": "0xd6070ae98b8069de6B494332d1A1a81B6179D960",
     "tokenDecimals": 18,
@@ -466,6 +637,7 @@
   {
     "id": "avax-bifi-gov",
     "name": "oldBIFI Earnings Pool",
+    "type": "gov",
     "token": "oldBIFI",
     "tokenAddress": "0xd6070ae98b8069de6B494332d1A1a81B6179D960",
     "tokenDecimals": 18,
@@ -488,7 +660,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "old-bifi-pool",
-    "isGovVault": true,
     "excluded": "avax-bifi-maxi",
     "buyTokenUrl": "https://www.traderjoexyz.com/#/trade?outputCurrency=0xd6070ae98b8069de6b494332d1a1a81b6179d960",
     "network": "avax",
@@ -497,6 +668,7 @@
   {
     "id": "kyber-avax-usdc-mai",
     "name": "MAI-USDC LP",
+    "type": "standard",
     "token": "MAI-USDC avaxkLP",
     "tokenAddress": "0xC2995a065106b5c5c738B2320387460eBd12c12D",
     "tokenDecimals": 18,
@@ -528,11 +700,11 @@
   {
     "id": "png-usdt-wavax",
     "name": "USDT-AVAX LP",
+    "type": "standard",
     "token": "USDT-AVAX LP",
     "tokenAddress": "0xe3bA3d5e3F98eefF5e9EDdD5Bd20E476202770da",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinUSDT-AVAX",
     "earnedTokenAddress": "0x976C1136c59d068Fc357e6c2Ca5D4c03B920C306",
     "earnContractAddress": "0x976C1136c59d068Fc357e6c2Ca5D4c03B920C306",
@@ -547,16 +719,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
     "network": "avax",
-    "createdAt": 1676748216
+    "createdAt": 1676748216,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "sicle-wavax-usd+",
     "name": "USD+-AVAX LP",
+    "type": "standard",
     "token": "USD+-AVAX LP",
     "tokenAddress": "0x7B4BFbEed1DEBb17c612a343CE392A9aFa1B3F6A",
     "tokenDecimals": 18,
     "tokenProviderId": "swapsicle",
-    "tokenAmmId": "avax-swapsicle",
     "earnedToken": "mooSicleAVAX-USD+",
     "earnedTokenAddress": "0xF6933FfC6240679D3dE6407141611b3388d9652B",
     "earnContractAddress": "0xF6933FfC6240679D3dE6407141611b3388d9652B",
@@ -579,16 +757,22 @@
     "addLiquidityUrl": "https://www.swapsicle.io/de/add/0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65/ETH",
     "removeLiquidityUrl": "https://www.swapsicle.io/de/remove/0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65/ETH",
     "network": "avax",
-    "createdAt": 1667061097
+    "createdAt": 1667061097,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-swapsicle"
+      }
+    ]
   },
   {
     "id": "sicle-usdc-usd+",
     "name": "USD+-USDC LP",
+    "type": "standard",
     "token": "USD+-USDC LP",
     "tokenAddress": "0x3e938F737696a0370bF01E8Cc30ed0e845cF78F2",
     "tokenDecimals": 18,
     "tokenProviderId": "swapsicle",
-    "tokenAmmId": "avax-swapsicle",
     "earnedToken": "mooSicleUSDC-USD+",
     "earnedTokenAddress": "0x06EE4eDD02e9f2513C57BC08a691a8D9f62F075E",
     "earnContractAddress": "0x06EE4eDD02e9f2513C57BC08a691a8D9f62F075E",
@@ -611,16 +795,22 @@
     "addLiquidityUrl": "https://www.swapsicle.io/de/add/0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "removeLiquidityUrl": "https://www.swapsicle.io/de/remove/0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "network": "avax",
-    "createdAt": 1667061097
+    "createdAt": 1667061097,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-swapsicle"
+      }
+    ]
   },
   {
     "id": "joe-busd-wavax",
     "name": "BUSD-AVAX LP",
+    "type": "standard",
     "token": "BUSD-AVAX JLP",
     "tokenAddress": "0xf57971383560715CcCF94E0C639125Ae0e955e60",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeBUSD-AVAX",
     "earnedTokenAddress": "0x78527f8155c74d8BFb71f1363d476433e39B4f14",
     "earnContractAddress": "0x78527f8155c74d8BFb71f1363d476433e39B4f14",
@@ -644,11 +834,18 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9C9e5fD8bbc25984B178FdCE6117Defa39d2db39/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9C9e5fD8bbc25984B178FdCE6117Defa39d2db39/AVAX",
     "network": "avax",
-    "createdAt": 1664561347
+    "createdAt": 1664561347,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "beefy-beJoe-earnings",
     "name": "beJOE Earnings Pool",
+    "type": "gov",
     "token": "beJOE",
     "tokenAddress": "0x1F2A8034f444dc55F963fb5925A9b6eb744EeE2c",
     "tokenDecimals": 18,
@@ -670,7 +867,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "bejoe",
-    "isGovVault": true,
     "excluded": "beefy-beJoe",
     "network": "avax",
     "createdAt": 1649422900
@@ -678,11 +874,11 @@
   {
     "id": "sicle-grape-mim",
     "name": "GRAPE-MIM LP",
+    "type": "standard",
     "token": "GRAPE-MIM SLP",
     "tokenAddress": "0x9076C15D7b2297723ecEAC17419D506AE320CbF1",
     "tokenDecimals": 18,
     "tokenProviderId": "swapsicle",
-    "tokenAmmId": "avax-swapsicle",
     "earnedToken": "mooSicleGRPAE-AVAX",
     "earnedTokenAddress": "0x5E55b1c38BC06d0d40434dC7fb6fa0E6D42E1380",
     "earnContractAddress": "0x5E55b1c38BC06d0d40434dC7fb6fa0E6D42E1380",
@@ -706,16 +902,22 @@
     "addLiquidityUrl": "https://www.swapsicle.io/add/0x130966628846BFd36ff31a822705796e8cb8C18D/0x5541D83EFaD1f281571B343977648B75d95cdAC2",
     "removeLiquidityUrl": "https://www.swapsicle.io/remove/0x130966628846BFd36ff31a822705796e8cb8C18D/0x5541D83EFaD1f281571B343977648B75d95cdAC2",
     "network": "avax",
-    "createdAt": 1659634990
+    "createdAt": 1659634990,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-swapsicle"
+      }
+    ]
   },
   {
     "id": "sicle-btc.b-wavax",
     "name": "BTC.b-AVAX LP",
+    "type": "standard",
     "token": "BTC.b-AVAX SLP",
     "tokenAddress": "0xf7505d0f042ae55770B3595CA9472D03E558693E",
     "tokenDecimals": 18,
     "tokenProviderId": "swapsicle",
-    "tokenAmmId": "avax-swapsicle",
     "earnedToken": "mooSicleBTC.b-AVAX",
     "earnedTokenAddress": "0xf747C3285645B8Dbc966ccd728e2586A769858E1",
     "earnContractAddress": "0xf747C3285645B8Dbc966ccd728e2586A769858E1",
@@ -738,16 +940,22 @@
     "addLiquidityUrl": "https://www.swapsicle.io/add/ETH/0x152b9d0FdC40C096757F570A51E494bd4b943E50",
     "removeLiquidityUrl": "https://www.swapsicle.io/remove/ETH/0x152b9d0FdC40C096757F570A51E494bd4b943E50",
     "network": "avax",
-    "createdAt": 1657811280
+    "createdAt": 1657811280,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-swapsicle"
+      }
+    ]
   },
   {
     "id": "sicle-link.e-wavax",
     "name": "LINK.e-AVAX LP",
+    "type": "standard",
     "token": "LINK.e-AVAX LP",
     "tokenAddress": "0x2C10416Cc050fD446c7Ab595b28DEE8C71F18d2A",
     "tokenDecimals": 18,
     "tokenProviderId": "swapsicle",
-    "tokenAmmId": "avax-swapsicle",
     "earnedToken": "mooSicleLINK.e-AVAX",
     "earnedTokenAddress": "0xf4d9FaDD4a96D4977a3B8f8E8a8873755C232B92",
     "earnContractAddress": "0xf4d9FaDD4a96D4977a3B8f8E8a8873755C232B92",
@@ -770,16 +978,22 @@
     "addLiquidityUrl": "https://www.swapsicle.io/add/ETH/0x5947BB275c521040051D82396192181b413227A3",
     "removeLiquidityUrl": "https://www.swapsicle.io/remove/ETH/0x5947BB275c521040051D82396192181b413227A3",
     "network": "avax",
-    "createdAt": 1657810082
+    "createdAt": 1657810082,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-swapsicle"
+      }
+    ]
   },
   {
     "id": "joe-btc.b-wavax",
     "name": "BTC.b-AVAX LP",
+    "type": "standard",
     "token": "BTC.b-AVAX JLP",
     "tokenAddress": "0x2fD81391E30805Cc7F2Ec827013ce86dc591B806",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeBTCb-AVAX",
     "earnedTokenAddress": "0x10d52685E9f55884a67a88f2b5Ed2215D607d0a2",
     "earnContractAddress": "0x10d52685E9f55884a67a88f2b5Ed2215D607d0a2",
@@ -803,11 +1017,18 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x152b9d0fdc40c096757f570a51e494bd4b943e50/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x152b9d0fdc40c096757f570a51e494bd4b943e50/AVAX",
     "network": "avax",
-    "createdAt": 1656366049
+    "createdAt": 1656366049,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "bankerjoe-avax",
     "name": "AVAX",
+    "type": "standard",
     "token": "AVAX",
     "tokenDecimals": 18,
     "earnedToken": "mooBankerJoeAVAX",
@@ -830,11 +1051,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     "network": "avax",
-    "createdAt": 1636471887
+    "createdAt": 1636471887,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "bankerjoe-weth.e",
     "name": "WETH.e",
+    "type": "standard",
     "token": "WETH.e",
     "tokenAddress": "0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     "tokenDecimals": 18,
@@ -858,11 +1085,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     "network": "avax",
-    "createdAt": 1636468072
+    "createdAt": 1636468072,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "bankerjoe-wbtc.e",
     "name": "WBTC.e",
+    "type": "standard",
     "token": "WBTC.e",
     "tokenAddress": "0x50b7545627a5162F82A992c33b87aDc75187B218",
     "tokenDecimals": 8,
@@ -886,11 +1119,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
     "network": "avax",
-    "createdAt": 1636462707
+    "createdAt": 1636462707,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "bankerjoe-usdc.e",
     "name": "USDC.e",
+    "type": "standard",
     "token": "USDC.e",
     "tokenAddress": "0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "tokenDecimals": 6,
@@ -914,11 +1153,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "network": "avax",
-    "createdAt": 1636468925
+    "createdAt": 1636468925,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "bankerjoe-usdt.e",
     "name": "USDT.e",
+    "type": "standard",
     "token": "USDT.e",
     "tokenAddress": "0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "tokenDecimals": 6,
@@ -942,16 +1187,21 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
-    "createdAt": 1636470449
+    "createdAt": 1636470449,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "blizz-blzz-avax",
     "name": "BLZZ-AVAX LP",
+    "type": "standard",
     "token": "BLZZ-AVAX LP",
     "tokenAddress": "0xac3F978714c613E768272c502a8912bC03DCf624",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooBlizzBLZZ-AVAX",
     "earnedTokenAddress": "0xE06575Cfd4a631e8C0Cd9FBDd8d77AB04CFfA52C",
     "earnContractAddress": "0xE06575Cfd4a631e8C0Cd9FBDd8d77AB04CFfA52C",
@@ -974,11 +1224,18 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x0f34919404a290e71fc6A510cB4a6aCb8D764b24",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x0f34919404a290e71fc6A510cB4a6aCb8D764b24",
     "network": "avax",
-    "createdAt": 1636366466
+    "createdAt": 1636366466,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "curve-avax-av3crv",
     "name": "DAI/USDC/USDT",
+    "type": "standard",
     "token": "av3CRV",
     "tokenAddress": "0x1337BedC9D22ecbe766dF105c9623922A27963EC",
     "tokenDecimals": 18,
@@ -1010,6 +1267,7 @@
   {
     "id": "curve-avax-atricrypto",
     "name": "aTriCrypto",
+    "type": "standard",
     "token": "crvUSDBTCETH",
     "tokenAddress": "0x1daB6560494B04473A0BE3E7D83CF3Fdf3a51828",
     "tokenDecimals": 18,
@@ -1040,6 +1298,7 @@
   {
     "id": "joe-joe",
     "name": "JOE",
+    "type": "standard",
     "token": "JOE",
     "tokenAddress": "0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
     "tokenDecimals": 18,
@@ -1061,19 +1320,24 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "single",
-    "depositFee": "1%",
+    "depositFee": 0.01,
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
     "network": "avax",
-    "createdAt": 1631011023
+    "createdAt": 1631011023,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "joe-mai-wavax-eol",
     "name": "miMatic-AVAX LP",
+    "type": "standard",
     "token": "miMatic-AVAX JLP",
     "tokenAddress": "0xD6d03fe131dB3dE3aF5E6326036BaC4C1Cf8C80d",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeMiMatic-AVAX",
     "earnedTokenAddress": "0xe419f17821F10Ce741F67232406F6a8585d52005",
     "earnContractAddress": "0xe419f17821F10Ce741F67232406F6a8585d52005",
@@ -1095,16 +1359,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0x3b55e45fd6bd7d4724f5c47e0d1bcaedd059263e/AVAX",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0x3b55e45fd6bd7d4724f5c47e0d1bcaedd059263e/AVAX",
     "network": "avax",
-    "createdAt": 1632848062
+    "createdAt": 1632848062,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-bnb-wavax",
     "name": "BNB-AVAX LP",
+    "type": "standard",
     "token": "BNB-AVAX JLP",
     "tokenAddress": "0xeb8eB6300c53C3AddBb7382Ff6c6FbC4165B0742",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeBNB-WAVAX",
     "earnedTokenAddress": "0x2b7066770EF90eb7faCFB6cbe6A975C91FA13151",
     "earnContractAddress": "0x2b7066770EF90eb7faCFB6cbe6A975C91FA13151",
@@ -1127,16 +1397,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0x264c1383ea520f73dd837f915ef3a732e204a493/AVAX",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0x264c1383ea520f73dd837f915ef3a732e204a493/AVAX",
     "network": "avax",
-    "createdAt": 1632232139
+    "createdAt": 1632232139,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-link.e-wavax",
     "name": "LINK.e-AVAX LP",
+    "type": "standard",
     "token": "LINK.e-AVAX JLP",
     "tokenAddress": "0x6F3a0C89f611Ef5dC9d96650324ac633D02265D3",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeLINK.e-WAVAX",
     "earnedTokenAddress": "0x7cB719CD18E171c3db4607536804f34A01AE506F",
     "earnContractAddress": "0x7cB719CD18E171c3db4607536804f34A01AE506F",
@@ -1159,16 +1435,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0x5947bb275c521040051d82396192181b413227a3/AVAX",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0x5947bb275c521040051d82396192181b413227a3/AVAX",
     "network": "avax",
-    "createdAt": 1632125698
+    "createdAt": 1632125698,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-time-wavax-eol",
     "name": "TIME-AVAX LP",
+    "type": "standard",
     "token": "TIME-AVAX JLP",
     "tokenAddress": "0xf64e1c5B6E17031f5504481Ac8145F4c3eab4917",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeTIME-AVAX",
     "earnedTokenAddress": "0x4502e2F6802D48578f76920e5D56557459C04B7D",
     "earnContractAddress": "0x4502e2F6802D48578f76920e5D56557459C04B7D",
@@ -1191,22 +1473,29 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xb54f16fB19478766A268F172C9480f8da1a7c9C3",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xb54f16fB19478766A268F172C9480f8da1a7c9C3",
     "network": "avax",
-    "createdAt": 1631633988
+    "createdAt": 1631633988,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-joe-wavax",
     "name": "JOE-AVAX LP",
+    "type": "standard",
     "token": "JOE-AVAX JLP",
     "tokenAddress": "0x454E67025631C065d3cFAD6d71E6892f74487a15",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeJOE-AVAX",
     "earnedTokenAddress": "0x3D81A269E05e6057e4dF9E2D76E254E65a65Eb66",
     "earnContractAddress": "0x3D81A269E05e6057e4dF9E2D76E254E65a65Eb66",
     "oracle": "lps",
     "oracleId": "joe-joe-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "traderjoe",
     "assets": ["JOE", "AVAX"],
     "risks": [
@@ -1222,16 +1511,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/avalanche/pool/v1/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd/AVAX",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/avalanche/pool/v1/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd/AVAX",
     "network": "avax",
-    "createdAt": 1631119335
+    "createdAt": 1631119335,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-mim-wavax-eol",
     "name": "MIM-AVAX LP",
+    "type": "standard",
     "token": "MIM-AVAX JLP",
     "tokenAddress": "0x781655d802670bbA3c89aeBaaEa59D3182fD755D",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeMIM-WAVAX",
     "earnedTokenAddress": "0xb387376366C479Ac1d97833c10cFe738CC786dd1",
     "earnContractAddress": "0xb387376366C479Ac1d97833c10cFe738CC786dd1",
@@ -1255,16 +1550,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x130966628846BFd36ff31a822705796e8cb8C18D",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x130966628846BFd36ff31a822705796e8cb8C18D",
     "network": "avax",
-    "createdAt": 1630670273
+    "createdAt": 1630670273,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-wbtc.e-usdt.e-eol",
     "name": "WBTC.e-USDT.e LP",
+    "type": "standard",
     "token": "WBTC.e-USDT.e JLP",
     "tokenAddress": "0xB8D5E8a9247db183847c7D79af9C67F6aeF759f7",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeUSDT.e-WBTC.e",
     "earnedTokenAddress": "0x3f5E367AC9Fb78A21Dc83d96dc1477eDE1F6219D",
     "earnContractAddress": "0x3f5E367AC9Fb78A21Dc83d96dc1477eDE1F6219D",
@@ -1287,16 +1588,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xc7198437980c041c805A1EDcbA50c1Ce5db95118/0x50b7545627a5162F82A992c33b87aDc75187B218",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0xc7198437980c041c805A1EDcbA50c1Ce5db95118/0x50b7545627a5162F82A992c33b87aDc75187B218",
     "network": "avax",
-    "createdAt": 1630496447
+    "createdAt": 1630496447,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-wbtc.e-wavax",
     "name": "WBTC.e-AVAX LP",
+    "type": "standard",
     "token": "WBTC.e-AVAX JLP",
     "tokenAddress": "0xd5a37dC5C9A396A03dd1136Fc76A1a02B1c88Ffa",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeWBTC.e-AVAX",
     "earnedTokenAddress": "0xf32E23EB10350e381aA8b775d381e27C50a9195f",
     "earnContractAddress": "0xf32E23EB10350e381aA8b775d381e27C50a9195f",
@@ -1319,22 +1626,29 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x50b7545627a5162F82A992c33b87aDc75187B218",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x50b7545627a5162F82A992c33b87aDc75187B218",
     "network": "avax",
-    "createdAt": 1630496650
+    "createdAt": 1630496650,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-weth.e-wavax",
     "name": "WETH.e-AVAX LP",
+    "type": "standard",
     "token": "WETH.e-AVAX JLP",
     "tokenAddress": "0xFE15c2695F1F920da45C30AAE47d11dE51007AF9",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeWETH.e-AVAX",
     "earnedTokenAddress": "0x68866acc5C940938B373F55F7009f824c7662F5B",
     "earnContractAddress": "0x68866acc5C940938B373F55F7009f824c7662F5B",
     "oracle": "lps",
     "oracleId": "joe-weth.e-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "traderjoe",
     "assets": ["WETHe", "AVAX"],
     "risks": [
@@ -1350,16 +1664,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB/AVAX",
     "network": "avax",
-    "createdAt": 1630496791
+    "createdAt": 1630496791,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "olive-dai.e-usdt.e",
     "name": "DAI.e-USDT.e LP",
+    "type": "standard",
     "token": "DAI.e-USDT.e LP",
     "tokenAddress": "0x4758441C1F5d067839776456033f6cd0EB9fb3d3",
     "tokenDecimals": 18,
     "tokenProviderId": "oliveswap",
-    "tokenAmmId": "avax-olive",
     "earnedToken": "mooOliveDAIe-USDTe",
     "earnedTokenAddress": "0xabd4a1aDaC20ff42d9946EF5ec5FbF822Ccd5B74",
     "earnContractAddress": "0xabd4a1aDaC20ff42d9946EF5ec5FbF822Ccd5B74",
@@ -1382,16 +1702,22 @@
     "addLiquidityUrl": "https://avax.olive.cash/add/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "removeLiquidityUrl": "https://avax.olive.cash/remove/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
-    "createdAt": 1630057114
+    "createdAt": 1630057114,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-olive"
+      }
+    ]
   },
   {
     "id": "olive-busd.e-usdt.e",
     "name": "BUSD.e-USDT.e LP",
+    "type": "standard",
     "token": "BUSD.e-USDT.e LP",
     "tokenAddress": "0x9e4562caC6b91f5154a42e6270F2Ea58A4149b3E",
     "tokenDecimals": 18,
     "tokenProviderId": "oliveswap",
-    "tokenAmmId": "avax-olive",
     "earnedToken": "mooOliveBUSDe-USDTe",
     "earnedTokenAddress": "0x2913966e88490B5a65D67298801c0c51f377BB9C",
     "earnContractAddress": "0x2913966e88490B5a65D67298801c0c51f377BB9C",
@@ -1414,11 +1740,18 @@
     "addLiquidityUrl": "https://avax.olive.cash/add/0x19860CCB0A68fd4213aB9D8266F7bBf05A8dDe98/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "removeLiquidityUrl": "https://avax.olive.cash/remove/0x19860CCB0A68fd4213aB9D8266F7bBf05A8dDe98/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
-    "createdAt": 1630054596
+    "createdAt": 1630054596,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-olive"
+      }
+    ]
   },
   {
     "id": "lyd-lyd-usdt-eol",
     "name": "LYD-USDT LP",
+    "type": "standard",
     "token": "LYD-USDT LP",
     "tokenAddress": "0x752C59f22fAAA861108649F4596034796C69bC3f",
     "tokenDecimals": 18,
@@ -1442,6 +1775,7 @@
   {
     "id": "olive-olive-usdt-eol",
     "name": "OLIVE-USDT LP",
+    "type": "standard",
     "token": "OLIVE-USDT LP",
     "tokenAddress": "0xF54a719215622f602FCA5BF5a6509734C3574a4c",
     "tokenDecimals": 18,
@@ -1464,6 +1798,7 @@
   {
     "id": "com-eth-avax-eol",
     "name": "ETH-AVAX LP",
+    "type": "standard",
     "token": "ETH-AVAX CLP",
     "tokenAddress": "0x0CA373D27CE17C4804D108afEee0A77EfEb33775",
     "tokenDecimals": 18,
@@ -1487,6 +1822,7 @@
   {
     "id": "com-png-avax-eol",
     "name": "PNG-AVAX LP",
+    "type": "standard",
     "token": "PNG-AVAX CLP",
     "tokenAddress": "0xEcee953e187d9e82D57bAedAaEF1e56E5283f5C3",
     "tokenDecimals": 18,
@@ -1509,11 +1845,11 @@
   {
     "id": "png-sushi-avax-eol",
     "name": "SUSHI-AVAX LP",
+    "type": "standard",
     "token": "SUSHI-AVAX LP",
     "tokenAddress": "0xd8B262C0676E13100B33590F10564b46eeF652AD",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinSUSHI-AVAX",
     "earnedTokenAddress": "0x3094Ab4Af54f5208B867125B5CCeCc94Bc17cbB6",
     "earnContractAddress": "0x3094Ab4Af54f5208B867125B5CCeCc94Bc17cbB6",
@@ -1528,11 +1864,18 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x39cf1BD5f15fb22eC3D9Ff86b0727aFc203427cc",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x39cf1BD5f15fb22eC3D9Ff86b0727aFc203427cc",
     "network": "avax",
-    "createdAt": 1615919277
+    "createdAt": 1615919277,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "png-usdt-png-eol",
     "name": "USDT-PNG LP",
+    "type": "standard",
     "token": "USDT-PNG LP",
     "tokenAddress": "0xE8AcF438B10A2C09f80aEf3Ef2858F8E758C98F9",
     "tokenDecimals": 18,
@@ -1556,11 +1899,11 @@
   {
     "id": "png-eth-avax-eol",
     "name": "ETH-AVAX LP",
+    "type": "standard",
     "token": "ETH-AVAX LP",
     "tokenAddress": "0x1aCf1583bEBdCA21C8025E172D8E8f2817343d65",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinETH-AVAX",
     "earnedTokenAddress": "0xDA875A511860f2752B891677489d08CaEDac00EA",
     "earnContractAddress": "0xDA875A511860f2752B891677489d08CaEDac00EA",
@@ -1575,16 +1918,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15",
     "network": "avax",
-    "createdAt": 1615742564
+    "createdAt": 1615742564,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "mai-qi-wavax",
     "name": "QI-AVAX LP",
+    "type": "standard",
     "token": "QI-WAVAX JLP",
     "tokenAddress": "0x05366F13d5f655FFB2d2ABb7b2ba005b12eB8bdE",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooMaiQI-AVAX",
     "earnedTokenAddress": "0x0D48E4E02eA44003b44360B9045F5A562890B1c6",
     "earnContractAddress": "0x0D48E4E02eA44003b44360B9045F5A562890B1c6",
@@ -1603,21 +1952,27 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "depositFee": "0.5%",
+    "depositFee": 0.005,
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xA56F9A54880afBc30CF29bB66d2D9ADCdcaEaDD6",
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xa56f9a54880afbc30cf29bb66d2d9adcdcaeadd6/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xa56f9a54880afbc30cf29bb66d2d9adcdcaeadd6/AVAX",
     "network": "avax",
-    "createdAt": 1651836388
+    "createdAt": 1651836388,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-cra-wavax",
     "name": "CRA-AVAX LP",
+    "type": "standard",
     "token": "CRA-AVAX JLP",
     "tokenAddress": "0x140CAc5f0e05cBEc857e65353839FddD0D8482C1",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeCRA-AVAX",
     "earnedTokenAddress": "0x5dd766E859c4BB01eaBCaFc320dED1A5E8e4a147",
     "earnContractAddress": "0x5dd766E859c4BB01eaBCaFc320dED1A5E8e4a147",
@@ -1640,16 +1995,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xa32608e873f9ddef944b24798db69d80bbb4d1ed/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xa32608e873f9ddef944b24798db69d80bbb4d1ed/AVAX",
     "network": "avax",
-    "createdAt": 1637589059
+    "createdAt": 1637589059,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-gohm-wavax",
     "name": "gOHM-AVAX LP",
+    "type": "standard",
     "token": "gOHM-AVAX JLP",
     "tokenAddress": "0xB674f93952F02F2538214D4572Aa47F262e990Ff",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoegOHM-AVAX",
     "earnedTokenAddress": "0x40324434a0b53dd1ED167Ba30dcB6B4bd7a9536d",
     "earnContractAddress": "0x40324434a0b53dd1ED167Ba30dcB6B4bd7a9536d",
@@ -1672,16 +2033,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x321e7092a180bb43555132ec53aaa65a5bf84251/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x321e7092a180bb43555132ec53aaa65a5bf84251/AVAX",
     "network": "avax",
-    "createdAt": 1638350965
+    "createdAt": 1638350965,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-usdt.e-dai.e-eol",
     "name": "USDT.e-DAI.e LP",
+    "type": "standard",
     "token": "USDT.e-DAI.e JLP",
     "tokenAddress": "0xa6908C7E3Be8F4Cd2eB704B5cB73583eBF56Ee62",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeUSDT.e-DAI.e",
     "earnedTokenAddress": "0x95D11A45B0B55F96D75f70d63EBf95a824cD836D",
     "earnContractAddress": "0x95D11A45B0B55F96D75f70d63EBf95a824cD836D",
@@ -1704,11 +2071,18 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xc7198437980c041c805a1edcba50c1ce5db95118/0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0xc7198437980c041c805a1edcba50c1ce5db95118/0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
     "network": "avax",
-    "createdAt": 1632133345
+    "createdAt": 1632133345,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "com-com-avax-eol",
     "name": "COM-AVAX LP",
+    "type": "standard",
     "token": "COM-AVAX LP",
     "tokenAddress": "0xF0ED25fD26E0b64C86c6c78b661F2ef283E9B6FF",
     "tokenDecimals": 18,
@@ -1732,11 +2106,11 @@
   {
     "id": "joe-usdc.e-usdt.e-eol",
     "name": "USDC.e-USDT.e LP",
+    "type": "standard",
     "token": "USDC.e-USDT.e JLP",
     "tokenAddress": "0x2E02539203256c83c7a9F6fA6f8608A32A2b1Ca2",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeUSDC.e-USDT.e",
     "earnedTokenAddress": "0xE37CeD3b5FBeDb523a48eB4eA3c3e13b2092352a",
     "earnContractAddress": "0xE37CeD3b5FBeDb523a48eB4eA3c3e13b2092352a",
@@ -1759,16 +2133,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664/0xc7198437980c041c805a1edcba50c1ce5db95118",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664/0xc7198437980c041c805a1edcba50c1ce5db95118",
     "network": "avax",
-    "createdAt": 1632154081
+    "createdAt": 1632154081,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-usdc.e-dai.e-eol",
     "name": "USDC.e-DAI.e LP",
+    "type": "standard",
     "token": "USDC.e-DAI.e JLP",
     "tokenAddress": "0x63ABE32d0Ee76C05a11838722A63e012008416E6",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeUSDC.e-DAI.e",
     "earnedTokenAddress": "0x8EdD09d683bD30baCB0EF6040160997Afe7d36c0",
     "earnContractAddress": "0x8EdD09d683bD30baCB0EF6040160997Afe7d36c0",
@@ -1791,16 +2171,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "network": "avax",
-    "createdAt": 1630085264
+    "createdAt": 1630085264,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-wavax-dai.e-eol",
     "name": "DAI.e-AVAX LP",
+    "type": "standard",
     "token": "DAI.e-AVAX JLP",
     "tokenAddress": "0x87Dee1cC9FFd464B79e058ba20387c1984aed86a",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeDAI.e-AVAX",
     "earnedTokenAddress": "0x71d57De132b3a090BFF5027A1e88947Bed1a32ba",
     "earnContractAddress": "0x71d57De132b3a090BFF5027A1e88947Bed1a32ba",
@@ -1823,16 +2209,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
     "network": "avax",
-    "createdAt": 1630074200
+    "createdAt": 1630074200,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-usdc.e-usdc",
     "name": "USDC-USDC.e LP",
+    "type": "standard",
     "token": "USDC-USDC.e JLP",
     "tokenAddress": "0x2A8A315e82F85D1f0658C5D66A452Bbdd9356783",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeUSDC.e-USDC",
     "earnedTokenAddress": "0x42ab5A790E99dF1b5d46f1C5C3e61d0Cd63D1f6E",
     "earnContractAddress": "0x42ab5A790E99dF1b5d46f1C5C3e61d0Cd63D1f6E",
@@ -1855,16 +2247,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664/0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664/0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e",
     "network": "avax",
-    "createdAt": 1639756286
+    "createdAt": 1639756286,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-ptp-wavax",
     "name": "PTP-AVAX LP",
+    "type": "standard",
     "token": "PTP-AVAX JLP",
     "tokenAddress": "0xCDFD91eEa657cc2701117fe9711C9a4F61FEED23",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoePTP-AVAX",
     "earnedTokenAddress": "0xc7024B02a3C3893C482F5DD03193CFD1DBEC604f",
     "earnContractAddress": "0xc7024B02a3C3893C482F5DD03193CFD1DBEC604f",
@@ -1887,11 +2285,18 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x22d4002028f537599bE9f666d1c4Fa138522f9c8/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x22d4002028f537599bE9f666d1c4Fa138522f9c8/AVAX",
     "network": "avax",
-    "createdAt": 1639751352
+    "createdAt": 1639751352,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "mai-avax-mai-crv",
     "name": "MAI/DAI/USDC/USDT",
+    "type": "standard",
     "token": "MAI-av3CRV",
     "tokenAddress": "0xb0D2EB3C2cA3c6916FAb8DCbf9d9c165649231AE",
     "tokenDecimals": 18,
@@ -1915,7 +2320,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "depositFee": "0.5%",
+    "depositFee": 0.005,
     "addLiquidityUrl": "https://avax.curve.fi/factory/7/deposit",
     "removeLiquidityUrl": "https://avax.curve.fi/factory/7/withdraw",
     "network": "avax",
@@ -1924,11 +2329,11 @@
   {
     "id": "joe-wavax-bifi-eol",
     "name": "oldBIFI-AVAX LP",
+    "type": "standard",
     "token": "oldBIFI-AVAX JLP",
     "tokenAddress": "0x361221991B3B6282fF3a62Bc874d018bfAF1f8C8",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeWAVAX-oldBIFI",
     "earnedTokenAddress": "0xb1e29194d90d67b8d1c4104FDf6DaF0F7d3344D5",
     "earnContractAddress": "0xb1e29194d90d67b8d1c4104FDf6DaF0F7d3344D5",
@@ -1951,16 +2356,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xd6070ae98b8069de6b494332d1a1a81b6179d960",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xd6070ae98b8069de6b494332d1a1a81b6179d960",
     "network": "avax",
-    "createdAt": 1632231693
+    "createdAt": 1632231693,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-syn-wavax-eol",
     "name": "SYN-AVAX LP",
+    "type": "standard",
     "token": "SYN-AVAX JLP",
     "tokenAddress": "0x20ABdC20758990b6afc90dA2f2D30CD0aa3F73c6",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeSYN-WAVAX",
     "earnedTokenAddress": "0x9b50B06B81f033ca86D70F0a44F30BD7E0155737",
     "earnContractAddress": "0x9b50B06B81f033ca86D70F0a44F30BD7E0155737",
@@ -1983,16 +2394,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x1f1E7c893855525b303f99bDF5c3c05Be09ca251",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x1f1E7c893855525b303f99bDF5c3c05Be09ca251",
     "network": "avax",
-    "createdAt": 1630670690
+    "createdAt": 1630670690,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-awool-wavax-eol",
     "name": "aWOOL-AVAX LP",
+    "type": "standard",
     "token": "aWOOL-AVAX JLP",
     "tokenAddress": "0xf895E6588585912e60b0131fa173e986859f69D5",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeaWOOL-AVAX",
     "earnedTokenAddress": "0xCefB5D22477394222F5C683E917Aa7c65847262C",
     "earnContractAddress": "0xCefB5D22477394222F5C683E917Aa7c65847262C",
@@ -2015,11 +2432,18 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x5eDE350E84223fb50775fD91a723F2ca71034cf7/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x5eDE350E84223fb50775fD91a723F2ca71034cf7/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
     "network": "avax",
-    "createdAt": 1639412305
+    "createdAt": 1639412305,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "png-png",
     "name": "PNG",
+    "type": "standard",
     "token": "PNG",
     "tokenAddress": "0x60781C2586D68229fde47564546784ab3fACA982",
     "tokenDecimals": 18,
@@ -2028,7 +2452,8 @@
     "earnContractAddress": "0x808D5f0A62336917Da14fA9A10E9575B1040f71c",
     "oracle": "tokens",
     "oracleId": "PNG",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "pangolin",
     "assets": ["PNG"],
     "risks": [
@@ -2042,16 +2467,21 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x60781C2586D68229fde47564546784ab3fACA982",
     "network": "avax",
-    "createdAt": 1642706787
+    "createdAt": 1642706787,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "joe-wavax-more",
     "name": "MORE-AVAX LP",
+    "type": "standard",
     "token": "MORE-AVAX JLP",
     "tokenAddress": "0xb8361D0E3F3B0fc5e6071f3a3C3271223C49e3d9",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeMORE-AVAX",
     "earnedTokenAddress": "0xA413a9a99F2681c89369Fe1e5F91d209C8bc7d53",
     "earnContractAddress": "0xA413a9a99F2681c89369Fe1e5F91d209C8bc7d53",
@@ -2074,16 +2504,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xd9d90f882cddd6063959a9d837b05cb748718a05",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xd9d90f882cddd6063959a9d837b05cb748718a05",
     "network": "avax",
-    "createdAt": 1643314704
+    "createdAt": 1643314704,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-gmx-wavax",
     "name": "GMX-AVAX LP",
+    "type": "standard",
     "token": "GMX-AVAX JLP",
     "tokenAddress": "0x0c91a070f862666bBcce281346BE45766d874D98",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeGMX-AVAX",
     "earnedTokenAddress": "0x682d9fB30cfe4Ced14a307F57AAbE9B27E05CC56",
     "earnContractAddress": "0x682d9fB30cfe4Ced14a307F57AAbE9B27E05CC56",
@@ -2106,16 +2542,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x62edc0692bd897d2295872a9ffcac5425011c661/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x62edc0692bd897d2295872a9ffcac5425011c661/AVAX",
     "network": "avax",
-    "createdAt": 1643314903
+    "createdAt": 1643314903,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-usdt-usdt.e",
     "name": "USDT-USDT.e LP",
+    "type": "standard",
     "token": "USDt-USDT.e JLP",
     "tokenAddress": "0x74B651Eff97871eA99fcc14423E611d85Eb0EA93",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeUSDT-USDTe",
     "earnedTokenAddress": "0x258e9884c111E2e3e0273372521982bd57ef29Bd",
     "earnContractAddress": "0x258e9884c111E2e3e0273372521982bd57ef29Bd",
@@ -2138,11 +2580,18 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7/0xc7198437980c041c805a1edcba50c1ce5db95118",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7/0xc7198437980c041c805a1edcba50c1ce5db95118",
     "network": "avax",
-    "createdAt": 1643233920
+    "createdAt": 1643233920,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "spell-avax-mim-crv-eol",
     "name": "MIM/USDC/USDT",
+    "type": "standard",
     "token": "MIM-3PoolV2",
     "tokenAddress": "0xAEA2E71b631fA93683BCF256A8689dFa0e094fcD",
     "tokenDecimals": 18,
@@ -2174,6 +2623,7 @@
   {
     "id": "pangolin-png-pause-eol",
     "name": "PNG",
+    "type": "standard",
     "token": "PNG",
     "tokenAddress": "0x60781C2586D68229fde47564546784ab3fACA982",
     "tokenDecimals": 18,
@@ -2197,16 +2647,21 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x60781C2586D68229fde47564546784ab3fACA982",
     "network": "avax",
-    "createdAt": 1631361439
+    "createdAt": 1631361439,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "pangolin-usdc.e-wavax-eol",
     "name": "USDC.e-AVAX LP",
+    "type": "standard",
     "token": "USDC.e-AVAX LP",
     "tokenAddress": "0xbd918Ed441767fe7924e99F6a0E0B568ac1970D9",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinUSDC.e-AVAX",
     "earnedTokenAddress": "0x8eb23a3010795574eE3DD101843dC90bD63b5099",
     "earnContractAddress": "0x8eb23a3010795574eE3DD101843dC90bD63b5099",
@@ -2229,16 +2684,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "network": "avax",
-    "createdAt": 1630269626
+    "createdAt": 1630269626,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "pangolin-png-qi-eol",
     "name": "QI-PNG LP",
+    "type": "standard",
     "token": "QI-PNG LP",
     "tokenAddress": "0x50E7e19281a80E3C24a07016eDB87EbA9fe8C6cA",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinQI-PNG",
     "earnedTokenAddress": "0xB297EC6eb512d646f558F6514e85aa59cD583a1F",
     "earnContractAddress": "0xB297EC6eb512d646f558F6514e85aa59cD583a1F",
@@ -2261,16 +2722,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x60781C2586D68229fde47564546784ab3fACA982/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x60781C2586D68229fde47564546784ab3fACA982/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
     "network": "avax",
-    "createdAt": 1629466316
+    "createdAt": 1629466316,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "pangolin-qi-wavax-eol",
     "name": "QI-AVAX LP",
+    "type": "standard",
     "token": "QI-AVAX LP",
     "tokenAddress": "0xE530dC2095Ef5653205CF5ea79F8979a7028065c",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinQI-AVAX",
     "earnedTokenAddress": "0x052B006A2CfB2523042b3041f15adC7fa5356312",
     "earnContractAddress": "0x052B006A2CfB2523042b3041f15adC7fa5356312",
@@ -2293,16 +2760,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
     "network": "avax",
-    "createdAt": 1629466194
+    "createdAt": 1629466194,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "pangolin-wavax-xava-eol",
     "name": "XAVA-AVAX LP",
+    "type": "standard",
     "token": "XAVA-AVAX LP",
     "tokenAddress": "0x42152bDD72dE8d6767FE3B4E17a221D6985E8B25",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinXAVA-AVAX",
     "earnedTokenAddress": "0xC556387AEA8B0E55f672edf15FEc3acbcF45dC17",
     "earnContractAddress": "0xC556387AEA8B0E55f672edf15FEc3acbcF45dC17",
@@ -2325,16 +2798,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x5947BB275c521040051D82396192181b413227A3",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x5947BB275c521040051D82396192181b413227A3",
     "network": "avax",
-    "createdAt": 1629305419
+    "createdAt": 1629305419,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "pangolin-weth.e-png-eol",
     "name": "WETH.e-PNG LP",
+    "type": "standard",
     "token": "WETH.e-PNG LP",
     "tokenAddress": "0xcf35400A595EFCF0Af591D3Aeb5a35cBCD120d54",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinWETH.e-PNG",
     "earnedTokenAddress": "0xa66DfCBdAfbe4B4D62535f64f1C2Fb50FF42E4C6",
     "earnContractAddress": "0xa66DfCBdAfbe4B4D62535f64f1C2Fb50FF42E4C6",
@@ -2357,16 +2836,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
-    "createdAt": 1629306038
+    "createdAt": 1629306038,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "pangolin-wavax-dai.e-eol",
     "name": "DAI.e-AVAX LP",
+    "type": "standard",
     "token": "DAI.e-AVAX LP",
     "tokenAddress": "0xbA09679Ab223C6bdaf44D45Ba2d7279959289AB0",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinDAI.e-AVAX",
     "earnedTokenAddress": "0x97102bAdf07DA7af61594b686fe311d06930B76e",
     "earnContractAddress": "0x97102bAdf07DA7af61594b686fe311d06930B76e",
@@ -2389,16 +2874,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
     "network": "avax",
-    "createdAt": 1629305758
+    "createdAt": 1629305758,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "pangolin-weth.e-wavax-eol",
     "name": "WETH.e-AVAX LP",
+    "type": "standard",
     "token": "WETH.e-AVAX LP",
     "tokenAddress": "0x7c05d54fc5CB6e4Ad87c6f5db3b807C94bB89c52",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinWETH.e-AVAX",
     "earnedTokenAddress": "0xc98fF20bB8cd7C68C483c7C66f36e3F69ad81B47",
     "earnContractAddress": "0xc98fF20bB8cd7C68C483c7C66f36e3F69ad81B47",
@@ -2421,16 +2912,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
-    "createdAt": 1629305055
+    "createdAt": 1629305055,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "pangolin-wavax-usdt.e-eol",
     "name": "USDT.e-AVAX LP",
+    "type": "standard",
     "token": "USDT.e-AVAX LP",
     "tokenAddress": "0xe28984e1EE8D431346D32BeC9Ec800Efb643eef4",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinUSDT.e-AVAX",
     "earnedTokenAddress": "0xC24c73C256d527726a7a012e1360c78d0cc02eEA",
     "earnContractAddress": "0xC24c73C256d527726a7a012e1360c78d0cc02eEA",
@@ -2453,16 +2950,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
-    "createdAt": 1629304913
+    "createdAt": 1629304913,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "pangolin-wbtc.e-wavax-eol",
     "name": "WBTC.e-AVAX LP",
+    "type": "standard",
     "token": "WBTC.e-AVAX LP",
     "tokenAddress": "0x5764b8D8039C6E32f1e5d8DE8Da05DdF974EF5D3",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinWBTC.e-AVAX",
     "earnedTokenAddress": "0xBBBe0fA93c8ced0614351bAF74979aB1243cF9c8",
     "earnContractAddress": "0xBBBe0fA93c8ced0614351bAF74979aB1243cF9c8",
@@ -2485,16 +2988,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x50b7545627a5162F82A992c33b87aDc75187B218",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x50b7545627a5162F82A992c33b87aDc75187B218",
     "network": "avax",
-    "createdAt": 1629297701
+    "createdAt": 1629297701,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "png-png-avax-eol",
     "name": "PNG-AVAX LP",
+    "type": "standard",
     "token": "PNG-AVAX LP",
     "tokenAddress": "0xd7538cABBf8605BdE1f4901B47B8D42c61DE0367",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinPNG-AVAX",
     "earnedTokenAddress": "0x71b5852857b85D5096d4288AD6d293F217d8e162",
     "earnContractAddress": "0x71b5852857b85D5096d4288AD6d293F217d8e162",
@@ -2517,16 +3026,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x60781C2586D68229fde47564546784ab3fACA982",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x60781C2586D68229fde47564546784ab3fACA982",
     "network": "avax",
-    "createdAt": 1615742387
+    "createdAt": 1615742387,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "joe-wavax-xava",
     "name": "XAVA-AVAX LP",
+    "type": "standard",
     "token": "XAVA-AVAX JLP",
     "tokenAddress": "0x72c3438cf1c915EcF5D9F17A6eD346B273d5bF71",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-XAVA",
     "earnedTokenAddress": "0x72A6F8E2510B9332Eaf744FEb1F7c19E3aCB2201",
     "earnContractAddress": "0x72A6F8E2510B9332Eaf744FEb1F7c19E3aCB2201",
@@ -2549,16 +3064,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xd1c3f94de7e5b45fa4edbba472491a9f4b166fc4",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xd1c3f94DE7e5B45fa4eDBBA472491a9f4B166FC4/AVAX",
     "network": "avax",
-    "createdAt": 1643391049
+    "createdAt": 1643391049,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-wavax-dcau",
     "name": "DCAU-AVAX LP",
+    "type": "standard",
     "token": "DCAU-AVAX JLP",
     "tokenAddress": "0x81034A38a124A3290DC226798f34c6645B153a02",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-DCAU",
     "earnedTokenAddress": "0x2D48D94ABfaD5a95b5fCA0fAB9cD37dd722C84A4",
     "earnContractAddress": "0x2D48D94ABfaD5a95b5fCA0fAB9cD37dd722C84A4",
@@ -2581,16 +3102,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x100Cc3a819Dd3e8573fD2E46D1E66ee866068f30/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x100Cc3a819Dd3e8573fD2E46D1E66ee866068f30/AVAX",
     "network": "avax",
-    "createdAt": 1643387033
+    "createdAt": 1643387033,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "png-link.e-wavax",
     "name": "LINK.e-AVAX LP",
+    "type": "standard",
     "token": "LINK.e-AVAX LP",
     "tokenAddress": "0x5875c368Cddd5FB9Bf2f410666ca5aad236DAbD4",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinV2LINKe-AVAX",
     "earnedTokenAddress": "0xb2f030af9B6000912e13764018A8121751D86BE8",
     "earnContractAddress": "0xb2f030af9B6000912e13764018A8121751D86BE8",
@@ -2612,16 +3139,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x5947BB275c521040051D82396192181b413227A3/AVAX",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x5947BB275c521040051D82396192181b413227A3/AVAX",
     "network": "avax",
-    "createdAt": 1643442618
+    "createdAt": 1643442618,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "png-jewel-wavax",
     "name": "JEWEL-AVAX LP",
+    "type": "standard",
     "token": "JEWEL-AVAX LP",
     "tokenAddress": "0x9AA76aE9f804E7a70bA3Fb8395D0042079238E9C",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinV2JEWEL-AVAX",
     "earnedTokenAddress": "0x84Cb5FF7f5068AC02a7B0fd4772577c670A5aFC6",
     "earnContractAddress": "0x84Cb5FF7f5068AC02a7B0fd4772577c670A5aFC6",
@@ -2644,16 +3177,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x4f60a160D8C2DDdaAfe16FCC57566dB84D674BD6/AVAX",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x4f60a160D8C2DDdaAfe16FCC57566dB84D674BD6/AVAX",
     "network": "avax",
-    "createdAt": 1643431788
+    "createdAt": 1643431788,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "grape-grape-mim",
     "name": "GRAPE-MIM LP",
+    "type": "standard",
     "token": "GRAPE-MIM LP",
     "tokenAddress": "0xb382247667fe8CA5327cA1Fa4835AE77A9907Bc8",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooGrapeGRAPE-MIM",
     "earnedTokenAddress": "0x9b03eF3896edea1cC1Ee19b8Fed35cA82843Aed4",
     "earnContractAddress": "0x9b03eF3896edea1cC1Ee19b8Fed35cA82843Aed4",
@@ -2677,16 +3216,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x130966628846bfd36ff31a822705796e8cb8c18d/0x5541d83efad1f281571b343977648b75d95cdac2",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x130966628846bfd36ff31a822705796e8cb8c18d/0x5541d83efad1f281571b343977648b75d95cdac2",
     "network": "avax",
-    "createdAt": 1643717100
+    "createdAt": 1643717100,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "grape-wine-mim",
     "name": "WINE-MIM LP",
+    "type": "standard",
     "token": "WINE-MIM LP",
     "tokenAddress": "0x00cB5b42684DA62909665d8151fF80D1567722c3",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooGrapeWINE-MIM",
     "earnedTokenAddress": "0x0421AE152e3967361a54396486C970257c14E096",
     "earnContractAddress": "0x0421AE152e3967361a54396486C970257c14E096",
@@ -2710,16 +3255,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x130966628846bfd36ff31a822705796e8cb8c18d/0xC55036B5348CfB45a932481744645985010d3A44",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x130966628846bfd36ff31a822705796e8cb8c18d/0xC55036B5348CfB45a932481744645985010d3A44",
     "network": "avax",
-    "createdAt": 1643718763
+    "createdAt": 1643718763,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "png-usdc.e-wavax",
     "name": "USDC.e-AVAX LP",
+    "type": "standard",
     "token": "USDC.e-AVAX LP",
     "tokenAddress": "0xbd918Ed441767fe7924e99F6a0E0B568ac1970D9",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinV2USDC.e-AVAX",
     "earnedTokenAddress": "0x9B02209a331c072637C6eBd34cdCD6b6A16987a9",
     "earnContractAddress": "0x9B02209a331c072637C6eBd34cdCD6b6A16987a9",
@@ -2741,16 +3292,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
     "network": "avax",
-    "createdAt": 1643458455
+    "createdAt": 1643458455,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "png-ust-wavax",
     "name": "UST-AVAX LP",
+    "type": "standard",
     "token": "UST-AVAX LP",
     "tokenAddress": "0xdeaBb6e80141F5E557EcBDD7e9580F37D7BBc371",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinV2UST-AVAX",
     "earnedTokenAddress": "0xDf306fBdA58527729A8D5185aB8fEF96BFa94c7A",
     "earnContractAddress": "0xDf306fBdA58527729A8D5185aB8fEF96BFa94c7A",
@@ -2774,16 +3331,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x260Bbf5698121EB85e7a74f2E45E16Ce762EbE11",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x260Bbf5698121EB85e7a74f2E45E16Ce762EbE11",
     "network": "avax",
-    "createdAt": 1643836585
+    "createdAt": 1643836585,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "png-ust-usdc",
     "name": "UST-USDC LP",
+    "type": "standard",
     "token": "UST-USDC LP",
     "tokenAddress": "0x3c0ECf5F430bbE6B16A8911CB25d898Ef20805cF",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinV2UST-USDC",
     "earnedTokenAddress": "0x6399A5E96CD627404b203Ea80517C3F8F9F78Fe6",
     "earnContractAddress": "0x6399A5E96CD627404b203Ea80517C3F8F9F78Fe6",
@@ -2806,11 +3369,18 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E/0x260Bbf5698121EB85e7a74f2E45E16Ce762EbE11",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E/0x260Bbf5698121EB85e7a74f2E45E16Ce762EbE11",
     "network": "avax",
-    "createdAt": 1643839674
+    "createdAt": 1643839674,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "bankerjoe-mim-eol",
     "name": "MIM",
+    "type": "standard",
     "token": "MIM",
     "tokenAddress": "0x130966628846BFd36ff31a822705796e8cb8C18D",
     "tokenDecimals": 18,
@@ -2835,16 +3405,21 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x130966628846BFd36ff31a822705796e8cb8C18D",
     "network": "avax",
-    "createdAt": 1636455936
+    "createdAt": 1636455936,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "joe-wavax-domi",
     "name": "DOMI-AVAX LP",
+    "type": "standard",
     "token": "DOMI-AVAX JLP",
     "tokenAddress": "0x5B9Faf0feA95df4D4cB894Ef920704daFf656f3E",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-DOMI",
     "earnedTokenAddress": "0x440F1249349B185748C9aA8dAB26F067A515A68F",
     "earnContractAddress": "0x440F1249349B185748C9aA8dAB26F067A515A68F",
@@ -2867,16 +3442,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xFc6Da929c031162841370af240dEc19099861d3B/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xFc6Da929c031162841370af240dEc19099861d3B/AVAX",
     "network": "avax",
-    "createdAt": 1644407428
+    "createdAt": 1644407428,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "png-luna-wavax",
     "name": "LUNA-AVAX LP",
+    "type": "standard",
     "token": "LUNA-AVAX LP",
     "tokenAddress": "0x40e747f27E6398b1f7C017c5ff5c31a2Ab69261c",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinV2LUNA-AVAX",
     "earnedTokenAddress": "0x5508222678C5337e76D93A3005dC008056715655",
     "earnContractAddress": "0x5508222678C5337e76D93A3005dC008056715655",
@@ -2899,16 +3480,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x120AD3e5A7c796349e591F1570D9f7980F4eA9cb",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x120AD3e5A7c796349e591F1570D9f7980F4eA9cb",
     "network": "avax",
-    "createdAt": 1644484239
+    "createdAt": 1644484239,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "joe-wavax-savax",
     "name": "sAVAX-AVAX LP",
+    "type": "standard",
     "token": "sAVAX-AVAX JLP",
     "tokenAddress": "0x4b946c91C2B1a7d7C40FB3C130CdfBaf8389094d",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-sAVAX",
     "earnedTokenAddress": "0x37a51D57958386E52f6d7D7d08ACb381abDA9157",
     "earnContractAddress": "0x37a51D57958386E52f6d7D7d08ACb381abDA9157",
@@ -2931,11 +3518,18 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE/AVAX",
     "network": "avax",
-    "createdAt": 1645036500
+    "createdAt": 1645036500,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "curve-avax-ren",
     "name": "WBTC/renBTC",
+    "type": "standard",
     "token": "btcCRV",
     "tokenAddress": "0xC2b1DF84112619D190193E48148000e3990Bf627",
     "tokenDecimals": 18,
@@ -2966,11 +3560,11 @@
   {
     "id": "joe-ampl-wavax-eol",
     "name": "AMPL-AVAX LP",
+    "type": "standard",
     "token": "AMPL-AVAX JLP",
     "tokenAddress": "0x230c4aD11510360aD0DB564a889C33559A959487",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAMPL-AVAX",
     "earnedTokenAddress": "0x936d1f2ECF2C911Efba16BCBB9F205184d827986",
     "earnContractAddress": "0x936d1f2ECF2C911Efba16BCBB9F205184d827986",
@@ -2993,16 +3587,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x027dbcA046ca156De9622cD1e2D907d375e53aa7",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x027dbcA046ca156De9622cD1e2D907d375e53aa7",
     "network": "avax",
-    "createdAt": 1636308849
+    "createdAt": 1636308849,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "sing-usdt.e-sing-eol",
     "name": "SING-USDT.e LP",
+    "type": "standard",
     "token": "SING-USDT.e LP",
     "tokenAddress": "0x42B33De8FAa08F9242F9E20d268FBd251DCEBd72",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooSingUSDT.e-SING",
     "earnedTokenAddress": "0x865628e18e99Ab563405E1F329024C50f7093318",
     "earnContractAddress": "0x865628e18e99Ab563405E1F329024C50f7093318",
@@ -3011,17 +3611,24 @@
     "status": "eol",
     "retireReason": "tvl",
     "platformId": "singular",
-    "assets": ["SING", "USDTe"],
+    "assets": ["aSING", "USDTe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xf9a075c9647e91410bf6c402bdf166e1540f67f0",
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xc7198437980c041c805a1edcba50c1ce5db95118/0xf9a075c9647e91410bf6c402bdf166e1540f67f0",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0xc7198437980c041c805a1edcba50c1ce5db95118/0xf9a075c9647e91410bf6c402bdf166e1540f67f0",
     "network": "avax",
-    "createdAt": 1633701180
+    "createdAt": 1633701180,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "aave-usdt.e-eol",
     "name": "USDT.e",
+    "type": "standard",
     "token": "USDT.e",
     "tokenAddress": "0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "tokenDecimals": 6,
@@ -3046,16 +3653,21 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
-    "createdAt": 1633529509
+    "createdAt": 1633529509,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "olive-olive-avax-eol",
     "name": "OLIVE-AVAX LP",
+    "type": "standard",
     "token": "OLIVE-AVAX LP",
     "tokenAddress": "0x57cc32Cd7F5a531953E9af25e1C9394093428082",
     "tokenDecimals": 18,
     "tokenProviderId": "oliveswap",
-    "tokenAmmId": "avax-olive",
     "earnedToken": "mooOliveOLIVE-AVAX",
     "earnedTokenAddress": "0x9Bb9B11917e7bC3528B6048E9B01cD5E302bb27B",
     "earnContractAddress": "0x9Bb9B11917e7bC3528B6048E9B01cD5E302bb27B",
@@ -3078,16 +3690,22 @@
     "addLiquidityUrl": "https://avax.olive.cash/add/AVAX/0x617724974218A18769020A70162165A539c07E8a",
     "removeLiquidityUrl": "https://avax.olive.cash/remove/AVAX/0x617724974218A18769020A70162165A539c07E8a",
     "network": "avax",
-    "createdAt": 1617865515
+    "createdAt": 1617865515,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-olive"
+      }
+    ]
   },
   {
     "id": "ripae-pavax-wavax",
     "name": "pAVAX-AVAX LP",
+    "type": "standard",
     "token": "pAVAX-AVAX LP",
     "tokenAddress": "0x1179E6AF2794fA9d39316951e868772F96230375",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooRipaepAVAX-AVAX",
     "earnedTokenAddress": "0xD78d5464690544F5D838dAEF0D7650fA03c64598",
     "earnContractAddress": "0xD78d5464690544F5D838dAEF0D7650fA03c64598",
@@ -3111,16 +3729,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x6ca558bd3eaB53DA1B25aB97916dd14bf6CFEe4E",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x6ca558bd3eaB53DA1B25aB97916dd14bf6CFEe4E",
     "network": "avax",
-    "createdAt": 1646045101
+    "createdAt": 1646045101,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "ripae-pae-wavax",
     "name": "PAE-AVAX LP",
+    "type": "standard",
     "token": "PAE-AVAX LP",
     "tokenAddress": "0x6139361Ccd4f40abF3d5D22AA3b72A195010F9AB",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooRipaePAE-AVAX",
     "earnedTokenAddress": "0x2c0E2Ec5C2C84346497cc82F5afF72f8A29dA835",
     "earnContractAddress": "0x2c0E2Ec5C2C84346497cc82F5afF72f8A29dA835",
@@ -3143,16 +3767,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x9466Ab927611725B9AF76b9F31B2F879Ff14233d",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x9466Ab927611725B9AF76b9F31B2F879Ff14233d",
     "network": "avax",
-    "createdAt": 1646045101
+    "createdAt": 1646045101,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "png-acre-wavax",
     "name": "ACRE-AVAX LP",
+    "type": "standard",
     "token": "ACRE-AVAX LP",
     "tokenAddress": "0x64694FC8dFCA286bF1A15b0903FAC98217dC3AD7",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinV2ACRE-AVAX",
     "earnedTokenAddress": "0xB6aE1f6Be8575a44D22af3cD2C5385CC9c293978",
     "earnContractAddress": "0xB6aE1f6Be8575a44D22af3cD2C5385CC9c293978",
@@ -3175,16 +3805,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x00EE200Df31b869a321B10400Da10b561F3ee60d",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x00EE200Df31b869a321B10400Da10b561F3ee60d",
     "network": "avax",
-    "createdAt": 1645887882
+    "createdAt": 1645887882,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "png-tus-wavax",
     "name": "TUS-AVAX LP",
+    "type": "standard",
     "token": "TUS-AVAX LP",
     "tokenAddress": "0xbCEd3B6D759B9CA8Fc7706E46Aa81627b2e9EAE8",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinV2TUS-AVAX",
     "earnedTokenAddress": "0xEd7208d44f5cC209DE534461a5D5b3cf60fDdeE5",
     "earnContractAddress": "0xEd7208d44f5cC209DE534461a5D5b3cf60fDdeE5",
@@ -3207,16 +3843,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xf693248F96Fe03422FEa95aC0aFbBBc4a8FdD172",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xf693248F96Fe03422FEa95aC0aFbBBc4a8FdD172",
     "network": "avax",
-    "createdAt": 1645972427
+    "createdAt": 1645972427,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "joe-joe-usdc",
     "name": "JOE-USDC LP",
+    "type": "standard",
     "token": "JOE-USDC LP",
     "tokenAddress": "0x3bc40d4307cD946157447CD55d70ee7495bA6140",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeJOE-USDC",
     "earnedTokenAddress": "0x909C9EF8E634C2bc6719d960146Bb38F20f6a547",
     "earnContractAddress": "0x909C9EF8E634C2bc6719d960146Bb38F20f6a547",
@@ -3239,16 +3881,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd/0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd/0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e",
     "network": "avax",
-    "createdAt": 1646825243
+    "createdAt": 1646825243,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-mai-wavax-v2-eol",
     "name": "MAI-AVAX LP",
+    "type": "standard",
     "token": "MAI-AVAX JLP",
     "tokenAddress": "0x23dDca8de11eCcd8000263f008A92e10dC1f21e8",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeMAI-AVAX",
     "earnedTokenAddress": "0x41e6612044AeDDeB19102304775cA39c204Ad030",
     "earnContractAddress": "0x41e6612044AeDDeB19102304775cA39c204Ad030",
@@ -3272,16 +3920,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x5c49b268c9841AFF1Cc3B0a418ff5c3442eE3F3b",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x5c49b268c9841AFF1Cc3B0a418ff5c3442eE3F3b",
     "network": "avax",
-    "createdAt": 1636310053
+    "createdAt": 1636310053,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-joe-usdc.e-eol",
     "name": "JOE-USDC.e LP",
+    "type": "standard",
     "token": "JOE-USDC.e JLP",
     "tokenAddress": "0x67926d973cD8eE876aD210fAaf7DFfA99E414aCf",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeJOE-USDC.e",
     "earnedTokenAddress": "0xea75ff4F580418A1430Bd3EBaF26B03C096D9489",
     "earnContractAddress": "0xea75ff4F580418A1430Bd3EBaF26B03C096D9489",
@@ -3304,16 +3958,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "network": "avax",
-    "createdAt": 1632845828
+    "createdAt": 1632845828,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-joe-usdt.e-eol",
     "name": "JOE-USDT.e LP",
+    "type": "standard",
     "token": "JOE-USDT.e JLP",
     "tokenAddress": "0x1643de2efB8e35374D796297a9f95f64C082a8ce",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeJOE-USDT.e",
     "earnedTokenAddress": "0xD0B0B19f2DC29a17175A2afc47b29C6DDd74d3D4",
     "earnContractAddress": "0xD0B0B19f2DC29a17175A2afc47b29C6DDd74d3D4",
@@ -3336,22 +3996,29 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
     "network": "avax",
-    "createdAt": 1631119603
+    "createdAt": 1631119603,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-wavax-usdc",
     "name": "USDC-AVAX LP",
+    "type": "standard",
     "token": "USDC-AVAX JLP",
     "tokenAddress": "0xf4003F4efBE8691B60249E6afbD307aBE7758adb",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeUSDC-AVAX",
     "earnedTokenAddress": "0x7E5bC7088aB3Da3e7fa1Aa7ceF1dC73F5B00681c",
     "earnContractAddress": "0x7E5bC7088aB3Da3e7fa1Aa7ceF1dC73F5B00681c",
     "oracle": "lps",
     "oracleId": "joe-wavax-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "traderjoe",
     "assets": ["USDC", "AVAX"],
     "risks": [
@@ -3367,16 +4034,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E/AVAX",
     "network": "avax",
-    "createdAt": 1646426309
+    "createdAt": 1646426309,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "png-usdc.e-usdc",
     "name": "USDC-USDC.e LP",
+    "type": "standard",
     "token": "USDC-USDC.e LP",
     "tokenAddress": "0x8a9c36BC3CEd5ECce703A4dA8032218Dfe72fE86",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinUSDC.e-USDC",
     "earnedTokenAddress": "0x99C719c26C64A371be84bAF0821fA89a1FEd459a",
     "earnContractAddress": "0x99C719c26C64A371be84bAF0821fA89a1FEd459a",
@@ -3398,16 +4071,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "network": "avax",
-    "createdAt": 1646973680
+    "createdAt": 1646973680,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "png-wavax-spell",
     "name": "SPELL-AVAX LP",
+    "type": "standard",
     "token": "SPELL-AVAX LP",
     "tokenAddress": "0xD4CBC976E1a1A2bf6F4FeA86DEB3308d68638211",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinSPELL-WAVAX",
     "earnedTokenAddress": "0x87a1525566A367F2a986ca15A09D8cA50f539C03",
     "earnContractAddress": "0x87a1525566A367F2a986ca15A09D8cA50f539C03",
@@ -3430,16 +4109,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xCE1bFFBD5374Dac86a2893119683F4911a2F7814",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xCE1bFFBD5374Dac86a2893119683F4911a2F7814",
     "network": "avax",
-    "createdAt": 1646976330
+    "createdAt": 1646976330,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "png-wavax-usdc",
     "name": "USDC-AVAX LP",
+    "type": "standard",
     "token": "USDC-AVAX LP",
     "tokenAddress": "0x0e0100Ab771E9288e0Aa97e11557E6654C3a9665",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinUSDC-WAVAX",
     "earnedTokenAddress": "0xf3340EdF16563D52C7E7C576F2fCC8f3D52464aB",
     "earnContractAddress": "0xf3340EdF16563D52C7E7C576F2fCC8f3D52464aB",
@@ -3461,16 +4146,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "network": "avax",
-    "createdAt": 1647003159
+    "createdAt": 1647003159,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "png-wavax-ime",
     "name": "IME-AVAX LP",
+    "type": "standard",
     "token": "IME-AVAX LP",
     "tokenAddress": "0xB6eE4A02F1fa523559B9Abb54C50dF3011911fe9",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinIME-WAVAX",
     "earnedTokenAddress": "0xcDD3542A7A741409d5c6F8aD487ebf39964992ED",
     "earnContractAddress": "0xcDD3542A7A741409d5c6F8aD487ebf39964992ED",
@@ -3493,16 +4184,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xF891214fdcF9cDaa5fdC42369eE4F27F226AdaD6",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xF891214fdcF9cDaa5fdC42369eE4F27F226AdaD6",
     "network": "avax",
-    "createdAt": 1647002201
+    "createdAt": 1647002201,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "joe-wavax-pefi2-eol",
     "name": "PEFI-AVAX LP",
+    "type": "standard",
     "token": "PEFI-AVAX JLP",
     "tokenAddress": "0xb78c8238bD907c42BE45AeBdB4A8C8a5D7B49755",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAvax-PEFI",
     "earnedTokenAddress": "0x35A338091c2077f33BED09717EB31BA0f02Efb2f",
     "earnContractAddress": "0x35A338091c2077f33BED09717EB31BA0f02Efb2f",
@@ -3525,16 +4222,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xe896cdeaac9615145c0ca09c8cd5c25bced6384c",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xe896cdeaac9615145c0ca09c8cd5c25bced6384c",
     "network": "avax",
-    "createdAt": 1643975170
+    "createdAt": 1643975170,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-wavax-vtx",
     "name": "VTX-AVAX LP",
+    "type": "standard",
     "token": "VTX-AVAX JLP",
     "tokenAddress": "0x9EF0C12b787F90F59cBBE0b611B82D30CAB92929",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeVTX-AVAX",
     "earnedTokenAddress": "0x9710755f5E6Ea9bd149800ec1901982b93beEf25",
     "earnContractAddress": "0x9710755f5E6Ea9bd149800ec1901982b93beEf25",
@@ -3557,16 +4260,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x5817D4F0b62A59b17f75207DA1848C2cE75e7AF4",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x5817D4F0b62A59b17f75207DA1848C2cE75e7AF4",
     "network": "avax",
-    "createdAt": 1646470439
+    "createdAt": 1646470439,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-wavax-ecd",
     "name": "ECD-AVAX LP",
+    "type": "standard",
     "token": "ECD-AVAX JLP",
     "tokenAddress": "0x218e6A0AD170460F93eA784FbcC92B57DF13316E",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-ECD",
     "earnedTokenAddress": "0x4C7cF6eE7AFa810028099C2D1d97c6AB33540412",
     "earnContractAddress": "0x4C7cF6eE7AFa810028099C2D1d97c6AB33540412",
@@ -3589,16 +4298,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xeb8343D5284CaEc921F035207ca94DB6BAaaCBcd",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xeb8343D5284CaEc921F035207ca94DB6BAaaCBcd",
     "network": "avax",
-    "createdAt": 1646470439
+    "createdAt": 1646470439,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-deg-wavax",
     "name": "DEG-AVAX LP",
+    "type": "standard",
     "token": "DEG-AVAX JLP",
     "tokenAddress": "0x465460F46969F2bf969432956491dEE95A6ba493",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeDEG-AVAX",
     "earnedTokenAddress": "0xB1298261e5C5219B93181f8EA45dD5D50A8e2E56",
     "earnContractAddress": "0xB1298261e5C5219B93181f8EA45dD5D50A8e2E56",
@@ -3621,11 +4336,18 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9f285507Ea5B4F33822CA7aBb5EC8953ce37A645/AVAX#/",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9f285507Ea5B4F33822CA7aBb5EC8953ce37A645/AVAX#/",
     "network": "avax",
-    "createdAt": 1647256112
+    "createdAt": 1647256112,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "bankerjoe-link.e-eol",
     "name": "LINK.e",
+    "type": "standard",
     "token": "LINK.e",
     "tokenAddress": "0x5947BB275c521040051D82396192181b413227A3",
     "tokenDecimals": 18,
@@ -3649,16 +4371,21 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x5947BB275c521040051D82396192181b413227A3",
     "network": "avax",
-    "createdAt": 1636458630
+    "createdAt": 1636458630,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "png-bribe-wavax-eol",
     "name": "BRIBE-AVAX LP",
+    "type": "standard",
     "token": "BRIBE-AVAX LP",
     "tokenAddress": "0x7472887De3B0aA65168a1Da22164C81DE5fd4044",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinV2BRIBE-AVAX",
     "earnedTokenAddress": "0xbaCeC852971EB461DA6Ad8F5C2e37694dca56002",
     "earnContractAddress": "0xbaCeC852971EB461DA6Ad8F5C2e37694dca56002",
@@ -3681,16 +4408,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/ 0xCe2fbed816E320258161CeD52c2d0CEBcdFd8136",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/ 0xCe2fbed816E320258161CeD52c2d0CEBcdFd8136",
     "network": "avax",
-    "createdAt": 1645972427
+    "createdAt": 1645972427,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "joe-link.e-usdc.e-eol",
     "name": "Link.e-USDC.e LP",
+    "type": "standard",
     "token": "Link.e-USDC.e JLP",
     "tokenAddress": "0xb9f425bC9AF072a91c423e31e9eb7e04F226B39D",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeLink.e-USDC.e",
     "earnedTokenAddress": "0x6537015Ea91516FdA74deB5E361d1FB4482D9525",
     "earnContractAddress": "0x6537015Ea91516FdA74deB5E361d1FB4482D9525",
@@ -3713,16 +4446,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x5947bb275c521040051d82396192181b413227a3/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x5947bb275c521040051d82396192181b413227a3/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "network": "avax",
-    "createdAt": 1643975317
+    "createdAt": 1643975317,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-wavax-cly-eol",
     "name": "CLY-AVAX LP",
+    "type": "standard",
     "token": "CLY-AVAX JLP",
     "tokenAddress": "0x0B2777b0c55AEaAeb56E86B6eEFa6cC2Cfa00e07",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-CLY",
     "earnedTokenAddress": "0x374DC1BaF7a05e2D47f8D169FB9c8c862A9082CA",
     "earnContractAddress": "0x374DC1BaF7a05e2D47f8D169FB9c8c862A9082CA",
@@ -3745,16 +4484,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xec3492a2508DDf4FDc0cD76F31f340b30d1793e6",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xec3492a2508DDf4FDc0cD76F31f340b30d1793e6",
     "network": "avax",
-    "createdAt": 1639753516
+    "createdAt": 1639753516,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-klo-wavax-eol",
     "name": "KLO-AVAX LP",
+    "type": "standard",
     "token": "KLO-AVAX JLP",
     "tokenAddress": "0xb2fF0817ad078C92C3AfB82326592e06C92581B8",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeKLO-AVAX",
     "earnedTokenAddress": "0x57c7128A8FbA6425F380AF712EFDCD7688acE332",
     "earnContractAddress": "0x57c7128A8FbA6425F380AF712EFDCD7688acE332",
@@ -3777,16 +4522,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xb27c8941a7Df8958A1778c0259f76D1F8B711C35",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xb27c8941a7Df8958A1778c0259f76D1F8B711C35",
     "network": "avax",
-    "createdAt": 1639411464
+    "createdAt": 1639411464,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-wavax-spell-eol",
     "name": "SPELL-AVAX LP",
+    "type": "standard",
     "token": "SPELL-AVAX JLP",
     "tokenAddress": "0x62cf16BF2BC053E7102E2AC1DEE5029b94008d99",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeSPELL-WAVAX",
     "earnedTokenAddress": "0x3E25CcCD4aC11d4F417b992285188714E80BAE8C",
     "earnContractAddress": "0x3E25CcCD4aC11d4F417b992285188714E80BAE8C",
@@ -3809,16 +4560,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xCE1bFFBD5374Dac86a2893119683F4911a2F7814",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xCE1bFFBD5374Dac86a2893119683F4911a2F7814",
     "network": "avax",
-    "createdAt": 1631896399
+    "createdAt": 1631896399,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-ape-wavax",
     "name": "APE-AVAX LP",
+    "type": "standard",
     "token": "APE-AVAX JLP",
     "tokenAddress": "0x11bBfA2Fa3b995ceA99D20DFA618fd32e252d8F2",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-APE",
     "earnedTokenAddress": "0x9C3D6E7956A7eF2ECF5987cF65ac5a5CEa87C889",
     "earnContractAddress": "0x9C3D6E7956A7eF2ECF5987cF65ac5a5CEa87C889",
@@ -3841,16 +4598,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x0802d66f029c46E042b74d543fC43B6705ccb4ba/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x0802d66f029c46E042b74d543fC43B6705ccb4ba/AVAX",
     "network": "avax",
-    "createdAt": 1648112467
+    "createdAt": 1648112467,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-fly-wavax",
     "name": "FLY-AVAX LP",
+    "type": "standard",
     "token": "FLY-AVAX JLP",
     "tokenAddress": "0x1371a6d8CBe2Ca66d0911f270e1cAA7C12A3045A",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-FLY",
     "earnedTokenAddress": "0xba8284Dc76fbEDd311f14937340E3bc174b4864c",
     "earnContractAddress": "0xba8284Dc76fbEDd311f14937340E3bc174b4864c",
@@ -3873,16 +4636,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x78Ea3fef1c1f07348199Bf44f45b803b9B0Dbe28/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x78Ea3fef1c1f07348199Bf44f45b803b9B0Dbe28/AVAX",
     "network": "avax",
-    "createdAt": 1648112061
+    "createdAt": 1648112061,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "png-wavax-ncash",
     "name": "NCASH-AVAX LP",
+    "type": "standard",
     "token": "nCASH-AVAX LP",
     "tokenAddress": "0xb8F66A8B3A1640492e3d45A26256C8ef4b934fe6",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinNCASH-AVAX",
     "earnedTokenAddress": "0x326d4521e4Cf78Fb2f8693b1ebc4D24ecE89de01",
     "earnContractAddress": "0x326d4521e4Cf78Fb2f8693b1ebc4D24ecE89de01",
@@ -3905,16 +4674,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xc69eba65e87889f0805db717af06797055a0ba07",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xc69eba65e87889f0805db717af06797055a0ba07",
     "network": "avax",
-    "createdAt": 1648734327
+    "createdAt": 1648734327,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "png-fire-wavax-eol",
     "name": "FIRE-AVAX LP",
+    "type": "standard",
     "token": "FIRE-AVAX LP",
     "tokenAddress": "0x45324950c6ba08112EbF72754004a66a0a2b7721",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinV2FIRE-AVAX",
     "earnedTokenAddress": "0xcd1f50DFfbC44F5eeFBA2ae6a19dE8196B51427a",
     "earnContractAddress": "0xcd1f50DFfbC44F5eeFBA2ae6a19dE8196B51427a",
@@ -3937,16 +4712,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xfcc6CE74f4cd7eDEF0C5429bB99d38A3608043a5",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xfcc6CE74f4cd7eDEF0C5429bB99d38A3608043a5",
     "network": "avax",
-    "createdAt": 1645197575
+    "createdAt": 1645197575,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "png-png-usdc.e-eol",
     "name": "PNG-USDC.e LP",
+    "type": "standard",
     "token": "PNG-USDC.e LP",
     "tokenAddress": "0xC33Ac18900b2f63DFb60B554B1F53Cd5b474d4cd",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinV2PNG-USDC.e",
     "earnedTokenAddress": "0x9829E51f6C1292563892dC65A4270b94E09B30C0",
     "earnContractAddress": "0x9829E51f6C1292563892dC65A4270b94E09B30C0",
@@ -3969,16 +4750,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x60781c2586d68229fde47564546784ab3faca982/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x60781c2586d68229fde47564546784ab3faca982/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "network": "avax",
-    "createdAt": 1643469425
+    "createdAt": 1643469425,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "joe-ust-wavax-eol",
     "name": "UST-AVAX LP",
+    "type": "standard",
     "token": "UST-AVAX JLP",
     "tokenAddress": "0x7BF98BD74E19AD8eB5e14076140Ee0103F8F872B",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeUST-AVAX",
     "earnedTokenAddress": "0xe6f6466E1cA56ab02eBb909C8228eD76534686D7",
     "earnContractAddress": "0xe6f6466E1cA56ab02eBb909C8228eD76534686D7",
@@ -4001,16 +4788,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x260Bbf5698121EB85e7a74f2E45E16Ce762EbE11/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x260Bbf5698121EB85e7a74f2E45E16Ce762EbE11/AVAX",
     "network": "avax",
-    "createdAt": 1643314337
+    "createdAt": 1643314337,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "png-ustw-usdc",
     "name": "USTw-USDC LP",
+    "type": "standard",
     "token": "USTw-USDC LP",
     "tokenAddress": "0xE1f75E2E74BA938abD6C3BE18CCc5C7f71925C4B",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinUSTw-USDC",
     "earnedTokenAddress": "0x02A0c97BE6D8f4F144AFE5f41C51b5cef192480C",
     "earnContractAddress": "0x02A0c97BE6D8f4F144AFE5f41C51b5cef192480C",
@@ -4033,16 +4826,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "network": "avax",
-    "createdAt": 1648788544
+    "createdAt": 1648788544,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "png-wavax-ustw",
     "name": "USTw-AVAX LP",
+    "type": "standard",
     "token": "USTw-AVAX LP",
     "tokenAddress": "0x9D563afF8B0017868DbA57eB3E04298C157d0aF5",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinUSTw-AVAX",
     "earnedTokenAddress": "0xe53a812EA0A03C2323428A04f5E8006e81083E5a",
     "earnContractAddress": "0xe53a812EA0A03C2323428A04f5E8006e81083E5a",
@@ -4066,11 +4865,18 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1",
     "network": "avax",
-    "createdAt": 1648788292
+    "createdAt": 1648788292,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "curve-avax-f-avaxl",
     "name": "AVAXL/AVAX",
+    "type": "standard",
     "token": "AVAXL/AVAX",
     "tokenAddress": "0x445109BcF194c538B73EA60C71bb773849bc9b79",
     "tokenDecimals": 18,
@@ -4102,11 +4908,11 @@
   {
     "id": "joe-money-wavax",
     "name": "MONEY-AVAX LP",
+    "type": "standard",
     "token": "MONEY-AVAX JLP",
     "tokenAddress": "0x66D12e1cb13EAbAB21f1Fb6628B1Ef33C6dED5a7",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeMONEY-AVAX",
     "earnedTokenAddress": "0xC040E6221B7FE844681c733aDCf1c19F9984272A",
     "earnContractAddress": "0xC040E6221B7FE844681c733aDCf1c19F9984272A",
@@ -4129,11 +4935,18 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x0f577433Bf59560Ef2a79c124E9Ff99fCa258948/AVAX#/",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x0f577433Bf59560Ef2a79c124E9Ff99fCa258948/AVAX#/",
     "network": "avax",
-    "createdAt": 1648847501
+    "createdAt": 1648847501,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "stargate-avax-usdc",
     "name": "USDC LP",
+    "type": "standard",
     "token": "S*USDC",
     "tokenAddress": "0x1205f31718499dBf1fCa446663B532Ef87481fe1",
     "tokenDecimals": 6,
@@ -4164,6 +4977,7 @@
   {
     "id": "stargate-avax-usdt",
     "name": "USDT LP",
+    "type": "standard",
     "token": "S*USDT",
     "tokenAddress": "0x29e38769f23701A2e4A8Ef0492e19dA4604Be62c",
     "tokenDecimals": 6,
@@ -4194,6 +5008,7 @@
   {
     "id": "beefy-beJoe",
     "name": "beJOE",
+    "type": "standard",
     "token": "beJOE",
     "tokenAddress": "0x1F2A8034f444dc55F963fb5925A9b6eb744EeE2c",
     "tokenDecimals": 18,
@@ -4222,11 +5037,11 @@
   {
     "id": "png-mim-usdc.e-eol",
     "name": "MIM-USDC.e LP",
+    "type": "standard",
     "token": "MIM-USDC.e LP",
     "tokenAddress": "0xE75eD6E50e3e2dc6b06FAf38b943560BD22e343B",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinV2MIM-USDC.e",
     "earnedTokenAddress": "0x83E05C8a4AdEfA875ABe0f30a18bb6F9b54b807e",
     "earnContractAddress": "0x83E05C8a4AdEfA875ABe0f30a18bb6F9b54b807e",
@@ -4250,16 +5065,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x130966628846BFd36ff31a822705796e8cb8C18D/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x130966628846BFd36ff31a822705796e8cb8C18D/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "network": "avax",
-    "createdAt": 1643465038
+    "createdAt": 1643465038,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "joe-wavax-boo-eol",
     "name": "BOO-AVAX LP",
+    "type": "standard",
     "token": "BOO-AVAX JLP",
     "tokenAddress": "0xebF50b8089a0c5E7c5de23F644fcD723818f65B3",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-BOO",
     "earnedTokenAddress": "0x714A52Cdee18cD074BaA87F1f9631B13d302E516",
     "earnContractAddress": "0x714A52Cdee18cD074BaA87F1f9631B13d302E516",
@@ -4282,16 +5103,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xbD83010eB60F12112908774998F65761cf9f6f9a",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xbD83010eB60F12112908774998F65761cf9f6f9a",
     "network": "avax",
-    "createdAt": 1637251694
+    "createdAt": 1637251694,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-weth.e-usdc.e-eol",
     "name": "WETH.e-USDC.e LP",
+    "type": "standard",
     "token": "WETH.e-USDC.e JLP",
     "tokenAddress": "0x199fb78019A08af2Cb6a078409D0C8233Eba8a0c",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeWETH.e-USDC.e",
     "earnedTokenAddress": "0xA4D0b2100107479dd637526F9296D34D8CBdde13",
     "earnContractAddress": "0xA4D0b2100107479dd637526F9296D34D8CBdde13",
@@ -4314,16 +5141,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "network": "avax",
-    "createdAt": 1632849037
+    "createdAt": 1632849037,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-lost-wavax",
     "name": "LOST-AVAX LP",
+    "type": "standard",
     "token": "LOST-AVAX LP",
     "tokenAddress": "0x9C396cF96319C8EF2b662Af57DEA6EE374b9959F",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-LOST",
     "earnedTokenAddress": "0xB38cA58F325D293B143364591c00704c91DEcdaC",
     "earnContractAddress": "0xB38cA58F325D293B143364591c00704c91DEcdaC",
@@ -4346,11 +5179,18 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x449674B82F05d498E126Dd6615a1057A9c088f2C/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x449674B82F05d498E126Dd6615a1057A9c088f2C/AVAX",
     "network": "avax",
-    "createdAt": 1649323990
+    "createdAt": 1649323990,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "curve-avax-f-3pool",
     "name": "USTw/USDC/USDT",
+    "type": "standard",
     "token": "3pool-f",
     "tokenAddress": "0xD79138c49c49200a1Afc935171D1bDAd084FDc95",
     "tokenDecimals": 18,
@@ -4381,11 +5221,11 @@
   {
     "id": "joe-usdt-wavax",
     "name": "USDT-AVAX LP",
+    "type": "standard",
     "token": "USDT-AVAX JLP",
     "tokenAddress": "0xbb4646a764358ee93c2a9c4a147d5aDEd527ab73",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeUSDt-AVAX",
     "earnedTokenAddress": "0xe7f4AB519b20A0F4dF71B9ad9147b9cd4f183349",
     "earnContractAddress": "0xe7f4AB519b20A0F4dF71B9ad9147b9cd4f183349",
@@ -4408,16 +5248,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7/AVAX",
     "network": "avax",
-    "createdAt": 1649966386
+    "createdAt": 1649966386,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "png-png-ustw",
     "name": "PNG-USTw LP",
+    "type": "standard",
     "token": "PNG-USTw LP",
     "tokenAddress": "0x2a0f65C76008EcBC469b0850454E57310E770557",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "MooPangolinPNG-USTw",
     "earnedTokenAddress": "0xC43e5065c28Dcf85f9a5D31feAC658c6EB7F23D6",
     "earnContractAddress": "0xC43e5065c28Dcf85f9a5D31feAC658c6EB7F23D6",
@@ -4441,16 +5287,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x60781C2586D68229fde47564546784ab3fACA982/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x60781C2586D68229fde47564546784ab3fACA982/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1",
     "network": "avax",
-    "createdAt": 1650107726
+    "createdAt": 1650107726,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "joe-yeti-wavax",
     "name": "YETI-AVAX LP",
+    "type": "standard",
     "token": "YETI-AVAX JLP",
     "tokenAddress": "0xbdc7EF37283BC67D50886c4afb64877E3e83f869",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeYETI-AVAX",
     "earnedTokenAddress": "0xDb054F4978a485bC5D9ae144B487340B141E41db",
     "earnContractAddress": "0xDb054F4978a485bC5D9ae144B487340B141E41db",
@@ -4473,16 +5325,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x77777777777d4554c39223C354A05825b2E8Faa3/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x77777777777d4554c39223C354A05825b2E8Faa3/AVAX",
     "network": "avax",
-    "createdAt": 1650288303
+    "createdAt": 1650288303,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "png-axlatom-wavax",
     "name": "ATOM-AVAX LP",
+    "type": "standard",
     "token": "ATOM-AVAX LP",
     "tokenAddress": "0x8a998BCd8D04e36cF5D28984F9979B6404471E51",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinAxlATOM-AVAX",
     "earnedTokenAddress": "0x3Adf681a9E050AecE8e12ad825eB64273552B29d",
     "earnContractAddress": "0x3Adf681a9E050AecE8e12ad825eB64273552B29d",
@@ -4505,16 +5363,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x80D18b1c9Ab0c9B5D6A6d5173575417457d00a12/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x80D18b1c9Ab0c9B5D6A6d5173575417457d00a12/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     "network": "avax",
-    "createdAt": 1650124579
+    "createdAt": 1650124579,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "png-png-wavax-eol",
     "name": "PNG-AVAX LP",
+    "type": "standard",
     "token": "PNG-AVAX LP",
     "tokenAddress": "0xd7538cABBf8605BdE1f4901B47B8D42c61DE0367",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinV2PNG-AVAX",
     "earnedTokenAddress": "0x180A73F4e0a84E4343019529429344cBEC21d946",
     "earnContractAddress": "0x180A73F4e0a84E4343019529429344cBEC21d946",
@@ -4537,16 +5401,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x60781c2586d68229fde47564546784ab3faca982/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x60781c2586d68229fde47564546784ab3faca982/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
     "network": "avax",
-    "createdAt": 1643465763
+    "createdAt": 1643465763,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "joe-wavax-cook-eol",
     "name": "COOK-AVAX LP",
+    "type": "standard",
     "token": "COOK-AVAX JLP",
     "tokenAddress": "0x3fcD1d5450e63FA6af495A601E6EA1230f01c4E3",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-COOK",
     "earnedTokenAddress": "0x4E685C0d068cb0af88Ff662B89951Ad5B3727387",
     "earnContractAddress": "0x4E685C0d068cb0af88Ff662B89951Ad5B3727387",
@@ -4569,16 +5439,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x637afeff75ca669fF92e4570B14D6399A658902f/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x637afeff75ca669fF92e4570B14D6399A658902f/AVAX",
     "network": "avax",
-    "createdAt": 1643382032
+    "createdAt": 1643382032,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-melt-wavax-eol",
     "name": "MELT-AVAX LP",
+    "type": "standard",
     "token": "MELT-AVAX JLP",
     "tokenAddress": "0x2923a62b2531EC744ca0C1e61dfFab1Ad9369FeB",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeMELT-AVAX",
     "earnedTokenAddress": "0x2ebAF60a6d6AE9ffe2C418470dF0D2444b996AE9",
     "earnContractAddress": "0x2ebAF60a6d6AE9ffe2C418470dF0D2444b996AE9",
@@ -4601,11 +5477,18 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x47EB6F7525C1aA999FBC9ee92715F5231eB1241D",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x47EB6F7525C1aA999FBC9ee92715F5231eB1241D",
     "network": "avax",
-    "createdAt": 1639409390
+    "createdAt": 1639409390,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "lyd-lyd-avax-eol",
     "name": "LYD-AVAX LP",
+    "type": "standard",
     "token": "LYD-AVAX LP",
     "tokenAddress": "0xFba4EdaAd3248B03f1a3261ad06Ad846A8e50765",
     "tokenDecimals": 18,
@@ -4629,11 +5512,11 @@
   {
     "id": "png-wavax-lost",
     "name": "LOST-AVAX LP",
+    "type": "standard",
     "token": "LOST-AVAX LP",
     "tokenAddress": "0x8461681211B49c15e20B3Cfd4c63BE258878B7D9",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinAVAX-LOST",
     "earnedTokenAddress": "0x02BE142346cbCAf2A1d8A8F7B4a5F2d929259270",
     "earnContractAddress": "0x02BE142346cbCAf2A1d8A8F7B4a5F2d929259270",
@@ -4656,11 +5539,18 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x449674B82F05d498E126Dd6615a1057A9c088f2C",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x449674B82F05d498E126Dd6615a1057A9c088f2C",
     "network": "avax",
-    "createdAt": 1651186444
+    "createdAt": 1651186444,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "joe-wavax-fief-eol",
     "name": "FIEF-AVAX LP",
+    "type": "standard",
     "token": "FIEF-AVAX JLP",
     "tokenAddress": "0x939D6eD8a0f7FC90436BA6842D7372250a03fA7c",
     "tokenDecimals": 18,
@@ -4692,11 +5582,11 @@
   {
     "id": "joe-wavax-aave.e-eol",
     "name": "AAVE.e-AVAX LP",
+    "type": "standard",
     "token": "AAVE.e-AVAX JLP",
     "tokenAddress": "0xc3e6D9f7a3A5E3e223356383C7C055Ee3F26A34F",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-AAVE.e",
     "earnedTokenAddress": "0xaF5D5a21E6d53b96daf37EC9fC9360c5b6B4AeBE",
     "earnContractAddress": "0xaF5D5a21E6d53b96daf37EC9fC9360c5b6B4AeBE",
@@ -4719,16 +5609,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0x63a72806098bd3d9520cc43356dd78afe5d386d9/AVAX",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0x63a72806098bd3d9520cc43356dd78afe5d386d9/AVAX",
     "network": "avax",
-    "createdAt": 1632847091
+    "createdAt": 1632847091,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-usdc.e-wavax-eol",
     "name": "USDC.e-AVAX LP",
+    "type": "standard",
     "token": "USDC.e-AVAX JLP",
     "tokenAddress": "0xA389f9430876455C36478DeEa9769B7Ca4E3DDB1",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeUSDC.e-AVAX",
     "earnedTokenAddress": "0xdD63306A9792Ecbd1cd6baED3f1b18BEA638aaCe",
     "earnContractAddress": "0xdD63306A9792Ecbd1cd6baED3f1b18BEA638aaCe",
@@ -4751,11 +5647,18 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "network": "avax",
-    "createdAt": 1630085124
+    "createdAt": 1630085124,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "aavev3-avax",
     "name": "AVAX",
+    "type": "standard",
     "token": "AVAX",
     "tokenDecimals": 18,
     "earnedToken": "mooAaveAVAX",
@@ -4763,7 +5666,8 @@
     "earnContractAddress": "0x1B156C5c75E9dF4CAAb2a5cc5999aC58ff4F9090",
     "oracle": "tokens",
     "oracleId": "AVAX",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "aave",
     "assets": ["AVAX"],
     "risks": [
@@ -4778,11 +5682,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     "network": "avax",
-    "createdAt": 1651836387
+    "createdAt": 1651836387,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "aavev3-dai.e",
     "name": "DAI.e",
+    "type": "standard",
     "token": "DAI.e",
     "tokenAddress": "0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
     "tokenDecimals": 18,
@@ -4807,11 +5717,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
     "network": "avax",
-    "createdAt": 1651836386
+    "createdAt": 1651836386,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "aavev3-usdc",
     "name": "USDC",
+    "type": "standard",
     "token": "USDC",
     "tokenAddress": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "tokenDecimals": 6,
@@ -4820,7 +5736,8 @@
     "earnContractAddress": "0x3C2131A02659343d68c211aAa686750bE37d88c4",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "aave",
     "assets": ["USDC"],
     "risks": [
@@ -4835,11 +5752,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "network": "avax",
-    "createdAt": 1651836385
+    "createdAt": 1651836385,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "aavev3-usdt",
     "name": "USDT",
+    "type": "standard",
     "token": "USDT",
     "tokenAddress": "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
     "tokenDecimals": 6,
@@ -4848,7 +5771,8 @@
     "earnContractAddress": "0x813aB5B3FDc59B143C42284665864b24B794C324",
     "oracle": "tokens",
     "oracleId": "USDT",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "aave",
     "assets": ["USDT"],
     "risks": [
@@ -4863,11 +5787,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
     "network": "avax",
-    "createdAt": 1651836384
+    "createdAt": 1651836384,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "aavev3-weth.e",
     "name": "WETH.e",
+    "type": "standard",
     "token": "WETH.e",
     "tokenAddress": "0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     "tokenDecimals": 18,
@@ -4876,7 +5806,8 @@
     "earnContractAddress": "0xDc5e537764F5Ad0f51Bf52CCF0767083bb4565EC",
     "oracle": "tokens",
     "oracleId": "WETHe",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "aave",
     "assets": ["WETHe"],
     "risks": [
@@ -4891,11 +5822,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     "network": "avax",
-    "createdAt": 1651836383
+    "createdAt": 1651836383,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "aavev3-wbtc.e",
     "name": "WBTC.e",
+    "type": "standard",
     "token": "WBTC.e",
     "tokenAddress": "0x50b7545627a5162F82A992c33b87aDc75187B218",
     "tokenDecimals": 8,
@@ -4920,11 +5857,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
     "network": "avax",
-    "createdAt": 1651836382
+    "createdAt": 1651836382,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "aave-usdc.e-eol",
     "name": "USDC.e",
+    "type": "standard",
     "token": "USDC.e",
     "tokenAddress": "0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "tokenDecimals": 6,
@@ -4949,11 +5892,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "network": "avax",
-    "createdAt": 1633512435
+    "createdAt": 1633512435,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "aave-aave.e-eol",
     "name": "AAVE.e",
+    "type": "standard",
     "token": "AAVE.e",
     "tokenAddress": "0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
     "tokenDecimals": 18,
@@ -4978,16 +5927,21 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
     "network": "avax",
-    "createdAt": 1633524150
+    "createdAt": 1633524150,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "png-fitfi-wavax",
     "name": "FITFI-AVAX LP",
+    "type": "standard",
     "token": "FITFI-AVAX LP",
     "tokenAddress": "0x1bB665942381FB2E67c4dCCb04E6CfE7f130E93C",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinFITFI-AVAX",
     "earnedTokenAddress": "0x2b1b82D0D3F79D0Ff0300263F215Ed2dCE0734D2",
     "earnContractAddress": "0x2b1b82D0D3F79D0Ff0300263F215Ed2dCE0734D2",
@@ -5010,11 +5964,18 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x714f020C54cc9D104B6F4f6998C63ce2a31D1888",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x714f020C54cc9D104B6F4f6998C63ce2a31D1888",
     "network": "avax",
-    "createdAt": 1651942440
+    "createdAt": 1651942440,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "blizz-avax-pause",
     "name": "AVAX",
+    "type": "standard",
     "token": "AVAX",
     "tokenDecimals": 18,
     "earnedToken": "mooBlizzAVAX",
@@ -5037,11 +5998,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     "network": "avax",
-    "createdAt": 1637579519
+    "createdAt": 1637579519,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "blizz-eth-pause",
     "name": "WETH.e",
+    "type": "standard",
     "token": "WETH.e",
     "tokenAddress": "0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     "tokenDecimals": 18,
@@ -5065,11 +6032,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     "network": "avax",
-    "createdAt": 1637587754
+    "createdAt": 1637587754,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "blizz-wbtc-pause",
     "name": "WBTC.e",
+    "type": "standard",
     "token": "WBTC.e",
     "tokenAddress": "0x50b7545627a5162F82A992c33b87aDc75187B218",
     "tokenDecimals": 8,
@@ -5093,16 +6066,21 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
     "network": "avax",
-    "createdAt": 1637589664
+    "createdAt": 1637589664,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "png-klo-wavax",
     "name": "KLO-AVAX LP",
+    "type": "standard",
     "token": "KLO-AVAX LP",
     "tokenAddress": "0x6745d7F9289d7d75B5121876B1b9D8DA775c9a3E",
     "tokenDecimals": 18,
     "tokenProviderId": "pangolin",
-    "tokenAmmId": "avax-pangolin",
     "earnedToken": "mooPangolinKLO-AVAX",
     "earnedTokenAddress": "0x9C9C14f28F07eDe4d796aED2D7038EF6F23494A8",
     "earnContractAddress": "0x9C9C14f28F07eDe4d796aED2D7038EF6F23494A8",
@@ -5125,16 +6103,22 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xb27c8941a7Df8958A1778c0259f76D1F8B711C35",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xb27c8941a7Df8958A1778c0259f76D1F8B711C35",
     "network": "avax",
-    "createdAt": 1653320561
+    "createdAt": 1653320561,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-pangolin"
+      }
+    ]
   },
   {
     "id": "joe-bpt-wavax-eol",
     "name": "BPT-AVAX LP",
+    "type": "standard",
     "token": "BPT-AVAX JLP",
     "tokenAddress": "0x0b44F6F5a32De1b36CfCD5F68f181F6787fb3225",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-BPT",
     "earnedTokenAddress": "0x93AADd13324FD724afe13E9930f5A466A4590853",
     "earnContractAddress": "0x93AADd13324FD724afe13E9930f5A466A4590853",
@@ -5157,16 +6141,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x1111111111182587795ef1098ac7da81a108c97a/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x1111111111182587795ef1098ac7da81a108c97a/AVAX",
     "network": "avax",
-    "createdAt": 1650788892
+    "createdAt": 1650788892,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-ustw-wavax-eol",
     "name": "USTw-AVAX LP",
+    "type": "standard",
     "token": "USTw-AVAX JLP",
     "tokenAddress": "0xeCD6D33555183Bc82264dbC8bebd77A1f02e421E",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-UST",
     "earnedTokenAddress": "0xE113C53D53f66A33cD1098263DE18bCe8Ed92DCE",
     "earnContractAddress": "0xE113C53D53f66A33cD1098263DE18bCe8Ed92DCE",
@@ -5190,16 +6180,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1/AVAX",
     "network": "avax",
-    "createdAt": 1649323779
+    "createdAt": 1649323779,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-wavax-ime-eol",
     "name": "IME-AVAX LP",
+    "type": "standard",
     "token": "IME-AVAX JLP",
     "tokenAddress": "0x5d95ae932D42E53Bb9DA4DE65E9b7263A4fA8564",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAvax-IME",
     "earnedTokenAddress": "0x6330c1eC0449c721F0DB17980344Abd6dC071Dfb",
     "earnContractAddress": "0x6330c1eC0449c721F0DB17980344Abd6dC071Dfb",
@@ -5222,16 +6218,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xf891214fdcf9cdaa5fdc42369ee4f27f226adad6",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xf891214fdcf9cdaa5fdc42369ee4f27f226adad6",
     "network": "avax",
-    "createdAt": 1643668967
+    "createdAt": 1643668967,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-craft-wavax-eol",
     "name": "CRAFT-AVAX LP",
+    "type": "standard",
     "token": "CRAFT-AVAX JLP",
     "tokenAddress": "0x86D1b1Ab4812a104BC1Ea1FbD07809DE636E6C6b",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeCRAFT-AVAX",
     "earnedTokenAddress": "0x5526851c271d8B59F6412e3244A7A6db3A13808f",
     "earnContractAddress": "0x5526851c271d8B59F6412e3244A7A6db3A13808f",
@@ -5254,16 +6256,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x8aE8be25C23833e0A01Aa200403e826F611f9CD2",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x8aE8be25C23833e0A01Aa200403e826F611f9CD2",
     "network": "avax",
-    "createdAt": 1639410461
+    "createdAt": 1639410461,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-tus-wavax-eol",
     "name": "TUS-AVAX LP",
+    "type": "standard",
     "token": "TUS-AVAX JLP",
     "tokenAddress": "0x565d20BD591b00EAD0C927e4b6D7DD8A33b0B319",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeTUS-AVAX",
     "earnedTokenAddress": "0x60c48584CfAe8e7D5263f2433FFD994e4A8D7C28",
     "earnContractAddress": "0x60c48584CfAe8e7D5263f2433FFD994e4A8D7C28",
@@ -5286,16 +6294,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xf693248f96fe03422fea95ac0afbbbc4a8fdd172",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xf693248f96fe03422fea95ac0afbbbc4a8fdd172",
     "network": "avax",
-    "createdAt": 1653320562
+    "createdAt": 1653320562,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-dby-wavax-eol",
     "name": "DBY-AVAX LP",
+    "type": "standard",
     "token": "DBY-AVAX JLP",
     "tokenAddress": "0x30556AcC64b7b8F37ae4CE8325dd279847F09926",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-DBY",
     "earnedTokenAddress": "0x3cD0bCffF160fF331a170832219E82355189528f",
     "earnContractAddress": "0x3cD0bCffF160fF331a170832219E82355189528f",
@@ -5318,16 +6332,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x5085434227aB73151fAd2DE546210Cbc8663dF96/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x5085434227aB73151fAd2DE546210Cbc8663dF96/AVAX",
     "network": "avax",
-    "createdAt": 1651052876
+    "createdAt": 1651052876,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-wavax-hec-eol",
     "name": "HEC-AVAX LP",
+    "type": "standard",
     "token": "HEC-AVAX JLP",
     "tokenAddress": "0x4dC5291cdc7Ad03342994E35D0Ccc76De065A566",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeAVAX-HEC",
     "earnedTokenAddress": "0xD8E92bcBf66a675b2Ac45f0BBbb0F285ba607AB7",
     "earnContractAddress": "0xD8E92bcBf66a675b2Ac45f0BBbb0F285ba607AB7",
@@ -5350,16 +6370,22 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xC7f4debC8072e23fe9259A5C0398326d8EfB7f5c/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xC7f4debC8072e23fe9259A5C0398326d8EfB7f5c/AVAX",
     "network": "avax",
-    "createdAt": 1643388939
+    "createdAt": 1643388939,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-wavax-usdt.e-eol",
     "name": "USDT.e-AVAX LP",
+    "type": "standard",
     "token": "USDT.e-AVAX JLP",
     "tokenAddress": "0xeD8CBD9F0cE3C6986b22002F03c6475CEb7a6256",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeWAVAX-USDT.e",
     "earnedTokenAddress": "0xc1e960785292E68a027FC88042e3ec1A5A064B3C",
     "earnContractAddress": "0xc1e960785292E68a027FC88042e3ec1A5A064B3C",
@@ -5382,16 +6408,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xc7198437980c041c805a1edcba50c1ce5db95118",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xc7198437980c041c805a1edcba50c1ce5db95118",
     "network": "avax",
-    "createdAt": 1632129313
+    "createdAt": 1632129313,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-qi-wavax-eol",
     "name": "QI-AVAX LP",
+    "type": "standard",
     "token": "QI-AVAX JLP",
     "tokenAddress": "0x2774516897AC629aD3ED9dCac7e375Dda78412b9",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeQI-WAVAX",
     "earnedTokenAddress": "0x1CA786F754D339797BBecE959799fBA063C22F44",
     "earnContractAddress": "0x1CA786F754D339797BBecE959799fBA063C22F44",
@@ -5414,16 +6446,22 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
     "network": "avax",
-    "createdAt": 1630670133
+    "createdAt": 1630670133,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "joe-egg-wavax-eol",
     "name": "EGG-AVAX JLP",
+    "type": "standard",
     "token": "EGG-AVAX JLP",
     "tokenAddress": "0x3052a75dfD7A9D9B0F81E510E01d3Fe80A9e7ec7",
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
-    "tokenAmmId": "avax-joe",
     "earnedToken": "mooJoeEGG-AVAX",
     "earnedTokenAddress": "0x491E09Eb736c0c4CD85DF694A22D1C0dec8c4C25",
     "earnContractAddress": "0x491E09Eb736c0c4CD85DF694A22D1C0dec8c4C25",
@@ -5446,11 +6484,18 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x7761E2338B35bCEB6BdA6ce477EF012bde7aE611/AVAX#/",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x7761E2338B35bCEB6BdA6ce477EF012bde7aE611/AVAX#/",
     "network": "avax",
-    "createdAt": 1646787205
+    "createdAt": 1646787205,
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "avax-joe"
+      }
+    ]
   },
   {
     "id": "aavev3-savax",
     "name": "sAVAX",
+    "type": "standard",
     "token": "sAVAX",
     "tokenAddress": "0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE",
     "tokenDecimals": 18,
@@ -5475,11 +6520,17 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE",
     "network": "avax",
-    "createdAt": 1657121627
+    "createdAt": 1657121627,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "gmx-avax-glp",
     "name": "GLP",
+    "type": "standard",
     "token": "GLP",
     "tokenAddress": "0xaE64d55a6f09E4263421737397D1fdFA71896a69",
     "tokenDecimals": 18,
@@ -5509,6 +6560,7 @@
   {
     "id": "gmx-avax-gmx",
     "name": "GMX",
+    "type": "standard",
     "token": "GMX",
     "tokenAddress": "0x62edc0692BD897D2295872a9FFCac5425011c661",
     "tokenDecimals": 18,
@@ -5532,6 +6584,11 @@
     "strategyTypeId": "glp-gmx",
     "buyTokenUrl": "https://app.1inch.io/#/43114/unified/swap/AVAX/GMX",
     "network": "avax",
-    "createdAt": 1666793247
+    "createdAt": 1666793247,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   }
 ]

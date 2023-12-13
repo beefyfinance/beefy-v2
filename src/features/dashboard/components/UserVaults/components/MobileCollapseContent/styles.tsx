@@ -9,12 +9,9 @@ export const styles = (theme: Theme) => ({
   },
   toggleContainer: {
     padding: '16px',
-    backgroundColor: theme.palette.background.appBG,
+    backgroundColor: theme.palette.background.contentDark,
     display: 'flex',
     justifyContent: 'center',
-  },
-  activeClassName: {
-    backgroundColor: theme.palette.primary.main,
   },
   buttonText: {
     ...theme.typography['body-sm-med'],

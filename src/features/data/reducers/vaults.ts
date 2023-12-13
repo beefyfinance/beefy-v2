@@ -1,17 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import type { Draft } from 'immer';
-import { isEmpty, mapValues, sortBy } from 'lodash-es';
+import { isEmpty, sortBy } from 'lodash-es';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
 import type { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import {
-  fetchAllVaults,
-  fetchFeaturedVaults,
-  fetchVaultsZapSupport,
-  fetchVaultsLastHarvests,
-} from '../actions/vaults';
+import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsLastHarvests } from '../actions/vaults';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import type { ChainEntity } from '../entities/chain';
 import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
@@ -22,8 +17,13 @@ import type { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
  * State containing Vault infos
  */
 export type VaultsState = NormalizedEntity<VaultEntity> & {
+  /** Vaults that have bridged receipt tokens we should track */
+  allBridgedIds: VaultEntity['id'][];
+
   byChainId: {
     [chainId: ChainEntity['id']]: {
+      /** Vaults on chain */
+      allIds: VaultEntity['id'][];
       /** Vaults that have status: active */
       allActiveIds: VaultEntity['id'][];
       /** Vaults that have status: eol or paused */
@@ -74,27 +74,18 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
    */
   featuredVaults: FeaturedVaultConfig;
 
-  /**
-   * Which zaps are enabled for each vault
-   */
-  zapSupportById: {
-    [vaultId: VaultEntity['id']]: {
-      beefy: boolean;
-      oneInch: boolean;
-    };
-  };
-
   lastHarvestById: {
     [vaultId: VaultEntity['id']]: number;
   };
 };
+
 export const initialVaultsState: VaultsState = {
   byId: {},
   allIds: [],
+  allBridgedIds: [],
   byChainId: {},
   contractData: { byVaultId: {} },
   featuredVaults: {},
-  zapSupportById: {},
   lastHarvestById: {},
 };
 
@@ -142,15 +133,6 @@ export const vaultsSlice = createSlice({
         addContractDataToState(sliceState, action.payload.contractData);
       }
     );
-
-    builder.addCase(fetchVaultsZapSupport.fulfilled, (sliceState, action) => {
-      sliceState.zapSupportById = mapValues(action.payload.byVaultId, support => {
-        return {
-          beefy: support.includes('beefy'),
-          oneInch: support.includes('oneInch'),
-        };
-      });
-    });
   },
 });
 
@@ -195,11 +177,11 @@ function addVaultToState(
   }
   const score = getVaultSafetyScore(state, chainId, apiVault);
 
-  if (apiVault.isGovVault) {
+  if (apiVault.type === 'gov') {
     const vault: VaultGov = {
       id: apiVault.id,
       name: apiVault.name,
-      isGovVault: true,
+      type: 'gov',
       depositTokenAddress: apiVault.tokenAddress,
       earnedTokenAddress: apiVault.earnedTokenAddress,
       earnContractAddress: apiVault.earnContractAddress,
@@ -210,12 +192,12 @@ function addVaultToState(
       platformId: apiVault.platformId,
       safetyScore: score,
       assetIds: apiVault.assets || [],
-      type: 'single',
+      assetType: 'single',
       risks: apiVault.risks || [],
       buyTokenUrl: apiVault.buyTokenUrl || null,
       addLiquidityUrl: null,
       removeLiquidityUrl: null,
-      depositFee: apiVault.depositFee ?? '0%',
+      depositFee: apiVault.depositFee ?? 0,
       createdAt: apiVault.createdAt ?? 0,
       retireReason: apiVault.retireReason,
       pauseReason: apiVault.pauseReason,
@@ -225,6 +207,7 @@ function addVaultToState(
     sliceState.allIds.push(vault.id);
     if (sliceState.byChainId[vault.chainId] === undefined) {
       sliceState.byChainId[vault.chainId] = {
+        allIds: [],
         allActiveIds: [],
         allRetiredIds: [],
         allBridgedIds: [],
@@ -239,6 +222,7 @@ function addVaultToState(
     }
 
     const vaultState = sliceState.byChainId[vault.chainId];
+    vaultState.allIds.push(vault.id);
     if (apiVault.status === 'eol' || apiVault.status === 'paused') {
       vaultState.allRetiredIds.push(vault.id);
     } else {
@@ -255,22 +239,23 @@ function addVaultToState(
     const vault: VaultStandard = {
       id: apiVault.id,
       name: apiVault.name,
-      isGovVault: false,
+      type: apiVault.type || 'standard',
       depositTokenAddress: apiVault.tokenAddress ?? 'native',
+      zaps: apiVault.zaps || [],
       earnContractAddress: apiVault.earnContractAddress,
       earnedTokenAddress: apiVault.earnedTokenAddress,
       strategyTypeId: apiVault.strategyTypeId,
       chainId: chainId,
       platformId: apiVault.platformId,
       status: apiVault.status as VaultStandard['status'],
-      type: !apiVault.assets ? 'single' : apiVault.assets.length > 1 ? 'lps' : 'single',
+      assetType: !apiVault.assets ? 'single' : apiVault.assets.length > 1 ? 'lps' : 'single',
       safetyScore: score,
       assetIds: apiVault.assets || [],
       risks: apiVault.risks || [],
       buyTokenUrl: apiVault.buyTokenUrl || null,
       addLiquidityUrl: apiVault.addLiquidityUrl || null,
       removeLiquidityUrl: apiVault.removeLiquidityUrl || null,
-      depositFee: apiVault.depositFee ?? '0%',
+      depositFee: apiVault.depositFee ?? 0,
       createdAt: apiVault.createdAt ?? 0,
       retireReason: apiVault.retireReason,
       pauseReason: apiVault.pauseReason,
@@ -283,6 +268,7 @@ function addVaultToState(
     sliceState.allIds.push(vault.id);
     if (sliceState.byChainId[vault.chainId] === undefined) {
       sliceState.byChainId[vault.chainId] = {
+        allIds: [],
         allActiveIds: [],
         allRetiredIds: [],
         allBridgedIds: [],
@@ -296,6 +282,7 @@ function addVaultToState(
       };
     }
     const vaultState = sliceState.byChainId[vault.chainId];
+    vaultState.allIds.push(vault.id);
     if (apiVault.status === 'eol' || apiVault.status === 'paused') {
       vaultState.allRetiredIds.push(vault.id);
     } else {
@@ -304,6 +291,7 @@ function addVaultToState(
 
     if (vault.bridged) {
       vaultState.allBridgedIds.push(vault.id);
+      sliceState.allBridgedIds.push(vault.id);
     }
 
     if (!vaultState.standardVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()]) {

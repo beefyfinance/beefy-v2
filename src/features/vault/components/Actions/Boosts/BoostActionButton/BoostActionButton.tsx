@@ -2,10 +2,10 @@ import { Collapse, IconButton, InputBase, makeStyles } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import type BigNumber from 'bignumber.js';
 import clsx from 'clsx';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button';
-import { formatBigDecimals } from '../../../../../../helpers/format';
+import { formatFullBigNumber, formatSignificantBigNumber } from '../../../../../../helpers/format';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../../../store';
 import { initBoostForm } from '../../../../../data/actions/scenarios';
 import { startStepper } from '../../../../../data/actions/stepper';
@@ -21,11 +21,16 @@ import {
 import { selectBoostById } from '../../../../../data/selectors/boosts';
 import { selectIsAddressBookLoaded } from '../../../../../data/selectors/data-loader';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
-import { selectErc20TokenByAddress } from '../../../../../data/selectors/tokens';
+import {
+  selectErc20TokenByAddress,
+  selectTokenPriceByAddress,
+} from '../../../../../data/selectors/tokens';
 import { selectStandardVaultById } from '../../../../../data/selectors/vaults';
 import { selectIsWalletKnown, selectWalletAddress } from '../../../../../data/selectors/wallet';
 import { selectIsApprovalNeededForBoostStaking } from '../../../../../data/selectors/wallet-actions';
 import { styles } from './styles';
+import { Tooltip } from '../../../../../../components/Tooltip';
+import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 
 const useStyles = makeStyles(styles);
 
@@ -34,7 +39,6 @@ interface BoostActionButtonProps {
   boostId: BoostEntity['id'];
   open: boolean;
   handleCollapse: () => void;
-
   balance: BigNumber;
 }
 
@@ -43,7 +47,6 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
   boostId,
   open,
   handleCollapse,
-
   balance,
 }) {
   const { t } = useTranslation();
@@ -58,6 +61,9 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
   );
   const mooToken = useAppSelector(state =>
     selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
+  );
+  const oraclePrice = useAppSelector(state =>
+    selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
   const boostPendingRewards = useAppSelector(state =>
@@ -75,7 +81,15 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
 
   const isStepping = useAppSelector(selectIsStepperStepping);
 
-  const isDisabled = !formReady || formState.amount.isLessThanOrEqualTo(0) || isStepping;
+  const isDisabled = useMemo(
+    () => !formReady || formState.amount.eq(0) || isStepping || balance.eq(0),
+    [balance, formReady, formState.amount, isStepping]
+  );
+
+  const isDisabledMaxButton = useMemo(
+    () => !formReady || isStepping || balance.eq(0),
+    [balance, formReady, isStepping]
+  );
 
   // initialize our form
   const store = useAppStore();
@@ -171,7 +185,21 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
           {t(isStake ? 'Boost-Button-Stake' : 'Boost-Button-Unstake')}
         </div>
         <div className={classes.balance}>
-          {t(isStake ? 'Available' : 'Staked')} <span>{formatBigDecimals(balance, 4)}</span>
+          {balance.gt(0) ? (
+            <Tooltip
+              content={
+                <BasicTooltipContent title={formatFullBigNumber(balance, mooToken.decimals)} />
+              }
+            >
+              {t(isStake ? 'Available' : 'Staked')}{' '}
+              <span>{formatSignificantBigNumber(balance, mooToken.decimals, oraclePrice)}</span>
+            </Tooltip>
+          ) : (
+            <>
+              {t(isStake ? 'Available' : 'Staked')}{' '}
+              <span>{formatSignificantBigNumber(balance, mooToken.decimals, oraclePrice)}</span>
+            </>
+          )}
         </div>
       </div>
       <Collapse in={open} timeout="auto">
@@ -183,7 +211,7 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
             fullWidth={true}
             endAdornment={
               <Button
-                disabled={!formReady || isStepping}
+                disabled={isDisabledMaxButton}
                 className={classes.maxButton}
                 onClick={handleMax}
               >
@@ -194,10 +222,10 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
           />
           <Button
             borderless={true}
-            className={classes.button}
             onClick={handleAction}
             fullWidth={true}
             disabled={isDisabled}
+            variant="boost"
           >
             {t(isStake ? 'Boost-Button-Stake' : 'Boost-Button-Unstake')}
           </Button>

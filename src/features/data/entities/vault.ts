@@ -1,6 +1,7 @@
 import type { ChainEntity } from './chain';
 import type { PlatformEntity } from './platform';
 import type { TokenEntity } from './token';
+import type { StrategyOptions } from '../apis/transact/strategies/IStrategy';
 
 // maybe a RiskAnalysis type would be better
 
@@ -24,7 +25,9 @@ export type VaultTag =
 export interface VaultStandard {
   id: string;
   name: string;
+  type: 'standard';
   depositTokenAddress: string;
+  zaps: StrategyOptions[];
 
   /**
    * ASSETS are basically the assets that are in that vault
@@ -44,8 +47,6 @@ export interface VaultStandard {
 
   strategyTypeId: string;
 
-  isGovVault: false;
-
   /**
    * The protocol this vault rely on (Curve, boo finance, etc)
    */
@@ -53,7 +54,7 @@ export interface VaultStandard {
 
   status: 'active' | 'eol' | 'paused';
 
-  type: 'lps' | 'single';
+  assetType: 'lps' | 'single';
 
   safetyScore: number;
 
@@ -63,7 +64,7 @@ export interface VaultStandard {
   addLiquidityUrl: string | null;
   removeLiquidityUrl: string | null;
 
-  depositFee: string | null;
+  depositFee: number;
 
   createdAt: number;
 
@@ -77,6 +78,7 @@ export interface VaultStandard {
 export interface VaultGov {
   id: string;
   name: string;
+  type: 'gov';
   depositTokenAddress: string;
 
   /**
@@ -109,13 +111,11 @@ export interface VaultGov {
 
   strategyTypeId: string;
 
-  isGovVault: true;
-
   platformId: PlatformEntity['id'];
 
   status: 'active' | 'eol' | 'paused';
 
-  type: 'single';
+  assetType: 'single';
 
   safetyScore: number;
 
@@ -125,7 +125,7 @@ export interface VaultGov {
   addLiquidityUrl: null;
   removeLiquidityUrl: null;
 
-  depositFee: string;
+  depositFee: number;
 
   createdAt: number;
 
@@ -135,11 +135,11 @@ export interface VaultGov {
 }
 
 export function isGovVault(vault: VaultEntity): vault is VaultGov {
-  return vault.isGovVault === true;
+  return vault.type === 'gov';
 }
 
 export function isStandardVault(vault: VaultEntity): vault is VaultStandard {
-  return vault.isGovVault === false;
+  return vault.type === 'standard';
 }
 
 export function isVaultRetired(vault: VaultEntity) {

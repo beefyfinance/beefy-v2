@@ -27,7 +27,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     columnGap: '4px',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     textDecoration: 'none',
     '& img': {
       height: '12px',
@@ -35,7 +35,7 @@ export const styles = (theme: Theme) => ({
     },
     '&:hover': {
       cursor: 'pointer',
-      color: theme.palette.text.primary,
+      color: theme.palette.text.light,
     },
   },
 });
