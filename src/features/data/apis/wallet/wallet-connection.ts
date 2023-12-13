@@ -10,6 +10,7 @@ import createInjectedWallets from '@web3-onboard/injected-wallets';
 import standardInjectedWallets from '@web3-onboard/injected-wallets/dist/wallets';
 import createCoinbaseWalletModule from '@web3-onboard/coinbase';
 import createWalletConnectModule from '@web3-onboard/walletconnect';
+import createMetamaskModule from '@web3-onboard/metamask';
 import type { ConnectOptions } from '@web3-onboard/core/dist/types';
 import type { WalletInit } from '@web3-onboard/common';
 import { createEIP1193Provider } from '@web3-onboard/common';
@@ -66,7 +67,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     return createWalletConnectModule(options);
   }
 
-  private static createWalletConnectCloneModule(): WalletInit {
+  private static createWalletConnectFireblocksModule(): WalletInit {
     const walletConnectInit = WalletConnectionApi.createWalletConnectModule({
       mobileWallets: [
         {
@@ -91,6 +92,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       enableExplorer: false,
       walletImages: walletConnectImages,
     });
+
     return (helpers: WalletHelpers) => {
       const module = walletConnectInit(helpers);
       if (!module || Array.isArray(module)) {
@@ -105,6 +107,20 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     };
   }
 
+  private static createMetamaskModule(): WalletInit {
+    return createMetamaskModule({
+      options: {
+        extensionOnly: false,
+        dappMetadata: {
+          name: 'Beefy',
+          url: 'https://app.beefy.com',
+          base64Icon:
+            'data:image/png;base64,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',
+        },
+      },
+    });
+  }
+
   /**
    * Create list of wallet modules for Onboard
    * @private
@@ -113,9 +129,10 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     return [
       WalletConnectionApi.createInjectedWalletsModule(),
       WalletConnectionApi.createWalletConnectModule(),
+      WalletConnectionApi.createMetamaskModule(),
       createCoinbaseWalletModule(),
       WalletConnectionApi.createCDCWalletModule(),
-      WalletConnectionApi.createWalletConnectCloneModule(),
+      WalletConnectionApi.createWalletConnectFireblocksModule(),
     ];
   }
 
