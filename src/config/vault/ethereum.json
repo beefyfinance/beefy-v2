@@ -2508,8 +2508,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/1/unified/swap/ETH/USDC",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDC-ETH/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDC-ETH/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/USDC-ETHEREUM/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/USDC-ETHEREUM/remove",
     "network": "ethereum",
     "createdAt": 1667598053
   },
@@ -2539,8 +2539,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/1/unified/swap/ETH/USDT",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDT-ETH/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDT-ETH/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/USDT-ETHEREUM/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/USDT-ETHEREUM/remove",
     "network": "ethereum",
     "createdAt": 1667598052
   },
@@ -2570,8 +2570,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/1/unified/swap/USDC/ETH",
-    "addLiquidityUrl": "https://stargate.finance/pool/eth-eth/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/eth-eth/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/eth-ETHEREUM/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/eth-ETHEREUM/remove",
     "network": "ethereum",
     "createdAt": 1667598051
   },
