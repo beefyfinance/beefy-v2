@@ -1,5 +1,55 @@
 [
   {
+    "id": "seamless-weth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0x4200000000000000000000000000000000000006",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSeamlessWETH",
+    "earnedTokenAddress": "0x2C1818c6F6781880cD49923AD993cA70B6DC2e8C",
+    "earnContractAddress": "0x2C1818c6F6781880cD49923AD993cA70B6DC2e8C",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "platformId": "seamless",
+    "assets": ["WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "base",
+    "createdAt": 1702578552,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "seamless-usdbc",
+    "name": "USDbC",
+    "type": "standard",
+    "token": "USDbC",
+    "tokenAddress": "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
+    "tokenDecimals": 6,
+    "earnedToken": "mooSeamlessUSDbC",
+    "earnedTokenAddress": "0x738e2e507F52925E8Ea67daC07B2e07342325276",
+    "earnContractAddress": "0x738e2e507F52925E8Ea67daC07B2e07342325276",
+    "oracle": "tokens",
+    "oracleId": "USDbC",
+    "status": "active",
+    "platformId": "seamless",
+    "assets": ["USDbC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "base",
+    "createdAt": 1702578552,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "sonne-base-usdbc",
     "name": "USDbC",
     "type": "standard",
