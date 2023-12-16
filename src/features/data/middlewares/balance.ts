@@ -26,7 +26,7 @@ balanceListener.startListening({
     // Debounce
     await delay(50);
 
-    // Compute vault zap support
+    // Compute user deposited vaults
     dispatch(recalculateDepositedVaultsAction({ walletAddress: action.payload.walletAddress }));
   },
 });
