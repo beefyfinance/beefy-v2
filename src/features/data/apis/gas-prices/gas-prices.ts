@@ -3,12 +3,13 @@ import type { EIP1559GasConfig, GasConfig, StandardGasConfig } from '../config-t
 import { getWeb3Instance } from '../instances';
 import { BigNumber } from 'bignumber.js';
 import {
+  averageBigNumbers,
   BIG_MAX_UINT256,
   BIG_ONE,
   BIG_ZERO,
   compareBigNumber,
 } from '../../../../helpers/big-number';
-import { itemAtPercentile, sortWith } from '../../utils/array-utils';
+import { sortWith } from '../../utils/array-utils';
 import type Web3 from 'web3';
 import type { Contract } from 'web3-eth-contract';
 
@@ -129,14 +130,14 @@ export class EIP1559GasPricer implements IGasPricer {
 
     const sortedBaseFees = sortWith(feeHistory.baseFeePerGas, compareBigNumber);
     const initialBaseFee = BigNumber.max(
-      itemAtPercentile(sortedBaseFees, this.percentile),
+      averageBigNumbers(sortedBaseFees),
       nextBlock.baseFeePerGas
     );
     const sortedPriorityFees = sortWith(
       feeHistory.reward.map(reward => reward[0]),
       compareBigNumber
     );
-    const initialPriorityFee = itemAtPercentile(sortedPriorityFees, this.percentile);
+    const initialPriorityFee = averageBigNumbers(sortedPriorityFees);
 
     const baseFee = multiplyAndClamp(
       initialBaseFee,

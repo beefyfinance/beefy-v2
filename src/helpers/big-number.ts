@@ -40,6 +40,13 @@ export function truncateBigNumber(value: BigNumber, places: number): BigNumber {
   return value.decimalPlaces(places, BigNumber.ROUND_FLOOR);
 }
 
+export function averageBigNumbers(values: BigNumber[]): BigNumber {
+  if (values.length === 0) {
+    return BIG_ZERO;
+  }
+  return values.reduce((sum, value) => sum.plus(value), BIG_ZERO).dividedBy(values.length);
+}
+
 export function toWei(value: BigNumber, decimals: number): BigNumber {
   return value.shiftedBy(decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
 }
