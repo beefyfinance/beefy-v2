@@ -734,7 +734,11 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       blockExplorerUrls: ['https://lineascan.build'],
     },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 5,
+      percentile: 0.2,
+      baseMinimum: '7',
+      baseSafetyMargin: 0.2,
     },
     stableCoins: ['USDT', 'USDC', 'DAI'],
   },

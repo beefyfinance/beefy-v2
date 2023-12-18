@@ -161,5 +161,11 @@
     "id": "connext",
     "name": "Connext",
     "website": "https://www.connext.network"
+  },
+  {
+    "id": "linea-canonical",
+    "name": "Linea Bridge",
+    "tagName": "Linea",
+    "website": "https://bridge.linea.build/"
   }
 ]
