@@ -111,6 +111,9 @@ export const styles = (theme: Theme) => ({
   'headerNetwork-gnosis': {
     backgroundColor: 'rgba(19, 54, 41, 0.4)',
   },
+  'headerNetwork-linea': {
+    backgroundColor: 'rgba(18, 18, 18, 0.2)',
+  },
   'headerMM-system9': {
     backgroundColor: 'rgba(243, 243, 200, 0.5)',
   },

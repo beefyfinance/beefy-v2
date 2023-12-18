@@ -103,4 +103,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-gnosis': {
     backgroundColor: '#133629',
   },
+  'vaultNetwork-linea': {
+    backgroundColor: '#121212',
+  },
 });
