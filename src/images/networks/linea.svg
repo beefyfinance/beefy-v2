@@ -1,0 +1,5 @@
+<svg width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle class="bg" cx="75" cy="75" r="75" fill="#121212"/>
+<path class="fg" d="M103 119H34V46H49.7872V104.852H103V118.992V119Z" fill="white"/>
+<path class="fg" d="M103 60C110.732 60 117 53.732 117 46C117 38.268 110.732 32 103 32C95.2673 32 89 38.268 89 46C89 53.732 95.2673 60 103 60Z" fill="white"/>
+</svg>

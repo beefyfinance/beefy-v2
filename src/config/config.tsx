@@ -713,7 +713,31 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     },
     stableCoins: ['xDAI', 'EURe', 'USDC', 'USDT', 'sDAI'],
   },
-
+  linea: {
+    new: true,
+    name: 'Linea',
+    chainId: 59144,
+    rpc: ['https://rpc.linea.build'],
+    explorerUrl: 'https://lineascan.build',
+    multicallAddress: '0x91BB303E972995EbE5f593BCddBb6F5Ef49Dbcbd',
+    appMulticallContractAddress: '0xe536F8141D8EB7B1f096934AF3329cB581bFe995',
+    providerName: 'Linea',
+    walletSettings: {
+      chainId: `0x${parseInt('59144', 10).toString(16)}`,
+      chainName: 'Linea',
+      nativeCurrency: {
+        name: 'ETH',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://rpc.linea.build'],
+      blockExplorerUrls: ['https://lineascan.build'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['USDT', 'USDC', 'DAI'],
+  },
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,
