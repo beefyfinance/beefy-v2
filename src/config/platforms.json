@@ -926,7 +926,7 @@
   {
     "id": "seamless",
     "name": "Seamless",
-    "filter: "true"
+    "filter": true
   },
   {
     "id": "mendi",
