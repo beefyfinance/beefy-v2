@@ -605,8 +605,8 @@
     "assets": ["BTCB", "BNB"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://thena.fi/liquidity/fusion?currency0=0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c&currency1=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c&strategy=GAMMA_NARROW",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/fusion?currency0=0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c&currency1=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c&strategy=GAMMA_NARROW",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/btcb-wbnb-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/btcb-wbnb-narrow",
     "network": "bsc",
     "createdAt": 1683627858
   },
