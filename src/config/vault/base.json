@@ -1897,7 +1897,8 @@
     "earnContractAddress": "0xDec409020325D0722Ac08fF27C7A6a375aE755DB",
     "oracle": "lps",
     "oracleId": "bvm-axlusdt-axlusdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "bvm",
     "assets": ["axlUSDT", "axlUSDC"],
     "risks": [
