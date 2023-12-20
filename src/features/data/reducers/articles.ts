@@ -7,12 +7,12 @@ type ArticleEntity = BeefyArticleConfig;
 
 export type articlesState = {
   lastArticle: ArticleEntity | null;
-  readedArticlesById: Record<ArticleEntity['id'], boolean>;
+  lastReadArticleId: ArticleEntity['id'] | null;
 };
 
 const initialArticlesState: articlesState = {
   lastArticle: null,
-  readedArticlesById: {},
+  lastReadArticleId: null,
 };
 
 export const articlesSlice = createSlice({
@@ -23,12 +23,12 @@ export const articlesSlice = createSlice({
     setReadedArticleById(sliceState, action: PayloadAction<ArticleEntity['id']>) {
       const articleId = action.payload;
 
-      sliceState.readedArticlesById[articleId] = true;
+      sliceState.lastReadArticleId = articleId;
     },
   },
   extraReducers: builder => {
     builder.addCase(fetchLastArticle.fulfilled, (sliceState, action) => {
-      sliceState.lastArticle = { ...action.payload, date: 1702498233 };
+      sliceState.lastArticle = { ...action.payload };
     });
   },
 });

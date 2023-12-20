@@ -51,7 +51,7 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
   proposals: proposalsSlice.reducer,
   bridges: bridgesSlice.reducer,
   articles: persistReducer(
-    { key: 'articles', storage, whitelist: ['readedArticlesById'] },
+    { key: 'articles', storage, whitelist: ['lastReadArticleId'] },
     articlesSlice.reducer
   ),
 });
