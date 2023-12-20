@@ -43,7 +43,7 @@ const oldValidFeeRecipients = {
 };
 
 const nonHarvestOnDepositChains = ['ethereum', 'avax'];
-const nonHarvestOnDepositPools = ['venus-bnb'];
+const nonHarvestOnDepositPools = ['venus-bnb', 'equilibria-arb-silo-usdc.e'];
 
 const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddress'];
 
