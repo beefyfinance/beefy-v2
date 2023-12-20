@@ -56,9 +56,8 @@ export interface PartnersConfig {
   Nexus: ChainEntity['id'][];
 }
 
-interface BoostPartnerConfig {
-  logo: string;
-  background: string;
+export interface BoostPartnerConfig {
+  title: string;
   text: string;
   website: string;
   social: {
@@ -66,13 +65,25 @@ interface BoostPartnerConfig {
     twitter: string;
     discord?: string | null;
   };
-  logoNight?: string | null;
+}
+
+export interface BoostCampaignConfig {
+  title: string;
+  description: string;
+  learn: string;
+  social: {
+    telegram?: string;
+    twitter?: string;
+    discord?: string;
+  };
 }
 
 export interface BoostConfig {
   id: string;
   poolId: string;
   name: string;
+  tagIcon?: string;
+  tagText?: string;
   assets?: string[] | null;
   earnedToken: string;
   earnedTokenDecimals: number;
@@ -83,8 +94,8 @@ export interface BoostConfig {
   partnership: boolean;
   status: string;
   isMooStaked: boolean;
-  partners?: BoostPartnerConfig[] | null;
-  logo?: string | null;
+  partners?: string[] | undefined;
+  campaign?: string | undefined;
   fixedStatus?: boolean | null;
 }
 
@@ -306,6 +317,29 @@ export type TreasuryConfig = {
       };
     };
   };
+};
+
+export type MarketMakerHoldingConfig = {
+  symbol: string;
+  name: string;
+  oracleId: string;
+  oracleType: 'tokens' | 'lps';
+  usdValue: string;
+  balance: string;
+  price: number;
+};
+
+export type MarketMakerConfig = {
+  [marketMakerId: string]: {
+    [exchange: string]: {
+      [tokenId: string]: MarketMakerHoldingConfig;
+    };
+  };
+};
+
+export type TreasuryCompleteBreakdownConfig = {
+  treasury: TreasuryConfig;
+  marketMaker: MarketMakerConfig;
 };
 
 export interface BridgeConfig {

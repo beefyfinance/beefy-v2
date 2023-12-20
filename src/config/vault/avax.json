@@ -4969,8 +4969,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E#/",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDC-AVAX/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDC-AVAX/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/USDC-AVALANCHE/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/USDC-AVALANCHE/remove",
     "network": "avax",
     "createdAt": 1648729105
   },
@@ -5000,8 +5000,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7#/",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDT-AVAX/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDT-AVAX/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/USDT-AVALANCHE/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/USDT-AVALANCHE/remove",
     "network": "avax",
     "createdAt": 1648730342
   },

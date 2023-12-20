@@ -2,11 +2,7 @@ import type { VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
-import {
-  formatBigUsd,
-  formatFullBigNumber,
-  formatSignificantBigNumber,
-} from '../../helpers/format';
+import { formatBigUsd } from '../../helpers/format';
 import {
   selectVaultApyAvailable,
   selectVaultShouldShowInterest,
@@ -16,7 +12,6 @@ import {
   selectVaultDailyYieldStats,
 } from '../../features/data/selectors/apy';
 import { VaultValueStat } from '../VaultValueStat';
-import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
 
 export type VaultDailyUsdStatProps = {
   vaultId: VaultEntity['id'];
@@ -69,20 +64,16 @@ function mapStateToProps(
     };
   }
 
-  const { dailyTokens, dailyUsd, oraclePrice, tokenDecimals } = selectVaultDailyYieldStats(
-    state,
-    vaultId,
-    walletAddress
-  );
+  const { dailyUsd } = selectVaultDailyYieldStats(state, vaultId, walletAddress);
 
   return {
     label,
-    value: formatSignificantBigNumber(dailyTokens, tokenDecimals, oraclePrice, 0, 2),
-    subValue: formatBigUsd(dailyUsd),
+    value: formatBigUsd(dailyUsd),
+    subValue: null,
     blur: false,
     loading: !isLoaded,
     boosted: false,
-    tooltip: <BasicTooltipContent title={formatFullBigNumber(dailyTokens, tokenDecimals)} />,
+    tooltip: null,
     className: className ?? '',
     triggerClassName: triggerClassName ?? '',
   };

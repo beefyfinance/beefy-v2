@@ -49,7 +49,6 @@ export const MobileCollapseContent = memo<MobileCollapseContentProps>(
       <div className={classes.container}>
         <div className={classes.toggleContainer}>
           <ToggleButtons
-            selectedClass={classes.activeClassName}
             buttonClass={classes.buttonText}
             value={listComponent}
             onChange={handleChange}

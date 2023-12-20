@@ -19,13 +19,26 @@ export const styles = (theme: Theme) => ({
       padding: '16px',
     },
   },
+  marketMakerAnnotation: {
+    position: 'relative' as const,
+    bottom: '0.5em',
+    fontSize: '0.5em',
+  },
   icon: {
     height: '32px',
+  },
+  mmNameContainer: {
+    display: 'flex',
+    alignItems: 'center',
   },
   nameContainer: {
     display: 'flex',
     columnGap: '12px',
     alignItems: 'center',
+  },
+  mmName: {
+    color: theme.palette.text.light,
+    paddingLeft: '12px',
   },
   chainName: { color: theme.palette.text.light },
   usdValue: { color: theme.palette.text.light },
@@ -97,5 +110,11 @@ export const styles = (theme: Theme) => ({
   },
   'headerNetwork-gnosis': {
     backgroundColor: 'rgba(19, 54, 41, 0.4)',
+  },
+  'headerNetwork-linea': {
+    backgroundColor: 'rgba(18, 18, 18, 0.2)',
+  },
+  'headerMM-system9': {
+    backgroundColor: 'rgba(243, 243, 200, 0.5)',
   },
 });

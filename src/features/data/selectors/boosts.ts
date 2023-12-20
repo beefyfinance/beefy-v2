@@ -197,3 +197,11 @@ export const selectUserActiveBoostBalanceInToken = (
 
   return isBoosted ? selectBoostUserBalanceInToken(state, activeBoost.id, walletAddress) : BIG_ZERO;
 };
+
+export const selectBoostPartnerById = (state: BeefyState, partnerId: string) => {
+  return state.entities.boosts.partners.byId[partnerId];
+};
+
+export const selectBoostCampaignById = (state: BeefyState, campaignId: string) => {
+  return state.entities.boosts.campaigns.byId[campaignId];
+};

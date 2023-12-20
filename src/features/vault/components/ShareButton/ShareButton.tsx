@@ -18,8 +18,11 @@ import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectVaultTotalApy } from '../../../data/selectors/apy';
 import { formatPercent } from '../../../../helpers/format';
 import type { BeefyState } from '../../../../redux-types';
-import { selectBoostById, selectPreStakeOrActiveBoostIds } from '../../../data/selectors/boosts';
-import { selectPartnerById } from '../../../data/selectors/partners';
+import {
+  selectBoostById,
+  selectBoostPartnerById,
+  selectPreStakeOrActiveBoostIds,
+} from '../../../data/selectors/boosts';
 import type {
   BoostedVaultExtraDetails,
   CommonVaultDetails,
@@ -72,7 +75,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
         const boostIds = selectPreStakeOrActiveBoostIds(state, vault.id);
         if (boostIds.length && apys.boostApr && apys.boostApr > 0) {
           const boost = selectBoostById(state, boostIds[0]);
-          const mainPartner = selectPartnerById(state, boost.partnerIds[0]);
+          const mainPartner = selectBoostPartnerById(state, boost.partnerIds[0]);
           const boostToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
           const partnerTag = '#' + boost.name.toLowerCase().replace(' ', '');
           let partnerHandle;

@@ -30,10 +30,11 @@ import {
 } from '../../features/data/selectors/data-loader';
 import { fetchActiveProposals } from '../../features/data/actions/proposal';
 import { UnreadProposalsDot } from './components/Badges/UnreadProposalsDot';
-import headerLogoMobile from '../../images/bifi-logos/header-logo-notext.svg';
-import headerLogoDesktop from '../../images/bifi-logos/header-logo.svg';
 import { UnreadArticlesDot } from './components/Badges/UnreadArticlesDot';
 import { fetchLastArticle } from '../../features/data/actions/articles';
+import headerLogoMobile from '../../images/bifi-logos/header-logo-notext-xmas.svg';
+import headerLogoDesktop from '../../images/bifi-logos/header-logo-xmas.svg';
+
 
 const useStyles = makeStyles(styles);
 export const Header = memo(function Header() {

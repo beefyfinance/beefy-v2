@@ -3,16 +3,30 @@ import type { BeefyState } from '../../../redux-types';
 import type { FetchAllBalancesResult } from '../apis/balance/balance-types';
 import { getBalanceApi } from '../apis/instances';
 import type { ChainEntity } from '../entities/chain';
-import { selectAllTokenWhereUserCouldHaveBalance } from '../selectors/balance';
-import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
+import {
+  selectAllTokenWhereUserCouldHaveBalance,
+  selectBoostUserBalanceInToken,
+  selectGovVaultUserStakedBalanceInDepositToken,
+  selectUserBalanceOfToken,
+} from '../selectors/balance';
+import {
+  selectAllVaultBoostIds,
+  selectBoostById,
+  selectBoostsByChainId,
+} from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
 import { selectTokenByAddress } from '../selectors/tokens';
-import { selectAllGovVaultsByChainId } from '../selectors/vaults';
+import {
+  selectAllGovVaultsByChainId,
+  selectAllVaultIds,
+  selectVaultById,
+} from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 import type { TokenEntity } from '../entities/token';
-import type { VaultEntity } from '../entities/vault';
+import { isStandardVault, type VaultEntity } from '../entities/vault';
 import { isGovVault } from '../entities/vault';
 import { uniqueTokens } from '../../../helpers/tokens';
+import { BIG_ZERO } from '../../../helpers/big-number';
 
 export interface FetchAllBalanceActionParams {
   chainId: ChainEntity['id'];
@@ -107,3 +121,78 @@ export const fetchBalanceAction = createAsyncThunk<
     };
   }
 );
+
+export type RecalculateDepositedVaultsParams = {
+  walletAddress: string;
+};
+
+export type RecalculateDepositedVaultsPayload = {
+  walletAddress: string;
+  vaultIds: VaultEntity['id'][];
+};
+
+export const recalculateDepositedVaultsAction = createAsyncThunk<
+  RecalculateDepositedVaultsPayload,
+  RecalculateDepositedVaultsParams,
+  { state: BeefyState }
+>('balance/recalculateDepositedVaultsAction', async ({ walletAddress }, { getState }) => {
+  const state = getState();
+  const allVaultIds = selectAllVaultIds(state);
+  const depositedIds: VaultEntity['id'][] = [];
+
+  for (const vaultId of allVaultIds) {
+    const vault = selectVaultById(state, vaultId);
+
+    if (isStandardVault(vault)) {
+      // standard vaults via receipt tokens
+      let deposited = false;
+      const balance = selectUserBalanceOfToken(
+        state,
+        vault.chainId,
+        vault.earnContractAddress,
+        walletAddress
+      );
+      if (balance.gt(BIG_ZERO)) {
+        deposited = true;
+      }
+
+      // + boosts
+      if (!deposited) {
+        const boostIds = selectAllVaultBoostIds(state, vault.id);
+        for (const boostId of boostIds) {
+          const balance = selectBoostUserBalanceInToken(state, boostId, walletAddress);
+          if (balance.gt(BIG_ZERO)) {
+            deposited = true;
+            break;
+          }
+        }
+      }
+
+      // + bridged
+      if (!deposited && vault.bridged) {
+        for (const [chainId, bridgedAddress] of Object.entries(vault.bridged)) {
+          const balance = selectUserBalanceOfToken(state, chainId, bridgedAddress, walletAddress);
+          if (balance.gt(BIG_ZERO)) {
+            deposited = true;
+            break;
+          }
+        }
+      }
+
+      // add?
+      if (deposited) {
+        depositedIds.push(vault.id);
+      }
+    } else if (isGovVault(vault)) {
+      const balance = selectGovVaultUserStakedBalanceInDepositToken(state, vault.id, walletAddress);
+      if (balance.gt(BIG_ZERO)) {
+        depositedIds.push(vault.id);
+      }
+    }
+  }
+
+  return {
+    walletAddress,
+    vaultIds: depositedIds,
+  };
+});

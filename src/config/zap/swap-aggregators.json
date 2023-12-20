@@ -289,7 +289,7 @@
   {
     "id": "kyber-zksync",
     "type": "kyber",
-    "chainId": "zkevm",
+    "chainId": "zksync",
     "fee": {
       "value": 0.0005,
       "recipient": "0x9F9FE15FDa14eAA2d878Ed667C805A7CC13c2560"
@@ -319,6 +319,18 @@
       "recipient": "0x88D19A03C429029901d917510f8f582D2E5F803B"
     },
     "priorityTokens": ["ETH", "WETH", "cbETH", "USDbC", "axlUSDC", "DAI", "MIM"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "kyber-linea",
+    "type": "kyber",
+    "chainId": "linea",
+    "fee": {
+      "value": 0.0005,
+      "recipient": "0x008f84b4f7B625636dD3E75045704b077D8db445"
+    },
+    "priorityTokens": ["ETH", "WETH", "USDC", "USDT", "DAI", "WBTC", "wstETH"],
     "blockedTokens": [],
     "blockedVaults": []
   }

@@ -8650,37 +8650,6 @@
     ]
   },
   {
-    "id": "beets-treeb-me-bro-eol",
-    "name": "Treeb Me Bro",
-    "type": "standard",
-    "token": "Treeb Me Bro",
-    "tokenAddress": "0xA1C5698A042638b6220e336Ed9cFAFb499560c20",
-    "tokenDecimals": 18,
-    "tokenProviderId": "beethovenx",
-    "earnedToken": "mooBeetTreebMeBro",
-    "earnedTokenAddress": "0xD8E92bcBf66a675b2Ac45f0BBbb0F285ba607AB7",
-    "earnContractAddress": "0xD8E92bcBf66a675b2Ac45f0BBbb0F285ba607AB7",
-    "oracle": "lps",
-    "oracleId": "beets-treeb-me-bro",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "beethovenx",
-    "assets": ["TREEB", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "NEW_STRAT",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://beets.fi/#/pool/0xa1c5698a042638b6220e336ed9cfafb499560c200002000000000000000001b6",
-    "removeLiquidityUrl": "https://beets.fi/#/pool/0xa1c5698a042638b6220e336ed9cfafb499560c200002000000000000000001b6",
-    "network": "fantom",
-    "createdAt": 1644853476
-  },
-  {
     "id": "spartacadabra-charm-usdc-eol",
     "name": "CHARM-USDC",
     "type": "standard",

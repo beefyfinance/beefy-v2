@@ -73,7 +73,7 @@
     "oracleId": "WFUSE",
     "status": "active",
     "platformId": "beefy",
-    "assets": ["WFUSE"],
+    "assets": ["FUSE"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",

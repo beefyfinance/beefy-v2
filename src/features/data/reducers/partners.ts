@@ -1,17 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAllBoosts } from '../actions/boosts';
-import { fetchPartnersConfig } from '../actions/partners';
 import type { ChainEntity } from '../entities/chain';
-import type { PartnerEntity } from '../entities/partner';
 import type { VaultEntity } from '../entities/vault';
+import { fetchPartnersConfig } from '../actions/partners';
 
 /**
  * State containing Vault infos
  */
 export type PartnersState = {
-  byId: {
-    [partnerId: PartnerEntity['id']]: PartnerEntity;
-  };
   insurace: {
     byChainId: {
       [chainId: ChainEntity['id']]: boolean;
@@ -30,14 +25,12 @@ export type PartnersState = {
   };
 };
 export const initialPartnersState: PartnersState = {
-  byId: {},
   insurace: {
     byChainId: {},
   },
   qidao: {
     byVaultId: {},
   },
-
   nexus: {
     byChainId: {},
   },
@@ -64,19 +57,6 @@ export const partnersSlice = createSlice({
       for (const chainId of action.payload.Nexus) {
         if (!sliceState.nexus.byChainId[chainId]) {
           sliceState.nexus.byChainId[chainId] = true;
-        }
-      }
-    });
-
-    builder.addCase(fetchAllBoosts.fulfilled, (sliceState, action) => {
-      for (const boosts of Object.values(action.payload)) {
-        for (const boost of boosts) {
-          for (const partner of boost.partners || []) {
-            const id = partner.website;
-            if (sliceState.byId[id] === undefined) {
-              sliceState.byId[id] = { id, ...partner };
-            }
-          }
         }
       }
     });

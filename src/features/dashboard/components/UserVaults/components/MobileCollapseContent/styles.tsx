@@ -13,9 +13,6 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
-  activeClassName: {
-    backgroundColor: theme.palette.primary.main,
-  },
   buttonText: {
     ...theme.typography['body-sm-med'],
   },
