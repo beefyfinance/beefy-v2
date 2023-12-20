@@ -12,6 +12,7 @@ import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { IconWithTooltip } from '../../../../../../components/Tooltip';
 import { IconWithBasicTooltip } from '../../../../../../components/Tooltip/IconWithBasicTooltip';
+import { transactFetchQuotes } from '../../../../../data/actions/transact';
 
 const useStyles = makeStyles(styles);
 
@@ -206,6 +207,7 @@ export const ZapSlippage = memo<ZapSlippageProps>(function ZapSlippage({ classNa
   const handleChange = useCallback<CustomSlippageInputProps['onChange']>(
     value => {
       dispatch(transactActions.setSlippage({ slippage: value ? value / 100 : DEFAULT_SLIPPAGE }));
+      dispatch(transactFetchQuotes());
     },
     [dispatch]
   );

@@ -529,7 +529,14 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-narrow",
     "network": "optimism",
-    "createdAt": 1691433584
+    "createdAt": 1691433584,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "optimism-gamma-uniswap-v3",
+        "chefAddress": "0xC7846d1bc4d8bcF7c45a7c998b77cE9B3c904365"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-weth-op-wide",
@@ -553,7 +560,14 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-wide",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-wide",
     "network": "optimism",
-    "createdAt": 1691433584
+    "createdAt": 1691433584,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "optimism-gamma-uniswap-v3",
+        "chefAddress": "0xC7846d1bc4d8bcF7c45a7c998b77cE9B3c904365"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-weth-hop",

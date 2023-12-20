@@ -12,6 +12,7 @@ import type { VaultEntity } from '../../../entities/vault';
 import type { BeefyState } from '../../../../../redux-types';
 import type {
   AmmEntity,
+  AmmEntityGamma,
   AmmEntitySolidly,
   AmmEntityUniswapV2,
   ZapEntity,
@@ -43,18 +44,23 @@ export type UniswapV2StrategyOptions = UniswapLikeStrategyOptions<AmmEntityUnisw
 
 export type SolidlyStrategyOptions = UniswapLikeStrategyOptions<AmmEntitySolidly>;
 
+export type GammaStrategyOptions = {
+  strategyId: 'gamma';
+  ammId: AmmEntityGamma['id'];
+  chefAddress: string;
+} & OptionalStrategySwapOption;
+
 export type StrategyOptions =
   | SingleStrategyOptions
   | UniswapV2StrategyOptions
-  | SolidlyStrategyOptions;
+  | SolidlyStrategyOptions
+  | GammaStrategyOptions;
 
 export interface IStrategy {
   readonly id: string;
 
-  /**
-   * Asynchronously called after constructor.
-   */
-  initialize(): Promise<void>;
+  beforeQuote?(): Promise<void>;
+  beforeStep?(): Promise<void>;
 
   fetchDepositOptions(): Promise<DepositOption[]>;
 

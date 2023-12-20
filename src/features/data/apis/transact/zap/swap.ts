@@ -56,19 +56,21 @@ export async function fetchZapAggregatorSwap(
     outputs: [swapOutput],
     minOutputs: [swapOutputMin],
     returned: [],
-    zap: {
-      target: swap.tx.toAddress,
-      data: swap.tx.data,
-      value: swap.tx.value,
-      tokens:
-        isFromNative && !insertBalance
-          ? []
-          : [
-              {
-                token: getTokenAddress(swap.fromToken),
-                index: insertBalance && !isFromNative ? swap.tx.inputPosition : -1, // use all balance : set allowance only
-              },
-            ],
-    },
+    zaps: [
+      {
+        target: swap.tx.toAddress,
+        data: swap.tx.data,
+        value: swap.tx.value,
+        tokens:
+          isFromNative && !insertBalance
+            ? []
+            : [
+                {
+                  token: getTokenAddress(swap.fromToken),
+                  index: insertBalance && !isFromNative ? swap.tx.inputPosition : -1, // use all balance : set allowance only
+                },
+              ],
+      },
+    ],
   };
 }
