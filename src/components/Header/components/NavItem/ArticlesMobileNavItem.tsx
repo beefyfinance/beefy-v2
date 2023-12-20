@@ -2,7 +2,7 @@ import { memo, useCallback } from 'react';
 import type { NavItemProps } from '../DropNavItem/types';
 import { NavItemMobile } from './NavItem';
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import { UnreadArticlesDot } from '../Badges/UnreadArticlesDot';
+import { UnreadArticleDot } from '../Badges/UnreadDots';
 import { selectLastArticle } from '../../../../features/data/selectors/articles';
 import { articlesActions } from '../../../../features/data/reducers/articles';
 
@@ -31,7 +31,7 @@ export const ArticlesMobileNavItem = memo<NavItemProps>(function ArticlesMobileN
       Icon={Icon}
       onClick={markRead}
       className={className}
-      Badge={UnreadArticlesDot}
+      Badge={UnreadArticleDot}
     />
   );
 });

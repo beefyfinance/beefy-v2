@@ -9,9 +9,8 @@ import { MobileList } from '../../list';
 import type { NavConfig, NavDropdownConfig } from '../DropNavItem/types';
 import { isNavDropdownConfig } from '../DropNavItem/types';
 import clsx from 'clsx';
-import { UnreadProposalsDot } from '../Badges/UnreadProposalsDot';
 import { Prices } from '../Prices';
-import { UnreadArticlesDot } from '../Badges/UnreadArticlesDot';
+import { UnreadDots } from '../Badges/UnreadDots';
 
 const useStyles = makeStyles(styles);
 
@@ -25,7 +24,7 @@ export const MobileMenu = memo(function MobileMenu() {
     <div>
       <button aria-label="menu" onClick={handleDrawerToggle} className={classes.toggleDrawer}>
         <Menu fontSize="inherit" className={classes.toggleDrawerIcon} />
-        <UnreadedDots />
+        <UnreadDots />
       </button>
       <Drawer className={classes.bg} anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
         <div className={classes.menuContainer}>
@@ -118,16 +117,5 @@ export const DropMobile = memo<DropMobileProps>(function DropMobile({
         })}
       </div>
     </div>
-  );
-});
-
-export const UnreadedDots = memo(function UnreadDots() {
-  const classes = useStyles();
-
-  return (
-    <>
-      <UnreadProposalsDot className={classes.toggleDrawNotification} />
-      <UnreadArticlesDot className={classes.toggleDrawNotification} />
-    </>
   );
 });

@@ -1,19 +1,18 @@
-import { memo, useMemo } from 'react';
-import type { BadgeComponentProps } from './types';
-import { useAppSelector } from '../../../../store';
-import { NotificationDot } from './NotificationDot';
+import { useMemo } from 'react';
 import {
   selectLastArticle,
   selectLastReadArticleId,
 } from '../../../../features/data/selectors/articles';
+import { useAppSelector } from '../../../../store';
+import { selectUnreadActiveProposals } from '../../../../features/data/selectors/proposals';
 
 const SEVEN_DAYS_IN_SECONDS = 60 * 60 * 24 * 7;
 
-export const UnreadArticlesDot = memo<BadgeComponentProps>(function UnreadArticlessDot(props) {
+export function useHaveUnreadArticle() {
   const lastArticle = useAppSelector(selectLastArticle);
   const lastReadArticleId = useAppSelector(selectLastReadArticleId);
 
-  const showDot = useMemo(() => {
+  return useMemo(() => {
     const now = new Date().getTime() / 1000;
 
     if (
@@ -26,10 +25,16 @@ export const UnreadArticlesDot = memo<BadgeComponentProps>(function UnreadArticl
 
     return false;
   }, [lastArticle, lastReadArticleId]);
+}
 
-  if (!showDot) {
-    return null;
-  }
+export function useHaveUnreadProposal() {
+  const proposals = useAppSelector(selectUnreadActiveProposals);
 
-  return <NotificationDot {...props} />;
-});
+  return useMemo(() => {
+    if (proposals.length === 0) {
+      return false;
+    }
+
+    return true;
+  }, [proposals.length]);
+}
