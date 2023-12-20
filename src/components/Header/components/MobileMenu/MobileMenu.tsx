@@ -25,8 +25,7 @@ export const MobileMenu = memo(function MobileMenu() {
     <div>
       <button aria-label="menu" onClick={handleDrawerToggle} className={classes.toggleDrawer}>
         <Menu fontSize="inherit" className={classes.toggleDrawerIcon} />
-        <UnreadProposalsDot className={classes.toggleDrawNotification} />
-        <UnreadArticlesDot className={classes.toggleDrawNotification} />
+        <UnreadedDots />
       </button>
       <Drawer className={classes.bg} anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
         <div className={classes.menuContainer}>
@@ -119,5 +118,16 @@ export const DropMobile = memo<DropMobileProps>(function DropMobile({
         })}
       </div>
     </div>
+  );
+});
+
+export const UnreadedDots = memo(function UnreadDots() {
+  const classes = useStyles();
+
+  return (
+    <>
+      <UnreadProposalsDot className={classes.toggleDrawNotification} />
+      <UnreadArticlesDot className={classes.toggleDrawNotification} />
+    </>
   );
 });

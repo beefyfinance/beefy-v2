@@ -34,7 +34,7 @@ import type { BridgesState } from './features/data/reducers/bridges';
 import type { MigrationState } from './features/data/reducers/wallet/migration';
 import type { TooltipsState } from './features/data/reducers/tooltips';
 import type { AddToWalletState } from './features/data/reducers/add-to-wallet';
-import type { articlesState } from './features/data/reducers/articles';
+import type { ArticlesState } from './features/data/reducers/articles';
 
 export interface BeefyState {
   entities: {
@@ -48,7 +48,7 @@ export interface BeefyState {
     minters: MintersState;
     proposals: ProposalsState;
     bridges: BridgesState;
-    articles: articlesState;
+    articles: ArticlesState;
   };
   biz: {
     tvl: TvlState;

@@ -5,12 +5,12 @@ import type { BeefyArticleConfig } from '../apis/beefy/beefy-api';
 
 type ArticleEntity = BeefyArticleConfig;
 
-export type articlesState = {
+export type ArticlesState = {
   lastArticle: ArticleEntity | null;
   lastReadArticleId: ArticleEntity['id'] | null;
 };
 
-const initialArticlesState: articlesState = {
+const initialArticlesState: ArticlesState = {
   lastArticle: null,
   lastReadArticleId: null,
 };
