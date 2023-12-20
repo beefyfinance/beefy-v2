@@ -16,6 +16,14 @@
     "name": "Conic Finance"
   },
   {
+    "id": "equilibria",
+    "name": "Equilibria"
+  },
+  {
+    "id": "pendle",
+    "name": "Pendle"
+  },
+  {
     "id": "apeswap",
     "name": "ApeSwap"
   },
