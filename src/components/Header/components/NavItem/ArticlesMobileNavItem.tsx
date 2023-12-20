@@ -17,7 +17,7 @@ export const ArticlesMobileNavItem = memo<NavItemProps>(function ArticlesMobileN
   const dispatch = useAppDispatch();
   const markRead = useCallback(() => {
     if (lastArticle) {
-      dispatch(articlesActions.setReadedArticleById(lastArticle.id));
+      dispatch(articlesActions.setLastReadArticleId(lastArticle.id));
     }
     if (onClick) {
       onClick();

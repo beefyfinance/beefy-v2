@@ -20,7 +20,7 @@ export const articlesSlice = createSlice({
   initialState: initialArticlesState,
 
   reducers: {
-    setReadedArticleById(sliceState, action: PayloadAction<ArticleEntity['id']>) {
+    setLastReadArticleId(sliceState, action: PayloadAction<ArticleEntity['id']>) {
       const articleId = action.payload;
 
       sliceState.lastReadArticleId = articleId;
