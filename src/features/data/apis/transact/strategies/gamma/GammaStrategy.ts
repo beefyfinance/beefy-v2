@@ -668,8 +668,8 @@ export class GammaStrategy implements IStrategy {
 
     // Common: Break LP
     const strategyAddress = selectVaultStrategyAddress(state, vault.id);
-    const tokenHolders: [string, ...string[]] = this.options.chefAddress
-      ? [this.options.chefAddress, strategyAddress]
+    const tokenHolders: [string, ...string[]] = this.options.tokenHolder
+      ? [this.options.tokenHolder, strategyAddress]
       : [strategyAddress];
     const [amount0, amount1] = await this.pool.quoteRemoveLiquidity(
       withdrawnAmountAfterFeeWei,
@@ -813,8 +813,8 @@ export class GammaStrategy implements IStrategy {
     const state = getState();
 
     const strategyAddress = selectVaultStrategyAddress(state, vault.id);
-    const tokenHolders: [string, ...string[]] = this.options.chefAddress
-      ? [this.options.chefAddress, strategyAddress]
+    const tokenHolders: [string, ...string[]] = this.options.tokenHolder
+      ? [this.options.tokenHolder, strategyAddress]
       : [strategyAddress];
     const withdrawnAmountAfterFeeWei = toWei(inputs[0].amount, inputs[0].token.decimals);
     const [amount0, amount1] = await this.pool.quoteRemoveLiquidity(

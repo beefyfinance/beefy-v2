@@ -48,7 +48,7 @@ export type GammaStrategyOptions = {
   strategyId: 'gamma';
   ammId: AmmEntityGamma['id'];
   /** where are the LP tokens held while earning, not needed for merkle as tokens held in strategy */
-  chefAddress?: string | undefined;
+  tokenHolder?: string | undefined;
 } & OptionalStrategySwapOption;
 
 export type StrategyOptions =
