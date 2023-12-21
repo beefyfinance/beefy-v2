@@ -1,8 +1,8 @@
 [
   {
     "chainId": "ethereum",
-    "router": "0xD6F475E999740ABb206F1E1D37d91F1bDC537E18",
-    "manager": "0x99449c03F3AE23F8187AA697d30e667886Ef0914"
+    "router": "0x5Cc9400FfB4Da168Cf271e912F589462C3A00d1F",
+    "manager": "0xEdFEc19ee32f5130084C0aCab91FeA604C137912"
   },
   {
     "chainId": "polygon",
