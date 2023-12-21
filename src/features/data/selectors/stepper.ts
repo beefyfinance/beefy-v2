@@ -1,7 +1,7 @@
 import { BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../redux-types';
 import { formatBigDecimals } from '../../../helpers/format';
-import { isTokenErc20, isTokenNative } from '../entities/token';
+import { isTokenErc20 } from '../entities/token';
 import { StepContent } from '../reducers/wallet/stepper';
 import type { TokenAmount } from '../apis/transact/transact-types';
 import { selectChainNativeToken, selectTokenByAddressOrNull } from './tokens';
@@ -151,13 +151,12 @@ export function selectZapReturned(state: BeefyState) {
     return [];
   }
 
+  // We need to know what normal tokens to expect, so we don't show them as dust
   if (!expectedTokens || !expectedTokens.length) {
     return [];
   }
-
-  // We need to know what normal tokens to expect, so we don't show them as dust
-  const excludeTokens: string[] = expectedTokens.map(t =>
-    isTokenNative(t) ? ZERO_ADDRESS : t.address.toLowerCase()
+  const expectedTokensAddresses: Set<string> = new Set(
+    expectedTokens.map(t => t.address.toLowerCase())
   );
 
   const vault = selectVaultById(state, vaultId);
@@ -186,7 +185,8 @@ export function selectZapReturned(state: BeefyState) {
         token,
       };
     })
-    .filter(t => !excludeTokens.includes(t.token.address.toLowerCase()))
+    .filter(t => !!t.token)
+    .filter(t => !expectedTokensAddresses.has(t.token.address.toLowerCase()))
     .filter(t => t.amount.gte(minAmount));
 
   return tokenAmounts;
