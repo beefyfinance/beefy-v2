@@ -26,5 +26,17 @@
     "swapFeeNumerator": "25",
     "swapFeeDenominator": "10000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "moonbeam-gamma-beamswap",
+    "type": "gamma",
+    "name": "Gamma Beamswap",
+    "proxyAddress": "0x3f474e5A15F42481ac18681a84D99691b828d5D1"
+  },
+  {
+    "id": "moonbeam-gamma-stellaswap",
+    "type": "gamma",
+    "name": "Gamma Stellaswap",
+    "proxyAddress": "0x34c14dCc974f827e0aa8E7a3EB0Db2431d09068E"
   }
 ]

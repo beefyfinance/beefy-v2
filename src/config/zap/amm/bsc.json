@@ -120,5 +120,17 @@
     "swapFeeNumerator": "4",
     "swapFeeDenominator": "10000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "bsc-gamma-thena-f75c",
+    "type": "gamma",
+    "name": "Gamma Thena",
+    "proxyAddress": "0xF75c017E3b023a593505e281b565ED35Cc120efa"
+  },
+  {
+    "id": "bsc-gamma-thena-6b3d",
+    "type": "gamma",
+    "name": "Gamma Thena",
+    "proxyAddress": "0x6B3d98406779DDca311E6C43553773207b506Fa6"
   }
 ]

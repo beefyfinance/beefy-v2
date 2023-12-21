@@ -458,7 +458,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/sushi/base/details/weth-usdbc-500-dynamic",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/sushi/base/details/weth-usdbc-500-dynamic",
     "network": "base",
-    "createdAt": 1698588011
+    "createdAt": 1698588011,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "base-gamma-sushi"
+      }
+    ]
   },
   {
     "id": "equalizer-base-axlwbtc-weth",

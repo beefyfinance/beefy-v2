@@ -38,5 +38,11 @@
     "swapFeeNumerator": "3",
     "swapFeeDenominator": "1000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "ethereum-gamma-uniswap-v3",
+    "type": "gamma",
+    "name": "Gamma Uniswap",
+    "proxyAddress": "0x83dE646A7125aC04950FEA7e322481D4BE66c71d"
   }
 ]

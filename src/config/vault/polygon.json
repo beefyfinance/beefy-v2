@@ -20,7 +20,14 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/cbeth-weth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/cbeth-weth-pegged-price",
     "network": "polygon",
-    "createdAt": 1700229087
+    "createdAt": 1700229087,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wbtc-weth-wide",
@@ -43,7 +50,14 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-weth-wide",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-weth-wide",
     "network": "polygon",
-    "createdAt": 1700229087
+    "createdAt": 1700229087,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "compound-polygon-usdc",
@@ -100,7 +114,14 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdt-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdt-narrow",
     "network": "polygon",
-    "createdAt": 1698862190
+    "createdAt": 1698862190,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-quick",
@@ -117,13 +138,20 @@
     "oracleId": "quick-gamma-wmatic-quick",
     "status": "active",
     "platformId": "gamma",
-    "assets": ["QUICK", "MATIC"],
+    "assets": ["newQUICK", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-quick-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-quick-narrow",
     "network": "polygon",
-    "createdAt": 1698862190
+    "createdAt": 1698862190,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-link-weth",
@@ -146,7 +174,14 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/link-weth-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/link-weth-narrow",
     "network": "polygon",
-    "createdAt": 1698862190
+    "createdAt": 1698862190,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-weth-aave",
@@ -169,7 +204,14 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-aave-wide",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-aave-wide",
     "network": "polygon",
-    "createdAt": 1698862190
+    "createdAt": 1698862190,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-bob-usdc-stable",
@@ -193,7 +235,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xB0B195aEFA3650A6908f15CdaC7D92F8a5791B0B",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xB0B195aEFA3650A6908f15CdaC7D92F8a5791B0B",
     "network": "polygon",
-    "createdAt": 1694096966
+    "createdAt": 1694096966,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-e0a6",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "retro-gamma-cash-weth",
@@ -216,7 +265,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/cash-weth-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/cash-weth-500-narrow",
     "network": "polygon",
-    "createdAt": 1693479128
+    "createdAt": 1693479128,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wmatic-cash",
@@ -239,7 +294,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-cash-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-cash-500-narrow",
     "network": "polygon",
-    "createdAt": 1693479128
+    "createdAt": 1693479128,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wbtc-cash",
@@ -262,7 +323,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wbtc-cash-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wbtc-cash-3000-narrow",
     "network": "polygon",
-    "createdAt": 1693479128
+    "createdAt": 1693479128,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-usdc-cash",
@@ -286,7 +353,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-cash-100-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-cash-100-stable",
     "network": "polygon",
-    "createdAt": 1693479128
+    "createdAt": 1693479128,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "aura-polygon-gyro-matic-stmatic",
@@ -356,7 +429,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wbtc-weth-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wbtc-weth-500-narrow",
     "network": "polygon",
-    "createdAt": 1693395784
+    "createdAt": 1693395784,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wmatic-frxeth-narrow",
@@ -379,7 +458,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-frxeth-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-frxeth-500-narrow",
     "network": "polygon",
-    "createdAt": 1693395784
+    "createdAt": 1693395784,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-frax-mimatic-",
@@ -403,7 +488,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/frax-mai-3000-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/frax-mai-3000-stable",
     "network": "polygon",
-    "createdAt": 1691499559
+    "createdAt": 1691499559,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wmatic-maticx",
@@ -426,7 +517,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-maticx-100-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-maticx-100-pegged-price",
     "network": "polygon",
-    "createdAt": 1691499559
+    "createdAt": 1691499559,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wmatic-stmatic",
@@ -449,7 +546,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-stmatic-100-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-stmatic-100-pegged-price",
     "network": "polygon",
-    "createdAt": 1691499559
+    "createdAt": 1691499559,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-usdc-ageur-narrow",
@@ -472,7 +575,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-ageur-100-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-ageur-100-narrow",
     "network": "polygon",
-    "createdAt": 1691447788
+    "createdAt": 1691447788,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-weth-frxeth-narrow",
@@ -495,7 +604,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/weth-frxeth-100-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/weth-frxeth-100-stable",
     "network": "polygon",
-    "createdAt": 1691447788
+    "createdAt": 1691447788,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-usdc-usdt",
@@ -518,7 +633,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-usdt-100-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-usdt-100-stable",
     "network": "polygon",
-    "createdAt": 1691447788
+    "createdAt": 1691447788,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "pearl-usdrv3-tngbl",
@@ -665,7 +786,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-usdc.e-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-usdc.e-500-narrow",
     "network": "polygon",
-    "createdAt": 1691364568
+    "createdAt": 1691364568,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-usdc-weth-narrow",
@@ -688,7 +815,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-weth-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-weth-500-narrow",
     "network": "polygon",
-    "createdAt": 1691364568
+    "createdAt": 1691364568,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wmatic-weth-narrow",
@@ -711,7 +844,13 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-weth-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-weth-500-narrow",
     "network": "polygon",
-    "createdAt": 1691364568
+    "createdAt": 1691364568,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "pearl-usdrv3-usdt",
@@ -913,7 +1052,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "network": "polygon",
-    "createdAt": 1688597681
+    "createdAt": 1688597681,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wbtc-usdc-narrow",
@@ -936,7 +1082,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "network": "polygon",
-    "createdAt": 1686917465
+    "createdAt": 1686917465,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wbtc-weth-narrow",
@@ -959,7 +1112,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "network": "polygon",
-    "createdAt": 1686917465
+    "createdAt": 1686917465,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-usdc-weth-wide",
@@ -982,7 +1142,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "network": "polygon",
-    "createdAt": 1686917465
+    "createdAt": 1686917465,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-usdc-weth-narrow",
@@ -1005,7 +1172,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "network": "polygon",
-    "createdAt": 1686917465
+    "createdAt": 1686917465,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-usdc-axlusdc-narrow",
@@ -1028,7 +1202,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed",
     "network": "polygon",
-    "createdAt": 1686917464
+    "createdAt": 1686917464,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-dai-mimatic-narrow",
@@ -1052,7 +1233,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "network": "polygon",
-    "createdAt": 1686917464
+    "createdAt": 1686917464,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-e0a6",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-mimatic-usdt-narrow",
@@ -1076,7 +1264,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "network": "polygon",
-    "createdAt": 1686917464
+    "createdAt": 1686917464,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-e0a6",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-usdc-dai-narrow",
@@ -1099,7 +1294,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
     "network": "polygon",
-    "createdAt": 1686917464
+    "createdAt": 1686917464,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-usdc-usdt-narrow",
@@ -1122,7 +1324,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "network": "polygon",
-    "createdAt": 1686917464
+    "createdAt": 1686917464,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-usdc-wide",
@@ -1145,7 +1354,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "network": "polygon",
-    "createdAt": 1686917464
+    "createdAt": 1686917464,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-usdc-narrow",
@@ -1168,7 +1384,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "network": "polygon",
-    "createdAt": 1686917464
+    "createdAt": 1686917464,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "pearl-matic-usdr",
@@ -1222,7 +1445,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
     "network": "polygon",
-    "createdAt": 1686878623
+    "createdAt": 1686878623,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-maticx-narrow",
@@ -1245,7 +1475,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6",
     "network": "polygon",
-    "createdAt": 1686878623
+    "createdAt": 1686878623,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-weth-narrow",
@@ -1268,7 +1505,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "network": "polygon",
-    "createdAt": 1686878623
+    "createdAt": 1686878623,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-weth-wide",
@@ -1291,7 +1535,14 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "network": "polygon",
-    "createdAt": 1686878623
+    "createdAt": 1686878623,
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "pearl-dai-usdr",
