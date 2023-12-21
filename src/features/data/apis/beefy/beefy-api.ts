@@ -94,6 +94,16 @@ export type BeefySnapshotProposal = {
 };
 export type BeefySnapshotActiveResponse = BeefySnapshotProposal[];
 
+export type BeefyArticleConfig = {
+  id: string;
+  title: string;
+  description: string;
+  url: string;
+  date: number;
+};
+
+export type BeefyLastArticleResponse = BeefyArticleConfig;
+
 export type ZapAggregatorTokenSupportResponse = {
   [chainId: ChainEntity['id']]: {
     [tokenAddress: TokenEntity['address']]: {
@@ -225,6 +235,17 @@ export class BeefyAPI {
     }
 
     const res = await this.api.get<BeefySnapshotActiveResponse>('/snapshot/active', {
+      params: { _: this.getCacheBuster('short') },
+    });
+    return res.data;
+  }
+
+  public async getArticles(): Promise<BeefyLastArticleResponse> {
+    if (featureFlag_simulateBeefyApiError('articles')) {
+      throw new Error('Simulated beefy api error');
+    }
+
+    const res = await this.api.get<BeefyLastArticleResponse>('/articles/latest', {
       params: { _: this.getCacheBuster('short') },
     });
     return res.data;

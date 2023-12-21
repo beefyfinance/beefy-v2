@@ -24,9 +24,13 @@ import { DropNavItem } from './components/DropNavItem';
 import { MobileMenu } from './components/MobileMenu';
 import { Prices } from './components/Prices';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { selectShouldInitProposals } from '../../features/data/selectors/data-loader';
+import {
+  selectShouldInitArticles,
+  selectShouldInitProposals,
+} from '../../features/data/selectors/data-loader';
 import { fetchActiveProposals } from '../../features/data/actions/proposal';
-import { UnreadProposalsDot } from './components/Badges/UnreadProposalsDot';
+import { UnreadProposalDot, UnreadArticleDot } from './components/Badges/UnreadDots';
+import { fetchLastArticle } from '../../features/data/actions/articles';
 import headerLogoMobile from '../../images/bifi-logos/header-logo-notext-xmas.svg';
 import headerLogoDesktop from '../../images/bifi-logos/header-logo-xmas.svg';
 
@@ -35,13 +39,20 @@ export const Header = memo(function Header() {
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width: 500px)', { noSsr: true });
   const dispatch = useAppDispatch();
-  const shouldLoad = useAppSelector(selectShouldInitProposals);
+  const shouldLoadProposals = useAppSelector(selectShouldInitProposals);
+  const shoudLoadArticles = useAppSelector(selectShouldInitArticles);
 
   useEffect(() => {
-    if (shouldLoad) {
+    if (shouldLoadProposals) {
       dispatch(fetchActiveProposals());
     }
-  }, [dispatch, shouldLoad]);
+  }, [dispatch, shouldLoadProposals]);
+
+  useEffect(() => {
+    if (shoudLoadArticles) {
+      dispatch(fetchLastArticle());
+    }
+  }, [dispatch, shoudLoadArticles]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -64,12 +75,13 @@ export const Header = memo(function Header() {
                   title={'Header-Dao'}
                   Icon={DaoIcon}
                   items={DaoNavItems}
-                  Badge={UnreadProposalsDot}
+                  Badge={UnreadProposalDot}
                 />
                 <DropNavItem
                   title={'Header-Resources'}
                   Icon={ResourcesIcon}
                   items={ResourcesNavItems}
+                  Badge={UnreadArticleDot}
                 />
               </Hidden>
             </div>
