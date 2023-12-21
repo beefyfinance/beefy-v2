@@ -3014,7 +3014,8 @@
     "earnContractAddress": "0xE82A0fE3Cf39d8f43CBeb202242eECB8b00B15AB",
     "oracle": "lps",
     "oracleId": "velodrome-usd+-dai+",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["USD+", "DAI+"],
     "risks": [
