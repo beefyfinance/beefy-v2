@@ -1,4 +1,13 @@
 {
+  "sonne": {
+    "title": "Sonne",
+    "text": "Sonne Finance is a decentralized lending protocol for individuals, institutions and protocols to access financial services. It is a permissionless, open source and Optimistic protocol serving users on Optimism.",
+    "website": "https://sonne.finance/",
+    "social": {
+      "discord": "https://discord.gg/sonnefinance",
+      "twitter": "https://twitter.com/SonneFinance"
+    }
+  },
   "threshold": {
     "title": "Threshold",
     "text": "Threshold Network allows users to mint tBTC and redeem native BTC through their decentralized infrastructure.",

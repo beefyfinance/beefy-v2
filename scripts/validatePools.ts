@@ -27,6 +27,7 @@ const overrides = {
   'baseswap-axlwbtc-usdbc': { harvestOnDeposit: undefined },
   'kinetix-klp': { harvestOnDeposit: undefined },
   'bifi-vault': { beefyFeeRecipient: undefined }, // TODO: remove
+  'convex-eusdfraxbp': { beefyFeeRecipient: undefined }, // TODO: remove
 };
 
 const oldValidOwners = [
@@ -43,7 +44,7 @@ const oldValidFeeRecipients = {
 };
 
 const nonHarvestOnDepositChains = ['ethereum', 'avax'];
-const nonHarvestOnDepositPools = ['venus-bnb'];
+const nonHarvestOnDepositPools = ['venus-bnb', 'equilibria-arb-silo-usdc.e'];
 
 const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddress'];
 

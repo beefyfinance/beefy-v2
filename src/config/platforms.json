@@ -16,6 +16,14 @@
     "name": "Conic Finance"
   },
   {
+    "id": "equilibria",
+    "name": "Equilibria"
+  },
+  {
+    "id": "pendle",
+    "name": "Pendle"
+  },
+  {
     "id": "apeswap",
     "name": "ApeSwap"
   },
@@ -921,6 +929,16 @@
   {
     "id": "sonne",
     "name": "Sonne",
+    "filter": true
+  },
+  {
+    "id": "seamless",
+    "name": "Seamless",
+    "filter": true
+  },
+  {
+    "id": "mendi",
+    "name": "Mendi",
     "filter": true
   }
 ]

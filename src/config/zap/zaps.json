@@ -88,5 +88,10 @@
     "chainId": "gnosis",
     "router": "0x992Ccc9D9b8b76310E044660E96171116820F019",
     "manager": "0xA59BB0da9565e03f53AeFC94fcC205c52Fc925B7"
+  },
+  {
+    "chainId": "linea",
+    "router": "0xf2068e1FE1A80E7f5Ba80D6ABD6e8618aD4E959E",
+    "manager": "0x19e730Ab391b79F03CFA2ffc2C5e3fc617F0eEfe"
   }
 ]

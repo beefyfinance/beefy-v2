@@ -1,5 +1,83 @@
 [
   {
+    "id": "aerodrome-dola-usdc",
+    "name": "DOLA-USDC sLP",
+    "token": "sAMM-DOLA/USDC",
+    "tokenAddress": "0xf213F2D02837012dC0236cC105061e121bB03e37",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroDOLA-USDC",
+    "earnedTokenAddress": "0x5A47993216fa6ACaf93418f9830cee485e82d0ba",
+    "earnContractAddress": "0x5A47993216fa6ACaf93418f9830cee485e82d0ba",
+    "oracle": "lps",
+    "oracleId": "aerodrome-dola-usdc",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["DOLA", "USDC"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4621b7a9c75199271f773ebd9a499dbd165c3191&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=true",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "createdAt": 1703152651,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "seamless-weth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0x4200000000000000000000000000000000000006",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSeamlessWETH",
+    "earnedTokenAddress": "0x2C1818c6F6781880cD49923AD993cA70B6DC2e8C",
+    "earnContractAddress": "0x2C1818c6F6781880cD49923AD993cA70B6DC2e8C",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "platformId": "seamless",
+    "assets": ["WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "base",
+    "createdAt": 1702578552,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "seamless-usdbc",
+    "name": "USDbC",
+    "type": "standard",
+    "token": "USDbC",
+    "tokenAddress": "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
+    "tokenDecimals": 6,
+    "earnedToken": "mooSeamlessUSDbC",
+    "earnedTokenAddress": "0x738e2e507F52925E8Ea67daC07B2e07342325276",
+    "earnContractAddress": "0x738e2e507F52925E8Ea67daC07B2e07342325276",
+    "oracle": "tokens",
+    "oracleId": "USDbC",
+    "status": "active",
+    "platformId": "seamless",
+    "assets": ["USDbC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "base",
+    "createdAt": 1702578552,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "sonne-base-usdbc",
     "name": "USDbC",
     "type": "standard",
@@ -858,7 +936,8 @@
     "earnContractAddress": "0x3673339459D46BE8364124F06e751Dfeb06fEf2e",
     "oracle": "lps",
     "oracleId": "aerodrome-dola-usd+",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "aerodrome",
     "assets": ["DOLA", "USD+"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -1787,7 +1866,8 @@
     "earnContractAddress": "0x962861c70D26EFb8f7eb425578EC7609DE9912bE",
     "oracle": "lps",
     "oracleId": "baso-mim-usdbc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "baso",
     "assets": ["MIM", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],

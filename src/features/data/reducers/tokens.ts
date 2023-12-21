@@ -374,8 +374,16 @@ function addBoostToState(
   const addressKey = tokenAddress.toLowerCase();
   // Add if it does not exist already
   if (sliceState.byChainId[chainId].byAddress[addressKey] === undefined) {
+    let id = apiBoost.earnedToken;
+    if (id === sliceState.byChainId[chainId].native) {
+      console.warn(
+        `addBoostToState: can not override native token ${id} with ERC20 token via earnedToken`
+      );
+      id = `${apiBoost.id}-${apiBoost.earnedToken}`;
+    }
+
     const token: TokenEntity = {
-      id: apiBoost.earnedToken,
+      id,
       chainId: chainId,
       address: apiBoost.earnedTokenAddress,
       oracleId: apiBoost.earnedOracleId,
