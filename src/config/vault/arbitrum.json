@@ -13,7 +13,7 @@
     "oracleId": "equilibria-arb-silo-usdc.e",
     "status": "active",
     "platformId": "equilibria",
-    "assets": ["USDC.e"],
+    "assets": ["arbUSDCe"],
     "strategyTypeId": "single-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9bc62257ffe7d0f7c52a019e6fc0af3102f8f44e/zap/in?chain=arbitrum",

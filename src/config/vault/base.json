@@ -19,7 +19,7 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4621b7a9c75199271f773ebd9a499dbd165c3191&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1703144744,
+    "createdAt": 1703152651,
     "zaps": [
       {
         "strategyId": "solidly",
