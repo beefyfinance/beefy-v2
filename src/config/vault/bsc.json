@@ -21258,7 +21258,8 @@
     "earnContractAddress": "0x725E14C3106EBf4778e01eA974e492f909029aE8",
     "oracle": "tokens",
     "oracleId": "ETH",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "valas",
     "assets": ["ETH"],
     "risks": [
@@ -21291,7 +21292,8 @@
     "earnContractAddress": "0xB78b6A0137ad8745784D3B23c16abeA8F527ff54",
     "oracle": "tokens",
     "oracleId": "BUSD",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "valas",
     "assets": ["BUSD"],
     "risks": [
@@ -21358,7 +21360,8 @@
     "earnContractAddress": "0x517493d1Fb90aB0a3cE3a5084065B706e33e0fEA",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "valas",
     "assets": ["USDC"],
     "risks": [
@@ -21391,7 +21394,8 @@
     "earnContractAddress": "0xF66e8edf8A86b2b405fF23e73B72DAC01070c8B8",
     "oracle": "tokens",
     "oracleId": "DAI",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "valas",
     "assets": ["DAI"],
     "risks": [

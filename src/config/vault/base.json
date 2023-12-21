@@ -1,5 +1,33 @@
 [
   {
+    "id": "aerodrome-dola-usdc",
+    "name": "DOLA-USDC sLP",
+    "token": "sAMM-DOLA/USDC",
+    "tokenAddress": "0xf213F2D02837012dC0236cC105061e121bB03e37",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroDOLA-USDC",
+    "earnedTokenAddress": "0x5A47993216fa6ACaf93418f9830cee485e82d0ba",
+    "earnContractAddress": "0x5A47993216fa6ACaf93418f9830cee485e82d0ba",
+    "oracle": "lps",
+    "oracleId": "aerodrome-dola-usdc",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["DOLA", "USDC"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4621b7a9c75199271f773ebd9a499dbd165c3191&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=true",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "createdAt": 1703152651,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "seamless-weth",
     "name": "WETH",
     "type": "standard",

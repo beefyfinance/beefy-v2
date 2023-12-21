@@ -27,6 +27,7 @@ const overrides = {
   'baseswap-axlwbtc-usdbc': { harvestOnDeposit: undefined },
   'kinetix-klp': { harvestOnDeposit: undefined },
   'bifi-vault': { beefyFeeRecipient: undefined }, // TODO: remove
+  'convex-eusdfraxbp': { beefyFeeRecipient: undefined }, // TODO: remove
 };
 
 const oldValidOwners = [
