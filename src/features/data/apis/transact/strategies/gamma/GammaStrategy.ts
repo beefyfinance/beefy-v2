@@ -668,10 +668,13 @@ export class GammaStrategy implements IStrategy {
 
     // Common: Break LP
     const strategyAddress = selectVaultStrategyAddress(state, vault.id);
-    const [amount0, amount1] = await this.pool.quoteRemoveLiquidity(withdrawnAmountAfterFeeWei, [
-      this.options.chefAddress, // lp tokens will be in chef if earning
-      strategyAddress, // or in strategy if panicked
-    ]);
+    const tokenHolders: [string, ...string[]] = this.options.chefAddress
+      ? [this.options.chefAddress, strategyAddress]
+      : [strategyAddress];
+    const [amount0, amount1] = await this.pool.quoteRemoveLiquidity(
+      withdrawnAmountAfterFeeWei,
+      tokenHolders
+    );
     const breakReturned: TokenAmount[] = [];
     const breakOutputs: TokenAmount[] = [
       { token: this.lpTokens[0], amount: fromWei(amount0, this.lpTokens[0].decimals) },
@@ -810,11 +813,14 @@ export class GammaStrategy implements IStrategy {
     const state = getState();
 
     const strategyAddress = selectVaultStrategyAddress(state, vault.id);
+    const tokenHolders: [string, ...string[]] = this.options.chefAddress
+      ? [this.options.chefAddress, strategyAddress]
+      : [strategyAddress];
     const withdrawnAmountAfterFeeWei = toWei(inputs[0].amount, inputs[0].token.decimals);
-    const [amount0, amount1] = await this.pool.quoteRemoveLiquidity(withdrawnAmountAfterFeeWei, [
-      this.options.chefAddress, // lp tokens will be in chef if earning
-      strategyAddress, // or in strategy if panicked
-    ]);
+    const [amount0, amount1] = await this.pool.quoteRemoveLiquidity(
+      withdrawnAmountAfterFeeWei,
+      tokenHolders
+    );
 
     const quoteIndexes = this.lpTokens.map(token =>
       quoteStep.outputs.findIndex(output => isTokenEqual(output.token, token))
