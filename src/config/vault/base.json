@@ -1068,7 +1068,7 @@
   },
   {
     "id": "aerodrome-usdc-usdbc",
-    "name": "USDC-USDbc sLP",
+    "name": "USDC-USDbC sLP",
     "type": "standard",
     "token": "sAMM-UDSC-USDbC",
     "tokenAddress": "0x27a8Afa3Bd49406e48a074350fB7b2020c43B2bD",
@@ -1087,7 +1087,7 @@
     "addLiquidityUrl": "https://aerodrome.finance/connect?token0=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1694096966,
+    "createdAt": 1703168135,
     "zaps": [
       {
         "strategyId": "solidly",
