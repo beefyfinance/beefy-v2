@@ -1,9 +1,9 @@
 [
   {
     "id": "velodrome-v2-kuji-weth",
-    "name": "KUJI-WETH vLP",
+    "name": "KUJI-ETH vLP",
     "type": "standard",
-    "token": "vAMM-KUJI-WETH",
+    "token": "vAMM-KUJI-ETH",
     "tokenAddress": "0x763C9dC392B6BEFe79Fa227056dD9279bAbb4E14",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
