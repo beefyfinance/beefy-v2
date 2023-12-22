@@ -839,7 +839,9 @@ export class GammaStrategy implements IStrategy {
           quote: quoteOutput.amount.toString(10),
           now: amountOut.toString(10),
         });
-        throw new QuoteChangedError('Split returned less than expected');
+        throw new QuoteChangedError(
+          'Expected output changed between quote and transaction when breaking LP.'
+        );
       }
 
       return {

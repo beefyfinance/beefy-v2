@@ -582,7 +582,9 @@ export abstract class UniswapLikeStrategy<
         bigNumberToStringDeep(quoteStep),
         bigNumberToStringDeep(swap)
       );
-      throw new QuoteChangedError('Swap returned less than expected');
+      throw new QuoteChangedError(
+        `Expected output changed between quote and transaction when swapping ${quoteStep.fromToken.symbol} to ${quoteStep.toToken.symbol}.`
+      );
     }
 
     return await pool.getZapSwap({
@@ -660,7 +662,9 @@ export abstract class UniswapLikeStrategy<
           quote: quoteOutput.amount.toString(10),
           now: amountOut.toString(10),
         });
-        throw new QuoteChangedError('Split returned less than expected');
+        throw new QuoteChangedError(
+          'Expected output changed between quote and transaction when breaking LP.'
+        );
       }
 
       return {

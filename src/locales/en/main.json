@@ -585,7 +585,7 @@
   "Transact-Notice-Confirm-Original": "Original: <amount/>",
   "Transact-Notice-Confirm-New": "New estimate: <amount/>",
   "Transact-Notice-Confirm-Difference": "Difference: <amount/> {{token}}",
-  "Transact-Notice-Confirm-Error": "An error occurred while confirming the quote is still valid: {{error}}",
+  "Transact-Notice-Confirm-Error": "An error occurred while building zap transaction: {{error}}",
   "Transact-Notice-Confirm-Error-Retry": "Refresh quote, check amount and try again.",
   "Transact-Fee-Deposit": "Deposit fee",
   "Transact-Fee-Deposit-Explainer": "Charged by underlying provider, not Beefy.",
