@@ -1,5 +1,55 @@
 [
   {
+    "id": "sonne-op-weth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0x4200000000000000000000000000000000000006",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSonneWETH",
+    "earnedTokenAddress": "0x3f63e9Db070ADe3e833EF8972Ac5E9810367a49c",
+    "earnContractAddress": "0x3f63e9Db070ADe3e833EF8972Ac5E9810367a49c",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "platformId": "sonne",
+    "assets": ["WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "createdAt": 1703168711,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "sonne-op-op",
+    "name": "OP",
+    "type": "standard",
+    "token": "OP",
+    "tokenAddress": "0x4200000000000000000000000000000000000042",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSonneOP",
+    "earnedTokenAddress": "0x06D95ef15b41270818Ecb0B0f4E80c71F30F8CB1",
+    "earnContractAddress": "0x06D95ef15b41270818Ecb0B0f4E80c71F30F8CB1",
+    "oracle": "tokens",
+    "oracleId": "OP",
+    "status": "active",
+    "platformId": "sonne",
+    "assets": ["OP"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "createdAt": 1703168711,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "uniswap-gamma-op-wsteth-usdc",
     "name": "wstETH-USDC.e LP",
     "type": "standard",
@@ -3040,7 +3090,8 @@
     "earnContractAddress": "0xE82A0fE3Cf39d8f43CBeb202242eECB8b00B15AB",
     "oracle": "lps",
     "oracleId": "velodrome-usd+-dai+",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["USD+", "DAI+"],
     "risks": [

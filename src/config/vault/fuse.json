@@ -804,7 +804,8 @@
     "earnContractAddress": "0x70c6AF9Dff8C19B3db576E5E199B22A883874f05",
     "oracle": "lps",
     "oracleId": "voltagev2-wfuse-gdollar",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "voltage",
     "assets": ["G", "FUSE"],
     "risks": [

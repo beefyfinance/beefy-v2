@@ -89,6 +89,7 @@ export interface DataLoaderState {
     proposals: LoaderState;
     bridges: LoaderState;
     migrators: LoaderState;
+    articles: LoaderState;
   };
   byChainId: {
     [chainId: ChainEntity['id']]: ChainIdDataEntity;
