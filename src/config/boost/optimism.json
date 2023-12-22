@@ -10,7 +10,7 @@
     "earnedToken": "mooSonneOP",
     "earnedTokenDecimals": 18,
     "earnedTokenAddress": "0x06D95ef15b41270818Ecb0B0f4E80c71F30F8CB1",
-    "earnContractAddress": "0xF37fE098a4FA15633448436780A935147828e381A5c0",
+    "earnContractAddress": "0xF37fE098a4FA15633448436780A935147828e381",
     "earnedOracle": "tokens",
     "earnedOracleId": "mooSonneOP",
     "partnership": true,
