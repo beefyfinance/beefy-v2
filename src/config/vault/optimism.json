@@ -1,5 +1,41 @@
 [
   {
+    "id": "velodrome-v2-kuji-weth",
+    "name": "KUJI-ETH vLP",
+    "type": "standard",
+    "token": "vAMM-KUJI-ETH",
+    "tokenAddress": "0x763C9dC392B6BEFe79Fa227056dD9279bAbb4E14",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2KUJI-ETH",
+    "earnedTokenAddress": "0x587e827ed502f494C056F8756f7Aec7190195A7b",
+    "earnContractAddress": "0x587e827ed502f494C056F8756f7Aec7190195A7b",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-kuji-weth",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["KUJI", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x3a18dcc9745edcd1ef33ecb93b0b6eba5671e7ca&token1=eth&stable=false",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw",
+    "network": "optimism",
+    "createdAt": 1703181916,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "sonne-op-weth",
     "name": "WETH",
     "type": "standard",
