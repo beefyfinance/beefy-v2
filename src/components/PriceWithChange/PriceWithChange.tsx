@@ -2,7 +2,7 @@ import { memo, useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { selectPriceWithChange } from '../../features/data/selectors/tokens';
 import { formatBigUsd, formatPercent } from '../../helpers/format';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { fetchHistoricalPrices } from '../../features/data/actions/historical';
 import type { ApiTimeBucket } from '../../features/data/apis/beefy/beefy-data-api-types';
 import { BIG_ZERO } from '../../helpers/big-number';
@@ -84,7 +84,7 @@ const WithChange = memo<WithChangeProps>(function WithChange({
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const diff = price.minus(previousPrice).decimalPlaces(2, BigNumber.ROUND_FLOOR);
+  const diff = price.minus(previousPrice);
   const diffAbs = diff.abs();
   const percentChange = diffAbs.div(previousPrice);
   const isPositive = diff.gt(BIG_ZERO);
