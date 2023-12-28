@@ -90,7 +90,7 @@ const WithChange = memo<WithChangeProps>(function WithChange({
   const isPositive = diff.gt(BIG_ZERO);
   const isNegative = diff.lt(BIG_ZERO);
   const tooltipContent = t(`Price-Change-${isPositive ? 'Up' : isNegative ? 'Down' : 'Flat'}`, {
-    change: formatBigUsd(diffAbs),
+    change: formatBigUsd(diffAbs, diffAbs.gte(0.01) ? 2 : 4),
     date: format(previousDate, 'MMM d, yyyy h:mm a'),
   });
   const handleTooltipClick = useCallback<TooltipProps['onTriggerClick']>(e => {
@@ -110,7 +110,7 @@ const WithChange = memo<WithChangeProps>(function WithChange({
         [classes.negative]: isNegative,
       })}
     >
-      <div className={classes.price}>{formatBigUsd(price)}</div>
+      <div className={classes.price}>{formatBigUsd(price, price.gte(0.01) ? 2 : 4)}</div>
       <div className={classes.change}>
         <div className={classes.changeValue}>
           {isPositive ? '+' : isNegative ? '-' : ''}
