@@ -2459,44 +2459,6 @@
     ]
   },
   {
-    "id": "dystopia-frax-mimatic",
-    "name": "MAI-FRAX sLP",
-    "type": "standard",
-    "token": "MAI-FRAX sLP",
-    "tokenAddress": "0x3f54C58092e9735AD23cf296ee3aF81F5a44a5bc",
-    "tokenDecimals": 18,
-    "tokenProviderId": "dystopia",
-    "earnedToken": "mooDystopiaMAI-FRAX",
-    "earnedTokenAddress": "0xbC94bDb5393CBABF9B319E892abC95B93B5949A8",
-    "earnContractAddress": "0xbC94bDb5393CBABF9B319E892abC95B93B5949A8",
-    "oracle": "lps",
-    "oracleId": "dystopia-frax-mimatic",
-    "status": "eol",
-    "retireReason": "tvl",
-    "platformId": "dystopia",
-    "assets": ["MAI", "FRAX"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "CONTRACTS_VERIFIED",
-      "ALGO_STABLE"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.dystopia.exchange/swap",
-    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x3f54c58092e9735ad23cf296ee3af81f5a44a5bc",
-    "removeLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x3f54c58092e9735ad23cf296ee3af81f5a44a5bc",
-    "network": "polygon",
-    "createdAt": 1661039366,
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "polygon-dystopia"
-      }
-    ]
-  },
-  {
     "id": "curve-matic-stmatic",
     "name": "stMATIC-MATIC",
     "type": "standard",
