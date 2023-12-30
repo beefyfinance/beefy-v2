@@ -1320,7 +1320,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "single",
-    "depositFee": 0.01,
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
     "network": "avax",
     "createdAt": 1631011023,
