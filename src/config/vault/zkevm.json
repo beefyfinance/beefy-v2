@@ -1,5 +1,35 @@
 [
   {
+    "id": "balancer-zkevm-wsteth-ankreth",
+    "name": "ankrETH-wstETH",
+    "type": "standard",
+    "token": "ankrETH-wstETH zkevm",
+    "tokenAddress": "0x65dA876A95CD5b6A5880710628C436409B1B29fa",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerzkEVMankrETH-wstETH",
+    "earnedTokenAddress": "0xa386e948d25E19A0B08C8E15b8B9d49ffa5d9a32",
+    "earnContractAddress": "0xa386e948d25E19A0B08C8E15b8B9d49ffa5d9a32",
+    "oracle": "lps",
+    "oracleId": "balancer-zkevm-wsteth-ankreth",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["ankrETH", "wstETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0x65da876a95cd5b6a5880710628c436409b1b29fa00000000000000000000005b/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0x65da876a95cd5b6a5880710628c436409b1b29fa00000000000000000000005b/withdraw",
+    "network": "zkevm",
+    "createdAt": 1703950221
+  },
+  {
     "id": "balancer-zkevm-gyro-reth-eth",
     "name": "Gyroscope rETH-ETH",
     "type": "standard",
