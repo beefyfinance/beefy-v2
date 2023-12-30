@@ -2533,7 +2533,8 @@
     "earnContractAddress": "0x6D887ab893AB867Bb379628554C7Ca7A3d6D6c1B",
     "oracle": "tokens",
     "oracleId": "USDbC",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "moonwell",
     "assets": ["USDbC"],
     "risks": [
