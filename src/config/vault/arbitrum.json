@@ -831,7 +831,7 @@
   },
   {
     "id": "uniswap-gamma-gns-weth",
-    "name": "GNS-ETH LP",
+    "name": "GNS-ETH Narrow LP",
     "type": "standard",
     "token": "GNS-ETH uLP",
     "tokenAddress": "0xF66DA0f517c6f5431c77f4d0525EbC4b3bb40578",
