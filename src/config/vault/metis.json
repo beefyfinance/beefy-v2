@@ -26,7 +26,11 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?outputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
     "network": "metis",
-    "createdAt": 1699441549
+    "createdAt": 1699441549,
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xD4a5Bb03B5D66d9bf81507379302Ac2C2DFDFa6D"
+    }
   },
   {
     "id": "stargate-metis-usdt",

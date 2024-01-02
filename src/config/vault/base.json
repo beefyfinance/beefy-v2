@@ -162,7 +162,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
+    }
   },
   {
     "id": "seamless-usdbc",
@@ -187,7 +191,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x7e860098F58bBFC8648a4311b374B1D669a2bc6B"
+    }
   },
   {
     "id": "sonne-base-usdbc",
@@ -212,7 +220,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x7e860098F58bBFC8648a4311b374B1D669a2bc6B"
+    }
   },
   {
     "id": "sonne-base-usdc",
@@ -237,7 +249,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x7e860098F58bBFC8648a4311b374B1D669a2bc6B"
+    }
   },
   {
     "id": "sonne-base-dai",
@@ -262,7 +278,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x591e79239a7d679378eC8c847e5038150364C78F"
+    }
   },
   {
     "id": "sonne-base-weth",
@@ -287,7 +307,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
+    }
   },
   {
     "id": "sonne-base-cbeth",
@@ -312,7 +336,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xd7818272B9e248357d13057AAb0B417aF31E817d"
+    }
   },
   {
     "id": "aerodrome-weth-axlusdc",
@@ -513,7 +541,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
+    }
   },
   {
     "id": "compound-base-usdbc",
@@ -547,7 +579,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x7e860098F58bBFC8648a4311b374B1D669a2bc6B"
+    }
   },
   {
     "id": "sushi-base-gamma-weth-usdbc-narrow",
@@ -1513,7 +1549,11 @@
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x7e860098F58bBFC8648a4311b374B1D669a2bc6B"
+    }
   },
   {
     "id": "aerodrome-usdbc-thales",
@@ -2552,7 +2592,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x7e860098F58bBFC8648a4311b374B1D669a2bc6B"
+    }
   },
   {
     "id": "moonwell-base-weth",
@@ -2584,7 +2628,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
+    }
   },
   {
     "id": "alienbase-alb-weth",
