@@ -1,5 +1,27 @@
 [
   {
+    "id": "equilibria-arb-aave-usdc",
+    "name": "USDC LPT 27Jun24",
+    "token": "PENDLE-aUSDC",
+    "tokenAddress": "0x8621c587059357d6C669f72dA3Bfe1398fc0D0B5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnedToken": "mooEqb-aUSDC_27JUN24",
+    "earnedTokenAddress": "0xc24E6428d1175E3A4b0a48fB46506006E99cb4e3",
+    "earnContractAddress": "0xc24E6428d1175E3A4b0a48fB46506006E99cb4e3",
+    "oracle": "lps",
+    "oracleId": "equilibria-arb-aave-usdc",
+    "status": "active",
+    "platformId": "equilibria",
+    "assets": ["USDC"],
+    "strategyTypeId": "single-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9bc62257ffe7d0f7c52a019e6fc0af3102f8f44e/zap/in?chain=arbitrum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9bc62257ffe7d0f7c52a019e6fc0af3102f8f44e/zap/out?chain=arbitrum",
+    "network": "arbitrum",
+    "createdAt": 1704264363
+  },
+  {
     "id": "balancer-wsteth-4pool",
     "name": "wstETH-4POOL",
     "type": "standard",
@@ -831,7 +853,7 @@
   },
   {
     "id": "uniswap-gamma-gns-weth",
-    "name": "GNS-ETH LP",
+    "name": "GNS-ETH Narrow LP",
     "type": "standard",
     "token": "GNS-ETH uLP",
     "tokenAddress": "0xF66DA0f517c6f5431c77f4d0525EbC4b3bb40578",
