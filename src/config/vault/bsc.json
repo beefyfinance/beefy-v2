@@ -236,7 +236,7 @@
     "oracle": "lps",
     "oracleId": "ooev2-ooe-busd",
     "status": "eol",
-    "retireReason": "rewards", 
+    "retireReason": "rewards",
     "platformId": "openocean",
     "assets": ["OOEV2", "BUSD"],
     "risks": [
