@@ -73,6 +73,7 @@
     "creationdate": "ts-node ./scripts/getPoolCreationTimestamp.ts",
     "launchpool": "ts-node ./scripts/launchpool.ts",
     "vault": "ts-node ./scripts/addVault.ts",
+    "pause": "ts-node ./scripts/pausePlatform.ts",
     "migratePlatform": "ts-node ./scripts/migratePlatform.ts",
     "setVaultUrls": "ts-node -r dotenv/config ./scripts/setVaultUrls.ts && prettier --write ./src/config/vault/*.json",
     "migrateZapV3": "ts-node -r dotenv/config ./scripts/migrateVaultFilesForZapV3.ts && prettier --write ./src/config/vault/*.json",
