@@ -114,6 +114,9 @@ export const styles = (theme: Theme) => ({
   'headerNetwork-linea': {
     backgroundColor: 'rgba(18, 18, 18, 0.2)',
   },
+  'headerNetwork-mantle': {
+    backgroundColor: 'rgba(18, 18, 18, 0.2)',
+  },
   'headerMM-system9': {
     backgroundColor: 'rgba(243, 243, 200, 0.5)',
   },

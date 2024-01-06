@@ -717,7 +717,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     stableCoins: ['xDAI', 'EURe', 'USDC', 'USDT', 'sDAI'],
   },
   linea: {
-    new: true,
     name: 'Linea',
     chainId: 59144,
     rpc: ['https://rpc.linea.build'],
@@ -735,6 +734,35 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       },
       rpcUrls: ['https://rpc.linea.build'],
       blockExplorerUrls: ['https://lineascan.build'],
+    },
+    gas: {
+      type: 'eip1559',
+      blocks: 5,
+      percentile: 0.2,
+      baseMinimum: '7',
+      baseSafetyMargin: 0.2,
+    },
+    stableCoins: ['USDT', 'USDC', 'DAI'],
+  },
+  mantle: {
+    new: true,
+    name: 'Mantle',
+    chainId: 5000,
+    rpc: ['https://rpc.mantle.xyz'],
+    explorerUrl: 'https://explorer.mantle.xyz',
+    multicallAddress: '0x',
+    appMulticallContractAddress: '0x',
+    providerName: 'Mantle',
+    walletSettings: {
+      chainId: `0x${parseInt('5000', 10).toString(16)}`,
+      chainName: 'Mantle',
+      nativeCurrency: {
+        name: 'Mantle',
+        symbol: 'MNT',
+        decimals: 18,
+      },
+      rpcUrls: ['https://rpc.mantle.xyz'],
+      blockExplorerUrls: ['https://explorer.mantle.xyz'],
     },
     gas: {
       type: 'eip1559',
