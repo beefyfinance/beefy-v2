@@ -24,7 +24,8 @@
       }
     ],
     "lendingOracle": {
-      "provider": "pyth"
+      "provider": "chainlink",
+      "address": "0x8eCE1AbA32716FdDe8D6482bfd88E9a0ee01f565"
     }
   },
   {
