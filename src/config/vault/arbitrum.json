@@ -1,5 +1,35 @@
 [
   {
+    "id": "aura-arb-wsteth-sfrxeth-reth",
+    "name": "wstETH/sfrxETH/rETH",
+    "type": "standard",
+    "token": "wstETH/sfrxETH/rETH Arb",
+    "tokenAddress": "0x0c8972437a38b389ec83d1E666b69b8a4fcf8bfd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraArbwstETH/sfrxETH/rETH",
+    "earnedTokenAddress": "0xA9052A4Dc90070349b0e22dAE8eEdf8bba74d435",
+    "earnContractAddress": "0xA9052A4Dc90070349b0e22dAE8eEdf8bba74d435",
+    "oracle": "lps",
+    "oracleId": "aura-arb-wsteth-sfrxeth-reth",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["wstETH", "sfrxETH", "rETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x0c8972437a38b389ec83d1e666b69b8a4fcf8bfd00000000000000000000049e/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x0c8972437a38b389ec83d1e666b69b8a4fcf8bfd00000000000000000000049e/withdraw",
+    "network": "arbitrum",
+    "createdAt": 1704654736
+  },
+  {
     "id": "equilibria-arb-aave-usdc",
     "name": "USDC LPT 27Jun24",
     "token": "PENDLE-aUSDC",

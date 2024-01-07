@@ -3355,7 +3355,7 @@
     "tokenAddress": "0xFb4C2E6E6e27B5b4a07a36360C89EDE29bB3c9B6",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
-    "earnedToken": "mooBalanceBasecbETH-ETH",
+    "earnedToken": "mooBalancerBasecbETH-ETH",
     "earnedTokenAddress": "0xbc15d22EA300d0965FD8a19A04CD8525834585Ef",
     "earnContractAddress": "0xbc15d22EA300d0965FD8a19A04CD8525834585Ef",
     "oracle": "lps",
