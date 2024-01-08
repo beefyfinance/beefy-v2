@@ -79,7 +79,7 @@
     "oracleId": "curve-arb-crvusd-usdc.e",
     "status": "active",
     "platformId": "curve",
-    "assets": ["crvUSD", "USDC.e"],
+    "assets": ["crvUSD", "arbUSDCe"],
     "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-1/deposit",
