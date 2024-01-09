@@ -1,5 +1,69 @@
 [
   {
+    "id": "aerodrome-sonne-usdc",
+    "name": "SONNE-USDC vLP",
+    "type": "standard",
+    "token": "vAMM-SONNE/USDC",
+    "tokenAddress": "0x4cC2FeFB2635C86b1bae1b58E0f60Fb43E95e264",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroSONNE-USDC",
+    "earnedTokenAddress": "0xAcd23676d95f3314D5A7538C635fFdb6E66c4f9f",
+    "earnContractAddress": "0xAcd23676d95f3314D5A7538C635fFdb6E66c4f9f",
+    "oracle": "lps",
+    "oracleId": "aerodrome-sonne-usdc",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["SONNE", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x22a2488fe295047ba13bd8cccdbc8361dbd8cf7c&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "createdAt": 1704204324,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-usdc-usd+",
+    "name": "USDC-USD+ sLP",
+    "token": "sAMM-USDC/USD+",
+    "tokenAddress": "0x418457Ca08fA5EC77f811B105F2c585cd051Ac10",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroUSDC-USD+",
+    "earnedTokenAddress": "0x47AE764B53a4088Fa706fa76711F20ED07fE11d7",
+    "earnContractAddress": "0x47AE764B53a4088Fa706fa76711F20ED07fE11d7",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usdc-usd+",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["USDC", "USD+"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "AUDIT",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=true",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "createdAt": 1703773383,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-usdc",
     "name": "ETH-USDC vLP",
     "token": "vAMM-ETH/USDC",
@@ -327,7 +391,8 @@
     "earnContractAddress": "0x3e8EA4ed4846d5A65FCC4c8e475857d5866fcCFb",
     "oracle": "lps",
     "oracleId": "aerodrome-weth-axlusdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "aerodrome",
     "assets": ["ETH", "axlUSDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -562,7 +627,7 @@
     "earnContractAddress": "0x34Ff4e2650E0FB7F0A780Fe56444e4575e0838B1",
     "oracle": "lps",
     "oracleId": "sushi-base-gamma-weth-usdbc-narrow",
-    "status": "active",
+    "status": "paused",
     "platformId": "gamma",
     "assets": ["USDbC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -2533,7 +2598,8 @@
     "earnContractAddress": "0x6D887ab893AB867Bb379628554C7Ca7A3d6D6c1B",
     "oracle": "tokens",
     "oracleId": "USDbC",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "moonwell",
     "assets": ["USDbC"],
     "risks": [
