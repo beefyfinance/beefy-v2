@@ -2842,7 +2842,7 @@
     "oracle": "lps",
     "oracleId": "bvm-cbeth-weth",
     "status": "eol",
-    "retireReason": "tvl", 
+    "retireReason": "tvl",
     "platformId": "bvm",
     "assets": ["cbETH", "ETH"],
     "risks": [
