@@ -318,8 +318,11 @@ export const selectFilteredVaults = (state: BeefyState) => {
 
   // Vaults are already presorted by date on the reducer
   if (filterOptions.sort === 'default') {
-    const vaultIsBoosted = Object.fromEntries(
-      sortedVaults.map(vault => [vault.id, selectIsVaultPreStakedOrBoosted(state, vault.id)])
+    const vaultIsActiveAndBoosted = Object.fromEntries(
+      sortedVaults.map(vault => [
+        vault.id,
+        vault.status === 'active' && selectIsVaultPreStakedOrBoosted(state, vault.id),
+      ])
     );
 
     if (filterOptions.userCategory === 'deposited') {
@@ -329,14 +332,14 @@ export const selectFilteredVaults = (state: BeefyState) => {
           ? -3
           : vault.status === 'paused'
           ? -2
-          : vaultIsBoosted[vault.id]
+          : vaultIsActiveAndBoosted[vault.id]
           ? -1
           : 1
       );
     } else {
       // Surface boosted
       sortedVaults = sortBy(sortedVaults, vault =>
-        vaultIsBoosted[vault.id]
+        vaultIsActiveAndBoosted[vault.id]
           ? selectIsVaultPrestakedBoost(state, vault.id)
             ? -Number.MAX_SAFE_INTEGER
             : -selectVaultsActiveBoostPeriodFinish(state, vault.id)
