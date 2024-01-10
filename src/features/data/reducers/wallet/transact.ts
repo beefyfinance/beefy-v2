@@ -128,17 +128,29 @@ const transactSlice = createSlice({
       if (sliceState.confirm.requestId === action.payload.requestId) {
         sliceState.confirm.status = TransactStatus.Fulfilled;
         sliceState.confirm.changes = action.payload.changes;
-
+        // replace quote
         delete sliceState.quotes.byQuoteId[action.payload.originalQuoteId];
         sliceState.quotes.byQuoteId[action.payload.newQuote.id] = action.payload.newQuote;
         sliceState.quotes.allQuoteIds = Object.keys(sliceState.quotes.byQuoteId);
         sliceState.selectedQuoteId = action.payload.newQuote.id;
       }
     },
-    confirmUnneeded(sliceState, action: PayloadAction<{ requestId: string }>) {
+    confirmUnneeded(
+      sliceState,
+      action: PayloadAction<{
+        requestId: string;
+        newQuote: TransactQuote;
+        originalQuoteId: TransactQuote['id'];
+      }>
+    ) {
       if (sliceState.confirm.requestId === action.payload.requestId) {
         sliceState.confirm.status = TransactStatus.Fulfilled;
         sliceState.confirm.changes = [];
+        // replace quote
+        delete sliceState.quotes.byQuoteId[action.payload.originalQuoteId];
+        sliceState.quotes.byQuoteId[action.payload.newQuote.id] = action.payload.newQuote;
+        sliceState.quotes.allQuoteIds = Object.keys(sliceState.quotes.byQuoteId);
+        sliceState.selectedQuoteId = action.payload.newQuote.id;
       }
     },
     selectQuote(sliceState, action: PayloadAction<{ quoteId: string }>) {

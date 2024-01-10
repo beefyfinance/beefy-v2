@@ -51,10 +51,8 @@ export type StrategyOptions =
 export interface IStrategy {
   readonly id: string;
 
-  /**
-   * Asynchronously called after constructor.
-   */
-  initialize(): Promise<void>;
+  beforeQuote?(): Promise<void>;
+  beforeStep?(): Promise<void>;
 
   fetchDepositOptions(): Promise<DepositOption[]>;
 

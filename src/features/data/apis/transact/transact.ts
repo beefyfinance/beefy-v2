@@ -108,6 +108,15 @@ export class TransactApi implements ITransactApi {
       strategies.map((strategy, i) => [strategyIds[i], strategy])
     );
 
+    // Call beforeQuote hooks
+    await Promise.allSettled(
+      strategies.map(async strategy => {
+        if (strategy.beforeQuote) {
+          await strategy.beforeQuote();
+        }
+      })
+    );
+
     // Get quotes
     const quotes = await Promise.allSettled(
       options.map(async option => {
@@ -148,6 +157,11 @@ export class TransactApi implements ITransactApi {
   ): Promise<Step> {
     const helpers = await this.getHelpersForVault(quote.option.vaultId, getState);
     const strategy = await this.getStrategyById(quote.option.strategyId, helpers);
+
+    // Call beforeStep hooks
+    if (strategy.beforeStep) {
+      await strategy.beforeStep();
+    }
 
     return await strategy.fetchDepositStep(quote, t);
   }
@@ -190,6 +204,15 @@ export class TransactApi implements ITransactApi {
     const strategies = await Promise.all(strategyIds.map(id => this.getStrategyById(id, helpers)));
     const strategiesById = Object.fromEntries(
       strategies.map((strategy, i) => [strategyIds[i], strategy])
+    );
+
+    // Call beforeQuote hooks
+    await Promise.allSettled(
+      strategies.map(async strategy => {
+        if (strategy.beforeQuote) {
+          await strategy.beforeQuote();
+        }
+      })
     );
 
     // Get quotes
@@ -248,6 +271,11 @@ export class TransactApi implements ITransactApi {
   ): Promise<Step> {
     const helpers = await this.getHelpersForVault(quote.option.vaultId, getState);
     const strategy = await this.getStrategyById(quote.option.strategyId, helpers);
+
+    // Call beforeStep hooks
+    if (strategy.beforeStep) {
+      await strategy.beforeStep();
+    }
 
     return await strategy.fetchWithdrawStep(quote, t);
   }
@@ -321,9 +349,7 @@ export class TransactApi implements ITransactApi {
 
     if (strategyId === 'vault') {
       // Wrapper for common interface
-      const strategy = new VaultStrategy(vaultType);
-      await strategy.initialize();
-      return strategy;
+      return new VaultStrategy(vaultType);
     }
 
     if (!isStandardVault(vault)) {

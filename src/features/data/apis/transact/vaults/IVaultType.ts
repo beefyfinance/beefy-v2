@@ -5,13 +5,12 @@ import type {
   DepositQuote,
   InputTokenAmount,
   TokenAmount,
+  TransactQuote,
+  WithdrawOption,
   WithdrawQuote,
 } from '../transact-types';
 import type { TokenEntity, TokenErc20 } from '../../../entities/token';
 import type { ZapStep } from '../zap/types';
-import type { TransactQuote } from '../transact-types';
-import type { BeefyThunk } from '../../../../../redux-types';
-import type { WithdrawOption } from '../transact-types';
 import type { Step } from '../../../reducers/wallet/stepper';
 import type { Namespace, TFunction } from 'react-i18next';
 
@@ -31,8 +30,6 @@ export type VaultWithdrawResponse = VaultDepositResponse;
 export interface IVaultType {
   readonly id: VaultEntity['type'];
   readonly vault: VaultEntity;
-
-  initialize(): Promise<void>;
 
   fetchDepositOption(): Promise<DepositOption>;
 

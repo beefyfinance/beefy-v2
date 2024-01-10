@@ -37,12 +37,20 @@ export function totalValueOfTokenAmounts(
 export function calculatePriceImpact(
   inputs: TokenAmount[],
   outputs: TokenAmount[],
+  returned: TokenAmount[],
   state: BeefyState
 ): number {
-  const inputAmount = totalValueOfTokenAmounts(inputs, state);
-  const outputAmount = totalValueOfTokenAmounts(outputs, state);
+  const inputAmount = inputs.length > 0 ? totalValueOfTokenAmounts(inputs, state) : BIG_ZERO;
+  const outputAmount = outputs.length > 0 ? totalValueOfTokenAmounts(outputs, state) : BIG_ZERO;
+  const returnedAmount = returned.length > 0 ? totalValueOfTokenAmounts(returned, state) : BIG_ZERO;
+  const totalOutputAmount = outputAmount.plus(returnedAmount);
 
-  return inputAmount.minus(outputAmount).div(inputAmount).toNumber();
+  // divide by zero check
+  if (inputAmount.isZero()) {
+    return 100;
+  }
+
+  return inputAmount.minus(totalOutputAmount).div(inputAmount).toNumber();
 }
 
 /**

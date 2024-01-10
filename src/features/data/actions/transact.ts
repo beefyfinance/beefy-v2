@@ -19,6 +19,7 @@ import {
   selectTransactSelectedQuote,
   selectTransactSelectedSelectionId,
   selectTransactSelectionById,
+  selectTransactSlippage,
   selectTransactVaultId,
 } from '../selectors/transact';
 import type {
@@ -403,8 +404,11 @@ function wrapStepConfirmQuote(originalStep: Step, originalQuote: TransactQuote):
         throw new Error(`Invalid option`);
       }
 
+      const state = getState();
+      const maxSlippage = selectTransactSlippage(state);
       const newQuote = quotes.find(quote => quote.option.id === originalQuote.option.id);
-      const minAllowedRatio = new BigNumber('0.9975'); // max 0.25% lower
+      const minAllowedRatio = new BigNumber(1 - maxSlippage * 0.1); // max 10% of slippage lower
+      console.log('minAllowedRatio', minAllowedRatio.toString(10));
 
       if (!newQuote) {
         throw new Error(`Failed to get new quote.`);
@@ -430,7 +434,13 @@ function wrapStepConfirmQuote(originalStep: Step, originalQuote: TransactQuote):
 
       // Perform original action if no changes
       if (significantChanges.length === 0) {
-        dispatch(transactActions.confirmUnneeded({ requestId }));
+        dispatch(
+          transactActions.confirmUnneeded({
+            requestId,
+            newQuote,
+            originalQuoteId: originalQuote.id,
+          })
+        );
         return await originalStep.action(dispatch, getState, undefined);
       }
 

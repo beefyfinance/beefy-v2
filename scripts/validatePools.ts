@@ -247,6 +247,20 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       exitCode = 1;
     }
 
+    // Assets
+    if (!pool.assets || !Array.isArray(pool.assets) || !pool.assets.length) {
+      console.error(`Error: ${pool.id} : Missing assets array`);
+      exitCode = 1;
+    } else if (pool.status !== 'eol') {
+      for (const assetId of pool.assets) {
+        if (!(assetId in addressBook[chainId].tokens)) {
+          // just warn for now
+          console.warn(`Warning: ${pool.id} : Asset ${assetId} not in addressbook on ${chainId}`);
+          // exitCode = 1;
+        }
+      }
+    }
+
     // Old fields we no longer need
     const fieldsToDelete = Object.keys(oldFields).filter(field => field in pool);
     if (fieldsToDelete.length) {

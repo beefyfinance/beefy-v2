@@ -319,7 +319,6 @@ function addAddressBookToState(
       existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
       existingToken.description = existingToken.description || token.description;
       existingToken.website = existingToken.website || token.website;
-      existingToken.documentation = existingToken.documentation || token.documentation;
       continue;
     }
 

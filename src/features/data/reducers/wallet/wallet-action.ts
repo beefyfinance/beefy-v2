@@ -1,6 +1,6 @@
 import type BigNumber from 'bignumber.js';
 import { WALLET_ACTION, WALLET_ACTION_RESET } from '../../actions/wallet-actions';
-import type { TokenEntity, TokenErc20 } from '../../entities/token';
+import type { TokenEntity } from '../../entities/token';
 import type { EventLog } from 'web3-core';
 import type { VaultEntity } from '../../entities/vault';
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types';
@@ -32,10 +32,12 @@ export type MigrateAdditionalData = BaseAdditionalData & {
 };
 
 export type ZapAdditionalData = BaseAdditionalData & {
+  /** Zap type */
+  type: 'zap';
   /** Vault zap is on */
   vaultId: VaultEntity['id'];
   /** Expected tokens returned to user */
-  expectedTokens: TokenErc20[];
+  expectedTokens: TokenEntity[];
 };
 
 export type BridgeAdditionalData = BaseAdditionalData & {
@@ -49,8 +51,8 @@ export type AdditionalData =
   | MigrateAdditionalData
   | BridgeAdditionalData;
 
-export function isZapAddtionalData(data: AdditionalData): data is ZapAdditionalData {
-  return 'vaultId' in data;
+export function isZapAdditionalData(data: AdditionalData): data is ZapAdditionalData {
+  return 'type' in data && data.type === 'zap';
 }
 
 export function isBridgeAdditionalData(data: AdditionalData): data is BridgeAdditionalData {

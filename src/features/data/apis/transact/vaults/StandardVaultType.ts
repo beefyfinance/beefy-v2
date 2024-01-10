@@ -80,9 +80,6 @@ export class StandardVaultType implements IStandardVaultType {
     this.shareToken = shareToken;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  async initialize(): Promise<void> {}
-
   protected calculateDepositFee(input: TokenAmount, state: BeefyState): BigNumber {
     const { deposit: depositFeePercent } = selectFeesByVaultId(state, this.vault.id);
     return depositFeePercent > 0

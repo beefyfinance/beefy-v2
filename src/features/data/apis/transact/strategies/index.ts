@@ -9,9 +9,7 @@ function makeLazyLoader<T extends StrategyConstructor>(loader: () => Promise<T>)
       constructor = await loader();
     }
 
-    const instance = new constructor(options, helpers);
-    await instance.initialize();
-    return instance;
+    return new constructor(options, helpers);
   };
 }
 

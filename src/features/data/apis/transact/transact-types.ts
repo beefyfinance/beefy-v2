@@ -7,7 +7,13 @@ import type { Step } from '../../reducers/wallet/stepper';
 import type { Namespace, TFunction } from 'react-i18next';
 import { TransactMode } from '../../reducers/wallet/transact-types';
 import type { QuoteResponse } from './swap/ISwapProvider';
-import type { AmmEntity, AmmEntitySolidly, AmmEntityUniswapV2 } from '../../entities/zap';
+import type {
+  AmmEntity,
+  AmmEntitySolidly,
+  AmmEntityUniswapLike,
+  AmmEntityUniswapV2,
+} from '../../entities/zap';
+import type { PlatformEntity } from '../../entities/platform';
 
 export type TokenAmount<T extends TokenEntity = TokenEntity> = {
   amount: BigNumber;
@@ -174,12 +180,10 @@ export type ZapQuoteStepSwap = ZapQuoteStepSwapAggregator | ZapQuoteStepSwapPool
 
 export type ZapQuoteStepBuild = {
   type: 'build';
-  inputs: {
-    token: TokenEntity;
-    amount: BigNumber;
-  }[];
+  inputs: TokenAmount[];
   outputToken: TokenEntity;
   outputAmount: BigNumber;
+  providerId?: PlatformEntity['id'];
 };
 
 export type ZapQuoteStepWithdraw = {
@@ -196,12 +200,14 @@ export type ZapQuoteStepDeposit = {
 
 export type ZapQuoteStepSplit = {
   type: 'split';
-  outputs: {
-    token: TokenEntity;
-    amount: BigNumber;
-  }[];
+  outputs: TokenAmount[];
   inputToken: TokenEntity;
   inputAmount: BigNumber;
+};
+
+export type ZapQuoteStepUnused = {
+  type: 'unused';
+  outputs: TokenAmount[];
 };
 
 export type ZapQuoteStep =
@@ -209,7 +215,8 @@ export type ZapQuoteStep =
   | ZapQuoteStepSwap
   | ZapQuoteStepBuild
   | ZapQuoteStepDeposit
-  | ZapQuoteStepSplit;
+  | ZapQuoteStepSplit
+  | ZapQuoteStepUnused;
 
 export function isZapQuoteStepSwap(step: ZapQuoteStep): step is ZapQuoteStepSwap {
   return step.type === 'swap';
@@ -265,12 +272,14 @@ export type SingleDepositQuote = BaseZapQuote<SingleDepositOption> & {
   swapQuote: QuoteResponse;
 };
 
-export type UniswapLikePoolDepositQuote = BaseZapQuote<UniswapLikeDepositOption<AmmEntity>> & {
+export type UniswapLikePoolDepositQuote = BaseZapQuote<
+  UniswapLikeDepositOption<AmmEntityUniswapLike>
+> & {
   quote: { from: TokenAmount; to: TokenAmount };
 };
 
 export type UniswapLikeAggregatorDepositQuote = BaseZapQuote<
-  UniswapLikeDepositOption<AmmEntity>
+  UniswapLikeDepositOption<AmmEntityUniswapLike>
 > & {
   lpQuotes: QuoteResponse[];
 };
@@ -304,12 +313,16 @@ export type GovVaultWithdrawQuote = BaseQuote<GovVaultWithdrawOption> & {
 
 export type SingleWithdrawQuote = BaseZapQuote<SingleWithdrawOption>;
 
-export type UniswapLikeBreakWithdrawQuote = BaseZapQuote<UniswapLikeWithdrawOption<AmmEntity>>;
-export type UniswapLikePoolWithdrawQuote = BaseZapQuote<UniswapLikeWithdrawOption<AmmEntity>> & {
+export type UniswapLikeBreakWithdrawQuote = BaseZapQuote<
+  UniswapLikeWithdrawOption<AmmEntityUniswapLike>
+>;
+export type UniswapLikePoolWithdrawQuote = BaseZapQuote<
+  UniswapLikeWithdrawOption<AmmEntityUniswapLike>
+> & {
   quote: { from: TokenAmount; to: TokenAmount };
 };
 export type UniswapLikeAggregatorWithdrawQuote = BaseZapQuote<
-  UniswapLikeWithdrawOption<AmmEntity>
+  UniswapLikeWithdrawOption<AmmEntityUniswapLike>
 > & {
   lpQuotes: QuoteResponse[];
 };
