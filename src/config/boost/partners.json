@@ -1,4 +1,13 @@
 {
+  "frax": {
+    "title": "Frax",
+    "text": "The Frax Protocol issues innovative, decentralized stablecoins and contains subprotocols to support them.",
+    "website": "https://app.frax.finance/",
+    "social": {
+      "telegram": "https://t.me/fraxfinance",
+      "twitter": "https://twitter.com/fraxfinance"
+    }
+  },
   "sonne": {
     "title": "Sonne",
     "text": "Sonne Finance is a decentralized lending protocol for individuals, institutions and protocols to access financial services. It is a permissionless, open source and Optimistic protocol serving users on Optimism.",
