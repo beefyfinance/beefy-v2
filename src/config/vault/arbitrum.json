@@ -1,5 +1,36 @@
 [
   {
+    "id": "joe-auto-joe-weth",
+    "name": "JOE-ETH APT",
+    "type": "standard",
+    "token": "JOE-ETH APT",
+    "tokenAddress": "0x29240AFF8c592640A20cbfe0Db563a6FFEb12B01",
+    "tokenDecimals": 24,
+    "tokenProviderId": "traderjoe",
+    "earnedToken": "mooJoeAutoPoolJOE-ETH",
+    "earnedTokenAddress": "0xb6a39d633fC24374E8ddB8cD2A7ee2e04f6541D6",
+    "earnContractAddress": "0xb6a39d633fC24374E8ddB8cD2A7ee2e04f6541D6",
+    "oracle": "lps",
+    "oracleId": "joe-auto-joe-weth",
+    "status": "active",
+    "platformId": "traderjoe",
+    "assets": ["JOE", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://traderjoexyz.com/arbitrum/vault/0x29240aff8c592640a20cbfe0db563a6ffeb12b01",
+    "removeLiquidityUrl": "https://traderjoexyz.com/arbitrum/vault/0x29240aff8c592640a20cbfe0db563a6ffeb12b01",
+    "network": "arbitrum",
+    "createdAt": 1704846853
+  },
+  {
     "id": "curve-arb-crvusd-mim",
     "name": "crvUSD/MIM",
     "token": "MIMcrvUSD",
