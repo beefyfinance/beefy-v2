@@ -1,5 +1,28 @@
 [
   {
+    "id": "aura-op-fraximalist-ethereum",
+    "name": "Fraximalist Ethereum",
+    "type": "standard",
+    "token": "Fraximalist Ethereum",
+    "tokenAddress": "0xA71021492a3966EeC735Ed1B505aFa097c7cFe6f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooAuraOPFraximalistEthereum",
+    "earnedTokenAddress": "0x416c578DFBEB2f1b07b0165a2e5F4C467F4Ed2F8",
+    "earnContractAddress": "0x416c578DFBEB2f1b07b0165a2e5F4C467F4Ed2F8",
+    "oracle": "lps",
+    "oracleId": "aura-op-fraximalist-ethereum",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["sfrxETH", "frxETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://op.beets.fi/pool/0xa71021492a3966eec735ed1b505afa097c7cfe6f00000000000000000000010d",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0xa71021492a3966eec735ed1b505afa097c7cfe6f00000000000000000000010d",
+    "network": "optimism",
+    "createdAt": 1704045419
+  },
+  {
     "id": "velodrome-v2-kuji-weth",
     "name": "KUJI-ETH vLP",
     "type": "standard",
@@ -330,6 +353,7 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["tBTC", "WBTC"],
+    "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-63/deposit",
@@ -3202,6 +3226,7 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["MIM", "DAI", "opUSDCe", "USDT"],
+    "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-47/deposit",
@@ -6512,6 +6537,7 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["sETH", "ETH"],
+    "migrationIds": ["l2-curve"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -6542,6 +6568,7 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["sBTC", "WBTC"],
+    "migrationIds": ["l2-curve"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -6572,6 +6599,7 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["sUSD", "DAI", "opUSDCe", "USDT"],
+    "migrationIds": ["l2-curve"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
