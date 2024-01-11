@@ -330,6 +330,7 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["tBTC", "WBTC"],
+    "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-63/deposit",
@@ -3202,6 +3203,7 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["MIM", "DAI", "opUSDCe", "USDT"],
+    "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-47/deposit",
@@ -6512,6 +6514,7 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["sETH", "ETH"],
+    "migrationIds": ["l2-curve"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -6542,6 +6545,7 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["sBTC", "WBTC"],
+    "migrationIds": ["l2-curve"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -6572,6 +6576,7 @@
     "status": "active",
     "platformId": "curve",
     "assets": ["sUSD", "DAI", "opUSDCe", "USDT"],
+    "migrationIds": ["l2-curve"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
