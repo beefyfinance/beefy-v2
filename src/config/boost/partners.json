@@ -1,4 +1,13 @@
 {
+  "frax": {
+    "title": "Frax",
+    "text": "sFRAX is an interest bearing USD from the well known stablecoin FRAX.  It's presence on Arbitrum enables holders to gain access RWA yields on their USD with a liquid asset directly on Arbitrum.    Deep liquidity in this pool enables others to pair with sFRAX, and it to be used as the blue chip RWA based interest bearing USD primitive on Arbitrum. Learn more: https://docs.frax.finance/frax-v3/sfrax ",
+    "website": "https://app.frax.finance/",
+    "social": {
+      "telegram": "https://t.me/fraxfinance",
+      "twitter": "https://twitter.com/fraxfinance"
+    }
+  },
   "sonne": {
     "title": "Sonne",
     "text": "Sonne Finance is a decentralized lending protocol for individuals, institutions and protocols to access financial services. It is a permissionless, open source and Optimistic protocol serving users on Optimism.",
