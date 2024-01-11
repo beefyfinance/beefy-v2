@@ -2841,7 +2841,8 @@
     "earnContractAddress": "0x9BA0F14512Ee29AbdbE2E5eA27a5D5836ef97F40",
     "oracle": "lps",
     "oracleId": "bvm-cbeth-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "bvm",
     "assets": ["cbETH", "ETH"],
     "risks": [
