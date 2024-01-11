@@ -150,16 +150,16 @@ export function getBigNumOrder(num: BigNumber): number {
   return Math.floor(exp / 3);
 }
 
-export function formatBigUsd(value: BigNumber) {
+export function formatBigUsd(value: BigNumber, places: number = 2) {
   if (value.lt(BIG_ZERO)) {
-    return '-$' + formatBigNumber(value.negated());
+    return '-$' + formatBigNumber(value.negated(), places);
   }
 
-  return '$' + formatBigNumber(value);
+  return '$' + formatBigNumber(value, places);
 }
 
-export function formatBigNumber(value: BigNumber) {
-  value = value.decimalPlaces(2, BigNumber.ROUND_FLOOR);
+export function formatBigNumber(value: BigNumber, places: number = 2) {
+  value = value.decimalPlaces(places, BigNumber.ROUND_FLOOR);
 
   if (value.isZero()) {
     return '0';
@@ -176,7 +176,7 @@ export function formatBigNumber(value: BigNumber) {
   }
   const units = ['', 'k', 'M', 'B', 'T', 'Q'];
 
-  return value.shiftedBy(-order * 3).toFixed(2) + units[order];
+  return value.shiftedBy(-order * 3).toFixed(places) + units[order];
 }
 
 export function formatBigDecimals(value: BigNumber, maxPlaces: number = 8, strip = true) {
