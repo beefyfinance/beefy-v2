@@ -20,7 +20,7 @@
     "addLiquidityUrl": "https://op.beets.fi/pool/0xa71021492a3966eec735ed1b505afa097c7cfe6f00000000000000000000010d",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0xa71021492a3966eec735ed1b505afa097c7cfe6f00000000000000000000010d",
     "network": "optimism",
-    "createdAt": 1704045419
+    "createdAt": 1704975503
   },
   {
     "id": "velodrome-v2-kuji-weth",

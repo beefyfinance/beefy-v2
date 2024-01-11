@@ -27,7 +27,7 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x0c8972437a38b389ec83d1e666b69b8a4fcf8bfd00000000000000000000049e/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x0c8972437a38b389ec83d1e666b69b8a4fcf8bfd00000000000000000000049e/withdraw",
     "network": "arbitrum",
-    "createdAt": 1704654736
+    "createdAt": 1704975503
   },
   {
     "id": "joe-auto-joe-weth",
@@ -280,7 +280,7 @@
     "oracle": "lps",
     "oracleId": "balancer-sfrax-4pool",
     "status": "active",
-    "platformId": "balancer",
+    "platformId": "aura",
     "assets": ["sFRAX", "bpt4POOL"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
