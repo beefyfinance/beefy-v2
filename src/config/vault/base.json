@@ -1,5 +1,55 @@
 [
   {
+    "id": "seamless-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "tokenDecimals": 6,
+    "earnedToken": "mooSeamlessUSDC",
+    "earnedTokenAddress": "0x8e9a045925F284129812B0105F5CD8a394b6dDB8",
+    "earnContractAddress": "0x8e9a045925F284129812B0105F5CD8a394b6dDB8",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "platformId": "seamless",
+    "assets": ["USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "base",
+    "createdAt": 1704975503,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "seamless-dai",
+    "name": "DAI",
+    "type": "standard",
+    "token": "DAI",
+    "tokenAddress": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSeamlessDAI",
+    "earnedTokenAddress": "0xd68De698e85c46dE909764469B03A12f6D2cb34B",
+    "earnContractAddress": "0xd68De698e85c46dE909764469B03A12f6D2cb34B",
+    "oracle": "tokens",
+    "oracleId": "DAI",
+    "status": "active",
+    "platformId": "seamless",
+    "assets": ["DAI"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "base",
+    "createdAt": 1704975503,
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-sonne-usdc",
     "name": "SONNE-USDC vLP",
     "type": "standard",
