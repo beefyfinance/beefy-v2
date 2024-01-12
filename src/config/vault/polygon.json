@@ -77,7 +77,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xfE4A8cc5b5B2366C1B58Bea3858e81843581b2F7"
+    }
   },
   {
     "id": "quick-gamma-weth-usdt",

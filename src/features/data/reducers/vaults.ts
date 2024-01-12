@@ -261,6 +261,7 @@ function addVaultToState(
       pauseReason: apiVault.pauseReason,
       migrationIds: apiVault.migrationIds,
       bridged: apiVault.bridged,
+      lendingOracle: apiVault.lendingOracle,
     };
     // redux toolkit uses immer by default so we can
     // directly modify the state as usual

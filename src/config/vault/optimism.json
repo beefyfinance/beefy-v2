@@ -81,7 +81,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xb7B9A39CC63f856b90B364911CC324dC46aC1770"
+    }
   },
   {
     "id": "sonne-op-op",
@@ -106,7 +110,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x0D276FC14719f9292D5C1eA2198673d1f4269246"
+    }
   },
   {
     "id": "uniswap-gamma-op-wsteth-usdc",
@@ -206,7 +214,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x16a9FA2FDa030272Ce99B29CF780dFA30361E0f3"
+    }
   },
   {
     "id": "sonne-op-usdt",
@@ -231,7 +243,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xECef79E109e997bCA29c1c0897ec9d7b03647F5E"
+    }
   },
   {
     "id": "sonne-op-dai",
@@ -256,7 +272,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x8dBa75e83DA73cc766A7e5a0ee71F656BAb470d6"
+    }
   },
   {
     "id": "sonne-op-susd",
@@ -281,7 +301,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x7f99817d87baD03ea21E05112Ca799d715730efe"
+    }
   },
   {
     "id": "sonne-op-lusd",
@@ -306,7 +330,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x9dfc79Aaeb5bb0f96C6e9402671981CdFc424052"
+    }
   },
   {
     "id": "velodrome-v2-wsteth-velo",
@@ -878,7 +906,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x0D276FC14719f9292D5C1eA2198673d1f4269246"
+    }
   },
   {
     "id": "velodrome-v2-frax-op",
@@ -3077,7 +3109,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x16a9FA2FDa030272Ce99B29CF780dFA30361E0f3"
+    }
   },
   {
     "id": "exactly-supply-eth",

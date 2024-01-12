@@ -96,7 +96,11 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1677251242
+    "createdAt": 1677251242,
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xD925C5BF88Bd0ca09312625d429240F811b437c6"
+    }
   },
   {
     "id": "moonwell-usdc.wh",
@@ -126,7 +130,11 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1676566692
+    "createdAt": 1676566692,
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xA122591F60115D63421f66F752EF9f6e0bc73abC"
+    }
   },
   {
     "id": "moonwell-weth.wh",
@@ -156,7 +164,11 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1676566692
+    "createdAt": 1676566692,
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x9ce2388a1696e22F870341C3FC1E89710C7569B5"
+    }
   },
   {
     "id": "moonwell-wbtc.wh",
@@ -186,7 +198,11 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1676566692
+    "createdAt": 1676566692,
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x8211B991d713ddAE32326Fd69E1E2510F4a653B0"
+    }
   },
   {
     "id": "beamswap-wstdot-xcdot",

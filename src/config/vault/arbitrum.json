@@ -477,7 +477,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612"
+    }
   },
   {
     "id": "silo-usdc-wsteth",
@@ -510,7 +514,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3"
+    }
   },
   {
     "id": "silo-wbtc",
@@ -543,7 +551,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xd0C7101eACbB49F3deCcCc166d238410D6D46d57"
+    }
   },
   {
     "id": "silo-arb",
@@ -576,7 +588,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xb2A824043730FE05F3DA2efaFa1CBbe83fa548D6"
+    }
   },
   {
     "id": "silo-wsteth",
@@ -609,7 +625,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xf1268Fd0F285fCDcA2bC130E1B44229079487DD1"
+    }
   },
   {
     "id": "silo-reth",
@@ -642,7 +662,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xD6aB2298946840262FcC278fF31516D39fF611eF"
+    }
   },
   {
     "id": "pancake-gamma-arb-weth",
@@ -1314,7 +1338,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3"
+    }
   },
   {
     "id": "sushi-gamma-magic-weth-narrow",

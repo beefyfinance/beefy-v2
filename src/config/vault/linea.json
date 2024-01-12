@@ -22,7 +22,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x8eCE1AbA32716FdDe8D6482bfd88E9a0ee01f565"
+    }
   },
   {
     "id": "mendi-linea-weth",
@@ -47,7 +51,10 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "pyth"
+    }
   },
   {
     "id": "mendi-linea-usdc",
@@ -72,7 +79,10 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "pyth"
+    }
   },
   {
     "id": "mendi-linea-usdt",
@@ -97,7 +107,10 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "pyth"
+    }
   },
   {
     "id": "mendi-linea-dai",
@@ -122,7 +135,10 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "pyth"
+    }
   },
   {
     "id": "mendi-linea-wbtc",
@@ -147,6 +163,9 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "pyth"
+    }
   }
 ]

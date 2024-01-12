@@ -145,7 +145,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "curve",
+      "address": "0x4dece678ceceb27446b35c672dc7d61f30bad69e"
+    }
   },
   {
     "id": "prisma-cvxprisma",
@@ -344,7 +348,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
+    }
   },
   {
     "id": "compound-mainnet-usdc",
@@ -378,7 +386,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6"
+    }
   },
   {
     "id": "uniswap-eth-gamma-reth-weth",
