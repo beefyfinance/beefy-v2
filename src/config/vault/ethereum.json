@@ -1,9 +1,9 @@
 [
   {
     "id": "aura-sdai-3pool",
-    "name": "sDAI-3Pool",
+    "name": "sDAI-3OOL",
     "type": "standard",
-    "token": "sDAI-3Pool",
+    "token": "sDAI-3POOL",
     "tokenAddress": "0x49cbD67651fbabCE12d1df18499896ec87BEf46f",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
