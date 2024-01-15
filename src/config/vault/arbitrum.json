@@ -1,5 +1,28 @@
 [
   {
+    "id": "curve-arb-tricrvarb",
+    "name": "crvUSD/ARB/CRV",
+    "token": "crvUSDARBCRV",
+    "tokenAddress": "0x845C8bc94610807fCbaB5dd2bc7aC9DAbaFf3c55",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveTriCRV-ARB",
+    "earnedTokenAddress": "0xE47CCbD0F9E80ed02EF68f35eA5074b7165c68ED",
+    "earnContractAddress": "0xE47CCbD0F9E80ed02EF68f35eA5074b7165c68ED",
+    "oracle": "lps",
+    "oracleId": "curve-arb-tricrvarb",
+    "status": "active",
+    "platformId": "curve",
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "assets": ["crvUSD", "ARB", "CRV"],
+    "strategyTypeId": "multi-lp",
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-14/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-14/withdraw",
+    "network": "arbitrum",
+    "createdAt": 1705304770
+  },
+  {
     "id": "aura-arb-wsteth-sfrxeth-reth",
     "name": "wstETH/sfrxETH/rETH",
     "type": "standard",
