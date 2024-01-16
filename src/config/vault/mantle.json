@@ -18,7 +18,10 @@
     "strategyTypeId": "lendingNoBorrow",
     "network": "mantle",
     "createdAt": 1705412439,
-    "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/WMNT"
+    "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/WMNT",
+    "lendingOracle": {
+      "provider": "pyth"
+    }
   },
   {
     "id": "lendle-mantle-meth",
@@ -39,7 +42,10 @@
     "strategyTypeId": "lendingNoBorrow",
     "network": "mantle",
     "createdAt": 1705412439,
-    "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/METH"
+    "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/METH",
+    "lendingOracle": {
+      "provider": "pyth"
+    }
   },
   {
     "id": "lendle-mantle-weth",
@@ -60,7 +66,10 @@
     "strategyTypeId": "lendingNoBorrow",
     "network": "mantle",
     "createdAt": 1705412439,
-    "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/WETH"
+    "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/WETH",
+    "lendingOracle": {
+      "provider": "pyth"
+    }
   },
   {
     "id": "lendle-mantle-usdt",
@@ -81,7 +90,10 @@
     "strategyTypeId": "lendingNoBorrow",
     "network": "mantle",
     "createdAt": 1705412439,
-    "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/USDT"
+    "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/USDT",
+    "lendingOracle": {
+      "provider": "pyth"
+    }
   },
   {
     "id": "lendle-mantle-usdc",
@@ -102,7 +114,10 @@
     "strategyTypeId": "lendingNoBorrow",
     "network": "mantle",
     "createdAt": 1705412439,
-    "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/USDC"
+    "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/USDC",
+    "lendingOracle": {
+      "provider": "pyth"
+    }
   },
   {
     "id": "lendle-mantle-wbtc",
@@ -123,6 +138,9 @@
     "strategyTypeId": "lendingNoBorrow",
     "network": "mantle",
     "createdAt": 1705412439,
-    "buyTokenUrl": "https://bridge.mantle.xyz/"
+    "buyTokenUrl": "https://bridge.mantle.xyz/",
+    "lendingOracle": {
+      "provider": "pyth"
+    }
   }
 ]
