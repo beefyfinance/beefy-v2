@@ -750,8 +750,8 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     chainId: 5000,
     rpc: ['https://rpc.mantle.xyz'],
     explorerUrl: 'https://explorer.mantle.xyz',
-    multicallAddress: '0x',
-    appMulticallContractAddress: '0x',
+    multicallAddress: '0xAb35d11199216c7F7368080Cf41beD8f3AbBc4E4',
+    appMulticallContractAddress: '0xBFE4FBaA07f413511abf3ED9Bcc8286b2F359FF3',
     providerName: 'Mantle',
     walletSettings: {
       chainId: `0x${parseInt('5000', 10).toString(16)}`,
@@ -765,11 +765,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       blockExplorerUrls: ['https://explorer.mantle.xyz'],
     },
     gas: {
-      type: 'eip1559',
-      blocks: 5,
-      percentile: 0.2,
-      baseMinimum: '7',
-      baseSafetyMargin: 0.2,
+      type: 'standard',
     },
     stableCoins: ['USDT', 'USDC', 'DAI'],
   },

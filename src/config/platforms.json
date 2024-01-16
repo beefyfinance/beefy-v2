@@ -940,5 +940,10 @@
     "id": "mendi",
     "name": "Mendi",
     "filter": true
+  },
+  {
+    "id": "lendle",
+    "name": "Lendle",
+    "filter": true
   }
 ]
