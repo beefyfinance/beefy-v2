@@ -1025,44 +1025,6 @@
     ]
   },
   {
-    "id": "tethys-rftm-metis",
-    "name": "rFTM-METIS LP",
-    "type": "standard",
-    "token": "rFTM-METIS LP",
-    "tokenAddress": "0x74Ca39F7aB9B685B8eA8c4ab19E7Ab6b474Dd22D",
-    "tokenDecimals": 18,
-    "tokenProviderId": "tethys",
-    "earnedToken": "mooTethysFTM-METIS",
-    "earnedTokenAddress": "0x55Dd65993cB918cdA55eA02FCc6D417A364833d9",
-    "earnContractAddress": "0x55Dd65993cB918cdA55eA02FCc6D417A364833d9",
-    "oracle": "lps",
-    "oracleId": "tethys-rftm-metis",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "tethys",
-    "assets": ["FTM", "METIS"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0xa9109271abcf0C4106Ab7366B4eDB34405947eED",
-    "addLiquidityUrl": "https://v1.tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0xa9109271abcf0C4106Ab7366B4eDB34405947eED",
-    "removeLiquidityUrl": "https://v1.tethys.finance/pool/remove?inputCurrency=METIS&outputCurrency=0xa9109271abcf0C4106Ab7366B4eDB34405947eED",
-    "network": "metis",
-    "createdAt": 1647625639,
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "metis-tethys"
-      }
-    ]
-  },
-  {
     "id": "tethys-metis-ravax",
     "name": "rAVAX-METIS LP",
     "type": "standard",
