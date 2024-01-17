@@ -1,5 +1,34 @@
 [
   {
+    "id": "velodrome-v2-kuji-velo",
+    "name": "KUJI-VELO vLP V2",
+    "type": "standard",
+    "token": "KUJI-VELO vLP V2",
+    "tokenAddress": "0x18C830F6a32A06Cf2aC4262E977a096F12bDAB8D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2KUJI-VELO",
+    "earnedTokenAddress": "0x9a2f07153964e4e02878101be10e31e2dd474d74",
+    "earnContractAddress": "0x9a2f07153964e4e02878101be10e31e2dd474d74",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-kuji-velo",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["KUJI", "VELOV2"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x3a18dcc9745edcd1ef33ecb93b0b6eba5671e7ca&token1=0x9560e827af36c94d2ac33a39bce1fe78631088db&stable=false",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x18C830F6a32A06Cf2aC4262E977a096F12bDAB8D",
+    "network": "optimism",
+    "createdAt": 1705452854,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "aura-op-fraximalist-ethereum",
     "name": "Fraximalist Ethereum",
     "type": "standard",
