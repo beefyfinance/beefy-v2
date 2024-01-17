@@ -13,7 +13,7 @@
     "oracleId": "equilibria-arb-gdai",
     "status": "active",
     "platformId": "equilibria",
-    "assets": ["DAI"],
+    "assets": ["gDAI"],
     "strategyTypeId": "single-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xa0192f6567f8f5dc38c53323235fd08b318d2dca/zap/in?chain=arbitrum",
