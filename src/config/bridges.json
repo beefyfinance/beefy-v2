@@ -167,5 +167,11 @@
     "name": "Linea Bridge",
     "tagName": "Linea",
     "website": "https://bridge.linea.build/"
+  },
+  {
+    "id": "mantle-canonical",
+    "name": "Mantle Bridge",
+    "tagName": "Mantle",
+    "website": "https://bridge.mantle.xyz/"
   }
 ]
