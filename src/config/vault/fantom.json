@@ -1,5 +1,35 @@
 [
   {
+    "id": "beets-love-thy-stables",
+    "name": "Love Thy Stables",
+    "type": "standard",
+    "token": "Love Thy Stables",
+    "tokenAddress": "0x46E578B73a95e62423CE26056aa750bB9D99be32",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsLoveThyStables",
+    "earnedTokenAddress": "0xEB641C78c87B8ECC92208AC587B74cB7bc064863",
+    "earnContractAddress": "0xEB641C78c87B8ECC92208AC587B74cB7bc064863",
+    "oracle": "lps",
+    "oracleId": "beets-love-thy-stables",
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["axlUSDC", "lzUSDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://beets.fi/pool/0x46e578b73a95e62423ce26056aa750bb9d99be320000000000000000000007cf",
+    "removeLiquidityUrl": "https://beets.fi/pool/0x46e578b73a95e62423ce26056aa750bb9d99be320000000000000000000007cf",
+    "network": "fantom",
+    "createdAt": 1706031084
+  },
+  {
     "id": "stargate-fantom-lzusdc",
     "name": "lzUSDC LP",
     "type": "standard",
