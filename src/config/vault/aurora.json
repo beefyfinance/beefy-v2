@@ -626,44 +626,6 @@
     "createdAt": 1651151106
   },
   {
-    "id": "tri-stnear-near",
-    "name": "stNEAR-NEAR LP",
-    "type": "standard",
-    "token": "stNEAR-NEAR LP",
-    "tokenAddress": "0x47924Ae4968832984F4091EEC537dfF5c38948a4",
-    "tokenDecimals": 18,
-    "tokenProviderId": "trisolaris",
-    "earnedToken": "mooTristNEAR-NEAR",
-    "earnedTokenAddress": "0x513f6F732d7635e01Fc8DA16412a408f3596696E",
-    "earnContractAddress": "0x513f6F732d7635e01Fc8DA16412a408f3596696E",
-    "oracle": "lps",
-    "oracleId": "tri-stnear-near",
-    "status": "eol",
-    "retireReason": "tvl",
-    "platformId": "trisolaris",
-    "assets": ["STNEAR", "NEAR"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x07F9F7f963C5cD2BBFFd30CcfB964Be114332E30",
-    "addLiquidityUrl": "https://www.trisolaris.io/#/add/0x07F9F7f963C5cD2BBFFd30CcfB964Be114332E30/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
-    "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0x07F9F7f963C5cD2BBFFd30CcfB964Be114332E30/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
-    "network": "aurora",
-    "createdAt": 1645554735,
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "aurora-trisolaris"
-      }
-    ]
-  },
-  {
     "id": "tri-aurora-near",
     "name": "AURORA-NEAR LP",
     "type": "standard",

@@ -184,68 +184,6 @@
     ]
   },
   {
-    "id": "velocimeterv2-eth-wsteth",
-    "name": "wstETH-ETH V2 vLP",
-    "type": "standard",
-    "token": "wstETH-ETH V2 vvLP",
-    "tokenAddress": "0x7E282E6538163e7afb76027490486F59B3218310",
-    "tokenDecimals": 18,
-    "tokenProviderId": "velocimeter",
-    "earnedToken": "mooVelocimeterV2wstETH-ETH",
-    "earnedTokenAddress": "0xd6627a73d23DF21C8A657B1FB1b77259F2FEA5B8",
-    "earnContractAddress": "0xd6627a73d23DF21C8A657B1FB1b77259F2FEA5B8",
-    "oracle": "lps",
-    "oracleId": "velocimeterv2-eth-wsteth",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "velocimeter",
-    "assets": ["wstETH", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.velocimeter.xyz/swap",
-    "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
-    "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
-    "network": "canto",
-    "createdAt": 1681408024,
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "canto-velocimeter"
-      }
-    ]
-  },
-  {
-    "id": "velocimeterv2-wbtc-eth",
-    "name": "WBTC-ETH V2 vLP",
-    "type": "standard",
-    "token": "WBTC-ETH V2 vvLP",
-    "tokenAddress": "0xa2f7ecE2f2A0ffd24889223dE9a8D8F4F8E3943F",
-    "tokenDecimals": 18,
-    "tokenProviderId": "velocimeter",
-    "earnedToken": "mooVelocimeterV2WBTC-ETH",
-    "earnedTokenAddress": "0xC36Ca623A67309D6736eCa815b650a646d36e81a",
-    "earnContractAddress": "0xC36Ca623A67309D6736eCa815b650a646d36e81a",
-    "oracle": "lps",
-    "oracleId": "velocimeterv2-wbtc-eth",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "velocimeter",
-    "assets": ["WBTC", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.velocimeter.xyz/swap",
-    "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
-    "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
-    "network": "canto",
-    "createdAt": 1680753801,
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "canto-velocimeter"
-      }
-    ]
-  },
-  {
     "id": "velocimeterv2-wbtc-multibtc",
     "name": "WBTC-multiBTC V2 sLP",
     "type": "standard",
