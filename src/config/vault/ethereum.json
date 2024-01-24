@@ -428,7 +428,7 @@
     "earnContractAddress": "0x7628f57cAA83fa54909a5E46e55F0406dEcE56E6",
     "oracle": "lps",
     "oracleId": "uniswap-eth-gamma-reth-weth",
-    "status": "paused",
+    "status": "active",
     "platformId": "gamma",
     "assets": ["rETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
