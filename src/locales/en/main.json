@@ -580,6 +580,7 @@
   "Transact-Notice-PriceImpact-Confirm": "Confirm zap",
   "Transact-Notice-MaxNative": "You can't deposit 100% of your {{token}} into vault, make sure you leave enough gas for future transactions",
   "Transact-Notice-EmeraldGas": "Please ensure your transaction's gas limit is under 10,000,000. Oasis RPCs are currently overestimating the amount of gas needed for a transaction.",
+  "Transact-Notice-AmountExceedsBalance": "Amount exceeds your available balance",
   "Transact-Notice-Confirm": "The quote has changed, please confirm.",
   "Transact-Notice-Confirm-Original": "Original: <amount/>",
   "Transact-Notice-Confirm-New": "New estimate: <amount/>",

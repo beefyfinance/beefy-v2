@@ -37,6 +37,7 @@ export type AmountInputProps = {
   onChange: (value: BigNumber, isMax: boolean) => void;
   error?: boolean;
   className?: string;
+  allowInputAboveBalance?: boolean;
 };
 export const AmountInput = memo<AmountInputProps>(function AmountInput({
   value,
@@ -45,6 +46,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   tokenDecimals = 2,
   error = false,
   className,
+  allowInputAboveBalance = false,
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -98,16 +100,16 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
       }
 
       // Can't go above max
-      if (maxValue && parsedNumber.gt(maxValue)) {
+      if (!allowInputAboveBalance && maxValue && parsedNumber.gt(maxValue)) {
         handleMax();
         return;
       }
 
       // Raise changed event
       setInput(rawInput);
-      onChange(parsedNumber, maxValue && parsedNumber.gte(maxValue));
+      onChange(parsedNumber, false);
     },
-    [maxValue, onChange, handleMax]
+    [allowInputAboveBalance, handleMax, maxValue, onChange]
   );
 
   const handleBlur = useCallback<InputBaseProps['onBlur']>(
@@ -127,12 +129,11 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
     },
     [setInput, tokenDecimals]
   );
-
   useEffect(() => {
-    if (maxValue && value.gt(maxValue)) {
+    if (!allowInputAboveBalance && maxValue && value.gt(maxValue)) {
       onChange(maxValue, true);
     }
-  }, [value, maxValue, onChange]);
+  }, [value, maxValue, onChange, allowInputAboveBalance]);
 
   return (
     <InputBase

@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
@@ -41,6 +41,10 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
       [dispatch, depositToken]
     );
 
+    const error = useMemo(() => {
+      return value.gt(userBalance);
+    }, [userBalance, value]);
+
     return (
       <AmountInput
         className={clsx(classes.input, className)}
@@ -48,6 +52,8 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
         maxValue={userBalance}
         tokenDecimals={depositToken.decimals}
         onChange={handleChange}
+        error={error}
+        allowInputAboveBalance={true}
       />
     );
   }

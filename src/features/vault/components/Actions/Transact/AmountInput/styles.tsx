@@ -21,7 +21,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   error: {
-    borderColor: theme.palette.background.indicators.warning,
+    backgroundColor: `${theme.palette.background.indicators.error}4C`,
   },
   max: {
     ...theme.typography['subline-sm'],
