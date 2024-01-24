@@ -1,5 +1,28 @@
 [
   {
+    "id": "aura-op-a-night-at-the-opara",
+    "name": "A Night at the OPara",
+    "type": "standard",
+    "token": "A Night at the OPara",
+    "tokenAddress": "0x0244B0025264dC5f5c113d472D579C9c994A59CE",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooAuraOPANightattheOPara",
+    "earnedTokenAddress": "0x32BF68dF1D113603346422fED4e4393b3c976159",
+    "earnContractAddress": "0x32BF68dF1D113603346422fED4e4393b3c976159",
+    "oracle": "lps",
+    "oracleId": "aura-op-a-night-at-the-opara",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["OP", "PSP"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://op.beets.fi/pool/0x0244b0025264dc5f5c113d472d579c9c994a59ce0002000000000000000000c9",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0x0244b0025264dc5f5c113d472d579c9c994a59ce0002000000000000000000c9",
+    "network": "optimism",
+    "createdAt": 1706115167
+  },
+  {
     "id": "velodrome-v2-kuji-velo",
     "name": "KUJI-VELO vLP V2",
     "type": "standard",
