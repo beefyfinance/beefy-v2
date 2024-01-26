@@ -30,6 +30,7 @@ import { PnLGraphLoader } from './components/PnLGraph';
 import { VaultsStats } from './components/VaultsStats';
 import { HistoricGraphsLoader } from './components/HistoricGraph';
 import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
+import { WormholeBridge } from './components/WormholeBridge/WormholeBridge';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -86,6 +87,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
           <div className={classes.columnActions}>
             <Actions vaultId={vaultId} />
             <Hidden smDown>
+              {vaultId === 'compound-arbitrum-usdc' ? <WormholeBridge /> : null}
               <InsuranceCards vaultId={vaultId} />
               <LeverageCards vaultId={vaultId} />
             </Hidden>
@@ -102,6 +104,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
             {!isGovVault(vault) ? <StrategyCard vaultId={vaultId} /> : null}
             <AssetsCard vaultId={vault.id} />
             <Hidden mdUp>
+              {vaultId === 'compound-arbitrum-usdc' ? <WormholeBridge /> : null}
               <InsuranceCards vaultId={vaultId} />
               <LeverageCards vaultId={vaultId} />
             </Hidden>
