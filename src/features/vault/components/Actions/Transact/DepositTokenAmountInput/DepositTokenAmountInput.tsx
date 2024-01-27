@@ -12,6 +12,7 @@ import type { AmountInputProps } from '../AmountInput';
 import { AmountInput } from '../AmountInput';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import BigNumber from 'bignumber.js';
+import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
@@ -29,6 +30,9 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
       selectUserBalanceOfToken(state, depositToken.chainId, depositToken.address)
     );
     const value = useAppSelector(selectTransactInputAmount);
+    const price = useAppSelector(state =>
+      selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
+    );
     const handleChange = useCallback<AmountInputProps['onChange']>(
       (value, isMax) => {
         dispatch(
@@ -54,6 +58,8 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
         onChange={handleChange}
         error={error}
         allowInputAboveBalance={true}
+        fullWidth={true}
+        price={price}
       />
     );
   }
