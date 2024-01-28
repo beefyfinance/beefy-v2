@@ -39,7 +39,7 @@ const runArgsConfig: ArgumentConfig<RunArgs> = {
   reason: {
     type: String,
     alias: 'r',
-    description: '{retire|pause}Reason code to set',
+    description: '(retire|pause)Reason code to set',
     optional: true,
   },
   vaults: {
