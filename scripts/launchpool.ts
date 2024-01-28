@@ -50,6 +50,9 @@ async function generateLaunchpool() {
   const boost = await boostParams(chain, boostAddress);
   const pools = await getVaultsForChain(chain);
   const pool = pools.find(pool => pool.earnedTokenAddress === boost.staked);
+  if (!pool) {
+    throw new Error(`Could not find pool for ${boost.staked}`);
+  }
 
   const newBoost = {
     id: `moo_${pool.oracleId}-${partnerId}`,

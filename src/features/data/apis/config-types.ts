@@ -33,8 +33,10 @@ export interface VaultConfig {
   createdAt?: number | null;
   addLiquidityUrl?: string | null;
   buyTokenUrl?: string | null;
-  retireReason?: string | null;
-  pauseReason?: string | null;
+  retireReason?: string;
+  retiredAt?: number;
+  pauseReason?: string;
+  pausedAt?: number;
   removeLiquidityUrl?: string | null;
   depositFee?: number | undefined;
   refund?: boolean | null;

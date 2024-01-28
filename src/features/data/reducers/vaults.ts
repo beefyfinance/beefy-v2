@@ -200,7 +200,9 @@ function addVaultToState(
       depositFee: apiVault.depositFee ?? 0,
       createdAt: apiVault.createdAt ?? 0,
       retireReason: apiVault.retireReason,
+      retiredAt: apiVault.retiredAt,
       pauseReason: apiVault.pauseReason,
+      pausedAt: apiVault.pausedAt,
     };
 
     sliceState.byId[vault.id] = vault;
@@ -258,7 +260,9 @@ function addVaultToState(
       depositFee: apiVault.depositFee ?? 0,
       createdAt: apiVault.createdAt ?? 0,
       retireReason: apiVault.retireReason,
+      retiredAt: apiVault.retiredAt,
       pauseReason: apiVault.pauseReason,
+      pausedAt: apiVault.pausedAt,
       migrationIds: apiVault.migrationIds,
       bridged: apiVault.bridged,
       lendingOracle: apiVault.lendingOracle,

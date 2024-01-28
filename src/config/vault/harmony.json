@@ -13,7 +13,9 @@
     "oracle": "tokens",
     "oracleId": "oldBIFI",
     "status": "eol",
+    "createdAt": 1623706144,
     "retireReason": "bifiV2",
+    "retiredAt": 1670515904,
     "platformId": "beefy",
     "assets": ["oldBIFI"],
     "risks": [
@@ -25,8 +27,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "old-bifi-pool",
-    "network": "harmony",
-    "createdAt": 1623706144
+    "network": "harmony"
   },
   {
     "id": "sushi-one-1eth-1aave-eol",
@@ -42,7 +43,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-1eth-1aave",
     "status": "eol",
+    "createdAt": 1631279357,
     "retireReason": "rewards",
+    "retiredAt": 1655135261,
     "platformId": "sushi",
     "assets": ["AAVE", "ETH"],
     "risks": [
@@ -58,7 +61,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x913de0f91169680c32c8f27212361272ef4fdfd9/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x913de0f91169680c32c8f27212361272ef4fdfd9/remove",
     "network": "harmony",
-    "createdAt": 1631279357,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -80,7 +82,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-1eth-1frax",
     "status": "eol",
+    "createdAt": 1631282533,
     "retireReason": "rewards",
+    "retiredAt": 1655135261,
     "platformId": "sushi",
     "assets": ["FRAX", "ETH"],
     "risks": [
@@ -96,7 +100,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xa46bba980512e328e344ce12bb969563f3429f05/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xa46bba980512e328e344ce12bb969563f3429f05/remove",
     "network": "harmony",
-    "createdAt": 1631282533,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -118,7 +121,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-1wbtc-1eth",
     "status": "eol",
+    "createdAt": 1631283021,
     "retireReason": "rewards",
+    "retiredAt": 1670515904,
     "platformId": "sushi",
     "assets": ["WBTC", "ETH"],
     "risks": [
@@ -134,7 +139,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x39be7c95276954a6f7070f9baa38db2123691ed0/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x39be7c95276954a6f7070f9baa38db2123691ed0/remove",
     "network": "harmony",
-    "createdAt": 1631283021,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -156,7 +160,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-1usdt-1usdc",
     "status": "eol",
+    "createdAt": 1631283436,
     "retireReason": "rewards",
+    "retiredAt": 1670515904,
     "platformId": "sushi",
     "assets": ["USDT", "USDC"],
     "risks": [
@@ -172,7 +178,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x0c51171b913db10ade3fd625548e69c9c63afb96/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x0c51171b913db10ade3fd625548e69c9c63afb96/remove",
     "network": "harmony",
-    "createdAt": 1631283436,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -194,7 +199,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-1usdt-wone",
     "status": "eol",
+    "createdAt": 1631283673,
     "retireReason": "rewards",
+    "retiredAt": 1670515904,
     "platformId": "sushi",
     "assets": ["USDT", "ONE"],
     "risks": [
@@ -210,7 +217,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x2c7862b408bb3dbff277110ffde1b4eaa45c692a/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x2c7862b408bb3dbff277110ffde1b4eaa45c692a/remove",
     "network": "harmony",
-    "createdAt": 1631283673,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -232,7 +238,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-busd-one",
     "status": "eol",
+    "createdAt": 1631201665,
     "retireReason": "rewards",
+    "retiredAt": 1670515904,
     "platformId": "sushi",
     "assets": ["BUSD", "ONE"],
     "risks": [
@@ -248,7 +256,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x8c36ede15c5e4b0e1f9764351a7a7a0037c5e103/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x8c36ede15c5e4b0e1f9764351a7a7a0037c5e103/remove",
     "network": "harmony",
-    "createdAt": 1631201665,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -270,7 +277,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-eth-one",
     "status": "eol",
+    "createdAt": 1631205117,
     "retireReason": "rewards",
+    "retiredAt": 1670515904,
     "platformId": "sushi",
     "assets": ["ETH", "ONE"],
     "risks": [
@@ -286,7 +295,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xeb049f1ed546f8efc3ad57f6c7d22f081ccc7375/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xeb049f1ed546f8efc3ad57f6c7d22f081ccc7375/remove",
     "network": "harmony",
-    "createdAt": 1631205117,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -308,7 +316,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-btc-one",
     "status": "eol",
+    "createdAt": 1631205541,
     "retireReason": "rewards",
+    "retiredAt": 1655135261,
     "platformId": "sushi",
     "assets": ["WBTC", "ONE"],
     "risks": [
@@ -324,7 +334,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xc3670b927ef42eed252e483e2446352c238d9905/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xc3670b927ef42eed252e483e2446352c238d9905/remove",
     "network": "harmony",
-    "createdAt": 1631205541,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -346,7 +355,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-usdc-one",
     "status": "eol",
+    "createdAt": 1631205683,
     "retireReason": "rewards",
+    "retiredAt": 1670515904,
     "platformId": "sushi",
     "assets": ["USDC", "ONE"],
     "risks": [
@@ -362,7 +373,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xbf255d8c30dbab84ea42110ea7dc870f01c0013a/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xbf255d8c30dbab84ea42110ea7dc870f01c0013a/remove",
     "network": "harmony",
-    "createdAt": 1631205683,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -383,7 +393,9 @@
     "oracle": "tokens",
     "oracleId": "oldBIFI",
     "status": "eol",
+    "createdAt": 1636644198,
     "retireReason": "rewards",
+    "retiredAt": 1670515904,
     "platformId": "beefy",
     "assets": ["oldBIFI"],
     "risks": [
@@ -396,8 +408,7 @@
     ],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8",
-    "network": "harmony",
-    "createdAt": 1636644198
+    "network": "harmony"
   },
   {
     "id": "curve-harmony-tricrypto",
@@ -413,7 +424,9 @@
     "oracle": "lps",
     "oracleId": "curve-harmony-tricrypto",
     "status": "eol",
+    "createdAt": 1638254407,
     "retireReason": "rewards",
+    "retiredAt": 1655486707,
     "platformId": "curve",
     "assets": ["DAI", "USDC", "USDT", "WBTC", "ETH"],
     "risks": [
@@ -429,8 +442,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://harmony.curve.fi/tricrypto/deposit",
     "removeLiquidityUrl": "https://harmony.curve.fi/tricrypto/withdraw",
-    "network": "harmony",
-    "createdAt": 1638254407
+    "network": "harmony"
   },
   {
     "id": "curve-harmony-3pool",
@@ -446,7 +458,9 @@
     "oracle": "lps",
     "oracleId": "curve-harmony-3pool",
     "status": "eol",
+    "createdAt": 1638252423,
     "retireReason": "rewards",
+    "retiredAt": 1655486707,
     "platformId": "curve",
     "assets": ["DAI", "USDC", "USDT"],
     "risks": [
@@ -462,8 +476,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://harmony.curve.fi/3pool/deposit",
     "removeLiquidityUrl": "https://harmony.curve.fi/3pool/withdraw",
-    "network": "harmony",
-    "createdAt": 1638252423
+    "network": "harmony"
   },
   {
     "id": "sushi-one-wone-1btc",
@@ -479,7 +492,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-wone-1btc",
     "status": "eol",
+    "createdAt": 1641218490,
     "retireReason": "rewards",
+    "retiredAt": 1670515904,
     "platformId": "sushi",
     "assets": ["BTC", "ONE"],
     "risks": [
@@ -495,7 +510,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x4f3d9ac088cdf31b1831db3aaf5803ab35c200c4/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x4f3d9ac088cdf31b1831db3aaf5803ab35c200c4/remove",
     "network": "harmony",
-    "createdAt": 1641218490,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -517,7 +531,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-1eth-1dai",
     "status": "eol",
+    "createdAt": 1631282246,
     "retireReason": "tvl",
+    "retiredAt": 1650042396,
     "platformId": "sushi",
     "assets": ["DAI", "ETH"],
     "risks": [
@@ -534,7 +550,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xc5b8129b411ef5f5be22e74de6fe86c3b69e641d/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xc5b8129b411ef5f5be22e74de6fe86c3b69e641d/remove",
     "network": "harmony",
-    "createdAt": 1631282246,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -556,7 +571,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-1usdt-1eth",
     "status": "eol",
+    "createdAt": 1631282425,
     "retireReason": "tvl",
+    "retiredAt": 1650042396,
     "platformId": "sushi",
     "assets": ["USDT", "ETH"],
     "risks": [
@@ -572,7 +589,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x02f4d0021e3cb8736108e11c8df02fbbd6eeedbf/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x02f4d0021e3cb8736108e11c8df02fbbd6eeedbf/remove",
     "network": "harmony",
-    "createdAt": 1631282425,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -594,7 +610,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-sushi-one",
     "status": "eol",
+    "createdAt": 1631197145,
     "retireReason": "tvl",
+    "retiredAt": 1650042396,
     "platformId": "sushi",
     "assets": ["SUSHI", "ONE"],
     "risks": [
@@ -610,7 +628,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x468dc50884962d6f81733ac0c23c04611ac219f9/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x468dc50884962d6f81733ac0c23c04611ac219f9/remove",
     "network": "harmony",
-    "createdAt": 1631197145,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -632,7 +649,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-1ygg-1eth",
     "status": "eol",
+    "createdAt": 1631279238,
     "retireReason": "rewards",
+    "retiredAt": 1650042396,
     "platformId": "sushi",
     "assets": ["YGG", "ETH"],
     "risks": [
@@ -648,7 +667,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x40112850efd90e9e17b56de35d86bdff9f4d07fd/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x40112850efd90e9e17b56de35d86bdff9f4d07fd/remove",
     "network": "harmony",
-    "createdAt": 1631279238,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -670,7 +688,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-1axs-1eth",
     "status": "eol",
+    "createdAt": 1631279474,
     "retireReason": "rewards",
+    "retiredAt": 1651422223,
     "platformId": "sushi",
     "assets": ["AXS", "ETH"],
     "risks": [
@@ -686,7 +706,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xbb680ba75f7e3e404923d04d484af5ce96b4a4bf/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xbb680ba75f7e3e404923d04d484af5ce96b4a4bf/remove",
     "network": "harmony",
-    "createdAt": 1631279474,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -708,7 +727,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-ust-1eth",
     "status": "eol",
+    "createdAt": 1631282733,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "sushi",
     "assets": ["UST", "ETH"],
     "risks": [
@@ -725,7 +746,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x9293dfdd719ee2163f2e158e66ef75722ed712b4/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x9293dfdd719ee2163f2e158e66ef75722ed712b4/remove",
     "network": "harmony",
-    "createdAt": 1631282733,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -747,7 +767,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-bifi-wone",
     "status": "eol",
+    "createdAt": 1641218645,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "sushi",
     "assets": ["oldBIFI", "ONE"],
     "risks": [
@@ -763,7 +785,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x27f3b2df4a81382202e87ee40429e0212ecc7d3f/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0x27f3b2df4a81382202e87ee40429e0212ecc7d3f/remove",
     "network": "harmony",
-    "createdAt": 1641218645,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -785,7 +806,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-bscbusd-busd",
     "status": "eol",
+    "createdAt": 1631204933,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "sushi",
     "assets": ["BUSD", "bscBUSD"],
     "risks": [
@@ -801,7 +824,6 @@
     "addLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xda64f9053a971531a75071a729a6432fb65ed60d/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/hmy-s0:0xda64f9053a971531a75071a729a6432fb65ed60d/remove",
     "network": "harmony",
-    "createdAt": 1631204933,
     "zaps": [
       {
         "strategyId": "uniswap-v2",

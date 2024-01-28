@@ -12,12 +12,12 @@
     "oracle": "tokens",
     "oracleId": "wstETH",
     "status": "active",
+    "createdAt": 1702481665,
     "platformId": "mendi",
     "assets": ["wstETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
-    "createdAt": 1702481665,
     "zaps": [
       {
         "strategyId": "single"
@@ -41,12 +41,12 @@
     "oracle": "tokens",
     "oracleId": "WETH",
     "status": "active",
+    "createdAt": 1702481665,
     "platformId": "mendi",
     "assets": ["WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
-    "createdAt": 1702481665,
     "zaps": [
       {
         "strategyId": "single"
@@ -69,12 +69,12 @@
     "oracle": "tokens",
     "oracleId": "USDC",
     "status": "active",
+    "createdAt": 1702481665,
     "platformId": "mendi",
     "assets": ["USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
-    "createdAt": 1702481665,
     "zaps": [
       {
         "strategyId": "single"
@@ -97,12 +97,12 @@
     "oracle": "tokens",
     "oracleId": "USDT",
     "status": "active",
+    "createdAt": 1702481665,
     "platformId": "mendi",
     "assets": ["USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
-    "createdAt": 1702481665,
     "zaps": [
       {
         "strategyId": "single"
@@ -125,12 +125,12 @@
     "oracle": "tokens",
     "oracleId": "DAI",
     "status": "active",
+    "createdAt": 1702481665,
     "platformId": "mendi",
     "assets": ["DAI"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
-    "createdAt": 1702481665,
     "zaps": [
       {
         "strategyId": "single"
@@ -153,12 +153,12 @@
     "oracle": "tokens",
     "oracleId": "WBTC",
     "status": "active",
+    "createdAt": 1702481665,
     "platformId": "mendi",
     "assets": ["WBTC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
-    "createdAt": 1702481665,
     "zaps": [
       {
         "strategyId": "single"
