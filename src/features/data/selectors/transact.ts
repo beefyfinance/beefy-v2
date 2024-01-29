@@ -72,6 +72,15 @@ export const selectTransactSelected = createSelector(
   (selectionId, bySelectionId) => bySelectionId[selectionId] || undefined
 );
 
+export const selectInputAmountExceedsBalance = (state: BeefyState) => {
+  const selection = selectTransactSelected(state);
+  const depositToken = selection.tokens[0];
+  const userBalance = selectUserBalanceOfToken(state, depositToken.chainId, depositToken.address);
+  const value = selectTransactInputAmount(state);
+
+  return value.gt(userBalance);
+};
+
 export const selectTransactTokenChains = (state: BeefyState) =>
   state.ui.transact.selections.allChainIds;
 

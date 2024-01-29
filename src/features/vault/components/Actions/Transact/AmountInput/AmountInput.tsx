@@ -155,7 +155,11 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
         {price && value.gt(0) && <div className={classes.price}>{formatBigUsd(inputUsdValue)}</div>}
       </div>
       {maxValue && (
-        <button onClick={handleMax} disabled={maxValue.lte(BIG_ZERO)} className={classes.max}>
+        <button
+          onClick={handleMax}
+          disabled={maxValue.lte(BIG_ZERO)}
+          className={clsx(classes.endAdornement, classes.max)}
+        >
           {t('Transact-Max')}
         </button>
       )}

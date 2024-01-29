@@ -7,9 +7,11 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     borderRadius: '8px',
+    padding: '0px 12px',
     cursor: 'default',
     boxSizing: 'border-box' as const,
     position: 'relative' as const,
+    justifyContent: 'space-between',
   },
   inputContent: {
     display: 'flex',
@@ -17,7 +19,8 @@ export const styles = (theme: Theme) => ({
   },
   input: {
     ...theme.typography['body-lg-med'],
-    display: 'block',
+    padding: 0,
+    width: '100%',
     background: 'none',
     border: 'none',
     color: theme.palette.text.light,
@@ -39,7 +42,8 @@ export const styles = (theme: Theme) => ({
     width: '100%',
   },
   price: {
-    ...theme.typography['subline-sm'],
+    ...theme.typography['body-sm'],
+    lineHeight: '12px',
     color: theme.palette.text.dark,
   },
   max: {
@@ -55,11 +59,16 @@ export const styles = (theme: Theme) => ({
     minWidth: 0,
     flexShrink: 0,
     cursor: 'pointer',
+    marginRight: '12px',
     '&:disabled': {
       color: theme.palette.text.dark,
       backgroundColor: theme.palette.background.buttons.button,
       borderColor: theme.palette.background.contentLight,
       opacity: 0.4,
     },
+  },
+  endAdornement: {
+    position: 'absolute' as const,
+    right: 0,
   },
 });
