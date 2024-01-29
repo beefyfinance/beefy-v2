@@ -54,6 +54,8 @@ export interface VaultStandard {
 
   status: 'active' | 'eol' | 'paused';
   createdAt: number;
+  /** Used for sorting, not required in config but defaults to createdAt on load so always available on entity */
+  updatedAt: number;
   retireReason?: string;
   retiredAt?: number;
   pauseReason?: string;
@@ -117,6 +119,8 @@ export interface VaultGov {
 
   status: 'active' | 'eol' | 'paused';
   createdAt: number;
+  /** Used for sorting, not required in config but defaults to createdAt on load so always available on entity */
+  updatedAt: number;
   retireReason?: string;
   retiredAt?: number;
   pauseReason?: string;

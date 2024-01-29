@@ -111,7 +111,7 @@ export const vaultsSlice = createSlice({
       // If new vaults were added, apply default sorting
       if (sliceState.allIds.length !== initialVaultAmount) {
         sliceState.allIds = sortBy(sliceState.allIds, id => {
-          return -sliceState.byId[id].createdAt;
+          return -sliceState.byId[id].updatedAt;
         });
       }
     });
@@ -199,6 +199,7 @@ function addVaultToState(
       removeLiquidityUrl: null,
       depositFee: apiVault.depositFee ?? 0,
       createdAt: apiVault.createdAt ?? 0,
+      updatedAt: apiVault.updatedAt || apiVault.createdAt || 0,
       retireReason: apiVault.retireReason,
       retiredAt: apiVault.retiredAt,
       pauseReason: apiVault.pauseReason,
@@ -259,6 +260,7 @@ function addVaultToState(
       removeLiquidityUrl: apiVault.removeLiquidityUrl || null,
       depositFee: apiVault.depositFee ?? 0,
       createdAt: apiVault.createdAt ?? 0,
+      updatedAt: apiVault.updatedAt || apiVault.createdAt || 0,
       retireReason: apiVault.retireReason,
       retiredAt: apiVault.retiredAt,
       pauseReason: apiVault.pauseReason,

@@ -18,6 +18,7 @@ const FIELD_ORDER = [
   'oracleId',
   'status',
   'createdAt',
+  'updatedAt',
   'retireReason',
   'retiredAt',
   'pauseReason',
