@@ -1,5 +1,28 @@
 [
   {
+    "id": "aura-op-yield-concerto-by-frax",
+    "name": "Yield Concerto by FRAX",
+    "type": "standard",
+    "token": "Yield Concerto by FRAX",
+    "tokenAddress": "0x2FEb76966459d7841fa8A7Ed0aa4bf574d6111Bf",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooAuraOPYieldConcertobyFRAX",
+    "earnedTokenAddress": "0xb253dD7351906933AB32623c8dd9ADDce8480B09",
+    "earnContractAddress": "0xb253dD7351906933AB32623c8dd9ADDce8480B09",
+    "oracle": "lps",
+    "oracleId": "aura-op-yield-concerto-by-frax",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["sFRAX", "sfrxETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://op.beets.fi/pool/0x2feb76966459d7841fa8a7ed0aa4bf574d6111bf00020000000000000000011d",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0x2feb76966459d7841fa8a7ed0aa4bf574d6111bf00020000000000000000011d",
+    "network": "optimism",
+    "createdAt": 1706256091
+  },
+  {
     "id": "aura-op-a-night-at-the-opara",
     "name": "A Night at the OPara",
     "type": "standard",
