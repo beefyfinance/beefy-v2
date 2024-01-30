@@ -14,7 +14,7 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "partners": ["frax"]
+    "partners": ["fraxprotocol"]
   },
   {
     "id": "moo_sonne-op-usdc-beefy",
