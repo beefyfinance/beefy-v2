@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_aura-op-yield-concerto-by-frax-beefy",
+    "poolId": "aura-op-yield-concerto-by-frax",
+    "name": "Beefy",
+    "assets": ["sfrxETH","sFRAX"],
+    "tokenAddress": "0xb253dD7351906933AB32623c8dd9ADDce8480B09",
+    "earnedToken": "OP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
+    "earnContractAddress": "0x959D9a0410dfCcEBE37F5bf838e34Ea50a0DE852",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OP",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["frax"]
+  },
+  {
     "id": "moo_sonne-op-usdc-beefy",
     "poolId": "sonne-op-usdc",
     "name": "Beefy",
