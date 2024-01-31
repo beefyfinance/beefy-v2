@@ -87,13 +87,13 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
           <div className={classes.columnActions}>
             <Actions vaultId={vaultId} />
             <Hidden smDown>
-              {vaultId === 'compound-arbitrum-usdc' ? <WormholeBridge /> : null}
               <InsuranceCards vaultId={vaultId} />
               <LeverageCards vaultId={vaultId} />
             </Hidden>
           </div>
           <div className={classes.columnInfo}>
             {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
+            {vaultId === 'compound-arbitrum-usdc' ? <WormholeBridge /> : null}
             {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
             {!isGovVault(vault) ? (
               <PnLGraphLoader vaultId={vaultId} address={walletAddress} />
@@ -104,7 +104,6 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
             {!isGovVault(vault) ? <StrategyCard vaultId={vaultId} /> : null}
             <AssetsCard vaultId={vault.id} />
             <Hidden mdUp>
-              {vaultId === 'compound-arbitrum-usdc' ? <WormholeBridge /> : null}
               <InsuranceCards vaultId={vaultId} />
               <LeverageCards vaultId={vaultId} />
             </Hidden>
