@@ -34,7 +34,7 @@ export const styles = (theme: Theme) => ({
     borderRadius: '12px',
     zIndex: 1,
     opacity: 1,
-    transition: 'opacity 0.4s ease-in-out',
+    transition: 'opacity 0.2s ease-in-out',
     '&$loading': {
       opacity: 0,
     },
@@ -91,5 +91,9 @@ export const styles = (theme: Theme) => ({
     '&:hover': {
       fill: theme.palette.text.light,
     },
+  },
+  link: {
+    color: 'inherit',
+    textDecoration: 'underline',
   },
 });

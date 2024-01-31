@@ -48,11 +48,15 @@ export const WormholeBridge = memo(function WormholeBridge() {
         </div>
         <CardContent>
           <div className={classes.text}>
-            {`This Beefy vault is part of a Wormhole Foundation grant from Arbitrum DAO. To be
+            This Beefy vault is part of a Wormhole Foundation grant from Arbitrum DAO. To be
             eligible for extra ARB incentives users need to bridge native USDC to Arbitrum using
             Circle’s CCTP via Wormhole Connect and stake into this vault. Earned ARB rewards are
-            displayed on Wormhole's Dashboard and will be distributed weekly, for the next three
-            months.`}
+            displayed on{' '}
+            <a
+              className={classes.link}
+              href="https://portalbridge.com/rewards-dashboard/"
+            >{`Wormhole's Dashboard`}</a>{' '}
+            and will be distributed weekly, for the next three months.
           </div>
           <RewardTokenDetails
             token={rewardToken}
