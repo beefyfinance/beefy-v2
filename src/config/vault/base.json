@@ -1,5 +1,34 @@
 [
   {
+    "id": "aerodrome-usdc-aero",
+    "name": "USDC-AERO vLP",
+    "type": "standard",
+    "token": "vAMM-USDC/AERO",
+    "tokenAddress": "0x6cDcb1C4A4D1C3C6d054b27AC5B77e89eAFb971d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroUSDC-AERO",
+    "earnedTokenAddress": "0xc005B9833deBcF5fe6cc5bC9ba4fD74Bb382ae55",
+    "earnContractAddress": "0xc005B9833deBcF5fe6cc5bC9ba4fD74Bb382ae55",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usdc-aero",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["USDC", "AERO"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&token1=0x940181a94a35a4569e4529a3cdfb74e38fd98631&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "createdAt": 1706371909,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "seamless-usdc",
     "name": "USDC",
     "type": "standard",
@@ -12,12 +41,12 @@
     "oracle": "tokens",
     "oracleId": "USDC",
     "status": "active",
+    "createdAt": 1704975503,
     "platformId": "seamless",
     "assets": ["USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "base",
-    "createdAt": 1704975503,
     "zaps": [
       {
         "strategyId": "single"
@@ -37,12 +66,12 @@
     "oracle": "tokens",
     "oracleId": "DAI",
     "status": "active",
+    "createdAt": 1704975503,
     "platformId": "seamless",
     "assets": ["DAI"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "base",
-    "createdAt": 1704975503,
     "zaps": [
       {
         "strategyId": "single"
@@ -63,6 +92,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-sonne-usdc",
     "status": "active",
+    "createdAt": 1704204324,
     "platformId": "aerodrome",
     "assets": ["SONNE", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -70,7 +100,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x22a2488fe295047ba13bd8cccdbc8361dbd8cf7c&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1704204324,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -91,9 +120,9 @@
     "oracle": "lps",
     "oracleId": "aerodrome-usdc-usd+",
     "status": "active",
+    "createdAt": 1703773383,
     "platformId": "aerodrome",
     "assets": ["USDC", "USD+"],
-    "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
@@ -102,10 +131,10 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1703773383,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -126,14 +155,14 @@
     "oracle": "lps",
     "oracleId": "aerodrome-weth-usdc",
     "status": "active",
+    "createdAt": 1703168135,
     "platformId": "aerodrome",
     "assets": ["ETH", "USDC"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_HIGH", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1703168135,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -154,14 +183,14 @@
     "oracle": "lps",
     "oracleId": "aerodrome-dai-usdc",
     "status": "active",
+    "createdAt": 1703168135,
     "platformId": "aerodrome",
     "assets": ["DAI", "USDC"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_HIGH", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1703168135,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -182,14 +211,14 @@
     "oracle": "lps",
     "oracleId": "aerodrome-usdc-eusd",
     "status": "active",
+    "createdAt": 1703168135,
     "platformId": "aerodrome",
     "assets": ["USDC", "eUSD"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&token1=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1703168135,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -210,14 +239,14 @@
     "oracle": "lps",
     "oracleId": "aerodrome-usdc-mai",
     "status": "active",
+    "createdAt": 1703168135,
     "platformId": "aerodrome",
     "assets": ["USDC", "MAI"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&token1=0xbf1aeA8670D2528E08334083616dD9C5F3B087aE&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1703168135,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -238,14 +267,14 @@
     "oracle": "lps",
     "oracleId": "aerodrome-dola-usdc",
     "status": "active",
+    "createdAt": 1703152651,
     "platformId": "aerodrome",
     "assets": ["DOLA", "USDC"],
-    "strategyTypeId": "multi-lp",
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4621b7a9c75199271f773ebd9a499dbd165c3191&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1703152651,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -266,12 +295,12 @@
     "oracle": "tokens",
     "oracleId": "WETH",
     "status": "active",
+    "createdAt": 1702578552,
     "platformId": "seamless",
     "assets": ["WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "base",
-    "createdAt": 1702578552,
     "zaps": [
       {
         "strategyId": "single"
@@ -295,12 +324,12 @@
     "oracle": "tokens",
     "oracleId": "USDbC",
     "status": "active",
+    "createdAt": 1702578552,
     "platformId": "seamless",
     "assets": ["USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "base",
-    "createdAt": 1702578552,
     "zaps": [
       {
         "strategyId": "single"
@@ -324,12 +353,12 @@
     "oracle": "tokens",
     "oracleId": "USDbC",
     "status": "active",
+    "createdAt": 1701787116,
     "platformId": "sonne",
     "assets": ["USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "base",
-    "createdAt": 1701787116,
     "zaps": [
       {
         "strategyId": "single"
@@ -353,12 +382,12 @@
     "oracle": "tokens",
     "oracleId": "USDC",
     "status": "active",
+    "createdAt": 1701787116,
     "platformId": "sonne",
     "assets": ["USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "base",
-    "createdAt": 1701787116,
     "zaps": [
       {
         "strategyId": "single"
@@ -382,12 +411,12 @@
     "oracle": "tokens",
     "oracleId": "DAI",
     "status": "active",
+    "createdAt": 1701787116,
     "platformId": "sonne",
     "assets": ["DAI"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "base",
-    "createdAt": 1701787116,
     "zaps": [
       {
         "strategyId": "single"
@@ -411,12 +440,12 @@
     "oracle": "tokens",
     "oracleId": "WETH",
     "status": "active",
+    "createdAt": 1701787116,
     "platformId": "sonne",
     "assets": ["WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "base",
-    "createdAt": 1701787116,
     "zaps": [
       {
         "strategyId": "single"
@@ -440,12 +469,12 @@
     "oracle": "tokens",
     "oracleId": "cbETH",
     "status": "active",
+    "createdAt": 1701787116,
     "platformId": "sonne",
     "assets": ["cbETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "base",
-    "createdAt": 1701787116,
     "zaps": [
       {
         "strategyId": "single"
@@ -470,7 +499,9 @@
     "oracle": "lps",
     "oracleId": "aerodrome-weth-axlusdc",
     "status": "eol",
+    "createdAt": 1700418524,
     "retireReason": "tvl",
+    "retiredAt": 1704791264,
     "platformId": "aerodrome",
     "assets": ["ETH", "axlUSDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -478,7 +509,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xeb466342c4d449bc9f53a865d5cb90586f405215&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1700418524,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -500,6 +530,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-aero-wsteth",
     "status": "active",
+    "createdAt": 1699845057,
     "platformId": "aerodrome",
     "assets": ["AERO", "wstETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -507,7 +538,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x940181a94A35A4569E4529A3CDfB74e38FD98631&token1=0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1699845057,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -529,6 +559,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-weth-wsteth",
     "status": "active",
+    "createdAt": 1699845057,
     "platformId": "aerodrome",
     "assets": ["ETH", "wstETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -536,7 +567,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1699845057,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -558,15 +588,15 @@
     "oracle": "lps",
     "oracleId": "curve-base-eusd",
     "status": "active",
+    "createdAt": 1699600982,
     "platformId": "curve",
-    "migrationIds": ["l2-curve"],
     "assets": ["eUSD", "crvUSD"],
+    "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-12/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-12/withdraw",
-    "network": "base",
-    "createdAt": 1699600982
+    "network": "base"
   },
   {
     "id": "aerodrome-hyusd-eusd",
@@ -582,6 +612,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-hyusd-eusd",
     "status": "active",
+    "createdAt": 1699568205,
     "platformId": "aerodrome",
     "assets": ["hyUSD", "eUSD"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -589,7 +620,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xCc7FF230365bD730eE4B352cC2492CEdAC49383e&token1=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1699568205,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -611,6 +641,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-eusd-usdbc",
     "status": "active",
+    "createdAt": 1699568205,
     "platformId": "aerodrome",
     "assets": ["eUSD", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -618,7 +649,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1699568205,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -638,6 +668,7 @@
     "oracle": "tokens",
     "oracleId": "ETH",
     "status": "active",
+    "createdAt": 1698951095,
     "platformId": "compound",
     "assets": ["ETH"],
     "risks": [
@@ -652,7 +683,6 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://swap.defillama.com/?chain=base&from=0x0000000000000000000000000000000000000000&to=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
     "network": "base",
-    "createdAt": 1698951095,
     "zaps": [
       {
         "strategyId": "single"
@@ -676,6 +706,7 @@
     "oracle": "tokens",
     "oracleId": "USDbC",
     "status": "active",
+    "createdAt": 1698772242,
     "platformId": "compound",
     "assets": ["USDbC"],
     "risks": [
@@ -690,7 +721,6 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://swap.defillama.com/?chain=base&from=0x0000000000000000000000000000000000000000&to=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
     "network": "base",
-    "createdAt": 1698772242,
     "zaps": [
       {
         "strategyId": "single"
@@ -715,14 +745,14 @@
     "oracle": "lps",
     "oracleId": "sushi-base-gamma-weth-usdbc-narrow",
     "status": "active",
+    "createdAt": 1698588011,
     "platformId": "gamma",
     "assets": ["USDbC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/sushi/base/details/weth-usdbc-500-dynamic",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/sushi/base/details/weth-usdbc-500-dynamic",
-    "network": "base",
-    "createdAt": 1698588011
+    "network": "base"
   },
   {
     "id": "equalizer-base-axlwbtc-weth",
@@ -738,7 +768,9 @@
     "oracle": "lps",
     "oracleId": "equalizer-base-axlwbtc-weth",
     "status": "eol",
+    "createdAt": 1696685577,
     "retireReason": "tvl",
+    "retiredAt": 1699954665,
     "platformId": "equalizer",
     "assets": ["axlWBTC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -746,7 +778,6 @@
     "addLiquidityUrl": "https://base.equalizer.exchange/liquidity/0x5F55b7d9c07815736Eb901BC2Fa1963a47ac1ce0",
     "removeLiquidityUrl": "https://base.equalizer.exchange/liquidity/0x5F55b7d9c07815736Eb901BC2Fa1963a47ac1ce0",
     "network": "base",
-    "createdAt": 1696685577,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -768,7 +799,9 @@
     "oracle": "lps",
     "oracleId": "equalizer-base-weth-axlusdc",
     "status": "eol",
+    "createdAt": 1696685577,
     "retireReason": "tvl",
+    "retiredAt": 1697816149,
     "platformId": "equalizer",
     "assets": ["axlUSDC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -776,7 +809,6 @@
     "addLiquidityUrl": "https://base.equalizer.exchange/liquidity/0x28a6a0C35BA84A7e9Da4b1d03b44d047495fEdF3",
     "removeLiquidityUrl": "https://base.equalizer.exchange/liquidity/0x28a6a0C35BA84A7e9Da4b1d03b44d047495fEdF3",
     "network": "base",
-    "createdAt": 1696685577,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -798,6 +830,7 @@
     "oracle": "lps",
     "oracleId": "equalizer-base-weth-usdc",
     "status": "active",
+    "createdAt": 1696685577,
     "platformId": "equalizer",
     "assets": ["USDC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -805,7 +838,6 @@
     "addLiquidityUrl": "https://base.equalizer.exchange/liquidity/0x83240b049Fa89b65be714aeD68e5B074df6aAc84",
     "removeLiquidityUrl": "https://base.equalizer.exchange/liquidity/0x83240b049Fa89b65be714aeD68e5B074df6aAc84",
     "network": "base",
-    "createdAt": 1696685577,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -827,6 +859,7 @@
     "oracle": "lps",
     "oracleId": "equalizer-base-weth-usdbc",
     "status": "active",
+    "createdAt": 1696685577,
     "platformId": "equalizer",
     "assets": ["USDbC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -834,7 +867,6 @@
     "addLiquidityUrl": "https://base.equalizer.exchange/liquidity/0xF3F1F5760a614B8146eec5D1c94658720c2425b9",
     "removeLiquidityUrl": "https://base.equalizer.exchange/liquidity/0xF3F1F5760a614B8146eec5D1c94658720c2425b9",
     "network": "base",
-    "createdAt": 1696685577,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -856,6 +888,7 @@
     "oracle": "lps",
     "oracleId": "equalizer-base-dai-usdbc",
     "status": "active",
+    "createdAt": 1696685577,
     "platformId": "equalizer",
     "assets": ["DAI", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -863,7 +896,6 @@
     "addLiquidityUrl": "https://base.equalizer.exchange/liquidity/0xf7CBeF201dc2BE7489D7fD434E9D3c17af92C7c0",
     "removeLiquidityUrl": "https://base.equalizer.exchange/liquidity/0xf7CBeF201dc2BE7489D7fD434E9D3c17af92C7c0",
     "network": "base",
-    "createdAt": 1696685577,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -885,7 +917,9 @@
     "oracle": "lps",
     "oracleId": "equalizer-base-usdbc-axlusdc",
     "status": "eol",
+    "createdAt": 1696685577,
     "retireReason": "tvl",
+    "retiredAt": 1699954665,
     "platformId": "equalizer",
     "assets": ["USDbC", "axlUSDC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -893,7 +927,6 @@
     "addLiquidityUrl": "https://base.equalizer.exchange/liquidity/0x1174d5ddbE6b827E4f4Cbf400EF5305585dBc9Ff",
     "removeLiquidityUrl": "https://base.equalizer.exchange/liquidity/0x1174d5ddbE6b827E4f4Cbf400EF5305585dBc9Ff",
     "network": "base",
-    "createdAt": 1696685577,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -915,7 +948,9 @@
     "oracle": "lps",
     "oracleId": "equalizer-base-usdc-usdbc",
     "status": "eol",
+    "createdAt": 1696685577,
     "retireReason": "tvl",
+    "retiredAt": 1701792309,
     "platformId": "equalizer",
     "assets": ["USDC", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -923,7 +958,6 @@
     "addLiquidityUrl": "https://base.equalizer.exchange/liquidity/0x0345AA92C7cb97e09b7CC0D55E730cD39C09fa43",
     "removeLiquidityUrl": "https://base.equalizer.exchange/liquidity/0x0345AA92C7cb97e09b7CC0D55E730cD39C09fa43",
     "network": "base",
-    "createdAt": 1696685577,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -945,6 +979,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-ovn-usd+",
     "status": "active",
+    "createdAt": 1695980893,
     "platformId": "aerodrome",
     "assets": ["OVN", "USD+"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -952,7 +987,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xa3d1a8deb97b111454b294e2324efad13a9d8396&token1=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1695980893,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -974,15 +1008,15 @@
     "oracle": "lps",
     "oracleId": "curve-base-usd+",
     "status": "active",
+    "createdAt": 1695635555,
     "platformId": "curve",
-    "migrationIds": ["l2-curve"],
     "assets": ["USD+", "crvUSD"],
+    "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-2/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-2/withdraw",
-    "network": "base",
-    "createdAt": 1695635555
+    "network": "base"
   },
   {
     "id": "baseswap-weth-bsx",
@@ -998,6 +1032,7 @@
     "oracle": "lps",
     "oracleId": "baseswap-weth-bsx",
     "status": "active",
+    "createdAt": 1694180071,
     "platformId": "baseswap",
     "assets": ["BSX", "ETH"],
     "risks": [
@@ -1012,7 +1047,6 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0x4200000000000000000000000000000000000006/0xd5046B976188EB40f6DE40fB527F89c05b323385",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0x4200000000000000000000000000000000000006/0xd5046B976188EB40f6DE40fB527F89c05b323385",
     "network": "base",
-    "createdAt": 1694180071,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1034,6 +1068,7 @@
     "oracle": "lps",
     "oracleId": "baseswap-usdc-usdbc",
     "status": "active",
+    "createdAt": 1694180071,
     "platformId": "baseswap",
     "assets": ["USDC", "USDbC"],
     "risks": [
@@ -1048,7 +1083,6 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
     "network": "base",
-    "createdAt": 1694180071,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1070,6 +1104,7 @@
     "oracle": "lps",
     "oracleId": "balancer-base-usdc-usdbc-axlusdc",
     "status": "active",
+    "createdAt": 1694110890,
     "platformId": "balancer",
     "assets": ["USDC", "USDbC", "axlUSDC"],
     "risks": [
@@ -1083,8 +1118,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0x0c659734f1eef9c63b7ebdf78a164cdd745586db000000000000000000000046/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0x0c659734f1eef9c63b7ebdf78a164cdd745586db000000000000000000000046/withdraw",
-    "network": "base",
-    "createdAt": 1694110890
+    "network": "base"
   },
   {
     "id": "balancer-base-weth-reth",
@@ -1100,6 +1134,7 @@
     "oracle": "lps",
     "oracleId": "balancer-base-weth-reth",
     "status": "active",
+    "createdAt": 1694110890,
     "platformId": "balancer",
     "assets": ["rETH", "ETH"],
     "risks": [
@@ -1113,8 +1148,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xc771c1a5905420daec317b154eb13e4198ba97d0000000000000000000000023/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xc771c1a5905420daec317b154eb13e4198ba97d0000000000000000000000023/withdraw",
-    "network": "base",
-    "createdAt": 1694110890
+    "network": "base"
   },
   {
     "id": "baseswap-weth-usdc",
@@ -1130,6 +1164,7 @@
     "oracle": "lps",
     "oracleId": "baseswap-weth-usdc",
     "status": "active",
+    "createdAt": 1694180071,
     "platformId": "baseswap",
     "assets": ["USDC", "ETH"],
     "risks": [
@@ -1144,7 +1179,6 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0x4200000000000000000000000000000000000006/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0x4200000000000000000000000000000000000006/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
     "network": "base",
-    "createdAt": 1694180071,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1166,6 +1200,7 @@
     "oracle": "lps",
     "oracleId": "baseswap-weth-dai",
     "status": "active",
+    "createdAt": 1694180071,
     "platformId": "baseswap",
     "assets": ["DAI", "ETH"],
     "risks": [
@@ -1180,7 +1215,6 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb/0x4200000000000000000000000000000000000006",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb/0x4200000000000000000000000000000000000006",
     "network": "base",
-    "createdAt": 1694180071,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1202,7 +1236,9 @@
     "oracle": "lps",
     "oracleId": "aerodrome-dola-usd+",
     "status": "eol",
+    "createdAt": 1694103026,
     "retireReason": "tvl",
+    "retiredAt": 1702305918,
     "platformId": "aerodrome",
     "assets": ["DOLA", "USD+"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -1211,7 +1247,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4621b7a9c75199271f773ebd9a499dbd165c3191&token1=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1694103026,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1233,6 +1268,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-usdc-usdbc",
     "status": "active",
+    "createdAt": 1703168135,
     "platformId": "aerodrome",
     "assets": ["USDC", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1240,7 +1276,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/connect?token0=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1703168135,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1262,6 +1297,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-weth-dai",
     "status": "active",
+    "createdAt": 1694096966,
     "platformId": "aerodrome",
     "assets": ["WETH", "DAI"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1269,7 +1305,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/connect?token0=0x4200000000000000000000000000000000000006&token1=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1694096966,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1291,6 +1326,7 @@
     "oracle": "lps",
     "oracleId": "baseswap-mai-usdbc",
     "status": "active",
+    "createdAt": 1693944220,
     "platformId": "baseswap",
     "assets": ["MAI", "USDbC"],
     "risks": [
@@ -1305,7 +1341,6 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0xbf1aeA8670D2528E08334083616dD9C5F3B087aE",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0xbf1aeA8670D2528E08334083616dD9C5F3B087aE",
     "network": "base",
-    "createdAt": 1693944220,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1327,6 +1362,7 @@
     "oracle": "lps",
     "oracleId": "baseswap-axlwbtc-usdbc",
     "status": "active",
+    "createdAt": 1693580890,
     "platformId": "baseswap",
     "assets": ["axlWBTC", "USDbC"],
     "risks": [
@@ -1341,7 +1377,6 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x1a35EE4640b0A3B87705B0A4B45D227Ba60Ca2ad",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x1a35EE4640b0A3B87705B0A4B45D227Ba60Ca2ad",
     "network": "base",
-    "createdAt": 1693580890,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1363,6 +1398,7 @@
     "oracle": "lps",
     "oracleId": "baseswap-usd+-usdbc",
     "status": "active",
+    "createdAt": 1693580890,
     "platformId": "baseswap",
     "assets": ["USD+", "USDbC"],
     "risks": [
@@ -1378,7 +1414,6 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376",
     "network": "base",
-    "createdAt": 1693580890,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1400,6 +1435,7 @@
     "oracle": "lps",
     "oracleId": "baseswap-dai+-usd+",
     "status": "active",
+    "createdAt": 1693580890,
     "platformId": "baseswap",
     "assets": ["DAI+", "USD+"],
     "risks": [
@@ -1415,7 +1451,6 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376/0x65a2508C429a6078a7BC2f7dF81aB575BD9D9275",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376/0x65a2508C429a6078a7BC2f7dF81aB575BD9D9275",
     "network": "base",
-    "createdAt": 1693580890,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1437,15 +1472,15 @@
     "oracle": "lps",
     "oracleId": "curve-base-crv",
     "status": "active",
+    "createdAt": 1694096967,
     "platformId": "curve",
-    "migrationIds": ["l2-curve"],
     "assets": ["CRV", "crvUSD"],
+    "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-4/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-4/withdraw",
-    "network": "base",
-    "createdAt": 1694096967
+    "network": "base"
   },
   {
     "id": "curve-base-4pool",
@@ -1461,15 +1496,15 @@
     "oracle": "lps",
     "oracleId": "curve-base-4pool",
     "status": "active",
+    "createdAt": 1694096967,
     "platformId": "curve",
-    "migrationIds": ["l2-curve"],
     "assets": ["USDC", "USDbC", "axlUSDC", "crvUSD"],
+    "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-1/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-1/withdraw",
-    "network": "base",
-    "createdAt": 1694096967
+    "network": "base"
   },
   {
     "id": "curve-base-tricrypto",
@@ -1485,15 +1520,15 @@
     "oracle": "lps",
     "oracleId": "curve-base-tricrypto",
     "status": "active",
+    "createdAt": 1694096967,
     "platformId": "curve",
-    "migrationIds": ["l2-curve"],
     "assets": ["crvUSD", "tBTC", "ETH"],
+    "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-tricrypto-1/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-tricrypto-1/withdraw",
-    "network": "base",
-    "createdAt": 1694096967
+    "network": "base"
   },
   {
     "id": "curve-base-cbeth",
@@ -1509,15 +1544,15 @@
     "oracle": "lps",
     "oracleId": "curve-base-cbeth",
     "status": "active",
+    "createdAt": 1694096967,
     "platformId": "curve",
-    "migrationIds": ["l2-curve"],
     "assets": ["cbETH", "ETH"],
+    "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-1/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-1/withdraw",
-    "network": "base",
-    "createdAt": 1694096967
+    "network": "base"
   },
   {
     "id": "aerodrome-dola-mai",
@@ -1533,6 +1568,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-dola-mai",
     "status": "active",
+    "createdAt": 1694018134,
     "platformId": "aerodrome",
     "assets": ["DOLA", "MAI"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -1541,7 +1577,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xbf1aea8670d2528e08334083616dd9c5f3b087ae&token1=0x4621b7a9c75199271f773ebd9a499dbd165c3191&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1694018134,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1563,6 +1598,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-weth-well",
     "status": "active",
+    "createdAt": 1693511119,
     "platformId": "aerodrome",
     "assets": ["WELL", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1570,7 +1606,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/connect?token0=0x4200000000000000000000000000000000000006&token1=0xFF8adeC2221f9f4D8dfbAFa6B9a297d17603493D&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693511119,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1592,6 +1627,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-weth-aero",
     "status": "active",
+    "createdAt": 1693508617,
     "platformId": "aerodrome",
     "assets": ["AERO", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1599,7 +1635,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x940181a94a35a4569e4529a3cdfb74e38fd98631&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693508617,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1621,6 +1656,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-usd+-usdbc",
     "status": "active",
+    "createdAt": 1693493753,
     "platformId": "aerodrome",
     "assets": ["USD+", "USDbC"],
     "risks": [
@@ -1635,7 +1671,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693493753,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1657,6 +1692,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-sonne-usdbc",
     "status": "active",
+    "createdAt": 1693493753,
     "platformId": "aerodrome",
     "assets": ["SONNE", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1664,7 +1700,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x22a2488fE295047Ba13BD8cCCdBC8361DBD8cf7c&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693493753,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1690,6 +1725,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-usdbc-thales",
     "status": "active",
+    "createdAt": 1693493753,
     "platformId": "aerodrome",
     "assets": ["THALES", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1697,7 +1733,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&token1=0xf34e0cff046e154CAfCae502C7541b9E5FD8C249&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693493753,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1719,6 +1754,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-weth-unidx",
     "status": "active",
+    "createdAt": 1693493753,
     "platformId": "aerodrome",
     "assets": ["UNIDX", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1726,7 +1762,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x6B4712AE9797C199edd44F897cA09BC57628a1CF&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693493753,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1748,6 +1783,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-weth-thales",
     "status": "active",
+    "createdAt": 1693493753,
     "platformId": "aerodrome",
     "assets": ["THALES", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1755,7 +1791,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xf34e0cff046e154CAfCae502C7541b9E5FD8C249&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693493753,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1777,6 +1812,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-ageur-usdbc",
     "status": "active",
+    "createdAt": 1693493753,
     "platformId": "aerodrome",
     "assets": ["agEUR", "USDbC"],
     "risks": [
@@ -1791,7 +1827,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xA61BeB4A3d02decb01039e378237032B351125B4&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693493753,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1813,6 +1848,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-aero-usdbc",
     "status": "active",
+    "createdAt": 1693496020,
     "platformId": "aerodrome",
     "assets": ["AERO", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -1821,7 +1857,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x940181a94a35a4569e4529a3cdfb74e38fd98631&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693496020,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1843,6 +1878,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-mai-usdbc",
     "status": "active",
+    "createdAt": 1693473078,
     "platformId": "aerodrome",
     "assets": ["MAI", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1850,7 +1886,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xbf1aea8670d2528e08334083616dd9c5f3b087ae&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693473078,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1872,6 +1907,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-tbtc-usdbc",
     "status": "active",
+    "createdAt": 1693429056,
     "platformId": "aerodrome",
     "assets": ["tBTC", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1879,7 +1915,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693429056,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1901,6 +1936,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-tbtc-weth",
     "status": "active",
+    "createdAt": 1693429056,
     "platformId": "aerodrome",
     "assets": ["tBTC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1908,7 +1944,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693429056,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1930,6 +1965,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-dai+-usd+",
     "status": "active",
+    "createdAt": 1693429056,
     "platformId": "aerodrome",
     "assets": ["DAI+", "USD+"],
     "risks": [
@@ -1944,7 +1980,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x65a2508C429a6078a7BC2f7dF81aB575BD9D9275&token1=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693429056,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1966,6 +2001,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-cbeth-weth",
     "status": "active",
+    "createdAt": 1693409597,
     "platformId": "aerodrome",
     "assets": ["cbETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1973,7 +2009,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x2ae3f1ec7f1f5012cfeab0185bfc7aa3cf0dec22&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693409597,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1995,6 +2030,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-dola-usdbc",
     "status": "active",
+    "createdAt": 1693409591,
     "platformId": "aerodrome",
     "assets": ["DOLA", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -2002,7 +2038,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4621b7a9c75199271f773ebd9a499dbd165c3191&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693409591,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2024,6 +2059,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-weth-usdbc",
     "status": "active",
+    "createdAt": 1693409575,
     "platformId": "aerodrome",
     "assets": ["ETH", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -2031,7 +2067,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693409575,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2053,6 +2088,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-dai-usdbc",
     "status": "active",
+    "createdAt": 1693409598,
     "platformId": "aerodrome",
     "assets": ["DAI", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -2060,7 +2096,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x50c5725949a6f0c72e6c4a641f24049a917db0cb&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693409598,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2082,6 +2117,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-wusdr-usdbc",
     "status": "active",
+    "createdAt": 1693409599,
     "platformId": "aerodrome",
     "assets": ["wUSDR", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -2089,7 +2125,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x9483ab65847a447e36d21af1cab8c87e9712ff93&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "createdAt": 1693409599,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2111,6 +2146,7 @@
     "oracle": "lps",
     "oracleId": "baso-weth-usdbc",
     "status": "active",
+    "createdAt": 1692735752,
     "platformId": "baso",
     "assets": ["ETH", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2118,7 +2154,6 @@
     "addLiquidityUrl": "https://www.baso.finance/deposit?token0=eth&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=false",
     "removeLiquidityUrl": "https://www.baso.finance/withdraw?token0=eth&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=false",
     "network": "base",
-    "createdAt": 1692735752,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2140,7 +2175,9 @@
     "oracle": "lps",
     "oracleId": "baso-mim-usdbc",
     "status": "eol",
+    "createdAt": 1692735752,
     "retireReason": "tvl",
+    "retiredAt": 1702305918,
     "platformId": "baso",
     "assets": ["MIM", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2148,7 +2185,6 @@
     "addLiquidityUrl": "https://www.baso.finance/deposit?token0=0x4A3A6Dd60A34bB2Aba60D73B4C88315E9CeB6A3D&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=true",
     "removeLiquidityUrl": "https://www.baso.finance/withdraw?token0=0x4A3A6Dd60A34bB2Aba60D73B4C88315E9CeB6A3D&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=true",
     "network": "base",
-    "createdAt": 1692735752,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2170,6 +2206,7 @@
     "oracle": "lps",
     "oracleId": "bvm-ftw-dai",
     "status": "active",
+    "createdAt": 1695881193,
     "platformId": "bvm",
     "assets": ["FTW", "DAI"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -2177,7 +2214,6 @@
     "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x7b809866eaa8137d902f83bf7cbe77b41d0df70c/0x108ef56f5146a060c847bb1a7755beb24eec4bd8",
     "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x7b809866eaa8137d902f83bf7cbe77b41d0df70c/0x108ef56f5146a060c847bb1a7755beb24eec4bd8",
     "network": "base",
-    "createdAt": 1695881193,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2199,7 +2235,9 @@
     "oracle": "lps",
     "oracleId": "bvm-axlusdt-axlusdc",
     "status": "eol",
+    "createdAt": 1694662452,
     "retireReason": "tvl",
+    "retiredAt": 1703931372,
     "platformId": "bvm",
     "assets": ["axlUSDT", "axlUSDC"],
     "risks": [
@@ -2214,7 +2252,6 @@
     "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x59d286411e41bb0c754dc01d692c4a54db314832/0xb65b5853aced77228654eeaf1bf80d29f230c6a7",
     "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x59d286411e41bb0c754dc01d692c4a54db314832/0xb65b5853aced77228654eeaf1bf80d29f230c6a7",
     "network": "base",
-    "createdAt": 1694662452,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2236,7 +2273,9 @@
     "oracle": "lps",
     "oracleId": "bvm-usdc-usdbc",
     "status": "eol",
+    "createdAt": 1694068320,
     "retireReason": "tvl",
+    "retiredAt": 1697816149,
     "platformId": "bvm",
     "assets": ["USDC", "USDbC"],
     "risks": [
@@ -2251,7 +2290,6 @@
     "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x9f773b35c711f32e77842ec61d063c7374fe07b6/0x500ce1cbb5327ec212b2a501f6438af0290c7485",
     "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x9f773b35c711f32e77842ec61d063c7374fe07b6/0x500ce1cbb5327ec212b2a501f6438af0290c7485",
     "network": "base",
-    "createdAt": 1694068320,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2273,7 +2311,9 @@
     "oracle": "lps",
     "oracleId": "bvm-dai-usdbc",
     "status": "eol",
+    "createdAt": 1693352053,
     "retireReason": "tvl",
+    "retiredAt": 1698574248,
     "platformId": "bvm",
     "assets": ["DAI", "USDbC"],
     "risks": [
@@ -2288,7 +2328,6 @@
     "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x110d58483e45b78a040fe052943a2ff4885d8cf5/0xe5ec7089c18b713c5e958258b1fb96c811fabc43",
     "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x110d58483e45b78a040fe052943a2ff4885d8cf5/0xe5ec7089c18b713c5e958258b1fb96c811fabc43",
     "network": "base",
-    "createdAt": 1693352053,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2310,7 +2349,9 @@
     "oracle": "lps",
     "oracleId": "bvm-dai+-usdbc",
     "status": "eol",
+    "createdAt": 1693352053,
     "retireReason": "tvl",
+    "retiredAt": 1696060775,
     "platformId": "bvm",
     "assets": ["DAI+", "USDbC"],
     "risks": [
@@ -2325,7 +2366,6 @@
     "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x42731e7774cf1b389fe2d9552bbdd6e4bb05e42b/0x32d077840235ab8fb340fddc0ecf29971a576235",
     "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x42731e7774cf1b389fe2d9552bbdd6e4bb05e42b/0x32d077840235ab8fb340fddc0ecf29971a576235",
     "network": "base",
-    "createdAt": 1693352053,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2347,6 +2387,7 @@
     "oracle": "lps",
     "oracleId": "swapbased-eth-cbeth",
     "status": "active",
+    "createdAt": 1694469591,
     "platformId": "swapbased",
     "assets": ["cbETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2354,7 +2395,6 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     "network": "base",
-    "createdAt": 1694469591,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2376,6 +2416,7 @@
     "oracle": "lps",
     "oracleId": "alienbase-dai-usdbc",
     "status": "active",
+    "createdAt": 1692384702,
     "platformId": "alienbase",
     "assets": ["DAI", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2383,7 +2424,6 @@
     "addLiquidityUrl": "https://app.alienbase.xyz/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
     "removeLiquidityUrl": "https://app.alienbase.xyz/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
     "network": "base",
-    "createdAt": 1692384702,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2405,13 +2445,13 @@
     "oracle": "tokens",
     "oracleId": "ALB",
     "status": "active",
+    "createdAt": 1692289605,
     "platformId": "alienbase",
     "assets": ["ALB"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.alienbase.xyz/swap?outputCurrency=0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
-    "network": "base",
-    "createdAt": 1692289605
+    "network": "base"
   },
   {
     "id": "baseswap-weth-unidx",
@@ -2427,7 +2467,9 @@
     "oracle": "lps",
     "oracleId": "baseswap-weth-unidx",
     "status": "eol",
+    "createdAt": 1693580890,
     "retireReason": "tvl",
+    "retiredAt": 1698574248,
     "platformId": "baseswap",
     "assets": ["UNIDX", "ETH"],
     "risks": [
@@ -2442,7 +2484,6 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0x4200000000000000000000000000000000000006/0x6B4712AE9797C199edd44F897cA09BC57628a1CF",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0x4200000000000000000000000000000000000006/0x6B4712AE9797C199edd44F897cA09BC57628a1CF",
     "network": "base",
-    "createdAt": 1693580890,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2464,6 +2505,7 @@
     "oracle": "lps",
     "oracleId": "alienbase-dai+-usd+",
     "status": "active",
+    "createdAt": 1692128324,
     "platformId": "alienbase",
     "assets": ["DAI+", "USD+"],
     "risks": [
@@ -2478,7 +2520,6 @@
     "addLiquidityUrl": "https://app.alienbase.xyz/add/0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376/0x65a2508C429a6078a7BC2f7dF81aB575BD9D9275",
     "removeLiquidityUrl": "https://app.alienbase.xyz/remove/0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376/0x65a2508C429a6078a7BC2f7dF81aB575BD9D9275",
     "network": "base",
-    "createdAt": 1692128324,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2500,6 +2541,7 @@
     "oracle": "lps",
     "oracleId": "alienbase-usd+-usdbc",
     "status": "active",
+    "createdAt": 1692128324,
     "platformId": "alienbase",
     "assets": ["USD+", "USDbC"],
     "risks": [
@@ -2514,7 +2556,6 @@
     "addLiquidityUrl": "https://app.alienbase.xyz/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376",
     "removeLiquidityUrl": "https://app.alienbase.xyz/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376",
     "network": "base",
-    "createdAt": 1692128324,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2536,6 +2577,7 @@
     "oracle": "lps",
     "oracleId": "swapbased-weth-usdbc",
     "status": "active",
+    "createdAt": 1694469591,
     "platformId": "swapbased",
     "assets": ["ETH", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2543,7 +2585,6 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "network": "base",
-    "createdAt": 1694469591,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2565,6 +2606,7 @@
     "oracle": "lps",
     "oracleId": "swapbased-weth-axlusdc",
     "status": "active",
+    "createdAt": 1694469591,
     "platformId": "swapbased",
     "assets": ["ETH", "axlUSDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2572,7 +2614,6 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=ETH&currency1=0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "network": "base",
-    "createdAt": 1694469591,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2594,7 +2635,9 @@
     "oracle": "lps",
     "oracleId": "swapbased-dai-usdbc",
     "status": "eol",
+    "createdAt": 1694469591,
     "retireReason": "tvl",
+    "retiredAt": 1698574248,
     "platformId": "swapbased",
     "assets": ["DAI", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2602,7 +2645,6 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&currency1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&currency1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "network": "base",
-    "createdAt": 1694469591,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2624,6 +2666,7 @@
     "oracle": "lps",
     "oracleId": "swapbased-usd+-usdbc",
     "status": "active",
+    "createdAt": 1694469591,
     "platformId": "swapbased",
     "assets": ["USD+", "USDbC"],
     "risks": [
@@ -2638,7 +2681,6 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&currency1=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&currency1=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376",
     "network": "base",
-    "createdAt": 1694469591,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2660,6 +2702,7 @@
     "oracle": "lps",
     "oracleId": "swapbased-dai+-usd+",
     "status": "active",
+    "createdAt": 1694469591,
     "platformId": "swapbased",
     "assets": ["DAI+", "USD+"],
     "risks": [
@@ -2674,7 +2717,6 @@
     "addLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376&currency1=0x65a2508C429a6078a7BC2f7dF81aB575BD9D9275",
     "removeLiquidityUrl": "https://swapbased.finance/#/pools?currency0=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376&currency1=0x65a2508C429a6078a7BC2f7dF81aB575BD9D9275",
     "network": "base",
-    "createdAt": 1694469591,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2695,7 +2737,9 @@
     "oracle": "tokens",
     "oracleId": "USDbC",
     "status": "eol",
+    "createdAt": 1691865366,
     "retireReason": "rewards",
+    "retiredAt": 1704371642,
     "platformId": "moonwell",
     "assets": ["USDbC"],
     "risks": [
@@ -2709,7 +2753,6 @@
     ],
     "strategyTypeId": "lending",
     "network": "base",
-    "createdAt": 1691865366,
     "zaps": [
       {
         "strategyId": "single"
@@ -2732,6 +2775,8 @@
     "oracle": "tokens",
     "oracleId": "ETH",
     "status": "paused",
+    "createdAt": 1691865366,
+    "pausedAt": 1692640320,
     "platformId": "moonwell",
     "assets": ["ETH"],
     "risks": [
@@ -2745,7 +2790,6 @@
     ],
     "strategyTypeId": "lending",
     "network": "base",
-    "createdAt": 1691865366,
     "zaps": [
       {
         "strategyId": "single"
@@ -2770,6 +2814,7 @@
     "oracle": "lps",
     "oracleId": "alienbase-alb-weth",
     "status": "active",
+    "createdAt": 1691865365,
     "platformId": "alienbase",
     "assets": ["ALB", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -2777,7 +2822,6 @@
     "addLiquidityUrl": "https://app.alienbase.xyz/add/WETH/0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
     "removeLiquidityUrl": "https://app.alienbase.xyz/remove/WETH/0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
     "network": "base",
-    "createdAt": 1691865365,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2799,6 +2843,7 @@
     "oracle": "lps",
     "oracleId": "alienbase-alb-usdbc",
     "status": "active",
+    "createdAt": 1691865365,
     "platformId": "alienbase",
     "assets": ["ALB", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -2806,7 +2851,6 @@
     "addLiquidityUrl": "https://app.alienbase.xyz/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
     "removeLiquidityUrl": "https://app.alienbase.xyz/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
     "network": "base",
-    "createdAt": 1691865365,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2828,6 +2872,7 @@
     "oracle": "lps",
     "oracleId": "alienbase-weth-usdbc",
     "status": "active",
+    "createdAt": 1691865365,
     "platformId": "alienbase",
     "assets": ["ETH", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2835,7 +2880,6 @@
     "addLiquidityUrl": "https://app.alienbase.xyz/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/WETH",
     "removeLiquidityUrl": "https://app.alienbase.xyz/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/WETH",
     "network": "base",
-    "createdAt": 1691865365,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2857,6 +2901,7 @@
     "oracle": "lps",
     "oracleId": "alienbase-usdbc-axlusdc",
     "status": "active",
+    "createdAt": 1691865365,
     "platformId": "alienbase",
     "assets": ["USDbC", "axlUSDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2864,7 +2909,6 @@
     "addLiquidityUrl": "https://app.alienbase.xyz/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "removeLiquidityUrl": "https://app.alienbase.xyz/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "network": "base",
-    "createdAt": 1691865365,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2886,6 +2930,7 @@
     "oracle": "lps",
     "oracleId": "alienbase-cbeth-weth",
     "status": "active",
+    "createdAt": 1691865365,
     "platformId": "alienbase",
     "assets": ["cbETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2893,7 +2938,6 @@
     "addLiquidityUrl": "https://app.alienbase.xyz/add/WETH/0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     "removeLiquidityUrl": "https://app.alienbase.xyz/remove/WETH/0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     "network": "base",
-    "createdAt": 1691865365,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2915,7 +2959,9 @@
     "oracle": "lps",
     "oracleId": "balancer-base-usdbc-axlusdc",
     "status": "eol",
+    "createdAt": 1691676608,
     "retireReason": "rewards",
+    "retiredAt": 1694455295,
     "platformId": "balancer",
     "assets": ["USDbC", "axlUSDC"],
     "risks": [
@@ -2929,8 +2975,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xe58ca65f418d4121d6c70d4c133e60cf6fda363c000000000000000000000013/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xe58ca65f418d4121d6c70d4c133e60cf6fda363c000000000000000000000013/withdraw",
-    "network": "base",
-    "createdAt": 1691676608
+    "network": "base"
   },
   {
     "id": "bvm-cbeth-weth",
@@ -2946,7 +2991,9 @@
     "oracle": "lps",
     "oracleId": "bvm-cbeth-weth",
     "status": "eol",
+    "createdAt": 1691794827,
     "retireReason": "tvl",
+    "retiredAt": 1704791264,
     "platformId": "bvm",
     "assets": ["cbETH", "ETH"],
     "risks": [
@@ -2961,7 +3008,6 @@
     "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x291cdd70257c17bc719d11531ec01c33c34a4d8b/0xed1e21320b0ca4e80a5c424ee4322bc9458061d7",
     "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x291cdd70257c17bc719d11531ec01c33c34a4d8b/0xed1e21320b0ca4e80a5c424ee4322bc9458061d7",
     "network": "base",
-    "createdAt": 1691794827,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2983,6 +3029,7 @@
     "oracle": "lps",
     "oracleId": "stargate-base-eth",
     "status": "active",
+    "createdAt": 1691661307,
     "platformId": "stargate",
     "assets": ["ETH"],
     "risks": [
@@ -2997,8 +3044,7 @@
     "buyTokenUrl": "https://app.balancer.fi/#/base/swap?outputCurrency=0x4200000000000000000000000000000000000006",
     "addLiquidityUrl": "https://stargate.finance/pool/ETH-BASE/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/ETH-BASE/remove",
-    "network": "base",
-    "createdAt": 1691661307
+    "network": "base"
   },
   {
     "id": "stargate-base-usdbc",
@@ -3014,6 +3060,7 @@
     "oracle": "lps",
     "oracleId": "stargate-base-usdbc",
     "status": "active",
+    "createdAt": 1691661307,
     "platformId": "stargate",
     "assets": ["USDbC"],
     "risks": [
@@ -3028,8 +3075,7 @@
     "buyTokenUrl": "https://app.balancer.fi/#/base/swap?outputCurrency=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "addLiquidityUrl": "https://stargate.finance/pool/USDC-BASE/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/USDC-BASE/remove",
-    "network": "base",
-    "createdAt": 1691661307
+    "network": "base"
   },
   {
     "id": "bvm-weth-axlusdc",
@@ -3045,7 +3091,9 @@
     "oracle": "lps",
     "oracleId": "bvm-weth-axlusdc",
     "status": "eol",
+    "createdAt": 1691470624,
     "retireReason": "tvl",
+    "retiredAt": 1696060775,
     "platformId": "bvm",
     "assets": ["axlUSDC", "ETH"],
     "risks": [
@@ -3060,7 +3108,6 @@
     "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x1c2f16eb9e2c18a87037194c5ea00f569953a1cc/0x5b21fbab44ddbcd2b73d5ec34c37250e6a73fe94",
     "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x1c2f16eb9e2c18a87037194c5ea00f569953a1cc/0x5b21fbab44ddbcd2b73d5ec34c37250e6a73fe94",
     "network": "base",
-    "createdAt": 1691470624,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3082,7 +3129,9 @@
     "oracle": "lps",
     "oracleId": "bvm-usd+-usdbc",
     "status": "eol",
+    "createdAt": 1691647069,
     "retireReason": "tvl",
+    "retiredAt": 1696060775,
     "platformId": "bvm",
     "assets": ["USD+", "USDbC"],
     "risks": [
@@ -3098,7 +3147,6 @@
     "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x653685aa9913c6ab13d659a4ea8f358ecec3d34f/0xd9875fbe2a706f9fed68f066d7420d63fdc5ed76",
     "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x653685aa9913c6ab13d659a4ea8f358ecec3d34f/0xd9875fbe2a706f9fed68f066d7420d63fdc5ed76",
     "network": "base",
-    "createdAt": 1691647069,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3120,7 +3168,9 @@
     "oracle": "lps",
     "oracleId": "bvm-dai+-usd+",
     "status": "eol",
+    "createdAt": 1691647069,
     "retireReason": "tvl",
+    "retiredAt": 1700566353,
     "platformId": "bvm",
     "assets": ["DAI+", "USD+"],
     "risks": [
@@ -3136,7 +3186,6 @@
     "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x298c9f812c470598c5f97e3da9261a9899b89d35/0x0daf00a383f8897553ac1d03f4445b15afa1dcb9",
     "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x298c9f812c470598c5f97e3da9261a9899b89d35/0x0daf00a383f8897553ac1d03f4445b15afa1dcb9",
     "network": "base",
-    "createdAt": 1691647069,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3158,7 +3207,9 @@
     "oracle": "lps",
     "oracleId": "bvm-weth-usdbc",
     "status": "eol",
+    "createdAt": 1691470624,
     "retireReason": "tvl",
+    "retiredAt": 1698743862,
     "platformId": "bvm",
     "assets": ["USDbC", "ETH"],
     "risks": [
@@ -3173,7 +3224,6 @@
     "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x6546ecac3f80e041006edc3da891adce567b40b8/0xf5f51a14587b02fdd1a7b4b538ea8e8d6c618fa5",
     "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x6546ecac3f80e041006edc3da891adce567b40b8/0xf5f51a14587b02fdd1a7b4b538ea8e8d6c618fa5",
     "network": "base",
-    "createdAt": 1691470624,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3195,6 +3245,7 @@
     "oracle": "lps",
     "oracleId": "bvm-weth-bvm",
     "status": "active",
+    "createdAt": 1691649529,
     "platformId": "bvm",
     "assets": ["BVM", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -3202,7 +3253,6 @@
     "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x53713f956a4da3f08b55a390b20657edf9e0897b/0x3f5129112754d4fbe7ab228c2d5e312b2bc79a06",
     "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x53713f956a4da3f08b55a390b20657edf9e0897b/0x3f5129112754d4fbe7ab228c2d5e312b2bc79a06",
     "network": "base",
-    "createdAt": 1691649529,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3224,6 +3274,7 @@
     "oracle": "lps",
     "oracleId": "baseswap-mim-usdbc",
     "status": "active",
+    "createdAt": 1693580890,
     "platformId": "baseswap",
     "assets": ["MIM", "USDbC"],
     "risks": [
@@ -3239,7 +3290,6 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x4A3A6Dd60A34bB2Aba60D73B4C88315E9CeB6A3D",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x4A3A6Dd60A34bB2Aba60D73B4C88315E9CeB6A3D",
     "network": "base",
-    "createdAt": 1693580890,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3261,6 +3311,7 @@
     "oracle": "lps",
     "oracleId": "baseswap-cbeth-weth",
     "status": "active",
+    "createdAt": 1693580890,
     "platformId": "baseswap",
     "assets": ["cbETH", "ETH"],
     "risks": [
@@ -3275,7 +3326,6 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0x4200000000000000000000000000000000000006/0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0x4200000000000000000000000000000000000006/0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     "network": "base",
-    "createdAt": 1693580890,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3297,6 +3347,7 @@
     "oracle": "lps",
     "oracleId": "baseswap-dai-usdbc",
     "status": "active",
+    "createdAt": 1693580890,
     "platformId": "baseswap",
     "assets": ["DAI", "USDbC"],
     "risks": [
@@ -3311,7 +3362,6 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
     "network": "base",
-    "createdAt": 1693580890,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3333,6 +3383,7 @@
     "oracle": "lps",
     "oracleId": "baseswap-weth-axlusdc",
     "status": "active",
+    "createdAt": 1693580890,
     "platformId": "baseswap",
     "assets": ["axlUSDC", "ETH"],
     "risks": [
@@ -3347,7 +3398,6 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0x4200000000000000000000000000000000000006/0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0x4200000000000000000000000000000000000006/0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "network": "base",
-    "createdAt": 1693580890,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3369,6 +3419,7 @@
     "oracle": "lps",
     "oracleId": "baseswap-weth-usdbc",
     "status": "active",
+    "createdAt": 1693580890,
     "platformId": "baseswap",
     "assets": ["USDbC", "ETH"],
     "risks": [
@@ -3383,7 +3434,6 @@
     "addLiquidityUrl": "https://baseswap.fi/add/0x4200000000000000000000000000000000000006/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "removeLiquidityUrl": "https://baseswap.fi/remove/0x4200000000000000000000000000000000000006/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
     "network": "base",
-    "createdAt": 1693580890,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3405,7 +3455,9 @@
     "oracle": "lps",
     "oracleId": "balancer-base-eth-bbsusd",
     "status": "eol",
+    "createdAt": 1691168108,
     "retireReason": "rewards",
+    "retiredAt": 1694455295,
     "platformId": "balancer",
     "assets": ["ETH", "bsUSD"],
     "risks": [
@@ -3419,8 +3471,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0x2db50a0e0310723ef0c2a165cb9a9f80d772ba2f00020000000000000000000d/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0x2db50a0e0310723ef0c2a165cb9a9f80d772ba2f00020000000000000000000d/withdraw",
-    "network": "base",
-    "createdAt": 1691168108
+    "network": "base"
   },
   {
     "id": "balancer-base-usdbc-dai",
@@ -3436,7 +3487,9 @@
     "oracle": "lps",
     "oracleId": "balancer-base-usdbc-dai",
     "status": "eol",
+    "createdAt": 1691168108,
     "retireReason": "rewards",
+    "retiredAt": 1694455295,
     "platformId": "balancer",
     "assets": ["USDbC", "DAI"],
     "risks": [
@@ -3450,8 +3503,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0x6fbfcf88db1aada31f34215b2a1df7fafb4883e900000000000000000000000c/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0x6fbfcf88db1aada31f34215b2a1df7fafb4883e900000000000000000000000c/withdraw",
-    "network": "base",
-    "createdAt": 1691168108
+    "network": "base"
   },
   {
     "id": "balancer-base-cbeth-weth",
@@ -3467,6 +3519,7 @@
     "oracle": "lps",
     "oracleId": "balancer-base-cbeth-weth",
     "status": "active",
+    "createdAt": 1694131744,
     "platformId": "balancer",
     "assets": ["cbETH", "ETH"],
     "risks": [
@@ -3480,7 +3533,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/withdraw",
-    "network": "base",
-    "createdAt": 1694131744
+    "network": "base"
   }
 ]

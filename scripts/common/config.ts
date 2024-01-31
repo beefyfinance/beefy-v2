@@ -12,6 +12,8 @@ const chainConfigs = Object.fromEntries(
   Object.entries(config).map(([chainId, chainConfig]) => [appToAddressBookId(chainId), chainConfig])
 );
 
+export type ChainConfig = (typeof chainConfigs)[keyof typeof chainConfigs];
+
 /**
  * What chains to exclude from chainIds array and thus any validation
  * Use `yarn makeExcludeConfig chain` to generate the hash
@@ -43,11 +45,20 @@ export const chainRpcs: Record<string, string> = Object.fromEntries(
   allChainIds.map(chainId => [
     chainId,
     process.env[`${addressBookToAppId(chainId).toUpperCase()}_RPC`] ||
-      lodash.sample(chainConfigs[chainId].rpc),
+      lodash.sample(chainConfigs[chainId].rpc)!,
   ])
 );
 
 const vaultsByChainId = {};
+
+export function getChain(chainId: string): ChainConfig {
+  const addressBookId = appToAddressBookId(chainId);
+  const config = chainConfigs[addressBookId];
+  if (!config) {
+    throw new Error(`No config for chain ${chainId}`);
+  }
+  return config;
+}
 
 export async function getVaultsForChain(chainId: string): Promise<VaultConfig[]> {
   const id = addressBookToAppId(chainId);

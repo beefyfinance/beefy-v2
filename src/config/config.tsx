@@ -246,6 +246,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'USDR',
       'wUSDR',
       'omultiwUSDR',
+      'sFRAX',
     ],
   },
   fantom: {
@@ -533,7 +534,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   fuse: {
     name: 'Fuse',
     chainId: 122,
-    rpc: ['https://fuse.liquify.com'],
+    rpc: ['https://rpc.fuse.io'],
     explorerUrl: 'https://explorer.fuse.io',
     multicallAddress: '0x4f22BD7CE44b0e0B2681A28e300A7285319de3a0',
     appMulticallContractAddress: '0x504A5F167BE8014b1d5CBDd993f3Bb34F95E70B2',
@@ -546,7 +547,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'FUSE',
         decimals: 18,
       },
-      rpcUrls: ['https://fuse.liquify.com'],
+      rpcUrls: ['https://rpc.fuse.io'],
       blockExplorerUrls: ['https://explorer.fuse.io/'],
     },
     gas: {
