@@ -1,5 +1,12 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo, useEffect, useState } from 'react';
+import React, {
+  memo,
+  type MouseEventHandler,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { styles } from './styles';
 import { Modal } from '../../../../components/Modal';
 import { TechLoader } from '../../../../components/TechLoader';
@@ -15,6 +22,16 @@ export type WormholeModalProps = {
 export const WormholeModal = memo<WormholeModalProps>(function WormholeModal({ open, onClose }) {
   const classes = useStyles();
   const [isLoading, setIsLoading] = useState(true);
+  const backRef = useRef<HTMLDivElement>(null);
+
+  const handleBackClick = useCallback<MouseEventHandler<HTMLDivElement>>(
+    e => {
+      if (e.target === backRef.current) {
+        onClose();
+      }
+    },
+    [onClose, backRef]
+  );
 
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
@@ -35,7 +52,7 @@ export const WormholeModal = memo<WormholeModalProps>(function WormholeModal({ o
   return (
     <Modal open={open} onClose={onClose}>
       {open ? (
-        <div className={classes.positioner}>
+        <div className={classes.positioner} onClick={handleBackClick} ref={backRef}>
           <div className={classes.sizer}>
             <TechLoader className={clsx(classes.loader, { [classes.loading]: isLoading })} />
             <iframe
