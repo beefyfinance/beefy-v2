@@ -1,5 +1,34 @@
 [
   {
+    "id": "aerodrome-tbtc-usdc",
+    "name": "tBTC-USDC vLP",
+    "type": "standard",
+    "token": "vAMM-tBTC/USDC",
+    "tokenAddress": "0x323121CD6F6274c9aeB9f87e0664C8FDa5d343A5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerotBTC-USDC",
+    "earnedTokenAddress": "0xC3a5b142a144135D900FC5Ef2Bb7E92a3bcB46F1",
+    "earnContractAddress": "0xC3a5b142a144135D900FC5Ef2Bb7E92a3bcB46F1",
+    "oracle": "lps",
+    "oracleId": "aerodrome-tbtc-usdc",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["tBTC", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x236aa50979d5f3de3bd1eeb40e81137f22ab794b&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "createdAt": 1706704571,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-usdc-aero",
     "name": "USDC-AERO vLP",
     "type": "standard",
