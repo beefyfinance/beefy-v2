@@ -1,9 +1,7 @@
 import type { Theme } from '@material-ui/core';
 
-import cowLoader from '../../../../images//tech-loader.gif';
-
 export const styles = (theme: Theme) => ({
-  container: {
+  positioner: {
     position: 'absolute' as const,
     outline: 'none',
     top: 0,
@@ -18,17 +16,41 @@ export const styles = (theme: Theme) => ({
       padding: '0',
     },
   },
-  embed: {
-    margin: 0,
-    padding: 0,
-    border: 0,
+  sizer: {
+    position: 'relative' as const,
     height: '750px',
     maxHeight: '100%',
     width: '682px',
     maxWidth: '100%',
     borderRadius: '12px',
-    background: `${theme.palette.background.contentPrimary} url(${cowLoader}) center center no-repeat`,
   },
+  embed: {
+    position: 'relative' as const,
+    margin: 0,
+    padding: 0,
+    border: 0,
+    height: '100%',
+    width: '100%',
+    borderRadius: '12px',
+    zIndex: 1,
+    opacity: 1,
+    transition: 'opacity 0.2s ease-in-out',
+    '&$loading': {
+      opacity: 0,
+    },
+  },
+  loader: {
+    position: 'absolute' as const,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    userSelect: 'none' as const,
+    pointerEvents: 'none' as const,
+    background: theme.palette.background.contentPrimary,
+    borderRadius: '12px',
+  },
+  loading: {},
   header: {
     display: 'flex',
     flexWrap: 'wrap' as const,

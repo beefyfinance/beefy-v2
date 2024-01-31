@@ -20,14 +20,14 @@ interface RewardTokenDetailsProps {
   token: TokenEntity;
   chainId: ChainEntity['id'];
   className?: string;
-  ExtraButton?: React.ReactNode;
+  prependButtons?: React.ReactNode;
 }
 
 export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardTokenDetails({
   token,
   chainId,
   className,
-  ExtraButton,
+  prependButtons,
 }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -44,7 +44,7 @@ export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardT
         <div className={classes.text}>{t('Earn', { symbol: token.symbol })}</div>
       </div>
       <div className={classes.buttons}>
-        {ExtraButton && ExtraButton}
+        {prependButtons ? prependButtons : null}
         <Button className={classes.button} onClick={addTokenToWallet}>
           {t('Add-To-Wallet')}
           <PlusIcon className={classes.icon} />

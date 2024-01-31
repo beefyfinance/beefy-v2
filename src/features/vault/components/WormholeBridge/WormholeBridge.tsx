@@ -1,9 +1,8 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { styles } from './styles';
 import { WormholeModal } from './WormholeModal';
 import { Button } from '../../../../components/Button';
-// import { getAssetBridgeIcon } from '../../../../helpers/assetBridgeSrc';
 import { useTranslation } from 'react-i18next';
 import { RewardTokenDetails } from '../AddTokenToWallet';
 import { LinkButton } from '../../../../components/LinkButton';
@@ -33,18 +32,6 @@ export const WormholeBridge = memo(function WormholeBridge() {
     setIsOpen(true);
   }, [setIsOpen]);
 
-  useEffect(() => {
-    const onMessage = (event: MessageEvent) => {
-      if (event.origin === 'https://wormhole.beefy.finance' && event.data === 'wormhole:close') {
-        handleClose();
-      }
-    };
-
-    window.addEventListener('message', onMessage);
-
-    return () => window.removeEventListener('message', onMessage);
-  }, [handleClose]);
-
   return (
     <div>
       <div>
@@ -71,7 +58,7 @@ export const WormholeBridge = memo(function WormholeBridge() {
             token={rewardToken}
             chainId={'arbitrum'}
             className={classes.rewardToken}
-            ExtraButton={<IframeButton handleOpen={handleOpen} />}
+            prependButtons={<IframeButton handleOpen={handleOpen} />}
           />
         </CardContent>
       </div>
