@@ -30,11 +30,15 @@ export interface VaultConfig {
   network: string;
   excluded?: string | null;
   callFee?: number | null;
-  createdAt?: number | null;
+  createdAt: number;
   addLiquidityUrl?: string | null;
   buyTokenUrl?: string | null;
-  retireReason?: string | null;
-  pauseReason?: string | null;
+  retireReason?: string;
+  retiredAt?: number;
+  pauseReason?: string;
+  pausedAt?: number;
+  /** Used for sorting, not required in config, defaults to createdAt */
+  updatedAt?: number;
   removeLiquidityUrl?: string | null;
   depositFee?: number | undefined;
   refund?: boolean | null;

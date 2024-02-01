@@ -121,10 +121,7 @@ const validatePools = async () => {
     }
   }
 
-  let promises = [];
-  for (const chainId of chainIds) {
-    promises.push(validateSingleChain(chainId, uniquePoolId));
-  }
+  let promises = chainIds.map(chainId => validateSingleChain(chainId, uniquePoolId));
   let results = await Promise.all(promises);
 
   exitCode = results.reduce((acum, cur) => (acum + cur.exitCode > 0 ? 1 : 0), 0);
@@ -235,6 +232,36 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     } else if (isNaN(pool.createdAt)) {
       console.error(`Error: ${pool.id} : Pool createdAt timestamp wrong type, should be a number`);
       exitCode = 1;
+    }
+
+    if (pool.status === 'eol') {
+      if (!pool.retiredAt) {
+        console.error(`Error: ${pool.id} : Pool retiredAt timestamp missing`);
+        exitCode = 1;
+      } else if (
+        typeof pool.retiredAt !== 'number' ||
+        isNaN(pool.retiredAt) ||
+        !isFinite(pool.retiredAt)
+      ) {
+        console.error(
+          `Error: ${pool.id} : Pool retiredAt timestamp wrong type, should be a number`
+        );
+        exitCode = 1;
+      }
+    }
+
+    if (pool.status === 'paused') {
+      if (!pool.pausedAt) {
+        console.error(`Error: ${pool.id} : Pool pausedAt timestamp missing`);
+        exitCode = 1;
+      } else if (
+        typeof pool.pausedAt !== 'number' ||
+        isNaN(pool.pausedAt) ||
+        !isFinite(pool.pausedAt)
+      ) {
+        console.error(`Error: ${pool.id} : Pool pausedAt timestamp wrong type, should be a number`);
+        exitCode = 1;
+      }
     }
 
     if (!pool.network) {

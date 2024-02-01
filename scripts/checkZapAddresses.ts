@@ -1,5 +1,5 @@
 import { appToAddressBookId, chainRpcs } from './common/config';
-import { loadJson } from './common/utils';
+import { loadJson } from './common/files';
 import { AppChainId } from './common/chains';
 import { MultiCall } from 'eth-multicall';
 import { addressBook } from 'blockchain-addressbook';
