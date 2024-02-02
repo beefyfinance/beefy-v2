@@ -58,7 +58,7 @@ export interface FeaturedVaultConfig {
 
 export interface PartnersConfig {
   QiDao: VaultEntity['id'][];
-  Insurace: ChainEntity['id'][];
+  OpenCover: ChainEntity['id'][];
   Nexus: ChainEntity['id'][];
 }
 
