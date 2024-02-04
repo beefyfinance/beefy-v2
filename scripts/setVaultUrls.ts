@@ -97,6 +97,10 @@ function replaceUrlsForVault(
   vault: VaultConfig,
   addresses: Record<string, string>
 ): ProviderUrls | undefined {
+  if (!vault.tokenProviderId) {
+    return undefined;
+  }
+
   const urlsForProvider = URLS[vault.network]?.[vault.tokenProviderId];
   if (!urlsForProvider) {
     return undefined;
@@ -117,6 +121,10 @@ function replaceUrlsForVault(
   }
 
   return mapValues(urlsForVault, url => {
+    if (!url) {
+      throw new Error(`Missing url for ${vault.id} on ${vault.network}`);
+    }
+
     const replaced = Object.entries(addresses).reduce((acc, [key, value]) => {
       return acc.replace(`{${key}}`, value);
     }, url);
@@ -168,6 +176,9 @@ async function getUrlsForVault(
 async function getModifiedConfig(chainId: AppChainId) {
   const vaults = await getVaultsForChain(chainId);
   const wnative = await getTokenById('wnative', chainId);
+  if (!wnative) {
+    throw new Error(`Missing wnative for ${chainId}`);
+  }
 
   return Promise.all(
     vaults.map(async vault => {

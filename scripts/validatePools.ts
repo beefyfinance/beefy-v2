@@ -121,10 +121,7 @@ const validatePools = async () => {
     }
   }
 
-  let promises = [];
-  for (const chainId of chainIds) {
-    promises.push(validateSingleChain(chainId, uniquePoolId));
-  }
+  let promises = chainIds.map(chainId => validateSingleChain(chainId, uniquePoolId));
   let results = await Promise.all(promises);
 
   exitCode = results.reduce((acum, cur) => (acum + cur.exitCode > 0 ? 1 : 0), 0);

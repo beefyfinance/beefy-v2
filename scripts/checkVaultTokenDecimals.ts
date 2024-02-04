@@ -49,7 +49,7 @@ async function fetchDecimalsForTokens(
 async function getModifiedConfig(chainId: AppChainId) {
   const vaults = await getVaultsForChain(chainId);
   const decimalsByAddress = await fetchDecimalsForTokens(
-    vaults.filter(vault => !!vault.tokenAddress).map(vault => vault.tokenAddress),
+    vaults.filter(vault => !!vault.tokenAddress).map(vault => vault.tokenAddress!),
     chainId
   );
 

@@ -86,7 +86,7 @@ export function sortTokenAddresses(addresses: TokenEntity['address'][]): TokenEn
 /**
  * Returns list of unique tokens by chainId and address
  */
-export function uniqueTokens(tokens: TokenEntity[]): TokenEntity[] {
+export function uniqueTokens<T extends TokenEntity = TokenEntity>(tokens: T[]): T[] {
   return uniqBy(tokens, token => `${token.chainId}-${token.address.toLowerCase()}`);
 }
 
