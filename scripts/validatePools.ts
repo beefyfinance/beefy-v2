@@ -234,6 +234,36 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       exitCode = 1;
     }
 
+    if (pool.status === 'eol') {
+      if (!pool.retiredAt) {
+        console.error(`Error: ${pool.id} : Pool retiredAt timestamp missing`);
+        exitCode = 1;
+      } else if (
+        typeof pool.retiredAt !== 'number' ||
+        isNaN(pool.retiredAt) ||
+        !isFinite(pool.retiredAt)
+      ) {
+        console.error(
+          `Error: ${pool.id} : Pool retiredAt timestamp wrong type, should be a number`
+        );
+        exitCode = 1;
+      }
+    }
+
+    if (pool.status === 'paused') {
+      if (!pool.pausedAt) {
+        console.error(`Error: ${pool.id} : Pool pausedAt timestamp missing`);
+        exitCode = 1;
+      } else if (
+        typeof pool.pausedAt !== 'number' ||
+        isNaN(pool.pausedAt) ||
+        !isFinite(pool.pausedAt)
+      ) {
+        console.error(`Error: ${pool.id} : Pool pausedAt timestamp wrong type, should be a number`);
+        exitCode = 1;
+      }
+    }
+
     if (!pool.network) {
       console.error(`Error: ${pool.id} : Missing network`);
       exitCode = 1;

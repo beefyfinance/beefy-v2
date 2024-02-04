@@ -138,20 +138,23 @@ export const transactFetchOptions = createAsyncThunk<
     }
 
     // update balances
-    const vault = selectVaultById(state, vaultId);
-    const tokens = getUniqueTokensForOptions(options, state);
-    const tokensByChain = groupBy(tokens, token => token.chainId);
-    await Promise.all(
-      Object.values(tokensByChain).map(tokens =>
-        dispatch(
-          fetchBalanceAction({
-            chainId: tokens[0].chainId,
-            tokens: tokens,
-            vaults: tokens[0].chainId === vault.chainId ? [vault] : [],
-          })
+    const wallet = selectWalletAddress(state);
+    if (wallet) {
+      const vault = selectVaultById(state, vaultId);
+      const tokens = getUniqueTokensForOptions(options, state);
+      const tokensByChain = groupBy(tokens, token => token.chainId);
+      await Promise.all(
+        Object.values(tokensByChain).map(tokens =>
+          dispatch(
+            fetchBalanceAction({
+              chainId: tokens[0].chainId,
+              tokens: tokens,
+              vaults: tokens[0].chainId === vault.chainId ? [vault] : [],
+            })
+          )
         )
-      )
-    );
+      );
+    }
 
     return {
       options: options,

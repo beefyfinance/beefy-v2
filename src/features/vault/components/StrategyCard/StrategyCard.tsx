@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { formattedTotalApy } from '../../../../helpers/format';
@@ -55,52 +55,105 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         <div className={classes.text}>
           <StrategyDescription vaultId={vaultId} />
         </div>
-        {showApy ? (
-          <div className={classes.apysContainer}>
-            <div className={classes.apyTitle}>{t('Vault-ApyBreakdown')}</div>
-            <div className={classes.apys}>
-              <div className={classes.apy}>
-                <div className={classes.apyLabel}>{t('Vault-ApyTotal')}</div>
-                <div className={classes.apyValue}>
-                  {isBoosted ? formatted.boostedTotalApy : formatted.totalApy}
+        <div className={classes.infoContainer}>
+          {showApy ? (
+            <div className={classes.apysContainer}>
+              <div className={classes.apyTitle}>{t('Vault-ApyBreakdown')}</div>
+              <div className={classes.apys}>
+                <div className={classes.apy}>
+                  <div className={classes.apyLabel}>{t('Vault-ApyTotal')}</div>
+                  <div className={classes.apyValue}>
+                    {isBoosted ? formatted.boostedTotalApy : formatted.totalApy}
+                  </div>
                 </div>
+                {values.vaultApr && (
+                  <div className={classes.apy}>
+                    <div className={classes.apyLabel}>{t('Vault-VaultApr')}</div>
+                    <div className={classes.apyValue}>{formatted.vaultApr}</div>
+                  </div>
+                )}
+                {values.tradingApr > 0 && (
+                  <div className={classes.apy}>
+                    <div className={classes.apyLabel}>{t('Vault-AprTrading')}</div>
+                    <div className={classes.apyValue}>{formatted.tradingApr}</div>
+                  </div>
+                )}
+                {values.liquidStakingApr > 0 && (
+                  <div className={classes.apy}>
+                    <div className={classes.apyLabel}>{t('Vault-AprLiquidStaking')}</div>
+                    <div className={classes.apyValue}>{formatted.liquidStakingApr}</div>
+                  </div>
+                )}
+                {values.composablePoolApr > 0 && (
+                  <div className={classes.apy}>
+                    <div className={classes.apyLabel}>{t('Vault-AprComposablePool')}</div>
+                    <div className={classes.apyValue}>{formatted.composablePoolApr}</div>
+                  </div>
+                )}
+                {isBoosted && (
+                  <div className={classes.apy}>
+                    <div className={classes.apyLabel}>{t('Vault-AprBoost')}</div>
+                    <div className={classes.apyValue}>{formatted.boostApr}</div>
+                  </div>
+                )}
               </div>
-              {values.vaultApr && (
-                <div className={classes.apy}>
-                  <div className={classes.apyLabel}>{t('Vault-VaultApr')}</div>
-                  <div className={classes.apyValue}>{formatted.vaultApr}</div>
-                </div>
-              )}
-              {values.tradingApr > 0 && (
-                <div className={classes.apy}>
-                  <div className={classes.apyLabel}>{t('Vault-AprTrading')}</div>
-                  <div className={classes.apyValue}>{formatted.tradingApr}</div>
-                </div>
-              )}
-              {values.liquidStakingApr > 0 && (
-                <div className={classes.apy}>
-                  <div className={classes.apyLabel}>{t('Vault-AprLiquidStaking')}</div>
-                  <div className={classes.apyValue}>{formatted.liquidStakingApr}</div>
-                </div>
-              )}
-              {values.composablePoolApr > 0 && (
-                <div className={classes.apy}>
-                  <div className={classes.apyLabel}>{t('Vault-AprComposablePool')}</div>
-                  <div className={classes.apyValue}>{formatted.composablePoolApr}</div>
-                </div>
-              )}
-              {isBoosted && (
-                <div className={classes.apy}>
-                  <div className={classes.apyLabel}>{t('Vault-AprBoost')}</div>
-                  <div className={classes.apyValue}>{formatted.boostApr}</div>
-                </div>
-              )}
             </div>
-          </div>
-        ) : null}
+          ) : null}
+          <LendingOracle vaultId={vault.id} />
+        </div>
       </CardContent>
     </Card>
   );
 }
 
-export const StrategyCard = React.memo(StrategyCardComponent);
+const oraclesMapToText: Record<string, string> = {
+  chainlink: 'Chainlink',
+  pyth: 'Pyth Network',
+  curve: 'Curve',
+};
+
+export const LendingOracle = memo(function LendingOracle({
+  vaultId,
+}: {
+  vaultId: VaultEntity['id'];
+}) {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
+  return (
+    !isGovVault(vault) &&
+    vault.lendingOracle && (
+      <div>
+        <div className={classes.apyTitle}>{t('Details')}</div>
+        <div className={classes.apys}>
+          <div className={classes.apy}>
+            <div className={classes.apyLabel}>{t('Oracle')}</div>
+            {vault.lendingOracle.address ? (
+              <a
+                className={classes.oracleLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                href={explorerAddressUrl(chain, vault.lendingOracle.address)}
+              >
+                {oraclesMapToText[vault.lendingOracle.provider]}
+              </a>
+            ) : (
+              <div className={classes.apyValue}>
+                {oraclesMapToText[vault.lendingOracle.provider]}
+              </div>
+            )}
+          </div>
+          {vault.lendingOracle.loops && (
+            <div className={classes.apy}>
+              <div className={classes.apyLabel}>{t('Loops')}</div>
+              <div className={classes.apyValue}>{vault.lendingOracle.loops}</div>
+            </div>
+          )}
+        </div>
+      </div>
+    )
+  );
+});
+
+export const StrategyCard = memo(StrategyCardComponent);

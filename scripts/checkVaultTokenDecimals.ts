@@ -1,5 +1,5 @@
 import { appToAddressBookId, chainRpcs, getVaultsForChain } from './common/config';
-import { saveJson } from './common/utils';
+import { saveJson } from './common/files';
 import { allChainIds, AppChainId } from './common/chains';
 import { sortVaultKeys } from './common/vault-fields';
 import { MultiCall } from 'eth-multicall';

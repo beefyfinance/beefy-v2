@@ -17,7 +17,7 @@ import { isTokenErc20 } from '../../../entities/token';
 import { selectAllowanceByTokenAddress } from '../../../selectors/allowances';
 import type { ConicMigrationUpdateFulfilledPayload } from './types';
 
-const CONIC_LP_TOKEN_STAKER = '0xeC037423A61B634BFc490dcc215236349999ca3d';
+const CONIC_LP_TOKEN_STAKER = '0xA5241560306298efb9ed80b87427e664FFff0CF9';
 
 export const fetchConicStakedBalance = createAsyncThunk<
   ConicMigrationUpdateFulfilledPayload,

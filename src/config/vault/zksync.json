@@ -13,7 +13,9 @@
     "oracle": "lps",
     "oracleId": "dracula-fang-usdc",
     "status": "eol",
+    "createdAt": 1691865364,
     "retireReason": "tvl",
+    "retiredAt": 1699631771,
     "platformId": "dracula",
     "assets": ["FANG", "USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -22,7 +24,6 @@
     "addLiquidityUrl": "https://draculafi.xyz/liquidity/0x0F62837f7d37638210F94fa8005D0a89be083922",
     "removeLiquidityUrl": "https://draculafi.xyz/liquidity/0x0F62837f7d37638210F94fa8005D0a89be083922",
     "network": "zksync",
-    "createdAt": 1691865364,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -44,6 +45,7 @@
     "oracle": "lps",
     "oracleId": "dracula-usdc-weth",
     "status": "active",
+    "createdAt": 1691865364,
     "platformId": "dracula",
     "assets": ["ETH", "USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -52,7 +54,6 @@
     "addLiquidityUrl": "https://draculafi.xyz/liquidity/0xB51E60f61c48d8329843F86d861AbF50E4DC918d",
     "removeLiquidityUrl": "https://draculafi.xyz/liquidity/0xB51E60f61c48d8329843F86d861AbF50E4DC918d",
     "network": "zksync",
-    "createdAt": 1691865364,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -74,7 +75,9 @@
     "oracle": "lps",
     "oracleId": "velocore-weth-wbtc",
     "status": "eol",
+    "createdAt": 1689916744,
     "retireReason": "rewards",
+    "retiredAt": 1697816149,
     "platformId": "velocore",
     "assets": ["WBTC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -83,7 +86,6 @@
     "addLiquidityUrl": "https://app.velocore.xyz/liquidity/0x3daBFd167B7eeBc3B41E71f616eFA0571906eF2B",
     "removeLiquidityUrl": "https://app.velocore.xyz/liquidity/0x3daBFd167B7eeBc3B41E71f616eFA0571906eF2B",
     "network": "zksync",
-    "createdAt": 1689916744,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -105,7 +107,9 @@
     "oracle": "lps",
     "oracleId": "vesync-bifi-weth",
     "status": "eol",
+    "createdAt": 1688599614,
     "retireReason": "bifiV2",
+    "retiredAt": 1689007467,
     "platformId": "vesync",
     "assets": ["oldBIFI", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -114,7 +118,6 @@
     "addLiquidityUrl": "https://app.vesync.finance/liquidity/0xF25ffca3742c66d4729f804e1B1385cE9ed55921",
     "removeLiquidityUrl": "https://app.vesync.finance/liquidity/0xF25ffca3742c66d4729f804e1B1385cE9ed55921",
     "network": "zksync",
-    "createdAt": 1688599614,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -136,6 +139,7 @@
     "oracle": "lps",
     "oracleId": "vesync-usdc-weth",
     "status": "active",
+    "createdAt": 1688599614,
     "platformId": "vesync",
     "assets": ["ETH", "USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -144,7 +148,6 @@
     "addLiquidityUrl": "https://app.vesync.finance/liquidity/0x19dB1D963e2Ac810C48C8565bB2Fd2866745AA8A",
     "removeLiquidityUrl": "https://app.vesync.finance/liquidity/0x19dB1D963e2Ac810C48C8565bB2Fd2866745AA8A",
     "network": "zksync",
-    "createdAt": 1688599614,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -166,7 +169,9 @@
     "oracle": "lps",
     "oracleId": "vesync-usdc-wtbt",
     "status": "eol",
+    "createdAt": 1688599614,
     "retireReason": "tvl",
+    "retiredAt": 1701289320,
     "platformId": "vesync",
     "assets": ["wTBT", "USDC"],
     "risks": [
@@ -182,7 +187,6 @@
     "addLiquidityUrl": "https://app.vesync.finance/liquidity/0xBC678eEa3D152b4C7B332C6bDA3956a4021A45B3",
     "removeLiquidityUrl": "https://app.vesync.finance/liquidity/0xBC678eEa3D152b4C7B332C6bDA3956a4021A45B3",
     "network": "zksync",
-    "createdAt": 1688599614,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -204,7 +208,9 @@
     "oracle": "lps",
     "oracleId": "velocore-bifi-weth",
     "status": "eol",
+    "createdAt": 1683764301,
     "retireReason": "bifiV2",
+    "retiredAt": 1689007467,
     "platformId": "velocore",
     "assets": ["oldBIFI", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -213,7 +219,6 @@
     "addLiquidityUrl": "https://app.velocore.xyz/liquidity/0x487b6645068E49Ad8cA8c082327DaB1F4Dc2ECbf",
     "removeLiquidityUrl": "https://app.velocore.xyz/liquidity/0x487b6645068E49Ad8cA8c082327DaB1F4Dc2ECbf",
     "network": "zksync",
-    "createdAt": 1683764301,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -235,7 +240,9 @@
     "oracle": "lps",
     "oracleId": "velocore-usdc-weth",
     "status": "eol",
+    "createdAt": 1682607112,
     "retireReason": "rewards",
+    "retiredAt": 1697816149,
     "platformId": "velocore",
     "assets": ["ETH", "USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_HIGH", "CONTRACTS_VERIFIED"],
@@ -244,7 +251,6 @@
     "addLiquidityUrl": "https://app.velocore.xyz/liquidity/0xcd52cbc975fbb802f82a1f92112b1250b5a997df",
     "removeLiquidityUrl": "https://app.velocore.xyz/liquidity/0xcd52cbc975fbb802f82a1f92112b1250b5a997df",
     "network": "zksync",
-    "createdAt": 1682607112,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -266,7 +272,9 @@
     "oracle": "lps",
     "oracleId": "velocore-busd-usdc",
     "status": "eol",
+    "createdAt": 1682607112,
     "retireReason": "rewards",
+    "retiredAt": 1697816149,
     "platformId": "velocore",
     "assets": ["USDC", "BUSD"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_HIGH", "CONTRACTS_VERIFIED"],
@@ -275,7 +283,6 @@
     "addLiquidityUrl": "https://app.velocore.xyz/liquidity/0xF6CC0F880150a08695B7913638F12C08e785b032",
     "removeLiquidityUrl": "https://app.velocore.xyz/liquidity/0xF6CC0F880150a08695B7913638F12C08e785b032",
     "network": "zksync",
-    "createdAt": 1682607112,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -297,7 +304,9 @@
     "oracle": "lps",
     "oracleId": "velocore-weth-vc",
     "status": "eol",
+    "createdAt": 1682607112,
     "retireReason": "rewards",
+    "retiredAt": 1697816149,
     "platformId": "velocore",
     "assets": ["VC", "WETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -306,7 +315,6 @@
     "addLiquidityUrl": "https://app.velocore.xyz/liquidity/0x80aB452b8Ba46722029a69308aC52c0897d3a855",
     "removeLiquidityUrl": "https://app.velocore.xyz/liquidity/0x80aB452b8Ba46722029a69308aC52c0897d3a855",
     "network": "zksync",
-    "createdAt": 1682607112,
     "zaps": [
       {
         "strategyId": "solidly",

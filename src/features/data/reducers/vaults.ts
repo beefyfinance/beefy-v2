@@ -111,7 +111,7 @@ export const vaultsSlice = createSlice({
       // If new vaults were added, apply default sorting
       if (sliceState.allIds.length !== initialVaultAmount) {
         sliceState.allIds = sortBy(sliceState.allIds, id => {
-          return -sliceState.byId[id].createdAt;
+          return -sliceState.byId[id].updatedAt;
         });
       }
     });
@@ -199,8 +199,11 @@ function addVaultToState(
       removeLiquidityUrl: null,
       depositFee: apiVault.depositFee ?? 0,
       createdAt: apiVault.createdAt ?? 0,
+      updatedAt: apiVault.updatedAt || apiVault.createdAt || 0,
       retireReason: apiVault.retireReason,
+      retiredAt: apiVault.retiredAt,
       pauseReason: apiVault.pauseReason,
+      pausedAt: apiVault.pausedAt,
     };
 
     sliceState.byId[vault.id] = vault;
@@ -257,10 +260,14 @@ function addVaultToState(
       removeLiquidityUrl: apiVault.removeLiquidityUrl || null,
       depositFee: apiVault.depositFee ?? 0,
       createdAt: apiVault.createdAt ?? 0,
+      updatedAt: apiVault.updatedAt || apiVault.createdAt || 0,
       retireReason: apiVault.retireReason,
+      retiredAt: apiVault.retiredAt,
       pauseReason: apiVault.pauseReason,
+      pausedAt: apiVault.pausedAt,
       migrationIds: apiVault.migrationIds,
       bridged: apiVault.bridged,
+      lendingOracle: apiVault.lendingOracle,
     };
     // redux toolkit uses immer by default so we can
     // directly modify the state as usual

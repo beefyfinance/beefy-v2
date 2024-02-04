@@ -1,6 +1,6 @@
 import { mapValues, omit } from 'lodash';
 import { getVaultsForChain } from './common/config';
-import { saveJson } from './common/utils';
+import { saveJson } from './common/files';
 import { allChainIds, AppChainId } from './common/chains';
 import { sortVaultKeys } from './common/vault-fields';
 import type { VaultConfig } from '../src/features/data/apis/config-types';
