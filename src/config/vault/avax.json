@@ -1295,7 +1295,33 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://avax.curve.fi/aave/deposit",
     "removeLiquidityUrl": "https://avax.curve.fi/aave/withdraw",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x7f90122BF0700F9E7e1F688fe926940E8839F353",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x7f90122BF0700F9E7e1F688fe926940E8839F353",
+            "coins": [
+              "0x47AFa96Cdc9fAb46904A55a6ad4bf6660B53c38a",
+              "0x46A51127C3ce23fb7AB1DE06226147F446e4a857",
+              "0x532E6537FEA298397212F09A61e03311686f548e"
+            ]
+          },
+          {
+            "type": "fixed-deposit-underlying",
+            "target": "0x7f90122BF0700F9E7e1F688fe926940E8839F353",
+            "coins": [
+              "0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
+              "0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
+              "0xc7198437980c041c805A1EDcbA50c1Ce5db95118"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-avax-atricrypto",
@@ -1327,7 +1353,35 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://avax.curve.fi/atricrypto/deposit",
     "removeLiquidityUrl": "https://avax.curve.fi/atricrypto/withdraw",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xB755B949C126C04e0348DD881a5cF55d424742B2",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xB755B949C126C04e0348DD881a5cF55d424742B2",
+            "coins": [
+              "0x1337BedC9D22ecbe766dF105c9623922A27963EC",
+              "0x686bEF2417b6Dc32C50a3cBfbCC3bb60E1e9a15D",
+              "0x53f7c5869a859F0AeC3D334ee8B4Cf01E3492f21"
+            ]
+          },
+          {
+            "type": "fixed-deposit",
+            "target": "0x58e57ca18b7a47112b877e31929798cd3d703b0f",
+            "coins": [
+              "0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
+              "0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
+              "0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
+              "0x50b7545627a5162F82A992c33b87aDc75187B218",
+              "0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "joe-joe",
@@ -2386,7 +2440,33 @@
     "depositFee": 0.005,
     "addLiquidityUrl": "https://avax.curve.fi/factory/7/deposit",
     "removeLiquidityUrl": "https://avax.curve.fi/factory/7/withdraw",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xb0D2EB3C2cA3c6916FAb8DCbf9d9c165649231AE",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xb0D2EB3C2cA3c6916FAb8DCbf9d9c165649231AE",
+            "coins": [
+              "0x5c49b268c9841AFF1Cc3B0a418ff5c3442eE3F3b",
+              "0x1337BedC9D22ecbe766dF105c9623922A27963EC"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0x001e3ba199b4ff4b5b6e97acd96dafc0e2e4156e",
+            "coins": [
+              "0x5c49b268c9841AFF1Cc3B0a418ff5c3442eE3F3b",
+              "0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
+              "0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
+              "0xc7198437980c041c805A1EDcbA50c1Ce5db95118"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "joe-wavax-bifi-eol",
@@ -2688,7 +2768,24 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://avax.curve.fi/factory/4/deposit",
     "removeLiquidityUrl": "https://avax.curve.fi/factory/4/withdraw",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xAEA2E71b631fA93683BCF256A8689dFa0e094fcD",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xAEA2E71b631fA93683BCF256A8689dFa0e094fcD",
+            "coins": [
+              "0x130966628846BFd36ff31a822705796e8cb8C18D",
+              "0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
+              "0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "pangolin-png-pause-eol",
@@ -3648,7 +3745,31 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://avax.curve.fi/ren/deposit",
     "removeLiquidityUrl": "https://avax.curve.fi/ren/withdraw",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x16a7DA911A4DD1d83F3fF066fE28F3C792C50d90",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x16a7DA911A4DD1d83F3fF066fE28F3C792C50d90",
+            "coins": [
+              "0x686bEF2417b6Dc32C50a3cBfbCC3bb60E1e9a15D",
+              "0xDBf31dF14B66535aF65AaC99C32e9eA844e14501"
+            ]
+          },
+          {
+            "type": "fixed-deposit-underlying",
+            "target": "0x16a7DA911A4DD1d83F3fF066fE28F3C792C50d90",
+            "coins": [
+              "0x50b7545627a5162F82A992c33b87aDc75187B218",
+              "0xDBf31dF14B66535aF65AaC99C32e9eA844e14501"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "joe-ampl-wavax-eol",
@@ -5030,7 +5151,20 @@
     "buyTokenUrl": "https://app.topshelf.finance/#/mint",
     "addLiquidityUrl": "https://avax.curve.fi/factory/33/deposit",
     "removeLiquidityUrl": "https://avax.curve.fi/factory/33/withdraw",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x445109BcF194c538B73EA60C71bb773849bc9b79",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x445109BcF194c538B73EA60C71bb773849bc9b79",
+            "coins": ["native", "0xe0237F9E2aaABd7Ffb8630BE5203D573a045Bca7"]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "joe-money-wavax",
@@ -5350,7 +5484,24 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://avax.curve.fi/factory/55/deposit",
     "removeLiquidityUrl": "https://avax.curve.fi/factory/55/withdraw",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xD79138c49c49200a1Afc935171D1bDAd084FDc95",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xD79138c49c49200a1Afc935171D1bDAd084FDc95",
+            "coins": [
+              "0xb599c3590F42f8F995ECfa0f85D2980B76862fc1",
+              "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+              "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "joe-usdt-wavax",

@@ -81,15 +81,31 @@
     "oracle": "lps",
     "oracleId": "prisma-yprisma",
     "status": "active",
+    "createdAt": 1706514996,
     "platformId": "prisma",
-    "migrationIds": ["ethereum-prisma"],
     "assets": ["yPRISMA", "PRISMA"],
-    "strategyTypeId": "multi-lp",
+    "migrationIds": ["ethereum-prisma"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-372/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-372/withdraw",
     "network": "ethereum",
-    "createdAt": 1706514996
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x69833361991ed76f9e8DBBcdf9ea1520fEbFb4a7",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x69833361991ed76f9e8DBBcdf9ea1520fEbFb4a7",
+            "coins": [
+              "0xdA47862a83dac0c112BA89c6abC2159b95afd71C",
+              "0xe3668873D944E4A949DA05fc8bDE419eFF543882"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "aura-silo-weth",
@@ -227,7 +243,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-252/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-252/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x8a8434A5952aC2CF4927bbEa3ace255c6dd165CD",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x8a8434A5952aC2CF4927bbEa3ace255c6dd165CD",
+            "coins": [
+              "0xaCdf0DBA4B9839b96221a8487e9ca660a48212be",
+              "0xA0d69E286B938e21CBf7E51D71F6A4c8918f482F"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-eth+",
@@ -250,7 +282,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-256/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-256/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x7fb53345f1B21aB5d9510ADB38F7d3590BE6364b",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x7fb53345f1B21aB5d9510ADB38F7d3590BE6364b",
+            "coins": [
+              "0xE72B141DF173b999AE7c1aDcbF60Cc9833Ce56a8",
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "prisma-mkusd-prisma",
@@ -273,7 +321,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-339/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-339/deposit",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x9D8108DDD8aD1Ee89d527C0C9e928Cb9D2BBa2d3",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x9D8108DDD8aD1Ee89d527C0C9e928Cb9D2BBa2d3",
+            "coins": [
+              "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
+              "0xdA47862a83dac0c112BA89c6abC2159b95afd71C"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-usdc+",
@@ -296,7 +360,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-312/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-312/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xF2B25362a03f6EACCa8De8d5350A9f37944c1e59",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0xF2B25362a03f6EACCa8De8d5350A9f37944c1e59",
+            "coins": [
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "0xFc0B1EEf20e4c68B3DCF36c4537Cfa7Ce46CA70b"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-eusdfraxbp",
@@ -319,7 +399,32 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-277/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-277/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xAEda92e6A3B1028edc139A4ae56Ec881f3064D4F",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xAEda92e6A3B1028edc139A4ae56Ec881f3064D4F",
+            "coins": [
+              "0xA0d69E286B938e21CBf7E51D71F6A4c8918f482F",
+              "0x3175Df0976dFA876431C2E9eE6Bc45b65d3473CC"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0x08780fb7e580e492c1935bee4fa5920b94aa95da",
+            "coins": [
+              "0xA0d69E286B938e21CBf7E51D71F6A4c8918f482F",
+              "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "silo-crvusd",
@@ -379,7 +484,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-371/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-371/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x3b21C2868B6028CfB38Ff86127eF22E68d16d53B",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x3b21C2868B6028CfB38Ff86127eF22E68d16d53B",
+            "coins": [
+              "0xdA47862a83dac0c112BA89c6abC2159b95afd71C",
+              "0x34635280737b5BFe6c7DC2FC3065D60d66e78185"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "prisma-mkusd-usdc",
@@ -402,7 +523,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-17/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-17/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xF980B4A4194694913Af231De69AB4593f5E0fCDc",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xF980B4A4194694913Af231De69AB4593f5E0fCDc",
+            "coins": [
+              "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "prisma-mkusd-fraxbp",
@@ -426,7 +563,32 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-342/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-342/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x0CFe5C777A7438C9Dd8Add53ed671cEc7A5FAeE5",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x0CFe5C777A7438C9Dd8Add53ed671cEc7A5FAeE5",
+            "coins": [
+              "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
+              "0x3175Df0976dFA876431C2E9eE6Bc45b65d3473CC"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0x08780fb7e580e492c1935bee4fa5920b94aa95da",
+            "coins": [
+              "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
+              "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "prisma-mkusd-crvusd",
@@ -450,7 +612,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-17/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-17/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x3de254A0f838a844F727fee81040e0FA7884B935",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x3de254A0f838a844F727fee81040e0FA7884B935",
+            "coins": [
+              "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
+              "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "prisma-prisma-eth",
@@ -474,7 +652,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-333/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-333/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x322135Dd9cBAE8Afa84727d9aE1434b5B3EBA44B",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x322135Dd9cBAE8Afa84727d9aE1434b5B3EBA44B",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0xdA47862a83dac0c112BA89c6abC2159b95afd71C"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-crvusd-sdai",
@@ -498,7 +692,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-27/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-27/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x1539c2461d7432cc114b0903f1824079BfCA2C92",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x1539c2461d7432cc114b0903f1824079BfCA2C92",
+            "coins": [
+              "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
+              "0x83F20F44975D03b1b09e64809B757c47f942BEeA"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-trylsd",
@@ -522,7 +732,24 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-14/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-14/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x2570f1bD5D2735314FC102eb12Fc1aFe9e6E7193",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x2570f1bD5D2735314FC102eb12Fc1aFe9e6E7193",
+            "coins": [
+              "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+              "0xae78736Cd615f374D3085123A210448E74Fc6393",
+              "0xac3E018457B222d93114458476f3E3416Abbe38F"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "compound-mainnet-eth",
@@ -707,7 +934,24 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-2/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-2/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x2889302a794dA87fBF1D6Db415C1492194663D13",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x2889302a794dA87fBF1D6Db415C1492194663D13",
+            "coins": [
+              "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
+              "0x18084fbA666a33d37592fA2633fD49a74DD93a88",
+              "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "aura-gho-usdc-usdt",
@@ -994,7 +1238,24 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-0/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-0/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x7F86Bf177Dd4F3494b841a37e810A34dD56c829B",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x7F86Bf177Dd4F3494b841a37e810A34dD56c829B",
+            "coins": [
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-oeth",
@@ -1018,7 +1279,20 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-298/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-298/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x94B17476A93b3262d87B9a326965D1E91f9c13E7",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x94B17476A93b3262d87B9a326965D1E91f9c13E7",
+            "coins": ["native", "0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3"]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "aura-r-wsteth",
@@ -1130,7 +1404,20 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/wbeth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/wbeth/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+            "coins": ["native", "0xa2E3356610840701BDf5611a53974510Ae27E2e1"]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "ape-ape",
@@ -1179,7 +1466,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/teth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/teth/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x752eBeb79963cf0732E9c0fec72a49FD1DEfAEAC",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x752eBeb79963cf0732E9c0fec72a49FD1DEfAEAC",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0xCdF7028ceAB81fA0C6971208e83fa7872994beE5"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-tbtc",
@@ -1205,7 +1508,32 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-247/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-247/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xF95AAa7EBB1620e46221B73588502960Ef63dBa0",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xF95AAa7EBB1620e46221B73588502960Ef63dBa0",
+            "coins": [
+              "0x18084fbA666a33d37592fA2633fD49a74DD93a88",
+              "0x051d7e5609917Bd9b73f04BAc0DED8Dd46a74301"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0xa2d40edbf76c6c0701ba8899e2d059798eba628e",
+            "coins": [
+              "0x18084fbA666a33d37592fA2633fD49a74DD93a88",
+              "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "0xfE18be6b3Bd88A2D2A7f928d00292E7a9963CfC6"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-lvusd",
@@ -1230,7 +1558,33 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-268/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-268/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xe9123CBC5d1EA65301D417193c40A72Ac8D53501",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xe9123CBC5d1EA65301D417193c40A72Ac8D53501",
+            "coins": [
+              "0x94A18d9FE00bab617fAD8B49b11e9F1f64Db6b36",
+              "0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0xa79828df1850e8a3a3064576f380d90aecdd3359",
+            "coins": [
+              "0x94A18d9FE00bab617fAD8B49b11e9F1f64Db6b36",
+              "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-staked-cvxFPIS",
@@ -1305,7 +1659,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-283/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-283/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x971add32Ea87f10bD192671630be3BE8A11b8623",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x971add32Ea87f10bD192671630be3BE8A11b8623",
+            "coins": [
+              "0xD533a949740bb3306d119CC777fa900bA034cd52",
+              "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "ethereum-bifi-maxi",
@@ -1359,7 +1729,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-45/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-45/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x838af967537350D2C44ABB8c010E49E32673ab94",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x838af967537350D2C44ABB8c010E49E32673ab94",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0x9aE380F0272E2162340a5bB646c354271c0F5cFC"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-ctr",
@@ -1383,7 +1769,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-151/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-151/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xf2f12B364F614925aB8E2C8BFc606edB9282Ba09",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0xf2f12B364F614925aB8E2C8BFc606edB9282Ba09",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0xb3Ad645dB386D7F6D753B2b9C3F4B853DA6890B8"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-matic",
@@ -1409,7 +1811,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-184/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-184/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x6bfE880Ed1d639bF80167b93cc9c56a39C1Ba2dC",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x6bfE880Ed1d639bF80167b93cc9c56a39C1Ba2dC",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-reth",
@@ -1433,7 +1851,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-210/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-210/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x0f3159811670c117c372428D4E69AC32325e4D0F",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x0f3159811670c117c372428D4E69AC32325e4D0F",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0xae78736Cd615f374D3085123A210448E74Fc6393"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "verse-weth-usdt",
@@ -1631,7 +2065,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-204/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-204/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x9409280DC1e6D33AB7A8C6EC03e5763FB61772B5",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x9409280DC1e6D33AB7A8C6EC03e5763FB61772B5",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-clev",
@@ -1655,7 +2105,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-140/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-140/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x342D1C4Aa76EA6F5E5871b7f11A019a0eB713A4f",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x342D1C4Aa76EA6F5E5871b7f11A019a0eB713A4f",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0x72953a5C32413614d24C29c84a66AE4B59581Bbf"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-clevcvx",
@@ -1679,7 +2145,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-209/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-209/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xF9078Fb962A7D13F55d40d49C8AA6472aBD1A5a6",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xF9078Fb962A7D13F55d40d49C8AA6472aBD1A5a6",
+            "coins": [
+              "0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B",
+              "0xf05e58fCeA29ab4dA01A495140B349F8410Ba904"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-ycrv",
@@ -1705,7 +2187,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-192/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-192/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x453D92C7d4263201C69aACfaf589Ed14202d83a4",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x453D92C7d4263201C69aACfaf589Ed14202d83a4",
+            "coins": [
+              "0xD533a949740bb3306d119CC777fa900bA034cd52",
+              "0xFCc5c47bE19d06BF83eB04298b026F81069ff65b"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-tusd",
@@ -1731,7 +2229,33 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/tusd/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/tusd/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xEcd5e75AFb02eFa118AF914515D6521aaBd189F1",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xEcd5e75AFb02eFa118AF914515D6521aaBd189F1",
+            "coins": [
+              "0x0000000000085d4780B73119b644AE5ecd22b376",
+              "0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0xa79828df1850e8a3a3064576f380d90aecdd3359",
+            "coins": [
+              "0x0000000000085d4780B73119b644AE5ecd22b376",
+              "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "synapse-syn-weth",
@@ -2177,7 +2701,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/sbtc2/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/sbtc2/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xf253f83AcA21aAbD2A20553AE0BF7F65C755A07F",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xf253f83AcA21aAbD2A20553AE0BF7F65C755A07F",
+            "coins": [
+              "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "0xfE18be6b3Bd88A2D2A7f928d00292E7a9963CfC6"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-multibtc",
@@ -2202,7 +2742,32 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-245/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-245/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x2863a328A0B7fC6040f11614FA0728587DB8e353",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x2863a328A0B7fC6040f11614FA0728587DB8e353",
+            "coins": [
+              "0x66eFF5221ca926636224650Fd3B9c497FF828F7D",
+              "0x051d7e5609917Bd9b73f04BAc0DED8Dd46a74301"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0xa2d40edbf76c6c0701ba8899e2d059798eba628e",
+            "coins": [
+              "0x66eFF5221ca926636224650Fd3B9c497FF828F7D",
+              "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "0xfE18be6b3Bd88A2D2A7f928d00292E7a9963CfC6"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-cvxfxs",
@@ -2228,7 +2793,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-18/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-18/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xd658A338613198204DCa1143Ac3F01A722b5d94A",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0xd658A338613198204DCa1143Ac3F01A722b5d94A",
+            "coins": [
+              "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+              "0xFEEf77d3f69374f66429C91d732A244f074bdf74"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-cvxeth",
@@ -2252,7 +2833,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/cvxeth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/cvxeth/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xB576491F1E6e5E62f1d8F26062Ee822B40B0E0d4",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0xB576491F1E6e5E62f1d8F26062Ee822B40B0E0d4",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-geareth",
@@ -2276,7 +2873,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-192/deposit/",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-192/withdraw/",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x0E9B5B092caD6F1c5E6bc7f89Ffe1abb5c95F1C2",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x0E9B5B092caD6F1c5E6bc7f89Ffe1abb5c95F1C2",
+            "coins": [
+              "0xBa3335588D9403515223F109EdC4eB7269a9Ab5D",
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-crveth",
@@ -2301,7 +2914,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/crveth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/crveth/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x8301AE4fc9c624d1D396cbDAa1ed877821D7C511",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x8301AE4fc9c624d1D396cbDAa1ed877821D7C511",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0xD533a949740bb3306d119CC777fa900bA034cd52"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-frxeth",
@@ -2325,7 +2954,20 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/frxeth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/frxeth/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xa1F8A6807c402E4A15ef4EBa36528A3FED24E577",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xa1F8A6807c402E4A15ef4EBa36528A3FED24E577",
+            "coins": ["native", "0x5E8422345238F34275888049021821E8E08CAa1f"]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-seth",
@@ -2351,7 +2993,20 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/seth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/seth/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xc5424B857f758E906013F3555Dad202e4bdB4567",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xc5424B857f758E906013F3555Dad202e4bdB4567",
+            "coins": ["native", "0x5e74C9036fb86BD7eCdcb084a0673EFc32eA31cb"]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-cbeth",
@@ -2375,7 +3030,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-91/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-91/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "aura-aura-weth",
@@ -2563,7 +3234,33 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-116/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-116/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xe6b5CC1B4b47305c58392CE3D359B10282FC36Ea",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xe6b5CC1B4b47305c58392CE3D359B10282FC36Ea",
+            "coins": [
+              "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
+              "0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0xa79828df1850e8a3a3064576f380d90aecdd3359",
+            "coins": [
+              "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
+              "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-usddfraxbp",
@@ -2596,7 +3293,32 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-135/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-135/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x4606326b4Db89373F5377C316d3b0F6e55Bc6A20",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x4606326b4Db89373F5377C316d3b0F6e55Bc6A20",
+            "coins": [
+              "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
+              "0x3175Df0976dFA876431C2E9eE6Bc45b65d3473CC"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0x08780fb7e580e492c1935bee4fa5920b94aa95da",
+            "coins": [
+              "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
+              "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-dolafraxbp",
@@ -2627,7 +3349,32 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-176/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-176/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xE57180685E3348589E9521aa53Af0BCD497E884d",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xE57180685E3348589E9521aa53Af0BCD497E884d",
+            "coins": [
+              "0x865377367054516e17014CcdED1e7d814EDC9ce4",
+              "0x3175Df0976dFA876431C2E9eE6Bc45b65d3473CC"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0x08780fb7e580e492c1935bee4fa5920b94aa95da",
+            "coins": [
+              "0x865377367054516e17014CcdED1e7d814EDC9ce4",
+              "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-apeusdfraxbp",
@@ -2659,7 +3406,32 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-138/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-138/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x04b727C7e246CA70d496ecF52E6b6280f3c8077D",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x04b727C7e246CA70d496ecF52E6b6280f3c8077D",
+            "coins": [
+              "0xfF709449528B6fB6b88f557F7d93dEce33bca78D",
+              "0x3175Df0976dFA876431C2E9eE6Bc45b65d3473CC"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0x08780fb7e580e492c1935bee4fa5920b94aa95da",
+            "coins": [
+              "0xfF709449528B6fB6b88f557F7d93dEce33bca78D",
+              "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-mim",
@@ -2690,7 +3462,33 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/mim/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/mim/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x5a6A4D54456819380173272A5E8E9B9904BdF41B",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x5a6A4D54456819380173272A5E8E9B9904BdF41B",
+            "coins": [
+              "0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3",
+              "0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0xa79828df1850e8a3a3064576f380d90aecdd3359",
+            "coins": [
+              "0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3",
+              "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-tricrypto2",
@@ -2714,7 +3512,24 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/tricrypto2/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/tricrypto2/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xD51a44d3FaE010294C616388b506AcdA1bfAAE46",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xD51a44d3FaE010294C616388b506AcdA1bfAAE46",
+            "coins": [
+              "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-aleth",
@@ -2763,7 +3578,20 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/steth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/steth/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+            "coins": ["native", "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-peth",
@@ -2795,7 +3623,20 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-194/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-194/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x9848482da3Ee3076165ce6497eDA906E66bB85C5",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x9848482da3Ee3076165ce6497eDA906E66bB85C5",
+            "coins": ["native", "0x836A808d4828586A69364065A1e064609F5078c7"]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-fraxusdc",
@@ -2826,7 +3667,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/fraxusdc/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/fraxusdc/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xDcEF968d416a41Cdac0ED8702fAC8128A64241A2",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xDcEF968d416a41Cdac0ED8702fAC8128A64241A2",
+            "coins": [
+              "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "convex-frax",
@@ -2857,7 +3714,33 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/frax/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/frax/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xd632f22692FaC7611d2AA1C0D552930D43CAEd3B",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0xd632f22692FaC7611d2AA1C0D552930D43CAEd3B",
+            "coins": [
+              "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+              "0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0xa79828df1850e8a3a3064576f380d90aecdd3359",
+            "coins": [
+              "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+              "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "stargate-eth-usdc",

@@ -59,7 +59,24 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://curve.fi/#/celo/pools/factory-v2-1/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/celo/pools/factory-v2-1/withdraw",
-    "network": "celo"
+    "network": "celo",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x32fD7e563c6521Ab4D59CE3277bcfBe3317CFd63",
+        "methods": [
+          {
+            "type": "fixed-deposit",
+            "target": "0x32fD7e563c6521Ab4D59CE3277bcfBe3317CFd63",
+            "coins": [
+              "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+              "0x37f750B7cC259A2f741AF45294f6a16572CF5cAd",
+              "0x617f3112bf5397D0467D315cC709EF968D9ba546"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "celo-bifi-maxi",
