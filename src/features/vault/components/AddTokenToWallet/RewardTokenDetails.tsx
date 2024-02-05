@@ -21,6 +21,7 @@ interface RewardTokenDetailsProps {
   chainId: ChainEntity['id'];
   className?: string;
   prependButtons?: React.ReactNode;
+  appendText?: React.ReactNode;
 }
 
 export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardTokenDetails({
@@ -28,6 +29,7 @@ export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardT
   chainId,
   className,
   prependButtons,
+  appendText,
 }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -41,7 +43,10 @@ export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardT
     <div className={clsx(classes.container, className)}>
       <div className={classes.token}>
         <AssetsImage size={24} chainId={chainId} assetIds={[token.id]} />{' '}
-        <div className={classes.text}>{t('Earn', { symbol: token.symbol })}</div>
+        <div className={classes.text}>
+          {t('Earn', { symbol: token.symbol })}
+          {appendText ? appendText : null}
+        </div>
       </div>
       <div className={classes.buttons}>
         {prependButtons ? prependButtons : null}

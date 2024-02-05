@@ -27,6 +27,7 @@ import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { RetirePauseReason } from '../../../RetirePauseReason';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
 import zapIcon from '../../../../../../images/icons/zap.svg';
+import { WormholeEligible } from '../../../WormholeBridge/WormholeEligible';
 
 const useStyles = makeStyles(styles);
 
@@ -75,9 +76,11 @@ export const DepositForm = memo(function DepositForm() {
   const { t } = useTranslation();
   const classes = useStyles();
   const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
+  const vaultId = useAppSelector(selectTransactVaultId);
 
   return (
     <>
+      {vaultId === 'compound-arbitrum-usdc' ? <WormholeEligible /> : null}
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
           {hasOptions ? <img src={zapIcon} alt="Zap" height={12} /> : null}

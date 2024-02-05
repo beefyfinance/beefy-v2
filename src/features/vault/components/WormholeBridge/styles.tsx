@@ -69,6 +69,18 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.middle,
     marginBottom: '16px',
   },
+  bridge: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    alignItems: 'center',
+    gap: '16px 8px',
+    [theme.breakpoints.up('sm')]: {
+      flexDirection: 'row' as const,
+    },
+  },
+  eligible: {
+    flexGrow: 1,
+  },
   rewardToken: {
     marginTop: '24px',
   },
@@ -95,5 +107,14 @@ export const styles = (theme: Theme) => ({
   link: {
     color: 'inherit',
     textDecoration: 'underline',
+  },
+  notice: {
+    ...theme.typography['body-sm'],
+    borderRadius: '4px',
+    backgroundColor: theme.palette.background.contentLight,
+    padding: '4px',
+    textAlign: 'center' as const,
+    marginBottom: '8px',
+    // display: 'none' as const,
   },
 });

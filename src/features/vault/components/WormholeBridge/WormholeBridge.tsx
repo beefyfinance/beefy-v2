@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { styles } from './styles';
 import { WormholeModal } from './WormholeModal';
 import { Button } from '../../../../components/Button';
@@ -10,27 +10,51 @@ import { LinkIcon } from '../../../../components/LinkIcon';
 import Twitter from '../../../../images/icons/twitter.svg';
 import Telegram from '../../../../images/icons/telegram.svg';
 import Discord from '../../../../images/icons/discord.svg';
-import { useAppSelector } from '../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../store';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { CardContent } from '../Card/CardContent';
+import { selectWalletAddress } from '../../../data/selectors/wallet';
+import { fetchBalanceAction, fetchWormholeBalanceAction } from '../../../data/actions/balance';
+import { selectWormholeBalance } from '../../../data/selectors/balance';
+import { formatBigDecimals } from '../../../../helpers/format';
 
 const useStyles = makeStyles(styles);
 
 export const WormholeBridge = memo(function WormholeBridge() {
   const classes = useStyles();
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const rewardToken = useAppSelector(state =>
     selectTokenByAddress(state, 'arbitrum', '0x912ce59144191c1204e64559fe8253a0e49e6548')
   );
+  const depositToken = useAppSelector(state =>
+    selectTokenByAddress(state, 'arbitrum', '0xaf88d065e77c8cC2239327C5EDb3A432268e5831')
+  );
+  const walletAddress = useAppSelector(selectWalletAddress);
   const [isOpen, setIsOpen] = useState(false);
+  const wormhole = useAppSelector(state => selectWormholeBalance(state, walletAddress));
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
-  }, [setIsOpen]);
+    if (walletAddress) {
+      dispatch(fetchWormholeBalanceAction({ walletAddress }));
+      dispatch(fetchBalanceAction({ chainId: depositToken.chainId, tokens: [depositToken] }));
+    }
+  }, [setIsOpen, dispatch, walletAddress, depositToken]);
 
   const handleOpen = useCallback(() => {
     setIsOpen(true);
   }, [setIsOpen]);
+
+  useEffect(() => {
+    if (walletAddress) {
+      dispatch(fetchWormholeBalanceAction({ walletAddress }));
+      const interval = setInterval(() => {
+        dispatch(fetchWormholeBalanceAction({ walletAddress }));
+      }, 15_000);
+      return () => clearInterval(interval);
+    }
+  }, [dispatch, walletAddress]);
 
   return (
     <div>
@@ -58,11 +82,25 @@ export const WormholeBridge = memo(function WormholeBridge() {
             >{`Wormhole's Dashboard`}</a>{' '}
             and will be distributed weekly, for the next three months.
           </div>
+          <div className={classes.bridge}>
+            <div className={classes.eligible}>
+              {"You've bridged"}{' '}
+              <strong>
+                {formatBigDecimals(wormhole.bridged, 2)} {'USDC'}
+              </strong>{' '}
+              {'so far'}
+            </div>
+            <IframeButton handleOpen={handleOpen} />
+          </div>
           <RewardTokenDetails
             token={rewardToken}
             chainId={'arbitrum'}
             className={classes.rewardToken}
-            prependButtons={<IframeButton handleOpen={handleOpen} />}
+            appendText={
+              wormhole.pendingRewards.gt(0) ? (
+                <>{` (${formatBigDecimals(wormhole.pendingRewards, 4)} pending)`}</>
+              ) : undefined
+            }
           />
         </CardContent>
       </div>
