@@ -10,7 +10,7 @@ export const OpenCoverCard = memo(function OpenCoverCard() {
       logo={getPartnerSrc('openCover')}
       title={t('OpenCover-Title')}
       content={t('OpenCover-Content')}
-      url="tbd"
+      url="https://opencover.com/app/?invite=BEEF100K&cover=14"
     />
   );
 });
