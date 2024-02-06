@@ -167,7 +167,9 @@ function _YearlyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const { t } = useTranslation();
 
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
+  const isBoosted = useAppSelector(
+    state => vaultId === 'compound-arbitrum-usdc' || selectIsVaultBoosted(state, vaultId)
+  );
   const shouldShowApy = shouldVaultShowInterest(vault);
 
   const isLoading = useAppSelector(
@@ -213,7 +215,9 @@ function _DailyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const { t } = useTranslation();
 
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
+  const isBoosted = useAppSelector(
+    state => vaultId === 'compound-arbitrum-usdc' || selectIsVaultBoosted(state, vaultId)
+  );
   const shouldShowApy = shouldVaultShowInterest(vault);
 
   const isLoading = useAppSelector(
