@@ -12,35 +12,27 @@ const QiDao = [
   'curve-op-f-wsteth',
 ];
 
-const Insurace = [
-  'bsc',
-  'avax',
-  'celo',
-  'cronos',
-  'fantom',
-  'harmony',
-  'moonriver',
+const Nexus = ['ethereum'];
+const OpenCover = [
   'polygon',
-  'ethereum',
-];
-
-const Nexus = [
   'bsc',
-  'avax',
-  'heco',
-  'polygon',
-  'fantom',
-  'harmony',
-  'arbitrum',
-  'celo',
-  'moonriver',
-  'cronos',
-  'fuse',
-  'metis',
-  'aurora',
-  'moonbeam',
   'optimism',
-  'ethereum',
+  'fantom',
+  'arbitrum',
+  'avax',
+  'cronos',
+  'moonbeam',
+  'moonriver',
+  'metis',
+  'fuse',
+  'kava',
+  'canto',
+  'zksync',
+  'zkevm',
+  'base',
+  'gnosis',
+  'linea',
+  'mantle',
 ];
 
-export { QiDao, Insurace, Nexus };
+export { QiDao, OpenCover, Nexus };
