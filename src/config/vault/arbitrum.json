@@ -3003,37 +3003,6 @@
     ]
   },
   {
-    "id": "ramses-frxeth-eth",
-    "name": "frxETH-ETH sLP",
-    "type": "standard",
-    "token": "frxETH-ETH sLP",
-    "tokenAddress": "0x3932192dE4f17DFB94Be031a8458E215A44BF560",
-    "tokenDecimals": 18,
-    "tokenProviderId": "ramses",
-    "earnedToken": "mooRamsesfrxETH-ETH",
-    "earnedTokenAddress": "0xe28ed3A8FE92fc7Ad6078bAB28B1A34aEFfE857f",
-    "earnContractAddress": "0xe28ed3A8FE92fc7Ad6078bAB28B1A34aEFfE857f",
-    "oracle": "lps",
-    "oracleId": "ramses-frxeth-eth",
-    "status": "eol",
-    "createdAt": 1680100045,
-    "retireReason": "tvl",
-    "retiredAt": 1695059742,
-    "platformId": "ramses",
-    "assets": ["frxETH", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.ramses.exchange/swap?from=ETH&to=0x178412e79c25968a32e89b11f63B33F733770c2A",
-    "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x3932192dE4f17DFB94Be031a8458E215A44BF560",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "arbitrum-ramses"
-      }
-    ]
-  },
-  {
     "id": "ramses-usd+-dai+",
     "name": "USD+-DAI+ sLP",
     "type": "standard",
