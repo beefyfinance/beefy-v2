@@ -77,6 +77,7 @@ import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens';
 import { walletActions } from '../../../../actions/wallet-actions';
 import { isStandardVault } from '../../../../entities/vault';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
+import { buildTokenApproveTx } from '../../zap/approve';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -1226,7 +1227,7 @@ export class CurveStrategy implements IStrategy {
       tokens: insertBalance
         ? [
             {
-              token: getTokenAddress(withdrawVia.token),
+              token: this.depositToken.address,
               index: this.typeToRemoveLiquidityTokenIndex(withdrawVia.type),
             },
           ]
@@ -1246,22 +1247,35 @@ export class CurveStrategy implements IStrategy {
     const input = first(inputs);
     const output = await this.quoteRemoveLiquidity(poolAddress, input.amount, via);
     const minOutputAmount = slipBy(output.amount, slippage, output.token.decimals);
+    const zaps: ZapStep[] = [
+      this.buildZapRemoveLiquidityTx(
+        poolAddress,
+        via,
+        toWei(input.amount, input.token.decimals),
+        toWei(minOutputAmount, output.token.decimals),
+        zap.router,
+        insertBalance
+      ),
+    ];
+
+    // Must approve the curve zap contact to spend the LP token
+    if (via.target !== poolAddress) {
+      zaps.unshift(
+        buildTokenApproveTx(
+          input.token.address, // token address
+          via.target, // spender
+          toWei(input.amount, input.token.decimals), // amount in wei
+          insertBalance
+        )
+      );
+    }
 
     return {
       inputs,
       outputs: [output],
       minOutputs: [{ token: output.token, amount: minOutputAmount }],
       returned: [],
-      zaps: [
-        this.buildZapRemoveLiquidityTx(
-          poolAddress,
-          via,
-          toWei(input.amount, input.token.decimals),
-          toWei(minOutputAmount, output.token.decimals),
-          zap.router,
-          insertBalance
-        ),
-      ],
+      zaps,
     };
   }
 
@@ -1309,7 +1323,8 @@ export class CurveStrategy implements IStrategy {
         splitQuote,
         [withdrawOutput],
         quote.viaToken,
-        zapHelpers
+        zapHelpers,
+        true
       );
       splitZap.zaps.forEach(step => steps.push(step));
 
