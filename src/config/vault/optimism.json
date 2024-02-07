@@ -471,7 +471,7 @@
         "poolAddress": "0x1Dc5c0f8668a9F54ED922171d578011850ca0341",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0x1Dc5c0f8668a9F54ED922171d578011850ca0341",
             "coins": [
               "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
@@ -3397,7 +3397,7 @@
         "poolAddress": "0x810D1AaA4Cd8F21c23bB648F2dfb9DC232A01F09",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0x810D1AaA4Cd8F21c23bB648F2dfb9DC232A01F09",
             "coins": [
               "0xB153FB3d196A8eB25522705560ac152eeEc57901",
@@ -4555,7 +4555,7 @@
         "poolAddress": "0xB90B9B1F91a01Ea22A182CD84C1E22222e39B415",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0xB90B9B1F91a01Ea22A182CD84C1E22222e39B415",
             "coins": ["native", "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb"]
           }
@@ -6830,7 +6830,7 @@
         "poolAddress": "0x7Bc5728BC2b59B45a58d9A576E2Ffc5f0505B35E",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0x7Bc5728BC2b59B45a58d9A576E2Ffc5f0505B35E",
             "coins": ["native", "0xE405de8F52ba7559f9df3C368500B6E6ae6Cee49"]
           }
@@ -6874,7 +6874,7 @@
         "poolAddress": "0x9F2fE3500B1a7E285FDc337acacE94c480e00130",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0x9F2fE3500B1a7E285FDc337acacE94c480e00130",
             "coins": [
               "0x298B9B95708152ff6968aafd889c6586e9169f1D",
@@ -6922,7 +6922,7 @@
         "poolAddress": "0x061b87122Ed14b9526A813209C8a59a633257bAb",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0x061b87122Ed14b9526A813209C8a59a633257bAb",
             "coins": [
               "0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9",

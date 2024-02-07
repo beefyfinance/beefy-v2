@@ -72,7 +72,7 @@
         "poolAddress": "0x591199E16E006Dec3eDcf79AE0fCea1Dd0F5b69D",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0x591199E16E006Dec3eDcf79AE0fCea1Dd0F5b69D",
             "coins": [
               "0x471EE749bA270eb4c1165B5AD95E614947f6fCeb",
@@ -113,7 +113,7 @@
         "poolAddress": "0xCf5f5ddE4D1D866b11b4cA2ba3Ff146Ec0fe3743",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0xCf5f5ddE4D1D866b11b4cA2ba3Ff146Ec0fe3743",
             "coins": [
               "0x471EE749bA270eb4c1165B5AD95E614947f6fCeb",
@@ -943,9 +943,9 @@
     "oracle": "lps",
     "oracleId": "curve-kava-axl3pool",
     "status": "eol",
+    "createdAt": 1677007992,
     "retireReason": "rewards",
     "retiredAt": 1706885963,
-    "createdAt": 1677007992,
     "platformId": "curve",
     "assets": ["axlDAI", "axlUSDC", "axlUSDT"],
     "risks": [
@@ -967,7 +967,7 @@
         "poolAddress": "0x29C623E1Cc593864bB3E41E31a8f72ed262F38e5",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0x29C623E1Cc593864bB3E41E31a8f72ed262F38e5",
             "coins": [
               "0x5C7e299CF531eb66f2A1dF637d37AbB78e6200C7",
@@ -1017,7 +1017,7 @@
         "poolAddress": "0x7A0e3b70b1dB0D6CA63Cac240895b2D21444A7b9",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0x7A0e3b70b1dB0D6CA63Cac240895b2D21444A7b9",
             "coins": [
               "0x765277EebeCA2e31912C9946eAe1021199B39C61",
@@ -1064,7 +1064,7 @@
         "poolAddress": "0xAA3b055186f96dD29d0c2A17710d280Bc54290c7",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0xAA3b055186f96dD29d0c2A17710d280Bc54290c7",
             "coins": [
               "0x7f5373AE26c3E8FfC4c77b7255DF7eC1A9aF52a6",

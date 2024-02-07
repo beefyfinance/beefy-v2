@@ -773,7 +773,7 @@
         "poolAddress": "0xc6e37086D09ec2048F151D11CdB9F9BbbdB7d685",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0xc6e37086D09ec2048F151D11CdB9F9BbbdB7d685",
             "coins": [
               "0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",

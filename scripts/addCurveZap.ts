@@ -107,7 +107,7 @@ type CurveApiPool = {
   [key: string]: unknown;
 };
 
-type CurveApiPoolWithMetadata = CurveApiPool & {
+export type CurveApiPoolWithMetadata = CurveApiPool & {
   metadata: CurveApiPoolMetadata;
 };
 
@@ -400,7 +400,7 @@ async function getCurvePools(
 }
 
 /** Get pool data from curve api */
-async function getApiPool(
+export async function getApiPool(
   chainId: string,
   lpTokenAddress: string,
   updateCache: boolean
@@ -552,7 +552,8 @@ type MakeCurveMethod<T extends CurveMethodTypes> = {
 };
 
 type CurveFixed = MakeCurveMethod<'fixed'>;
-type CurveFixedDeposit = MakeCurveMethod<'fixed-deposit'>;
+type CurveFixedDepositInt128 = MakeCurveMethod<'fixed-deposit-int128'>;
+type CurveFixedDepositUint256 = MakeCurveMethod<'fixed-deposit-uint256'>;
 type CurveFixedDepositUnderlying = MakeCurveMethod<'fixed-deposit-underlying'>;
 type CurveDynamicDeposit = MakeCurveMethod<'dynamic-deposit'>;
 type CurvePoolFixed = MakeCurveMethod<'pool-fixed'>;
@@ -560,7 +561,8 @@ type CurvePoolFixedDeposit = MakeCurveMethod<'pool-fixed-deposit'>;
 
 type CurveMethods =
   | CurveFixed
-  | CurveFixedDeposit
+  | CurveFixedDepositInt128
+  | CurveFixedDepositUint256
   | CurveFixedDepositUnderlying
   | CurveDynamicDeposit
   | CurvePoolFixed
@@ -580,8 +582,10 @@ function makeMethod<T extends CurveMethodTypes>(
 
 const makeFixed = (target: string, coins: string[]): CurveFixed =>
   makeMethod('fixed', target, coins);
-const makeFixedDeposit = (target: string, coins: string[]): CurveFixedDeposit =>
-  makeMethod('fixed-deposit', target, coins);
+const makeFixedDepositInt128 = (target: string, coins: string[]): CurveFixedDepositInt128 =>
+  makeMethod('fixed-deposit-int128', target, coins);
+const makeFixedDepositUint256 = (target: string, coins: string[]): CurveFixedDepositUint256 =>
+  makeMethod('fixed-deposit-uint256', target, coins);
 const makeFixedDepositUnderlying = (target: string, coins: string[]): CurveFixedDepositUnderlying =>
   makeMethod('fixed-deposit-underlying', target, coins);
 const makeDynamicDeposit = (target: string, coins: string[]): CurveDynamicDeposit =>
@@ -590,6 +594,16 @@ const makePoolFixed = (target: string, coins: string[]): CurvePoolFixed =>
   makeMethod('pool-fixed', target, coins);
 const makePoolFixedDeposit = (target: string, coins: string[]): CurvePoolFixedDeposit =>
   makeMethod('pool-fixed-deposit', target, coins);
+
+function makeFixedDeposit(
+  target: string,
+  coins: string[],
+  indexType: 'int128' | 'uint256'
+): CurveFixedDepositInt128 | CurveFixedDepositUint256 {
+  return indexType === 'uint256'
+    ? makeFixedDepositUint256(target, coins)
+    : makeFixedDepositInt128(target, coins);
+}
 
 function makeAmounts(amount: string, index: number, numCoins: number): string[] {
   const amounts = Array<string>(numCoins).fill('0');
@@ -671,6 +685,24 @@ async function isDepositFlagNeededFixed(
   return yes !== undefined;
 }
 
+function poolEndpointToIndexType(
+  endpoint: CurveApiPoolWithChain['metadata']['endpoint']
+): 'int128' | 'uint256' {
+  switch (endpoint) {
+    case 'factory':
+    case 'factory-stable-ng':
+    case 'factory-crvusd':
+    case 'main':
+      return 'int128';
+    case 'factory-crypto':
+    case 'factory-tricrypto':
+    case 'crypto':
+      return 'uint256';
+    default:
+      throw new Error(`Unknown endpoint ${endpoint}`);
+  }
+}
+
 async function factoryPoolToZap(pool: CurveApiPoolWithChain): Promise<CurveMethods[]> {
   // newer contracts don't need is_deposit flag
   const depositQuoteNeedsIsDepositFlag = await isDepositFlagNeededFixed(
@@ -683,7 +715,8 @@ async function factoryPoolToZap(pool: CurveApiPoolWithChain): Promise<CurveMetho
     depositQuoteNeedsIsDepositFlag
       ? makeFixedDeposit(
           pool.address,
-          pool.coins.map(coin => coin.address)
+          pool.coins.map(coin => coin.address),
+          poolEndpointToIndexType(pool.metadata.endpoint)
         )
       : makeFixed(
           pool.address,
@@ -773,7 +806,8 @@ async function mainToZap(pool: CurveApiPoolWithChain): Promise<CurveMethods[]> {
   const methods: CurveMethods[] = [
     makeFixedDeposit(
       pool.address,
-      pool.coins.map(coin => coin.address)
+      pool.coins.map(coin => coin.address),
+      poolEndpointToIndexType(pool.metadata.endpoint)
     ),
   ];
   const hasUnderlying = !!pool.underlyingCoins?.length;
@@ -822,7 +856,8 @@ async function cryptoToZap(pool: CurveApiPoolWithChain): Promise<CurveMethods[]>
     depositQuoteNeedsIsDepositFlag
       ? makeFixedDeposit(
           pool.address,
-          pool.coins.map(coin => coin.address)
+          pool.coins.map(coin => coin.address),
+          poolEndpointToIndexType(pool.metadata.endpoint)
         )
       : makeFixed(
           pool.address,
@@ -871,7 +906,13 @@ async function cryptoToZap(pool: CurveApiPoolWithChain): Promise<CurveMethods[]>
       }
 
       if (depositQuoteNeedsIsDepositFlag) {
-        methods.push(makeFixedDeposit(pool.zapAddress!, underlyingCoins));
+        methods.push(
+          makeFixedDeposit(
+            pool.zapAddress!,
+            underlyingCoins,
+            poolEndpointToIndexType(pool.metadata.endpoint)
+          )
+        );
       } else {
         methods.push(makeFixed(pool.zapAddress!, underlyingCoins));
       }

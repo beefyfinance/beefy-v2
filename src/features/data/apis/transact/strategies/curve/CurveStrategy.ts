@@ -254,6 +254,28 @@ export class CurveStrategy implements IStrategy {
     return this.signatureToAbiItem(type, signatures.deposit, numCoins, 'payable');
   }
 
+  protected typeToAddLiquidityQuoteParams(
+    type: CurveTokenOption['type'],
+    poolAddress: string,
+    amounts: string[]
+  ): unknown[] {
+    switch (type) {
+      case 'fixed':
+        return [amounts];
+      case 'fixed-deposit-int128':
+      case 'fixed-deposit-uint256':
+      case 'dynamic-deposit':
+      case 'fixed-deposit-underlying':
+        return [amounts, true];
+      case 'pool-fixed':
+        return [poolAddress, amounts];
+      case 'pool-fixed-deposit':
+        return [poolAddress, amounts, true];
+      default:
+        throw new Error(`Invalid deposit type ${type}`);
+    }
+  }
+
   protected typeToAddLiquidityParams(
     type: CurveTokenOption['type'],
     poolAddress: string,
@@ -263,7 +285,8 @@ export class CurveStrategy implements IStrategy {
   ): unknown[] {
     switch (type) {
       case 'fixed':
-      case 'fixed-deposit':
+      case 'fixed-deposit-int128':
+      case 'fixed-deposit-uint256':
       case 'dynamic-deposit':
         return [amounts, minMintAmount];
       case 'fixed-deposit-underlying':
@@ -282,7 +305,8 @@ export class CurveStrategy implements IStrategy {
   ): number[] {
     switch (type) {
       case 'fixed':
-      case 'fixed-deposit':
+      case 'fixed-deposit-int128':
+      case 'fixed-deposit-uint256':
       case 'fixed-deposit-underlying':
         // amounts[N_COINS] is first param, so array index N is at offset N
         return amounts.map((_, i) => getInsertIndex(i));
@@ -335,10 +359,15 @@ export class CurveStrategy implements IStrategy {
               name: input,
               type: 'uint256',
             };
-          case 'index':
+          case 'uint256_index':
             return {
-              name: input,
-              type: 'int128', // TODO check this is same for all :fingers_crossed:
+              name: 'index',
+              type: 'uint256',
+            };
+          case 'int128_index':
+            return {
+              name: 'index',
+              type: 'int128',
             };
           case 'is_deposit':
           case 'use_underlying':
@@ -387,34 +416,9 @@ export class CurveStrategy implements IStrategy {
       deposit.numCoins
     );
 
-    // TODO we should be able to dynamic build this from the string/input names
-    const amount = await ((): Promise<string> => {
-      switch (deposit.type) {
-        case 'fixed':
-          console.log(deposit.type, deposit.target, 'calc_token_amount', amounts);
-          return contract.methods.calc_token_amount(amounts).call();
-        case 'fixed-deposit':
-        case 'dynamic-deposit':
-        case 'fixed-deposit-underlying':
-          console.log(deposit.type, deposit.target, 'calc_token_amount', amounts, true);
-          return contract.methods.calc_token_amount(amounts, true).call();
-        case 'pool-fixed':
-          console.log(deposit.type, deposit.target, 'calc_token_amount', poolAddress, amounts);
-          return contract.methods.calc_token_amount(poolAddress, amounts).call();
-        case 'pool-fixed-deposit':
-          console.log(
-            deposit.type,
-            deposit.target,
-            'calc_token_amount',
-            poolAddress,
-            amounts,
-            true
-          );
-          return contract.methods.calc_token_amount(poolAddress, amounts, true).call();
-        default:
-          throw new Error(`Invalid deposit type ${deposit.type}`);
-      }
-    })();
+    const params = this.typeToAddLiquidityQuoteParams(deposit.type, poolAddress, amounts);
+    console.log(deposit.type, deposit.target, 'calc_token_amount', params);
+    const amount = await contract.methods.calc_token_amount(...params).call();
     console.log('->', amount);
 
     return {
@@ -927,7 +931,8 @@ export class CurveStrategy implements IStrategy {
   ): unknown[] {
     switch (type) {
       case 'fixed':
-      case 'fixed-deposit':
+      case 'fixed-deposit-int128':
+      case 'fixed-deposit-uint256':
       case 'dynamic-deposit':
       case 'fixed-deposit-underlying':
         return [amount, tokenIndex];
@@ -948,7 +953,8 @@ export class CurveStrategy implements IStrategy {
   ): unknown[] {
     switch (type) {
       case 'fixed':
-      case 'fixed-deposit':
+      case 'fixed-deposit-int128':
+      case 'fixed-deposit-uint256':
       case 'dynamic-deposit':
         return [amount, tokenIndex, minAmount];
       case 'fixed-deposit-underlying':
@@ -964,7 +970,8 @@ export class CurveStrategy implements IStrategy {
   protected typeToRemoveLiquidityTokenIndex(type: CurveTokenOption['type']): number {
     switch (type) {
       case 'fixed':
-      case 'fixed-deposit':
+      case 'fixed-deposit-int128':
+      case 'fixed-deposit-uint256':
       case 'dynamic-deposit':
       case 'fixed-deposit-underlying':
         // 0: amount

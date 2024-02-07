@@ -704,7 +704,7 @@
         "poolAddress": "0x798D81d60966d2E909468d87e7e4b6A8DAFB1C36",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0x798D81d60966d2E909468d87e7e4b6A8DAFB1C36",
             "coins": [
               "0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4",
@@ -1140,7 +1140,7 @@
         "poolAddress": "0xda3de145054ED30Ee937865D31B500505C4bDfe7",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0xda3de145054ED30Ee937865D31B500505C4bDfe7",
             "coins": [
               "0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376",
@@ -1660,7 +1660,7 @@
         "poolAddress": "0xf6C5F01C7F3148891ad0e19DF78743D31E390D1f",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0xf6C5F01C7F3148891ad0e19DF78743D31E390D1f",
             "coins": [
               "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
@@ -1702,7 +1702,7 @@
         "poolAddress": "0x6e53131F68a034873b6bFA15502aF094Ef0c5854",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-uint256",
             "target": "0x6e53131F68a034873b6bFA15502aF094Ef0c5854",
             "coins": [
               "0x417Ac0e078398C154EdFadD9Ef675d30Be60Af93",

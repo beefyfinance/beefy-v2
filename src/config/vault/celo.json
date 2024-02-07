@@ -66,7 +66,7 @@
         "poolAddress": "0x32fD7e563c6521Ab4D59CE3277bcfBe3317CFd63",
         "methods": [
           {
-            "type": "fixed-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0x32fD7e563c6521Ab4D59CE3277bcfBe3317CFd63",
             "coins": [
               "0x765DE816845861e75A25fCA122bb6898B8B1282a",
