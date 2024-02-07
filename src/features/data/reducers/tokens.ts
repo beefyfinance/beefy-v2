@@ -57,11 +57,13 @@ export type TokensState = {
       [tokenId: TokenEntity['oracleId']]: TokenLpBreakdown;
     };
   };
+  allTokenIdsInActiveVaults: TokenEntity['id'][];
 };
 export const initialTokensState: TokensState = {
   byChainId: {},
   prices: { byOracleId: {} },
   breakdown: { byOracleId: {} },
+  allTokenIdsInActiveVaults: [],
 };
 
 export const tokensSlice = createSlice({
@@ -487,6 +489,16 @@ function addVaultToState(
   const depositToken = getDepositTokenFromLegacyVaultConfig(chain, vault);
   const depositAddressKey = depositToken.address.toLowerCase();
   const existingDepositToken = sliceState.byChainId[chainId].byAddress[depositAddressKey];
+
+  //add assets Id's from active vaults to state
+
+  if (vault.status === 'active') {
+    for (const assetId of vault.assets) {
+      if (!sliceState.allTokenIdsInActiveVaults.includes(assetId)) {
+        sliceState.allTokenIdsInActiveVaults.push(assetId);
+      }
+    }
+  }
 
   if (existingDepositToken === undefined) {
     // Add the token
