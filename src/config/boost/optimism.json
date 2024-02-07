@@ -3,7 +3,7 @@
     "id": "moo_aura-op-yield-concerto-by-frax-beefy",
     "poolId": "aura-op-yield-concerto-by-frax",
     "name": "Beefy",
-    "assets": ["sfrxETH","sFRAX"],
+    "assets": ["sfrxETH", "sFRAX"],
     "tokenAddress": "0xb253dD7351906933AB32623c8dd9ADDce8480B09",
     "earnedToken": "OP",
     "earnedTokenDecimals": 18,

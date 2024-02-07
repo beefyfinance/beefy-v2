@@ -6,6 +6,7 @@ import {
   fetchAllBalanceAction,
   type FetchAllBalanceFulfilledPayload,
   fetchBalanceAction,
+  fetchWormholeBalanceAction,
   recalculateDepositedVaultsAction,
 } from '../../actions/balance';
 import { initiateBoostForm } from '../../actions/boosts';
@@ -75,6 +76,12 @@ export interface BalanceState {
             rewards: BigNumber;
           };
         };
+      };
+
+      /** wormhole boost campaign */
+      wormhole: {
+        bridged: BigNumber;
+        pendingRewards: BigNumber;
       };
     };
   };
@@ -149,6 +156,16 @@ export const balanceSlice = createSlice({
       const walletState = getWalletState(sliceState, action.payload.walletAddress.toLowerCase());
       walletState.depositedVaultIds = action.payload.vaultIds;
     });
+
+    builder.addCase(fetchWormholeBalanceAction.fulfilled, (sliceState, action) => {
+      const walletState = getWalletState(sliceState, action.payload.walletAddress.toLowerCase());
+      if (!walletState.wormhole.bridged.isEqualTo(action.payload.bridged)) {
+        walletState.wormhole.bridged = action.payload.bridged;
+      }
+      if (!walletState.wormhole.pendingRewards.isEqualTo(action.payload.pendingRewards)) {
+        walletState.wormhole.pendingRewards = action.payload.pendingRewards;
+      }
+    });
   },
 });
 
@@ -160,6 +177,10 @@ function getWalletState(sliceState: Draft<BalanceState>, walletAddress: string) 
         byChainId: {},
         byBoostId: {},
         byGovVaultId: {},
+      },
+      wormhole: {
+        bridged: BIG_ZERO,
+        pendingRewards: BIG_ZERO,
       },
     };
   }
