@@ -20,7 +20,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-30/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-30/withdraw",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x864490Cf55dc2Dee3f0ca4D06F5f80b2BB154a03",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x864490Cf55dc2Dee3f0ca4D06F5f80b2BB154a03",
+            "coins": [
+              "0xc4Ce1D6F5D98D65eE25Cf85e9F2E9DcFEe6Cb5d6",
+              "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-poly-crvusd-usdt",
@@ -43,7 +59,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-28/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-28/deposit",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xA70Af99bFF6b168327f9D1480e29173e757c7904",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xA70Af99bFF6b168327f9D1480e29173e757c7904",
+            "coins": [
+              "0xc4Ce1D6F5D98D65eE25Cf85e9F2E9DcFEe6Cb5d6",
+              "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-poly-crvusd-usdc",
@@ -66,7 +98,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-27/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-27/deposit",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x5225010A0AE133B357861782B0B865a48471b2C5",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x5225010A0AE133B357861782B0B865a48471b2C5",
+            "coins": [
+              "0xc4Ce1D6F5D98D65eE25Cf85e9F2E9DcFEe6Cb5d6",
+              "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-poly-crvusd-dai",
@@ -89,7 +137,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-29/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-29/withdraw",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x62c949ee985b125Ff2d7ddcf4Fe7AEcB0a040E2a",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x62c949ee985b125Ff2d7ddcf4Fe7AEcB0a040E2a",
+            "coins": [
+              "0xc4Ce1D6F5D98D65eE25Cf85e9F2E9DcFEe6Cb5d6",
+              "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "quick-gamma-fxcbeth-weth",
