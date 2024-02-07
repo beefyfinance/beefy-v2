@@ -70,8 +70,10 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDailySt
 
   const values = selectVaultTotalApy(state, vaultId);
   const formatted = formattedTotalApy(values, '???');
-  const isBoosted = selectIsVaultBoosted(state, vaultId);
-  const isPrestake = selectIsVaultPrestakedBoost(state, vaultId);
+  const isBoosted =
+    vaultId === 'compound-arbitrum-usdc' ? true : selectIsVaultBoosted(state, vaultId);
+  const isPrestake =
+    vaultId === 'compound-arbitrum-usdc' ? false : selectIsVaultPrestakedBoost(state, vaultId);
 
   return {
     label,
