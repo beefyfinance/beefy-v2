@@ -732,6 +732,10 @@ export class CurveStrategy implements IStrategy {
 
       // Swaps
       if (swapQuotes.length) {
+        if (swapQuotes.length > 1) {
+          throw new Error('CurveStrategy: Too many swaps in quote');
+        }
+
         const swapQuote = first(swapQuotes);
         const swap = await this.fetchZapSwap(swapQuote, zapHelpers, true);
         // add step to order
@@ -1046,6 +1050,7 @@ export class CurveStrategy implements IStrategy {
     withdrawVias: CurveTokenOption[]
   ): Promise<WithdrawLiquidity> {
     const { vault, swapAggregator } = this.helpers;
+    const slippage = selectTransactSlippage(state);
 
     // Fetch withdraw liquidity quotes for each possible withdraw via token
     const quotes = await Promise.all(
@@ -1062,7 +1067,7 @@ export class CurveStrategy implements IStrategy {
           {
             vaultId: vault.id,
             fromToken: split.token,
-            fromAmount: split.amount,
+            fromAmount: slipBy(split.amount, slippage, split.token.decimals), // we have to assume it will slip 100% since we can't modify the call data later
             toToken: wanted,
           },
           state
@@ -1134,6 +1139,7 @@ export class CurveStrategy implements IStrategy {
     const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
     const liquidityWithdrawn = { amount: withdrawnAmountAfterFee, token: withdrawnToken };
     const wantedToken = first(option.wantedOutputs);
+    const returned: TokenAmount[] = [];
 
     // Common: Token Allowances
     const allowances = [
@@ -1182,10 +1188,21 @@ export class CurveStrategy implements IStrategy {
         fee: withdrawnLiquidity.quote.fee,
         quote: withdrawnLiquidity.quote,
       });
+
+      const unused = withdrawnLiquidity.split.amount.minus(withdrawnLiquidity.quote.fromAmount);
+      if (unused.gt(BIG_ZERO)) {
+        returned.push({ token: withdrawnLiquidity.split.token, amount: unused });
+      }
+    }
+
+    if (returned.length > 0) {
+      steps.push({
+        type: 'unused',
+        outputs: returned,
+      });
     }
 
     const outputs: TokenAmount[] = [withdrawnLiquidity.output];
-    const returned: TokenAmount[] = [];
 
     return {
       id: createQuoteId(option.id),
@@ -1331,8 +1348,8 @@ export class CurveStrategy implements IStrategy {
       // Step 3. Swaps
       // 0 swaps is valid when we break only
       if (swapQuotes.length > 0) {
-        if (swapQuotes.length > 2) {
-          throw new Error('Invalid swap quote');
+        if (swapQuotes.length > splitZap.minOutputs.length) {
+          throw new Error('More swap quotes than expected outputs');
         }
 
         const insertBalance = allTokensAreDistinct(
@@ -1340,10 +1357,15 @@ export class CurveStrategy implements IStrategy {
         );
         // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
         const lastSwapIndex = swapQuotes.length - 1;
+
         const swapZaps = await Promise.all(
-          swapQuotes.map((quoteStep, i) =>
-            this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i)
-          )
+          swapQuotes.map((quoteStep, i) => {
+            const input = splitZap.minOutputs.find(o => isTokenEqual(o.token, quoteStep.fromToken));
+            if (!input) {
+              throw new Error('Swap input not found in split outputs');
+            }
+            return this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i);
+          })
         );
         swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
       }
