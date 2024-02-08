@@ -5,6 +5,7 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { Button } from '../../../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
+  selectWithdrawInputAmountExceedsBalance,
   selectTransactQuoteStatus,
   selectTransactSelectedQuote,
   selectTransactVaultId,
@@ -134,6 +135,10 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ optio
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
   const [isDisabledByScreamLiquidity, setIsDisabledByScreamLiquidity] = useState(false);
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const isDisabledByInputAmountExceedsBalance = useAppSelector(state =>
+    selectWithdrawInputAmountExceedsBalance(state, vaultId)
+  );
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
@@ -142,7 +147,8 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ optio
     isDisabledByPriceImpact ||
     isDisabledByConfirm ||
     isDisabledByGlpLock ||
-    isDisabledByScreamLiquidity;
+    isDisabledByScreamLiquidity ||
+    isDisabledByInputAmountExceedsBalance;
   const handleClick = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);

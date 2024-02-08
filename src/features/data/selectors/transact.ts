@@ -4,11 +4,15 @@ import type { ChainEntity } from '../entities/chain';
 import { first, orderBy } from 'lodash-es';
 import { selectTokenPriceByAddress } from './tokens';
 import { selectWalletAddressIfKnown } from './wallet';
-import { selectUserBalanceOfToken } from './balance';
+import {
+  selectUserBalanceOfToken,
+  selectUserVaultDepositInDepositTokenExcludingBoostsBridged,
+} from './balance';
 import type { TokenAmount, TransactOption, TransactQuote } from '../apis/transact/transact-types';
 import BigNumber from 'bignumber.js';
 import { TransactStatus } from '../reducers/wallet/transact-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
+import type { VaultEntity } from '../entities/vault';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) => state.ui.transact.vaultId;
@@ -72,10 +76,21 @@ export const selectTransactSelected = createSelector(
   (selectionId, bySelectionId) => bySelectionId[selectionId] || undefined
 );
 
-export const selectInputAmountExceedsBalance = (state: BeefyState) => {
+export const selectDepositInputAmountExceedsBalance = (state: BeefyState) => {
   const selection = selectTransactSelected(state);
   const depositToken = selection.tokens[0];
   const userBalance = selectUserBalanceOfToken(state, depositToken.chainId, depositToken.address);
+  const value = selectTransactInputAmount(state);
+
+  return value.gt(userBalance);
+};
+
+export const selectWithdrawInputAmountExceedsBalance = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => {
+  const userBalance = selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId);
+
   const value = selectTransactInputAmount(state);
 
   return value.gt(userBalance);

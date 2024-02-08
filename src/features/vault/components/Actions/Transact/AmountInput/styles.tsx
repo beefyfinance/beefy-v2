@@ -12,13 +12,14 @@ export const styles = (theme: Theme) => ({
     boxSizing: 'border-box' as const,
     position: 'relative' as const,
     justifyContent: 'space-between',
+    minHeight: '48px',
   },
   inputContent: {
     display: 'flex',
     flexDirection: 'column' as const,
   },
   input: {
-    ...theme.typography['body-lg-med'],
+    ...theme.typography['h2'],
     padding: 0,
     width: '100%',
     background: 'none',
@@ -34,6 +35,9 @@ export const styles = (theme: Theme) => ({
     '&::focus ': {
       outline: 0,
     },
+  },
+  inputWithPrice: {
+    ...theme.typography['body-lg-med'],
   },
   error: {
     border: `1px solid ${theme.palette.background.indicators.error}`,

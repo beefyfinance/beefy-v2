@@ -5,7 +5,7 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { Button } from '../../../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectInputAmountExceedsBalance,
+  selectDepositInputAmountExceedsBalance,
   selectTransactQuoteStatus,
   selectTransactSelectedQuote,
 } from '../../../../../data/selectors/transact';
@@ -92,7 +92,9 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
-  const isDisabledByInputAmountExceedsBalance = useAppSelector(selectInputAmountExceedsBalance);
+  const isDisabledByInputAmountExceedsBalance = useAppSelector(
+    selectDepositInputAmountExceedsBalance
+  );
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);

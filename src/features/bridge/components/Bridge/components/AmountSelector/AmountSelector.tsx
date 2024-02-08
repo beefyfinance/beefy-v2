@@ -16,6 +16,7 @@ import {
 import { formatBigDecimals } from '../../../../../../helpers/format';
 import BigNumber from 'bignumber.js';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
+import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
@@ -32,6 +33,7 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
   const userBalance = useAppSelector(state =>
     selectUserBalanceOfToken(state, fromToken.chainId, fromToken.address)
   );
+  const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, fromToken.oracleId));
 
   const handleMax = useCallback(() => {
     dispatch(
@@ -73,6 +75,7 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
         maxValue={userBalance}
         tokenDecimals={input.token.decimals}
         onChange={handleChange}
+        price={price}
       />
     </div>
   );

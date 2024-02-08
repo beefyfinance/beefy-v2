@@ -60,7 +60,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   });
 
   const inputUsdValue = useMemo(() => {
-    return price.times(value);
+    return price ? price.times(value) : BIG_ZERO;
   }, [price, value]);
 
   const handleMax = useCallback(() => {
@@ -145,7 +145,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
     >
       <div className={classes.inputContent}>
         <input
-          className={clsx(classes.input, className)}
+          className={clsx(classes.input, className, { [classes.inputWithPrice]: Boolean(price) })}
           value={input}
           onChange={handleChange}
           onBlur={handleBlur}
