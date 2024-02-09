@@ -134,7 +134,10 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
     if (!allowInputAboveBalance && maxValue && value.gt(maxValue)) {
       onChange(maxValue, true);
     }
-  }, [value, maxValue, onChange, allowInputAboveBalance]);
+    if (value === BIG_ZERO) {
+      setInput(numberToString(value, tokenDecimals));
+    }
+  }, [value, maxValue, onChange, allowInputAboveBalance, tokenDecimals]);
 
   return (
     <div
