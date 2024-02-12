@@ -113,8 +113,8 @@ export function getCurveMethodsSignatures<T extends CurveMethodTypes>(
   return curveMethodTypeToSignatures[method.type];
 }
 
-export type CurveTokenOption = {
-  type: CurveMethodTypes;
+export type CurveTokenOption<T extends CurveMethodTypes = CurveMethodTypes> = {
+  type: T;
   target: string;
   index: number;
   numCoins: number;

@@ -49,15 +49,13 @@ import {
   BIG_ZERO,
   bigNumberToStringDeep,
   fromWei,
-  fromWeiString,
   toWei,
   toWeiString,
 } from '../../../../../../helpers/big-number';
 import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes';
 import type BigNumber from 'bignumber.js';
-import { getWeb3Instance } from '../../../instances';
 import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
-import { type CurveMethod, type CurveTokenOption, getMethodSignaturesForType } from './types';
+import type { CurveMethod, CurveTokenOption } from './types';
 import type { QuoteResponse } from '../../swap/ISwapProvider';
 import type {
   OrderInput,
@@ -69,15 +67,14 @@ import type {
 import { fetchZapAggregatorSwap } from '../../zap/swap';
 import { selectTransactSlippage } from '../../../../selectors/transact';
 import { Balances } from '../../helpers/Balances';
-import type { AbiItem } from 'web3-utils';
-import abiCoder from 'web3-eth-abi';
-import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap';
+import { getTokenAddress, NO_RELAY } from '../../helpers/zap';
 import { slipBy } from '../../helpers/amounts';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens';
 import { walletActions } from '../../../../actions/wallet-actions';
 import { isStandardVault } from '../../../../entities/vault';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import { buildTokenApproveTx } from '../../zap/approve';
+import { CurvePool } from './CurvePool';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -101,9 +98,6 @@ type WithdrawLiquidity = DepositLiquidity & {
   /** How much token we have after the split */
   split: TokenAmount;
 };
-
-// TODO remove
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
 export class CurveStrategy implements IStrategy {
   public readonly id = 'curve';
@@ -195,25 +189,10 @@ export class CurveStrategy implements IStrategy {
       };
     });
 
-    const supportedAggregatorTokens = await this.aggregatorTokenSupport();
-    const tokenToDepositTokens = Object.fromEntries(
-      supportedAggregatorTokens.any.map(
-        t =>
-          [
-            t.address,
-            this.possibleTokens.filter(
-              (o, i) =>
-                // disable native as swap target, as zap can't insert balance of native in to call data
-                !isTokenNative(o.token) &&
-                !isTokenEqual(o.token, t) &&
-                supportedAggregatorTokens.tokens[i].length > 1 &&
-                supportedAggregatorTokens.tokens[i].some(t => isTokenEqual(t, o.token))
-            ),
-          ] as [string, CurveTokenOption[]]
-      )
-    );
+    const { any: allAggregatorTokens, map: tokenToDepositTokens } =
+      await this.aggregatorTokenSupport();
 
-    const aggregatorOptions: CurveDepositOption[] = supportedAggregatorTokens.any
+    const aggregatorOptions: CurveDepositOption[] = allAggregatorTokens
       .filter(token => tokenToDepositTokens[token.address].length > 0)
       .map(token => {
         const inputs = [token];
@@ -243,194 +222,7 @@ export class CurveStrategy implements IStrategy {
     return baseOptions.concat(aggregatorOptions);
   }
 
-  /** calc_token_amount abi */
-  protected typeToAddLiquidityQuoteAbi(type: CurveTokenOption['type'], numCoins: number): AbiItem {
-    const signatures = getMethodSignaturesForType(type);
-    return this.signatureToAbiItem(type, signatures.depositQuote, numCoins);
-  }
-
-  /** add_liquidity abi */
-  protected typeToAddLiquidityAbi(type: CurveTokenOption['type'], numCoins: number): AbiItem {
-    const signatures = getMethodSignaturesForType(type);
-    return this.signatureToAbiItem(type, signatures.deposit, numCoins, 'payable');
-  }
-
-  protected typeToAddLiquidityQuoteParams(
-    type: CurveTokenOption['type'],
-    poolAddress: string,
-    amounts: string[]
-  ): unknown[] {
-    switch (type) {
-      case 'fixed':
-        return [amounts];
-      case 'fixed-deposit-int128':
-      case 'fixed-deposit-uint256':
-      case 'dynamic-deposit':
-      case 'fixed-deposit-underlying':
-        return [amounts, true];
-      case 'pool-fixed':
-        return [poolAddress, amounts];
-      case 'pool-fixed-deposit':
-        return [poolAddress, amounts, true];
-      default:
-        throw new Error(`Invalid deposit type ${type}`);
-    }
-  }
-
-  protected typeToAddLiquidityParams(
-    type: CurveTokenOption['type'],
-    poolAddress: string,
-    amounts: string[],
-    minMintAmount: string,
-    beefyRouter: string
-  ): unknown[] {
-    switch (type) {
-      case 'fixed':
-      case 'fixed-deposit-int128':
-      case 'fixed-deposit-uint256':
-      case 'dynamic-deposit':
-        return [amounts, minMintAmount];
-      case 'fixed-deposit-underlying':
-        return [amounts, minMintAmount, true];
-      case 'pool-fixed':
-      case 'pool-fixed-deposit':
-        return [poolAddress, amounts, minMintAmount];
-      default:
-        throw new Error(`Invalid deposit type ${type}`);
-    }
-  }
-
-  protected typeToAddLiquidityTokenIndexes(
-    type: CurveTokenOption['type'],
-    amounts: string[]
-  ): number[] {
-    switch (type) {
-      case 'fixed':
-      case 'fixed-deposit-int128':
-      case 'fixed-deposit-uint256':
-      case 'fixed-deposit-underlying':
-        // amounts[N_COINS] is first param, so array index N is at offset N
-        return amounts.map((_, i) => getInsertIndex(i));
-      case 'dynamic-deposit':
-        // amounts[] is first param, but its dynamic array
-        // 0   offset to array
-        // 1   min_amount
-        // 2   array length
-        // 3   array 0
-        // 4   array 1
-        // N+3 array N
-        return amounts.map((_, i) => getInsertIndex(3 + i));
-      case 'pool-fixed':
-      case 'pool-fixed-deposit':
-        // amounts[N_COINS] is second param, so array index N is at offset N+1
-        return amounts.map((_, i) => getInsertIndex(1 + i));
-      default:
-        throw new Error(`Invalid deposit type ${type}`);
-    }
-  }
-
-  protected signatureToAbiItem(
-    type: CurveTokenOption['type'],
-    signature: string,
-    numCoins: number,
-    stateMutability: 'payable' | 'view' = 'view'
-  ): AbiItem {
-    const [name, inputsPart] = signature.split(':');
-    const inputs = inputsPart.split('/');
-
-    return {
-      type: 'function',
-      name,
-      stateMutability,
-      inputs: inputs.map(input => {
-        switch (input) {
-          case 'fixed_amounts':
-            return {
-              name: 'amounts',
-              type: `uint256[${numCoins}]`,
-            };
-          case 'dynamic_amounts':
-            return {
-              name: 'amounts',
-              type: `uint256[]`,
-            };
-          case 'amount':
-          case 'min_amount':
-            return {
-              name: input,
-              type: 'uint256',
-            };
-          case 'uint256_index':
-            return {
-              name: 'index',
-              type: 'uint256',
-            };
-          case 'int128_index':
-            return {
-              name: 'index',
-              type: 'int128',
-            };
-          case 'is_deposit':
-          case 'use_underlying':
-            return {
-              name: input,
-              type: 'bool',
-            };
-          case 'pool':
-            return {
-              name: input,
-              type: 'address',
-            };
-          default:
-            throw new Error(`Invalid input type ${input}`);
-        }
-      }),
-      outputs: [
-        {
-          name: 'amount',
-          type: 'uint256',
-        },
-      ],
-    };
-  }
-
-  protected typeToAbi(type: CurveTokenOption['type'], numCoins: number): AbiItem[] {
-    const signatures = getMethodSignaturesForType(type);
-    return Object.values(signatures).map(signature =>
-      this.signatureToAbiItem(type, signature, numCoins)
-    );
-  }
-
-  protected async quoteAddLiquidity(
-    poolAddress: string,
-    depositAmount: BigNumber,
-    deposit: CurveTokenOption
-  ): Promise<TokenAmount> {
-    const web3 = await getWeb3Instance(this.chain);
-    const contract = new web3.eth.Contract(
-      [this.typeToAddLiquidityQuoteAbi(deposit.type, deposit.numCoins)],
-      deposit.target
-    );
-    const amounts = this.makeAmounts(
-      toWeiString(depositAmount, deposit.token.decimals),
-      deposit.index,
-      deposit.numCoins
-    );
-
-    const params = this.typeToAddLiquidityQuoteParams(deposit.type, poolAddress, amounts);
-    console.log(deposit.type, deposit.target, 'calc_token_amount', params);
-    const amount = await contract.methods.calc_token_amount(...params).call();
-    console.log('->', amount);
-
-    return {
-      token: this.depositToken,
-      amount: fromWeiString(amount, this.depositToken.decimals),
-    };
-  }
-
   protected async getDepositLiquidityDirect(
-    state: BeefyState,
-    poolAddress: string,
     input: InputTokenAmount,
     depositVia: CurveTokenOption
   ): Promise<DepositLiquidity> {
@@ -440,13 +232,13 @@ export class CurveStrategy implements IStrategy {
       );
     }
 
-    const output = await this.quoteAddLiquidity(poolAddress, input.amount, depositVia);
+    const pool = new CurvePool(depositVia, this.poolAddress, this.chain, this.depositToken);
+    const output = await pool.quoteAddLiquidity(input.amount);
     return { input, output, via: depositVia };
   }
 
   protected async getDepositLiquidityAggregator(
     state: BeefyState,
-    poolAddress: string,
     input: InputTokenAmount,
     depositVias: CurveTokenOption[]
   ): Promise<DepositLiquidity> {
@@ -471,11 +263,12 @@ export class CurveStrategy implements IStrategy {
     // For the best quote per deposit via token, calculate how much liquidity we get
     const withLiquidity = await Promise.all(
       quotes.map(async ({ via, quote }) => {
+        const pool = new CurvePool(via, this.poolAddress, this.chain, this.depositToken);
         return {
           via,
           quote,
           input: { token: quote.toToken, amount: quote.toAmount },
-          output: await this.quoteAddLiquidity(poolAddress, quote.toAmount, via),
+          output: await pool.quoteAddLiquidity(quote.toAmount),
         };
       })
     );
@@ -483,37 +276,28 @@ export class CurveStrategy implements IStrategy {
     // sort by most liquidity
     withLiquidity.sort((a, b) => b.output.amount.comparedTo(a.output.amount));
 
-    // debug
-    withLiquidity.forEach(({ via, quote, input, output }) =>
-      console.log({
-        via: via.token.symbol,
-        liquidity: output.amount.toString(10),
-      })
-    );
-
     // Get the one which gives the most liquidity
     return first(withLiquidity);
   }
 
   protected async getDepositLiquidity(
     state: BeefyState,
-    poolAddress: string,
     input: InputTokenAmount,
     option: CurveDepositOption
   ): Promise<DepositLiquidity> {
     if (option.via === 'direct') {
-      return this.getDepositLiquidityDirect(state, poolAddress, input, option.viaToken);
+      return this.getDepositLiquidityDirect(input, option.viaToken);
     }
-    return this.getDepositLiquidityAggregator(state, poolAddress, input, option.viaTokens);
+    return this.getDepositLiquidityAggregator(state, input, option.viaTokens);
   }
 
   public async fetchDepositQuote(
-    inputs: InputTokenAmount<TokenEntity>[],
+    inputs: InputTokenAmount[],
     option: CurveDepositOption
   ): Promise<CurveDepositQuote> {
     onlyInputCount(inputs, 1);
 
-    const { zap, vault, swapAggregator, getState } = this.helpers;
+    const { zap, getState } = this.helpers;
     const state = getState();
     const input = first(inputs);
     if (input.amount.lte(BIG_ZERO)) {
@@ -532,8 +316,7 @@ export class CurveStrategy implements IStrategy {
       : [];
 
     // Fetch liquidity (and swap quote if aggregator)
-    const poolAddress = this.options.poolAddress || this.depositToken.address;
-    const depositLiquidity = await this.getDepositLiquidity(state, poolAddress, input, option);
+    const depositLiquidity = await this.getDepositLiquidity(state, input, option);
 
     // Build quote steps
     const steps: ZapQuoteStep[] = [];
@@ -621,52 +404,6 @@ export class CurveStrategy implements IStrategy {
     );
   }
 
-  protected makeAmounts(amount: string, index: number, numCoins: number): string[] {
-    const amounts = Array<string>(numCoins).fill('0');
-    amounts[index] = amount;
-    return amounts;
-  }
-
-  protected buildZapAddLiquidityTx(
-    poolAddress: string,
-    depositVia: CurveTokenOption,
-    depositAmountWei: BigNumber,
-    minLiquidityWei: BigNumber,
-    receiver: string,
-    insertBalance: boolean
-  ): ZapStep {
-    const amountsWei = this.makeAmounts(
-      depositAmountWei.toString(10),
-      depositVia.index,
-      depositVia.numCoins
-    );
-    const tokenIndexes = this.typeToAddLiquidityTokenIndexes(depositVia.type, amountsWei);
-    const isNative = isTokenNative(depositVia.token);
-
-    const methodAbi = this.typeToAddLiquidityAbi(depositVia.type, depositVia.numCoins);
-    const methodParams = this.typeToAddLiquidityParams(
-      depositVia.type,
-      poolAddress,
-      amountsWei,
-      minLiquidityWei.toString(10),
-      receiver
-    );
-
-    return {
-      target: depositVia.target,
-      value: isNative ? depositAmountWei.toString(10) : '0',
-      data: abiCoder.encodeFunctionCall(methodAbi, methodParams),
-      tokens: insertBalance
-        ? [
-            {
-              token: getTokenAddress(depositVia.token),
-              index: tokenIndexes[depositVia.index],
-            },
-          ]
-        : [],
-    };
-  }
-
   protected async fetchZapBuild(
     quoteStep: ZapQuoteStepBuild,
     depositVia: CurveTokenOption,
@@ -674,18 +411,10 @@ export class CurveStrategy implements IStrategy {
     zapHelpers: ZapHelpers,
     insertBalance: boolean = false
   ): Promise<ZapStepResponse> {
-    const { zap } = this.helpers;
     const { slippage } = zapHelpers;
-    const poolAddress = this.options.poolAddress || this.depositToken.address;
-    const liquidity = await this.quoteAddLiquidity(poolAddress, minInputAmount, depositVia);
+    const pool = new CurvePool(depositVia, this.poolAddress, this.chain, this.depositToken);
+    const liquidity = await pool.quoteAddLiquidity(minInputAmount);
     const minLiquidity = slipBy(liquidity.amount, slippage, liquidity.token.decimals);
-    console.log(bigNumberToStringDeep({ liquidity, minLiquidity }));
-
-    // we can't do this check as the above liquidity quote is using min amounts as input
-    // TODO but maybe we should set the min output to that of the quote; or full amount of above liquidity
-    // if (liquidity.amount.lt(quoteStep.outputAmount)) {
-    //   throw new QuoteChangedError(`Expected liquidity created changed between quote and execution`);
-    // }
 
     return {
       inputs: [{ token: depositVia.token, amount: minInputAmount }],
@@ -693,12 +422,9 @@ export class CurveStrategy implements IStrategy {
       minOutputs: [{ token: liquidity.token, amount: minLiquidity }],
       returned: [],
       zaps: [
-        this.buildZapAddLiquidityTx(
-          poolAddress,
-          depositVia,
+        pool.buildZapAddLiquidityTx(
           toWei(minInputAmount, depositVia.token.decimals),
           toWei(minLiquidity, liquidity.token.decimals),
-          zap.router,
           insertBalance
         ),
       ],
@@ -865,25 +591,10 @@ export class CurveStrategy implements IStrategy {
       };
     });
 
-    const supportedAggregatorTokens = await this.aggregatorTokenSupport();
-    const tokenToDepositTokens = Object.fromEntries(
-      supportedAggregatorTokens.any.map(
-        t =>
-          [
-            t.address,
-            this.possibleTokens.filter(
-              (o, i) =>
-                // disable native as swap target, as zap can't insert balance of native in to call data
-                !isTokenNative(o.token) &&
-                !isTokenEqual(o.token, t) &&
-                supportedAggregatorTokens.tokens[i].length > 1 &&
-                supportedAggregatorTokens.tokens[i].some(t => isTokenEqual(t, o.token))
-            ),
-          ] as [string, CurveTokenOption[]]
-      )
-    );
+    const { any: allAggregatorTokens, map: tokenToDepositTokens } =
+      await this.aggregatorTokenSupport();
 
-    const aggregatorOptions: CurveWithdrawOption[] = supportedAggregatorTokens.any
+    const aggregatorOptions: CurveWithdrawOption[] = allAggregatorTokens
       .filter(token => tokenToDepositTokens[token.address].length > 0)
       .map(token => {
         const outputs = [token];
@@ -913,119 +624,7 @@ export class CurveStrategy implements IStrategy {
     return baseOptions.concat(aggregatorOptions);
   }
 
-  /** calc_withdraw_one_coin abi */
-  protected typeToRemoveLiquidityQuoteAbi(
-    type: CurveTokenOption['type'],
-    numCoins: number
-  ): AbiItem {
-    const signatures = getMethodSignaturesForType(type);
-    return this.signatureToAbiItem(type, signatures.withdrawQuote, numCoins);
-  }
-
-  /** remove_liquidity_one_coin abi */
-  protected typeToRemoveLiquidityAbi(type: CurveTokenOption['type'], numCoins: number): AbiItem {
-    const signatures = getMethodSignaturesForType(type);
-    return this.signatureToAbiItem(type, signatures.withdraw, numCoins, 'payable');
-  }
-
-  protected typeToRemoveLiquidityQuoteParams(
-    type: CurveTokenOption['type'],
-    poolAddress: string,
-    amount: string,
-    tokenIndex: number
-  ): unknown[] {
-    switch (type) {
-      case 'fixed':
-      case 'fixed-deposit-int128':
-      case 'fixed-deposit-uint256':
-      case 'dynamic-deposit':
-      case 'fixed-deposit-underlying':
-        return [amount, tokenIndex];
-      case 'pool-fixed':
-      case 'pool-fixed-deposit':
-        return [poolAddress, amount, tokenIndex];
-      default:
-        throw new Error(`Invalid withdraw type ${type}`);
-    }
-  }
-
-  protected typeToRemoveLiquidityParams(
-    type: CurveTokenOption['type'],
-    poolAddress: string,
-    amount: string,
-    tokenIndex: number,
-    minAmount: string
-  ): unknown[] {
-    switch (type) {
-      case 'fixed':
-      case 'fixed-deposit-int128':
-      case 'fixed-deposit-uint256':
-      case 'dynamic-deposit':
-        return [amount, tokenIndex, minAmount];
-      case 'fixed-deposit-underlying':
-        return [amount, tokenIndex, minAmount, true];
-      case 'pool-fixed':
-      case 'pool-fixed-deposit':
-        return [poolAddress, amount, tokenIndex, minAmount];
-      default:
-        throw new Error(`Invalid withdraw type ${type}`);
-    }
-  }
-
-  protected typeToRemoveLiquidityTokenIndex(type: CurveTokenOption['type']): number {
-    switch (type) {
-      case 'fixed':
-      case 'fixed-deposit-int128':
-      case 'fixed-deposit-uint256':
-      case 'dynamic-deposit':
-      case 'fixed-deposit-underlying':
-        // 0: amount
-        // 1: index
-        // 2: min_amount
-        // [3: use_underlying]
-        return getInsertIndex(0);
-      case 'pool-fixed':
-      case 'pool-fixed-deposit':
-        // 0: pool
-        // 1: amount
-        // 2: index
-        // 3: min_amount
-        return getInsertIndex(1);
-      default:
-        throw new Error(`Invalid withdraw type ${type}`);
-    }
-  }
-
-  protected async quoteRemoveLiquidity(
-    poolAddress: string,
-    withdrawAmount: BigNumber,
-    withdraw: CurveTokenOption
-  ): Promise<TokenAmount> {
-    const web3 = await getWeb3Instance(this.chain);
-    const contract = new web3.eth.Contract(
-      [this.typeToRemoveLiquidityQuoteAbi(withdraw.type, withdraw.numCoins)],
-      withdraw.target
-    );
-    const amount = toWeiString(withdrawAmount, this.depositToken.decimals);
-    const params = this.typeToRemoveLiquidityQuoteParams(
-      withdraw.type,
-      poolAddress,
-      amount,
-      withdraw.index
-    );
-    console.log(withdraw.type, withdraw.target, 'calc_withdraw_one_coin', params);
-    const withdrawn = await contract.methods.calc_withdraw_one_coin(...params).call();
-    console.log('->', withdrawn);
-
-    return {
-      token: withdraw.token,
-      amount: fromWeiString(withdrawn, withdraw.token.decimals),
-    };
-  }
-
   protected async getWithdrawLiquidityDirect(
-    state: BeefyState,
-    poolAddress: string,
     input: TokenAmount,
     wanted: TokenEntity,
     withdrawVia: CurveTokenOption
@@ -1036,7 +635,8 @@ export class CurveStrategy implements IStrategy {
       );
     }
 
-    const split = await this.quoteRemoveLiquidity(poolAddress, input.amount, withdrawVia);
+    const pool = new CurvePool(withdrawVia, this.poolAddress, this.chain, this.depositToken);
+    const split = await pool.quoteRemoveLiquidity(input.amount);
 
     // no further steps so output is same as split
     return { input, split, output: split, via: withdrawVia };
@@ -1044,7 +644,6 @@ export class CurveStrategy implements IStrategy {
 
   protected async getWithdrawLiquidityAggregator(
     state: BeefyState,
-    poolAddress: string,
     input: TokenAmount,
     wanted: TokenEntity,
     withdrawVias: CurveTokenOption[]
@@ -1055,7 +654,8 @@ export class CurveStrategy implements IStrategy {
     // Fetch withdraw liquidity quotes for each possible withdraw via token
     const quotes = await Promise.all(
       withdrawVias.map(async withdrawVia => {
-        const split = await this.quoteRemoveLiquidity(poolAddress, input.amount, withdrawVia);
+        const pool = new CurvePool(withdrawVia, this.poolAddress, this.chain, this.depositToken);
+        const split = await pool.quoteRemoveLiquidity(input.amount);
         return { via: withdrawVia, split };
       })
     );
@@ -1087,33 +687,24 @@ export class CurveStrategy implements IStrategy {
     // sort by most output
     withSwaps.sort((a, b) => b.output.amount.comparedTo(a.output.amount));
 
-    // debug
-    withSwaps.forEach(({ via, quote, input, output }) =>
-      console.log({
-        via: via.token.symbol,
-        output: output.amount.toString(10),
-      })
-    );
-
     // Get the one which gives the most output
     return first(withSwaps);
   }
 
   protected async getWithdrawLiquidity(
     state: BeefyState,
-    poolAddress: string,
     input: TokenAmount,
     wanted: TokenEntity,
     option: CurveWithdrawOption
   ): Promise<WithdrawLiquidity> {
     if (option.via === 'direct') {
-      return this.getWithdrawLiquidityDirect(state, poolAddress, input, wanted, option.viaToken);
+      return this.getWithdrawLiquidityDirect(input, wanted, option.viaToken);
     }
-    return this.getWithdrawLiquidityAggregator(state, poolAddress, input, wanted, option.viaTokens);
+    return this.getWithdrawLiquidityAggregator(state, input, wanted, option.viaTokens);
   }
 
   public async fetchWithdrawQuote(
-    inputs: InputTokenAmount<TokenEntity>[],
+    inputs: InputTokenAmount[],
     option: CurveWithdrawOption
   ): Promise<CurveWithdrawQuote> {
     onlyInputCount(inputs, 1);
@@ -1151,10 +742,8 @@ export class CurveStrategy implements IStrategy {
     ];
 
     // Fetch remove liquidity (and swap quote if aggregator)
-    const poolAddress = this.options.poolAddress || this.depositToken.address;
     const withdrawnLiquidity = await this.getWithdrawLiquidity(
       state,
-      poolAddress,
       liquidityWithdrawn,
       wantedToken,
       option
@@ -1220,38 +809,6 @@ export class CurveStrategy implements IStrategy {
     };
   }
 
-  protected buildZapRemoveLiquidityTx(
-    poolAddress: string,
-    withdrawVia: CurveTokenOption,
-    withdrawAmountWei: BigNumber,
-    minOutputWei: BigNumber,
-    receiver: string,
-    insertBalance: boolean
-  ): ZapStep {
-    const methodAbi = this.typeToRemoveLiquidityAbi(withdrawVia.type, withdrawVia.numCoins);
-    const methodParams = this.typeToRemoveLiquidityParams(
-      withdrawVia.type,
-      poolAddress,
-      withdrawAmountWei.toString(10),
-      withdrawVia.index,
-      minOutputWei.toString(10)
-    );
-
-    return {
-      target: withdrawVia.target,
-      value: '0',
-      data: abiCoder.encodeFunctionCall(methodAbi, methodParams),
-      tokens: insertBalance
-        ? [
-            {
-              token: this.depositToken.address,
-              index: this.typeToRemoveLiquidityTokenIndex(withdrawVia.type),
-            },
-          ]
-        : [],
-    };
-  }
-
   protected async fetchZapSplit(
     quoteStep: ZapQuoteStepSplit,
     inputs: TokenAmount[],
@@ -1259,24 +816,21 @@ export class CurveStrategy implements IStrategy {
     zapHelpers: ZapHelpers,
     insertBalance: boolean = false
   ): Promise<ZapStepResponse> {
-    const { zap } = this.helpers;
-    const { slippage, poolAddress, state } = zapHelpers;
+    const { slippage } = zapHelpers;
     const input = first(inputs);
-    const output = await this.quoteRemoveLiquidity(poolAddress, input.amount, via);
+    const pool = new CurvePool(via, this.poolAddress, this.chain, this.depositToken);
+    const output = await pool.quoteRemoveLiquidity(input.amount);
     const minOutputAmount = slipBy(output.amount, slippage, output.token.decimals);
     const zaps: ZapStep[] = [
-      this.buildZapRemoveLiquidityTx(
-        poolAddress,
-        via,
+      pool.buildZapRemoveLiquidityTx(
         toWei(input.amount, input.token.decimals),
         toWei(minOutputAmount, output.token.decimals),
-        zap.router,
         insertBalance
       ),
     ];
 
     // Must approve the curve zap contact to spend the LP token
-    if (via.target !== poolAddress) {
+    if (via.target !== this.poolAddress) {
       zaps.unshift(
         buildTokenApproveTx(
           input.token.address, // token address
@@ -1298,7 +852,7 @@ export class CurveStrategy implements IStrategy {
 
   public async fetchWithdrawStep(
     quote: CurveWithdrawQuote,
-    t: TFunction<Namespace<string>, undefined>
+    t: TFunction<Namespace<string>>
   ): Promise<Step> {
     const { vault, vaultType } = this.helpers;
 
@@ -1442,12 +996,32 @@ export class CurveStrategy implements IStrategy {
   protected async aggregatorTokenSupport() {
     const { vault, swapAggregator, getState } = this.helpers;
     const state = getState();
-    return await swapAggregator.fetchTokenSupport(
+    const supportedAggregatorTokens = await swapAggregator.fetchTokenSupport(
       this.possibleTokens.map(option => option.token),
       vault.id,
       vault.chainId,
       state,
       this.options.swap
     );
+
+    return {
+      ...supportedAggregatorTokens,
+      map: Object.fromEntries(
+        supportedAggregatorTokens.any.map(
+          t =>
+            [
+              t.address,
+              this.possibleTokens.filter(
+                (o, i) =>
+                  // disable native as swap target, as zap can't insert balance of native in to call data
+                  !isTokenNative(o.token) &&
+                  !isTokenEqual(o.token, t) &&
+                  supportedAggregatorTokens.tokens[i].length > 1 &&
+                  supportedAggregatorTokens.tokens[i].some(t => isTokenEqual(t, o.token))
+              ),
+            ] as [string, CurveTokenOption[]]
+        )
+      ),
+    };
   }
 }
