@@ -1,35 +1,5 @@
 [
   {
-    "id": "beets-fantom-menace",
-    "name": "Fantom Menace",
-    "type": "standard",
-    "token": "Fantom Menace",
-    "tokenAddress": "0x593000b762dE3c465855336E95c8BB46080AF064",
-    "tokenDecimals": 18,
-    "tokenProviderId": "beethovenx",
-    "earnedToken": "mooBeetsFantomMenace",
-    "earnedTokenAddress": "0xEEbCc5Bd9603424fc71Fa5aC48C574235a00aa49",
-    "earnContractAddress": "0xEEbCc5Bd9603424fc71Fa5aC48C574235a00aa49",
-    "oracle": "lps",
-    "oracleId": "beets-fantom-menace",
-    "status": "active",
-    "createdAt": 1707304985,
-    "platformId": "beethovenx",
-    "assets": ["FTM", "sFTMx"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://beets.fi/pool/0x593000b762de3c465855336e95c8bb46080af064000000000000000000000760",
-    "removeLiquidityUrl": "https://beets.fi/pool/0x593000b762de3c465855336e95c8bb46080af064000000000000000000000760",
-    "network": "fantom"
-  },
-  {
     "id": "beets-love-thy-stables",
     "name": "Love Thy Stables",
     "type": "standard",
