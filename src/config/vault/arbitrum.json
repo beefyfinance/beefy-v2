@@ -108,7 +108,24 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-14/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-14/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x845C8bc94610807fCbaB5dd2bc7aC9DAbaFf3c55",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x845C8bc94610807fCbaB5dd2bc7aC9DAbaFf3c55",
+            "coins": [
+              "0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5",
+              "0x912CE59144191C1204E64559FE8253a0e49E6548",
+              "0x11cDb42B0EB46D95f990BeDD4695A6e3fA034978"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "aura-arb-wsteth-sfrxeth-reth",
@@ -192,7 +209,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-11/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-11/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x4070C044ABc8d9d22447DFE4B032405970878d06",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x4070C044ABc8d9d22447DFE4B032405970878d06",
+            "coins": [
+              "0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5",
+              "0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-arb-crvusd-usdt",
@@ -215,7 +248,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-0/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-0/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x73aF1150F265419Ef8a5DB41908B700C32D49135",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x73aF1150F265419Ef8a5DB41908B700C32D49135",
+            "coins": [
+              "0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5",
+              "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-arb-crvusd-usdc",
@@ -238,7 +287,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-2/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-2/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xec090cf6DD891D2d014beA6edAda6e05E025D93d",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xec090cf6DD891D2d014beA6edAda6e05E025D93d",
+            "coins": [
+              "0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5",
+              "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-arb-crvusd-usdc.e",
@@ -261,7 +326,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-1/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-1/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x3aDf984c937FA6846E5a24E0A68521Bdaf767cE1",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x3aDf984c937FA6846E5a24E0A68521Bdaf767cE1",
+            "coins": [
+              "0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5",
+              "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-arb-crvusd-frax",
@@ -284,7 +365,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-7/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-7/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x2FE7AE43591E534C256A1594D326e5779E302Ff4",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x2FE7AE43591E534C256A1594D326e5779E302Ff4",
+            "coins": [
+              "0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5",
+              "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-arb-tricrypto-crvusd",
@@ -307,7 +404,24 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-9/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-9/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x82670f35306253222F8a165869B28c64739ac62e",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x82670f35306253222F8a165869B28c64739ac62e",
+            "coins": [
+              "0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5",
+              "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+              "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-arb-usd+fraxbp",
@@ -330,7 +444,32 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-117/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-117/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xb34a7d1444a707349Bc7b981B7F2E1f20F81F013",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xb34a7d1444a707349Bc7b981B7F2E1f20F81F013",
+            "coins": [
+              "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65",
+              "0xC9B8a3FDECB9D5b218d02555a8Baf332E5B740d5"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0x58ac91f5be7dc0c35b24b96b19bac55fbb8e705e",
+            "coins": [
+              "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65",
+              "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
+              "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "equilibria-arb-aave-usdc",
@@ -1492,7 +1631,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-98/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-98/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x755D6688AD74661Add2FB29212ef9153D40fcA46",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x755D6688AD74661Add2FB29212ef9153D40fcA46",
+            "coins": [
+              "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+              "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "compound-arbitrum-usdc",
@@ -4380,7 +4535,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-41/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-41/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xC9B8a3FDECB9D5b218d02555a8Baf332E5B740d5",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xC9B8a3FDECB9D5b218d02555a8Baf332E5B740d5",
+            "coins": [
+              "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
+              "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "arbi-bifi-gov",
@@ -5215,7 +5386,20 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/wsteth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/wsteth/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x6eB2dc694eB516B16Dc9FBc678C60052BbdD7d80",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x6eB2dc694eB516B16Dc9FBc678C60052BbdD7d80",
+            "coins": ["native", "0x5979D7b546E38E414F7E9822514be443A4800529"]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "gmx-arb-glp",
@@ -5648,7 +5832,32 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-0/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-0/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x30dF229cefa463e991e29D42DB0bae2e122B2AC7",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x30dF229cefa463e991e29D42DB0bae2e122B2AC7",
+            "coins": [
+              "0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A",
+              "0x7f90122BF0700F9E7e1F688fe926940E8839F353"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0x7544fe3d184b6b55d6b36c3fca1157ee0ba30287",
+            "coins": [
+              "0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A",
+              "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+              "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "sushi-arb-spell-weth",
@@ -5799,7 +6008,24 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/tricrypto/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/tricrypto/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x960ea3e3C7FB317332d990873d354E18d7645590",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x960ea3e3C7FB317332d990873d354E18d7645590",
+            "coins": [
+              "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+              "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+              "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-arb-2pool",
@@ -5830,7 +6056,23 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/2pool/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/2pool/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x7f90122BF0700F9E7e1F688fe926940E8839F353",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x7f90122BF0700F9E7e1F688fe926940E8839F353",
+            "coins": [
+              "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+              "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-arb-ren",
@@ -5863,7 +6105,23 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://arbitrum.curve.fi/ren/deposit",
     "removeLiquidityUrl": "https://arbitrum.curve.fi/ren/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x3E01dD8a5E1fb3481F0F589056b428Fc308AF0Fb",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x3E01dD8a5E1fb3481F0F589056b428Fc308AF0Fb",
+            "coins": [
+              "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+              "0xDBf31dF14B66535aF65AaC99C32e9eA844e14501"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "sushi-arb-wbtc-weth",

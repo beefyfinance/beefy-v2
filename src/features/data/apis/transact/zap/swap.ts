@@ -5,6 +5,7 @@ import type { ZapStepRequest, ZapStepResponse } from './types';
 import { first } from 'lodash-es';
 import { isTokenNative } from '../../../entities/token';
 import type { QuoteResponse } from '../swap/ISwapProvider';
+import { QuoteChangedError } from '../strategies/errors';
 
 export type ZapAggregatorSwapRequest = ZapStepRequest & {
   providerId: string;
@@ -36,7 +37,10 @@ export async function fetchZapAggregatorSwap(
   );
 
   if (swap.toAmount.lt(output.amount)) {
-    throw new Error(`Swap via ${providerId} returned less than expected`);
+    console.error({ quote, swap });
+    throw new QuoteChangedError(
+      `Expected swap output amount changed between quote and execution for ${providerId}`
+    );
   }
 
   const swapOutput = {

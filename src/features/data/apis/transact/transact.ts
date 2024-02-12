@@ -18,38 +18,13 @@ import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../reducers/wallet/stepper';
 import type { VaultType } from './vaults/IVaultType';
 import { strategyBuildersById } from './strategies';
-import type { ISwapAggregator } from './swap/ISwapAggregator';
 import { vaultTypeBuildersById } from './vaults';
 import { uniq } from 'lodash-es';
 import { VaultStrategy } from './strategies/vault/VaultStrategy';
 import { selectZapByChainId } from '../../selectors/zap';
-import type { ISwapProvider } from './swap/ISwapProvider';
-import { featureFlag_disableKyber, featureFlag_disableOneInch } from '../../utils/feature-flags';
+import { getSwapAggregator } from '../instances';
 
 export class TransactApi implements ITransactApi {
-  private swapAggregator: ISwapAggregator;
-
-  protected async getSwapAggregator(): Promise<ISwapAggregator> {
-    if (!this.swapAggregator) {
-      const { SwapAggregator, WNativeSwapProvider, OneInchSwapProvider, KyberSwapProvider } =
-        await import('./swap');
-
-      const providers: ISwapProvider[] = [new WNativeSwapProvider()];
-
-      if (!featureFlag_disableOneInch()) {
-        providers.push(new OneInchSwapProvider());
-      }
-
-      if (!featureFlag_disableKyber()) {
-        providers.push(new KyberSwapProvider());
-      }
-
-      this.swapAggregator = new SwapAggregator(providers);
-    }
-
-    return this.swapAggregator;
-  }
-
   protected async getHelpersForVault(
     vaultId: VaultEntity['id'],
     getState: GetStateFn
@@ -63,7 +38,7 @@ export class TransactApi implements ITransactApi {
       vault,
       vaultType,
       zap,
-      swapAggregator: await this.getSwapAggregator(),
+      swapAggregator: await getSwapAggregator(),
       getState,
     };
   }

@@ -137,7 +137,6 @@ export const selectSuccessBar = (state: BeefyState) => {
 };
 
 export function selectZapReturned(state: BeefyState) {
-  console.log(state.user.walletActions);
   if (!isWalletActionSuccess(state.user.walletActions)) {
     return [];
   }

@@ -14,6 +14,7 @@ import type {
   AmmEntityUniswapV2,
 } from '../../entities/zap';
 import type { PlatformEntity } from '../../entities/platform';
+import type { CurveTokenOption } from './strategies/curve/types';
 
 export type TokenAmount<T extends TokenEntity = TokenEntity> = {
   amount: BigNumber;
@@ -30,6 +31,11 @@ export type AllowanceTokenAmount = {
   amount: BigNumber;
   token: TokenErc20;
   spenderAddress: string;
+};
+
+export type TokenIndex<T extends TokenEntity = TokenEntity> = {
+  token: T;
+  index: number;
 };
 
 export type ZapFeeNormal = {
@@ -140,13 +146,28 @@ export type SingleWithdrawOption = ZapBaseWithdrawOption & {
   strategyId: 'single';
 };
 
+export type CurveDepositOption = ZapBaseDepositOption & {
+  strategyId: 'curve';
+} & (
+    | { via: 'direct'; viaToken: CurveTokenOption }
+    | { via: 'aggregator'; viaTokens: CurveTokenOption[] }
+  );
+
+export type CurveWithdrawOption = ZapBaseWithdrawOption & {
+  strategyId: 'curve';
+} & (
+    | { via: 'direct'; viaToken: CurveTokenOption }
+    | { via: 'aggregator'; viaTokens: CurveTokenOption[] }
+  );
+
 export type DepositOption =
   | StandardVaultDepositOption
   | GovVaultDepositOption
   | SolidlyDepositOption
   | UniswapV2DepositOption
   | GammaDepositOption
-  | SingleDepositOption;
+  | SingleDepositOption
+  | CurveDepositOption;
 
 export type WithdrawOption =
   | StandardVaultWithdrawOption
@@ -154,7 +175,8 @@ export type WithdrawOption =
   | SolidlyWithdrawOption
   | UniswapV2WithdrawOption
   | GammaWithdrawOption
-  | SingleWithdrawOption;
+  | SingleWithdrawOption
+  | CurveWithdrawOption;
 
 export type TransactOption = DepositOption | WithdrawOption;
 
@@ -313,6 +335,11 @@ export type UniswapV2AggregatorDepositQuote = BaseZapQuote<UniswapV2DepositOptio
 export type UniswapV2DepositQuote = UniswapLikeDepositQuote;
 export type SolidlyDepositQuote = UniswapLikeDepositQuote;
 
+export type CurveDepositQuote = BaseZapQuote<CurveDepositOption> & {
+  via: 'aggregator' | 'direct';
+  viaToken: CurveTokenOption;
+};
+
 export type GammaDepositQuote = BaseZapQuote<GammaDepositOption> & {
   lpQuotes: QuoteResponse[];
 };
@@ -323,6 +350,7 @@ export type ZapDepositQuote =
   | SingleDepositQuote
   | UniswapV2DepositQuote
   | SolidlyDepositQuote
+  | CurveDepositQuote
   | GammaDepositQuote;
 
 export type DepositQuote = VaultDepositQuote | ZapDepositQuote;
@@ -358,6 +386,11 @@ export type UniswapLikeWithdrawQuote =
 export type UniswapV2WithdrawQuote = UniswapLikeWithdrawQuote;
 export type SolidlyWithdrawQuote = UniswapLikeWithdrawQuote;
 
+export type CurveWithdrawQuote = BaseZapQuote<CurveWithdrawOption> & {
+  via: 'aggregator' | 'direct';
+  viaToken: CurveTokenOption;
+};
+
 export type GammaBreakWithdrawQuote = BaseZapQuote<GammaWithdrawOption>;
 export type GammaAggregatorWithdrawQuote = BaseZapQuote<GammaWithdrawOption> & {
   lpQuotes: QuoteResponse[];
@@ -370,6 +403,7 @@ export type ZapWithdrawQuote =
   | SingleWithdrawQuote
   | UniswapV2WithdrawQuote
   | SolidlyWithdrawQuote
+  | CurveWithdrawQuote
   | GammaWithdrawQuote;
 
 export type WithdrawQuote = VaultWithdrawQuote | ZapWithdrawQuote;

@@ -766,7 +766,23 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://moonbeam.curve.fi/factory/14/deposit",
     "removeLiquidityUrl": "https://moonbeam.curve.fi/factory/14/withdraw",
-    "network": "moonbeam"
+    "network": "moonbeam",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xc6e37086D09ec2048F151D11CdB9F9BbbdB7d685",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xc6e37086D09ec2048F151D11CdB9F9BbbdB7d685",
+            "coins": [
+              "0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
+              "0xFA36Fe1dA08C89eC72Ea1F0143a35bFd5DAea108"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "stellaswap-ldo-wglmr",

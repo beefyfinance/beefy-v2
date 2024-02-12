@@ -1,0 +1,1027 @@
+import type { Namespace, TFunction } from 'react-i18next';
+import {
+  isTokenEqual,
+  isTokenErc20,
+  isTokenNative,
+  type TokenEntity,
+  type TokenErc20,
+  type TokenNative,
+} from '../../../../entities/token';
+import type { Step } from '../../../../reducers/wallet/stepper';
+import {
+  type CurveDepositOption,
+  type CurveDepositQuote,
+  type CurveWithdrawOption,
+  type CurveWithdrawQuote,
+  type InputTokenAmount,
+  isZapQuoteStepBuild,
+  isZapQuoteStepSplit,
+  isZapQuoteStepSwap,
+  isZapQuoteStepSwapAggregator,
+  isZapQuoteStepWithdraw,
+  type TokenAmount,
+  type ZapQuoteStep,
+  type ZapQuoteStepBuild,
+  type ZapQuoteStepSplit,
+  type ZapQuoteStepSwap,
+  type ZapQuoteStepSwapAggregator,
+} from '../../transact-types';
+import type { CurveStrategyOptions, IStrategy, TransactHelpers } from '../IStrategy';
+import type { ChainEntity } from '../../../../entities/chain';
+import {
+  createOptionId,
+  createQuoteId,
+  createSelectionId,
+  onlyInputCount,
+  onlyVaultStandard,
+} from '../../helpers/options';
+import {
+  selectChainNativeToken,
+  selectChainWrappedNativeToken,
+  selectIsTokenLoaded,
+  selectTokenByAddressOrNull,
+  selectTokenPriceByTokenOracleId,
+} from '../../../../selectors/tokens';
+import { selectChainById } from '../../../../selectors/chains';
+import { TransactMode } from '../../../../reducers/wallet/transact-types';
+import { first, uniqBy } from 'lodash-es';
+import {
+  BIG_ZERO,
+  bigNumberToStringDeep,
+  fromWei,
+  toWei,
+  toWeiString,
+} from '../../../../../../helpers/big-number';
+import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes';
+import type BigNumber from 'bignumber.js';
+import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
+import type { CurveMethod, CurveTokenOption } from './types';
+import type { QuoteResponse } from '../../swap/ISwapProvider';
+import type {
+  OrderInput,
+  OrderOutput,
+  UserlessZapRequest,
+  ZapStep,
+  ZapStepResponse,
+} from '../../zap/types';
+import { fetchZapAggregatorSwap } from '../../zap/swap';
+import { selectTransactSlippage } from '../../../../selectors/transact';
+import { Balances } from '../../helpers/Balances';
+import { getTokenAddress, NO_RELAY } from '../../helpers/zap';
+import { slipBy } from '../../helpers/amounts';
+import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens';
+import { walletActions } from '../../../../actions/wallet-actions';
+import { isStandardVault } from '../../../../entities/vault';
+import { getVaultWithdrawnFromState } from '../../helpers/vault';
+import { buildTokenApproveTx } from '../../zap/approve';
+import { CurvePool } from './CurvePool';
+
+type ZapHelpers = {
+  chain: ChainEntity;
+  slippage: number;
+  poolAddress: string;
+  state: BeefyState;
+};
+
+type DepositLiquidity = {
+  /** Liquidity input (coin for deposit, lp for withdraw) */
+  input: TokenAmount;
+  /** Liquidity output (lp for deposit, coin for withdraw) */
+  output: TokenAmount;
+  /** Which method we are using to deposit/withdraw liquidity */
+  via: CurveTokenOption;
+  /** Quote for swapping to/from coin if required */
+  quote?: QuoteResponse;
+};
+
+type WithdrawLiquidity = DepositLiquidity & {
+  /** How much token we have after the split */
+  split: TokenAmount;
+};
+
+export class CurveStrategy implements IStrategy {
+  public readonly id = 'curve';
+  protected readonly native: TokenNative;
+  protected readonly wnative: TokenErc20;
+  protected readonly possibleTokens: CurveTokenOption[];
+  protected readonly chain: ChainEntity;
+  protected readonly depositToken: TokenEntity;
+  protected readonly poolAddress: string;
+
+  constructor(protected options: CurveStrategyOptions, protected helpers: TransactHelpers) {
+    const { vault, vaultType, getState } = this.helpers;
+
+    onlyVaultStandard(vault);
+
+    const state = getState();
+    for (let i = 0; i < vault.assetIds.length; ++i) {
+      if (!selectIsTokenLoaded(state, vault.chainId, vault.assetIds[i])) {
+        throw new Error(`Vault ${vault.id}: Asset ${vault.assetIds[i]} not loaded`);
+      }
+    }
+
+    this.native = selectChainNativeToken(state, vault.chainId);
+    this.wnative = selectChainWrappedNativeToken(state, vault.chainId);
+    this.depositToken = vaultType.depositToken;
+    this.chain = selectChainById(state, vault.chainId);
+    this.possibleTokens = this.selectAvailableTokens(state, this.chain.id, this.options.methods);
+    this.poolAddress = this.options.poolAddress || this.depositToken.address;
+
+    if (!this.possibleTokens.length) {
+      throw new Error(
+        `Vault ${
+          vault.id
+        }: No tokens configured are available in addressbook, wanted one of ${this.options.methods
+          .flatMap(m => m.coins)
+          .join(', ')}`
+      );
+    }
+  }
+
+  /**
+   * Tokens are available so long as they are in the address book
+   */
+  protected selectAvailableTokens(
+    state: BeefyState,
+    chainId: ChainEntity['id'],
+    methods: CurveMethod[]
+  ): CurveTokenOption[] {
+    return uniqBy(
+      methods
+        .flatMap(option =>
+          option.coins.map((address, i) => {
+            const token = selectTokenByAddressOrNull(state, chainId, address);
+            return {
+              type: option.type,
+              target: option.target,
+              index: i,
+              numCoins: option.coins.length,
+              token,
+              price: token && selectTokenPriceByTokenOracleId(state, token.oracleId),
+            };
+          })
+        )
+        .filter(option => !!option.token && option.price && option.price.gt(BIG_ZERO)),
+      option => `${option.token.chainId} -${option.token.address}`
+    );
+  }
+
+  public async fetchDepositOptions(): Promise<CurveDepositOption[]> {
+    const { vault, vaultType } = this.helpers;
+    const outputs = [vaultType.depositToken];
+
+    const baseOptions: CurveDepositOption[] = this.possibleTokens.map(depositToken => {
+      const inputs = [depositToken.token];
+      const selectionId = createSelectionId(vault.chainId, inputs);
+
+      return {
+        id: createOptionId(this.id, vault.id, selectionId, 'direct'),
+        vaultId: vault.id,
+        chainId: vault.chainId,
+        selectionId,
+        selectionOrder: 2,
+        inputs,
+        wantedOutputs: outputs,
+        mode: TransactMode.Deposit,
+        strategyId: 'curve',
+        via: 'direct',
+        viaToken: depositToken,
+      };
+    });
+
+    const { any: allAggregatorTokens, map: tokenToDepositTokens } =
+      await this.aggregatorTokenSupport();
+
+    const aggregatorOptions: CurveDepositOption[] = allAggregatorTokens
+      .filter(token => tokenToDepositTokens[token.address].length > 0)
+      .map(token => {
+        const inputs = [token];
+        const selectionId = createSelectionId(vault.chainId, inputs);
+        const possible = tokenToDepositTokens[token.address];
+
+        if (possible.length === 0) {
+          console.error({ vault: vault.id, token, possible });
+          throw new Error(`No other tokens supported for ${token.symbol}`);
+        }
+
+        return {
+          id: createOptionId(this.id, vault.id, selectionId, 'aggregator'),
+          vaultId: vault.id,
+          chainId: vault.chainId,
+          selectionId,
+          selectionOrder: 3,
+          inputs,
+          wantedOutputs: outputs,
+          mode: TransactMode.Deposit,
+          strategyId: 'curve',
+          via: 'aggregator',
+          viaTokens: possible,
+        };
+      });
+
+    return baseOptions.concat(aggregatorOptions);
+  }
+
+  protected async getDepositLiquidityDirect(
+    input: InputTokenAmount,
+    depositVia: CurveTokenOption
+  ): Promise<DepositLiquidity> {
+    if (!isTokenEqual(input.token, depositVia.token)) {
+      throw new Error(
+        `Curve strategy: Direct deposit called with input token ${input.token.symbol} but expected ${depositVia.token.symbol}`
+      );
+    }
+
+    const pool = new CurvePool(depositVia, this.poolAddress, this.chain, this.depositToken);
+    const output = await pool.quoteAddLiquidity(input.amount);
+    return { input, output, via: depositVia };
+  }
+
+  protected async getDepositLiquidityAggregator(
+    state: BeefyState,
+    input: InputTokenAmount,
+    depositVias: CurveTokenOption[]
+  ): Promise<DepositLiquidity> {
+    const { vault, swapAggregator } = this.helpers;
+
+    // Fetch quotes from input token, to each possible deposit via token
+    const quotes = await Promise.all(
+      depositVias.map(async depositVia => {
+        const quotes = await swapAggregator.fetchQuotes(
+          {
+            vaultId: vault.id,
+            fromToken: input.token,
+            fromAmount: input.amount,
+            toToken: depositVia.token,
+          },
+          state
+        );
+        return { via: depositVia, quote: first(quotes) };
+      })
+    );
+
+    // For the best quote per deposit via token, calculate how much liquidity we get
+    const withLiquidity = await Promise.all(
+      quotes.map(async ({ via, quote }) => {
+        const pool = new CurvePool(via, this.poolAddress, this.chain, this.depositToken);
+        return {
+          via,
+          quote,
+          input: { token: quote.toToken, amount: quote.toAmount },
+          output: await pool.quoteAddLiquidity(quote.toAmount),
+        };
+      })
+    );
+
+    // sort by most liquidity
+    withLiquidity.sort((a, b) => b.output.amount.comparedTo(a.output.amount));
+
+    // Get the one which gives the most liquidity
+    return first(withLiquidity);
+  }
+
+  protected async getDepositLiquidity(
+    state: BeefyState,
+    input: InputTokenAmount,
+    option: CurveDepositOption
+  ): Promise<DepositLiquidity> {
+    if (option.via === 'direct') {
+      return this.getDepositLiquidityDirect(input, option.viaToken);
+    }
+    return this.getDepositLiquidityAggregator(state, input, option.viaTokens);
+  }
+
+  public async fetchDepositQuote(
+    inputs: InputTokenAmount[],
+    option: CurveDepositOption
+  ): Promise<CurveDepositQuote> {
+    onlyInputCount(inputs, 1);
+
+    const { zap, getState } = this.helpers;
+    const state = getState();
+    const input = first(inputs);
+    if (input.amount.lte(BIG_ZERO)) {
+      throw new Error('Curve strategy: Quote called with 0 input amount');
+    }
+
+    // Token allowances
+    const allowances = isTokenErc20(input.token)
+      ? [
+          {
+            token: input.token,
+            amount: input.amount,
+            spenderAddress: zap.manager,
+          },
+        ]
+      : [];
+
+    // Fetch liquidity (and swap quote if aggregator)
+    const depositLiquidity = await this.getDepositLiquidity(state, input, option);
+
+    // Build quote steps
+    const steps: ZapQuoteStep[] = [];
+
+    if (depositLiquidity.quote) {
+      steps.push({
+        type: 'swap',
+        fromToken: depositLiquidity.quote.fromToken,
+        fromAmount: depositLiquidity.quote.fromAmount,
+        toToken: depositLiquidity.quote.toToken,
+        toAmount: depositLiquidity.quote.toAmount,
+        via: 'aggregator',
+        providerId: depositLiquidity.quote.providerId,
+        fee: depositLiquidity.quote.fee,
+        quote: depositLiquidity.quote,
+      });
+    }
+
+    steps.push({
+      type: 'build',
+      inputs: [depositLiquidity.input],
+      outputToken: depositLiquidity.output.token,
+      outputAmount: depositLiquidity.output.amount,
+    });
+
+    steps.push({
+      type: 'deposit',
+      token: depositLiquidity.output.token,
+      amount: depositLiquidity.output.amount,
+    });
+
+    // Build quote outputs
+    const outputs: TokenAmount[] = [depositLiquidity.output];
+    const returned: TokenAmount[] = [];
+
+    // Build quote
+    return {
+      id: createQuoteId(option.id),
+      strategyId: 'curve',
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state), // includes the zap fee
+      option,
+      inputs,
+      outputs,
+      returned,
+      allowances,
+      steps,
+      fee: highestFeeOrZero(steps),
+      via: option.via,
+      viaToken: depositLiquidity.via,
+    };
+  }
+
+  protected async fetchZapSwap(
+    quoteStep: ZapQuoteStepSwap,
+    zapHelpers: ZapHelpers,
+    insertBalance: boolean
+  ): Promise<ZapStepResponse> {
+    if (isZapQuoteStepSwapAggregator(quoteStep)) {
+      return this.fetchZapSwapAggregator(quoteStep, zapHelpers, insertBalance);
+    } else {
+      throw new Error('Unknown zap quote swap step type');
+    }
+  }
+
+  protected async fetchZapSwapAggregator(
+    quoteStep: ZapQuoteStepSwapAggregator,
+    zapHelpers: ZapHelpers,
+    insertBalance: boolean
+  ): Promise<ZapStepResponse> {
+    const { swapAggregator, zap } = this.helpers;
+    const { slippage, state } = zapHelpers;
+
+    return await fetchZapAggregatorSwap(
+      {
+        quote: quoteStep.quote,
+        inputs: [{ token: quoteStep.fromToken, amount: quoteStep.fromAmount }],
+        outputs: [{ token: quoteStep.toToken, amount: quoteStep.toAmount }],
+        maxSlippage: slippage,
+        zapRouter: zap.router,
+        providerId: quoteStep.providerId,
+        insertBalance,
+      },
+      swapAggregator,
+      state
+    );
+  }
+
+  protected async fetchZapBuild(
+    quoteStep: ZapQuoteStepBuild,
+    depositVia: CurveTokenOption,
+    minInputAmount: BigNumber,
+    zapHelpers: ZapHelpers,
+    insertBalance: boolean = false
+  ): Promise<ZapStepResponse> {
+    const { slippage } = zapHelpers;
+    const pool = new CurvePool(depositVia, this.poolAddress, this.chain, this.depositToken);
+    const liquidity = await pool.quoteAddLiquidity(minInputAmount);
+    const minLiquidity = slipBy(liquidity.amount, slippage, liquidity.token.decimals);
+
+    return {
+      inputs: [{ token: depositVia.token, amount: minInputAmount }],
+      outputs: [liquidity],
+      minOutputs: [{ token: liquidity.token, amount: minLiquidity }],
+      returned: [],
+      zaps: [
+        pool.buildZapAddLiquidityTx(
+          toWei(minInputAmount, depositVia.token.decimals),
+          toWei(minLiquidity, liquidity.token.decimals),
+          insertBalance
+        ),
+      ],
+    };
+  }
+
+  public async fetchDepositStep(
+    quote: CurveDepositQuote,
+    t: TFunction<Namespace<string>>
+  ): Promise<Step> {
+    const { vault, vaultType } = this.helpers;
+    const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
+      const state = getState();
+      const chain = selectChainById(state, vault.chainId);
+      const slippage = selectTransactSlippage(state);
+      const zapHelpers: ZapHelpers = {
+        chain,
+        slippage,
+        state,
+        poolAddress: this.options.poolAddress || this.depositToken.address,
+      };
+      const steps: ZapStep[] = [];
+      const minBalances = new Balances(quote.inputs);
+      const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
+      const buildQuote = quote.steps.find(isZapQuoteStepBuild);
+
+      // wrap and asset swap, 2 max
+      if (swapQuotes.length > 2) {
+        throw new Error('CurveStrategy: Too many swaps');
+      }
+
+      // Swaps
+      if (swapQuotes.length) {
+        if (swapQuotes.length > 1) {
+          throw new Error('CurveStrategy: Too many swaps in quote');
+        }
+
+        const swapQuote = first(swapQuotes);
+        const swap = await this.fetchZapSwap(swapQuote, zapHelpers, true);
+        // add step to order
+        swap.zaps.forEach(zap => steps.push(zap));
+        // track minimum balances for use in further steps
+        minBalances.subtractMany(swap.inputs);
+        minBalances.addMany(swap.minOutputs);
+      }
+
+      // Build LP
+      const buildZap = await this.fetchZapBuild(
+        buildQuote,
+        quote.viaToken,
+        minBalances.get(quote.viaToken.token),
+        zapHelpers,
+        true
+      );
+      console.debug('fetchDepositStep::buildZap', bigNumberToStringDeep(buildZap));
+      buildZap.zaps.forEach(step => steps.push(step));
+      minBalances.subtractMany(buildZap.inputs);
+      minBalances.addMany(buildZap.minOutputs);
+
+      // Deposit in vault
+      const vaultDeposit = await vaultType.fetchZapDeposit({
+        inputs: [
+          {
+            token: buildQuote.outputToken,
+            amount: minBalances.get(buildQuote.outputToken), // min expected in case add liquidity slipped
+            max: true, // but we call depositAll
+          },
+        ],
+      });
+      console.log('fetchDepositStep::vaultDeposit', vaultDeposit);
+      steps.push(vaultDeposit.zap);
+
+      // Build order
+      const inputs: OrderInput[] = quote.inputs.map(input => ({
+        token: getTokenAddress(input.token),
+        amount: toWeiString(input.amount, input.token.decimals),
+      }));
+
+      const requiredOutputs: OrderOutput[] = vaultDeposit.outputs.map(output => ({
+        token: getTokenAddress(output.token),
+        minOutputAmount: toWeiString(
+          slipBy(output.amount, slippage, output.token.decimals),
+          output.token.decimals
+        ),
+      }));
+
+      // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
+      const dustOutputs: OrderOutput[] = pickTokens(
+        quote.outputs,
+        quote.inputs,
+        quote.returned
+      ).map(token => ({
+        token: getTokenAddress(token),
+        minOutputAmount: '0',
+      }));
+
+      swapQuotes.forEach(quoteStep => {
+        dustOutputs.push({
+          token: getTokenAddress(quoteStep.fromToken),
+          minOutputAmount: '0',
+        });
+        dustOutputs.push({
+          token: getTokenAddress(quoteStep.toToken),
+          minOutputAmount: '0',
+        });
+      });
+      dustOutputs.push({
+        token: getTokenAddress(buildQuote.outputToken),
+        minOutputAmount: '0',
+      });
+
+      // @dev uniqBy: first occurrence of each element is kept.
+      const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
+
+      // Perform TX
+      const zapRequest: UserlessZapRequest = {
+        order: {
+          inputs,
+          outputs,
+          relay: NO_RELAY,
+        },
+        steps,
+      };
+
+      const expectedTokens = vaultDeposit.outputs.map(output => output.token);
+      const walletAction = walletActions.zapExecuteOrder(
+        quote.option.vaultId,
+        zapRequest,
+        expectedTokens
+      );
+
+      return walletAction(dispatch, getState, extraArgument);
+    };
+
+    return {
+      step: 'zap-in',
+      message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+      action: zapAction,
+      pending: false,
+      extraInfo: { zap: true, vaultId: quote.option.vaultId },
+    };
+  }
+
+  async fetchWithdrawOptions(): Promise<CurveWithdrawOption[]> {
+    const { vault, vaultType } = this.helpers;
+    const inputs = [vaultType.depositToken];
+
+    const baseOptions: CurveWithdrawOption[] = this.possibleTokens.map(depositToken => {
+      const outputs = [depositToken.token];
+      const selectionId = createSelectionId(vault.chainId, outputs);
+
+      return {
+        id: createOptionId(this.id, vault.id, selectionId, 'direct'),
+        vaultId: vault.id,
+        chainId: vault.chainId,
+        selectionId,
+        selectionOrder: 2,
+        inputs,
+        wantedOutputs: outputs,
+        mode: TransactMode.Withdraw,
+        strategyId: 'curve',
+        via: 'direct',
+        viaToken: depositToken,
+      };
+    });
+
+    const { any: allAggregatorTokens, map: tokenToDepositTokens } =
+      await this.aggregatorTokenSupport();
+
+    const aggregatorOptions: CurveWithdrawOption[] = allAggregatorTokens
+      .filter(token => tokenToDepositTokens[token.address].length > 0)
+      .map(token => {
+        const outputs = [token];
+        const selectionId = createSelectionId(vault.chainId, outputs);
+        const possible = tokenToDepositTokens[token.address];
+
+        if (possible.length === 0) {
+          console.error({ vault: vault.id, token, possible });
+          throw new Error(`No other tokens supported for ${token.symbol}`);
+        }
+
+        return {
+          id: createOptionId(this.id, vault.id, selectionId, 'aggregator'),
+          vaultId: vault.id,
+          chainId: vault.chainId,
+          selectionId,
+          selectionOrder: 3,
+          inputs,
+          wantedOutputs: outputs,
+          mode: TransactMode.Withdraw,
+          strategyId: 'curve',
+          via: 'aggregator',
+          viaTokens: possible,
+        };
+      });
+
+    return baseOptions.concat(aggregatorOptions);
+  }
+
+  protected async getWithdrawLiquidityDirect(
+    input: TokenAmount,
+    wanted: TokenEntity,
+    withdrawVia: CurveTokenOption
+  ): Promise<WithdrawLiquidity> {
+    if (!isTokenEqual(wanted, withdrawVia.token)) {
+      throw new Error(
+        `Curve strategy: Direct withdraw called with wanted token ${input.token.symbol} but expected ${withdrawVia.token.symbol}`
+      );
+    }
+
+    const pool = new CurvePool(withdrawVia, this.poolAddress, this.chain, this.depositToken);
+    const split = await pool.quoteRemoveLiquidity(input.amount);
+
+    // no further steps so output is same as split
+    return { input, split, output: split, via: withdrawVia };
+  }
+
+  protected async getWithdrawLiquidityAggregator(
+    state: BeefyState,
+    input: TokenAmount,
+    wanted: TokenEntity,
+    withdrawVias: CurveTokenOption[]
+  ): Promise<WithdrawLiquidity> {
+    const { vault, swapAggregator } = this.helpers;
+    const slippage = selectTransactSlippage(state);
+
+    // Fetch withdraw liquidity quotes for each possible withdraw via token
+    const quotes = await Promise.all(
+      withdrawVias.map(async withdrawVia => {
+        const pool = new CurvePool(withdrawVia, this.poolAddress, this.chain, this.depositToken);
+        const split = await pool.quoteRemoveLiquidity(input.amount);
+        return { via: withdrawVia, split };
+      })
+    );
+
+    // Fetch swap quote between withdrawn token and wanted token
+    const withSwaps = await Promise.all(
+      quotes.map(async ({ via, split }) => {
+        const quotes = await swapAggregator.fetchQuotes(
+          {
+            vaultId: vault.id,
+            fromToken: split.token,
+            fromAmount: slipBy(split.amount, slippage, split.token.decimals), // we have to assume it will slip 100% since we can't modify the call data later
+            toToken: wanted,
+          },
+          state
+        );
+        const quote = first(quotes);
+
+        return {
+          via,
+          quote,
+          input,
+          split,
+          output: { token: wanted, amount: quote ? quote.toAmount : BIG_ZERO },
+        };
+      })
+    );
+
+    // sort by most output
+    withSwaps.sort((a, b) => b.output.amount.comparedTo(a.output.amount));
+
+    // Get the one which gives the most output
+    return first(withSwaps);
+  }
+
+  protected async getWithdrawLiquidity(
+    state: BeefyState,
+    input: TokenAmount,
+    wanted: TokenEntity,
+    option: CurveWithdrawOption
+  ): Promise<WithdrawLiquidity> {
+    if (option.via === 'direct') {
+      return this.getWithdrawLiquidityDirect(input, wanted, option.viaToken);
+    }
+    return this.getWithdrawLiquidityAggregator(state, input, wanted, option.viaTokens);
+  }
+
+  public async fetchWithdrawQuote(
+    inputs: InputTokenAmount[],
+    option: CurveWithdrawOption
+  ): Promise<CurveWithdrawQuote> {
+    onlyInputCount(inputs, 1);
+
+    const input = first(inputs);
+    if (input.amount.lte(BIG_ZERO)) {
+      throw new Error('Quote called with 0 input amount');
+    }
+
+    if (option.wantedOutputs.length !== 1) {
+      throw new Error('Can only swap to 1 output token');
+    }
+
+    const { vault, vaultType, zap, getState } = this.helpers;
+    if (!isStandardVault(vault)) {
+      throw new Error('Vault is not standard');
+    }
+
+    // Common: Withdraw from vault
+    const state = getState();
+    const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
+      getVaultWithdrawnFromState(input, vault, state);
+    const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
+    const liquidityWithdrawn = { amount: withdrawnAmountAfterFee, token: withdrawnToken };
+    const wantedToken = first(option.wantedOutputs);
+    const returned: TokenAmount[] = [];
+
+    // Common: Token Allowances
+    const allowances = [
+      {
+        token: shareToken,
+        amount: fromWei(sharesToWithdrawWei, shareToken.decimals),
+        spenderAddress: zap.manager,
+      },
+    ];
+
+    // Fetch remove liquidity (and swap quote if aggregator)
+    const withdrawnLiquidity = await this.getWithdrawLiquidity(
+      state,
+      liquidityWithdrawn,
+      wantedToken,
+      option
+    );
+
+    // Build quote steps
+    const steps: ZapQuoteStep[] = [
+      {
+        type: 'withdraw',
+        token: vaultType.depositToken,
+        amount: withdrawnAmountAfterFee,
+      },
+    ];
+
+    steps.push({
+      type: 'split',
+      inputToken: withdrawnLiquidity.input.token,
+      inputAmount: withdrawnLiquidity.input.amount,
+      outputs: [withdrawnLiquidity.split],
+    });
+
+    if (withdrawnLiquidity.quote) {
+      steps.push({
+        type: 'swap',
+        fromToken: withdrawnLiquidity.quote.fromToken,
+        fromAmount: withdrawnLiquidity.quote.fromAmount,
+        toToken: withdrawnLiquidity.quote.toToken,
+        toAmount: withdrawnLiquidity.quote.toAmount,
+        via: 'aggregator',
+        providerId: withdrawnLiquidity.quote.providerId,
+        fee: withdrawnLiquidity.quote.fee,
+        quote: withdrawnLiquidity.quote,
+      });
+
+      const unused = withdrawnLiquidity.split.amount.minus(withdrawnLiquidity.quote.fromAmount);
+      if (unused.gt(BIG_ZERO)) {
+        returned.push({ token: withdrawnLiquidity.split.token, amount: unused });
+      }
+    }
+
+    if (returned.length > 0) {
+      steps.push({
+        type: 'unused',
+        outputs: returned,
+      });
+    }
+
+    const outputs: TokenAmount[] = [withdrawnLiquidity.output];
+
+    return {
+      id: createQuoteId(option.id),
+      strategyId: 'curve',
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
+      option,
+      inputs,
+      outputs,
+      returned,
+      allowances,
+      steps,
+      via: option.via,
+      viaToken: withdrawnLiquidity.via,
+      fee: highestFeeOrZero(steps),
+    };
+  }
+
+  protected async fetchZapSplit(
+    quoteStep: ZapQuoteStepSplit,
+    inputs: TokenAmount[],
+    via: CurveTokenOption,
+    zapHelpers: ZapHelpers,
+    insertBalance: boolean = false
+  ): Promise<ZapStepResponse> {
+    const { slippage } = zapHelpers;
+    const input = first(inputs);
+    const pool = new CurvePool(via, this.poolAddress, this.chain, this.depositToken);
+    const output = await pool.quoteRemoveLiquidity(input.amount);
+    const minOutputAmount = slipBy(output.amount, slippage, output.token.decimals);
+    const zaps: ZapStep[] = [
+      pool.buildZapRemoveLiquidityTx(
+        toWei(input.amount, input.token.decimals),
+        toWei(minOutputAmount, output.token.decimals),
+        insertBalance
+      ),
+    ];
+
+    // Must approve the curve zap contact to spend the LP token
+    if (via.target !== this.poolAddress) {
+      zaps.unshift(
+        buildTokenApproveTx(
+          input.token.address, // token address
+          via.target, // spender
+          toWei(input.amount, input.token.decimals), // amount in wei
+          insertBalance
+        )
+      );
+    }
+
+    return {
+      inputs,
+      outputs: [output],
+      minOutputs: [{ token: output.token, amount: minOutputAmount }],
+      returned: [],
+      zaps,
+    };
+  }
+
+  public async fetchWithdrawStep(
+    quote: CurveWithdrawQuote,
+    t: TFunction<Namespace<string>>
+  ): Promise<Step> {
+    const { vault, vaultType } = this.helpers;
+
+    const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
+      const state = getState();
+      const chain = selectChainById(state, vault.chainId);
+      const slippage = selectTransactSlippage(state);
+      const zapHelpers: ZapHelpers = {
+        chain,
+        slippage,
+        state,
+        poolAddress: this.options.poolAddress || this.depositToken.address,
+      };
+      const withdrawQuote = quote.steps.find(isZapQuoteStepWithdraw);
+      const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
+      const splitQuote = quote.steps.find(isZapQuoteStepSplit);
+
+      // Step 1. Withdraw from vault
+      const vaultWithdraw = await vaultType.fetchZapWithdraw({
+        inputs: quote.inputs,
+      });
+      if (vaultWithdraw.outputs.length !== 1) {
+        throw new Error('Withdraw output count mismatch');
+      }
+
+      const withdrawOutput = first(vaultWithdraw.outputs);
+      if (!isTokenEqual(withdrawOutput.token, splitQuote.inputToken)) {
+        throw new Error('Withdraw output token mismatch');
+      }
+
+      if (withdrawOutput.amount.lt(withdrawQuote.toAmount)) {
+        throw new Error('Withdraw output amount mismatch');
+      }
+
+      const steps: ZapStep[] = [vaultWithdraw.zap];
+
+      // Step 2. Split lp
+      const splitZap = await this.fetchZapSplit(
+        splitQuote,
+        [withdrawOutput],
+        quote.viaToken,
+        zapHelpers,
+        true
+      );
+      splitZap.zaps.forEach(step => steps.push(step));
+
+      // Step 3. Swaps
+      // 0 swaps is valid when we break only
+      if (swapQuotes.length > 0) {
+        if (swapQuotes.length > splitZap.minOutputs.length) {
+          throw new Error('More swap quotes than expected outputs');
+        }
+
+        const insertBalance = allTokensAreDistinct(
+          swapQuotes.map(quoteStep => quoteStep.fromToken)
+        );
+        // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
+        const lastSwapIndex = swapQuotes.length - 1;
+
+        const swapZaps = await Promise.all(
+          swapQuotes.map((quoteStep, i) => {
+            const input = splitZap.minOutputs.find(o => isTokenEqual(o.token, quoteStep.fromToken));
+            if (!input) {
+              throw new Error('Swap input not found in split outputs');
+            }
+            return this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i);
+          })
+        );
+        swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
+      }
+
+      // Build order
+      const inputs: OrderInput[] = vaultWithdraw.inputs.map(input => ({
+        token: getTokenAddress(input.token),
+        amount: toWeiString(input.amount, input.token.decimals),
+      }));
+
+      const requiredOutputs: OrderOutput[] = quote.outputs.map(output => ({
+        token: getTokenAddress(output.token),
+        minOutputAmount: toWeiString(
+          slipBy(output.amount, slippage, output.token.decimals),
+          output.token.decimals
+        ),
+      }));
+
+      // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
+      const dustOutputs: OrderOutput[] = pickTokens(
+        vaultWithdraw.inputs,
+        quote.outputs,
+        quote.inputs,
+        quote.returned,
+        splitQuote.outputs
+      ).map(token => ({
+        token: getTokenAddress(token),
+        minOutputAmount: '0',
+      }));
+
+      swapQuotes.forEach(quoteStep => {
+        dustOutputs.push({
+          token: getTokenAddress(quoteStep.fromToken),
+          minOutputAmount: '0',
+        });
+        dustOutputs.push({
+          token: getTokenAddress(quoteStep.toToken),
+          minOutputAmount: '0',
+        });
+      });
+
+      // @dev uniqBy: first occurrence of each element is kept -> required outputs are kept
+      const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
+
+      // Perform TX
+      const zapRequest: UserlessZapRequest = {
+        order: {
+          inputs,
+          outputs,
+          relay: NO_RELAY,
+        },
+        steps,
+      };
+
+      const expectedTokens = quote.outputs.map(output => output.token);
+      const walletAction = walletActions.zapExecuteOrder(
+        quote.option.vaultId,
+        zapRequest,
+        expectedTokens
+      );
+
+      return walletAction(dispatch, getState, extraArgument);
+    };
+
+    return {
+      step: 'zap-out',
+      message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+      action: zapAction,
+      pending: false,
+      extraInfo: { zap: true, vaultId: quote.option.vaultId },
+    };
+  }
+
+  protected async aggregatorTokenSupport() {
+    const { vault, swapAggregator, getState } = this.helpers;
+    const state = getState();
+    const supportedAggregatorTokens = await swapAggregator.fetchTokenSupport(
+      this.possibleTokens.map(option => option.token),
+      vault.id,
+      vault.chainId,
+      state,
+      this.options.swap
+    );
+
+    return {
+      ...supportedAggregatorTokens,
+      map: Object.fromEntries(
+        supportedAggregatorTokens.any.map(
+          t =>
+            [
+              t.address,
+              this.possibleTokens.filter(
+                (o, i) =>
+                  // disable native as swap target, as zap can't insert balance of native in to call data
+                  !isTokenNative(o.token) &&
+                  !isTokenEqual(o.token, t) &&
+                  supportedAggregatorTokens.tokens[i].length > 1 &&
+                  supportedAggregatorTokens.tokens[i].some(t => isTokenEqual(t, o.token))
+              ),
+            ] as [string, CurveTokenOption[]]
+        )
+      ),
+    };
+  }
+}
