@@ -3,14 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { PartnerCard } from '../PartnerCard';
 import { getPartnerSrc } from '../../../../helpers/partnerSrc';
 
-export const NexusCard = memo(function NexusCard() {
+export const OpenCoverCard = memo(function OpenCoverCard() {
   const { t } = useTranslation();
   return (
     <PartnerCard
-      logo={getPartnerSrc('nexus')}
-      title={t('Nexus-Title')}
-      content={t('Nexus-Content')}
-      url="https://app.nexusmutual.io/cover/buy/get-quote?productId=14"
+      logo={getPartnerSrc('openCover')}
+      title={t('OpenCover-Title')}
+      content={t('OpenCover-Content')}
+      url="https://opencover.com/app/?invite=BEEF100K&cover=14"
     />
   );
 });

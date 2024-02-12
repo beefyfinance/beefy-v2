@@ -22136,41 +22136,6 @@
     ]
   },
   {
-    "id": "valas-tusd",
-    "name": "TUSD",
-    "type": "standard",
-    "token": "TUSD",
-    "tokenAddress": "0x14016E85a25aeb13065688cAFB43044C2ef86784",
-    "tokenDecimals": 18,
-    "earnedToken": "mooValasTUSD",
-    "earnedTokenAddress": "0x9749b2D46f0caa661bD84D26264811DA968bC4Fc",
-    "earnContractAddress": "0x9749b2D46f0caa661bD84D26264811DA968bC4Fc",
-    "oracle": "tokens",
-    "oracleId": "TUSD",
-    "status": "eol",
-    "createdAt": 1650309426,
-    "retireReason": "tvl",
-    "retiredAt": 1661444768,
-    "platformId": "valas",
-    "assets": ["TUSD"],
-    "risks": [
-      "COMPLEXITY_MEDIUM",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "ADMIN_WITH_TIMELOCK",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lending",
-    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x14016E85a25aeb13065688cAFB43044C2ef86784",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
-  },
-  {
     "id": "mdex-lac-busd-eol",
     "name": "LAC-BUSD LP",
     "type": "standard",

@@ -1,5 +1,41 @@
 [
   {
+    "id": "aerodrome-weth-usd+",
+    "name": "ETH-USD+ vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/USD+",
+    "tokenAddress": "0x08B935148AB10d3699Cb8d944519e8213abE6f1D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroWETH-USD+",
+    "earnedTokenAddress": "0xE20B37F6EB24c7DF62D72B587cB5406cf843Df10",
+    "earnContractAddress": "0xE20B37F6EB24c7DF62D72B587cB5406cf843Df10",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-usd+",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["ETH", "USD+"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&token1=eth&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "createdAt": 1707402737,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-mai-eusd",
     "name": "MAI-eUSD sLP",
     "type": "standard",
