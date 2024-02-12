@@ -1,5 +1,27 @@
 [
   {
+    "id": "equilibria-arb-eeth",
+    "name": "eETH 25Apr24",
+    "token": "PENDLE-eETH",
+    "tokenAddress": "0xE11f9786B06438456b044B3E21712228ADcAA0D1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "equilibria",
+    "earnedToken": "mooEqb-eETH_25APR24",
+    "earnedTokenAddress": "0x245d1c493342464ba568BCfb058C1069dFdc07B5",
+    "earnContractAddress": "0x245d1c493342464ba568BCfb058C1069dFdc07B5",
+    "oracle": "lps",
+    "oracleId": "equilibria-arb-eeth",
+    "status": "active",
+    "createdAt": 1707723612,
+    "platformId": "equilibria",
+    "assets": ["weETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xe11f9786b06438456b044b3e21712228adcaa0d1/zap/in?chain=arbitrum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xe11f9786b06438456b044b3e21712228adcaa0d1/zap/out?chain=arbitrum",
+    "network": "arbitrum"
+  },
+  {
     "id": "equilibria-arb-gdai",
     "name": "gDAI 28Mar24",
     "token": "PENDLE-gDAI",
