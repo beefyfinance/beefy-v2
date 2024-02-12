@@ -66,4 +66,21 @@ export const styles = (theme: Theme) => ({
   detailsLink: {
     color: theme.palette.text.middle,
   },
+  oracleLink: {
+    ...theme.typography['body-lg-med'],
+    color: theme.palette.text.middle,
+    textDecoration: 'none' as const,
+    '&:hover': {
+      cursor: 'pointer' as const,
+    },
+  },
+  infoContainer: {
+    display: 'flex',
+    columnGap: '8px',
+    justifyContent: 'space-between',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      rowGap: '8px',
+    },
+  },
 });

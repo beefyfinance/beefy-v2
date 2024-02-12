@@ -106,4 +106,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-linea': {
     backgroundColor: '#121212',
   },
+  'vaultNetwork-mantle': {
+    backgroundColor: '#121212',
+  },
 });

@@ -58,6 +58,10 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'R',
       'GHO',
       'bbsDAI',
+      'hyUSD',
+      'sDAI',
+      'bpt3POOL',
+      'USDC+',
     ],
   },
   polygon: {
@@ -124,6 +128,8 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'axlUSDC',
       'CASH',
       'BOB',
+      'crvUSD',
+      'pUSDCe',
     ],
   },
   bsc: {
@@ -193,7 +199,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   optimism: {
     name: 'Optimism',
     chainId: 10,
-    rpc: ['https://rpc.ankr.com/optimism'],
+    rpc: ['https://mainnet.optimism.io'],
     explorerUrl: 'https://optimistic.etherscan.io',
     multicallAddress: '0x820ae7bf39792d7ce7befc70b0172f4d267f1938',
     appMulticallContractAddress: '0x88D537a86e09B753361D70448d60D3dC2D75883d',
@@ -206,7 +212,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://rpc.ankr.com/optimism'],
+      rpcUrls: ['https://mainnet.optimism.io'],
       blockExplorerUrls: ['https://optimistic.etherscan.io/'],
     },
     gas: {
@@ -242,6 +248,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'USDR',
       'wUSDR',
       'omultiwUSDR',
+      'sFRAX',
     ],
   },
   fantom: {
@@ -349,7 +356,10 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'bbaaDAIV2',
       'aArbUSDCn',
       'cArbUSDCv3',
+      'crvUSD',
       'arbwUSD+',
+      'sFRAX',
+      'bpt4POOL',
     ],
   },
   avax: {
@@ -526,7 +536,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   fuse: {
     name: 'Fuse',
     chainId: 122,
-    rpc: ['https://fuse.liquify.com'],
+    rpc: ['https://rpc.fuse.io'],
     explorerUrl: 'https://explorer.fuse.io',
     multicallAddress: '0x4f22BD7CE44b0e0B2681A28e300A7285319de3a0',
     appMulticallContractAddress: '0x504A5F167BE8014b1d5CBDd993f3Bb34F95E70B2',
@@ -539,7 +549,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'FUSE',
         decimals: 18,
       },
-      rpcUrls: ['https://fuse.liquify.com'],
+      rpcUrls: ['https://rpc.fuse.io'],
       blockExplorerUrls: ['https://explorer.fuse.io/'],
     },
     gas: {
@@ -687,6 +697,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'hyUSD',
       'USDR',
       'wUSDR',
+      'USDC+',
     ],
   },
   gnosis: {
@@ -714,7 +725,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     stableCoins: ['xDAI', 'EURe', 'USDC', 'USDT', 'sDAI'],
   },
   linea: {
-    new: true,
     name: 'Linea',
     chainId: 59144,
     rpc: ['https://rpc.linea.build'],
@@ -739,6 +749,31 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       percentile: 0.2,
       baseMinimum: '7',
       baseSafetyMargin: 0.2,
+    },
+    stableCoins: ['USDT', 'USDC', 'DAI'],
+  },
+  mantle: {
+    new: true,
+    name: 'Mantle',
+    chainId: 5000,
+    rpc: ['https://rpc.mantle.xyz'],
+    explorerUrl: 'https://explorer.mantle.xyz',
+    multicallAddress: '0xAb35d11199216c7F7368080Cf41beD8f3AbBc4E4',
+    appMulticallContractAddress: '0xBFE4FBaA07f413511abf3ED9Bcc8286b2F359FF3',
+    providerName: 'Mantle',
+    walletSettings: {
+      chainId: `0x${parseInt('5000', 10).toString(16)}`,
+      chainName: 'Mantle',
+      nativeCurrency: {
+        name: 'Mantle',
+        symbol: 'MNT',
+        decimals: 18,
+      },
+      rpcUrls: ['https://rpc.mantle.xyz'],
+      blockExplorerUrls: ['https://explorer.mantle.xyz'],
+    },
+    gas: {
+      type: 'standard',
     },
     stableCoins: ['USDT', 'USDC', 'DAI'],
   },

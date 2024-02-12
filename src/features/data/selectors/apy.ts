@@ -18,7 +18,18 @@ import { isEmpty } from '../../../helpers/utils';
 import { selectWalletAddress } from './wallet';
 
 export const selectVaultTotalApy = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  return state.biz.apy.totalApy.byVaultId[vaultId] || {};
+  const result = state.biz.apy.totalApy.byVaultId[vaultId] || {};
+  if (vaultId === 'compound-arbitrum-usdc') {
+    return {
+      ...result,
+      boostedTotalApy: result.totalApy + 0.05,
+      boostApr: 0.05,
+      boostDaily: 0.05 / 365,
+      boostedTotalDaily: result.totalDaily + 0.05 / 365,
+    };
+  }
+
+  return result;
 };
 
 export const selectDidAPIReturnValuesForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {

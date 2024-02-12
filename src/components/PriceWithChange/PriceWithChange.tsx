@@ -2,7 +2,7 @@ import { memo, useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { selectPriceWithChange } from '../../features/data/selectors/tokens';
 import { formatBigUsd, formatPercent } from '../../helpers/format';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { fetchHistoricalPrices } from '../../features/data/actions/historical';
 import type { ApiTimeBucket } from '../../features/data/apis/beefy/beefy-data-api-types';
 import { BIG_ZERO } from '../../helpers/big-number';
@@ -84,13 +84,13 @@ const WithChange = memo<WithChangeProps>(function WithChange({
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const diff = price.minus(previousPrice).decimalPlaces(2, BigNumber.ROUND_FLOOR);
+  const diff = price.minus(previousPrice);
   const diffAbs = diff.abs();
   const percentChange = diffAbs.div(previousPrice);
   const isPositive = diff.gt(BIG_ZERO);
   const isNegative = diff.lt(BIG_ZERO);
   const tooltipContent = t(`Price-Change-${isPositive ? 'Up' : isNegative ? 'Down' : 'Flat'}`, {
-    change: formatBigUsd(diffAbs),
+    change: formatBigUsd(diffAbs, diffAbs.gte(0.01) ? 2 : 4),
     date: format(previousDate, 'MMM d, yyyy h:mm a'),
   });
   const handleTooltipClick = useCallback<TooltipProps['onTriggerClick']>(e => {
@@ -110,7 +110,7 @@ const WithChange = memo<WithChangeProps>(function WithChange({
         [classes.negative]: isNegative,
       })}
     >
-      <div className={classes.price}>{formatBigUsd(price)}</div>
+      <div className={classes.price}>{formatBigUsd(price, price.gte(0.01) ? 2 : 4)}</div>
       <div className={classes.change}>
         <div className={classes.changeValue}>
           {isPositive ? '+' : isNegative ? '-' : ''}

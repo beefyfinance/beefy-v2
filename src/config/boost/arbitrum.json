@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_balancer-sfrax-4pool-frax",
+    "poolId": "balancer-sfrax-4pool",
+    "name": "Frax",
+    "assets": ["sFRAX", "bpt-4POOL"],
+    "tokenAddress": "0x503ebD3E15A19C43F76A27263466be0C7fB4b401",
+    "earnedToken": "ARB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+    "earnContractAddress": "0x68F6d90727EB96eeC1C9f50578213e8e6d59128b",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "ARB",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["frax"]
+  },
+  {
     "id": "moo_balancer-wsteth-weth-v3-lido-arb",
     "poolId": "balancer-wsteth-weth-v3",
     "name": "Lido",

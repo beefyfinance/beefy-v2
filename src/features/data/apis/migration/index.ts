@@ -4,6 +4,8 @@ import type { Migrator, IMigrationApi } from './migration-types';
 export const migrators: MigrationConfig['id'][] = [
   'ethereum-conic',
   'ethereum-convex',
+  'l2-convex',
+  'l2-curve',
   'ethereum-prisma',
   'polygon-pearl',
 ];

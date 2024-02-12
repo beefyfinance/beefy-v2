@@ -302,7 +302,7 @@ export class TransactApi implements ITransactApi {
       return [];
     }
 
-    if (!vault.zaps) {
+    if (!vault.zaps || vault.zaps.length === 0) {
       return [];
     }
 

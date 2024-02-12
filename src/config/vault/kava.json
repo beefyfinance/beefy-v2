@@ -12,14 +12,14 @@
     "oracle": "lps",
     "oracleId": "stargate-kava-usdt",
     "status": "active",
+    "createdAt": 1701265078,
     "platformId": "stargate",
     "assets": ["USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://stargate.finance/pool/USDT-KAVA/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/USDT-KAVA/remove",
-    "network": "kava",
-    "createdAt": 1701265078
+    "network": "kava"
   },
   {
     "id": "kinetix-klp",
@@ -35,14 +35,14 @@
     "oracle": "lps",
     "oracleId": "kinetix-klp",
     "status": "active",
+    "createdAt": 1695916394,
     "platformId": "kinetix",
     "assets": ["WKAVA", "axlETH", "USDT", "ATOM", "axlWBTC"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "klp",
     "addLiquidityUrl": "https://perps.kinetix.finance/#/liquidity",
     "removeLiquidityUrl": "https://perps.kinetix.finance/#/liquidity#redeem",
-    "network": "kava",
-    "createdAt": 1695916394
+    "network": "kava"
   },
   {
     "id": "curve-kava-mimusdt-new",
@@ -58,14 +58,14 @@
     "oracle": "lps",
     "oracleId": "curve-kava-mimusdt-new",
     "status": "active",
+    "createdAt": 1690789534,
     "platformId": "curve",
     "assets": ["MIM", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-17/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-17/withdraw",
-    "network": "kava",
-    "createdAt": 1690789534
+    "network": "kava"
   },
   {
     "id": "curve-kava-mimusdt",
@@ -81,15 +81,16 @@
     "oracle": "lps",
     "oracleId": "curve-kava-mimusdt",
     "status": "eol",
+    "createdAt": 1689834853,
     "retireReason": "rewards",
+    "retiredAt": 1690624926,
     "platformId": "curve",
     "assets": ["MIM", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-16/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-16/withdraw",
-    "network": "kava",
-    "createdAt": 1689834853
+    "network": "kava"
   },
   {
     "id": "kava-bifi-maxi",
@@ -104,7 +105,9 @@
     "oracle": "tokens",
     "oracleId": "oldBIFI",
     "status": "eol",
+    "createdAt": 1679403789,
     "retireReason": "bifiV2",
+    "retiredAt": 1689087437,
     "platformId": "beefy",
     "assets": ["oldBIFI"],
     "risks": [
@@ -117,8 +120,7 @@
     ],
     "strategyTypeId": "maxi",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
-    "network": "kava",
-    "createdAt": 1679403789
+    "network": "kava"
   },
   {
     "id": "kava-bifi-gov",
@@ -134,7 +136,9 @@
     "oracle": "tokens",
     "oracleId": "oldBIFI",
     "status": "eol",
+    "createdAt": 1678801905,
     "retireReason": "bifiV2",
+    "retiredAt": 1697567756,
     "platformId": "beefy",
     "assets": ["oldBIFI"],
     "risks": [
@@ -146,8 +150,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "old-bifi-pool",
-    "network": "kava",
-    "createdAt": 1678801905
+    "network": "kava"
   },
   {
     "id": "equilibre-atom-usdt",
@@ -163,7 +166,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-atom-usdt",
     "status": "eol",
+    "createdAt": 1689953777,
     "retireReason": "tvl",
+    "retiredAt": 1692947480,
     "platformId": "equilibre",
     "assets": ["ATOM", "USDT"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -172,7 +177,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0xD39c219B018207F44799D93433c9bA23A01EFBA2",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0xD39c219B018207F44799D93433c9bA23A01EFBA2",
     "network": "kava",
-    "createdAt": 1689953777,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -194,6 +198,7 @@
     "oracle": "lps",
     "oracleId": "equilibre-usdt-axlusdc",
     "status": "active",
+    "createdAt": 1689953777,
     "platformId": "equilibre",
     "assets": ["USDT", "axlUSDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -202,7 +207,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0x4A18F16b6A4F695639B0d1390263Def2e91fc60f",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0x4A18F16b6A4F695639B0d1390263Def2e91fc60f",
     "network": "kava",
-    "createdAt": 1689953777,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -224,7 +228,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-axlusdt-usdt",
     "status": "eol",
+    "createdAt": 1689269165,
     "retireReason": "tvl",
+    "retiredAt": 1698574248,
     "platformId": "equilibre",
     "assets": ["axlUSDT", "USDT"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -233,7 +239,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0x6337e3a13CB76d93856E7403B7f98A37CB2bc7dF",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0x6337e3a13CB76d93856E7403B7f98A37CB2bc7dF",
     "network": "kava",
-    "createdAt": 1689269165,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -255,7 +260,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-usdt-mai",
     "status": "eol",
+    "createdAt": 1689269165,
     "retireReason": "rewards",
+    "retiredAt": 1699192515,
     "platformId": "equilibre",
     "assets": ["MAI", "USDT"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -264,7 +271,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0x1A2c489d90212eE7AD351c826a3A4d53186b4b8b",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0x1A2c489d90212eE7AD351c826a3A4d53186b4b8b",
     "network": "kava",
-    "createdAt": 1689269165,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -286,6 +292,7 @@
     "oracle": "lps",
     "oracleId": "equilibre-usdt-wkava",
     "status": "active",
+    "createdAt": 1689269165,
     "platformId": "equilibre",
     "assets": ["USDT", "KAVA"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -294,7 +301,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0xBe87F2e81aa16238445651fAbf62Ae097498C200",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0xBe87F2e81aa16238445651fAbf62Ae097498C200",
     "network": "kava",
-    "createdAt": 1689269165,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -316,7 +322,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-axlwbtc-wkava",
     "status": "eol",
+    "createdAt": 1687262769,
     "retireReason": "tvl",
+    "retiredAt": 1690624926,
     "platformId": "equilibre",
     "assets": ["axlWBTC", "KAVA"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -325,7 +333,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0x48e345bf70E6bb30A4FC7cDC94A185D5c931EFD4",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0x48e345bf70E6bb30A4FC7cDC94A185D5c931EFD4",
     "network": "kava",
-    "createdAt": 1687262769,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -347,7 +354,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-wkava-axlusdc",
     "status": "eol",
+    "createdAt": 1687262769,
     "retireReason": "tvl",
+    "retiredAt": 1692947480,
     "platformId": "equilibre",
     "assets": ["axlUSDC", "KAVA"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -356,7 +365,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0x35067270e3cde15A3881ea0Ce6c93D8E3FE688f4",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0x35067270e3cde15A3881ea0Ce6c93D8E3FE688f4",
     "network": "kava",
-    "createdAt": 1687262769,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -378,7 +386,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-axleth-wkava",
     "status": "eol",
+    "createdAt": 1687262769,
     "retireReason": "tvl",
+    "retiredAt": 1690624926,
     "platformId": "equilibre",
     "assets": ["axlETH", "KAVA"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -387,7 +397,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0x93932676cDC21F61fCd476CaaB3Ec3b3F3f347D7",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0x93932676cDC21F61fCd476CaaB3Ec3b3F3f347D7",
     "network": "kava",
-    "createdAt": 1687262769,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -409,7 +418,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-bifi-usdc",
     "status": "eol",
+    "createdAt": 1686223842,
     "retireReason": "bifiV2",
+    "retiredAt": 1689007467,
     "platformId": "equilibre",
     "assets": ["oldBIFI", "kmultiUSDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -418,7 +429,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0x510c1bFDAFB356ace6cC735be304E25C05d22C02",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0x510c1bFDAFB356ace6cC735be304E25C05d22C02",
     "network": "kava",
-    "createdAt": 1686223842,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -440,7 +450,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-mare-usdc",
     "status": "eol",
+    "createdAt": 1681788395,
     "retireReason": "exploit",
+    "retiredAt": 1689599402,
     "platformId": "equilibre",
     "assets": ["MARE", "kmultiUSDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -449,7 +461,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "network": "kava",
-    "createdAt": 1681788395,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -471,7 +482,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-eth-usdc",
     "status": "eol",
+    "createdAt": 1680770581,
     "retireReason": "exploit",
+    "retiredAt": 1689599402,
     "platformId": "equilibre",
     "assets": ["ETH", "kmultiUSDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -480,7 +493,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "network": "kava",
-    "createdAt": 1680770581,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -502,7 +514,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-axlusdc-usdc",
     "status": "eol",
+    "createdAt": 1679667896,
     "retireReason": "exploit",
+    "retiredAt": 1689599402,
     "platformId": "equilibre",
     "assets": ["axlUSDC", "kmultiUSDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -511,7 +525,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "network": "kava",
-    "createdAt": 1679667896,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -533,7 +546,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-bnb-vara",
     "status": "eol",
+    "createdAt": 1679667896,
     "retireReason": "tvl",
+    "retiredAt": 1680336147,
     "platformId": "equilibre",
     "assets": ["BNB", "VARA"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -542,7 +557,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "network": "kava",
-    "createdAt": 1679667896,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -564,7 +578,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-mai-vara",
     "status": "eol",
+    "createdAt": 1679667896,
     "retireReason": "tvl",
+    "retiredAt": 1690624926,
     "platformId": "equilibre",
     "assets": ["MAI", "VARA"],
     "risks": [
@@ -580,7 +596,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "network": "kava",
-    "createdAt": 1679667896,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -602,7 +617,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-wbtc-wkava",
     "status": "eol",
+    "createdAt": 1679367974,
     "retireReason": "exploit",
+    "retiredAt": 1689599402,
     "platformId": "equilibre",
     "assets": ["WBTC", "KAVA"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -611,7 +628,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "network": "kava",
-    "createdAt": 1679367974,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -633,7 +649,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-bifi-wkava",
     "status": "eol",
+    "createdAt": 1678458801,
     "retireReason": "bifiV2",
+    "retiredAt": 1689007467,
     "platformId": "equilibre",
     "assets": ["oldBIFI", "KAVA"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "AUDIT"],
@@ -642,7 +660,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0xf96b58442ccb7d1f0889efb5120b428e3dd56c6f",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0xf96b58442ccb7d1f0889efb5120b428e3dd56c6f",
     "network": "kava",
-    "createdAt": 1678458801,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -664,7 +681,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-wkava-usdc",
     "status": "eol",
+    "createdAt": 1678458801,
     "retireReason": "exploit",
+    "retiredAt": 1689599402,
     "platformId": "equilibre",
     "assets": ["KAVA", "kmultiUSDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "AUDIT"],
@@ -673,7 +692,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0x5C27a0D0e6d045b5113D728081268642060f7499",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0x5C27a0D0e6d045b5113D728081268642060f7499",
     "network": "kava",
-    "createdAt": 1678458801,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -695,7 +713,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-vara-usdc",
     "status": "eol",
+    "createdAt": 1678458801,
     "retireReason": "exploit",
+    "retiredAt": 1689599402,
     "platformId": "equilibre",
     "assets": ["VARA", "kmultiUSDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "AUDIT"],
@@ -704,7 +724,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/0x9bf1E3ee61cBe5C61E520c8BEFf45Ed4D8212a9A",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/0x9bf1E3ee61cBe5C61E520c8BEFf45Ed4D8212a9A",
     "network": "kava",
-    "createdAt": 1678458801,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -726,7 +745,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-dai-usdc",
     "status": "eol",
+    "createdAt": 1678458801,
     "retireReason": "tvl",
+    "retiredAt": 1688639926,
     "platformId": "equilibre",
     "assets": ["DAI", "multichainUSDT"],
     "risks": [
@@ -742,7 +763,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "network": "kava",
-    "createdAt": 1678458801,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -764,7 +784,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-mai-usdc",
     "status": "eol",
+    "createdAt": 1678458801,
     "retireReason": "exploit",
+    "retiredAt": 1689599402,
     "platformId": "equilibre",
     "assets": ["MAI", "kmultiUSDC"],
     "risks": [
@@ -780,7 +802,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "network": "kava",
-    "createdAt": 1678458801,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -802,7 +823,9 @@
     "oracle": "lps",
     "oracleId": "equilibre-wkava-eth",
     "status": "eol",
+    "createdAt": 1678458801,
     "retireReason": "exploit",
+    "retiredAt": 1689599402,
     "platformId": "equilibre",
     "assets": ["ETH", "KAVA"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -811,7 +834,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "network": "kava",
-    "createdAt": 1678458801,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -833,6 +855,7 @@
     "oracle": "lps",
     "oracleId": "equilibre-wkava-vara",
     "status": "active",
+    "createdAt": 1678458801,
     "platformId": "equilibre",
     "assets": ["VARA", "KAVA"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -841,7 +864,6 @@
     "addLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "removeLiquidityUrl": "https://equilibrefinance.com/liquidity/create",
     "network": "kava",
-    "createdAt": 1678458801,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -863,7 +885,9 @@
     "oracle": "lps",
     "oracleId": "sushi-kava-wkava-usdcaxl",
     "status": "eol",
+    "createdAt": 1677082936,
     "retireReason": "rewards",
+    "retiredAt": 1688639926,
     "platformId": "sushi",
     "assets": ["axlUSDC", "KAVA"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MEDIUM", "AUDIT"],
@@ -871,8 +895,7 @@
     "buyTokenUrl": "https://www.sushi.com/swap",
     "addLiquidityUrl": "https://www.sushi.com/earn/kava:0xb379Eb428A28a927a16ee7f95100Ac6A5117AaA1/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0xb379Eb428A28a927a16ee7f95100Ac6A5117AaA1/remove",
-    "network": "kava",
-    "createdAt": 1677082936
+    "network": "kava"
   },
   {
     "id": "curve-kava-axl3pool",
@@ -887,7 +910,10 @@
     "earnContractAddress": "0xE1dD8FfC39A01022Cbd1Bd3Db6FEb89F9b2f7cee",
     "oracle": "lps",
     "oracleId": "curve-kava-axl3pool",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1706885963,
+    "createdAt": 1677007992,
     "platformId": "curve",
     "assets": ["axlDAI", "axlUSDC", "axlUSDT"],
     "risks": [
@@ -902,8 +928,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-2/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-2/withdraw",
-    "network": "kava",
-    "createdAt": 1677007992
+    "network": "kava"
   },
   {
     "id": "curve-kava-3pool",
@@ -919,7 +944,9 @@
     "oracle": "lps",
     "oracleId": "curve-kava-3pool",
     "status": "eol",
+    "createdAt": 1665750277,
     "retireReason": "exploit",
+    "retiredAt": 1689599402,
     "platformId": "curve",
     "assets": ["DAI", "kmultiUSDC", "multichainUSDT"],
     "risks": [
@@ -934,8 +961,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://kava.curve.fi/factory/0/deposit",
     "removeLiquidityUrl": "https://kava.curve.fi/factory/0/withdraw",
-    "network": "kava",
-    "createdAt": 1665750277
+    "network": "kava"
   },
   {
     "id": "curve-kava-axlusdt-f",
@@ -951,6 +977,7 @@
     "oracle": "lps",
     "oracleId": "curve-kava-axlusdt-f",
     "status": "active",
+    "createdAt": 1689035208,
     "platformId": "curve",
     "assets": ["axlUSDT", "USDT"],
     "risks": [
@@ -964,8 +991,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-13/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-13/withdraw",
-    "network": "kava",
-    "createdAt": 1689035208
+    "network": "kava"
   },
   {
     "id": "sushi-kava-wkava-usdc",
@@ -981,7 +1007,9 @@
     "oracle": "lps",
     "oracleId": "sushi-kava-wkava-usdc",
     "status": "eol",
+    "createdAt": 1666033971,
     "retireReason": "rewards",
+    "retiredAt": 1688639926,
     "platformId": "sushi",
     "assets": ["kmultiUSDC", "KAVA"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MEDIUM", "AUDIT"],
@@ -989,8 +1017,7 @@
     "buyTokenUrl": "https://www.sushi.com/swap",
     "addLiquidityUrl": "https://www.sushi.com/earn/kava:0x88395b86cf9787e131d2fb5462a22b44056bf574/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0x88395b86cf9787e131d2fb5462a22b44056bf574/remove",
-    "network": "kava",
-    "createdAt": 1666033971
+    "network": "kava"
   },
   {
     "id": "sushi-kava-sushi-wkava",
@@ -1006,7 +1033,9 @@
     "oracle": "lps",
     "oracleId": "sushi-kava-sushi-wkava",
     "status": "eol",
+    "createdAt": 1666033970,
     "retireReason": "rewards",
+    "retiredAt": 1685639823,
     "platformId": "sushi",
     "assets": ["SUSHI", "KAVA"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "AUDIT"],
@@ -1014,8 +1043,7 @@
     "buyTokenUrl": "https://www.sushi.com/swap",
     "addLiquidityUrl": "https://www.sushi.com/earn/kava:0x52089cd962a5665498aea8d57576e2d3f68eb47d/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0x52089cd962a5665498aea8d57576e2d3f68eb47d/remove",
-    "network": "kava",
-    "createdAt": 1666033970
+    "network": "kava"
   },
   {
     "id": "sushi-kava-wbtc-eth",
@@ -1031,7 +1059,9 @@
     "oracle": "lps",
     "oracleId": "sushi-kava-wbtc-eth",
     "status": "eol",
+    "createdAt": 1666033969,
     "retireReason": "rewards",
+    "retiredAt": 1685639823,
     "platformId": "sushi",
     "assets": ["WBTC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "AUDIT"],
@@ -1039,8 +1069,7 @@
     "buyTokenUrl": "https://www.sushi.com/swap",
     "addLiquidityUrl": "https://www.sushi.com/earn/kava:0x8070cfc234c4b7f3ec2ae873885390973f5b15c0/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0x8070cfc234c4b7f3ec2ae873885390973f5b15c0/remove",
-    "network": "kava",
-    "createdAt": 1666033969
+    "network": "kava"
   },
   {
     "id": "sushi-kava-wkava-eth",
@@ -1056,7 +1085,9 @@
     "oracle": "lps",
     "oracleId": "sushi-kava-wkava-eth",
     "status": "eol",
+    "createdAt": 1666033968,
     "retireReason": "rewards",
+    "retiredAt": 1685639823,
     "platformId": "sushi",
     "assets": ["ETH", "KAVA"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "AUDIT"],
@@ -1064,8 +1095,7 @@
     "buyTokenUrl": "https://www.sushi.com/swap",
     "addLiquidityUrl": "https://www.sushi.com/earn/kava:0xe9c40af74fcfb85b38db2a74a7d5d22d731660f5/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0xe9c40af74fcfb85b38db2a74a7d5d22d731660f5/remove",
-    "network": "kava",
-    "createdAt": 1666033968
+    "network": "kava"
   },
   {
     "id": "sushi-kava-usdt-wkava",
@@ -1081,7 +1111,9 @@
     "oracle": "lps",
     "oracleId": "sushi-kava-usdt-wkava",
     "status": "eol",
+    "createdAt": 1666033967,
     "retireReason": "rewards",
+    "retiredAt": 1674225613,
     "platformId": "sushi",
     "assets": ["multichainUSDT", "KAVA"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MEDIUM", "AUDIT"],
@@ -1089,7 +1121,6 @@
     "buyTokenUrl": "https://www.sushi.com/swap",
     "addLiquidityUrl": "https://www.sushi.com/earn/kava:0x5b3b7e769ebb5f35262b1ce532f230ed4ebb9c51/add",
     "removeLiquidityUrl": "https://www.sushi.com/earn/kava:0x5b3b7e769ebb5f35262b1ce532f230ed4ebb9c51/remove",
-    "network": "kava",
-    "createdAt": 1666033967
+    "network": "kava"
   }
 ]

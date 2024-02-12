@@ -53,6 +53,13 @@ export interface VaultStandard {
   platformId: PlatformEntity['id'];
 
   status: 'active' | 'eol' | 'paused';
+  createdAt: number;
+  /** Used for sorting, not required in config but defaults to createdAt on load so always available on entity */
+  updatedAt: number;
+  retireReason?: string;
+  retiredAt?: number;
+  pauseReason?: string;
+  pausedAt?: number;
 
   assetType: 'lps' | 'single';
 
@@ -66,13 +73,10 @@ export interface VaultStandard {
 
   depositFee: number;
 
-  createdAt: number;
-
-  retireReason?: string;
-  pauseReason?: string;
   migrationIds?: string[];
   /** Map of chain->address of bridged receipt tokens */
   bridged?: Record<ChainEntity['id'], string>;
+  lendingOracle?: { provider: string; address?: string; loops?: number };
 }
 
 export interface VaultGov {
@@ -114,6 +118,13 @@ export interface VaultGov {
   platformId: PlatformEntity['id'];
 
   status: 'active' | 'eol' | 'paused';
+  createdAt: number;
+  /** Used for sorting, not required in config but defaults to createdAt on load so always available on entity */
+  updatedAt: number;
+  retireReason?: string;
+  retiredAt?: number;
+  pauseReason?: string;
+  pausedAt?: number;
 
   assetType: 'single';
 
@@ -127,10 +138,6 @@ export interface VaultGov {
 
   depositFee: number;
 
-  createdAt: number;
-
-  retireReason?: string;
-  pauseReason?: string;
   migrationIds?: string[];
 }
 

@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { Collapsable } from '../../../../components/Collapsable';
 import { useAppSelector } from '../../../../store';
 import type { VaultEntity } from '../../../data/entities/vault';
-import { selectIsVaultInsurace, selectIsVaultNexus } from '../../../data/selectors/partners';
-import { InsuraceCard } from '../InsuraceCard';
+import { selectIsOpenCover, selectIsVaultNexus } from '../../../data/selectors/partners';
+import { OpenCoverCard } from '../OpenCoverCard';
 import { NexusCard } from '../NexusCard';
 import { styles } from './styles';
 
@@ -18,10 +18,10 @@ interface InsuraceCardProps {
 export const InsuranceCards = memo<InsuraceCardProps>(function InsuranceCards({ vaultId }) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const isInsurace = useAppSelector(state => selectIsVaultInsurace(state, vaultId));
+  const isOpenCover = useAppSelector(state => selectIsOpenCover(state, vaultId));
   const isNexus = useAppSelector(state => selectIsVaultNexus(state, vaultId));
 
-  if (!isInsurace && !isNexus) {
+  if (!isOpenCover && !isNexus) {
     return null;
   }
 
@@ -29,7 +29,7 @@ export const InsuranceCards = memo<InsuraceCardProps>(function InsuranceCards({ 
     <div className={classes.container}>
       <Collapsable openByDefault={true} titleClassName={classes.title} title={t('Insurance')}>
         {isNexus && <NexusCard />}
-        {isInsurace && <InsuraceCard />}
+        {isOpenCover && <OpenCoverCard />}
       </Collapsable>
     </div>
   );

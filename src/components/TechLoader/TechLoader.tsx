@@ -2,17 +2,19 @@ import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import loadingImage from '../../images/tech-loader.gif';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
 export type TechLoaderProps = {
+  className?: string;
   text?: string;
 };
 
-export const TechLoader = memo<TechLoaderProps>(function TechLoader({ text }) {
+export const TechLoader = memo<TechLoaderProps>(function TechLoader({ text, className }) {
   const classes = useStyles();
   return (
-    <div className={classes.loader}>
+    <div className={clsx(classes.loader, className)}>
       <img
         alt="Loading..."
         className={classes.image}

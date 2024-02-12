@@ -8,8 +8,8 @@ import {
   selectTransactNumTokens,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
-  selectTransactSelectedChainId,
   selectTransactSelected,
+  selectTransactSelectedChainId,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';

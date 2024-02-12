@@ -38,5 +38,11 @@
     "type": "gamma",
     "name": "Gamma Stellaswap",
     "proxyAddress": "0x34c14dCc974f827e0aa8E7a3EB0Db2431d09068E"
+  },
+  {
+    "id": "moonbeam-gamma-uniswap",
+    "type": "gamma",
+    "name": "Gamma Uniswap",
+    "proxyAddress": "0xEf4F95d8c252D64308c04F711FB31892Cc4c9965"
   }
 ]

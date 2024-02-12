@@ -13,6 +13,7 @@
     "oracle": "lps",
     "oracleId": "joe-auto-wavax-weth.e",
     "status": "active",
+    "createdAt": 1699756643,
     "platformId": "traderjoe",
     "assets": ["WETHe", "AVAX"],
     "risks": [
@@ -27,8 +28,7 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x6178dE6E552055862CF5c56310763EeC0145688d",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x6178dE6E552055862CF5c56310763EeC0145688d",
-    "network": "avax",
-    "createdAt": 1699756643
+    "network": "avax"
   },
   {
     "id": "joe-auto-wavax-btcb",
@@ -44,6 +44,7 @@
     "oracle": "lps",
     "oracleId": "joe-auto-wavax-btcb",
     "status": "active",
+    "createdAt": 1699756643,
     "platformId": "traderjoe",
     "assets": ["BTCb", "AVAX"],
     "risks": [
@@ -58,8 +59,7 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x1C739A43606794849750C50bC7C43FBbDAcdf801",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x1C739A43606794849750C50bC7C43FBbDAcdf801",
-    "network": "avax",
-    "createdAt": 1699756643
+    "network": "avax"
   },
   {
     "id": "joe-auto-usdc-eurc",
@@ -75,6 +75,7 @@
     "oracle": "lps",
     "oracleId": "joe-auto-usdc-eurc",
     "status": "active",
+    "createdAt": 1699756643,
     "platformId": "traderjoe",
     "assets": ["EURC", "USDC"],
     "risks": [
@@ -89,8 +90,7 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x052AF5B8aC73082D8c4C8202bB21F4531A51DC73",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x052AF5B8aC73082D8c4C8202bB21F4531A51DC73",
-    "network": "avax",
-    "createdAt": 1699756643
+    "network": "avax"
   },
   {
     "id": "balancer-avax-usdc-eurc",
@@ -106,7 +106,9 @@
     "oracle": "lps",
     "oracleId": "balancer-avax-usdc-eurc",
     "status": "eol",
+    "createdAt": 1699715901,
     "retireReason": "default",
+    "retiredAt": 1700220596,
     "platformId": "balancer",
     "assets": ["USDC", "EURC"],
     "risks": [
@@ -120,8 +122,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.xave.co/#/pool",
     "removeLiquidityUrl": "https://app.xave.co/#/pool",
-    "network": "avax",
-    "createdAt": 1699715901
+    "network": "avax"
   },
   {
     "id": "joe-auto-wavax-usdc",
@@ -137,6 +138,7 @@
     "oracle": "lps",
     "oracleId": "joe-auto-wavax-usdc",
     "status": "active",
+    "createdAt": 1691411422,
     "platformId": "traderjoe",
     "assets": ["AVAX", "USDC"],
     "risks": [
@@ -152,8 +154,7 @@
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x9C9e5fD8bbc25984B178FdCE6117Defa39d2db39#/",
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x32833a12ed3fd5120429fb01564c98ce3c60fc1d",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/vault/0x32833a12ed3fd5120429fb01564c98ce3c60fc1d",
-    "network": "avax",
-    "createdAt": 1691411422
+    "network": "avax"
   },
   {
     "id": "balancer-savax-bbaavavax",
@@ -169,7 +170,9 @@
     "oracle": "lps",
     "oracleId": "balancer-savax-bbaavavax",
     "status": "eol",
+    "createdAt": 1690982945,
     "retireReason": "exploit",
+    "retiredAt": 1692719625,
     "platformId": "balancer",
     "assets": ["sAVAX", "bbaavAVAX"],
     "risks": [
@@ -183,8 +186,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/avalanche/pool/0xa154009870e9b6431305f19b09f9cfd7284d4e7a000000000000000000000013/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/avalanche/pool/0xa154009870e9b6431305f19b09f9cfd7284d4e7a000000000000000000000013/withdraw",
-    "network": "avax",
-    "createdAt": 1690982945
+    "network": "avax"
   },
   {
     "id": "balancer-yyavax-bbaavavax",
@@ -200,7 +202,9 @@
     "oracle": "lps",
     "oracleId": "balancer-yyavax-bbaavavax",
     "status": "eol",
+    "createdAt": 1690982945,
     "retireReason": "exploit",
+    "retiredAt": 1692719625,
     "platformId": "balancer",
     "assets": ["yyAVAX", "bbaavAVAX"],
     "risks": [
@@ -214,8 +218,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/avalanche/pool/0xece571847897fd61e764d455dc15cf1cd9de8d6f000000000000000000000014/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/avalanche/pool/0xece571847897fd61e764d455dc15cf1cd9de8d6f000000000000000000000014/withdraw",
-    "network": "avax",
-    "createdAt": 1690982945
+    "network": "avax"
   },
   {
     "id": "solisnek-usdt-usdc",
@@ -231,7 +234,9 @@
     "oracle": "lps",
     "oracleId": "solisnek-usdt-usdc",
     "status": "eol",
+    "createdAt": 1686258272,
     "retireReason": "tvl",
+    "retiredAt": 1693479749,
     "platformId": "solisnek",
     "assets": ["USDT", "USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -239,7 +244,6 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7&to=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x1CF7F397af73F6206055C69205fC9cb7D69187A0",
     "network": "avax",
-    "createdAt": 1686258272,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -261,7 +265,9 @@
     "oracle": "lps",
     "oracleId": "solisnek-wavax-bifi",
     "status": "eol",
+    "createdAt": 1682949068,
     "retireReason": "bifiV2",
+    "retiredAt": 1689007467,
     "platformId": "solisnek",
     "assets": ["oldBIFI", "AVAX"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -269,7 +275,6 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=AVAX&to=0xd6070ae98b8069de6b494332d1a1a81b6179d960",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0xd45c4da6987cc1067e9ee8481d42abeed9167689",
     "network": "avax",
-    "createdAt": 1682949068,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -291,7 +296,9 @@
     "oracle": "lps",
     "oracleId": "solisnek-wavax-usdc",
     "status": "eol",
+    "createdAt": 1682949068,
     "retireReason": "tvl",
+    "retiredAt": 1697816149,
     "platformId": "solisnek",
     "assets": ["AVAX", "USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -299,7 +306,6 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=AVAX&to=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0xDF214f497BeCA7f550a74CEB89240FB185CE19b4",
     "network": "avax",
-    "createdAt": 1682949068,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -321,7 +327,9 @@
     "oracle": "lps",
     "oracleId": "solisnek-mai-usdc",
     "status": "eol",
+    "createdAt": 1682949068,
     "retireReason": "tvl",
+    "retiredAt": 1693479749,
     "platformId": "solisnek",
     "assets": ["MAI", "USDC"],
     "risks": [
@@ -336,7 +344,6 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&to=0x5c49b268c9841AFF1Cc3B0a418ff5c3442eE3F3b",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x39d7fa4567f1e989c04867fc8d7d6882a1bdfb75",
     "network": "avax",
-    "createdAt": 1682949068,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -358,7 +365,9 @@
     "oracle": "lps",
     "oracleId": "solisnek-mai-frax",
     "status": "eol",
+    "createdAt": 1682949068,
     "retireReason": "tvl",
+    "retiredAt": 1693479749,
     "platformId": "solisnek",
     "assets": ["MAI", "FRAX"],
     "risks": [
@@ -373,7 +382,6 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xD24C2Ad096400B6FBcd2ad8B24E7acBc21A1da64&to=0x5c49b268c9841AFF1Cc3B0a418ff5c3442eE3F3b",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0xe4ff38cee745bf42df9239abe671b7bc637e9b4d",
     "network": "avax",
-    "createdAt": 1682949068,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -395,7 +403,9 @@
     "oracle": "lps",
     "oracleId": "solisnek-dola-usdc",
     "status": "eol",
+    "createdAt": 1682949068,
     "retireReason": "rewards",
+    "retiredAt": 1693479749,
     "platformId": "solisnek",
     "assets": ["DOLA", "USDC"],
     "risks": [
@@ -410,7 +420,6 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&to=0x221743dc9e954be4f86844649bf19b43d6f8366d",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x7680d9f07f80b11a7a96e4443398245d917998e6",
     "network": "avax",
-    "createdAt": 1682949068,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -432,7 +441,9 @@
     "oracle": "lps",
     "oracleId": "solisnek-btc.b-wbtc.e",
     "status": "eol",
+    "createdAt": 1682949068,
     "retireReason": "tvl",
+    "retiredAt": 1694443783,
     "platformId": "solisnek",
     "assets": ["BTCb", "WBTCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -440,7 +451,6 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0x152b9d0fdc40c096757f570a51e494bd4b943e50&to=0x50b7545627a5162F82A992c33b87aDc75187B218",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0xadb32de92151d0769d214445b6d8b905cff17ccf",
     "network": "avax",
-    "createdAt": 1682949068,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -462,7 +472,9 @@
     "oracle": "lps",
     "oracleId": "solisnek-usdc.e-usdc",
     "status": "eol",
+    "createdAt": 1682949068,
     "retireReason": "tvl",
+    "retiredAt": 1697816149,
     "platformId": "solisnek",
     "assets": ["USDCe", "USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -470,7 +482,6 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&to=0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x6ee94bba2658c4de8be091c005f62d36b28463ae",
     "network": "avax",
-    "createdAt": 1682949068,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -492,7 +503,9 @@
     "oracle": "lps",
     "oracleId": "solisnek-usdc-frax",
     "status": "eol",
+    "createdAt": 1682949068,
     "retireReason": "tvl",
+    "retiredAt": 1693479749,
     "platformId": "solisnek",
     "assets": ["FRAX", "USDC"],
     "risks": [
@@ -507,7 +520,6 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&to=0xD24C2Ad096400B6FBcd2ad8B24E7acBc21A1da64",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x01d806052d1d3926b4456567144375b192bf41b7",
     "network": "avax",
-    "createdAt": 1682949068,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -529,7 +541,9 @@
     "oracle": "lps",
     "oracleId": "solisnek-weth.e-wavax",
     "status": "eol",
+    "createdAt": 1682949068,
     "retireReason": "tvl",
+    "retiredAt": 1694443783,
     "platformId": "solisnek",
     "assets": ["WETHe", "AVAX"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -537,7 +551,6 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=AVAX&to=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x8d2d4464cb5c65cbda6188d6c7653e0a3ad28828",
     "network": "avax",
-    "createdAt": 1682949068,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -559,7 +572,9 @@
     "oracle": "lps",
     "oracleId": "solisnek-btc.b-wavax",
     "status": "eol",
+    "createdAt": 1682949068,
     "retireReason": "tvl",
+    "retiredAt": 1702465854,
     "platformId": "solisnek",
     "assets": ["BTCb", "AVAX"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -567,7 +582,6 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=AVAX&to=0x152b9d0fdc40c096757f570a51e494bd4b943e50",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x3b7fe0276915bbe081c178d68be472286f501d59",
     "network": "avax",
-    "createdAt": 1682949068,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -589,7 +603,9 @@
     "oracle": "lps",
     "oracleId": "solisnek-wavax-deus",
     "status": "eol",
+    "createdAt": 1682949068,
     "retireReason": "exploit",
+    "retiredAt": 1689271044,
     "platformId": "solisnek",
     "assets": ["DEUS", "AVAX"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -597,7 +613,6 @@
     "buyTokenUrl": "https://www.solisnek.finance/swap?from=AVAX&to=0xde5ed76e7c05ec5e4572cfc88d1acea165109e44",
     "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x81d230d1a8a9db0ca319a346c1412383f8af4764",
     "network": "avax",
-    "createdAt": 1682949068,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -618,7 +633,9 @@
     "oracle": "tokens",
     "oracleId": "oldBIFI",
     "status": "eol",
+    "createdAt": 1629307105,
     "retireReason": "bifiV2",
+    "retiredAt": 1689087437,
     "platformId": "beefy",
     "assets": ["oldBIFI"],
     "risks": [
@@ -631,8 +648,7 @@
     ],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xd6070ae98b8069de6b494332d1a1a81b6179d960",
-    "network": "avax",
-    "createdAt": 1629307105
+    "network": "avax"
   },
   {
     "id": "avax-bifi-gov",
@@ -648,7 +664,9 @@
     "oracle": "tokens",
     "oracleId": "oldBIFI",
     "status": "eol",
+    "createdAt": 1623706144,
     "retireReason": "bifiV2",
+    "retiredAt": 1697567756,
     "platformId": "beefy",
     "assets": ["oldBIFI"],
     "risks": [
@@ -662,8 +680,7 @@
     "strategyTypeId": "old-bifi-pool",
     "excluded": "avax-bifi-maxi",
     "buyTokenUrl": "https://www.traderjoexyz.com/#/trade?outputCurrency=0xd6070ae98b8069de6b494332d1a1a81b6179d960",
-    "network": "avax",
-    "createdAt": 1623706144
+    "network": "avax"
   },
   {
     "id": "kyber-avax-usdc-mai",
@@ -679,7 +696,9 @@
     "oracle": "lps",
     "oracleId": "kyber-avax-usdc-mai",
     "status": "eol",
+    "createdAt": 1675790594,
     "retireReason": "rewards",
+    "retiredAt": 1685979260,
     "platformId": "kyber",
     "assets": ["MAI", "USDC"],
     "risks": [
@@ -694,8 +713,7 @@
     "buyTokenUrl": "https://kyberswap.com/swap/avalanche",
     "addLiquidityUrl": "https://kyberswap.com/add/0x5c49b268c9841aff1cc3b0a418ff5c3442ee3f3b/0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e/0xc2995a065106b5c5c738b2320387460ebd12c12d?networkId=43114",
     "removeLiquidityUrl": "https://kyberswap.com/remove/0x5c49b268c9841aff1cc3b0a418ff5c3442ee3f3b/0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e/0xc2995a065106b5c5c738b2320387460ebd12c12d?networkId=43114",
-    "network": "avax",
-    "createdAt": 1675790594
+    "network": "avax"
   },
   {
     "id": "png-usdt-wavax",
@@ -711,6 +729,7 @@
     "oracle": "lps",
     "oracleId": "png-usdt-wavax",
     "status": "active",
+    "createdAt": 1676748216,
     "platformId": "pangolin",
     "assets": ["USDT", "AVAX"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -719,7 +738,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
     "network": "avax",
-    "createdAt": 1676748216,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -741,7 +759,9 @@
     "oracle": "lps",
     "oracleId": "sicle-wavax-usd+",
     "status": "eol",
+    "createdAt": 1667061097,
     "retireReason": "rewards",
+    "retiredAt": 1669968203,
     "platformId": "swapsicle",
     "assets": ["USD+", "AVAX"],
     "risks": [
@@ -757,7 +777,6 @@
     "addLiquidityUrl": "https://www.swapsicle.io/de/add/0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65/ETH",
     "removeLiquidityUrl": "https://www.swapsicle.io/de/remove/0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65/ETH",
     "network": "avax",
-    "createdAt": 1667061097,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -779,7 +798,9 @@
     "oracle": "lps",
     "oracleId": "sicle-usdc-usd+",
     "status": "eol",
+    "createdAt": 1667061097,
     "retireReason": "rewards",
+    "retiredAt": 1669968203,
     "platformId": "swapsicle",
     "assets": ["USD+", "USDC"],
     "risks": [
@@ -795,7 +816,6 @@
     "addLiquidityUrl": "https://www.swapsicle.io/de/add/0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "removeLiquidityUrl": "https://www.swapsicle.io/de/remove/0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "network": "avax",
-    "createdAt": 1667061097,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -817,7 +837,9 @@
     "oracle": "lps",
     "oracleId": "joe-busd-wavax",
     "status": "eol",
+    "createdAt": 1664561347,
     "retireReason": "rewards",
+    "retiredAt": 1677172982,
     "platformId": "traderjoe",
     "assets": ["BUSD", "AVAX"],
     "risks": [
@@ -834,7 +856,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9C9e5fD8bbc25984B178FdCE6117Defa39d2db39/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9C9e5fD8bbc25984B178FdCE6117Defa39d2db39/AVAX",
     "network": "avax",
-    "createdAt": 1664561347,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -856,6 +877,8 @@
     "oracle": "tokens",
     "oracleId": "beJOE",
     "status": "eol",
+    "createdAt": 1649422900,
+    "retiredAt": 1673010453,
     "platformId": "beefy",
     "assets": ["beJOE"],
     "risks": [
@@ -868,8 +891,7 @@
     ],
     "strategyTypeId": "bejoe",
     "excluded": "beefy-beJoe",
-    "network": "avax",
-    "createdAt": 1649422900
+    "network": "avax"
   },
   {
     "id": "sicle-grape-mim",
@@ -885,7 +907,9 @@
     "oracle": "lps",
     "oracleId": "sicle-grape-mim",
     "status": "eol",
+    "createdAt": 1659634990,
     "retireReason": "rewards",
+    "retiredAt": 1659636849,
     "platformId": "grape",
     "assets": ["GRAPE", "MIM"],
     "risks": [
@@ -902,7 +926,6 @@
     "addLiquidityUrl": "https://www.swapsicle.io/add/0x130966628846BFd36ff31a822705796e8cb8C18D/0x5541D83EFaD1f281571B343977648B75d95cdAC2",
     "removeLiquidityUrl": "https://www.swapsicle.io/remove/0x130966628846BFd36ff31a822705796e8cb8C18D/0x5541D83EFaD1f281571B343977648B75d95cdAC2",
     "network": "avax",
-    "createdAt": 1659634990,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -924,7 +947,9 @@
     "oracle": "lps",
     "oracleId": "sicle-btc.b-wavax",
     "status": "eol",
+    "createdAt": 1657811280,
     "retireReason": "rewards",
+    "retiredAt": 1684776304,
     "platformId": "swapsicle",
     "assets": ["BTCb", "AVAX"],
     "risks": [
@@ -940,7 +965,6 @@
     "addLiquidityUrl": "https://www.swapsicle.io/add/ETH/0x152b9d0FdC40C096757F570A51E494bd4b943E50",
     "removeLiquidityUrl": "https://www.swapsicle.io/remove/ETH/0x152b9d0FdC40C096757F570A51E494bd4b943E50",
     "network": "avax",
-    "createdAt": 1657811280,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -962,7 +986,9 @@
     "oracle": "lps",
     "oracleId": "sicle-link.e-wavax",
     "status": "eol",
+    "createdAt": 1657810082,
     "retireReason": "rewards",
+    "retiredAt": 1684742133,
     "platformId": "swapsicle",
     "assets": ["LINKe", "AVAX"],
     "risks": [
@@ -978,7 +1004,6 @@
     "addLiquidityUrl": "https://www.swapsicle.io/add/ETH/0x5947BB275c521040051D82396192181b413227A3",
     "removeLiquidityUrl": "https://www.swapsicle.io/remove/ETH/0x5947BB275c521040051D82396192181b413227A3",
     "network": "avax",
-    "createdAt": 1657810082,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1000,7 +1025,9 @@
     "oracle": "lps",
     "oracleId": "joe-btc.b-wavax",
     "status": "eol",
+    "createdAt": 1656366049,
     "retireReason": "rewards",
+    "retiredAt": 1683906986,
     "platformId": "traderjoe",
     "assets": ["BTCb", "AVAX"],
     "risks": [
@@ -1017,7 +1044,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x152b9d0fdc40c096757f570a51e494bd4b943e50/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x152b9d0fdc40c096757f570a51e494bd4b943e50/AVAX",
     "network": "avax",
-    "createdAt": 1656366049,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1037,7 +1063,9 @@
     "oracle": "tokens",
     "oracleId": "AVAX",
     "status": "eol",
+    "createdAt": 1636471887,
     "retireReason": "rewards",
+    "retiredAt": 1656495284,
     "platformId": "bankerjoe",
     "assets": ["AVAX"],
     "risks": [
@@ -1051,7 +1079,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     "network": "avax",
-    "createdAt": 1636471887,
     "zaps": [
       {
         "strategyId": "single"
@@ -1071,7 +1098,9 @@
     "oracle": "tokens",
     "oracleId": "WETHe",
     "status": "eol",
+    "createdAt": 1636468072,
     "retireReason": "rewards",
+    "retiredAt": 1656495284,
     "platformId": "bankerjoe",
     "assets": ["WETHe"],
     "risks": [
@@ -1085,7 +1114,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     "network": "avax",
-    "createdAt": 1636468072,
     "zaps": [
       {
         "strategyId": "single"
@@ -1105,7 +1133,9 @@
     "oracle": "tokens",
     "oracleId": "WBTCe",
     "status": "eol",
+    "createdAt": 1636462707,
     "retireReason": "rewards",
+    "retiredAt": 1656495284,
     "platformId": "bankerjoe",
     "assets": ["WBTCe"],
     "risks": [
@@ -1119,7 +1149,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
     "network": "avax",
-    "createdAt": 1636462707,
     "zaps": [
       {
         "strategyId": "single"
@@ -1139,7 +1168,9 @@
     "oracle": "tokens",
     "oracleId": "USDCe",
     "status": "eol",
+    "createdAt": 1636468925,
     "retireReason": "rewards",
+    "retiredAt": 1656495284,
     "platformId": "bankerjoe",
     "assets": ["USDCe"],
     "risks": [
@@ -1153,7 +1184,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "network": "avax",
-    "createdAt": 1636468925,
     "zaps": [
       {
         "strategyId": "single"
@@ -1173,7 +1203,9 @@
     "oracle": "tokens",
     "oracleId": "USDT.e",
     "status": "eol",
+    "createdAt": 1636470449,
     "retireReason": "rewards",
+    "retiredAt": 1656495284,
     "platformId": "bankerjoe",
     "assets": ["USDTe"],
     "risks": [
@@ -1187,7 +1219,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
-    "createdAt": 1636470449,
     "zaps": [
       {
         "strategyId": "single"
@@ -1208,7 +1239,9 @@
     "oracle": "lps",
     "oracleId": "blizz-blzz-avax",
     "status": "eol",
+    "createdAt": 1636366466,
     "retireReason": "rewards",
+    "retiredAt": 1656496722,
     "platformId": "blizz",
     "assets": ["BLZZ", "AVAX"],
     "risks": [
@@ -1224,7 +1257,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x0f34919404a290e71fc6A510cB4a6aCb8D764b24",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x0f34919404a290e71fc6A510cB4a6aCb8D764b24",
     "network": "avax",
-    "createdAt": 1636366466,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1246,7 +1278,9 @@
     "oracle": "lps",
     "oracleId": "curve-avax-av3crv",
     "status": "eol",
+    "createdAt": 1652662923,
     "retireReason": "rewards",
+    "retiredAt": 1679479578,
     "platformId": "curve",
     "assets": ["DAIe", "USDCe", "USDTe"],
     "risks": [
@@ -1261,8 +1295,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://avax.curve.fi/aave/deposit",
     "removeLiquidityUrl": "https://avax.curve.fi/aave/withdraw",
-    "network": "avax",
-    "createdAt": 1652662923
+    "network": "avax"
   },
   {
     "id": "curve-avax-atricrypto",
@@ -1278,7 +1311,9 @@
     "oracle": "lps",
     "oracleId": "curve-avax-atricrypto",
     "status": "eol",
+    "createdAt": 1652662923,
     "retireReason": "rewards",
+    "retiredAt": 1695059742,
     "platformId": "curve",
     "assets": ["DAIe", "USDCe", "USDTe", "WBTCe", "WETHe"],
     "risks": [
@@ -1292,8 +1327,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://avax.curve.fi/atricrypto/deposit",
     "removeLiquidityUrl": "https://avax.curve.fi/atricrypto/withdraw",
-    "network": "avax",
-    "createdAt": 1652662923
+    "network": "avax"
   },
   {
     "id": "joe-joe",
@@ -1309,6 +1343,7 @@
     "oracle": "tokens",
     "oracleId": "JOE",
     "status": "active",
+    "createdAt": 1631011023,
     "platformId": "traderjoe",
     "assets": ["JOE"],
     "risks": [
@@ -1320,10 +1355,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "single",
-    "depositFee": 0.01,
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
     "network": "avax",
-    "createdAt": 1631011023,
     "zaps": [
       {
         "strategyId": "single"
@@ -1344,6 +1377,8 @@
     "oracle": "lps",
     "oracleId": "joe-mai-wavax",
     "status": "eol",
+    "createdAt": 1632848062,
+    "retiredAt": 1638351550,
     "platformId": "traderjoe",
     "assets": ["miMatic", "AVAX"],
     "risks": [
@@ -1359,7 +1394,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0x3b55e45fd6bd7d4724f5c47e0d1bcaedd059263e/AVAX",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0x3b55e45fd6bd7d4724f5c47e0d1bcaedd059263e/AVAX",
     "network": "avax",
-    "createdAt": 1632848062,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1381,7 +1415,9 @@
     "oracle": "lps",
     "oracleId": "joe-bnb-wavax",
     "status": "eol",
+    "createdAt": 1632232139,
     "retireReason": "rewards",
+    "retiredAt": 1655486707,
     "platformId": "traderjoe",
     "assets": ["BNB", "AVAX"],
     "risks": [
@@ -1397,7 +1433,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0x264c1383ea520f73dd837f915ef3a732e204a493/AVAX",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0x264c1383ea520f73dd837f915ef3a732e204a493/AVAX",
     "network": "avax",
-    "createdAt": 1632232139,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1419,7 +1454,9 @@
     "oracle": "lps",
     "oracleId": "joe-link.e-wavax",
     "status": "eol",
+    "createdAt": 1632125698,
     "retireReason": "rewards",
+    "retiredAt": 1655486707,
     "platformId": "traderjoe",
     "assets": ["LINKe", "AVAX"],
     "risks": [
@@ -1435,7 +1472,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0x5947bb275c521040051d82396192181b413227a3/AVAX",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0x5947bb275c521040051d82396192181b413227a3/AVAX",
     "network": "avax",
-    "createdAt": 1632125698,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1457,7 +1493,9 @@
     "oracle": "lps",
     "oracleId": "joe-time-wavax",
     "status": "eol",
+    "createdAt": 1631633988,
     "retireReason": "rewards",
+    "retiredAt": 1635945535,
     "platformId": "traderjoe",
     "assets": ["TIME", "AVAX"],
     "risks": [
@@ -1473,7 +1511,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xb54f16fB19478766A268F172C9480f8da1a7c9C3",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xb54f16fB19478766A268F172C9480f8da1a7c9C3",
     "network": "avax",
-    "createdAt": 1631633988,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1495,7 +1532,9 @@
     "oracle": "lps",
     "oracleId": "joe-joe-wavax",
     "status": "eol",
+    "createdAt": 1631119335,
     "retireReason": "rewards",
+    "retiredAt": 1700220596,
     "platformId": "traderjoe",
     "assets": ["JOE", "AVAX"],
     "risks": [
@@ -1511,7 +1550,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/avalanche/pool/v1/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd/AVAX",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/avalanche/pool/v1/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd/AVAX",
     "network": "avax",
-    "createdAt": 1631119335,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1533,7 +1571,9 @@
     "oracle": "lps",
     "oracleId": "joe-mim-wavax",
     "status": "eol",
+    "createdAt": 1630670273,
     "retireReason": "rewards",
+    "retiredAt": 1655135261,
     "platformId": "traderjoe",
     "assets": ["MIM", "AVAX"],
     "risks": [
@@ -1550,7 +1590,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x130966628846BFd36ff31a822705796e8cb8C18D",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x130966628846BFd36ff31a822705796e8cb8C18D",
     "network": "avax",
-    "createdAt": 1630670273,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1572,7 +1611,9 @@
     "oracle": "lps",
     "oracleId": "joe-wbtc.e-usdt.e",
     "status": "eol",
+    "createdAt": 1630496447,
     "retireReason": "rewards",
+    "retiredAt": 1635945535,
     "platformId": "traderjoe",
     "assets": ["WBTCe", "USDTe"],
     "risks": [
@@ -1588,7 +1629,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xc7198437980c041c805A1EDcbA50c1Ce5db95118/0x50b7545627a5162F82A992c33b87aDc75187B218",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0xc7198437980c041c805A1EDcbA50c1Ce5db95118/0x50b7545627a5162F82A992c33b87aDc75187B218",
     "network": "avax",
-    "createdAt": 1630496447,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1610,7 +1650,9 @@
     "oracle": "lps",
     "oracleId": "joe-wbtc.e-wavax",
     "status": "eol",
+    "createdAt": 1630496650,
     "retireReason": "rewards",
+    "retiredAt": 1655994042,
     "platformId": "traderjoe",
     "assets": ["WBTCe", "AVAX"],
     "risks": [
@@ -1626,7 +1668,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x50b7545627a5162F82A992c33b87aDc75187B218",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x50b7545627a5162F82A992c33b87aDc75187B218",
     "network": "avax",
-    "createdAt": 1630496650,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1648,7 +1689,9 @@
     "oracle": "lps",
     "oracleId": "joe-weth.e-wavax",
     "status": "eol",
+    "createdAt": 1630496791,
     "retireReason": "rewards",
+    "retiredAt": 1699192515,
     "platformId": "traderjoe",
     "assets": ["WETHe", "AVAX"],
     "risks": [
@@ -1664,7 +1707,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB/AVAX",
     "network": "avax",
-    "createdAt": 1630496791,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1686,7 +1728,9 @@
     "oracle": "lps",
     "oracleId": "olive-dai.e-usdt.e",
     "status": "eol",
+    "createdAt": 1630057114,
     "retireReason": "tvl",
+    "retiredAt": 1661508152,
     "platformId": "oliveswap",
     "assets": ["DAIe", "USDTe"],
     "risks": [
@@ -1702,7 +1746,6 @@
     "addLiquidityUrl": "https://avax.olive.cash/add/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "removeLiquidityUrl": "https://avax.olive.cash/remove/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
-    "createdAt": 1630057114,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1724,7 +1767,9 @@
     "oracle": "lps",
     "oracleId": "olive-busd.e-usdt.e",
     "status": "eol",
+    "createdAt": 1630054596,
     "retireReason": "tvl",
+    "retiredAt": 1680018611,
     "platformId": "oliveswap",
     "assets": ["BUSDe", "USDTe"],
     "risks": [
@@ -1740,7 +1785,6 @@
     "addLiquidityUrl": "https://avax.olive.cash/add/0x19860CCB0A68fd4213aB9D8266F7bBf05A8dDe98/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "removeLiquidityUrl": "https://avax.olive.cash/remove/0x19860CCB0A68fd4213aB9D8266F7bBf05A8dDe98/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
-    "createdAt": 1630054596,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1762,15 +1806,16 @@
     "oracle": "lps",
     "oracleId": "lyd-lyd-usdt",
     "status": "eol",
+    "createdAt": 1619706954,
     "retireReason": "rewards",
+    "retiredAt": 1630487344,
     "platformId": "lydia",
     "assets": ["LYD", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.lydia.finance/#/swap?inputCurrency=0x4c9b4e1ac6f24cde3660d5e4ef1ebf77c710c084&outputCurrency=0xde3a24028580884448a5397872046a019649b084",
     "addLiquidityUrl": "https://www.lydia.finance/#/add/0x4c9b4e1ac6f24cde3660d5e4ef1ebf77c710c084/0xde3a24028580884448a5397872046a019649b084",
     "removeLiquidityUrl": "https://www.lydia.finance/#/remove/0x4c9b4e1ac6f24cde3660d5e4ef1ebf77c710c084/0xde3a24028580884448a5397872046a019649b084",
-    "network": "avax",
-    "createdAt": 1619706954
+    "network": "avax"
   },
   {
     "id": "olive-olive-usdt-eol",
@@ -1786,14 +1831,15 @@
     "oracle": "lps",
     "oracleId": "olive-olive-usdt",
     "status": "eol",
+    "createdAt": 1617867390,
+    "retiredAt": 1630487344,
     "platformId": "oliveswap",
     "assets": ["OLIVE", "USDT"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.olive.cash/#/swap?outputCurrency=0x617724974218A18769020A70162165A539c07E8a",
     "addLiquidityUrl": "https://swap.olive.cash/#/add/0xde3A24028580884448a5397872046a019649b084/0x617724974218A18769020A70162165A539c07E8a",
     "removeLiquidityUrl": "https://swap.olive.cash/#/remove/0xde3A24028580884448a5397872046a019649b084/0x617724974218A18769020A70162165A539c07E8a",
-    "network": "avax",
-    "createdAt": 1617867390
+    "network": "avax"
   },
   {
     "id": "com-eth-avax-eol",
@@ -1809,15 +1855,16 @@
     "oracle": "lps",
     "oracleId": "com-eth-avax",
     "status": "eol",
+    "createdAt": 1616228400,
     "retireReason": "rewards",
+    "retiredAt": 1630487344,
     "platformId": "complus",
     "assets": ["ETH", "AVAX"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://avadex.complus.exchange/#/swap?inputCurrency=0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15&outputCurrency=AVAX",
     "addLiquidityUrl": "https://avadex.complus.exchange/#/add/AVAX/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15",
     "removeLiquidityUrl": "https://avadex.complus.exchange/#/remove/AVAX/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15",
-    "network": "avax",
-    "createdAt": 1616228400
+    "network": "avax"
   },
   {
     "id": "com-png-avax-eol",
@@ -1833,14 +1880,15 @@
     "oracle": "lps",
     "oracleId": "com-png-avax",
     "status": "eol",
+    "createdAt": 1616228454,
+    "retiredAt": 1620654547,
     "platformId": "complus",
     "assets": ["PNG", "AVAX"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://avadex.complus.exchange/#/swap?inputCurrency=0x60781C2586D68229fde47564546784ab3fACA982&outputCurrency=AVAX",
     "addLiquidityUrl": "https://avadex.complus.exchange/#/add/AVAX/0x60781C2586D68229fde47564546784ab3fACA982",
     "removeLiquidityUrl": "https://avadex.complus.exchange/#/remove/AVAX/0x60781C2586D68229fde47564546784ab3fACA982",
-    "network": "avax",
-    "createdAt": 1616228454
+    "network": "avax"
   },
   {
     "id": "png-sushi-avax-eol",
@@ -1856,7 +1904,9 @@
     "oracle": "lps",
     "oracleId": "png-sushi-avax",
     "status": "eol",
+    "createdAt": 1615919277,
     "retireReason": "rewards",
+    "retiredAt": 1630487344,
     "platformId": "pangolin",
     "assets": ["SUSHI", "AVAX"],
     "strategyTypeId": "lp",
@@ -1864,7 +1914,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x39cf1BD5f15fb22eC3D9Ff86b0727aFc203427cc",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x39cf1BD5f15fb22eC3D9Ff86b0727aFc203427cc",
     "network": "avax",
-    "createdAt": 1615919277,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1886,15 +1935,16 @@
     "oracle": "lps",
     "oracleId": "png-usdt-png",
     "status": "eol",
+    "createdAt": 1615919670,
     "retireReason": "rewards",
+    "retiredAt": 1630487344,
     "platformId": "pangolin",
     "assets": ["USDT", "PNG"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xde3A24028580884448a5397872046a019649b084",
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x60781C2586D68229fde47564546784ab3fACA982/0xde3A24028580884448a5397872046a019649b084",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x60781C2586D68229fde47564546784ab3fACA982/0xde3A24028580884448a5397872046a019649b084",
-    "network": "avax",
-    "createdAt": 1615919670
+    "network": "avax"
   },
   {
     "id": "png-eth-avax-eol",
@@ -1910,7 +1960,9 @@
     "oracle": "lps",
     "oracleId": "png-eth-avax",
     "status": "eol",
+    "createdAt": 1615742564,
     "retireReason": "rewards",
+    "retiredAt": 1630487344,
     "platformId": "pangolin",
     "assets": ["ETH", "AVAX"],
     "strategyTypeId": "lp",
@@ -1918,7 +1970,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15",
     "network": "avax",
-    "createdAt": 1615742564,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1940,7 +1991,9 @@
     "oracle": "lps",
     "oracleId": "mai-qi-wavax",
     "status": "eol",
+    "createdAt": 1651836388,
     "retireReason": "rewards",
+    "retiredAt": 1669881747,
     "platformId": "mai",
     "assets": ["QI", "AVAX"],
     "risks": [
@@ -1957,7 +2010,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xa56f9a54880afbc30cf29bb66d2d9adcdcaeadd6/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xa56f9a54880afbc30cf29bb66d2d9adcdcaeadd6/AVAX",
     "network": "avax",
-    "createdAt": 1651836388,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -1979,7 +2031,9 @@
     "oracle": "lps",
     "oracleId": "joe-cra-wavax",
     "status": "eol",
+    "createdAt": 1637589059,
     "retireReason": "rewards",
+    "retiredAt": 1655486707,
     "platformId": "traderjoe",
     "assets": ["CRA", "AVAX"],
     "risks": [
@@ -1995,7 +2049,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xa32608e873f9ddef944b24798db69d80bbb4d1ed/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xa32608e873f9ddef944b24798db69d80bbb4d1ed/AVAX",
     "network": "avax",
-    "createdAt": 1637589059,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2017,7 +2070,9 @@
     "oracle": "lps",
     "oracleId": "joe-gohm-wavax",
     "status": "eol",
+    "createdAt": 1638350965,
     "retireReason": "rewards",
+    "retiredAt": 1655486707,
     "platformId": "traderjoe",
     "assets": ["gOHM", "AVAX"],
     "risks": [
@@ -2033,7 +2088,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x321e7092a180bb43555132ec53aaa65a5bf84251/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x321e7092a180bb43555132ec53aaa65a5bf84251/AVAX",
     "network": "avax",
-    "createdAt": 1638350965,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2055,7 +2109,9 @@
     "oracle": "lps",
     "oracleId": "joe-usdt.e-dai.e",
     "status": "eol",
+    "createdAt": 1632133345,
     "retireReason": "rewards",
+    "retiredAt": 1641206004,
     "platformId": "traderjoe",
     "assets": ["USDTe", "DAIe"],
     "risks": [
@@ -2071,7 +2127,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xc7198437980c041c805a1edcba50c1ce5db95118/0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0xc7198437980c041c805a1edcba50c1ce5db95118/0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
     "network": "avax",
-    "createdAt": 1632133345,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2093,15 +2148,16 @@
     "oracle": "lps",
     "oracleId": "com-com-avax",
     "status": "eol",
+    "createdAt": 1616082096,
     "retireReason": "tvl",
+    "retiredAt": 1641206004,
     "platformId": "complus",
     "assets": ["COM", "AVAX"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://avadex.complus.exchange/#/swap?inputCurrency=0x3711c397B6c8F7173391361e27e67d72F252cAad&outputCurrency=AVAX",
     "addLiquidityUrl": "https://avadex.complus.exchange/#/add/AVAX/0x3711c397B6c8F7173391361e27e67d72F252cAad",
     "removeLiquidityUrl": "https://avadex.complus.exchange/#/remove/AVAX/0x3711c397B6c8F7173391361e27e67d72F252cAad",
-    "network": "avax",
-    "createdAt": 1616082096
+    "network": "avax"
   },
   {
     "id": "joe-usdc.e-usdt.e-eol",
@@ -2117,7 +2173,9 @@
     "oracle": "lps",
     "oracleId": "joe-usdc.e-usdt.e",
     "status": "eol",
+    "createdAt": 1632154081,
     "retireReason": "rewards",
+    "retiredAt": 1641206004,
     "platformId": "traderjoe",
     "assets": ["USDCe", "USDTe"],
     "risks": [
@@ -2133,7 +2191,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664/0xc7198437980c041c805a1edcba50c1ce5db95118",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664/0xc7198437980c041c805a1edcba50c1ce5db95118",
     "network": "avax",
-    "createdAt": 1632154081,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2155,7 +2212,9 @@
     "oracle": "lps",
     "oracleId": "joe-usdc.e-dai.e",
     "status": "eol",
+    "createdAt": 1630085264,
     "retireReason": "rewards",
+    "retiredAt": 1641206004,
     "platformId": "traderjoe",
     "assets": ["USDCe", "DAIe"],
     "risks": [
@@ -2171,7 +2230,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "network": "avax",
-    "createdAt": 1630085264,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2193,7 +2251,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-dai.e",
     "status": "eol",
+    "createdAt": 1630074200,
     "retireReason": "rewards",
+    "retiredAt": 1641206004,
     "platformId": "traderjoe",
     "assets": ["DAIe", "AVAX"],
     "risks": [
@@ -2209,7 +2269,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
     "network": "avax",
-    "createdAt": 1630074200,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2231,7 +2290,9 @@
     "oracle": "lps",
     "oracleId": "joe-usdc.e-usdc",
     "status": "eol",
+    "createdAt": 1639756286,
     "retireReason": "rewards",
+    "retiredAt": 1683906986,
     "platformId": "traderjoe",
     "assets": ["USDC", "USDCe"],
     "risks": [
@@ -2247,7 +2308,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664/0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664/0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e",
     "network": "avax",
-    "createdAt": 1639756286,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2269,7 +2329,9 @@
     "oracle": "lps",
     "oracleId": "joe-ptp-wavax",
     "status": "eol",
+    "createdAt": 1639751352,
     "retireReason": "rewards",
+    "retiredAt": 1676063858,
     "platformId": "traderjoe",
     "assets": ["PTP", "AVAX"],
     "risks": [
@@ -2285,7 +2347,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x22d4002028f537599bE9f666d1c4Fa138522f9c8/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x22d4002028f537599bE9f666d1c4Fa138522f9c8/AVAX",
     "network": "avax",
-    "createdAt": 1639751352,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2307,7 +2368,9 @@
     "oracle": "lps",
     "oracleId": "curve-avax-mai",
     "status": "eol",
+    "createdAt": 1651836389,
     "retireReason": "rewards",
+    "retiredAt": 1695146858,
     "platformId": "mai",
     "assets": ["MAI", "DAIe", "USDCe", "USDTe"],
     "risks": [
@@ -2323,8 +2386,7 @@
     "depositFee": 0.005,
     "addLiquidityUrl": "https://avax.curve.fi/factory/7/deposit",
     "removeLiquidityUrl": "https://avax.curve.fi/factory/7/withdraw",
-    "network": "avax",
-    "createdAt": 1651836389
+    "network": "avax"
   },
   {
     "id": "joe-wavax-bifi-eol",
@@ -2340,7 +2402,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-bifi",
     "status": "eol",
+    "createdAt": 1632231693,
     "retireReason": "rewards",
+    "retiredAt": 1641206004,
     "platformId": "traderjoe",
     "assets": ["oldBIFI", "AVAX"],
     "risks": [
@@ -2356,7 +2420,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xd6070ae98b8069de6b494332d1a1a81b6179d960",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xd6070ae98b8069de6b494332d1a1a81b6179d960",
     "network": "avax",
-    "createdAt": 1632231693,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2378,7 +2441,9 @@
     "oracle": "lps",
     "oracleId": "joe-syn-wavax",
     "status": "eol",
+    "createdAt": 1630670690,
     "retireReason": "rewards",
+    "retiredAt": 1641206004,
     "platformId": "traderjoe",
     "assets": ["SYN", "AVAX"],
     "risks": [
@@ -2394,7 +2459,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x1f1E7c893855525b303f99bDF5c3c05Be09ca251",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x1f1E7c893855525b303f99bDF5c3c05Be09ca251",
     "network": "avax",
-    "createdAt": 1630670690,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2416,7 +2480,9 @@
     "oracle": "lps",
     "oracleId": "joe-awool-wavax",
     "status": "eol",
+    "createdAt": 1639412305,
     "retireReason": "rewards",
+    "retiredAt": 1643710675,
     "platformId": "traderjoe",
     "assets": ["aWOOL", "AVAX"],
     "risks": [
@@ -2432,7 +2498,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x5eDE350E84223fb50775fD91a723F2ca71034cf7/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x5eDE350E84223fb50775fD91a723F2ca71034cf7/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
     "network": "avax",
-    "createdAt": 1639412305,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2453,7 +2518,9 @@
     "oracle": "tokens",
     "oracleId": "PNG",
     "status": "eol",
+    "createdAt": 1642706787,
     "retireReason": "tvl",
+    "retiredAt": 1700220596,
     "platformId": "pangolin",
     "assets": ["PNG"],
     "risks": [
@@ -2467,7 +2534,6 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x60781C2586D68229fde47564546784ab3fACA982",
     "network": "avax",
-    "createdAt": 1642706787,
     "zaps": [
       {
         "strategyId": "single"
@@ -2488,7 +2554,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-more",
     "status": "eol",
+    "createdAt": 1643314704,
     "retireReason": "rewards",
+    "retiredAt": 1657620389,
     "platformId": "traderjoe",
     "assets": ["MORE", "AVAX"],
     "risks": [
@@ -2504,7 +2572,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xd9d90f882cddd6063959a9d837b05cb748718a05",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xd9d90f882cddd6063959a9d837b05cb748718a05",
     "network": "avax",
-    "createdAt": 1643314704,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2526,7 +2593,9 @@
     "oracle": "lps",
     "oracleId": "joe-gmx-wavax",
     "status": "eol",
+    "createdAt": 1643314903,
     "retireReason": "rewards",
+    "retiredAt": 1657620389,
     "platformId": "traderjoe",
     "assets": ["GMX", "AVAX"],
     "risks": [
@@ -2542,7 +2611,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x62edc0692bd897d2295872a9ffcac5425011c661/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x62edc0692bd897d2295872a9ffcac5425011c661/AVAX",
     "network": "avax",
-    "createdAt": 1643314903,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2564,7 +2632,9 @@
     "oracle": "lps",
     "oracleId": "joe-usdt-usdt.e",
     "status": "eol",
+    "createdAt": 1643233920,
     "retireReason": "rewards",
+    "retiredAt": 1683906986,
     "platformId": "traderjoe",
     "assets": ["USDT", "USDTe"],
     "risks": [
@@ -2580,7 +2650,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7/0xc7198437980c041c805a1edcba50c1ce5db95118",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7/0xc7198437980c041c805a1edcba50c1ce5db95118",
     "network": "avax",
-    "createdAt": 1643233920,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2602,7 +2671,9 @@
     "oracle": "lps",
     "oracleId": "curve-avax-mim",
     "status": "eol",
+    "createdAt": 1637146468,
     "retireReason": "rewards",
+    "retiredAt": 1643710675,
     "platformId": "mim",
     "assets": ["MIM", "USDCe", "USDTe"],
     "risks": [
@@ -2617,8 +2688,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://avax.curve.fi/factory/4/deposit",
     "removeLiquidityUrl": "https://avax.curve.fi/factory/4/withdraw",
-    "network": "avax",
-    "createdAt": 1637146468
+    "network": "avax"
   },
   {
     "id": "pangolin-png-pause-eol",
@@ -2633,7 +2703,9 @@
     "oracle": "tokens",
     "oracleId": "PNG",
     "status": "eol",
+    "createdAt": 1631361439,
     "retireReason": "rewards",
+    "retiredAt": 1643710675,
     "platformId": "pangolin",
     "assets": ["PNG"],
     "risks": [
@@ -2647,7 +2719,6 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x60781C2586D68229fde47564546784ab3fACA982",
     "network": "avax",
-    "createdAt": 1631361439,
     "zaps": [
       {
         "strategyId": "single"
@@ -2668,7 +2739,9 @@
     "oracle": "lps",
     "oracleId": "pangolin-usdc.e-wavax",
     "status": "eol",
+    "createdAt": 1630269626,
     "retireReason": "rewards",
+    "retiredAt": 1643710675,
     "platformId": "pangolin",
     "assets": ["USDCe", "AVAX"],
     "risks": [
@@ -2684,7 +2757,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "network": "avax",
-    "createdAt": 1630269626,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2706,7 +2778,9 @@
     "oracle": "lps",
     "oracleId": "pangolin-png-qi",
     "status": "eol",
+    "createdAt": 1629466316,
     "retireReason": "rewards",
+    "retiredAt": 1643710675,
     "platformId": "pangolin",
     "assets": ["aQI", "PNG"],
     "risks": [
@@ -2722,7 +2796,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x60781C2586D68229fde47564546784ab3fACA982/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x60781C2586D68229fde47564546784ab3fACA982/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
     "network": "avax",
-    "createdAt": 1629466316,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2744,7 +2817,9 @@
     "oracle": "lps",
     "oracleId": "pangolin-qi-wavax",
     "status": "eol",
+    "createdAt": 1629466194,
     "retireReason": "rewards",
+    "retiredAt": 1643710675,
     "platformId": "pangolin",
     "assets": ["aQI", "AVAX"],
     "risks": [
@@ -2760,7 +2835,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
     "network": "avax",
-    "createdAt": 1629466194,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2782,7 +2856,9 @@
     "oracle": "lps",
     "oracleId": "pangolin-wavax-xava",
     "status": "eol",
+    "createdAt": 1629305419,
     "retireReason": "rewards",
+    "retiredAt": 1643710675,
     "platformId": "pangolin",
     "assets": ["XAVA", "AVAX"],
     "risks": [
@@ -2798,7 +2874,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x5947BB275c521040051D82396192181b413227A3",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x5947BB275c521040051D82396192181b413227A3",
     "network": "avax",
-    "createdAt": 1629305419,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2820,7 +2895,9 @@
     "oracle": "lps",
     "oracleId": "pangolin-weth.e-png",
     "status": "eol",
+    "createdAt": 1629306038,
     "retireReason": "rewards",
+    "retiredAt": 1643710675,
     "platformId": "pangolin",
     "assets": ["WETHe", "PNG"],
     "risks": [
@@ -2836,7 +2913,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
-    "createdAt": 1629306038,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2858,7 +2934,9 @@
     "oracle": "lps",
     "oracleId": "pangolin-wavax-dai.e",
     "status": "eol",
+    "createdAt": 1629305758,
     "retireReason": "rewards",
+    "retiredAt": 1643710675,
     "platformId": "pangolin",
     "assets": ["DAIe", "AVAX"],
     "risks": [
@@ -2874,7 +2952,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
     "network": "avax",
-    "createdAt": 1629305758,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2896,7 +2973,9 @@
     "oracle": "lps",
     "oracleId": "pangolin-weth.e-wavax",
     "status": "eol",
+    "createdAt": 1629305055,
     "retireReason": "rewards",
+    "retiredAt": 1643710675,
     "platformId": "pangolin",
     "assets": ["WETHe", "AVAX"],
     "risks": [
@@ -2912,7 +2991,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
-    "createdAt": 1629305055,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2934,7 +3012,9 @@
     "oracle": "lps",
     "oracleId": "pangolin-wavax-usdt.e",
     "status": "eol",
+    "createdAt": 1629304913,
     "retireReason": "rewards",
+    "retiredAt": 1643710675,
     "platformId": "pangolin",
     "assets": ["USDTe", "AVAX"],
     "risks": [
@@ -2950,7 +3030,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
-    "createdAt": 1629304913,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -2972,7 +3051,9 @@
     "oracle": "lps",
     "oracleId": "pangolin-wbtc.e-wavax",
     "status": "eol",
+    "createdAt": 1629297701,
     "retireReason": "rewards",
+    "retiredAt": 1643710675,
     "platformId": "pangolin",
     "assets": ["WBTCe", "AVAX"],
     "risks": [
@@ -2988,7 +3069,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x50b7545627a5162F82A992c33b87aDc75187B218",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x50b7545627a5162F82A992c33b87aDc75187B218",
     "network": "avax",
-    "createdAt": 1629297701,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3010,7 +3090,9 @@
     "oracle": "lps",
     "oracleId": "png-png-avax",
     "status": "eol",
+    "createdAt": 1615742387,
     "retireReason": "rewards",
+    "retiredAt": 1643710675,
     "platformId": "pangolin",
     "assets": ["PNG", "AVAX"],
     "risks": [
@@ -3026,7 +3108,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x60781C2586D68229fde47564546784ab3fACA982",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x60781C2586D68229fde47564546784ab3fACA982",
     "network": "avax",
-    "createdAt": 1615742387,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3048,7 +3129,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-xava",
     "status": "eol",
+    "createdAt": 1643391049,
     "retireReason": "rewards",
+    "retiredAt": 1655486707,
     "platformId": "traderjoe",
     "assets": ["XAVA", "AVAX"],
     "risks": [
@@ -3064,7 +3147,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xd1c3f94de7e5b45fa4edbba472491a9f4b166fc4",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xd1c3f94DE7e5B45fa4eDBBA472491a9f4B166FC4/AVAX",
     "network": "avax",
-    "createdAt": 1643391049,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3086,7 +3168,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-dcau",
     "status": "eol",
+    "createdAt": 1643387033,
     "retireReason": "rewards",
+    "retiredAt": 1655486707,
     "platformId": "traderjoe",
     "assets": ["DCAU", "AVAX"],
     "risks": [
@@ -3102,7 +3186,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x100Cc3a819Dd3e8573fD2E46D1E66ee866068f30/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x100Cc3a819Dd3e8573fD2E46D1E66ee866068f30/AVAX",
     "network": "avax",
-    "createdAt": 1643387033,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3124,6 +3207,7 @@
     "oracle": "lps",
     "oracleId": "png-link.e-wavax",
     "status": "active",
+    "createdAt": 1643442618,
     "platformId": "pangolin",
     "assets": ["LINKe", "AVAX"],
     "risks": [
@@ -3139,7 +3223,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x5947BB275c521040051D82396192181b413227A3/AVAX",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x5947BB275c521040051D82396192181b413227A3/AVAX",
     "network": "avax",
-    "createdAt": 1643442618,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3161,7 +3244,9 @@
     "oracle": "lps",
     "oracleId": "png-jewel-wavax",
     "status": "eol",
+    "createdAt": 1643431788,
     "retireReason": "tvl",
+    "retiredAt": 1661508152,
     "platformId": "pangolin",
     "assets": ["JEWEL", "AVAX"],
     "risks": [
@@ -3177,7 +3262,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x4f60a160D8C2DDdaAfe16FCC57566dB84D674BD6/AVAX",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x4f60a160D8C2DDdaAfe16FCC57566dB84D674BD6/AVAX",
     "network": "avax",
-    "createdAt": 1643431788,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3199,7 +3283,9 @@
     "oracle": "lps",
     "oracleId": "grape-grape-mim",
     "status": "eol",
+    "createdAt": 1643717100,
     "retireReason": "rewards",
+    "retiredAt": 1675811643,
     "platformId": "grape",
     "assets": ["GRAPE", "MIM"],
     "risks": [
@@ -3216,7 +3302,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x130966628846bfd36ff31a822705796e8cb8c18d/0x5541d83efad1f281571b343977648b75d95cdac2",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x130966628846bfd36ff31a822705796e8cb8c18d/0x5541d83efad1f281571b343977648b75d95cdac2",
     "network": "avax",
-    "createdAt": 1643717100,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3238,7 +3323,9 @@
     "oracle": "lps",
     "oracleId": "grape-wine-mim",
     "status": "eol",
+    "createdAt": 1643718763,
     "retireReason": "rewards",
+    "retiredAt": 1675811643,
     "platformId": "grape",
     "assets": ["WINE", "MIM"],
     "risks": [
@@ -3255,7 +3342,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x130966628846bfd36ff31a822705796e8cb8c18d/0xC55036B5348CfB45a932481744645985010d3A44",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x130966628846bfd36ff31a822705796e8cb8c18d/0xC55036B5348CfB45a932481744645985010d3A44",
     "network": "avax",
-    "createdAt": 1643718763,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3277,6 +3363,7 @@
     "oracle": "lps",
     "oracleId": "png-usdc.e-wavax",
     "status": "active",
+    "createdAt": 1643458455,
     "platformId": "pangolin",
     "assets": ["USDCe", "AVAX"],
     "risks": [
@@ -3292,7 +3379,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
     "network": "avax",
-    "createdAt": 1643458455,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3314,7 +3400,9 @@
     "oracle": "lps",
     "oracleId": "png-ust-wavax",
     "status": "eol",
+    "createdAt": 1643836585,
     "retireReason": "rewards",
+    "retiredAt": 1655214018,
     "platformId": "pangolin",
     "assets": ["UST", "AVAX"],
     "risks": [
@@ -3331,7 +3419,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x260Bbf5698121EB85e7a74f2E45E16Ce762EbE11",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x260Bbf5698121EB85e7a74f2E45E16Ce762EbE11",
     "network": "avax",
-    "createdAt": 1643836585,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3353,7 +3440,9 @@
     "oracle": "lps",
     "oracleId": "png-ust-usdc",
     "status": "eol",
+    "createdAt": 1643839674,
     "retireReason": "rewards",
+    "retiredAt": 1655214018,
     "platformId": "pangolin",
     "assets": ["UST", "USDC"],
     "risks": [
@@ -3369,7 +3458,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E/0x260Bbf5698121EB85e7a74f2E45E16Ce762EbE11",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E/0x260Bbf5698121EB85e7a74f2E45E16Ce762EbE11",
     "network": "avax",
-    "createdAt": 1643839674,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3390,7 +3478,9 @@
     "oracle": "tokens",
     "oracleId": "MIM",
     "status": "eol",
+    "createdAt": 1636455936,
     "retireReason": "rewards",
+    "retiredAt": 1646152305,
     "platformId": "bankerjoe",
     "assets": ["MIM"],
     "risks": [
@@ -3405,7 +3495,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x130966628846BFd36ff31a822705796e8cb8C18D",
     "network": "avax",
-    "createdAt": 1636455936,
     "zaps": [
       {
         "strategyId": "single"
@@ -3426,7 +3515,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-domi",
     "status": "eol",
+    "createdAt": 1644407428,
     "retireReason": "rewards",
+    "retiredAt": 1657620389,
     "platformId": "traderjoe",
     "assets": ["DOMI", "AVAX"],
     "risks": [
@@ -3442,7 +3533,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xFc6Da929c031162841370af240dEc19099861d3B/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xFc6Da929c031162841370af240dEc19099861d3B/AVAX",
     "network": "avax",
-    "createdAt": 1644407428,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3464,7 +3554,9 @@
     "oracle": "lps",
     "oracleId": "png-luna-wavax",
     "status": "eol",
+    "createdAt": 1644484239,
     "retireReason": "rewards",
+    "retiredAt": 1655214018,
     "platformId": "pangolin",
     "assets": ["LUNA", "AVAX"],
     "risks": [
@@ -3480,7 +3572,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x120AD3e5A7c796349e591F1570D9f7980F4eA9cb",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x120AD3e5A7c796349e591F1570D9f7980F4eA9cb",
     "network": "avax",
-    "createdAt": 1644484239,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3502,7 +3593,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-savax",
     "status": "eol",
+    "createdAt": 1645036500,
     "retireReason": "rewards",
+    "retiredAt": 1682962654,
     "platformId": "traderjoe",
     "assets": ["sAVAX", "AVAX"],
     "risks": [
@@ -3518,7 +3611,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE/AVAX",
     "network": "avax",
-    "createdAt": 1645036500,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3540,7 +3632,9 @@
     "oracle": "lps",
     "oracleId": "curve-avax-ren",
     "status": "eol",
+    "createdAt": 1652662923,
     "retireReason": "rewards",
+    "retiredAt": 1671728454,
     "platformId": "curve",
     "assets": ["WBTCe", "renBTC"],
     "risks": [
@@ -3554,8 +3648,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://avax.curve.fi/ren/deposit",
     "removeLiquidityUrl": "https://avax.curve.fi/ren/withdraw",
-    "network": "avax",
-    "createdAt": 1652662923
+    "network": "avax"
   },
   {
     "id": "joe-ampl-wavax-eol",
@@ -3571,7 +3664,9 @@
     "oracle": "lps",
     "oracleId": "joe-ampl-wavax",
     "status": "eol",
+    "createdAt": 1636308849,
     "retireReason": "tvl",
+    "retiredAt": 1646152305,
     "platformId": "traderjoe",
     "assets": ["AMPL", "AVAX"],
     "risks": [
@@ -3587,7 +3682,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x027dbcA046ca156De9622cD1e2D907d375e53aa7",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x027dbcA046ca156De9622cD1e2D907d375e53aa7",
     "network": "avax",
-    "createdAt": 1636308849,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3609,7 +3703,9 @@
     "oracle": "lps",
     "oracleId": "sing-usdt.e-sing",
     "status": "eol",
+    "createdAt": 1633701180,
     "retireReason": "tvl",
+    "retiredAt": 1646152305,
     "platformId": "singular",
     "assets": ["aSING", "USDTe"],
     "strategyTypeId": "lp",
@@ -3617,7 +3713,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xc7198437980c041c805a1edcba50c1ce5db95118/0xf9a075c9647e91410bf6c402bdf166e1540f67f0",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0xc7198437980c041c805a1edcba50c1ce5db95118/0xf9a075c9647e91410bf6c402bdf166e1540f67f0",
     "network": "avax",
-    "createdAt": 1633701180,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3638,7 +3733,9 @@
     "oracle": "tokens",
     "oracleId": "USDT.e",
     "status": "eol",
+    "createdAt": 1633529509,
     "retireReason": "tvl",
+    "retiredAt": 1646152305,
     "platformId": "aave",
     "assets": ["USDTe"],
     "risks": [
@@ -3653,7 +3750,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
-    "createdAt": 1633529509,
     "zaps": [
       {
         "strategyId": "single"
@@ -3674,7 +3770,9 @@
     "oracle": "lps",
     "oracleId": "olive-olive-avax",
     "status": "eol",
+    "createdAt": 1617865515,
     "retireReason": "tvl",
+    "retiredAt": 1646152305,
     "platformId": "oliveswap",
     "assets": ["OLIVE", "AVAX"],
     "risks": [
@@ -3690,7 +3788,6 @@
     "addLiquidityUrl": "https://avax.olive.cash/add/AVAX/0x617724974218A18769020A70162165A539c07E8a",
     "removeLiquidityUrl": "https://avax.olive.cash/remove/AVAX/0x617724974218A18769020A70162165A539c07E8a",
     "network": "avax",
-    "createdAt": 1617865515,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3712,7 +3809,9 @@
     "oracle": "lps",
     "oracleId": "ripae-pavax-wavax",
     "status": "eol",
+    "createdAt": 1646045101,
     "retireReason": "rewards",
+    "retiredAt": 1677578616,
     "platformId": "ripae",
     "assets": ["pAVAX", "AVAX"],
     "risks": [
@@ -3729,7 +3828,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x6ca558bd3eaB53DA1B25aB97916dd14bf6CFEe4E",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x6ca558bd3eaB53DA1B25aB97916dd14bf6CFEe4E",
     "network": "avax",
-    "createdAt": 1646045101,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3751,7 +3849,9 @@
     "oracle": "lps",
     "oracleId": "ripae-pae-wavax",
     "status": "eol",
+    "createdAt": 1646045101,
     "retireReason": "rewards",
+    "retiredAt": 1677578616,
     "platformId": "ripae",
     "assets": ["PAE", "AVAX"],
     "risks": [
@@ -3767,7 +3867,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x9466Ab927611725B9AF76b9F31B2F879Ff14233d",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x9466Ab927611725B9AF76b9F31B2F879Ff14233d",
     "network": "avax",
-    "createdAt": 1646045101,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3789,7 +3888,9 @@
     "oracle": "lps",
     "oracleId": "png-acre-wavax",
     "status": "eol",
+    "createdAt": 1645887882,
     "retireReason": "rewards",
+    "retiredAt": 1655214018,
     "platformId": "pangolin",
     "assets": ["ACRE", "AVAX"],
     "risks": [
@@ -3805,7 +3906,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x00EE200Df31b869a321B10400Da10b561F3ee60d",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x00EE200Df31b869a321B10400Da10b561F3ee60d",
     "network": "avax",
-    "createdAt": 1645887882,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3827,7 +3927,9 @@
     "oracle": "lps",
     "oracleId": "png-tus-wavax",
     "status": "eol",
+    "createdAt": 1645972427,
     "retireReason": "rewards",
+    "retiredAt": 1655214018,
     "platformId": "pangolin",
     "assets": ["TUS", "AVAX"],
     "risks": [
@@ -3843,7 +3945,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xf693248F96Fe03422FEa95aC0aFbBBc4a8FdD172",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xf693248F96Fe03422FEa95aC0aFbBBc4a8FdD172",
     "network": "avax",
-    "createdAt": 1645972427,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3865,7 +3966,9 @@
     "oracle": "lps",
     "oracleId": "joe-joe-usdc",
     "status": "eol",
+    "createdAt": 1646825243,
     "retireReason": "tvl",
+    "retiredAt": 1661508152,
     "platformId": "traderjoe",
     "assets": ["JOE", "USDC"],
     "risks": [
@@ -3881,7 +3984,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd/0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd/0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e",
     "network": "avax",
-    "createdAt": 1646825243,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3903,7 +4005,9 @@
     "oracle": "lps",
     "oracleId": "joe-mai-wavax-v2",
     "status": "eol",
+    "createdAt": 1636310053,
     "retireReason": "rewards",
+    "retiredAt": 1648802295,
     "platformId": "traderjoe",
     "assets": ["MAI", "AVAX"],
     "risks": [
@@ -3920,7 +4024,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x5c49b268c9841AFF1Cc3B0a418ff5c3442eE3F3b",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x5c49b268c9841AFF1Cc3B0a418ff5c3442eE3F3b",
     "network": "avax",
-    "createdAt": 1636310053,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3942,7 +4045,9 @@
     "oracle": "lps",
     "oracleId": "joe-joe-usdc.e",
     "status": "eol",
+    "createdAt": 1632845828,
     "retireReason": "rewards",
+    "retiredAt": 1648802295,
     "platformId": "traderjoe",
     "assets": ["JOE", "USDCe"],
     "risks": [
@@ -3958,7 +4063,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "network": "avax",
-    "createdAt": 1632845828,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -3980,7 +4084,9 @@
     "oracle": "lps",
     "oracleId": "joe-joe-usdt.e",
     "status": "eol",
+    "createdAt": 1631119603,
     "retireReason": "rewards",
+    "retiredAt": 1648802295,
     "platformId": "traderjoe",
     "assets": ["JOE", "USDTe"],
     "risks": [
@@ -3996,7 +4102,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
     "network": "avax",
-    "createdAt": 1631119603,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4018,7 +4123,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-usdc",
     "status": "eol",
+    "createdAt": 1646426309,
     "retireReason": "rewards",
+    "retiredAt": 1699192515,
     "platformId": "traderjoe",
     "assets": ["USDC", "AVAX"],
     "risks": [
@@ -4034,7 +4141,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E/AVAX",
     "network": "avax",
-    "createdAt": 1646426309,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4056,6 +4162,7 @@
     "oracle": "lps",
     "oracleId": "png-usdc.e-usdc",
     "status": "active",
+    "createdAt": 1646973680,
     "platformId": "pangolin",
     "assets": ["USDC", "USDCe"],
     "risks": [
@@ -4071,7 +4178,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "network": "avax",
-    "createdAt": 1646973680,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4093,7 +4199,9 @@
     "oracle": "lps",
     "oracleId": "png-wavax-spell",
     "status": "eol",
+    "createdAt": 1646976330,
     "retireReason": "rewards",
+    "retiredAt": 1655214018,
     "platformId": "pangolin",
     "assets": ["SPELL", "AVAX"],
     "risks": [
@@ -4109,7 +4217,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xCE1bFFBD5374Dac86a2893119683F4911a2F7814",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xCE1bFFBD5374Dac86a2893119683F4911a2F7814",
     "network": "avax",
-    "createdAt": 1646976330,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4131,6 +4238,7 @@
     "oracle": "lps",
     "oracleId": "png-wavax-usdc",
     "status": "active",
+    "createdAt": 1647003159,
     "platformId": "pangolin",
     "assets": ["USDC", "AVAX"],
     "risks": [
@@ -4146,7 +4254,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "network": "avax",
-    "createdAt": 1647003159,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4168,7 +4275,9 @@
     "oracle": "lps",
     "oracleId": "png-wavax-ime",
     "status": "eol",
+    "createdAt": 1647002201,
     "retireReason": "rewards",
+    "retiredAt": 1655214018,
     "platformId": "pangolin",
     "assets": ["IME", "AVAX"],
     "risks": [
@@ -4184,7 +4293,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xF891214fdcF9cDaa5fdC42369eE4F27F226AdaD6",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xF891214fdcF9cDaa5fdC42369eE4F27F226AdaD6",
     "network": "avax",
-    "createdAt": 1647002201,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4206,7 +4314,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-pefi2",
     "status": "eol",
+    "createdAt": 1643975170,
     "retireReason": "rewards",
+    "retiredAt": 1648802295,
     "platformId": "traderjoe",
     "assets": ["PEFI", "AVAX"],
     "risks": [
@@ -4222,7 +4332,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xe896cdeaac9615145c0ca09c8cd5c25bced6384c",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xe896cdeaac9615145c0ca09c8cd5c25bced6384c",
     "network": "avax",
-    "createdAt": 1643975170,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4244,7 +4353,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-vtx",
     "status": "eol",
+    "createdAt": 1646470439,
     "retireReason": "rewards",
+    "retiredAt": 1657620389,
     "platformId": "traderjoe",
     "assets": ["VTX", "AVAX"],
     "risks": [
@@ -4260,7 +4371,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x5817D4F0b62A59b17f75207DA1848C2cE75e7AF4",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x5817D4F0b62A59b17f75207DA1848C2cE75e7AF4",
     "network": "avax",
-    "createdAt": 1646470439,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4282,7 +4392,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-ecd",
     "status": "eol",
+    "createdAt": 1646470439,
     "retireReason": "rewards",
+    "retiredAt": 1661508152,
     "platformId": "traderjoe",
     "assets": ["ECD", "AVAX"],
     "risks": [
@@ -4298,7 +4410,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xeb8343D5284CaEc921F035207ca94DB6BAaaCBcd",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xeb8343D5284CaEc921F035207ca94DB6BAaaCBcd",
     "network": "avax",
-    "createdAt": 1646470439,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4320,7 +4431,9 @@
     "oracle": "lps",
     "oracleId": "joe-deg-wavax",
     "status": "eol",
+    "createdAt": 1647256112,
     "retireReason": "rewards",
+    "retiredAt": 1655486707,
     "platformId": "traderjoe",
     "assets": ["DEG", "AVAX"],
     "risks": [
@@ -4336,7 +4449,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9f285507Ea5B4F33822CA7aBb5EC8953ce37A645/AVAX#/",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9f285507Ea5B4F33822CA7aBb5EC8953ce37A645/AVAX#/",
     "network": "avax",
-    "createdAt": 1647256112,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4357,7 +4469,9 @@
     "oracle": "tokens",
     "oracleId": "LINK.e",
     "status": "eol",
+    "createdAt": 1636458630,
     "retireReason": "tvl",
+    "retiredAt": 1648802295,
     "platformId": "bankerjoe",
     "assets": ["LINKe"],
     "risks": [
@@ -4371,7 +4485,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x5947BB275c521040051D82396192181b413227A3",
     "network": "avax",
-    "createdAt": 1636458630,
     "zaps": [
       {
         "strategyId": "single"
@@ -4392,7 +4505,9 @@
     "oracle": "lps",
     "oracleId": "png-bribe-wavax",
     "status": "eol",
+    "createdAt": 1645972427,
     "retireReason": "rewards",
+    "retiredAt": 1648802295,
     "platformId": "pangolin",
     "assets": ["BRIBE", "AVAX"],
     "risks": [
@@ -4408,7 +4523,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/ 0xCe2fbed816E320258161CeD52c2d0CEBcdFd8136",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/ 0xCe2fbed816E320258161CeD52c2d0CEBcdFd8136",
     "network": "avax",
-    "createdAt": 1645972427,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4430,7 +4544,9 @@
     "oracle": "lps",
     "oracleId": "joe-link.e-usdc.e",
     "status": "eol",
+    "createdAt": 1643975317,
     "retireReason": "rewards",
+    "retiredAt": 1648802295,
     "platformId": "traderjoe",
     "assets": ["USDCe", "LINKe"],
     "risks": [
@@ -4446,7 +4562,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x5947bb275c521040051d82396192181b413227a3/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x5947bb275c521040051d82396192181b413227a3/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "network": "avax",
-    "createdAt": 1643975317,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4468,7 +4583,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-cly",
     "status": "eol",
+    "createdAt": 1639753516,
     "retireReason": "rewards",
+    "retiredAt": 1648802295,
     "platformId": "traderjoe",
     "assets": ["CLY", "AVAX"],
     "risks": [
@@ -4484,7 +4601,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xec3492a2508DDf4FDc0cD76F31f340b30d1793e6",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xec3492a2508DDf4FDc0cD76F31f340b30d1793e6",
     "network": "avax",
-    "createdAt": 1639753516,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4506,7 +4622,9 @@
     "oracle": "lps",
     "oracleId": "joe-klo-wavax",
     "status": "eol",
+    "createdAt": 1639411464,
     "retireReason": "rewards",
+    "retiredAt": 1648802295,
     "platformId": "traderjoe",
     "assets": ["KLO", "AVAX"],
     "risks": [
@@ -4522,7 +4640,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xb27c8941a7Df8958A1778c0259f76D1F8B711C35",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xb27c8941a7Df8958A1778c0259f76D1F8B711C35",
     "network": "avax",
-    "createdAt": 1639411464,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4544,7 +4661,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-spell",
     "status": "eol",
+    "createdAt": 1631896399,
     "retireReason": "rewards",
+    "retiredAt": 1648802295,
     "platformId": "traderjoe",
     "assets": ["SPELL", "AVAX"],
     "risks": [
@@ -4560,7 +4679,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xCE1bFFBD5374Dac86a2893119683F4911a2F7814",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xCE1bFFBD5374Dac86a2893119683F4911a2F7814",
     "network": "avax",
-    "createdAt": 1631896399,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4582,7 +4700,9 @@
     "oracle": "lps",
     "oracleId": "joe-ape-wavax",
     "status": "eol",
+    "createdAt": 1648112467,
     "retireReason": "rewards",
+    "retiredAt": 1655486707,
     "platformId": "traderjoe",
     "assets": ["APE", "AVAX"],
     "risks": [
@@ -4598,7 +4718,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x0802d66f029c46E042b74d543fC43B6705ccb4ba/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x0802d66f029c46E042b74d543fC43B6705ccb4ba/AVAX",
     "network": "avax",
-    "createdAt": 1648112467,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4620,7 +4739,9 @@
     "oracle": "lps",
     "oracleId": "joe-fly-wavax",
     "status": "eol",
+    "createdAt": 1648112061,
     "retireReason": "tvl",
+    "retiredAt": 1661508152,
     "platformId": "traderjoe",
     "assets": ["FLY", "AVAX"],
     "risks": [
@@ -4636,7 +4757,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x78Ea3fef1c1f07348199Bf44f45b803b9B0Dbe28/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x78Ea3fef1c1f07348199Bf44f45b803b9B0Dbe28/AVAX",
     "network": "avax",
-    "createdAt": 1648112061,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4658,7 +4778,9 @@
     "oracle": "lps",
     "oracleId": "png-wavax-ncash",
     "status": "eol",
+    "createdAt": 1648734327,
     "retireReason": "rewards",
+    "retiredAt": 1685979260,
     "platformId": "pangolin",
     "assets": ["NCASH", "AVAX"],
     "risks": [
@@ -4674,7 +4796,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xc69eba65e87889f0805db717af06797055a0ba07",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xc69eba65e87889f0805db717af06797055a0ba07",
     "network": "avax",
-    "createdAt": 1648734327,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4696,7 +4817,9 @@
     "oracle": "lps",
     "oracleId": "png-fire-wavax",
     "status": "eol",
+    "createdAt": 1645197575,
     "retireReason": "rewards",
+    "retiredAt": 1651451661,
     "platformId": "pangolin",
     "assets": ["FIRE", "AVAX"],
     "risks": [
@@ -4712,7 +4835,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xfcc6CE74f4cd7eDEF0C5429bB99d38A3608043a5",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xfcc6CE74f4cd7eDEF0C5429bB99d38A3608043a5",
     "network": "avax",
-    "createdAt": 1645197575,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4734,7 +4856,9 @@
     "oracle": "lps",
     "oracleId": "png-png-usdc.e",
     "status": "eol",
+    "createdAt": 1643469425,
     "retireReason": "rewards",
+    "retiredAt": 1651451661,
     "platformId": "pangolin",
     "assets": ["PNG", "USDCe"],
     "risks": [
@@ -4750,7 +4874,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x60781c2586d68229fde47564546784ab3faca982/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x60781c2586d68229fde47564546784ab3faca982/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "network": "avax",
-    "createdAt": 1643469425,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4772,7 +4895,9 @@
     "oracle": "lps",
     "oracleId": "joe-ust-wavax",
     "status": "eol",
+    "createdAt": 1643314337,
     "retireReason": "rewards",
+    "retiredAt": 1651451661,
     "platformId": "traderjoe",
     "assets": ["UST", "AVAX"],
     "risks": [
@@ -4788,7 +4913,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x260Bbf5698121EB85e7a74f2E45E16Ce762EbE11/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x260Bbf5698121EB85e7a74f2E45E16Ce762EbE11/AVAX",
     "network": "avax",
-    "createdAt": 1643314337,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4810,7 +4934,9 @@
     "oracle": "lps",
     "oracleId": "png-ustw-usdc",
     "status": "eol",
+    "createdAt": 1648788544,
     "retireReason": "rewards",
+    "retiredAt": 1656461445,
     "platformId": "pangolin",
     "assets": ["USTw", "USDC"],
     "risks": [
@@ -4826,7 +4952,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "network": "avax",
-    "createdAt": 1648788544,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4848,7 +4973,9 @@
     "oracle": "lps",
     "oracleId": "png-wavax-ustw",
     "status": "eol",
+    "createdAt": 1648788292,
     "retireReason": "rewards",
+    "retiredAt": 1656461445,
     "platformId": "pangolin",
     "assets": ["USTw", "AVAX"],
     "risks": [
@@ -4865,7 +4992,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1",
     "network": "avax",
-    "createdAt": 1648788292,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4887,7 +5013,9 @@
     "oracle": "lps",
     "oracleId": "curve-avax-f-avaxl",
     "status": "eol",
+    "createdAt": 1649341331,
     "retireReason": "rewards",
+    "retiredAt": 1655486707,
     "platformId": "curve",
     "assets": ["AVAXL", "AVAX"],
     "risks": [
@@ -4902,8 +5030,7 @@
     "buyTokenUrl": "https://app.topshelf.finance/#/mint",
     "addLiquidityUrl": "https://avax.curve.fi/factory/33/deposit",
     "removeLiquidityUrl": "https://avax.curve.fi/factory/33/withdraw",
-    "network": "avax",
-    "createdAt": 1649341331
+    "network": "avax"
   },
   {
     "id": "joe-money-wavax",
@@ -4919,7 +5046,9 @@
     "oracle": "lps",
     "oracleId": "joe-money-wavax",
     "status": "eol",
+    "createdAt": 1648847501,
     "retireReason": "rewards",
+    "retiredAt": 1655486707,
     "platformId": "traderjoe",
     "assets": ["MONEY", "AVAX"],
     "risks": [
@@ -4935,7 +5064,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x0f577433Bf59560Ef2a79c124E9Ff99fCa258948/AVAX#/",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x0f577433Bf59560Ef2a79c124E9Ff99fCa258948/AVAX#/",
     "network": "avax",
-    "createdAt": 1648847501,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -4957,6 +5085,7 @@
     "oracle": "lps",
     "oracleId": "stargate-avax-usdc",
     "status": "active",
+    "createdAt": 1648729105,
     "platformId": "stargate",
     "assets": ["USDC"],
     "risks": [
@@ -4971,8 +5100,7 @@
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E#/",
     "addLiquidityUrl": "https://stargate.finance/pool/USDC-AVALANCHE/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/USDC-AVALANCHE/remove",
-    "network": "avax",
-    "createdAt": 1648729105
+    "network": "avax"
   },
   {
     "id": "stargate-avax-usdt",
@@ -4988,6 +5116,7 @@
     "oracle": "lps",
     "oracleId": "stargate-avax-usdt",
     "status": "active",
+    "createdAt": 1648730342,
     "platformId": "stargate",
     "assets": ["USDT"],
     "risks": [
@@ -5002,8 +5131,7 @@
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7#/",
     "addLiquidityUrl": "https://stargate.finance/pool/USDT-AVALANCHE/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/USDT-AVALANCHE/remove",
-    "network": "avax",
-    "createdAt": 1648730342
+    "network": "avax"
   },
   {
     "id": "beefy-beJoe",
@@ -5018,6 +5146,8 @@
     "oracle": "tokens",
     "oracleId": "beJOE",
     "status": "eol",
+    "createdAt": 1649422919,
+    "retiredAt": 1673010453,
     "platformId": "beefy",
     "assets": ["beJOE"],
     "risks": [
@@ -5031,8 +5161,7 @@
     ],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
-    "network": "avax",
-    "createdAt": 1649422919
+    "network": "avax"
   },
   {
     "id": "png-mim-usdc.e-eol",
@@ -5048,7 +5177,9 @@
     "oracle": "lps",
     "oracleId": "png-mim-usdc.e",
     "status": "eol",
+    "createdAt": 1643465038,
     "retireReason": "rewards",
+    "retiredAt": 1651451661,
     "platformId": "pangolin",
     "assets": ["MIM", "USDCe"],
     "risks": [
@@ -5065,7 +5196,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x130966628846BFd36ff31a822705796e8cb8C18D/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x130966628846BFd36ff31a822705796e8cb8C18D/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "network": "avax",
-    "createdAt": 1643465038,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -5087,7 +5217,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-boo",
     "status": "eol",
+    "createdAt": 1637251694,
     "retireReason": "rewards",
+    "retiredAt": 1651451661,
     "platformId": "traderjoe",
     "assets": ["BOO", "AVAX"],
     "risks": [
@@ -5103,7 +5235,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xbD83010eB60F12112908774998F65761cf9f6f9a",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xbD83010eB60F12112908774998F65761cf9f6f9a",
     "network": "avax",
-    "createdAt": 1637251694,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -5125,7 +5256,9 @@
     "oracle": "lps",
     "oracleId": "joe-weth.e-usdc.e",
     "status": "eol",
+    "createdAt": 1632849037,
     "retireReason": "rewards",
+    "retiredAt": 1651451661,
     "platformId": "traderjoe",
     "assets": ["WETHe", "USDCe"],
     "risks": [
@@ -5141,7 +5274,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "network": "avax",
-    "createdAt": 1632849037,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -5163,7 +5295,9 @@
     "oracle": "lps",
     "oracleId": "joe-lost-wavax",
     "status": "eol",
+    "createdAt": 1649323990,
     "retireReason": "rewards",
+    "retiredAt": 1655486707,
     "platformId": "traderjoe",
     "assets": ["LOST", "AVAX"],
     "risks": [
@@ -5179,7 +5313,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x449674B82F05d498E126Dd6615a1057A9c088f2C/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x449674B82F05d498E126Dd6615a1057A9c088f2C/AVAX",
     "network": "avax",
-    "createdAt": 1649323990,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -5201,7 +5334,9 @@
     "oracle": "lps",
     "oracleId": "curve-avax-f-3pool",
     "status": "eol",
+    "createdAt": 1649925210,
     "retireReason": "rewards",
+    "retiredAt": 1655486707,
     "platformId": "curve",
     "assets": ["USTw", "USDT", "USDC"],
     "risks": [
@@ -5215,8 +5350,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://avax.curve.fi/factory/55/deposit",
     "removeLiquidityUrl": "https://avax.curve.fi/factory/55/withdraw",
-    "network": "avax",
-    "createdAt": 1649925210
+    "network": "avax"
   },
   {
     "id": "joe-usdt-wavax",
@@ -5232,7 +5366,9 @@
     "oracle": "lps",
     "oracleId": "joe-usdt-wavax",
     "status": "eol",
+    "createdAt": 1649966386,
     "retireReason": "rewards",
+    "retiredAt": 1683906986,
     "platformId": "traderjoe",
     "assets": ["USDT", "AVAX"],
     "risks": [
@@ -5248,7 +5384,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7/AVAX",
     "network": "avax",
-    "createdAt": 1649966386,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -5270,7 +5405,9 @@
     "oracle": "lps",
     "oracleId": "png-png-ustw",
     "status": "eol",
+    "createdAt": 1650107726,
     "retireReason": "rewards",
+    "retiredAt": 1656461445,
     "platformId": "pangolin",
     "assets": ["PNG", "USTw"],
     "risks": [
@@ -5287,7 +5424,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x60781C2586D68229fde47564546784ab3fACA982/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x60781C2586D68229fde47564546784ab3fACA982/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1",
     "network": "avax",
-    "createdAt": 1650107726,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -5309,7 +5445,9 @@
     "oracle": "lps",
     "oracleId": "joe-yeti-wavax",
     "status": "eol",
+    "createdAt": 1650288303,
     "retireReason": "rewards",
+    "retiredAt": 1688151912,
     "platformId": "traderjoe",
     "assets": ["YETI", "AVAX"],
     "risks": [
@@ -5325,7 +5463,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x77777777777d4554c39223C354A05825b2E8Faa3/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x77777777777d4554c39223C354A05825b2E8Faa3/AVAX",
     "network": "avax",
-    "createdAt": 1650288303,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -5347,7 +5484,9 @@
     "oracle": "lps",
     "oracleId": "png-axlatom-wavax",
     "status": "eol",
+    "createdAt": 1650124579,
     "retireReason": "rewards",
+    "retiredAt": 1655214018,
     "platformId": "pangolin",
     "assets": ["axlATOM", "AVAX"],
     "risks": [
@@ -5363,7 +5502,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x80D18b1c9Ab0c9B5D6A6d5173575417457d00a12/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x80D18b1c9Ab0c9B5D6A6d5173575417457d00a12/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     "network": "avax",
-    "createdAt": 1650124579,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -5385,7 +5523,9 @@
     "oracle": "lps",
     "oracleId": "png-png-wavax",
     "status": "eol",
+    "createdAt": 1643465763,
     "retireReason": "tvl",
+    "retiredAt": 1651451661,
     "platformId": "pangolin",
     "assets": ["PNG", "AVAX"],
     "risks": [
@@ -5401,7 +5541,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x60781c2586d68229fde47564546784ab3faca982/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x60781c2586d68229fde47564546784ab3faca982/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
     "network": "avax",
-    "createdAt": 1643465763,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -5423,7 +5562,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-cook",
     "status": "eol",
+    "createdAt": 1643382032,
     "retireReason": "tvl",
+    "retiredAt": 1651451661,
     "platformId": "traderjoe",
     "assets": ["COOK", "AVAX"],
     "risks": [
@@ -5439,7 +5580,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x637afeff75ca669fF92e4570B14D6399A658902f/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x637afeff75ca669fF92e4570B14D6399A658902f/AVAX",
     "network": "avax",
-    "createdAt": 1643382032,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -5461,7 +5601,9 @@
     "oracle": "lps",
     "oracleId": "joe-melt-wavax",
     "status": "eol",
+    "createdAt": 1639409390,
     "retireReason": "tvl",
+    "retiredAt": 1651451661,
     "platformId": "traderjoe",
     "assets": ["MELT", "AVAX"],
     "risks": [
@@ -5477,7 +5619,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x47EB6F7525C1aA999FBC9ee92715F5231eB1241D",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x47EB6F7525C1aA999FBC9ee92715F5231eB1241D",
     "network": "avax",
-    "createdAt": 1639409390,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -5499,15 +5640,16 @@
     "oracle": "lps",
     "oracleId": "lyd-lyd-avax",
     "status": "eol",
+    "createdAt": 1619706922,
     "retireReason": "tvl",
+    "retiredAt": 1651451661,
     "platformId": "lydia",
     "assets": ["LYD", "AVAX"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.lydia.finance/#/swap?inputCurrency=0x4c9b4e1ac6f24cde3660d5e4ef1ebf77c710c084&outputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
     "addLiquidityUrl": "https://www.lydia.finance/#/add/0x4c9b4e1ac6f24cde3660d5e4ef1ebf77c710c084/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
     "removeLiquidityUrl": "https://www.lydia.finance/#/remove/0x4c9b4e1ac6f24cde3660d5e4ef1ebf77c710c084/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
-    "network": "avax",
-    "createdAt": 1619706922
+    "network": "avax"
   },
   {
     "id": "png-wavax-lost",
@@ -5523,7 +5665,9 @@
     "oracle": "lps",
     "oracleId": "png-wavax-lost",
     "status": "eol",
+    "createdAt": 1651186444,
     "retireReason": "rewards",
+    "retiredAt": 1688151912,
     "platformId": "pangolin",
     "assets": ["LOST", "AVAX"],
     "risks": [
@@ -5539,7 +5683,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x449674B82F05d498E126Dd6615a1057A9c088f2C",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x449674B82F05d498E126Dd6615a1057A9c088f2C",
     "network": "avax",
-    "createdAt": 1651186444,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -5561,7 +5704,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-fief",
     "status": "eol",
+    "createdAt": 1646148122,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "traderjoe",
     "assets": ["FIEF", "AVAX"],
     "risks": [
@@ -5576,8 +5721,7 @@
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0xeA068Fba19CE95f12d252aD8Cb2939225C4Ea02D",
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xeA068Fba19CE95f12d252aD8Cb2939225C4Ea02D/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xeA068Fba19CE95f12d252aD8Cb2939225C4Ea02D/AVAX",
-    "network": "avax",
-    "createdAt": 1646148122
+    "network": "avax"
   },
   {
     "id": "joe-wavax-aave.e-eol",
@@ -5593,7 +5737,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-aave.e",
     "status": "eol",
+    "createdAt": 1632847091,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "traderjoe",
     "assets": ["AAVEe", "AVAX"],
     "risks": [
@@ -5609,7 +5755,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/0x63a72806098bd3d9520cc43356dd78afe5d386d9/AVAX",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/0x63a72806098bd3d9520cc43356dd78afe5d386d9/AVAX",
     "network": "avax",
-    "createdAt": 1632847091,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -5631,7 +5776,9 @@
     "oracle": "lps",
     "oracleId": "joe-usdc.e-wavax",
     "status": "eol",
+    "createdAt": 1630085124,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "traderjoe",
     "assets": ["USDCe", "AVAX"],
     "risks": [
@@ -5647,7 +5794,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "network": "avax",
-    "createdAt": 1630085124,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -5667,7 +5813,9 @@
     "oracle": "tokens",
     "oracleId": "AVAX",
     "status": "eol",
+    "createdAt": 1651836387,
     "retireReason": "rewards",
+    "retiredAt": 1702465854,
     "platformId": "aave",
     "assets": ["AVAX"],
     "risks": [
@@ -5682,7 +5830,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     "network": "avax",
-    "createdAt": 1651836387,
     "zaps": [
       {
         "strategyId": "single"
@@ -5702,7 +5849,9 @@
     "oracle": "tokens",
     "oracleId": "DAI.e",
     "status": "eol",
+    "createdAt": 1651836386,
     "retireReason": "rewards",
+    "retiredAt": 1694445654,
     "platformId": "aave",
     "assets": ["DAIe"],
     "risks": [
@@ -5717,7 +5866,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
     "network": "avax",
-    "createdAt": 1651836386,
     "zaps": [
       {
         "strategyId": "single"
@@ -5737,7 +5885,9 @@
     "oracle": "tokens",
     "oracleId": "USDC",
     "status": "eol",
+    "createdAt": 1651836385,
     "retireReason": "rewards",
+    "retiredAt": 1702465854,
     "platformId": "aave",
     "assets": ["USDC"],
     "risks": [
@@ -5752,7 +5902,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "network": "avax",
-    "createdAt": 1651836385,
     "zaps": [
       {
         "strategyId": "single"
@@ -5772,7 +5921,9 @@
     "oracle": "tokens",
     "oracleId": "USDT",
     "status": "eol",
+    "createdAt": 1651836384,
     "retireReason": "rewards",
+    "retiredAt": 1702465854,
     "platformId": "aave",
     "assets": ["USDT"],
     "risks": [
@@ -5787,7 +5938,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
     "network": "avax",
-    "createdAt": 1651836384,
     "zaps": [
       {
         "strategyId": "single"
@@ -5807,7 +5957,9 @@
     "oracle": "tokens",
     "oracleId": "WETHe",
     "status": "eol",
+    "createdAt": 1651836383,
     "retireReason": "rewards",
+    "retiredAt": 1702465854,
     "platformId": "aave",
     "assets": ["WETHe"],
     "risks": [
@@ -5822,7 +5974,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     "network": "avax",
-    "createdAt": 1651836383,
     "zaps": [
       {
         "strategyId": "single"
@@ -5842,7 +5993,9 @@
     "oracle": "tokens",
     "oracleId": "WBTCe",
     "status": "eol",
+    "createdAt": 1651836382,
     "retireReason": "rewards",
+    "retiredAt": 1664632197,
     "platformId": "aave",
     "assets": ["WBTCe"],
     "risks": [
@@ -5857,7 +6010,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
     "network": "avax",
-    "createdAt": 1651836382,
     "zaps": [
       {
         "strategyId": "single"
@@ -5877,7 +6029,9 @@
     "oracle": "tokens",
     "oracleId": "USDCe",
     "status": "eol",
+    "createdAt": 1633512435,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "aave",
     "assets": ["USDCe"],
     "risks": [
@@ -5892,7 +6046,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "network": "avax",
-    "createdAt": 1633512435,
     "zaps": [
       {
         "strategyId": "single"
@@ -5912,7 +6065,9 @@
     "oracle": "tokens",
     "oracleId": "AAVE.e",
     "status": "eol",
+    "createdAt": 1633524150,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "aave",
     "assets": ["AAVEe"],
     "risks": [
@@ -5927,7 +6082,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
     "network": "avax",
-    "createdAt": 1633524150,
     "zaps": [
       {
         "strategyId": "single"
@@ -5948,7 +6102,9 @@
     "oracle": "lps",
     "oracleId": "png-fitfi-wavax",
     "status": "eol",
+    "createdAt": 1651942440,
     "retireReason": "tvl",
+    "retiredAt": 1681374415,
     "platformId": "pangolin",
     "assets": ["FITFI", "AVAX"],
     "risks": [
@@ -5964,7 +6120,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0x714f020C54cc9D104B6F4f6998C63ce2a31D1888",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0x714f020C54cc9D104B6F4f6998C63ce2a31D1888",
     "network": "avax",
-    "createdAt": 1651942440,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -5984,7 +6139,9 @@
     "oracle": "tokens",
     "oracleId": "AVAX",
     "status": "eol",
+    "createdAt": 1637579519,
     "retireReason": "default",
+    "retiredAt": 1656495284,
     "platformId": "blizz",
     "assets": ["AVAX"],
     "risks": [
@@ -5998,7 +6155,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     "network": "avax",
-    "createdAt": 1637579519,
     "zaps": [
       {
         "strategyId": "single"
@@ -6018,7 +6174,9 @@
     "oracle": "tokens",
     "oracleId": "WETHe",
     "status": "eol",
+    "createdAt": 1637587754,
     "retireReason": "default",
+    "retiredAt": 1656495284,
     "platformId": "blizz",
     "assets": ["WETHe"],
     "risks": [
@@ -6032,7 +6190,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     "network": "avax",
-    "createdAt": 1637587754,
     "zaps": [
       {
         "strategyId": "single"
@@ -6052,7 +6209,9 @@
     "oracle": "tokens",
     "oracleId": "WBTCe",
     "status": "eol",
+    "createdAt": 1637589664,
     "retireReason": "default",
+    "retiredAt": 1656495284,
     "platformId": "blizz",
     "assets": ["WBTCe"],
     "risks": [
@@ -6066,7 +6225,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
     "network": "avax",
-    "createdAt": 1637589664,
     "zaps": [
       {
         "strategyId": "single"
@@ -6087,7 +6245,9 @@
     "oracle": "lps",
     "oracleId": "png-klo-wavax",
     "status": "eol",
+    "createdAt": 1653320561,
     "retireReason": "rewards",
+    "retiredAt": 1655994042,
     "platformId": "pangolin",
     "assets": ["KLO", "AVAX"],
     "risks": [
@@ -6103,7 +6263,6 @@
     "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xb27c8941a7Df8958A1778c0259f76D1F8B711C35",
     "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xb27c8941a7Df8958A1778c0259f76D1F8B711C35",
     "network": "avax",
-    "createdAt": 1653320561,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -6125,7 +6284,9 @@
     "oracle": "lps",
     "oracleId": "joe-bpt-wavax",
     "status": "eol",
+    "createdAt": 1650788892,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "traderjoe",
     "assets": ["BPT", "AVAX"],
     "risks": [
@@ -6141,7 +6302,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x1111111111182587795ef1098ac7da81a108c97a/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x1111111111182587795ef1098ac7da81a108c97a/AVAX",
     "network": "avax",
-    "createdAt": 1650788892,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -6163,7 +6323,9 @@
     "oracle": "lps",
     "oracleId": "joe-ustw-wavax",
     "status": "eol",
+    "createdAt": 1649323779,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "traderjoe",
     "assets": ["USTw", "AVAX"],
     "risks": [
@@ -6180,7 +6342,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xb599c3590F42f8F995ECfa0f85D2980B76862fc1/AVAX",
     "network": "avax",
-    "createdAt": 1649323779,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -6202,7 +6363,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-ime",
     "status": "eol",
+    "createdAt": 1643668967,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "traderjoe",
     "assets": ["IME", "AVAX"],
     "risks": [
@@ -6218,7 +6381,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xf891214fdcf9cdaa5fdc42369ee4f27f226adad6",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xf891214fdcf9cdaa5fdc42369ee4f27f226adad6",
     "network": "avax",
-    "createdAt": 1643668967,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -6240,7 +6402,9 @@
     "oracle": "lps",
     "oracleId": "joe-craft-wavax",
     "status": "eol",
+    "createdAt": 1639410461,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "traderjoe",
     "assets": ["CRAFT", "AVAX"],
     "risks": [
@@ -6256,7 +6420,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x8aE8be25C23833e0A01Aa200403e826F611f9CD2",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0x8aE8be25C23833e0A01Aa200403e826F611f9CD2",
     "network": "avax",
-    "createdAt": 1639410461,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -6278,7 +6441,9 @@
     "oracle": "lps",
     "oracleId": "joe-tus-wavax",
     "status": "eol",
+    "createdAt": 1653320562,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "traderjoe",
     "assets": ["TUS", "AVAX"],
     "risks": [
@@ -6294,7 +6459,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xf693248f96fe03422fea95ac0afbbbc4a8fdd172",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xf693248f96fe03422fea95ac0afbbbc4a8fdd172",
     "network": "avax",
-    "createdAt": 1653320562,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -6316,7 +6480,9 @@
     "oracle": "lps",
     "oracleId": "joe-dby-wavax",
     "status": "eol",
+    "createdAt": 1651052876,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "traderjoe",
     "assets": ["DBY", "AVAX"],
     "risks": [
@@ -6332,7 +6498,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x5085434227aB73151fAd2DE546210Cbc8663dF96/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x5085434227aB73151fAd2DE546210Cbc8663dF96/AVAX",
     "network": "avax",
-    "createdAt": 1651052876,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -6354,7 +6519,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-hec",
     "status": "eol",
+    "createdAt": 1643388939,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "traderjoe",
     "assets": ["HEC", "AVAX"],
     "risks": [
@@ -6370,7 +6537,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xC7f4debC8072e23fe9259A5C0398326d8EfB7f5c/AVAX",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0xC7f4debC8072e23fe9259A5C0398326d8EfB7f5c/AVAX",
     "network": "avax",
-    "createdAt": 1643388939,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -6392,7 +6558,9 @@
     "oracle": "lps",
     "oracleId": "joe-wavax-usdt.e",
     "status": "eol",
+    "createdAt": 1632129313,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "traderjoe",
     "assets": ["USDTe", "AVAX"],
     "risks": [
@@ -6408,7 +6576,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xc7198437980c041c805a1edcba50c1ce5db95118",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0xc7198437980c041c805a1edcba50c1ce5db95118",
     "network": "avax",
-    "createdAt": 1632129313,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -6430,7 +6597,9 @@
     "oracle": "lps",
     "oracleId": "joe-qi-wavax",
     "status": "eol",
+    "createdAt": 1630670133,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "traderjoe",
     "assets": ["aQI", "AVAX"],
     "risks": [
@@ -6446,7 +6615,6 @@
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
     "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
     "network": "avax",
-    "createdAt": 1630670133,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -6468,7 +6636,9 @@
     "oracle": "lps",
     "oracleId": "joe-egg-wavax",
     "status": "eol",
+    "createdAt": 1646787205,
     "retireReason": "rewards",
+    "retiredAt": 1654097535,
     "platformId": "traderjoe",
     "assets": ["EGG", "AVAX"],
     "risks": [
@@ -6484,7 +6654,6 @@
     "addLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x7761E2338B35bCEB6BdA6ce477EF012bde7aE611/AVAX#/",
     "removeLiquidityUrl": "https://traderjoexyz.com/avalanche/pool/v1/0x7761E2338B35bCEB6BdA6ce477EF012bde7aE611/AVAX#/",
     "network": "avax",
-    "createdAt": 1646787205,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -6505,7 +6674,9 @@
     "oracle": "tokens",
     "oracleId": "sAVAX",
     "status": "eol",
+    "createdAt": 1657121627,
     "retireReason": "rewards",
+    "retiredAt": 1680688453,
     "platformId": "aave",
     "assets": ["sAVAX"],
     "risks": [
@@ -6520,7 +6691,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE",
     "network": "avax",
-    "createdAt": 1657121627,
     "zaps": [
       {
         "strategyId": "single"
@@ -6541,6 +6711,7 @@
     "oracle": "lps",
     "oracleId": "gmx-avax-glp",
     "status": "active",
+    "createdAt": 1666793249,
     "platformId": "gmx",
     "assets": ["AVAX", "USDCe", "USDC", "WBTCe", "BTCb", "USDTe", "WETHe"],
     "risks": [
@@ -6554,8 +6725,7 @@
     "strategyTypeId": "glp-gmx",
     "addLiquidityUrl": "https://app.gmx.io/#/buy_glp/?ref=beefy",
     "removeLiquidityUrl": "https://app.gmx.io/#/buy_glp/?ref=beefy",
-    "network": "avax",
-    "createdAt": 1666793249
+    "network": "avax"
   },
   {
     "id": "gmx-avax-gmx",
@@ -6571,6 +6741,7 @@
     "oracle": "tokens",
     "oracleId": "GMX",
     "status": "active",
+    "createdAt": 1666793247,
     "platformId": "gmx",
     "assets": ["GMX"],
     "risks": [
@@ -6584,7 +6755,6 @@
     "strategyTypeId": "glp-gmx",
     "buyTokenUrl": "https://app.1inch.io/#/43114/unified/swap/AVAX/GMX",
     "network": "avax",
-    "createdAt": 1666793247,
     "zaps": [
       {
         "strategyId": "single"

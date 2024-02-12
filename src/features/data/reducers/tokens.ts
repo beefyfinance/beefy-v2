@@ -319,6 +319,7 @@ function addAddressBookToState(
       existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
       existingToken.description = existingToken.description || token.description;
       existingToken.website = existingToken.website || token.website;
+      existingToken.documentation = existingToken.documentation || token.documentation;
       continue;
     }
 
@@ -331,12 +332,21 @@ function addAddressBookToState(
     } else {
       const existingToken = sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()];
 
-      // Addressbook is source of truth for oracle ids
+      // Address book is source of truth for oracle ids
       if (token.oracleId) {
         existingToken.oracleId = token.oracleId;
       } else {
         console.error(
           `[Addressbook] ${existingToken.id}/${existingToken.address}/${existingToken.chainId} has no oracleId`
+        );
+      }
+
+      // Address book is source of truth for symbols
+      if (token.symbol) {
+        existingToken.symbol = token.symbol;
+      } else {
+        console.error(
+          `[Addressbook] ${existingToken.id}/${existingToken.address}/${existingToken.chainId} has no symbol`
         );
       }
 
