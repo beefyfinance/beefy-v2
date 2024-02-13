@@ -21,9 +21,11 @@ export const styles = (theme: Theme) => ({
   input: {
     ...theme.typography['h2'],
     padding: 0,
-    width: '100%',
-    background: 'none',
+    margin: 0,
     border: 'none',
+    background: 'none',
+    boxShadow: 'none',
+    width: '100%',
     color: theme.palette.text.light,
     height: 'auto',
     cursor: 'default',

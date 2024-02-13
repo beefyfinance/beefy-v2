@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';

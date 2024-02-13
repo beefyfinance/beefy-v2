@@ -76,7 +76,7 @@ export const selectTransactSelected = createSelector(
   (selectionId, bySelectionId) => bySelectionId[selectionId] || undefined
 );
 
-export const selectDepositInputAmountExceedsBalance = (state: BeefyState) => {
+export const selectTransactDepositInputAmountExceedsBalance = (state: BeefyState) => {
   const selection = selectTransactSelected(state);
   const depositToken = selection.tokens[0];
   const userBalance = selectUserBalanceOfToken(state, depositToken.chainId, depositToken.address);
@@ -85,7 +85,7 @@ export const selectDepositInputAmountExceedsBalance = (state: BeefyState) => {
   return value.gt(userBalance);
 };
 
-export const selectWithdrawInputAmountExceedsBalance = (
+export const selectTransactWithdrawInputAmountExceedsBalance = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ) => {

@@ -5,7 +5,7 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { Button } from '../../../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectWithdrawInputAmountExceedsBalance,
+  selectTransactWithdrawInputAmountExceedsBalance,
   selectTransactQuoteStatus,
   selectTransactSelectedQuote,
   selectTransactVaultId,
@@ -137,7 +137,7 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ optio
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const vaultId = useAppSelector(selectTransactVaultId);
   const isDisabledByInputAmountExceedsBalance = useAppSelector(state =>
-    selectWithdrawInputAmountExceedsBalance(state, vaultId)
+    selectTransactWithdrawInputAmountExceedsBalance(state, vaultId)
   );
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);

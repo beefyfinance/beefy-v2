@@ -31,7 +31,7 @@ export function getVaultWithdrawnFromState(
 
   let sharesToWithdrawWei = totalSharesWei; // max
   if (!withdrawAll) {
-    // try to round up, so we withdraw at least the requested amount / request more shares than we have
+    // try to round up, so we withdraw at least the requested amount
     sharesToWithdrawWei = requestedAmountWei.dividedBy(ppfs).decimalPlaces(0, BigNumber.ROUND_CEIL);
   }
 
