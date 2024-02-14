@@ -58,6 +58,7 @@ function addPlatformToState(sliceState: Draft<PlatformsState>, platformConfig: P
     const platform: PlatformEntity = {
       id: platformConfig.id,
       name: platformConfig.name,
+      risks: platformConfig.risks,
     };
     sliceState.byId[platform.id] = platform;
     sliceState.allIds.push(platform.id);

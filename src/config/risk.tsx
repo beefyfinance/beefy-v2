@@ -224,6 +224,16 @@ export const RISKS = {
     explanation: 'Platfrm-TimelockNo-Expl',
     condition: 'Platfrm-TimelockNo-Cond',
   },
+
+  PLATFORM_NO_TIMELOCK: {
+    title: 'StrategyRisk-Title-Platform-No-Timelock',
+    explanation: 'StrategyRisk-Explanation-Platform-No-Timelock',
+  },
+
+  TOKEN_NO_TIMELOCK: {
+    title: 'StrategyRisk-Title-Token-No-Timelock',
+    explanation: 'StrategyRisk-Explanation-Token-No-Timelock',
+  },
 };
 
 export const CATEGORIES = {

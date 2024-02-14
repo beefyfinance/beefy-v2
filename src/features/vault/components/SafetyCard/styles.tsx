@@ -7,6 +7,9 @@ export const styles = (theme: Theme) => ({
   riskList: {
     marginBottom: '32px',
   },
+  warning: {
+    marginBottom: '18px',
+  },
   riskRow: {
     display: 'flex',
     flexDirection: 'row' as const,

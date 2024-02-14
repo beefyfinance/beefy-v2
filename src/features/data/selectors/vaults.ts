@@ -1,7 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
-import type { TokenEntity } from '../entities/token';
+import type { TokenErc20, TokenEntity } from '../entities/token';
+import { isTokenErc20 } from '../entities/token';
 import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
   isGovVault,
@@ -10,11 +11,18 @@ import {
   isVaultPausedOrRetired,
   isVaultRetired,
 } from '../entities/vault';
-import { selectIsBeefyToken, selectIsTokenBluechip, selectIsTokenStable } from './tokens';
+import {
+  selectIsBeefyToken,
+  selectIsTokenBluechip,
+  selectIsTokenStable,
+  selectTokenByIdOrNull,
+} from './tokens';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE } from '../../../helpers/big-number';
 import { differenceWith, first, isEqual } from 'lodash-es';
 import { selectChainById } from './chains';
+import { selectPlatformById } from './platforms';
+import type { PlatformEntity } from '../entities/platform';
 
 export const selectAllVaultIds = (state: BeefyState) => state.entities.vaults.allIds;
 
@@ -251,3 +259,44 @@ export const selectAllVaultIdsWithBridgedVersion = (state: BeefyState) =>
 
 export const selectAllVaultsWithBridgedVersion = (state: BeefyState) =>
   state.entities.vaults.allBridgedIds.map(id => selectStandardVaultById(state, id));
+
+export const selectVaultHasAssetsWithRisks = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): { risks: boolean; token?: TokenErc20 } => {
+  const vault = selectVaultById(state, vaultId);
+
+  // if any of the tokens have risks return true
+  for (const tokenId of vault.assetIds) {
+    const token = selectTokenByIdOrNull(state, vault.chainId, tokenId);
+
+    if (token && isTokenErc20(token) && token?.risks?.length > 0) {
+      return {
+        token,
+        risks: true,
+      };
+    }
+  }
+  // by default return false
+  return {
+    risks: false,
+  };
+};
+
+export const selectVaultHasPlatformWithRisks = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): { risks: boolean; platform?: PlatformEntity } => {
+  const vault = selectVaultById(state, vaultId);
+
+  const platform = selectPlatformById(state, vault.platformId);
+
+  if (platform?.risks?.length > 0) {
+    return {
+      risks: true,
+      platform,
+    };
+  } else {
+    return { risks: false };
+  }
+};
