@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
 import {
@@ -90,8 +90,18 @@ const WarningText = memo<WarningTextProps>(function WarningText({
     }
   }, [isTitle, risks, type]);
 
+  const handleClickScroll = useCallback(() => {
+    const element = document.getElementById('SafetyCard');
+    if (element && isTitle) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [isTitle]);
+
   return (
-    <div className={clsx(classes.container, className)}>
+    <div
+      onClick={handleClickScroll}
+      className={clsx(classes.container, className, { [classes.hover]: isTitle })}
+    >
       <Trans
         t={t}
         i18nKey={i18Key}
