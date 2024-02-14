@@ -493,28 +493,6 @@
     "network": "arbitrum"
   },
   {
-    "id": "equilibria-arb-silo-usdc.e",
-    "name": "USDC.e LPT 01Feb24 via Silo",
-    "token": "PENDLE-sUSDC.e",
-    "tokenAddress": "0x9bC62257Ffe7D0f7c52A019E6Fc0AF3102F8F44E",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pendle",
-    "earnedToken": "mooEqbUSDCe_01FEB24",
-    "earnedTokenAddress": "0xf0604d654c5c6fd8D08F5CE70A17Ae6957a4014B",
-    "earnContractAddress": "0xf0604d654c5c6fd8D08F5CE70A17Ae6957a4014B",
-    "oracle": "lps",
-    "oracleId": "equilibria-arb-silo-usdc.e",
-    "status": "active",
-    "createdAt": 1703080258,
-    "platformId": "equilibria",
-    "assets": ["arbUSDCe"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9bc62257ffe7d0f7c52a019e6fc0af3102f8f44e/zap/in?chain=arbitrum",
-    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9bc62257ffe7d0f7c52a019e6fc0af3102f8f44e/zap/out?chain=arbitrum",
-    "network": "arbitrum"
-  },
-  {
     "id": "equilibria-arb-glp",
     "name": "GLP LPT 28Mar24 via GMX",
     "token": "PENDLE-GLP",
