@@ -8,9 +8,14 @@ const useStyles = makeStyles(styles);
 
 export type CardProps = PropsWithChildren<{
   className?: string;
+  id?: string;
 }>;
-export const Card = memo<CardProps>(function Card({ className, children }) {
+export const Card = memo<CardProps>(function Card({ className, children, id }) {
   const classes = useStyles();
 
-  return <Paper className={clsx(classes.container, className)}>{children}</Paper>;
+  return (
+    <Paper id={id} className={clsx(classes.container, className)}>
+      {children}
+    </Paper>
+  );
 });

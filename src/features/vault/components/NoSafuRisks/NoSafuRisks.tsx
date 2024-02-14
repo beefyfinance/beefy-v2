@@ -92,16 +92,13 @@ const WarningText = memo<WarningTextProps>(function WarningText({
 
   const handleClickScroll = useCallback(() => {
     const element = document.getElementById('SafetyCard');
-    if (element && isTitle) {
+    if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [isTitle]);
+  }, []);
 
   return (
-    <div
-      onClick={handleClickScroll}
-      className={clsx(classes.container, className, { [classes.hover]: isTitle })}
-    >
+    <div className={clsx(classes.container, className, { [classes.hover]: isTitle })}>
       <Trans
         t={t}
         i18nKey={i18Key}
@@ -116,6 +113,7 @@ const WarningText = memo<WarningTextProps>(function WarningText({
               rel={'noopener'}
             />
           ),
+          DetailsBtn: <span className={classes.link} onClick={handleClickScroll} />,
         }}
       />
     </div>
