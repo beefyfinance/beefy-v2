@@ -1,33 +1,33 @@
-import React, { memo } from 'react';
+import React, { lazy, memo } from 'react';
 import { makeStyles } from '@material-ui/core';
+import { styles } from './styles';
+import { TransactState } from './TransactState';
 import { useAppSelector } from '../../../../../../store';
-import type { BeefyState } from '../../../../../../redux-types';
+import { selectVaultById } from '../../../../../data/selectors/vaults';
+import { selectTokenByAddressOrNull } from '../../../../../data/selectors/tokens';
 
-const useStyles = makeStyles({
-  container: {
-    display: 'none',
-    position: 'fixed' as const,
-    top: 0,
-    left: 0,
-    width: 'calc((100vw - 1296px)/2)',
-    height: '100%',
-    overflow: 'auto',
-    whiteSpace: 'pre-wrap',
-    backgroundColor: '#111',
-    '@media (min-width: 2000px)': {
-      display: 'block',
-    },
-  },
-});
+const CurveZap = lazy(() => import(`./CurveZap`));
 
-function selectDebugData(state: BeefyState) {
-  const transact = state.ui.transact;
-  return transact;
-}
+const useStyles = makeStyles(styles);
 
-export const TransactDebugger = memo(function TransactDebugger() {
+type TransactDebuggerProps = {
+  vaultId: string;
+};
+
+const TransactDebugger = memo<TransactDebuggerProps>(function TransactDebugger({ vaultId }) {
   const classes = useStyles();
-  const data = useAppSelector(selectDebugData);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const depositToken = useAppSelector(state =>
+    selectTokenByAddressOrNull(state, vault.chainId, vault.depositTokenAddress)
+  );
 
-  return <div className={classes.container}>{JSON.stringify(data, null, 2)}</div>;
+  return (
+    <div className={classes.container}>
+      {depositToken.providerId === 'curve' ? <CurveZap vaultId={vaultId} /> : null}
+      <TransactState />
+    </div>
+  );
 });
+
+// eslint-disable-next-line no-restricted-syntax
+export default TransactDebugger;

@@ -18,6 +18,7 @@ import type {
 } from '../../../entities/zap';
 import type { Step } from '../../../reducers/wallet/stepper';
 import type { Namespace, TFunction } from 'react-i18next';
+import type { CurveMethod } from './curve/types';
 
 export type SwapAggregatorId = 'one-inch' | 'kyber';
 
@@ -43,18 +44,26 @@ export type UniswapV2StrategyOptions = UniswapLikeStrategyOptions<AmmEntityUnisw
 
 export type SolidlyStrategyOptions = UniswapLikeStrategyOptions<AmmEntitySolidly>;
 
+export type CurveStrategyOptions = {
+  strategyId: 'curve';
+  /** Address of the curve pool. Can be undefined if same as the LP token (want) */
+  poolAddress?: string | undefined;
+  /** Methods to interact with pool, @see curve/types.ts */
+  methods: CurveMethod[];
+} & OptionalStrategySwapOption;
+
 export type StrategyOptions =
   | SingleStrategyOptions
   | UniswapV2StrategyOptions
-  | SolidlyStrategyOptions;
+  | SolidlyStrategyOptions
+  | CurveStrategyOptions;
 
 export interface IStrategy {
   readonly id: string;
 
-  /**
-   * Asynchronously called after constructor.
-   */
-  initialize(): Promise<void>;
+  beforeQuote?(): Promise<void>;
+
+  beforeStep?(): Promise<void>;
 
   fetchDepositOptions(): Promise<DepositOption[]>;
 

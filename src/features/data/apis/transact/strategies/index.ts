@@ -9,9 +9,7 @@ function makeLazyLoader<T extends StrategyConstructor>(loader: () => Promise<T>)
       constructor = await loader();
     }
 
-    const instance = new constructor(options, helpers);
-    await instance.initialize();
-    return instance;
+    return new constructor(options, helpers);
   };
 }
 
@@ -21,8 +19,7 @@ export const strategyBuildersById = {
     async () => (await import('./uniswap-v2/UniswapV2Strategy')).UniswapV2Strategy
   ),
   solidly: makeLazyLoader(async () => (await import('./solidly/SolidlyStrategy')).SolidlyStrategy),
-  // 'solidly': SolidlyStrategy,
-  // conic
+  curve: makeLazyLoader(async () => (await import('./curve/CurveStrategy')).CurveStrategy),
 } as const satisfies Record<
   StrategyOptions['strategyId'],
   (options: StrategyOptions, helpers: TransactHelpers, state: BeefyState) => Promise<IStrategy>

@@ -835,7 +835,11 @@ const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => 
   });
 };
 
-const zapExecuteOrder = (vaultId: VaultEntity['id'], params: UserlessZapRequest) => {
+const zapExecuteOrder = (
+  vaultId: VaultEntity['id'],
+  params: UserlessZapRequest,
+  expectedTokens: TokenEntity[]
+) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -875,8 +879,11 @@ const zapExecuteOrder = (vaultId: VaultEntity['id'], params: UserlessZapRequest)
       dispatch,
       transaction,
       {
+        type: 'zap',
         amount: BIG_ZERO,
         token: depositToken,
+        expectedTokens,
+        vaultId: vault.id,
       },
       {
         walletAddress: address,
@@ -937,10 +944,10 @@ export function captureWalletErrors<ReturnType>(
   };
 }
 
-function bindTransactionEvents<T extends AdditionalData>(
+function bindTransactionEvents(
   dispatch: ThunkDispatch<BeefyState, unknown, Action<unknown>>,
   transaction: PromiEvent<unknown>,
-  additionalData: T,
+  additionalData: AdditionalData,
   refreshOnSuccess?: {
     walletAddress: string;
     chainId: ChainEntity['id'];

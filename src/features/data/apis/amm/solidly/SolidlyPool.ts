@@ -9,12 +9,11 @@ import { BIG_ONE, BIG_ZERO, fromWei, toWei } from '../../../../../helpers/big-nu
 import type {
   AddLiquidityRatio,
   AddLiquidityResult,
-  IPool,
+  IUniswapLikePool,
   RemoveLiquidityResult,
   SwapFeeParams,
   SwapResult,
 } from '../types';
-import { WANT_TYPE } from '../types';
 import type { ZapStep, ZapStepRequest, ZapStepResponse } from '../../transact/zap/types';
 import { first } from 'lodash-es';
 import type { TokenAmount } from '../../transact/transact-types';
@@ -76,7 +75,7 @@ export type LiquidityAmounts = {
   amountB: BigNumber;
 };
 
-export class SolidlyPool implements IPool {
+export class SolidlyPool implements IUniswapLikePool {
   public readonly type = 'solidly';
 
   protected pairData: PairData | null = null;
@@ -732,14 +731,6 @@ export class SolidlyPool implements IPool {
     return amountIn.multipliedBy(reservesOut).dividedToIntegerBy(reservesIn);
   }
 
-  getWantType(): WANT_TYPE {
-    if (!this.pairData) {
-      throw new Error('Pair data is not loaded');
-    }
-
-    return this.pairData.stable ? WANT_TYPE.SOLIDLY_STABLE : WANT_TYPE.SOLIDLY_VOLATILE;
-  }
-
   protected buildZapSwapTx(
     amountIn: BigNumber,
     amountOutMin: BigNumber,
@@ -817,14 +808,16 @@ export class SolidlyPool implements IPool {
       outputs,
       minOutputs: [minOutput],
       returned: [],
-      zap: this.buildZapSwapTx(
-        toWei(input.amount, input.token.decimals),
-        toWei(minOutput.amount, minOutput.token.decimals),
-        [{ from: input.token.address, to: output.token.address }],
-        zapRouter,
-        deadline,
-        insertBalance
-      ),
+      zaps: [
+        this.buildZapSwapTx(
+          toWei(input.amount, input.token.decimals),
+          toWei(minOutput.amount, minOutput.token.decimals),
+          [{ from: input.token.address, to: output.token.address }],
+          zapRouter,
+          deadline,
+          insertBalance
+        ),
+      ],
     };
   }
 
@@ -923,24 +916,26 @@ export class SolidlyPool implements IPool {
       outputs,
       minOutputs: slipAllBy(outputs, maxSlippage),
       returned: [],
-      zap: this.buildZapAddLiquidityTx(
-        inputs[0].token.address,
-        inputs[1].token.address,
-        this.pairData.stable,
-        toWei(inputs[0].amount, inputs[0].token.decimals),
-        toWei(inputs[1].amount, inputs[1].token.decimals),
-        toWei(
-          slipBy(inputs[0].amount, maxSlippage, inputs[0].token.decimals),
-          inputs[0].token.decimals
+      zaps: [
+        this.buildZapAddLiquidityTx(
+          inputs[0].token.address,
+          inputs[1].token.address,
+          this.pairData.stable,
+          toWei(inputs[0].amount, inputs[0].token.decimals),
+          toWei(inputs[1].amount, inputs[1].token.decimals),
+          toWei(
+            slipBy(inputs[0].amount, maxSlippage, inputs[0].token.decimals),
+            inputs[0].token.decimals
+          ),
+          toWei(
+            slipBy(inputs[1].amount, maxSlippage, inputs[1].token.decimals),
+            inputs[1].token.decimals
+          ),
+          zapRouter,
+          deadline,
+          insertBalance
         ),
-        toWei(
-          slipBy(inputs[1].amount, maxSlippage, inputs[1].token.decimals),
-          inputs[1].token.decimals
-        ),
-        zapRouter,
-        deadline,
-        insertBalance
-      ),
+      ],
     };
   }
 
@@ -1038,17 +1033,19 @@ export class SolidlyPool implements IPool {
       outputs,
       minOutputs,
       returned: [],
-      zap: this.buildZapRemoveLiquidityTx(
-        outputs[0].token.address,
-        outputs[1].token.address,
-        this.pairData.stable,
-        toWei(input.amount, input.token.decimals),
-        toWei(minOutputs[0].amount, minOutputs[0].token.decimals),
-        toWei(minOutputs[1].amount, minOutputs[1].token.decimals),
-        zapRouter,
-        deadline,
-        insertBalance
-      ),
+      zaps: [
+        this.buildZapRemoveLiquidityTx(
+          outputs[0].token.address,
+          outputs[1].token.address,
+          this.pairData.stable,
+          toWei(input.amount, input.token.decimals),
+          toWei(minOutputs[0].amount, minOutputs[0].token.decimals),
+          toWei(minOutputs[1].amount, minOutputs[1].token.decimals),
+          zapRouter,
+          deadline,
+          insertBalance
+        ),
+      ],
     };
   }
 }
