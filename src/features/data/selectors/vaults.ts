@@ -15,7 +15,7 @@ import {
   selectIsBeefyToken,
   selectIsTokenBluechip,
   selectIsTokenStable,
-  selectTokenById,
+  selectTokenByIdOrNull,
 } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE } from '../../../helpers/big-number';
@@ -268,9 +268,9 @@ export const selectVaultHasAssetsWithRisks = (
 
   // if any of the tokens have risks return true
   for (const tokenId of vault.assetIds) {
-    const token = selectTokenById(state, vault.chainId, tokenId);
+    const token = selectTokenByIdOrNull(state, vault.chainId, tokenId);
 
-    if (isTokenErc20(token) && token.risks) {
+    if (token && isTokenErc20(token) && token.risks) {
       return {
         token,
         risks: true,

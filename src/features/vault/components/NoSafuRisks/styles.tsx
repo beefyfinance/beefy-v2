@@ -8,4 +8,8 @@ export const styles = (theme: Theme) => ({
     padding: '16px',
     borderRadius: '8px',
   },
+  link: {
+    color: theme.palette.text.primary,
+    textDecoration: 'underline',
+  },
 });

@@ -5,7 +5,7 @@ import {
   selectVaultHasAssetsWithRisks,
   selectVaultHasPlatformWithRisks,
 } from '../../../data/selectors/vaults';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { RISKS } from '../../../../config/risk';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
@@ -45,6 +45,8 @@ export const NoSafuRisks = memo<NoSafuRisksProps>(function NoSafuRisks({
     );
   }
 
+  console.log(vaultHasAssetsWithRisks);
+
   if (vaultHasAssetsWithRisks.risks) {
     const { token } = vaultHasAssetsWithRisks;
     return (
@@ -76,7 +78,7 @@ const WarningText = memo<WarningTextProps>(function WarningText({
   name,
   className,
 }) {
-  const { t } = useTranslation();
+  const { t } = useTranslation('risks');
   const classes = useStyles();
 
   const i18Key = useMemo(() => {
@@ -90,7 +92,22 @@ const WarningText = memo<WarningTextProps>(function WarningText({
 
   return (
     <div className={clsx(classes.container, className)}>
-      {t(i18Key, { [type.toLowerCase()]: name, ns: 'risks' })}
+      <Trans
+        t={t}
+        i18nKey={i18Key}
+        name="risks"
+        values={{ [type.toLowerCase()]: name }}
+        components={{
+          Link: (
+            <a
+              href={'https://docs.beefy.finance/safu-protocol/beefy-safu-practices'}
+              className={classes.link}
+              target={'_blank'}
+              rel={'noopener'}
+            />
+          ),
+        }}
+      />
     </div>
   );
 });
