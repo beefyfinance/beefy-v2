@@ -58,7 +58,7 @@ export const selectTokenByIdOrNull = (
 ) => {
   const byChainId = state.entities.tokens.byChainId;
   const address = byChainId[chainId].byId[tokenId];
-  return byChainId[chainId].byAddress[address] || null;
+  return byChainId[chainId]?.byAddress[address] || null;
 };
 
 export const selectTokenByAddress = (

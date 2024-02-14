@@ -270,7 +270,7 @@ export const selectVaultHasAssetsWithRisks = (
   for (const tokenId of vault.assetIds) {
     const token = selectTokenByIdOrNull(state, vault.chainId, tokenId);
 
-    if (token && isTokenErc20(token) && token.risks) {
+    if (token && isTokenErc20(token) && token?.risks?.length > 0) {
       return {
         token,
         risks: true,
@@ -291,7 +291,7 @@ export const selectVaultHasPlatformWithRisks = (
 
   const platform = selectPlatformById(state, vault.platformId);
 
-  if (platform.risks) {
+  if (platform?.risks?.length > 0) {
     return {
       risks: true,
       platform,
