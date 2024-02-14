@@ -100,7 +100,6 @@ const WarningText = memo<WarningTextProps>(function WarningText({
       <Trans
         t={t}
         i18nKey={i18Key}
-        name="risks"
         values={{ [type.toLowerCase()]: name }}
         components={{
           Link: (
