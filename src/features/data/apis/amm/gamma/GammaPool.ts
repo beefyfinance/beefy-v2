@@ -400,7 +400,7 @@ export class GammaPool implements IGammaPool {
   }
 
   public async getZapRemoveLiquidity(request: ZapStepRequest): Promise<ZapStepResponse> {
-    const { inputs, outputs, zapRouter, insertBalance } = request;
+    const { inputs, outputs, zapRouter, insertBalance, maxSlippage } = request;
 
     if (inputs.length !== 1) {
       throw new Error('Invalid input count');
@@ -418,7 +418,7 @@ export class GammaPool implements IGammaPool {
     return {
       inputs,
       outputs,
-      minOutputs: outputs,
+      minOutputs: slipAllBy(outputs, maxSlippage),
       returned: [],
       zaps: [
         this.buildZapRemoveLiquidityTx(

@@ -52,7 +52,12 @@ import { selectChainById } from '../../../../selectors/chains';
 import BigNumber from 'bignumber.js';
 import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
 import type { QuoteRequest } from '../../swap/ISwapProvider';
-import { calculatePriceImpact, highestFeeOrZero, ZERO_FEE } from '../../helpers/quotes';
+import {
+  calculatePriceImpact,
+  highestFeeOrZero,
+  totalValueOfTokenAmounts,
+  ZERO_FEE,
+} from '../../helpers/quotes';
 import { selectTransactSlippage } from '../../../../selectors/transact';
 import type {
   OrderInput,
@@ -63,7 +68,7 @@ import type {
 } from '../../zap/types';
 import { Balances } from '../../helpers/Balances';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap';
-import { slipBy } from '../../helpers/amounts';
+import { mergeTokenAmounts, slipBy } from '../../helpers/amounts';
 import { walletActions } from '../../../../actions/wallet-actions';
 import { fetchZapAggregatorSwap } from '../../zap/swap';
 import type { ChainEntity } from '../../../../entities/chain';
@@ -709,6 +714,13 @@ export class GammaStrategy implements IStrategy {
       fee = ZERO_FEE;
     }
 
+    if (returned.length > 0) {
+      steps.push({
+        type: 'unused',
+        outputs: returned,
+      });
+    }
+
     // return break only
     return {
       id: createQuoteId(option.id),
@@ -738,6 +750,7 @@ export class GammaStrategy implements IStrategy {
     }
 
     const state = getState();
+    const slippage = selectTransactSlippage(state);
     const wantedOutput = first(wantedOutputs);
     const needsSwap = breakOutputs.map(
       tokenAmount => !isTokenEqual(wantedOutput, tokenAmount.token)
@@ -748,7 +761,7 @@ export class GammaStrategy implements IStrategy {
         if (needsSwap[i]) {
           const quotes = await swapAggregator.fetchQuotes(
             {
-              fromAmount: input.amount,
+              fromAmount: slipBy(input.amount, slippage, input.token.decimals), // we have to assume it will slip 100% since we can't modify the call data later
               fromToken: input.token,
               toToken: wantedOutput,
               vaultId: option.vaultId,
@@ -768,6 +781,8 @@ export class GammaStrategy implements IStrategy {
     );
 
     let outputTotal = new BigNumber(0);
+    const unused: TokenAmount[] = [];
+
     breakOutputs.forEach((input, i) => {
       if (needsSwap[i]) {
         const swapQuote = swapQuotes[i];
@@ -788,6 +803,13 @@ export class GammaStrategy implements IStrategy {
           fee: swapQuote.fee,
           quote: swapQuote,
         });
+
+        if (swapQuote.fromAmount.lt(breakOutputs[i].amount)) {
+          unused.push({
+            token: input.token,
+            amount: breakOutputs[i].amount.minus(swapQuote.fromAmount),
+          });
+        }
       } else {
         outputTotal = outputTotal.plus(input.amount);
       }
@@ -797,7 +819,7 @@ export class GammaStrategy implements IStrategy {
 
     return {
       outputs,
-      returned: breakReturned,
+      returned: mergeTokenAmounts(breakReturned, unused),
       steps,
       fee: highestFeeOrZero(steps),
     };
@@ -834,21 +856,27 @@ export class GammaStrategy implements IStrategy {
       const quoteOutput = quoteStep.outputs[quoteIndexes[i]];
       const token = quoteOutput.token;
       const amountOut = fromWei(amount, token.decimals);
-      if (amountOut.lt(quoteOutput.amount)) {
-        console.debug('fetchZapSplit', {
-          quote: quoteOutput.amount.toString(10),
-          now: amountOut.toString(10),
-        });
-        throw new QuoteChangedError(
-          'Expected output changed between quote and transaction when breaking LP.'
-        );
-      }
 
       return {
         token,
         amount: amountOut,
       };
     });
+
+    // We need some leeway or we will get stuck in a quote-requote loop (also our prices aren't 100% accurate)
+    const originalValue = totalValueOfTokenAmounts(quoteStep.outputs, state);
+    const minAllowed = originalValue.multipliedBy(1 - slippage / 10); // 10% of slippage% (1% -> 0.1%)
+    const nowValue = totalValueOfTokenAmounts(outputs, state);
+    if (nowValue.lt(minAllowed)) {
+      console.debug('fetchZapSplit', {
+        quote: originalValue.toString(10),
+        now: nowValue.toString(10),
+        nowMin: minAllowed.toString(10),
+      });
+      throw new QuoteChangedError(
+        'Expected output changed between quote and transaction when breaking LP.'
+      );
+    }
 
     return await this.pool.getZapRemoveLiquidity({
       inputs: inputs,
@@ -909,10 +937,15 @@ export class GammaStrategy implements IStrategy {
         );
         // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
         const lastSwapIndex = swapQuotes.length - 1;
+
         const swapZaps = await Promise.all(
-          swapQuotes.map((quoteStep, i) =>
-            this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i)
-          )
+          swapQuotes.map((quoteStep, i) => {
+            const input = splitZap.minOutputs.find(o => isTokenEqual(o.token, quoteStep.fromToken));
+            if (!input) {
+              throw new Error('Swap input not found in split outputs');
+            }
+            return this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i);
+          })
         );
         swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
       }
