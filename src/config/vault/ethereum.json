@@ -16,7 +16,14 @@
     "createdAt": 1707663390,
     "platformId": "aura",
     "assets": ["weETH", "rETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "NO_TIMELOCK"
+    ],
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x05ff47afada98a98982113758878f9a8b9fdda0a000000000000000000000645",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x05ff47afada98a98982113758878f9a8b9fdda0a000000000000000000000645",
@@ -39,7 +46,14 @@
     "createdAt": 1707663390,
     "platformId": "aura",
     "assets": ["ezETH", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "NO_TIMELOCK"
+    ],
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x596192bb6e41802428ac943d2f1476c1af25cc0e000000000000000000000659",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x596192bb6e41802428ac943d2f1476c1af25cc0e000000000000000000000659",

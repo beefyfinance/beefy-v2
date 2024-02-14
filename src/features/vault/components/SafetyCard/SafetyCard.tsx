@@ -14,6 +14,7 @@ import type { VaultEntity } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
 import { Collapsable } from '../../../../components/Collapsable';
 import clsx from 'clsx';
+import { NoSafuRisks } from '../NoSafuRisks';
 
 const useStyles = makeStyles(styles);
 
@@ -28,6 +29,7 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         <div className={classes.safetyLabel}>{t('Safety-Score1')}</div>
       </CardHeader>
       <CardContent>
+        <NoSafuRisks className={classes.warning} vaultId={vaultId} isTitle={false} />
         <div className={classes.riskList}>
           {vault.risks.map(risk => (
             <Fragment key={risk}>
