@@ -32,7 +32,7 @@ function numberToString(value: BigNumber, tokenDecimals: number): string {
 
 export type AmountInputProps = {
   value: BigNumber;
-  maxValue?: BigNumber;
+  maxValue: BigNumber;
   tokenDecimals?: number;
   onChange: (value: BigNumber, isMax: boolean) => void;
   error?: boolean;
@@ -107,7 +107,11 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
 
       // Raise changed event
       setInput(rawInput);
-      onChange(parsedNumber, false);
+      onChange(
+        parsedNumber,
+        (!allowInputAboveBalance && parsedNumber.eq(maxValue)) ||
+          (allowInputAboveBalance && parsedNumber.gte(maxValue))
+      );
     },
     [allowInputAboveBalance, handleMax, maxValue, onChange]
   );
