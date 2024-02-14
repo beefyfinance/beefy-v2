@@ -11,8 +11,6 @@ export const styles = (theme: Theme) => ({
   link: {
     color: theme.palette.text.primary,
     textDecoration: 'underline',
-  },
-  hover: {
     '&:hover': {
       cursor: 'pointer' as const,
     },

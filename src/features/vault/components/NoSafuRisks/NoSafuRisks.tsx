@@ -98,7 +98,7 @@ const WarningText = memo<WarningTextProps>(function WarningText({
   }, []);
 
   return (
-    <div className={clsx(classes.container, className, { [classes.hover]: isTitle })}>
+    <div className={clsx(classes.container, className)}>
       <Trans
         t={t}
         i18nKey={i18Key}
