@@ -65,7 +65,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-17/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-17/withdraw",
-    "network": "kava"
+    "network": "kava",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x591199E16E006Dec3eDcf79AE0fCea1Dd0F5b69D",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x591199E16E006Dec3eDcf79AE0fCea1Dd0F5b69D",
+            "coins": [
+              "0x471EE749bA270eb4c1165B5AD95E614947f6fCeb",
+              "0x919C1c267BC06a7039e03fcc2eF738525769109c"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-kava-mimusdt",
@@ -90,7 +106,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-16/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-16/withdraw",
-    "network": "kava"
+    "network": "kava",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xCf5f5ddE4D1D866b11b4cA2ba3Ff146Ec0fe3743",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xCf5f5ddE4D1D866b11b4cA2ba3Ff146Ec0fe3743",
+            "coins": [
+              "0x471EE749bA270eb4c1165B5AD95E614947f6fCeb",
+              "0x919C1c267BC06a7039e03fcc2eF738525769109c"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "kava-bifi-maxi",
@@ -911,9 +943,9 @@
     "oracle": "lps",
     "oracleId": "curve-kava-axl3pool",
     "status": "eol",
+    "createdAt": 1677007992,
     "retireReason": "rewards",
     "retiredAt": 1706885963,
-    "createdAt": 1677007992,
     "platformId": "curve",
     "assets": ["axlDAI", "axlUSDC", "axlUSDT"],
     "risks": [
@@ -928,7 +960,24 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-2/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-2/withdraw",
-    "network": "kava"
+    "network": "kava",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x29C623E1Cc593864bB3E41E31a8f72ed262F38e5",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x29C623E1Cc593864bB3E41E31a8f72ed262F38e5",
+            "coins": [
+              "0x5C7e299CF531eb66f2A1dF637d37AbB78e6200C7",
+              "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+              "0x7f5373AE26c3E8FfC4c77b7255DF7eC1A9aF52a6"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-kava-3pool",
@@ -961,7 +1010,24 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://kava.curve.fi/factory/0/deposit",
     "removeLiquidityUrl": "https://kava.curve.fi/factory/0/withdraw",
-    "network": "kava"
+    "network": "kava",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x7A0e3b70b1dB0D6CA63Cac240895b2D21444A7b9",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x7A0e3b70b1dB0D6CA63Cac240895b2D21444A7b9",
+            "coins": [
+              "0x765277EebeCA2e31912C9946eAe1021199B39C61",
+              "0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
+              "0xB44a9B6905aF7c801311e8F4E76932ee959c663C"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-kava-axlusdt-f",
@@ -991,7 +1057,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-13/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-13/withdraw",
-    "network": "kava"
+    "network": "kava",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xAA3b055186f96dD29d0c2A17710d280Bc54290c7",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xAA3b055186f96dD29d0c2A17710d280Bc54290c7",
+            "coins": [
+              "0x7f5373AE26c3E8FfC4c77b7255DF7eC1A9aF52a6",
+              "0x919C1c267BC06a7039e03fcc2eF738525769109c"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "sushi-kava-wkava-usdc",

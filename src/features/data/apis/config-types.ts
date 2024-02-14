@@ -173,6 +173,9 @@ export interface ChainConfig {
 export interface AmmConfigBase {
   id: string;
   name: string;
+}
+
+export interface AmmConfigUniswapV2LikeBase extends AmmConfigBase {
   routerAddress: string;
   factoryAddress: string;
   pairInitHash: string;
@@ -181,19 +184,20 @@ export interface AmmConfigBase {
   swapFeeDenominator: string;
 }
 
-export interface AmmConfigUniswapV2 extends AmmConfigBase {
+export interface AmmConfigUniswapV2 extends AmmConfigUniswapV2LikeBase {
   readonly type: 'uniswap-v2';
   mintFeeNumerator: string;
   mintFeeDenominator: string;
   getAmountOutMode: 'getAmountOut' | 'getAmountsOut' | 'getAmountOutWithFee';
 }
 
-export interface AmmConfigSolidly extends AmmConfigBase {
+export interface AmmConfigSolidly extends AmmConfigUniswapV2LikeBase {
   readonly type: 'solidly';
   getAmountOutMode: 'getAmountOut';
 }
 
-export type AmmConfig = AmmConfigUniswapV2 | AmmConfigSolidly;
+export type AmmConfigUniswapV2Like = AmmConfigUniswapV2 | AmmConfigSolidly;
+export type AmmConfig = AmmConfigUniswapV2Like;
 
 export function isSolidlyAmmConfig(amm: AmmConfig): amm is AmmConfigSolidly {
   return amm.type === 'solidly';

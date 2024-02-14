@@ -464,7 +464,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-63/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-63/withdraw",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x1Dc5c0f8668a9F54ED922171d578011850ca0341",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x1Dc5c0f8668a9F54ED922171d578011850ca0341",
+            "coins": [
+              "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
+              "0x68f180fcCe6836688e9084f035309E29Bf0A2095"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "aura-op-ethereum-triplets",
@@ -3374,7 +3390,33 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-47/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-47/withdraw",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x810D1AaA4Cd8F21c23bB648F2dfb9DC232A01F09",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x810D1AaA4Cd8F21c23bB648F2dfb9DC232A01F09",
+            "coins": [
+              "0xB153FB3d196A8eB25522705560ac152eeEc57901",
+              "0x1337BedC9D22ecbe766dF105c9623922A27963EC"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0x167e42a1c7ab4be03764a2222aac57f5f6754411",
+            "coins": [
+              "0xB153FB3d196A8eB25522705560ac152eeEc57901",
+              "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+              "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+              "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "velodrome-weth-unidx",
@@ -4506,7 +4548,20 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/wsteth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/wsteth/withdraw",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xB90B9B1F91a01Ea22A182CD84C1E22222e39B415",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xB90B9B1F91a01Ea22A182CD84C1E22222e39B415",
+            "coins": ["native", "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb"]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "hop-op-snx",
@@ -6768,7 +6823,20 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-10/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-10/withdraw",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x7Bc5728BC2b59B45a58d9A576E2Ffc5f0505B35E",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x7Bc5728BC2b59B45a58d9A576E2Ffc5f0505B35E",
+            "coins": ["native", "0xE405de8F52ba7559f9df3C368500B6E6ae6Cee49"]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-op-f-sbtc",
@@ -6799,7 +6867,23 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-12/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-12/withdraw",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x9F2fE3500B1a7E285FDc337acacE94c480e00130",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x9F2fE3500B1a7E285FDc337acacE94c480e00130",
+            "coins": [
+              "0x298B9B95708152ff6968aafd889c6586e9169f1D",
+              "0x68f180fcCe6836688e9084f035309E29Bf0A2095"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-op-f-susd",
@@ -6831,7 +6915,33 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-0/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-0/withdraw",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x061b87122Ed14b9526A813209C8a59a633257bAb",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x061b87122Ed14b9526A813209C8a59a633257bAb",
+            "coins": [
+              "0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9",
+              "0x1337BedC9D22ecbe766dF105c9623922A27963EC"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0x167e42a1c7ab4be03764a2222aac57f5f6754411",
+            "coins": [
+              "0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9",
+              "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+              "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+              "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "velodrome-op-usdc",

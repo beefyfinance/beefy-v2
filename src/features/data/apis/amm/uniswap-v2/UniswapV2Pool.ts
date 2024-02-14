@@ -11,12 +11,11 @@ import { BIG_ZERO, toWei } from '../../../../../helpers/big-number';
 import type {
   AddLiquidityRatio,
   AddLiquidityResult,
-  IPool,
+  IUniswapLikePool,
   RemoveLiquidityResult,
   SwapFeeParams,
   SwapResult,
 } from '../types';
-import { WANT_TYPE } from '../types';
 import type { ZapStep, ZapStepRequest, ZapStepResponse } from '../../transact/zap/types';
 import abiCoder from 'web3-eth-abi';
 import { getInsertIndex } from '../../transact/helpers/zap';
@@ -74,7 +73,7 @@ export type MintFeeParams = {
   denominator: BigNumber;
 };
 
-export class UniswapV2Pool implements IPool {
+export class UniswapV2Pool implements IUniswapLikePool {
   public readonly type = 'uniswap-v2';
 
   protected pairData: PairData | null = null;
@@ -473,10 +472,6 @@ export class UniswapV2Pool implements IPool {
     };
   }
 
-  getWantType(): WANT_TYPE {
-    return WANT_TYPE.UNISWAP_V2;
-  }
-
   protected buildZapSwapTx(
     amountIn: BigNumber,
     amountOutMin: BigNumber,
@@ -559,14 +554,16 @@ export class UniswapV2Pool implements IPool {
       outputs,
       minOutputs: [minOutput],
       returned: [],
-      zap: this.buildZapSwapTx(
-        toWei(input.amount, input.token.decimals),
-        toWei(minOutput.amount, minOutput.token.decimals),
-        [input.token.address, output.token.address],
-        zapRouter,
-        deadline,
-        insertBalance
-      ),
+      zaps: [
+        this.buildZapSwapTx(
+          toWei(input.amount, input.token.decimals),
+          toWei(minOutput.amount, minOutput.token.decimals),
+          [input.token.address, output.token.address],
+          zapRouter,
+          deadline,
+          insertBalance
+        ),
+      ],
     };
   }
 
@@ -745,23 +742,25 @@ export class UniswapV2Pool implements IPool {
       outputs,
       minOutputs: slipAllBy(outputs, maxSlippage),
       returned: [],
-      zap: this.buildZapAddLiquidityTx(
-        inputs[0].token.address,
-        inputs[1].token.address,
-        toWei(inputs[0].amount, inputs[0].token.decimals),
-        toWei(inputs[1].amount, inputs[1].token.decimals),
-        toWei(
-          slipBy(inputs[0].amount, maxSlippage, inputs[0].token.decimals),
-          inputs[0].token.decimals
+      zaps: [
+        this.buildZapAddLiquidityTx(
+          inputs[0].token.address,
+          inputs[1].token.address,
+          toWei(inputs[0].amount, inputs[0].token.decimals),
+          toWei(inputs[1].amount, inputs[1].token.decimals),
+          toWei(
+            slipBy(inputs[0].amount, maxSlippage, inputs[0].token.decimals),
+            inputs[0].token.decimals
+          ),
+          toWei(
+            slipBy(inputs[1].amount, maxSlippage, inputs[1].token.decimals),
+            inputs[1].token.decimals
+          ),
+          zapRouter,
+          deadline,
+          insertBalance
         ),
-        toWei(
-          slipBy(inputs[1].amount, maxSlippage, inputs[1].token.decimals),
-          inputs[1].token.decimals
-        ),
-        zapRouter,
-        deadline,
-        insertBalance
-      ),
+      ],
     };
   }
 
@@ -795,16 +794,18 @@ export class UniswapV2Pool implements IPool {
       outputs,
       minOutputs,
       returned: [],
-      zap: this.buildZapRemoveLiquidityTx(
-        outputs[0].token.address,
-        outputs[1].token.address,
-        toWei(input.amount, input.token.decimals),
-        toWei(minOutputs[0].amount, minOutputs[0].token.decimals),
-        toWei(minOutputs[1].amount, minOutputs[1].token.decimals),
-        zapRouter,
-        deadline,
-        insertBalance
-      ),
+      zaps: [
+        this.buildZapRemoveLiquidityTx(
+          outputs[0].token.address,
+          outputs[1].token.address,
+          toWei(input.amount, input.token.decimals),
+          toWei(minOutputs[0].amount, minOutputs[0].token.decimals),
+          toWei(minOutputs[1].amount, minOutputs[1].token.decimals),
+          zapRouter,
+          deadline,
+          insertBalance
+        ),
+      ],
     };
   }
 }

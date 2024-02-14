@@ -1,25 +1,18 @@
 import { BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../redux-types';
 import { formatBigDecimals } from '../../../helpers/format';
-import type { TokenErc20 } from '../entities/token';
 import { isTokenErc20 } from '../entities/token';
-import type { Step } from '../reducers/wallet/stepper';
 import { StepContent } from '../reducers/wallet/stepper';
 import type { TokenAmount } from '../apis/transact/transact-types';
-import {
-  selectChainNativeToken,
-  selectChainWrappedNativeToken,
-  selectTokenByAddressOrNull,
-} from './tokens';
+import { selectChainNativeToken, selectTokenByAddressOrNull } from './tokens';
 import { fromWeiString } from '../../../helpers/big-number';
 import { selectVaultById } from './vaults';
-import { wnativeToNative } from '../apis/transact/helpers/tokens';
 import { ZERO_ADDRESS } from '../../../helpers/addresses';
 import {
   type BridgeAdditionalData,
   isWalletActionBridgeSuccess,
   isWalletActionSuccess,
-  isZapAddtionalData,
+  isZapAdditionalData,
   type WalletActionsSuccessState,
 } from '../reducers/wallet/wallet-action';
 
@@ -143,11 +136,11 @@ export const selectSuccessBar = (state: BeefyState) => {
   return stepContent === StepContent.SuccessTx;
 };
 
-export function selectZapReturned(state: BeefyState, type: Step['step']) {
+export function selectZapReturned(state: BeefyState) {
   if (!isWalletActionSuccess(state.user.walletActions)) {
     return [];
   }
-  if (!isZapAddtionalData(state.user.walletActions.data)) {
+  if (!isZapAdditionalData(state.user.walletActions.data)) {
     return [];
   }
 
@@ -157,15 +150,13 @@ export function selectZapReturned(state: BeefyState, type: Step['step']) {
     return [];
   }
 
-  // We need to know what normal tokens to expect when zap out, so we don't show them as dust
-  let excludeTokens: TokenErc20['address'][] = [];
-  if (type === 'zap-out') {
-    if (!expectedTokens || !expectedTokens.length) {
-      return [];
-    } else {
-      excludeTokens = expectedTokens.map(t => t.address.toLowerCase());
-    }
+  // We need to know what normal tokens to expect, so we don't show them as dust
+  if (!expectedTokens || !expectedTokens.length) {
+    return [];
   }
+  const expectedTokensAddresses: Set<string> = new Set(
+    expectedTokens.map(t => t.address.toLowerCase())
+  );
 
   const vault = selectVaultById(state, vaultId);
   const zapAddress = receipt.to.toLowerCase();
@@ -180,32 +171,22 @@ export function selectZapReturned(state: BeefyState, type: Step['step']) {
   }
 
   const minAmount = new BigNumber('0.00000001');
-  const wnative = selectChainWrappedNativeToken(state, vault.chainId);
   const native = selectChainNativeToken(state, vault.chainId);
   const tokenAmounts: TokenAmount[] = returnEvents
     .map(e => {
-      const token = selectTokenByAddressOrNull(state, vault.chainId, e.returnValues.token);
+      const token =
+        e.returnValues.token === ZERO_ADDRESS
+          ? native
+          : selectTokenByAddressOrNull(state, vault.chainId, e.returnValues.token);
+
       return {
         amount: fromWeiString(e.returnValues.amount, token.decimals),
         token,
       };
     })
-    .filter(isTokenErc20Amount)
-    .filter(t => !excludeTokens.includes(t.token.address.toLowerCase()))
-    .map(t => ({
-      ...t,
-      token: wnativeToNative(t.token, wnative, native),
-    }))
+    .filter(t => !!t.token)
+    .filter(t => !expectedTokensAddresses.has(t.token.address.toLowerCase()))
     .filter(t => t.amount.gte(minAmount));
 
   return tokenAmounts;
-}
-
-type TokenErc20Amount = {
-  amount: BigNumber;
-  token: TokenErc20;
-};
-
-function isTokenErc20Amount(tokenAmount: TokenAmount): tokenAmount is TokenErc20Amount {
-  return tokenAmount && isTokenErc20(tokenAmount.token);
 }

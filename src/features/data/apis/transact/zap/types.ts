@@ -14,7 +14,7 @@ export type ZapStepResponse = {
   outputs: TokenAmount[];
   minOutputs: TokenAmount[];
   returned: TokenAmount[];
-  zap: ZapStep;
+  zaps: ZapStep[];
 };
 
 export type OrderInput = {

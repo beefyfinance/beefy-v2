@@ -16,7 +16,7 @@ export class Balances {
     );
 
     if (this.byAddress[amount.token.address].lt(BIG_ZERO)) {
-      throw new Error(`Balance of ${amount.token.symbol} is negative`);
+      throw new Error(`add: Balance of ${amount.token.symbol} is negative`);
     }
 
     return this;
@@ -33,7 +33,7 @@ export class Balances {
     );
 
     if (this.byAddress[amount.token.address].lt(BIG_ZERO)) {
-      throw new Error(`Balance of ${amount.token.symbol} is negative`);
+      throw new Error(`subtract: Balance of ${amount.token.symbol} is negative`);
     }
 
     return this;

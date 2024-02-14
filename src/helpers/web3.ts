@@ -260,19 +260,14 @@ function rateLimitProvider(provider: PrivateProvider, queue: PQueue): PrivatePro
         return queue
           .add(
             () =>
-              new Promise((resolve, reject) => {
+              new Promise<void>(resolve => {
                 originalMethod(payload, (err, data) => {
-                  if (err) {
-                    reject(err);
-                  } else {
-                    resolve(data);
-                  }
+                  callback(err, data);
+                  resolve();
                 });
               })
           )
-          .then(data => Promise.resolve(callback(null, data)))
-          .catch(err => Promise.resolve(callback(err, null)))
-          .catch(err => console.error('callback threw', err));
+          .catch(err => console.error('queue.add threw', method, err));
       };
     }
   }
