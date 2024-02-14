@@ -45,8 +45,6 @@ export const NoSafuRisks = memo<NoSafuRisksProps>(function NoSafuRisks({
     );
   }
 
-  console.log(vaultHasAssetsWithRisks);
-
   if (vaultHasAssetsWithRisks.risks) {
     const { token } = vaultHasAssetsWithRisks;
     return (
