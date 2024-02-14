@@ -22,15 +22,28 @@ export const ProviderFrame = memo(function ProviderFrame() {
   const { value: url, error: urlError, status: urlStatus } = useAsync(fetchUrl, null);
 
   return url ? (
-    <iframe
-      src={url}
-      width="100%"
-      height="100%"
-      frameBorder="0"
-      title={title}
-      className={classes.iframe}
-      allow="payment"
-    />
+    quote.provider === 'transak' ? (
+      <iframe
+        src={url}
+        width="100%"
+        height="100%"
+        frameBorder="0"
+        title={title}
+        className={classes.iframe}
+        allow="payment"
+      />
+    ) : (
+      <iframe
+        src={url}
+        width="100%"
+        height="100%"
+        frameBorder="0"
+        title={title}
+        className={classes.iframe}
+        allow="usb; ethereum; clipboard-write"
+        loading="lazy"
+      />
+    )
   ) : urlError || (urlStatus === 'success' && !url) ? (
     <ErrorIndicator
       className={classes.error}

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault';
 import { useAppSelector } from '../../store';
 import { selectVaultById } from '../../features/data/selectors/vaults';
@@ -25,13 +25,17 @@ export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, isLi
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isBoosted = useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId));
 
+  const shouldAddBoostedClass = useMemo(() => {
+    return vaultId === 'compound-arbitrum-usdc' || isBoosted;
+  }, [isBoosted, vaultId]);
+
   if (isLink) {
     return (
       <Link
         to={`/vault/${vaultId}`}
         className={clsx({
           [classes.vaultName]: true,
-          [classes.vaultNameBoosted]: isBoosted,
+          [classes.vaultNameBoosted]: shouldAddBoostedClass,
         })}
       >
         {punctuationWrap(vault.id === 'bifi-vault' ? `${vault.name} Vault` : vault.name)}
@@ -43,7 +47,7 @@ export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, isLi
     <div
       className={clsx({
         [classes.vaultName]: true,
-        [classes.vaultNameBoosted]: isBoosted,
+        [classes.vaultNameBoosted]: shouldAddBoostedClass,
       })}
     >
       {punctuationWrap(vault.id === 'bifi-vault' ? `${vault.name} Vault` : vault.name)}

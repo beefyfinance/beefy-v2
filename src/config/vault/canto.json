@@ -12,7 +12,9 @@
     "oracle": "tokens",
     "oracleId": "oldBIFI",
     "status": "eol",
+    "createdAt": 1679403789,
     "retireReason": "bifiV2",
+    "retiredAt": 1689087437,
     "platformId": "beefy",
     "assets": ["oldBIFI"],
     "risks": [
@@ -25,8 +27,7 @@
     ],
     "strategyTypeId": "maxi",
     "buyTokenUrl": "https://www.velocimeter.xyz/swap",
-    "network": "canto",
-    "createdAt": 1679403789
+    "network": "canto"
   },
   {
     "id": "velocimeterv2-flow-blotr",
@@ -42,7 +43,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-flow-blotr",
     "status": "eol",
+    "createdAt": 1685409403,
     "retireReason": "rewards",
+    "retiredAt": 1690903973,
     "platformId": "velocimeter",
     "assets": ["FLOW", "BLOTR"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -51,7 +54,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1685409403,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -73,7 +75,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-wcanto-scanto",
     "status": "eol",
+    "createdAt": 1684633501,
     "retireReason": "rewards",
+    "retiredAt": 1690903973,
     "platformId": "velocimeter",
     "assets": ["sCANTO", "CANTO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -82,7 +86,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1684633501,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -104,7 +107,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-scanto-blotr",
     "status": "eol",
+    "createdAt": 1684633501,
     "retireReason": "rewards",
+    "retiredAt": 1690903973,
     "platformId": "velocimeter",
     "assets": ["BLOTR", "sCANTO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -113,7 +118,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1684633501,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -135,7 +139,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-statom-wcanto",
     "status": "eol",
+    "createdAt": 1682635324,
     "retireReason": "tvl",
+    "retiredAt": 1688151912,
     "platformId": "velocimeter",
     "assets": ["stATOM", "CANTO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -144,7 +150,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1682635324,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -166,7 +171,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-eth-cre8r",
     "status": "eol",
+    "createdAt": 1681663629,
     "retireReason": "tvl",
+    "retiredAt": 1690357628,
     "platformId": "velocimeter",
     "assets": ["CRE8R", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -175,69 +182,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1681663629,
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "canto-velocimeter"
-      }
-    ]
-  },
-  {
-    "id": "velocimeterv2-eth-wsteth",
-    "name": "wstETH-ETH V2 vLP",
-    "type": "standard",
-    "token": "wstETH-ETH V2 vvLP",
-    "tokenAddress": "0x7E282E6538163e7afb76027490486F59B3218310",
-    "tokenDecimals": 18,
-    "tokenProviderId": "velocimeter",
-    "earnedToken": "mooVelocimeterV2wstETH-ETH",
-    "earnedTokenAddress": "0xd6627a73d23DF21C8A657B1FB1b77259F2FEA5B8",
-    "earnContractAddress": "0xd6627a73d23DF21C8A657B1FB1b77259F2FEA5B8",
-    "oracle": "lps",
-    "oracleId": "velocimeterv2-eth-wsteth",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "velocimeter",
-    "assets": ["wstETH", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.velocimeter.xyz/swap",
-    "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
-    "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
-    "network": "canto",
-    "createdAt": 1681408024,
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "canto-velocimeter"
-      }
-    ]
-  },
-  {
-    "id": "velocimeterv2-wbtc-eth",
-    "name": "WBTC-ETH V2 vLP",
-    "type": "standard",
-    "token": "WBTC-ETH V2 vvLP",
-    "tokenAddress": "0xa2f7ecE2f2A0ffd24889223dE9a8D8F4F8E3943F",
-    "tokenDecimals": 18,
-    "tokenProviderId": "velocimeter",
-    "earnedToken": "mooVelocimeterV2WBTC-ETH",
-    "earnedTokenAddress": "0xC36Ca623A67309D6736eCa815b650a646d36e81a",
-    "earnContractAddress": "0xC36Ca623A67309D6736eCa815b650a646d36e81a",
-    "oracle": "lps",
-    "oracleId": "velocimeterv2-wbtc-eth",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "velocimeter",
-    "assets": ["WBTC", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.velocimeter.xyz/swap",
-    "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
-    "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
-    "network": "canto",
-    "createdAt": 1680753801,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -259,7 +203,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-wbtc-multibtc",
     "status": "eol",
+    "createdAt": 1680297022,
     "retireReason": "exploit",
+    "retiredAt": 1689599747,
     "platformId": "velocimeter",
     "assets": ["WBTC", "multiBTC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -268,7 +214,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1680297022,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -290,7 +235,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-multibtc-flow",
     "status": "eol",
+    "createdAt": 1680247395,
     "retireReason": "tvl",
+    "retiredAt": 1683906986,
     "platformId": "velocimeter",
     "assets": ["FLOW", "multiBTC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -299,7 +246,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1680247395,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -321,7 +267,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-flow-somm",
     "status": "eol",
+    "createdAt": 1680247395,
     "retireReason": "rewards",
+    "retiredAt": 1690903973,
     "platformId": "velocimeter",
     "assets": ["FLOW", "SOMM"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -330,7 +278,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1680247395,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -352,7 +299,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-note-multibtc",
     "status": "eol",
+    "createdAt": 1679594788,
     "retireReason": "tvl",
+    "retiredAt": 1684742133,
     "platformId": "velocimeter",
     "assets": ["NOTE", "multiBTC"],
     "risks": [
@@ -368,7 +317,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1679594788,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -390,7 +338,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-multibtc-wcanto",
     "status": "eol",
+    "createdAt": 1679594788,
     "retireReason": "tvl",
+    "retiredAt": 1685962044,
     "platformId": "velocimeter",
     "assets": ["multiBTC", "CANTO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -399,7 +349,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1679594788,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -421,7 +370,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-multibtc-usdt",
     "status": "eol",
+    "createdAt": 1679594788,
     "retireReason": "tvl",
+    "retiredAt": 1685962044,
     "platformId": "velocimeter",
     "assets": ["USDT", "multiBTC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -430,7 +381,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1679594788,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -452,7 +402,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-eth-multibtc",
     "status": "eol",
+    "createdAt": 1679594788,
     "retireReason": "exploit",
+    "retiredAt": 1689599747,
     "platformId": "velocimeter",
     "assets": ["ETH", "multiBTC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -461,7 +413,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1679594788,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -483,7 +434,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-usdc-flow",
     "status": "eol",
+    "createdAt": 1679204825,
     "retireReason": "rewards",
+    "retiredAt": 1690903973,
     "platformId": "velocimeter",
     "assets": ["FLOW", "USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -492,7 +445,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1679204825,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -514,7 +466,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-flow-usdt",
     "status": "eol",
+    "createdAt": 1679145308,
     "retireReason": "tvl",
+    "retiredAt": 1688151912,
     "platformId": "velocimeter",
     "assets": ["FLOW", "USDT"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -523,7 +477,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1679145308,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -545,7 +498,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-note-flow",
     "status": "eol",
+    "createdAt": 1679145308,
     "retireReason": "tvl",
+    "retiredAt": 1688151912,
     "platformId": "velocimeter",
     "assets": ["FLOW", "NOTE"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -554,7 +509,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1679145308,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -576,7 +530,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-wcanto-somm",
     "status": "eol",
+    "createdAt": 1679145308,
     "retireReason": "rewards",
+    "retiredAt": 1690903973,
     "platformId": "velocimeter",
     "assets": ["SOMM", "CANTO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -585,7 +541,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1679145308,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -607,7 +562,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-wcanto-flow",
     "status": "eol",
+    "createdAt": 1678923629,
     "retireReason": "rewards",
+    "retiredAt": 1690903973,
     "platformId": "velocimeter",
     "assets": ["FLOW", "CANTO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -616,7 +573,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1678923629,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -638,7 +594,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-eth-flow",
     "status": "eol",
+    "createdAt": 1678923629,
     "retireReason": "rewards",
+    "retiredAt": 1690903973,
     "platformId": "velocimeter",
     "assets": ["FLOW", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -647,7 +605,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1678923629,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -669,7 +626,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-bifi-wcanto",
     "status": "eol",
+    "createdAt": 1678923629,
     "retireReason": "bifiV2",
+    "retiredAt": 1689007467,
     "platformId": "velocimeter",
     "assets": ["oldBIFI", "CANTO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -678,7 +637,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1678923629,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -700,7 +658,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-eth-wcanto",
     "status": "eol",
+    "createdAt": 1678923629,
     "retireReason": "tvl",
+    "retiredAt": 1688151912,
     "platformId": "velocimeter",
     "assets": ["ETH", "CANTO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -709,7 +669,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1678923629,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -731,7 +690,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-wcanto-atom",
     "status": "eol",
+    "createdAt": 1678923629,
     "retireReason": "rewards",
+    "retiredAt": 1690903973,
     "platformId": "velocimeter",
     "assets": ["ATOM", "CANTO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -740,7 +701,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1678923629,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -762,7 +722,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-usdc-wcanto",
     "status": "eol",
+    "createdAt": 1678923629,
     "retireReason": "tvl",
+    "retiredAt": 1688151912,
     "platformId": "velocimeter",
     "assets": ["USDC", "CANTO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -771,7 +733,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1678923629,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -793,7 +754,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-note-wcanto",
     "status": "eol",
+    "createdAt": 1678923629,
     "retireReason": "rewards",
+    "retiredAt": 1690903973,
     "platformId": "velocimeter",
     "assets": ["NOTE", "CANTO"],
     "risks": [
@@ -809,7 +772,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1678923629,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -831,7 +793,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-note-usdc",
     "status": "eol",
+    "createdAt": 1678923629,
     "retireReason": "rewards",
+    "retiredAt": 1690903973,
     "platformId": "velocimeter",
     "assets": ["NOTE", "USDC"],
     "risks": [
@@ -847,7 +811,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1678923629,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -869,7 +832,9 @@
     "oracle": "lps",
     "oracleId": "velocimeterv2-usdc-usdt",
     "status": "eol",
+    "createdAt": 1678923629,
     "retireReason": "rewards",
+    "retiredAt": 1690903973,
     "platformId": "velocimeter",
     "assets": ["USDC", "USDT"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -878,7 +843,6 @@
     "addLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://www.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1678923629,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -900,7 +864,9 @@
     "oracle": "tokens",
     "oracleId": "oldBIFI",
     "status": "eol",
+    "createdAt": 1678201170,
     "retireReason": "bifiV2",
+    "retiredAt": 1697567756,
     "platformId": "beefy",
     "assets": ["oldBIFI"],
     "risks": [
@@ -912,8 +878,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "old-bifi-pool",
-    "network": "canto",
-    "createdAt": 1678201170
+    "network": "canto"
   },
   {
     "id": "velocimeter-wcanto-atom",
@@ -929,7 +894,9 @@
     "oracle": "lps",
     "oracleId": "velocimeter-wcanto-atom",
     "status": "eol",
+    "createdAt": 1677460129,
     "retireReason": "rewards",
+    "retiredAt": 1678901972,
     "platformId": "velocimeter",
     "assets": ["ATOM", "CANTO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -938,7 +905,6 @@
     "addLiquidityUrl": "https://canto.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://canto.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1677460129,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -960,7 +926,9 @@
     "oracle": "lps",
     "oracleId": "velocimeter-usdc-wcanto",
     "status": "eol",
+    "createdAt": 1677460129,
     "retireReason": "rewards",
+    "retiredAt": 1677773580,
     "platformId": "velocimeter",
     "assets": ["USDC", "CANTO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -969,7 +937,6 @@
     "addLiquidityUrl": "https://canto.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://canto.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1677460129,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -991,7 +958,9 @@
     "oracle": "lps",
     "oracleId": "velocimeter-note-wcanto",
     "status": "eol",
+    "createdAt": 1677460129,
     "retireReason": "rewards",
+    "retiredAt": 1677773580,
     "platformId": "velocimeter",
     "assets": ["NOTE", "CANTO"],
     "risks": [
@@ -1007,7 +976,6 @@
     "addLiquidityUrl": "https://canto.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://canto.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1677460129,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1029,7 +997,9 @@
     "oracle": "lps",
     "oracleId": "velocimeter-note-usdc",
     "status": "eol",
+    "createdAt": 1677460129,
     "retireReason": "rewards",
+    "retiredAt": 1678901972,
     "platformId": "velocimeter",
     "assets": ["NOTE", "USDC"],
     "risks": [
@@ -1045,7 +1015,6 @@
     "addLiquidityUrl": "https://canto.velocimeter.xyz/liquidity",
     "removeLiquidityUrl": "https://canto.velocimeter.xyz/liquidity",
     "network": "canto",
-    "createdAt": 1677460129,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1067,6 +1036,7 @@
     "oracle": "lps",
     "oracleId": "canto-note-usdt",
     "status": "active",
+    "createdAt": 1677184771,
     "platformId": "cantoDex",
     "assets": ["NOTE", "USDT"],
     "risks": [
@@ -1082,7 +1052,6 @@
     "addLiquidityUrl": "https://canto.io/lp",
     "removeLiquidityUrl": "https://canto.io/lp",
     "network": "canto",
-    "createdAt": 1677184771,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1104,6 +1073,7 @@
     "oracle": "lps",
     "oracleId": "canto-note-usdc",
     "status": "active",
+    "createdAt": 1677184771,
     "platformId": "cantoDex",
     "assets": ["NOTE", "USDC"],
     "risks": [
@@ -1119,7 +1089,6 @@
     "addLiquidityUrl": "https://canto.io/lp",
     "removeLiquidityUrl": "https://canto.io/lp",
     "network": "canto",
-    "createdAt": 1677184771,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1141,6 +1110,7 @@
     "oracle": "lps",
     "oracleId": "canto-note-wcanto",
     "status": "active",
+    "createdAt": 1677184771,
     "platformId": "cantoDex",
     "assets": ["NOTE", "CANTO"],
     "risks": [
@@ -1156,7 +1126,6 @@
     "addLiquidityUrl": "https://canto.io/lp",
     "removeLiquidityUrl": "https://canto.io/lp",
     "network": "canto",
-    "createdAt": 1677184771,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1178,6 +1147,7 @@
     "oracle": "lps",
     "oracleId": "canto-eth-wcanto",
     "status": "active",
+    "createdAt": 1677184771,
     "platformId": "cantoDex",
     "assets": ["ETH", "CANTO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -1186,7 +1156,6 @@
     "addLiquidityUrl": "https://canto.io/lp",
     "removeLiquidityUrl": "https://canto.io/lp",
     "network": "canto",
-    "createdAt": 1677184771,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1208,6 +1177,7 @@
     "oracle": "lps",
     "oracleId": "canto-wcanto-atom",
     "status": "active",
+    "createdAt": 1677184771,
     "platformId": "cantoDex",
     "assets": ["ATOM", "CANTO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -1216,7 +1186,6 @@
     "addLiquidityUrl": "https://canto.io/lp",
     "removeLiquidityUrl": "https://canto.io/lp",
     "network": "canto",
-    "createdAt": 1677184771,
     "zaps": [
       {
         "strategyId": "solidly",

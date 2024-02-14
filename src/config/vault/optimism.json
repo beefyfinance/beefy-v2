@@ -1,5 +1,51 @@
 [
   {
+    "id": "aura-op-yield-concerto-by-frax",
+    "name": "Yield Concerto by FRAX",
+    "type": "standard",
+    "token": "Yield Concerto by FRAX",
+    "tokenAddress": "0x2FEb76966459d7841fa8A7Ed0aa4bf574d6111Bf",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooAuraOPYieldConcertobyFRAX",
+    "earnedTokenAddress": "0xb253dD7351906933AB32623c8dd9ADDce8480B09",
+    "earnContractAddress": "0xb253dD7351906933AB32623c8dd9ADDce8480B09",
+    "oracle": "lps",
+    "oracleId": "aura-op-yield-concerto-by-frax",
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["sFRAX", "sfrxETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://op.beets.fi/pool/0x2feb76966459d7841fa8a7ed0aa4bf574d6111bf00020000000000000000011d",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0x2feb76966459d7841fa8a7ed0aa4bf574d6111bf00020000000000000000011d",
+    "network": "optimism",
+    "createdAt": 1706256091
+  },
+  {
+    "id": "aura-op-a-night-at-the-opara",
+    "name": "A Night at the OPara",
+    "type": "standard",
+    "token": "A Night at the OPara",
+    "tokenAddress": "0x0244B0025264dC5f5c113d472D579C9c994A59CE",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooAuraOPANightattheOPara",
+    "earnedTokenAddress": "0x32BF68dF1D113603346422fED4e4393b3c976159",
+    "earnContractAddress": "0x32BF68dF1D113603346422fED4e4393b3c976159",
+    "oracle": "lps",
+    "oracleId": "aura-op-a-night-at-the-opara",
+    "status": "active",
+    "createdAt": 1706115167,
+    "platformId": "aura",
+    "assets": ["OP", "PSP"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://op.beets.fi/pool/0x0244b0025264dc5f5c113d472d579c9c994a59ce0002000000000000000000c9",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0x0244b0025264dc5f5c113d472d579c9c994a59ce0002000000000000000000c9",
+    "network": "optimism"
+  },
+  {
     "id": "velodrome-v2-kuji-velo",
     "name": "KUJI-VELO vLP V2",
     "type": "standard",
@@ -13,6 +59,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-kuji-velo",
     "status": "active",
+    "createdAt": 1705452854,
     "platformId": "velodrome",
     "assets": ["KUJI", "VELOV2"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -20,7 +67,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x3a18dcc9745edcd1ef33ecb93b0b6eba5671e7ca&token1=0x9560e827af36c94d2ac33a39bce1fe78631088db&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x18C830F6a32A06Cf2aC4262E977a096F12bDAB8D",
     "network": "optimism",
-    "createdAt": 1705452854,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -42,14 +88,14 @@
     "oracle": "lps",
     "oracleId": "aura-op-fraximalist-ethereum",
     "status": "active",
+    "createdAt": 1704975503,
     "platformId": "aura",
     "assets": ["sfrxETH", "frxETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0xa71021492a3966eec735ed1b505afa097c7cfe6f00000000000000000000010d",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0xa71021492a3966eec735ed1b505afa097c7cfe6f00000000000000000000010d",
-    "network": "optimism",
-    "createdAt": 1704975503
+    "network": "optimism"
   },
   {
     "id": "velodrome-v2-kuji-weth",
@@ -65,6 +111,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-kuji-weth",
     "status": "active",
+    "createdAt": 1703181916,
     "platformId": "velodrome",
     "assets": ["KUJI", "ETH"],
     "risks": [
@@ -79,7 +126,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x3a18dcc9745edcd1ef33ecb93b0b6eba5671e7ca&token1=eth&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw",
     "network": "optimism",
-    "createdAt": 1703181916,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -100,12 +146,12 @@
     "oracle": "tokens",
     "oracleId": "WETH",
     "status": "active",
+    "createdAt": 1703168711,
     "platformId": "sonne",
     "assets": ["WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "optimism",
-    "createdAt": 1703168711,
     "zaps": [
       {
         "strategyId": "single"
@@ -129,12 +175,12 @@
     "oracle": "tokens",
     "oracleId": "OP",
     "status": "active",
+    "createdAt": 1703168711,
     "platformId": "sonne",
     "assets": ["OP"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "optimism",
-    "createdAt": 1703168711,
     "zaps": [
       {
         "strategyId": "single"
@@ -158,15 +204,17 @@
     "earnContractAddress": "0x3f4B33345eD666dB5f849eEE33d24F209ac898A4",
     "oracle": "lps",
     "oracleId": "uniswap-gamma-op-wsteth-usdc",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1706885963,
+    "createdAt": 1702484967,
     "platformId": "gamma",
     "assets": ["wstETH", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/wsteth-usdc-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/wsteth-usdc-500-narrow",
-    "network": "optimism",
-    "createdAt": 1702484967
+    "network": "optimism"
   },
   {
     "id": "uniswap-gamma-op-wsteth-eth",
@@ -181,15 +229,15 @@
     "earnContractAddress": "0x7587A6a488d86Be08924135357F76aa17268Cd9A",
     "oracle": "lps",
     "oracleId": "uniswap-gamma-op-wsteth-eth",
-    "status": "paused",
+    "status": "active",
+    "createdAt": 1702484967,
     "platformId": "gamma",
     "assets": ["wstETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/wsteth-weth-100-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/wsteth-weth-100-pegged-price",
-    "network": "optimism",
-    "createdAt": 1702484967
+    "network": "optimism"
   },
   {
     "id": "velodrome-v2-next-usdc",
@@ -205,6 +253,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-next-usdc",
     "status": "active",
+    "createdAt": 1702153240,
     "platformId": "velodrome",
     "assets": ["NEXT", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -212,7 +261,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x58b9cb810a68a7f3e1e4f8cb45d1b9b3c79705e8&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw",
     "network": "optimism",
-    "createdAt": 1702153240,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -233,12 +281,12 @@
     "oracle": "tokens",
     "oracleId": "opUSDCe",
     "status": "active",
+    "createdAt": 1701787116,
     "platformId": "sonne",
     "assets": ["opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "optimism",
-    "createdAt": 1701787116,
     "zaps": [
       {
         "strategyId": "single"
@@ -262,12 +310,12 @@
     "oracle": "tokens",
     "oracleId": "USDT",
     "status": "active",
+    "createdAt": 1701787116,
     "platformId": "sonne",
     "assets": ["USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "optimism",
-    "createdAt": 1701787116,
     "zaps": [
       {
         "strategyId": "single"
@@ -291,12 +339,12 @@
     "oracle": "tokens",
     "oracleId": "DAI",
     "status": "active",
+    "createdAt": 1701787116,
     "platformId": "sonne",
     "assets": ["DAI"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "optimism",
-    "createdAt": 1701787116,
     "zaps": [
       {
         "strategyId": "single"
@@ -320,12 +368,12 @@
     "oracle": "tokens",
     "oracleId": "sUSD",
     "status": "active",
+    "createdAt": 1701787116,
     "platformId": "sonne",
     "assets": ["sUSD"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "optimism",
-    "createdAt": 1701787116,
     "zaps": [
       {
         "strategyId": "single"
@@ -349,12 +397,12 @@
     "oracle": "tokens",
     "oracleId": "LUSD",
     "status": "active",
+    "createdAt": 1701787116,
     "platformId": "sonne",
     "assets": ["LUSD"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "optimism",
-    "createdAt": 1701787116,
     "zaps": [
       {
         "strategyId": "single"
@@ -379,6 +427,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-wsteth-velo",
     "status": "active",
+    "createdAt": 1700173968,
     "platformId": "velodrome",
     "assets": ["VELOV2", "wstETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -386,7 +435,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1f32b1c2345538c0c6f582fcb022739c4a194ebb&token1=0x9560e827af36c94d2ac33a39bce1fe78631088db&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw",
     "network": "optimism",
-    "createdAt": 1700173968,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -408,6 +456,7 @@
     "oracle": "lps",
     "oracleId": "curve-op-tbtc",
     "status": "active",
+    "createdAt": 1699261710,
     "platformId": "curve",
     "assets": ["tBTC", "WBTC"],
     "migrationIds": ["l2-curve"],
@@ -415,8 +464,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-63/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-63/withdraw",
-    "network": "optimism",
-    "createdAt": 1699261710
+    "network": "optimism"
   },
   {
     "id": "aura-op-ethereum-triplets",
@@ -432,20 +480,20 @@
     "oracle": "lps",
     "oracleId": "aura-op-ethereum-triplets",
     "status": "active",
+    "createdAt": 1698951093,
     "platformId": "aura",
     "assets": ["wstETH", "sfrxETH", "rETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x5f8893506ddc4c271837187d14a9c87964a074dc000000000000000000000106",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x5f8893506ddc4c271837187d14a9c87964a074dc000000000000000000000106",
-    "network": "optimism",
-    "createdAt": 1698951093
+    "network": "optimism"
   },
   {
     "id": "aura-op-ovn-wusd+",
-    "name": "OVN-wUSD+",
+    "name": "Overnight Opening Ensemble",
     "type": "standard",
-    "token": "OVN-wUSD+",
+    "token": "Overnight Opening Ensemble",
     "tokenAddress": "0x00b82bc5EdEa6E5E6c77635e31a1A25Aad99f881",
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
@@ -454,15 +502,17 @@
     "earnContractAddress": "0xEf6ac74ba097aa0661FC7bB2CF2C43f6817F4Bbb",
     "oracle": "lps",
     "oracleId": "aura-op-ovn-wusd+",
-    "status": "active",
+    "status": "eol",
+    "createdAt": 1698687269,
+    "retireReason": "rewards",
+    "retiredAt": 1706123939,
     "platformId": "aura",
     "assets": ["OVN", "wUSD+"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x00b82bc5edea6e5e6c77635e31a1a25aad99f881000200000000000000000105",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x00b82bc5edea6e5e6c77635e31a1a25aad99f881000200000000000000000105",
-    "network": "optimism",
-    "createdAt": 1698687269
+    "network": "optimism"
   },
   {
     "id": "velodrome-v2-weth-moobifi",
@@ -478,6 +528,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-moobifi",
     "status": "active",
+    "createdAt": 1698188042,
     "platformId": "velodrome",
     "assets": ["mooBIFI", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -486,7 +537,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xc55e93c62874d8100dbd2dfe307edc1036ad5434&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x6ed6df1c23c51cb7cc67a348cc8d9e6108ea3bfe",
     "network": "optimism",
-    "createdAt": 1698188042,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -496,9 +546,9 @@
   },
   {
     "id": "aura-op-reth-ankreth",
-    "name": "rETH-ankrETH",
+    "name": "Ankr's Galactic Harmony",
     "type": "standard",
-    "token": "rETH-ankrETH",
+    "token": "Ankr's Galactic Harmony",
     "tokenAddress": "0x004700ba0a4f5f22e1E78a277fCA55e36F47E09C",
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
@@ -508,20 +558,20 @@
     "oracle": "lps",
     "oracleId": "aura-op-reth-ankreth",
     "status": "active",
+    "createdAt": 1697819700,
     "platformId": "aura",
     "assets": ["rETH", "ankrETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x004700ba0a4f5f22e1e78a277fca55e36f47e09c000000000000000000000104",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x004700ba0a4f5f22e1e78a277fca55e36f47e09c000000000000000000000104",
-    "network": "optimism",
-    "createdAt": 1697819700
+    "network": "optimism"
   },
   {
     "id": "aura-op-usdc-usdce-usdt-dai",
-    "name": "USDC/USDCe/USDT/DAI",
+    "name": "Native Stable Beets",
     "type": "standard",
-    "token": "USDC/USDCe/USDT/DAI",
+    "token": "Native Stable Beets",
     "tokenAddress": "0x9Da11Ff60bfc5aF527f58fd61679c3AC98d040d9",
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
@@ -531,20 +581,20 @@
     "oracle": "lps",
     "oracleId": "aura-op-usdc-usdce-usdt-dai",
     "status": "active",
+    "createdAt": 1697819700,
     "platformId": "aura",
     "assets": ["USDC", "opUSDCe", "USDT", "DAI"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x9da11ff60bfc5af527f58fd61679c3ac98d040d9000000000000000000000100",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x9da11ff60bfc5af527f58fd61679c3ac98d040d9000000000000000000000100",
-    "network": "optimism",
-    "createdAt": 1697819700
+    "network": "optimism"
   },
   {
     "id": "aura--op-dola-usdce",
-    "name": "DOLA-USDCe",
+    "name": "Sonata for Two: DOLA & USDC",
     "type": "standard",
-    "token": "DOLA-USDCe",
+    "token": "Sonata for Two: DOLA & USDC",
     "tokenAddress": "0xACfE9b4782910A853b68abbA60f3FD8049Ffe638",
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
@@ -554,14 +604,14 @@
     "oracle": "lps",
     "oracleId": "aura--op-dola-usdce",
     "status": "active",
+    "createdAt": 1696338460,
     "platformId": "aura",
     "assets": ["DOLA", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0xacfe9b4782910a853b68abba60f3fd8049ffe6380000000000000000000000ff",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0xacfe9b4782910a853b68abba60f3fd8049ffe6380000000000000000000000ff",
-    "network": "optimism",
-    "createdAt": 1696338460
+    "network": "optimism"
   },
   {
     "id": "velodrome-v2-ovn-usd+",
@@ -577,6 +627,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-ovn-usd+",
     "status": "active",
+    "createdAt": 1695979179,
     "platformId": "velodrome",
     "assets": ["OVN", "USD+"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -584,7 +635,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x3b08fcd15280e7b5a6e404c4abb87f7c774d1b2e&token1=0x73cb180bf0521828d8849bc8cf2b920918e23032&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x844D7d2fCa6786Be7De6721AabdfF6957ACE73a0",
     "network": "optimism",
-    "createdAt": 1695979179,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -606,6 +656,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-wsteth-pendle",
     "status": "active",
+    "createdAt": 1693005457,
     "platformId": "velodrome",
     "assets": ["wstETH", "PENDLE"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -614,7 +665,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1f32b1c2345538c0c6f582fcb022739c4a194ebb&token1=0xbc7b1ff1c6989f006a1185318ed4e7b5796e66e1&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x7c9a7243f6a359781996822a141a28dc48aa258b",
     "network": "optimism",
-    "createdAt": 1693005457,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -636,14 +686,14 @@
     "oracle": "lps",
     "oracleId": "beets-eclp-wsteth-eth",
     "status": "active",
+    "createdAt": 1691762163,
     "platformId": "aura",
     "assets": ["wstETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x7ca75bdea9dede97f8b13c6641b768650cb837820002000000000000000000d5",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x7ca75bdea9dede97f8b13c6641b768650cb837820002000000000000000000d5",
-    "network": "optimism",
-    "createdAt": 1691762163
+    "network": "optimism"
   },
   {
     "id": "uniswap-gamma-weth-op-narrow",
@@ -658,7 +708,10 @@
     "earnContractAddress": "0xF731390c889d9a2089C5bC1d4640F3BA0708D82B",
     "oracle": "lps",
     "oracleId": "uniswap-gamma-weth-op-narrow",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1706885963,
+    "createdAt": 1691433584,
     "platformId": "gamma",
     "assets": ["ETH", "OP"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -666,8 +719,7 @@
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/ETH/OP",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-narrow",
-    "network": "optimism",
-    "createdAt": 1691433584
+    "network": "optimism"
   },
   {
     "id": "uniswap-gamma-weth-op-wide",
@@ -682,7 +734,10 @@
     "earnContractAddress": "0x3786907a920DDE1bE8EC49E332F8B36635490C43",
     "oracle": "lps",
     "oracleId": "uniswap-gamma-weth-op-wide",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1706885963,
+    "createdAt": 1691433584,
     "platformId": "gamma",
     "assets": ["ETH", "OP"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -690,8 +745,7 @@
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/ETH/OP",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-wide",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-wide",
-    "network": "optimism",
-    "createdAt": 1691433584
+    "network": "optimism"
   },
   {
     "id": "velodrome-v2-weth-hop",
@@ -707,6 +761,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-hop",
     "status": "active",
+    "createdAt": 1691417919,
     "platformId": "velodrome",
     "assets": ["HOP", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -715,7 +770,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xc5102fe9359fd9a28f877a67e36b0f050d81a3cc&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x0e88a5bff34d39da66bdd32b82dc89a32d7bb6c9",
     "network": "optimism",
-    "createdAt": 1691417919,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -737,6 +791,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdc-wusdr",
     "status": "active",
+    "createdAt": 1691190913,
     "platformId": "velodrome",
     "assets": ["opUSDCe", "wUSDR"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -745,7 +800,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x7f5c764cbc14f9669b88837ca1490cca17c31607&token1=0xc03b43d492d904406db2d7d57e67c7e8234ba752&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x95a05d06decf8e1eb93ae09b612fbd342f2f9e2e",
     "network": "optimism",
-    "createdAt": 1691190913,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -767,6 +821,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-unidx-weth-v2",
     "status": "active",
+    "createdAt": 1690458996,
     "platformId": "velodrome",
     "assets": ["UNIDX", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -775,7 +830,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x28b42698caf46b4b012cf38b6c75867e0762186d&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x9269f5199b01b7b7dd38321b85c3f34ee3f28f7f",
     "network": "optimism",
-    "createdAt": 1690458996,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -797,7 +851,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-unidx-dai-v2",
     "status": "eol",
+    "createdAt": 1690458996,
     "retireReason": "tvl",
+    "retiredAt": 1701708841,
     "platformId": "velodrome",
     "assets": ["UNIDX", "DAI"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -806,7 +862,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x28b42698caf46b4b012cf38b6c75867e0762186d&token1=0xda10009cbd5d07dd0cecc66161fc93d7c9000da1&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xfc233ad094c8c9c245bdea891dfee2d7f9e632c4",
     "network": "optimism",
-    "createdAt": 1690458996,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -828,6 +883,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-wbtc-tbtc",
     "status": "active",
+    "createdAt": 1690458996,
     "platformId": "velodrome",
     "assets": ["tBTC", "WBTC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -836,7 +892,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x6c84a8f1c29108f47a79964b5fe888d4f4d0de40&token1=0x68f180fcce6836688e9084f035309e29bf0a2095&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x6e57b9e54ea043a829584b22182ad22bf446926c",
     "network": "optimism",
-    "createdAt": 1690458996,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -858,6 +913,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-tbtc",
     "status": "active",
+    "createdAt": 1690458996,
     "platformId": "velodrome",
     "assets": ["tBTC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -866,7 +922,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x6c84a8f1c29108f47a79964b5fe888d4f4d0de40&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xadbb23bcc3c1b9810491897cb0690cf645b858b1",
     "network": "optimism",
-    "createdAt": 1690458996,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -888,6 +943,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-exa-weth",
     "status": "active",
+    "createdAt": 1690549768,
     "platformId": "velodrome",
     "assets": ["EXA", "WETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -896,7 +952,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1e925de1c68ef83bd98ee3e130ef14a50309c01b&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xf3c45b45223df6071a478851b9c17e0630fdf535",
     "network": "optimism",
-    "createdAt": 1690549768,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -916,7 +971,10 @@
     "earnContractAddress": "0xBe0eB1af5d47b118fC24987EA85a20dFa3a98303",
     "oracle": "tokens",
     "oracleId": "OP",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1706885963,
+    "createdAt": 1694023422,
     "platformId": "exactly",
     "assets": ["OP"],
     "risks": [
@@ -930,7 +988,6 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/OP",
     "network": "optimism",
-    "createdAt": 1694023422,
     "zaps": [
       {
         "strategyId": "single"
@@ -955,7 +1012,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-frax-op",
     "status": "eol",
+    "createdAt": 1689918804,
     "retireReason": "tvl",
+    "retiredAt": 1694605850,
     "platformId": "velodrome",
     "assets": ["OP", "FRAX"],
     "risks": [
@@ -971,7 +1030,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000042&token1=0x2e3d870790dc77a83dd1d18184acc7439a53f475&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xe9b168fa9409eaffa07679196c7568317baf80ed",
     "network": "optimism",
-    "createdAt": 1689918804,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -993,6 +1051,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-op-frxeth",
     "status": "active",
+    "createdAt": 1689918804,
     "platformId": "velodrome",
     "assets": ["OP", "frxETH"],
     "risks": [
@@ -1008,7 +1067,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000042&token1=0x6806411765af15bddd26f8f544a34cc40cb9838b&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x2fe304b407c7fab2a3c10962f14db751468a4f5b",
     "network": "optimism",
-    "createdAt": 1689918804,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1030,6 +1088,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-susd-lusd",
     "status": "active",
+    "createdAt": 1689918804,
     "platformId": "velodrome",
     "assets": ["sUSD", "LUSD"],
     "risks": [
@@ -1045,7 +1104,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9&token1=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x3b375ba61920551217f5944f4f5d8a63989a438e",
     "network": "optimism",
-    "createdAt": 1689918804,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1067,6 +1125,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-velo",
     "status": "active",
+    "createdAt": 1689918804,
     "platformId": "velodrome",
     "assets": ["VELOV2", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -1075,7 +1134,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x9560e827af36c94d2ac33a39bce1fe78631088db&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x58e6433a6903886e440ddf519ecc573c4046a6b2",
     "network": "optimism",
-    "createdAt": 1689918804,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1097,6 +1155,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usd+-lusd",
     "status": "active",
+    "createdAt": 1689918804,
     "platformId": "velodrome",
     "assets": ["USD+", "LUSD"],
     "risks": [
@@ -1112,7 +1171,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x73cb180bf0521828d8849bc8cf2b920918e23032&token1=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x37e7d30cc180a750c83d68ed0c2511da10694d63",
     "network": "optimism",
-    "createdAt": 1689918804,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1134,6 +1192,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-thales-weth",
     "status": "active",
+    "createdAt": 1689918804,
     "platformId": "velodrome",
     "assets": ["THALES", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -1142,7 +1201,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x217d47011b23bb961eb6d93ca9945b7501a5bb11&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xdff90e4a6c229565f25337b1db9fa12f6d8cb118",
     "network": "optimism",
-    "createdAt": 1689918804,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1164,7 +1222,9 @@
     "oracle": "lps",
     "oracleId": "hop-op-susd",
     "status": "eol",
+    "createdAt": 1689591528,
     "retireReason": "rewards",
+    "retiredAt": 1696930682,
     "platformId": "hop",
     "assets": ["sUSD"],
     "risks": [
@@ -1180,8 +1240,7 @@
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/sUSD",
     "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=sUSD&sourceNetwork=optimism",
     "removeLiquidityUrl": "https://app.hop.exchange/#/pool/withdraw?token=sUSD&sourceNetwork=optimism",
-    "network": "optimism",
-    "createdAt": 1689591528
+    "network": "optimism"
   },
   {
     "id": "velodrome-v2-weth-unidx",
@@ -1197,7 +1256,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-unidx",
     "status": "eol",
+    "createdAt": 1688210133,
     "retireReason": "exploit",
+    "retiredAt": 1688910375,
     "platformId": "velodrome",
     "assets": ["WETH", "multiUNIDX"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -1206,7 +1267,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x5d47baba0d66083c52009271faf3f50dcc01023c&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xe39120b27e5bfec953524402c2e261763c76519e",
     "network": "optimism",
-    "createdAt": 1688210133,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1228,6 +1288,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdc-ageur",
     "status": "active",
+    "createdAt": 1688210852,
     "platformId": "velodrome",
     "assets": ["agEUR", "opUSDCe"],
     "risks": [
@@ -1243,7 +1304,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x9485aca5bbbe1667ad97c7fe7c4531a624c8b1ed&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x4be2cbe40521279b8fc561e65bb842bf73ec3a80",
     "network": "optimism",
-    "createdAt": 1688210852,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1265,6 +1325,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usd+-dai+",
     "status": "active",
+    "createdAt": 1688203289,
     "platformId": "velodrome",
     "assets": ["USD+", "DAI+"],
     "risks": [
@@ -1280,7 +1341,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x73cb180bf0521828d8849bc8cf2b920918e23032&token1=0x970d50d09f3a656b43e11b0d45241a84e3a6e011&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x667002f9dc61ebcba8ee1cbeb2ad04060388f223",
     "network": "optimism",
-    "createdAt": 1688203289,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1302,6 +1362,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-jeur-ageur",
     "status": "active",
+    "createdAt": 1688104101,
     "platformId": "velodrome",
     "assets": ["jEUR", "agEUR"],
     "risks": [
@@ -1317,7 +1378,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x79af5dd14e855823fa3e9ecacdf001d99647d043&token1=0x9485aca5bbbe1667ad97c7fe7c4531a624c8b1ed&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x3dd9556a521d6e57be480c94da102fedf0429aba",
     "network": "optimism",
-    "createdAt": 1688104101,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1339,6 +1399,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-frax-usdc",
     "status": "active",
+    "createdAt": 1688104100,
     "platformId": "velodrome",
     "assets": ["FRAX", "opUSDCe"],
     "risks": [
@@ -1354,7 +1415,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x2e3d870790dc77a83dd1d18184acc7439a53f475&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x8542dd4744edea38b8a9306268b08f4d26d38581",
     "network": "optimism",
-    "createdAt": 1688104100,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1376,6 +1436,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-frax-mai",
     "status": "active",
+    "createdAt": 1688104099,
     "platformId": "velodrome",
     "assets": ["FRAX", "MAI"],
     "risks": [
@@ -1390,7 +1451,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x2e3d870790dc77a83dd1d18184acc7439a53f475&token1=0xdfa46478f9e5ea86d57387849598dbfb2e964b02&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xc37a0a37664aeb3848f98c5dd5d7ae286a1e9ebd",
     "network": "optimism",
-    "createdAt": 1688104099,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1412,6 +1472,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdc-mta",
     "status": "active",
+    "createdAt": 1688104098,
     "platformId": "velodrome",
     "assets": ["MTA", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -1420,7 +1481,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x929b939f8524c3be977af57a4a0ad3fb1e374b50&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x8453cc52f2108ff9d1636b6a108db06ac137b72f",
     "network": "optimism",
-    "createdAt": 1688104098,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1442,7 +1502,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-aelin",
     "status": "eol",
+    "createdAt": 1688104098,
     "retireReason": "tvl",
+    "retiredAt": 1694605850,
     "platformId": "velodrome",
     "assets": ["AELIN", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -1451,7 +1513,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x61baadcf22d2565b0f471b291c475db5555e0b76&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x5da5e8a46d435d619a12086620bc77bf7fb043e5",
     "network": "optimism",
-    "createdAt": 1688104098,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1473,7 +1534,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-unidx-dai",
     "status": "eol",
+    "createdAt": 1688104098,
     "retireReason": "exploit",
+    "retiredAt": 1688910375,
     "platformId": "velodrome",
     "assets": ["multiUNIDX", "DAI"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -1482,7 +1545,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x5d47baba0d66083c52009271faf3f50dcc01023c&token1=0xda10009cbd5d07dd0cecc66161fc93d7c9000da1&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xc0a0adf5e3b07e383c2c1533b2f0878a3195c622",
     "network": "optimism",
-    "createdAt": 1688104098,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1504,7 +1566,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdc-wtbt",
     "status": "eol",
+    "createdAt": 1688104098,
     "retireReason": "tvl",
+    "retiredAt": 1701708841,
     "platformId": "velodrome",
     "assets": ["wTBT", "opUSDCe"],
     "risks": [
@@ -1520,7 +1584,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xdb4ea87ff83eb1c80b8976fc47731da6a31d35e5&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x5e6e17f745ff620e87324b7c6ec672b5743bd0b4",
     "network": "optimism",
-    "createdAt": 1688104098,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1542,6 +1605,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdc-snx",
     "status": "active",
+    "createdAt": 1688104098,
     "platformId": "velodrome",
     "assets": ["SNX", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -1550,7 +1614,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x8700daec35af8ff88c16bdf0418774cb3d7599b4&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x71d53b5b7141e1ec9a3fc9cc48b4766102d14a4a",
     "network": "optimism",
-    "createdAt": 1688104098,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1572,6 +1635,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-wsteth-ldo",
     "status": "active",
+    "createdAt": 1688096352,
     "platformId": "velodrome",
     "assets": ["wstETH", "LDO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -1580,7 +1644,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1f32b1c2345538c0c6f582fcb022739c4a194ebb&token1=0xfdb794692724153d1488ccdbe0c56c252596735f&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xc5c247580a4a6e4d3811c0da6215057aac480bac",
     "network": "optimism",
-    "createdAt": 1688096352,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1602,6 +1665,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-lusd",
     "status": "active",
+    "createdAt": 1688096352,
     "platformId": "velodrome",
     "assets": ["LUSD", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -1610,7 +1674,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x6387765ffa609ab9a1da1b16c455548bfed7cbea",
     "network": "optimism",
-    "createdAt": 1688096352,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1632,6 +1695,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-sonne-usdc",
     "status": "active",
+    "createdAt": 1688096352,
     "platformId": "velodrome",
     "assets": ["SONNE", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -1640,7 +1704,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1db2466d9f5e10d7090e7152b68d62703a2245f0&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x4e60495550071693bc8bdffc40033d278157eac7",
     "network": "optimism",
-    "createdAt": 1688096352,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1662,6 +1725,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-seth",
     "status": "active",
+    "createdAt": 1688096352,
     "platformId": "velodrome",
     "assets": ["sETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -1670,7 +1734,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xe405de8f52ba7559f9df3c368500b6e6ae6cee49&token1=0x4200000000000000000000000000000000000006&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x5e5a37445fadeb71f23514ae7d675ffc644e5e5a",
     "network": "optimism",
-    "createdAt": 1688096352,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1692,6 +1755,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdc-dai",
     "status": "active",
+    "createdAt": 1688079945,
     "platformId": "velodrome",
     "assets": ["DAI", "opUSDCe"],
     "risks": [
@@ -1706,7 +1770,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xda10009cbd5d07dd0cecc66161fc93d7c9000da1&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x19715771e30c93915a5bbda134d782b81a820076",
     "network": "optimism",
-    "createdAt": 1688079945,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1728,6 +1791,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdc-susd",
     "status": "active",
+    "createdAt": 1688079945,
     "platformId": "velodrome",
     "assets": ["sUSD", "opUSDCe"],
     "risks": [
@@ -1742,7 +1806,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x6d5ba400640226e24b50214d2bbb3d4db8e6e15a",
     "network": "optimism",
-    "createdAt": 1688079945,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1764,6 +1827,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-op",
     "status": "active",
+    "createdAt": 1688079945,
     "platformId": "velodrome",
     "assets": ["OP", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -1772,7 +1836,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000042&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xd25711edfbf747efce181442cc1d8f5f8fc8a0d3",
     "network": "optimism",
-    "createdAt": 1688079945,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1794,6 +1857,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdc-lusd",
     "status": "active",
+    "createdAt": 1688079945,
     "platformId": "velodrome",
     "assets": ["LUSD", "opUSDCe"],
     "risks": [
@@ -1808,7 +1872,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xf04458f7b21265b80fc340de7ee598e24485c5bb",
     "network": "optimism",
-    "createdAt": 1688079945,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1830,6 +1893,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-frax-dola",
     "status": "active",
+    "createdAt": 1688079945,
     "platformId": "velodrome",
     "assets": ["DOLA", "FRAX"],
     "risks": [
@@ -1845,7 +1909,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x8ae125e8653821e851f12a49f7765db9a9ce7384&token1=0x2e3d870790dc77a83dd1d18184acc7439a53f475&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x1f8b46abe1eabf5a60cbbb5fb2e4a6a46fa0b6e6",
     "network": "optimism",
-    "createdAt": 1688079945,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1867,6 +1930,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usd+-usdc",
     "status": "active",
+    "createdAt": 1688079945,
     "platformId": "velodrome",
     "assets": ["USD+", "opUSDCe"],
     "risks": [
@@ -1882,7 +1946,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x73cb180bf0521828d8849bc8cf2b920918e23032&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xd95e98fc33670dc033424e7aa0578d742d00f9c7",
     "network": "optimism",
-    "createdAt": 1688079945,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1904,6 +1967,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-lusd-dai",
     "status": "active",
+    "createdAt": 1688065628,
     "platformId": "velodrome",
     "assets": ["LUSD", "DAI"],
     "risks": [
@@ -1918,7 +1982,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&token1=0xda10009cbd5d07dd0cecc66161fc93d7c9000da1&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x0d0f65c63e379263f7ce2713dd012180681d0dc5",
     "network": "optimism",
-    "createdAt": 1688065628,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1940,6 +2003,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-frax-alusd",
     "status": "active",
+    "createdAt": 1688065628,
     "platformId": "velodrome",
     "assets": ["alUSD", "FRAX"],
     "risks": [
@@ -1955,7 +2019,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xcb8fa9a76b8e203d8c3797bf438d8fb81ea3326a&token1=0x2e3d870790dc77a83dd1d18184acc7439a53f475&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xaf03f51de7a0e62bf061f6fc3931cf79166b0a29",
     "network": "optimism",
-    "createdAt": 1688065628,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1977,6 +2040,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-aleth-frxeth",
     "status": "active",
+    "createdAt": 1688065628,
     "platformId": "velodrome",
     "assets": ["alETH", "frxETH"],
     "risks": [
@@ -1992,7 +2056,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x3e29d3a9316dab217754d13b28646b76607c5f04&token1=0x6806411765af15bddd26f8f544a34cc40cb9838b&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x1ad06ca54de04dbe9e2817f4c13ecb406dcbeaf0",
     "network": "optimism",
-    "createdAt": 1688065628,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2014,6 +2077,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-frax-usd+",
     "status": "active",
+    "createdAt": 1688065628,
     "platformId": "velodrome",
     "assets": ["USD+", "FRAX"],
     "risks": [
@@ -2029,7 +2093,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x73cb180bf0521828d8849bc8cf2b920918e23032&token1=0x2e3d870790dc77a83dd1d18184acc7439a53f475&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xd330841ef9527e3bd0abc28a230c7ca8dec9423b",
     "network": "optimism",
-    "createdAt": 1688065628,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2051,6 +2114,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-reth",
     "status": "active",
+    "createdAt": 1688067767,
     "platformId": "velodrome",
     "assets": ["rETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2059,7 +2123,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x9bcef72be871e61ed4fbbc7630889bee758eb81d&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x7e0f65fab1524da9e2e5711d160541cf1199912e",
     "network": "optimism",
-    "createdAt": 1688067767,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2081,6 +2144,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-wsteth-weth",
     "status": "active",
+    "createdAt": 1688065647,
     "platformId": "velodrome",
     "assets": ["wstETH", "ETH"],
     "risks": [
@@ -2096,7 +2160,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1f32b1c2345538c0c6f582fcb022739c4a194ebb&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x6da98bde0068d10ddd11b468b197ea97d96f96bc",
     "network": "optimism",
-    "createdAt": 1688065647,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2118,6 +2181,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-wsteth-op",
     "status": "active",
+    "createdAt": 1688067735,
     "platformId": "velodrome",
     "assets": ["wstETH", "OP"],
     "risks": [
@@ -2133,7 +2197,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1f32b1c2345538c0c6f582fcb022739c4a194ebb&token1=0x4200000000000000000000000000000000000042&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x7178f61694ba9109205b8d6f686282307625e62d",
     "network": "optimism",
-    "createdAt": 1688067735,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2155,6 +2218,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-dola-mai",
     "status": "active",
+    "createdAt": 1688058796,
     "platformId": "velodrome",
     "assets": ["DOLA", "MAI"],
     "risks": [
@@ -2170,7 +2234,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x8ae125e8653821e851f12a49f7765db9a9ce7384&token1=0xdfa46478f9e5ea86d57387849598dbfb2e964b02&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xbe418771bc91f75c4d2bce1d5e2b7286f50992da",
     "network": "optimism",
-    "createdAt": 1688058796,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2192,6 +2255,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-op-velo",
     "status": "active",
+    "createdAt": 1688040374,
     "platformId": "velodrome",
     "assets": ["VELOV2", "OP"],
     "risks": [
@@ -2207,7 +2271,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x9560e827af36c94d2ac33a39bce1fe78631088db&token1=0x4200000000000000000000000000000000000042&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xe9581d0f1a628b038fc8b2a7f5a7d904f0e2f937",
     "network": "optimism",
-    "createdAt": 1688040374,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2229,6 +2292,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdc-alusd",
     "status": "active",
+    "createdAt": 1688040373,
     "platformId": "velodrome",
     "assets": ["alUSD", "opUSDCe"],
     "risks": [
@@ -2245,7 +2309,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xcb8fa9a76b8e203d8c3797bf438d8fb81ea3326a&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x4d7959d17b9710be87e3657e69d946914221bb88",
     "network": "optimism",
-    "createdAt": 1688040373,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2267,6 +2330,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-aleth-weth",
     "status": "active",
+    "createdAt": 1688040372,
     "platformId": "velodrome",
     "assets": ["alETH", "ETH"],
     "risks": [
@@ -2283,7 +2347,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x3e29d3a9316dab217754d13b28646b76607c5f04&token1=0x4200000000000000000000000000000000000006&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xa1055762336f92b4b8d2edc032a0ce45ead6280a",
     "network": "optimism",
-    "createdAt": 1688040372,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2305,7 +2368,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-hnd-usdc",
     "status": "eol",
+    "createdAt": 1688040371,
     "retireReason": "tvl",
+    "retiredAt": 1696060775,
     "platformId": "velodrome",
     "assets": ["HND", "opUSDCe"],
     "risks": [
@@ -2321,7 +2386,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x10010078a54396f62c96df8532dc2b4847d47ed3&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x6b95147a8d2c7f480c0cf7288fcf268400ce9970",
     "network": "optimism",
-    "createdAt": 1688040371,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2343,6 +2407,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-kwenta",
     "status": "active",
+    "createdAt": 1688037724,
     "platformId": "velodrome",
     "assets": ["KWENTA", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -2351,7 +2416,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x920cf626a271321c151d027030d5d08af699456b&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x8f47041adbef5bf321c9f63a0660326614ab6b60",
     "network": "optimism",
-    "createdAt": 1688037724,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2373,6 +2437,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-thales-usdc",
     "status": "active",
+    "createdAt": 1688037724,
     "platformId": "velodrome",
     "assets": ["THALES", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -2381,7 +2446,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x217d47011b23bb961eb6d93ca9945b7501a5bb11&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xe5f28fc43bb40cdf7202ebe406793815b6f07fbd",
     "network": "optimism",
-    "createdAt": 1688037724,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2403,6 +2467,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-lyra-usdc",
     "status": "active",
+    "createdAt": 1688037724,
     "platformId": "velodrome",
     "assets": ["LYRA", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -2411,7 +2476,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x50c5725949a6f0c72e6c4a641f24049a917db0cb&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xdb61f9b480f0a8b817811cfaa89a1c219c355224",
     "network": "optimism",
-    "createdAt": 1688037724,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2433,6 +2497,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-wusdr-usdc",
     "status": "active",
+    "createdAt": 1688037724,
     "platformId": "velodrome",
     "assets": ["omultiwUSDR", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -2441,7 +2506,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x340fe1d898eccaad394e2ba0fc1f93d27c7b717a&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x77b6d0279c9cef559ef7c32c31d9a5d8acb664fe",
     "network": "optimism",
-    "createdAt": 1688037724,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2463,6 +2527,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-stg-usdc",
     "status": "active",
+    "createdAt": 1688037724,
     "platformId": "velodrome",
     "assets": ["STG", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2471,7 +2536,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x296f55f8fb28e498b858d0bcda06d955b2cb3f97&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x56770b94279539416855fe29ef14b26438b5e421",
     "network": "optimism",
-    "createdAt": 1688037724,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2493,6 +2557,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-op-usdc",
     "status": "active",
+    "createdAt": 1688037724,
     "platformId": "velodrome",
     "assets": ["OP", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2501,7 +2566,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000042&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x0df083de449f75691fc5a36477a6f3284c269108",
     "network": "optimism",
-    "createdAt": 1688037724,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2523,6 +2587,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usd+-dola",
     "status": "active",
+    "createdAt": 1688037724,
     "platformId": "velodrome",
     "assets": ["USD+", "DOLA"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -2531,7 +2596,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x73cb180bf0521828d8849bc8cf2b920918e23032&token1=0x8ae125e8653821e851f12a49f7765db9a9ce7384&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x0b28c2e41058edc7d66c516c617b664ea86eec5d",
     "network": "optimism",
-    "createdAt": 1688037724,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2553,6 +2617,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdt-lusd",
     "status": "active",
+    "createdAt": 1688037724,
     "platformId": "velodrome",
     "assets": ["LUSD", "USDT"],
     "risks": [
@@ -2567,7 +2632,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&token1=0x94b008aa00579c1307b0ef2c499ad98a8ce58e58&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xe8b8bff1e415258eb3d5fa8deee9c38406e609cd",
     "network": "optimism",
-    "createdAt": 1688037724,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2589,6 +2653,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdc-mai",
     "status": "active",
+    "createdAt": 1688037723,
     "platformId": "velodrome",
     "assets": ["MAI", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -2597,7 +2662,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xdfa46478f9e5ea86d57387849598dbfb2e964b02&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xe54e4020d1c3afdb312095d90054103e68fe34b0",
     "network": "optimism",
-    "createdAt": 1688037723,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2619,6 +2683,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdc-dola",
     "status": "active",
+    "createdAt": 1688037723,
     "platformId": "velodrome",
     "assets": ["DOLA", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -2627,7 +2692,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x8ae125e8653821e851f12a49f7765db9a9ce7384&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xb720fbc32d60bb6dcc955be86b98d8fd3c4ba645",
     "network": "optimism",
-    "createdAt": 1688037723,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2649,6 +2713,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-usdc",
     "status": "active",
+    "createdAt": 1688037723,
     "platformId": "velodrome",
     "assets": ["ETH", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2657,7 +2722,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x0493bf8b6dbb159ce2db2e0e8403e753abd1235b",
     "network": "optimism",
-    "createdAt": 1688037723,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2679,6 +2743,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdc-velo",
     "status": "active",
+    "createdAt": 1688037723,
     "platformId": "velodrome",
     "assets": ["VELOV2", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -2687,7 +2752,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x9560e827af36c94d2ac33a39bce1fe78631088db&token1=0x7f5c764cbc14f9669b88837ca1490cca17c31607&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x8134a2fdc127549480865fb8e5a9e8a8a95a54c5",
     "network": "optimism",
-    "createdAt": 1688037723,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2709,6 +2773,7 @@
     "oracle": "tokens",
     "oracleId": "BeVELO",
     "status": "active",
+    "createdAt": 1687996562,
     "platformId": "beefy",
     "assets": ["beVELO"],
     "risks": [
@@ -2720,8 +2785,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "bevelov2",
-    "network": "optimism",
-    "createdAt": 1687996562
+    "network": "optimism"
   },
   {
     "id": "velodrome-v2-weth-bifi",
@@ -2737,7 +2801,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-bifi",
     "status": "eol",
+    "createdAt": 1688039323,
     "retireReason": "bifiV2",
+    "retiredAt": 1689007467,
     "platformId": "velodrome",
     "assets": ["oldBIFI", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -2746,7 +2812,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4e720dd3ac5cfe1e1fbde4935f386bb1c66f4642&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x1cdfae29a66b39c30eb2b090a2dbba562026e9ff",
     "network": "optimism",
-    "createdAt": 1688039323,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2768,7 +2833,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-op-bifi",
     "status": "eol",
+    "createdAt": 1688039323,
     "retireReason": "bifiV2",
+    "retiredAt": 1689007467,
     "platformId": "velodrome",
     "assets": ["oldBIFI", "OP"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -2777,7 +2844,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4e720dd3ac5cfe1e1fbde4935f386bb1c66f4642&token1=0x4200000000000000000000000000000000000042&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xe0a1467a9d86d9f433496c48c6831c0142464ce6",
     "network": "optimism",
-    "createdAt": 1688039323,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2799,6 +2865,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-frxeth",
     "status": "active",
+    "createdAt": 1688039323,
     "platformId": "velodrome",
     "assets": ["frxETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -2807,7 +2874,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x6806411765af15bddd26f8f544a34cc40cb9838b&token1=0x4200000000000000000000000000000000000006&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x3f42dc59dc4df5cd607163bc620168f7ff7ab970",
     "network": "optimism",
-    "createdAt": 1688039323,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2829,6 +2895,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-sfrxeth-frxeth",
     "status": "active",
+    "createdAt": 1688039323,
     "platformId": "velodrome",
     "assets": ["sfrxETH", "frxETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -2837,7 +2904,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x484c2d6e3cdd945a8b2df735e079178c1036578c&token1=0x6806411765af15bddd26f8f544a34cc40cb9838b&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xff5318f81dd791e92d51b8a54fa3538832d2890d",
     "network": "optimism",
-    "createdAt": 1688039323,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2859,6 +2925,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdc-usdt",
     "status": "active",
+    "createdAt": 1688039323,
     "platformId": "velodrome",
     "assets": ["opUSDCe", "USDT"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2867,7 +2934,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x7f5c764cbc14f9669b88837ca1490cca17c31607&token1=0x94b008aa00579c1307b0ef2c499ad98a8ce58e58&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x2b47c794c3789f499d8a54ec12f949eecce8ba16",
     "network": "optimism",
-    "createdAt": 1688039323,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2889,6 +2955,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-alusd-mai",
     "status": "active",
+    "createdAt": 1688039323,
     "platformId": "velodrome",
     "assets": ["alUSD", "MAI"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -2897,7 +2964,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xcb8fa9a76b8e203d8c3797bf438d8fb81ea3326a&token1=0xdfa46478f9e5ea86d57387849598dbfb2e964b02&stable=true",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xfa09479d72e2b3f8b6df63399772237ad6658d76",
     "network": "optimism",
-    "createdAt": 1688039323,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2919,6 +2985,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-op-ageur",
     "status": "active",
+    "createdAt": 1688039323,
     "platformId": "velodrome",
     "assets": ["agEUR", "OP"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -2927,7 +2994,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x9485aca5bbbe1667ad97c7fe7c4531a624c8b1ed&token1=0x4200000000000000000000000000000000000042&stable=false",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xefe139aa71b674168f5823360a824b3714f2718d",
     "network": "optimism",
-    "createdAt": 1688039323,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2948,7 +3014,9 @@
     "oracle": "tokens",
     "oracleId": "wstETH",
     "status": "eol",
+    "createdAt": 1694023422,
     "retireReason": "rewards",
+    "retiredAt": 1700566353,
     "platformId": "exactly",
     "assets": ["wstETH"],
     "risks": [
@@ -2962,7 +3030,6 @@
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/wstETH",
     "network": "optimism",
-    "createdAt": 1694023422,
     "zaps": [
       {
         "strategyId": "single"
@@ -2983,7 +3050,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-frax-usd+",
     "status": "eol",
+    "createdAt": 1685588249,
     "retireReason": "tvl",
+    "retiredAt": 1688639926,
     "platformId": "velodrome",
     "assets": ["USD+", "FRAX"],
     "risks": [
@@ -2999,7 +3068,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x947A96B025C70497DbC0D095D966f3B59a675a70",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x947A96B025C70497DbC0D095D966f3B59a675a70",
     "network": "optimism",
-    "createdAt": 1685588249,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3021,7 +3089,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdc-mta",
     "status": "eol",
+    "createdAt": 1684761395,
     "retireReason": "tvl",
+    "retiredAt": 1690624926,
     "platformId": "velodrome",
     "assets": ["MTA", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -3030,7 +3100,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x66a8bD7cCfD52bfb5bC838d149FBa78e6920303F",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x66a8bD7cCfD52bfb5bC838d149FBa78e6920303F",
     "network": "optimism",
-    "createdAt": 1684761395,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3052,7 +3121,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdc-wtbt",
     "status": "eol",
+    "createdAt": 1684761395,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["wTBT", "opUSDCe"],
     "risks": [
@@ -3068,7 +3139,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xb81df7a1E7404c6c1dbcaC503a9412b7A926F62E",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xb81df7a1E7404c6c1dbcaC503a9412b7A926F62E",
     "network": "optimism",
-    "createdAt": 1684761395,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3090,7 +3160,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-stg-usdc",
     "status": "eol",
+    "createdAt": 1684761395,
     "retireReason": "tvl",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["STG", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -3099,7 +3171,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x7892d498F22c9393385F4A798788126F7090d2CC",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x7892d498F22c9393385F4A798788126F7090d2CC",
     "network": "optimism",
-    "createdAt": 1684761395,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3119,7 +3190,10 @@
     "earnContractAddress": "0xE7db4eA58560D4678DF204165D1f50d18185BC89",
     "oracle": "tokens",
     "oracleId": "opUSDCe",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1706885963,
+    "createdAt": 1694023422,
     "platformId": "exactly",
     "assets": ["opUSDCe"],
     "risks": [
@@ -3133,7 +3207,6 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/WETH/USDCe",
     "network": "optimism",
-    "createdAt": 1694023422,
     "zaps": [
       {
         "strategyId": "single"
@@ -3155,7 +3228,10 @@
     "earnContractAddress": "0x0Bf7616889d0ae18382d9715eAc00a3302e9aB92",
     "oracle": "tokens",
     "oracleId": "ETH",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1706885963,
+    "createdAt": 1694023422,
     "platformId": "exactly",
     "assets": ["ETH"],
     "risks": [
@@ -3169,7 +3245,6 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/USDCe/WETH",
     "network": "optimism",
-    "createdAt": 1694023422,
     "zaps": [
       {
         "strategyId": "single"
@@ -3190,7 +3265,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usd+-dai+",
     "status": "eol",
+    "createdAt": 1680535940,
     "retireReason": "tvl",
+    "retiredAt": 1703155937,
     "platformId": "velodrome",
     "assets": ["USD+", "DAI+"],
     "risks": [
@@ -3206,7 +3283,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x69C28d5BbE392eF48C0dC347C575023dAf0CD243",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x69C28d5BbE392eF48C0dC347C575023dAf0CD243",
     "network": "optimism",
-    "createdAt": 1680535940,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3228,7 +3304,9 @@
     "oracle": "lps",
     "oracleId": "beets-overnight-pulse-v2",
     "status": "eol",
+    "createdAt": 1680283578,
     "retireReason": "rewards",
+    "retiredAt": 1690624926,
     "platformId": "beethovenx",
     "assets": ["bbUSD+", "bbDAI+"],
     "risks": [
@@ -3242,8 +3320,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x43da214fab3315aa6c02e0b8f2bfb7ef2e3c60a50000000000000000000000ae",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x43da214fab3315aa6c02e0b8f2bfb7ef2e3c60a50000000000000000000000ae",
-    "network": "optimism",
-    "createdAt": 1680283578
+    "network": "optimism"
   },
   {
     "id": "mmy-op-mlp",
@@ -3259,6 +3336,7 @@
     "oracle": "lps",
     "oracleId": "mmy-op-mlp",
     "status": "active",
+    "createdAt": 1680196017,
     "platformId": "mummy",
     "assets": ["WBTC", "WETH", "opUSDCe", "USDT", "DAI", "OP", "LINK", "SNX"],
     "risks": [
@@ -3272,8 +3350,7 @@
     "strategyTypeId": "mmy-mlp",
     "addLiquidityUrl": "https://app.mummy.finance/#/buy_mlp?ref=beef",
     "removeLiquidityUrl": "https://app.mummy.finance/#/buy_mlp?ref=beef",
-    "network": "optimism",
-    "createdAt": 1680196017
+    "network": "optimism"
   },
   {
     "id": "curve-op-f-mim",
@@ -3289,6 +3366,7 @@
     "oracle": "lps",
     "oracleId": "curve-op-f-mim",
     "status": "active",
+    "createdAt": 1680074623,
     "platformId": "curve",
     "assets": ["MIM", "DAI", "opUSDCe", "USDT"],
     "migrationIds": ["l2-curve"],
@@ -3296,8 +3374,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-47/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-47/withdraw",
-    "network": "optimism",
-    "createdAt": 1680074623
+    "network": "optimism"
   },
   {
     "id": "velodrome-weth-unidx",
@@ -3313,7 +3390,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-unidx",
     "status": "eol",
+    "createdAt": 1679849813,
     "retireReason": "tvl",
+    "retiredAt": 1688639926,
     "platformId": "velodrome",
     "assets": ["WETH", "multiUNIDX"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -3322,7 +3401,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9f611290d537840BDAb9f32C408ACBebe83b07B5",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9f611290d537840BDAb9f32C408ACBebe83b07B5",
     "network": "optimism",
-    "createdAt": 1679849813,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3344,7 +3422,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdt-lusd",
     "status": "eol",
+    "createdAt": 1679530696,
     "retireReason": "rewards",
+    "retiredAt": 1688639926,
     "platformId": "velodrome",
     "assets": ["LUSD", "USDT"],
     "risks": [
@@ -3359,7 +3439,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x91F3FCE37992d608673140034A134F4612B82118",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x91F3FCE37992d608673140034A134F4612B82118",
     "network": "optimism",
-    "createdAt": 1679530696,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3381,7 +3460,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-lusd-dai",
     "status": "eol",
+    "createdAt": 1679543463,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["LUSD", "DAI"],
     "risks": [
@@ -3396,7 +3477,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xF12BA676F9045BD76f8280BF249CBe8D209276e2",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xF12BA676F9045BD76f8280BF249CBe8D209276e2",
     "network": "optimism",
-    "createdAt": 1679543463,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3418,7 +3498,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-frax-dola",
     "status": "eol",
+    "createdAt": 1678985453,
     "retireReason": "rewards",
+    "retiredAt": 1688639926,
     "platformId": "velodrome",
     "assets": ["DOLA", "FRAX"],
     "risks": [
@@ -3434,7 +3516,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xD29DE64c1a9Dd3e829A7345BE1E9c32a9414541f",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xD29DE64c1a9Dd3e829A7345BE1E9c32a9414541f",
     "network": "optimism",
-    "createdAt": 1678985453,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3456,7 +3537,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-dola-mai",
     "status": "eol",
+    "createdAt": 1678382699,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["DOLA", "MAI"],
     "risks": [
@@ -3472,7 +3555,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x21950a0cA249A0ef3d182338c86c8C066B24D801",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x21950a0cA249A0ef3d182338c86c8C066B24D801",
     "network": "optimism",
-    "createdAt": 1678382699,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3494,7 +3576,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-wusdr-usdc",
     "status": "eol",
+    "createdAt": 1677179159,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["omultiwUSDR", "opUSDCe"],
     "risks": [
@@ -3510,7 +3594,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x48dce63BacF1C7C839cFa7d4F871ad17c0D30D38",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x48dce63BacF1C7C839cFa7d4F871ad17c0D30D38",
     "network": "optimism",
-    "createdAt": 1677179159,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3532,7 +3615,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-bevelo-velo",
     "status": "eol",
+    "createdAt": 1677115178,
     "retireReason": "bevelo",
+    "retiredAt": 1688639926,
     "platformId": "velodrome",
     "assets": ["beVELO", "VELO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -3541,7 +3626,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xC6c7B143295b2920DA41369e9627245FaB8c1CcE",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xC6c7B143295b2920DA41369e9627245FaB8c1CcE",
     "network": "optimism",
-    "createdAt": 1677115178,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3563,7 +3647,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-sfrxeth-frxeth",
     "status": "eol",
+    "createdAt": 1676926172,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["sfrxETH", "frxETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -3572,7 +3658,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xeB676aE691df237aC09a0f7410123A714D84afb3",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xeB676aE691df237aC09a0f7410123A714D84afb3",
     "network": "optimism",
-    "createdAt": 1676926172,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3594,7 +3679,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-wsteth",
     "status": "eol",
+    "createdAt": 1675896222,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["wstETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -3603,7 +3690,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xc6C1E8399C1c33a3f1959f2f77349D74a373345c",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xc6C1E8399C1c33a3f1959f2f77349D74a373345c",
     "network": "optimism",
-    "createdAt": 1675896222,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3625,7 +3711,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-reth-weth",
     "status": "eol",
+    "createdAt": 1675896343,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["rETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -3634,7 +3722,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x985612ff2C9409174FedcFf23d4F4761AF124F88",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x985612ff2C9409174FedcFf23d4F4761AF124F88",
     "network": "optimism",
-    "createdAt": 1675896343,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3656,7 +3743,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdt-mai",
     "status": "eol",
+    "createdAt": 1675891871,
     "retireReason": "tvl",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["USDT", "MAI"],
     "risks": [
@@ -3672,7 +3761,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x4AB66eED0b39F9d229A1281468a4482515dB0709",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x4AB66eED0b39F9d229A1281468a4482515dB0709",
     "network": "optimism",
-    "createdAt": 1675891871,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3694,7 +3782,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-alusd-mai-samm",
     "status": "eol",
+    "createdAt": 1675891871,
     "retireReason": "tvl",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["alUSD", "MAI"],
     "risks": [
@@ -3710,7 +3800,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x16E7e0960A74b0eA3E61118a0C0EaE8f83D43d7C",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x16E7e0960A74b0eA3E61118a0C0EaE8f83D43d7C",
     "network": "optimism",
-    "createdAt": 1675891871,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3732,7 +3821,9 @@
     "oracle": "lps",
     "oracleId": "kyber-optimism-usdc-mai",
     "status": "eol",
+    "createdAt": 1675790593,
     "retireReason": "rewards",
+    "retiredAt": 1690624926,
     "platformId": "kyber",
     "assets": ["MAI", "opUSDCe"],
     "risks": [
@@ -3747,8 +3838,7 @@
     "buyTokenUrl": "https://kyberswap.com/swap/optimism",
     "addLiquidityUrl": "https://kyberswap.com/add/0x7F5c764cBc14f9669B88837ca1490cCa17c31607/0xdFA46478F9e5EA86d57387849598dbFB2e964b02/0xc2995a065106b5c5c738b2320387460ebd12c12d",
     "removeLiquidityUrl": "https://kyberswap.com/remove/0x7F5c764cBc14f9669B88837ca1490cCa17c31607/0xdFA46478F9e5EA86d57387849598dbFB2e964b02/0xc2995a065106b5c5c738b2320387460ebd12c12d",
-    "network": "optimism",
-    "createdAt": 1675790593
+    "network": "optimism"
   },
   {
     "id": "stargate-op-dai",
@@ -3764,6 +3854,7 @@
     "oracle": "lps",
     "oracleId": "stargate-op-dai",
     "status": "active",
+    "createdAt": 1675440288,
     "platformId": "stargate",
     "assets": ["DAI"],
     "risks": [
@@ -3777,8 +3868,7 @@
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/DAI",
     "addLiquidityUrl": "https://stargate.finance/pool/dai-optimism",
-    "network": "optimism",
-    "createdAt": 1675440288
+    "network": "optimism"
   },
   {
     "id": "stargate-op-frax",
@@ -3794,7 +3884,9 @@
     "oracle": "lps",
     "oracleId": "stargate-op-frax",
     "status": "eol",
+    "createdAt": 1675440289,
     "retireReason": "rewards",
+    "retiredAt": 1690624926,
     "platformId": "stargate",
     "assets": ["FRAX"],
     "risks": [
@@ -3808,8 +3900,7 @@
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
     "addLiquidityUrl": "https://stargate.finance/pool/FRAX-OPTIMISM",
-    "network": "optimism",
-    "createdAt": 1675440289
+    "network": "optimism"
   },
   {
     "id": "beefy-beopx",
@@ -3824,7 +3915,9 @@
     "oracle": "tokens",
     "oracleId": "beOPX",
     "status": "eol",
+    "createdAt": 1671735524,
     "retireReason": "rewards",
+    "retiredAt": 1700164371,
     "platformId": "beefy",
     "assets": ["beOPX"],
     "risks": [
@@ -3837,8 +3930,7 @@
     ],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/OPX",
-    "network": "optimism",
-    "createdAt": 1671735524
+    "network": "optimism"
   },
   {
     "id": "beefy-beopx-earnings",
@@ -3854,7 +3946,9 @@
     "oracle": "tokens",
     "oracleId": "beOPX",
     "status": "eol",
+    "createdAt": 1671735523,
     "retireReason": "rewards",
+    "retiredAt": 1700164371,
     "platformId": "beefy",
     "assets": ["beOPX"],
     "risks": [
@@ -3867,8 +3961,7 @@
     ],
     "strategyTypeId": "beopx",
     "excluded": "beefy-beopx",
-    "network": "optimism",
-    "createdAt": 1671735523
+    "network": "optimism"
   },
   {
     "id": "velodrome-weth-frxeth",
@@ -3884,7 +3977,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-frxeth",
     "status": "eol",
+    "createdAt": 1675525207,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["frxETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -3893,7 +3988,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x63642a192BAb08B09A70a997bb35B36b9286B01e",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x63642a192BAb08B09A70a997bb35B36b9286B01e",
     "network": "optimism",
-    "createdAt": 1675525207,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3915,7 +4009,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-alusd-mai",
     "status": "eol",
+    "createdAt": 1675436590,
     "retireReason": "tvl",
+    "retiredAt": 1678187377,
     "platformId": "velodrome",
     "assets": ["alUSD", "MAI"],
     "risks": [
@@ -3931,7 +4027,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xa8FeDB4A8194E21Cf775ce868a865242e4e45151",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xa8FeDB4A8194E21Cf775ce868a865242e4e45151",
     "network": "optimism",
-    "createdAt": 1675436590,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3953,7 +4048,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-dai-mai",
     "status": "eol",
+    "createdAt": 1675341832,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["DAI", "MAI"],
     "risks": [
@@ -3969,7 +4066,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xFfb4fD14e840abD3EBd6Cd026332B2302948A3fc",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xFfb4fD14e840abD3EBd6Cd026332B2302948A3fc",
     "network": "optimism",
-    "createdAt": 1675341832,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3991,7 +4087,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usd+-dola",
     "status": "eol",
+    "createdAt": 1675341832,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["USD+", "DOLA"],
     "risks": [
@@ -4007,7 +4105,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xa99817d2d286C894F8f3888096A5616d06F20d46",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xa99817d2d286C894F8f3888096A5616d06F20d46",
     "network": "optimism",
-    "createdAt": 1675341832,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4029,7 +4126,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-wsteth-usdc",
     "status": "eol",
+    "createdAt": 1674847402,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["wstETH", "opUSDCe"],
     "risks": ["BATTLE_TESTED", "CONTRACTS_VERIFIED", "COMPLEXITY_LOW", "MCAP_LARGE", "IL_LOW"],
@@ -4038,7 +4137,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x794299137282e5D3Af56616624Ab918D1b2BeCF3",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x794299137282e5D3Af56616624Ab918D1b2BeCF3",
     "network": "optimism",
-    "createdAt": 1674847402,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4060,6 +4158,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-wsteth-op",
     "status": "active",
+    "createdAt": 1674850871,
     "platformId": "velodrome",
     "assets": ["wstETH", "OP"],
     "risks": ["BATTLE_TESTED", "CONTRACTS_VERIFIED", "COMPLEXITY_LOW", "MCAP_MEDIUM", "IL_LOW"],
@@ -4068,7 +4167,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x3905870E647c97Cb9C8D99Db24384f480531B5b9",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x3905870E647c97Cb9C8D99Db24384f480531B5b9",
     "network": "optimism",
-    "createdAt": 1674850871,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4090,7 +4188,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-wsteth-seth",
     "status": "eol",
+    "createdAt": 1675354581,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["wstETH", "sETH"],
     "risks": ["BATTLE_TESTED", "CONTRACTS_VERIFIED", "COMPLEXITY_LOW", "MCAP_MEDIUM", "IL_NONE"],
@@ -4099,7 +4199,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xB343dae0E7fe28c16EC5dCa64cB0C1ac5F4690AC",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xB343dae0E7fe28c16EC5dCa64cB0C1ac5F4690AC",
     "network": "optimism",
-    "createdAt": 1675354581,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4121,7 +4220,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-jeur-seur",
     "status": "eol",
+    "createdAt": 1674180481,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["jEUR", "sEUR"],
     "risks": [
@@ -4137,7 +4238,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9905f635c656208f4725f3EB51fb762D8041FD50",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9905f635c656208f4725f3EB51fb762D8041FD50",
     "network": "optimism",
-    "createdAt": 1674180481,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4159,7 +4259,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-unidx-dai",
     "status": "eol",
+    "createdAt": 1672282535,
     "retireReason": "exploit",
+    "retiredAt": 1688910375,
     "platformId": "velodrome",
     "assets": ["multiUNIDX", "DAI"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -4168,7 +4270,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x83E33607e808A0693DF2F803b41291caC5a51e58",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x83E33607e808A0693DF2F803b41291caC5a51e58",
     "network": "optimism",
-    "createdAt": 1672282535,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4190,7 +4291,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-lusd",
     "status": "eol",
+    "createdAt": 1672282535,
     "retireReason": "tvl",
+    "retiredAt": 1700566353,
     "platformId": "velodrome",
     "assets": ["LUSD", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -4199,7 +4302,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x91e0fC1E4D32cC62C4f9Bc11aCa5f3a159483d31",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x91e0fC1E4D32cC62C4f9Bc11aCa5f3a159483d31",
     "network": "optimism",
-    "createdAt": 1672282535,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4221,7 +4323,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-kwenta",
     "status": "eol",
+    "createdAt": 1671717603,
     "retireReason": "tvl",
+    "retiredAt": 1700164371,
     "platformId": "velodrome",
     "assets": ["KWENTA", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -4230,7 +4334,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xd65c1120DDF79F827b925C505949E02c5A0D6236",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xd65c1120DDF79F827b925C505949E02c5A0D6236",
     "network": "optimism",
-    "createdAt": 1671717603,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4252,7 +4355,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-thales-weth",
     "status": "eol",
+    "createdAt": 1671717603,
     "retireReason": "tvl",
+    "retiredAt": 1690624926,
     "platformId": "velodrome",
     "assets": ["THALES", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -4261,7 +4366,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x6Fe429de4284B7625CAC1FCaACFa1D705ac9ec28",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x6Fe429de4284B7625CAC1FCaACFa1D705ac9ec28",
     "network": "optimism",
-    "createdAt": 1671717603,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4283,7 +4387,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdc-usdt",
     "status": "eol",
+    "createdAt": 1670479365,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["USDT", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -4292,7 +4398,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xe08d427724d8a2673FE0bE3A81b7db17BE835B36",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xe08d427724d8a2673FE0bE3A81b7db17BE835B36",
     "network": "optimism",
-    "createdAt": 1670479365,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4314,7 +4419,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdc-usx",
     "status": "eol",
+    "createdAt": 1670479365,
     "retireReason": "tvl",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["USX", "opUSDCe"],
     "risks": [
@@ -4330,7 +4437,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x5edac6B8EA08d535c01981D75B3361481C0EE999",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x5edac6B8EA08d535c01981D75B3361481C0EE999",
     "network": "optimism",
-    "createdAt": 1670479365,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4352,7 +4458,9 @@
     "oracle": "lps",
     "oracleId": "opx-olp",
     "status": "eol",
+    "createdAt": 1670252431,
     "retireReason": "rewards",
+    "retiredAt": 1700164371,
     "platformId": "opx",
     "assets": ["WETH", "WBTC", "opUSDCe", "USDT", "DAI", "OP"],
     "risks": [
@@ -4366,8 +4474,7 @@
     "strategyTypeId": "olp-opx",
     "addLiquidityUrl": "https://www.opx.finance/#/buy_olp",
     "removeLiquidityUrl": "https://www.opx.finance/#/buy_olp",
-    "network": "optimism",
-    "createdAt": 1670252431
+    "network": "optimism"
   },
   {
     "id": "curve-op-f-wsteth",
@@ -4383,7 +4490,9 @@
     "oracle": "lps",
     "oracleId": "curve-op-f-wsteth",
     "status": "eol",
+    "createdAt": 1668590265,
     "retireReason": "rewards",
+    "retiredAt": 1698160111,
     "platformId": "curve",
     "assets": ["wstETH", "ETH"],
     "risks": [
@@ -4397,8 +4506,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/wsteth/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/wsteth/withdraw",
-    "network": "optimism",
-    "createdAt": 1668590265
+    "network": "optimism"
   },
   {
     "id": "hop-op-snx",
@@ -4414,7 +4522,9 @@
     "oracle": "lps",
     "oracleId": "hop-op-snx",
     "status": "eol",
+    "createdAt": 1667671412,
     "retireReason": "rewards",
+    "retiredAt": 1696930682,
     "platformId": "hop",
     "assets": ["SNX"],
     "risks": [
@@ -4429,8 +4539,7 @@
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/SNX",
     "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=SNX&sourceNetwork=optimism",
     "removeLiquidityUrl": "https://app.hop.exchange/#/pool/withdraw?token=SNX&sourceNetwork=optimism",
-    "network": "optimism",
-    "createdAt": 1667671412
+    "network": "optimism"
   },
   {
     "id": "hop-op-eth",
@@ -4446,6 +4555,7 @@
     "oracle": "lps",
     "oracleId": "hop-op-eth",
     "status": "active",
+    "createdAt": 1667671411,
     "platformId": "hop",
     "assets": ["ETH"],
     "risks": [
@@ -4460,8 +4570,7 @@
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/USDCe/ETH",
     "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=ETH&sourceNetwork=optimism",
     "removeLiquidityUrl": "https://app.hop.exchange/#/pool/withdraw?token=ETH&sourceNetwork=optimism",
-    "network": "optimism",
-    "createdAt": 1667671411
+    "network": "optimism"
   },
   {
     "id": "hop-op-usdc",
@@ -4477,6 +4586,7 @@
     "oracle": "lps",
     "oracleId": "hop-op-usdc",
     "status": "active",
+    "createdAt": 1667671410,
     "platformId": "hop",
     "assets": ["opUSDCe"],
     "risks": [
@@ -4491,8 +4601,7 @@
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/USDCe",
     "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=USDCe&sourceNetwork=optimism",
     "removeLiquidityUrl": "https://app.hop.exchange/#/pool/withdraw?token=USDCe&sourceNetwork=optimism",
-    "network": "optimism",
-    "createdAt": 1667671410
+    "network": "optimism"
   },
   {
     "id": "hop-op-dai",
@@ -4508,6 +4617,7 @@
     "oracle": "lps",
     "oracleId": "hop-op-dai",
     "status": "active",
+    "createdAt": 1667671409,
     "platformId": "hop",
     "assets": ["DAI"],
     "risks": [
@@ -4522,8 +4632,7 @@
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/DAI",
     "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=DAI&sourceNetwork=optimism",
     "removeLiquidityUrl": "https://app.hop.exchange/#/pool/withdraw?token=DAI&sourceNetwork=optimism",
-    "network": "optimism",
-    "createdAt": 1667671409
+    "network": "optimism"
   },
   {
     "id": "hop-op-usdt",
@@ -4539,6 +4648,7 @@
     "oracle": "lps",
     "oracleId": "hop-op-usdt",
     "status": "active",
+    "createdAt": 1667671408,
     "platformId": "hop",
     "assets": ["USDT"],
     "risks": [
@@ -4553,8 +4663,7 @@
     "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/USDT",
     "addLiquidityUrl": "https://app.hop.exchange/#/pool/deposit?token=USDT&sourceNetwork=optimism",
     "removeLiquidityUrl": "https://app.hop.exchange/#/pool/withdraw?token=USDT&sourceNetwork=optimism",
-    "network": "optimism",
-    "createdAt": 1667671408
+    "network": "optimism"
   },
   {
     "id": "velodrome-weth-reth",
@@ -4570,7 +4679,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-reth",
     "status": "eol",
+    "createdAt": 1668704939,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["rETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -4579,7 +4690,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x69F795e2d9249021798645d784229e5bec2a5a25",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x69F795e2d9249021798645d784229e5bec2a5a25",
     "network": "optimism",
-    "createdAt": 1668704939,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4601,7 +4711,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-wsteth-ldo",
     "status": "eol",
+    "createdAt": 1668704938,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["wstETH", "LDO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -4610,7 +4722,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xfEdd5A17D009DCB28DEaC39094A2aA5b601DC4a3",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xfEdd5A17D009DCB28DEaC39094A2aA5b601DC4a3",
     "network": "optimism",
-    "createdAt": 1668704938,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4632,7 +4743,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-wsteth-usd+",
     "status": "eol",
+    "createdAt": 1668704937,
     "retireReason": "tvl",
+    "retiredAt": 1676567650,
     "platformId": "velodrome",
     "assets": ["wstETH", "USD+"],
     "risks": [
@@ -4648,7 +4761,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x98dc12979A34EE2F7099B1cBD65f9080c5a3284F",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x98dc12979A34EE2F7099B1cBD65f9080c5a3284F",
     "network": "optimism",
-    "createdAt": 1668704937,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4670,7 +4782,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-op-mai",
     "status": "eol",
+    "createdAt": 1668704936,
     "retireReason": "tvl",
+    "retiredAt": 1675865662,
     "platformId": "velodrome",
     "assets": ["MAI", "OP"],
     "risks": [
@@ -4686,7 +4800,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x8fbC13969B03B58E0ac50B19E4aEdd4DFf8554a1",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x8fbC13969B03B58E0ac50B19E4aEdd4DFf8554a1",
     "network": "optimism",
-    "createdAt": 1668704936,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4708,7 +4821,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-hop",
     "status": "eol",
+    "createdAt": 1666954558,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["ETH", "HOP"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -4717,7 +4832,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xCC441718F7F50d55F497fd37E3f3f3fe4789cf6b",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xCC441718F7F50d55F497fd37E3f3f3fe4789cf6b",
     "network": "optimism",
-    "createdAt": 1666954558,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4738,7 +4852,9 @@
     "oracle": "tokens",
     "oracleId": "oldBIFI",
     "status": "eol",
+    "createdAt": 1663091478,
     "retireReason": "bifiV2",
+    "retiredAt": 1689087437,
     "platformId": "beefy",
     "assets": ["oldBIFI"],
     "risks": [
@@ -4751,8 +4867,7 @@
     ],
     "strategyTypeId": "maxi",
     "buyTokenUrl": "https://velodrome.finance/swap",
-    "network": "optimism",
-    "createdAt": 1663091478
+    "network": "optimism"
   },
   {
     "id": "beefy-bevelo",
@@ -4767,7 +4882,9 @@
     "oracle": "tokens",
     "oracleId": "BeVELO",
     "status": "eol",
+    "createdAt": 1666200900,
     "retireReason": "bevelo",
+    "retiredAt": 1690557040,
     "platformId": "beefy",
     "assets": ["beVELO"],
     "risks": [
@@ -4780,8 +4897,7 @@
     ],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://velodrome.finance/swap",
-    "network": "optimism",
-    "createdAt": 1666200900
+    "network": "optimism"
   },
   {
     "id": "velodrome-wsteth-weth",
@@ -4797,6 +4913,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-wsteth-weth",
     "status": "active",
+    "createdAt": 1665617208,
     "platformId": "velodrome",
     "assets": ["wstETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -4805,7 +4922,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xBf205335De602ac38244F112d712ab04CB59A498",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xBf205335De602ac38244F112d712ab04CB59A498",
     "network": "optimism",
-    "createdAt": 1665617208,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4827,14 +4943,14 @@
     "oracle": "lps",
     "oracleId": "beets-shanghai-shakedown",
     "status": "active",
+    "createdAt": 1700600674,
     "platformId": "aura",
     "assets": ["wstETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x7b50775383d3d6f0215a8f290f2c9e2eebbeceb200020000000000000000008b",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x7b50775383d3d6f0215a8f290f2c9e2eebbeceb200020000000000000000008b",
-    "network": "optimism",
-    "createdAt": 1700600674
+    "network": "optimism"
   },
   {
     "id": "beets-helter-skelter",
@@ -4850,15 +4966,16 @@
     "oracle": "lps",
     "oracleId": "beets-helter-skelter",
     "status": "eol",
+    "createdAt": 1673373128,
     "retireReason": "tvl",
+    "retiredAt": 1686563142,
     "platformId": "beethovenx",
     "assets": ["wstETH", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x899f737750db562b88c1e412ee1902980d3a4844000200000000000000000081",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x899f737750db562b88c1e412ee1902980d3a4844000200000000000000000081",
-    "network": "optimism",
-    "createdAt": 1673373128
+    "network": "optimism"
   },
   {
     "id": "beets-overnight-pulse",
@@ -4874,7 +4991,9 @@
     "oracle": "lps",
     "oracleId": "beets-overnight-pulse",
     "status": "eol",
+    "createdAt": 1673373128,
     "retireReason": "rewards",
+    "retiredAt": 1680018611,
     "platformId": "beethovenx",
     "assets": ["bbUSD+", "bbDAI+"],
     "risks": [
@@ -4888,8 +5007,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0xb1c9ac57594e9b1ec0f3787d9f6744ef4cb0a02400000000000000000000006e",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0xb1c9ac57594e9b1ec0f3787d9f6744ef4cb0a02400000000000000000000006e",
-    "network": "optimism",
-    "createdAt": 1673373128
+    "network": "optimism"
   },
   {
     "id": "beets-yellow-submarine",
@@ -4905,15 +5023,16 @@
     "oracle": "lps",
     "oracleId": "beets-yellow-submarine",
     "status": "eol",
+    "createdAt": 1665023323,
     "retireReason": "rewards",
+    "retiredAt": 1673714261,
     "platformId": "beethovenx",
     "assets": ["wstETH", "bbrfaUSD", "bbrfaWBTC"],
     "risks": ["COMPLEXITY_MID", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x981fb05b738e981ac532a99e77170ecb4bc27aef00010000000000000000004b",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x981fb05b738e981ac532a99e77170ecb4bc27aef00010000000000000000004b",
-    "network": "optimism",
-    "createdAt": 1665023323
+    "network": "optimism"
   },
   {
     "id": "velodrome-usdc-mim",
@@ -4929,6 +5048,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdc-mim",
     "status": "active",
+    "createdAt": 1665023322,
     "platformId": "velodrome",
     "assets": ["MIM", "opUSDCe"],
     "risks": [
@@ -4944,7 +5064,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x29A20cA4968d756C7D0922a7064a1A56f4624e9a",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x29A20cA4968d756C7D0922a7064a1A56f4624e9a",
     "network": "optimism",
-    "createdAt": 1665023322,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4966,7 +5085,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-bifi",
     "status": "eol",
+    "createdAt": 1665023322,
     "retireReason": "tvl",
+    "retiredAt": 1688639926,
     "platformId": "velodrome",
     "assets": ["oldBIFI", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -4975,7 +5096,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x17d99c78F1AA7870ab30FB3E93b2fE9F6502d192",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x17d99c78F1AA7870ab30FB3E93b2fE9F6502d192",
     "network": "optimism",
-    "createdAt": 1665023322,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4997,7 +5117,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usd+-lusd",
     "status": "eol",
+    "createdAt": 1664540189,
     "retireReason": "tvl",
+    "retiredAt": 1702305918,
     "platformId": "velodrome",
     "assets": ["USD+", "LUSD"],
     "risks": [
@@ -5013,7 +5135,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x8a9Cd3dce710e90177B4332C108E159a15736A0F",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x8a9Cd3dce710e90177B4332C108E159a15736A0F",
     "network": "optimism",
-    "createdAt": 1664540189,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5035,6 +5156,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-sonne-usdc",
     "status": "active",
+    "createdAt": 1664749297,
     "platformId": "velodrome",
     "assets": ["SONNE", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -5043,7 +5165,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xc899C4D73ED8dF2eAd1543AB915888B0Bf7d57a2",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xc899C4D73ED8dF2eAd1543AB915888B0Bf7d57a2",
     "network": "optimism",
-    "createdAt": 1664749297,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5065,7 +5186,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-jeur-ageur",
     "status": "eol",
+    "createdAt": 1663910717,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["jEUR", "agEUR"],
     "risks": [
@@ -5081,7 +5204,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x050D6Dbc73F6993A29e1327846117C4F5Fc7D68E",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x050D6Dbc73F6993A29e1327846117C4F5Fc7D68E",
     "network": "optimism",
-    "createdAt": 1663910717,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5103,7 +5225,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-op-bifi",
     "status": "eol",
+    "createdAt": 1663091479,
     "retireReason": "bifiV2",
+    "retiredAt": 1689007467,
     "platformId": "velodrome",
     "assets": ["oldBIFI", "OP"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -5112,7 +5236,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x81f638E5d063618Fc5f6a976E48e9B803b3240C0",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x81f638E5d063618Fc5f6a976E48e9B803b3240C0",
     "network": "optimism",
-    "createdAt": 1663091479,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5134,7 +5257,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-frax-op",
     "status": "eol",
+    "createdAt": 1663344353,
     "retireReason": "tvl",
+    "retiredAt": 1675865662,
     "platformId": "velodrome",
     "assets": ["FRAX", "OP"],
     "risks": [
@@ -5150,7 +5275,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x986d353A3700530BE4e75794830f57e657bc68cB",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x986d353A3700530BE4e75794830f57e657bc68cB",
     "network": "optimism",
-    "createdAt": 1663344353,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5172,7 +5296,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdc-tusd",
     "status": "eol",
+    "createdAt": 1663811140,
     "retireReason": "tvl",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["TUSD", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -5181,7 +5307,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xA4549B89A39f76d9D28415474aeD7d06Ec9935fe",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xA4549B89A39f76d9D28415474aeD7d06Ec9935fe",
     "network": "optimism",
-    "createdAt": 1663811140,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5203,7 +5328,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdp-usdc",
     "status": "eol",
+    "createdAt": 1663344352,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["USD+", "opUSDCe"],
     "risks": [
@@ -5219,7 +5346,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x67124355cCE2Ad7A8eA283E990612eBe12730175",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x67124355cCE2Ad7A8eA283E990612eBe12730175",
     "network": "optimism",
-    "createdAt": 1663344352,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5241,7 +5367,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-ageur-mai",
     "status": "eol",
+    "createdAt": 1662659522,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["agEUR", "MAI"],
     "risks": [
@@ -5257,7 +5385,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x389d9aeA762fd5F9FBD4434D8E11295F15097B67",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x389d9aeA762fd5F9FBD4434D8E11295F15097B67",
     "network": "optimism",
-    "createdAt": 1662659522,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5279,6 +5406,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-snx-usdc",
     "status": "active",
+    "createdAt": 1662145826,
     "platformId": "velodrome",
     "assets": ["SNX", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -5287,7 +5415,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9056EB7Ca982a5Dd65A584189994e6a27318067D",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9056EB7Ca982a5Dd65A584189994e6a27318067D",
     "network": "optimism",
-    "createdAt": 1662145826,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5309,7 +5436,9 @@
     "oracle": "tokens",
     "oracleId": "oldBIFI",
     "status": "eol",
+    "createdAt": 1658491885,
     "retireReason": "bifiV2",
+    "retiredAt": 1697567756,
     "platformId": "beefy",
     "assets": ["oldBIFI"],
     "risks": [
@@ -5321,8 +5450,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "old-bifi-pool",
-    "network": "optimism",
-    "createdAt": 1658491885
+    "network": "optimism"
   },
   {
     "id": "beets-rocket-fuel",
@@ -5338,14 +5466,14 @@
     "oracle": "lps",
     "oracleId": "beets-rocket-fuel",
     "status": "active",
+    "createdAt": 1694164215,
     "platformId": "aura",
     "assets": ["ETH", "rETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x4fd63966879300cafafbb35d157dc5229278ed2300020000000000000000002b",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x4fd63966879300cafafbb35d157dc5229278ed2300020000000000000000002b",
-    "network": "optimism",
-    "createdAt": 1694164215
+    "network": "optimism"
   },
   {
     "id": "velodrome-susd-lusd",
@@ -5361,7 +5489,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-susd-lusd",
     "status": "eol",
+    "createdAt": 1661450076,
     "retireReason": "tvl",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["sUSD", "LUSD"],
     "risks": [
@@ -5377,7 +5507,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x0D693eFd716021878D5979FaB4Cf8f6c1b7ce450",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x0D693eFd716021878D5979FaB4Cf8f6c1b7ce450",
     "network": "optimism",
-    "createdAt": 1661450076,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5399,7 +5528,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-lusd-mai",
     "status": "eol",
+    "createdAt": 1661450077,
     "retireReason": "tvl",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["MAI", "LUSD"],
     "risks": [
@@ -5415,7 +5546,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x88835Af27c7A22BdED54033c5FAD482a913981BC",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x88835Af27c7A22BdED54033c5FAD482a913981BC",
     "network": "optimism",
-    "createdAt": 1661450077,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5436,7 +5566,9 @@
     "oracle": "tokens",
     "oracleId": "WBTC",
     "status": "eol",
+    "createdAt": 1659634988,
     "retireReason": "rewards",
+    "retiredAt": 1694605850,
     "platformId": "aave",
     "assets": ["WBTC"],
     "risks": [
@@ -5451,7 +5583,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://op.beets.fi/#/trade",
     "network": "optimism",
-    "createdAt": 1659634988,
     "zaps": [
       {
         "strategyId": "single"
@@ -5471,7 +5602,9 @@
     "oracle": "tokens",
     "oracleId": "DAI",
     "status": "eol",
+    "createdAt": 1659634987,
     "retireReason": "rewards",
+    "retiredAt": 1694605850,
     "platformId": "aave",
     "assets": ["DAI"],
     "risks": [
@@ -5487,7 +5620,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://velodrome.finance/swap",
     "network": "optimism",
-    "createdAt": 1659634987,
     "zaps": [
       {
         "strategyId": "single"
@@ -5507,7 +5639,9 @@
     "oracle": "tokens",
     "oracleId": "opUSDCe",
     "status": "eol",
+    "createdAt": 1659634986,
     "retireReason": "rewards",
+    "retiredAt": 1694605850,
     "platformId": "aave",
     "assets": ["opUSDCe"],
     "risks": [
@@ -5522,7 +5656,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://velodrome.finance/swap",
     "network": "optimism",
-    "createdAt": 1659634986,
     "zaps": [
       {
         "strategyId": "single"
@@ -5541,7 +5674,9 @@
     "oracle": "tokens",
     "oracleId": "WETH",
     "status": "eol",
+    "createdAt": 1659634985,
     "retireReason": "rewards",
+    "retiredAt": 1694605850,
     "platformId": "aave",
     "assets": ["ETH"],
     "risks": [
@@ -5556,7 +5691,6 @@
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://velodrome.finance/swap",
     "network": "optimism",
-    "createdAt": 1659634985,
     "zaps": [
       {
         "strategyId": "single"
@@ -5577,7 +5711,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-op-l2dao",
     "status": "eol",
+    "createdAt": 1659469377,
     "retireReason": "tvl",
+    "retiredAt": 1688639926,
     "platformId": "velodrome",
     "assets": ["L2DAO", "OP"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -5586,7 +5722,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xfc77e39De40E54F820E313039207DC850E4C9E60",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xfc77e39De40E54F820E313039207DC850E4C9E60",
     "network": "optimism",
-    "createdAt": 1659469377,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5608,7 +5743,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdc-ageur",
     "status": "eol",
+    "createdAt": 1659469376,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["agEUR", "opUSDCe"],
     "risks": [
@@ -5624,7 +5761,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x7866C6072B09539fC0FDE82963846b80203d7beb",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x7866C6072B09539fC0FDE82963846b80203d7beb",
     "network": "optimism",
-    "createdAt": 1659469376,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5646,7 +5782,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-aelin",
     "status": "eol",
+    "createdAt": 1659469375,
     "retireReason": "tvl",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["AELIN", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -5655,7 +5793,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x3EEc44e94ee86ce79f34Bb26dc3CdbbEe18d6d17",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x3EEc44e94ee86ce79f34Bb26dc3CdbbEe18d6d17",
     "network": "optimism",
-    "createdAt": 1659469375,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5677,7 +5814,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-susd-dai",
     "status": "eol",
+    "createdAt": 1657897430,
     "retireReason": "tvl",
+    "retiredAt": 1675865662,
     "platformId": "velodrome",
     "assets": ["sUSD", "DAI"],
     "risks": [
@@ -5693,7 +5832,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xEc24EB97cEc2F0F6A2D61254990B0f163BbbFe1d",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xEc24EB97cEc2F0F6A2D61254990B0f163BbbFe1d",
     "network": "optimism",
-    "createdAt": 1657897430,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5715,7 +5853,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-aleth-weth",
     "status": "eol",
+    "createdAt": 1657895221,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["alETH", "ETH"],
     "risks": [
@@ -5731,7 +5871,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x6fD5BEe1Ddb4dbBB0b7368B080Ab99b8BA765902",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x6fD5BEe1Ddb4dbBB0b7368B080Ab99b8BA765902",
     "network": "optimism",
-    "createdAt": 1657895221,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5753,6 +5892,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdc-dola",
     "status": "active",
+    "createdAt": 1657895221,
     "platformId": "velodrome",
     "assets": ["DOLA", "opUSDCe"],
     "risks": [
@@ -5768,7 +5908,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x6C5019D345Ec05004A7E7B0623A91a0D9B8D590d",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x6C5019D345Ec05004A7E7B0623A91a0D9B8D590d",
     "network": "optimism",
-    "createdAt": 1657895221,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5790,7 +5929,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdc-alusd",
     "status": "eol",
+    "createdAt": 1657894234,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["alUSD", "opUSDCe"],
     "risks": [
@@ -5806,7 +5947,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xe75a3f4Bf99882aD9f8aeBAB2115873315425D00",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xe75a3f4Bf99882aD9f8aeBAB2115873315425D00",
     "network": "optimism",
-    "createdAt": 1657894234,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5828,6 +5968,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-velo-op",
     "status": "active",
+    "createdAt": 1657893236,
     "platformId": "velodrome",
     "assets": ["VELO", "OP"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -5836,7 +5977,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xFFD74EF185989BFF8752c818A53a47FC45388F08",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xFFD74EF185989BFF8752c818A53a47FC45388F08",
     "network": "optimism",
-    "createdAt": 1657893236,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5858,7 +5998,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-dola",
     "status": "eol",
+    "createdAt": 1657892646,
     "retireReason": "tvl",
+    "retiredAt": 1671741623,
     "platformId": "velodrome",
     "assets": ["DOLA", "ETH"],
     "risks": [
@@ -5874,7 +6016,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x43Ce87A1ad20277b78CAE52C7bCD5FC82A297551",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x43Ce87A1ad20277b78CAE52C7bCD5FC82A297551",
     "network": "optimism",
-    "createdAt": 1657892646,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5896,7 +6037,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-op-dai",
     "status": "eol",
+    "createdAt": 1657891846,
     "retireReason": "tvl",
+    "retiredAt": 1678741198,
     "platformId": "velodrome",
     "assets": ["OP", "DAI"],
     "risks": [
@@ -5912,7 +6055,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x43C3f2d0aA0EbC433d654BB6ebf67F0C03f8D8d9",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x43C3f2d0aA0EbC433d654BB6ebf67F0C03f8D8d9",
     "network": "optimism",
-    "createdAt": 1657891846,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5934,7 +6076,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-hnd-usdc",
     "status": "eol",
+    "createdAt": 1657891042,
     "retireReason": "tvl",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["HND", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -5943,7 +6087,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x588443c932b45F47e936b969eB5AA6b5Fd4F3369",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x588443c932b45F47e936b969eB5AA6b5Fd4F3369",
     "network": "optimism",
-    "createdAt": 1657891042,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5965,7 +6108,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-snx",
     "status": "eol",
+    "createdAt": 1657889921,
     "retireReason": "tvl",
+    "retiredAt": 1676567650,
     "platformId": "velodrome",
     "assets": ["SNX", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -5974,7 +6119,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xffB6c35960b23989037C8c391faCebC8a17De970",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xffB6c35960b23989037C8c391faCebC8a17De970",
     "network": "optimism",
-    "createdAt": 1657889921,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -5996,7 +6140,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-wbtc-usdc",
     "status": "eol",
+    "createdAt": 1657556188,
     "retireReason": "tvl",
+    "retiredAt": 1671741623,
     "platformId": "velodrome",
     "assets": ["WBTC", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -6005,7 +6151,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x4C8B195d33c6F95A8262D56Ede793611ee7b5AAD",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x4C8B195d33c6F95A8262D56Ede793611ee7b5AAD",
     "network": "optimism",
-    "createdAt": 1657556188,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6027,7 +6172,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdc-perp",
     "status": "eol",
+    "createdAt": 1657556187,
     "retireReason": "tvl",
+    "retiredAt": 1698160111,
     "platformId": "velodrome",
     "assets": ["PERP", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -6036,7 +6183,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9C8a59934fbA9aF82674EFf5D13a24e7c7E7A1f1",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9C8a59934fbA9aF82674EFf5D13a24e7c7E7A1f1",
     "network": "optimism",
-    "createdAt": 1657556187,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6058,6 +6204,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-lyra-usdc",
     "status": "active",
+    "createdAt": 1657556186,
     "platformId": "velodrome",
     "assets": ["LYRA", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -6066,7 +6213,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xDEE1856D7B75Abf4C1bDf986da4e1C6c7864d640",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xDEE1856D7B75Abf4C1bDf986da4e1C6c7864d640",
     "network": "optimism",
-    "createdAt": 1657556186,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6088,7 +6234,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-thales-usdc",
     "status": "eol",
+    "createdAt": 1657556185,
     "retireReason": "tvl",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["THALES", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -6097,7 +6245,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9355292f66552ea5717B274d27EEFc8254011d83",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x9355292f66552ea5717B274d27EEFc8254011d83",
     "network": "optimism",
-    "createdAt": 1657556185,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6119,7 +6266,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-frax-fxs",
     "status": "eol",
+    "createdAt": 1657556184,
     "retireReason": "tvl",
+    "retiredAt": 1690903973,
     "platformId": "velodrome",
     "assets": ["FXS", "FRAX"],
     "risks": [
@@ -6135,7 +6284,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xE2EA57FDF87624f4384EF6Da5f3844e8E9e5d878",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xE2EA57FDF87624f4384EF6Da5f3844e8E9e5d878",
     "network": "optimism",
-    "createdAt": 1657556184,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6157,6 +6305,7 @@
     "oracle": "lps",
     "oracleId": "stargate-op-usdc",
     "status": "active",
+    "createdAt": 1659634991,
     "platformId": "stargate",
     "assets": ["opUSDCe"],
     "risks": [
@@ -6171,8 +6320,7 @@
     "buyTokenUrl": "https://app.uniswap.org/#/swap?chain=optimism&inputCurrency=ETH&outputCurrency=0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
     "addLiquidityUrl": "https://stargate.finance/pool/usdc-optimism/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/usdc-optimism/remove",
-    "network": "optimism",
-    "createdAt": 1659634991
+    "network": "optimism"
   },
   {
     "id": "stargate-op-eth",
@@ -6188,6 +6336,7 @@
     "oracle": "lps",
     "oracleId": "stargate-op-eth",
     "status": "active",
+    "createdAt": 1659634992,
     "platformId": "stargate",
     "assets": ["ETH"],
     "risks": [
@@ -6202,8 +6351,7 @@
     "buyTokenUrl": "https://app.uniswap.org/#/swap?chain=optimism&inputCurrency=0x7F5c764cBc14f9669B88837ca1490cCa17c31607&outputCurrency=ETH",
     "addLiquidityUrl": "https://stargate.finance/pool/eth-optimism/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/eth-optimism/remove",
-    "network": "optimism",
-    "createdAt": 1659634992
+    "network": "optimism"
   },
   {
     "id": "velodrome-velo-weth",
@@ -6219,6 +6367,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-velo-weth",
     "status": "active",
+    "createdAt": 1657018688,
     "platformId": "velodrome",
     "assets": ["VELO", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -6227,7 +6376,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x06141423DCF1A5a4C137039063aC873cDC1E363A",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x06141423DCF1A5a4C137039063aC873cDC1E363A",
     "network": "optimism",
-    "createdAt": 1657018688,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6249,6 +6397,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-op",
     "status": "active",
+    "createdAt": 1657018687,
     "platformId": "velodrome",
     "assets": ["OP", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -6257,7 +6406,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xcdd41009E74bD1AE4F7B2EeCF892e4bC718b9302",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xcdd41009E74bD1AE4F7B2EeCF892e4bC718b9302",
     "network": "optimism",
-    "createdAt": 1657018687,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6279,6 +6427,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-usdc",
     "status": "active",
+    "createdAt": 1657018686,
     "platformId": "velodrome",
     "assets": ["ETH", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -6287,7 +6436,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x79c912FEF520be002c2B6e57EC4324e260f38E50",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x79c912FEF520be002c2B6e57EC4324e260f38E50",
     "network": "optimism",
-    "createdAt": 1657018686,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6309,7 +6457,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdc-lusd",
     "status": "eol",
+    "createdAt": 1657018685,
     "retireReason": "tvl",
+    "retiredAt": 1704371642,
     "platformId": "velodrome",
     "assets": ["LUSD", "opUSDCe"],
     "risks": [
@@ -6324,7 +6474,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x207AddB05C548F262219f6bFC6e11c02d0f7fDbe",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x207AddB05C548F262219f6bFC6e11c02d0f7fDbe",
     "network": "optimism",
-    "createdAt": 1657018685,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6346,7 +6495,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-frax-usdc",
     "status": "eol",
+    "createdAt": 1657018684,
     "retireReason": "tvl",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["FRAX", "opUSDCe"],
     "risks": [
@@ -6362,7 +6513,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xAdF902b11e4ad36B227B84d856B229258b0b0465",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xAdF902b11e4ad36B227B84d856B229258b0b0465",
     "network": "optimism",
-    "createdAt": 1657018684,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6384,6 +6534,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-seth",
     "status": "active",
+    "createdAt": 1657018684,
     "platformId": "velodrome",
     "assets": ["sETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -6392,7 +6543,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xFd7FddFc0A729eCF45fB6B12fA3B71A575E1966F",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xFd7FddFc0A729eCF45fB6B12fA3B71A575E1966F",
     "network": "optimism",
-    "createdAt": 1657018684,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6414,6 +6564,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdc-dai",
     "status": "active",
+    "createdAt": 1657018683,
     "platformId": "velodrome",
     "assets": ["DAI", "opUSDCe"],
     "risks": [
@@ -6428,7 +6579,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x4F7ebc19844259386DBdDB7b2eB759eeFc6F8353",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x4F7ebc19844259386DBdDB7b2eB759eeFc6F8353",
     "network": "optimism",
-    "createdAt": 1657018683,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6450,7 +6600,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdc-mai",
     "status": "eol",
+    "createdAt": 1657018681,
     "retireReason": "rewards",
+    "retiredAt": 1690357628,
     "platformId": "velodrome",
     "assets": ["MAI", "opUSDCe"],
     "risks": [
@@ -6465,7 +6617,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xd62C9D8a3D4fd98b27CaaEfE3571782a3aF0a737",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xd62C9D8a3D4fd98b27CaaEfE3571782a3aF0a737",
     "network": "optimism",
-    "createdAt": 1657018681,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6487,6 +6638,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-usdc-susd",
     "status": "active",
+    "createdAt": 1657018680,
     "platformId": "velodrome",
     "assets": ["sUSD", "opUSDCe"],
     "risks": [
@@ -6501,7 +6653,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xd16232ad60188B68076a235c65d692090caba155",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xd16232ad60188B68076a235c65d692090caba155",
     "network": "optimism",
-    "createdAt": 1657018680,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6523,7 +6674,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-petho",
     "status": "eol",
+    "createdAt": 1660565619,
     "retireReason": "rewards",
+    "retiredAt": 1691870039,
     "platformId": "ripae",
     "assets": ["pETHo", "ETH"],
     "risks": [
@@ -6540,7 +6693,6 @@
     "addLiquidityUrl": "https://velodrome.finance/liquidity/create",
     "removeLiquidityUrl": "https://velodrome.finance/liquidity/create",
     "network": "optimism",
-    "createdAt": 1660565619,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6562,7 +6714,9 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-setho",
     "status": "eol",
+    "createdAt": 1660565619,
     "retireReason": "tvl",
+    "retiredAt": 1675865662,
     "platformId": "ripae",
     "assets": ["sETHo", "ETH"],
     "risks": [
@@ -6578,7 +6732,6 @@
     "addLiquidityUrl": "https://velodrome.finance/liquidity/create",
     "removeLiquidityUrl": "https://velodrome.finance/liquidity/create",
     "network": "optimism",
-    "createdAt": 1660565619,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6600,6 +6753,7 @@
     "oracle": "lps",
     "oracleId": "curve-op-f-seth",
     "status": "active",
+    "createdAt": 1670252930,
     "platformId": "curve",
     "assets": ["sETH", "ETH"],
     "migrationIds": ["l2-curve"],
@@ -6614,8 +6768,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-10/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-10/withdraw",
-    "network": "optimism",
-    "createdAt": 1670252930
+    "network": "optimism"
   },
   {
     "id": "curve-op-f-sbtc",
@@ -6631,6 +6784,7 @@
     "oracle": "lps",
     "oracleId": "curve-op-f-sbtc",
     "status": "active",
+    "createdAt": 1660288888,
     "platformId": "curve",
     "assets": ["sBTC", "WBTC"],
     "migrationIds": ["l2-curve"],
@@ -6645,8 +6799,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-12/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-12/withdraw",
-    "network": "optimism",
-    "createdAt": 1660288888
+    "network": "optimism"
   },
   {
     "id": "curve-op-f-susd",
@@ -6662,6 +6815,7 @@
     "oracle": "lps",
     "oracleId": "curve-op-f-susd",
     "status": "active",
+    "createdAt": 1667194759,
     "platformId": "curve",
     "assets": ["sUSD", "DAI", "opUSDCe", "USDT"],
     "migrationIds": ["l2-curve"],
@@ -6677,8 +6831,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-0/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-0/withdraw",
-    "network": "optimism",
-    "createdAt": 1667194759
+    "network": "optimism"
   },
   {
     "id": "velodrome-op-usdc",
@@ -6694,6 +6847,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-op-usdc",
     "status": "active",
+    "createdAt": 1656705591,
     "platformId": "velodrome",
     "assets": ["OP", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
@@ -6702,7 +6856,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x47029bc8f5CBe3b464004E87eF9c9419a48018cd",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x47029bc8f5CBe3b464004E87eF9c9419a48018cd",
     "network": "optimism",
-    "createdAt": 1656705591,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6724,6 +6877,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-velo-usdc",
     "status": "active",
+    "createdAt": 1656705590,
     "platformId": "velodrome",
     "assets": ["VELO", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -6732,7 +6886,6 @@
     "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xe8537b6FF1039CB9eD0B71713f697DDbaDBb717d",
     "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xe8537b6FF1039CB9eD0B71713f697DDbaDBb717d",
     "network": "optimism",
-    "createdAt": 1656705590,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6754,14 +6907,14 @@
     "oracle": "lps",
     "oracleId": "beets-happy-road",
     "status": "active",
+    "createdAt": 1688037722,
     "platformId": "beethovenx",
     "assets": ["ETH", "OP", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/#/pool/0x39965c9dab5448482cf7e002f583c812ceb53046000100000000000000000003/invest",
     "removeLiquidityUrl": "https://op.beets.fi/#/pool/0x39965c9dab5448482cf7e002f583c812ceb53046000100000000000000000003/invest",
-    "network": "optimism",
-    "createdAt": 1688037722
+    "network": "optimism"
   },
   {
     "id": "beets-lennons-long",
@@ -6777,15 +6930,16 @@
     "oracle": "lps",
     "oracleId": "beets-lennons-long",
     "status": "eol",
+    "createdAt": 1673571557,
     "retireReason": "rewards",
+    "retiredAt": 1679479578,
     "platformId": "beethovenx",
     "assets": ["ETH", "WBTC", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/#/pool/0x5028497af0c9a54ea8c6d42a054c0341b9fc6168000100000000000000000004/invest",
     "removeLiquidityUrl": "https://op.beets.fi/#/pool/0x5028497af0c9a54ea8c6d42a054c0341b9fc6168000100000000000000000004/invest",
-    "network": "optimism",
-    "createdAt": 1673571557
+    "network": "optimism"
   },
   {
     "id": "beets-all-you-need-is-love",
@@ -6801,14 +6955,15 @@
     "oracle": "lps",
     "oracleId": "beets-all-you-need-is-love",
     "status": "eol",
+    "createdAt": 1688037722,
     "retireReason": "rewards",
+    "retiredAt": 1700566353,
     "platformId": "beethovenx",
     "assets": ["BEETS", "BAL", "OP"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/#/pool/0xd6e5824b54f64ce6f1161210bc17eebffc77e031000100000000000000000006",
     "removeLiquidityUrl": "https://op.beets.fi/#/pool/0xd6e5824b54f64ce6f1161210bc17eebffc77e031000100000000000000000006",
-    "network": "optimism",
-    "createdAt": 1688037722
+    "network": "optimism"
   }
 ]

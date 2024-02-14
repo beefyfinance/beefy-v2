@@ -343,6 +343,8 @@ export const selectFilteredVaults = (state: BeefyState) => {
           ? selectIsVaultPrestakedBoost(state, vault.id)
             ? -Number.MAX_SAFE_INTEGER
             : -selectVaultsActiveBoostPeriodFinish(state, vault.id)
+          : vault.id === 'compound-arbitrum-usdc'
+          ? -Number.MAX_SAFE_INTEGER
           : 1
       );
     }

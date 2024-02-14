@@ -6,6 +6,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": false, // TODO: make true eventually
+    "strictNullChecks": true,
     "noImplicitAny": false, // TODO: remove this eventually
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,

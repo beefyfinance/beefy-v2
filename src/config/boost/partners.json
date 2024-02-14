@@ -1,4 +1,13 @@
 {
+  "fraxprotocol": {
+    "title": "Frax",
+    "text": "The Frax Protocol issues innovative, decentralized stablecoins and contains subprotocols to support them. The Frax Protocol currently issues 3 stablecoins: FRAX, FPI, and frxETH. FRAX is a USD pegged asset, the Frax Price Index (FPI) stablecoin is the first stablecoin pegged to a basket of consumer goods, and FraxEther (frxETH), which is pegged to ETH.",
+    "website": "https://app.frax.finance/",
+    "social": {
+      "telegram": "https://t.me/fraxfinance",
+      "twitter": "https://twitter.com/fraxfinance"
+    }
+  },
   "lendle": {
     "title": "Lendle",
     "text": "Lendle is a decentralized, non-custodial lending and borrowing market on the Mantle network. The protocol is powered by the $LEND token allowing users to earn high APRs in their different markets.",

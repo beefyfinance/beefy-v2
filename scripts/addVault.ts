@@ -9,6 +9,7 @@ import vaultABI from '../src/config/abi/vault.json';
 import stratABI from '../src/config/abi/strategy.json';
 import erc20ABI from '../src/config/abi/erc20.json';
 import type { AbiItem } from 'web3-utils';
+import { sortVaultKeys } from './common/vault-fields';
 
 let vaultsFile = './src/config/vault/$chain.json';
 
@@ -58,7 +59,7 @@ async function generateVault() {
 
   const vault = await vaultData(chain, vaultAddress, id);
 
-  const newVault = {
+  const newVault = sortVaultKeys({
     id: id,
     name: vault.token,
     token: vault.token,
@@ -79,7 +80,7 @@ async function generateVault() {
     removeLiquidityUrl: 'XXX',
     network: chain,
     createdAt: Math.floor(Date.now() / 1000),
-  };
+  });
 
   const vaults = JSON.parse(await fs.readFile(vaultsFile, 'utf8'));
   const newBoosts = [newVault, ...vaults];
