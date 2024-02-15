@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
@@ -9,6 +9,7 @@ import {
 } from '../../../../../data/selectors/wallet';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import {
+  selectBridgeDepositTokenForChainId,
   selectBridgeFormState,
   selectBridgeHasSelectedQuote,
 } from '../../../../../data/selectors/bridge';
@@ -19,6 +20,7 @@ import { AmountSelector } from '../AmountSelector';
 import { FormValidator } from '../FormValidator';
 import { QuoteSelector } from '../QuoteSelector';
 import { confirmBridgeForm } from '../../../../../data/actions/bridge';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 
 const useStyles = makeStyles(styles);
 
@@ -26,13 +28,19 @@ function _Preview() {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const { from } = useAppSelector(selectBridgeFormState);
+  const { from, input } = useAppSelector(selectBridgeFormState);
   const currentChainId = useAppSelector(selectCurrentChainId);
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const isWalletOnFromChain = currentChainId === from;
   const fromChain = useAppSelector(state => selectChainById(state, from));
   const hasSelectedQuote = useAppSelector(selectBridgeHasSelectedQuote);
-  const isConfirmDisabled = !hasSelectedQuote;
+  const fromToken = useAppSelector(state => selectBridgeDepositTokenForChainId(state, from));
+  const userBalance = useAppSelector(state =>
+    selectUserBalanceOfToken(state, fromToken.chainId, fromToken.address)
+  );
+  const isConfirmDisabled = useMemo(() => {
+    return !hasSelectedQuote || input.amount.gt(userBalance);
+  }, [hasSelectedQuote, input.amount, userBalance]);
 
   const handleConnectWallet = useCallback(() => {
     dispatch(askForWalletConnection());

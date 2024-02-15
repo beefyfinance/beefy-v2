@@ -5,6 +5,7 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { Button } from '../../../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
+  selectTransactDepositInputAmountExceedsBalance,
   selectTransactQuoteStatus,
   selectTransactSelectedQuote,
 } from '../../../../../data/selectors/transact';
@@ -89,7 +90,11 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
   const [isDisabledByMaxNative, setIsDisabledByMaxNative] = useState(false);
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
+
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const isDisabledByInputAmountExceedsBalance = useAppSelector(
+    selectTransactDepositInputAmountExceedsBalance
+  );
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
@@ -98,7 +103,8 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
     isDisabledByPriceImpact ||
     isDisabledByMaxNative ||
     isDisabledByConfirm ||
-    isDisabledByGlpLock;
+    isDisabledByGlpLock ||
+    isDisabledByInputAmountExceedsBalance;
   const handleClick = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);

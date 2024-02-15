@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
@@ -12,6 +12,7 @@ import type { AmountInputProps } from '../AmountInput';
 import { AmountInput } from '../AmountInput';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import BigNumber from 'bignumber.js';
+import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
@@ -29,6 +30,9 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
       selectUserBalanceOfToken(state, depositToken.chainId, depositToken.address)
     );
     const value = useAppSelector(selectTransactInputAmount);
+    const price = useAppSelector(state =>
+      selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
+    );
     const handleChange = useCallback<AmountInputProps['onChange']>(
       (value, isMax) => {
         dispatch(
@@ -41,6 +45,10 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
       [dispatch, depositToken]
     );
 
+    const error = useMemo(() => {
+      return value.gt(userBalance);
+    }, [userBalance, value]);
+
     return (
       <AmountInput
         className={clsx(classes.input, className)}
@@ -48,6 +56,10 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
         maxValue={userBalance}
         tokenDecimals={depositToken.decimals}
         onChange={handleChange}
+        error={error}
+        allowInputAboveBalance={true}
+        fullWidth={true}
+        price={price}
       />
     );
   }
