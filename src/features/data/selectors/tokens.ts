@@ -52,6 +52,16 @@ export const selectTokenById = (
   return byChainId[chainId].byAddress[address];
 };
 
+export const selectTokenByIdOrNull = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  tokenId: TokenEntity['id']
+) => {
+  const byChainId = state.entities.tokens.byChainId;
+  const address = byChainId[chainId].byId[tokenId];
+  return byChainId[chainId]?.byAddress[address] || null;
+};
+
 export const selectTokenByAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],

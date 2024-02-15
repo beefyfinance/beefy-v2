@@ -14,6 +14,7 @@ interface AddressBookTokenConfig {
   description?: string;
   documentation?: string;
   bridge?: string;
+  risks: string[];
 }
 
 export interface ChainAddressBook {
@@ -100,6 +101,7 @@ export const getChainAddressBook = memoize(
           documentation: bookToken.documentation || null,
           type: 'erc20',
           bridge: bookToken.bridge,
+          risks: bookToken.risks,
         };
       }
 

@@ -10,9 +10,7 @@ function makeLazyLoader<T extends VaultType>(loader: () => Promise<VaultTypeCons
       constructor = await loader();
     }
 
-    const instance = new constructor(vault, getState);
-    await instance.initialize();
-    return instance;
+    return new constructor(vault, getState);
   };
 }
 

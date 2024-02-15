@@ -5,6 +5,8 @@ import {
   createDependencyInitializerFactory,
 } from '../utils/factory-utils';
 import type { WalletConnectionOptions } from './wallet/wallet-connection-types';
+import type { ISwapProvider } from './transact/swap/ISwapProvider';
+import { featureFlag_disableKyber, featureFlag_disableOneInch } from '../utils/feature-flags';
 
 export const getBeefyApi = createDependencyFactory(
   async ({ BeefyAPI }) => new BeefyAPI(),
@@ -49,6 +51,23 @@ export const getOnRampApi = createDependencyFactory(
 export const getTransactApi = createDependencyFactory(
   async ({ TransactApi }) => new TransactApi(),
   () => import('./transact/transact')
+);
+
+export const getSwapAggregator = createDependencyFactory(
+  async ({ SwapAggregator, WNativeSwapProvider, OneInchSwapProvider, KyberSwapProvider }) => {
+    const providers: ISwapProvider[] = [new WNativeSwapProvider()];
+
+    if (!featureFlag_disableOneInch()) {
+      providers.push(new OneInchSwapProvider());
+    }
+
+    if (!featureFlag_disableKyber()) {
+      providers.push(new KyberSwapProvider());
+    }
+
+    return new SwapAggregator(providers);
+  },
+  () => import('./transact/swap')
 );
 
 export const getWalletConnectionApi = createDependencyInitializerFactory(

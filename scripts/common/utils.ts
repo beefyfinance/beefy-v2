@@ -1,5 +1,4 @@
 import { getAddress } from '@ethersproject/address';
-import { createWriteStream, promises as fsPromises } from 'fs';
 
 const trimReg = /(^\s*)|(\s*$)/g;
 
@@ -81,4 +80,13 @@ export function sortKeys<T extends object>(obj: T, sortFn: (a: keyof T, b: keyof
     newObj[key] = obj[key];
     return newObj;
   }, {} as T);
+}
+
+export async function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export type NonEmptyArray<T> = [T, ...T[]];
+export function isNonEmptyArray<T>(arr: T[]): arr is NonEmptyArray<T> {
+  return arr.length > 0;
 }

@@ -1,5 +1,41 @@
 [
   {
+    "id": "aerodrome-weth-usd+",
+    "name": "ETH-USD+ vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/USD+",
+    "tokenAddress": "0x08B935148AB10d3699Cb8d944519e8213abE6f1D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroWETH-USD+",
+    "earnedTokenAddress": "0xE20B37F6EB24c7DF62D72B587cB5406cf843Df10",
+    "earnContractAddress": "0xE20B37F6EB24c7DF62D72B587cB5406cf843Df10",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-usd+",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["ETH", "USD+"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&token1=eth&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "createdAt": 1707402737,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-mai-eusd",
     "name": "MAI-eUSD sLP",
     "type": "standard",
@@ -141,7 +177,9 @@
     "earnContractAddress": "0x8e9a045925F284129812B0105F5CD8a394b6dDB8",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1707845800,
     "createdAt": 1704975503,
     "platformId": "seamless",
     "assets": ["USDC"],
@@ -166,7 +204,9 @@
     "earnContractAddress": "0xd68De698e85c46dE909764469B03A12f6D2cb34B",
     "oracle": "tokens",
     "oracleId": "DAI",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1707845800,
     "createdAt": 1704975503,
     "platformId": "seamless",
     "assets": ["DAI"],
@@ -395,7 +435,9 @@
     "earnContractAddress": "0x2C1818c6F6781880cD49923AD993cA70B6DC2e8C",
     "oracle": "tokens",
     "oracleId": "WETH",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1707845800,
     "createdAt": 1702578552,
     "platformId": "seamless",
     "assets": ["WETH"],
@@ -424,7 +466,9 @@
     "earnContractAddress": "0x738e2e507F52925E8Ea67daC07B2e07342325276",
     "oracle": "tokens",
     "oracleId": "USDbC",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1707845800,
     "createdAt": 1702578552,
     "platformId": "seamless",
     "assets": ["USDbC"],
@@ -697,7 +741,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-12/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-12/withdraw",
-    "network": "base"
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x798D81d60966d2E909468d87e7e4b6A8DAFB1C36",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x798D81d60966d2E909468d87e7e4b6A8DAFB1C36",
+            "coins": [
+              "0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4",
+              "0x417Ac0e078398C154EdFadD9Ef675d30Be60Af93"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "aerodrome-hyusd-eusd",
@@ -988,7 +1048,9 @@
     "earnContractAddress": "0xf67EbBa72f4793B1013d1C0e9565BD70FDeb4551",
     "oracle": "lps",
     "oracleId": "equalizer-base-dai-usdbc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
+    "retiredAt": 1707845800,
     "createdAt": 1696685577,
     "platformId": "equalizer",
     "assets": ["DAI", "USDbC"],
@@ -1117,7 +1179,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-2/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-2/withdraw",
-    "network": "base"
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xda3de145054ED30Ee937865D31B500505C4bDfe7",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xda3de145054ED30Ee937865D31B500505C4bDfe7",
+            "coins": [
+              "0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376",
+              "0x417Ac0e078398C154EdFadD9Ef675d30Be60Af93"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "baseswap-weth-bsx",
@@ -1581,7 +1659,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-4/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-4/withdraw",
-    "network": "base"
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xDE37E221442Fa15C35dc19FbAE11Ed106ba52fB2",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0xDE37E221442Fa15C35dc19FbAE11Ed106ba52fB2",
+            "coins": [
+              "0x8Ee73c484A26e0A5df2Ee2a4960B789967dd0415",
+              "0x417Ac0e078398C154EdFadD9Ef675d30Be60Af93"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-base-4pool",
@@ -1605,7 +1699,25 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-1/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-1/withdraw",
-    "network": "base"
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xf6C5F01C7F3148891ad0e19DF78743D31E390D1f",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xf6C5F01C7F3148891ad0e19DF78743D31E390D1f",
+            "coins": [
+              "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+              "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
+              "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+              "0x417Ac0e078398C154EdFadD9Ef675d30Be60Af93"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-base-tricrypto",
@@ -1629,7 +1741,24 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-tricrypto-1/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-tricrypto-1/withdraw",
-    "network": "base"
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x6e53131F68a034873b6bFA15502aF094Ef0c5854",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x6e53131F68a034873b6bFA15502aF094Ef0c5854",
+            "coins": [
+              "0x417Ac0e078398C154EdFadD9Ef675d30Be60Af93",
+              "0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b",
+              "0x4200000000000000000000000000000000000006"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-base-cbeth",
@@ -1653,7 +1782,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-1/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-1/withdraw",
-    "network": "base"
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x11C1fBd4b3De66bC0565779b35171a6CF3E71f59",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x11C1fBd4b3De66bC0565779b35171a6CF3E71f59",
+            "coins": [
+              "0x4200000000000000000000000000000000000006",
+              "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "aerodrome-dola-mai",
@@ -2306,7 +2451,9 @@
     "earnContractAddress": "0xbDCb3Fb19bE4BCD54a6dfeE25bb3439718eFB959",
     "oracle": "lps",
     "oracleId": "bvm-ftw-dai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
+    "retiredAt": 1707845800,
     "createdAt": 1695881193,
     "platformId": "bvm",
     "assets": ["FTW", "DAI"],

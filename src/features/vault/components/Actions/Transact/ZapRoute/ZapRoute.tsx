@@ -7,6 +7,7 @@ import type {
   ZapQuoteStepDeposit,
   ZapQuoteStepSplit,
   ZapQuoteStepSwap,
+  ZapQuoteStepUnused,
   ZapQuoteStepWithdraw,
 } from '../../../../../data/apis/transact/transact-types';
 import { Trans, useTranslation } from 'react-i18next';
@@ -74,7 +75,9 @@ const StepContentBuild = memo<StepContentProps<ZapQuoteStepBuild>>(function Step
   step,
 }) {
   const { t } = useTranslation();
-  const provider = useAppSelector(state => selectPlatformById(state, step.outputToken.providerId));
+  const provider = useAppSelector(state =>
+    selectPlatformById(state, step.providerId || step.outputToken.providerId)
+  );
   const tokenAmounts = useMemo(() => {
     return step.inputs.map(tokenAmount => (
       <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
@@ -178,6 +181,36 @@ const StepContentSplit = memo<StepContentProps<ZapQuoteStepSplit>>(function Step
   );
 });
 
+const StepContentUnused = memo<StepContentProps<ZapQuoteStepUnused>>(function StepContentUnused({
+  step,
+}) {
+  const { t } = useTranslation();
+  const tokenAmounts = useMemo(() => {
+    return step.outputs.map(tokenAmount => (
+      <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
+        <TokenAmountFromEntity
+          amount={tokenAmount.amount}
+          token={tokenAmount.token}
+          minShortPlaces={4}
+        />{' '}
+        {tokenAmount.token.symbol}
+      </Fragment>
+    ));
+  }, [step]);
+
+  return (
+    <>
+      <Trans
+        t={t}
+        i18nKey="Transact-Route-Step-Unused"
+        components={{
+          tokenAmounts: <ListJoin items={tokenAmounts} />,
+        }}
+      />
+    </>
+  );
+});
+
 const StepContentComponents: Record<
   ZapQuoteStep['type'],
   ComponentType<StepContentProps<ZapQuoteStep>>
@@ -187,6 +220,7 @@ const StepContentComponents: Record<
   deposit: StepContentDeposit,
   withdraw: StepContentWithdraw,
   split: StepContentSplit,
+  unused: StepContentUnused,
 };
 
 type StepProps = {

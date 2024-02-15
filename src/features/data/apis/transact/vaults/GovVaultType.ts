@@ -52,9 +52,6 @@ export class GovVaultType implements IGovVaultType {
     this.depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  async initialize(): Promise<void> {}
-
   protected calculateDepositFee(input: TokenAmount, state: BeefyState): BigNumber {
     const { deposit: depositFeePercent } = selectFeesByVaultId(state, this.vault.id);
     return depositFeePercent > 0

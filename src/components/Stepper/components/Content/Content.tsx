@@ -138,7 +138,7 @@ type SuccessContentProps = {
 
 const ZapSuccessContent = memo<SuccessContentProps>(function ZapSuccessContent({ step }) {
   const { t } = useTranslation();
-  const returned = useAppSelector(state => selectZapReturned(state, step.step));
+  const returned = useAppSelector(selectZapReturned);
 
   const dust = useMemo(() => {
     if (returned.length) {
