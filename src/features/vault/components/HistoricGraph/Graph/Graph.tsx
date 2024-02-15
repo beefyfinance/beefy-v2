@@ -125,5 +125,5 @@ const formatDateTimeTick = (timestamp: number, bucket: ApiTimeBucket) => {
   if (bucket === '1h_1d') {
     return format(date, 'HH:mm');
   }
-  return date.toLocaleDateString(undefined, { month: 'numeric', day: 'numeric' });
+  return date.toLocaleDateString(navigator.language, { month: 'numeric', day: 'numeric' });
 };
