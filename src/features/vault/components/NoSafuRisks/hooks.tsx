@@ -39,11 +39,11 @@ export const useVaultHasRisks = (vaultId: VaultEntity['id']) => {
         const token0 = tokens[0];
         const token1 = tokens[1];
 
-        const allTokensHasSameIssue =
+        const allTokensHasSameRisk =
           token0.risks.length === token1.risks.length &&
           token0.risks.every((value, index) => value === token1.risks[index]);
 
-        if (allTokensHasSameIssue && token0.risks[0] === platform.risks[0]) {
+        if (allTokensHasSameRisk && token0.risks[0] === platform.risks[0]) {
           setRisk(`PLATFORM_TOKENS_${platform.risks[0]}`);
         }
         //TODO: Add logic to handle if platform and token issues are differents
@@ -59,7 +59,7 @@ export const useVaultHasRisks = (vaultId: VaultEntity['id']) => {
     //handle only platform risk
     else if (vaultHasPlatformWithRisks.risks) {
       setValues({ platform: platform.name });
-      setRisk(`PLATFORM_NO_TIMELOCK`);
+      setRisk(`PLATFORM_${platform.risks[0]}`);
       setVaultHasRisks(true);
     }
     //handle only tokens risk
