@@ -258,8 +258,8 @@
     "assets": ["ETH", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdt-narrow",
-    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdt-narrow",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-usdt-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-usdt-narrow",
     "network": "polygon"
   },
   {
