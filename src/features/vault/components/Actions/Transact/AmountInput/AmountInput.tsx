@@ -107,11 +107,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
 
       // Raise changed event
       setInput(rawInput);
-      onChange(
-        parsedNumber,
-        (!allowInputAboveBalance && parsedNumber.eq(maxValue)) ||
-          (allowInputAboveBalance && parsedNumber.gte(maxValue))
-      );
+      onChange(parsedNumber, !allowInputAboveBalance && parsedNumber.gte(maxValue));
     },
     [allowInputAboveBalance, handleMax, maxValue, onChange]
   );
