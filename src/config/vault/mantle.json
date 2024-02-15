@@ -58,35 +58,6 @@
     ]
   },
   {
-    "id": "moe-lend-wmnt",
-    "name": "LEND-WMNT LP",
-    "type": "standard",
-    "token": "LEND-WMNT LP",
-    "tokenAddress": "0x30ac02b4c99D140CDE2a212ca807CBdA35D4f6b5",
-    "tokenDecimals": 18,
-    "tokenProviderId": "moe",
-    "earnedToken": "mooMoeLEND-WMNT",
-    "earnedTokenAddress": "0x979ec49f0D27257c255899d139a43bD08a1E892A",
-    "earnContractAddress": "0x979ec49f0D27257c255899d139a43bD08a1E892A",
-    "oracle": "lps",
-    "oracleId": "moe-lend-wmnt",
-    "status": "active",
-    "createdAt": 1708001964,
-    "platformId": "moe",
-    "assets": ["LEND", "WMNT"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x25356aeca4210eF7553140edb9b8026089E49396",
-    "addLiquidityUrl": "https://merchantmoe.com/pool/v1/0x25356aeca4210eF7553140edb9b8026089E49396/0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8",
-    "network": "mantle",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "mantle-moe"
-      }
-    ]
-  },
-  {
     "id": "moe-usdc-usdt",
     "name": "USDC-USDT LP",
     "type": "standard",
@@ -261,35 +232,6 @@
     ]
   },
   {
-    "id": "moe-ktc-wmnt",
-    "name": "KTC-WMNT LP",
-    "type": "standard",
-    "token": "KTC-WMNT LP",
-    "tokenAddress": "0xfBea6DA85f6554fe4D429e9f37f8bA54a9ac94c3",
-    "tokenDecimals": 18,
-    "tokenProviderId": "moe",
-    "earnedToken": "mooMoeKTC-WMNT",
-    "earnedTokenAddress": "0xA3dDD9d930A6C5330EF58a20d1d6549A8b17dEdC",
-    "earnContractAddress": "0xA3dDD9d930A6C5330EF58a20d1d6549A8b17dEdC",
-    "oracle": "lps",
-    "oracleId": "moe-ktc-wmnt",
-    "status": "active",
-    "createdAt": 1708001964,
-    "platformId": "moe",
-    "assets": ["KTC", "WMNT"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x779f4E5fB773E17Bc8E809F4ef1aBb140861159a",
-    "addLiquidityUrl": "https://merchantmoe.com/pool/v1/0x779f4E5fB773E17Bc8E809F4ef1aBb140861159a/0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8",
-    "network": "mantle",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "mantle-moe"
-      }
-    ]
-  },
-  {
     "id": "moe-wmnt-wbtc",
     "name": "WBTC-WMNT LP",
     "type": "standard",
@@ -339,35 +281,6 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x4515A45337F461A11Ff0FE8aBF3c606AE5dC00c9",
     "addLiquidityUrl": "https://merchantmoe.com/pool/v1/0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE/0x4515A45337F461A11Ff0FE8aBF3c606AE5dC00c9",
-    "network": "mantle",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "mantle-moe"
-      }
-    ]
-  },
-  {
-    "id": "moe-minu-wmnt",
-    "name": "MINU-WMNT LP",
-    "type": "standard",
-    "token": "MINU-WMNT LP",
-    "tokenAddress": "0x5126aC4145eD84eBE28cFB34bB6300Bcef492bB7",
-    "tokenDecimals": 18,
-    "tokenProviderId": "moe",
-    "earnedToken": "mooMoeMINU-WMNT",
-    "earnedTokenAddress": "0x8729efEd2937b3b14971b170496825298189A066",
-    "earnContractAddress": "0x8729efEd2937b3b14971b170496825298189A066",
-    "oracle": "lps",
-    "oracleId": "moe-minu-wmnt",
-    "status": "active",
-    "createdAt": 1708001964,
-    "platformId": "moe",
-    "assets": ["MINU", "WMNT"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x51cfe5b1E764dC253F4c8C1f19a081fF4C3517eD",
-    "addLiquidityUrl": "https://merchantmoe.com/pool/v1/0x51cfe5b1E764dC253F4c8C1f19a081fF4C3517eD/0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8",
     "network": "mantle",
     "zaps": [
       {
