@@ -945,5 +945,11 @@
     "id": "lendle",
     "name": "Lendle",
     "filter": true
+  },
+  {
+    "id": "moe",
+    "name": "Merchant Moe",
+    "filter": true,
+    "risks": ["NO_TIMELOCK"]
   }
 ]
