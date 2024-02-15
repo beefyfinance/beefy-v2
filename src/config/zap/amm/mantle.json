@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "id": "mantle-moe",
+    "name": "Merchant Moe",
+    "type": "uniswap-v2",
+    "routerAddress": "0xeaEE7EE68874218c3558b40063c42B82D3E7232a",
+    "factoryAddress": "0x5bEf015CA9424A7C07B68490616a4C1F094BEdEc",
+    "pairInitHash": "0xb69017c50cc0d7657bb9ad9f67d2737c6464eed573f3d2ffd537ac498ff9d836",
+    "minimumLiquidity": "1000",
+    "mintFeeNumerator": "0",
+    "mintFeeDenominator": "1",
+    "swapFeeNumerator": "3",
+    "swapFeeDenominator": "1000",
+    "getAmountOutMode": "getAmountOut"
+  }
+]
