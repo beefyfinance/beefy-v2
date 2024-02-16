@@ -5654,7 +5654,7 @@
     "oracleId": "curve-arb-mim",
     "status": "active",
     "createdAt": 1701769111,
-    "platformId": "mim",
+    "platformId": "abracadabra",
     "assets": ["MIM", "arbUSDCe", "USDT"],
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": [

@@ -3153,7 +3153,7 @@
     "createdAt": 1633879958,
     "retireReason": "rewards",
     "retiredAt": 1665418765,
-    "platformId": "mim",
+    "platformId": "abracadabra",
     "assets": ["MIM", "USDC", "fUSDT"],
     "risks": [
       "COMPLEXITY_LOW",
