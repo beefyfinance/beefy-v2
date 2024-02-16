@@ -281,11 +281,10 @@ export const selectFilteredVaults = (state: BeefyState) => {
     ) {
       return false;
     }
-    if (
-      (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) ||
-      (filterOptions.onlyBoosted && vault.id !== 'compound-arbitrum-usdc')
-    ) {
-      return false;
+    if (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) {
+      if (vault.id !== 'compound-arbitrum-usdc') {
+        return false;
+      }
     }
 
     if (filterOptions.assetType === 'lps' && vault.assetType !== 'lps') {
