@@ -45,10 +45,9 @@
     "earnContractAddress": "0x0d281FF551351C8b88D019ecd23481723a1cC8E3",
     "oracle": "lps",
     "oracleId": "stargate-metis-usdt",
-    "status": "eol",
+    "status": "active",
     "createdAt": 1675694667,
-    "retireReason": "rewards",
-    "retiredAt": 1694605850,
+    "updatedAt": 1708120553,
     "platformId": "stargate",
     "assets": ["USDT"],
     "risks": [
@@ -62,6 +61,7 @@
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "addLiquidityUrl": "https://stargate.finance/pool/USDT-METIS",
+    "removeLiquidityUrl": "https://stargate.finance/pool/usdt-metis/remove",
     "network": "metis"
   },
   {
@@ -635,10 +635,9 @@
     "earnContractAddress": "0x85f287c860f02bAc3aE5023eFb547b6B7Aa4D9eD",
     "oracle": "lps",
     "oracleId": "netswap-weth-m.usdc",
-    "status": "eol",
+    "status": "active",
     "createdAt": 1642365777,
-    "retireReason": "exploit",
-    "retiredAt": 1690624926,
+    "updatedAt": 1708120553,
     "platformId": "netswap",
     "assets": ["mUSDC", "WETH"],
     "risks": [
