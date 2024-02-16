@@ -281,7 +281,10 @@ export const selectFilteredVaults = (state: BeefyState) => {
     ) {
       return false;
     }
-    if (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) {
+    if (
+      (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) ||
+      (filterOptions.onlyBoosted && vault.id !== 'compound-arbitrum-usdc')
+    ) {
       return false;
     }
 
