@@ -725,7 +725,7 @@ export class GammaStrategy implements IStrategy {
     return {
       id: createQuoteId(option.id),
       strategyId: 'gamma',
-      priceImpact: calculatePriceImpact(inputs, breakOutputs, returned, state),
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       option,
       inputs,
       outputs,
