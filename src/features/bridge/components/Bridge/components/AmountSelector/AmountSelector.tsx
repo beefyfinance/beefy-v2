@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
@@ -16,6 +16,7 @@ import {
 import { formatBigDecimals } from '../../../../../../helpers/format';
 import BigNumber from 'bignumber.js';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
+import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
@@ -32,6 +33,7 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
   const userBalance = useAppSelector(state =>
     selectUserBalanceOfToken(state, fromToken.chainId, fromToken.address)
   );
+  const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, fromToken.oracleId));
 
   const handleMax = useCallback(() => {
     dispatch(
@@ -56,6 +58,10 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
     [dispatch, fromToken]
   );
 
+  const error = useMemo(() => {
+    return input.amount.gt(userBalance);
+  }, [input.amount, userBalance]);
+
   return (
     <div className={clsx(classes.group, className)}>
       <div className={classes.labels}>
@@ -73,6 +79,9 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
         maxValue={userBalance}
         tokenDecimals={input.token.decimals}
         onChange={handleChange}
+        allowInputAboveBalance={true}
+        error={error}
+        price={price}
       />
     </div>
   );

@@ -29,6 +29,7 @@ export interface TokenErc20 {
   description: string | null;
   documentation: string | null;
   bridge?: string;
+  risks?: string[];
 }
 
 /**

@@ -1,5 +1,161 @@
 [
   {
+    "id": "curve-op-crvusd-susd",
+    "name": "crvUSD/sUSD",
+    "token": "crvUSDsUSD",
+    "tokenAddress": "0x56771e7a9Df6E977164B48e07Aa3F5dadf448402",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveCrvUSD-sUSD",
+    "earnedTokenAddress": "0x8cFF638fcbA43CE672b7C7Ef1735d991eA473dB3",
+    "earnContractAddress": "0x8cFF638fcbA43CE672b7C7Ef1735d991eA473dB3",
+    "oracle": "lps",
+    "oracleId": "curve-op-crvusd-susd",
+    "status": "active",
+    "createdAt": 1708082149,
+    "platformId": "curve",
+    "assets": ["crvUSD", "sUSD"],
+    "migrationIds": ["l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-11/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-11/withdraw",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x56771e7a9Df6E977164B48e07Aa3F5dadf448402",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x56771e7a9Df6E977164B48e07Aa3F5dadf448402",
+            "coins": [
+              "0xC52D7F23a2e460248Db6eE192Cb23dD12bDDCbf6",
+              "0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-op-crvusd-usdc",
+    "name": "crvUSD/USDC",
+    "token": "crvUSDC",
+    "tokenAddress": "0x03771e24b7C9172d163Bf447490B142a15be3485",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveCrvUSD-USDC",
+    "earnedTokenAddress": "0x7f5651A60739308217D68cce2Bb48Fa7980aB45E",
+    "earnContractAddress": "0x7f5651A60739308217D68cce2Bb48Fa7980aB45E",
+    "oracle": "lps",
+    "oracleId": "curve-op-crvusd-usdc",
+    "status": "active",
+    "createdAt": 1708082093,
+    "platformId": "curve",
+    "assets": ["crvUSD", "USDC"],
+    "migrationIds": ["l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-2/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-2/withdraw",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x03771e24b7C9172d163Bf447490B142a15be3485",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x03771e24b7C9172d163Bf447490B142a15be3485",
+            "coins": [
+              "0xC52D7F23a2e460248Db6eE192Cb23dD12bDDCbf6",
+              "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-op-crvusd-usdc.e",
+    "name": "crvUSD/USDC.e",
+    "token": "crvUSDC.e",
+    "tokenAddress": "0x05FA06D4Fb883F67f1cfEA0889edBff9e8358101",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveCrvUSD-USDC.e",
+    "earnedTokenAddress": "0xd85869C544820dF304c1F420f1a4107Fe109d176",
+    "earnContractAddress": "0xd85869C544820dF304c1F420f1a4107Fe109d176",
+    "oracle": "lps",
+    "oracleId": "curve-op-crvusd-usdc.e",
+    "status": "active",
+    "createdAt": 1708082083,
+    "platformId": "curve",
+    "assets": ["crvUSD", "opUSDCe"],
+    "migrationIds": ["l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-1/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-1/withdraw",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x05FA06D4Fb883F67f1cfEA0889edBff9e8358101",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x05FA06D4Fb883F67f1cfEA0889edBff9e8358101",
+            "coins": [
+              "0xC52D7F23a2e460248Db6eE192Cb23dD12bDDCbf6",
+              "0x7F5c764cBc14f9669B88837ca1490cCa17c31607"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-op-crvusd-usdt",
+    "name": "crvUSD/USDT",
+    "token": "crvUSDT",
+    "tokenAddress": "0xD1b30BA128573fcd7D141C8A987961b40e047BB6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveCrvUSD-USDT",
+    "earnedTokenAddress": "0xe0e1dD54334007aCcF731395d1DAD784036DF2D9",
+    "earnContractAddress": "0xe0e1dD54334007aCcF731395d1DAD784036DF2D9",
+    "oracle": "lps",
+    "oracleId": "curve-op-crvusd-usdt",
+    "status": "active",
+    "createdAt": 1708081934,
+    "platformId": "curve",
+    "assets": ["crvUSD", "USDT"],
+    "migrationIds": ["l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-0/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-0/withdraw",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xD1b30BA128573fcd7D141C8A987961b40e047BB6",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xD1b30BA128573fcd7D141C8A987961b40e047BB6",
+            "coins": [
+              "0xC52D7F23a2e460248Db6eE192Cb23dD12bDDCbf6",
+              "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "aura-op-yield-concerto-by-frax",
     "name": "Yield Concerto by FRAX",
     "type": "standard",

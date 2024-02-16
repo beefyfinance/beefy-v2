@@ -1,27 +1,56 @@
 import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
-  input: {
+  inputContainer: {
     color: theme.palette.text.middle,
     background: theme.palette.background.searchInputBg,
-    borderRadius: '8px',
-    width: '100%',
     display: 'flex',
+    alignItems: 'center',
+    borderRadius: '8px',
+    padding: '0px 12px',
     cursor: 'default',
-    '& .MuiInputBase-input': {
-      ...theme.typography['h3'],
-      padding: '12px 16px',
-      color: theme.palette.text.light,
-      height: 'auto',
-      cursor: 'default',
-      '&::placeholder': {
-        color: theme.palette.text.dark,
-        opacity: 1,
-      },
+    boxSizing: 'border-box' as const,
+    position: 'relative' as const,
+    justifyContent: 'space-between',
+    minHeight: '48px',
+  },
+  inputContent: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+  },
+  input: {
+    ...theme.typography['h2'],
+    padding: 0,
+    margin: 0,
+    border: 'none',
+    background: 'none',
+    boxShadow: 'none',
+    width: '100%',
+    color: theme.palette.text.light,
+    height: 'auto',
+    cursor: 'default',
+    outline: 0,
+    '&::placeholder': {
+      color: theme.palette.text.dark,
+      opacity: 1,
+    },
+    '&::focus ': {
+      outline: 0,
     },
   },
+  inputWithPrice: {
+    ...theme.typography['body-lg-med'],
+  },
   error: {
-    borderColor: theme.palette.background.indicators.warning,
+    border: `1px solid ${theme.palette.background.indicators.error}`,
+  },
+  fullWidth: {
+    width: '100%',
+  },
+  price: {
+    ...theme.typography['body-sm'],
+    lineHeight: '12px',
+    color: theme.palette.text.dark,
   },
   max: {
     ...theme.typography['subline-sm'],
@@ -36,12 +65,16 @@ export const styles = (theme: Theme) => ({
     minWidth: 0,
     flexShrink: 0,
     cursor: 'pointer',
-    marginRight: '8px',
+    marginRight: '12px',
     '&:disabled': {
       color: theme.palette.text.dark,
       backgroundColor: theme.palette.background.buttons.button,
       borderColor: theme.palette.background.contentLight,
       opacity: 0.4,
     },
+  },
+  endAdornement: {
+    position: 'absolute' as const,
+    right: 0,
   },
 });

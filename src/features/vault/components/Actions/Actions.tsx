@@ -6,6 +6,7 @@ import { Minters } from './Minter';
 import { Migration } from '../Migation';
 import { isDevelopment } from '../../../data/utils/feature-flags';
 import { DisplacedBalances } from '../DisplacedBalances';
+import { NoSafuRisks } from '../NoSafuRisks';
 
 const TransactDebugger = lazy(() => import(`./Transact/TransactDebugger/TransactDebugger`));
 
@@ -18,6 +19,7 @@ export const Actions = memo<ActionsProps>(function Actions({ vaultId }) {
       {isDevelopment ? <TransactDebugger vaultId={vaultId} /> : null}
       <Migration vaultId={vaultId} />
       <DisplacedBalances vaultId={vaultId} />
+      <NoSafuRisks vaultId={vaultId} isTitle={true} />
       <Transact vaultId={vaultId} />
       <Boosts vaultId={vaultId} />
       <Minters vaultId={vaultId} />

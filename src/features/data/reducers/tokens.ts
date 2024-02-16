@@ -355,6 +355,7 @@ function addAddressBookToState(
       existingToken.website = existingToken.website || token.website;
       if (isTokenErc20(existingToken)) {
         existingToken.bridge = existingToken.bridge || token.bridge;
+        existingToken.risks = existingToken.risks || token.risks;
       }
     }
 

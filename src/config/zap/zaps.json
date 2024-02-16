@@ -93,5 +93,10 @@
     "chainId": "linea",
     "router": "0xf2068e1FE1A80E7f5Ba80D6ABD6e8618aD4E959E",
     "manager": "0x19e730Ab391b79F03CFA2ffc2C5e3fc617F0eEfe"
+  },
+  {
+    "chainId": "mantle",
+    "router": "0x445d3D1E75824197bd6A7F46434F67D754FA25C3",
+    "manager": "0x71c1203fD77fbB109aA06ef5F07f3CE592E96370"
   }
 ]

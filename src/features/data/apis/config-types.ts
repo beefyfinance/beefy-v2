@@ -277,6 +277,7 @@ export interface MinterConfig {
 export type PlatformConfig = {
   id: string;
   name: string;
+  risks?: string[];
 };
 
 export interface TokenHoldingConfig {
