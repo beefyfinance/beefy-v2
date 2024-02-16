@@ -249,6 +249,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       'wUSDR',
       'omultiwUSDR',
       'sFRAX',
+      'crvUSD',
     ],
   },
   fantom: {
@@ -753,7 +754,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     stableCoins: ['USDT', 'USDC', 'DAI'],
   },
   mantle: {
-    new: true,
     name: 'Mantle',
     chainId: 5000,
     rpc: ['https://rpc.mantle.xyz'],
