@@ -10,7 +10,7 @@
     "earnedToken": "OP",
     "earnedTokenDecimals": 18,
     "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
-    "earnContractAddress": "0x5d7629B52Ee3A4BEe5e4DB08c49A88B793EF89f7",
+    "earnContractAddress": "0xD149A55810Af46a1231217C9bb95E8aC88D27CCa",
     "earnedOracle": "tokens",
     "earnedOracleId": "OP",
     "partnership": true,
