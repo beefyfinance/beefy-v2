@@ -1399,9 +1399,10 @@
     "earnContractAddress": "0xBE2bD093B8F342e060E79Fad6059B1057F016Ba4",
     "oracle": "lps",
     "oracleId": "aura-r-dai",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1708113204,
     "createdAt": 1685985894,
-    "pausedAt": 1699645440,
     "platformId": "aura",
     "assets": ["R", "DAI"],
     "risks": [
