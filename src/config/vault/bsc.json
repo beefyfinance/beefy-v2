@@ -35,7 +35,9 @@
     "earnContractAddress": "0x2625DEc6c26C2f6ceFE4aa3598A5B75420cdac31",
     "oracle": "lps",
     "oracleId": "pancake-ichi-usdt-wbnb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1708113204,
     "createdAt": 1699279219,
     "platformId": "bril",
     "assets": ["USDT", "BNB"],
@@ -58,7 +60,9 @@
     "earnContractAddress": "0x6FCBdA554A360b287df38b8002E640e6B653F270",
     "oracle": "lps",
     "oracleId": "pancake-ichi-usdt-btcb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1708113204,
     "createdAt": 1699279219,
     "platformId": "bril",
     "assets": ["USDT", "BTCB"],
@@ -104,7 +108,9 @@
     "earnContractAddress": "0x9f3b955a86085FFdFdEb2B2cb1C0581601557A92",
     "oracle": "lps",
     "oracleId": "pancake-ichi-cake-usdt",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1708113204,
     "createdAt": 1699279219,
     "platformId": "bril",
     "assets": ["CAKE", "USDT"],
@@ -1109,38 +1115,6 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "bsc-thena"
-      }
-    ]
-  },
-  {
-    "id": "thena-fil-wbnb",
-    "name": "FIL-BNB vLP",
-    "type": "standard",
-    "token": "FIL-BNB vLP",
-    "tokenAddress": "0x1f06C7E323Bc3A5C94Bb6B760C128830cDF6ADfB",
-    "tokenDecimals": 18,
-    "tokenProviderId": "thena",
-    "earnedToken": "mooThenaFIL-BNB",
-    "earnedTokenAddress": "0x56C254017Ea3AecB27d671905d25Cc56a5EdA95E",
-    "earnContractAddress": "0x56C254017Ea3AecB27d671905d25Cc56a5EdA95E",
-    "oracle": "lps",
-    "oracleId": "thena-fil-wbnb",
-    "status": "eol",
-    "createdAt": 1677122554,
-    "retireReason": "rewards",
-    "retiredAt": 1682019887,
-    "platformId": "thena",
-    "assets": ["FIL", "BNB"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://thena.fi/swap",
     "addLiquidityUrl": "https://thena.fi/liquidity",
@@ -4063,7 +4037,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://belt.fi/",
     "removeLiquidityUrl": "https://belt.fi/pools",
     "network": "bsc"
@@ -4206,7 +4180,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://belt.fi/",
     "removeLiquidityUrl": "https://belt.fi/pools",
     "network": "bsc"
@@ -4236,7 +4210,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "single",
+    "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://belt.fi/",
     "removeLiquidityUrl": "https://belt.fi/pools",
     "network": "bsc"
@@ -15933,7 +15907,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "lending",
+    "strategyTypeId": "lendingNoBorrow",
     "network": "bsc",
     "zaps": [
       {

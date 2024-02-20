@@ -1,5 +1,44 @@
 [
   {
+    "id": "curve-veth",
+    "name": "vETH/ETH",
+    "token": "vETHETH",
+    "tokenAddress": "0x6685fcFCe05e7502bf9f0AA03B36025b09374726",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveVETH",
+    "earnedTokenAddress": "0xAE0bFfc3110e69DA8993F11C1CBd9a6eA3d16daF",
+    "earnContractAddress": "0xAE0bFfc3110e69DA8993F11C1CBd9a6eA3d16daF",
+    "oracle": "lps",
+    "oracleId": "curve-veth",
+    "status": "active",
+    "createdAt": 1708410203,
+    "platformId": "curve",
+    "assets": ["vETH", "ETH"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-70/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-70/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x6685fcFCe05e7502bf9f0AA03B36025b09374726",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x6685fcFCe05e7502bf9f0AA03B36025b09374726",
+            "coins": [
+              "0x38D64ce1Bdf1A9f24E0Ec469C9cAde61236fB4a0",
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "aura-weeth-reth",
     "name": "weETH-rETH",
     "type": "standard",
@@ -1399,9 +1438,10 @@
     "earnContractAddress": "0xBE2bD093B8F342e060E79Fad6059B1057F016Ba4",
     "oracle": "lps",
     "oracleId": "aura-r-dai",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1708113204,
     "createdAt": 1685985894,
-    "pausedAt": 1699645440,
     "platformId": "aura",
     "assets": ["R", "DAI"],
     "risks": [
