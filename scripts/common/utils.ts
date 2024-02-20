@@ -90,3 +90,18 @@ export type NonEmptyArray<T> = [T, ...T[]];
 export function isNonEmptyArray<T>(arr: T[]): arr is NonEmptyArray<T> {
   return arr.length > 0;
 }
+
+export async function mapValuesAsync<T, U>(
+  obj: Record<string, T>,
+  fn: (value: T, key: string) => Promise<U>,
+  skipUndefined = false
+): Promise<Record<string, U>> {
+  const result: Record<string, U> = {};
+  for (const [key, value] of Object.entries(obj)) {
+    const newValue = await fn(value, key);
+    if (!skipUndefined || newValue !== undefined) {
+      result[key] = newValue;
+    }
+  }
+  return result;
+}
