@@ -366,7 +366,7 @@ function addAddressBookToState(
 }
 
 function tempFilterRisks(risks: string[]) {
-  return risks.filter(risk => risk !== 'NO_TIMELOCK');
+  return risks.filter(risk => risk === 'NO_TIMELOCK');
 }
 
 function addBoostToState(
