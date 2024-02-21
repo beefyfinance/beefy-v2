@@ -25,7 +25,6 @@ export const useVaultHasRisks = (vaultId: VaultEntity['id']) => {
 
     //handle tokens and platform risks
     if (vaultHasAssetsWithRisks.risks && vaultHasPlatformWithRisks.risks) {
-      console.log('hi');
       if (tokens.length > 1) {
         const auxValues = { platform: platform.name };
 
@@ -81,8 +80,7 @@ export const useVaultHasRisks = (vaultId: VaultEntity['id']) => {
 
       setVaultHasRisks(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [vaultHasAssetsWithRisks, vaultHasPlatformWithRisks]);
 
   return { vaultHasRisks, values, risk };
 };
