@@ -2,13 +2,13 @@ import type { OnRampConfig } from '../features/data/apis/config-types';
 
 export const onRampConfig: OnRampConfig = {
   blockedTokens: {
-    ethereum: [],
-    polygon: [],
-    bsc: ['BIFI'],
-    optimism: [],
-    fantom: [],
+    ethereum: ['jEUR', 'jCHF', 'jGBP', 'UST'],
+    polygon: ['jEUR', 'jCHF', 'jCAD', 'jSGD', 'jSEK', 'jAUD', 'jJPY', 'UST'],
+    bsc: ['BIFI', 'jEUR', 'jCHF', 'jGBP', 'jZAR'],
+    optimism: ['jEUR', 'jEUR'],
+    fantom: ['UST'],
     arbitrum: [],
-    avax: [],
+    avax: ['jEUR', 'jCHF', 'UST'],
     cronos: [],
     moonbeam: [],
     moonriver: [],
@@ -19,7 +19,7 @@ export const onRampConfig: OnRampConfig = {
     zksync: [],
     zkevm: [],
     base: [],
-    gnosis: [],
+    gnosis: ['jEUR', 'jCHF'],
     linea: [],
     mantle: [],
     aurora: [],

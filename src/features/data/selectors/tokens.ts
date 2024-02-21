@@ -19,7 +19,6 @@ import { orderBy } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { fromUnixTime, sub } from 'date-fns';
 import { TIME_BUCKETS } from '../../vault/components/HistoricGraph/utils';
-import { createSelector } from '@reduxjs/toolkit';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -367,8 +366,3 @@ export const selectSupportedSwapTokensForChainAggregatorHavingPrice = (
     selectTokenPriceByTokenOracleId(state, token.oracleId).gt(BIG_ZERO)
   );
 };
-
-export const selectAllTokenIdsInActiveVaults = createSelector(
-  (state: BeefyState) => state.entities.tokens.allTokenIdsInActiveVaults,
-  allTokenIdsInActiveVaukts => allTokenIdsInActiveVaukts
-);
