@@ -13,17 +13,15 @@ import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenEqual, isTokenNative } from '../entities/token';
 import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { isStandardVault } from '../entities/vault';
-import type {
-  TrxError,
-  TrxHash,
-  TrxReceipt,
-  TxAdditionalData,
-} from '../reducers/wallet/wallet-action';
 import {
   createWalletActionErrorAction,
   createWalletActionPendingAction,
   createWalletActionResetAction,
   createWalletActionSuccessAction,
+  type TrxError,
+  type TrxHash,
+  type TrxReceipt,
+  type TxAdditionalData,
 } from '../reducers/wallet/wallet-action';
 import {
   selectBoostUserBalanceInToken,
@@ -82,6 +80,7 @@ type TxRefreshOnSuccess = {
   minterId?: MinterEntity['id'];
   vaultId?: VaultEntity['id'];
   migrationId?: MigrationConfig['id'];
+  clearInput?: boolean;
 };
 
 type TxContext = {
@@ -130,7 +129,6 @@ function txMined(
 
   dispatch(createWalletActionSuccessAction(receipt, additionalData));
   dispatch(updateSteps());
-  dispatch(transactActions.clearInput());
 
   // fetch new balance and allowance of native token (gas spent) and allowance token
   if (refreshOnSuccess) {
@@ -144,6 +142,7 @@ function txMined(
       minterId,
       vaultId,
       migrationId,
+      clearInput,
     } = refreshOnSuccess;
 
     dispatch(
@@ -156,6 +155,7 @@ function txMined(
         tokens: tokens,
       })
     );
+
     if (minterId) {
       dispatch(
         reloadReserves({
@@ -164,8 +164,13 @@ function txMined(
         })
       );
     }
+
     if (migrationId) {
       dispatch(migratorUpdate({ vaultId, migrationId, walletAddress }));
+    }
+
+    if (clearInput) {
+      dispatch(transactActions.clearInput());
     }
   }
 }
@@ -313,6 +318,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
+        clearInput: true,
       }
     );
   });
@@ -381,6 +387,7 @@ const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) =
         spenderAddress: vault.earnContractAddress,
         tokens: selectVaultTokensToRefresh(state, vault),
         walletAddress: address,
+        clearInput: true,
       }
     );
   });
@@ -420,6 +427,7 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
+        clearInput: true,
       }
     );
   });
@@ -467,6 +475,7 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
+        clearInput: true,
       }
     );
   });
@@ -505,6 +514,7 @@ const claimGovVault = (vault: VaultGov) => {
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
+        clearInput: true,
       }
     );
   });
@@ -550,6 +560,7 @@ const exitGovVault = (vault: VaultGov) => {
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
+        clearInput: true,
       }
     );
   });
@@ -990,6 +1001,7 @@ const zapExecuteOrder = (
         chainId: vault.chainId,
         spenderAddress: zap.manager,
         tokens: selectZapTokensToRefresh(state, vault, order),
+        clearInput: true,
       }
     );
   });
