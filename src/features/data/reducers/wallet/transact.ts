@@ -99,6 +99,11 @@ const transactSlice = createSlice({
         sliceState.inputMax = action.payload.max;
       }
     },
+    clearInput(sliceState) {
+      sliceState.inputAmount = BIG_ZERO;
+      sliceState.inputMax = false;
+      resetQuotes(sliceState);
+    },
     clearQuotes(sliceState) {
       resetQuotes(sliceState);
     },
