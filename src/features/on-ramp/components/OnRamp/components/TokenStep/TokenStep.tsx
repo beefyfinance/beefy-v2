@@ -14,7 +14,6 @@ import type { ItemInnerProps } from '../../../../../../components/SearchableList
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { FiatTitleAdornment } from '../FiatTitleAdornment';
 import { setOnRampToken } from '../../../../../data/actions/on-ramp';
-import { selectAllTokenIdsInActiveVaults } from '../../../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
@@ -56,15 +55,7 @@ const ListItem = memo<ItemInnerProps>(function ListItem({ value }) {
 
 const TokenSelector = memo<{ fiat: string }>(function TokenSelector({ fiat }) {
   const tokens = useAppSelector(state => selectSupportedTokensForFiat(state, fiat));
-  const allTokenIdsInActiveVaults = useAppSelector(selectAllTokenIdsInActiveVaults);
-  const sortedTokens = useMemo(
-    () =>
-      [...tokens]
-        .filter(token => allTokenIdsInActiveVaults.includes(token))
-        .filter(token => token !== 'BIFI')
-        .sort(),
-    [allTokenIdsInActiveVaults, tokens]
-  );
+  const sortedTokens = useMemo(() => [...tokens].sort((a, b) => a.localeCompare(b)), [tokens]);
 
   const dispatch = useAppDispatch();
 

@@ -447,3 +447,10 @@ export type BeefyBridgeConfig = Readonly<{
    */
   bridges: ReadonlyArray<BeefyAnyBridgeConfig>;
 }>;
+
+export type OnRampConfig = {
+  blockedTokens: {
+    /** chain to array of address book ids */
+    [chainId: ChainEntity['id']]: TokenEntity['id'][];
+  };
+};

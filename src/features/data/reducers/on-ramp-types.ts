@@ -1,5 +1,6 @@
 import type { SerializedError } from '@reduxjs/toolkit';
 import type { ApiQuoteRequest, ApiQuoteResponse } from '../apis/on-ramp/on-ramp-types';
+import type { OnRampConfig } from '../apis/config-types';
 
 export enum FormStep {
   UnsupportedCountry = 1,
@@ -82,6 +83,7 @@ export type Quote = {
 export type OnRampTypes = {
   step: FormStep;
   lastStep: FormStep;
+  config: OnRampConfig;
   country: {
     value: string | null;
     error: CountryError | null;

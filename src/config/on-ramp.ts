@@ -1,0 +1,31 @@
+import type { OnRampConfig } from '../features/data/apis/config-types';
+
+export const onRampConfig: OnRampConfig = {
+  blockedTokens: {
+    ethereum: [],
+    polygon: [],
+    bsc: ['BIFI'],
+    optimism: [],
+    fantom: [],
+    arbitrum: [],
+    avax: [],
+    cronos: [],
+    moonbeam: [],
+    moonriver: [],
+    metis: [],
+    fuse: [],
+    kava: [],
+    canto: [],
+    zksync: [],
+    zkevm: [],
+    base: [],
+    gnosis: [],
+    linea: [],
+    mantle: [],
+    aurora: [],
+    emerald: [],
+    celo: [],
+    heco: [],
+    harmony: [],
+  },
+};
