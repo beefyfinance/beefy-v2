@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { useAppSelector } from '../../../../store';
 import type { VaultEntity } from '../../../data/entities/vault';
 import {
@@ -7,10 +7,6 @@ import {
 } from '../../../data/selectors/vaults';
 
 export const useVaultHasRisks = (vaultId: VaultEntity['id']) => {
-  const [vaultHasRisks, setVaultHasRisks] = useState<boolean>(false);
-  const [values, setValues] = useState<Record<string, string>>({});
-  const [risk, setRisk] = useState<string>('');
-
   const vaultHasPlatformWithRisks = useAppSelector(state =>
     selectVaultHasPlatformWithRisks(state, vaultId)
   );
@@ -19,11 +15,11 @@ export const useVaultHasRisks = (vaultId: VaultEntity['id']) => {
     selectVaultHasAssetsWithRisks(state, vaultId)
   );
 
-  useEffect(() => {
+  return useMemo(() => {
     const { platform } = vaultHasPlatformWithRisks;
     const { tokens } = vaultHasAssetsWithRisks;
 
-    //handle tokens and platform risks
+    // handle tokens and platform risks
     if (vaultHasAssetsWithRisks.risks && vaultHasPlatformWithRisks.risks) {
       if (tokens.length > 1) {
         const auxValues = { platform: platform.name };
@@ -33,8 +29,6 @@ export const useVaultHasRisks = (vaultId: VaultEntity['id']) => {
           auxValues[`token${i + 1}`] = token.symbol;
         }
 
-        setValues(auxValues);
-
         const token0 = tokens[0];
         const token1 = tokens[1];
 
@@ -43,26 +37,44 @@ export const useVaultHasRisks = (vaultId: VaultEntity['id']) => {
           token0.risks.every((value, index) => value === token1.risks[index]);
 
         if (allTokensHasSameRisk && token0.risks[0] === platform.risks[0]) {
-          setRisk(`PLATFORM_TOKENS_${platform.risks[0]}`);
+          return {
+            vaultHasRisks: true,
+            values: auxValues,
+            risk: `PLATFORM_TOKENS_${platform.risks[0]}`,
+          };
+        } else {
+          //TODO: Add logic to handle if platform and token issues are different
+          console.error(
+            `Different risks for platform and tokens: ${platform.risks[0]} and ${token0.risks[0]}`
+          );
+          // FIXME currently on shows the platform risk if token and platform risk are different
+          return {
+            vaultHasRisks: true,
+            values: { platform: platform.name },
+            risk: `PLATFORM_${platform.risks[0]}`,
+          };
         }
-        //TODO: Add logic to handle if platform and token issues are differents
       } else {
         const token = tokens[0];
-        setValues({ platform: platform.name, token: token.symbol });
-
-        setRisk('PLATFORM_TOKEN_NO_TIMELOCK');
+        return {
+          vaultHasRisks: true,
+          values: { platform: platform.name, token: token.symbol },
+          risk: 'PLATFORM_TOKEN_NO_TIMELOCK',
+        };
       }
-
-      setVaultHasRisks(true);
     }
-    //handle only platform risk
+    // handle only platform risk
     else if (vaultHasPlatformWithRisks.risks) {
-      setValues({ platform: platform.name });
-      setRisk(`PLATFORM_${platform.risks[0]}`);
-      setVaultHasRisks(true);
+      // TODO handle multiple platform risks
+      return {
+        vaultHasRisks: true,
+        values: { platform: platform.name },
+        risk: `PLATFORM_${platform.risks[0]}`,
+      };
     }
-    //handle only tokens risk
+    // handle only tokens risk
     else if (vaultHasAssetsWithRisks.risks) {
+      // TODO handle different risks per token and multiple risks per token
       if (tokens.length > 1) {
         const auxValues = {};
 
@@ -71,16 +83,16 @@ export const useVaultHasRisks = (vaultId: VaultEntity['id']) => {
           auxValues[`token${i + 1}`] = token.symbol;
         }
 
-        setValues(auxValues);
-        setRisk(`TOKENS_NO_TIMELOCK`);
+        return { vaultHasRisks: true, values: auxValues, risk: `TOKEN_${tokens[0].risks[0]}` };
       } else {
-        setValues({ token: tokens[0].symbol });
-        setRisk(`TOKEN_${tokens[0].risks[0]}`);
+        return {
+          vaultHasRisks: true,
+          values: { token: tokens[0].symbol },
+          risk: `TOKEN_${tokens[0].risks[0]}`,
+        };
       }
-
-      setVaultHasRisks(true);
     }
-  }, [vaultHasAssetsWithRisks, vaultHasPlatformWithRisks]);
 
-  return { vaultHasRisks, values, risk };
+    return { vaultHasRisks: false, values: undefined, risk: undefined };
+  }, [vaultHasAssetsWithRisks, vaultHasPlatformWithRisks]);
 };
