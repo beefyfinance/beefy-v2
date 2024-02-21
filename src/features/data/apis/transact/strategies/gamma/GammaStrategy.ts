@@ -753,7 +753,8 @@ export class GammaStrategy implements IStrategy {
     const slippage = selectTransactSlippage(state);
     const wantedOutput = first(wantedOutputs);
     const needsSwap = breakOutputs.map(
-      tokenAmount => !isTokenEqual(wantedOutput, tokenAmount.token)
+      tokenAmount =>
+        !isTokenEqual(wantedOutput, tokenAmount.token) && tokenAmount.amount.gt(BIG_ZERO)
     );
 
     const swapQuotes = await Promise.all(
