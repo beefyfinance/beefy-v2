@@ -279,9 +279,9 @@ function addBreakdownToState(sliceState: Draft<TokensState>, oracleId: string, b
     return;
   }
 
-  // All balances should be > 0
-  if (breakdown.balances.find(balance => balance === '0') !== undefined) {
-    // console.warn(`[LP Breakdown] ${oracleId} has zero balance`);
+  // At least one balance should be > 0
+  if (breakdown.balances.find(balance => balance !== '0') === undefined) {
+    // console.warn(`[LP Breakdown] ${oracleId} has all zero balances`);
     return;
   }
 

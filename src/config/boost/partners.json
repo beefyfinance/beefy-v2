@@ -1,4 +1,13 @@
 {
+  "curve": {
+    "title": "Curve",
+    "text": "Curve Finance is a decentralized exchange and automated market maker deployed on many EVM compatible chains. It specializes in efficient trading of stablecoins and volatile assets. Curve has also introduced its own over-collateralized USD stablecoin, crvUSD, powered by a unique liquidation mechanism.",
+    "website": "https://curve.fi/",
+    "social": {
+      "telegram": "https://t.me/curvefi",
+      "twitter": "https://twitter.com/CurveFinance"
+    }
+  },
   "fraxprotocol": {
     "title": "Frax",
     "text": "The Frax Protocol issues innovative, decentralized stablecoins and contains subprotocols to support them. The Frax Protocol currently issues 3 stablecoins: FRAX, FPI, and frxETH. FRAX is a USD pegged asset, the Frax Price Index (FPI) stablecoin is the first stablecoin pegged to a basket of consumer goods, and FraxEther (frxETH), which is pegged to ETH.",
