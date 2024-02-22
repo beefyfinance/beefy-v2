@@ -222,7 +222,10 @@ export class GammaPool implements IGammaPool {
       return [
         {
           token: inputs[0].token,
-          amount: neededToken0AmountsForInput1.max,
+          amount: neededToken0AmountsForInput1.min
+            .plus(neededToken0AmountsForInput1.max)
+            .dividedBy(2)
+            .decimalPlaces(inputs[0].token.decimals, BigNumber.ROUND_FLOOR),
         },
         inputs[1],
       ];
@@ -233,7 +236,10 @@ export class GammaPool implements IGammaPool {
         inputs[0],
         {
           token: inputs[1].token,
-          amount: neededToken1AmountsForInput0.max,
+          amount: neededToken1AmountsForInput0.min
+            .plus(neededToken1AmountsForInput0.max)
+            .dividedBy(2)
+            .decimalPlaces(inputs[1].token.decimals, BigNumber.ROUND_FLOOR),
         },
       ];
     }
