@@ -20,6 +20,7 @@ export const strategyBuildersById = {
   ),
   solidly: makeLazyLoader(async () => (await import('./solidly/SolidlyStrategy')).SolidlyStrategy),
   curve: makeLazyLoader(async () => (await import('./curve/CurveStrategy')).CurveStrategy),
+  gamma: makeLazyLoader(async () => (await import('./gamma/GammaStrategy')).GammaStrategy),
 } as const satisfies Record<
   StrategyOptions['strategyId'],
   (options: StrategyOptions, helpers: TransactHelpers, state: BeefyState) => Promise<IStrategy>

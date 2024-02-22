@@ -132,5 +132,23 @@
     "swapFeeNumerator": "1",
     "swapFeeDenominator": "1000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "polygon-gamma-retro",
+    "type": "gamma",
+    "name": "Gamma Retro",
+    "proxyAddress": "0xDC8eE75f52FABF057ae43Bb4B85C55315b57186c"
+  },
+  {
+    "id": "polygon-gamma-quickswap-a42d",
+    "type": "gamma",
+    "name": "Gamma Quickswap",
+    "proxyAddress": "0xA42d55074869491D60Ac05490376B74cF19B00e6"
+  },
+  {
+    "id": "polygon-gamma-quickswap-e0a6",
+    "type": "gamma",
+    "name": "Gamma Quickswap",
+    "proxyAddress": "0xe0A61107E250f8B5B24bf272baBFCf638569830C"
   }
 ]

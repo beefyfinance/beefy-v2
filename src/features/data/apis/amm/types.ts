@@ -57,6 +57,31 @@ export interface IUniswapLikePool extends IPool {
   getZapRemoveLiquidity(request: ZapStepRequest): Promise<ZapStepResponse>;
 }
 
+export type GammaHypervisorData = {
+  currentTick: BigNumber;
+  totalSupply: BigNumber;
+  totalAmounts: [BigNumber, BigNumber];
+  sqrtPrice: BigNumber;
+  priceRatio: BigNumber;
+};
+
+export interface IGammaPool extends IPool {
+  getHypervisorData(): GammaHypervisorData;
+
+  getAddLiquidityRatio(testAmounts: TokenAmount[]): Promise<BigNumber>;
+
+  getOptimalAddLiquidity(inputs: TokenAmount[]): Promise<TokenAmount[]>;
+
+  quoteRemoveLiquidity(
+    sharesWei: BigNumber,
+    tokenHolders: [string, ...string[]]
+  ): Promise<BigNumber[]>;
+
+  getZapAddLiquidity(request: ZapStepRequest): Promise<ZapStepResponse>;
+
+  getZapRemoveLiquidity(request: ZapStepRequest): Promise<ZapStepResponse>;
+}
+
 export interface IPool {
   readonly type: string;
 

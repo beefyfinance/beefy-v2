@@ -12,7 +12,6 @@ import type { TokenAmount, TransactOption, TransactQuote } from '../apis/transac
 import BigNumber from 'bignumber.js';
 import { TransactStatus } from '../reducers/wallet/transact-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import type { VaultEntity } from '../entities/vault';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) => state.ui.transact.vaultId;
@@ -85,12 +84,9 @@ export const selectTransactDepositInputAmountExceedsBalance = (state: BeefyState
   return value.gt(userBalance);
 };
 
-export const selectTransactWithdrawInputAmountExceedsBalance = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-) => {
+export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyState) => {
+  const vaultId = selectTransactVaultId(state);
   const userBalance = selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId);
-
   const value = selectTransactInputAmount(state);
 
   return value.gt(userBalance);

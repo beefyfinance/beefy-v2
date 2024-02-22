@@ -114,6 +114,13 @@ export type UniswapLikeDepositOption<TAmm extends AmmEntity> = ZapBaseDepositOpt
 export type UniswapV2DepositOption = UniswapLikeDepositOption<AmmEntityUniswapV2>;
 export type SolidlyDepositOption = UniswapLikeDepositOption<AmmEntitySolidly>;
 
+export type GammaDepositOption = ZapBaseDepositOption & {
+  strategyId: 'gamma';
+  depositToken: TokenEntity;
+  lpTokens: TokenErc20[];
+  swapVia: 'aggregator';
+};
+
 export type UniswapLikeWithdrawOption<TAmm extends AmmEntity> = ZapBaseWithdrawOption & {
   strategyId: TAmm['type'];
   depositToken: TokenEntity;
@@ -123,6 +130,13 @@ export type UniswapLikeWithdrawOption<TAmm extends AmmEntity> = ZapBaseWithdrawO
 
 export type UniswapV2WithdrawOption = UniswapLikeWithdrawOption<AmmEntityUniswapV2>;
 export type SolidlyWithdrawOption = UniswapLikeWithdrawOption<AmmEntitySolidly>;
+
+export type GammaWithdrawOption = ZapBaseWithdrawOption & {
+  strategyId: 'gamma';
+  depositToken: TokenEntity;
+  lpTokens: TokenErc20[];
+  swapVia?: 'aggregator' | undefined;
+};
 
 export type SingleDepositOption = ZapBaseDepositOption & {
   strategyId: 'single';
@@ -151,6 +165,7 @@ export type DepositOption =
   | GovVaultDepositOption
   | SolidlyDepositOption
   | UniswapV2DepositOption
+  | GammaDepositOption
   | SingleDepositOption
   | CurveDepositOption;
 
@@ -159,6 +174,7 @@ export type WithdrawOption =
   | GovVaultWithdrawOption
   | SolidlyWithdrawOption
   | UniswapV2WithdrawOption
+  | GammaWithdrawOption
   | SingleWithdrawOption
   | CurveWithdrawOption;
 
@@ -324,13 +340,18 @@ export type CurveDepositQuote = BaseZapQuote<CurveDepositOption> & {
   viaToken: CurveTokenOption;
 };
 
+export type GammaDepositQuote = BaseZapQuote<GammaDepositOption> & {
+  lpQuotes: QuoteResponse[];
+};
+
 export type VaultDepositQuote = StandardVaultDepositQuote | GovVaultDepositQuote;
 
 export type ZapDepositQuote =
   | SingleDepositQuote
   | UniswapV2DepositQuote
   | SolidlyDepositQuote
-  | CurveDepositQuote;
+  | CurveDepositQuote
+  | GammaDepositQuote;
 
 export type DepositQuote = VaultDepositQuote | ZapDepositQuote;
 
@@ -369,13 +390,21 @@ export type CurveWithdrawQuote = BaseZapQuote<CurveWithdrawOption> & {
   via: 'aggregator' | 'direct';
   viaToken: CurveTokenOption;
 };
+
+export type GammaBreakWithdrawQuote = BaseZapQuote<GammaWithdrawOption>;
+export type GammaAggregatorWithdrawQuote = BaseZapQuote<GammaWithdrawOption> & {
+  lpQuotes: QuoteResponse[];
+};
+export type GammaWithdrawQuote = GammaBreakWithdrawQuote | GammaAggregatorWithdrawQuote;
+
 export type VaultWithdrawQuote = StandardVaultWithdrawQuote | GovVaultWithdrawQuote;
 
 export type ZapWithdrawQuote =
   | SingleWithdrawQuote
   | UniswapV2WithdrawQuote
   | SolidlyWithdrawQuote
-  | CurveWithdrawQuote;
+  | CurveWithdrawQuote
+  | GammaWithdrawQuote;
 
 export type WithdrawQuote = VaultWithdrawQuote | ZapWithdrawQuote;
 

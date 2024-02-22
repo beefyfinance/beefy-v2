@@ -375,7 +375,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/wsteth-usdc-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/wsteth-usdc-500-narrow",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "optimism-gamma-uniswap-v3"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-op-wsteth-eth",
@@ -398,7 +404,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/wsteth-weth-100-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/wsteth-weth-100-pegged-price",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "optimism-gamma-uniswap-v3"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-next-usdc",
@@ -897,7 +909,14 @@
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/ETH/OP",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-narrow",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "optimism-gamma-uniswap-v3",
+        "tokenHolder": "0xC7846d1bc4d8bcF7c45a7c998b77cE9B3c904365"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-weth-op-wide",
@@ -923,7 +942,14 @@
     "buyTokenUrl": "https://app.1inch.io/#/10/simple/swap/ETH/OP",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-wide",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/weth-op-3000-wide",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "optimism-gamma-uniswap-v3",
+        "tokenHolder": "0xC7846d1bc4d8bcF7c45a7c998b77cE9B3c904365"
+      }
+    ]
   },
   {
     "id": "velodrome-v2-weth-hop",

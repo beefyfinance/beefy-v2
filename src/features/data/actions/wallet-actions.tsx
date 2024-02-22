@@ -13,17 +13,15 @@ import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenEqual, isTokenNative } from '../entities/token';
 import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { isStandardVault } from '../entities/vault';
-import type {
-  AdditionalData,
-  TrxError,
-  TrxHash,
-  TrxReceipt,
-} from '../reducers/wallet/wallet-action';
 import {
   createWalletActionErrorAction,
   createWalletActionPendingAction,
   createWalletActionResetAction,
   createWalletActionSuccessAction,
+  type TrxError,
+  type TrxHash,
+  type TrxReceipt,
+  type TxAdditionalData,
 } from '../reducers/wallet/wallet-action';
 import {
   selectBoostUserBalanceInToken,
@@ -67,10 +65,32 @@ import { migratorUpdate } from './migrator';
 import type { MigrationConfig } from '../reducers/wallet/migration';
 import type { IBridgeQuote } from '../apis/bridge/providers/provider-types';
 import type { BeefyAnyBridgeConfig } from '../apis/config-types';
+import { transactActions } from '../reducers/wallet/transact';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
 
+type TxRefreshOnSuccess = {
+  walletAddress: string;
+  chainId: ChainEntity['id'];
+  spenderAddress: string;
+  tokens: TokenEntity[];
+  govVaultId?: VaultEntity['id'];
+  boostId?: BoostEntity['id'];
+  minterId?: MinterEntity['id'];
+  vaultId?: VaultEntity['id'];
+  migrationId?: MigrationConfig['id'];
+  clearInput?: boolean;
+};
+
+type TxContext = {
+  additionalData?: TxAdditionalData;
+  refreshOnSuccess?: TxRefreshOnSuccess;
+};
+
+/**
+ * Called before building a transaction
+ */
 function txStart(dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>) {
   dispatch(createWalletActionResetAction());
   // should already be set by Stepper
@@ -82,6 +102,91 @@ function txStart(dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>) {
  */
 function txWallet(dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>) {
   dispatch(stepperActions.setStepContent({ stepContent: StepContent.WalletTx }));
+}
+
+/**
+ * Called when .send() succeeds / tx is submitted to RPC
+ */
+function txSubmitted(
+  dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>,
+  context: TxContext,
+  hash: TrxHash
+) {
+  const { additionalData } = context;
+  dispatch(createWalletActionPendingAction(hash, additionalData));
+  dispatch(stepperActions.setStepContent({ stepContent: StepContent.WaitingTx }));
+}
+
+/**
+ * Called when tx is successfully mined
+ */
+function txMined(
+  dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>,
+  context: TxContext,
+  receipt: TrxReceipt
+) {
+  const { additionalData, refreshOnSuccess } = context;
+
+  dispatch(createWalletActionSuccessAction(receipt, additionalData));
+  dispatch(updateSteps());
+
+  // fetch new balance and allowance of native token (gas spent) and allowance token
+  if (refreshOnSuccess) {
+    const {
+      walletAddress,
+      chainId,
+      govVaultId,
+      boostId,
+      spenderAddress,
+      tokens,
+      minterId,
+      vaultId,
+      migrationId,
+      clearInput,
+    } = refreshOnSuccess;
+
+    dispatch(
+      reloadBalanceAndAllowanceAndGovRewardsAndBoostData({
+        walletAddress: walletAddress,
+        chainId: chainId,
+        govVaultId: govVaultId,
+        boostId: boostId,
+        spenderAddress: spenderAddress,
+        tokens: tokens,
+      })
+    );
+
+    if (minterId) {
+      dispatch(
+        reloadReserves({
+          chainId: chainId,
+          minterId: minterId,
+        })
+      );
+    }
+
+    if (migrationId) {
+      dispatch(migratorUpdate({ vaultId, migrationId, walletAddress }));
+    }
+
+    if (clearInput) {
+      dispatch(transactActions.clearInput());
+    }
+  }
+}
+
+/**
+ * Called when tx fails
+ */
+function txError(
+  dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>,
+  context: TxContext,
+  error: TrxError
+) {
+  const { additionalData } = context;
+
+  dispatch(createWalletActionErrorAction(error, additionalData));
+  dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
 }
 
 const approval = (token: TokenErc20, spenderAddress: string) => {
@@ -213,6 +318,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
+        clearInput: true,
       }
     );
   });
@@ -281,6 +387,7 @@ const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) =
         spenderAddress: vault.earnContractAddress,
         tokens: selectVaultTokensToRefresh(state, vault),
         walletAddress: address,
+        clearInput: true,
       }
     );
   });
@@ -320,6 +427,7 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
+        clearInput: true,
       }
     );
   });
@@ -367,6 +475,7 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
+        clearInput: true,
       }
     );
   });
@@ -405,6 +514,7 @@ const claimGovVault = (vault: VaultGov) => {
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
+        clearInput: true,
       }
     );
   });
@@ -450,6 +560,7 @@ const exitGovVault = (vault: VaultGov) => {
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
+        clearInput: true,
       }
     );
   });
@@ -890,6 +1001,7 @@ const zapExecuteOrder = (
         chainId: vault.chainId,
         spenderAddress: zap.manager,
         tokens: selectZapTokensToRefresh(state, vault, order),
+        clearInput: true,
       }
     );
   });
@@ -947,72 +1059,23 @@ export function captureWalletErrors<ReturnType>(
 function bindTransactionEvents(
   dispatch: ThunkDispatch<BeefyState, unknown, Action<unknown>>,
   transaction: PromiEvent<unknown>,
-  additionalData: AdditionalData,
-  refreshOnSuccess?: {
-    walletAddress: string;
-    chainId: ChainEntity['id'];
-    spenderAddress: string;
-    tokens: TokenEntity[];
-    govVaultId?: VaultEntity['id'];
-    boostId?: BoostEntity['id'];
-    minterId?: MinterEntity['id'];
-    vaultId?: VaultEntity['id'];
-    migrationId?: MigrationConfig['id'];
-  }
+  additionalData: TxAdditionalData,
+  refreshOnSuccess?: TxRefreshOnSuccess
 ) {
+  const context: TxContext = { additionalData, refreshOnSuccess };
+
   transaction
     .on('transactionHash', function (hash: TrxHash) {
-      dispatch(createWalletActionPendingAction(hash, additionalData));
-      dispatch(stepperActions.setStepContent({ stepContent: StepContent.WaitingTx }));
+      txSubmitted(dispatch, context, hash);
     })
     .on('receipt', function (receipt: TrxReceipt) {
-      dispatch(createWalletActionSuccessAction(receipt, additionalData));
-      dispatch(updateSteps());
-
-      // fetch new balance and allowance of native token (gas spent) and allowance token
-      if (refreshOnSuccess) {
-        const {
-          walletAddress,
-          chainId,
-          govVaultId,
-          boostId,
-          spenderAddress,
-          tokens,
-          minterId,
-          vaultId,
-          migrationId,
-        } = refreshOnSuccess;
-
-        dispatch(
-          reloadBalanceAndAllowanceAndGovRewardsAndBoostData({
-            walletAddress: walletAddress,
-            chainId: chainId,
-            govVaultId: govVaultId,
-            boostId: boostId,
-            spenderAddress: spenderAddress,
-            tokens: tokens,
-          })
-        );
-        if (minterId) {
-          dispatch(
-            reloadReserves({
-              chainId: chainId,
-              minterId: minterId,
-            })
-          );
-        }
-        if (migrationId) {
-          dispatch(migratorUpdate({ vaultId, migrationId, walletAddress }));
-        }
-      }
+      txMined(dispatch, context, receipt);
     })
     .on('error', function (error: TrxError) {
-      dispatch(createWalletActionErrorAction(error, additionalData));
-      dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
+      txError(dispatch, context, error);
     })
     .catch(error => {
-      dispatch(createWalletActionErrorAction({ message: String(error) }, additionalData));
-      dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
+      txError(dispatch, context, { message: String(error) });
     });
 }
 

@@ -1021,7 +1021,14 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/ethereum/details/reth-weth-500-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/ethereum/details/reth-weth-500-pegged-price",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "ethereum-gamma-uniswap-911b",
+        "tokenHolder": "0x40a3E5778f66835265602f92D507AeC708c2C0AD"
+      }
+    ]
   },
   {
     "id": "bifi-vault",

@@ -12,12 +12,14 @@ const IMPACT_CONFIRM_PERCENT = 5 / 100;
 export type PriceImpactNoticeProps = {
   quote: TransactQuote;
   onChange: (shouldDisable: boolean) => void;
+  hideCheckbox?: boolean;
   className?: string;
 };
 export const PriceImpactNotice = memo<PriceImpactNoticeProps>(function PriceImpactNotice({
   quote,
   onChange,
   className,
+  hideCheckbox = false,
 }) {
   const { t } = useTranslation();
   const [shouldWarn, setShouldWarn] = useState(false);
@@ -57,7 +59,7 @@ export const PriceImpactNotice = memo<PriceImpactNoticeProps>(function PriceImpa
       <p>
         {t('Transact-Notice-PriceImpact', { priceImpact: formatPercent(-priceImpact, 2, '0.00%') })}
       </p>
-      {shouldConfirm ? (
+      {shouldConfirm && !hideCheckbox ? (
         <LabelledCheckbox
           onChange={setConfirmed}
           checked={confirmed}

@@ -23,6 +23,9 @@ import VelodromeV2PairJson from './velodromeV2Pair.json';
 import ConicLpTokenStakerJson from './conicLpTokenStaker.json';
 import BeefyCommonBridgeJson from './beefyCommonBridge.json';
 import ArbitrumNodeInterfaceJson from './arbitrumNodeInterface.json';
+import GammaHypervisorJson from './gammaHypervisor.json';
+import GammaProxyJson from './gammaProxy.json';
+import UniswapV3PoolJson from './uniswapV3Pool.json';
 
 export const BeefyV2AppMulticallAbi = BeefyV2AppMulticallJson as AbiItem[];
 export const BoostAbi = BoostJson as AbiItem[];
@@ -48,3 +51,6 @@ export const ConicLpTokenStakerAbi = ConicLpTokenStakerJson as AbiItem[];
 export const BeefyCommonBridgeAbi = BeefyCommonBridgeJson as AbiItem[];
 export const ArbitrumNodeInterfaceAbi = ArbitrumNodeInterfaceJson as AbiItem[];
 export const XErc20Abi = XERC20Json as AbiItem[];
+export const GammaHypervisorAbi = GammaHypervisorJson as AbiItem[];
+export const GammaProxyAbi = GammaProxyJson as AbiItem[];
+export const UniswapV3PoolAbi = UniswapV3PoolJson as AbiItem[];

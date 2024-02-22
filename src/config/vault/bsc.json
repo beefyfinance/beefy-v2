@@ -20,7 +20,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://thena.fi/add?type=gamma&address=0x3513292a2e0e0c6fb0a82196d7ed8eb499fe5772",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0x0f75C0004bcda3DF44B8375197F3f2c0915edA8c"
+      }
+    ]
   },
   {
     "id": "pancake-ichi-usdt-wbnb",
@@ -189,7 +196,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0xf7369b1d005f2cbb1887233b5aa0cb0b39fb9891",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0x56019Fe949C29Ec8b895cFFAb3292564CD1C3e42"
+      }
+    ]
   },
   {
     "id": "ooev2-ooe-bnb",
@@ -292,7 +306,14 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0xacb6a2c03c8012c2817efc4d81e33cc0978e3abd",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-6b3d",
+        "tokenHolder": "0x2a2d5Fc3793019C71ce94a07B85659943b832E41"
+      }
+    ]
   },
   {
     "id": "thena-gamma-bnbx-usdt-narrow",
@@ -317,7 +338,14 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x88e1ce1e3e0171c83150844bb2f0bd2266802da2",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-6b3d",
+        "tokenHolder": "0xcF37Bddd36fbf113F60f7aB7fc15997819007b94"
+      }
+    ]
   },
   {
     "id": "thena-gamma-bnbx-frax-narrow",
@@ -342,7 +370,14 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x3f18d9a1126e55042da5e4e7c5a9a2f51fcdb48b",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-6b3d",
+        "tokenHolder": "0x4F902c6fA1cf156fCE39D03Aff725927143a0AAd"
+      }
+    ]
   },
   {
     "id": "thena-gamma-bnbx-btcb-narrow",
@@ -365,7 +400,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x0827841963cc8a0515b5baa59782b0a0870b5f88",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0xF40d8323c3a9d108467a23a4018b637Ed0817aD1"
+      }
+    ]
   },
   {
     "id": "thena-gamma-bnbx-btcb-wide",
@@ -390,7 +432,14 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x630ea7c98d797c8b9920b26ab3f335b26fc421b7",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-6b3d",
+        "tokenHolder": "0x4D351d25A14c4aE54dA1CF60F5c9BD5f1De0cC8c"
+      }
+    ]
   },
   {
     "id": "thena-gamma-bnbx-eth-narrow",
@@ -415,7 +464,14 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://thena.fi/liquidity/fusion?currency0=0x1bdd3Cf7F79cfB8EdbB955f20ad99211551BA275&currency1=0x2170Ed0880ac9A755fd29B2688956BD959F933F8&strategy=NARROW",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-6b3d",
+        "tokenHolder": "0xdd1dEFA6f68b035c436F688Dc7F8FA1CD9631844"
+      }
+    ]
   },
   {
     "id": "thena-gamma-bnb-bifi",
@@ -440,7 +496,14 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://thena.fi/liquidity/fusion?currency0=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c&currency1=0xca3f508b8e4dd382ee878a314789373d80a5190a&strategy=GAMMA_WIDE",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-6b3d",
+        "tokenHolder": "0xF352D2709BcB4A50a87c8780D6006a8115a599ef"
+      }
+    ]
   },
   {
     "id": "thena-usdt+-usd+",
@@ -534,7 +597,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x5c15842fcc12313c4f94dfb6fad1af3f989d33e9",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0x5F8a5C3C094C6eb31d6b99B921dbB34a5151b352"
+      }
+    ]
   },
   {
     "id": "thena-gamma-usdt-usdc",
@@ -557,7 +627,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x5eeca990e9b7489665f4b57d27d92c78bc2afbf2",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0x1011530830c914970CAa96a52B9DA1C709Ea48fb"
+      }
+    ]
   },
   {
     "id": "thena-gamma-usdt-bnb",
@@ -580,7 +657,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x3ec1ffd5dc29190588608ae9fd4f93750e84cda2",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0x56996C3686E131A73E512d35308f348f987Bc0D5"
+      }
+    ]
   },
   {
     "id": "thena-gamma-eth-bnb",
@@ -603,7 +687,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x10bf6e7b28b1cffb1c047d7f815953931e5ee947",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0xD777E84b0D29128351A35045D7AE728780dEf54D"
+      }
+    ]
   },
   {
     "id": "thena-gamma-btcb-bnb",
@@ -626,7 +717,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0xd3c480ec7a47596ff8d63396227d1f7dc728a7f0",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0x65E40E779560199F5e68126Bc95bdc03083e5AA4"
+      }
+    ]
   },
   {
     "id": "thena-gamma-ankrbnb-bnb",
@@ -649,7 +747,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x754fd74e22255780a58f125300008781d8318e3a",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0x8782fA8e2C973f7Cc19ce28DDf549fD9114F69dA"
+      }
+    ]
   },
   {
     "id": "thena-gamma-bnb-stkbnb",
@@ -672,7 +777,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x86b481fce116dcd01fbebb963f1358bcc466668c",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0x796472D20654D8751B481999204B623B264b004E"
+      }
+    ]
   },
   {
     "id": "thena-gamma-bnbx-bnb",
@@ -695,7 +807,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x2ecbd508c00bbc8aa0cdc9100bf3956fcabe7677",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0xf50Af14BC4953Dcf9d27EbCA8BB3625855F5B42d"
+      }
+    ]
   },
   {
     "id": "thena-gamma-wusdr-usdc",
@@ -720,7 +839,14 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://thena.fi/liquidity/fusion?currency0=0x2952beb1326accbb5243725bd4da2fc937bca087&currency1=0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d&strategy=GAMMA_STABLE",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0xaD11A9034fB8657ebBB2FdD75f7254C2805F4981"
+      }
+    ]
   },
   {
     "id": "thena-hay-ankrbnb",
