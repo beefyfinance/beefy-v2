@@ -1,5 +1,69 @@
 [
   {
+    "id": "velodrome-v2-usdc-usdc.e",
+    "name": "USDC-USDC.e sLP V2",
+    "type": "standard",
+    "token": "USDC-USDC.e sLP V2",
+    "tokenAddress": "0x36E3c209B373b861c185ecdBb8b2EbDD98587BDb",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2USDC-USDC.e",
+    "earnedTokenAddress": "0x31250144b1ad6B04A004836C67F7f07990FF84aa",
+    "earnContractAddress": "0x31250144b1ad6B04A004836C67F7f07990FF84aa",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-usdc-usdc",
+    "status": "active",
+    "createdAt": 1708526713,
+    "platformId": "velodrome",
+    "assets": ["USDC", "opUSDCe"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&token1=0x7F5c764cBc14f9669B88837ca1490cCa17c31607&type=0",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x36E3c209B373b861c185ecdBb8b2EbDD98587BDb",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-v2-usdc-usd+",
+    "name": "USDC-USD+ sLP V2",
+    "type": "standard",
+    "token": "USDC-USD+ sLP V2",
+    "tokenAddress": "0x46e1B51e07851301f025ffeA506b140dB80a214A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2USDC-USD+",
+    "earnedTokenAddress": "0x7f3918f9677d4581F3d02BE1bFa8CfF8d0595743",
+    "earnContractAddress": "0x7f3918f9677d4581F3d02BE1bFa8CfF8d0595743",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-usdc-usd+",
+    "status": "active",
+    "createdAt": 1708526712,
+    "platformId": "velodrome",
+    "assets": ["USDC", "USD+"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&token1=0x73cb180bf0521828d8849bc8CF2B920918e23032&type=0",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x46e1B51e07851301f025ffeA506b140dB80a214A",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "aura-op-yield-concerto-by-frax",
     "name": "Yield Concerto by FRAX",
     "type": "standard",
