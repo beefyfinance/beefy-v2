@@ -78,7 +78,6 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   }, [canBurnReserves, canZapInWithOneInch, minterEarningsType]);
 
   const isStepping = useAppSelector(selectIsStepperStepping);
-  console.log(contentKey);
 
   const [formData, setFormData] = React.useState({
     deposit: {
