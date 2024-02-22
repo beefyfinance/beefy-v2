@@ -45,6 +45,8 @@ export type TokensState = {
        * inside the balance reducer once the config is reworked
        */
       interestingBalanceTokenAddresses: TokenEntity['address'][];
+      /** list of tokens that have an active vault */
+      tokenIdsInActiveVaults: TokenEntity['id'][];
     };
   };
   prices: {
@@ -81,6 +83,7 @@ export const tokensSlice = createSlice({
             byId: {},
             byAddress: {},
             interestingBalanceTokenAddresses: [],
+            tokenIdsInActiveVaults: [],
             native: null,
             wnative: null,
           };
@@ -209,6 +212,7 @@ function addBridgeTokenToState(
       byId: {},
       byAddress: {},
       interestingBalanceTokenAddresses: [],
+      tokenIdsInActiveVaults: [],
       native: null,
       wnative: null,
     };
@@ -305,6 +309,7 @@ function addAddressBookToState(
       byId: {},
       byAddress: {},
       interestingBalanceTokenAddresses: [],
+      tokenIdsInActiveVaults: [],
       native: null,
       wnative: null,
     };
@@ -379,6 +384,7 @@ function addBoostToState(
       byId: {},
       byAddress: {},
       interestingBalanceTokenAddresses: [],
+      tokenIdsInActiveVaults: [],
       native: null,
       wnative: null,
     };
@@ -425,6 +431,7 @@ function addMinterToState(
       byId: {},
       byAddress: {},
       interestingBalanceTokenAddresses: [],
+      tokenIdsInActiveVaults: [],
       native: null,
       wnative: null,
     };
@@ -483,6 +490,7 @@ function addVaultToState(
       byId: {},
       byAddress: {},
       interestingBalanceTokenAddresses: [],
+      tokenIdsInActiveVaults: [],
       native: null,
       wnative: null,
     };
@@ -491,6 +499,15 @@ function addVaultToState(
   const depositToken = getDepositTokenFromLegacyVaultConfig(chain, vault);
   const depositAddressKey = depositToken.address.toLowerCase();
   const existingDepositToken = sliceState.byChainId[chainId].byAddress[depositAddressKey];
+
+  // add assets id's from active vaults to state
+  if (vault.status === 'active') {
+    for (const assetId of vault.assets) {
+      if (!sliceState.byChainId[chainId].tokenIdsInActiveVaults.includes(assetId)) {
+        sliceState.byChainId[chainId].tokenIdsInActiveVaults.push(assetId);
+      }
+    }
+  }
 
   if (existingDepositToken === undefined) {
     // Add the token
