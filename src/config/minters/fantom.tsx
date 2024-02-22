@@ -21,7 +21,6 @@ export const minters: MinterConfig[] = [
     },
     canZapInWithOneInch: true,
     canBurnReserves: false,
-    hasEarningsPool: true,
     vaultIds: [
       'beefy-beFTM',
       'beefy-beFTM-earnings',
@@ -49,7 +48,6 @@ export const minters: MinterConfig[] = [
       decimals: 18,
     },
     canBurnReserves: false,
-    hasEarningsPool: false,
     vaultIds: ['beefy-binspirit', 'spirit-binspirit-spirit'],
   },
 ];

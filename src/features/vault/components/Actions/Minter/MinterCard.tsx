@@ -28,6 +28,7 @@ export const MinterCard = memo(function MinterCard({ vaultId, minterId }: Minter
   const isFormReady = useAppSelector(
     state =>
       selectIsAddressBookLoaded(state, minter.chainId) &&
+      isFulfilled(state.ui.dataLoader.byChainId[minter.chainId].contractData) &&
       isFulfilled(state.ui.dataLoader.global.minterForm)
   );
   const walletAddress = useAppSelector(state =>

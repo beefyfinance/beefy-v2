@@ -21,7 +21,6 @@ export const minters: MinterConfig[] = [
       decimals: 18,
     },
     canBurnReserves: true,
-    hasEarningsPool: true,
     reserveBalanceMethod: 'withdrawableBalance',
     vaultIds: ['beefy-beopx', 'beefy-beopx-earnings'],
   },
