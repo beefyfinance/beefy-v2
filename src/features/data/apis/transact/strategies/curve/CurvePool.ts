@@ -142,7 +142,7 @@ export class CurvePool {
         // 3   array length
         // 4   array 0
         // 5   array 1
-        // 6+3 array N
+        // N+4 array N
         return amounts.map((_, i) => getInsertIndex(4 + i));
       default:
         throw new Error(`Invalid deposit type ${type}`);
