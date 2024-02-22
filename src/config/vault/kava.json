@@ -63,6 +63,7 @@
     "assets": ["MIM", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/kava/pools/factory-v2-17/swap",
     "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-17/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-17/withdraw",
     "network": "kava",
@@ -104,6 +105,7 @@
     "assets": ["MIM", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/kava/pools/factory-v2-16/swap",
     "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-16/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-16/withdraw",
     "network": "kava",
@@ -958,6 +960,7 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/kava/pools/factory-v2-2/swap",
     "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-2/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-2/withdraw",
     "network": "kava",
@@ -1008,8 +1011,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://kava.curve.fi/factory/0/deposit",
-    "removeLiquidityUrl": "https://kava.curve.fi/factory/0/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/kava/pools/factory-v2-0/swap",
+    "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-0/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-0/withdraw",
     "network": "kava",
     "zaps": [
       {
@@ -1055,6 +1059,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/kava/pools/factory-v2-13/swap",
     "addLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-13/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/kava/pools/factory-v2-13/withdraw",
     "network": "kava",

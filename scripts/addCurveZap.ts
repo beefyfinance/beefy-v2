@@ -353,7 +353,7 @@ async function loadCurvePool(cachePath: string): Promise<CurveApiPoolWithMetadat
 
 const apiPoolsCache = new Map<string, CurveApiPoolWithMetadata[]>();
 
-async function getCurvePools(
+export async function getCurvePools(
   chainId: string,
   updateCache: boolean,
   quiet: boolean = false

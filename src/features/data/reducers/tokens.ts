@@ -355,7 +355,7 @@ function addAddressBookToState(
       existingToken.website = existingToken.website || token.website;
       if (isTokenErc20(existingToken)) {
         existingToken.bridge = existingToken.bridge || token.bridge;
-        existingToken.risks = existingToken.risks || token.risks;
+        existingToken.risks = tempFilterRisks(existingToken.risks || token.risks || []); // FIXME remove once we support multiple risks types
       }
     }
 
@@ -363,6 +363,10 @@ function addAddressBookToState(
       sliceState.byChainId[chainId].wnative = token.id;
     }
   }
+}
+
+function tempFilterRisks(risks: string[]) {
+  return risks.filter(risk => risk === 'NO_TIMELOCK');
 }
 
 function addBoostToState(

@@ -631,9 +631,9 @@
     "oracle": "lps",
     "oracleId": "voltagev2-wfuse-busd",
     "status": "eol",
+    "createdAt": 1647505250,
     "retireReason": "rewards",
     "retiredAt": 1707845800,
-    "createdAt": 1647505250,
     "platformId": "voltage",
     "assets": ["BUSD", "FUSE"],
     "risks": [
