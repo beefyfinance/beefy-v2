@@ -1,5 +1,33 @@
 [
   {
+    "id": "beqiv2-pool",
+    "name": "beQI Earnings Pool",
+    "type": "gov",
+    "token": "beQI",
+    "tokenAddress": "0x6c9D885B37b131aa68794ee1549fFB80be381Fa9",
+    "tokenDecimals": 18,
+    "earnedToken": "rbeQI",
+    "earnedTokenAddress": "0x5e3E4ED40E754254095F091aA51871D125F4380a",
+    "earnedTokenDecimals": 18,
+    "earnContractAddress": "0x5e3E4ED40E754254095F091aA51871D125F4380a",
+    "oracle": "tokens",
+    "oracleId": "beQIv2",
+    "status": "active",
+    "createdAt": 1708531102,
+    "platformId": "beefy",
+    "assets": ["beQI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "beqi",
+    "network": "ethereum"
+  },
+  {
     "id": "curve-veth",
     "name": "vETH/ETH",
     "token": "vETHETH",
