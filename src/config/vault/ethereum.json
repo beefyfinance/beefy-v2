@@ -59,7 +59,32 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-91/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-91/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x9e10f9Fb6F0D32B350CEe2618662243d4f24C64a",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x9e10f9Fb6F0D32B350CEe2618662243d4f24C64a",
+            "coins": [
+              "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
+              "0x383E6b4437b59fff47B619CBA855CA29342A8559"
+            ]
+          },
+          {
+            "type": "pool-dynamic-deposit",
+            "target": "0xe07a16358aa878cbda2d49a88e5106871e0db307",
+            "coins": [
+              "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
+              "0x6c3ea9036406852006290770BEdFcAbA0e23A0e8",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-veth",

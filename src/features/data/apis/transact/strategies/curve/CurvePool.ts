@@ -65,6 +65,7 @@ export class CurvePool {
       case 'pool-fixed':
         return [poolAddress, amounts];
       case 'pool-fixed-deposit':
+      case 'pool-dynamic-deposit':
         return [poolAddress, amounts, true];
       default:
         throw new Error(`Invalid deposit type ${type}`);
@@ -133,6 +134,16 @@ export class CurvePool {
       case 'pool-fixed-deposit':
         // amounts[N_COINS] is second param, so array index N is at offset N+1
         return amounts.map((_, i) => getInsertIndex(1 + i));
+      case 'pool-dynamic-deposit':
+        // amounts[] is 2nd param, but its dynamic array
+        // 0   pool address
+        // 1   offset to array
+        // 2   min_amount
+        // 3   array length
+        // 4   array 0
+        // 5   array 1
+        // 6+3 array N
+        return amounts.map((_, i) => getInsertIndex(4 + i));
       default:
         throw new Error(`Invalid deposit type ${type}`);
     }
@@ -161,6 +172,7 @@ export class CurvePool {
         return [amounts, minMintAmount, true];
       case 'pool-fixed':
       case 'pool-fixed-deposit':
+      case 'pool-dynamic-deposit':
         return [poolAddress, amounts, minMintAmount];
       default:
         throw new Error(`Invalid deposit type ${type}`);
@@ -216,6 +228,7 @@ export class CurvePool {
         return [amount, tokenIndex];
       case 'pool-fixed':
       case 'pool-fixed-deposit':
+      case 'pool-dynamic-deposit':
         return [poolAddress, amount, tokenIndex];
       default:
         throw new Error(`Invalid withdraw type ${type}`);
@@ -267,6 +280,7 @@ export class CurvePool {
         return getInsertIndex(0);
       case 'pool-fixed':
       case 'pool-fixed-deposit':
+      case 'pool-dynamic-deposit':
         // 0: pool
         // 1: amount
         // 2: index
@@ -301,6 +315,7 @@ export class CurvePool {
         return [amount, tokenIndex, minAmount, true];
       case 'pool-fixed':
       case 'pool-fixed-deposit':
+      case 'pool-dynamic-deposit':
         return [poolAddress, amount, tokenIndex, minAmount];
       default:
         throw new Error(`Invalid withdraw type ${type}`);
