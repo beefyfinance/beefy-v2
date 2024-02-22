@@ -182,7 +182,7 @@ export const onRamp = createSlice({
                   }
                   for (const network of token.networks) {
                     // Skip blocked tokens
-                    if (config.blockedTokens[network]?.includes(tokenSymbol)) {
+                    if (config.blockedTokens[providerKey]?.[network]?.includes(tokenSymbol)) {
                       continue;
                     }
 
