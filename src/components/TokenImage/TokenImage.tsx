@@ -22,11 +22,11 @@ export const TokenImage = memo<TokenImageProps>(function TokenImage({
 }) {
   const token = useAppSelector(state => selectTokenByAddressOrNull(state, chainId, tokenAddress));
   const haveAssetForToken = useMemo(() => {
-    return token && singleAssetExists(token.id, token.chainId);
+    return token && singleAssetExists(token.symbol, token.chainId);
   }, [token]);
 
   return haveAssetForToken ? (
-    <AssetsImage chainId={chainId} assetIds={[token.id]} className={className} size={size} />
+    <AssetsImage chainId={chainId} assetIds={[token.symbol]} className={className} size={size} />
   ) : token ? (
     <TokenWithoutAsset token={token} size={size} className={className} />
   ) : (
