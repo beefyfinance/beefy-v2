@@ -1,5 +1,67 @@
 [
   {
+    "id": "prisma-mkusd-ultra",
+    "name": "mkUSD/ULTRA",
+    "token": "MKULTRA",
+    "tokenAddress": "0xC236BAE6e35b3Fb7335e1c35CA0862Ce92bd5DE3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "prisma",
+    "earnedToken": "mooPrismaMkUSD-ULTRA",
+    "earnedTokenAddress": "0x914a02E02dB217E6f5BdBaC65ab4510Ab208ae89",
+    "earnContractAddress": "0x914a02E02dB217E6f5BdBaC65ab4510Ab208ae89",
+    "oracle": "lps",
+    "oracleId": "prisma-mkusd-ultra",
+    "status": "active",
+    "createdAt": 1708591199,
+    "platformId": "prisma",
+    "assets": ["mkUSD", "ULTRA"],
+    "migrationIds": ["ethereum-prisma"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-101/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-101/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xC236BAE6e35b3Fb7335e1c35CA0862Ce92bd5DE3",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xC236BAE6e35b3Fb7335e1c35CA0862Ce92bd5DE3",
+            "coins": [
+              "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
+              "0x35282d87011f87508D457F08252Bc5bFa52E10A0"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "prisma-mkusd-paypool",
+    "name": "mkUSD/PYUSD/USDC",
+    "token": "mkUSDPay",
+    "tokenAddress": "0x9e10f9Fb6F0D32B350CEe2618662243d4f24C64a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooPrismaMkUSD-PayPool",
+    "earnedTokenAddress": "0x3AFa8b3AB875DFFb6F1AF182BA4475345814A4B4",
+    "earnContractAddress": "0x3AFa8b3AB875DFFb6F1AF182BA4475345814A4B4",
+    "oracle": "lps",
+    "oracleId": "prisma-mkusd-paypool",
+    "status": "active",
+    "createdAt": 1708590349,
+    "platformId": "prisma",
+    "assets": ["mkUSD", "PYUSD", "USDC"],
+    "migrationIds": ["ethereum-prisma"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-91/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-91/withdraw",
+    "network": "ethereum"
+  },
+  {
     "id": "curve-veth",
     "name": "vETH/ETH",
     "token": "vETHETH",
