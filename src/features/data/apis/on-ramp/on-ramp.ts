@@ -1,14 +1,13 @@
 import type { AxiosInstance } from 'axios';
 import axios from 'axios';
 import type {
+  IOnRampApi,
   ApiQuoteRequest,
   ApiQuoteResponse,
   ApiSupportedResponse,
   ApiUrlRequest,
   ApiUrlResponse,
-  IOnRampApi,
 } from './on-ramp-types';
-import type { OnRampConfig } from '../config-types';
 
 export class OnRampApi implements IOnRampApi {
   public api: AxiosInstance;
@@ -32,10 +31,5 @@ export class OnRampApi implements IOnRampApi {
   public async getUrl(options: ApiUrlRequest): Promise<ApiUrlResponse> {
     const res = await this.api.post<ApiUrlResponse>('/onboard/init', options);
     return res.data;
-  }
-
-  public async getConfig(): Promise<OnRampConfig> {
-    const { onRampConfig } = await import('../../../../config/on-ramp');
-    return onRampConfig;
   }
 }

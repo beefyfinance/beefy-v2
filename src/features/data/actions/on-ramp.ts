@@ -26,9 +26,8 @@ import {
   selectProvidersForFiatTokenNetwork,
   selectToken,
 } from '../selectors/on-ramp';
-import type { OnRampConfig } from '../apis/config-types';
 
-export type FulfilledSupportedPayload = { support: ApiSupportedResponse; config: OnRampConfig };
+export type FulfilledSupportedPayload = ApiSupportedResponse;
 
 export const fetchOnRampSupportedProviders = createAsyncThunk<
   FulfilledSupportedPayload,
@@ -36,8 +35,7 @@ export const fetchOnRampSupportedProviders = createAsyncThunk<
   { state: BeefyState }
 >('on-ramp/fetchSupported', async () => {
   const api = await getOnRampApi();
-  const [support, config] = await Promise.all([api.getSupported(), api.getConfig()]);
-  return { support, config };
+  return await api.getSupported();
 });
 
 export type FulfilledQuotePayload = ApiQuoteResponse;

@@ -16,7 +16,6 @@ import { CountryError, FormStep, InputMode } from './on-ramp-types';
 const initialState: OnRampTypes = {
   step: FormStep.SelectToken,
   lastStep: FormStep.SelectToken,
-  config: { blockedTokens: {} },
   country: { value: null, error: null },
   fiat: { value: null, error: null },
   token: { value: null, error: null },
@@ -134,22 +133,20 @@ export const onRamp = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchOnRampSupportedProviders.fulfilled, (sliceState, action) => {
-        const { support, config } = action.payload;
-
-        sliceState.country.value = support.countryCode;
-        sliceState.fiat.value = support.currencyCode;
+        sliceState.country.value = action.payload.countryCode;
+        sliceState.fiat.value = action.payload.currencyCode;
 
         // Binance OnRamp has closed
-        if ('binance' in support.providers) {
-          delete support.providers.binance;
+        if ('binance' in action.payload.providers) {
+          delete action.payload.providers.binance;
         }
 
         // Check if country is supported / has providers
         if (
-          !support.currencyCode ||
-          !support.countryCode ||
-          !support.providers ||
-          Object.keys(support.providers).length === 0
+          !action.payload.currencyCode ||
+          !action.payload.countryCode ||
+          !action.payload.providers ||
+          Object.keys(action.payload.providers).length === 0
         ) {
           sliceState.country.error = CountryError.NotSupported;
           sliceState.step = FormStep.UnsupportedCountry;
@@ -157,7 +154,7 @@ export const onRamp = createSlice({
         }
 
         // Process to fiat>token>network>provider>payment method
-        for (const [providerKey, provider] of Object.entries(support.providers)) {
+        for (const [providerKey, provider] of Object.entries(action.payload.providers)) {
           for (const [tokenSymbol, token] of Object.entries(provider)) {
             if (Object.keys(token.fiatCurrencies).length && token.networks.length) {
               for (const [fiatSymbol, paymentMethods] of Object.entries(token.fiatCurrencies)) {
@@ -181,11 +178,6 @@ export const onRamp = createSlice({
                     };
                   }
                   for (const network of token.networks) {
-                    // Skip blocked tokens
-                    if (config.blockedTokens[providerKey]?.[network]?.includes(tokenSymbol)) {
-                      continue;
-                    }
-
                     if (
                       !(network in sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].byNetwork)
                     ) {
