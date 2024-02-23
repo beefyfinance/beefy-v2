@@ -589,7 +589,7 @@
   "Transact-Notice-Confirm-Error": "An error occurred while building zap transaction: {{error}}",
   "Transact-Notice-Confirm-Error-Retry": "Refresh quote, check amount and try again.",
   "Transact-Notice-NotEnough": "Amount exceeds available balance",
-  "Transact-Notice-WithdrawnInWallet": "You have <amount/> {{token}} in your wallet. You can remove liquidity at <platformLink>{{platformName}}</platformLink>.",
+  "Transact-Notice-WithdrawnInWallet": "You have <amount/> {{token}} in your wallet. You can remove liquidity on the <platformLink>underlying platform</platformLink>.",
   "Transact-Fee-Deposit": "Deposit fee",
   "Transact-Fee-Deposit-Explainer": "Charged by underlying provider, not Beefy.",
   "Transact-Fee-Withdraw": "Withdrawal fee",

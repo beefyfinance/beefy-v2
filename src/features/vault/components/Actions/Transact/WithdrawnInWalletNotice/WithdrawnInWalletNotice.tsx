@@ -6,7 +6,6 @@ import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { selectPlatformByIdOrUndefined } from '../../../../../data/selectors/platforms';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
@@ -30,11 +29,8 @@ export const WithdrawnInWalletNotice = memo<WithdrawnInWalletNoticeProps>(
     const balance = useAppSelector(state =>
       selectUserBalanceOfToken(state, vault.chainId, depositToken.address)
     );
-    const platform = useAppSelector(state =>
-      selectPlatformByIdOrUndefined(state, depositToken.providerId)
-    );
 
-    if (balance.lte(BIG_ZERO) || !vault.removeLiquidityUrl || !platform) {
+    if (balance.lte(BIG_ZERO) || !vault.removeLiquidityUrl) {
       return null;
     }
 
@@ -54,7 +50,7 @@ export const WithdrawnInWalletNotice = memo<WithdrawnInWalletNoticeProps>(
             ),
             amount: <TokenAmountFromEntity amount={balance} token={depositToken} />,
           }}
-          values={{ token: depositToken.symbol, platformName: platform.name }}
+          values={{ token: depositToken.symbol }}
         />
       </AlertInfo>
     );
