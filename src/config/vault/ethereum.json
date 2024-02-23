@@ -31,7 +31,7 @@
     "id": "silo-weeth-eth",
     "name": "WETH (weETH Market)",
     "type": "standard",
-    "token": "WETH (weETH Market)",
+    "token": "WETH",
     "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     "tokenDecimals": 18,
     "earnedToken": "mooSiloWETH",
