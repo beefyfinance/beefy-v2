@@ -36,10 +36,6 @@ export const excludeChains: Record<string, { count: number; hash: string }> = {
     count: 10,
     hash: '0x8bc8e4abf4228c9dcf41bf674a325cddfc0956bad8af1c4d6a57a340057fcd67',
   },
-  avax: {
-    count: 185,
-    hash: '0x3ca61376124098707c95fb9048cb30afd48d066677b9f6fdf33afc8646a4fb6d',
-  },
 };
 
 export const excludedChainIds = Object.keys(excludeChains);
