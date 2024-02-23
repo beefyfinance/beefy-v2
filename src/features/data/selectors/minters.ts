@@ -1,8 +1,9 @@
 import type { BeefyState } from '../../../redux-types';
 import type { MinterEntity } from '../entities/minter';
 import type { ChainEntity } from '../entities/chain';
-import type { VaultEntity } from '../entities/vault';
+import { isGovVault, isStandardVault, type VaultEntity } from '../entities/vault';
 import { isInitialLoader } from '../reducers/data-loader-types';
+import { selectVaultById } from './vaults';
 
 export const selectMinterById = (state: BeefyState, minterId: MinterEntity['id']) => {
   const mintersById = state.entities.minters.byId;
@@ -32,3 +33,21 @@ export const selectAreMintersLoaded = (state: BeefyState) =>
 
 export const selectShouldInitMinters = (state: BeefyState) =>
   isInitialLoader(state.ui.dataLoader.global.minters);
+
+export const selectMinterVaultsType = (state: BeefyState, minterId: MinterEntity['id']) => {
+  const minter = selectMinterById(state, minterId);
+  const { vaultsCount, govsCount } = minter.vaultIds.reduce(
+    (counts, vaultId) => {
+      const vault = selectVaultById(state, vaultId);
+      counts.vaultsCount += isStandardVault(vault) ? 1 : 0;
+      counts.govsCount += isGovVault(vault) ? 1 : 0;
+      return counts;
+    },
+    { vaultsCount: 0, govsCount: 0 }
+  );
+  return vaultsCount > 0 && govsCount > 0
+    ? 'WithEarnings'
+    : vaultsCount > 0 && govsCount === 0
+    ? 'WithoutEarnings'
+    : 'OnlyEarnings';
+};
