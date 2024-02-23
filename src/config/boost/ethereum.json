@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_silo-weeth-eth-silo",
+    "poolId": "silo-weeth-eth",
+    "name": "Silo",
+    "assets": ["ETH"],
+    "tokenAddress": "0x0E5F3a47122901D3eE047d2C7e1B36b419Ede5FE",
+    "earnedToken": "SILO",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x6f80310CA7F2C654691D1383149Fa1A57d8AB1f8",
+    "earnContractAddress": "0xC0dD9F05511Eec7f3C9C755816E4A25caECde47a",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "SILO",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["silo"]
+  },
+  {
     "id": "moo_convex-steth-lido",
     "poolId": "convex-steth",
     "name": "Lido",
