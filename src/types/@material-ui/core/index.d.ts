@@ -49,6 +49,7 @@ declare module '@material-ui/core/styles/createPalette' {
       warning: string;
       error: string;
       success: string;
+      info: string;
     };
   }
 
