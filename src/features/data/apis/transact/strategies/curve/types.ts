@@ -7,7 +7,8 @@ export type CurveMethodTypes =
   | 'fixed-deposit-underlying'
   | 'dynamic-deposit'
   | 'pool-fixed'
-  | 'pool-fixed-deposit';
+  | 'pool-fixed-deposit'
+  | 'pool-dynamic-deposit';
 
 type CurveMethodSignatures = {
   depositQuote: string;
@@ -59,6 +60,12 @@ const curveMethodTypeToSignatures = {
     withdrawQuote: 'calc_withdraw_one_coin:pool/amount/int128_index',
     withdraw: 'remove_liquidity_one_coin:pool/amount/int128_index/min_amount',
   },
+  'pool-dynamic-deposit': {
+    depositQuote: 'calc_token_amount:pool/dynamic_amounts/is_deposit',
+    deposit: 'add_liquidity:pool/dynamic_amounts/min_amount',
+    withdrawQuote: 'calc_withdraw_one_coin:pool/amount/int128_index',
+    withdraw: 'remove_liquidity_one_coin:pool/amount/int128_index/min_amount',
+  },
 } as const satisfies Record<CurveMethodTypes, CurveMethodSignatures>;
 
 export type CurveMethodTypeToSignaturesMap = typeof curveMethodTypeToSignatures;
@@ -76,6 +83,7 @@ type CurveMethodFixedDepositUnderlying = MakeCurveMethod<'fixed-deposit-underlyi
 type CurveMethodDynamicDeposit = MakeCurveMethod<'dynamic-deposit'>;
 type CurveMethodPoolFixed = MakeCurveMethod<'pool-fixed'>;
 type CurveMethodPoolFixedDeposit = MakeCurveMethod<'pool-fixed-deposit'>;
+type CurveMethodPoolDynamicDeposit = MakeCurveMethod<'pool-dynamic-deposit'>;
 
 export type CurveMethod =
   | CurveMethodFixed
@@ -84,22 +92,8 @@ export type CurveMethod =
   | CurveMethodFixedDepositUnderlying
   | CurveMethodDynamicDeposit
   | CurveMethodPoolFixed
-  | CurveMethodPoolFixedDeposit;
-
-function makeIsCurveMethod<T extends CurveMethodTypes>(
-  type: T
-): (method: CurveMethod | MakeCurveMethod<T>) => method is MakeCurveMethod<T> {
-  return (method: CurveMethod | MakeCurveMethod<T>): method is MakeCurveMethod<T> =>
-    method.type === type;
-}
-
-export const isCurveMethodFixed = makeIsCurveMethod('fixed');
-export const isCurveMethodFixedDepositInt128 = makeIsCurveMethod('fixed-deposit-int128');
-export const isCurveMethodFixedDepositUint256 = makeIsCurveMethod('fixed-deposit-uint256');
-export const isCurveMethodFixedDepositUnderlying = makeIsCurveMethod('fixed-deposit-underlying');
-export const isCurveMethodDynamicDeposit = makeIsCurveMethod('dynamic-deposit');
-export const isCurveMethodPoolFixed = makeIsCurveMethod('pool-fixed');
-export const isCurveMethodPoolFixedDeposit = makeIsCurveMethod('pool-fixed-deposit');
+  | CurveMethodPoolFixedDeposit
+  | CurveMethodPoolDynamicDeposit;
 
 export function getMethodSignaturesForType<T extends CurveMethodTypes>(
   type: T
