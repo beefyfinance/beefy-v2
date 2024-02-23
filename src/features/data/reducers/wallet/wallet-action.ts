@@ -45,17 +45,17 @@ export type BridgeAdditionalData = BaseAdditionalData & {
   quote: IBridgeQuote<BeefyAnyBridgeConfig>;
 };
 
-export type AdditionalData =
+export type TxAdditionalData =
   | VaultAdditionalData
   | ZapAdditionalData
   | MigrateAdditionalData
   | BridgeAdditionalData;
 
-export function isZapAdditionalData(data: AdditionalData): data is ZapAdditionalData {
+export function isZapAdditionalData(data: TxAdditionalData): data is ZapAdditionalData {
   return 'type' in data && data.type === 'zap';
 }
 
-export function isBridgeAdditionalData(data: AdditionalData): data is BridgeAdditionalData {
+export function isBridgeAdditionalData(data: TxAdditionalData): data is BridgeAdditionalData {
   return 'type' in data && data.type === 'bridge';
 }
 
@@ -64,21 +64,21 @@ export type WalletActionsIdleState = {
   data: null;
 };
 
-export type WalletActionsErrorState<T extends AdditionalData = AdditionalData> = {
+export type WalletActionsErrorState<T extends TxAdditionalData = TxAdditionalData> = {
   result: 'error';
   data: {
     error: TrxError;
   } & T;
 };
 
-export type WalletActionsPendingState<T extends AdditionalData = AdditionalData> = {
+export type WalletActionsPendingState<T extends TxAdditionalData = TxAdditionalData> = {
   result: 'success_pending';
   data: {
     hash: TrxHash;
   } & T;
 };
 
-export type WalletActionsSuccessState<T extends AdditionalData = AdditionalData> = {
+export type WalletActionsSuccessState<T extends TxAdditionalData = TxAdditionalData> = {
   result: 'success';
   data: {
     hash: TrxHash;
@@ -154,7 +154,7 @@ export function createWalletActionResetAction() {
 
 export function createWalletActionErrorAction(
   error: TrxError,
-  additionalData: AdditionalData
+  additionalData: TxAdditionalData
 ): WalletAction<WalletActionsErrorState> {
   return {
     type: WALLET_ACTION,
@@ -170,7 +170,7 @@ export function createWalletActionErrorAction(
 
 export function createWalletActionPendingAction(
   hash: TrxHash,
-  additionalData: AdditionalData
+  additionalData: TxAdditionalData
 ): WalletAction<WalletActionsPendingState> {
   return {
     type: WALLET_ACTION,
@@ -186,7 +186,7 @@ export function createWalletActionPendingAction(
 
 export function createWalletActionSuccessAction(
   receipt: TrxReceipt,
-  additionalData: AdditionalData
+  additionalData: TxAdditionalData
 ): WalletAction<WalletActionsSuccessState> {
   return {
     type: WALLET_ACTION,

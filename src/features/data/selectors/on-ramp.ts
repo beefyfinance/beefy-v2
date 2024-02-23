@@ -38,7 +38,15 @@ export const selectSupportedTokensForFiat = createSelector(
     allTokens.filter(
       token =>
         byToken[token].allNetworks.find(network => appChainIds.includes(network)) !== undefined &&
-        appChainIds.find(chainId => token in appTokensByChainId[chainId].byId) !== undefined
+        appChainIds.find(
+          chainId =>
+            // token exists
+            token in appTokensByChainId[chainId].byId &&
+            // token is used in an active vault
+            (appTokensByChainId[chainId].tokenIdsInActiveVaults.includes(token) ||
+              appTokensByChainId[chainId].wnative === token ||
+              appTokensByChainId[chainId].native === token)
+        ) !== undefined
     )
 );
 

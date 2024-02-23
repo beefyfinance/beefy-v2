@@ -76,5 +76,23 @@
     "swapFeeNumerator": "25",
     "swapFeeDenominator": "10000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "arbitrum-gamma-uniswap-v3",
+    "type": "gamma",
+    "name": "Gamma Uniswap",
+    "proxyAddress": "0x82FcEB07a4D01051519663f6c1c919aF21C27845"
+  },
+  {
+    "id": "arbitrum-gamma-sushi",
+    "type": "gamma",
+    "name": "Gamma Sushi",
+    "proxyAddress": "0x530071b0373Ab3029cAd32E0c19b75253e231b69"
+  },
+  {
+    "id": "arbitrum-gamma-pancakeswap-v3",
+    "type": "gamma",
+    "name": "Gamma Pancakeswap",
+    "proxyAddress": "0x4fd87c7FA22D4E8aD933aC4C709C83cEFDCE8B00"
   }
 ]

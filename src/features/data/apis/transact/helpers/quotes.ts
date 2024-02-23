@@ -1,9 +1,9 @@
 import {
   isZapQuoteStepSwap,
   isZapQuoteStepSwapAggregator,
+  type TokenAmount,
   type ZapFee,
   type ZapQuoteStep,
-  type TokenAmount,
 } from '../transact-types';
 import type { BeefyState } from '../../../../../redux-types';
 import { BIG_ZERO } from '../../../../../helpers/big-number';

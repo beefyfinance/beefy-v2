@@ -9,6 +9,7 @@ import { LoadingIndicator } from '../../../../../../components/LoadingIndicator'
 import { PROVIDERS } from '../../providers';
 import { ErrorIndicator } from '../ErrorIndicator';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -39,7 +40,7 @@ export const ProviderFrame = memo(function ProviderFrame() {
         height="100%"
         frameBorder="0"
         title={title}
-        className={classes.iframe}
+        className={clsx(classes.iframe, classes.iframeMtPellerin)}
         allow="usb; ethereum; clipboard-write"
         loading="lazy"
       />

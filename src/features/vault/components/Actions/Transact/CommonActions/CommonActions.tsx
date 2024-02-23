@@ -1,10 +1,14 @@
 import type { ChainEntity } from '../../../../../data/entities/chain';
-import { memo, useCallback } from 'react';
+import { memo, type ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
 import { Button } from '../../../../../../components/Button';
+import {
+  selectCurrentChainId,
+  selectIsWalletConnected,
+} from '../../../../../data/selectors/wallet';
 
 export type ActionButtonProps = {
   className?: string;
@@ -50,4 +54,29 @@ export const ActionSwitch = memo<ActionSwitchProps>(function ActionSwitch({ chai
       {t('Network-Change', { network: chain.name })}
     </Button>
   );
+});
+
+export type ActionConnectSwitchProps = {
+  className?: string;
+  chainId?: ChainEntity['id'];
+  children: ReactNode;
+};
+
+export const ActionConnectSwitch = memo<ActionConnectSwitchProps>(function ActionConnectSwitch({
+  children,
+  className,
+  chainId,
+}) {
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+  const connectedChainId = useAppSelector(selectCurrentChainId);
+
+  if (!isWalletConnected) {
+    return <ActionConnect className={className} />;
+  }
+
+  if (chainId && chainId !== connectedChainId) {
+    return <ActionSwitch chainId={chainId} className={className} />;
+  }
+
+  return <>{children}</>;
 });

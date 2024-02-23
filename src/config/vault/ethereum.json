@@ -28,6 +28,43 @@
     "network": "ethereum"
   },
   {
+    "id": "silo-weeth-eth",
+    "name": "WETH (weETH Market)",
+    "type": "standard",
+    "token": "WETH (weETH Market)",
+    "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloWETH",
+    "earnedTokenAddress": "0xB19B7f719b2C499E5688a71E93EAdffe2270e7F5",
+    "earnContractAddress": "0xB19B7f719b2C499E5688a71E93EAdffe2270e7F5",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1708693378,
+    "platformId": "silo",
+    "assets": ["WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=ethereum&from=0x0000000000000000000000000000000000000000&to=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
+    }
+  },
+  {
     "id": "prisma-mkusd-ultra",
     "name": "mkUSD/ULTRA",
     "token": "MKULTRA",
@@ -87,7 +124,32 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-91/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-91/withdraw",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x9e10f9Fb6F0D32B350CEe2618662243d4f24C64a",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x9e10f9Fb6F0D32B350CEe2618662243d4f24C64a",
+            "coins": [
+              "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
+              "0x383E6b4437b59fff47B619CBA855CA29342A8559"
+            ]
+          },
+          {
+            "type": "pool-dynamic-deposit",
+            "target": "0xe07a16358aa878cbda2d49a88e5106871e0db307",
+            "coins": [
+              "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
+              "0x6c3ea9036406852006290770BEdFcAbA0e23A0e8",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "curve-veth",
@@ -1049,7 +1111,14 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/ethereum/details/reth-weth-500-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/ethereum/details/reth-weth-500-pegged-price",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "ethereum-gamma-uniswap-911b",
+        "tokenHolder": "0x40a3E5778f66835265602f92D507AeC708c2C0AD"
+      }
+    ]
   },
   {
     "id": "bifi-vault",

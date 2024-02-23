@@ -570,7 +570,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gdai-dai-100-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gdai-dai-100-pegged-price",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3",
+        "tokenHolder": "0x8A8fDe5D57725f070bFc55cd022B924e1c36C8a0"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-gns-usdc-narrow",
@@ -595,7 +602,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-usdc-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-usdc-500-narrow",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3",
+        "tokenHolder": "0x8A8fDe5D57725f070bFc55cd022B924e1c36C8a0"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-gns-usdc-wide",
@@ -620,7 +634,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-usdc-500-wide",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-usdc-500-wide",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3",
+        "tokenHolder": "0x8A8fDe5D57725f070bFc55cd022B924e1c36C8a0"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-gns-weth-wide",
@@ -645,7 +666,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-weth-3000-wide",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-weth-3000-wide",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3",
+        "tokenHolder": "0x8A8fDe5D57725f070bFc55cd022B924e1c36C8a0"
+      }
+    ]
   },
   {
     "id": "equilibria-arb-glp",
@@ -933,7 +961,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/cake/arbitrum/details/weth-arb-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/cake/arbitrum/details/weth-arb-500-narrow",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-pancakeswap-v3",
+        "tokenHolder": "0xC23b44e766435AaA712AaEBc299686385c428B9F"
+      }
+    ]
   },
   {
     "id": "gmx-arb-wbtc-usdc",
@@ -1316,7 +1351,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/arb-usdc.e-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/arb-usdc.e-500-narrow",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3",
+        "tokenHolder": "0x8A8fDe5D57725f070bFc55cd022B924e1c36C8a0"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-arb-usdt",
@@ -1339,7 +1381,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/arb-usdt-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/arb-usdt-500-narrow",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3",
+        "tokenHolder": "0x8A8fDe5D57725f070bFc55cd022B924e1c36C8a0"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-gns-weth",
@@ -1362,7 +1411,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-weth-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-weth-3000-narrow",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3",
+        "tokenHolder": "0x8A8fDe5D57725f070bFc55cd022B924e1c36C8a0"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-rdnt-weth",
@@ -1385,7 +1441,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/rdnt-weth-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/rdnt-weth-3000-narrow",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3",
+        "tokenHolder": "0x8A8fDe5D57725f070bFc55cd022B924e1c36C8a0"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-weth-link",
@@ -1408,7 +1471,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/weth-link-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/weth-link-3000-narrow",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3",
+        "tokenHolder": "0x8A8fDe5D57725f070bFc55cd022B924e1c36C8a0"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-usdc-link",
@@ -1431,7 +1501,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-link-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-link-500-narrow",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3",
+        "tokenHolder": "0x8A8fDe5D57725f070bFc55cd022B924e1c36C8a0"
+      }
+    ]
   },
   {
     "id": "joe-auto-wbtc-weth",
@@ -1628,7 +1705,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/magic-weth-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/magic-weth-3000-narrow",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-sushi"
+      }
+    ]
   },
   {
     "id": "sushi-gamma-weth-arb-narrow",
@@ -1651,7 +1734,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/weth-arb-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/weth-arb-3000-narrow",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-sushi"
+      }
+    ]
   },
   {
     "id": "sushi-gamma-weth-sushi-narrow",
@@ -1676,7 +1765,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/weth-sushi-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/weth-sushi-3000-narrow",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-sushi"
+      }
+    ]
   },
   {
     "id": "sushi-gamma-weth-usdc-narrow",
@@ -1701,7 +1796,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/weth-usdc.e-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/weth-usdc.e-500-narrow",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-sushi"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-usdc-dai",
@@ -1724,7 +1825,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-dai-100-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-dai-100-stable",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-wsteth-weth",
@@ -1747,7 +1854,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/wsteth-weth-100-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/wsteth-weth-100-pegged-price",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-usdc-usdt",
@@ -1772,7 +1885,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-usdt-100-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-usdt-100-stable",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-btc.b-weth",
@@ -1797,7 +1916,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/btcb-weth-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/btcb-weth-3000-narrow",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-magic-weth",
@@ -1820,7 +1945,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/magic-weth-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/magic-weth-3000-narrow",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-weth-reth",
@@ -1843,7 +1974,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/weth-reth-500-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/weth-reth-500-pegged-price",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3"
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-rdpx-weth",
@@ -1868,7 +2005,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/rdpx-weth-10000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/rdpx-weth-10000-narrow",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "arbitrum-gamma-uniswap-v3"
+      }
+    ]
   },
   {
     "id": "balancer-usdc-dai-usdt-usdce",
