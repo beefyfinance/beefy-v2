@@ -4,10 +4,10 @@
 export type NormalizedEntity<T extends { id: string }> = {
   // Effectively an index of all entities
   byId: {
-    [id: string]: T;
+    -readonly [id in T['id']]?: T;
   };
   // normalization best practice, keeps the same array reference
   // for iteration, can be extended for vaults with different
   // arrays like "allBscIds", "allHarmonyIds", "allStableIds", etc etc
-  allIds: string[];
+  allIds: T['id'][];
 };

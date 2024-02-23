@@ -27,6 +27,7 @@ import { isGovVault, isStandardVault, type VaultEntity } from '../entities/vault
 import { uniqueTokens } from '../../../helpers/tokens';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { BigNumber } from 'bignumber.js';
+import { entries } from '../../../helpers/object';
 
 export interface FetchAllBalanceActionParams {
   chainId: ChainEntity['id'];
@@ -170,7 +171,7 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
 
       // + bridged
       if (!deposited && vault.bridged) {
-        for (const [chainId, bridgedAddress] of Object.entries(vault.bridged)) {
+        for (const [chainId, bridgedAddress] of entries(vault.bridged)) {
           const balance = selectUserBalanceOfToken(state, chainId, bridgedAddress, walletAddress);
           if (balance.gt(BIG_ZERO)) {
             deposited = true;

@@ -35,7 +35,7 @@ export interface TvlState {
     [vaultId: VaultEntity['id']]: VaultEntity['id'];
   };
   byChaindId: {
-    [chaindId: ChainEntity['id']]: BigNumber;
+    [chainId in ChainEntity['id']]?: BigNumber;
   };
 }
 

@@ -92,12 +92,12 @@ export interface DataLoaderState {
     articles: LoaderState;
   };
   byChainId: {
-    [chainId: ChainEntity['id']]: ChainIdDataEntity;
+    [chainId in ChainEntity['id']]?: ChainIdDataEntity;
   };
   byAddress: {
     [address: string]: {
       byChainId: {
-        [chainId: ChainEntity['id']]: ChainIdDataByAddressEntity;
+        [chainId in ChainEntity['id']]?: ChainIdDataByAddressEntity;
       };
     };
   };

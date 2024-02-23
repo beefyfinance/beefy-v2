@@ -8,7 +8,7 @@ import { selectHasWalletBalanceBeenFetched } from '../selectors/balance';
 import { fetchWalletTimeline } from '../actions/analytics';
 
 async function reloadUserData(store: BeefyStore, walletAddress: string) {
-  const userFfsByChain: { [chainId: ChainEntity['id']]: CapturedFulfilledActions['user'] } = {};
+  const userFfsByChain: { [chainId in ChainEntity['id']]?: CapturedFulfilledActions['user'] } = {};
   for (const chain of chains) {
     userFfsByChain[chain.id] = fetchCaptureUserData(store, chain.id);
   }

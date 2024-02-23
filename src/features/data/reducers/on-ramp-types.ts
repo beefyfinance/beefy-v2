@@ -1,5 +1,6 @@
 import type { SerializedError } from '@reduxjs/toolkit';
 import type { ApiQuoteRequest, ApiQuoteResponse } from '../apis/on-ramp/on-ramp-types';
+import type { ChainEntity } from '../entities/chain';
 
 export enum FormStep {
   UnsupportedCountry = 1,
@@ -48,7 +49,7 @@ type Fiat = {
 };
 type Token = {
   id: string;
-  allNetworks: string[];
+  allNetworks: ChainEntity['id'][];
   minFiat: number;
   maxFiat: number;
   byNetwork: Record<string, Network>;
@@ -95,7 +96,7 @@ export type OnRampTypes = {
     error: TokenError | null;
   };
   network: {
-    value: string | null;
+    value: ChainEntity['id'] | null;
     error: NetworkError | null;
   };
   input: {

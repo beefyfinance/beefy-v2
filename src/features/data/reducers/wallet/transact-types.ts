@@ -38,7 +38,7 @@ export type TransactSelections = {
   allSelectionIds: string[];
   bySelectionId: Record<TransactOption['selectionId'], TransactSelection>;
   allChainIds: ChainEntity['id'][];
-  byChainId: Record<ChainEntity['id'], TransactOption['selectionId'][]>;
+  byChainId: Partial<Record<ChainEntity['id'], TransactOption['selectionId'][]>>;
 };
 
 export type TransactOptions = {
@@ -69,7 +69,7 @@ export type TransactConfirm = {
 
 export type TransactState = {
   vaultId: VaultEntity['id'] | null;
-  selectedChainId: string | null;
+  selectedChainId: ChainEntity['id'] | null;
   selectedSelectionId: string | null;
   selectedQuoteId: string | null;
   swapSlippage: number;

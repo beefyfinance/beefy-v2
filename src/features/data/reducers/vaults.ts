@@ -12,6 +12,7 @@ import type { ChainEntity } from '../entities/chain';
 import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import type { NormalizedEntity } from '../utils/normalized-entity';
 import type { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
+import { entries } from '../../../helpers/object';
 
 /**
  * State containing Vault infos
@@ -21,7 +22,7 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
   allBridgedIds: VaultEntity['id'][];
 
   byChainId: {
-    [chainId: ChainEntity['id']]: {
+    [chainId in ChainEntity['id']]?: {
       /** Vaults on chain */
       allIds: VaultEntity['id'][];
       /** Vaults that have status: active */
@@ -102,7 +103,7 @@ export const vaultsSlice = createSlice({
 
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
       const initialVaultAmount = sliceState.allIds.length;
-      for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
+      for (const [chainId, vaults] of entries(action.payload.byChainId)) {
         for (const vault of vaults) {
           addVaultToState(action.payload.state, sliceState, chainId, vault);
         }

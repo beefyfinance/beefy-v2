@@ -8,12 +8,13 @@ import { ExpandMore } from '@material-ui/icons';
 import clsx from 'clsx';
 import { Floating } from '../Floating';
 import type { Placement } from '@floating-ui/react-dom';
+import { entries } from '../../helpers/object';
 
 const useStyles = makeStyles(styles);
 
-export type LabeledSelectCommonProps = {
+export type LabeledSelectCommonProps<V extends string = string> = {
   label?: string;
-  options: Record<string, string>;
+  options: Partial<Record<V, string>>;
   placement?: Placement;
   sortOptions?: 'default' | 'value' | 'label';
   fullWidth?: boolean;
@@ -37,10 +38,10 @@ export type LabeledSelectCommonProps = {
   dropdownShift?: boolean;
 };
 
-export type LabeledSelectProps = LabeledSelectCommonProps & {
-  value: string;
-  defaultValue?: string;
-  onChange: (value: string) => void;
+export type LabeledSelectProps<V extends string = string> = LabeledSelectCommonProps<V> & {
+  value: V;
+  defaultValue?: V | 'default';
+  onChange: (value: V) => void;
   SelectedItemComponent?: FC<SelectedItemProps>;
   DropdownItemComponent?: FC<DropdownItemProps>;
   DropdownItemLabelComponent?: FC<DropdownItemLabelProps>;
@@ -48,31 +49,31 @@ export type LabeledSelectProps = LabeledSelectCommonProps & {
   showArrow?: boolean;
 };
 
-type DropdownItemProps = {
+type DropdownItemProps<V extends string = string> = {
   label: string;
-  value: string;
-  onChange: (value: string) => void;
+  value: V;
+  onChange: (value: V) => void;
   className?: string;
-  DropdownItemLabelComponent?: FC<DropdownItemLabelProps>;
+  DropdownItemLabelComponent?: FC<DropdownItemLabelProps<V>>;
 };
 
-export type DropdownItemLabelProps = {
+export type DropdownItemLabelProps<V extends string = string> = {
   label: string;
-  value: string;
+  value: V;
 };
 
-export type SelectedItemProps = {
-  value: LabeledSelectProps['value'];
-  options: LabeledSelectProps['options'];
+export type SelectedItemProps<V extends string = string> = {
+  value: LabeledSelectProps<V>['value'];
+  options: LabeledSelectProps<V>['options'];
 };
 
-function useSortedOptions(
-  options: LabeledSelectProps['options'],
-  sort: LabeledSelectProps['sortOptions'],
-  defaultValue: LabeledSelectProps['defaultValue']
+function useSortedOptions<V extends string = string>(
+  options: LabeledSelectProps<V>['options'],
+  sort: LabeledSelectProps<V>['sortOptions'],
+  defaultValue: LabeledSelectProps<V>['defaultValue']
 ) {
   return useMemo(() => {
-    const values = Object.entries(options).map(([value, label]) => ({
+    const values = entries(options).map(([value, label]) => ({
       value,
       label,
       isDefault: value === defaultValue,
@@ -83,13 +84,13 @@ function useSortedOptions(
   }, [options, sort, defaultValue]);
 }
 
-const DropdownItem = memo<DropdownItemProps>(function DropdownItem({
+const DropdownItem = memo(function DropdownItem<V extends string = string>({
   label,
   value,
   onChange,
   className,
-  DropdownItemLabelComponent = DropdownItemLabel,
-}) {
+  DropdownItemLabelComponent = DropdownItemLabel<V>,
+}: DropdownItemProps<V>) {
   const handleChange = useCallback<MouseEventHandler<HTMLDivElement>>(
     e => {
       e.stopPropagation();
@@ -105,15 +106,20 @@ const DropdownItem = memo<DropdownItemProps>(function DropdownItem({
   );
 });
 
-const DropdownItemLabel = memo<DropdownItemLabelProps>(function DropdownItemLabel({ label }) {
+const DropdownItemLabel = memo(function DropdownItemLabel<V extends string = string>({
+  label,
+}: DropdownItemLabelProps<V>) {
   return <>{label}</>;
 });
 
-const SelectedItem = memo<SelectedItemProps>(function SelectedItem({ value, options }) {
+const SelectedItem = memo(function SelectedItem<V extends string = string>({
+  value,
+  options,
+}: SelectedItemProps<V>) {
   return <>{options[value]}</>;
 });
 
-export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
+export const LabeledSelect = memo(function LabeledSelect<V extends string = string>({
   label,
   value,
   defaultValue = 'default',
@@ -123,9 +129,9 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
   fullWidth = false,
   borderless = false,
   disabled = false,
-  SelectedItemComponent = SelectedItem,
-  DropdownItemComponent = DropdownItem,
-  DropdownItemLabelComponent = DropdownItemLabel,
+  SelectedItemComponent = SelectedItem<V>,
+  DropdownItemComponent = DropdownItem<V>,
+  DropdownItemLabelComponent = DropdownItemLabel<V>,
   selectClass,
   selectCurrentClass,
   selectLabelClass,
@@ -142,11 +148,11 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
   dropdownAutoHide = true,
   placement = 'bottom-start',
   showArrow = true,
-}) {
+}: LabeledSelectProps<V>) {
   const baseClasses = useStyles();
   const [isOpen, setIsOpen] = useState(false);
   const anchorEl = useRef<HTMLButtonElement | null>(null);
-  const optionsList = useSortedOptions(options, sortOptions, defaultValue);
+  const optionsList = useSortedOptions<V>(options, sortOptions, defaultValue);
   const classes = useMemo<typeof baseClasses>(
     () => ({
       ...baseClasses,
@@ -190,7 +196,7 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
     setIsOpen(false);
   }, [setIsOpen]);
 
-  const handleChange = useCallback(
+  const handleChange = useCallback<LabeledSelectProps<V>['onChange']>(
     value => {
       setIsOpen(false);
       onChange(value);

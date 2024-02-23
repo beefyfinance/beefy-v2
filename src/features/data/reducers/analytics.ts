@@ -11,6 +11,8 @@ import type { Draft } from 'immer';
 import { groupBy, partition, sortBy } from 'lodash-es';
 import { selectAllVaultsWithBridgedVersion } from '../selectors/vaults';
 import { BIG_ZERO } from '../../../helpers/big-number';
+import type { ChainEntity } from '../entities/chain';
+import { entries } from '../../../helpers/object';
 
 type StatusType = 'idle' | 'pending' | 'fulfilled' | 'rejected';
 
@@ -87,18 +89,23 @@ export const analyticsSlice = createSlice({
 
       // Build a map of bridge vaults to their base vaults
       const bridgeVaultIds = selectAllVaultsWithBridgedVersion(state);
-      const bridgeToBaseId = bridgeVaultIds.reduce((accum: Record<string, BaseVault>, vault) => {
-        if (vault.bridged) {
-          for (const [chainId, address] of Object.entries(vault.bridged)) {
-            accum[`beefy:vault:${chainId}:${address.toLowerCase()}`] = {
-              vaultId: vault.id,
-              chainId: vault.chainId,
-              productKey: `beefy:vault:${vault.chainId}:${vault.earnContractAddress.toLowerCase()}`,
-            };
+      const bridgeToBaseId = bridgeVaultIds.reduce(
+        (accum: Partial<Record<ChainEntity['id'], BaseVault>>, vault) => {
+          if (vault.bridged) {
+            for (const [chainId, address] of entries(vault.bridged)) {
+              accum[`beefy:vault:${chainId}:${address.toLowerCase()}`] = {
+                vaultId: vault.id,
+                chainId: vault.chainId,
+                productKey: `beefy:vault:${
+                  vault.chainId
+                }:${vault.earnContractAddress.toLowerCase()}`,
+              };
+            }
           }
-        }
-        return accum;
-      }, {});
+          return accum;
+        },
+        {}
+      );
 
       // Modify the vault txs to use the base vault product key etc.
       // We have to sort since the timeline is not guaranteed to be in order after merge

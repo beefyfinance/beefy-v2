@@ -47,7 +47,7 @@ export function createDependencyFactoryWithCacheByChain<T, D>(
   factoryFn: (chain: ChainEntity, dependencies: D) => Promise<T>,
   dependenciesFn: () => Promise<D>
 ): (chain: ChainEntity) => Promise<T> {
-  const factoryPromiseByChainId: Record<ChainEntity['id'], Promise<T>> = {};
+  const factoryPromiseByChainId: Partial<Record<ChainEntity['id'], Promise<T>>> = {};
   let dependenciesPromise: Promise<D> | undefined;
 
   return async (chain: ChainEntity): Promise<T> => {

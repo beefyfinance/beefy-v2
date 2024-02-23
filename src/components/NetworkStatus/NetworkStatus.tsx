@@ -21,9 +21,10 @@ import {
 import { selectChainById, selectEolChainIds } from '../../features/data/selectors/chains';
 import { getNetworkSrc } from '../../helpers/networkSrc';
 import iconUnsupportedChain from '../../images/icons/navigation/unsuported-chain.svg';
+import { entries } from '../../helpers/object';
 
 const useStyles = makeStyles(styles);
-const ActiveChain = ({ chainId }: { chainId: string | null }) => {
+const ActiveChain = ({ chainId }: { chainId: ChainEntity['id'] | null }) => {
   const classes = useStyles();
 
   return (
@@ -182,7 +183,7 @@ const findChainIdMatching = (state: BeefyState, matcher: (loader: LoaderState) =
   const chainIds: ChainEntity['id'][] = [];
   const eolChains = selectEolChainIds(state);
   const walletAddress = selectWalletAddressIfKnown(state);
-  const chainsToCheck = Object.entries(state.ui.dataLoader.byChainId).filter(
+  const chainsToCheck = entries(state.ui.dataLoader.byChainId).filter(
     ([chainId, _]) => !eolChains.includes(chainId)
   );
 
@@ -193,9 +194,9 @@ const findChainIdMatching = (state: BeefyState, matcher: (loader: LoaderState) =
   }
 
   if (walletAddress && state.ui.dataLoader.byAddress[walletAddress]) {
-    const userDataToCheck = Object.entries(
-      state.ui.dataLoader.byAddress[walletAddress].byChainId
-    ).filter(([chainId, _]) => !eolChains.includes(chainId));
+    const userDataToCheck = entries(state.ui.dataLoader.byAddress[walletAddress].byChainId).filter(
+      ([chainId, _]) => !eolChains.includes(chainId)
+    );
     for (const [chainId, loader] of userDataToCheck) {
       if (matcher(loader.balance) || matcher(loader.allowance)) {
         chainIds.push(chainId);

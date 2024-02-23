@@ -10,6 +10,7 @@ import { selectUserRewardsByVaultId } from '../../features/data/selectors/balanc
 import type { TokenEntity } from '../../features/data/entities/token';
 import type BigNumber from 'bignumber.js';
 import { formatBigNumber, formatBigUsd } from '../../helpers/format';
+import { selectVaultById } from '../../features/data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 
@@ -25,7 +26,7 @@ export const RewardsTooltip = memo<RewardsTooltipProps>(function RewardsTooltip(
   walletAddress,
 }) {
   const classes = useStyles();
-
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const { rewards, rewardsTokens } = useAppSelector(state =>
     selectUserRewardsByVaultId(state, vaultId, walletAddress)
   );
@@ -37,7 +38,7 @@ export const RewardsTooltip = memo<RewardsTooltipProps>(function RewardsTooltip(
   return (
     <Tooltip content={<RewardsTooltipContent rewards={rewards} />}>
       <div className={classes.container}>
-        <AssetsImage chainId={vaultId} size={size} assetIds={rewardsTokens} />
+        <AssetsImage chainId={vault.chainId} size={size} assetIds={rewardsTokens} />
       </div>
     </Tooltip>
   );

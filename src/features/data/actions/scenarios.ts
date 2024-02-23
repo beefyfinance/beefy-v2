@@ -104,7 +104,7 @@ export async function initHomeDataV4(store: BeefyStore) {
 
   // now we start fetching all data for all chains
   const fulfillsByNet: {
-    [chainId: ChainEntity['id']]: CapturedFulfilledActions;
+    [chainId in ChainEntity['id']]?: CapturedFulfilledActions;
   } = {};
   for (const chain of chains) {
     fulfillsByNet[chain.id] = {

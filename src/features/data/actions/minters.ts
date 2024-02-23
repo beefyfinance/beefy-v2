@@ -15,7 +15,7 @@ import type { FetchMinterReservesReloadResult } from '../apis/minter/minter-type
 
 export interface FulfilledAllMintersPayload {
   byChainId: {
-    [chainId: ChainEntity['id']]: MinterConfig[];
+    [chainId in ChainEntity['id']]?: MinterConfig[];
   };
   state: BeefyState;
 }

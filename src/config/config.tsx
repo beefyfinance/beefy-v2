@@ -1,6 +1,7 @@
 import type { ChainConfig } from '../features/data/apis/config-types';
+import type { ChainEntity } from '../features/data/entities/chain';
 
-export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
+export const config = {
   ethereum: {
     name: 'Ethereum',
     chainId: 1,
@@ -907,6 +908,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     },
     stableCoins: ['BUSD', 'bscBUSD', 'USDC', 'USDT', 'UST', 'DAI', 'FRAX'],
   },
-};
+} satisfies Record<ChainConfig['id'], Omit<ChainConfig, 'id'>>;
 
-export const chains: string[] = Object.keys(config);
+export const chains: ChainEntity['id'][] = Object.keys(config) as ChainEntity['id'][];

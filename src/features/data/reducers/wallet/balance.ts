@@ -47,7 +47,7 @@ export interface BalanceState {
          * and oracle balance, to display how much the user can put in a vault or boost
          */
         byChainId: {
-          [chainId: ChainEntity['id']]: {
+          [chainId in ChainEntity['id']]?: {
             byTokenAddress: {
               [tokenAddress: TokenEntity['address']]: {
                 balance: BigNumber;

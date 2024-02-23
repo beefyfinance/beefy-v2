@@ -21,6 +21,7 @@ import type { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-type
 import type { LpData } from '../apis/beefy/beefy-api';
 import { isNativeAlternativeAddress } from '../../../helpers/addresses';
 import { fetchBridgeConfig } from '../actions/bridge';
+import { entries } from '../../../helpers/object';
 
 /**
  * State containing Vault infos
@@ -28,7 +29,7 @@ import { fetchBridgeConfig } from '../actions/bridge';
 export type TokensState = {
   // we need to split by chain because tokens from different chains have the same ids
   byChainId: {
-    [chainId: ChainEntity['id']]: {
+    [chainId in ChainEntity['id']]?: {
       byId: {
         [id: string]: TokenEntity['address'];
       };
@@ -112,7 +113,7 @@ export const tokensSlice = createSlice({
 
     // when vault list is fetched, add all new tokens
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
-      for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
+      for (const [chainId, vaults] of entries(action.payload.byChainId)) {
         const chain = selectChainById(action.payload.state, chainId);
         for (const vault of vaults) {
           addVaultToState(action.payload.state, sliceState, chain, vault);
@@ -122,7 +123,7 @@ export const tokensSlice = createSlice({
 
     // when boost list is fetched, add all new tokens
     builder.addCase(fetchAllBoosts.fulfilled, (sliceState, action) => {
-      for (const [chainId, boosts] of Object.entries(action.payload.boostsByChainId)) {
+      for (const [chainId, boosts] of entries(action.payload.boostsByChainId)) {
         for (const boost of boosts) {
           addBoostToState(sliceState, chainId, boost);
         }
@@ -131,7 +132,7 @@ export const tokensSlice = createSlice({
 
     // when minter list is fetched, add all new tokens
     builder.addCase(fetchAllMinters.fulfilled, (sliceState, action) => {
-      for (const [chainId, minters] of Object.entries(action.payload.byChainId)) {
+      for (const [chainId, minters] of entries(action.payload.byChainId)) {
         for (const minter of minters) {
           addMinterToState(sliceState, chainId, minter);
         }
@@ -182,7 +183,7 @@ export const tokensSlice = createSlice({
         true
       );
 
-      for (const [chainId, address] of Object.entries(tokens)) {
+      for (const [chainId, address] of entries(tokens)) {
         const isSourceXErc20 = chainId === sourceToken.chainId;
 
         const token: TokenErc20 = {
@@ -614,7 +615,7 @@ function addBridgedReceiptTokensToState(
     return;
   }
 
-  const bridgedTokens = Object.entries(vault.bridged).map(([chainId, address]) => ({
+  const bridgedTokens = entries(vault.bridged).map(([chainId, address]) => ({
     ...token,
     id: `${token.id}`,
     chainId,

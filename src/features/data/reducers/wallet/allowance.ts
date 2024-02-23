@@ -20,7 +20,7 @@ import { selectMinterById } from '../../selectors/minters';
  */
 export interface AllowanceState {
   byChainId: {
-    [chainId: ChainEntity['id']]: {
+    [chainId in ChainEntity['id']]?: {
       byTokenAddress: {
         [tokenAddress: TokenEntity['address']]: {
           bySpenderAddress: {

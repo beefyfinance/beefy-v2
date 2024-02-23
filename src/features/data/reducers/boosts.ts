@@ -11,6 +11,7 @@ import type { VaultEntity } from '../entities/vault';
 import type { NormalizedEntity } from '../utils/normalized-entity';
 import type { BoostConfig } from '../apis/config-types';
 import { datesAreEqual } from '../../../helpers/date';
+import { entries } from '../../../helpers/object';
 
 export type BoostContractState = {
   periodFinish: Date | null;
@@ -29,7 +30,7 @@ export type BoostsState = NormalizedEntity<BoostEntity> & {
     };
   };
   byChainId: {
-    [chainId: ChainEntity['id']]: {
+    [chainId in ChainEntity['id']]?: {
       allBoostsIds: BoostEntity['id'][];
       prestakeBoostsIds: BoostEntity['id'][];
       activeBoostsIds: BoostEntity['id'][];
@@ -78,7 +79,7 @@ export const boostsSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchAllBoosts.fulfilled, (sliceState, action) => {
-      for (const [chainId, boosts] of Object.entries(action.payload.boostsByChainId)) {
+      for (const [chainId, boosts] of entries(action.payload.boostsByChainId)) {
         for (const boost of boosts) {
           addBoostToState(sliceState, chainId, boost);
         }

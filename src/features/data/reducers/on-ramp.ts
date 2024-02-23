@@ -12,6 +12,7 @@ import type { ApiQuote, ApiQuoteRequest } from '../apis/on-ramp/on-ramp-types';
 import { first, orderBy } from 'lodash-es';
 import type { OnRampTypes, Quote } from './on-ramp-types';
 import { CountryError, FormStep, InputMode } from './on-ramp-types';
+import type { ChainEntity } from '../entities/chain';
 
 const initialState: OnRampTypes = {
   step: FormStep.SelectToken,
@@ -113,7 +114,7 @@ export const onRamp = createSlice({
 
       setStep(sliceState, FormStep.SelectNetwork);
     },
-    selectNetwork(sliceState, action: PayloadAction<{ network: string }>) {
+    selectNetwork(sliceState, action: PayloadAction<{ network: ChainEntity['id'] }>) {
       if (sliceState.network.value !== action.payload.network) {
         clearQuote(sliceState);
         sliceState.network.value = action.payload.network;

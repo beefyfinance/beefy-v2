@@ -16,6 +16,7 @@ import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types';
 import type { Draft } from 'immer';
 import { keyBy, pick } from 'lodash-es';
 import type BigNumber from 'bignumber.js';
+import { keys } from '../../../../helpers/object';
 
 export enum FormStep {
   Loading = 1,
@@ -73,14 +74,13 @@ export type BridgesMap = {
 
 export type BridgeState = {
   source: ChainEntity['id'];
-  tokens: Record<ChainEntity['id'], string>;
+  tokens: Partial<Record<ChainEntity['id'], string>>;
   destinations: {
     allChains: ChainEntity['id'][];
-    chainToAddress: Record<ChainEntity['id'], string>;
-    chainToChain: Record<ChainEntity['id'], ChainEntity['id'][]>;
-    chainToBridges: Record<
-      ChainEntity['id'],
-      Record<ChainEntity['id'], BeefyAnyBridgeConfig['id'][]>
+    chainToAddress: Partial<Record<ChainEntity['id'], string>>;
+    chainToChain: Partial<Record<ChainEntity['id'], ChainEntity['id'][]>>;
+    chainToBridges: Partial<
+      Record<ChainEntity['id'], Record<ChainEntity['id'], BeefyAnyBridgeConfig['id'][]>>
     >;
   };
   bridges: BridgesMap | undefined;
@@ -218,7 +218,7 @@ export const bridgeSlice = createSlice({
     builder
       .addCase(fetchBridgeConfig.fulfilled, (sliceState, action) => {
         const { config } = action.payload;
-        const allChains = Object.keys(config.tokens);
+        const allChains = keys(config.tokens);
         const chainToBridges = allChains.reduce((allMap, fromChainId) => {
           allMap[fromChainId] = allChains.reduce((chainMap, toChainId) => {
             chainMap[toChainId] = config.bridges

@@ -18,7 +18,7 @@ export type ZapsState = {
    */
   zaps: {
     byChainId: {
-      [chainId: ChainEntity['id']]: ZapEntity;
+      [chainId in ChainEntity['id']]?: ZapEntity;
     };
   };
   /**
@@ -29,7 +29,7 @@ export type ZapsState = {
       [aggregatorId: string]: SwapAggregatorEntity;
     };
     byChainId: {
-      [chainId: ChainEntity['id']]: {
+      [chainId in ChainEntity['id']]?: {
         byType: {
           [aggregatorType in SwapAggregatorEntity['type']]?: SwapAggregatorEntity['id'];
         };
@@ -44,7 +44,7 @@ export type ZapsState = {
       [ammId: AmmEntity['id']]: AmmEntity;
     };
     byChainId: {
-      [chainId: ChainEntity['id']]: AmmEntity[];
+      [chainId in ChainEntity['id']]?: AmmEntity[];
     };
   };
   /**
@@ -52,7 +52,7 @@ export type ZapsState = {
    */
   swaps: {
     byChainId: {
-      [chainId: ChainEntity['id']]: {
+      [chainId in ChainEntity['id']]?: {
         byProvider: {
           [providerId: string]: TokenEntity['address'][];
         };
@@ -75,7 +75,7 @@ export type ZapsState = {
    */
   tokens: {
     byChainId: {
-      [chainId: ChainEntity['id']]: {
+      [chainId in ChainEntity['id']]?: {
         scoreById: Record<string, number>;
       };
     };

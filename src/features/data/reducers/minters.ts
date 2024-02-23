@@ -7,10 +7,11 @@ import type { MinterEntity } from '../entities/minter';
 import { fetchAllMinters, initiateMinterForm, reloadReserves } from '../actions/minters';
 import type { MinterConfig } from '../apis/config-types';
 import type BigNumber from 'bignumber.js';
+import { entries } from '../../../helpers/object';
 
 export type MintersState = NormalizedEntity<MinterEntity> & {
   byChainId: {
-    [chainId: ChainEntity['id']]: MinterEntity['id'][];
+    [chainId in ChainEntity['id']]?: MinterEntity['id'][];
   };
   byVaultId: {
     [vaultId: VaultEntity['id']]: MinterEntity['id'][];
@@ -34,7 +35,7 @@ export const mintersSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchAllMinters.fulfilled, (sliceState, action) => {
-      for (const [chainId, minters] of Object.entries(action.payload.byChainId)) {
+      for (const [chainId, minters] of entries(action.payload.byChainId)) {
         for (const minter of minters) {
           addMinterToState(sliceState, chainId, minter);
         }

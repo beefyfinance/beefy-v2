@@ -141,8 +141,35 @@ export interface CeloGasConfig {
 
 export type GasConfig = StandardGasConfig | EIP1559GasConfig | CeloGasConfig;
 
-export interface ChainConfig {
-  id: string;
+type ChainId =
+  | 'ethereum'
+  | 'polygon'
+  | 'bsc'
+  | 'optimism'
+  | 'fantom'
+  | 'arbitrum'
+  | 'avax'
+  | 'cronos'
+  | 'moonbeam'
+  | 'moonriver'
+  | 'metis'
+  | 'fuse'
+  | 'kava'
+  | 'canto'
+  | 'zksync'
+  | 'zkevm'
+  | 'base'
+  | 'gnosis'
+  | 'linea'
+  | 'mantle'
+  | 'aurora'
+  | 'emerald'
+  | 'celo'
+  | 'heco'
+  | 'harmony';
+
+export type ChainConfig = {
+  id: ChainId;
   name: string;
   eol?: number;
   chainId: number;
@@ -168,7 +195,7 @@ export interface ChainConfig {
   gas: GasConfig;
   stableCoins: string[];
   new?: boolean;
-}
+};
 
 export interface AmmConfigBase {
   id: string;
@@ -240,7 +267,11 @@ export interface KyberSwapSwapConfig {
 
 export type SwapAggregatorConfig = OneInchSwapConfig | KyberSwapSwapConfig;
 
-export type SwapAggregatorConfigLoose = ChangeTypeOfKeys<SwapAggregatorConfig, 'type', string>; // loosen type
+export type SwapAggregatorConfigLoose = ChangeTypeOfKeys<
+  SwapAggregatorConfig,
+  'type' | 'chainId',
+  string
+>; // loosen type
 
 export interface MinterConfigTokenErc20 {
   oracleId: string;
@@ -325,7 +356,7 @@ export function isTokenHoldingConfig(token: TreasuryHoldingConfig): token is Tok
 }
 
 export type TreasuryConfig = {
-  [chainId: ChainEntity['id']]: {
+  [chainId in ChainEntity['id']]: {
     [address: string]: {
       name: string;
       balances: {
@@ -401,7 +432,7 @@ export type BeefyCommonBridgeConfig = {
   /** Url of bridge explorer, use {{hash}} for outgoing tx hash */
   explorerUrl?: string;
   /** Chains supported by this bridge */
-  chains: Record<ChainEntity['id'], BeefyCommonBridgeChainConfig>;
+  chains: Partial<Record<ChainEntity['id'], BeefyCommonBridgeChainConfig>>;
 };
 
 export type BeefyLayerZeroBridgeConfig = BeefyCommonBridgeConfig & {
@@ -446,7 +477,7 @@ export type BeefyBridgeConfig = Readonly<{
   /**
    * xTokens per chain
    */
-  tokens: Record<ChainEntity['id'], string>;
+  tokens: Partial<Record<ChainEntity['id'], string>>;
   /**
    * Config per bridge
    */

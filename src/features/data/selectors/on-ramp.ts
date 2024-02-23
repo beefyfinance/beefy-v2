@@ -3,6 +3,7 @@ import type { BeefyState } from '../../../redux-types';
 import { InputMode } from '../reducers/on-ramp-types';
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { orderBy } from 'lodash-es';
+import type { ChainEntity } from '../entities/chain';
 
 export const selectIsOnRampLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.onRamp.alreadyLoadedOnce;
@@ -67,7 +68,7 @@ export const selectNetworksForFiatToken = createSelector(
 export const selectIsFiatTokenNetworkSupported = createSelector(
   (state: BeefyState, fiat: string, token: string) =>
     selectNetworksForFiatToken(state, fiat, token),
-  (state: BeefyState, fiat: string, token: string, network: string) => network,
+  (state: BeefyState, fiat: string, token: string, network: ChainEntity['id']) => network,
   (networksForFiatToken, network) => networksForFiatToken.includes(network)
 );
 

@@ -14,6 +14,7 @@ import { Button } from '../../../../../components/Button';
 import { useAppSelector } from '../../../../../store';
 import { orderBy } from 'lodash-es';
 import { getNetworkSrc } from '../../../../../helpers/networkSrc';
+import { entries } from '../../../../../helpers/object';
 
 const useStyles = makeStyles(styles);
 
@@ -34,7 +35,7 @@ const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ModalTvl({ 
 
   const sortedTvls = React.useMemo<ItemListType[]>(() => {
     const list = [];
-    for (const [chainId, tvl] of Object.entries(tvls)) {
+    for (const [chainId, tvl] of entries(tvls)) {
       if (!activeChainIds.includes(chainId)) continue;
       list.push({ tvl: tvl.toNumber(), chainId });
     }

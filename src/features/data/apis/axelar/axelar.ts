@@ -3,7 +3,7 @@ import { AxelarQueryAPI, Environment, EvmChain, GasToken } from '@axelar-network
 import type { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 
-const chainIdToEvmChain: Record<ChainEntity['id'], EvmChain> = {
+const chainIdToEvmChain: Partial<Record<ChainEntity['id'], EvmChain>> = {
   ethereum: EvmChain.ETHEREUM,
   polygon: EvmChain.POLYGON,
   bsc: EvmChain.BINANCE,
@@ -19,7 +19,7 @@ const chainIdToEvmChain: Record<ChainEntity['id'], EvmChain> = {
   celo: EvmChain.CELO,
 };
 
-const chainIdToGasToken: Record<ChainEntity['id'], GasToken> = {
+const chainIdToGasToken: Partial<Record<ChainEntity['id'], GasToken>> = {
   ethereum: GasToken.ETH,
   polygon: GasToken.MATIC,
   bsc: GasToken.BINANCE,
