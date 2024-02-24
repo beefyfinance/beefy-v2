@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "id": "linea-gamma-lynex",
+    "type": "gamma",
+    "name": "Gamma Uniswap",
+    "proxyAddress": "0xFc13Ebe7FEB9595D70195E9168aA7F3acE153621"
+  }
+]

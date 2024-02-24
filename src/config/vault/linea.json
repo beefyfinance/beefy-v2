@@ -1,5 +1,95 @@
 [
   {
+    "id": "lynex-gamma-wbtc-weth",
+    "name": "ETH-WBTC LP",
+    "type": "standard",
+    "token": "ETH-WBTC LP",
+    "tokenAddress": "0x8a9570ec97534277Ade6e46d100939FbCE4968f0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lynex",
+    "earnedToken": "mooLynexGammaETH-WBTC",
+    "earnedTokenAddress": "0x8c0919AE1fAcD6695Ad236Ea618d1018e5c4d42c",
+    "earnContractAddress": "0x8c0919AE1fAcD6695Ad236Ea618d1018e5c4d42c",
+    "oracle": "lps",
+    "oracleId": "lynex-gamma-wbtc-weth",
+    "status": "active",
+    "createdAt": 1708793598,
+    "platformId": "gamma",
+    "assets": ["ETH", "WBTC"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/wbtc-weth-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/wbtc-weth-narrow",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "linea-gamma-lynex",
+        "tokenHolder": "0x81921e25c109aB1eF910081184295387f50e1f78"
+      }
+    ]
+  },
+  {
+    "id": "lynex-gamma-usdt-weth",
+    "name": "ETH-USDT LP",
+    "type": "standard",
+    "token": "ETH-USDT LP",
+    "tokenAddress": "0xF3B1125C8505f038503E002e61a78253610D4F60",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lynex",
+    "earnedToken": "mooLynexGammaETH-USDT",
+    "earnedTokenAddress": "0x7168464Ac7330EC5177694005e60FBe319DC40c2",
+    "earnContractAddress": "0x7168464Ac7330EC5177694005e60FBe319DC40c2",
+    "oracle": "lps",
+    "oracleId": "lynex-gamma-usdt-weth",
+    "status": "active",
+    "createdAt": 1708793598,
+    "platformId": "gamma",
+    "assets": ["ETH", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdt-weth-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdt-weth-narrow",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "linea-gamma-lynex",
+        "tokenHolder": "0x7dB1b80ecF40A6a5F84554fD047aafdEEeBc4230"
+      }
+    ]
+  },
+  {
+    "id": "lynex-gamma-usdc-weth",
+    "name": "ETH-USDC LP",
+    "type": "standard",
+    "token": "ETH-USDC LP",
+    "tokenAddress": "0x0B15A5E3cA0D4b492C3b476d0f807535F9B72079",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lynex",
+    "earnedToken": "mooLynexGammaETH-USDC",
+    "earnedTokenAddress": "0x7F0577524408cf676668429AC1f0c0636c39aeA8",
+    "earnContractAddress": "0x7F0577524408cf676668429AC1f0c0636c39aeA8",
+    "oracle": "lps",
+    "oracleId": "lynex-gamma-usdc-weth",
+    "status": "active",
+    "createdAt": 1708793598,
+    "platformId": "gamma",
+    "assets": ["ETH", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdc-weth-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdc-weth-narrow",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "linea-gamma-lynex",
+        "tokenHolder": "0xEf79A12c48973f0193E67730C8636485Da59f0FD"
+      }
+    ]
+  },
+  {
     "id": "mendi-linea-wsteth",
     "name": "wstETH",
     "type": "standard",
