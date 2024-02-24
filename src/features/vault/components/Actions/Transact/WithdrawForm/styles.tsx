@@ -7,6 +7,9 @@ export const styles = (theme: Theme) => ({
   stakedInBoost: {
     marginBottom: '24px',
   },
+  notice: {
+    marginBottom: '16px',
+  },
   labels: {
     display: 'flex',
     flexWrap: 'nowrap' as const,

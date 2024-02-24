@@ -25,6 +25,7 @@ import { WithdrawActions } from '../WithdrawActions';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
 import { WithdrawLinks } from '../WithDrawLinks';
 import zapIcon from '../../../../../../images/icons/zap.svg';
+import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice';
 
 const useStyles = makeStyles(styles);
 
@@ -75,6 +76,7 @@ export const WithdrawForm = memo(function WithdrawForm() {
 
   return (
     <>
+      <WithdrawnInWalletNotice className={classes.notice} />
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
           {hasOptions ? <img src={zapIcon} alt="Zap" height={12} /> : null}
