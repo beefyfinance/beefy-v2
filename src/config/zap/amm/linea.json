@@ -4,5 +4,17 @@
     "type": "gamma",
     "name": "Gamma Uniswap",
     "proxyAddress": "0xFc13Ebe7FEB9595D70195E9168aA7F3acE153621"
+  },
+  {
+    "id": "linea-solidly-lynex",
+    "name": "Lynex",
+    "type": "solidly",
+    "routerAddress": "0x610D2f07b7EdC67565160F587F37636194C34E74",
+    "factoryAddress": "0xBc7695Fd00E3b32D08124b7a4287493aEE99f9ee",
+    "pairInitHash": "0xf40e8808230a29863f9f7f99beb90d28bca2c60094e78d93cca67f746dbfd142",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "4",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
   }
 ]

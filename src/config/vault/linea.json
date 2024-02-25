@@ -1,5 +1,122 @@
 [
   {
+    "id": "lynex-usdc-mai",
+    "name": "USDC-MAI LP",
+    "type": "standard",
+    "token": "USDC-MAI sLP",
+    "tokenAddress": "0xE9E146f5bceBD71Fb8C526EA036dE6bbFB1B0Ad7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lynex",
+    "earnedToken": "mooLynexUSDC-MAI",
+    "earnedTokenAddress": "0x2A0609bF2c96c69504eEc69c1c6655f506336670",
+    "earnContractAddress": "0x2A0609bF2c96c69504eEc69c1c6655f506336670",
+    "oracle": "lps",
+    "oracleId": "lynex-usdc-mai",
+    "status": "active",
+    "createdAt": 1708793598,
+    "platformId": "lynex",
+    "assets": ["USDC", "MAI"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xE9E146f5bceBD71Fb8C526EA036dE6bbFB1B0Ad7",
+    "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xE9E146f5bceBD71Fb8C526EA036dE6bbFB1B0Ad7",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "linea-solidly-lynex"
+      }
+    ]
+  },
+  {
+    "id": "lynex-usdc-usdt",
+    "name": "USDC-USDT LP",
+    "type": "standard",
+    "token": "USDC-USDT sLP",
+    "tokenAddress": "0xa4477d98e519D4c1d66aEf4EfDF7cBEb84f4f778",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lynex",
+    "earnedToken": "mooLynexUSDC-USDT",
+    "earnedTokenAddress": "0x84A1FB4e62E6ccEE5F2514A418f8603a6DD6aFFe",
+    "earnContractAddress": "0x84A1FB4e62E6ccEE5F2514A418f8603a6DD6aFFe",
+    "oracle": "lps",
+    "oracleId": "lynex-usdc-usdt",
+    "status": "active",
+    "createdAt": 1708793598,
+    "platformId": "lynex",
+    "assets": ["USDC", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xa4477d98e519D4c1d66aEf4EfDF7cBEb84f4f778",
+    "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xa4477d98e519D4c1d66aEf4EfDF7cBEb84f4f778",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "linea-solidly-lynex"
+      }
+    ]
+  },
+  {
+    "id": "lynex-wsteth-weth",
+    "name": "wstETH-ETH LP",
+    "type": "standard",
+    "token": "wstETH-ETH sLP",
+    "tokenAddress": "0xa8e4B5401F98cf20F7e4e9323B02c40f10661f06",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lynex",
+    "earnedToken": "mooLynexwstETH-ETH",
+    "earnedTokenAddress": "0x3a577cb5cc1af6F391F0d1916eD63a906d00b94D",
+    "earnContractAddress": "0x3a577cb5cc1af6F391F0d1916eD63a906d00b94D",
+    "oracle": "lps",
+    "oracleId": "lynex-wsteth-weth",
+    "status": "active",
+    "createdAt": 1708793598,
+    "platformId": "lynex",
+    "assets": ["wstETH", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xa8e4b5401f98cf20f7e4e9323b02c40f10661f06",
+    "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xa8e4b5401f98cf20f7e4e9323b02c40f10661f06",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "linea-solidly-lynex"
+      }
+    ]
+  },
+  {
+    "id": "lynex-gamma-usdc-lynx",
+    "name": "LYNX-USDC LP",
+    "type": "standard",
+    "token": "LYNX-USDC LP",
+    "tokenAddress": "0xcC86572Ce5a6EEe74c76c57E9ea7b08221F06bb9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lynex",
+    "earnedToken": "mooLynexGammaLYNX-USDC",
+    "earnedTokenAddress": "0x2FcBcf97891C70764C617C41395CCFCEd3EDd06E",
+    "earnContractAddress": "0x2FcBcf97891C70764C617C41395CCFCEd3EDd06E",
+    "oracle": "lps",
+    "oracleId": "lynex-gamma-usdc-lynx",
+    "status": "active",
+    "createdAt": 1708793598,
+    "platformId": "gamma",
+    "assets": ["LYNX", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdc-lynx-wide",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdc-lynx-wide",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "linea-gamma-lynex",
+        "tokenHolder": "0x48C93b97A6AFf589B4Bc8B60865165ab19D509A0"
+      }
+    ]
+  },
+  {
     "id": "lynex-gamma-wbtc-weth",
     "name": "ETH-WBTC LP",
     "type": "standard",
