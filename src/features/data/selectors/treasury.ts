@@ -217,8 +217,8 @@ export const selectTreasuryStats = (state: BeefyState) => {
 
                 const vaultTokenSymbols = selectVaultTokenSymbols(state, vaultId);
 
-                for (const assetId of vaultTokenSymbols) {
-                  const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, assetId);
+                for (const tokenSymbol of vaultTokenSymbols) {
+                  const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, tokenSymbol);
                   holdingAssets.add(symbol);
                 }
               }
