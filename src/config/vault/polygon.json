@@ -18,6 +18,7 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-30/swap",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-30/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-30/withdraw",
     "network": "polygon",
@@ -57,8 +58,9 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-28/swap",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-28/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-28/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-28/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -96,8 +98,9 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-27/swap",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-27/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-27/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-27/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -135,6 +138,7 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-29/swap",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-29/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-29/withdraw",
     "network": "polygon",
@@ -176,7 +180,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/cbeth-weth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/cbeth-weth-pegged-price",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wbtc-weth-wide",
@@ -192,16 +203,23 @@
     "oracle": "lps",
     "oracleId": "quick-gamma-wbtc-weth-wide",
     "status": "eol",
+    "createdAt": 1700229087,
     "retireReason": "rewards",
     "retiredAt": 1708113204,
-    "createdAt": 1700229087,
     "platformId": "gamma",
     "assets": ["ETH", "WBTC"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-weth-wide",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-weth-wide",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "compound-polygon-usdc",
@@ -255,16 +273,23 @@
     "oracle": "lps",
     "oracleId": "quick-gamma-weth-usdt",
     "status": "eol",
+    "createdAt": 1698862190,
     "retireReason": "rewards",
     "retiredAt": 1708113204,
-    "createdAt": 1698862190,
     "platformId": "gamma",
     "assets": ["ETH", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-usdt-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-usdt-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-quick",
@@ -280,16 +305,23 @@
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-quick",
     "status": "eol",
+    "createdAt": 1698862190,
     "retireReason": "rewards",
     "retiredAt": 1708113204,
-    "createdAt": 1698862190,
     "platformId": "gamma",
     "assets": ["QUICK", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-quick-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-quick-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-link-weth",
@@ -312,7 +344,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/link-weth-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/link-weth-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-weth-aave",
@@ -335,7 +374,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-aave-wide",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-aave-wide",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-bob-usdc-stable",
@@ -360,7 +406,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xB0B195aEFA3650A6908f15CdaC7D92F8a5791B0B",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xB0B195aEFA3650A6908f15CdaC7D92F8a5791B0B",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-e0a6",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "retro-gamma-cash-weth",
@@ -383,7 +436,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/cash-weth-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/cash-weth-500-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wmatic-cash",
@@ -406,7 +465,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-cash-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-cash-500-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wbtc-cash",
@@ -422,16 +487,22 @@
     "oracle": "lps",
     "oracleId": "retro-gamma-wbtc-cash",
     "status": "eol",
+    "createdAt": 1693479128,
     "retireReason": "rewards",
     "retiredAt": 1706885963,
-    "createdAt": 1693479128,
     "platformId": "gamma",
     "assets": ["CASH", "WBTC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wbtc-cash-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wbtc-cash-3000-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-usdc-cash",
@@ -456,7 +527,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-cash-100-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-cash-100-stable",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "aura-polygon-gyro-matic-stmatic",
@@ -527,7 +604,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wbtc-weth-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wbtc-weth-500-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wmatic-frxeth-narrow",
@@ -550,7 +633,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-frxeth-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-frxeth-500-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-frax-mimatic-",
@@ -575,7 +664,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/frax-mai-3000-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/frax-mai-3000-stable",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wmatic-maticx",
@@ -598,7 +693,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-maticx-100-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-maticx-100-pegged-price",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wmatic-stmatic",
@@ -621,7 +722,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-stmatic-100-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-stmatic-100-pegged-price",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-usdc-ageur-narrow",
@@ -644,7 +751,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-ageur-100-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-ageur-100-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-weth-frxeth-narrow",
@@ -667,7 +780,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/weth-frxeth-100-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/weth-frxeth-100-stable",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-usdc-usdt",
@@ -690,7 +809,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-usdt-100-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-usdt-100-stable",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "pearl-usdrv3-tngbl",
@@ -841,7 +966,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-usdc.e-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-usdc.e-500-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-usdc-weth-narrow",
@@ -864,7 +995,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-weth-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-weth-500-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wmatic-weth-narrow",
@@ -887,7 +1024,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-weth-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-weth-500-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "pearl-usdrv3-usdt",
@@ -1096,7 +1239,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wbtc-usdc-narrow",
@@ -1119,7 +1269,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wbtc-weth-narrow",
@@ -1142,7 +1299,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-usdc-weth-wide",
@@ -1158,16 +1322,23 @@
     "oracle": "lps",
     "oracleId": "quick-gamma-usdc-weth-wide",
     "status": "eol",
+    "createdAt": 1686917465,
     "retireReason": "rewards",
     "retiredAt": 1708113204,
-    "createdAt": 1686917465,
     "platformId": "gamma",
     "assets": ["ETH", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-usdc-weth-narrow",
@@ -1190,7 +1361,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-usdc-axlusdc-narrow",
@@ -1213,7 +1391,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-dai-mimatic-narrow",
@@ -1238,7 +1423,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-e0a6",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-mimatic-usdt-narrow",
@@ -1263,7 +1455,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-e0a6",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-usdc-dai-narrow",
@@ -1279,16 +1478,23 @@
     "oracle": "lps",
     "oracleId": "quick-gamma-usdc-dai-narrow",
     "status": "eol",
+    "createdAt": 1686917464,
     "retireReason": "rewards",
     "retiredAt": 1708113204,
-    "createdAt": 1686917464,
     "platformId": "gamma",
     "assets": ["pUSDCe", "DAI"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-usdc-usdt-narrow",
@@ -1311,7 +1517,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-usdc-wide",
@@ -1327,16 +1540,23 @@
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-usdc-wide",
     "status": "eol",
+    "createdAt": 1686917464,
     "retireReason": "rewards",
     "retiredAt": 1708113204,
-    "createdAt": 1686917464,
     "platformId": "gamma",
     "assets": ["MATIC", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-usdc-narrow",
@@ -1359,7 +1579,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "pearl-matic-usdr",
@@ -1414,7 +1641,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-maticx-narrow",
@@ -1437,7 +1671,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-weth-narrow",
@@ -1460,7 +1701,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-weth-wide",
@@ -1476,16 +1724,23 @@
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-weth-wide",
     "status": "eol",
+    "createdAt": 1686878623,
     "retireReason": "rewards",
     "retiredAt": 1708113204,
-    "createdAt": 1686878623,
     "platformId": "gamma",
     "assets": ["MATIC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "pearl-dai-usdr",
@@ -1701,6 +1956,7 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-339/swap",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-339/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-339/withdraw",
     "network": "polygon",
@@ -1918,6 +2174,7 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-crypto-83/swap",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-83/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-83/withdraw",
     "network": "polygon",
@@ -2128,6 +2385,7 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-crypto-1/swap",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-1/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-1/withdraw",
     "network": "polygon",
@@ -2796,8 +3054,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory-crypto/13/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory-crypto/13/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-crypto-13/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-13/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-13/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -3230,8 +3489,9 @@
     ],
     "strategyTypeId": "multi-lp",
     "depositFee": 0.005,
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/107/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/107/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-107/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-107/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-107/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -3273,7 +3533,8 @@
     "earnContractAddress": "0x5D060698F179E7D2233480A44d6D3979e4Ae9e7f",
     "oracle": "tokens",
     "oracleId": "beQI",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "createdAt": 1650557675,
     "platformId": "beefy",
     "assets": ["beQI"],
@@ -3287,7 +3548,8 @@
     ],
     "strategyTypeId": "beqi",
     "excluded": "beefy-beqi",
-    "network": "polygon"
+    "network": "polygon",
+    "retiredAt": 1708531102
   },
   {
     "id": "giddy-giddy",
@@ -3380,8 +3642,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/aave/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/aave/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/aave/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/aave/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/aave/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -3511,8 +3774,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/ren/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/ren/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/ren/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/ren/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/ren/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -3607,6 +3871,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/atricrypto3/swap",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto3/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto3/withdraw",
     "network": "polygon",
@@ -4928,9 +5193,9 @@
     "oracle": "lps",
     "oracleId": "telxchange-quick-aave-tel",
     "status": "eol",
+    "createdAt": 1626327159,
     "retireReason": "rewards",
     "retiredAt": 1707845800,
-    "createdAt": 1626327159,
     "platformId": "telxchange",
     "assets": ["TEL", "AAVE"],
     "risks": [
@@ -5004,8 +5269,9 @@
     "platformId": "curve",
     "assets": ["DAI", "pUSDCe", "USDT", "WBTC", "ETH"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/atricrypto/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/atricrypto/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/atricrypto/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -8555,8 +8821,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/eurtusd/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/eurtusd/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/eurtusd/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/eurtusd/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/eurtusd/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -8615,8 +8882,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/37/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/37/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-37/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-37/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-37/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -9392,8 +9660,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/23/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/23/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-23/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-23/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-23/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -10665,8 +10934,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/22/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/22/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-22/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-22/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-22/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -11115,8 +11385,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/72/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/72/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-72/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-72/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-72/withdraw",
     "network": "polygon"
   },
   {
@@ -11411,7 +11682,8 @@
     "earnContractAddress": "0xDBFf95e99FccC8fbd90648B9E42C0F152518b9B8",
     "oracle": "tokens",
     "oracleId": "beQI",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "createdAt": 1650557677,
     "platformId": "beefy",
     "assets": ["beQI"],
@@ -11425,7 +11697,8 @@
     ],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0x580A84C73811E1839F75d86d75d88cCa0c241fF4",
-    "network": "polygon"
+    "network": "polygon",
+    "retiredAt": 1708531102
   },
   {
     "id": "quick-wmatic-maticx",
@@ -12060,8 +12333,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/85/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/85/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-85/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-85/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-85/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -12110,8 +12384,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/228/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/228/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-228/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-228/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-228/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -12160,8 +12435,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/255/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/255/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-255/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-255/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-255/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -12210,8 +12486,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/209/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/209/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-209/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-209/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-209/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -12516,9 +12793,9 @@
     "oracle": "lps",
     "oracleId": "quick-weth-tel",
     "status": "eol",
+    "createdAt": 1653558100,
     "retireReason": "rewards",
     "retiredAt": 1707845800,
-    "createdAt": 1653558100,
     "platformId": "quickswap",
     "assets": ["ETH", "TEL"],
     "risks": [
@@ -12556,9 +12833,9 @@
     "oracle": "lps",
     "oracleId": "quick-usdc-tel",
     "status": "eol",
+    "createdAt": 1653558999,
     "retireReason": "rewards",
     "retiredAt": 1707845800,
-    "createdAt": 1653558999,
     "platformId": "quickswap",
     "assets": ["pUSDCe", "TEL"],
     "risks": [
@@ -12931,8 +13208,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/286/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/286/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-286/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-286/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-286/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -12981,8 +13259,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/285/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/285/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-285/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-285/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-285/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -13063,8 +13342,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/304/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/304/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-304/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-304/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-304/withdraw",
     "network": "polygon",
     "zaps": [
       {

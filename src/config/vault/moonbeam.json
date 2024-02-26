@@ -764,8 +764,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://moonbeam.curve.fi/factory/14/deposit",
-    "removeLiquidityUrl": "https://moonbeam.curve.fi/factory/14/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/moonbeam/pools/factory-v2-14/swap",
+    "addLiquidityUrl": "https://curve.fi/#/moonbeam/pools/factory-v2-14/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/moonbeam/pools/factory-v2-14/withdraw",
     "network": "moonbeam",
     "zaps": [
       {

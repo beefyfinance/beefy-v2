@@ -8,6 +8,7 @@ export const BIG_ONE = new BigNumber(1);
 export const BIG_MAX_UINT256 = new BigNumber(
   '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
 );
+export const Q192 = new BigNumber(2).pow(192);
 
 export function compound(
   rate: BigNumberish,

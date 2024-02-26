@@ -1,15 +1,11 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
-import { useAppSelector } from '../../../../store';
-import {
-  selectVaultHasAssetsWithRisks,
-  selectVaultHasPlatformWithRisks,
-} from '../../../data/selectors/vaults';
 import { Trans, useTranslation } from 'react-i18next';
 import { RISKS } from '../../../../config/risk';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
+import { useVaultHasRisks } from './hooks';
 
 const useStyles = makeStyles(styles);
 
@@ -24,69 +20,37 @@ export const NoSafuRisks = memo<NoSafuRisksProps>(function NoSafuRisks({
   isTitle,
   className,
 }) {
-  const vaultHasPlatformWithRisks = useAppSelector(state =>
-    selectVaultHasPlatformWithRisks(state, vaultId)
-  );
+  const { vaultHasRisks, values, risk } = useVaultHasRisks(vaultId);
 
-  const vaultHasAssetsWithRisks = useAppSelector(state =>
-    selectVaultHasAssetsWithRisks(state, vaultId)
-  );
-
-  if (vaultHasPlatformWithRisks.risks) {
-    const { platform } = vaultHasPlatformWithRisks;
-    return (
-      <WarningText
-        className={className}
-        isTitle={isTitle}
-        type="Platform"
-        risks={platform.risks}
-        name={platform.name}
-      />
-    );
-  }
-
-  if (vaultHasAssetsWithRisks.risks) {
-    const { token } = vaultHasAssetsWithRisks;
-    return (
-      <WarningText
-        className={className}
-        isTitle={isTitle}
-        type="Token"
-        risks={token.risks}
-        name={token.id}
-      />
-    );
+  if (vaultHasRisks && values && risk) {
+    return <WarningText className={className} isTitle={isTitle} values={values} risk={risk} />;
   }
 
   return null;
 });
 
 interface WarningTextProps {
-  type: 'Token' | 'Platform';
   isTitle: boolean;
-  risks: string[];
-  name: string;
+  risk: string;
+  values: Record<string, string>;
   className?: string;
 }
 
 const WarningText = memo<WarningTextProps>(function WarningText({
-  type,
   isTitle,
-  risks,
-  name,
+  risk,
+  values,
   className,
 }) {
   const { t } = useTranslation('risks');
   const classes = useStyles();
 
   const i18Key = useMemo(() => {
-    const risk = `${type.toUpperCase()}_${risks[0]}`;
-
     if (RISKS[risk]) {
       const riskObject = RISKS[risk];
       return isTitle ? riskObject.title : riskObject.explanation;
     }
-  }, [isTitle, risks, type]);
+  }, [isTitle, risk]);
 
   const handleClickScroll = useCallback(() => {
     const element = document.getElementById('SafetyCard');
@@ -100,7 +64,7 @@ const WarningText = memo<WarningTextProps>(function WarningText({
       <Trans
         t={t}
         i18nKey={i18Key}
-        values={{ [type.toLowerCase()]: name }}
+        values={values}
         components={{
           Link: (
             <a

@@ -5,15 +5,10 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { Button } from '../../../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectTransactWithdrawInputAmountExceedsBalance,
   selectTransactQuoteStatus,
   selectTransactSelectedQuote,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
-import {
-  selectCurrentChainId,
-  selectIsWalletConnected,
-} from '../../../../../data/selectors/wallet';
 import type {
   GovVaultWithdrawQuote,
   TransactOption,
@@ -27,13 +22,13 @@ import { EmeraldGasNotice } from '../EmeraldGasNotice';
 import { ConfirmNotice } from '../ConfirmNotice';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { selectGovVaultById, selectIsVaultGov } from '../../../../../data/selectors/vaults';
-import type { ActionButtonProps } from '../CommonActions';
-import { ActionConnect, ActionSwitch } from '../CommonActions';
+import { type ActionButtonProps, ActionConnectSwitch } from '../CommonActions';
 import { selectGovVaultPendingRewardsInToken } from '../../../../../data/selectors/balance';
 import type { VaultGov } from '../../../../../data/entities/vault';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { GlpWithdrawNotice } from '../GlpNotices';
 import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotice';
+import { NotEnoughNotice } from '../NotEnoughNotice';
 
 const useStyles = makeStyles(styles);
 
@@ -52,16 +47,6 @@ export const WithdrawActionsStandard = memo(function WithdrawActionsStandard() {
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuote);
   const option = quote ? quote.option : null;
-  const isWalletConnected = useAppSelector(selectIsWalletConnected);
-  const connectedChainId = useAppSelector(selectCurrentChainId);
-
-  if (!isWalletConnected) {
-    return <ActionConnect />;
-  }
-
-  if (option && option.chainId !== connectedChainId) {
-    return <ActionSwitch chainId={option.chainId} />;
-  }
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
     return <ActionWithdrawDisabled />;
@@ -76,30 +61,20 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
   const vault = useAppSelector(state => selectGovVaultById(state, vaultId));
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuote);
-  const isWalletConnected = useAppSelector(selectIsWalletConnected);
-  const connectedChainId = useAppSelector(selectCurrentChainId);
-  const isVaultChain = connectedChainId === vault.chainId;
   const showWithdraw =
     quote && isGovVaultWithdrawQuote(quote) && quoteStatus === TransactStatus.Fulfilled;
-
-  if (!isWalletConnected) {
-    return <ActionConnect />;
-  }
-
-  // This will need changed if we ever support x-chain zapping in to gov vault
-  if (!isVaultChain) {
-    return <ActionSwitch chainId={vault.chainId} />;
-  }
 
   return (
     <>
       {showWithdraw ? (
         <ActionClaimWithdraw quote={quote} vault={vault} />
       ) : (
-        <div className={classes.buttons}>
-          <ActionWithdrawDisabled />
-          <ActionClaim vault={vault} />
-        </div>
+        <ActionConnectSwitch chainId={vault.chainId}>
+          <div className={classes.buttons}>
+            <ActionWithdrawDisabled />
+            <ActionClaim vault={vault} />
+          </div>
+        </ActionConnectSwitch>
       )}
     </>
   );
@@ -134,21 +109,21 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ optio
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
   const [isDisabledByScreamLiquidity, setIsDisabledByScreamLiquidity] = useState(false);
+  const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
+
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
-  const vaultId = useAppSelector(selectTransactVaultId);
-  const isDisabledByInputAmountExceedsBalance = useAppSelector(state =>
-    selectTransactWithdrawInputAmountExceedsBalance(state, vaultId)
-  );
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
+
   const isDisabled =
     isTxInProgress ||
     isDisabledByPriceImpact ||
     isDisabledByConfirm ||
     isDisabledByGlpLock ||
     isDisabledByScreamLiquidity ||
-    isDisabledByInputAmountExceedsBalance;
+    isDisabledByNotEnoughInput;
+
   const handleClick = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
@@ -163,15 +138,18 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ optio
       <GlpWithdrawNotice vaultId={option.vaultId} onChange={setIsDisabledByGlpLock} />
       <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
-      <Button
-        variant="success"
-        disabled={isDisabled}
-        fullWidth={true}
-        borderless={true}
-        onClick={handleClick}
-      >
-        {t(isMaxAll ? 'Transact-WithdrawAll' : 'Transact-Withdraw')}
-      </Button>
+      <NotEnoughNotice mode="withdraw" onChange={setIsDisabledByNotEnoughInput} />
+      <ActionConnectSwitch chainId={option.chainId}>
+        <Button
+          variant="success"
+          disabled={isDisabled}
+          fullWidth={true}
+          borderless={true}
+          onClick={handleClick}
+        >
+          {t(isMaxAll ? 'Transact-WithdrawAll' : 'Transact-Withdraw')}
+        </Button>
+      </ActionConnectSwitch>
     </>
   );
 });
@@ -190,11 +168,16 @@ const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimW
   const option = quote.option;
   const [isDisabledByPriceImpact, setIsDisabledByPriceImpact] = useState(false);
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
+  const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
+
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
-  const isDisabled = isTxInProgress || isDisabledByPriceImpact || isDisabledByConfirm;
+
+  const isDisabled =
+    isTxInProgress || isDisabledByPriceImpact || isDisabledByConfirm || isDisabledByNotEnoughInput;
+
   const handleWithdraw = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
@@ -204,23 +187,26 @@ const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimW
       {option.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
       <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
+      <NotEnoughNotice mode="withdraw" onChange={setIsDisabledByNotEnoughInput} />
       <div className={classes.buttons}>
-        <Button
-          variant="success"
-          disabled={isDisabled}
-          fullWidth={true}
-          borderless={true}
-          onClick={handleWithdraw}
-        >
-          {t(
-            isMaxAll
-              ? quote.outputs.length > 1
-                ? 'Transact-ClaimWithdrawAll'
-                : 'Transact-WithdrawAll'
-              : 'Transact-Withdraw'
-          )}
-        </Button>
-        <ActionClaim vault={vault} />
+        <ActionConnectSwitch chainId={option.chainId}>
+          <Button
+            variant="success"
+            disabled={isDisabled}
+            fullWidth={true}
+            borderless={true}
+            onClick={handleWithdraw}
+          >
+            {t(
+              isMaxAll
+                ? quote.outputs.length > 1
+                  ? 'Transact-ClaimWithdrawAll'
+                  : 'Transact-WithdrawAll'
+                : 'Transact-Withdraw'
+            )}
+          </Button>
+          <ActionClaim vault={vault} />
+        </ActionConnectSwitch>
       </div>
     </>
   );

@@ -235,9 +235,19 @@ export const RISKS = {
     explanation: 'StrategyRisk-Explanation-Token-No-Timelock',
   },
 
-  TOKEN_LARGE_HOLDERS: {
-    title: 'StrategyRisk-Title-Token',
-    explanation: 'StrategyRisk-Explanation-Token-Large-Holders',
+  TOKENS_NO_TIMELOCK: {
+    title: 'StrategyRisk-Title-Tokens',
+    explanation: 'StrategyRisk-Explanation-Tokens-No-Timelock',
+  },
+
+  PLATFORM_TOKEN_NO_TIMELOCK: {
+    title: 'StrategyRisk-Title-Platform-Token',
+    explanation: 'StrategyRisk-Explanation-Platform-Token-No-Timelock',
+  },
+
+  PLATFORM_TOKENS_NO_TIMELOCK: {
+    title: 'StrategyRisk-Title-Platform-Tokens',
+    explanation: 'StrategyRisk-Explanation-Platform-Tokens-No-Timelock',
   },
 };
 

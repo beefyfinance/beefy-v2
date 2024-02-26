@@ -263,20 +263,26 @@ export const selectAllVaultsWithBridgedVersion = (state: BeefyState) =>
 export const selectVaultHasAssetsWithRisks = (
   state: BeefyState,
   vaultId: VaultEntity['id']
-): { risks: boolean; token?: TokenErc20 } => {
+): { risks: boolean; tokens?: TokenErc20[] } => {
   const vault = selectVaultById(state, vaultId);
 
-  // if any of the tokens have risks return true
+  const tokensWithRisks = [];
+
   for (const tokenId of vault.assetIds) {
     const token = selectTokenByIdOrNull(state, vault.chainId, tokenId);
 
     if (token && isTokenErc20(token) && token?.risks?.length > 0) {
-      return {
-        token,
-        risks: true,
-      };
+      tokensWithRisks.push(token);
     }
   }
+
+  if (tokensWithRisks.length >= 1) {
+    return {
+      risks: true,
+      tokens: tokensWithRisks,
+    };
+  }
+
   // by default return false
   return {
     risks: false,

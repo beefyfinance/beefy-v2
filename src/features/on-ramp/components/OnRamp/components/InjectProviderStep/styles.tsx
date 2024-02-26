@@ -6,6 +6,9 @@ export const styles = () => ({
     borderBottomLeftRadius: '12px',
     borderBottomRightRadius: '12px',
   },
+  iframeMtPellerin: {
+    background: '#121212',
+  },
   error: {
     padding: '24px',
   },

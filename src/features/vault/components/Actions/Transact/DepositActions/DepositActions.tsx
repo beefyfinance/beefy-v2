@@ -5,14 +5,9 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { Button } from '../../../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectTransactDepositInputAmountExceedsBalance,
   selectTransactQuoteStatus,
   selectTransactSelectedQuote,
 } from '../../../../../data/selectors/transact';
-import {
-  selectCurrentChainId,
-  selectIsWalletConnected,
-} from '../../../../../data/selectors/wallet';
 import type {
   TransactOption,
   TransactQuote,
@@ -25,9 +20,9 @@ import { EmeraldGasNotice } from '../EmeraldGasNotice';
 import clsx from 'clsx';
 import { ConfirmNotice } from '../ConfirmNotice';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
-import type { ActionButtonProps } from '../CommonActions';
-import { ActionConnect, ActionSwitch } from '../CommonActions';
+import { type ActionButtonProps, ActionConnectSwitch } from '../CommonActions';
 import { GlpDepositNotice } from '../GlpNotices';
+import { NotEnoughNotice } from '../NotEnoughNotice';
 
 const useStyles = makeStyles(styles);
 
@@ -38,16 +33,6 @@ export const DepositActions = memo<DepositActionsProps>(function DepositActions(
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuote);
   const option = quote ? quote.option : null;
-  const isWalletConnected = useAppSelector(selectIsWalletConnected);
-  const connectedChainId = useAppSelector(selectCurrentChainId);
-
-  if (!isWalletConnected) {
-    return <ActionConnect className={className} />;
-  }
-
-  if (option && option.chainId !== connectedChainId) {
-    return <ActionSwitch chainId={option.chainId} className={className} />;
-  }
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
     return <ActionDepositDisabled className={className} />;
@@ -90,21 +75,21 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
   const [isDisabledByMaxNative, setIsDisabledByMaxNative] = useState(false);
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
+  const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
-  const isDisabledByInputAmountExceedsBalance = useAppSelector(
-    selectTransactDepositInputAmountExceedsBalance
-  );
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
+
   const isDisabled =
     isTxInProgress ||
     isDisabledByPriceImpact ||
     isDisabledByMaxNative ||
     isDisabledByConfirm ||
     isDisabledByGlpLock ||
-    isDisabledByInputAmountExceedsBalance;
+    isDisabledByNotEnoughInput;
+
   const handleClick = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
@@ -113,18 +98,25 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
     <div className={clsx(classes.actions, className)}>
       {option.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
       <GlpDepositNotice vaultId={option.vaultId} onChange={setIsDisabledByGlpLock} />
-      <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
+      <PriceImpactNotice
+        quote={quote}
+        onChange={setIsDisabledByPriceImpact}
+        hideCheckbox={isDisabledByNotEnoughInput}
+      />
       <MaxNativeNotice quote={quote} onChange={setIsDisabledByMaxNative} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
-      <Button
-        variant="success"
-        disabled={isDisabled}
-        fullWidth={true}
-        borderless={true}
-        onClick={handleClick}
-      >
-        {t(isMaxAll ? 'Transact-DepositAll' : 'Transact-Deposit')}
-      </Button>
+      <NotEnoughNotice mode="deposit" onChange={setIsDisabledByNotEnoughInput} />
+      <ActionConnectSwitch chainId={option.chainId}>
+        <Button
+          variant="success"
+          disabled={isDisabled}
+          fullWidth={true}
+          borderless={true}
+          onClick={handleClick}
+        >
+          {t(isMaxAll ? 'Transact-DepositAll' : 'Transact-Deposit')}
+        </Button>
+      </ActionConnectSwitch>
     </div>
   );
 });

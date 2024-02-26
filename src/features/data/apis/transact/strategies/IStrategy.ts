@@ -12,6 +12,7 @@ import type { VaultEntity } from '../../../entities/vault';
 import type { BeefyState } from '../../../../../redux-types';
 import type {
   AmmEntity,
+  AmmEntityGamma,
   AmmEntitySolidly,
   AmmEntityUniswapV2,
   ZapEntity,
@@ -52,11 +53,19 @@ export type CurveStrategyOptions = {
   methods: CurveMethod[];
 } & OptionalStrategySwapOption;
 
+export type GammaStrategyOptions = {
+  strategyId: 'gamma';
+  ammId: AmmEntityGamma['id'];
+  /** where are the LP tokens held while earning, not needed for merkle as tokens held in strategy */
+  tokenHolder?: string | undefined;
+} & OptionalStrategySwapOption;
+
 export type StrategyOptions =
   | SingleStrategyOptions
   | UniswapV2StrategyOptions
   | SolidlyStrategyOptions
-  | CurveStrategyOptions;
+  | CurveStrategyOptions
+  | GammaStrategyOptions;
 
 export interface IStrategy {
   readonly id: string;

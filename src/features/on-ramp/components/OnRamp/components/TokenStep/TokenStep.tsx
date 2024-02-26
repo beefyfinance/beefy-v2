@@ -55,10 +55,7 @@ const ListItem = memo<ItemInnerProps>(function ListItem({ value }) {
 
 const TokenSelector = memo<{ fiat: string }>(function TokenSelector({ fiat }) {
   const tokens = useAppSelector(state => selectSupportedTokensForFiat(state, fiat));
-  const sortedTokens = useMemo(
-    () => [...tokens].filter(token => token !== 'BIFI').sort(),
-    [tokens]
-  );
+  const sortedTokens = useMemo(() => [...tokens].sort((a, b) => a.localeCompare(b)), [tokens]);
 
   const dispatch = useAppDispatch();
 

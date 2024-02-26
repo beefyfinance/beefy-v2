@@ -353,7 +353,7 @@ async function loadCurvePool(cachePath: string): Promise<CurveApiPoolWithMetadat
 
 const apiPoolsCache = new Map<string, CurveApiPoolWithMetadata[]>();
 
-async function getCurvePools(
+export async function getCurvePools(
   chainId: string,
   updateCache: boolean,
   quiet: boolean = false
@@ -558,6 +558,7 @@ type CurveFixedDepositUnderlying = MakeCurveMethod<'fixed-deposit-underlying'>;
 type CurveDynamicDeposit = MakeCurveMethod<'dynamic-deposit'>;
 type CurvePoolFixed = MakeCurveMethod<'pool-fixed'>;
 type CurvePoolFixedDeposit = MakeCurveMethod<'pool-fixed-deposit'>;
+type CurvePoolDynamicDeposit = MakeCurveMethod<'pool-dynamic-deposit'>;
 
 type CurveMethods =
   | CurveFixed
@@ -566,7 +567,8 @@ type CurveMethods =
   | CurveFixedDepositUnderlying
   | CurveDynamicDeposit
   | CurvePoolFixed
-  | CurvePoolFixedDeposit;
+  | CurvePoolFixedDeposit
+  | CurvePoolDynamicDeposit;
 
 function makeMethod<T extends CurveMethodTypes>(
   type: T,
@@ -594,6 +596,8 @@ const makePoolFixed = (target: string, coins: string[]): CurvePoolFixed =>
   makeMethod('pool-fixed', target, coins);
 const makePoolFixedDeposit = (target: string, coins: string[]): CurvePoolFixedDeposit =>
   makeMethod('pool-fixed-deposit', target, coins);
+const makePoolDynamicDeposit = (target: string, coins: string[]): CurvePoolDynamicDeposit =>
+  makeMethod('pool-dynamic-deposit', target, coins);
 
 function makeFixedDeposit(
   target: string,
@@ -778,28 +782,52 @@ async function factoryPoolToZap(pool: CurveApiPoolWithChain): Promise<CurveMetho
 }
 
 async function factoryStablePoolToZap(pool: CurveApiPoolWithChain): Promise<CurveMethods[]> {
-  const methods: CurveMethods[] = [
-    makeDynamicDeposit(
-      pool.address,
-      pool.coins.map(coin => coin.address)
-    ),
-  ];
   const hasUnderlying = !!pool.underlyingCoins?.length;
   const hasZap = !!pool.zapAddress;
 
-  if (hasUnderlying) {
-    throw new Error('Underlying not implemented for factory stable pools');
-  }
-
-  if (hasZap) {
-    throw new Error('Zap not implemented for factory stable pools');
-  }
-
   if (pool.isMetaPool) {
-    throw new Error('Meta pools not implemented for factory stable pools');
-  }
+    // meta pools have fixed array for amounts and is_deposit flag
+    const methods: CurveMethods[] = [
+      makeFixedDeposit(
+        pool.address,
+        pool.coins.map(coin => coin.address),
+        poolEndpointToIndexType(pool.metadata.endpoint)
+      ),
+    ];
 
-  return methods;
+    if (hasUnderlying && !hasZap) {
+      throw new Error('Factory stable pool is meta pool but has no zap address');
+    }
+
+    if (hasZap) {
+      methods.push(
+        makePoolDynamicDeposit(
+          pool.zapAddress!,
+          pool.underlyingCoins!.map(coin => coin.address)
+        )
+      );
+    }
+
+    return methods;
+  } else {
+    // plain pools have dynamic array for amounts and is_deposit flag
+    const methods: CurveMethods[] = [
+      makeDynamicDeposit(
+        pool.address,
+        pool.coins.map(coin => coin.address)
+      ),
+    ];
+
+    if (hasUnderlying) {
+      throw new Error('Underlying not implemented for non-metapool factory stable pools');
+    }
+
+    if (hasZap) {
+      throw new Error('Zap not implemented for non-metapool factory stable pools');
+    }
+
+    return methods;
+  }
 }
 
 async function mainToZap(pool: CurveApiPoolWithChain): Promise<CurveMethods[]> {

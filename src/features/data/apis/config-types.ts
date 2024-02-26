@@ -196,8 +196,13 @@ export interface AmmConfigSolidly extends AmmConfigUniswapV2LikeBase {
   getAmountOutMode: 'getAmountOut';
 }
 
+export interface AmmConfigGamma extends AmmConfigBase {
+  readonly type: 'gamma';
+  proxyAddress: string;
+}
+
 export type AmmConfigUniswapV2Like = AmmConfigUniswapV2 | AmmConfigSolidly;
-export type AmmConfig = AmmConfigUniswapV2Like;
+export type AmmConfig = AmmConfigUniswapV2Like | AmmConfigGamma;
 
 export function isSolidlyAmmConfig(amm: AmmConfig): amm is AmmConfigSolidly {
   return amm.type === 'solidly';
@@ -263,7 +268,6 @@ export interface MinterConfig {
   depositToken: MinterConfigToken;
   mintedToken: MinterConfigToken;
   canBurnReserves: boolean;
-  hasEarningsPool: boolean;
   reserveBalanceMethod?: string;
   vaultIds: string[];
   canZapInWithOneInch?: boolean;

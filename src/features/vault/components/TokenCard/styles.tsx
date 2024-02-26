@@ -66,5 +66,6 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg'],
     color: theme.palette.text.middle,
     marginTop: '16px',
+    whiteSpace: 'pre-line' as const,
   },
 });

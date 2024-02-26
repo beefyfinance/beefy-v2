@@ -969,7 +969,7 @@ export abstract class UniswapLikeStrategy<
     return {
       id: createQuoteId(option.id),
       strategyId: this.id,
-      priceImpact: calculatePriceImpact(inputs, breakOutputs, returned, state),
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       option,
       inputs,
       outputs,

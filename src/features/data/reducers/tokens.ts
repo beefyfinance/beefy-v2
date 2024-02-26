@@ -45,6 +45,8 @@ export type TokensState = {
        * inside the balance reducer once the config is reworked
        */
       interestingBalanceTokenAddresses: TokenEntity['address'][];
+      /** list of tokens that have an active vault */
+      tokenIdsInActiveVaults: TokenEntity['id'][];
     };
   };
   prices: {
@@ -81,6 +83,7 @@ export const tokensSlice = createSlice({
             byId: {},
             byAddress: {},
             interestingBalanceTokenAddresses: [],
+            tokenIdsInActiveVaults: [],
             native: null,
             wnative: null,
           };
@@ -209,6 +212,7 @@ function addBridgeTokenToState(
       byId: {},
       byAddress: {},
       interestingBalanceTokenAddresses: [],
+      tokenIdsInActiveVaults: [],
       native: null,
       wnative: null,
     };
@@ -262,6 +266,9 @@ function addPriceToState(
 
 function addBreakdownToState(sliceState: Draft<TokensState>, oracleId: string, breakdown: LpData) {
   // Must have breakdown
+  if (oracleId === 'equilibria-arb-rseth') {
+    console.log('addBreakdownToState', oracleId, breakdown);
+  }
   if (!('tokens' in breakdown) || !('balances' in breakdown)) {
     // console.warn(`[LP Breakdown] ${oracleId} missing breakdown`);
     return;
@@ -280,7 +287,10 @@ function addBreakdownToState(sliceState: Draft<TokensState>, oracleId: string, b
   }
 
   // At least one balance should be > 0
-  if (breakdown.balances.find(balance => balance !== '0') === undefined) {
+  if (
+    breakdown.balances.length > 0 &&
+    breakdown.balances.find(balance => balance !== '0') === undefined
+  ) {
     // console.warn(`[LP Breakdown] ${oracleId} has all zero balances`);
     return;
   }
@@ -305,6 +315,7 @@ function addAddressBookToState(
       byId: {},
       byAddress: {},
       interestingBalanceTokenAddresses: [],
+      tokenIdsInActiveVaults: [],
       native: null,
       wnative: null,
     };
@@ -355,7 +366,7 @@ function addAddressBookToState(
       existingToken.website = existingToken.website || token.website;
       if (isTokenErc20(existingToken)) {
         existingToken.bridge = existingToken.bridge || token.bridge;
-        existingToken.risks = existingToken.risks || token.risks;
+        existingToken.risks = tempFilterRisks(existingToken.risks || token.risks || []); // FIXME remove once we support multiple risks types
       }
     }
 
@@ -363,6 +374,10 @@ function addAddressBookToState(
       sliceState.byChainId[chainId].wnative = token.id;
     }
   }
+}
+
+function tempFilterRisks(risks: string[]) {
+  return risks.filter(risk => risk === 'NO_TIMELOCK');
 }
 
 function addBoostToState(
@@ -375,6 +390,7 @@ function addBoostToState(
       byId: {},
       byAddress: {},
       interestingBalanceTokenAddresses: [],
+      tokenIdsInActiveVaults: [],
       native: null,
       wnative: null,
     };
@@ -421,6 +437,7 @@ function addMinterToState(
       byId: {},
       byAddress: {},
       interestingBalanceTokenAddresses: [],
+      tokenIdsInActiveVaults: [],
       native: null,
       wnative: null,
     };
@@ -479,6 +496,7 @@ function addVaultToState(
       byId: {},
       byAddress: {},
       interestingBalanceTokenAddresses: [],
+      tokenIdsInActiveVaults: [],
       native: null,
       wnative: null,
     };
@@ -487,6 +505,15 @@ function addVaultToState(
   const depositToken = getDepositTokenFromLegacyVaultConfig(chain, vault);
   const depositAddressKey = depositToken.address.toLowerCase();
   const existingDepositToken = sliceState.byChainId[chainId].byAddress[depositAddressKey];
+
+  // add assets id's from active vaults to state
+  if (vault.status === 'active') {
+    for (const assetId of vault.assets) {
+      if (!sliceState.byChainId[chainId].tokenIdsInActiveVaults.includes(assetId)) {
+        sliceState.byChainId[chainId].tokenIdsInActiveVaults.push(assetId);
+      }
+    }
+  }
 
   if (existingDepositToken === undefined) {
     // Add the token

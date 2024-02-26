@@ -1293,8 +1293,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://avax.curve.fi/aave/deposit",
-    "removeLiquidityUrl": "https://avax.curve.fi/aave/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/avalanche/pools/aave/swap",
+    "addLiquidityUrl": "https://curve.fi/#/avalanche/pools/aave/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/avalanche/pools/aave/withdraw",
     "network": "avax",
     "zaps": [
       {
@@ -1351,8 +1352,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://avax.curve.fi/atricrypto/deposit",
-    "removeLiquidityUrl": "https://avax.curve.fi/atricrypto/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/avalanche/pools/atricrypto/swap",
+    "addLiquidityUrl": "https://curve.fi/#/avalanche/pools/atricrypto/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/avalanche/pools/atricrypto/withdraw",
     "network": "avax",
     "zaps": [
       {
@@ -2438,8 +2440,9 @@
     ],
     "strategyTypeId": "multi-lp",
     "depositFee": 0.005,
-    "addLiquidityUrl": "https://avax.curve.fi/factory/7/deposit",
-    "removeLiquidityUrl": "https://avax.curve.fi/factory/7/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/avalanche/pools/factory-v2-7/swap",
+    "addLiquidityUrl": "https://curve.fi/#/avalanche/pools/factory-v2-7/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/avalanche/pools/factory-v2-7/withdraw",
     "network": "avax",
     "zaps": [
       {
@@ -3743,8 +3746,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://avax.curve.fi/ren/deposit",
-    "removeLiquidityUrl": "https://avax.curve.fi/ren/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/avalanche/pools/ren/swap",
+    "addLiquidityUrl": "https://curve.fi/#/avalanche/pools/ren/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/avalanche/pools/ren/withdraw",
     "network": "avax",
     "zaps": [
       {
@@ -5148,9 +5152,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.topshelf.finance/#/mint",
-    "addLiquidityUrl": "https://avax.curve.fi/factory/33/deposit",
-    "removeLiquidityUrl": "https://avax.curve.fi/factory/33/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/avalanche/pools/factory-v2-33/swap",
+    "addLiquidityUrl": "https://curve.fi/#/avalanche/pools/factory-v2-33/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/avalanche/pools/factory-v2-33/withdraw",
     "network": "avax",
     "zaps": [
       {
@@ -5482,8 +5486,9 @@
       "ALGO_STABLE"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://avax.curve.fi/factory/55/deposit",
-    "removeLiquidityUrl": "https://avax.curve.fi/factory/55/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/avalanche/pools/factory-v2-55/swap",
+    "addLiquidityUrl": "https://curve.fi/#/avalanche/pools/factory-v2-55/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/avalanche/pools/factory-v2-55/withdraw",
     "network": "avax",
     "zaps": [
       {
