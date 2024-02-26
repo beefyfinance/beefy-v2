@@ -70,7 +70,7 @@
     "token": "MKULTRA",
     "tokenAddress": "0xC236BAE6e35b3Fb7335e1c35CA0862Ce92bd5DE3",
     "tokenDecimals": 18,
-    "tokenProviderId": "prisma",
+    "tokenProviderId": "curve",
     "earnedToken": "mooPrismaMkUSD-ULTRA",
     "earnedTokenAddress": "0x914a02E02dB217E6f5BdBaC65ab4510Ab208ae89",
     "earnContractAddress": "0x914a02E02dB217E6f5BdBaC65ab4510Ab208ae89",

@@ -266,6 +266,9 @@ function addPriceToState(
 
 function addBreakdownToState(sliceState: Draft<TokensState>, oracleId: string, breakdown: LpData) {
   // Must have breakdown
+  if (oracleId === 'equilibria-arb-rseth') {
+    console.log('addBreakdownToState', oracleId, breakdown);
+  }
   if (!('tokens' in breakdown) || !('balances' in breakdown)) {
     // console.warn(`[LP Breakdown] ${oracleId} missing breakdown`);
     return;
@@ -284,7 +287,10 @@ function addBreakdownToState(sliceState: Draft<TokensState>, oracleId: string, b
   }
 
   // At least one balance should be > 0
-  if (breakdown.balances.find(balance => balance !== '0') === undefined) {
+  if (
+    breakdown.balances.length > 0 &&
+    breakdown.balances.find(balance => balance !== '0') === undefined
+  ) {
     // console.warn(`[LP Breakdown] ${oracleId} has all zero balances`);
     return;
   }
