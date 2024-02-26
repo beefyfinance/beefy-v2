@@ -6,7 +6,7 @@ import type { TokenEntity } from '../../../data/entities/token';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { selectUserBalanceOfToken } from '../../../data/selectors/balance';
 import { selectVaultById } from '../../../data/selectors/vaults';
-import { selectTokenByAddress } from '../../../data/selectors/tokens';
+import { selectTokenByAddress, selectVaultTokenSymbols } from '../../../data/selectors/tokens';
 import { useAppSelector } from '../../../../store';
 
 const useStyles = makeStyles(styles);
@@ -28,13 +28,14 @@ export function TokenWithBalance({
   const balance = useAppSelector(state =>
     selectUserBalanceOfToken(state, vault.chainId, token.address)
   );
+  const vaultTokenSymbols = useAppSelector(state => selectVaultTokenSymbols(state, vault.id));
 
   return (
     <Box className={classes.balanceContainer}>
       <Box>
         <AssetsImage
           chainId={vault.chainId}
-          assetIds={token.address === depositToken.address ? vault.assetIds : [token.id]}
+          assetIds={token.address === depositToken.address ? vaultTokenSymbols : [token.id]}
           size={variant === 'sm' ? 20 : 24}
         />
       </Box>

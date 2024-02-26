@@ -2,7 +2,10 @@ import { memo, useMemo } from 'react';
 import type { TokenEntity } from '../../features/data/entities/token';
 import type { ChainEntity } from '../../features/data/entities/chain';
 import { useAppSelector } from '../../store';
-import { selectTokenByAddressOrNull } from '../../features/data/selectors/tokens';
+import {
+  selectTokenByAddressOrNull,
+  selectVaultTokenSymbols,
+} from '../../features/data/selectors/tokens';
 import type { AssetsImageType } from '../AssetsImage';
 import { AssetsImage } from '../AssetsImage';
 import { singleAssetExists } from '../../helpers/singleAssetSrc';
@@ -47,10 +50,12 @@ const TokenWithoutAsset = memo<TokenWithoutAssetProps>(function TokenWithoutAsse
     selectFirstStandardVaultByDepositTokenAddress(state, token.chainId, token.address)
   );
 
+  const vaultTokenSymbols = useAppSelector(state => selectVaultTokenSymbols(state, vault.id));
+
   return vault ? (
     <AssetsImage
       chainId={token.chainId}
-      assetIds={vault.assetIds}
+      assetIds={vaultTokenSymbols}
       className={className}
       size={size}
     />

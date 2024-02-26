@@ -39,7 +39,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
       <div className={classes.titleContainer}>
         <div className={classes.assetIconSymbol}>
           <AssetsImage
-            assetIds={[token.id]}
+            assetIds={[token.symbol]}
             chainId={chain.id}
             size={24}
             className={classes.assetIcon}

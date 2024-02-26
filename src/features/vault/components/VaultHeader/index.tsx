@@ -13,6 +13,7 @@ import { styles } from './styles';
 import { ShareButton } from '../ShareButton';
 import { punctuationWrap } from '../../../../helpers/string';
 import { SaveButton } from '../SaveButton';
+import { selectVaultTokenSymbols } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
@@ -24,11 +25,12 @@ export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
+  const vaultTokenSymbols = useAppSelector(state => selectVaultTokenSymbols(state, vaultId));
 
   return (
     <div className={classes.header}>
       <div className={classes.titleHolder}>
-        <AssetsImage assetIds={vault.assetIds} size={48} chainId={vault.chainId} />
+        <AssetsImage assetIds={vaultTokenSymbols} size={48} chainId={vault.chainId} />
         <h1 className={classes.title}>
           {punctuationWrap(vault.name)} {!isGovVault(vault) ? t('Vault-vault') : ''}
         </h1>

@@ -16,6 +16,7 @@ import type { VaultEntity } from '../../../../../data/entities/vault';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { styles } from './styles';
 import { TokenImage } from '../../../../../../components/TokenImage/TokenImage';
+import { selectVaultTokenSymbols } from '../../../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
@@ -94,10 +95,11 @@ interface VaultNameProps {
 
 export const VaultIdentity = memo<VaultNameProps>(function VaultIdentity({ vaultId }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const vaultTokenSymbols = useAppSelector(state => selectVaultTokenSymbols(state, vault.id));
 
   return (
     <>
-      <AssetsImage size={24} chainId={vault.chainId} assetIds={vault.assetIds} />
+      <AssetsImage size={24} chainId={vault.chainId} assetIds={vaultTokenSymbols} />
       <AssetName name={vault.name} />
     </>
   );
