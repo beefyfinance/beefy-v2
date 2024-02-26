@@ -39,6 +39,7 @@
     "assets": ["rsETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
+    "earningPoints": true,
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6f02c88650837c8dfe89f66723c4743e9cf833cd/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6f02c88650837c8dfe89f66723c4743e9cf833cd/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -61,6 +62,7 @@
     "assets": ["weETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
+    "earningPoints": true,
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xe11f9786b06438456b044b3e21712228adcaa0d1/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xe11f9786b06438456b044b3e21712228adcaa0d1/zap/out?chain=arbitrum",
     "network": "arbitrum"
