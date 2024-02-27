@@ -730,7 +730,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
   linea: {
     name: 'Linea',
     chainId: 59144,
-    rpc: ['https://rpc.linea.build'],
+    rpc: ['https://linea.drpc.org'],
     explorerUrl: 'https://lineascan.build',
     multicallAddress: '0x91BB303E972995EbE5f593BCddBb6F5Ef49Dbcbd',
     appMulticallContractAddress: '0xe536F8141D8EB7B1f096934AF3329cB581bFe995',
@@ -743,7 +743,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://rpc.linea.build'],
+      rpcUrls: ['https://linea.drpc.org'],
       blockExplorerUrls: ['https://lineascan.build'],
     },
     gas: {
