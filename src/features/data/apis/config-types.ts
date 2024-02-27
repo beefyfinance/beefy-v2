@@ -10,7 +10,10 @@ import type BigNumber from 'bignumber.js';
 export interface VaultConfig {
   id: string;
   name: string;
+  /** defaults to standard */
   type?: 'standard' | 'gov' /*| 'concentrated-liquidity'*/;
+  /** version of vault type defaults to 1 */
+  version?: number;
   token: string;
   tokenAddress?: string | null;
   tokenDecimals: number;
