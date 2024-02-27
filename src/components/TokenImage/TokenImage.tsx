@@ -29,11 +29,16 @@ export const TokenImage = memo<TokenImageProps>(function TokenImage({
   }, [token]);
 
   return haveAssetForToken ? (
-    <AssetsImage chainId={chainId} assetIds={[token.symbol]} className={className} size={size} />
+    <AssetsImage
+      chainId={chainId}
+      assetSymbols={[token.symbol]}
+      className={className}
+      size={size}
+    />
   ) : token ? (
     <TokenWithoutAsset token={token} size={size} className={className} />
   ) : (
-    <AssetsImage chainId={chainId} assetIds={['unknown']} className={className} size={size} />
+    <AssetsImage chainId={chainId} assetSymbols={['unknown']} className={className} size={size} />
   );
 });
 
@@ -55,12 +60,17 @@ const TokenWithoutAsset = memo<TokenWithoutAssetProps>(function TokenWithoutAsse
   return vault ? (
     <AssetsImage
       chainId={token.chainId}
-      assetIds={vaultTokenSymbols}
+      assetSymbols={vaultTokenSymbols}
       className={className}
       size={size}
     />
   ) : (
-    <AssetsImage chainId={token.chainId} assetIds={[token.id]} className={className} size={size} />
+    <AssetsImage
+      chainId={token.chainId}
+      assetSymbols={[token.id]}
+      className={className}
+      size={size}
+    />
   );
 });
 
@@ -88,7 +98,7 @@ export const TokensImage = memo<TokensImageProps>(function TokensImage({
   return (
     <AssetsImage
       chainId={tokens[0].chainId}
-      assetIds={tokens.map(token => token.id)}
+      assetSymbols={tokens.map(token => token.id)}
       className={className}
       size={size}
     />

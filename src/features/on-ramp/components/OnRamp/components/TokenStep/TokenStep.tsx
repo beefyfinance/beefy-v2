@@ -44,7 +44,7 @@ const ListItem = memo<ItemInnerProps>(function ListItem({ value }) {
     <>
       <AssetsImage
         chainId={undefined}
-        assetIds={assetIds}
+        assetSymbols={assetIds}
         size={24}
         className={classes.listItemIcon}
       />

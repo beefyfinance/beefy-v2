@@ -20,7 +20,7 @@ export const VaultIcon = memo<VaultIconProps>(function VaultIcon({ vaultId }) {
   return (
     <AssetsImage
       className={classes.vaultIcon}
-      assetIds={vaultTokenSymbols}
+      assetSymbols={vaultTokenSymbols}
       chainId={vault.chainId}
     />
   );

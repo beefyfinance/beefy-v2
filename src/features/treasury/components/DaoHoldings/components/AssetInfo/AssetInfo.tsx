@@ -99,7 +99,7 @@ export const VaultIdentity = memo<VaultNameProps>(function VaultIdentity({ vault
 
   return (
     <>
-      <AssetsImage size={24} chainId={vault.chainId} assetIds={vaultTokenSymbols} />
+      <AssetsImage size={24} chainId={vault.chainId} assetSymbols={vaultTokenSymbols} />
       <AssetName name={vault.name} />
     </>
   );
@@ -125,7 +125,7 @@ export const LPidentity = memo<LPidentityProps>(function LPidentity({ chainId, n
 
   return (
     <>
-      <AssetsImage size={24} chainId={chainId} assetIds={assets} />
+      <AssetsImage size={24} chainId={chainId} assetSymbols={assets} />
       <AssetName name={name} />
     </>
   );
@@ -153,7 +153,7 @@ export const AssetInfoMM = memo<MMAssetInfoProps>(function AssetInfoMM({ holding
   return (
     <MMAssetContainer holding={holding}>
       <>
-        <AssetsImage chainId={'ethereum'} size={24} assetIds={[holding.symbol]} />
+        <AssetsImage chainId={'ethereum'} size={24} assetSymbols={[holding.symbol]} />
         <AssetName name={holding.symbol} />
       </>
     </MMAssetContainer>

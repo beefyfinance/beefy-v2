@@ -25,7 +25,7 @@ const BusdBanner = memo(function BusdBanner() {
 
   return (
     <Banner
-      icon={<AssetsImage chainId={'bsc'} assetIds={['BUSD']} className={classes.icon} />}
+      icon={<AssetsImage chainId={'bsc'} assetSymbols={['BUSD']} className={classes.icon} />}
       text={
         <>
           The issuer of BUSD, Paxos, has halted the minting of new tokens, and Binance plans to

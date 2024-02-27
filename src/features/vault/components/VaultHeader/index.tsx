@@ -30,7 +30,7 @@ export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId
   return (
     <div className={classes.header}>
       <div className={classes.titleHolder}>
-        <AssetsImage assetIds={vaultTokenSymbols} size={48} chainId={vault.chainId} />
+        <AssetsImage assetSymbols={vaultTokenSymbols} size={48} chainId={vault.chainId} />
         <h1 className={classes.title}>
           {punctuationWrap(vault.name)} {!isGovVault(vault) ? t('Vault-vault') : ''}
         </h1>
