@@ -753,7 +753,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
       baseMinimum: '7',
       baseSafetyMargin: 0.2,
     },
-    stableCoins: ['USDT', 'USDC', 'DAI'],
+    stableCoins: ['USDT', 'USDC', 'DAI', 'MAI'],
   },
   mantle: {
     name: 'Mantle',
