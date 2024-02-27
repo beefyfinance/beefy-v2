@@ -1,5 +1,28 @@
 [
   {
+    "id": "aura-op-all-roads-lead-to-frax",
+    "name": "All Roads Lead to Frax",
+    "type": "standard",
+    "token": "All Roads Lead to Frax",
+    "tokenAddress": "0x478980c67d53Cd990F2B7bab311DDC9934324E7B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooAuraOPAllRoadsLeadtoFrax",
+    "earnedTokenAddress": "0x9977885b3bb32B0C766e3B8F22AB9d6c7f647404",
+    "earnContractAddress": "0x9977885b3bb32B0C766e3B8F22AB9d6c7f647404",
+    "oracle": "lps",
+    "oracleId": "aura-op-all-roads-lead-to-frax",
+    "status": "active",
+    "createdAt": 1709043538,
+    "platformId": "aura",
+    "assets": ["FRAX", "sfrxETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://op.beets.fi/pool/0x478980c67d53cd990f2b7bab311ddc9934324e7b00020000000000000000010c",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0x478980c67d53cd990f2b7bab311ddc9934324e7b00020000000000000000010c",
+    "network": "optimism"
+  },
+  {
     "id": "velodrome-v2-usdc-usdc",
     "name": "USDC-USDC.e sLP V2",
     "type": "standard",
