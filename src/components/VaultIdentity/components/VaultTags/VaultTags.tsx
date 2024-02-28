@@ -105,6 +105,23 @@ const WormholeSTIPTag = memo(function WormholeSTIPTag() {
   );
 });
 
+const PointsTag = memo(function WormholeSTIPTag() {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const { isOverflowing, ref } = useIsOverflowingHorizontally();
+  return (
+    <VaultTagWithTooltip
+      content={<BasicTooltipContent title={t('VaultTag-Points')} />}
+      placement="bottom"
+      disabled={!isOverflowing}
+      className={classes.vaultTagPoints}
+      ref={ref}
+    >
+      {t('VaultTag-Points')}
+    </VaultTagWithTooltip>
+  );
+});
+
 export type VaultTagsProps = {
   vaultId: VaultEntity['id'];
 };
@@ -131,9 +148,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
       ) : isGovVault(vault) ? (
         <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddress} />
       ) : null}
-      {isVaultEarningPoints(vault) && (
-        <VaultTag className={classes.vaultTagPoints}>{t('VaultTag-Points')}</VaultTag>
-      )}
+      {isVaultEarningPoints(vault) && <PointsTag />}
     </div>
   );
 });
