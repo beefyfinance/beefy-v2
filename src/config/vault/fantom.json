@@ -1,5 +1,35 @@
 [
   {
+    "id": "beets-layered-and-staked-fantom-opera",
+    "name": "Layered & Staked Fantom Opera",
+    "type": "standard",
+    "token": "Layered & Staked Fantom Opera",
+    "tokenAddress": "0xB4d48849eE191c230fD1BDc573Fc614fbC4738d2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsLayered&StakedFantomOpera",
+    "earnedTokenAddress": "0xF3099b78FD4B6b6fEb969d458c1e30710471f29C",
+    "earnContractAddress": "0xF3099b78FD4B6b6fEb969d458c1e30710471f29C",
+    "oracle": "lps",
+    "oracleId": "beets-layered-and-staked-fantom-opera",
+    "status": "active",
+    "createdAt": 1709041606,
+    "platformId": "beethovenx",
+    "assets": ["lzUSDC", "sFTMx"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://beets.fi/pool/0xb4d48849ee191c230fd1bdc573fc614fbc4738d20002000000000000000007e1",
+    "removeLiquidityUrl": "https://beets.fi/pool/0xb4d48849ee191c230fd1bdc573fc614fbc4738d20002000000000000000007e1",
+    "network": "fantom"
+  },
+  {
     "id": "beets-fantom-menace",
     "name": "Fantom Menace",
     "type": "standard",

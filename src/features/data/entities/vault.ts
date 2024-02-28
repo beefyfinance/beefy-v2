@@ -26,6 +26,7 @@ export interface VaultStandard {
   id: string;
   name: string;
   type: 'standard';
+  version: number;
   depositTokenAddress: string;
   zaps: StrategyOptions[];
 
@@ -84,6 +85,7 @@ export interface VaultGov {
   id: string;
   name: string;
   type: 'gov';
+  version: number;
   depositTokenAddress: string;
 
   /**
