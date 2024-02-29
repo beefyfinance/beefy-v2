@@ -105,7 +105,7 @@ const WormholeSTIPTag = memo(function WormholeSTIPTag() {
   );
 });
 
-const PointsTag = memo(function WormholeSTIPTag() {
+const PointsTag = memo(function PointsTag() {
   const classes = useStyles();
   const { t } = useTranslation();
   const { isOverflowing, ref } = useIsOverflowingHorizontally();

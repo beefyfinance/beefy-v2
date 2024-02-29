@@ -122,7 +122,7 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState.onlyZappable = action.payload;
     },
-    setonlyEarningPoints(
+    setOnlyEarningPoints(
       sliceState,
       action: PayloadAction<FilteredVaultsState['onlyEarningPoints']>
     ) {
