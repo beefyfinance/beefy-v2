@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import type { TokenEntity } from '../../features/data/entities/token';
 import type { ChainEntity } from '../../features/data/entities/chain';
 import { useAppSelector } from '../../store';
-import { selectTokenByAddressOrNull } from '../../features/data/selectors/tokens';
+import { selectTokenByAddressOrUndefined } from '../../features/data/selectors/tokens';
 import type { AssetsImageType } from '../AssetsImage';
 import { AssetsImage } from '../AssetsImage';
 import { singleAssetExists } from '../../helpers/singleAssetSrc';
@@ -20,13 +20,15 @@ export const TokenImage = memo<TokenImageProps>(function TokenImage({
   size,
   className,
 }) {
-  const token = useAppSelector(state => selectTokenByAddressOrNull(state, chainId, tokenAddress));
+  const token = useAppSelector(state =>
+    selectTokenByAddressOrUndefined(state, chainId, tokenAddress)
+  );
   const haveAssetForToken = useMemo(() => {
-    return token && singleAssetExists(token.id, token.chainId);
+    return !!token && singleAssetExists(token.id, token.chainId);
   }, [token]);
 
   return haveAssetForToken ? (
-    <AssetsImage chainId={chainId} assetIds={[token.id]} className={className} size={size} />
+    <AssetsImage chainId={chainId} assetIds={[token!.id]} className={className} size={size} />
   ) : token ? (
     <TokenWithoutAsset token={token} size={size} className={className} />
   ) : (

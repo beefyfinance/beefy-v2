@@ -12,7 +12,7 @@ export type QuoteRequest = {
   vaultId: VaultEntity['id']; // so we can block vaults from aggregators if needed
 };
 
-export type QuoteResponse<T extends unknown = unknown> = {
+export type QuoteResponse<T = unknown> = {
   providerId: string;
   fromToken: TokenEntity;
   fromAmount: BigNumber;
@@ -22,7 +22,7 @@ export type QuoteResponse<T extends unknown = unknown> = {
   extra?: T;
 };
 
-export type SwapRequest<T extends unknown = unknown> = {
+export type SwapRequest<T = unknown> = {
   quote: QuoteResponse<T>;
   fromAddress: string;
   slippage: number;

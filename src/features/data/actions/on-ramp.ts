@@ -112,10 +112,10 @@ export const setOnRampToken = createAsyncThunk<
 });
 
 export type ValidateFulfilledPayload = {
-  fiat: null | FiatError;
-  token: null | TokenError;
-  network: null | NetworkError;
-  input: null | InputError;
+  fiat: undefined | FiatError;
+  token: undefined | TokenError;
+  network: undefined | NetworkError;
+  input: undefined | InputError;
 };
 
 export const validateOnRampForm = createAsyncThunk<
@@ -124,11 +124,11 @@ export const validateOnRampForm = createAsyncThunk<
   { state: BeefyState }
 >('on-ramp/validateForm', async (_, { getState, dispatch }) => {
   const state = getState();
-  const errors = {
-    fiat: null,
-    token: null,
-    network: null,
-    input: null,
+  const errors: ValidateFulfilledPayload = {
+    fiat: undefined,
+    token: undefined,
+    network: undefined,
+    input: undefined,
   };
   const fiat = selectFiat(state);
   if (!fiat) {

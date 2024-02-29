@@ -31,45 +31,53 @@ import { fetchPlatforms } from '../actions/platforms';
 import { fetchOnRampSupportedProviders } from '../actions/on-ramp';
 import { fetchFees } from '../actions/fees';
 import type {
-  ChainIdDataByAddressEntity,
+  ChainIdDataByAddressByChainEntity,
   ChainIdDataEntity,
   DataLoaderState,
+  GlobalDataByAddressEntity,
   LoaderState,
 } from './data-loader-types';
 import { errorToString } from '../../../helpers/format';
 import { fetchTreasury } from '../actions/treasury';
-import type { fetchWalletTimelineFulfilled } from '../actions/analytics';
 import { fetchWalletTimeline } from '../actions/analytics';
 import { fetchActiveProposals } from '../actions/proposal';
 import { fetchBridges } from '../actions/bridges';
 import { fetchAllMigrators } from '../actions/migrator';
 import { fetchLastArticle } from '../actions/articles';
+import type { BeefyState } from '../../../redux-types';
+import type { ChainEntity } from '../entities/chain';
 
 const dataLoaderStateInit: LoaderState = {
   alreadyLoadedOnce: false,
   status: 'init',
   error: null,
 };
+
 const dataLoaderStateFulfilled: LoaderState = {
   alreadyLoadedOnce: true,
   status: 'fulfilled',
   error: null,
 };
+
 const dataLoaderStatePending: LoaderState = {
   alreadyLoadedOnce: false,
   status: 'pending',
   error: null,
 };
-const dataLoaderStateInitByChainId: DataLoaderState['byChainId']['bsc'] = {
+
+const dataLoaderStateInitByChainId: ChainIdDataEntity = {
   contractData: dataLoaderStateInit,
   addressBook: dataLoaderStateInit,
 };
 
-const dataLoaderStateInitByAddresAndChainId = {
+const dataLoaderStateInitByAddress = {
   byChainId: {},
+  global: {
+    timeline: dataLoaderStateInit,
+  },
 };
 
-const dataLoaderStateByChainIdWithAddress: ChainIdDataByAddressEntity = {
+const dataLoaderStateInitByAddressByChainId: ChainIdDataByAddressByChainEntity = {
   balance: dataLoaderStateInit,
   allowance: dataLoaderStateInit,
 };
@@ -112,7 +120,6 @@ export const initialDataLoaderState: DataLoaderState = {
   },
   byChainId: {},
   byAddress: {},
-  timelineByAddress: {},
 };
 
 /**
@@ -121,7 +128,7 @@ export const initialDataLoaderState: DataLoaderState = {
  */
 function addGlobalAsyncThunkActions(
   builder: ActionReducerMapBuilder<DataLoaderState>,
-  action: AsyncThunk<unknown, unknown, unknown>,
+  action: AsyncThunk<unknown, unknown, { state: BeefyState }>,
   stateKey: keyof DataLoaderState['global'],
   openNetworkModalOnReject: boolean = false
 ) {
@@ -150,152 +157,173 @@ function addGlobalAsyncThunkActions(
   });
 }
 
-function addByChainAsyncThunkActions<
-  ActionParams extends { chainId: string; walletAddress?: string }
->(
-  builder: ActionReducerMapBuilder<DataLoaderState>,
-  action: AsyncThunk<unknown, ActionParams, unknown>,
-  stateKeys: Array<keyof ChainIdDataEntity | keyof ChainIdDataByAddressEntity>,
-  updateByAddress: boolean
-) {
-  builder.addCase(action.pending, (sliceState, action) => {
-    const chainId = action.meta?.arg.chainId;
-    if (updateByAddress) {
-      const walletAddress = action.meta?.arg.walletAddress;
-      if (sliceState.byAddress[walletAddress] === undefined) {
-        sliceState.byAddress[walletAddress] = {
-          ...dataLoaderStateInitByAddresAndChainId,
-        };
-      }
+function getOrCreateChainState(sliceState: DataLoaderState, chainId: string) {
+  let chainState: ChainIdDataEntity | undefined = sliceState.byChainId[chainId];
+  if (!chainState) {
+    chainState = sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
+  }
+  return chainState;
+}
 
-      if (sliceState.byAddress[walletAddress].byChainId[chainId] === undefined) {
-        sliceState.byAddress[walletAddress].byChainId = {
-          [chainId]: dataLoaderStateByChainIdWithAddress,
-        };
-      }
+function getOrCreateAddressState(sliceState: DataLoaderState, address: string) {
+  let addressState = sliceState.byAddress[address];
+  if (!addressState) {
+    addressState = sliceState.byAddress[address] = {
+      ...dataLoaderStateInitByAddress,
+    };
+  }
+
+  return addressState;
+}
+
+function getOrCreateAddressChainState(
+  sliceState: DataLoaderState,
+  chainId: string,
+  address: string
+) {
+  const addressState = getOrCreateAddressState(sliceState, address);
+
+  let chainState: ChainIdDataByAddressByChainEntity | undefined = addressState.byChainId[chainId];
+  if (!chainState) {
+    chainState = sliceState.byAddress[address].byChainId[chainId] = {
+      ...dataLoaderStateInitByAddressByChainId,
+    };
+  }
+
+  return chainState;
+}
+
+function addByChainAsyncThunkActions<ActionParams extends { chainId: ChainEntity['id'] }>(
+  builder: ActionReducerMapBuilder<DataLoaderState>,
+  action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
+  stateKeys: Array<keyof ChainIdDataEntity>
+) {
+  builder
+    .addCase(action.pending, (sliceState, action) => {
+      const chainId = action.meta?.arg.chainId;
+      const chainState = getOrCreateChainState(sliceState, chainId);
       for (const stateKey of stateKeys) {
-        sliceState.byAddress[walletAddress].byChainId[chainId] = {
-          [stateKey]: {
-            ...dataLoaderStatePending,
-            alreadyLoadedOnce: true,
-          },
-          ...sliceState.byAddress[walletAddress].byChainId[chainId],
-        };
-      }
-    } else {
-      if (sliceState.byChainId[chainId] === undefined) {
-        sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
-      }
-      for (const stateKey of stateKeys) {
-        sliceState.byChainId[chainId][stateKey] = {
+        chainState[stateKey] = {
           ...dataLoaderStatePending,
           alreadyLoadedOnce: true,
         };
       }
-    }
-  });
-  builder.addCase(action.rejected, (sliceState, action) => {
-    const chainId = action.meta?.arg.chainId;
+    })
+    .addCase(action.rejected, (sliceState, action) => {
+      const chainId = action.meta?.arg.chainId;
+      const chainState = getOrCreateChainState(sliceState, chainId);
+      const error = errorToString(action.error);
 
-    const msg = errorToString(action.error);
-
-    if (updateByAddress) {
-      const walletAddress = action.meta?.arg.walletAddress;
-      if (sliceState.byAddress[walletAddress] === undefined) {
-        sliceState.byAddress[walletAddress] = {
-          ...dataLoaderStateInitByAddresAndChainId,
-        };
-      }
-      if (sliceState.byAddress[walletAddress].byChainId[chainId] === undefined) {
-        sliceState.byAddress[walletAddress].byChainId[chainId] = {
-          ...dataLoaderStateByChainIdWithAddress,
-        };
-      }
       for (const stateKey of stateKeys) {
-        sliceState.byAddress[walletAddress].byChainId[chainId][stateKey] = {
-          alreadyLoadedOnce:
-            sliceState.byAddress[walletAddress].byChainId[chainId][stateKey].alreadyLoadedOnce,
+        chainState[stateKey] = {
+          alreadyLoadedOnce: chainState[stateKey].alreadyLoadedOnce,
           status: 'rejected',
-          error: msg,
-        };
-      }
-    } else {
-      if (sliceState.byChainId[chainId] === undefined) {
-        sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
-      }
-      // here, maybe put an error message
-      for (const stateKey of stateKeys) {
-        sliceState.byChainId[chainId][stateKey] = {
-          alreadyLoadedOnce: sliceState.byChainId[chainId][stateKey].alreadyLoadedOnce,
-          status: 'rejected',
-          error: msg,
+          error,
         };
 
         // something got rejected, we want to auto-open the indicator
         sliceState.statusIndicator.open = true;
       }
-    }
-  });
-  builder.addCase(action.fulfilled, (sliceState, action) => {
-    const chainId = action.meta?.arg.chainId;
-    if (updateByAddress) {
-      const walletAddress = action.meta?.arg.walletAddress;
-      if (sliceState.byAddress[walletAddress] === undefined) {
-        sliceState.byAddress[walletAddress] = {
-          ...dataLoaderStateInitByAddresAndChainId,
-        };
-      }
-      if (sliceState.byAddress[walletAddress].byChainId[chainId] === undefined) {
-        sliceState.byAddress[walletAddress].byChainId[chainId] = {
-          ...dataLoaderStateByChainIdWithAddress,
-        };
-      }
+    })
+    .addCase(action.fulfilled, (sliceState, action) => {
+      const chainId = action.meta?.arg.chainId;
+      const chainState = getOrCreateChainState(sliceState, chainId);
+
       for (const stateKey of stateKeys) {
-        sliceState.byAddress[walletAddress].byChainId[chainId][stateKey] = dataLoaderStateFulfilled;
+        chainState[stateKey] = { ...dataLoaderStateFulfilled };
       }
-    } else {
-      if (sliceState.byChainId[chainId] === undefined) {
-        sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
-      }
-      for (const stateKey of stateKeys) {
-        sliceState.byChainId[chainId][stateKey] = dataLoaderStateFulfilled;
-      }
-    }
-  });
+    });
 }
 
-function addByAddressAsyncThunkActions(
+function addByAddressByChainAsyncThunkActions<
+  ActionParams extends { chainId: ChainEntity['id']; walletAddress: string }
+>(
   builder: ActionReducerMapBuilder<DataLoaderState>,
-  action: AsyncThunk<fetchWalletTimelineFulfilled, { address: string }, unknown>
+  action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
+  stateKeys: Array<keyof ChainIdDataByAddressByChainEntity>
 ) {
-  builder.addCase(action.pending, (sliceState, action) => {
-    const address = action.meta?.arg.address;
-    if (sliceState.timelineByAddress[address] === undefined) {
-      sliceState.timelineByAddress[address] = dataLoaderStatePending;
-    }
-  });
-  builder.addCase(action.rejected, (sliceState, action) => {
-    const address = action.meta?.arg.address;
-    const msg = errorToString(action.error);
+  builder
+    .addCase(action.pending, (sliceState, action) => {
+      const chainId = action.meta.arg.chainId;
+      const chainState = getOrCreateAddressChainState(
+        sliceState,
+        chainId,
+        action.meta.arg.walletAddress
+      );
 
-    if (sliceState.timelineByAddress[address] === undefined) {
-      sliceState.timelineByAddress[address] = dataLoaderStateInit;
-    }
+      for (const stateKey of stateKeys) {
+        chainState[stateKey] = {
+          ...dataLoaderStatePending,
+          alreadyLoadedOnce: true,
+        };
+      }
+    })
+    .addCase(action.rejected, (sliceState, action) => {
+      const chainId = action.meta?.arg.chainId;
+      const chainState = getOrCreateAddressChainState(
+        sliceState,
+        chainId,
+        action.meta.arg.walletAddress
+      );
+      const error = errorToString(action.error);
 
-    sliceState.timelineByAddress[address] = {
-      alreadyLoadedOnce: true,
-      status: 'rejected',
-      error: msg,
-    };
-  });
-  builder.addCase(action.fulfilled, (sliceState, action) => {
-    const address = action.meta?.arg.address;
-    if (sliceState.timelineByAddress[address] === undefined) {
-      sliceState.timelineByAddress[address] = dataLoaderStatePending;
-    }
+      for (const stateKey of stateKeys) {
+        chainState[stateKey] = {
+          alreadyLoadedOnce: chainState[stateKey].alreadyLoadedOnce,
+          status: 'rejected',
+          error,
+        };
+      }
+    })
+    .addCase(action.fulfilled, (sliceState, action) => {
+      const chainId = action.meta?.arg.chainId;
+      const chainState = getOrCreateAddressChainState(
+        sliceState,
+        chainId,
+        action.meta.arg.walletAddress
+      );
 
-    sliceState.timelineByAddress[address] = { ...dataLoaderStateFulfilled };
-  });
+      for (const stateKey of stateKeys) {
+        chainState[stateKey] = { ...dataLoaderStateFulfilled };
+      }
+    });
+}
+
+function addByAddressAsyncThunkActions<ActionParams extends { walletAddress: string }>(
+  builder: ActionReducerMapBuilder<DataLoaderState>,
+  action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
+  stateKeys: Array<keyof GlobalDataByAddressEntity>
+) {
+  builder
+    .addCase(action.pending, (sliceState, action) => {
+      const addressState = getOrCreateAddressState(sliceState, action.meta.arg.walletAddress);
+
+      for (const stateKey of stateKeys) {
+        addressState.global[stateKey] = {
+          ...dataLoaderStatePending,
+          alreadyLoadedOnce: true,
+        };
+      }
+    })
+    .addCase(action.rejected, (sliceState, action) => {
+      const addressState = getOrCreateAddressState(sliceState, action.meta.arg.walletAddress);
+      const error = errorToString(action.error);
+
+      for (const stateKey of stateKeys) {
+        addressState.global[stateKey] = {
+          alreadyLoadedOnce: addressState[stateKey].alreadyLoadedOnce,
+          status: 'rejected',
+          error,
+        };
+      }
+    })
+    .addCase(action.fulfilled, (sliceState, action) => {
+      const addressState = getOrCreateAddressState(sliceState, action.meta.arg.walletAddress);
+
+      for (const stateKey of stateKeys) {
+        addressState.global[stateKey] = { ...dataLoaderStateFulfilled };
+      }
+    });
 }
 
 export const dataLoaderSlice = createSlice({
@@ -342,22 +370,19 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury', true);
     addGlobalAsyncThunkActions(builder, fetchActiveProposals, 'proposals', false);
     addGlobalAsyncThunkActions(builder, fetchLastArticle, 'articles', false);
-    addByChainAsyncThunkActions(
-      builder,
-      fetchAllContractDataByChainAction,
-      ['contractData'],
-      false
-    );
-    addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook'], false);
-    addByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance'], true);
-    addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, ['allowance'], true);
-    addByChainAsyncThunkActions(
+
+    addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
+    addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);
+
+    addByAddressByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance']);
+    addByAddressByChainAsyncThunkActions(builder, fetchAllAllowanceAction, ['allowance']);
+    addByAddressByChainAsyncThunkActions(
       builder,
       reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
-      ['balance', 'allowance'],
-      true
+      ['balance', 'allowance']
     );
-    addByAddressAsyncThunkActions(builder, fetchWalletTimeline);
+
+    addByAddressAsyncThunkActions(builder, fetchWalletTimeline, ['timeline']);
   },
 });
 

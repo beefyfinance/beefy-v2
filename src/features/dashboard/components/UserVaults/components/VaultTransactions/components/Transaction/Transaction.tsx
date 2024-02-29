@@ -73,7 +73,7 @@ export const Transaction = memo<TransactionProps>(function Transaction({ data, t
             className={clsx(amountClassName, classes.stat)}
             amount={underlyingDiff}
             decimals={tokenDecimals}
-            price={underlyingToUsdPrice}
+            price={underlyingToUsdPrice || BIG_ZERO}
           />
         </div>
         <div className={classes.column}>
@@ -81,7 +81,7 @@ export const Transaction = memo<TransactionProps>(function Transaction({ data, t
           <TokenAmount
             amount={shareBalance.times(shareToUnderlyingPrice)}
             decimals={tokenDecimals}
-            price={underlyingToUsdPrice}
+            price={underlyingToUsdPrice || BIG_ZERO}
             className={classes.stat}
           />
         </div>
@@ -96,7 +96,7 @@ export const Transaction = memo<TransactionProps>(function Transaction({ data, t
         </div>
         {/*Usd Balance */}
         <div className={classes.column}>
-          <div className={classes.stat}>{formatBigUsd(usdBalance)}</div>
+          <div className={classes.stat}>{formatBigUsd(usdBalance || BIG_ZERO)}</div>
         </div>
       </InfoGrid>
     </Row>
@@ -127,7 +127,13 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
   }, [classes.textGreen, classes.textRed, underlyingDiff]);
 
   const balance = useMemo(() => {
-    return formatSignificantBigNumber(underlyingBalance, tokenDecimals, underlyingToUsdPrice, 0, 2);
+    return formatSignificantBigNumber(
+      underlyingBalance,
+      tokenDecimals,
+      underlyingToUsdPrice || BIG_ZERO,
+      0,
+      2
+    );
   }, [underlyingBalance, tokenDecimals, underlyingToUsdPrice]);
 
   const mooTokenBal = useMemo(() => {
@@ -135,7 +141,13 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
   }, [shareBalance, shareToUnderlyingPrice]);
 
   const diff = useMemo(() => {
-    return formatSignificantBigNumber(underlyingDiff, tokenDecimals, underlyingToUsdPrice, 0, 2);
+    return formatSignificantBigNumber(
+      underlyingDiff,
+      tokenDecimals,
+      underlyingToUsdPrice || BIG_ZERO,
+      0,
+      2
+    );
   }, [underlyingDiff, tokenDecimals, underlyingToUsdPrice]);
 
   return (
@@ -175,7 +187,10 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
           label={t('Dashboard-Filter-MooTokens')}
           value={mooTokenBal}
         />
-        <MobileStat label={t('Dashboard-Filter-UsdBalance')} value={formatBigUsd(usdBalance)} />
+        <MobileStat
+          label={t('Dashboard-Filter-UsdBalance')}
+          value={formatBigUsd(usdBalance || BIG_ZERO)}
+        />
       </InfoGrid>
     </RowMobile>
   );

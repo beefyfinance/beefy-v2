@@ -36,8 +36,10 @@ export const mintersSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(fetchAllMinters.fulfilled, (sliceState, action) => {
       for (const [chainId, minters] of entries(action.payload.byChainId)) {
-        for (const minter of minters) {
-          addMinterToState(sliceState, chainId, minter);
+        if (minters) {
+          for (const minter of minters) {
+            addMinterToState(sliceState, chainId, minter);
+          }
         }
       }
     });
@@ -70,16 +72,28 @@ function addMinterToState(
   sliceState.allIds.push(minter.id);
 
   // Add to chain id index
-  if (sliceState.byChainId[chainId] === undefined) {
-    sliceState.byChainId[chainId] = [];
-  }
-  sliceState.byChainId[chainId].push(minter.id);
+  const chainState = getOrCreateMinterChainState(sliceState, chainId);
+  chainState.push(minter.id);
 
   // Add to vault id index
   for (const vaultId of minter.vaultIds) {
-    if (sliceState.byVaultId[vaultId] === undefined) {
-      sliceState.byVaultId[vaultId] = [];
-    }
-    sliceState.byVaultId[vaultId].push(minter.id);
+    const vaultState = getOrCreateMinterVaultState(sliceState, vaultId);
+    vaultState.push(minter.id);
   }
+}
+
+function getOrCreateMinterChainState(sliceState: Draft<MintersState>, chainId: ChainEntity['id']) {
+  let chainState = sliceState.byChainId[chainId];
+  if (chainState === undefined) {
+    chainState = sliceState.byChainId[chainId] = [];
+  }
+  return chainState;
+}
+
+function getOrCreateMinterVaultState(sliceState: Draft<MintersState>, vaultId: VaultEntity['id']) {
+  let vaultState = sliceState.byVaultId[vaultId];
+  if (vaultState === undefined) {
+    vaultState = sliceState.byVaultId[vaultId] = [];
+  }
+  return vaultState;
 }

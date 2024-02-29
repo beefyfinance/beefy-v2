@@ -10,14 +10,20 @@ import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { selectUserDepositedVaultIds } from './balance';
 import { selectWalletAddress } from './wallet';
 import { selectIsConfigAvailable } from './data-loader';
+import type { AnalyticsBucketData } from '../reducers/analytics';
 
 export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], address?: string) =>
     address || selectWalletAddress(state),
   (state: BeefyState, _vaultId: VaultEntity['id'], _address?: string) => state.user.analytics,
   (state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId,
-  (walletAddress, analyticsState, vaultId) =>
-    analyticsState.byAddress[walletAddress?.toLowerCase()]?.timeline.byVaultId[vaultId] || []
+  (walletAddress, analyticsState, vaultId) => {
+    if (!walletAddress) {
+      return [];
+    }
+
+    return analyticsState.byAddress[walletAddress.toLowerCase()]?.timeline.byVaultId[vaultId] || [];
+  }
 )((state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
 
 export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAddress: string) => {
@@ -51,7 +57,7 @@ export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAd
 };
 
 export const selectIsAnalyticsLoadedByAddress = (state: BeefyState, walletAddress: string) => {
-  return state.ui.dataLoader.timelineByAddress[walletAddress]?.alreadyLoadedOnce || false;
+  return state.ui.dataLoader.byAddress[walletAddress]?.global.timeline.alreadyLoadedOnce || false;
 };
 
 export const selectVaultPnl = (
@@ -135,21 +141,40 @@ export const selectLastVaultDepositStart = (
   return firstDepositDate;
 };
 
+const EMPTY_TIMEBUCKET: AnalyticsBucketData = {
+  data: [],
+  status: 'idle',
+};
+
 export const selectShareToUnderlyingTimebucketByVaultId = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   timebucket: TimeBucketType,
   address?: string
-) => {
+): AnalyticsBucketData => {
   const walletAddress = address || selectWalletAddress(state);
-  return (
-    state.user.analytics.byAddress[walletAddress?.toLowerCase()]?.shareToUnderlying.byVaultId[
-      vaultId
-    ]?.byTimebucket[timebucket] || {
-      data: [],
-      status: 'idle',
-    }
-  );
+  if (!walletAddress) {
+    return { ...EMPTY_TIMEBUCKET };
+  }
+
+  const addressKey = walletAddress.toLowerCase();
+  const addressState = state.user.analytics.byAddress[addressKey];
+
+  if (!addressState) {
+    return { ...EMPTY_TIMEBUCKET };
+  }
+
+  const vaultState = addressState.shareToUnderlying.byVaultId[vaultId];
+  if (!vaultState) {
+    return { ...EMPTY_TIMEBUCKET };
+  }
+
+  const bucketState = vaultState.byTimebucket[timebucket];
+  if (!bucketState) {
+    return { ...EMPTY_TIMEBUCKET };
+  }
+
+  return bucketState;
 };
 
 export const selectUnderlyingToUsdTimebucketByVaultId = (
@@ -159,12 +184,13 @@ export const selectUnderlyingToUsdTimebucketByVaultId = (
   address?: string
 ) => {
   const walletAddress = address || selectWalletAddress(state);
+  if (!walletAddress) {
+    return { ...EMPTY_TIMEBUCKET };
+  }
+
   return (
-    state.user.analytics.byAddress[walletAddress?.toLowerCase()]?.underlyingToUsd.byVaultId[vaultId]
-      ?.byTimebucket[timebucket] || {
-      data: [],
-      status: 'idle',
-    }
+    state.user.analytics.byAddress[walletAddress.toLowerCase()]?.underlyingToUsd.byVaultId[vaultId]
+      ?.byTimebucket[timebucket] || { ...EMPTY_TIMEBUCKET }
   );
 };
 

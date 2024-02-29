@@ -216,35 +216,6 @@ const QuotesLoading = memo(function QuotesLoading() {
   );
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const AllLimitedError = memo(function AllLimitedError() {
-  const { t } = useTranslation();
-  const quotes = useAppSelector(selectAllBridgeLimitedQuotes);
-  const currentLimit = useMemo(() => {
-    return BigNumber.max(
-      ...quotes.map(quote => BigNumber.min(quote.limits.from.current, quote.limits.to.current))
-    );
-  }, [quotes]);
-  const maxLimit = useMemo(() => {
-    return BigNumber.max(
-      ...quotes.map(quote => BigNumber.min(quote.limits.from.max, quote.limits.to.max))
-    );
-  }, [quotes]);
-  const waitLimits = useMemo(() => {
-    const wanted = quotes[0].input.amount;
-    return maxLimit.minus(currentLimit).gt(BIG_ONE) && maxLimit.gt(wanted);
-  }, [currentLimit, maxLimit, quotes]);
-
-  return (
-    <AlertError>
-      {t(waitLimits ? 'Bridge-Quotes-AllRateLimited-Wait' : 'Bridge-Quotes-AllRateLimited', {
-        current: formatBigDecimals(currentLimit, 4),
-        max: formatBigDecimals(maxLimit, 4),
-      })}
-    </AlertError>
-  );
-});
-
 const QuotesError = memo(function QuotesError() {
   const { t } = useTranslation();
   const errorLimits = useAppSelector(selectBridgeQuoteErrorLimits);

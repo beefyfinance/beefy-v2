@@ -33,7 +33,7 @@ export class KyberSwapProvider implements ISwapProvider {
     chainId: ChainEntity['id'],
     state: BeefyState
   ): KyberSwapSwapConfig | undefined {
-    return selectSwapAggregatorForChainType<KyberSwapSwapConfig>(state, chainId, 'kyber');
+    return selectSwapAggregatorForChainType<KyberSwapSwapConfig['type']>(state, chainId, 'kyber');
   }
 
   async fetchQuote(request: QuoteRequest, state: BeefyState): Promise<QuoteResponse<RouteSummary>> {
@@ -77,6 +77,9 @@ export class KyberSwapProvider implements ISwapProvider {
     const config = this.getConfigForChain(chain.id, state);
     if (!config) {
       throw new Error(`No kyber aggregator config found for chain ${chain.id}`);
+    }
+    if (!quote.extra) {
+      throw new Error(`No route summary found for kyber swap`);
     }
     const api = await getKyberSwapApi(chain);
     const swap = await api.postSwap({

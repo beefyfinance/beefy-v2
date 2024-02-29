@@ -4,6 +4,7 @@ import { InputMode } from '../reducers/on-ramp-types';
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { orderBy } from 'lodash-es';
 import type { ChainEntity } from '../entities/chain';
+import { valueOrThrow } from '../utils/selector-utils';
 
 export const selectIsOnRampLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.onRamp.alreadyLoadedOnce;
@@ -11,13 +12,17 @@ export const selectIsOnRampLoaded = (state: BeefyState) =>
 export const selectShouldInitOnRamp = (state: BeefyState) =>
   isInitialLoader(state.ui.dataLoader.global.onRamp);
 
-export const selectToken = (state: BeefyState) => state.ui.onRamp.token.value;
+export const selectToken = (state: BeefyState) =>
+  valueOrThrow(state.ui.onRamp.token.value, 'Token value is not set');
 export const selectTokenError = (state: BeefyState) => state.ui.onRamp.token.error;
-export const selectFiat = (state: BeefyState) => state.ui.onRamp.fiat.value;
+export const selectFiat = (state: BeefyState) =>
+  valueOrThrow(state.ui.onRamp.fiat.value, 'Fiat value is not set');
 export const selectFiatError = (state: BeefyState) => state.ui.onRamp.fiat.error;
-export const selectNetwork = (state: BeefyState) => state.ui.onRamp.network.value;
+export const selectNetwork = (state: BeefyState) =>
+  valueOrThrow(state.ui.onRamp.network.value, 'Network value is not set');
 export const selectNetworkError = (state: BeefyState) => state.ui.onRamp.network.error;
-export const selectInputAmount = (state: BeefyState) => state.ui.onRamp.input.value;
+export const selectInputAmount = (state: BeefyState) =>
+  valueOrThrow(state.ui.onRamp.input.value, 'Input amount value is not set');
 export const selectInputMode = (state: BeefyState) => state.ui.onRamp.input.mode;
 export const selectInputError = (state: BeefyState) => state.ui.onRamp.input.error;
 export const selectCanQuote = (state: BeefyState) => state.ui.onRamp.canQuote;
@@ -42,11 +47,11 @@ export const selectSupportedTokensForFiat = createSelector(
         appChainIds.find(
           chainId =>
             // token exists
-            token in appTokensByChainId[chainId].byId &&
+            token in appTokensByChainId[chainId]!.byId &&
             // token is used in an active vault
-            (appTokensByChainId[chainId].tokenIdsInActiveVaults.includes(token) ||
-              appTokensByChainId[chainId].wnative === token ||
-              appTokensByChainId[chainId].native === token)
+            (appTokensByChainId[chainId]!.tokenIdsInActiveVaults.includes(token) ||
+              appTokensByChainId[chainId]!.wnative === token ||
+              appTokensByChainId[chainId]!.native === token)
         ) !== undefined
     )
 );
@@ -90,12 +95,17 @@ export const selectHaveQuote = createSelector(
     status === 'fulfilled' && providers.length && provider && provider in byProvider
 );
 
-export const selectSelectedQuote = createSelector(
+export const selectSelectedQuoteOrUndefined = createSelector(
   (state: BeefyState) => selectHaveQuote(state),
   (state: BeefyState) => state.ui.onRamp.quote.byProvider,
   (state: BeefyState) => state.ui.onRamp.quote.provider,
-  (valid, byProvider, provider) => (valid ? byProvider[provider] : null)
+  (valid, byProvider, provider) => (valid && provider ? byProvider[provider] : undefined)
 );
+
+export const selectSelectedQuote = (state: BeefyState) => {
+  const quote = selectSelectedQuoteOrUndefined(state);
+  return valueOrThrow(quote, 'Selected quote is not set');
+};
 
 export const selectQuoteProviders = createSelector(
   (state: BeefyState) => state.ui.onRamp.quote.providers,
@@ -114,11 +124,8 @@ export const selectQuoteByProvider = createSelector(
   (provider, byProvider) => byProvider[provider]
 );
 
-export const selectQuoteError = createSelector(
-  (state: BeefyState) => state.ui.onRamp.quote.status,
-  (state: BeefyState) => state.ui.onRamp.quote.error,
-  (status, error) => (status ? error : null)
-);
+export const selectQuoteError = (state: BeefyState) =>
+  valueOrThrow(state.ui.onRamp.quote.error, 'Quote error is not set');
 
 export const selectOutputAmount = createSelector(
   (state: BeefyState) => selectSelectedQuote(state),

@@ -1,5 +1,5 @@
-import * as React from 'react';
 import type { FC, MouseEventHandler } from 'react';
+import * as React from 'react';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import { orderBy } from 'lodash-es';
@@ -42,9 +42,9 @@ export type LabeledSelectProps<V extends string = string> = LabeledSelectCommonP
   value: V;
   defaultValue?: V | 'default';
   onChange: (value: V) => void;
-  SelectedItemComponent?: FC<SelectedItemProps>;
-  DropdownItemComponent?: FC<DropdownItemProps>;
-  DropdownItemLabelComponent?: FC<DropdownItemLabelProps>;
+  SelectedItemComponent?: FC<SelectedItemProps<V>>;
+  DropdownItemComponent?: FC<DropdownItemProps<V>>;
+  DropdownItemLabelComponent?: FC<DropdownItemLabelProps<V>>;
 
   showArrow?: boolean;
 };
@@ -71,9 +71,9 @@ function useSortedOptions<V extends string = string>(
   options: LabeledSelectProps<V>['options'],
   sort: LabeledSelectProps<V>['sortOptions'],
   defaultValue: LabeledSelectProps<V>['defaultValue']
-) {
+): { value: V; label: string; isDefault: boolean }[] {
   return useMemo(() => {
-    const values = entries(options).map(([value, label]) => ({
+    const values = entries(options as Record<V, string>).map(([value, label]) => ({
       value,
       label,
       isDefault: value === defaultValue,
@@ -151,7 +151,7 @@ export const LabeledSelect = memo(function LabeledSelect<V extends string = stri
 }: LabeledSelectProps<V>) {
   const baseClasses = useStyles();
   const [isOpen, setIsOpen] = useState(false);
-  const anchorEl = useRef<HTMLButtonElement | null>(null);
+  const anchorEl = useRef<HTMLButtonElement>(null);
   const optionsList = useSortedOptions<V>(options, sortOptions, defaultValue);
   const classes = useMemo<typeof baseClasses>(
     () => ({

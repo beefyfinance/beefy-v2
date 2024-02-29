@@ -2,7 +2,15 @@ import { Dropdown } from '../../../../components/Dropdown';
 import ShareIcon from '@material-ui/icons/Share';
 import { Button } from '../../../../components/Button';
 import * as React from 'react';
-import { memo, useCallback, useMemo, useRef, useState } from 'react';
+import {
+  memo,
+  type MutableRefObject,
+  type RefObject,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
@@ -45,7 +53,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const anchorEl = useRef();
+  const anchorEl = useRef<HTMLButtonElement>();
   const [isOpen, setIsOpen] = useState(false);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
@@ -128,7 +136,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
           active: isOpen,
           [classes.mobileAlternative]: mobileAlternative,
         })}
-        ref={anchorEl}
+        ref={anchorEl as RefObject<HTMLButtonElement>}
         onClick={handleOpen}
         active={isOpen}
         borderless={true}
@@ -137,7 +145,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
         <ShareIcon className={classes.shareIcon} />
       </Button>
       <Dropdown
-        anchorEl={anchorEl}
+        anchorEl={anchorEl as MutableRefObject<HTMLElement>}
         open={isOpen}
         onClose={handleClose}
         placement={placement || 'bottom-end'}

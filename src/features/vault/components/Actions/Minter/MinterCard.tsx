@@ -31,7 +31,7 @@ export const MinterCard = memo(function MinterCard({ vaultId, minterId }: Minter
       isFulfilled(state.ui.dataLoader.global.minterForm)
   );
   const walletAddress = useAppSelector(state =>
-    selectIsWalletKnown(state) ? selectWalletAddress(state) : null
+    selectIsWalletKnown(state) ? selectWalletAddress(state) : undefined
   );
 
   // initialize our form

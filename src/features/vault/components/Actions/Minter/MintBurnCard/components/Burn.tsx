@@ -53,7 +53,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     selectUserBalanceOfToken(state, vault.chainId, mintedToken.address)
   );
   const mintedTokenAllowance = useAppSelector(state =>
-    selectAllowanceByTokenAddress(state, vault.chainId, mintedToken.address, minter.burnerAddress)
+    selectAllowanceByTokenAddress(state, vault.chainId, mintedToken.address, minter.burnerAddress!)
   );
   const reserves = useAppSelector(state => selectMinterReserves(state, minter.id));
 
@@ -140,7 +140,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           step: {
             step: 'approve',
             message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(mintedToken, minter.burnerAddress),
+            action: walletActions.approval(mintedToken, minter.burnerAddress!),
             pending: false,
           },
         })
@@ -153,7 +153,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           message: t('Vault-TxnConfirm', { type: t('Burn') }),
           action: walletActions.burnWithdraw(
             vault.chainId,
-            minter.burnerAddress,
+            minter.burnerAddress!,
             depositToken,
             mintedToken,
             formData.withdraw.amount,

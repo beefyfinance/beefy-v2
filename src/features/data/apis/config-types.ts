@@ -6,6 +6,7 @@ import type { StrategyOptions } from './transact/strategies/IStrategy';
 import type { ZapFee } from './transact/transact-types';
 import type { ChangeTypeOfKeys } from '../utils/types-utils';
 import type BigNumber from 'bignumber.js';
+import type { Address } from 'viem';
 
 export interface VaultConfig {
   id: string;
@@ -179,6 +180,7 @@ export type ChainConfig = {
   explorerTokenUrlTemplate?: string;
   explorerTxUrlTemplate?: string;
   multicallAddress: string;
+  multicall3Address: Address;
   appMulticallContractAddress: string;
   providerName: string;
   walletSettings: {

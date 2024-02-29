@@ -64,13 +64,13 @@ export type ChartProps = {
 export const Chart = memo<ChartProps>(function Chart({ assets }) {
   const classes = useStyles();
   const [activeIndex, setActiveIndex] = useState<undefined | number>(undefined);
-  const onPieEnter = useCallback<PieProps['onMouseEnter']>(
+  const onPieEnter = useCallback<Exclude<PieProps['onMouseEnter'], undefined>>(
     (_, index) => {
       setActiveIndex(index);
     },
     [setActiveIndex]
   );
-  const onPieLeave = useCallback<PieProps['onMouseLeave']>(() => {
+  const onPieLeave = useCallback<Exclude<PieProps['onMouseLeave'], undefined>>(() => {
     setActiveIndex(undefined);
   }, [setActiveIndex]);
 

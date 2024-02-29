@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { isEqual, sortedUniq, uniq } from 'lodash-es';
-import React, { memo, useCallback } from 'react';
+import React, { memo, type RefObject, useCallback } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import type { ChainEntity } from '../../features/data/entities/chain';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader';
@@ -31,7 +31,7 @@ const ActiveChain = ({ chainId }: { chainId: ChainEntity['id'] | null }) => {
     <>
       <div className={classes.line} />
       <div className={classes.chain} style={{ textDecoration: 'none' }}>
-        <img alt={chainId} src={chainId ? getNetworkSrc(chainId) : iconUnsupportedChain} />
+        <img alt={chainId ?? ''} src={chainId ? getNetworkSrc(chainId) : iconUnsupportedChain} />
       </div>
     </>
   );
@@ -40,7 +40,7 @@ const ActiveChain = ({ chainId }: { chainId: ChainEntity['id'] | null }) => {
 export const NetworkStatus = memo(function NetworkStatus({
   anchorEl,
 }: {
-  anchorEl: React.RefObject<HTMLSelectElement>;
+  anchorEl: RefObject<HTMLElement>;
 }) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
@@ -188,8 +188,10 @@ const findChainIdMatching = (state: BeefyState, matcher: (loader: LoaderState) =
   );
 
   for (const [chainId, loader] of chainsToCheck) {
-    if (matcher(loader.addressBook) || matcher(loader.contractData)) {
-      chainIds.push(chainId);
+    if (loader) {
+      if (matcher(loader.addressBook) || matcher(loader.contractData)) {
+        chainIds.push(chainId);
+      }
     }
   }
 
@@ -198,8 +200,10 @@ const findChainIdMatching = (state: BeefyState, matcher: (loader: LoaderState) =
       ([chainId, _]) => !eolChains.includes(chainId)
     );
     for (const [chainId, loader] of userDataToCheck) {
-      if (matcher(loader.balance) || matcher(loader.allowance)) {
-        chainIds.push(chainId);
+      if (loader) {
+        if (matcher(loader.balance) || matcher(loader.allowance)) {
+          chainIds.push(chainId);
+        }
       }
     }
   }

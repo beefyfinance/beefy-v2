@@ -1,6 +1,6 @@
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import type { FC, MouseEventHandler } from 'react';
+import type { FC, MouseEventHandler, MutableRefObject } from 'react';
 import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Floating } from '../../../Floating';
@@ -63,7 +63,7 @@ export const ExtraOptionsList = memo<ExtraOptionsListProps>(function ExtraOption
         <MoreVertRounded className={classes.icon} />
         <Floating
           open={isOpen}
-          anchorEl={anchorEl}
+          anchorEl={anchorEl as MutableRefObject<HTMLDivElement>}
           placement="bottom-end"
           className={classes.dropdown}
           display="flex"

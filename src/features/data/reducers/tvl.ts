@@ -34,9 +34,7 @@ export interface TvlState {
   exclusions: {
     [vaultId: VaultEntity['id']]: VaultEntity['id'];
   };
-  byChaindId: {
-    [chainId in ChainEntity['id']]?: BigNumber;
-  };
+  byChaindId: Partial<Record<ChainEntity['id'], BigNumber>>;
 }
 
 export const initialTvlState: TvlState = {

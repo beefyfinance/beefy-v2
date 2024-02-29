@@ -804,7 +804,7 @@ export const selectUserRewardsByVaultId = (
     rewards: BigNumber;
     rewardsUsd: BigNumber;
   }[] = [];
-  const rewardsTokens = [];
+  const rewardsTokens: string[] = [];
   let totalRewardsUsd = BIG_ZERO;
 
   const vault = selectVaultById(state, vaultId);

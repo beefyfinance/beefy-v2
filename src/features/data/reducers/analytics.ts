@@ -16,6 +16,11 @@ import { entries } from '../../../helpers/object';
 
 type StatusType = 'idle' | 'pending' | 'fulfilled' | 'rejected';
 
+export interface AnalyticsBucketData {
+  status: StatusType;
+  data: ApiProductPriceRow[];
+}
+
 export interface AnalyticsState {
   byAddress: {
     [address: string]: {
@@ -28,10 +33,7 @@ export interface AnalyticsState {
         byVaultId: {
           [vaultId: VaultEntity['id']]: {
             byTimebucket: {
-              [K in TimeBucketType]?: {
-                status: StatusType;
-                data: ApiProductPriceRow[];
-              };
+              [K in TimeBucketType]?: AnalyticsBucketData;
             };
           };
         };
@@ -40,10 +42,7 @@ export interface AnalyticsState {
         byVaultId: {
           [vaultId: VaultEntity['id']]: {
             byTimebucket: {
-              [K in TimeBucketType]?: {
-                status: StatusType;
-                data: ApiProductPriceRow[];
-              };
+              [K in TimeBucketType]?: AnalyticsBucketData;
             };
           };
         };
@@ -140,44 +139,44 @@ export const analyticsSlice = createSlice({
         const txs = byVaultId[vaultId];
         if (txs && txs.length > 1) {
           for (let i = 1; i < txs.length; ++i) {
-            txs[i].shareBalance = txs[i - 1].shareBalance.plus(txs[i].shareDiff);
+            const tx = txs[i];
+            const prevTx = txs[i - 1];
 
-            const underlyingPerShare = txs[i].shareDiff.isZero()
+            tx.shareBalance = prevTx.shareBalance.plus(tx.shareDiff);
+
+            const underlyingPerShare = tx.shareDiff.isZero()
               ? BIG_ZERO
-              : txs[i].underlyingDiff.dividedBy(txs[i].shareDiff).absoluteValue();
-            txs[i].underlyingBalance = txs[i].shareBalance.multipliedBy(underlyingPerShare);
+              : tx.underlyingDiff.dividedBy(tx.shareDiff).absoluteValue();
+            tx.underlyingBalance = tx.shareBalance.multipliedBy(underlyingPerShare);
 
             // usd can be null if price was missing
-            if (txs[i].usdDiff) {
-              const usdPerShare = txs[i].shareDiff.isZero()
+            if (tx.usdDiff) {
+              const usdPerShare = tx.shareDiff.isZero()
                 ? BIG_ZERO
-                : txs[i].usdDiff.dividedBy(txs[i].shareDiff).absoluteValue();
-              txs[i].usdBalance = txs[i].shareBalance.multipliedBy(usdPerShare);
+                : tx.usdDiff.dividedBy(tx.shareDiff).absoluteValue();
+              tx.usdBalance = tx.shareBalance.multipliedBy(usdPerShare);
             } else {
-              txs[i].usdBalance = txs[i - 1].usdBalance;
+              tx.usdBalance = prevTx.usdBalance;
             }
           }
         }
       });
 
-      sliceState.byAddress[walletAddress] = {
-        timeline: { byVaultId },
-        shareToUnderlying: {
-          byVaultId: {},
-        },
-        underlyingToUsd: {
-          byVaultId: {},
-        },
-      };
+      const addressState = getOrCreateAnalyticsAddressState(sliceState, walletAddress);
+      addressState.timeline.byVaultId = byVaultId;
     });
 
     builder.addCase(fetchShareToUnderlying.fulfilled, (sliceState, action) => {
       const { data, vaultId, walletAddress, timebucket } = action.payload;
-
-      setStatus(sliceState, 'shareToUnderlying', vaultId, timebucket, walletAddress, 'fulfilled');
-      sliceState.byAddress[walletAddress.toLocaleLowerCase()].shareToUnderlying.byVaultId[
-        vaultId
-      ].byTimebucket[timebucket].data = data;
+      const bucketState = setStatus(
+        sliceState,
+        'shareToUnderlying',
+        vaultId,
+        timebucket,
+        walletAddress,
+        'fulfilled'
+      );
+      bucketState.data = data;
     });
 
     builder.addCase(fetchShareToUnderlying.pending, (sliceState, action) => {
@@ -192,11 +191,15 @@ export const analyticsSlice = createSlice({
 
     builder.addCase(fetchUnderlyingToUsd.fulfilled, (sliceState, action) => {
       const { data, vaultId, walletAddress, timebucket } = action.payload;
-
-      setStatus(sliceState, 'underlyingToUsd', vaultId, timebucket, walletAddress, 'fulfilled');
-      sliceState.byAddress[walletAddress.toLocaleLowerCase()].underlyingToUsd.byVaultId[
-        vaultId
-      ].byTimebucket[timebucket].data = data;
+      const bucketState = setStatus(
+        sliceState,
+        'underlyingToUsd',
+        vaultId,
+        timebucket,
+        walletAddress,
+        'fulfilled'
+      );
+      bucketState.data = data;
     });
 
     builder.addCase(fetchUnderlyingToUsd.pending, (sliceState, action) => {
@@ -219,19 +222,87 @@ function setStatus(
   walletAddress: string,
   status: StatusType
 ) {
-  walletAddress = walletAddress.toLocaleLowerCase();
+  const bucketState = getOrCreateAnalyticsAddressPartVaultTimeBucketState(
+    sliceState,
+    walletAddress,
+    part,
+    vaultId,
+    timebucket
+  );
+  bucketState.status = status;
+  return bucketState;
+}
 
-  if (!sliceState.byAddress[walletAddress][part].byVaultId[vaultId]) {
-    sliceState.byAddress[walletAddress][part].byVaultId[vaultId] = { byTimebucket: {} };
-  }
+function getOrCreateAnalyticsAddressPartVaultTimeBucketState(
+  sliceState: Draft<AnalyticsState>,
+  walletAddress: string,
+  part: 'shareToUnderlying' | 'underlyingToUsd',
+  vaultId: VaultEntity['id'],
+  timebucket: TimeBucketType
+) {
+  const partState = getOrCreateAnalyticsAddressPartVaultState(
+    sliceState,
+    walletAddress,
+    part,
+    vaultId
+  );
+  let bucketState = partState.byTimebucket[timebucket];
 
-  if (!sliceState.byAddress[walletAddress][part].byVaultId[vaultId].byTimebucket[timebucket]) {
-    sliceState.byAddress[walletAddress][part].byVaultId[vaultId].byTimebucket[timebucket] = {
+  if (!bucketState) {
+    bucketState = partState.byTimebucket[timebucket] = {
       data: [],
-      status: status,
+      status: 'idle',
     };
-  } else {
-    sliceState.byAddress[walletAddress][part].byVaultId[vaultId].byTimebucket[timebucket].status =
-      status;
   }
+
+  return bucketState;
+}
+
+function getOrCreateAnalyticsAddressPartVaultState(
+  sliceState: Draft<AnalyticsState>,
+  walletAddress: string,
+  part: 'shareToUnderlying' | 'underlyingToUsd',
+  vaultId: VaultEntity['id']
+) {
+  const partState = getOrCreateAnalyticsAddressPartState(sliceState, walletAddress, part);
+  let vaultState = partState.byVaultId[vaultId];
+
+  if (!vaultState) {
+    vaultState = partState.byVaultId[vaultId] = { byTimebucket: {} };
+  }
+
+  return vaultState;
+}
+
+function getOrCreateAnalyticsAddressPartState(
+  sliceState: Draft<AnalyticsState>,
+  walletAddress: string,
+  part: 'shareToUnderlying' | 'underlyingToUsd'
+) {
+  const addressState = getOrCreateAnalyticsAddressState(sliceState, walletAddress);
+  let partState = addressState[part];
+
+  if (!partState) {
+    partState = addressState[part] = { byVaultId: {} };
+  }
+
+  return partState;
+}
+
+function getOrCreateAnalyticsAddressState(
+  sliceState: Draft<AnalyticsState>,
+  walletAddress: string
+) {
+  walletAddress = walletAddress.toLowerCase();
+  let addressState = sliceState.byAddress[walletAddress];
+
+  if (!addressState) {
+    addressState = sliceState.byAddress[walletAddress] = {
+      timeline: { byVaultId: {} },
+      shareToUnderlying: { byVaultId: {} },
+      underlyingToUsd: { byVaultId: {} },
+    };
+  }
+
+  return addressState;
 }

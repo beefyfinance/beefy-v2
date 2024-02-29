@@ -6,7 +6,15 @@ import {
   selectVaultHasPlatformWithRisks,
 } from '../../../data/selectors/vaults';
 
-export const useVaultHasRisks = (vaultId: VaultEntity['id']) => {
+export const useVaultHasRisks = (
+  vaultId: VaultEntity['id']
+):
+  | {
+      vaultHasRisks: true;
+      values: Record<string, string>;
+      risk: string;
+    }
+  | { vaultHasRisks: false; values: undefined; risk: undefined } => {
   const vaultHasPlatformWithRisks = useAppSelector(state =>
     selectVaultHasPlatformWithRisks(state, vaultId)
   );
@@ -16,13 +24,13 @@ export const useVaultHasRisks = (vaultId: VaultEntity['id']) => {
   );
 
   return useMemo(() => {
-    const { platform } = vaultHasPlatformWithRisks;
-    const { tokens } = vaultHasAssetsWithRisks;
-
     // handle tokens and platform risks
     if (vaultHasAssetsWithRisks.risks && vaultHasPlatformWithRisks.risks) {
+      const { tokens } = vaultHasAssetsWithRisks;
+      const { platform } = vaultHasPlatformWithRisks;
+
       if (tokens.length > 1) {
-        const auxValues = { platform: platform.name };
+        const auxValues: Record<string, string> = { platform: platform.name };
 
         for (let i = 0; i < tokens.length; i++) {
           const token = tokens[i];
@@ -66,6 +74,7 @@ export const useVaultHasRisks = (vaultId: VaultEntity['id']) => {
     // handle only platform risk
     else if (vaultHasPlatformWithRisks.risks) {
       // TODO handle multiple platform risks
+      const { platform } = vaultHasPlatformWithRisks;
       return {
         vaultHasRisks: true,
         values: { platform: platform.name },
@@ -74,9 +83,10 @@ export const useVaultHasRisks = (vaultId: VaultEntity['id']) => {
     }
     // handle only tokens risk
     else if (vaultHasAssetsWithRisks.risks) {
+      const { tokens } = vaultHasAssetsWithRisks;
       // TODO handle different risks per token and multiple risks per token
       if (tokens.length > 1) {
-        const auxValues = {};
+        const auxValues: Record<string, string> = {};
 
         for (let i = 0; i < tokens.length; i++) {
           const token = tokens[i];

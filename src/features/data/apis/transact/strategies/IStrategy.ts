@@ -87,13 +87,26 @@ export interface IStrategy {
   fetchWithdrawStep(quote: TransactQuote, t: TFunction<Namespace>): Promise<Step>;
 }
 
-export type TransactHelpers = {
+type BaseTransactHelpers = {
   swapAggregator: ISwapAggregator;
   vault: VaultEntity;
   vaultType: VaultType;
-  zap: ZapEntity | undefined;
   getState: () => BeefyState;
 };
+
+export type ZaplessTransactHelpers = BaseTransactHelpers & {
+  zap: undefined;
+};
+
+export type ZapTransactHelpers = BaseTransactHelpers & {
+  zap: ZapEntity;
+};
+
+export type TransactHelpers = ZaplessTransactHelpers | ZapTransactHelpers;
+
+export function isZapTransactHelpers(helpers: TransactHelpers): helpers is ZapTransactHelpers {
+  return helpers.zap !== undefined;
+}
 
 export type StrategyConstructor = new (
   options: StrategyOptions,

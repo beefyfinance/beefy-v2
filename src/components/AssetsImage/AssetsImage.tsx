@@ -9,7 +9,7 @@ import type { ChainEntity } from '../../features/data/entities/chain';
 const useStyles = makeStyles(styles);
 const maxSupportedAssets = 8;
 
-function useAssetsImageUris(chainId: ChainEntity['id'], assetIds: string[]) {
+function useAssetsImageUris(chainId: ChainEntity['id'] | undefined, assetIds: string[]) {
   return useMemo(() => {
     return assetIds
       .slice(0, maxSupportedAssets)
@@ -18,7 +18,7 @@ function useAssetsImageUris(chainId: ChainEntity['id'], assetIds: string[]) {
 }
 
 export type AssetsImageType = {
-  chainId: ChainEntity['id'];
+  chainId: ChainEntity['id'] | undefined;
   assetIds: string[];
   size?: number;
   className?: string;

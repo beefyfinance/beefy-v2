@@ -105,6 +105,8 @@ export const selectTreasuryBalanceByChainId = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id']) =>
     selectTreasuryHoldingsByChainId(state, chainId),
   treasuryByChainId => {
+    if (!treasuryByChainId) return BIG_ZERO;
+
     return Object.values(treasuryByChainId).reduce((totals, address) => {
       for (const token of Object.values(address.balances)) {
         if (isFiniteBigNumber(token.usdValue)) {
@@ -136,6 +138,10 @@ export const selectTreasuryAssetsByChainId = createCachedSelector(
     selectTreasuryHoldingsByChainId(state, chainId),
 
   treasuryByChainId => {
+    if (!treasuryByChainId) {
+      return [];
+    }
+
     const vaults: Record<string, TreasuryHoldingEntity> = {};
     for (const address of Object.values(treasuryByChainId)) {
       for (const token of Object.values(address.balances)) {
@@ -166,6 +172,7 @@ export const selectTreasuryStats = (state: BeefyState) => {
   let stables = BIG_ZERO;
 
   for (const [chainId, balances] of entries(treasury)) {
+    if (balances === undefined) continue;
     for (const balancePerChain of Object.values(balances)) {
       for (const token of Object.values(balancePerChain.balances)) {
         if (token) {
@@ -296,6 +303,8 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
   const mmHoldings = selectMMAssets(state);
 
   const exposure = entries(treasury).reduce((totals, [chainId, wallets]) => {
+    if (wallets === undefined) return totals;
+
     for (const wallet of Object.values(wallets)) {
       for (const token of Object.values(wallet.balances)) {
         if (isFiniteBigNumber(token.usdValue)) {
@@ -464,6 +473,8 @@ export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id']) => selectChainById(state, chainId),
 
   (treasury, chain) => {
+    if (!treasury) return [];
+
     return Object.values(treasury).map(wallet => {
       if (wallet.name.includes('validator')) {
         if (chain.id === 'ethereum') {
@@ -479,7 +490,7 @@ export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
         return {
           address: wallet.address,
           name: 'validator',
-          url: explorerAddressUrl(chain, Object.values(wallet.balances)[0].methodPath),
+          url: explorerAddressUrl(chain, Object.values(wallet.balances)[0].methodPath!),
         };
       }
       return {

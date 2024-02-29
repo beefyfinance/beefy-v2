@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js';
 import type { ChainEntity } from '../../../entities/chain';
 import { getWeb3Instance } from '../../instances';
-import { ArbitrumNodeInterfaceAbi } from '../../../../../config/abi';
+import { ArbitrumNodeInterfaceAbi } from '../../../../../config/abi/ArbitrumNodeInterfaceAbi';
+import { viemToWeb3Abi } from '../../../../../helpers/web3';
 
 const fallbackSequencerGasPerByte = new BigNumber('5000');
 const gasContractAddress = '0x00000000000000000000000000000000000000C8';
@@ -42,7 +43,10 @@ export async function estimateArbitrumSequencerGas(
 
   try {
     const web3 = await getWeb3Instance(chain);
-    const gasContract = new web3.eth.Contract(ArbitrumNodeInterfaceAbi, gasContractAddress);
+    const gasContract = new web3.eth.Contract(
+      viemToWeb3Abi(ArbitrumNodeInterfaceAbi),
+      gasContractAddress
+    );
     const result: GasEstimateComponentsResponse = await gasContract.methods
       .gasEstimateComponents(wethAddress, false, transferCallData)
       .call({

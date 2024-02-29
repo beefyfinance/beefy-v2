@@ -26,20 +26,22 @@ import {
   type ZapQuoteStepSwap,
   type ZapQuoteStepSwapAggregator,
 } from '../../transact-types';
-import type { CurveStrategyOptions, IStrategy, TransactHelpers } from '../IStrategy';
+import type { CurveStrategyOptions, IStrategy, ZapTransactHelpers } from '../IStrategy';
 import type { ChainEntity } from '../../../../entities/chain';
 import {
   createOptionId,
   createQuoteId,
   createSelectionId,
-  onlyInputCount,
+  onlyOneInput,
+  onlyOneToken,
+  onlyOneTokenAmount,
   onlyVaultStandard,
 } from '../../helpers/options';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
   selectIsTokenLoaded,
-  selectTokenByAddressOrNull,
+  selectTokenByAddressOrUndefined,
   selectTokenPriceByTokenOracleId,
 } from '../../../../selectors/tokens';
 import { selectChainById } from '../../../../selectors/chains';
@@ -75,6 +77,8 @@ import { isStandardVault } from '../../../../entities/vault';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import { buildTokenApproveTx } from '../../zap/approve';
 import { CurvePool } from './CurvePool';
+import { isFulfilledResult } from '../../../../../../helpers/promises';
+import { isDefined } from '../../../../utils/array-utils';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -108,7 +112,7 @@ export class CurveStrategy implements IStrategy {
   protected readonly depositToken: TokenEntity;
   protected readonly poolAddress: string;
 
-  constructor(protected options: CurveStrategyOptions, protected helpers: TransactHelpers) {
+  constructor(protected options: CurveStrategyOptions, protected helpers: ZapTransactHelpers) {
     const { vault, vaultType, getState } = this.helpers;
 
     onlyVaultStandard(vault);
@@ -146,11 +150,17 @@ export class CurveStrategy implements IStrategy {
     chainId: ChainEntity['id'],
     methods: CurveMethod[]
   ): CurveTokenOption[] {
+    type MaybeCurveTokenOptionWithPrice = Omit<CurveTokenOption, 'token'> & {
+      price: BigNumber | undefined;
+      token: TokenEntity | undefined;
+    };
+    type CurveTokenOptionWithPrice = CurveTokenOption & { price: BigNumber };
+
     return uniqBy(
       methods
         .flatMap(option =>
           option.coins.map((address, i) => {
-            const token = selectTokenByAddressOrNull(state, chainId, address);
+            const token = selectTokenByAddressOrUndefined(state, chainId, address);
             return {
               type: option.type,
               target: option.target,
@@ -158,11 +168,14 @@ export class CurveStrategy implements IStrategy {
               numCoins: option.coins.length,
               token,
               price: token && selectTokenPriceByTokenOracleId(state, token.oracleId),
-            };
+            } satisfies MaybeCurveTokenOptionWithPrice;
           })
         )
-        .filter(option => !!option.token && option.price && option.price.gt(BIG_ZERO)),
-      option => `${option.token.chainId} -${option.token.address}`
+        .filter(
+          (option: MaybeCurveTokenOptionWithPrice): option is CurveTokenOptionWithPrice =>
+            !!option.token && !!option.price && option.price.gt(BIG_ZERO)
+        ),
+      option => `${option.token.chainId}-${option.token.address}`
     );
   }
 
@@ -245,7 +258,7 @@ export class CurveStrategy implements IStrategy {
     const { vault, swapAggregator } = this.helpers;
 
     // Fetch quotes from input token, to each possible deposit via token
-    const quotes = await Promise.all(
+    const maybeQuotes = await Promise.allSettled(
       depositVias.map(async depositVia => {
         const quotes = await swapAggregator.fetchQuotes(
           {
@@ -256,9 +269,20 @@ export class CurveStrategy implements IStrategy {
           },
           state
         );
-        return { via: depositVia, quote: first(quotes) };
+        const bestQuote = first(quotes);
+        if (!bestQuote) {
+          throw new Error(`No quote for ${input.token.symbol} to ${depositVia.token.symbol}`);
+        }
+        return { via: depositVia, quote: bestQuote };
       })
     );
+    const quotes = maybeQuotes
+      .filter(isFulfilledResult)
+      .map(r => r.value)
+      .filter(isDefined);
+    if (!quotes.length) {
+      throw new Error(`No quotes for ${input.token.symbol} to any deposit via token`);
+    }
 
     // For the best quote per deposit via token, calculate how much liquidity we get
     const withLiquidity = await Promise.all(
@@ -277,7 +301,7 @@ export class CurveStrategy implements IStrategy {
     withLiquidity.sort((a, b) => b.output.amount.comparedTo(a.output.amount));
 
     // Get the one which gives the most liquidity
-    return first(withLiquidity);
+    return withLiquidity[0];
   }
 
   protected async getDepositLiquidity(
@@ -295,11 +319,9 @@ export class CurveStrategy implements IStrategy {
     inputs: InputTokenAmount[],
     option: CurveDepositOption
   ): Promise<CurveDepositQuote> {
-    onlyInputCount(inputs, 1);
-
     const { zap, getState } = this.helpers;
     const state = getState();
-    const input = first(inputs);
+    const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Curve strategy: Quote called with 0 input amount');
     }
@@ -451,6 +473,10 @@ export class CurveStrategy implements IStrategy {
       const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
       const buildQuote = quote.steps.find(isZapQuoteStepBuild);
 
+      if (!buildQuote) {
+        throw new Error('CurveStrategy: No build step in quote');
+      }
+
       // wrap and asset swap, 2 max
       if (swapQuotes.length > 2) {
         throw new Error('CurveStrategy: Too many swaps');
@@ -462,7 +488,7 @@ export class CurveStrategy implements IStrategy {
           throw new Error('CurveStrategy: Too many swaps in quote');
         }
 
-        const swapQuote = first(swapQuotes);
+        const swapQuote = swapQuotes[0];
         const swap = await this.fetchZapSwap(swapQuote, zapHelpers, true);
         // add step to order
         swap.zaps.forEach(zap => steps.push(zap));
@@ -688,7 +714,7 @@ export class CurveStrategy implements IStrategy {
     withSwaps.sort((a, b) => b.output.amount.comparedTo(a.output.amount));
 
     // Get the one which gives the most output
-    return first(withSwaps);
+    return withSwaps[0];
   }
 
   protected async getWithdrawLiquidity(
@@ -707,9 +733,7 @@ export class CurveStrategy implements IStrategy {
     inputs: InputTokenAmount[],
     option: CurveWithdrawOption
   ): Promise<CurveWithdrawQuote> {
-    onlyInputCount(inputs, 1);
-
-    const input = first(inputs);
+    const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Quote called with 0 input amount');
     }
@@ -729,7 +753,7 @@ export class CurveStrategy implements IStrategy {
       getVaultWithdrawnFromState(input, vault, state);
     const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
     const liquidityWithdrawn = { amount: withdrawnAmountAfterFee, token: withdrawnToken };
-    const wantedToken = first(option.wantedOutputs);
+    const wantedToken = onlyOneToken(option.wantedOutputs);
     const returned: TokenAmount[] = [];
 
     // Common: Token Allowances
@@ -817,7 +841,7 @@ export class CurveStrategy implements IStrategy {
     insertBalance: boolean = false
   ): Promise<ZapStepResponse> {
     const { slippage } = zapHelpers;
-    const input = first(inputs);
+    const input = onlyOneTokenAmount(inputs);
     const pool = new CurvePool(via, this.poolAddress, this.chain, this.depositToken);
     const output = await pool.quoteRemoveLiquidity(input.amount);
     const minOutputAmount = slipBy(output.amount, slippage, output.token.decimals);
@@ -870,6 +894,10 @@ export class CurveStrategy implements IStrategy {
       const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
       const splitQuote = quote.steps.find(isZapQuoteStepSplit);
 
+      if (!withdrawQuote || !splitQuote) {
+        throw new Error('Withdraw quote missing withdraw or split step');
+      }
+
       // Step 1. Withdraw from vault
       const vaultWithdraw = await vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
@@ -878,7 +906,7 @@ export class CurveStrategy implements IStrategy {
         throw new Error('Withdraw output count mismatch');
       }
 
-      const withdrawOutput = first(vaultWithdraw.outputs);
+      const withdrawOutput = onlyOneTokenAmount(vaultWithdraw.outputs);
       if (!isTokenEqual(withdrawOutput.token, splitQuote.inputToken)) {
         throw new Error('Withdraw output token mismatch');
       }

@@ -59,7 +59,7 @@ export const fetchBridgeConfig = createAsyncThunk<
 });
 
 type InitBridgeFormParams = {
-  walletAddress: string | null;
+  walletAddress: string | undefined;
 };
 
 type InitBridgeFormPayload = {

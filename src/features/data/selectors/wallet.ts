@@ -18,15 +18,19 @@ export const selectIsWalletConnected = createSelector(
 export const selectWalletAddress = createSelector(
   (state: BeefyState) => state.user.wallet.address,
   address => {
-    address = featureFlag_walletAddressOverride(address);
-    return address;
+    return address ? featureFlag_walletAddressOverride(address) : undefined;
   }
 );
+
+export const selectWalletAddressOrThrow = createSelector(selectWalletAddress, (address): string => {
+  if (!address) throw new Error('Wallet address not known');
+  return address;
+});
 
 export const selectWalletAddressIfKnown = createSelector(
   (state: BeefyState) => state.user.wallet.address,
   (state: BeefyState) => selectIsWalletKnown(state),
-  (address, isKnown) => (isKnown ? address : null)
+  (address, isKnown) => (isKnown && address ? address : undefined)
 );
 
 export const selectCurrentChainId = (state: BeefyState) => state.user.wallet.selectedChainId;

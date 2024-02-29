@@ -6,7 +6,7 @@ import { Button } from '../../../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectTransactQuoteStatus,
-  selectTransactSelectedQuote,
+  selectTransactSelectedQuoteOrUndefined,
 } from '../../../../../data/selectors/transact';
 import type {
   TransactOption,
@@ -31,7 +31,7 @@ export type DepositActionsProps = {
 };
 export const DepositActions = memo<DepositActionsProps>(function DepositActions({ className }) {
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
-  const quote = useAppSelector(selectTransactSelectedQuote);
+  const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const option = quote ? quote.option : null;
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {

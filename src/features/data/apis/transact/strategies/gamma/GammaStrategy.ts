@@ -1,4 +1,4 @@
-import type { GammaStrategyOptions, IStrategy, TransactHelpers } from '../IStrategy';
+import type { GammaStrategyOptions, IStrategy, ZapTransactHelpers } from '../IStrategy';
 import {
   type DepositOption,
   type GammaDepositOption,
@@ -28,7 +28,9 @@ import {
   createQuoteId,
   createSelectionId,
   onlyAssetCount,
-  onlyInputCount,
+  onlyOneInput,
+  onlyOneToken,
+  onlyOneTokenAmount,
   onlyVaultStandard,
 } from '../../helpers/options';
 import {
@@ -102,7 +104,7 @@ export class GammaStrategy implements IStrategy {
   protected readonly chain: ChainEntity;
   protected readonly depositToken: TokenEntity;
 
-  constructor(protected options: GammaStrategyOptions, protected helpers: TransactHelpers) {
+  constructor(protected options: GammaStrategyOptions, protected helpers: ZapTransactHelpers) {
     const { vault, vaultType, getState } = this.helpers;
 
     onlyVaultStandard(vault);
@@ -229,14 +231,11 @@ export class GammaStrategy implements IStrategy {
     inputs: InputTokenAmount[],
     option: GammaDepositOption
   ): Promise<GammaDepositQuote> {
-    onlyInputCount(inputs, 1);
-
     const { zap, vault, swapAggregator, getState } = this.helpers;
     const { lpTokens, depositToken } = option;
     const state = getState();
-    const chain = selectChainById(state, vault.chainId);
     const slippage = selectTransactSlippage(state);
-    const input = first(inputs);
+    const input = onlyOneInput(inputs);
 
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Gamma strategy: Quote called with 0 input amount');
@@ -267,7 +266,7 @@ export class GammaStrategy implements IStrategy {
 
     // Swap quotes
     // Skip swaps if input token is one of the lp tokens, or if position is out of range, and we need to swap 0 of that token
-    const quoteRequestsPerLpToken: QuoteRequest[] = lpTokens.map((lpTokenN, i) =>
+    const quoteRequestsPerLpToken: (QuoteRequest | undefined)[] = lpTokens.map((lpTokenN, i) =>
       isTokenEqual(lpTokenN, input.token) || swapInAmounts[i].lte(BIG_ZERO)
         ? undefined
         : {
@@ -290,11 +289,12 @@ export class GammaStrategy implements IStrategy {
 
     const quotePerLpToken = quotesPerLpToken.map((quotes, i) => {
       if (quotes === undefined) {
-        if (quoteRequestsPerLpToken[i] === undefined) {
+        const quoteRequest = quoteRequestsPerLpToken[i];
+        if (quoteRequest === undefined) {
           return undefined;
         } else {
           throw new Error(
-            `No quotes found for ${quoteRequestsPerLpToken[i].fromToken.symbol} -> ${quoteRequestsPerLpToken[i].toToken.symbol}`
+            `No quotes found for ${quoteRequest.fromToken.symbol} -> ${quoteRequest.toToken.symbol}`
           );
         }
       }
@@ -470,6 +470,10 @@ export class GammaStrategy implements IStrategy {
       const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
       const buildQuote = quote.steps.find(isZapQuoteStepBuild);
 
+      if (!buildQuote || !swapQuotes.length) {
+        throw new Error('Invalid deposit quote');
+      }
+
       // Swaps
       if (swapQuotes.length == 0 || swapQuotes.length > 2) {
         throw new Error('Invalid swap quote');
@@ -637,9 +641,7 @@ export class GammaStrategy implements IStrategy {
     inputs: InputTokenAmount[],
     option: GammaWithdrawOption
   ): Promise<GammaWithdrawQuote> {
-    onlyInputCount(inputs, 1);
-
-    const input = first(inputs);
+    const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Quote called with 0 input amount');
     }
@@ -744,14 +746,9 @@ export class GammaStrategy implements IStrategy {
   ): Promise<PartialWithdrawQuote> {
     const { wantedOutputs } = option;
     const { swapAggregator, getState } = this.helpers;
-
-    if (wantedOutputs.length !== 1) {
-      throw new Error('Can only swap to 1 output token');
-    }
-
     const state = getState();
     const slippage = selectTransactSlippage(state);
-    const wantedOutput = first(wantedOutputs);
+    const wantedOutput = onlyOneToken(wantedOutputs);
     const needsSwap = breakOutputs.map(
       tokenAmount =>
         !isTokenEqual(wantedOutput, tokenAmount.token) && tokenAmount.amount.gt(BIG_ZERO)
@@ -903,6 +900,10 @@ export class GammaStrategy implements IStrategy {
       const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
       const splitQuote = quote.steps.find(isZapQuoteStepSplit);
 
+      if (!withdrawQuote || !splitQuote) {
+        throw new Error('Withdraw or split zap quote not found');
+      }
+
       // Step 1. Withdraw from vault
       const vaultWithdraw = await vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
@@ -911,7 +912,7 @@ export class GammaStrategy implements IStrategy {
         throw new Error('Withdraw output count mismatch');
       }
 
-      const withdrawOutput = first(vaultWithdraw.outputs);
+      const withdrawOutput = onlyOneTokenAmount(vaultWithdraw.outputs);
       if (!isTokenEqual(withdrawOutput.token, splitQuote.inputToken)) {
         throw new Error('Withdraw output token mismatch');
       }

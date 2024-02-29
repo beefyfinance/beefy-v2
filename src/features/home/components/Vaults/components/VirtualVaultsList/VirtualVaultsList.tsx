@@ -1,6 +1,6 @@
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import type { Theme } from '@material-ui/core';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, MutableRefObject } from 'react';
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { debounce } from 'lodash-es';
 import { useInView } from 'react-intersection-observer';
@@ -82,7 +82,7 @@ export const VirtualVaultsList = memo<VirtualVaultsListProps>(function VirtualVa
   // Render more vaults on intersection (won't trigger again until placeholder is {vaultHeightEstimate * 2}px off screen)
   const onIntersection = useCallback(
     inView => {
-      if (inView && remainingVaults > 0) {
+      if (inView && remainingVaults > 0 && bottomRef.current) {
         const batchSize =
           minBatchSize +
           Math.ceil(
@@ -145,12 +145,12 @@ export const VirtualVaultsList = memo<VirtualVaultsListProps>(function VirtualVa
 
   return (
     <>
-      <div className={classes.container} ref={containerRef}>
+      <div className={classes.container} ref={containerRef as MutableRefObject<HTMLDivElement>}>
         {renderVaultIds.map(vaultId => (
           <Vault vaultId={vaultId} key={vaultId} />
         ))}
       </div>
-      <div ref={bottomRef} />
+      <div ref={bottomRef as MutableRefObject<HTMLDivElement>} />
       <div style={placeholderStyle} ref={placeholderRef} />
     </>
   );

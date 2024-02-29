@@ -1,10 +1,15 @@
-import type { IStrategy, StrategyConstructor, StrategyOptions, TransactHelpers } from './IStrategy';
+import type {
+  IStrategy,
+  StrategyConstructor,
+  StrategyOptions,
+  ZapTransactHelpers,
+} from './IStrategy';
 import type { BeefyState } from '../../../../../redux-types';
 
 function makeLazyLoader<T extends StrategyConstructor>(loader: () => Promise<T>) {
   let constructor: T | undefined;
 
-  return async (options: StrategyOptions, helpers: TransactHelpers) => {
+  return async (options: StrategyOptions, helpers: ZapTransactHelpers) => {
     if (!constructor) {
       constructor = await loader();
     }
@@ -23,5 +28,5 @@ export const strategyBuildersById = {
   gamma: makeLazyLoader(async () => (await import('./gamma/GammaStrategy')).GammaStrategy),
 } as const satisfies Record<
   StrategyOptions['strategyId'],
-  (options: StrategyOptions, helpers: TransactHelpers, state: BeefyState) => Promise<IStrategy>
+  (options: StrategyOptions, helpers: ZapTransactHelpers, state: BeefyState) => Promise<IStrategy>
 >;

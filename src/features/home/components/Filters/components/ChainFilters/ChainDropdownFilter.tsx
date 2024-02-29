@@ -51,19 +51,21 @@ const SelectedChain = memo<SelectedItemProps<ChainEntity['id']>>(function Select
   const classes = useStyles();
   let label: string | ReactNode;
 
-  if (allSelected) {
+  if (allSelected && allSelectedLabel) {
     label = t(allSelectedLabel);
   } else if (value.length === 1) {
     const chainId = value[0];
     label = (
       <IconWithChain
         chainId={chainId}
-        label={options[chainId]}
+        label={options[chainId]!}
         className={classes.iconWithChainSelected}
       />
     );
-  } else {
+  } else if (countSelectedLabel) {
     label = t(countSelectedLabel, { count: value.length });
+  } else {
+    label = 'missing label';
   }
 
   return <>{label}</>;

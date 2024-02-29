@@ -1,6 +1,6 @@
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 
-import type { MouseEventHandler } from 'react';
+import type { MouseEventHandler, MutableRefObject } from 'react';
 import React, { memo, useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Floating } from '../../../../components/Floating';
@@ -39,7 +39,7 @@ export const ExplorerLinks = memo<ExplorerLinkProps>(function ExplorerLinks({ ch
         <img className={classes.icon} src={iconExternalLink} alt="external link" />
         <Floating
           open={isOpen}
-          anchorEl={anchorEl}
+          anchorEl={anchorEl as MutableRefObject<HTMLDivElement>}
           placement="bottom-start"
           className={classes.dropdown}
           display="flex"

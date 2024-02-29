@@ -11,6 +11,7 @@ import {
   fetchZapSwapAggregatorsAction,
 } from '../actions/zap';
 import { fetchAllVaults } from '../actions/vaults';
+import { isNonEmptyArray } from '../utils/array-utils';
 
 export type ZapsState = {
   /**
@@ -122,13 +123,15 @@ export const zapsSlice = createSlice({
         for (const aggregator of action.payload.aggregators) {
           // Aggregator
           sliceState.aggregators.byId[aggregator.id] = aggregator;
-          if (!(aggregator.chainId in sliceState.aggregators.byChainId)) {
-            sliceState.aggregators.byChainId[aggregator.chainId] = { byType: {} };
+
+          let aggByChainId = sliceState.aggregators.byChainId[aggregator.chainId];
+          if (!aggByChainId) {
+            aggByChainId = sliceState.aggregators.byChainId[aggregator.chainId] = { byType: {} };
           }
 
-          if (!(aggregator.type in sliceState.aggregators.byChainId[aggregator.chainId].byType)) {
-            sliceState.aggregators.byChainId[aggregator.chainId].byType[aggregator.type] =
-              aggregator.id;
+          let aggByType = aggByChainId.byType[aggregator.type];
+          if (!aggByType) {
+            aggByType = aggByChainId.byType[aggregator.type] = aggregator.id;
           } else {
             console.warn(
               `Ignoring duplicate aggregator type ${aggregator.type} for chain ${aggregator.chainId}`
@@ -136,11 +139,11 @@ export const zapsSlice = createSlice({
           }
 
           // Priority Tokens
-          if (!(aggregator.chainId in sliceState.tokens.byChainId)) {
-            sliceState.tokens.byChainId[aggregator.chainId] = { scoreById: {} };
+          let tokensByChain = sliceState.tokens.byChainId[aggregator.chainId];
+          if (!tokensByChain) {
+            tokensByChain = sliceState.tokens.byChainId[aggregator.chainId] = { scoreById: {} };
             for (const tokenId of aggregator.priorityTokens) {
-              sliceState.tokens.byChainId[aggregator.chainId].scoreById[tokenId] =
-                (sliceState.tokens.byChainId[aggregator.chainId].scoreById[tokenId] || 0) + 1;
+              tokensByChain.scoreById[tokenId] = (tokensByChain.scoreById[tokenId] || 0) + 1;
             }
           }
         }
@@ -150,7 +153,7 @@ export const zapsSlice = createSlice({
         sliceState.vaults.byId = Object.values(action.payload.byChainId)
           .flat()
           .reduce((acc, vault) => {
-            if (vault.type === 'standard' && vault.zaps?.length > 0) {
+            if (vault.type === 'standard' && isNonEmptyArray(vault.zaps)) {
               acc[vault.id] = true;
             }
             return acc;

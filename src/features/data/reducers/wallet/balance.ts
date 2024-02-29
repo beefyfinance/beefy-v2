@@ -212,23 +212,20 @@ function addTokenBalanceToState(
    * Ingest token data
    */
   for (const tokenBalance of balances) {
-    if (walletState.tokenAmount.byChainId[chainId] === undefined) {
-      walletState.tokenAmount.byChainId[chainId] = { byTokenAddress: {} };
+    let byChainId = walletState.tokenAmount.byChainId[chainId];
+    if (byChainId === undefined) {
+      byChainId = walletState.tokenAmount.byChainId[chainId] = { byTokenAddress: {} };
     }
 
     // only update data if necessary
-    const stateForToken =
-      walletState.tokenAmount.byChainId[chainId].byTokenAddress[
-        tokenBalance.tokenAddress.toLowerCase()
-      ];
+    const tokenKey = tokenBalance.tokenAddress.toLowerCase();
+    const stateForToken = byChainId.byTokenAddress[tokenKey];
     if (
       // state isn't already there if it's there, only if amount differ
       stateForToken === undefined ||
       !stateForToken.balance.isEqualTo(tokenBalance.amount)
     ) {
-      walletState.tokenAmount.byChainId[chainId].byTokenAddress[
-        tokenBalance.tokenAddress.toLowerCase()
-      ] = {
+      byChainId.byTokenAddress[tokenKey] = {
         balance: tokenBalance.amount,
       };
     }

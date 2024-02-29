@@ -51,16 +51,18 @@ export function createDependencyFactoryWithCacheByChain<T, D>(
   let dependenciesPromise: Promise<D> | undefined;
 
   return async (chain: ChainEntity): Promise<T> => {
-    if (factoryPromiseByChainId[chain.id] === undefined) {
-      factoryPromiseByChainId[chain.id] = (async () => {
+    let factoryPromise = factoryPromiseByChainId[chain.id];
+    if (factoryPromise === undefined) {
+      factoryPromise = (async () => {
         if (dependenciesPromise === undefined) {
           dependenciesPromise = dependenciesFn();
         }
 
         return factoryFn(chain, await dependenciesPromise);
       })();
+      factoryPromiseByChainId[chain.id] = factoryPromise;
     }
 
-    return factoryPromiseByChainId[chain.id];
+    return factoryPromise;
   };
 }

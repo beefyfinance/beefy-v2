@@ -1,10 +1,9 @@
-import _BeefyV2AppMulticallUserAbi from '../../../../config/abi/BeefyV2AppMulticall.json';
-import type { AbiItem } from 'web3-utils';
+import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi';
 import type Web3 from 'web3';
 import type { VaultGov } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
-import type { AllValuesAsString } from '../../utils/types-utils';
+import type { AsWeb3Result } from '../../utils/types-utils';
 import type { BoostEntity } from '../../entities/boost';
 import { chunk } from 'lodash-es';
 import type {
@@ -24,11 +23,12 @@ import {
   selectGovVaultBalanceTokenEntity,
   selectGovVaultRewardsTokenEntity,
 } from '../../selectors/balance';
-import type { Web3Call, Web3CallMethod } from '../../../../helpers/web3';
-import { makeBatchRequest } from '../../../../helpers/web3';
-
-// fix ts types
-const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];
+import {
+  makeBatchRequest,
+  viemToWeb3Abi,
+  type Web3Call,
+  type Web3CallMethod,
+} from '../../../../helpers/web3';
 
 export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   constructor(protected web3: Web3, protected chain: T) {}
@@ -41,7 +41,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     walletAddress: string
   ): Promise<FetchAllBalancesResult> {
     const mc = new this.web3.eth.Contract(
-      BeefyV2AppMulticallUserAbi,
+      viemToWeb3Abi(BeefyV2AppMulticallAbi),
       this.chain.appMulticallContractAddress
     );
 
@@ -102,13 +102,14 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     let boostIndex = 0;
     for (let j = 0; j < boostAndGovVaultBatches.length; j++) {
-      for (let i = 0; i < (results[resultsIdx] as unknown[]).length; i++) {
-        const boostOrGovVaultRes = results[resultsIdx][i];
+      const batchResults = results[resultsIdx] as unknown[];
+      for (let i = 0; i < batchResults.length; i++) {
+        const boostOrGovVaultRes = batchResults[i];
         if (boostIndex < boosts.length) {
           res.boosts.push(
             this.boostFormatter(
               state,
-              boostOrGovVaultRes as AllValuesAsString<BoostBalance>,
+              boostOrGovVaultRes as AsWeb3Result<BoostBalance>,
               boosts[boostIndex]
             )
           );
@@ -116,7 +117,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
           res.govVaults.push(
             this.govVaultFormatter(
               state,
-              boostOrGovVaultRes as AllValuesAsString<GovVaultPoolBalance>,
+              boostOrGovVaultRes as AsWeb3Result<GovVaultPoolBalance>,
               govVaults[boostIndex - boosts.length] as VaultGov
             )
           );
@@ -244,7 +245,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     return res;
   }*/
 
-  protected erc20TokenFormatter(result: string, token: TokenEntity): null | TokenBalance {
+  protected erc20TokenFormatter(result: string, token: TokenEntity): TokenBalance {
     const rawAmount = new BigNumber(result);
     return {
       tokenAddress: token.address,
@@ -252,7 +253,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     };
   }
 
-  protected nativeTokenFormatter(result: string, token: TokenNative): TokenBalance | null {
+  protected nativeTokenFormatter(result: string, token: TokenNative): TokenBalance {
     const rawAmount = new BigNumber(result);
     return {
       tokenAddress: token.address,
@@ -262,9 +263,9 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
   protected govVaultFormatter(
     state: BeefyState,
-    result: AllValuesAsString<GovVaultPoolBalance>,
+    result: AsWeb3Result<GovVaultPoolBalance>,
     govVault: VaultGov
-  ): GovVaultPoolBalance | null {
+  ): GovVaultPoolBalance {
     const balanceToken = selectGovVaultBalanceTokenEntity(state, govVault.id);
     const rewardsToken = selectGovVaultRewardsTokenEntity(state, govVault.id);
     const rawBalance = new BigNumber(result.balance);
@@ -278,9 +279,9 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
   protected boostFormatter(
     state: BeefyState,
-    result: AllValuesAsString<BoostBalance>,
+    result: AsWeb3Result<BoostBalance>,
     boost: BoostEntity
-  ): BoostBalance | null {
+  ): BoostBalance {
     const balanceToken = selectBoostBalanceTokenEntity(state, boost.id);
     const rewardsToken = selectBoostRewardsTokenEntity(state, boost.id);
     const rawBalance = new BigNumber(result.balance);

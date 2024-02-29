@@ -74,7 +74,9 @@ export function getInvestorTimeserie(
         .times(timeline[0].shareToUnderlyingPrice)
         .toNumber(),
       usdBalance: timeline[0].shareBalance
-        .times(timeline[0].shareToUnderlyingPrice.times(timeline[0].underlyingToUsdPrice))
+        .times(
+          timeline[0].shareToUnderlyingPrice.times(timeline[0].underlyingToUsdPrice || BIG_ZERO)
+        )
         .toNumber(),
     });
     currentDate = new Date(currentDate.getTime() + bucketSize);

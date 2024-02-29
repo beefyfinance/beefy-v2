@@ -2,10 +2,11 @@ import { BigNumber } from 'bignumber.js';
 import type { TotalApy } from '../features/data/reducers/apy';
 import { toNumber } from 'web3-utils';
 import type { ReactNode } from 'react';
-import type { AllValuesAsString } from '../features/data/utils/types-utils';
+import type { AllValuesAs } from '../features/data/utils/types-utils';
 import { BIG_ONE, BIG_ZERO, isBigNumber, toBigNumber } from './big-number';
 import type { SerializedError } from '@reduxjs/toolkit';
 import { isString, padStart } from 'lodash-es';
+import { strictEntries } from './object';
 
 export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
   const number = num.toFormat({
@@ -23,7 +24,11 @@ export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
     return wholes;
   }
   const pattern = new RegExp(`^[0]*[0-9]{0,${digits - (wholes === '0' ? 0 : wholes.length)}}`);
-  return `${wholes}.${decimals.match(pattern)[0]}`;
+  const matches = decimals.match(pattern);
+  if (!matches || matches.length === 0) {
+    throw new Error('No match found');
+  }
+  return `${wholes}.${matches[0]}`;
 }
 
 /**
@@ -89,19 +94,27 @@ export function formatSmallPercent(
       }) + '%';
 }
 
-export const formattedTotalApy = (
+export function formattedTotalApy(
+  totalApy: TotalApy,
+  placeholder?: string
+): AllValuesAs<TotalApy, string>;
+export function formattedTotalApy(
+  totalApy: TotalApy,
+  placeholder?: ReactNode
+): AllValuesAs<TotalApy, ReactNode>;
+export function formattedTotalApy(
   totalApy: TotalApy,
   placeholder: ReactNode = '?'
-): AllValuesAsString<TotalApy> => {
+): AllValuesAs<TotalApy, string | ReactNode> {
   return Object.fromEntries(
-    Object.entries(totalApy).map(([key, value]) => {
+    strictEntries(totalApy).map(([key, value]) => {
       const formattedValue = key.toLowerCase().includes('daily')
         ? formatPercent(value, 4, placeholder)
         : formatPercent(value, 2, placeholder);
       return [key, formattedValue];
     })
-  );
-};
+  ) as AllValuesAs<TotalApy, string | ReactNode>; // required keys in input so should exist in output
+}
 
 /**
  * Formats: 123 -> $123, 1234 -> $1.23k, 1234567 -> $1.23M etc
@@ -322,10 +335,17 @@ export function formatDomain(domain: string, length: number = 16): string {
   return domain;
 }
 
-export function errorToString(error: SerializedError | string) {
+export function errorToString(
+  error: SerializedError | string | undefined | null,
+  fallbackMessage: string = 'Unknown error'
+) {
+  if (error === undefined || error === null) {
+    return fallbackMessage;
+  }
+
   return isString(error)
     ? error
-    : `${error?.message || error?.name || error?.code || String(error)}`;
+    : `${error?.message || error?.name || error?.code || String(error) || fallbackMessage}`;
 }
 
 export function zeroPad(value: number | undefined, length: number): string {

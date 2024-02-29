@@ -25,7 +25,7 @@ export type LabeledMultiSelectProps<V extends string = string> = LabeledSelectCo
   onChange: (value: V[]) => void;
   SelectedItemComponent?: FC<SelectedItemProps<V>>;
   DropdownItemComponent?: FC<DropdownItemProps<V | 'all'>>;
-  DropdownItemLabelComponent?: FC<DropdownItemProps<V>>;
+  DropdownItemLabelComponent?: FC<DropdownItemLabelProps<V | 'all'>>;
 };
 
 export type DropdownItemProps<V extends string = string> = {
@@ -34,7 +34,7 @@ export type DropdownItemProps<V extends string = string> = {
   selected: boolean;
   onChange: (value: V) => void;
   className?: string;
-  DropdownItemLabelComponent?: FC<DropdownItemLabelProps>;
+  DropdownItemLabelComponent?: FC<DropdownItemLabelProps<V>>;
 };
 
 export type DropdownItemLabelProps<V extends string = string> = {
@@ -55,11 +55,13 @@ export function useMultiSelectSortedOptions<V extends string = string>(
   sort: LabeledMultiSelectProps<V>['sortOptions']
 ) {
   return useMemo(() => {
-    const values = entries(options).map(([value, label]) => ({
+    const values = entries(options as Record<V, string>).map(([value, label]) => ({
       value,
       label,
     }));
-    return sort !== 'default' ? sortBy(values, value => value[sort].toLowerCase()) : values;
+    return sort !== 'default' && sort !== undefined
+      ? sortBy(values, value => value[sort].toLowerCase())
+      : values;
   }, [options, sort]);
 }
 
@@ -98,12 +100,12 @@ export const SelectedMultiSelectItem = memo(function SelectedMultiSelectItem<
   let message: string;
 
   if (allSelected) {
-    message = t(allSelectedLabel);
+    message = t(allSelectedLabel ?? 'Select-AllSelected');
   } else if (value.length === 1) {
     const key = value[0];
-    message = options[key];
+    message = options[key]!;
   } else {
-    message = t(countSelectedLabel, { count: value.length });
+    message = t(countSelectedLabel ?? 'Select-CountSelected', { count: value.length });
   }
 
   return <>{message}</>;

@@ -12,13 +12,23 @@ export function cloneDeep<T>(input: T): T {
   });
 }
 
-type Entries<T> = {
-  [K in keyof T]: [K, T[K]];
-}[keyof T][];
+type Entries<T> = [keyof T, T[keyof T]][];
 
 /** Key type preserving Object.entries - assumes the object input only has the keys in type T */
-export function entries<T extends Record<string, unknown>>(input: T): Entries<T> {
+export function entries<T extends object>(input: T): Entries<T> {
   return Object.entries(input) as Entries<T>;
+}
+
+type StrictEntries<T> = Exclude<
+  {
+    [K in keyof T]: [K, T[K]];
+  }[keyof T],
+  undefined
+>[];
+
+/** Pair type preserving Object.entries - assumes the object input only has the keys in type T */
+export function strictEntries<T extends object>(input: T): StrictEntries<T> {
+  return Object.entries(input) as StrictEntries<T>;
 }
 
 type Keys<T> = (keyof T)[];

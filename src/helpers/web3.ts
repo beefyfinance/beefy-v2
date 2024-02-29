@@ -9,6 +9,7 @@ import BigNumber from 'bignumber.js';
 import { maybeHexToNumber } from './format';
 import type { Method } from 'web3-core-method';
 import type PQueue from 'p-queue';
+import type { Abi } from 'viem';
 
 export type Web3CallMethod = {
   request: (params: unknown, callback: (err: Error, data: unknown) => void) => Method;
@@ -255,7 +256,7 @@ function rateLimitProvider(provider: PrivateProvider, queue: PQueue): PrivatePro
   // send and sendAsync are callback based
   for (const method of ['send', 'sendAsync'] as const) {
     if (provider[method]) {
-      const originalMethod = provider[method].bind(provider);
+      const originalMethod = provider[method]!.bind(provider);
       provider[method] = (payload: unknown, callback: (err: unknown, data: unknown) => unknown) => {
         return queue
           .add(
@@ -285,4 +286,11 @@ function rateLimitProvider(provider: PrivateProvider, queue: PQueue): PrivatePro
 
 export function createContract(jsonInterface: AbiItem[], address: string): Contract {
   return new (ContractConstructor as unknown as typeof Contract)(jsonInterface, address);
+}
+
+/**
+ * Temporary helper to convert viem ABI to web3 ABI until we are 100% moved over to viem
+ */
+export function viemToWeb3Abi(viemAbi: Abi): AbiItem[] {
+  return viemAbi as AbiItem[];
 }

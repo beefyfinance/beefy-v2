@@ -25,7 +25,9 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultWalletStatProps) {
   const hideBalance = selectIsBalanceHidden(state);
   const walletAddress = selectWalletAddress(state);
   const isLoaded =
-    state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
+    state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
+    selectIsWalletKnown(state) &&
+    walletAddress
       ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
           .alreadyLoadedOnce
       : true;

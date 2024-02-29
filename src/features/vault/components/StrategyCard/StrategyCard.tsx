@@ -72,19 +72,19 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
                     <div className={classes.apyValue}>{formatted.vaultApr}</div>
                   </div>
                 )}
-                {values.tradingApr > 0 && (
+                {(values.tradingApr ?? 0) > 0 && (
                   <div className={classes.apy}>
                     <div className={classes.apyLabel}>{t('Vault-AprTrading')}</div>
                     <div className={classes.apyValue}>{formatted.tradingApr}</div>
                   </div>
                 )}
-                {values.liquidStakingApr > 0 && (
+                {(values.liquidStakingApr ?? 0) > 0 && (
                   <div className={classes.apy}>
                     <div className={classes.apyLabel}>{t('Vault-AprLiquidStaking')}</div>
                     <div className={classes.apyValue}>{formatted.liquidStakingApr}</div>
                   </div>
                 )}
-                {values.composablePoolApr > 0 && (
+                {(values.composablePoolApr ?? 0) > 0 && (
                   <div className={classes.apy}>
                     <div className={classes.apyLabel}>{t('Vault-AprComposablePool')}</div>
                     <div className={classes.apyValue}>{formatted.composablePoolApr}</div>

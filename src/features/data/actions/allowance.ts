@@ -27,8 +27,6 @@ export const fetchAllAllowanceAction = createAsyncThunk<
   { state: BeefyState }
 >('allowance/fetchAllAllowanceAction', async ({ chainId, walletAddress }, { getState }) => {
   const state = getState();
-
-  const userAddress = walletAddress || selectWalletAddress(state);
   const chain = selectChainById(state, chainId);
   const api = await getAllowanceApi(chain);
 
@@ -56,7 +54,7 @@ export const fetchAllAllowanceAction = createAsyncThunk<
     standardVaults,
     govVaults,
     boosts,
-    userAddress
+    walletAddress
   );
   return { chainId, data };
 });

@@ -6,7 +6,7 @@ import { Button } from '../../../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectTransactQuoteStatus,
-  selectTransactSelectedQuote,
+  selectTransactSelectedQuoteOrUndefined,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import type {
@@ -45,7 +45,7 @@ export const WithdrawActions = memo(function WithdrawActions() {
 
 export const WithdrawActionsStandard = memo(function WithdrawActionsStandard() {
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
-  const quote = useAppSelector(selectTransactSelectedQuote);
+  const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const option = quote ? quote.option : null;
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
@@ -60,7 +60,7 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectGovVaultById(state, vaultId));
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
-  const quote = useAppSelector(selectTransactSelectedQuote);
+  const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const showWithdraw =
     quote && isGovVaultWithdrawQuote(quote) && quoteStatus === TransactStatus.Fulfilled;
 

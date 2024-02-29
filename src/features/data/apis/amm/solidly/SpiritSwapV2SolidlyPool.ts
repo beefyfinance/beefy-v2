@@ -34,7 +34,7 @@ const SpiritSwapPairAbi: AbiItem[] = [
 ];
 
 export class SpiritSwapV2SolidlyPool extends SolidlyPool {
-  protected pairData: PairData | null = null;
+  protected pairData: PairData | undefined = undefined;
 
   protected getPairDataRequest(): ShapeWithLabel[] {
     const contract = createContract(SpiritSwapPairAbi, this.address);
@@ -50,6 +50,10 @@ export class SpiritSwapV2SolidlyPool extends SolidlyPool {
     const result = (untypedResult as PairDataResponse[])[0];
 
     super.consumePairDataResponse(untypedResult);
+
+    if (!this.pairData) {
+      throw new Error('Pair data is not loaded');
+    }
 
     this.pairData.fee = new BigNumber(result.fee);
   }

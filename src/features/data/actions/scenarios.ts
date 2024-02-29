@@ -38,10 +38,12 @@ type CapturedFulfilledActionGetter = Promise<() => Action>;
 
 export interface CapturedFulfilledActions {
   contractData: CapturedFulfilledActionGetter;
-  user: {
-    balance: CapturedFulfilledActionGetter;
-    //allowance: CapturedFulfilledActionGetter;
-  } | null;
+  user:
+    | {
+        balance: CapturedFulfilledActionGetter;
+        //allowance: CapturedFulfilledActionGetter;
+      }
+    | undefined;
 }
 
 let pollStopFns: PollStop[] = [];
@@ -109,10 +111,11 @@ export async function initHomeDataV4(store: BeefyStore) {
   for (const chain of chains) {
     fulfillsByNet[chain.id] = {
       contractData: captureFulfill(fetchAllContractDataByChainAction({ chainId: chain.id })),
-      user: null,
+      user: undefined,
     };
-    if (selectIsWalletKnown(store.getState())) {
-      fulfillsByNet[chain.id].user = fetchCaptureUserData(store, chain.id);
+    const walletAddress = selectWalletAddress(store.getState());
+    if (walletAddress) {
+      fulfillsByNet[chain.id]!.user = fetchCaptureUserData(store, chain.id, walletAddress);
     }
   }
 
@@ -124,16 +127,20 @@ export async function initHomeDataV4(store: BeefyStore) {
   // pnl timeline
   if (selectIsWalletKnown(store.getState())) {
     const walletAddress = selectWalletAddress(store.getState());
-    await store.dispatch(fetchWalletTimeline({ address: walletAddress }));
+    if (walletAddress) {
+      await store.dispatch(fetchWalletTimeline({ walletAddress }));
+    }
   }
 
   for (const chain of chains) {
     // run in an async block se we don't wait for a slow chain
     (async () => {
       const chainFfs = fulfillsByNet[chain.id];
-      await store.dispatch((await chainFfs.contractData)());
-      if (chainFfs.user !== null) {
-        return dispatchUserFfs(store, chainFfs.user);
+      if (chainFfs) {
+        await store.dispatch((await chainFfs.contractData)());
+        if (chainFfs.user !== undefined) {
+          return dispatchUserFfs(store, chainFfs.user);
+        }
       }
     })().catch(err => {
       // as we still dispatch network errors, for reducers to handle
@@ -198,11 +205,12 @@ export async function initHomeDataV4(store: BeefyStore) {
   // now set regular calls to update user data
   for (const chain of chains) {
     const pollStop = poll(async () => {
-      if (!selectIsWalletKnown(store.getState())) {
+      const walletAddress = selectWalletAddress(store.getState());
+      if (!walletAddress) {
         return;
       }
       // trigger all calls at the same time
-      const fulfills = fetchCaptureUserData(store, chain.id);
+      const fulfills = fetchCaptureUserData(store, chain.id, walletAddress);
 
       // dispatch fulfills in order
       await dispatchUserFfs(store, fulfills);
@@ -228,8 +236,10 @@ export function manualPoll(): BeefyThunk {
 
     if (selectIsWalletKnown(state)) {
       const walletAddress = selectWalletAddress(state);
-      for (const chainId of chains) {
-        dispatch(fetchAllBalanceAction({ chainId, walletAddress }));
+      if (walletAddress) {
+        for (const chainId of chains) {
+          dispatch(fetchAllBalanceAction({ chainId, walletAddress }));
+        }
       }
     }
   };
@@ -237,21 +247,21 @@ export function manualPoll(): BeefyThunk {
 
 export function fetchCaptureUserData(
   store: BeefyStore,
-  chainId: ChainEntity['id']
-): CapturedFulfilledActions['user'] {
+  chainId: ChainEntity['id'],
+  walletAddress: string
+): Exclude<CapturedFulfilledActions['user'], undefined> {
   const captureFulfill = createFulfilledActionCapturer(store);
 
-  const walletAddress = selectWalletAddress(store.getState());
   return {
     balance: captureFulfill(fetchAllBalanceAction({ chainId, walletAddress })),
     // TODO: do we really need to fetch allowances right now?
-    //allowance: captureFulfill(fetchAllAllowanceAction({ chainId })),
+    //allowance: captureFulfill(fetchAllAllowanceAction({ chainId, walletAddress })),
   };
 }
 
 export async function dispatchUserFfs(
   store: BeefyStore,
-  userFfs: CapturedFulfilledActions['user']
+  userFfs: Exclude<CapturedFulfilledActions['user'], undefined>
 ) {
   await store.dispatch((await userFfs.balance)());
   //await store.dispatch((await userFfs.allowance)());
@@ -272,7 +282,7 @@ export async function initBoostForm(
   store: BeefyStore,
   boostId: BoostEntity['id'],
   mode: 'stake' | 'unstake',
-  walletAddress: string | null
+  walletAddress: string | undefined
 ) {
   const vault = selectBoostById(store.getState(), boostId);
 
@@ -288,7 +298,7 @@ export async function initBoostForm(
 export async function initMinterForm(
   store: BeefyStore,
   minterId: MinterEntity['id'],
-  walletAddress: string | null
+  walletAddress: string | undefined
 ) {
   const minter = selectMinterById(store.getState(), minterId);
 
