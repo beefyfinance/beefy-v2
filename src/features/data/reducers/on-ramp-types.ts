@@ -50,14 +50,14 @@ type Fiat = {
 type Token = {
   id: string;
   allNetworks: ChainEntity['id'][];
-  minFiat: number;
-  maxFiat: number;
   byNetwork: Record<string, Network>;
 };
 type Network = {
   id: string;
   allProviders: string[];
   byProvider: Record<string, Provider>;
+  minFiat: number;
+  maxFiat: number;
 };
 type Provider = {
   id: string;
@@ -100,7 +100,7 @@ export type OnRampTypes = {
     error: NetworkError | undefined;
   };
   input: {
-    value: number | undefined;
+    value: number;
     error: InputError | undefined;
     mode: InputMode;
   };

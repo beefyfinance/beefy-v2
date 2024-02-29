@@ -16,15 +16,17 @@ import {
 } from '../reducers/on-ramp-types';
 import {
   selectFiat,
+  selectFiatOrUndefined,
   selectFiatTokenMinMaxFiat,
   selectInputAmount,
-  selectInputMode,
+  selectInputModeOrUndefined,
   selectIsFiatSupported,
   selectIsFiatTokenNetworkSupported,
   selectIsFiatTokenSupported,
-  selectNetwork,
+  selectNetworkOrUndefined,
   selectProvidersForFiatTokenNetwork,
   selectToken,
+  selectTokenOrUndefined,
 } from '../selectors/on-ramp';
 
 export type FulfilledSupportedPayload = ApiSupportedResponse;
@@ -62,10 +64,11 @@ export const setOnRampFiat = createAsyncThunk<
   const state = getState();
   const { fiat: newFiat } = options;
   const token = selectToken(state);
-  const network = selectNetwork(state);
+  const network = selectNetworkOrUndefined(state);
 
   if (
     state.ui.onRamp.lastStep === FormStep.InputAmount &&
+    network &&
     selectIsFiatTokenNetworkSupported(state, newFiat, token, network)
   ) {
     return {
@@ -93,10 +96,11 @@ export const setOnRampToken = createAsyncThunk<
   const state = getState();
   const { token: newToken } = options;
   const fiat = selectFiat(state);
-  const network = selectNetwork(state);
+  const network = selectNetworkOrUndefined(state);
 
   if (
     state.ui.onRamp.lastStep === FormStep.InputAmount &&
+    network &&
     selectIsFiatTokenNetworkSupported(state, fiat, newToken, network)
   ) {
     return {
@@ -130,7 +134,7 @@ export const validateOnRampForm = createAsyncThunk<
     network: undefined,
     input: undefined,
   };
-  const fiat = selectFiat(state);
+  const fiat = selectFiatOrUndefined(state);
   if (!fiat) {
     errors.fiat = FiatError.NotSelected;
     return errors;
@@ -141,7 +145,7 @@ export const validateOnRampForm = createAsyncThunk<
     return errors;
   }
 
-  const token = selectToken(state);
+  const token = selectTokenOrUndefined(state);
   if (!token) {
     errors.token = TokenError.NotSelected;
     return errors;
@@ -152,7 +156,7 @@ export const validateOnRampForm = createAsyncThunk<
     return errors;
   }
 
-  const network = selectNetwork(state);
+  const network = selectNetworkOrUndefined(state);
   if (!network) {
     errors.network = NetworkError.NotSelected;
     return errors;
@@ -169,9 +173,10 @@ export const validateOnRampForm = createAsyncThunk<
     return errors;
   }
 
-  const inputMode = selectInputMode(state);
+  const inputMode = selectInputModeOrUndefined(state);
   if (inputMode === InputMode.Fiat) {
-    const range = selectFiatTokenMinMaxFiat(state, fiat, token);
+    const range = selectFiatTokenMinMaxFiat(state, fiat, token, network);
+    console.log(range, inputAmount);
     if (inputAmount < range.min || inputAmount > range.max) {
       errors.input = InputError.OutOfRange;
       return errors;

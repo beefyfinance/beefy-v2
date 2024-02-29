@@ -22,7 +22,7 @@ const initialState: OnRampTypes = {
   fiat: { value: undefined, error: undefined },
   token: { value: undefined, error: undefined },
   network: { value: undefined, error: undefined },
-  input: { value: undefined, error: undefined, mode: InputMode.Fiat },
+  input: { value: 0, error: undefined, mode: InputMode.Fiat },
   canQuote: false,
   allFiat: [],
   byFiat: {},
@@ -101,6 +101,7 @@ export const onRamp = createSlice({
         clearQuote(sliceState);
         sliceState.input.value = action.payload.amount;
       }
+      ``;
     },
     toggleInputMode(sliceState) {
       clearQuote(sliceState);
@@ -173,8 +174,6 @@ export const onRamp = createSlice({
                     sliceState.byFiat[fiatSymbol].allTokens.push(tokenSymbol);
                     sliceState.byFiat[fiatSymbol].byToken[tokenSymbol] = {
                       id: tokenSymbol,
-                      minFiat: Number.MAX_VALUE,
-                      maxFiat: 0,
                       allNetworks: [],
                       byNetwork: {},
                     };
@@ -188,6 +187,8 @@ export const onRamp = createSlice({
                         id: network,
                         allProviders: [],
                         byProvider: {},
+                        minFiat: Number.MAX_VALUE,
+                        maxFiat: 0,
                       };
                     }
                     if (
@@ -210,14 +211,27 @@ export const onRamp = createSlice({
                     }
 
                     for (const method of paymentMethods) {
+                      console.log(providerKey, network, fiatSymbol, tokenSymbol, method);
                       const min =
                         method.minLimit === null || method.minLimit === 0 ? 0.01 : method.minLimit;
                       const max = method.maxLimit === null ? Number.MAX_VALUE : method.maxLimit;
-                      if (min < sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].minFiat) {
-                        sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].minFiat = min;
+                      if (
+                        min <
+                        sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].byNetwork[network]
+                          .minFiat
+                      ) {
+                        sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].byNetwork[
+                          network
+                        ].minFiat = min;
                       }
-                      if (max > sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].maxFiat) {
-                        sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].maxFiat = max;
+                      if (
+                        max >
+                        sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].byNetwork[network]
+                          .maxFiat
+                      ) {
+                        sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].byNetwork[
+                          network
+                        ].maxFiat = max;
                       }
 
                       if (

@@ -16,11 +16,12 @@ import {
   selectTransactOptionsMode,
   selectTransactOptionsVaultId,
   selectTransactSelectedChainId,
-  selectTransactSelectedQuote,
+  selectTransactSelectedQuoteOrUndefined,
   selectTransactSelectedSelectionId,
   selectTransactSelectionById,
   selectTransactSlippage,
   selectTransactVaultId,
+  selectTransactVaultIdOrUndefined,
 } from '../selectors/transact';
 import type {
   InputTokenAmount,
@@ -103,7 +104,7 @@ export const transactInit = createAsyncThunk<
   {
     condition({ vaultId }, { getState }) {
       // only dispatch if needed
-      return selectTransactVaultId(getState()) !== vaultId;
+      return selectTransactVaultIdOrUndefined(getState()) !== vaultId;
     },
   }
 );
@@ -289,7 +290,7 @@ export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state:
   'transact/fetchQuotesIfNeeded',
   async (_, { getState, dispatch }) => {
     const state = getState();
-    const quote = selectTransactSelectedQuote(state);
+    const quote = selectTransactSelectedQuoteOrUndefined(state);
     let shouldFetch = true;
 
     if (quote) {

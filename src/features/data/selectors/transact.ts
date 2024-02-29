@@ -15,13 +15,10 @@ import { BIG_ZERO } from '../../../helpers/big-number';
 import { valueOrThrow } from '../utils/selector-utils';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
-export const selectTransactVaultId = (state: BeefyState) => {
-  const id = state.ui.transact.vaultId;
-  if (!id) {
-    throw new Error('No transact vaultId found');
-  }
-  return id;
-};
+export const selectTransactVaultId = (state: BeefyState) =>
+  valueOrThrow(state.ui.transact.vaultId, 'No transact vaultId found');
+export const selectTransactVaultIdOrUndefined = (state: BeefyState) => state.ui.transact.vaultId;
+
 export const selectTransactMode = (state: BeefyState) => state.ui.transact.mode;
 export const selectTransactSlippage = (state: BeefyState) => state.ui.transact.swapSlippage;
 
@@ -48,13 +45,8 @@ export const selectTransactSelectedQuoteId = (state: BeefyState) =>
 
 export const selectTransactQuoteError = (state: BeefyState) => state.ui.transact.quotes.error;
 
-export const selectTransactSelectedQuote = (state: BeefyState) => {
-  const quote = selectTransactSelectedQuoteOrUndefined(state);
-  if (!quote) {
-    throw new Error('No selected quote found');
-  }
-  return quote;
-};
+export const selectTransactSelectedQuote = (state: BeefyState) =>
+  valueOrThrow(selectTransactSelectedQuoteOrUndefined(state), 'No selected quote found');
 
 export const selectTransactSelectedQuoteOrUndefined = createSelector(
   (state: BeefyState) => selectTransactSelectedQuoteId(state),

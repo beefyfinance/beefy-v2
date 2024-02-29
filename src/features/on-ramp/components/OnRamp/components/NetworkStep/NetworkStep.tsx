@@ -13,7 +13,6 @@ import {
 } from '../../../../../data/selectors/on-ramp';
 import { useDispatch } from 'react-redux';
 import { SearchableList } from '../../../../../../components/SearchableList';
-import type { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 import clsx from 'clsx';
 import { selectChainById } from '../../../../../data/selectors/chains';

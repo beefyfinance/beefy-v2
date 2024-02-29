@@ -14,16 +14,20 @@ export const selectShouldInitOnRamp = (state: BeefyState) =>
 
 export const selectToken = (state: BeefyState) =>
   valueOrThrow(state.ui.onRamp.token.value, 'Token value is not set');
+export const selectTokenOrUndefined = (state: BeefyState) => state.ui.onRamp.token.value;
 export const selectTokenError = (state: BeefyState) => state.ui.onRamp.token.error;
 export const selectFiat = (state: BeefyState) =>
   valueOrThrow(state.ui.onRamp.fiat.value, 'Fiat value is not set');
+export const selectFiatOrUndefined = (state: BeefyState) => state.ui.onRamp.fiat.value;
 export const selectFiatError = (state: BeefyState) => state.ui.onRamp.fiat.error;
 export const selectNetwork = (state: BeefyState) =>
   valueOrThrow(state.ui.onRamp.network.value, 'Network value is not set');
+export const selectNetworkOrUndefined = (state: BeefyState) => state.ui.onRamp.network.value;
 export const selectNetworkError = (state: BeefyState) => state.ui.onRamp.network.error;
-export const selectInputAmount = (state: BeefyState) =>
-  valueOrThrow(state.ui.onRamp.input.value, 'Input amount value is not set');
-export const selectInputMode = (state: BeefyState) => state.ui.onRamp.input.mode;
+export const selectInputAmount = (state: BeefyState) => state.ui.onRamp.input.value;
+export const selectInputMode = (state: BeefyState) =>
+  valueOrThrow(state.ui.onRamp.input.mode, 'Input mode is not set');
+export const selectInputModeOrUndefined = (state: BeefyState) => state.ui.onRamp.input.mode;
 export const selectInputError = (state: BeefyState) => state.ui.onRamp.input.error;
 export const selectCanQuote = (state: BeefyState) => state.ui.onRamp.canQuote;
 export const selectAllFiat = (state: BeefyState) => state.ui.onRamp.allFiat;
@@ -128,7 +132,7 @@ export const selectQuoteError = (state: BeefyState) =>
   valueOrThrow(state.ui.onRamp.quote.error, 'Quote error is not set');
 
 export const selectOutputAmount = createSelector(
-  (state: BeefyState) => selectSelectedQuote(state),
+  (state: BeefyState) => selectSelectedQuoteOrUndefined(state),
   (state: BeefyState) => selectInputMode(state),
   (quote, mode) => (quote ? (mode === InputMode.Fiat ? quote.tokenAmount : quote.fiatAmount) : 0)
 );
@@ -142,9 +146,10 @@ export const selectIsCheapestProviderSelected = createSelector(
 export const selectFiatTokenMinMaxFiat = createSelector(
   (state: BeefyState, fiat: string) => fiat,
   (state: BeefyState, fiat: string, token: string) => token,
+  (state: BeefyState, fiat: string, token: string, network: string) => network,
   (state: BeefyState) => state.ui.onRamp.byFiat,
-  (fiat, token, byFiat) => ({
-    min: byFiat[fiat].byToken[token].minFiat,
-    max: byFiat[fiat].byToken[token].maxFiat,
+  (fiat, token, network, byFiat) => ({
+    min: byFiat[fiat].byToken[token].byNetwork[network].minFiat,
+    max: byFiat[fiat].byToken[token].byNetwork[network].maxFiat,
   })
 );
