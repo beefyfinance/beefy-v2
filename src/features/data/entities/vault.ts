@@ -78,7 +78,7 @@ export interface VaultStandard {
   /** Map of chain->address of bridged receipt tokens */
   bridged?: Record<ChainEntity['id'], string>;
   lendingOracle?: { provider: string; address?: string; loops?: number };
-  earningPoints?: boolean;
+  earningPoints: boolean;
 }
 
 export interface VaultGov {
