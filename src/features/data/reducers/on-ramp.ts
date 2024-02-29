@@ -211,7 +211,6 @@ export const onRamp = createSlice({
                     }
 
                     for (const method of paymentMethods) {
-                      console.log(providerKey, network, fiatSymbol, tokenSymbol, method);
                       const min =
                         method.minLimit === null || method.minLimit === 0 ? 0.01 : method.minLimit;
                       const max = method.maxLimit === null ? Number.MAX_VALUE : method.maxLimit;
