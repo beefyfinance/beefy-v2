@@ -2,7 +2,6 @@ import React, { memo, type ReactNode, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectAllBridgeLimitedQuotes,
   selectBridgeConfigById,
   selectBridgeFormState,
   selectBridgeIdsFromTo,
@@ -27,7 +26,6 @@ import { useTranslation } from 'react-i18next';
 import { formatMinutesDuration } from '../../../../../../helpers/date';
 import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
 import BigNumber from 'bignumber.js';
-import { BIG_ONE } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 

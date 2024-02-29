@@ -3,7 +3,6 @@ import { CloseRounded, Search } from '@material-ui/icons';
 import React, {
   memo,
   type MutableRefObject,
-  type RefObject,
   useCallback,
   useEffect,
   useMemo,
