@@ -11,11 +11,7 @@ import {
 } from '../../actions/balance';
 import { initiateBoostForm } from '../../actions/boosts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
-import type {
-  BoostBalance,
-  GovVaultPoolBalance,
-  TokenBalance,
-} from '../../apis/balance/balance-types';
+import type { BoostBalance, GovVaultBalance, TokenBalance } from '../../apis/balance/balance-types';
 import type { BoostEntity } from '../../entities/boost';
 import type { ChainEntity } from '../../entities/chain';
 import type { TokenEntity } from '../../entities/token';
@@ -234,7 +230,7 @@ function addTokenBalanceToState(
 
 function addGovVaultBalanceToState(
   walletState: Draft<BalanceState['byAddress']['0xABC']>,
-  govVaultBalance: GovVaultPoolBalance[]
+  govVaultBalance: GovVaultBalance[]
 ) {
   for (const vaultBalance of govVaultBalance) {
     const vaultId = vaultBalance.vaultId;

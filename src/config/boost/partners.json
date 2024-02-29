@@ -1,4 +1,22 @@
 {
+  "vectorreserve": {
+    "title": "Vector Reserve",
+    "text": "Vector Reserve is DeFi’s first Liquidity Layer and issuer of the first LPD: vETH. Powered by EigenLayer and Superfluid Staking.",
+    "website": "https://www.vectorreserve.com/",
+    "social": {
+      "telegram": "https://t.me/vectorreserve",
+      "twitter": "http://x.com/vectorreserve"
+    }
+  },
+  "silo": {
+    "title": "Silo",
+    "text": "Silo Finance creates permissionless and risk-isolated lending markets on Arbitrum and two different deployments on Ethereum. Silo uses an isolated-pool approach where every token asset has its own lending market and is paired against the predetermined tokens called the 'bridge' assets. This novel architecture means lenders depositing bridge assets into a silo for one token would not be affected by the risks of other assets on the network even if they were to be exploited.",
+    "website": "https://www.silo.finance/",
+    "social": {
+      "discord": "https://discord.gg/silo-finance",
+      "twitter": "https://twitter.com/SiloFinance"
+    }
+  },
   "curve": {
     "title": "Curve",
     "text": "Curve Finance is a decentralized exchange and automated market maker deployed on many EVM compatible chains. It specializes in efficient trading of stablecoins and volatile assets. Curve has also introduced its own over-collateralized USD stablecoin, crvUSD, powered by a unique liquidation mechanism.",

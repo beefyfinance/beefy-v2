@@ -209,6 +209,47 @@ export const BeefyV2AppMulticallAbi = [
     inputs: [
       {
         internalType: 'address[]',
+        name: 'vaults',
+        type: 'address[]',
+      },
+      {
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+    ],
+    name: 'getGovVaultMultiBalance',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'balance',
+            type: 'uint256',
+          },
+          {
+            internalType: 'address[]',
+            name: 'rewardTokens',
+            type: 'address[]',
+          },
+          {
+            internalType: 'uint256[]',
+            name: 'rewards',
+            type: 'uint256[]',
+          },
+        ],
+        internalType: 'struct BoostBalanceInfoV2[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address[]',
         name: 'tokens',
         type: 'address[]',
       },

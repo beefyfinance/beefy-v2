@@ -9,7 +9,7 @@ export const config = {
     explorerUrl: 'https://etherscan.io',
     multicallAddress: '0x9dA9f3C6c45F1160b53D395b0A982aEEE1D212fE',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x306f8F99e28cece7C091c436D817A37002e18D62',
+    appMulticallContractAddress: '0x00d3e26d17aEA6f5c7d2f442aAc68E679E454517',
     providerName: 'Ethereum',
     walletSettings: {
       chainId: `0x${parseInt('1', 10).toString(16)}`,
@@ -749,7 +749,7 @@ export const config = {
   linea: {
     name: 'Linea',
     chainId: 59144,
-    rpc: ['https://rpc.linea.build'],
+    rpc: ['https://linea.drpc.org'],
     explorerUrl: 'https://lineascan.build',
     multicallAddress: '0x91BB303E972995EbE5f593BCddBb6F5Ef49Dbcbd',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -763,7 +763,7 @@ export const config = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://rpc.linea.build'],
+      rpcUrls: ['https://linea.drpc.org'],
       blockExplorerUrls: ['https://lineascan.build'],
     },
     gas: {
@@ -773,7 +773,7 @@ export const config = {
       baseMinimum: '7',
       baseSafetyMargin: 0.2,
     },
-    stableCoins: ['USDT', 'USDC', 'DAI'],
+    stableCoins: ['USDT', 'USDC', 'DAI', 'MAI'],
   },
   mantle: {
     name: 'Mantle',

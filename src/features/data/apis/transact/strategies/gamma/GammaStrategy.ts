@@ -91,8 +91,6 @@ type ZapHelpers = {
 
 type PartialWithdrawQuote = Pick<GammaWithdrawQuote, 'steps' | 'outputs' | 'fee' | 'returned'>;
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 export class GammaStrategy implements IStrategy {
   public readonly id: string = 'gamma';
   protected readonly wnative: TokenErc20;
@@ -175,7 +173,7 @@ export class GammaStrategy implements IStrategy {
     inputToken: TokenEntity,
     inputAmount: BigNumber
   ): Promise<BigNumber> {
-    const [token0, token1] = this.lpTokens;
+    const [token0] = this.lpTokens;
     const roughInputPrice = selectTokenPriceByTokenOracleId(state, inputToken.oracleId);
     const roughTokenPrices = this.lpTokens.map(token =>
       selectTokenPriceByTokenOracleId(state, token.oracleId)
@@ -440,7 +438,7 @@ export class GammaStrategy implements IStrategy {
     zapHelpers: ZapHelpers
   ): Promise<ZapStepResponse> {
     const { zap, vaultType } = this.helpers;
-    const { slippage, state } = zapHelpers;
+    const { slippage } = zapHelpers;
     const { liquidity, used, unused } = await this.quoteAddLiquidity(
       vaultType.depositToken,
       minInputs

@@ -25,11 +25,15 @@ export interface MinterCardParams {
 
 export const MinterCard = memo(function MinterCard({ vaultId, minterId }: MinterCardParams) {
   const minter = useAppSelector(state => selectMinterById(state, minterId));
-  const isFormReady = useAppSelector(
-    state =>
+  const isFormReady = useAppSelector(state => {
+    const minterChain = state.ui.dataLoader.byChainId[minter.chainId];
+    return (
       selectIsAddressBookLoaded(state, minter.chainId) &&
+      minterChain &&
+      isFulfilled(minterChain.contractData) &&
       isFulfilled(state.ui.dataLoader.global.minterForm)
-  );
+    );
+  });
   const walletAddress = useAppSelector(state =>
     selectIsWalletKnown(state) ? selectWalletAddress(state) : undefined
   );

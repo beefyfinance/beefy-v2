@@ -11,7 +11,10 @@ import type { Address } from 'viem';
 export interface VaultConfig {
   id: string;
   name: string;
+  /** defaults to standard */
   type?: 'standard' | 'gov' /*| 'concentrated-liquidity'*/;
+  /** version of vault type defaults to 1 */
+  version?: number;
   token: string;
   tokenAddress?: string | null;
   tokenDecimals: number;
@@ -301,7 +304,6 @@ export interface MinterConfig {
   depositToken: MinterConfigToken;
   mintedToken: MinterConfigToken;
   canBurnReserves: boolean;
-  hasEarningsPool: boolean;
   reserveBalanceMethod?: string;
   vaultIds: string[];
   canZapInWithOneInch?: boolean;

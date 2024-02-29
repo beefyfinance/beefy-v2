@@ -1,11 +1,77 @@
 [
   {
+    "id": "beqiv2-pool",
+    "name": "beQI Earnings Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "beQI",
+    "tokenAddress": "0x6c9D885B37b131aa68794ee1549fFB80be381Fa9",
+    "tokenDecimals": 18,
+    "earnedToken": "QI BPT",
+    "earnedTokenAddress": "0x39eB558131E5eBeb9f76a6cbf6898f6E6DCe5e4E",
+    "earnedTokenDecimals": 18,
+    "earnContractAddress": "0x5e3E4ED40E754254095F091aA51871D125F4380a",
+    "oracle": "tokens",
+    "oracleId": "beQIv2",
+    "status": "active",
+    "createdAt": 1708618917,
+    "platformId": "beefy",
+    "assets": ["beQI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "beqi",
+    "network": "ethereum"
+  },
+  {
+    "id": "silo-weeth-eth",
+    "name": "WETH (weETH Market)",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloWETH",
+    "earnedTokenAddress": "0x0E5F3a47122901D3eE047d2C7e1B36b419Ede5FE",
+    "earnContractAddress": "0x0E5F3a47122901D3eE047d2C7e1B36b419Ede5FE",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1708693378,
+    "platformId": "silo",
+    "assets": ["WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=ethereum&from=0x0000000000000000000000000000000000000000&to=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
+    }
+  },
+  {
     "id": "prisma-mkusd-ultra",
     "name": "mkUSD/ULTRA",
     "token": "MKULTRA",
     "tokenAddress": "0xC236BAE6e35b3Fb7335e1c35CA0862Ce92bd5DE3",
     "tokenDecimals": 18,
-    "tokenProviderId": "prisma",
+    "tokenProviderId": "curve",
     "earnedToken": "mooPrismaMkUSD-ULTRA",
     "earnedTokenAddress": "0x914a02E02dB217E6f5BdBaC65ab4510Ab208ae89",
     "earnContractAddress": "0x914a02E02dB217E6f5BdBaC65ab4510Ab208ae89",
@@ -1094,6 +1160,7 @@
     "id": "bifi-pool",
     "name": "BIFI Pool",
     "type": "gov",
+    "version": 2,
     "token": "BIFI",
     "tokenAddress": "0xB1F1ee126e9c96231Cc3d3fAD7C08b4cf873b1f1",
     "tokenDecimals": 18,

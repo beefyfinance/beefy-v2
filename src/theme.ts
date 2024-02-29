@@ -155,6 +155,7 @@ const theme = createTheme(
           warning: '#D19847',
           error: '#DA5932',
           success: '#4DB258',
+          info: '#5C70D6',
         },
       },
       text: {
