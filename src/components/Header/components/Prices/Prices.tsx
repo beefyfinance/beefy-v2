@@ -37,7 +37,7 @@ type Token = {
     icon: string;
     url: string;
   };
-  walletIconUrl?: string;
+  walletIconUrl: string;
   oneInchUrl: string;
   llamaSwapUrl: string;
 };

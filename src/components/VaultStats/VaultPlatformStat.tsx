@@ -19,7 +19,9 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultPlatfor
 
   const vault = selectVaultById(state, vaultId);
   const isLoaded =
-    state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
+    state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
+    selectIsWalletKnown(state) &&
+    walletAddress
       ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
           .alreadyLoadedOnce
       : true;

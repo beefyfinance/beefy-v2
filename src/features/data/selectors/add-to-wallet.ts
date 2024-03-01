@@ -1,4 +1,5 @@
 import type { BeefyState } from '../../../redux-types';
+import { valueOrThrow } from '../utils/selector-utils';
 
 export const selectAddToWalletStatus = (state: BeefyState) => state.ui.addToWallet.status;
 
@@ -10,4 +11,5 @@ export const selectAddToWalletSymbol = (state: BeefyState) =>
 
 export const selectAddToWalletIconUrl = (state: BeefyState) => state.ui.addToWallet.iconUrl;
 
-export const selectAddToWalletToken = (state: BeefyState) => state.ui.addToWallet.token;
+export const selectAddToWalletToken = (state: BeefyState) =>
+  valueOrThrow(state.ui.addToWallet.token, 'Add to wallet token not set');

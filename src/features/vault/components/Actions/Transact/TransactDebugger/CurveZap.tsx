@@ -7,7 +7,7 @@ import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { isStandardVault, type VaultStandard } from '../../../../../data/entities/vault';
 import type { CurveStrategyOptions } from '../../../../../data/apis/transact/strategies/IStrategy';
 import {
-  selectTokenByAddressOrNull,
+  selectTokenByAddressOrUndefined,
   selectTokenPriceByTokenOracleId,
 } from '../../../../../data/selectors/tokens';
 import type { ISwapAggregator } from '../../../../../data/apis/transact/swap/ISwapAggregator';
@@ -66,9 +66,11 @@ const ZapLoader = memo<ZapLoaderProps>(function ZapLoader({ vault, zap }) {
     uniqBy(
       zap.methods
         .flatMap(method =>
-          method.coins.map(address => selectTokenByAddressOrNull(state, vault.chainId, address))
+          method.coins.map(address =>
+            selectTokenByAddressOrUndefined(state, vault.chainId, address)
+          )
         )
-        .filter(Boolean),
+        .filter((t): t is TokenEntity => !!t),
       token => token.address
     )
   );
@@ -111,7 +113,7 @@ const Zap = memo<ZapProps>(function Zap({ aggregatorSupportedTokens, vault, zap 
     zap.methods.map(method => ({
       ...method,
       tokens: method.coins.map(address => {
-        const token = selectTokenByAddressOrNull(state, vault.chainId, address);
+        const token = selectTokenByAddressOrUndefined(state, vault.chainId, address);
         const inAddressBook = !!token;
         const inAggregator =
           inAddressBook &&

@@ -3,7 +3,7 @@ import type { TokenEntity } from '../../features/data/entities/token';
 import type { ChainEntity } from '../../features/data/entities/chain';
 import { useAppSelector } from '../../store';
 import {
-  selectTokenByAddressOrNull,
+  selectTokenByAddressOrUndefined,
   selectVaultTokenSymbols,
 } from '../../features/data/selectors/tokens';
 import type { AssetsImageType } from '../AssetsImage';
@@ -23,15 +23,17 @@ export const TokenImage = memo<TokenImageProps>(function TokenImage({
   size,
   className,
 }) {
-  const token = useAppSelector(state => selectTokenByAddressOrNull(state, chainId, tokenAddress));
+  const token = useAppSelector(state =>
+    selectTokenByAddressOrUndefined(state, chainId, tokenAddress)
+  );
   const haveAssetForToken = useMemo(() => {
-    return token && singleAssetExists(token.symbol, token.chainId);
+    return !!token && singleAssetExists(token.symbol, token.chainId);
   }, [token]);
 
   return haveAssetForToken ? (
     <AssetsImage
       chainId={chainId}
-      assetSymbols={[token.symbol]}
+      assetSymbols={[token!.symbol]}
       className={className}
       size={size}
     />
@@ -54,10 +56,11 @@ const TokenWithoutAsset = memo<TokenWithoutAssetProps>(function TokenWithoutAsse
   const vault = useAppSelector(state =>
     selectFirstStandardVaultByDepositTokenAddress(state, token.chainId, token.address)
   );
+  const vaultTokenSymbols = useAppSelector(state =>
+    vault ? selectVaultTokenSymbols(state, vault.id) : []
+  );
 
-  const vaultTokenSymbols = useAppSelector(state => selectVaultTokenSymbols(state, vault.id));
-
-  return vault ? (
+  return vault && vaultTokenSymbols.length ? (
     <AssetsImage
       chainId={token.chainId}
       assetSymbols={vaultTokenSymbols}

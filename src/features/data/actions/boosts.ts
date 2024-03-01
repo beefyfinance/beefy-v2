@@ -32,7 +32,7 @@ export const fetchAllBoosts = createAsyncThunk<FulfilledAllBoostsPayload>(
 interface InitBoostFormParams {
   boostId: BoostEntity['id'];
   mode: 'stake' | 'unstake';
-  walletAddress: string | null;
+  walletAddress: string | undefined;
 }
 
 interface InitBoostFormPayload {
@@ -40,7 +40,7 @@ interface InitBoostFormPayload {
   mode: 'stake' | 'unstake';
 
   // really, this should be separated
-  walletAddress: string | null;
+  walletAddress: string | undefined;
   balance: FetchAllBalancesResult;
   allowance: TokenAllowance[];
 

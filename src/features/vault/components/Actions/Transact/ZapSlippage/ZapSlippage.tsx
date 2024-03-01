@@ -1,4 +1,4 @@
-import type { ChangeEventHandler, MouseEventHandler } from 'react';
+import type { ChangeEventHandler, MouseEventHandler, MutableRefObject } from 'react';
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
@@ -92,7 +92,7 @@ const CustomSlippageInput = memo<CustomSlippageInputProps>(function CustomSlippa
   const showPlaceholder = !inputMode && !isCustom;
 
   const handleClick = useCallback<MouseEventHandler<HTMLButtonElement>>(() => {
-    inputRef.current.focus();
+    inputRef.current?.focus();
   }, [inputRef]);
 
   const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
@@ -152,7 +152,7 @@ const CustomSlippageInput = memo<CustomSlippageInputProps>(function CustomSlippa
         onChange={handleChange}
         onBlur={handleBlur}
         onFocus={handleFocus}
-        ref={inputRef}
+        ref={inputRef as MutableRefObject<HTMLInputElement>}
       />
       {showPlaceholder ? (
         <button

@@ -111,7 +111,7 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
                   />
                 ),
               }
-            : null
+            : undefined
         }
       />
     );

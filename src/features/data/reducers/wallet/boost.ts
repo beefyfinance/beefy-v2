@@ -13,14 +13,15 @@ import { BIG_ZERO } from '../../../../helpers/big-number';
 
 // TODO: this looks exactly like the withdraw state
 export type BoostState = {
-  boostId: BoostEntity['id'];
+  boostId: BoostEntity['id'] | undefined;
   mode: 'stake' | 'unstake';
   max: boolean; // this is so we know when to disable the max button
   amount: BigNumber;
   formattedInput: string;
 };
+
 const initialBoostState: BoostState = {
-  boostId: null,
+  boostId: undefined,
   mode: 'stake',
   amount: BIG_ZERO,
   formattedInput: '',
@@ -40,6 +41,10 @@ export const boostSlice = createSlice({
         state: BeefyState;
       }>
     ) {
+      if (!sliceState.boostId) {
+        throw new Error('Boost id not set');
+      }
+
       const state = action.payload.state;
       const boost = selectBoostById(state, sliceState.boostId);
       const vault = selectVaultById(state, boost.vaultId);
@@ -57,8 +62,11 @@ export const boostSlice = createSlice({
       sliceState,
       action: PayloadAction<{ amount: string; withdraw: boolean; state: BeefyState }>
     ) {
-      const state = action.payload.state;
+      if (!sliceState.boostId) {
+        throw new Error('Boost id not set');
+      }
 
+      const state = action.payload.state;
       const boost = selectBoostById(state, sliceState.boostId);
       const vault = selectVaultById(state, boost.vaultId);
       const balanceToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);

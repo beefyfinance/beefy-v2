@@ -26,11 +26,11 @@ const initialTransactTokens: TransactSelections = {
 };
 
 const initialTransactOptions: TransactOptions = {
-  vaultId: null,
+  vaultId: undefined,
   mode: TransactMode.Deposit,
   status: TransactStatus.Idle,
-  requestId: null,
-  error: null,
+  requestId: undefined,
+  error: undefined,
   allOptionIds: [],
   byOptionId: {},
   bySelectionId: {},
@@ -40,22 +40,22 @@ const initialTransactQuotes: TransactQuotes = {
   allQuoteIds: [],
   byQuoteId: {},
   status: TransactStatus.Idle,
-  requestId: null,
-  error: null,
+  requestId: undefined,
+  error: undefined,
 };
 
 const initialTransactConfirm = {
   changes: [],
   status: TransactStatus.Idle,
-  requestId: null,
-  error: null,
+  requestId: undefined,
+  error: undefined,
 };
 
 const initialTransactState: TransactState = {
-  vaultId: null,
-  selectedChainId: null,
-  selectedSelectionId: null,
-  selectedQuoteId: null,
+  vaultId: undefined,
+  selectedChainId: undefined,
+  selectedSelectionId: undefined,
+  selectedQuoteId: undefined,
   swapSlippage: 0.01, // 1% default
   inputAmount: BIG_ZERO,
   inputMax: false,
@@ -202,8 +202,10 @@ const transactSlice = createSlice({
           addOptionsToState(sliceState, action.payload.options);
 
           const defaultOption = first(action.payload.options);
-          sliceState.selectedSelectionId = defaultOption.selectionId;
-          sliceState.selectedChainId = defaultOption.chainId;
+          if (defaultOption) {
+            sliceState.selectedSelectionId = defaultOption.selectionId;
+            sliceState.selectedChainId = defaultOption.chainId;
+          }
         }
       })
       .addCase(transactFetchQuotes.pending, (sliceState, action) => {
@@ -228,9 +230,11 @@ const transactSlice = createSlice({
 
             addQuotesToState(sliceState, action.payload.quotes);
 
-            if (sliceState.selectedQuoteId === null) {
+            if (sliceState.selectedQuoteId === undefined) {
               const firstQuote = first(action.payload.quotes);
-              sliceState.selectedQuoteId = firstQuote.id;
+              if (firstQuote) {
+                sliceState.selectedQuoteId = firstQuote.id;
+              }
             }
           }
         }
@@ -239,13 +243,13 @@ const transactSlice = createSlice({
 });
 
 function resetForm(sliceState: Draft<TransactState>) {
-  sliceState.selectedChainId = null;
-  sliceState.selectedSelectionId = null;
+  sliceState.selectedChainId = undefined;
+  sliceState.selectedSelectionId = undefined;
   sliceState.inputAmount = BIG_ZERO;
   sliceState.inputMax = false;
 
   sliceState.options.status = TransactStatus.Idle;
-  sliceState.options.error = null;
+  sliceState.options.error = undefined;
   sliceState.options.allOptionIds = [];
   sliceState.options.byOptionId = {};
   sliceState.options.bySelectionId = {};
@@ -260,19 +264,19 @@ function resetForm(sliceState: Draft<TransactState>) {
 }
 
 function resetQuotes(sliceState: Draft<TransactState>) {
-  sliceState.selectedQuoteId = null;
+  sliceState.selectedQuoteId = undefined;
   sliceState.quotes.status = TransactStatus.Idle;
   sliceState.quotes.allQuoteIds = [];
   sliceState.quotes.byQuoteId = {};
-  sliceState.quotes.error = null;
-  sliceState.quotes.requestId = null;
+  sliceState.quotes.error = undefined;
+  sliceState.quotes.requestId = undefined;
 
   resetConfirm(sliceState);
 }
 
 function resetConfirm(sliceState: Draft<TransactState>) {
-  sliceState.confirm.requestId = null;
-  sliceState.confirm.error = null;
+  sliceState.confirm.requestId = undefined;
+  sliceState.confirm.error = undefined;
   sliceState.confirm.status = TransactStatus.Idle;
   sliceState.confirm.changes = [];
 }
@@ -319,11 +323,12 @@ function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOp
     }
 
     // Add chainId -> selectionId[] mapping
-    if (!(option.chainId in sliceState.selections.byChainId)) {
+    const byChainId = sliceState.selections.byChainId[option.chainId];
+    if (!byChainId) {
       sliceState.selections.byChainId[option.chainId] = [option.selectionId];
       sliceState.selections.allChainIds.push(option.chainId);
-    } else if (!sliceState.selections.byChainId[option.chainId].includes(option.selectionId)) {
-      sliceState.selections.byChainId[option.chainId].push(option.selectionId);
+    } else if (!byChainId.includes(option.selectionId)) {
+      byChainId.push(option.selectionId);
     }
   }
 }

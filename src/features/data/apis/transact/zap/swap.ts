@@ -24,7 +24,7 @@ export async function fetchZapAggregatorSwap(
     throw new Error(`Invalid swap request`);
   }
 
-  const output = first(outputs);
+  const output = first(outputs)!; // we checked length above
 
   const swap = await swapAggregator.fetchSwap(
     request.providerId,

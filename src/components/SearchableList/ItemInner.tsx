@@ -1,9 +1,11 @@
 import React, { memo } from 'react';
 
-export type ItemInnerProps = {
-  value: string;
+export type ItemInnerProps<V extends string = string> = {
+  value: V;
 };
 
-export const ItemInner = memo<ItemInnerProps>(function ItemInner({ value }) {
+export const ItemInner = memo(function ItemInner<V extends string = string>({
+  value,
+}: ItemInnerProps<V>) {
   return <>{value}</>;
 });

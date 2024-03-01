@@ -2,9 +2,10 @@ import type Web3 from 'web3';
 import BigNumber from 'bignumber.js';
 import type { ShapeWithLabel } from 'eth-multicall';
 import { MultiCall } from 'eth-multicall';
-import { UniswapV2FactoryAbi, UniswapV2PairAbi } from '../../../../../config/abi';
+import { UniswapV2FactoryAbi } from '../../../../../config/abi/UniswapV2FactoryAbi';
+import { UniswapV2PairAbi } from '../../../../../config/abi/UniswapV2PairAbi';
 import type { ChainEntity } from '../../../entities/chain';
-import { createContract } from '../../../../../helpers/web3';
+import { createContract, viemToWeb3Abi } from '../../../../../helpers/web3';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
 import { getWeb3Instance } from '../../instances';
 import { BIG_ZERO, toWei } from '../../../../../helpers/big-number';
@@ -22,9 +23,9 @@ import { getInsertIndex } from '../../transact/helpers/zap';
 import type { TokenEntity } from '../../../entities/token';
 import { isTokenNative } from '../../../entities/token';
 import type { TokenAmount } from '../../transact/transact-types';
-import { first } from 'lodash-es';
 import { slipAllBy, slipBy } from '../../transact/helpers/amounts';
 import type { AmmEntityUniswapV2 } from '../../../entities/zap';
+import { onlyOneTokenAmount } from '../../transact/helpers/options';
 
 export type PairDataResponse = {
   totalSupply: string;
@@ -76,10 +77,10 @@ export type MintFeeParams = {
 export class UniswapV2Pool implements IUniswapLikePool {
   public readonly type = 'uniswap-v2';
 
-  protected pairData: PairData | null = null;
-  protected factoryData: FactoryData | null = null;
-  protected web3: Web3 | null = null;
-  protected multicall: MultiCall | null = null;
+  protected pairData: PairData | undefined = undefined;
+  protected factoryData: FactoryData | undefined = undefined;
+  protected web3: Web3 | undefined = undefined;
+  protected multicall: MultiCall | undefined = undefined;
 
   constructor(
     protected address: string,
@@ -88,7 +89,7 @@ export class UniswapV2Pool implements IUniswapLikePool {
   ) {}
 
   async getWeb3(): Promise<Web3> {
-    if (this.web3 === null) {
+    if (this.web3 === undefined) {
       this.web3 = await getWeb3Instance(this.chain);
     }
 
@@ -96,7 +97,7 @@ export class UniswapV2Pool implements IUniswapLikePool {
   }
 
   async getMulticall(): Promise<MultiCall> {
-    if (this.multicall === null) {
+    if (this.multicall === undefined) {
       this.multicall = new MultiCall(await this.getWeb3(), this.chain.multicallAddress);
     }
 
@@ -104,7 +105,7 @@ export class UniswapV2Pool implements IUniswapLikePool {
   }
 
   protected getPairDataRequest(): ShapeWithLabel[] {
-    const contract = createContract(UniswapV2PairAbi, this.address);
+    const contract = createContract(viemToWeb3Abi(UniswapV2PairAbi), this.address);
     return [
       {
         totalSupply: contract.methods.totalSupply(),
@@ -138,7 +139,7 @@ export class UniswapV2Pool implements IUniswapLikePool {
   }
 
   protected getFactoryDataRequest(): ShapeWithLabel[] {
-    const contract = createContract(UniswapV2FactoryAbi, this.amm.factoryAddress);
+    const contract = createContract(viemToWeb3Abi(UniswapV2FactoryAbi), this.amm.factoryAddress);
     return [
       {
         feeTo: contract.methods.feeTo(),
@@ -422,6 +423,10 @@ export class UniswapV2Pool implements IUniswapLikePool {
   }
 
   protected getReservesInOut(tokenIn: string): ReservesInOut {
+    if (!this.pairData) {
+      throw new Error('Pair data is not loaded');
+    }
+
     const inIsToken0 = this.isToken0(tokenIn);
     return {
       reservesIn: inIsToken0 ? this.pairData.reserves0 : this.pairData.reserves1,
@@ -430,10 +435,18 @@ export class UniswapV2Pool implements IUniswapLikePool {
   }
 
   protected isToken0(tokenAddress: string): boolean {
+    if (!this.pairData) {
+      throw new Error('Pair data is not loaded');
+    }
+
     return this.pairData.token0.toLowerCase() === tokenAddress.toLowerCase();
   }
 
   protected isTokenInPair(token: TokenEntity): boolean {
+    if (!this.pairData) {
+      throw new Error('Pair data is not loaded');
+    }
+
     if (isTokenNative(token)) {
       return false;
     }
@@ -536,8 +549,8 @@ export class UniswapV2Pool implements IUniswapLikePool {
 
   async getZapSwap(request: ZapStepRequest): Promise<ZapStepResponse> {
     const { inputs, outputs, maxSlippage, zapRouter, insertBalance } = request;
-    const input = first(inputs);
-    const output = first(outputs);
+    const input = onlyOneTokenAmount(inputs);
+    const output = onlyOneTokenAmount(outputs);
 
     if (!this.isTokenInPair(input.token) || !this.isTokenInPair(output.token)) {
       throw new Error('Invalid token');
@@ -767,11 +780,7 @@ export class UniswapV2Pool implements IUniswapLikePool {
   async getZapRemoveLiquidity(request: ZapStepRequest): Promise<ZapStepResponse> {
     const { inputs, outputs, maxSlippage, zapRouter, insertBalance } = request;
 
-    if (inputs.length !== 1) {
-      throw new Error('Invalid input count');
-    }
-
-    const input = first(inputs);
+    const input = onlyOneTokenAmount(inputs);
     if (this.address.toLowerCase() !== input.token.address.toLowerCase()) {
       throw new Error('Invalid input token');
     }

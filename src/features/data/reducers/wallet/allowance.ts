@@ -20,7 +20,7 @@ import { selectMinterById } from '../../selectors/minters';
  */
 export interface AllowanceState {
   byChainId: {
-    [chainId: ChainEntity['id']]: {
+    [chainId in ChainEntity['id']]?: {
       byTokenAddress: {
         [tokenAddress: TokenEntity['address']]: {
           bySpenderAddress: {
@@ -84,17 +84,16 @@ function addAllowancesToState(
 ) {
   let stateForChain = sliceState.byChainId[chainId];
   if (stateForChain === undefined) {
-    sliceState.byChainId[chainId] = { byTokenAddress: {} };
-    stateForChain = sliceState.byChainId[chainId];
+    stateForChain = sliceState.byChainId[chainId] = { byTokenAddress: {} };
   }
 
   for (const tokenAllowance of allowances) {
-    let stateForToken = stateForChain.byTokenAddress[tokenAllowance.tokenAddress.toLowerCase()];
+    const tokenKey = tokenAllowance.tokenAddress.toLowerCase();
+    let stateForToken = stateForChain.byTokenAddress[tokenKey];
     if (stateForToken === undefined) {
-      stateForChain.byTokenAddress[tokenAllowance.tokenAddress.toLowerCase()] = {
+      stateForToken = stateForChain.byTokenAddress[tokenKey] = {
         bySpenderAddress: {},
       };
-      stateForToken = stateForChain.byTokenAddress[tokenAllowance.tokenAddress.toLowerCase()];
     }
 
     // only update data if necessary

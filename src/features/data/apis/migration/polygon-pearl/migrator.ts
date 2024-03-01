@@ -13,13 +13,15 @@ import { selectChainById } from '../../../selectors/chains';
 import { getWalletConnectionApi, getWeb3Instance } from '../../instances';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import { selectUserBalanceToMigrateByVaultId } from '../../../selectors/migration';
-import { SolidlyGaugeAbi, SolidlyVoterAbi } from '../../../../../config/abi';
+import { SolidlyGaugeAbi } from '../../../../../config/abi/SolidlyGaugeAbi';
+import { SolidlyVoterAbi } from '../../../../../config/abi/SolidlyVoterAbi';
 import type { Step } from '../../../reducers/wallet/stepper';
 import { walletActions } from '../../../actions/wallet-actions';
 import { toWei } from '../../../../../helpers/big-number';
 import { startStepperWithSteps } from '../../../actions/stepper';
 import { isTokenErc20 } from '../../../entities/token';
 import { selectAllowanceByTokenAddress } from '../../../selectors/allowances';
+import type { AbiItem } from 'web3-utils';
 
 const PEARL_VOTER = '0xa26C2A6BfeC5512c13Ae9EacF41Cb4319d30cCF0';
 
@@ -35,9 +37,9 @@ export const fetchPearlStakedBalance = createAsyncThunk<
 
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
-  const voter = new web3.eth.Contract(SolidlyVoterAbi, PEARL_VOTER);
+  const voter = new web3.eth.Contract(SolidlyVoterAbi as unknown as AbiItem[], PEARL_VOTER);
   const gaugeAddress = await voter.methods.gauges(depositToken.address).call();
-  const gauge = new web3.eth.Contract(SolidlyGaugeAbi, gaugeAddress);
+  const gauge = new web3.eth.Contract(SolidlyGaugeAbi as unknown as AbiItem[], gaugeAddress);
   const balance = await gauge.methods.balanceOf(walletAddress).call();
 
   const fixedBalance = new BigNumber(balance).shiftedBy(-depositToken.decimals);
@@ -55,10 +57,10 @@ async function unstakeCall(
   const walletApi = await getWalletConnectionApi();
   const web3 = await walletApi.getConnectedWeb3Instance();
 
-  const voter = new web3.eth.Contract(SolidlyVoterAbi, PEARL_VOTER);
+  const voter = new web3.eth.Contract(SolidlyVoterAbi as unknown as AbiItem[], PEARL_VOTER);
   const gaugeAddress = await voter.methods.gauges(depositToken.address).call();
 
-  const gauge = new web3.eth.Contract(SolidlyGaugeAbi, gaugeAddress);
+  const gauge = new web3.eth.Contract(SolidlyGaugeAbi as unknown as AbiItem[], gaugeAddress);
   const amountInWei = toWei(amount, depositToken.decimals);
   return gauge.methods.withdraw(amountInWei.toString(10));
 }

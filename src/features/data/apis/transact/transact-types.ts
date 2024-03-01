@@ -319,7 +319,7 @@ export type UniswapLikePoolDepositQuote = BaseZapQuote<
 export type UniswapLikeAggregatorDepositQuote = BaseZapQuote<
   UniswapLikeDepositOption<AmmEntityUniswapLike>
 > & {
-  lpQuotes: QuoteResponse[];
+  lpQuotes: (QuoteResponse | undefined)[];
 };
 
 export type UniswapLikeDepositQuote =
@@ -341,7 +341,7 @@ export type CurveDepositQuote = BaseZapQuote<CurveDepositOption> & {
 };
 
 export type GammaDepositQuote = BaseZapQuote<GammaDepositOption> & {
-  lpQuotes: QuoteResponse[];
+  lpQuotes: (QuoteResponse | undefined)[];
 };
 
 export type VaultDepositQuote = StandardVaultDepositQuote | GovVaultDepositQuote;

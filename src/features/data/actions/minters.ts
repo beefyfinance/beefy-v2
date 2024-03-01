@@ -15,7 +15,7 @@ import type { FetchMinterReservesReloadResult } from '../apis/minter/minter-type
 
 export interface FulfilledAllMintersPayload {
   byChainId: {
-    [chainId: ChainEntity['id']]: MinterConfig[];
+    [chainId in ChainEntity['id']]?: MinterConfig[];
   };
   state: BeefyState;
 }
@@ -32,14 +32,14 @@ export const fetchAllMinters = createAsyncThunk<
 
 interface InitMinterFormParams {
   minterId: MinterEntity['id'];
-  walletAddress: string | null;
+  walletAddress: string | undefined;
 }
 
 interface InitMinterFormPayload {
   minterId: MinterEntity['id'];
 
   // really, this should be separated
-  walletAddress: string | null;
+  walletAddress: string | undefined;
   balance: FetchAllBalancesResult;
   allowance: TokenAllowance[];
   reserves: BigNumber;

@@ -32,7 +32,7 @@ export class OneInchSwapProvider implements ISwapProvider {
     chainId: ChainEntity['id'],
     state: BeefyState
   ): OneInchSwapConfig | undefined {
-    return selectSwapAggregatorForChainType<OneInchSwapConfig>(state, chainId, 'one-inch');
+    return selectSwapAggregatorForChainType<OneInchSwapConfig['type']>(state, chainId, 'one-inch');
   }
 
   async fetchQuote(request: QuoteRequest, state: BeefyState): Promise<QuoteResponse> {

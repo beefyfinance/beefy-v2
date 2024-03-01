@@ -67,7 +67,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
     onChange(maxValue, true);
   }, [maxValue, onChange, tokenDecimals, setInput]);
 
-  const handleChange = useCallback<InputBaseProps['onChange']>(
+  const handleChange = useCallback<Exclude<InputBaseProps['onChange'], undefined>>(
     e => {
       const rawInput = e.target.value;
 
@@ -112,7 +112,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
     [allowInputAboveBalance, handleMax, maxValue, onChange]
   );
 
-  const handleBlur = useCallback<InputBaseProps['onBlur']>(
+  const handleBlur = useCallback<Exclude<InputBaseProps['onBlur'], undefined>>(
     e => {
       const rawInput = e.target.value;
 

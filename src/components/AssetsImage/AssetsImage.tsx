@@ -9,16 +9,16 @@ import type { ChainEntity } from '../../features/data/entities/chain';
 const useStyles = makeStyles(styles);
 const maxSupportedAssets = 8;
 
-function useAssetsImageUris(chainId: ChainEntity['id'], assetSymbols: string[]) {
+function useAssetsImageUris(chainId: ChainEntity['id'] | undefined, assetSymbols: string[]) {
   return useMemo(() => {
     return assetSymbols
       .slice(0, maxSupportedAssets)
-      .map(assetId => getSingleAssetSrc(assetId, chainId));
+      .map(assetSymbol => getSingleAssetSrc(assetSymbol, chainId));
   }, [assetSymbols, chainId]);
 }
 
 export type AssetsImageType = {
-  chainId: ChainEntity['id'];
+  chainId: ChainEntity['id'] | undefined;
   assetSymbols: string[];
   size?: number;
   className?: string;

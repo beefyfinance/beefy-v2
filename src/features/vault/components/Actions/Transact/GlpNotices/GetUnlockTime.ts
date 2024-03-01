@@ -66,7 +66,7 @@ const managerAbi: AbiItem[] = [
 
 export async function getUnlockTime(
   depositTokenAddress: string,
-  userAddress: string,
+  userAddress: string | undefined,
   chain: ChainEntity,
   config: GlpLikeConfig
 ): Promise<UnlockTimeResult> {

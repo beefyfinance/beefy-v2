@@ -87,7 +87,11 @@ export const ConfirmNotice = memo<ConfirmNoticeProps>(function ConfirmNotice({
   if (status === TransactStatus.Rejected) {
     return (
       <AlertError className={className}>
-        <p>{t('Transact-Notice-Confirm-Error', { error: errorToString(error) })}</p>
+        <p>
+          {t('Transact-Notice-Confirm-Error', {
+            error: error ? errorToString(error) : 'unknown error',
+          })}
+        </p>
         <p>{t('Transact-Notice-Confirm-Error-Retry')}</p>
       </AlertError>
     );

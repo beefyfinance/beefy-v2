@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { TransactState } from './TransactState';
 import { useAppSelector } from '../../../../../../store';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
-import { selectTokenByAddressOrNull } from '../../../../../data/selectors/tokens';
+import { selectTokenByAddressOrUndefined } from '../../../../../data/selectors/tokens';
 
 const CurveZap = lazy(() => import(`./CurveZap`));
 
@@ -18,12 +18,12 @@ const TransactDebugger = memo<TransactDebuggerProps>(function TransactDebugger({
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const depositToken = useAppSelector(state =>
-    selectTokenByAddressOrNull(state, vault.chainId, vault.depositTokenAddress)
+    selectTokenByAddressOrUndefined(state, vault.chainId, vault.depositTokenAddress)
   );
 
   return (
     <div className={classes.container}>
-      {depositToken.providerId === 'curve' ? <CurveZap vaultId={vaultId} /> : null}
+      {depositToken && depositToken.providerId === 'curve' ? <CurveZap vaultId={vaultId} /> : null}
       <TransactState />
     </div>
   );

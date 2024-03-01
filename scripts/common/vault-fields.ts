@@ -5,6 +5,7 @@ const FIELD_ORDER = [
   'id',
   'name',
   'type',
+  'version',
   'token',
   'tokenAddress',
   'tokenDecimals',

@@ -24,6 +24,7 @@ import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaul
 import { createIdMap } from '../utils/array-utils';
 import { mooAmountToOracleAmount } from '../utils/ppfs';
 import { BIG_ONE } from '../../../helpers/big-number';
+import type { BigNumber } from 'bignumber.js';
 
 // boost is expressed as APR
 interface AprData {
@@ -32,8 +33,8 @@ interface AprData {
 
 // TODO: this should be reworked
 export interface TotalApy {
-  totalApy?: number;
-  totalDaily?: number;
+  totalApy: number;
+  totalDaily: number;
   vaultApr?: number;
   vaultDaily?: number;
   tradingApr?: number;
@@ -135,7 +136,7 @@ function addContractDataToState(
      * unrelated token (like PAE). When the boost is a mooToken, we don't have the
      * token price in the api so we need to compute it.
      **/
-    let earnedPrice = null;
+    let earnedPrice: BigNumber;
     const rewardTargetVaultId =
       state.entities.vaults.byChainId[boost.chainId]?.standardVault.byEarnedTokenAddress[
         boost.earnedTokenAddress.toLowerCase()
@@ -204,7 +205,10 @@ function recomputeTotalApy(
   }
 
   for (const [vaultId, apy] of Object.entries(sliceState.rawApy.byVaultId)) {
-    const values: TotalApy = {};
+    const values: TotalApy = {
+      totalApy: 0,
+      totalDaily: 0,
+    };
 
     // sometimes we get vault ids in the api that are not yet configure
     // locally, so we have to check that the vault exists first

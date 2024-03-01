@@ -1,6 +1,14 @@
 import { CircularProgress, InputBase, makeStyles } from '@material-ui/core';
 import { CloseRounded, Search } from '@material-ui/icons';
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  memo,
+  type MutableRefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
 import { styles } from './styles';
@@ -25,7 +33,7 @@ export const AddressInput = memo(function AddressInput({ className }: { classNam
   const [hasFocus, setHasFocus] = useState<boolean>(false);
   const { t } = useTranslation();
   const classes = useStyles();
-  const anchorEl = useRef();
+  const anchorEl = useRef<HTMLInputElement>();
   const history = useHistory();
 
   const handleChange = useCallback(
@@ -125,7 +133,7 @@ export const AddressInput = memo(function AddressInput({ className }: { classNam
       !isFulfilledStatus(resolverStatus) ? (
         <FloatingError
           userInput={userInput}
-          anchorRef={anchorEl}
+          anchorRef={anchorEl as MutableRefObject<HTMLInputElement>}
           inputMode={inputMode}
           isAddressValid={isAddressValid}
           isDomainValid={isDomainValid}

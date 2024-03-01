@@ -12,7 +12,12 @@ import type { VaultEntity } from '../../entities/vault';
 import { isStandardVault } from '../../entities/vault';
 import type { GetStateFn } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
-import type { IStrategy, StrategyOptions, TransactHelpers } from './strategies/IStrategy';
+import {
+  type IStrategy,
+  isZapTransactHelpers,
+  type StrategyOptions,
+  type TransactHelpers,
+} from './strategies/IStrategy';
 import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../reducers/wallet/stepper';
@@ -61,8 +66,6 @@ export class TransactApi implements ITransactApi {
         zapStrategies.map(zapStrategy => zapStrategy.fetchDepositOptions())
       );
       options.push(...zapOptions.flat());
-    } else {
-      console.debug('no zap strategies for', vaultId); // this is OK
     }
 
     return options;
@@ -220,10 +223,6 @@ export class TransactApi implements ITransactApi {
   }
 
   private async getVaultTypeFor(vault: VaultEntity, getState: GetStateFn): Promise<VaultType> {
-    if (!vault.type) {
-      throw new Error(`Vault ${vault.id} has no type`);
-    }
-
     const builder = vaultTypeBuildersById[vault.type];
     if (!builder) {
       throw new Error(
@@ -270,7 +269,7 @@ export class TransactApi implements ITransactApi {
   }
 
   private async getZapStrategiesForVault(helpers: TransactHelpers): Promise<IStrategy[]> {
-    const { vault, zap } = helpers;
+    const { vault } = helpers;
 
     // Only standard vault is supported so far
     if (!isStandardVault(vault)) {
@@ -281,7 +280,7 @@ export class TransactApi implements ITransactApi {
       return [];
     }
 
-    if (!zap) {
+    if (!isZapTransactHelpers(helpers)) {
       console.warn(`Vault ${vault.id} has zaps defined but ${vault.chainId} has no zap config`);
       return [];
     }
@@ -325,6 +324,10 @@ export class TransactApi implements ITransactApi {
     if (strategyId === 'vault') {
       // Wrapper for common interface
       return new VaultStrategy(vaultType);
+    }
+
+    if (!isZapTransactHelpers(helpers)) {
+      throw new Error(`Strategy "${strategyId}" requires zap contract`);
     }
 
     if (!isStandardVault(vault)) {

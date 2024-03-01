@@ -16,7 +16,7 @@ export const resolverSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(resolveAddressToDomain.pending, (state, action) => {
-        const address = action.meta.arg.address;
+        const address = action.meta.arg.address!; // action condition: not dispatched if address is null
         setPending(state, 'byAddress', address.toLowerCase());
       })
       .addCase(resolveAddressToDomain.fulfilled, (state, action) => {
@@ -26,11 +26,11 @@ export const resolverSlice = createSlice({
         setAddressForDomain(state, address, domain);
       })
       .addCase(resolveAddressToDomain.rejected, (state, action) => {
-        const address = action.meta.arg.address;
+        const address = action.meta.arg.address!; // action condition: not dispatched if address is null
         setRejected(state, 'byAddress', address.toLowerCase(), action.error);
       })
       .addCase(resolveDomainToAddress.pending, (state, action) => {
-        const domain = action.meta.arg.domain;
+        const domain = action.meta.arg.domain!; // action condition: not dispatched if domain is null
         setPending(state, 'byDomain', domain.toLowerCase());
       })
       .addCase(resolveDomainToAddress.fulfilled, (state, action) => {
@@ -40,7 +40,7 @@ export const resolverSlice = createSlice({
         setAddressForDomain(state, address, domain);
       })
       .addCase(resolveDomainToAddress.rejected, (state, action) => {
-        const domain = action.meta.arg.domain;
+        const domain = action.meta.arg.domain!; // action condition: not dispatched if domain is null
         setRejected(state, 'byDomain', domain.toLowerCase(), action.error);
       });
   },

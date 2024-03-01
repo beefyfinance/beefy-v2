@@ -1,11 +1,11 @@
-import { createAsyncThunk, miniSerializeError, nanoid } from '@reduxjs/toolkit';
+import { type AnyAction, createAsyncThunk, miniSerializeError, nanoid } from '@reduxjs/toolkit';
 import type { BeefyState, BeefyThunk } from '../../../redux-types';
 import type { VaultEntity, VaultGov } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
 import { selectShouldInitAddressBook } from '../selectors/data-loader';
 import { fetchAddressBookAction } from './tokens';
 import { isInitialLoader } from '../reducers/data-loader-types';
-import { fetchZapSwapAggregatorsAction, fetchZapConfigsAction, fetchZapAmmsAction } from './zap';
+import { fetchZapAmmsAction, fetchZapConfigsAction, fetchZapSwapAggregatorsAction } from './zap';
 import { getTransactApi } from '../apis/instances';
 import { transactActions } from '../reducers/wallet/transact';
 import {
@@ -16,11 +16,12 @@ import {
   selectTransactOptionsMode,
   selectTransactOptionsVaultId,
   selectTransactSelectedChainId,
-  selectTransactSelectedQuote,
+  selectTransactSelectedQuoteOrUndefined,
   selectTransactSelectedSelectionId,
   selectTransactSelectionById,
   selectTransactSlippage,
   selectTransactVaultId,
+  selectTransactVaultIdOrUndefined,
 } from '../selectors/transact';
 import type {
   InputTokenAmount,
@@ -49,13 +50,14 @@ import type { ThunkAction } from 'redux-thunk';
 import { startStepperWithSteps } from './stepper';
 import { TransactMode } from '../reducers/wallet/transact-types';
 import { selectTokenByAddress } from '../selectors/tokens';
-import { first, groupBy, uniqBy } from 'lodash-es';
+import { groupBy, uniqBy } from 'lodash-es';
 import { fetchAllowanceAction } from './allowance';
 import { fetchFees } from './fees';
 import { uniqueTokens } from '../../../helpers/tokens';
 import { fetchBalanceAction } from './balance';
 import type { Action } from 'redux';
 import { selectWalletAddress } from '../selectors/wallet';
+import { onlyOneInput } from '../apis/transact/helpers/options';
 
 export type TransactInitArgs = {
   vaultId: VaultEntity['id'];
@@ -71,7 +73,7 @@ export const transactInit = createAsyncThunk<
   'transact/init',
   async ({ vaultId }, { getState, dispatch }) => {
     const vault = selectVaultById(getState(), vaultId);
-    const loaders = [];
+    const loaders: Promise<AnyAction>[] = [];
 
     if (selectShouldInitAddressBook(getState(), vault.chainId)) {
       loaders.push(dispatch(fetchAddressBookAction({ chainId: vault.chainId })));
@@ -102,7 +104,7 @@ export const transactInit = createAsyncThunk<
   {
     condition({ vaultId }, { getState }) {
       // only dispatch if needed
-      return selectTransactVaultId(getState()) !== vaultId;
+      return selectTransactVaultIdOrUndefined(getState()) !== vaultId;
     },
   }
 );
@@ -251,27 +253,30 @@ export const transactFetchQuotes = createAsyncThunk<
   });
 
   // update allowances
-  const uniqueAllowances = uniqBy(
-    quotes.map(quote => quote.allowances).flat(),
-    allowance => `${allowance.token.chainId}-${allowance.spenderAddress}-${allowance.token.address}`
-  );
-  const allowancesPerChainSpender = groupBy(
-    uniqueAllowances,
-    allowance => `${allowance.token.chainId}-${allowance.spenderAddress}`
-  );
+  if (walletAddress) {
+    const uniqueAllowances = uniqBy(
+      quotes.map(quote => quote.allowances).flat(),
+      allowance =>
+        `${allowance.token.chainId}-${allowance.spenderAddress}-${allowance.token.address}`
+    );
+    const allowancesPerChainSpender = groupBy(
+      uniqueAllowances,
+      allowance => `${allowance.token.chainId}-${allowance.spenderAddress}`
+    );
 
-  await Promise.all(
-    Object.values(allowancesPerChainSpender).map(allowances =>
-      dispatch(
-        fetchAllowanceAction({
-          chainId: allowances[0].token.chainId,
-          spenderAddress: allowances[0].spenderAddress,
-          tokens: allowances.map(allowance => allowance.token),
-          walletAddress,
-        })
+    await Promise.all(
+      Object.values(allowancesPerChainSpender).map(allowances =>
+        dispatch(
+          fetchAllowanceAction({
+            chainId: allowances[0].token.chainId,
+            spenderAddress: allowances[0].spenderAddress,
+            tokens: allowances.map(allowance => allowance.token),
+            walletAddress,
+          })
+        )
       )
-    )
-  );
+    );
+  }
 
   return {
     selectionId,
@@ -285,7 +290,7 @@ export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state:
   'transact/fetchQuotesIfNeeded',
   async (_, { getState, dispatch }) => {
     const state = getState();
-    const quote = selectTransactSelectedQuote(state);
+    const quote = selectTransactSelectedQuoteOrUndefined(state);
     let shouldFetch = true;
 
     if (quote) {
@@ -294,7 +299,7 @@ export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state:
       const chainId = selectTransactSelectedChainId(state);
       const selectionId = selectTransactSelectedSelectionId(state);
       const inputAmount = selectTransactInputAmount(state);
-      const input = first(quote.inputs);
+      const input = onlyOneInput(quote.inputs);
 
       shouldFetch =
         option.chainId !== chainId ||
@@ -427,10 +432,11 @@ function wrapStepConfirmQuote(originalStep: Step, originalQuote: TransactQuote):
           !newOutput ||
           newOutput.amount.lt(originalOutput.amount.multipliedBy(minAllowedRatio))
         ) {
+          const newAmount = newOutput ? newOutput.amount : BIG_ZERO;
           significantChanges.push({
             ...originalOutput,
-            newAmount: newOutput.amount,
-            difference: newOutput.amount.minus(originalOutput.amount),
+            newAmount,
+            difference: newAmount.minus(originalOutput.amount),
           });
         }
       }

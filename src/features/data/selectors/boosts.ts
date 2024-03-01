@@ -11,10 +11,11 @@ export const selectBoostById = createCachedSelector(
   (state: BeefyState) => state.entities.boosts.byId,
   (state: BeefyState, boostId: BoostEntity['id']) => boostId,
   (boostsById, boostId) => {
-    if (boostsById[boostId] === undefined) {
+    const boost = boostsById[boostId];
+    if (boost === undefined) {
       throw new Error(`selectBoostById: Unknown boost id ${boostId}`);
     }
-    return boostsById[boostId];
+    return boost;
   }
 )((state: BeefyState, boostId: BoostEntity['id']) => boostId);
 
@@ -98,7 +99,7 @@ export const selectPastBoostIdsWithUserBalance = (
 
   const vaultBoosts = state.entities.boosts.byVaultId[vaultId];
 
-  const boostIds = [];
+  const boostIds: string[] = [];
   for (const eolBoostId of vaultBoosts.expiredBoostsIds) {
     const userBalance = selectBoostUserBalanceInToken(state, eolBoostId);
     if (userBalance.gt(0)) {
@@ -142,7 +143,8 @@ export const selectVaultsActiveBoostPeriodFinish = (
   vaultId: BoostEntity['id']
 ) => {
   const activeBoost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
-  return activeBoost ? selectBoostPeriodFinish(state, activeBoost.id) : null;
+  const finish = activeBoost ? selectBoostPeriodFinish(state, activeBoost.id) : new Date(0);
+  return finish || new Date(0);
 };
 
 export const selectBoostPeriodFinish = (state: BeefyState, boostId: BoostEntity['id']) => {
@@ -171,15 +173,17 @@ export const selectUserBalanceOnActiveOrPastBoost = (
 
   const isBoostedOrHaveBalanceInPastBoost = isBoosted || pastBoostsWithUserBalance.length === 1;
 
-  const boost = isBoosted
-    ? selectBoostById(state, activeBoost.id)
-    : pastBoostsWithUserBalance.length === 1
-    ? selectBoostById(state, pastBoostsWithUserBalance[0])
-    : null;
+  const boost =
+    isBoosted && activeBoost
+      ? selectBoostById(state, activeBoost.id)
+      : pastBoostsWithUserBalance.length === 1
+      ? selectBoostById(state, pastBoostsWithUserBalance[0])
+      : null;
 
-  const boostBalance = isBoostedOrHaveBalanceInPastBoost
-    ? selectBoostUserBalanceInToken(state, boost.id)
-    : BIG_ZERO;
+  const boostBalance =
+    isBoostedOrHaveBalanceInPastBoost && boost
+      ? selectBoostUserBalanceInToken(state, boost.id)
+      : BIG_ZERO;
 
   return boostBalance;
 };
@@ -195,7 +199,9 @@ export const selectUserActiveBoostBalanceInToken = (
     ? selectBoostById(state, selectPreStakeOrActiveBoostIds(state, vaultId)[0])
     : null;
 
-  return isBoosted ? selectBoostUserBalanceInToken(state, activeBoost.id, walletAddress) : BIG_ZERO;
+  return isBoosted && activeBoost
+    ? selectBoostUserBalanceInToken(state, activeBoost.id, walletAddress)
+    : BIG_ZERO;
 };
 
 export const selectBoostPartnerById = (state: BeefyState, partnerId: string) => {

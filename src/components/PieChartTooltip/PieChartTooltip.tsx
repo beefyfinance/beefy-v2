@@ -8,6 +8,7 @@ import { styles } from './styles';
 import type { TypeChart } from '../PieChart/PieChart';
 import { getNetworkSrc } from '../../helpers/networkSrc';
 import type BigNumber from 'bignumber.js';
+import type { ChainEntity } from '../../features/data/entities/chain';
 
 // TODO: fix this type
 type PayloadData = {
@@ -15,7 +16,7 @@ type PayloadData = {
   percentage?: number;
   label?: string;
   key?: string;
-  chainId: string;
+  chainId: ChainEntity['id'];
   assetIds: string[];
 };
 
@@ -49,7 +50,11 @@ export const PieChartTooltip = memo<TooltipProps>(function PieChartTooltip({
           {data.key !== 'others' && (
             <>
               {type === 'chain' && (
-                <img className={classes.icon} src={getNetworkSrc(data.key)} alt={title} />
+                <img
+                  className={classes.icon}
+                  src={getNetworkSrc(data.key as ChainEntity['id'])}
+                  alt={title}
+                />
               )}
               {type === 'token' && (
                 <AssetsImage size={24} chainId={data.chainId} assetSymbols={data.assetIds} />

@@ -28,7 +28,7 @@ const useStyles = makeStyles(styles);
 export const WalletContainer = connect((state: BeefyState) => {
   const isWalletConnected = selectIsWalletConnected(state);
   const isWalletKnown = selectIsWalletKnown(state);
-  const walletAddress = isWalletKnown ? selectWalletAddress(state) : null;
+  const walletAddress = isWalletKnown ? selectWalletAddress(state) : undefined;
   const walletPending = selectIsWalletPending(state);
   const blurred = selectIsBalanceHidden(state);
   return { isWalletConnected, walletAddress, walletPending, blurred };
@@ -40,7 +40,7 @@ export const WalletContainer = connect((state: BeefyState) => {
     blurred,
   }: {
     isWalletConnected: boolean;
-    walletAddress: null | string;
+    walletAddress: undefined | string;
     walletPending: boolean;
     blurred: boolean;
   }) => {

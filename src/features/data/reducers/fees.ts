@@ -23,35 +23,42 @@ export const feesSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchFees.fulfilled, (sliceState, action) => {
-      let added = false;
-
       for (const [vaultId, data] of Object.entries(action.payload)) {
-        if (vaultId in sliceState.byId) {
-          // Avoid creating new object/updating state if none of the values have changed
-          for (const [key, value] of Object.entries(data.performance)) {
-            if (sliceState.byId[vaultId][key] !== value) {
-              sliceState.byId[vaultId][key] = value;
-            }
-          }
-          for (const key of ['withdraw', 'deposit']) {
-            if (sliceState.byId[vaultId][key] !== data[key]) {
-              sliceState.byId[vaultId][key] = data[key];
-            }
-          }
-        } else {
-          sliceState.byId[vaultId] = {
-            id: vaultId,
-            ...data.performance,
-            withdraw: data.withdraw,
-            deposit: data.deposit,
-          };
-          added = true;
-        }
-      }
+        const fees = getOrCreateVaultFees(sliceState, vaultId, data);
 
-      if (added) {
-        sliceState.allIds = Object.keys(sliceState.byId);
+        // Avoid creating new object/updating state if none of the values have changed
+        for (const [key, value] of Object.entries(data.performance)) {
+          if (fees[key] !== value) {
+            fees[key] = value;
+          }
+        }
+
+        for (const key of ['withdraw', 'deposit']) {
+          if (fees[key] !== data[key]) {
+            fees[key] = data[key];
+          }
+        }
       }
     });
   },
 });
+
+function getOrCreateVaultFees(
+  sliceState: FeesState,
+  vaultId: VaultEntity['id'],
+  data: ApyVaultFeeData
+) {
+  let fees = sliceState.byId[vaultId];
+
+  if (!fees) {
+    fees = sliceState.byId[vaultId] = {
+      id: vaultId,
+      ...data.performance,
+      withdraw: data.withdraw,
+      deposit: data.deposit,
+    };
+    sliceState.allIds.push(vaultId);
+  }
+
+  return fees;
+}

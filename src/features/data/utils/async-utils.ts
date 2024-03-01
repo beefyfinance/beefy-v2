@@ -1,5 +1,5 @@
 import type { AsyncThunkAction } from '@reduxjs/toolkit';
-import type { Action, Store } from 'redux';
+import type { Action, Dispatch, Store } from 'redux';
 import type { BeefyState } from '../../../redux-types';
 
 /**
@@ -46,6 +46,7 @@ export function poll(
       setTimeout(doPoll);
     }
   }
+
   doPoll();
 
   function onVisibilityChange() {
@@ -122,19 +123,32 @@ export function createFulfilledActionCapturer(store: Store) {
     };
   }
 
+  type AsyncThunkConfig = {
+    state?: unknown;
+    dispatch?: Dispatch;
+    extra?: unknown;
+    rejectValue?: unknown;
+    serializedErrorType?: unknown;
+    pendingMeta?: unknown;
+    fulfilledMeta?: unknown;
+    rejectedMeta?: unknown;
+  };
+
   /**
    * This function allow us to dispatch AsyncActions as soon as needed
    * We "capture" the fulfilled action to be able to dispatch it later on
    */
-  return function captureFulfilledAction<Returned, ThunkArg, ThunkApiConfig>(
-    asyncAction: AsyncThunkAction<Returned, ThunkArg, ThunkApiConfig>
-  ): Promise<() => Action> {
+  return function captureFulfilledAction<
+    Returned,
+    ThunkArg,
+    ThunkApiConfig extends AsyncThunkConfig
+  >(asyncAction: AsyncThunkAction<Returned, ThunkArg, ThunkApiConfig>): Promise<() => Action> {
     const extra = {};
     return new Promise((resolve, reject) => {
       try {
         asyncAction(
           // @ts-ignore I could not find a proper TS type here
-          (action: Action<string> & { payload: unknown }) => {
+          (action: AsyncThunkAction) => {
             // if this is the fulfilled action
             if (action.type.endsWith('/fulfilled')) {
               // we don't dispatch it to the store, just pass it to our caller

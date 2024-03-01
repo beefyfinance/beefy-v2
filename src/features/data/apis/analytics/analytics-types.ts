@@ -1,10 +1,11 @@
 import type BigNumber from 'bignumber.js';
+import type { ChainEntity } from '../../entities/chain';
 
 export interface TimelineAnalyticsConfig {
   datetime: string;
   product_key: string;
   display_name: string;
-  chain: string;
+  chain: ChainEntity['id'];
   is_eol: boolean;
   is_dashboard_eol: boolean;
   transaction_hash: string;

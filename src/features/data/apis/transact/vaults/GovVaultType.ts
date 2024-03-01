@@ -13,6 +13,7 @@ import {
   createQuoteId,
   createSelectionId,
   onlyInputCount,
+  onlyOneInput,
 } from '../helpers/options';
 import { TransactMode } from '../../../reducers/wallet/transact-types';
 import type {
@@ -54,7 +55,7 @@ export class GovVaultType implements IGovVaultType {
 
   protected calculateDepositFee(input: TokenAmount, state: BeefyState): BigNumber {
     const { deposit: depositFeePercent } = selectFeesByVaultId(state, this.vault.id);
-    return depositFeePercent > 0
+    return depositFeePercent && depositFeePercent > 0
       ? input.amount
           .multipliedBy(depositFeePercent)
           .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR)
@@ -92,9 +93,7 @@ export class GovVaultType implements IGovVaultType {
     inputs: InputTokenAmount[],
     option: GovVaultDepositOption
   ): Promise<GovVaultDepositQuote> {
-    onlyInputCount(inputs, 1);
-
-    const input = first(inputs);
+    const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Quote called with 0 input amount');
     }
@@ -136,7 +135,7 @@ export class GovVaultType implements IGovVaultType {
   async fetchDepositStep(quote: TransactQuote, t: TFunction<Namespace>): Promise<Step> {
     onlyInputCount(quote.inputs, 1);
 
-    const input = first(quote.inputs);
+    const input = first(quote.inputs)!; // we checked length above
 
     return {
       step: 'deposit-gov',
@@ -169,9 +168,7 @@ export class GovVaultType implements IGovVaultType {
     inputs: InputTokenAmount[],
     option: GovVaultWithdrawOption
   ): Promise<GovVaultWithdrawQuote> {
-    onlyInputCount(inputs, 1);
-
-    const input = first(inputs);
+    const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Quote called with 0 input amount');
     }
@@ -181,7 +178,7 @@ export class GovVaultType implements IGovVaultType {
     }
 
     const state = this.getState();
-    const isWithdrawAll = input.max === true;
+    const isWithdrawAll = input.max;
     const allowances = [];
     const fee = this.calculateWithdrawFee(input, state);
     const withdrawAmountAfterFee = input.amount.minus(fee);
@@ -223,8 +220,8 @@ export class GovVaultType implements IGovVaultType {
   async fetchWithdrawStep(quote: TransactQuote, t: TFunction<Namespace>): Promise<Step> {
     onlyInputCount(quote.inputs, 1);
 
-    const input = first(quote.inputs);
-    const isWithdrawAll = input.max === true;
+    const input = first(quote.inputs)!; // we checked length above
+    const isWithdrawAll = input.max;
     const hasPendingRewards = quote.outputs.length > 1;
 
     // 'exit' withdraws all and claims pending rewards

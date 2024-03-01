@@ -30,17 +30,17 @@ const walletConnectImages: Record<string, string> = {
 };
 
 export class WalletConnectionApi implements IWalletConnectionApi {
-  protected onboard: OnboardAPI | null;
-  protected onboardWalletInitializers: WalletInit[] | null;
+  protected onboard: OnboardAPI | undefined;
+  protected onboardWalletInitializers: WalletInit[] | undefined;
   protected ignoreDisconnectFromAutoConnect = false;
 
   constructor(protected options: WalletConnectionOptions) {
-    this.onboard = null;
-    this.onboardWalletInitializers = null;
+    this.onboard = undefined;
+    this.onboardWalletInitializers = undefined;
   }
 
   private getOnboardWalletInitializers(): WalletInit[] {
-    if (this.onboardWalletInitializers === null) {
+    if (this.onboardWalletInitializers === undefined) {
       this.onboardWalletInitializers = WalletConnectionApi.createOnboardWalletInitializers();
     }
     return this.onboardWalletInitializers;
@@ -155,7 +155,14 @@ export class WalletConnectionApi implements IWalletConnectionApi {
           chainType: 'eth',
           chainId: cronosChainId.toString(),
           supportedChainIds: chains.map(chain => maybeHexToNumber(chain.id)),
-          rpcUrls: Object.fromEntries(chains.map(chain => [chain.id.toString(), chain.rpcUrl])),
+          rpcUrls: Object.fromEntries(
+            chains.map(chain => {
+              if (!chain.rpcUrl) {
+                throw new Error(`Chain ${chain.id} is missing rpcUrl`);
+              }
+              return [chain.id.toString(), chain.rpcUrl];
+            })
+          ),
         });
 
         const { provider } = await connector.activate();
@@ -288,7 +295,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     });
   }
 
-  private static setLastConnectedWallet(wallet: string | null) {
+  private static setLastConnectedWallet(wallet: string | undefined) {
     try {
       if (wallet) {
         window?.localStorage?.setItem('lastConnectedWallet', wallet);
@@ -300,11 +307,11 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     }
   }
 
-  private static getLastConnectedWallet(): string | null {
+  private static getLastConnectedWallet(): string | undefined {
     try {
-      return window?.localStorage?.getItem('lastConnectedWallet');
+      return window?.localStorage?.getItem('lastConnectedWallet') || undefined;
     } catch {
-      return null;
+      return undefined;
     }
   }
 
@@ -313,7 +320,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    * @private
    */
   private getOnboard() {
-    if (this.onboard === null) {
+    if (this.onboard === undefined) {
       this.onboard = this.createOnboard();
     }
 
@@ -350,7 +357,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     } catch (err) {
       // We clear last connected wallet here so that attempting to reconnect opens the modal
       // rather than trying to reconnect to previous wallet that just failed/was rejected.
-      WalletConnectionApi.setLastConnectedWallet(null);
+      WalletConnectionApi.setLastConnectedWallet(undefined);
       // Rethrow so called knows connection failed
       throw err;
     } finally {
@@ -427,7 +434,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       throw new Error(`Wallet not connected.`);
     }
 
-    const wallet = this.onboard.state.get().wallets[0];
+    const onboard = this.getOnboard();
+    const wallet = onboard.state.get().wallets[0];
     return createWeb3Instance(wallet.provider as unknown as provider);
   }
 
@@ -457,7 +465,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     } catch (err) {
       // We clear last connected wallet here so that attempting to reconnect opens the modal
       // rather than trying to reconnect to previous wallet that just failed/was rejected.
-      WalletConnectionApi.setLastConnectedWallet(null);
+      WalletConnectionApi.setLastConnectedWallet(undefined);
       // Rethrow so called knows connection failed
       throw err;
     }
@@ -498,7 +506,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     }
 
     // Change chain
-    const success = await this.onboard.setChain({ chainId: numberToHex(chain.networkChainId) });
+    const onboard = this.getOnboard();
+    const success = await onboard.setChain({ chainId: numberToHex(chain.networkChainId) });
     if (!success) {
       console.error('askUserForChainChange: Failed to switch chain');
       throw new Error(`Failed to switch chain`);
@@ -515,7 +524,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     }
 
     // Clear last wallet
-    WalletConnectionApi.setLastConnectedWallet(null);
+    WalletConnectionApi.setLastConnectedWallet(undefined);
 
     // Clear wallet connect storage or else it will try to reconnect to same session
     WalletConnectionApi.clearWalletConnectStorage();
@@ -526,7 +535,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
   private static clearWalletConnectStorage() {
     try {
-      const toRemove = [];
+      const toRemove: string[] = [];
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key && key.startsWith('wc@2:')) {

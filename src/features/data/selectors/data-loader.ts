@@ -36,13 +36,13 @@ export const selectVaultShouldShowInterest = createCachedSelector(
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectIsUserBalanceAvailable = createSelector(
-  (state: BeefyState, _walletAddress: string) => selectIsConfigAvailable(state),
-  (state: BeefyState, _walletAddress: string) => selectIsPriceAvailable(state),
-  (state: BeefyState, _walletAddress: string) => state.ui.dataLoader.byChainId,
-  (state: BeefyState, _walletAddress: string) => state.ui.dataLoader.byAddress,
-  (state: BeefyState, walletAddress: string) => walletAddress,
+  (state: BeefyState, _walletAddress: string | undefined) => selectIsConfigAvailable(state),
+  (state: BeefyState, _walletAddress: string | undefined) => selectIsPriceAvailable(state),
+  (state: BeefyState, _walletAddress: string | undefined) => state.ui.dataLoader.byChainId,
+  (state: BeefyState, _walletAddress: string | undefined) => state.ui.dataLoader.byAddress,
+  (state: BeefyState, walletAddress: string | undefined) => walletAddress,
   (configAvailable, pricesAvailable, byChainId, byAddress, walletAddress) => {
-    if (!configAvailable || !pricesAvailable) {
+    if (!configAvailable || !pricesAvailable || !walletAddress) {
       return false;
     }
     for (const chainId in byChainId) {
@@ -69,7 +69,7 @@ export const selectIsWalletPending = (state: BeefyState) =>
 export const selectShouldInitAddressBook = (state: BeefyState, chainId: ChainEntity['id']) =>
   isInitialLoader(state.ui.dataLoader.global.addressBook) ||
   !state.ui.dataLoader.byChainId[chainId] ||
-  isInitialLoader(state.ui.dataLoader.byChainId[chainId].addressBook);
+  isInitialLoader(state.ui.dataLoader.byChainId[chainId]!.addressBook);
 
 export const selectIsAddressBookLoaded = (state: BeefyState, chainId: ChainEntity['id']) =>
   state.ui.dataLoader.global.addressBook.alreadyLoadedOnce ||

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { useAppSelector } from '../../../../../../store';
-import { selectTransactSelectedQuote } from '../../../../../data/selectors/transact';
+import { selectTransactSelectedQuoteOrUndefined } from '../../../../../data/selectors/transact';
 import type { ZapQuote } from '../../../../../data/apis/transact/transact-types';
 import { isZapFeeDiscounted, isZapQuote } from '../../../../../data/apis/transact/transact-types';
 import { Value } from './Value';
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const MaybeZapFees = memo(function MaybeZapFees() {
-  const quote = useAppSelector(selectTransactSelectedQuote);
+  const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const isZap = quote && isZapQuote(quote);
 
   if (!isZap) {

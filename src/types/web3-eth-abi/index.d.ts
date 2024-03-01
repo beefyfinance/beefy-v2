@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any,no-restricted-syntax */
 declare module 'web3-eth-abi' {
-  import { AbiInput, AbiItem } from 'web3-utils';
+  import type { AbiInput, AbiItem } from 'web3-utils';
 
   export class AbiCoder {
     encodeFunctionSignature(functionName: string | AbiItem): string;
@@ -22,3 +23,4 @@ declare module 'web3-eth-abi' {
   const coder: AbiCoder;
   export default coder;
 }
+/* eslint-enable @typescript-eslint/no-explicit-any,no-restricted-syntax */

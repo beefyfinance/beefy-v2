@@ -78,7 +78,7 @@ const Migrator = memo<{ migrationId: MigrationConfig['id'] } & MigrationProps>(f
   );
 
   useEffect(() => {
-    if (balance.eq(BIG_ZERO) && !initialized) {
+    if (balance.eq(BIG_ZERO) && !initialized && walletAddress) {
       dispatch(migratorUpdate({ vaultId, migrationId, walletAddress }));
     }
   }, [dispatch, migrationId, balance, vaultId, walletAddress, initialized]);

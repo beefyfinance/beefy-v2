@@ -9,7 +9,7 @@ import { fetchPartnersConfig } from '../actions/partners';
 export type PartnersState = {
   openCover: {
     byChainId: {
-      [chainId: ChainEntity['id']]: boolean;
+      [chainId in ChainEntity['id']]?: boolean;
     };
   };
   qidao: {
@@ -19,7 +19,7 @@ export type PartnersState = {
   };
   nexus: {
     byChainId: {
-      [chainId: ChainEntity['id']]: boolean;
+      [chainId in ChainEntity['id']]?: boolean;
     };
   };
 };

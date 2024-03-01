@@ -97,57 +97,57 @@ const YearlyTooltipContent = memo<YearlyTooltipContentProps>(function YearlyTool
 }) {
   const isGovVault = useAppSelector(state => selectIsVaultGov(state, vaultId));
   const rows = useMemo(() => {
-    const items = [];
+    const items: { label: string; value: string }[] = [];
 
     if (isGovVault) {
       items.push({
         label: 'Pool-Apr',
-        value: rates.vaultApr,
+        value: rates.vaultApr ?? '?',
       });
     } else {
       if ('vaultApr' in rates) {
         items.push({
           label: 'Vault-Breakdown-VaultApr',
-          value: rates.vaultApr,
+          value: rates.vaultApr ?? '?',
         });
       }
 
       if ('tradingApr' in rates) {
         items.push({
           label: 'Vault-Breakdown-TradingApr',
-          value: rates.tradingApr,
+          value: rates.tradingApr ?? '?',
         });
       }
 
       if ('liquidStakingApr' in rates) {
         items.push({
           label: 'Vault-Breakdown-LiquidStakingApr',
-          value: rates.liquidStakingApr,
+          value: rates.liquidStakingApr ?? '?',
         });
       }
 
       if ('composablePoolApr' in rates) {
         items.push({
           label: 'Vault-Breakdown-ComposablePoolApr',
-          value: rates.composablePoolApr,
+          value: rates.composablePoolApr ?? '?',
         });
       }
 
       if ('boostApr' in rates) {
         items.push({
           label: 'Vault-Breakdown-BoostApr',
-          value: rates.boostApr,
+          value: rates.boostApr ?? '?',
         });
       }
 
       items.push({
         label: 'APY',
-        value: isBoosted ? rates.boostedTotalApy : rates.totalApy,
+        value: isBoosted ? rates.boostedTotalApy ?? '?' : rates.totalApy,
       });
     }
 
-    return items.length ? items : null;
+    return items.length ? items : undefined;
   }, [isGovVault, isBoosted, rates]);
 
-  return <InterestTooltipContent rows={rows} />;
+  return rows ? <InterestTooltipContent rows={rows} /> : undefined;
 });

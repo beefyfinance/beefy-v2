@@ -41,13 +41,13 @@ export const GlpNotice = memo<GlpNoticeProps>(function GlpNotice({
   }, [updateUnlockTime]);
 
   useEffect(() => {
-    if (haveUpdatedOnce === false && updateStatus === 'success') {
+    if (!haveUpdatedOnce && updateStatus === 'success') {
       setHaveUpdatedOnce(true);
     }
   }, [updateStatus, haveUpdatedOnce, setHaveUpdatedOnce]);
 
   useEffect(() => {
-    if (haveUpdatedOnce) {
+    if (haveUpdatedOnce && unlockInfo) {
       setUnlocksAt(new Date(unlockInfo.unlocksAt));
 
       const handle = setInterval(() => {
@@ -63,6 +63,10 @@ export const GlpNotice = memo<GlpNoticeProps>(function GlpNotice({
   }, [onChange, isLocked]);
 
   const AlertComponent = isLocked ? AlertError : AlertWarning;
+
+  if (!unlockInfo) {
+    return null;
+  }
 
   return (
     <AlertComponent className={classes.alert}>
