@@ -78,6 +78,7 @@ export interface VaultStandard {
   /** Map of chain->address of bridged receipt tokens */
   bridged?: Record<ChainEntity['id'], string>;
   lendingOracle?: { provider: string; address?: string; loops?: number };
+  earningPoints: boolean;
 }
 
 export interface VaultGov {
@@ -161,6 +162,10 @@ export function isVaultActive(vault: VaultEntity) {
 
 export function isVaultPaused(vault: VaultEntity) {
   return vault.status === 'paused';
+}
+
+export function isVaultEarningPoints(vault: VaultEntity) {
+  return isStandardVault(vault) && vault.earningPoints === true;
 }
 
 export function isVaultPausedOrRetired(vault: VaultEntity) {
