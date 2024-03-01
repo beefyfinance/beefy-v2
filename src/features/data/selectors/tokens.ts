@@ -366,3 +366,12 @@ export const selectSupportedSwapTokensForChainAggregatorHavingPrice = (
     selectTokenPriceByTokenOracleId(state, token.oracleId).gt(BIG_ZERO)
   );
 };
+
+export const selectVaultTokenSymbols = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const vault = selectVaultById(state, vaultId);
+  return vault.assetIds.map(assetId => {
+    const token = selectTokenByIdOrNull(state, vault.chainId, assetId);
+
+    return token?.symbol || assetId;
+  });
+};

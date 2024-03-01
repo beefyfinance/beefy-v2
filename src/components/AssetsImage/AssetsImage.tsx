@@ -9,28 +9,28 @@ import type { ChainEntity } from '../../features/data/entities/chain';
 const useStyles = makeStyles(styles);
 const maxSupportedAssets = 8;
 
-function useAssetsImageUris(chainId: ChainEntity['id'], assetIds: string[]) {
+function useAssetsImageUris(chainId: ChainEntity['id'], assetSymbols: string[]) {
   return useMemo(() => {
-    return assetIds
+    return assetSymbols
       .slice(0, maxSupportedAssets)
       .map(assetId => getSingleAssetSrc(assetId, chainId));
-  }, [assetIds, chainId]);
+  }, [assetSymbols, chainId]);
 }
 
 export type AssetsImageType = {
   chainId: ChainEntity['id'];
-  assetIds: string[];
+  assetSymbols: string[];
   size?: number;
   className?: string;
 };
 export const AssetsImage = memo<AssetsImageType>(function AssetsImage({
   chainId,
-  assetIds,
+  assetSymbols,
   className,
   size = DEFAULT_SIZE,
 }) {
   const classes = useStyles();
-  const uris = useAssetsImageUris(chainId, assetIds);
+  const uris = useAssetsImageUris(chainId, assetSymbols);
 
   return (
     <div

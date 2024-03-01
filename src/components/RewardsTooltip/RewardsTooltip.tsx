@@ -37,7 +37,7 @@ export const RewardsTooltip = memo<RewardsTooltipProps>(function RewardsTooltip(
   return (
     <Tooltip content={<RewardsTooltipContent rewards={rewards} />}>
       <div className={classes.container}>
-        <AssetsImage chainId={vaultId} size={size} assetIds={rewardsTokens} />
+        <AssetsImage chainId={vaultId} size={size} assetSymbols={rewardsTokens} />
       </div>
     </Tooltip>
   );

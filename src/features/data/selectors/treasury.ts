@@ -13,8 +13,9 @@ import {
   selectLpBreakdownByOracleId,
   selectHasBreakdownDataByOracleId,
   selectWrappedToNativeSymbolOrTokenSymbol,
+  selectVaultTokenSymbols,
 } from './tokens';
-import { selectIsVaultStable, selectVaultById, selectVaultPricePerFullShare } from './vaults';
+import { selectIsVaultStable, selectVaultPricePerFullShare } from './vaults';
 import { explorerAddressUrl } from '../../../helpers/url';
 
 export const selectIsTreasuryLoaded = (state: BeefyState) =>
@@ -212,10 +213,12 @@ export const selectTreasuryStats = (state: BeefyState) => {
 
             if (isVaultHoldingEntity(token)) {
               if (token.usdValue.gt(10)) {
-                const vault = selectVaultById(state, token.vaultId);
+                const { vaultId } = token;
 
-                for (const assetId of vault.assetIds) {
-                  const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, assetId);
+                const vaultTokenSymbols = selectVaultTokenSymbols(state, vaultId);
+
+                for (const tokenSymbol of vaultTokenSymbols) {
+                  const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, tokenSymbol);
                   holdingAssets.add(symbol);
                 }
               }
