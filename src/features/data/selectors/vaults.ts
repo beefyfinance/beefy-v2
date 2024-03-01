@@ -23,6 +23,7 @@ import { differenceWith, isEqual } from 'lodash-es';
 import { selectChainById } from './chains';
 import { selectPlatformById } from './platforms';
 import type { PlatformEntity } from '../entities/platform';
+import { valueOrThrow } from '../utils/selector-utils';
 
 export const selectAllVaultIds = (state: BeefyState) => state.entities.vaults.allIds;
 
@@ -102,12 +103,17 @@ export const selectVaultPricePerFullShare = createSelector(
   price => price || BIG_ONE
 );
 
-export const selectVaultStrategyAddress = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const address = state.entities.vaults.contractData.byVaultId[vaultId]?.strategyAddress;
-  if (!address) {
-    throw new Error(`Vault ${vaultId} has no strategy address`);
-  }
-  return address;
+export const selectVaultStrategyAddress = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  valueOrThrow(
+    state.entities.vaults.contractData.byVaultId[vaultId]?.strategyAddress,
+    `Vault ${vaultId} has no strategy address`
+  );
+
+export const selectVaultStrategyAddressOrUndefined = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => {
+  return state.entities.vaults.contractData.byVaultId[vaultId]?.strategyAddress;
 };
 
 export const selectAllGovVaultsByChainId = createSelector(
