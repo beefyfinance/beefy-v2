@@ -6,6 +6,7 @@ import {
   isGovVault,
   isVaultPaused,
   isVaultRetired,
+  isVaultEarningPoints,
   shouldVaultShowInterest,
 } from '../entities/vault';
 import {
@@ -67,6 +68,7 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.onlyPaused ? 1 : 0) +
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.onlyZappable ? 1 : 0) +
+    (filterOptions.onlyEarningPoints ? 1 : 0) +
     (filterOptions.assetType !== 'all' ? 1 : 0) +
     (filterOptions.vaultCategory !== 'all' ? 1 : 0) +
     (filterOptions.sort !== 'default' ? 1 : 0) +
@@ -84,6 +86,7 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.onlyPaused !== false ||
     filterOptions.onlyBoosted !== false ||
     filterOptions.onlyZappable !== false ||
+    filterOptions.onlyEarningPoints !== false ||
     filterOptions.searchText !== '' ||
     filterOptions.platformIds.length > 0 ||
     filterOptions.sort !== 'default' ||
@@ -99,6 +102,7 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.onlyPaused !== false ||
     filterOptions.onlyBoosted !== false ||
     filterOptions.onlyZappable !== false ||
+    filterOptions.onlyEarningPoints !== false ||
     filterOptions.searchText !== '' ||
     filterOptions.platformIds.length > 0 ||
     filterOptions.chainIds.length > 0
@@ -274,6 +278,10 @@ export const selectFilteredVaults = (state: BeefyState) => {
       return false;
     }
 
+    if (filterOptions.onlyEarningPoints && !isVaultEarningPoints(vault)) {
+      return false;
+    }
+
     if (
       !filterOptions.onlyRetired &&
       isVaultRetired(vault) &&
@@ -281,6 +289,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
     ) {
       return false;
     }
+
     if (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) {
       if (vault.id !== 'compound-arbitrum-usdc') {
         return false;

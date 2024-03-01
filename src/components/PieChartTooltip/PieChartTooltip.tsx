@@ -57,7 +57,7 @@ export const PieChartTooltip = memo<TooltipProps>(function PieChartTooltip({
                 />
               )}
               {type === 'token' && (
-                <AssetsImage size={24} chainId={data.chainId} assetIds={data.assetIds} />
+                <AssetsImage size={24} chainId={data.chainId} assetSymbols={data.assetIds} />
               )}
             </>
           )}

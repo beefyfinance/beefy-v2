@@ -17,6 +17,7 @@ import { selectTokenByAddress } from '../../../../features/data/selectors/tokens
 import type { VaultEntity } from '../../../../features/data/entities/vault';
 import {
   isGovVault,
+  isVaultEarningPoints,
   isVaultPaused,
   isVaultRetired,
 } from '../../../../features/data/entities/vault';
@@ -104,6 +105,23 @@ const WormholeSTIPTag = memo(function WormholeSTIPTag() {
   );
 });
 
+const PointsTag = memo(function PointsTag() {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const { isOverflowing, ref } = useIsOverflowingHorizontally();
+  return (
+    <VaultTagWithTooltip
+      content={<BasicTooltipContent title={t('VaultTag-Points')} />}
+      placement="bottom"
+      disabled={!isOverflowing}
+      className={classes.vaultTagPoints}
+      ref={ref}
+    >
+      {t('VaultTag-Points')}
+    </VaultTagWithTooltip>
+  );
+});
+
 export type VaultTagsProps = {
   vaultId: VaultEntity['id'];
 };
@@ -116,6 +134,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
 
   // Tag 1: Platform
   // Tag 2: Retired -> Paused -> Boosted > Earnings
+  // Tag 3: Points
   return (
     <div className={classes.vaultTags}>
       <VaultPlatformTag vaultId={vaultId} />
@@ -129,6 +148,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
       ) : isGovVault(vault) ? (
         <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddress} />
       ) : null}
+      {isVaultEarningPoints(vault) && <PointsTag />}
     </div>
   );
 });

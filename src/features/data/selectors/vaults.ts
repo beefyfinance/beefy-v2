@@ -140,7 +140,7 @@ export const selectFirstStandardVaultByDepositTokenAddress = createCachedSelecto
     selectStandardVaultIdsByDepositTokenAddress(state, chainId, tokenAddress),
   (state: BeefyState, _chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) =>
     state.entities.vaults.byId,
-  (ids, byId) => (ids.length && ids[0] ? byId[ids[0]] : null)
+  (ids, byId) => (ids.length > 0 && !!ids[0] ? byId[ids[0]] : undefined)
 )(
   (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
     `${chainId}-${tokenAddress.toLowerCase()}`

@@ -26,7 +26,7 @@ export const TokenIconAdornment = memo<TokenIconAdornmentProps>(function TokenIc
 
   return (
     <button className={clsx(classes.tokenAdornment, className)} onClick={handleClick}>
-      <AssetsImage chainId={undefined} assetIds={[token]} size={24} className={classes.icon} />
+      <AssetsImage chainId={undefined} assetSymbols={[token]} size={24} className={classes.icon} />
       {token}
     </button>
   );

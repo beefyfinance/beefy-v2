@@ -269,6 +269,7 @@ function addVaultToState(
       migrationIds: apiVault.migrationIds,
       bridged: apiVault.bridged,
       lendingOracle: apiVault.lendingOracle,
+      earningPoints: apiVault.earningPoints ?? false,
     } satisfies VaultStandard;
   } else {
     throw new Error(`Unknown vault type: ${apiVault.type}`);
