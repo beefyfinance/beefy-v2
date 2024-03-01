@@ -4,7 +4,7 @@ const iconPathToUrl = import.meta.glob('../images/onramp-providers/icons/*.svg',
   as: 'url',
   eager: true,
 });
-const logoPathToUrl = import.meta.glob('../images/onramp-providers/icons/*.svg', {
+const logoPathToUrl = import.meta.glob('../images/onramp-providers/logos/*.svg', {
   as: 'url',
   eager: true,
 });
