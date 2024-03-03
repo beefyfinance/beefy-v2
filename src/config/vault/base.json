@@ -1,5 +1,34 @@
 [
   {
+    "id": "aerodrome-tybg-weth",
+    "name": "TYBG-ETH vLP",
+    "type": "standard",
+    "token": "vAMM-TYBG/WETH",
+    "tokenAddress": "0x20000FbfeDFD172821821C9c59284129B04ffB2e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroTYBG-WETH",
+    "earnedTokenAddress": "",
+    "earnContractAddress": "0xc005B9833deBcF5fe6cc5bC9ba4fD74Bb382ae55",
+    "oracle": "lps",
+    "oracleId": "aerodrome-tybg-weth",
+    "status": "active",
+    "createdAt": 1709420692,
+    "platformId": "aerodrome",
+    "assets": ["TYBG", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LOW", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x0d97f261b1e88845184f678e2d1e7a98d9fd38de&token1=0x940181a94a35a4569e4529a3cdfb74e38fd98631&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-bsdeth",
     "name": "ETH-bsdETH vLP",
     "type": "standard",
