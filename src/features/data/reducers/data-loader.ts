@@ -160,7 +160,11 @@ function addGlobalAsyncThunkActions(
 function getOrCreateChainState(sliceState: DataLoaderState, chainId: string) {
   let chainState: ChainIdDataEntity | undefined = sliceState.byChainId[chainId];
   if (!chainState) {
-    chainState = sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
+    chainState = { ...dataLoaderStateInitByChainId };
+    sliceState.byChainId = {
+      ...sliceState.byChainId,
+      [chainId]: chainState,
+    };
   }
   return chainState;
 }
@@ -168,8 +172,10 @@ function getOrCreateChainState(sliceState: DataLoaderState, chainId: string) {
 function getOrCreateAddressState(sliceState: DataLoaderState, address: string) {
   let addressState = sliceState.byAddress[address];
   if (!addressState) {
-    addressState = sliceState.byAddress[address] = {
-      ...dataLoaderStateInitByAddress,
+    addressState = { ...dataLoaderStateInitByAddress };
+    sliceState.byAddress = {
+      ...sliceState.byAddress,
+      [address]: addressState,
     };
   }
 
@@ -185,8 +191,10 @@ function getOrCreateAddressChainState(
 
   let chainState: ChainIdDataByAddressByChainEntity | undefined = addressState.byChainId[chainId];
   if (!chainState) {
-    chainState = sliceState.byAddress[address].byChainId[chainId] = {
-      ...dataLoaderStateInitByAddressByChainId,
+    chainState = { ...dataLoaderStateInitByAddressByChainId };
+    sliceState.byAddress[address].byChainId = {
+      ...sliceState.byAddress[address].byChainId,
+      [chainId]: chainState,
     };
   }
 
