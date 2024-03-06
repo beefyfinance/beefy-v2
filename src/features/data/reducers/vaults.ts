@@ -9,7 +9,7 @@ import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/t
 import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsLastHarvests } from '../actions/vaults';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import type { ChainEntity } from '../entities/chain';
-import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
+import type { VaultCowcentrated, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import type { NormalizedEntity } from '../utils/normalized-entity';
 import type { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
 
@@ -48,6 +48,16 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
           [address: string]: VaultEntity['id'][];
         };
       };
+      cowcentratedVault: {
+        /** Map of cowcentrated vault ids by deposit token address */
+        byDepositTokenAddress: {
+          [address: string]: VaultEntity['id'][];
+        };
+        /** Map of cowcentrated vault id by earned (receipt) token address */
+        byEarnedTokenAddress: {
+          [address: string]: VaultEntity['id'];
+        };
+      };
     };
   };
 
@@ -64,7 +74,8 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
     byVaultId: {
       [vaultId: VaultEntity['id']]: {
         strategyAddress: string;
-        pricePerFullShare: BigNumber;
+        pricePerFullShare: BigNumber | null;
+        balances?: BigNumber[];
       };
     };
   };
@@ -177,6 +188,26 @@ function addVaultToState(
   }
   const score = getVaultSafetyScore(state, chainId, apiVault);
 
+  if (sliceState.byChainId[chainId] === undefined) {
+    sliceState.byChainId[chainId] = {
+      allIds: [],
+      allActiveIds: [],
+      allRetiredIds: [],
+      allBridgedIds: [],
+      standardVault: {
+        byEarnedTokenAddress: {},
+        byDepositTokenAddress: {},
+      },
+      govVault: {
+        byDepositTokenAddress: {},
+      },
+      cowcentratedVault: {
+        byEarnedTokenAddress: {},
+        byDepositTokenAddress: {},
+      },
+    };
+  }
+
   if (apiVault.type === 'gov') {
     const vault: VaultGov = {
       id: apiVault.id,
@@ -209,21 +240,6 @@ function addVaultToState(
 
     sliceState.byId[vault.id] = vault;
     sliceState.allIds.push(vault.id);
-    if (sliceState.byChainId[vault.chainId] === undefined) {
-      sliceState.byChainId[vault.chainId] = {
-        allIds: [],
-        allActiveIds: [],
-        allRetiredIds: [],
-        allBridgedIds: [],
-        standardVault: {
-          byEarnedTokenAddress: {},
-          byDepositTokenAddress: {},
-        },
-        govVault: {
-          byDepositTokenAddress: {},
-        },
-      };
-    }
 
     const vaultState = sliceState.byChainId[vault.chainId];
     vaultState.allIds.push(vault.id);
@@ -239,6 +255,66 @@ function addVaultToState(
     vaultState.govVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()].push(
       vault.id
     );
+  } else if (apiVault.type === 'cowcentrated') {
+    const vault: VaultCowcentrated = {
+      id: apiVault.id,
+      name: apiVault.name,
+      type: apiVault.type || 'cowcentrated',
+      version: apiVault.version || 1,
+      depositTokenAddress: apiVault.tokenAddress ?? 'native',
+      zaps: apiVault.zaps || [],
+      earnContractAddress: apiVault.earnContractAddress,
+      earnedTokenAddress: apiVault.earnedTokenAddress,
+      strategyTypeId: apiVault.strategyTypeId,
+      chainId: chainId,
+      platformId: apiVault.platformId,
+      status: apiVault.status as VaultStandard['status'],
+      assetType: 'lps',
+      safetyScore: score,
+      assetIds: apiVault.assets || [],
+      risks: apiVault.risks || [],
+      buyTokenUrl: apiVault.buyTokenUrl || null,
+      addLiquidityUrl: apiVault.addLiquidityUrl || null,
+      removeLiquidityUrl: apiVault.removeLiquidityUrl || null,
+      depositFee: apiVault.depositFee ?? 0,
+      createdAt: apiVault.createdAt ?? 0,
+      updatedAt: apiVault.updatedAt || apiVault.createdAt || 0,
+      retireReason: apiVault.retireReason,
+      retiredAt: apiVault.retiredAt,
+      pauseReason: apiVault.pauseReason,
+      pausedAt: apiVault.pausedAt,
+      migrationIds: apiVault.migrationIds,
+      bridged: apiVault.bridged,
+      lendingOracle: apiVault.lendingOracle,
+    };
+
+    sliceState.byId[vault.id] = vault;
+    sliceState.allIds.push(vault.id);
+
+    const vaultState = sliceState.byChainId[vault.chainId];
+    vaultState.allIds.push(vault.id);
+    if (apiVault.status === 'eol' || apiVault.status === 'paused') {
+      vaultState.allRetiredIds.push(vault.id);
+    } else {
+      vaultState.allActiveIds.push(vault.id);
+    }
+
+    if (vault.bridged) {
+      vaultState.allBridgedIds.push(vault.id);
+      sliceState.allBridgedIds.push(vault.id);
+    }
+
+    if (
+      !vaultState.cowcentratedVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()]
+    ) {
+      vaultState.cowcentratedVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()] =
+        [];
+    }
+    vaultState.cowcentratedVault.byDepositTokenAddress[
+      vault.depositTokenAddress.toLowerCase()
+    ].push(vault.id);
+    vaultState.cowcentratedVault.byEarnedTokenAddress[vault.earnedTokenAddress.toLowerCase()] =
+      vault.id;
   } else {
     const vault: VaultStandard = {
       id: apiVault.id,
@@ -275,21 +351,7 @@ function addVaultToState(
     // directly modify the state as usual
     sliceState.byId[vault.id] = vault;
     sliceState.allIds.push(vault.id);
-    if (sliceState.byChainId[vault.chainId] === undefined) {
-      sliceState.byChainId[vault.chainId] = {
-        allIds: [],
-        allActiveIds: [],
-        allRetiredIds: [],
-        allBridgedIds: [],
-        standardVault: {
-          byEarnedTokenAddress: {},
-          byDepositTokenAddress: {},
-        },
-        govVault: {
-          byDepositTokenAddress: {},
-        },
-      };
-    }
+
     const vaultState = sliceState.byChainId[vault.chainId];
     vaultState.allIds.push(vault.id);
     if (apiVault.status === 'eol' || apiVault.status === 'paused') {

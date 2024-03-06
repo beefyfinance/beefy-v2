@@ -23,7 +23,9 @@ export type TransactProps = {
 };
 export const Transact = memo<TransactProps>(function Transact({ vaultId }) {
   const transactStep = useAppSelector(selectTransactStep);
+  console.log('Transact transactStep:', transactStep);
   const transactVaultId = useAppSelector(selectTransactVaultId);
+  console.log('Transact transactVaultId:', transactVaultId);
   const step = transactVaultId === vaultId ? transactStep : TransactStep.Loading;
   const StepComponent = stepToComponent[step];
   const dispatch = useAppDispatch();

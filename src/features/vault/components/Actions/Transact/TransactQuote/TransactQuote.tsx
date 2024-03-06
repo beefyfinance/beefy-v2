@@ -5,14 +5,16 @@ import React, { memo, useEffect, useMemo } from 'react';
 import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
+  selectTransactDualInputAmounts,
+  selectTransactDualMaxAmounts,
   selectTransactInputAmount,
   selectTransactInputMax,
   selectTransactMode,
   selectTransactQuoteError,
   selectTransactQuoteStatus,
+  selectTransactSelected,
   selectTransactSelectedChainId,
   selectTransactSelectedQuote,
-  selectTransactSelectedSelectionId,
 } from '../../../../../data/selectors/transact';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { transactFetchQuotesIfNeeded } from '../../../../../data/actions/transact';
@@ -38,16 +40,26 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const mode = useAppSelector(selectTransactMode);
-  const inputAmount = useAppSelector(selectTransactInputAmount);
-  const inputMax = useAppSelector(selectTransactInputMax);
+  const selection = useAppSelector(selectTransactSelected);
+  const singleInputAmount = [useAppSelector(selectTransactInputAmount)];
+  const dualInputAmounts = useAppSelector(selectTransactDualInputAmounts);
+  const inputAmounts = selection.tokens.length === 2 ? dualInputAmounts : singleInputAmount;
+  const singleMaxAmount = [useAppSelector(selectTransactInputMax)];
+  const dualMaxAmounts = useAppSelector(selectTransactDualMaxAmounts);
+  const inputMax = selection.tokens.length === 2 ? dualMaxAmounts : singleMaxAmount;
+  // const inputAmount = useAppSelector(selectTransactInputAmount);
+  // const inputMax = useAppSelector(selectTransactInputMax);
   const chainId = useAppSelector(selectTransactSelectedChainId);
-  const selectionId = useAppSelector(selectTransactSelectedSelectionId);
+  const selectionId = selection.id;
+  console.log('transactQuote selection:', selection);
+  console.log('TransactQuote selectionId:', selectionId);
   const status = useAppSelector(selectTransactQuoteStatus);
+  console.log('TransactQuote status:', status);
   const debouncedFetchQuotes = useMemo(
     () =>
       debounce(
-        (dispatch: ReturnType<typeof useAppDispatch>, inputAmount: BigNumber) => {
-          if (inputAmount.lte(BIG_ZERO)) {
+        (dispatch: ReturnType<typeof useAppDispatch>, inputAmounts: BigNumber[]) => {
+          if (inputAmounts.every(amount => amount.lte(BIG_ZERO))) {
             dispatch(transactActions.clearQuotes());
           } else {
             dispatch(transactFetchQuotesIfNeeded());
@@ -60,8 +72,10 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   );
 
   useEffect(() => {
-    debouncedFetchQuotes(dispatch, inputAmount);
-  }, [dispatch, mode, chainId, selectionId, inputAmount, inputMax, debouncedFetchQuotes]);
+    debouncedFetchQuotes(dispatch, inputAmounts);
+  }, [dispatch, mode, chainId, selectionId, inputAmounts, inputMax, debouncedFetchQuotes]);
+
+  console.log('TransactQuote status:', status);
 
   if (status === TransactStatus.Idle) {
     return null;

@@ -5,6 +5,7 @@ import type { TokenErc20, TokenEntity } from '../entities/token';
 import { isTokenErc20 } from '../entities/token';
 import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
+  isCowcentratedLiquidityVault,
   isGovVault,
   isStandardVault,
   isVaultPaused,
@@ -52,6 +53,11 @@ export const selectIsVaultRetired = createCachedSelector(
   vault => isVaultRetired(vault)
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
+export const selectIsVaultCowcentrated = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  vault => isCowcentratedLiquidityVault(vault)
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
 export const selectIsVaultGov = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   vault => isGovVault(vault)
@@ -81,9 +87,9 @@ export const selectGovVaultById = (state: BeefyState, vaultId: VaultEntity['id']
 export const selectStandardVaultById = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   standardVault => {
-    if (!isStandardVault(standardVault)) {
-      throw new Error(`selectStandardVaultById: Vault ${standardVault.id} is not a standard vault`);
-    }
+    // if (!isStandardVault(standardVault)) {
+    //   throw new Error(`selectStandardVaultById: Vault ${standardVault.id} is not a standard vault`);
+    // }
     return standardVault;
   }
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);

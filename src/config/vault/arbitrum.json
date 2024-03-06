@@ -1,5 +1,26 @@
 [
   {
+    "id": "uniswap-cow-eth-usdc",
+    "name": "ETH-USDC",
+    "token": "ETH-USDC",
+    "tokenAddress": "0x641C00A822e8b671738d32a431a4Fb6074E5c79d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapETH-USDC",
+    "earnedTokenAddress": "0x487CeE58D6868f4662b716E4e1aB9DB728512789",
+    "earnContractAddress": "0x487CeE58D6868f4662b716E4e1aB9DB728512789",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-eth-usdc",
+    "status": "active",
+    "createdAt": 1708939193,
+    "platformId": "beefy",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "type": "cowcentrated"
+  },
+  {
     "id": "equilibria-arb-seth",
     "name": "ETH 26Dec24",
     "token": "sETH-26Dec24",

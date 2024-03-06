@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
-import { TokenSelectButton } from '../TokenSelectButton';
+import { TokenSelectButton, V3TokenButton } from '../TokenSelectButton';
 import {
   selectTransactNumTokens,
   selectTransactOptionsError,
@@ -16,7 +16,7 @@ import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance'
 import { errorToString } from '../../../../../../helpers/format';
 import { TextLoader } from '../../../../../../components/TextLoader';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
-import { DepositTokenAmountInput } from '../DepositTokenAmountInput';
+import { DepositTokenAmountInput, V3DepositTokenAmountInput } from '../DepositTokenAmountInput';
 import { DepositBuyLinks } from '../DepositBuyLinks';
 import { DepositActions } from '../DepositActions';
 import { TransactQuote } from '../TransactQuote';
@@ -27,6 +27,10 @@ import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { RetirePauseReason } from '../../../RetirePauseReason';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
 import zapIcon from '../../../../../../images/icons/zap.svg';
+import { isCowcentratedLiquidityVault } from '../../../../../data/entities/vault';
+import type { TokenEntity } from '../../../../../data/entities/token';
+import type { ChainEntity } from '../../../../../data/entities/chain';
+import { selectTokenById } from '../../../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
@@ -50,6 +54,7 @@ export const DepositFormLoader = memo(function DepositFormLoader() {
   const { t } = useTranslation();
   const classes = useStyles();
   const status = useAppSelector(selectTransactOptionsStatus);
+  console.log('DepositFormLoader status:', status);
   const error = useAppSelector(selectTransactOptionsError);
   const isLoading = status === TransactStatus.Idle || status === TransactStatus.Pending;
   const isError = status === TransactStatus.Rejected;
@@ -64,6 +69,8 @@ export const DepositFormLoader = memo(function DepositFormLoader() {
         <LoadingIndicator text={t('Transact-Loading')} />
       ) : isError ? (
         <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
+      ) : isCowcentratedLiquidityVault(vault) ? (
+        <CowcentratedDepositForm />
       ) : (
         <DepositForm />
       )}
@@ -99,5 +106,62 @@ export const DepositForm = memo(function DepositForm() {
       <DepositActions className={classes.actions} />
       <VaultFees className={classes.fees} />
     </>
+  );
+});
+
+export const CowcentratedDepositForm = memo(function V3DepositForm() {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+
+  return (
+    <>
+      <div className={classes.v3Inputs}>
+        {vault.assetIds.map((assetId, index) => (
+          <V3TokenInput key={assetId} tokenId={assetId} chainId={vault.chainId} index={index} />
+        ))}
+      </div>
+      <TransactQuote title={t('Transact-YouDeposit')} className={classes.quote} />
+      {/* <DepositActions className={classes.actions} /> */}
+      <VaultFees className={classes.fees} />
+    </>
+  );
+});
+
+interface V3TokenInputProps {
+  tokenId: TokenEntity['id'];
+  chainId: ChainEntity['id'];
+  index: number;
+}
+
+export const V3TokenInput = memo<V3TokenInputProps>(function V3TokenInput({
+  tokenId,
+  chainId,
+  index,
+}) {
+  const { t } = useTranslation();
+  const token = useAppSelector(state => selectTokenById(state, chainId, tokenId));
+  const classes = useStyles();
+  const balance = useAppSelector(state =>
+    selectUserBalanceOfToken(state, token.chainId, token.address)
+  );
+
+  return (
+    <div>
+      <div className={classes.labels}>
+        <div className={classes.selectLabel}>{token.symbol}</div>
+        <div className={classes.availableLabel}>
+          {t('Transact-Available')}{' '}
+          <span className={classes.availableLabelAmount}>
+            <TokenAmountFromEntity amount={balance} token={token} minShortPlaces={4} />
+          </span>
+        </div>
+      </div>
+      <div className={classes.inputs}>
+        <V3TokenButton token={token} />
+        <V3DepositTokenAmountInput index={index} />
+      </div>
+    </div>
   );
 });

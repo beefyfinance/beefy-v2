@@ -10,6 +10,8 @@ import { getTransactApi } from '../apis/instances';
 import { transactActions } from '../reducers/wallet/transact';
 import {
   selectTokenAmountsTotalValue,
+  selectTransactDualInputAmounts,
+  selectTransactDualMaxAmounts,
   selectTransactInputAmount,
   selectTransactInputMax,
   selectTransactOptionsForSelectionId,
@@ -98,6 +100,7 @@ export const transactInit = createAsyncThunk<
     }
 
     await Promise.all(loaders);
+    console.log('loaders finished');
   },
   {
     condition({ vaultId }, { getState }) {
@@ -131,6 +134,7 @@ export const transactFetchOptions = createAsyncThunk<
     const api = await getTransactApi();
     const state = getState();
     const method = optionsForByMode[mode];
+    console.log('fetchOptions', vaultId, mode);
     const options = await api[method](vaultId, getState);
 
     if (!options || options.length === 0) {
@@ -192,14 +196,25 @@ export const transactFetchQuotes = createAsyncThunk<
   void,
   { state: BeefyState }
 >('transact/fetchQuotes', async (_, { getState, dispatch }) => {
+  console.log('fetchQuotes started');
   const api = await getTransactApi();
   const state = getState();
   const mode = selectTransactOptionsMode(state);
   const inputAmount = selectTransactInputAmount(state);
   const inputMax = selectTransactInputMax(state);
+  const dualInputAmounts = selectTransactDualInputAmounts(state);
+  const dualMaxAmounts = selectTransactDualMaxAmounts;
   const walletAddress = selectWalletAddress(state);
-  if (inputAmount.lte(BIG_ZERO)) {
+
+  const vaultId = selectTransactVaultId(state);
+  const vault = selectVaultById(state, vaultId);
+  // This can be improved, don't worry chimpo
+
+  if (vault.type !== 'cowcentrated' && inputAmount.lte(BIG_ZERO)) {
     throw new Error(`Can not quote for 0`);
+  }
+  if (vault.type === 'cowcentrated' && dualInputAmounts.every(amount => amount.lte(BIG_ZERO))) {
+    throw new Error(`Can not quote for [0, 0]`);
   }
 
   const selectionId = selectTransactSelectedSelectionId(state);
@@ -222,21 +237,36 @@ export const transactFetchQuotes = createAsyncThunk<
     throw new Error(`No tokens for selectionId ${selectionId}`);
   }
 
-  const vaultId = selectTransactVaultId(state);
-  const vault = selectVaultById(state, vaultId);
+  // const vaultId = selectTransactVaultId(state);
+  // const vault = selectVaultById(state, vaultId);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
   // TODO handle differently for univ3 with multiple deposit tokens
-  const inputAmounts: InputTokenAmount[] = [
-    {
-      amount: inputAmount,
-      token: mode === TransactMode.Withdraw ? depositToken : selection.tokens[0], // for withdraw this is always depositToken / deposit is only token of selection
-      max: inputMax,
-    },
-  ];
+  const inputAmounts: InputTokenAmount[] =
+    vault.type !== 'cowcentrated' || mode === TransactMode.Withdraw
+      ? [
+          {
+            amount: inputAmount,
+            token: mode === TransactMode.Withdraw ? depositToken : selection.tokens[0], // for withdraw this is always depositToken / deposit is only token of selection
+            max: inputMax,
+          },
+        ]
+      : [
+          {
+            amount: dualInputAmounts[0],
+            token: selection.tokens[0],
+            max: dualMaxAmounts[0],
+          },
+          {
+            amount: dualInputAmounts[1],
+            token: selection.tokens[1],
+            max: dualMaxAmounts[1],
+          },
+        ];
 
   let quotes: TransactQuote[];
   if (options.every(isDepositOption)) {
+    console.log('every option is a deposit option');
     quotes = await api.fetchDepositQuotesFor(options, inputAmounts, getState);
   } else if (options.every(isWithdrawOption)) {
     quotes = await api.fetchWithdrawQuotesFor(options, inputAmounts, getState);
@@ -284,9 +314,12 @@ export const transactFetchQuotes = createAsyncThunk<
 export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state: BeefyState }>(
   'transact/fetchQuotesIfNeeded',
   async (_, { getState, dispatch }) => {
+    console.log('fetchQuotesIfNeeded started');
     const state = getState();
     const quote = selectTransactSelectedQuote(state);
     let shouldFetch = true;
+
+    console.log('fetchQuotesIfNeeded', quote);
 
     if (quote) {
       const option = quote.option;

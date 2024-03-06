@@ -17,6 +17,9 @@ function makeLazyLoader<T extends VaultType>(loader: () => Promise<VaultTypeCons
 export const vaultTypeBuildersById = {
   gov: makeLazyLoader(async () => (await import('./GovVaultType')).GovVaultType),
   standard: makeLazyLoader(async () => (await import('./StandardVaultType')).StandardVaultType),
+  cowcentrated: makeLazyLoader(
+    async () => (await import('./CowcentratedVaultType')).CowcentratedVaultType
+  ),
 } as const satisfies Record<
   VaultEntity['type'],
   (vault: VaultEntity, getState: GetStateFn) => Promise<VaultType>

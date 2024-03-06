@@ -44,7 +44,6 @@ const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
     if (!userAddress) {
       return null;
     }
-
     return selectWalletBalanceByAddress(state, userAddress);
   }
 };

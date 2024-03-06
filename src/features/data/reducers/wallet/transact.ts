@@ -59,6 +59,8 @@ const initialTransactState: TransactState = {
   swapSlippage: 0.01, // 1% default
   inputAmount: BIG_ZERO,
   inputMax: false,
+  dualInputAmounts: [BIG_ZERO, BIG_ZERO],
+  dualInputMax: [false, false],
   mode: TransactMode.Deposit,
   step: TransactStep.Form,
   selections: initialTransactTokens,
@@ -76,6 +78,7 @@ const transactSlice = createSlice({
       sliceState.mode = action.payload;
       sliceState.step = TransactStep.Form;
       sliceState.inputAmount = BIG_ZERO;
+      sliceState.dualInputAmounts = [BIG_ZERO, BIG_ZERO];
     },
     switchStep(sliceState, action: PayloadAction<TransactStep>) {
       sliceState.step = action.payload;
@@ -89,6 +92,8 @@ const transactSlice = createSlice({
       if (action.payload.resetInput) {
         sliceState.inputAmount = BIG_ZERO;
         sliceState.inputMax = false;
+        sliceState.dualInputAmounts = [BIG_ZERO, BIG_ZERO];
+        sliceState.dualInputMax = [false, false];
       }
     },
     setInputAmount(sliceState, action: PayloadAction<{ amount: BigNumber; max: boolean }>) {
@@ -99,12 +104,26 @@ const transactSlice = createSlice({
         sliceState.inputMax = action.payload.max;
       }
     },
+    setDualInputAmount(
+      sliceState,
+      action: PayloadAction<{ index: number; amount: BigNumber; max: boolean }>
+    ) {
+      if (!sliceState.dualInputAmounts[action.payload.index].isEqualTo(action.payload.amount)) {
+        sliceState.dualInputAmounts[action.payload.index] = action.payload.amount;
+      }
+      if (sliceState.dualInputMax[action.payload.index] !== action.payload.max) {
+        sliceState.dualInputMax[action.payload.index] = action.payload.max;
+      }
+    },
     clearInput(sliceState) {
       sliceState.inputAmount = BIG_ZERO;
       sliceState.inputMax = false;
+      sliceState.dualInputAmounts = [BIG_ZERO, BIG_ZERO];
+      sliceState.dualInputMax = [false, false];
       resetQuotes(sliceState);
     },
     clearQuotes(sliceState) {
+      console.log('clearing quotes');
       resetQuotes(sliceState);
     },
     confirmPending(sliceState, action: PayloadAction<{ requestId: string }>) {
@@ -243,6 +262,8 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.selectedSelectionId = null;
   sliceState.inputAmount = BIG_ZERO;
   sliceState.inputMax = false;
+  sliceState.dualInputAmounts = [BIG_ZERO, BIG_ZERO];
+  sliceState.dualInputMax = [false, false];
 
   sliceState.options.status = TransactStatus.Idle;
   sliceState.options.error = null;

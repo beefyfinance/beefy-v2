@@ -1,4 +1,9 @@
-import type { VaultEntity, VaultGov, VaultStandard } from '../../../entities/vault';
+import type {
+  VaultEntity,
+  VaultGov,
+  VaultStandard,
+  VaultCowcentrated,
+} from '../../../entities/vault';
 import type { GetStateFn } from '../../../../../redux-types';
 import type {
   DepositOption,
@@ -61,7 +66,14 @@ export interface IGovVaultType extends IVaultType {
   readonly depositToken: TokenEntity;
 }
 
-export type VaultType = IStandardVaultType | IGovVaultType;
+export interface ICowcentratedVaultType extends IVaultType {
+  readonly id: 'cowcentrated';
+  readonly vault: VaultCowcentrated;
+  readonly depositToken: TokenEntity;
+  readonly depositTokens: TokenEntity[];
+}
+
+export type VaultType = IStandardVaultType | IGovVaultType | ICowcentratedVaultType;
 
 export type VaultTypeConstructor<T extends VaultType = VaultType> = new (
   vault: VaultEntity,
@@ -74,4 +86,8 @@ export function isStandardVaultType(vaultType: VaultType): vaultType is IStandar
 
 export function isGovVaultType(vaultType: VaultType): vaultType is IGovVaultType {
   return vaultType.id === 'gov';
+}
+
+export function isCowcentratedVaultType(vaultType: VaultType): vaultType is IGovVaultType {
+  return vaultType.id === 'cowcentrated';
 }

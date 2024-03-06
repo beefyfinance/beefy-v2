@@ -518,7 +518,9 @@ function addVaultToState(
   if (existingDepositToken === undefined) {
     // Add the token
     sliceState.byChainId[chainId].byId[depositToken.id] = depositAddressKey;
-    sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(depositToken.address);
+    if (vault.type !== 'cowcentrated') {
+      sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(depositToken.address);
+    }
     sliceState.byChainId[chainId].byAddress[depositAddressKey] = depositToken;
   } else {
     // Only add missing information

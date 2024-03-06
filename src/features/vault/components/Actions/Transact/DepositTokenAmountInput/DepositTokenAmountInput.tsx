@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
+  selectTransactDualInputAmount,
   selectTransactInputAmount,
   selectTransactSelected,
 } from '../../../../../data/selectors/transact';
@@ -48,6 +49,60 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
     const error = useMemo(() => {
       return value.gt(userBalance);
     }, [userBalance, value]);
+
+    return (
+      <AmountInput
+        className={clsx(classes.input, className)}
+        value={value}
+        maxValue={userBalance}
+        tokenDecimals={depositToken.decimals}
+        onChange={handleChange}
+        error={error}
+        allowInputAboveBalance={true}
+        fullWidth={true}
+        price={price}
+      />
+    );
+  }
+);
+
+type V3DepositTokenAmountInputProps = DepositTokenAmountInputProps & {
+  index: number;
+};
+
+export const V3DepositTokenAmountInput = memo<V3DepositTokenAmountInputProps>(
+  function DepositTokenAmountInput({ className, index }) {
+    const dispatch = useAppDispatch();
+    const classes = useStyles();
+    const selection = useAppSelector(selectTransactSelected);
+    const depositToken = selection.tokens[index];
+    console.log('Deposit token:', depositToken);
+    const userBalance = useAppSelector(state =>
+      selectUserBalanceOfToken(state, depositToken.chainId, depositToken.address)
+    );
+    console.log('User balance:', userBalance.toString(10));
+    const value = useAppSelector(state => selectTransactDualInputAmount(state, index));
+    const price = useAppSelector(state =>
+      selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
+    );
+    console.log('Selection:', selection);
+
+    const error = useMemo(() => {
+      return value.gt(userBalance);
+    }, [userBalance, value]);
+
+    const handleChange = useCallback<AmountInputProps['onChange']>(
+      (value, isMax) => {
+        dispatch(
+          transactActions.setDualInputAmount({
+            amount: value.decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR),
+            max: isMax,
+            index,
+          })
+        );
+      },
+      [dispatch, depositToken, index]
+    );
 
     return (
       <AmountInput

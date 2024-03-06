@@ -11,6 +11,7 @@ import clsx from 'clsx';
 import { ExpandMore } from '@material-ui/icons';
 import { TokensImage } from '../../../../../../components/TokenImage/TokenImage';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types';
+import type { TokenEntity } from '../../../../../data/entities/token';
 
 const useStyles = makeStyles(styles);
 
@@ -39,5 +40,19 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
       <TokensImage tokens={selection.tokens} className={classes.iconAssets} />
       {multipleOptions ? <ExpandMore className={classes.iconMore} /> : null}
     </button>
+  );
+});
+
+type V3TokenButton = TokenSelectButtonProps & {
+  token: TokenEntity;
+};
+
+export const V3TokenButton = memo<V3TokenButton>(function V3TokenButton({ className, token }) {
+  const classes = useStyles();
+
+  return (
+    <div className={clsx(classes.button, className)}>
+      <TokensImage tokens={[token]} className={classes.iconAssets} />
+    </div>
   );
 });
