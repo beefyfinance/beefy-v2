@@ -726,38 +726,6 @@
     ]
   },
   {
-    "id": "uniswap-gamma-gns-usdc-wide",
-    "name": "GNS-USDC Wide LP",
-    "type": "standard",
-    "token": "GNS-USDC Wide LP",
-    "tokenAddress": "0x265A0f96B61849773a7B515495c6f04B364B28D8",
-    "tokenDecimals": 18,
-    "tokenProviderId": "uniswap",
-    "earnedToken": "mooUniswapGammaGNS-USDCWide",
-    "earnedTokenAddress": "0xAa76B70002EF6966a0327886e33ED4781D411934",
-    "earnContractAddress": "0xAa76B70002EF6966a0327886e33ED4781D411934",
-    "oracle": "lps",
-    "oracleId": "uniswap-gamma-gns-usdc-wide",
-    "status": "eol",
-    "createdAt": 1703942842,
-    "retireReason": "rewards",
-    "retiredAt": 1708113204,
-    "platformId": "gamma",
-    "assets": ["GNS", "USDC"],
-    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-usdc-500-wide",
-    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-usdc-500-wide",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "arbitrum-gamma-uniswap-v3",
-        "tokenHolder": "0x8A8fDe5D57725f070bFc55cd022B924e1c36C8a0"
-      }
-    ]
-  },
-  {
     "id": "uniswap-gamma-gns-weth-wide",
     "name": "GNS-ETH Wide LP",
     "type": "standard",
@@ -3524,37 +3492,6 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0x99c409e5f62e4bd2ac142f17cafb6810b8f0baae",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0xf9c642d206e7974d7d01758568d3e30019c7f022",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "arbitrum-ramses"
-      }
-    ]
-  },
-  {
-    "id": "ramses-eth-usdc",
-    "name": "ETH-USDC.e vLP",
-    "type": "standard",
-    "token": "ETH-USDC.e vLP",
-    "tokenAddress": "0x5513a48F3692Df1d9C793eeaB1349146B2140386",
-    "tokenDecimals": 18,
-    "tokenProviderId": "ramses",
-    "earnedToken": "mooRamsesETH-USDC",
-    "earnedTokenAddress": "0x01EB576CABBd03188BbF2099e4c3bB50A1Db2E0E",
-    "earnContractAddress": "0x01EB576CABBd03188BbF2099e4c3bB50A1Db2E0E",
-    "oracle": "lps",
-    "oracleId": "ramses-eth-usdc",
-    "status": "eol",
-    "createdAt": 1680096691,
-    "retireReason": "rewards",
-    "retiredAt": 1686563142,
-    "platformId": "ramses",
-    "assets": ["ETH", "arbUSDCe"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
-    "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x5513a48f3692df1d9c793eeab1349146b2140386",
     "network": "arbitrum",
     "zaps": [
       {
