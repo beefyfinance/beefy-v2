@@ -1,5 +1,41 @@
 [
   {
+    "id": "silo-eth-pendle-weeth",
+    "name": "ETH (PT-weETH Market)",
+    "type": "standard",
+    "token": "ETH",
+    "tokenAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloWETH(PT-weETH)",
+    "earnedTokenAddress": "0x70f9daff47ddFB3A8E776450fba0F0301022aF57",
+    "earnContractAddress": "0x70f9daff47ddFB3A8E776450fba0F0301022aF57",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "createdAt": 1709726583,
+    "platformId": "silo",
+    "assets": ["ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612"
+    }
+  },
+  {
     "id": "aura-arb-weth-reth-v2",
     "name": "rETH-ETH V2",
     "type": "standard",
@@ -802,7 +838,7 @@
   },
   {
     "id": "silo-eth-wsteth",
-    "name": "ETH",
+    "name": "ETH (wstETH Market)",
     "type": "standard",
     "token": "ETH",
     "tokenDecimals": 18,
