@@ -1,4 +1,4 @@
-import { memo, useCallback, useRef, useState } from 'react';
+import { memo, type MutableRefObject, useCallback, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Button } from '../../../../../../components/Button';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,7 @@ export type ExtendedFiltersButtonProps = {
 export const ExtendedFiltersButton = memo<ExtendedFiltersButtonProps>(
   function ExtendedFiltersButton({ desktopView, className }) {
     const { t } = useTranslation();
-    const anchorEl = useRef();
+    const anchorEl = useRef<HTMLButtonElement>();
     const [isOpen, setIsOpen] = useState(false);
 
     const handleClose = useCallback(() => {
@@ -30,14 +30,19 @@ export const ExtendedFiltersButton = memo<ExtendedFiltersButtonProps>(
           className={clsx(className)}
           variant="filter"
           size="sm"
-          ref={anchorEl}
+          ref={anchorEl as MutableRefObject<HTMLButtonElement>}
           onClick={handleOpen}
           active={isOpen}
         >
           {t('Filter-Btn')}
         </Button>
         {desktopView ? (
-          <Dropdown anchorEl={anchorEl} open={isOpen} onClose={handleClose} placement="bottom-end">
+          <Dropdown
+            anchorEl={anchorEl as MutableRefObject<HTMLButtonElement>}
+            open={isOpen}
+            onClose={handleClose}
+            placement="bottom-end"
+          >
             <ExtendedFilters desktopView={true} />
           </Dropdown>
         ) : (

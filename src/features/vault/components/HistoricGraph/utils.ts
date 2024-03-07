@@ -90,5 +90,7 @@ export function getBucketParams(bucket: ApiTimeBucket) {
 }
 
 export function getDefaultStat(availableStats: ChartStat[]): ChartStat {
-  return first(availableStats);
+  const defaultStat = first(availableStats);
+  if (!defaultStat) throw new Error('No default stat');
+  return defaultStat;
 }

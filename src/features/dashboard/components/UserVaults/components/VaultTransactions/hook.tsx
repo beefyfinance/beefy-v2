@@ -72,7 +72,7 @@ export function useSortedTimeline(vaultId: VaultEntity['id'], address: string) {
     }
     if (sortedOptions.sort === 'usdBalance') {
       sortedResult = sortBy(vaultTimelineFixed, tx => {
-        return tx.usdBalance?.toNumber() * sortDirMul;
+        return (tx.usdBalance?.toNumber() || 0) * sortDirMul;
       });
     }
 

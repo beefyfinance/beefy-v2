@@ -2,7 +2,10 @@ import { memo, useMemo } from 'react';
 import type { TokenEntity } from '../../features/data/entities/token';
 import type { ChainEntity } from '../../features/data/entities/chain';
 import { useAppSelector } from '../../store';
-import { selectTokenByAddressOrNull } from '../../features/data/selectors/tokens';
+import {
+  selectTokenByAddressOrUndefined,
+  selectVaultTokenSymbols,
+} from '../../features/data/selectors/tokens';
 import type { AssetsImageType } from '../AssetsImage';
 import { AssetsImage } from '../AssetsImage';
 import { singleAssetExists } from '../../helpers/singleAssetSrc';
@@ -20,17 +23,24 @@ export const TokenImage = memo<TokenImageProps>(function TokenImage({
   size,
   className,
 }) {
-  const token = useAppSelector(state => selectTokenByAddressOrNull(state, chainId, tokenAddress));
+  const token = useAppSelector(state =>
+    selectTokenByAddressOrUndefined(state, chainId, tokenAddress)
+  );
   const haveAssetForToken = useMemo(() => {
-    return token && singleAssetExists(token.symbol, token.chainId);
+    return !!token && singleAssetExists(token.symbol, token.chainId);
   }, [token]);
 
   return haveAssetForToken ? (
-    <AssetsImage chainId={chainId} assetIds={[token.symbol]} className={className} size={size} />
+    <AssetsImage
+      chainId={chainId}
+      assetSymbols={[token!.symbol]}
+      className={className}
+      size={size}
+    />
   ) : token ? (
     <TokenWithoutAsset token={token} size={size} className={className} />
   ) : (
-    <AssetsImage chainId={chainId} assetIds={['unknown']} className={className} size={size} />
+    <AssetsImage chainId={chainId} assetSymbols={['unknown']} className={className} size={size} />
   );
 });
 
@@ -46,16 +56,24 @@ const TokenWithoutAsset = memo<TokenWithoutAssetProps>(function TokenWithoutAsse
   const vault = useAppSelector(state =>
     selectFirstStandardVaultByDepositTokenAddress(state, token.chainId, token.address)
   );
+  const vaultTokenSymbols = useAppSelector(state =>
+    vault ? selectVaultTokenSymbols(state, vault.id) : []
+  );
 
-  return vault ? (
+  return vault && vaultTokenSymbols.length ? (
     <AssetsImage
       chainId={token.chainId}
-      assetIds={vault.assetIds}
+      assetSymbols={vaultTokenSymbols}
       className={className}
       size={size}
     />
   ) : (
-    <AssetsImage chainId={token.chainId} assetIds={[token.id]} className={className} size={size} />
+    <AssetsImage
+      chainId={token.chainId}
+      assetSymbols={[token.id]}
+      className={className}
+      size={size}
+    />
   );
 });
 
@@ -83,7 +101,7 @@ export const TokensImage = memo<TokensImageProps>(function TokensImage({
   return (
     <AssetsImage
       chainId={tokens[0].chainId}
-      assetIds={tokens.map(token => token.id)}
+      assetSymbols={tokens.map(token => token.id)}
       className={className}
       size={size}
     />

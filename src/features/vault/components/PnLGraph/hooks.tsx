@@ -145,12 +145,12 @@ export const usePnLChartData = (
         currentMooTokenBalance
       );
 
-      if (data.length > 0) {
-        const minUsd = data ? minBy(data, row => row.usdBalance).usdBalance : 0;
-        const maxUsd = data ? maxBy(data, row => row.usdBalance).usdBalance : 0;
+      if (data && data.length > 0) {
+        const minUsd = minBy(data, row => row.usdBalance)?.usdBalance || 0;
+        const maxUsd = maxBy(data, row => row.usdBalance)?.usdBalance || 0;
 
-        const minUnderlying = minBy(data, row => row.underlyingBalance).underlyingBalance;
-        const maxUnderlying = maxBy(data, row => row.underlyingBalance).underlyingBalance;
+        const minUnderlying = minBy(data, row => row.underlyingBalance)?.underlyingBalance || 0;
+        const maxUnderlying = maxBy(data, row => row.underlyingBalance)?.underlyingBalance || 0;
 
         return { data, minUnderlying, maxUnderlying, minUsd, maxUsd };
       }

@@ -21,6 +21,72 @@
     "type": "cowcentrated"
   },
   {
+    "id": "silo-eth-pendle-weeth",
+    "name": "ETH (PT-weETH Market)",
+    "type": "standard",
+    "token": "ETH",
+    "tokenAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloWETH(PT-weETH)",
+    "earnedTokenAddress": "0x70f9daff47ddFB3A8E776450fba0F0301022aF57",
+    "earnContractAddress": "0x70f9daff47ddFB3A8E776450fba0F0301022aF57",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "createdAt": 1709726583,
+    "platformId": "silo",
+    "assets": ["ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612"
+    }
+  },
+  {
+    "id": "aura-arb-weth-reth-v2",
+    "name": "rETH-ETH V2",
+    "type": "standard",
+    "token": "rETH-ETH V2 Arb",
+    "tokenAddress": "0xd0EC47c54cA5e20aaAe4616c25C825c7f48D4069",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraArbrETH-ETHV2",
+    "earnedTokenAddress": "0x81FdC9a8a233519D00f8eDFa0f8bFB7618dBf26b",
+    "earnContractAddress": "0x81FdC9a8a233519D00f8eDFa0f8bFB7618dBf26b",
+    "oracle": "lps",
+    "oracleId": "aura-arb-weth-reth-v2",
+    "status": "active",
+    "createdAt": 1709368857,
+    "platformId": "aura",
+    "assets": ["rETH", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xd0ec47c54ca5e20aaae4616c25c825c7f48d40690000000000000000000004ef/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xd0ec47c54ca5e20aaae4616c25c825c7f48d40690000000000000000000004ef/withdraw",
+    "network": "arbitrum"
+  },
+  {
     "id": "equilibria-arb-seth",
     "name": "ETH 26Dec24",
     "token": "sETH-26Dec24",
@@ -60,6 +126,7 @@
     "assets": ["rsETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
+    "earningPoints": true,
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6f02c88650837c8dfe89f66723c4743e9cf833cd/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6f02c88650837c8dfe89f66723c4743e9cf833cd/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -82,6 +149,7 @@
     "assets": ["weETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
+    "earningPoints": true,
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xe11f9786b06438456b044b3e21712228adcaa0d1/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xe11f9786b06438456b044b3e21712228adcaa0d1/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -679,38 +747,6 @@
     ]
   },
   {
-    "id": "uniswap-gamma-gns-usdc-wide",
-    "name": "GNS-USDC Wide LP",
-    "type": "standard",
-    "token": "GNS-USDC Wide LP",
-    "tokenAddress": "0x265A0f96B61849773a7B515495c6f04B364B28D8",
-    "tokenDecimals": 18,
-    "tokenProviderId": "uniswap",
-    "earnedToken": "mooUniswapGammaGNS-USDCWide",
-    "earnedTokenAddress": "0xAa76B70002EF6966a0327886e33ED4781D411934",
-    "earnContractAddress": "0xAa76B70002EF6966a0327886e33ED4781D411934",
-    "oracle": "lps",
-    "oracleId": "uniswap-gamma-gns-usdc-wide",
-    "status": "eol",
-    "createdAt": 1703942842,
-    "retireReason": "rewards",
-    "retiredAt": 1708113204,
-    "platformId": "gamma",
-    "assets": ["GNS", "USDC"],
-    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-usdc-500-wide",
-    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-usdc-500-wide",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "arbitrum-gamma-uniswap-v3",
-        "tokenHolder": "0x8A8fDe5D57725f070bFc55cd022B924e1c36C8a0"
-      }
-    ]
-  },
-  {
     "id": "uniswap-gamma-gns-weth-wide",
     "name": "GNS-ETH Wide LP",
     "type": "standard",
@@ -777,8 +813,10 @@
     "earnContractAddress": "0x43f92A2b1567Dc99db4ac6d6421E8B705e742BB1",
     "oracle": "lps",
     "oracleId": "aura-arb-ovn-wusd+",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1702153240,
+    "retireReason": "rewards",
+    "retiredAt": 1709372936,
     "platformId": "aura",
     "assets": ["OVN", "arbwUSD+"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -789,7 +827,7 @@
   },
   {
     "id": "silo-eth-wsteth",
-    "name": "ETH",
+    "name": "ETH (wstETH Market)",
     "type": "standard",
     "token": "ETH",
     "tokenDecimals": 18,
@@ -3475,37 +3513,6 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0x99c409e5f62e4bd2ac142f17cafb6810b8f0baae",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0xf9c642d206e7974d7d01758568d3e30019c7f022",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "arbitrum-ramses"
-      }
-    ]
-  },
-  {
-    "id": "ramses-eth-usdc",
-    "name": "ETH-USDC.e vLP",
-    "type": "standard",
-    "token": "ETH-USDC.e vLP",
-    "tokenAddress": "0x5513a48F3692Df1d9C793eeaB1349146B2140386",
-    "tokenDecimals": 18,
-    "tokenProviderId": "ramses",
-    "earnedToken": "mooRamsesETH-USDC",
-    "earnedTokenAddress": "0x01EB576CABBd03188BbF2099e4c3bB50A1Db2E0E",
-    "earnContractAddress": "0x01EB576CABBd03188BbF2099e4c3bB50A1Db2E0E",
-    "oracle": "lps",
-    "oracleId": "ramses-eth-usdc",
-    "status": "eol",
-    "createdAt": 1680096691,
-    "retireReason": "rewards",
-    "retiredAt": 1686563142,
-    "platformId": "ramses",
-    "assets": ["ETH", "arbUSDCe"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
-    "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x5513a48f3692df1d9c793eeab1349146b2140386",
     "network": "arbitrum",
     "zaps": [
       {

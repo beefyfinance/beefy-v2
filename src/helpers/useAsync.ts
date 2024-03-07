@@ -7,17 +7,17 @@ type AsyncStatus = 'idle' | 'pending' | 'success' | 'error';
 type AsyncReturnType<T> = {
   execute: () => Promise<void>;
   status: AsyncStatus;
-  value: T;
+  value: T | null;
   error: SerializedError | null;
 };
 
 export function useAsync<T>(
   asyncFunction: () => Promise<T>,
-  initialValue: T = null,
+  initialValue: T | null = null,
   immediate: boolean = true
 ): AsyncReturnType<T> {
   const [status, setStatus] = useState<AsyncStatus>('idle');
-  const [value, setValue] = useState<T>(initialValue);
+  const [value, setValue] = useState<T | null>(initialValue);
   const [error, setError] = useState<SerializedError | null>(null);
 
   const execute = useCallback(() => {

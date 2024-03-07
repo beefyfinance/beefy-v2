@@ -3,7 +3,10 @@ import { memo, useEffect } from 'react';
 import type { VaultEntity } from '../../../../data/entities/vault';
 import { useAppDispatch, useAppSelector } from '../../../../../store';
 import { transactInit } from '../../../../data/actions/transact';
-import { selectTransactStep, selectTransactVaultId } from '../../../../data/selectors/transact';
+import {
+  selectTransactStep,
+  selectTransactVaultIdOrUndefined,
+} from '../../../../data/selectors/transact';
 import { LoadingStep } from './LoadingStep';
 import { FormStep } from './FormStep';
 import { Card } from '../../Card';
@@ -24,7 +27,7 @@ export type TransactProps = {
 export const Transact = memo<TransactProps>(function Transact({ vaultId }) {
   const transactStep = useAppSelector(selectTransactStep);
   console.log('Transact transactStep:', transactStep);
-  const transactVaultId = useAppSelector(selectTransactVaultId);
+  const transactVaultId = useAppSelector(selectTransactVaultIdOrUndefined);
   console.log('Transact transactVaultId:', transactVaultId);
   const step = transactVaultId === vaultId ? transactStep : TransactStep.Loading;
   const StepComponent = stepToComponent[step];

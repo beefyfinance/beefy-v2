@@ -6,7 +6,8 @@ import type {
 } from '../../transact/transact-types';
 import type { IBridgeProvider, IBridgeQuote } from './provider-types';
 import type { ChainEntity } from '../../../entities/chain';
-import { BeefyCommonBridgeAbi, XErc20Abi } from '../../../../../config/abi';
+import { BeefyCommonBridgeAbi } from '../../../../../config/abi/BeefyCommonBridgeAbi';
+import { XErc20Abi } from '../../../../../config/abi/XErc20Abi';
 import { getWeb3Instance } from '../../instances';
 import { BIG_ZERO, fromWeiString, toWeiString } from '../../../../../helpers/big-number';
 import type { BeefyState } from '../../../../../redux-types';
@@ -27,6 +28,7 @@ import {
   featureFlag_simulateAllBridgeRateLimit,
   featureFlag_simulateBridgeRateLimit,
 } from '../../../utils/feature-flags';
+import { viemToWeb3Abi } from '../../../../../helpers/web3';
 
 export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
   implements IBridgeProvider<T>
@@ -40,11 +42,13 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
     input: InputTokenAmount<TokenErc20>,
     state: BeefyState
   ): Promise<IBridgeQuote<T>> {
-    if (!(from.id in config.chains) || !(to.id in config.chains)) {
-      throw new Error(`bridge '${this.id}' not available for ${from}->${to}.`);
+    const fromChain = config.chains[from.id];
+    const toChain = config.chains[to.id];
+    if (!fromChain || !toChain) {
+      throw new Error(`bridge '${this.id}' not available for ${from.id}->${to.id}.`);
     }
 
-    const { bridge: bridgeAddress } = config.chains[from.id];
+    const { bridge: bridgeAddress } = fromChain;
     const [fee, fromLimit, toLimit] = await Promise.all([
       this.fetchBridgeFee(config, from, to, input, state),
       this.fetchAmountLimit(bridgeAddress, from, 'outgoing', state),
@@ -69,7 +73,7 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
       gas,
       allowance,
       config,
-      timeEstimate: config.chains[from.id].time.outgoing + config.chains[to.id].time.incoming,
+      timeEstimate: fromChain.time.outgoing + toChain.time.incoming,
       withinLimits: input.amount.lt(fromLimit.current) && output.lt(toLimit.current),
       limits: {
         from: fromLimit,
@@ -86,7 +90,7 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
   ) {
     const token = selectBridgeXTokenForChainId(state, chain.id);
     const web3 = await getWeb3Instance(chain);
-    const contract = new web3.eth.Contract(XErc20Abi, token.address);
+    const contract = new web3.eth.Contract(viemToWeb3Abi(XErc20Abi), token.address);
     const multicall = new MultiCall(web3, chain.multicallAddress);
     const isBurn = direction === 'outgoing';
 
@@ -135,7 +139,11 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
     fee: TokenAmount<TokenNative>,
     state: BeefyState
   ): Promise<BigNumber> {
-    const { gasLimits, bridge: bridgeAddress } = config.chains[from.id];
+    const fromChain = config.chains[from.id];
+    if (!fromChain) {
+      throw new Error(`bridge '${this.id}' not available for ${from.id}->${to.id}.`);
+    }
+    const { gasLimits, bridge: bridgeAddress } = fromChain;
     const configEstimate = gasLimits.outgoing.plus(gasLimits.approve || BIG_ZERO);
     const address = selectWalletAddress(state);
     if (!address) {
@@ -144,7 +152,7 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
 
     try {
       const web3 = await getWeb3Instance(from);
-      const contract = new web3.eth.Contract(BeefyCommonBridgeAbi, bridgeAddress);
+      const contract = new web3.eth.Contract(viemToWeb3Abi(BeefyCommonBridgeAbi), bridgeAddress);
       const inputWei = toWeiString(input.amount, input.token.decimals);
       const feeWei = toWeiString(fee.amount, fee.token.decimals);
       const chainEstimate: number = await contract.methods
@@ -172,13 +180,19 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
   ): Promise<TokenAmount<TokenNative>> {
     try {
       const web3 = await getWeb3Instance(from);
-      const { bridge: bridgeAddress } = config.chains[from.id];
-      const contract = new web3.eth.Contract(BeefyCommonBridgeAbi, bridgeAddress);
+      const fromChain = config.chains[from.id];
+      const toChain = config.chains[to.id];
+      if (!fromChain || !toChain) {
+        throw new Error(`bridge '${this.id}' not available for ${from.id}->${to.id}.`);
+      }
+
+      const { bridge: bridgeAddress } = fromChain;
+      const contract = new web3.eth.Contract(viemToWeb3Abi(BeefyCommonBridgeAbi), bridgeAddress);
       const inputWei = toWeiString(input.amount, input.token.decimals);
 
       const feeToken = selectChainNativeToken(state, from.id);
       const feeWei = await contract.methods
-        .bridgeCost(to.networkChainId, inputWei, config.chains[to.id].bridge)
+        .bridgeCost(to.networkChainId, inputWei, toChain.bridge)
         .call();
       const fee = fromWeiString(feeWei, feeToken.decimals);
 

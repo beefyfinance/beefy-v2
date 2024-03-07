@@ -43,9 +43,8 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
 
   return (
     <VaultLabelledStat
-      triggerClassName={clsx(classes.value, {
+      triggerClassName={clsx(classes.value, triggerClassName, {
         [classes.blurValue]: blur,
-        [triggerClassName]: triggerClassName,
         [classes.boostedValue]: boosted,
       })}
       showLabel={showLabel}

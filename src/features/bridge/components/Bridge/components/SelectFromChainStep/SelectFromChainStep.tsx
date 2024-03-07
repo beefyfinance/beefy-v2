@@ -5,15 +5,16 @@ import { SearchableList } from '../../../../../../components/SearchableList';
 import { Step } from '../../../../../../components/Step';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectBridgeSupportedChainIds } from '../../../../../data/selectors/bridge';
-import { ListItem } from '../ListItem';
+import { ChainListItem } from '../ListItem';
 import { BalanceEndAdornment } from '../BalanceEndAdornement';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 
 const ChainSelector = memo(function ChainSelector() {
   const dispatch = useAppDispatch();
   const options = useAppSelector(selectBridgeSupportedChainIds);
 
   const handleSelect = useCallback(
-    (chainId: string) => {
+    (chainId: ChainEntity['id']) => {
       dispatch(bridgeActions.setFromChain({ chainId }));
     },
     [dispatch]
@@ -23,7 +24,7 @@ const ChainSelector = memo(function ChainSelector() {
     <SearchableList
       options={options}
       onSelect={handleSelect}
-      ItemInnerComponent={ListItem}
+      ItemInnerComponent={ChainListItem}
       EndComponent={BalanceEndAdornment}
     />
   );

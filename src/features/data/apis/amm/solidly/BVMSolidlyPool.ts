@@ -24,7 +24,7 @@ const BVMFactoryAbi: AbiItem[] = [
 ];
 
 export class BVMSolidlyPool extends SolidlyPool {
-  protected factoryData: FactoryData | null = null;
+  protected factoryData: FactoryData | undefined = undefined;
 
   protected getFactoryDataRequest(): ShapeWithLabel[] {
     if (!this.pairData) {

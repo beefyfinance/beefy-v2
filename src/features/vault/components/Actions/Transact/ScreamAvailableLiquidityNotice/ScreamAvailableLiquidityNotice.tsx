@@ -6,8 +6,8 @@ import { useAppSelector } from '../../../../../../store';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import type { ChainEntity } from '../../../../../data/entities/chain';
-import vaultABI from '../../../../../../config/abi/vault.json';
-import erc20ABI from '../../../../../../config/abi/erc20.json';
+import { StandardVaultAbi } from '../../../../../../config/abi/StandardVaultAbi';
+import { ERC20Abi } from '../../../../../../config/abi/ERC20Abi';
 import type { AbiItem } from 'web3-utils';
 import { MultiCall } from 'eth-multicall';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
@@ -33,11 +33,17 @@ type ScreamAvailableLiquidityProps = {
 
 async function getLiquidity(vault: VaultEntity, chain: ChainEntity, depositToken: TokenEntity) {
   const web3 = await getWeb3Instance(chain);
-  const vaultContract = new web3.eth.Contract(vaultABI as AbiItem[], vault.earnContractAddress);
+  const vaultContract = new web3.eth.Contract(
+    StandardVaultAbi as unknown as AbiItem[],
+    vault.earnContractAddress
+  );
   const strategyAddress = await vaultContract.methods.strategy().call();
   const strategyContract = new web3.eth.Contract(strategyABI as AbiItem[], strategyAddress);
   const iTokenAddress = await strategyContract.methods.iToken().call();
-  const wantContract = new web3.eth.Contract(erc20ABI as AbiItem[], vault.depositTokenAddress);
+  const wantContract = new web3.eth.Contract(
+    ERC20Abi as unknown as AbiItem[],
+    vault.depositTokenAddress
+  );
   const multicall = new MultiCall(web3, chain.multicallAddress);
   const [[balances]] = await multicall.all([
     [
@@ -81,7 +87,7 @@ const ScreamAvailableLiquidityImpl = memo<ScreamAvailableLiquidityProps>(
     }, [updateLiquidity]);
 
     useEffect(() => {
-      if (haveUpdatedOnce === false && updateStatus === 'success') {
+      if (!haveUpdatedOnce && updateStatus === 'success') {
         setHaveUpdatedOnce(true);
       }
     }, [updateStatus, haveUpdatedOnce, setHaveUpdatedOnce]);
@@ -96,7 +102,9 @@ const ScreamAvailableLiquidityImpl = memo<ScreamAvailableLiquidityProps>(
         {haveUpdatedOnce ? (
           <p>
             <strong>Available liquidity:</strong>{' '}
-            {liquidity.toLocaleString('en-US', { maximumFractionDigits: depositToken.decimals })}{' '}
+            {(liquidity || 0).toLocaleString('en-US', {
+              maximumFractionDigits: depositToken.decimals,
+            })}{' '}
             {depositToken.symbol}
           </p>
         ) : null}

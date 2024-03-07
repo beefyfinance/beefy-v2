@@ -5,6 +5,7 @@ import {
   selectFiatTokenMinMaxFiat,
   selectInputAmount,
   selectInputError,
+  selectNetwork,
   selectOutputAmount,
   selectToken,
 } from '../../../../../data/selectors/on-ramp';
@@ -53,8 +54,9 @@ const FiatAmountInput = memo<FiatAmountInputProps>(function FiatAmountInput({ fi
 
   const inputValue = useAppSelector(selectInputAmount);
   const token = useAppSelector(selectToken);
+  const network = useAppSelector(selectNetwork);
   const error = useAppSelector(selectInputError);
-  const range = useAppSelector(state => selectFiatTokenMinMaxFiat(state, fiat, token));
+  const range = useAppSelector(state => selectFiatTokenMinMaxFiat(state, fiat, token, network));
   const handleValueChange = useCallback(
     (value: number) => {
       dispatch(onRampFormActions.setInputAmount({ amount: value }));

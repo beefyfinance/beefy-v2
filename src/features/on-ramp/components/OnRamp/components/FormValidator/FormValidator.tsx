@@ -1,11 +1,11 @@
 import { memo, useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectFiat,
+  selectFiatOrUndefined,
   selectInputAmount,
-  selectInputMode,
-  selectNetwork,
-  selectToken,
+  selectInputModeOrUndefined,
+  selectNetworkOrUndefined,
+  selectTokenOrUndefined,
 } from '../../../../../data/selectors/on-ramp';
 import { validateOnRampForm } from '../../../../../data/actions/on-ramp';
 import { debounce } from 'lodash-es';
@@ -13,10 +13,10 @@ import { debounce } from 'lodash-es';
 export const FormValidator = memo(function FormValidator() {
   const dispatch = useAppDispatch();
   const inputAmount = useAppSelector(selectInputAmount);
-  const inputMode = useAppSelector(selectInputMode);
-  const fiat = useAppSelector(selectFiat);
-  const token = useAppSelector(selectToken);
-  const network = useAppSelector(selectNetwork);
+  const inputMode = useAppSelector(selectInputModeOrUndefined);
+  const fiat = useAppSelector(selectFiatOrUndefined);
+  const token = useAppSelector(selectTokenOrUndefined);
+  const network = useAppSelector(selectNetworkOrUndefined);
 
   const debouncedValidate = useMemo(
     () => debounce(() => dispatch(validateOnRampForm()), 150),

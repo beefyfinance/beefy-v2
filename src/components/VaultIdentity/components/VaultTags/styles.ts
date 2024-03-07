@@ -44,4 +44,7 @@ export const styles = (theme: Theme) => ({
   vaultTagEarn: {
     backgroundColor: theme.palette.background.tags.earnings,
   },
+  vaultTagPoints: {
+    backgroundColor: theme.palette.background.tags.earnings,
+  },
 });

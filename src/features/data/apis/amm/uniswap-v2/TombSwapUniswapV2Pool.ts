@@ -55,7 +55,7 @@ const TombSwapPairAbi: AbiItem[] = [
 ];
 
 export class TombSwapUniswapV2Pool extends UniswapV2Pool {
-  protected factoryData: FactoryData | null = null;
+  protected factoryData: FactoryData | undefined = undefined;
 
   protected getFactoryDataRequest(): ShapeWithLabel[] {
     const contract = createContract(TombSwapPairAbi, this.amm.factoryAddress);
@@ -72,6 +72,10 @@ export class TombSwapUniswapV2Pool extends UniswapV2Pool {
     const result = (untypedResult as FactoryDataResponse[])[0];
 
     super.consumeFactoryDataResponse(untypedResult);
+
+    if (!this.factoryData) {
+      throw new Error('Factory data is not loaded');
+    }
 
     this.factoryData.mintFee = new BigNumber(result.mintFee);
     this.factoryData.swapFee = new BigNumber(result.swapFee);

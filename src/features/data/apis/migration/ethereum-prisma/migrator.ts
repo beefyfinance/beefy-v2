@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults';
 import { selectTokenByAddress } from '../../../selectors/tokens';
-import { ERC20Abi } from '../../../../../config/abi';
+import { ERC20Abi } from '../../../../../config/abi/ERC20Abi';
 import { toWei } from '../../../../../helpers/big-number';
 import type { AbiItem } from 'web3-utils';
 import type Web3 from 'web3';
@@ -41,14 +41,14 @@ async function getBalance(
   const pools = prismaPools.find(s => s.includes(stakingAddress)) || [];
   if (pools.length > 0) {
     const promises = pools.map(address => {
-      const staking = new web3.eth.Contract(ERC20Abi, address);
+      const staking = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], address);
       return staking.methods.balanceOf(walletAddress).call();
     });
     const res = await Promise.all(promises);
     const balances = res.map(b => new BigNumber(b)).sort((b1, b2) => (b1.gte(b2) ? -1 : 1));
     return balances[0].toString(10);
   } else {
-    const staking = new web3.eth.Contract(ERC20Abi, stakingAddress);
+    const staking = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], stakingAddress);
     return staking.methods.balanceOf(walletAddress).call();
   }
 }
@@ -61,7 +61,7 @@ async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, st
   const pools = prismaPools.find(s => s.includes(stakingAddress)) || [];
   if (pools.length > 1) {
     for (const address of pools) {
-      const staking = new web3.eth.Contract(ERC20Abi, address);
+      const staking = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], address);
       const bal = await staking.methods.balanceOf(wallet).call();
       if (amountInWei.eq(new BigNumber(bal))) {
         stakingAddress = address;

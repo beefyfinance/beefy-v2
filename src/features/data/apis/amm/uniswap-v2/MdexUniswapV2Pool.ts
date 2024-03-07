@@ -69,7 +69,7 @@ const MdexFactoryAbi: AbiItem[] = [
 ];
 
 export class MdexUniswapV2Pool extends UniswapV2Pool {
-  protected factoryData: FactoryData | null = null;
+  protected factoryData: FactoryData | undefined = undefined;
 
   protected getFactoryDataRequest(): ShapeWithLabel[] {
     const contract = createContract(MdexFactoryAbi, this.amm.factoryAddress);
@@ -86,6 +86,10 @@ export class MdexUniswapV2Pool extends UniswapV2Pool {
     const result = (untypedResult as FactoryDataResponse[])[0];
 
     super.consumeFactoryDataResponse(untypedResult);
+
+    if (!this.factoryData) {
+      throw new Error('Factory data is not loaded');
+    }
 
     this.factoryData.pairRate = new BigNumber(result.pairRate);
     this.factoryData.pairFees = new BigNumber(result.pairFees);

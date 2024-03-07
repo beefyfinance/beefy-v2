@@ -84,7 +84,7 @@ export function isMaybeDomain(domain: string, validTlds = DEFAULT_VALID_TLDS, mi
 
   const dot = domain.lastIndexOf('.');
   if (dot < minNameLength || dot === domain.length - 1) {
-    return undefined;
+    return false;
   }
 
   const tld = domain.substring(dot + 1);

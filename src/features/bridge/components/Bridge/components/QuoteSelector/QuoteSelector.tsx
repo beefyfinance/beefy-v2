@@ -2,7 +2,6 @@ import React, { memo, type ReactNode, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectAllBridgeLimitedQuotes,
   selectBridgeConfigById,
   selectBridgeFormState,
   selectBridgeIdsFromTo,
@@ -27,7 +26,6 @@ import { useTranslation } from 'react-i18next';
 import { formatMinutesDuration } from '../../../../../../helpers/date';
 import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
 import BigNumber from 'bignumber.js';
-import { BIG_ONE } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
@@ -213,35 +211,6 @@ const QuotesLoading = memo(function QuotesLoading() {
         <LoadingQuoteButton key={id} providerId={id} />
       ))}
     </div>
-  );
-});
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const AllLimitedError = memo(function AllLimitedError() {
-  const { t } = useTranslation();
-  const quotes = useAppSelector(selectAllBridgeLimitedQuotes);
-  const currentLimit = useMemo(() => {
-    return BigNumber.max(
-      ...quotes.map(quote => BigNumber.min(quote.limits.from.current, quote.limits.to.current))
-    );
-  }, [quotes]);
-  const maxLimit = useMemo(() => {
-    return BigNumber.max(
-      ...quotes.map(quote => BigNumber.min(quote.limits.from.max, quote.limits.to.max))
-    );
-  }, [quotes]);
-  const waitLimits = useMemo(() => {
-    const wanted = quotes[0].input.amount;
-    return maxLimit.minus(currentLimit).gt(BIG_ONE) && maxLimit.gt(wanted);
-  }, [currentLimit, maxLimit, quotes]);
-
-  return (
-    <AlertError>
-      {t(waitLimits ? 'Bridge-Quotes-AllRateLimited-Wait' : 'Bridge-Quotes-AllRateLimited', {
-        current: formatBigDecimals(currentLimit, 4),
-        max: formatBigDecimals(maxLimit, 4),
-      })}
-    </AlertError>
   );
 });
 

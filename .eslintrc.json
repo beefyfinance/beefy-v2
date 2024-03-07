@@ -39,6 +39,7 @@
         "argsIgnorePattern": "^_"
       }
     ],
+    "@typescript-eslint/no-non-null-assertion": "off", // TODO fix
     "react/jsx-no-target-blank": [
       "error",
       {

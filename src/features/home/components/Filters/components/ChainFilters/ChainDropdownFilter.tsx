@@ -40,7 +40,7 @@ const IconWithChain = memo<{ chainId: ChainEntity['id']; label: string; classNam
   }
 );
 
-const SelectedChain = memo<SelectedItemProps>(function SelectedChain({
+const SelectedChain = memo<SelectedItemProps<ChainEntity['id']>>(function SelectedChain({
   value,
   options,
   allSelected,
@@ -51,27 +51,31 @@ const SelectedChain = memo<SelectedItemProps>(function SelectedChain({
   const classes = useStyles();
   let label: string | ReactNode;
 
-  if (allSelected) {
+  if (allSelected && allSelectedLabel) {
     label = t(allSelectedLabel);
   } else if (value.length === 1) {
     const chainId = value[0];
     label = (
       <IconWithChain
         chainId={chainId}
-        label={options[chainId]}
+        label={options[chainId]!}
         className={classes.iconWithChainSelected}
       />
     );
-  } else {
+  } else if (countSelectedLabel) {
     label = t(countSelectedLabel, { count: value.length });
+  } else {
+    label = 'missing label';
   }
 
   return <>{label}</>;
 });
 
-const DropdownItemLabel = memo<DropdownItemLabelProps>(function DropdownItem({ label, value }) {
-  return <IconWithChain chainId={value} label={label} />;
-});
+const ChainDropdownItemLabel = memo<DropdownItemLabelProps<ChainEntity['id']>>(
+  function DropdownItem({ label, value }) {
+    return <IconWithChain chainId={value} label={label} />;
+  }
+);
 
 export type ChainDropdownFilterProps = {
   className?: string;
@@ -93,12 +97,12 @@ export const ChainDropdownFilter = memo<ChainDropdownFilterProps>(function Chain
     [dispatch, activeChains]
   );
 
-  const options = useMemo(() => {
+  const options: Partial<Record<ChainEntity['id'], string>> = useMemo(() => {
     return Object.fromEntries(activeChains.map(chain => [chain.id, chain.name]));
   }, [activeChains]);
 
   return (
-    <LabeledMultiSelect
+    <LabeledMultiSelect<ChainEntity['id']>
       label={t('Filter-Chain')}
       onChange={handleChange}
       value={selectedChainIds}
@@ -106,7 +110,7 @@ export const ChainDropdownFilter = memo<ChainDropdownFilterProps>(function Chain
       sortOptions="label"
       selectClass={className}
       SelectedItemComponent={SelectedChain}
-      DropdownItemLabelComponent={DropdownItemLabel}
+      DropdownItemLabelComponent={ChainDropdownItemLabel}
     />
   );
 });

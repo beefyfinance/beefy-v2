@@ -51,31 +51,40 @@ export type TxAdditionalData =
   | MigrateAdditionalData
   | BridgeAdditionalData;
 
-export function isZapAdditionalData(data: TxAdditionalData): data is ZapAdditionalData {
-  return 'type' in data && data.type === 'zap';
+export function isZapAdditionalData(data: TxAdditionalData | undefined): data is ZapAdditionalData {
+  return !!data && 'type' in data && data.type === 'zap';
 }
 
-export function isBridgeAdditionalData(data: TxAdditionalData): data is BridgeAdditionalData {
-  return 'type' in data && data.type === 'bridge';
+export function isBridgeAdditionalData(
+  data: TxAdditionalData | undefined
+): data is BridgeAdditionalData {
+  return !!data && 'type' in data && data.type === 'bridge';
+}
+
+export function isBaseAdditionalData(
+  data: TxAdditionalData | undefined
+): data is BaseAdditionalData {
+  return !!data && 'amount' in data && 'token' in data;
 }
 
 export type WalletActionsIdleState = {
-  result: null;
-  data: null;
+  result: undefined;
+  data: undefined;
+  additional: undefined;
 };
 
 export type WalletActionsErrorState<T extends TxAdditionalData = TxAdditionalData> = {
   result: 'error';
   data: {
     error: TrxError;
-  } & T;
+  };
+  additional?: T;
 };
 
 export type WalletActionsPendingState<T extends TxAdditionalData = TxAdditionalData> = {
   result: 'success_pending';
-  data: {
-    hash: TrxHash;
-  } & T;
+  data: { hash: TrxHash };
+  additional?: T;
 };
 
 export type WalletActionsSuccessState<T extends TxAdditionalData = TxAdditionalData> = {
@@ -83,7 +92,8 @@ export type WalletActionsSuccessState<T extends TxAdditionalData = TxAdditionalD
   data: {
     hash: TrxHash;
     receipt: TrxReceipt;
-  } & T;
+  };
+  additional?: T;
 };
 
 export type WalletActionsState =
@@ -115,7 +125,9 @@ export function isWalletActionSuccess(
 export function isWalletActionBridgeSuccess(
   state: WalletActionsState
 ): state is WalletActionsSuccessState<BridgeAdditionalData> {
-  return isWalletActionSuccess(state) && isBridgeAdditionalData(state.data);
+  return (
+    isWalletActionSuccess(state) && !!state.additional && isBridgeAdditionalData(state.additional)
+  );
 }
 
 export type WalletAction<T extends WalletActionsState> = {
@@ -124,8 +136,9 @@ export type WalletAction<T extends WalletActionsState> = {
 };
 
 const initialWalletActionState: WalletActionsState = {
-  result: null,
-  data: null,
+  result: undefined,
+  data: undefined,
+  additional: undefined,
 };
 
 export const walletActionsReducer = (
@@ -136,7 +149,7 @@ export const walletActionsReducer = (
     case WALLET_ACTION:
       return action.payload;
     case WALLET_ACTION_RESET:
-      return { result: null, data: null };
+      return { result: undefined, data: undefined, additional: undefined };
     default:
       return state;
   }
@@ -146,15 +159,15 @@ export function createWalletActionResetAction() {
   return {
     type: WALLET_ACTION_RESET,
     payload: {
-      result: null,
-      data: null,
+      result: undefined,
+      data: undefined,
     },
   };
 }
 
 export function createWalletActionErrorAction(
   error: TrxError,
-  additionalData: TxAdditionalData
+  additionalData: TxAdditionalData | undefined
 ): WalletAction<WalletActionsErrorState> {
   return {
     type: WALLET_ACTION,
@@ -162,15 +175,15 @@ export function createWalletActionErrorAction(
       result: 'error',
       data: {
         error,
-        ...additionalData,
       },
+      additional: additionalData,
     },
   };
 }
 
 export function createWalletActionPendingAction(
   hash: TrxHash,
-  additionalData: TxAdditionalData
+  additionalData: TxAdditionalData | undefined
 ): WalletAction<WalletActionsPendingState> {
   return {
     type: WALLET_ACTION,
@@ -178,15 +191,15 @@ export function createWalletActionPendingAction(
       result: 'success_pending',
       data: {
         hash,
-        ...additionalData,
       },
+      additional: additionalData,
     },
   };
 }
 
 export function createWalletActionSuccessAction(
   receipt: TrxReceipt,
-  additionalData: TxAdditionalData
+  additionalData: TxAdditionalData | undefined
 ): WalletAction<WalletActionsSuccessState> {
   return {
     type: WALLET_ACTION,
@@ -195,8 +208,8 @@ export function createWalletActionSuccessAction(
       data: {
         hash: receipt.transactionHash,
         receipt,
-        ...additionalData,
       },
+      additional: additionalData,
     },
   };
 }

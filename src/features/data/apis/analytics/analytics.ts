@@ -24,7 +24,7 @@ export class AnalyticsApi {
       return res.data;
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        if (err.response.status === 404) {
+        if (err.response?.status === 404) {
           return [];
         }
       }

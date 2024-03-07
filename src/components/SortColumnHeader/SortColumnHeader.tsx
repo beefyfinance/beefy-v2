@@ -46,7 +46,9 @@ export const SortColumnHeader = memo<SortColumnHeaderProps>(function SortColumnH
   const classes = useStyles();
   const { t } = useTranslation();
   const handleChange = useCallback(() => {
-    onChange(sortKey);
+    if (onChange) {
+      onChange(sortKey);
+    }
   }, [sortKey, onChange]);
 
   return (

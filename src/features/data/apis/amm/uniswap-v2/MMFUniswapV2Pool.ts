@@ -36,7 +36,7 @@ const MMFPairAbi: AbiItem[] = [
 ];
 
 export class MMFUniswapV2Pool extends UniswapV2Pool {
-  protected pairData: PairData | null = null;
+  protected pairData: PairData | undefined = undefined;
 
   protected getPairDataRequest(): ShapeWithLabel[] {
     const contract = createContract(MMFPairAbi, this.address);
@@ -52,6 +52,10 @@ export class MMFUniswapV2Pool extends UniswapV2Pool {
     const result = (untypedResult as PairDataResponse[])[0];
 
     super.consumePairDataResponse(untypedResult);
+
+    if (!this.pairData) {
+      throw new Error('Pair data is not loaded');
+    }
 
     this.pairData.swapFee = new BigNumber(result.swapFee);
   }

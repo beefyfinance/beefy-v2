@@ -27,7 +27,7 @@ const useStyles = makeStyles(styles);
 interface GraphProps {
   vaultId: string;
   period: number;
-  address: string;
+  address?: string;
 }
 
 export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address }) {
@@ -57,11 +57,11 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
   }, [maxUsd, minUsd]);
 
   const startUnderlyingDomain = useMemo(() => {
-    return max([0, minUnderlying - underlyingDiff]);
+    return max([0, minUnderlying - underlyingDiff])!;
   }, [minUnderlying, underlyingDiff]);
 
   const startUsdDomain = useMemo(() => {
-    return max([0, minUsd - usdDiff]);
+    return max([0, minUsd - usdDiff])!;
   }, [minUsd, usdDiff]);
 
   const underlyingAxisDomain = useMemo<[number, number]>(() => {

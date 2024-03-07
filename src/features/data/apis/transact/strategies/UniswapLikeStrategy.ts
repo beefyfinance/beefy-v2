@@ -1,4 +1,4 @@
-import type { IStrategy, TransactHelpers, UniswapLikeStrategyOptions } from './IStrategy';
+import type { IStrategy, UniswapLikeStrategyOptions, ZapTransactHelpers } from './IStrategy';
 import type {
   InputTokenAmount,
   TokenAmount,
@@ -42,7 +42,8 @@ import {
   createQuoteId,
   createSelectionId,
   onlyAssetCount,
-  onlyInputCount,
+  onlyOneInput,
+  onlyOneToken,
   onlyVaultStandard,
 } from '../helpers/options';
 import { TransactMode } from '../../../reducers/wallet/transact-types';
@@ -113,7 +114,7 @@ export abstract class UniswapLikeStrategy<
 
   protected abstract isAmmType(amm: AmmEntityUniswapLike): amm is TAmm;
 
-  constructor(protected options: TOptions, protected helpers: TransactHelpers) {
+  constructor(protected options: TOptions, protected helpers: ZapTransactHelpers) {
     // Make sure zap was configured correctly for this vault
     const { vault, getState } = this.helpers;
 
@@ -213,9 +214,7 @@ export abstract class UniswapLikeStrategy<
     inputs: InputTokenAmount[],
     option: UniswapLikeDepositOption<AmmEntityUniswapLike>
   ): Promise<UniswapLikeDepositQuote> {
-    onlyInputCount(inputs, 1);
-
-    const input = first(inputs);
+    const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Uniswap v2 strategy: Quote called with 0 input amount');
     }
@@ -304,6 +303,9 @@ export abstract class UniswapLikeStrategy<
         state
       );
       const wrapQuote = first(wrapQuotes);
+      if (!wrapQuote) {
+        throw new Error('No wrap quotes found');
+      }
 
       steps.push({
         type: 'swap',
@@ -325,7 +327,7 @@ export abstract class UniswapLikeStrategy<
       toToken: swapOutToken,
       toAmount: swapOutAmount,
       via: 'pool',
-      providerId: depositToken.providerId,
+      providerId: depositToken.providerId || 'unknown',
     });
 
     steps.push({
@@ -401,7 +403,7 @@ export abstract class UniswapLikeStrategy<
     console.log('fetchDepositQuoteAggregator::swapInAmounts', bigNumberToStringDeep(swapInAmounts));
 
     // Swap quotes
-    const quoteRequestsPerLpToken: QuoteRequest[] = lpTokens.map((lpTokenN, i) =>
+    const quoteRequestsPerLpToken: (QuoteRequest | undefined)[] = lpTokens.map((lpTokenN, i) =>
       isTokenEqual(lpTokenN, input.token)
         ? undefined
         : {
@@ -424,11 +426,12 @@ export abstract class UniswapLikeStrategy<
 
     const quotePerLpToken = quotesPerLpToken.map((quotes, i) => {
       if (quotes === undefined) {
-        if (quoteRequestsPerLpToken[i] === undefined) {
+        const quoteRequest = quoteRequestsPerLpToken[i];
+        if (quoteRequest === undefined) {
           return undefined;
         } else {
           throw new Error(
-            `No quotes found for ${quoteRequestsPerLpToken[i].fromToken.symbol} -> ${quoteRequestsPerLpToken[i].toToken.symbol}`
+            `No quotes found for ${quoteRequest.fromToken.symbol} -> ${quoteRequest.toToken.symbol}`
           );
         }
       }
@@ -696,10 +699,11 @@ export abstract class UniswapLikeStrategy<
       const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
       const buildQuote = quote.steps.find(isZapQuoteStepBuild);
 
-      // Swaps
-      if (swapQuotes.length == 0 || swapQuotes.length > 2) {
-        throw new Error('Invalid swap quote');
+      if (!buildQuote || swapQuotes.length == 0 || swapQuotes.length > 2) {
+        throw new Error('Invalid quote');
       }
+
+      // Swaps
       const insertBalance = allTokensAreDistinct(
         swapQuotes
           .map(quoteStep => quoteStep.fromToken)
@@ -876,9 +880,7 @@ export abstract class UniswapLikeStrategy<
     inputs: InputTokenAmount[],
     option: UniswapLikeWithdrawOption<AmmEntityUniswapLike>
   ): Promise<UniswapLikeWithdrawQuote> {
-    onlyInputCount(inputs, 1);
-
-    const input = first(inputs);
+    const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Quote called with 0 input amount');
     }
@@ -988,10 +990,7 @@ export abstract class UniswapLikeStrategy<
     pool: IUniswapLikePool
   ): Promise<PartialWithdrawQuote> {
     const { wantedOutputs, depositToken } = option;
-    if (wantedOutputs.length !== 1) {
-      throw new Error('Can only swap to 1 output token');
-    }
-    const wantedOutput = first(wantedOutputs);
+    const wantedOutput = onlyOneToken(wantedOutputs);
     const isWantedOutputNative = isTokenNative(wantedOutput);
     const lpOutput = isWantedOutputNative ? this.wnative : wantedOutput;
     if (!this.lpTokens.some(token => isTokenEqual(token, lpOutput))) {
@@ -1004,12 +1003,18 @@ export abstract class UniswapLikeStrategy<
     const swapTokenAmount = breakOutputs.find(
       tokenAmount => !isTokenEqual(tokenAmount.token, lpOutput)
     );
+    if (!swapTokenAmount) {
+      throw new Error('Swap token is not one of the break lp outputs');
+    }
     const swapInAmountWei = tokenAmountToWei(swapTokenAmount);
     const swap = pool.swap(swapInAmountWei, swapTokenAmount.token.address, false);
     const swapOutAmount = fromWei(swap.amountOut, lpOutput.decimals);
     const keepTokenAmount = breakOutputs.find(tokenAmount =>
       isTokenEqual(tokenAmount.token, lpOutput)
     );
+    if (!keepTokenAmount) {
+      throw new Error('Wanted token is not one of the break lp outputs');
+    }
 
     steps.push({
       type: 'swap',
@@ -1018,7 +1023,7 @@ export abstract class UniswapLikeStrategy<
       toToken: lpOutput,
       toAmount: swapOutAmount,
       via: 'pool',
-      providerId: depositToken.providerId,
+      providerId: depositToken.providerId || 'unknown',
     });
 
     const outputAmount = keepTokenAmount.amount.plus(swapOutAmount);
@@ -1070,13 +1075,8 @@ export abstract class UniswapLikeStrategy<
   ): Promise<PartialWithdrawQuote> {
     const { wantedOutputs } = option;
     const { swapAggregator, getState } = this.helpers;
-
-    if (wantedOutputs.length !== 1) {
-      throw new Error('Can only swap to 1 output token');
-    }
-
     const state = getState();
-    const wantedOutput = first(wantedOutputs);
+    const wantedOutput = onlyOneToken(wantedOutputs);
     const needsSwap = breakOutputs.map(
       tokenAmount => !isTokenEqual(wantedOutput, tokenAmount.token)
     );
@@ -1154,6 +1154,10 @@ export abstract class UniswapLikeStrategy<
       const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
       const splitQuote = quote.steps.find(isZapQuoteStepSplit);
 
+      if (!withdrawQuote || !splitQuote) {
+        throw new Error('Invalid withdraw quote');
+      }
+
       // Step 1. Withdraw from vault
       const vaultWithdraw = await vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
@@ -1162,7 +1166,7 @@ export abstract class UniswapLikeStrategy<
         throw new Error('Withdraw output count mismatch');
       }
 
-      const withdrawOutput = first(vaultWithdraw.outputs);
+      const withdrawOutput = first(vaultWithdraw.outputs)!; // we checked length above
       if (!isTokenEqual(withdrawOutput.token, splitQuote.inputToken)) {
         throw new Error('Withdraw output token mismatch');
       }

@@ -2,9 +2,9 @@ import BigNumber from 'bignumber.js';
 import { uniqBy } from 'lodash-es';
 import type { Action } from 'redux';
 import boostAbi from '../../../config/abi/boost.json';
-import erc20Abi from '../../../config/abi/erc20.json';
-import vaultAbi from '../../../config/abi/vault.json';
-import minterAbi from '../../../config/abi/minter.json';
+import { ERC20Abi } from '../../../config/abi/ERC20Abi';
+import { StandardVaultAbi } from '../../../config/abi/StandardVaultAbi';
+import { MinterAbi } from '../../../config/abi/MinterAbi';
 import type { BeefyState, BeefyThunk } from '../../../redux-types';
 import { getOneInchApi, getWalletConnectionApi } from '../apis/instances';
 import type { BoostEntity } from '../entities/boost';
@@ -36,7 +36,7 @@ import {
   selectErc20TokenByAddress,
   selectIsTokenLoaded,
   selectTokenByAddress,
-  selectTokenByAddressOrNull,
+  selectTokenByAddressOrUndefined,
   selectTokenById,
 } from '../selectors/tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
@@ -53,7 +53,6 @@ import { selectChainById } from '../selectors/chains';
 import { BIG_ZERO, toWei, toWeiString } from '../../../helpers/big-number';
 import { updateSteps } from './stepper';
 import { StepContent, stepperActions } from '../reducers/wallet/stepper';
-import { BeefyCommonBridgeAbi, BeefyZapRouterAbi } from '../../../config/abi';
 import type { PromiEvent } from 'web3-core';
 import type { ThunkDispatch } from 'redux-thunk';
 import { selectOneInchSwapAggregatorForChain, selectZapByChainId } from '../selectors/zap';
@@ -66,6 +65,9 @@ import type { MigrationConfig } from '../reducers/wallet/migration';
 import type { IBridgeQuote } from '../apis/bridge/providers/provider-types';
 import type { BeefyAnyBridgeConfig } from '../apis/config-types';
 import { transactActions } from '../reducers/wallet/transact';
+import { viemToWeb3Abi } from '../../../helpers/web3';
+import { BeefyCommonBridgeAbi } from '../../../config/abi/BeefyCommonBridgeAbi';
+import { BeefyZapRouterAbi } from '../../../config/abi/BeefyZapRouterAbi';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -165,7 +167,7 @@ function txMined(
       );
     }
 
-    if (migrationId) {
+    if (migrationId && vaultId && walletAddress) {
       dispatch(migratorUpdate({ vaultId, migrationId, walletAddress }));
     }
 
@@ -202,7 +204,7 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
     const native = selectChainNativeToken(state, token.chainId);
 
-    const contract = new web3.eth.Contract(erc20Abi as AbiItem[], token.address);
+    const contract = new web3.eth.Contract(viemToWeb3Abi(ERC20Abi), token.address);
     const maxAmount = web3.utils.toWei('8000000000', 'ether');
     const chain = selectChainById(state, token.chainId);
     const gasPrices = await getGasPriceOptions(chain);
@@ -281,7 +283,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     const native = selectChainNativeToken(state, vault.chainId);
     const isNativeToken = depositToken.id === native.id;
     const contractAddr = mooToken.address;
-    const contract = new web3.eth.Contract(vaultAbi as AbiItem[], contractAddr);
+    const contract = new web3.eth.Contract(viemToWeb3Abi(StandardVaultAbi), contractAddr);
     const rawAmount = toWei(amount, depositToken.decimals);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
@@ -354,7 +356,10 @@ const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) =
 
     const native = selectChainNativeToken(state, vault.chainId);
     const isNativeToken = depositToken.id === native.id;
-    const contract = new web3.eth.Contract(vaultAbi as AbiItem[], vault.earnContractAddress);
+    const contract = new web3.eth.Contract(
+      viemToWeb3Abi(StandardVaultAbi),
+      vault.earnContractAddress
+    );
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
@@ -752,7 +757,7 @@ const mintDeposit = (
     const gasToken = selectChainNativeToken(state, chainId);
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(minterAbi as AbiItem[], minterAddress);
+    const contract = new web3.eth.Contract(viemToWeb3Abi(MinterAbi), minterAddress);
     const chain = selectChainById(state, chainId);
     const gasPrices = await getGasPriceOptions(chain);
     const amountInWei = toWei(amount, payToken.decimals);
@@ -863,7 +868,7 @@ const burnWithdraw = (
     const gasToken = selectChainNativeToken(state, chainId);
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(minterAbi as AbiItem[], contractAddr);
+    const contract = new web3.eth.Contract(viemToWeb3Abi(MinterAbi), contractAddr);
     const chain = selectChainById(state, chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
@@ -901,7 +906,11 @@ const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => 
     }
 
     const { input, output, fee, config } = quote;
-    const viaBeefyBridgeAddress = config.chains[input.token.chainId].bridge;
+    const fromChainConfig = config.chains[input.token.chainId];
+    if (!fromChainConfig) {
+      throw new Error(`No config found for chain ${input.token.chainId}`);
+    }
+    const viaBeefyBridgeAddress = fromChainConfig.bridge;
     const fromChainId = input.token.chainId;
     const toChainId = output.token.chainId;
     const fromChain = selectChainById(state, fromChainId);
@@ -917,7 +926,10 @@ const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => 
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(BeefyCommonBridgeAbi, viaBeefyBridgeAddress);
+    const contract = new web3.eth.Contract(
+      viemToWeb3Abi(BeefyCommonBridgeAbi),
+      viaBeefyBridgeAddress
+    );
     const gasPrices = await getGasPriceOptions(fromChain);
 
     txWallet(dispatch);
@@ -962,6 +974,9 @@ const zapExecuteOrder = (
     const vault = selectVaultById(state, vaultId);
     const chain = selectChainById(state, vault.chainId);
     const zap = selectZapByChainId(state, vault.chainId);
+    if (!zap) {
+      throw new Error(`No zap found for chain ${chain.id}`);
+    }
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     const order = {
@@ -976,7 +991,7 @@ const zapExecuteOrder = (
     const gasPrices = await getGasPriceOptions(chain);
     const nativeInput = order.inputs.find(input => input.token === ZERO_ADDRESS);
 
-    const contract = new web3.eth.Contract(BeefyZapRouterAbi, zap.router);
+    const contract = new web3.eth.Contract(viemToWeb3Abi(BeefyZapRouterAbi), zap.router);
     const options = {
       ...gasPrices,
       value: nativeInput ? nativeInput.amount : '0',
@@ -1033,9 +1048,9 @@ export const walletActions = {
   bridgeViaCommonInterface,
 };
 
-export function captureWalletErrors<ReturnType>(
-  func: BeefyThunk<Promise<ReturnType>>
-): BeefyThunk<Promise<ReturnType>> {
+export function captureWalletErrors(
+  func: BeefyThunk<Promise<unknown>>
+): BeefyThunk<Promise<unknown>> {
   return async (dispatch, getState, extraArgument) => {
     try {
       return await func(dispatch, getState, extraArgument);
@@ -1045,12 +1060,7 @@ export function captureWalletErrors<ReturnType>(
           ? { message: errorToString(error.getInnerError()), friendlyMessage: error.message }
           : { message: errorToString(error) };
 
-      dispatch(
-        createWalletActionErrorAction(txError, {
-          amount: BIG_ZERO,
-          token: null,
-        })
-      );
+      dispatch(createWalletActionErrorAction(txError, undefined));
       dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
     }
   };
@@ -1109,14 +1119,14 @@ function selectZapTokensToRefresh(
   const tokens: TokenEntity[] = selectVaultTokensToRefresh(state, vault);
 
   for (const { token: tokenAddress } of order.inputs) {
-    const token = selectTokenByAddressOrNull(state, vault.chainId, tokenAddress);
+    const token = selectTokenByAddressOrUndefined(state, vault.chainId, tokenAddress);
     if (token) {
       tokens.push(token);
     }
   }
 
   for (const { token: tokenAddress } of order.outputs) {
-    const token = selectTokenByAddressOrNull(state, vault.chainId, tokenAddress);
+    const token = selectTokenByAddressOrUndefined(state, vault.chainId, tokenAddress);
     if (token) {
       tokens.push(token);
     }

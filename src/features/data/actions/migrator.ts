@@ -8,7 +8,7 @@ import type { MigrationConfig } from '../reducers/wallet/migration';
 
 export interface FulfilledAllMigratorsPayload {
   byChainId: {
-    [chainId: ChainEntity['id']]: MigrationConfig[];
+    [chainId in ChainEntity['id']]?: MigrationConfig[];
   };
   state: BeefyState;
 }

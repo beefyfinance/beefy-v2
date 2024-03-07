@@ -16,6 +16,7 @@ import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types';
 import type { Draft } from 'immer';
 import { keyBy, pick } from 'lodash-es';
 import type BigNumber from 'bignumber.js';
+import { keys } from '../../../../helpers/object';
 
 export enum FormStep {
   Loading = 1,
@@ -40,7 +41,7 @@ export type BridgeValidateState = {
 
 export type BridgeQuoteState = {
   status: 'idle' | 'pending' | 'fulfilled' | 'rejected';
-  selected: string | null;
+  selected: string | undefined;
   quotes: {
     allIds: IBridgeQuote<BeefyAnyBridgeConfig>['id'][];
     byId: Partial<
@@ -53,9 +54,9 @@ export type BridgeQuoteState = {
       Record<IBridgeQuote<BeefyAnyBridgeConfig>['id'], IBridgeQuote<BeefyAnyBridgeConfig>>
     >;
   };
-  error: SerializedError | null;
+  error: SerializedError | undefined;
   limitError?: { current: BigNumber; max: BigNumber; canWait: boolean };
-  requestId: string | null;
+  requestId: string | undefined;
 };
 
 export type BridgeConfirmState = {
@@ -72,26 +73,25 @@ export type BridgesMap = {
 };
 
 export type BridgeState = {
-  source: ChainEntity['id'];
-  tokens: Record<ChainEntity['id'], string>;
+  source: ChainEntity['id'] | undefined;
+  tokens: Partial<Record<ChainEntity['id'], string>>;
   destinations: {
     allChains: ChainEntity['id'][];
-    chainToAddress: Record<ChainEntity['id'], string>;
-    chainToChain: Record<ChainEntity['id'], ChainEntity['id'][]>;
-    chainToBridges: Record<
-      ChainEntity['id'],
-      Record<ChainEntity['id'], BeefyAnyBridgeConfig['id'][]>
+    chainToAddress: Partial<Record<ChainEntity['id'], string>>;
+    chainToChain: Partial<Record<ChainEntity['id'], ChainEntity['id'][]>>;
+    chainToBridges: Partial<
+      Record<ChainEntity['id'], Record<ChainEntity['id'], BeefyAnyBridgeConfig['id'][]>>
     >;
   };
   bridges: BridgesMap | undefined;
-  form: BridgeFormState;
+  form: BridgeFormState | undefined;
   validate: BridgeValidateState;
   quote: BridgeQuoteState;
   confirm: BridgeConfirmState;
 };
 
 const initialBridgeState: BridgeState = {
-  source: null,
+  source: undefined,
   tokens: {},
   destinations: {
     allChains: [],
@@ -100,23 +100,14 @@ const initialBridgeState: BridgeState = {
     chainToBridges: {},
   },
   bridges: undefined,
-  form: {
-    step: FormStep.Loading,
-    from: null,
-    to: null,
-    input: {
-      amount: BIG_ZERO,
-      max: false,
-      token: null,
-    },
-  },
+  form: undefined,
   validate: {
     status: 'idle',
     requestId: undefined,
   },
   quote: {
     status: 'idle',
-    selected: null,
+    selected: undefined,
     quotes: {
       allIds: [],
       byId: {},
@@ -125,8 +116,8 @@ const initialBridgeState: BridgeState = {
       allIds: [],
       byId: {},
     },
-    error: null,
-    requestId: null,
+    error: undefined,
+    requestId: undefined,
   },
   confirm: {
     status: 'idle',
@@ -142,9 +133,15 @@ export const bridgeSlice = createSlice({
   initialState: initialBridgeState,
   reducers: {
     setStep(sliceState, action: PayloadAction<{ step: FormStep }>) {
+      if (!sliceState.form) {
+        throw new Error(`Bridge form not initialized.`);
+      }
       sliceState.form.step = action.payload.step;
     },
     reverseDirection(sliceState) {
+      if (!sliceState.form) {
+        throw new Error(`Bridge form not initialized.`);
+      }
       const { from, to } = sliceState.form;
       sliceState.form.to = from;
       sliceState.form.from = to;
@@ -154,6 +151,9 @@ export const bridgeSlice = createSlice({
       resetQuotes(sliceState);
     },
     setFromChain(sliceState, action: PayloadAction<{ chainId: ChainEntity['id'] }>) {
+      if (!sliceState.form) {
+        throw new Error(`Bridge form not initialized.`);
+      }
       sliceState.form.from = action.payload.chainId;
       sliceState.form.input.amount = BIG_ZERO;
       sliceState.form.input.max = false;
@@ -170,6 +170,9 @@ export const bridgeSlice = createSlice({
       resetQuotes(sliceState);
     },
     setToChain(sliceState, action: PayloadAction<{ chainId: ChainEntity['id'] }>) {
+      if (!sliceState.form) {
+        throw new Error(`Bridge form not initialized.`);
+      }
       sliceState.form.to = action.payload.chainId;
       sliceState.form.input.amount = BIG_ZERO;
       sliceState.form.input.max = false;
@@ -186,6 +189,9 @@ export const bridgeSlice = createSlice({
       resetQuotes(sliceState);
     },
     setInputAmount(sliceState, action: PayloadAction<InputTokenAmount<TokenErc20>>) {
+      if (!sliceState.form) {
+        throw new Error(`Bridge form not initialized.`);
+      }
       if (!sliceState.form.input.amount.isEqualTo(action.payload.amount)) {
         sliceState.form.input.amount = action.payload.amount;
       }
@@ -202,13 +208,16 @@ export const bridgeSlice = createSlice({
       if (quoteId in sliceState.quote.quotes.byId) {
         sliceState.quote.selected = action.payload.quoteId;
       } else {
-        sliceState.quote.selected = null;
+        sliceState.quote.selected = undefined;
       }
     },
     unselectQuote(sliceState) {
-      sliceState.quote.selected = null;
+      sliceState.quote.selected = undefined;
     },
     restart(sliceState) {
+      if (!sliceState.form) {
+        throw new Error(`Bridge form not initialized.`);
+      }
       resetQuotes(sliceState);
       sliceState.form.input.amount = BIG_ZERO;
       sliceState.form.step = FormStep.Preview;
@@ -218,17 +227,19 @@ export const bridgeSlice = createSlice({
     builder
       .addCase(fetchBridgeConfig.fulfilled, (sliceState, action) => {
         const { config } = action.payload;
-        const allChains = Object.keys(config.tokens);
+        const allChains = keys(config.tokens);
         const chainToBridges = allChains.reduce((allMap, fromChainId) => {
           allMap[fromChainId] = allChains.reduce((chainMap, toChainId) => {
             chainMap[toChainId] = config.bridges
               .filter(bridge => {
+                const fromChain = bridge.chains[fromChainId];
+                const toChain = bridge.chains[toChainId];
                 return (
                   fromChainId !== toChainId &&
-                  fromChainId in bridge.chains &&
-                  !bridge.chains[fromChainId].sendDisabled &&
-                  toChainId in bridge.chains &&
-                  !bridge.chains[toChainId].receiveDisabled
+                  fromChain &&
+                  !fromChain.sendDisabled &&
+                  toChain &&
+                  !toChain.receiveDisabled
                 );
               })
               .map(bridge => bridge.id);
@@ -290,15 +301,15 @@ export const bridgeSlice = createSlice({
         sliceState.quote.status = 'fulfilled';
         setQuotes(sliceState, 'quotes', action.payload.quotes);
         setQuotes(sliceState, 'limitedQuotes', action.payload.limitedQuotes);
-        sliceState.quote.selected = action.payload.quotes[0]?.id || null;
-        sliceState.quote.error = null;
+        sliceState.quote.selected = action.payload.quotes[0]?.id || undefined;
+        sliceState.quote.error = undefined;
       })
       .addCase(quoteBridgeForm.rejected, (sliceState, action) => {
         if (sliceState.quote.requestId !== action.meta.requestId) {
           return;
         }
         sliceState.quote.status = 'rejected';
-        sliceState.quote.selected = null;
+        sliceState.quote.selected = undefined;
         sliceState.quote.error = action.error;
         if (action.meta.rejectedWithValue) {
           sliceState.quote.error = {
@@ -311,9 +322,12 @@ export const bridgeSlice = createSlice({
         }
       })
       .addCase(confirmBridgeForm.pending, (sliceState, action) => {
+        if (!sliceState.form) {
+          throw new Error(`Bridge form not initialized.`);
+        }
         sliceState.confirm.status = 'pending';
         sliceState.confirm.requestId = action.meta.requestId;
-        sliceState.confirm.error = null;
+        sliceState.confirm.error = undefined;
         sliceState.form.step = FormStep.Confirm;
       })
       .addCase(confirmBridgeForm.fulfilled, (sliceState, action) => {
@@ -322,17 +336,20 @@ export const bridgeSlice = createSlice({
         }
         sliceState.confirm.status = 'fulfilled';
         sliceState.confirm.quote = action.payload.quote;
-        sliceState.confirm.error = null;
+        sliceState.confirm.error = undefined;
       })
       .addCase(confirmBridgeForm.rejected, (sliceState, action) => {
         if (sliceState.confirm.requestId !== action.meta.requestId) {
           return;
         }
         sliceState.confirm.status = 'rejected';
-        sliceState.confirm.quote = null;
+        sliceState.confirm.quote = undefined;
         sliceState.confirm.error = action.error;
       })
       .addCase(performBridge.fulfilled, (sliceState, _action) => {
+        if (!sliceState.form) {
+          throw new Error(`Bridge form not initialized.`);
+        }
         sliceState.form.step = FormStep.Transaction;
       });
   },
@@ -355,9 +372,9 @@ function resetQuotes(
   status: BridgeState['quote']['status'] = 'idle'
 ) {
   sliceState.quote.status = status;
-  sliceState.quote.requestId = null;
-  sliceState.quote.selected = null;
-  sliceState.quote.error = null;
+  sliceState.quote.requestId = undefined;
+  sliceState.quote.selected = undefined;
+  sliceState.quote.error = undefined;
 }
 
 export const bridgeActions = bridgeSlice.actions;

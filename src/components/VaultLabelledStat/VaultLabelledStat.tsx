@@ -36,7 +36,7 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
 }) {
   const classes = useStyles();
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
-  const handleTooltipClick = useCallback<TooltipProps['onTriggerClick']>(e => {
+  const handleTooltipClick = useCallback<Exclude<TooltipProps['onTriggerClick'], undefined>>(e => {
     // don't bubble up to the link on whole row
     e.preventDefault();
   }, []);

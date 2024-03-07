@@ -1,6 +1,14 @@
 import { makeStyles } from '@material-ui/styles';
 import { useTranslation } from 'react-i18next';
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  memo,
+  type MutableRefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { debounce } from 'lodash-es';
 import { useInView } from 'react-intersection-observer';
 import { Section } from '../../../../components/Section';
@@ -75,7 +83,7 @@ export const VirtualList = memo<VirtualListProps>(function VirtualList({ vaults,
   // Render more vaults on intersection (won't trigger again until placeholder is {75 * 2}px off screen)
   const onIntersection = useCallback(
     inView => {
-      if (inView && remainingVaults > 0) {
+      if (inView && remainingVaults > 0 && bottomRef.current) {
         const batchSize =
           minBatchSize +
           Math.ceil((window.scrollY - bottomRef.current.offsetTop + window.innerHeight) / 75);
@@ -132,12 +140,12 @@ export const VirtualList = memo<VirtualListProps>(function VirtualList({ vaults,
 
   return (
     <>
-      <div className={classes.container} ref={containerRef}>
+      <div className={classes.container} ref={containerRef as MutableRefObject<HTMLDivElement>}>
         {renderVaultIds.map(vault => {
           return <Vault address={address} key={vault.id} vaultId={vault.id} />;
         })}
       </div>
-      <div ref={bottomRef} />
+      <div ref={bottomRef as MutableRefObject<HTMLDivElement>} />
       <div ref={placeholderRef} />
     </>
   );

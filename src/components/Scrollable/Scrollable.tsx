@@ -84,7 +84,7 @@ export const Scrollable = memo<ScrollableProps>(function Scrollable({
     right: 0,
     bottom: 0,
   });
-  const handleUpdate = useCallback<ScrollbarProps['onUpdate']>(
+  const handleUpdate = useCallback<Exclude<ScrollbarProps['onUpdate'], undefined>>(
     ({ scrollTop, scrollHeight, clientHeight, scrollLeft, scrollWidth, clientWidth }) => {
       const bottomScrollTop = scrollHeight - clientHeight;
       const rightScrollLeft = scrollWidth - clientWidth;

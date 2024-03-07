@@ -11,7 +11,7 @@ const useStyles = makeStyles(styles);
 
 export const ConnectionStatus = memo(function ConnectionStatus() {
   const classes = useStyles();
-  const anchorEl = useRef();
+  const anchorEl = useRef<HTMLDivElement>(null);
   return (
     <div ref={anchorEl} className={classes.container}>
       <NetworkStatus anchorEl={anchorEl} />
