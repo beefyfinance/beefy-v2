@@ -101,6 +101,8 @@ export class TransactApi implements ITransactApi {
       })
     );
     console.log('fetchDepositQuotesFor strategies:', strategies);
+    console.log('fetchDepositQuotesFor amounts:');
+    console.log(amounts);
 
     // Get quotes
     const quotes = await Promise.allSettled(

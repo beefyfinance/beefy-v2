@@ -1,8 +1,8 @@
 [
   {
-    "id": "uniswap-cow-eth-usdc",
-    "name": "ETH-USDC",
-    "token": "ETH-USDC",
+    "id": "uniswap-cow-eth-usdt",
+    "name": "ETH-USDT",
+    "token": "ETH-USDT",
     "tokenAddress": "0x641C00A822e8b671738d32a431a4Fb6074E5c79d",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
@@ -14,7 +14,7 @@
     "status": "active",
     "createdAt": 1708939193,
     "platformId": "beefy",
-    "assets": ["WETH", "USDC"],
+    "assets": ["WETH", "USDT"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",

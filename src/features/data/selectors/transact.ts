@@ -108,9 +108,17 @@ export const selectTransactDepositInputAmountExceedsBalance = (state: BeefyState
 };
 
 export const selectTransactDepositInputAmountsExceedBalances = (state: BeefyState) => {
-  // const selection = selectTransactSelected(state);
-  // const depositTokens = selection
-  return state.ui ? false : false;
+  const selection = selectTransactSelected(state);
+  const depositTokens = selection.tokens;
+  const inputAmounts = selectTransactDualInputAmounts(state);
+  const userBalances = depositTokens.map(token =>
+    selectUserBalanceOfToken(state, token.chainId, token.address)
+  );
+  console.log(
+    'selectTransactDepositInputAmountsExceedBalances:',
+    depositTokens.every((_, index) => inputAmounts[index].lte(userBalances[index]))
+  );
+  return depositTokens.some((_, index) => inputAmounts[index].gt(userBalances[index]));
 };
 
 export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyState) => {

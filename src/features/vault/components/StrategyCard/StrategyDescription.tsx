@@ -39,6 +39,8 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
   const chainNativeToken = chain.walletSettings.nativeCurrency.symbol;
 
   let i18nKey = `StrategyDescription-${vault.strategyTypeId}`;
+  console.log('StrategyDescription i18nKey:', i18nKey);
+
   if (!i18n.exists(i18nKey, { ns: 'risks' })) {
     i18nKey = 'StrategyDescription-default';
   }
