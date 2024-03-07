@@ -242,7 +242,7 @@ export const selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged 
   }
 
   // account for bridged mooToken
-  if (vault.bridged) {
+  if (!isGovVault(vault) && vault.bridged) {
     for (const [chainId, tokenAddress] of entries(vault.bridged)) {
       const bridgedMooToken = selectUserBalanceOfToken(state, chainId, tokenAddress, walletAddress);
       mooTokenBalance = mooTokenBalance.plus(bridgedMooToken);
@@ -319,7 +319,8 @@ export const selectStandardVaultUserBalanceInDepositTokenBreakdown = (
   }
 
   // bridged mooToken
-  if (vault.bridged) {
+
+  if (!isGovVault(vault) && vault.bridged) {
     for (const [chainId, tokenAddress] of entries(vault.bridged)) {
       const bridgedMooToken = selectUserBalanceOfToken(state, chainId, tokenAddress, walletAddress);
       if (bridgedMooToken.gt(BIG_ZERO)) {

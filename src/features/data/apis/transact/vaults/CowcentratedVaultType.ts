@@ -29,7 +29,13 @@ import type {
   TokenAmount,
   TransactQuote,
 } from '../transact-types';
-import type { ICowcentratedVaultType } from './IVaultType';
+import type {
+  ICowcentratedVaultType,
+  VaultDepositRequest,
+  VaultDepositResponse,
+  VaultWithdrawRequest,
+  VaultWithdrawResponse,
+} from './IVaultType';
 import { selectFeesByVaultId } from '../../../selectors/fees';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../reducers/wallet/stepper';
@@ -164,7 +170,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
 
   protected calculateDepositFee(inputs: TokenAmount[], state: BeefyState): BigNumber {
     const { deposit: depositFeePercent } = selectFeesByVaultId(state, this.vault.id);
-    return depositFeePercent > 0
+    return depositFeePercent && depositFeePercent > 0
       ? inputs
           .map(input =>
             input.amount
@@ -209,7 +215,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
   ): Promise<CowcentratedVaultWithdrawQuote> {
     onlyInputCount(inputs, 1);
 
-    const input = first(inputs);
+    const input = inputs[0];
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Quote called with 0 input amount');
     }
@@ -219,7 +225,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     const web3 = await getWeb3Instance(chain);
     const multicall = new MultiCall(web3, chain.multicallAddress);
     const { withdrawPreviewAmounts } = await getCowcentratedVaultWithdrawSimulationAmount(
-      input,
+      inputs[0],
       this.vault,
       state,
       web3,
@@ -254,9 +260,17 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     return {
       step: 'withdraw',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-      action: walletActions.v3Withdraw(this.vault, input.amount, input.max),
+      action: walletActions.v3Withdraw(this.vault, input?.amount ?? BIG_ZERO, input?.max ?? false),
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };
+  }
+
+  async fetchZapDeposit(_request: VaultDepositRequest): Promise<VaultDepositResponse> {
+    throw new Error('Cowcentrated vaults do not support zap.');
+  }
+
+  async fetchZapWithdraw(_request: VaultWithdrawRequest): Promise<VaultWithdrawResponse> {
+    throw new Error('Cowcentrated vaults do not support zap.');
   }
 }

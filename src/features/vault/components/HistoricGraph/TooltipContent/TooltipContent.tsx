@@ -17,7 +17,7 @@ export type TooltipContentProps = TooltipProps<number, string> & {
   toggles: LineTogglesState;
   valueFormatter: (value: number) => string;
   avg: number;
-  vaultType: 'standard' | 'gov';
+  vaultType: 'standard' | 'gov' | 'cowcentrated';
 };
 
 export const TooltipContent = memo<TooltipContentProps>(function TooltipContent({

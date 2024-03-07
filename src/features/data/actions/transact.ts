@@ -232,7 +232,7 @@ export const transactFetchQuotes = createAsyncThunk<
     throw new Error(`No selectionId selected`);
   }
 
-  console.log('fetchQuotes', selectionId, mode, inputAmount.toString(10), inputMax.toString(10));
+  console.log('fetchQuotes', selectionId, mode, inputAmount.toString(10), inputMax);
 
   const chainId = selectTransactSelectedChainId(state);
   if (!chainId) {
