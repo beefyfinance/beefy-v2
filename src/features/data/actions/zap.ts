@@ -9,6 +9,7 @@ import type { VaultEntity } from '../entities/vault';
 import type { ZapAggregatorTokenSupportResponse } from '../apis/beefy/beefy-api';
 import { featureFlag_kyberSwapSupport, featureFlag_oneInchSupport } from '../utils/feature-flags';
 import type { ChainEntity } from '../entities/chain';
+import { keys } from '../../../helpers/object';
 
 interface FetchAllZapsFulfilledPayload {
   zaps: ZapConfig[];
@@ -50,7 +51,7 @@ export const calculateZapAvailabilityAction = createAsyncThunk<
   { state: BeefyState }
 >('zap/calculateZapAvailability', async (_, { getState }) => {
   const state = getState();
-  const chainIds = Object.keys(state.entities.zaps.zaps.byChainId);
+  const chainIds = keys(state.entities.zaps.zaps.byChainId);
   const vaults = chainIds
     .flatMap(chainId => selectAllStandardVaultsByChainId(state, chainId))
     .filter(v => v.zaps?.length > 0);
@@ -105,7 +106,7 @@ export const fetchZapAggregatorTokenSupportAction = createAsyncThunk<
 
 export interface FetchZapAmmsFulfilledPayload {
   byChainId: {
-    [chainId: ChainEntity['id']]: AmmConfig[];
+    [chainId in ChainEntity['id']]?: AmmConfig[];
   };
 }
 

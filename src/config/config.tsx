@@ -1,12 +1,14 @@
 import type { ChainConfig } from '../features/data/apis/config-types';
+import type { ChainEntity } from '../features/data/entities/chain';
 
-export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
+export const config = {
   ethereum: {
     name: 'Ethereum',
     chainId: 1,
     rpc: ['https://rpc.ankr.com/eth'],
     explorerUrl: 'https://etherscan.io',
     multicallAddress: '0x9dA9f3C6c45F1160b53D395b0A982aEEE1D212fE',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x00d3e26d17aEA6f5c7d2f442aAc68E679E454517',
     providerName: 'Ethereum',
     walletSettings: {
@@ -72,6 +74,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://polygon-rpc.com'],
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x244908D9A21B143911D531cD1D37575D63da4D87',
     providerName: 'polygon',
     walletSettings: {
@@ -145,6 +148,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     ],
     explorerUrl: 'https://bscscan.com',
     multicallAddress: '0xB94858b0bB5437498F5453A16039337e5Fdc269C',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x72580937d2B5563792793e72200fC8942a4045D6',
     providerName: 'binance',
     walletSettings: {
@@ -204,6 +208,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://mainnet.optimism.io'],
     explorerUrl: 'https://optimistic.etherscan.io',
     multicallAddress: '0x820ae7bf39792d7ce7befc70b0172f4d267f1938',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x88D537a86e09B753361D70448d60D3dC2D75883d',
     providerName: 'Optimism',
     walletSettings: {
@@ -260,6 +265,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://rpc.ankr.com/fantom'],
     explorerUrl: 'https://ftmscan.com',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xdd54c53d169aCFC53cAf08F1778A492Ff5Aea258',
     providerName: 'fantom',
     walletSettings: {
@@ -311,6 +317,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://arb1.arbitrum.io/rpc'],
     explorerUrl: 'https://arbiscan.io',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x332f4079E042A5764060E24C72DE765c8Ea1BC95',
     providerName: 'Arbitrum',
     walletSettings: {
@@ -371,6 +378,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://rpc.ankr.com/avalanche'],
     explorerUrl: 'https://cchain.explorer.avax.network',
     multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x911E556Afd49468429072A3677f895B3cE0AcCcB',
     providerName: 'avalanche',
     walletSettings: {
@@ -423,6 +431,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://evm.cronos.org'],
     explorerUrl: 'https://cronoscan.com',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xc8872773ADcC8264eEBe5E40D97943434264e973',
     providerName: 'Cronos',
     walletSettings: {
@@ -450,6 +459,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://rpc.api.moonbeam.network'],
     explorerUrl: 'https://moonscan.io',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xA4afDf57663951C6204E5110EE1741e8dfb0F3ec',
     providerName: 'Moonbeam',
     walletSettings: {
@@ -491,6 +501,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://rpc.api.moonriver.moonbeam.network/'],
     explorerUrl: 'https://moonriver.moonscan.io',
     multicallAddress: '0x7f6fE34C51d5352A0CF375C0Fbe03bD19eCD8460',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xe8EeDE3a063AdF991096E317e916d9AF56cb11B2',
     providerName: 'Moonriver',
     walletSettings: {
@@ -518,6 +529,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://andromeda.metis.io/?owner=1088'],
     explorerUrl: 'https://andromeda-explorer.metis.io',
     multicallAddress: '0x4fd2e1c2395dc088F36cab06DCe47F88A912fC85',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xDc34b7e0f1F1512f088D1854a54EAFfD4dCaC7Bd',
     providerName: 'Metis',
     walletSettings: {
@@ -542,6 +554,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://rpc.fuse.io'],
     explorerUrl: 'https://explorer.fuse.io',
     multicallAddress: '0x4f22BD7CE44b0e0B2681A28e300A7285319de3a0',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x504A5F167BE8014b1d5CBDd993f3Bb34F95E70B2',
     providerName: 'Fuse',
     walletSettings: {
@@ -566,6 +579,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://evm.kava.io'],
     explorerUrl: 'https://explorer.kava.io',
     multicallAddress: '0x13C6bCC2411861A31dcDC2f990ddbe2325482222',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x41D44B276904561Ac51855159516FD4cB2c90968',
     providerName: 'Kava',
     walletSettings: {
@@ -590,6 +604,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://mainnode.plexnode.org:8545'],
     explorerUrl: 'https://tuber.build',
     multicallAddress: '0xc34b9c9DBB39Be0Ef850170127A7b4283484f804',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x7c7B7FbccA5699175003ecbe1B41E79F40385469',
     providerName: 'Canto',
     walletSettings: {
@@ -615,6 +630,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     explorerUrl: 'https://explorer.zksync.io',
     explorerTokenUrlTemplate: 'https://explorer.zksync.io/address/{address}',
     multicallAddress: '0x1E9231Cc9782D9F8e213736F6dAC00020D8271cB',
+    multicall3Address: '0x9A04a9e1d67151AB1E742E6D8965e0602410f91d',
     appMulticallContractAddress: '0x5479d2A10e60110F4728d910b5321Af4B78c30E4',
     providerName: 'zkSync',
     walletSettings: {
@@ -639,6 +655,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://zkevm-rpc.com'],
     explorerUrl: 'https://zkevm.polygonscan.com/',
     multicallAddress: '0xD19ab62F83380908D65E344567378cF104cE46c2',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x2ec5d5e9aaf3c3f56eBeF2fC46A5af9e42810b41',
     providerName: 'zkEVM',
     walletSettings: {
@@ -663,6 +680,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://mainnet.base.org'],
     explorerUrl: 'https://basescan.org',
     multicallAddress: '0xbA790ec6F95D68123E772A43b314464585B311b4',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x354D3d7B61230C88F5f50176d9329d13366FbC28',
     providerName: 'Base',
     walletSettings: {
@@ -709,6 +727,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://gnosis.oat.farm'],
     explorerUrl: 'https://gnosisscan.io',
     multicallAddress: '0x2840463Ea288c26B66E24f92E8C704e1aB6b095c',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x70Ed6174d8425332F7D9AD2d26C86902977307c0',
     providerName: 'Gnosis',
     walletSettings: {
@@ -733,6 +752,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://linea.drpc.org'],
     explorerUrl: 'https://lineascan.build',
     multicallAddress: '0x91BB303E972995EbE5f593BCddBb6F5Ef49Dbcbd',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xe536F8141D8EB7B1f096934AF3329cB581bFe995',
     providerName: 'Linea',
     walletSettings: {
@@ -761,6 +781,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://rpc.mantle.xyz'],
     explorerUrl: 'https://explorer.mantle.xyz',
     multicallAddress: '0xAb35d11199216c7F7368080Cf41beD8f3AbBc4E4',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xBFE4FBaA07f413511abf3ED9Bcc8286b2F359FF3',
     providerName: 'Mantle',
     walletSettings: {
@@ -786,6 +807,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://mainnet.aurora.dev'],
     explorerUrl: 'https://aurorascan.dev',
     multicallAddress: '0x55f46144bC62e9Af4bAdB71842B62162e2194E90',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x88D537a86e09B753361D70448d60D3dC2D75883d',
     providerName: 'Aurora',
     walletSettings: {
@@ -811,6 +833,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://emerald.oasis.dev'],
     explorerUrl: 'https://explorer.emerald.oasis.dev',
     multicallAddress: '0xFE40f6eAD11099D91D51a945c145CFaD1DD15Bb8',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xd3C0A4AB6F68e3c12DEc753255b9f769E0bA615b',
     providerName: 'Oasis Emerald',
     walletSettings: {
@@ -836,6 +859,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://forno.celo.org'],
     explorerUrl: 'https://celoscan.io',
     multicallAddress: '0xa9E6E271b27b20F65394914f8784B3B860dBd259',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x0bF5F48d8F761efAe0f187eCce60784e5d3E87E6',
     providerName: 'Celo',
     walletSettings: {
@@ -861,6 +885,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://http-mainnet.hecochain.com'],
     explorerUrl: 'https://hecoinfo.com',
     multicallAddress: '0x2776CF9B6E2Fa7B33A37139C3CB1ee362Ff0356e',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeCD68D935Fd331EbA27381929845737346577943',
     providerName: 'heco',
     walletSettings: {
@@ -889,6 +914,7 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     rpc: ['https://api.s0.t.hmny.io'],
     explorerUrl: 'https://explorer.harmony.one',
     multicallAddress: '0xBa5041B1c06e8c9cFb5dDB4b82BdC52E41EA5FC5',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xe8EeDE3a063AdF991096E317e916d9AF56cb11B2',
     providerName: 'harmony',
     walletSettings: {
@@ -907,6 +933,6 @@ export const config: Record<ChainConfig['id'], Omit<ChainConfig, 'id'>> = {
     },
     stableCoins: ['BUSD', 'bscBUSD', 'USDC', 'USDT', 'UST', 'DAI', 'FRAX'],
   },
-};
+} satisfies Record<ChainConfig['id'], Omit<ChainConfig, 'id'>>;
 
-export const chains: string[] = Object.keys(config);
+export const chains: ChainEntity['id'][] = Object.keys(config) as ChainEntity['id'][];

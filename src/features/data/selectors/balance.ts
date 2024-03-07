@@ -33,6 +33,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { selectChainById } from './chains';
 import { selectVaultPnl } from './analytics';
 import type { VaultPnLDataType } from '../../../components/VaultStats/types';
+import { entries } from '../../../helpers/object';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (walletAddress) {
@@ -178,7 +179,7 @@ export const selectUserBalanceOfTokensIncludingBoostsBridged = (
 
   // account for bridged mooToken
   if (isStandardVault(vault) && vault.bridged) {
-    for (const [chainId, tokenAddress] of Object.entries(vault.bridged)) {
+    for (const [chainId, tokenAddress] of entries(vault.bridged)) {
       const bridgedMooToken = selectUserBalanceOfToken(state, chainId, tokenAddress, walletAddress);
       mooTokenBalance = mooTokenBalance.plus(bridgedMooToken);
     }
@@ -241,8 +242,8 @@ export const selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged 
   }
 
   // account for bridged mooToken
-  if (vault.bridged) {
-    for (const [chainId, tokenAddress] of Object.entries(vault.bridged)) {
+  if (!isGovVault(vault) && vault.bridged) {
+    for (const [chainId, tokenAddress] of entries(vault.bridged)) {
       const bridgedMooToken = selectUserBalanceOfToken(state, chainId, tokenAddress, walletAddress);
       mooTokenBalance = mooTokenBalance.plus(bridgedMooToken);
     }
@@ -318,8 +319,9 @@ export const selectStandardVaultUserBalanceInDepositTokenBreakdown = (
   }
 
   // bridged mooToken
-  if (vault.bridged) {
-    for (const [chainId, tokenAddress] of Object.entries(vault.bridged)) {
+
+  if (!isGovVault(vault) && vault.bridged) {
+    for (const [chainId, tokenAddress] of entries(vault.bridged)) {
       const bridgedMooToken = selectUserBalanceOfToken(state, chainId, tokenAddress, walletAddress);
       if (bridgedMooToken.gt(BIG_ZERO)) {
         balances.push({
@@ -802,7 +804,7 @@ export const selectUserRewardsByVaultId = (
     rewards: BigNumber;
     rewardsUsd: BigNumber;
   }[] = [];
-  const rewardsTokens = [];
+  const rewardsTokens: string[] = [];
   let totalRewardsUsd = BIG_ZERO;
 
   const vault = selectVaultById(state, vaultId);

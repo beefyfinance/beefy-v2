@@ -7,6 +7,7 @@ import type { TreasuryHoldingConfig } from '../apis/config-types';
 import { isVaultHoldingConfig } from '../apis/config-types';
 import { selectIsTokenLoadedOnChain } from '../selectors/tokens';
 import type { BeefyState } from '../../../redux-types';
+import { entries } from '../../../helpers/object';
 
 interface AddressHolding {
   address: string;
@@ -20,7 +21,7 @@ interface ExchangeHolding {
 
 export interface TreasuryState {
   byChainId: {
-    [chainId: ChainEntity['id']]: {
+    [chainId in ChainEntity['id']]?: {
       [address: string]: AddressHolding;
     };
   };
@@ -44,7 +45,7 @@ export const treasurySlice = createSlice({
     builder.addCase(fetchTreasury.fulfilled, (sliceState, action) => {
       const { data, activeChainIds, state } = action.payload;
       // Store treasury assets and balances
-      for (const [chainId, balances] of Object.entries(data.treasury)) {
+      for (const [chainId, balances] of entries(data.treasury)) {
         if (activeChainIds.includes(chainId)) {
           const items = {};
           for (const [address, data] of Object.entries(balances)) {

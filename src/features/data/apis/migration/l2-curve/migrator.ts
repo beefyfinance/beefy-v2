@@ -3,7 +3,7 @@ import type { VaultEntity } from '../../../entities/vault';
 import type BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
-import { ERC20Abi } from '../../../../../config/abi';
+import { ERC20Abi } from '../../../../../config/abi/ERC20Abi';
 import { toWei } from '../../../../../helpers/big-number';
 import type { AbiItem } from 'web3-utils';
 import type Web3 from 'web3';
@@ -32,7 +32,7 @@ async function getBalance(
 ): Promise<string> {
   const stakingAddress = await getStakingAddress(vault, web3, state);
   if (stakingAddress == ZERO_ADDRESS) return '0';
-  const staking = new web3.eth.Contract(ERC20Abi, stakingAddress);
+  const staking = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], stakingAddress);
   return staking.methods.balanceOf(walletAddress).call();
 }
 

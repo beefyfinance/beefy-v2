@@ -29,12 +29,12 @@ function makeTransactionId(config: TimelineAnalyticsConfig): string {
 
 export const fetchWalletTimeline = createAsyncThunk<
   fetchWalletTimelineFulfilled,
-  { address: string },
+  { walletAddress: string },
   { state: BeefyState }
->('analytics/fetchWalletTimeline', async ({ address }, { getState }) => {
+>('analytics/fetchWalletTimeline', async ({ walletAddress }, { getState }) => {
   const api = await getAnalyticsApi();
 
-  const userTimeline = await api.getWalletTimeline(address);
+  const userTimeline = await api.getWalletTimeline(walletAddress);
 
   const timeline = userTimeline.map((row): VaultTimelineAnalyticsEntity => {
     return {
@@ -59,7 +59,7 @@ export const fetchWalletTimeline = createAsyncThunk<
     };
   });
 
-  return { timeline, walletAddress: address.toLowerCase(), state: getState() };
+  return { timeline, walletAddress: walletAddress.toLowerCase(), state: getState() };
 });
 
 interface DataMartPricesFulfilled {

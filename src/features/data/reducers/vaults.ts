@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import type { Draft } from 'immer';
-import { isEmpty, sortBy } from 'lodash-es';
+import { sortBy } from 'lodash-es';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
 import type { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
@@ -9,9 +9,18 @@ import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/t
 import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsLastHarvests } from '../actions/vaults';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import type { ChainEntity } from '../entities/chain';
-import type { VaultCowcentrated, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
+import {
+  isCowcentratedLiquidityVault,
+  isGovVault,
+  isStandardVault,
+  type VaultCowcentrated,
+  type VaultEntity,
+  type VaultGov,
+  type VaultStandard,
+} from '../entities/vault';
 import type { NormalizedEntity } from '../utils/normalized-entity';
 import type { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
+import { entries } from '../../../helpers/object';
 
 /**
  * State containing Vault infos
@@ -21,7 +30,7 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
   allBridgedIds: VaultEntity['id'][];
 
   byChainId: {
-    [chainId: ChainEntity['id']]: {
+    [chainId in ChainEntity['id']]?: {
       /** Vaults on chain */
       allIds: VaultEntity['id'][];
       /** Vaults that have status: active */
@@ -113,16 +122,18 @@ export const vaultsSlice = createSlice({
 
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
       const initialVaultAmount = sliceState.allIds.length;
-      for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
-        for (const vault of vaults) {
-          addVaultToState(action.payload.state, sliceState, chainId, vault);
+      for (const [chainId, vaults] of entries(action.payload.byChainId)) {
+        if (vaults) {
+          for (const vault of vaults) {
+            addVaultToState(action.payload.state, sliceState, chainId, vault);
+          }
         }
       }
 
       // If new vaults were added, apply default sorting
       if (sliceState.allIds.length !== initialVaultAmount) {
         sliceState.allIds = sortBy(sliceState.allIds, id => {
-          return -sliceState.byId[id].updatedAt;
+          return -sliceState.byId[id]!.updatedAt;
         });
       }
     });
@@ -163,7 +174,7 @@ function addContractDataToState(
     }
 
     if (
-      !sliceState.contractData.byVaultId[vaultId].pricePerFullShare.isEqualTo(
+      !sliceState.contractData.byVaultId[vaultId].pricePerFullShare?.isEqualTo(
         vaultContractData.pricePerFullShare
       )
     ) {
@@ -176,20 +187,10 @@ function addContractDataToState(
   }
 }
 
-function addVaultToState(
-  state: BeefyState,
-  sliceState: Draft<VaultsState>,
-  chainId: ChainEntity['id'],
-  apiVault: VaultConfig
-) {
-  // we already know this vault
-  if (apiVault.id in sliceState.byId) {
-    return;
-  }
-  const score = getVaultSafetyScore(state, chainId, apiVault);
-
-  if (sliceState.byChainId[chainId] === undefined) {
-    sliceState.byChainId[chainId] = {
+function getOrCreateVaultsChainState(sliceState: Draft<VaultsState>, chainId: ChainEntity['id']) {
+  let vaultState = sliceState.byChainId[chainId];
+  if (vaultState === undefined) {
+    vaultState = sliceState.byChainId[chainId] = {
       allIds: [],
       allActiveIds: [],
       allRetiredIds: [],
@@ -207,14 +208,31 @@ function addVaultToState(
       },
     };
   }
+  return vaultState;
+}
+
+function addVaultToState(
+  state: BeefyState,
+  sliceState: Draft<VaultsState>,
+  chainId: ChainEntity['id'],
+  apiVault: VaultConfig
+) {
+  // we already know this vault
+  if (apiVault.id in sliceState.byId) {
+    return;
+  }
+
+  const score = getVaultSafetyScore(state, chainId, apiVault);
+  const chainState = getOrCreateVaultsChainState(sliceState, chainId);
+  let vault: VaultEntity;
 
   if (apiVault.type === 'gov') {
-    const vault: VaultGov = {
+    vault = {
       id: apiVault.id,
       name: apiVault.name,
       type: 'gov',
       version: apiVault.version || 1,
-      depositTokenAddress: apiVault.tokenAddress,
+      depositTokenAddress: apiVault.tokenAddress || 'native',
       earnedTokenAddress: apiVault.earnedTokenAddress,
       earnContractAddress: apiVault.earnContractAddress,
       strategyTypeId: apiVault.strategyTypeId,
@@ -236,30 +254,12 @@ function addVaultToState(
       retiredAt: apiVault.retiredAt,
       pauseReason: apiVault.pauseReason,
       pausedAt: apiVault.pausedAt,
-    };
-
-    sliceState.byId[vault.id] = vault;
-    sliceState.allIds.push(vault.id);
-
-    const vaultState = sliceState.byChainId[vault.chainId];
-    vaultState.allIds.push(vault.id);
-    if (apiVault.status === 'eol' || apiVault.status === 'paused') {
-      vaultState.allRetiredIds.push(vault.id);
-    } else {
-      vaultState.allActiveIds.push(vault.id);
-    }
-
-    if (!vaultState.govVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()]) {
-      vaultState.govVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()] = [];
-    }
-    vaultState.govVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()].push(
-      vault.id
-    );
+    } satisfies VaultGov;
   } else if (apiVault.type === 'cowcentrated') {
-    const vault: VaultCowcentrated = {
+    vault = {
       id: apiVault.id,
       name: apiVault.name,
-      type: apiVault.type || 'cowcentrated',
+      type: 'cowcentrated',
       version: apiVault.version || 1,
       depositTokenAddress: apiVault.tokenAddress ?? 'native',
       zaps: apiVault.zaps || [],
@@ -286,37 +286,10 @@ function addVaultToState(
       migrationIds: apiVault.migrationIds,
       bridged: apiVault.bridged,
       lendingOracle: apiVault.lendingOracle,
-    };
-
-    sliceState.byId[vault.id] = vault;
-    sliceState.allIds.push(vault.id);
-
-    const vaultState = sliceState.byChainId[vault.chainId];
-    vaultState.allIds.push(vault.id);
-    if (apiVault.status === 'eol' || apiVault.status === 'paused') {
-      vaultState.allRetiredIds.push(vault.id);
-    } else {
-      vaultState.allActiveIds.push(vault.id);
-    }
-
-    if (vault.bridged) {
-      vaultState.allBridgedIds.push(vault.id);
-      sliceState.allBridgedIds.push(vault.id);
-    }
-
-    if (
-      !vaultState.cowcentratedVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()]
-    ) {
-      vaultState.cowcentratedVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()] =
-        [];
-    }
-    vaultState.cowcentratedVault.byDepositTokenAddress[
-      vault.depositTokenAddress.toLowerCase()
-    ].push(vault.id);
-    vaultState.cowcentratedVault.byEarnedTokenAddress[vault.earnedTokenAddress.toLowerCase()] =
-      vault.id;
-  } else {
-    const vault: VaultStandard = {
+      earningPoints: apiVault.earningPoints ?? false,
+    } satisfies VaultCowcentrated;
+  } else if (apiVault.type === 'standard' || apiVault.type === undefined) {
+    vault = {
       id: apiVault.id,
       name: apiVault.name,
       type: apiVault.type || 'standard',
@@ -346,33 +319,70 @@ function addVaultToState(
       migrationIds: apiVault.migrationIds,
       bridged: apiVault.bridged,
       lendingOracle: apiVault.lendingOracle,
-    };
-    // redux toolkit uses immer by default so we can
-    // directly modify the state as usual
-    sliceState.byId[vault.id] = vault;
-    sliceState.allIds.push(vault.id);
+      earningPoints: apiVault.earningPoints ?? false,
+    } satisfies VaultStandard;
+  } else {
+    throw new Error(`Unknown vault type: ${apiVault.type}`);
+  }
 
-    const vaultState = sliceState.byChainId[vault.chainId];
-    vaultState.allIds.push(vault.id);
-    if (apiVault.status === 'eol' || apiVault.status === 'paused') {
-      vaultState.allRetiredIds.push(vault.id);
+  // Track vault globally
+  sliceState.byId[vault.id] = vault;
+  sliceState.allIds.push(vault.id);
+
+  // Track vault by chain
+  chainState.allIds.push(vault.id);
+
+  if (apiVault.status === 'eol' || apiVault.status === 'paused') {
+    chainState.allRetiredIds.push(vault.id);
+  } else {
+    chainState.allActiveIds.push(vault.id);
+  }
+
+  if (isStandardVault(vault)) {
+    // List of all standard vaults for deposit token
+    const depositTokenKey = vault.depositTokenAddress.toLowerCase();
+    const byDepositTokenAddress = chainState.standardVault.byDepositTokenAddress[depositTokenKey];
+    if (byDepositTokenAddress === undefined) {
+      chainState.standardVault.byDepositTokenAddress[depositTokenKey] = [vault.id];
     } else {
-      vaultState.allActiveIds.push(vault.id);
+      byDepositTokenAddress.push(vault.id);
     }
 
+    // Standard vaults earned tokens are unique to each vault
+    const earnedTokenKey = vault.earnedTokenAddress.toLowerCase();
+    chainState.standardVault.byEarnedTokenAddress[earnedTokenKey] = vault.id;
+
+    // Track bridged tokens (like mooBIFI)
     if (vault.bridged) {
-      vaultState.allBridgedIds.push(vault.id);
+      chainState.allBridgedIds.push(vault.id);
       sliceState.allBridgedIds.push(vault.id);
     }
+  } else if (isCowcentratedLiquidityVault(vault)) {
+    const depositTokenKey = vault.depositTokenAddress.toLowerCase();
+    const byDepositTokenAddress =
+      chainState.cowcentratedVault.byDepositTokenAddress[depositTokenKey];
 
-    if (!vaultState.standardVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()]) {
-      vaultState.standardVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()] = [];
+    if (vault.bridged) {
+      chainState.allBridgedIds.push(vault.id);
+      sliceState.allBridgedIds.push(vault.id);
     }
-    vaultState.standardVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()].push(
-      vault.id
-    );
-    vaultState.standardVault.byEarnedTokenAddress[vault.earnedTokenAddress.toLowerCase()] =
-      vault.id;
+    if (byDepositTokenAddress === undefined) {
+      chainState.cowcentratedVault.byDepositTokenAddress[depositTokenKey] = [vault.id];
+    } else {
+      byDepositTokenAddress.push(vault.id);
+    }
+
+    const earnedTokenKey = vault.earnedTokenAddress.toLowerCase();
+    chainState.cowcentratedVault.byEarnedTokenAddress[earnedTokenKey] = vault.id;
+  } else if (isGovVault(vault)) {
+    // List of all gov vaults for deposit token
+    const depositTokenKey = vault.depositTokenAddress.toLowerCase();
+    const byDepositTokenAddress = chainState.govVault.byDepositTokenAddress[depositTokenKey];
+    if (byDepositTokenAddress === undefined) {
+      chainState.govVault.byDepositTokenAddress[depositTokenKey] = [vault.id];
+    } else {
+      byDepositTokenAddress.push(vault.id);
+    }
   }
 }
 
@@ -382,8 +392,8 @@ function getVaultSafetyScore(
   apiVault: VaultConfig
 ): number {
   let score = 0;
-  if (!isEmpty(apiVault.risks)) {
-    score = safetyScoreNum(apiVault.risks);
+  if (apiVault.risks && apiVault.risks.length > 0) {
+    score = safetyScoreNum(apiVault.risks) || 0;
   }
 
   return score;

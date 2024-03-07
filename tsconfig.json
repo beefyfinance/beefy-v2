@@ -19,7 +19,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noErrorTruncation": true,
-    "importsNotUsedAsValues": "error"
+    "verbatimModuleSyntax": true,
+    "strictNullChecks": true
   },
   "include": ["src"],
   "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "node_modules"]

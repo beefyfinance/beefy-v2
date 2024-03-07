@@ -75,9 +75,10 @@ const StepContentBuild = memo<StepContentProps<ZapQuoteStepBuild>>(function Step
   step,
 }) {
   const { t } = useTranslation();
-  const provider = useAppSelector(state =>
-    selectPlatformById(state, step.providerId || step.outputToken.providerId)
-  );
+  const provider = useAppSelector(state => {
+    const id = step.providerId || step.outputToken.providerId;
+    return id ? selectPlatformById(state, id) : undefined;
+  });
   const tokenAmounts = useMemo(() => {
     return step.inputs.map(tokenAmount => (
       <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
@@ -97,7 +98,7 @@ const StepContentBuild = memo<StepContentProps<ZapQuoteStepBuild>>(function Step
         t={t}
         i18nKey="Transact-Route-Step-Build"
         values={{
-          provider: provider.name,
+          provider: provider ? provider.name : 'underlying platform',
         }}
         components={{
           tokenAmounts: <ListJoin items={tokenAmounts} />,
@@ -151,7 +152,9 @@ const StepContentSplit = memo<StepContentProps<ZapQuoteStepSplit>>(function Step
   step,
 }) {
   const { t } = useTranslation();
-  const provider = useAppSelector(state => selectPlatformById(state, step.inputToken.providerId));
+  const provider = useAppSelector(state =>
+    step.inputToken.providerId ? selectPlatformById(state, step.inputToken.providerId) : undefined
+  );
   const tokenAmounts = useMemo(() => {
     return step.outputs.map(tokenAmount => (
       <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
@@ -171,7 +174,7 @@ const StepContentSplit = memo<StepContentProps<ZapQuoteStepSplit>>(function Step
         t={t}
         i18nKey="Transact-Route-Step-Split"
         values={{
-          provider: provider.name,
+          provider: provider ? provider.name : 'underlying platform',
         }}
         components={{
           tokenAmounts: <ListJoin items={tokenAmounts} />,

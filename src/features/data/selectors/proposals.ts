@@ -18,7 +18,7 @@ export function selectProposalById(
 export const selectAllProposals = createSelector(
   selectAllProposalIds,
   (state: BeefyState) => state.entities.proposals.byId,
-  (allIds, byId): ProposalEntity[] => allIds.map(id => byId[id])
+  (allIds, byId): ProposalEntity[] => allIds.map(id => byId[id]!)
 );
 
 export const selectAllActiveProposals = createSelector(

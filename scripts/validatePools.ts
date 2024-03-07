@@ -15,10 +15,11 @@ import {
 } from './common/config';
 import { getStrategyIds } from './common/strategies';
 import strategyABI from '../src/config/abi/strategy.json';
-import vaultABI from '../src/config/abi/vault.json';
+import { StandardVaultAbi } from '../src/config/abi/StandardVaultAbi';
 import platforms from '../src/config/platforms.json';
 import type { VaultConfig } from '../src/features/data/apis/config-types';
 import partition from 'lodash/partition';
+import { AbiItem } from 'web3-utils';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
@@ -513,7 +514,10 @@ const populateVaultsData = async (
   const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
 
   const calls = pools.map(pool => {
-    const vaultContract = new web3.eth.Contract(vaultABI, pool.earnContractAddress);
+    const vaultContract = new web3.eth.Contract(
+      StandardVaultAbi as unknown as AbiItem[],
+      pool.earnContractAddress
+    );
     return {
       strategy: vaultContract.methods.strategy(),
       owner: vaultContract.methods.owner(),

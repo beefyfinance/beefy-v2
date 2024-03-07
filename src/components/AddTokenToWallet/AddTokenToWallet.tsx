@@ -32,7 +32,7 @@ const Pending = memo(function Pending() {
 
 const Rejected = memo(function Rejected() {
   const error = useAppSelector(selectAddToWalletError);
-  return <div>Error: {error.message}</div>;
+  return <div>Error: {error?.message || 'unknown error'}</div>;
 });
 
 type CopyTextProps = {
@@ -76,8 +76,14 @@ const Fulfilled = memo(function Fulfilled() {
     const perform = async () => {
       const walletApi = await getWalletConnectionApi();
       const web3 = await walletApi.getConnectedWeb3Instance();
-      if (typeof web3.currentProvider === 'object' && 'request' in web3.currentProvider) {
-        await web3.currentProvider?.request({
+      const currentProvider = web3.currentProvider;
+      if (
+        currentProvider &&
+        typeof currentProvider === 'object' &&
+        'request' in currentProvider &&
+        typeof currentProvider.request === 'function'
+      ) {
+        await currentProvider.request({
           method: 'wallet_watchAsset',
           params: {
             type: 'ERC20',

@@ -140,8 +140,8 @@ interface SharesValueProps {
   className?: string;
   percentage?: BigNumber;
   minShortPlaces?: number;
-  amount?: BigNumber;
-  decimals?: number;
+  amount: BigNumber;
+  decimals: number;
   price: BigNumber;
   subValue?: string;
 }

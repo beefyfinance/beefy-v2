@@ -5,7 +5,7 @@ import { getAllowanceApi } from '../apis/instances';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenErc20 } from '../entities/token';
 import type { VaultGov, VaultStandard } from '../entities/vault';
-import { isGovVault } from '../entities/vault';
+import { isGovVault, isStandardVault } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
 import { selectVaultIdsByChainId, selectVaultById } from '../selectors/vaults';
@@ -27,8 +27,6 @@ export const fetchAllAllowanceAction = createAsyncThunk<
   { state: BeefyState }
 >('allowance/fetchAllAllowanceAction', async ({ chainId, walletAddress }, { getState }) => {
   const state = getState();
-
-  const userAddress = walletAddress || selectWalletAddress(state);
   const chain = selectChainById(state, chainId);
   const api = await getAllowanceApi(chain);
 
@@ -44,9 +42,10 @@ export const fetchAllAllowanceAction = createAsyncThunk<
   for (const vault of allVaults) {
     if (isGovVault(vault)) {
       govVaults.push(vault);
-    } else {
+    } else if (isStandardVault(vault)) {
       standardVaults.push(vault);
     }
+    //TODO add v3 allowance
   }
 
   // always re-fetch state as late as possible
@@ -56,7 +55,7 @@ export const fetchAllAllowanceAction = createAsyncThunk<
     standardVaults,
     govVaults,
     boosts,
-    userAddress
+    walletAddress
   );
   return { chainId, data };
 });

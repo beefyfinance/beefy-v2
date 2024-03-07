@@ -17,7 +17,7 @@ export type TooltipContentProps = TooltipProps<number, string> & {
   toggles: LineTogglesState;
   valueFormatter: (value: number) => string;
   avg: number;
-  vaultType: 'standard' | 'gov';
+  vaultType: 'standard' | 'gov' | 'cowcentrated';
 };
 
 export const TooltipContent = memo<TooltipContentProps>(function TooltipContent({
@@ -38,7 +38,7 @@ export const TooltipContent = memo<TooltipContentProps>(function TooltipContent(
     return null;
   }
 
-  const [valueLine, maLine] = payload;
+  const [valueLine, maLine] = payload!;
   const [value, ma] = [valueLine?.value, maLine?.value];
   const { t: timestamp } = valueLine.payload;
 
@@ -49,7 +49,7 @@ export const TooltipContent = memo<TooltipContentProps>(function TooltipContent(
       </div>
       <div className={classes.grid}>
         <div className={classes.label}>{t([`Graph-${vaultType}-${stat}`, `Graph-${stat}`])}:</div>
-        <div className={classes.value}>{valueFormatter(value)}</div>
+        {value ? <div className={classes.value}>{valueFormatter(value)}</div> : null}
         {toggles.average ? (
           <>
             <div className={classes.label}>{t('Average')}:</div>
@@ -62,7 +62,7 @@ export const TooltipContent = memo<TooltipContentProps>(function TooltipContent(
               <div>{t('Moving-Average')}:</div>
               <div className={classes.labelDetail}>{`(${maPeriods} ${t(maUnit)})`}</div>
             </div>
-            <div className={classes.value}>{valueFormatter(ma)}</div>
+            {ma ? <div className={classes.value}>{valueFormatter(ma)}</div> : null}
           </>
         ) : null}
       </div>

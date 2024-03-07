@@ -1,11 +1,11 @@
 import type { ShapeWithLabel } from 'eth-multicall';
-import { createContract } from '../../../../../helpers/web3';
+import { createContract, viemToWeb3Abi } from '../../../../../helpers/web3';
 import BigNumber from 'bignumber.js';
 import type { SwapFeeParams } from '../types';
 import type { PairData, PairDataResponse } from './SolidlyPool';
 import { MetadataKeys, SolidlyPool } from './SolidlyPool';
 import type { AbiItem } from 'web3-utils';
-import { VelodromeV2PairAbi } from '../../../../../config/abi';
+import { VelodromeV2PairAbi } from '../../../../../config/abi/VelodromeV2PairAbi';
 import abiCoder from 'web3-eth-abi';
 import type { ZapStep } from '../../transact/zap/types';
 import { getInsertIndex } from '../../transact/helpers/zap';
@@ -44,8 +44,8 @@ export type VelodromeV2PairDataResponse = PairDataResponse & {
 };
 
 export class VelodromeV2SolidlyPool extends SolidlyPool {
-  protected pairData: VelodromeV2PairData | null = null;
-  protected factoryData: FactoryData | null = null;
+  protected pairData: VelodromeV2PairData | undefined = undefined;
+  protected factoryData: FactoryData | undefined = undefined;
 
   protected getFactoryDataRequest(): ShapeWithLabel[] {
     if (!this.pairData) {
@@ -70,7 +70,7 @@ export class VelodromeV2SolidlyPool extends SolidlyPool {
   }
 
   protected getPairDataRequest(): ShapeWithLabel[] {
-    const contract = createContract(VelodromeV2PairAbi, this.address);
+    const contract = createContract(viemToWeb3Abi(VelodromeV2PairAbi), this.address);
     return [
       {
         totalSupply: contract.methods.totalSupply(),
@@ -91,8 +91,8 @@ export class VelodromeV2SolidlyPool extends SolidlyPool {
       token1: result.metadata[MetadataKeys.token1],
       reserves0: new BigNumber(result.metadata[MetadataKeys.reserves0]),
       reserves1: new BigNumber(result.metadata[MetadataKeys.reserves1]),
-      decimals0: new BigNumber(result.metadata[MetadataKeys.decimals0]).e, // 1e18 -> 18
-      decimals1: new BigNumber(result.metadata[MetadataKeys.decimals1]).e,
+      decimals0: new BigNumber(result.metadata[MetadataKeys.decimals0]).e!, // 1e18 -> 18
+      decimals1: new BigNumber(result.metadata[MetadataKeys.decimals1]).e!,
       stable: result.metadata[MetadataKeys.stable],
       factory: result.factory,
     };
@@ -131,6 +131,11 @@ export class VelodromeV2SolidlyPool extends SolidlyPool {
     deadline: number,
     insertBalance: boolean
   ): ZapStep {
+    const pairData = this.pairData;
+    if (!pairData) {
+      throw new Error('Pair data is not loaded');
+    }
+
     return {
       target: this.amm.routerAddress,
       value: '0',
@@ -167,7 +172,7 @@ export class VelodromeV2SolidlyPool extends SolidlyPool {
         [
           amountIn.toString(10),
           amountOutMin.toString(10),
-          routes.map(({ from, to }) => [from, to, this.pairData.stable, this.pairData.factory]),
+          routes.map(({ from, to }) => [from, to, pairData.stable, pairData.factory]),
           to,
           deadline.toString(10),
         ]

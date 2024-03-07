@@ -7,6 +7,9 @@ export function selectDomainResolution(state: BeefyState, domain: string): Resol
   return state.user.resolver.byDomain[(domain || '').toLowerCase()] || IDLE_STATUS;
 }
 
-export function selectAddressResolution(state: BeefyState, address: string): ResolverStatus {
+export function selectAddressResolution(
+  state: BeefyState,
+  address: string | undefined
+): ResolverStatus {
   return state.user.resolver.byAddress[(address || '').toLowerCase()] || IDLE_STATUS;
 }

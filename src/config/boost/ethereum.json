@@ -2,7 +2,7 @@
   {
     "id": "moo_curve-veth-vectorreserve",
     "poolId": "curve-veth",
-    "name": "Vector Reserve",
+    "name": "Vector",
     "assets": ["vETH", "ETH"],
     "tokenAddress": "0xAE0bFfc3110e69DA8993F11C1CBd9a6eA3d16daF",
     "earnedToken": "VEC",

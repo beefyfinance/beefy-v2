@@ -7,16 +7,17 @@ import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance'
 import { selectBridgeDepositTokenForChainId } from '../../../../../data/selectors/bridge';
 import { selectIsWalletConnected } from '../../../../../data/selectors/wallet';
 import { styles } from './styles';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 
 const useStyles = makeStyles(styles);
 
-interface BalanceEndAdornmentProps {
-  value: string;
+interface BalanceEndAdornmentProps<V extends string = string> {
+  value: V;
 }
 
-export const BalanceEndAdornment = memo<BalanceEndAdornmentProps>(function BalanceEndAdornment({
+export const BalanceEndAdornment = memo(function BalanceEndAdornment({
   value: chainId,
-}) {
+}: BalanceEndAdornmentProps<ChainEntity['id']>) {
   const classes = useStyles();
   const token = useAppSelector(state => selectBridgeDepositTokenForChainId(state, chainId));
   const isWalletConnected = useAppSelector(selectIsWalletConnected);

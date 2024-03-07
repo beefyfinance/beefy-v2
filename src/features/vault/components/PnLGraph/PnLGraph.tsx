@@ -13,7 +13,7 @@ export const useStyles = makeStyles(styles);
 
 interface PnLGraphProps {
   vaultId: VaultEntity['id'];
-  address: string;
+  address?: string | undefined;
 }
 
 export const PnLGraphLoader = memo<PnLGraphProps>(function PnLGraphLoader({ vaultId, address }) {

@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import type BigNumber from 'bignumber.js';
-import { sortBy } from 'lodash-es';
-import React, { memo } from 'react';
+import { orderBy } from 'lodash-es';
+import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ContentLoading } from '../../../../components/ContentLoading';
 import { Section } from '../../../../components/Section';
@@ -12,13 +12,9 @@ import { selectChainById } from '../../../data/selectors/chains';
 import { selectTvlByChain } from '../../../data/selectors/tvl';
 import { styles } from './styles';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
+import { entries } from '../../../../helpers/object';
 
 const useStyles = makeStyles(styles);
-
-interface ItemListType {
-  chainId: ChainEntity['id'];
-  tvl: number;
-}
 
 export const DaoInflows = memo(function DaoInflows() {
   const { t } = useTranslation();
@@ -26,19 +22,24 @@ export const DaoInflows = memo(function DaoInflows() {
 
   const tvls = useAppSelector(selectTvlByChain);
 
-  const sortedTvls = React.useMemo<ItemListType[]>(() => {
-    const list = [];
-    for (const [chainId, tvl] of Object.entries(tvls)) {
-      list.push({ tvl: tvl.toNumber(), chainId });
-    }
-    return sortBy(list, ['tvl']).reverse();
+  const sortedTvls = useMemo(() => {
+    return orderBy(
+      entries(tvls)
+        .filter((entry): entry is [ChainEntity['id'], BigNumber] => !!(entry && entry[1]))
+        .map(([chainId, tvl]) => ({
+          chainId,
+          tvl,
+        })),
+      e => e.tvl.toNumber(),
+      'desc'
+    );
   }, [tvls]);
 
   return (
     <Section title={t('Treasury-Title-Inflows')}>
       <div className={classes.container}>
         {sortedTvls.map(item => {
-          return <Chain key={item.chainId} value={tvls[item.chainId]} chainId={item.chainId} />;
+          return <Chain key={item.chainId} value={item.tvl} chainId={item.chainId} />;
         })}
       </div>
     </Section>

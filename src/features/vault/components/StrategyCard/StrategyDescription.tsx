@@ -4,7 +4,7 @@ import type { VaultEntity, VaultStandard } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectPlatformById } from '../../../data/selectors/platforms';
-import { selectTokenByAddress } from '../../../data/selectors/tokens';
+import { selectTokenByAddress, selectVaultTokenSymbols } from '../../../data/selectors/tokens';
 import { selectChainById } from '../../../data/selectors/chains';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
@@ -29,9 +29,11 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
   const depositTokenProvider = useAppSelector(state =>
     depositToken.providerId ? selectPlatformById(state, depositToken.providerId) : null
   );
+
+  const vaultTokenSymbols = useAppSelector(state => selectVaultTokenSymbols(state, vault.id));
   const vaultPlatformName = vaultPlatform.name;
   const depositTokenProviderName = depositTokenProvider ? depositTokenProvider.name : null;
-  const assets = vault.assetIds;
+
   const depositTokenName = depositToken.symbol;
   const chainName = chain.name;
   const chainNativeToken = chain.walletSettings.nativeCurrency.symbol;
@@ -53,14 +55,14 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
       ns: 'risks',
     };
 
-    for (const i in assets) {
-      opts[`asset${i}`] = assets[i];
+    for (const i in vaultTokenSymbols) {
+      opts[`asset${i}`] = vaultTokenSymbols[i];
     }
 
     return opts;
   }, [
     vaultPlatformName,
-    assets,
+    vaultTokenSymbols,
     depositTokenName,
     depositTokenProviderName,
     chainName,

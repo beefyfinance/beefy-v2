@@ -1,3 +1,5 @@
+import type { ChainEntity } from '../../entities/chain';
+
 export type ApiSupportedResponse = {
   countryCode: string;
   currencyCode: string;
@@ -16,7 +18,7 @@ export type ApiMethod = {
   maxLimit: null | number;
 };
 
-export type ApiNetwork = string;
+export type ApiNetwork = ChainEntity['id']; // we filter this list based on the chains we support in the api
 
 export type ApiFiatSymbol = string;
 

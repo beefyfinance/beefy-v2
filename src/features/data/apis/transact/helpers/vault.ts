@@ -9,7 +9,8 @@ import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../select
 import { selectUserBalanceOfToken } from '../../../selectors/balance';
 import { selectVaultPricePerFullShare } from '../../../selectors/vaults';
 import { selectFeesByVaultId } from '../../../selectors/fees';
-import { VaultAbi } from '../../../../../config/abi';
+import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi';
+import type { AbiItem } from 'web3-utils';
 
 export function getVaultWithdrawnFromState(
   userInput: InputTokenAmount,
@@ -66,7 +67,10 @@ export async function getVaultWithdrawnFromContract(
   const withdrawnToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const requestedAmountWei = toWei(userInput.amount, withdrawnToken.decimals);
   const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
-  const vaultContract = new web3.eth.Contract(VaultAbi, vault.earnContractAddress);
+  const vaultContract = new web3.eth.Contract(
+    StandardVaultAbi as unknown as AbiItem[],
+    vault.earnContractAddress
+  );
   const vaultFees = selectFeesByVaultId(state, vault.id);
   const withdrawFee = vaultFees?.withdraw || 0;
 

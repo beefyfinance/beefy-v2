@@ -3,10 +3,11 @@ import type { BeefyState } from '../../../../../redux-types';
 import type { VaultCowcentrated } from '../../../entities/vault';
 import type { InputTokenAmount } from '../transact-types';
 import type { MultiCall } from 'eth-multicall';
-import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../../config/abi';
+import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
 import { selectFeesByVaultId } from '../../../selectors/fees';
 import { toWeiString } from '../../../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
+import { viemToWeb3Abi } from '../../../../../helpers/web3';
 
 export async function getCowcentratedVaultDepositSimulationAmount(
   userInput: InputTokenAmount[],
@@ -16,7 +17,7 @@ export async function getCowcentratedVaultDepositSimulationAmount(
   multicall: MultiCall
 ) {
   const vaultContract = new web3.eth.Contract(
-    BeefyCowcentratedLiquidityVaultAbi,
+    viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
     vault.earnContractAddress
   );
   const vaultFees = selectFeesByVaultId(state, vault.id);
@@ -56,7 +57,7 @@ export async function getCowcentratedVaultWithdrawSimulationAmount(
   multicall: MultiCall
 ) {
   const vaultContract = new web3.eth.Contract(
-    BeefyCowcentratedLiquidityVaultAbi,
+    viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
     vault.earnContractAddress
   );
   const vaultFees = selectFeesByVaultId(state, vault.id);

@@ -76,7 +76,7 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
       isFulfilled(state.ui.dataLoader.global.boostForm)
   );
   const walletAddress = useAppSelector(state =>
-    selectIsWalletKnown(state) ? selectWalletAddress(state) : null
+    selectIsWalletKnown(state) ? selectWalletAddress(state) : undefined
   );
 
   const isStepping = useAppSelector(selectIsStepperStepping);

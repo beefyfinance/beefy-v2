@@ -8,14 +8,18 @@ function makeChainSelector(idsSelector: (state: BeefyState) => ChainEntity['id']
   return createSelector(
     idsSelector,
     (state: BeefyState) => state.entities.chains.byId,
-    (allIds, byId) => allIds.map(id => byId[id])
+    (allIds, byId) => allIds.map(id => byId[id]).filter((c): c is ChainEntity => !!c)
   );
 }
 
 export const selectChainById = createCachedSelector(
   (state, chainId) => chainId,
   state => state.entities.chains.byId,
-  (chainId, byId): ChainEntity | undefined => byId[chainId]
+  (chainId, byId): ChainEntity => {
+    const chain = byId[chainId];
+    if (!chain) throw new Error(`Unknown chainId ${chainId}`);
+    return chain;
+  }
 )((state, chainId) => chainId);
 
 export const selectAllChainsNativeAssetsIsd = (state: BeefyState) => {

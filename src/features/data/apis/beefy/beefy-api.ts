@@ -106,7 +106,7 @@ export type BeefyArticleConfig = {
 export type BeefyLastArticleResponse = BeefyArticleConfig;
 
 export type ZapAggregatorTokenSupportResponse = {
-  [chainId: ChainEntity['id']]: {
+  [chainId in ChainEntity['id']]?: {
     [tokenAddress: TokenEntity['address']]: {
       [provider: string]: boolean;
     };
@@ -212,7 +212,7 @@ export class BeefyAPI {
     // Handle api->app chain id
     const data = res.data;
     if ('one' in data) {
-      data['harmony'] = data['one'];
+      data['harmony'] = data['one'] as ZapAggregatorTokenSupportResponse['harmony'];
       delete data['one'];
     }
 

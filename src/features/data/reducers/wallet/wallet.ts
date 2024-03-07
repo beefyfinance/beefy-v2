@@ -8,8 +8,8 @@ import { initWallet } from '../../actions/wallet';
  */
 export type WalletState = {
   initialized: boolean;
-  address: string | null;
-  connectedAddress: string | null;
+  address: string | undefined;
+  connectedAddress: string | undefined;
   selectedChainId: ChainEntity['id'] | null;
   error: 'unsupported chain' | null;
   hideBalance: boolean;
@@ -17,8 +17,8 @@ export type WalletState = {
 
 const initialWalletState: WalletState = {
   initialized: false,
-  address: null,
-  connectedAddress: null,
+  address: undefined,
+  connectedAddress: undefined,
   selectedChainId: null,
   error: null,
   hideBalance: false,
@@ -41,8 +41,8 @@ export const walletSlice = createSlice({
       sliceState.error = null;
     },
     walletHasDisconnected(sliceState) {
-      sliceState.address = null;
-      sliceState.connectedAddress = null;
+      sliceState.address = undefined;
+      sliceState.connectedAddress = undefined;
       sliceState.error = null;
     },
     accountHasChanged(sliceState, action: PayloadAction<{ address: string }>) {

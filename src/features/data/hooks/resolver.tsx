@@ -17,7 +17,7 @@ export function useResolveDomain(domain: string) {
   return status;
 }
 
-export function useResolveAddress(address: string) {
+export function useResolveAddress(address: string | undefined) {
   const dispatch = useAppDispatch();
   const status = useAppSelector(state => selectAddressResolution(state, address));
 

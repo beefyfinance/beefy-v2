@@ -41,7 +41,7 @@ export interface BoostContractDataResponse {
   id: string;
   totalSupply: string;
   rewardRate: string;
-  periodFinish: string | null; // null means boost is in prestake
+  periodFinish: string | undefined; // undefined means boost is in prestake
   isPreStake: boolean;
 }
 
@@ -49,7 +49,7 @@ export interface BoostContractData {
   id: string;
   totalSupply: BigNumber;
   rewardRate: BigNumber;
-  periodFinish: Date | null; // null means boost is in prestake
+  periodFinish: Date | undefined; // undefined means boost is in prestake
   isPreStake: boolean;
 }
 

@@ -28,10 +28,13 @@ import {
   isGovVault,
   isStandardVault,
   type VaultEntity,
+  type VaultGov,
 } from '../entities/vault';
 import { uniqueTokens } from '../../../helpers/tokens';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { BigNumber } from 'bignumber.js';
+import { entries } from '../../../helpers/object';
+import type { BoostEntity } from '../entities/boost';
 
 export interface FetchAllBalanceActionParams {
   chainId: ChainEntity['id'];
@@ -52,8 +55,6 @@ export const fetchAllBalanceAction = createAsyncThunk<
   { state: BeefyState }
 >('balance/fetchAllBalanceAction', async ({ chainId, walletAddress }, { getState }) => {
   const state = getState();
-
-  const userAddress = walletAddress ?? selectWalletAddress(state);
   const chain = selectChainById(state, chainId);
   const api = await getBalanceApi(chain);
 
@@ -67,10 +68,10 @@ export const fetchAllBalanceAction = createAsyncThunk<
   );
   const govVaults = selectAllGovVaultsByChainId(state, chain.id);
 
-  const data = await api.fetchAllBalances(getState(), tokens, govVaults, boosts, userAddress);
+  const data = await api.fetchAllBalances(getState(), tokens, govVaults, boosts, walletAddress);
   return {
     chainId,
-    walletAddress: userAddress,
+    walletAddress,
     data,
     state: getState(),
   };
@@ -90,14 +91,16 @@ export const fetchBalanceAction = createAsyncThunk<
   'balance/fetchBalanceAction',
   async ({ chainId, tokens: requestedTokens = [], vaults = [] }, { getState }) => {
     const state = getState();
-
     const walletAddress = selectWalletAddress(state);
+    if (!walletAddress) {
+      throw new Error('No wallet address');
+    }
     const chain = selectChainById(state, chainId);
     const api = await getBalanceApi(chain);
 
     const tokens = requestedTokens;
-    const govVaults = [];
-    const boosts = [];
+    const govVaults: VaultGov[] = [];
+    const boosts: BoostEntity[] = [];
 
     if (vaults.length) {
       for (const vault of vaults) {
@@ -177,7 +180,7 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
 
       // + bridged
       if (!deposited && vault.bridged) {
-        for (const [chainId, bridgedAddress] of Object.entries(vault.bridged)) {
+        for (const [chainId, bridgedAddress] of entries(vault.bridged)) {
           const balance = selectUserBalanceOfToken(state, chainId, bridgedAddress, walletAddress);
           if (balance.gt(BIG_ZERO)) {
             deposited = true;

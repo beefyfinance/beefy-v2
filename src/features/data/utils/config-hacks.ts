@@ -50,11 +50,12 @@ export function getDepositTokenFromLegacyVaultConfig(chain: ChainEntity, apiVaul
       decimals: apiVault.tokenDecimals,
       symbol: apiVault.token,
       providerId: apiVault.tokenProviderId,
-      buyUrl: null,
-      description: null,
-      website: null,
+      buyUrl: undefined,
+      description: undefined,
+      website: undefined,
       type: 'erc20',
-      documentation: null,
+      documentation: undefined,
+      risks: [],
     };
   } else {
     token = {
@@ -65,11 +66,11 @@ export function getDepositTokenFromLegacyVaultConfig(chain: ChainEntity, apiVaul
       decimals: chain.walletSettings.nativeCurrency.decimals,
       symbol: chain.walletSettings.nativeCurrency.symbol,
       providerId: apiVault.tokenProviderId,
-      buyUrl: null,
-      description: null,
-      website: null,
+      buyUrl: undefined,
+      description: undefined,
+      website: undefined,
       type: 'native',
-      documentation: null,
+      documentation: undefined,
     };
   }
   return token;

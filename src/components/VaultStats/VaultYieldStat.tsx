@@ -19,7 +19,7 @@ export type VaultYieldStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
   pnlData: VaultPnLDataType;
-  walletAddress?: string;
+  walletAddress: string;
 };
 
 export const VaultYieldStat = memo(connect(mapStateToProps)(VaultValueStat));

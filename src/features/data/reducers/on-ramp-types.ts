@@ -1,5 +1,6 @@
 import type { SerializedError } from '@reduxjs/toolkit';
 import type { ApiQuoteRequest, ApiQuoteResponse } from '../apis/on-ramp/on-ramp-types';
+import type { ChainEntity } from '../entities/chain';
 
 export enum FormStep {
   UnsupportedCountry = 1,
@@ -48,15 +49,15 @@ type Fiat = {
 };
 type Token = {
   id: string;
-  allNetworks: string[];
-  minFiat: number;
-  maxFiat: number;
+  allNetworks: ChainEntity['id'][];
   byNetwork: Record<string, Network>;
 };
 type Network = {
   id: string;
   allProviders: string[];
   byProvider: Record<string, Provider>;
+  minFiat: number;
+  maxFiat: number;
 };
 type Provider = {
   id: string;
@@ -65,8 +66,8 @@ type Provider = {
 };
 type PaymentMethod = {
   id: string;
-  minLimit: null | number;
-  maxLimit: null | number;
+  minLimit: undefined | number;
+  maxLimit: undefined | number;
 };
 export type Quote = {
   provider: string;
@@ -83,38 +84,38 @@ export type OnRampTypes = {
   step: FormStep;
   lastStep: FormStep;
   country: {
-    value: string | null;
-    error: CountryError | null;
+    value: string | undefined;
+    error: CountryError | undefined;
   };
   fiat: {
-    value: string | null;
-    error: FiatError | null;
+    value: string | undefined;
+    error: FiatError | undefined;
   };
   token: {
-    value: string | null;
-    error: TokenError | null;
+    value: string | undefined;
+    error: TokenError | undefined;
   };
   network: {
-    value: string | null;
-    error: NetworkError | null;
+    value: ChainEntity['id'] | undefined;
+    error: NetworkError | undefined;
   };
   input: {
-    value: number | null;
-    error: InputError | null;
+    value: number;
+    error: InputError | undefined;
     mode: InputMode;
   };
   canQuote: boolean;
   allFiat: string[];
   byFiat: Record<string, Fiat>;
   quote: {
-    requestId: string | null;
+    requestId: string | undefined;
     status: 'idle' | 'pending' | 'rejected' | 'fulfilled';
-    error: SerializedError | null;
-    request: ApiQuoteRequest | null;
-    response: ApiQuoteResponse | null;
+    error: SerializedError | undefined;
+    request: ApiQuoteRequest | undefined;
+    response: ApiQuoteResponse | undefined;
     providers: string[];
     byProvider: Record<string, Quote>;
-    provider: string | null;
-    cheapestProvider: string | null;
+    provider: string | undefined;
+    cheapestProvider: string | undefined;
   };
 };

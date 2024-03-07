@@ -88,6 +88,6 @@ export function isGovVaultType(vaultType: VaultType): vaultType is IGovVaultType
   return vaultType.id === 'gov';
 }
 
-export function isCowcentratedVaultType(vaultType: VaultType): vaultType is IGovVaultType {
+export function isCowcentratedVaultType(vaultType: VaultType): vaultType is ICowcentratedVaultType {
   return vaultType.id === 'cowcentrated';
 }

@@ -1,14 +1,14 @@
 import { add, intervalToDuration } from 'date-fns';
 import { zeroPad } from './format';
 
-export function datesAreEqual(a: Date | null, b: Date | null): boolean {
-  // both are the same Date object, or both are null
+export function datesAreEqual(a: Date | undefined, b: Date | undefined): boolean {
+  // both are the same Date object, or both are undefined
   if (a === b) {
     return true;
   }
 
-  // one is null, the other is not
-  if (a === null || b === null) {
+  // one is undefined, the other is not
+  if (a === undefined || b === undefined) {
     return false;
   }
 
