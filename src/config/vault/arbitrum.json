@@ -10,7 +10,7 @@
     "earnedTokenAddress": "0x487CeE58D6868f4662b716E4e1aB9DB728512789",
     "earnContractAddress": "0x487CeE58D6868f4662b716E4e1aB9DB728512789",
     "oracle": "lps",
-    "oracleId": "uniswap-cow-eth-usdc",
+    "oracleId": "uniswap-cow-eth-usdt",
     "status": "active",
     "createdAt": 1708939193,
     "platformId": "beefy",
