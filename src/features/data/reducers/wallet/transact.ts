@@ -215,12 +215,18 @@ const transactSlice = createSlice({
         }
       })
       .addCase(transactFetchOptions.fulfilled, (sliceState, action) => {
+        console.log('fetch options fulfilled');
         if (sliceState.options.requestId === action.meta.requestId) {
+          console.log('fetch options fulfilled requestId match');
           sliceState.options.status = TransactStatus.Fulfilled;
+
+          console.log(action.payload.options);
 
           addOptionsToState(sliceState, action.payload.options);
 
           const defaultOption = first(action.payload.options);
+          console.log('defaultOption');
+          console.log(defaultOption);
           sliceState.selectedSelectionId = defaultOption.selectionId;
           sliceState.selectedChainId = defaultOption.chainId;
         }
@@ -258,6 +264,7 @@ const transactSlice = createSlice({
 });
 
 function resetForm(sliceState: Draft<TransactState>) {
+  console.log('resetting form');
   sliceState.selectedChainId = null;
   sliceState.selectedSelectionId = null;
   sliceState.inputAmount = BIG_ZERO;

@@ -147,6 +147,7 @@ export const transactFetchOptions = createAsyncThunk<
       const vault = selectVaultById(state, vaultId);
       const tokens = getUniqueTokensForOptions(options, state);
       const tokensByChain = groupBy(tokens, token => token.chainId);
+      console.log('Fetching balances');
       await Promise.all(
         Object.values(tokensByChain).map(tokens =>
           dispatch(
@@ -158,7 +159,10 @@ export const transactFetchOptions = createAsyncThunk<
           )
         )
       );
+      console.log('fetching balances finished');
     }
+
+    console.log(options);
 
     return {
       options: options,
@@ -203,7 +207,7 @@ export const transactFetchQuotes = createAsyncThunk<
   const inputAmount = selectTransactInputAmount(state);
   const inputMax = selectTransactInputMax(state);
   const dualInputAmounts = selectTransactDualInputAmounts(state);
-  const dualMaxAmounts = selectTransactDualMaxAmounts;
+  const dualMaxAmounts = selectTransactDualMaxAmounts(state);
   const walletAddress = selectWalletAddress(state);
 
   const vaultId = selectTransactVaultId(state);
@@ -213,8 +217,12 @@ export const transactFetchQuotes = createAsyncThunk<
   if (vault.type !== 'cowcentrated' && inputAmount.lte(BIG_ZERO)) {
     throw new Error(`Can not quote for 0`);
   }
-  if (vault.type === 'cowcentrated' && dualInputAmounts.every(amount => amount.lte(BIG_ZERO))) {
-    throw new Error(`Can not quote for [0, 0]`);
+  if (vault.type === 'cowcentrated') {
+    if (mode === TransactMode.Deposit && dualInputAmounts.every(amount => amount.lte(BIG_ZERO))) {
+      throw new Error(`Can not quote for [0, 0]`);
+    } else if (mode === TransactMode.Withdraw && inputAmount.lte(BIG_ZERO)) {
+      throw new Error(`Can not quote for 0`);
+    }
   }
 
   const selectionId = selectTransactSelectedSelectionId(state);
@@ -222,10 +230,14 @@ export const transactFetchQuotes = createAsyncThunk<
     throw new Error(`No selectionId selected`);
   }
 
+  console.log('fetchQuotes', selectionId, mode, inputAmount.toString(10), inputMax.toString(10));
+
   const chainId = selectTransactSelectedChainId(state);
   if (!chainId) {
     throw new Error(`No chainId selected`);
   }
+
+  console.log('chainId', chainId);
 
   const options = selectTransactOptionsForSelectionId(state, selectionId);
   if (!options || options.length === 0) {
@@ -237,9 +249,13 @@ export const transactFetchQuotes = createAsyncThunk<
     throw new Error(`No tokens for selectionId ${selectionId}`);
   }
 
+  console.log('till here');
+
   // const vaultId = selectTransactVaultId(state);
   // const vault = selectVaultById(state, vaultId);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+
+  console.log('almost there');
 
   // TODO handle differently for univ3 with multiple deposit tokens
   const inputAmounts: InputTokenAmount[] =
@@ -269,6 +285,7 @@ export const transactFetchQuotes = createAsyncThunk<
     console.log('every option is a deposit option');
     quotes = await api.fetchDepositQuotesFor(options, inputAmounts, getState);
   } else if (options.every(isWithdrawOption)) {
+    console.log('every option is a withdraw');
     quotes = await api.fetchWithdrawQuotesFor(options, inputAmounts, getState);
   } else {
     throw new Error(`Invalid options`);

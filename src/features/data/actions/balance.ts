@@ -23,7 +23,12 @@ import {
 } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 import type { TokenEntity } from '../entities/token';
-import { isGovVault, isStandardVault, type VaultEntity } from '../entities/vault';
+import {
+  isCowcentratedLiquidityVault,
+  isGovVault,
+  isStandardVault,
+  type VaultEntity,
+} from '../entities/vault';
 import { uniqueTokens } from '../../../helpers/tokens';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { BigNumber } from 'bignumber.js';
@@ -99,7 +104,9 @@ export const fetchBalanceAction = createAsyncThunk<
         if (isGovVault(vault)) {
           govVaults.push(vault);
         } else {
-          tokens.push(selectTokenByAddress(state, chain.id, vault.depositTokenAddress));
+          if (!isCowcentratedLiquidityVault(vault)) {
+            tokens.push(selectTokenByAddress(state, chain.id, vault.depositTokenAddress));
+          }
           tokens.push(selectTokenByAddress(state, chain.id, vault.earnedTokenAddress));
         }
       }

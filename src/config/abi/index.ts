@@ -26,6 +26,7 @@ import ArbitrumNodeInterfaceJson from './arbitrumNodeInterface.json';
 import GammaHypervisorJson from './gammaHypervisor.json';
 import GammaProxyJson from './gammaProxy.json';
 import UniswapV3PoolJson from './uniswapV3Pool.json';
+import BeefyCowcentratedLiquidityVaultJson from './BeefyCowcentratedLiquidityVault.json';
 
 export const BeefyV2AppMulticallAbi = BeefyV2AppMulticallJson as AbiItem[];
 export const BoostAbi = BoostJson as AbiItem[];
@@ -54,3 +55,4 @@ export const XErc20Abi = XERC20Json as AbiItem[];
 export const GammaHypervisorAbi = GammaHypervisorJson as AbiItem[];
 export const GammaProxyAbi = GammaProxyJson as AbiItem[];
 export const UniswapV3PoolAbi = UniswapV3PoolJson as AbiItem[];
+export const BeefyCowcentratedLiquidityVaultAbi = BeefyCowcentratedLiquidityVaultJson as AbiItem[];

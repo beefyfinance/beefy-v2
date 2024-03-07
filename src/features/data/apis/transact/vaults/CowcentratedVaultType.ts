@@ -23,6 +23,8 @@ import {
 import type {
   CowcentratedDepositOption,
   CowcentratedVaultDepositQuote,
+  CowcentratedVaultWithdrawQuote,
+  CowcentratedWithdrawOption,
   InputTokenAmount,
   TokenAmount,
   TransactQuote,
@@ -32,12 +34,21 @@ import { selectFeesByVaultId } from '../../../selectors/fees';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../reducers/wallet/stepper';
 import { walletActions } from '../../../actions/wallet-actions';
+import {
+  getCowcentratedVaultDepositSimulationAmount,
+  getCowcentratedVaultWithdrawSimulationAmount,
+} from '../helpers/cowcentratedVault';
+import { getWeb3Instance } from '../../instances';
+import { selectChainById } from '../../../selectors/chains';
+import { MultiCall } from 'eth-multicall';
+import { first } from 'lodash-es';
 
 export class CowcentratedVaultType implements ICowcentratedVaultType {
   public readonly id = 'cowcentrated';
   public readonly vault: VaultCowcentrated;
   public readonly depositToken: TokenEntity;
   public readonly depositTokens: TokenEntity[];
+  public readonly vaultToken: TokenEntity;
   public readonly shareToken: TokenErc20;
   protected readonly getState: GetStateFn;
 
@@ -52,6 +63,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     this.depositTokens = vault.assetIds.map(tokenId =>
       selectTokenById(state, vault.chainId, tokenId)
     );
+    this.vaultToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
 
     const shareToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
     if (!isTokenErc20(shareToken)) {
@@ -93,11 +105,24 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     }
 
     const state = this.getState();
-    const fee = this.calculateDepositFee(inputs, state);
-    const outputs = inputs.map(input => ({
-      token: input.token,
-      amount: input.amount.minus(fee),
-    }));
+    const chain = selectChainById(state, this.vault.chainId);
+    const web3 = await getWeb3Instance(chain);
+    const multicall = new MultiCall(web3, chain.multicallAddress);
+
+    const resp = await getCowcentratedVaultDepositSimulationAmount(
+      inputs,
+      this.vault,
+      state,
+      web3,
+      multicall
+    );
+
+    const outputs = [
+      {
+        token: this.vaultToken,
+        amount: resp.depositPreviewAmount.shiftedBy(-18),
+      },
+    ];
 
     const allowances = inputs
       .filter(input => isTokenErc20(input.token))
@@ -122,11 +147,16 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
 
   async fetchDepositStep(quote: TransactQuote, t: TFunction<Namespace>): Promise<Step> {
     onlyInputCount(quote.inputs, 2);
-
+    const isMaxDeposit = quote.inputs.every(input => input.max);
     return {
       step: 'deposit',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-      action: walletActions.deposit(this.vault, quote.inputs[0].amount, quote.inputs[0].max),
+      action: walletActions.v3Deposit(
+        this.vault,
+        quote.inputs[0].amount,
+        quote.inputs[1].amount,
+        isMaxDeposit
+      ),
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };
@@ -145,5 +175,88 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       : BIG_ZERO;
   }
 
-  // async fetchDepositQuote
+  async fetchWithdrawOption(): Promise<CowcentratedWithdrawOption> {
+    const vaultToken = selectTokenByAddress(
+      this.getState(),
+      this.vault.chainId,
+      this.vault.earnContractAddress
+    );
+    const selectionId = createSelectionId(this.vault.chainId, [vaultToken]);
+    console.log('selectionId:', selectionId);
+    const outputs = this.vault.assetIds.map(tokenId =>
+      selectTokenById(this.getState(), this.vault.chainId, tokenId)
+    );
+
+    console.log('fetching withdraw option');
+
+    return {
+      id: createOptionId('vault-cowcentrated', this.vault.id, selectionId),
+      vaultId: this.vault.id,
+      chainId: this.vault.chainId,
+      selectionId,
+      selectionOrder: 1,
+      inputs: [vaultToken],
+      wantedOutputs: outputs,
+      strategyId: 'cowcentrated',
+      vaultType: 'cowcentrated',
+      mode: TransactMode.Withdraw,
+    };
+  }
+
+  async fetchWithdrawQuote(
+    inputs: InputTokenAmount[],
+    option: CowcentratedWithdrawOption
+  ): Promise<CowcentratedVaultWithdrawQuote> {
+    onlyInputCount(inputs, 1);
+
+    const input = first(inputs);
+    if (input.amount.lte(BIG_ZERO)) {
+      throw new Error('Quote called with 0 input amount');
+    }
+
+    const state = this.getState();
+    const chain = selectChainById(state, this.vault.chainId);
+    const web3 = await getWeb3Instance(chain);
+    const multicall = new MultiCall(web3, chain.multicallAddress);
+    const { withdrawPreviewAmounts } = await getCowcentratedVaultWithdrawSimulationAmount(
+      input,
+      this.vault,
+      state,
+      web3,
+      multicall
+    );
+
+    const outputs = option.wantedOutputs.map((output, index) => ({
+      token: output,
+      amount: withdrawPreviewAmounts[index].shiftedBy(-output.decimals),
+    }));
+
+    const allowances = [];
+
+    return {
+      id: createQuoteId(option.id),
+      strategyId: option.strategyId,
+      vaultType: option.vaultType,
+      option,
+      inputs,
+      outputs,
+      returned: [],
+      allowances,
+      priceImpact: 0,
+    };
+  }
+
+  async fetchWithdrawStep(quote: TransactQuote, t: TFunction<Namespace>): Promise<Step> {
+    onlyInputCount(quote.inputs, 1);
+
+    const input = first(quote.inputs);
+
+    return {
+      step: 'withdraw',
+      message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+      action: walletActions.v3Withdraw(this.vault, input.amount, input.max),
+      pending: false,
+      extraInfo: { zap: false, vaultId: quote.option.vaultId },
+    };
+  }
 }

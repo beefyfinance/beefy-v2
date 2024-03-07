@@ -111,7 +111,7 @@ export type CowcentratedDepositOption = BaseDepositOption & {
 
 export type CowcentratedWithdrawOption = BaseWithdrawOption & {
   strategyId: 'cowcentrated';
-  vaultYpe: 'cowcentrated';
+  vaultType: 'cowcentrated';
 };
 
 export type UniswapLikeDepositOption<TAmm extends AmmEntity> = ZapBaseDepositOption & {
@@ -382,7 +382,7 @@ export type GovVaultWithdrawQuote = BaseQuote<GovVaultWithdrawOption> & {
   vaultType: 'gov';
 };
 
-export type CowcentratedWithdrawQuote = BaseQuote<CowcentratedWithdrawOption> & {
+export type CowcentratedVaultWithdrawQuote = BaseQuote<CowcentratedWithdrawOption> & {
   vaultType: 'cowcentrated';
 };
 
@@ -420,7 +420,10 @@ export type GammaAggregatorWithdrawQuote = BaseZapQuote<GammaWithdrawOption> & {
 };
 export type GammaWithdrawQuote = GammaBreakWithdrawQuote | GammaAggregatorWithdrawQuote;
 
-export type VaultWithdrawQuote = StandardVaultWithdrawQuote | GovVaultWithdrawQuote;
+export type VaultWithdrawQuote =
+  | StandardVaultWithdrawQuote
+  | GovVaultWithdrawQuote
+  | CowcentratedVaultWithdrawQuote;
 
 export type ZapWithdrawQuote =
   | SingleWithdrawQuote

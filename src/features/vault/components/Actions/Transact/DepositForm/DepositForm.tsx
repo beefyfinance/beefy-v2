@@ -123,7 +123,7 @@ export const CowcentratedDepositForm = memo(function V3DepositForm() {
         ))}
       </div>
       <TransactQuote title={t('Transact-YouDeposit')} className={classes.quote} />
-      {/* <DepositActions className={classes.actions} /> */}
+      <DepositActions className={classes.actions} />
       <VaultFees className={classes.fees} />
     </>
   );
