@@ -92,17 +92,15 @@ export interface DataLoaderState {
     articles: LoaderState;
   };
   byChainId: {
-    [chainId: ChainEntity['id']]: ChainIdDataEntity;
+    [chainId in ChainEntity['id']]?: ChainIdDataEntity;
   };
   byAddress: {
     [address: string]: {
+      global: GlobalDataByAddressEntity;
       byChainId: {
-        [chainId: ChainEntity['id']]: ChainIdDataByAddressEntity;
+        [chainId in ChainEntity['id']]?: ChainIdDataByAddressByChainEntity;
       };
     };
-  };
-  timelineByAddress: {
-    [address: string]: LoaderState;
   };
 }
 
@@ -111,7 +109,11 @@ export interface ChainIdDataEntity {
   addressBook: LoaderState;
 }
 
-export interface ChainIdDataByAddressEntity {
+export interface ChainIdDataByAddressByChainEntity {
   balance: LoaderState;
   allowance: LoaderState;
+}
+
+export interface GlobalDataByAddressEntity {
+  timeline: LoaderState;
 }

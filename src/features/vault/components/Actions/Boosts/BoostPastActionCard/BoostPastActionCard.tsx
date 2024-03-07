@@ -56,7 +56,7 @@ export const BoostPastActionCard = memo<BoostPastCardActionCardProps>(function B
   return (
     <div className={classes.expiredBoostContainer} key={boost.id}>
       <div className={classes.title}>
-        <AssetsImage size={24} chainId={boost.chainId} assetIds={[rewardToken.id]} />
+        <AssetsImage size={24} chainId={boost.chainId} assetSymbols={[rewardToken.symbol]} />
         <div className={classes.expiredBoostName}>{t('Boost-NameBoost', { name: boost.name })}</div>
       </div>
       <div className={classes.balances}>

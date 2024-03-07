@@ -53,7 +53,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     selectUserBalanceOfToken(state, vault.chainId, mintedToken.address)
   );
   const mintedTokenAllowance = useAppSelector(state =>
-    selectAllowanceByTokenAddress(state, vault.chainId, mintedToken.address, minter.burnerAddress)
+    selectAllowanceByTokenAddress(state, vault.chainId, mintedToken.address, minter.burnerAddress!)
   );
   const reserves = useAppSelector(state => selectMinterReserves(state, minter.id));
 
@@ -140,7 +140,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           step: {
             step: 'approve',
             message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(mintedToken, minter.burnerAddress),
+            action: walletActions.approval(mintedToken, minter.burnerAddress!),
             pending: false,
           },
         })
@@ -153,7 +153,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           message: t('Vault-TxnConfirm', { type: t('Burn') }),
           action: walletActions.burnWithdraw(
             vault.chainId,
-            minter.burnerAddress,
+            minter.burnerAddress!,
             depositToken,
             mintedToken,
             formData.withdraw.amount,
@@ -180,7 +180,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         <div className={classes.reservesText}>
           {t('reserves', { token: minter.depositToken.symbol })}
         </div>
-        <AssetsImage assetIds={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
+        <AssetsImage assetSymbols={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
         <div className={classes.amountReserves}>
           {reserves.shiftedBy(-depositToken.decimals).toFixed(2)} {depositToken.symbol}
         </div>
@@ -199,7 +199,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         </div>
         <Paper component="form">
           <div className={classes.inputLogo}>
-            <AssetsImage assetIds={[minter.mintedToken.symbol]} size={20} chainId={chain.id} />
+            <AssetsImage assetSymbols={[minter.mintedToken.symbol]} size={20} chainId={chain.id} />
           </div>
           <InputBase
             placeholder="0.00"
@@ -229,7 +229,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         </div>
         <Paper component="form">
           <div className={classes.inputLogo}>
-            <AssetsImage assetIds={[minter.depositToken.symbol]} size={20} chainId={chain.id} />
+            <AssetsImage assetSymbols={[minter.depositToken.symbol]} size={20} chainId={chain.id} />
           </div>
           <InputBase disabled={true} placeholder="0.00" value={formData.withdraw.input} />
         </Paper>

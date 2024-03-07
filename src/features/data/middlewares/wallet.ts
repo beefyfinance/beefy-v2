@@ -8,15 +8,17 @@ import { selectHasWalletBalanceBeenFetched } from '../selectors/balance';
 import { fetchWalletTimeline } from '../actions/analytics';
 
 async function reloadUserData(store: BeefyStore, walletAddress: string) {
-  const userFfsByChain: { [chainId: ChainEntity['id']]: CapturedFulfilledActions['user'] } = {};
+  const userFfsByChain: { [chainId in ChainEntity['id']]?: CapturedFulfilledActions['user'] } = {};
   for (const chain of chains) {
-    userFfsByChain[chain.id] = fetchCaptureUserData(store, chain.id);
+    userFfsByChain[chain.id] = fetchCaptureUserData(store, chain.id, walletAddress);
   }
   for (const chain of chains) {
-    dispatchUserFfs(store, userFfsByChain[chain.id]);
+    const userFfs = userFfsByChain[chain.id];
+    if (!userFfs) continue;
+    dispatchUserFfs(store, userFfs);
   }
 
-  store.dispatch(fetchWalletTimeline({ address: walletAddress }));
+  store.dispatch(fetchWalletTimeline({ walletAddress }));
 }
 
 // fetch balance and allowance again
@@ -29,7 +31,7 @@ export function walletActionsMiddleware(store: BeefyStore) {
     // On rehydrate, avoid refetching since it will be triggered from scenario already
     if (action.type === 'persist/REHYDRATE') return;
 
-    if (walletAddressBefore !== walletAddressAfter && walletAddressAfter !== null) {
+    if (walletAddressBefore !== walletAddressAfter && walletAddressAfter) {
       // reload data if account has changed and we don't already have some data
       // ie: when user selects a totally new account, we want to fetch
       // his wallet balance and allowances

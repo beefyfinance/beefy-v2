@@ -171,6 +171,7 @@
     "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "earningPoints": true,
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-70/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-70/withdraw",
     "network": "ethereum",
@@ -217,6 +218,7 @@
       "NO_TIMELOCK"
     ],
     "strategyTypeId": "multi-lp-locked",
+    "earningPoints": true,
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x05ff47afada98a98982113758878f9a8b9fdda0a000000000000000000000645",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x05ff47afada98a98982113758878f9a8b9fdda0a000000000000000000000645",
     "network": "ethereum"
@@ -247,6 +249,7 @@
       "NO_TIMELOCK"
     ],
     "strategyTypeId": "multi-lp-locked",
+    "earningPoints": true,
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x596192bb6e41802428ac943d2f1476c1af25cc0e000000000000000000000659",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x596192bb6e41802428ac943d2f1476c1af25cc0e000000000000000000000659",
     "network": "ethereum"
@@ -3369,29 +3372,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xcfca23ca9ca720b6e98e3eb9b6aa0ffc4a5c08b9000200000000000000000274/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0xcfca23ca9ca720b6e98e3eb9b6aa0ffc4a5c08b9000200000000000000000274/withdraw",
-    "network": "ethereum"
-  },
-  {
-    "id": "aura-aurabal-balbpt",
-    "name": "auraBAL-BAL/WETH(80-20)",
-    "type": "standard",
-    "token": "auraBAL-BAL/WETH(80-20)",
-    "tokenAddress": "0x3dd0843A028C86e0b760b1A76929d1C5Ef93a2dd",
-    "tokenDecimals": 18,
-    "tokenProviderId": "balancer",
-    "earnedToken": "mooAuraauraBAL-BAL-WETH80/20",
-    "earnedTokenAddress": "0x86b2D22C92ef56A9434A1b3758cC39a8D7FA8C1F",
-    "earnContractAddress": "0x86b2D22C92ef56A9434A1b3758cC39a8D7FA8C1F",
-    "oracle": "lps",
-    "oracleId": "aura-aurabal-balbpt",
-    "status": "active",
-    "createdAt": 1687443962,
-    "platformId": "aura",
-    "assets": ["auraBAL", "BAL-WETH-80-20"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x3dd0843a028c86e0b760b1a76929d1c5ef93a2dd000200000000000000000249/invest",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x3dd0843a028c86e0b760b1a76929d1c5ef93a2dd000200000000000000000249/withdraw",
     "network": "ethereum"
   },
   {

@@ -157,38 +157,6 @@
     "network": "avax"
   },
   {
-    "id": "balancer-savax-bbaavavax",
-    "name": "sAVAX-bbaAVAX",
-    "type": "standard",
-    "token": "sAVAX-bbaAVAX",
-    "tokenAddress": "0xA154009870E9B6431305F19b09F9cfD7284d4E7A",
-    "tokenDecimals": 18,
-    "tokenProviderId": "balancer",
-    "earnedToken": "mooBalancersAVAX-bbaAVAX",
-    "earnedTokenAddress": "0x6D79e3B5cdF334ffC4af2A3a451C790115914fdB",
-    "earnContractAddress": "0x6D79e3B5cdF334ffC4af2A3a451C790115914fdB",
-    "oracle": "lps",
-    "oracleId": "balancer-savax-bbaavavax",
-    "status": "eol",
-    "createdAt": 1690982945,
-    "retireReason": "exploit",
-    "retiredAt": 1692719625,
-    "platformId": "balancer",
-    "assets": ["sAVAX", "bbaavAVAX"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/avalanche/pool/0xa154009870e9b6431305f19b09f9cfd7284d4e7a000000000000000000000013/add-liquidity",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/avalanche/pool/0xa154009870e9b6431305f19b09f9cfd7284d4e7a000000000000000000000013/withdraw",
-    "network": "avax"
-  },
-  {
     "id": "balancer-yyavax-bbaavavax",
     "name": "yyAVAX-bbaAVAX",
     "type": "standard",

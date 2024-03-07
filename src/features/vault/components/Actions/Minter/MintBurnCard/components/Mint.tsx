@@ -216,7 +216,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
         </div>
         <Paper component="form">
           <div className={classes.inputLogo}>
-            <AssetsImage assetIds={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
+            <AssetsImage assetSymbols={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
           </div>
           <InputBase
             placeholder="0.00"
@@ -246,7 +246,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
         </div>
         <Paper component="form">
           <div className={classes.inputLogo}>
-            <AssetsImage assetIds={[minter.mintedToken.symbol]} size={20} chainId={chain.id} />
+            <AssetsImage assetSymbols={[minter.mintedToken.symbol]} size={20} chainId={chain.id} />
           </div>
           <InputBase disabled={true} placeholder="0.00" value={formData.deposit.input} />
         </Paper>

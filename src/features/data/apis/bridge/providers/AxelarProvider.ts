@@ -20,6 +20,11 @@ export class AxelarProvider extends CommonBridgeProvider<BeefyAxelarBridgeConfig
     input: InputTokenAmount<TokenErc20>,
     state: BeefyState
   ): Promise<TokenAmount<TokenNative>> {
+    const fromChain = config.chains[from.id];
+    const toChain = config.chains[to.id];
+    if (!fromChain || !toChain) {
+      throw new Error(`bridge '${this.id}' not available for ${from.id}->${to.id}.`);
+    }
     const api = await getAxelarApi();
     const native = selectChainNativeToken(state, from.id);
     const incomingGasLimit = await this.fetchIncomingGasLimit(config, from, to);
@@ -28,8 +33,8 @@ export class AxelarProvider extends CommonBridgeProvider<BeefyAxelarBridgeConfig
       from,
       to,
       incomingGasLimit,
-      config.chains[from.id].bridge,
-      config.chains[to.id].bridge
+      fromChain.bridge,
+      toChain.bridge
     );
 
     return {
@@ -47,7 +52,11 @@ export class AxelarProvider extends CommonBridgeProvider<BeefyAxelarBridgeConfig
       return await this.fetchIncomingGasLimitForArbitrum(config, from, to);
     }
 
-    return config.chains[to.id].gasLimits.incoming;
+    const toChain = config.chains[to.id];
+    if (!toChain) {
+      throw new Error(`bridge '${this.id}' not available for ${from.id}->${to.id}.`);
+    }
+    return toChain.gasLimits.incoming;
   }
 
   protected async fetchIncomingGasLimitForArbitrum(
@@ -75,6 +84,10 @@ export class AxelarProvider extends CommonBridgeProvider<BeefyAxelarBridgeConfig
      * total - 392 bytes
      */
     const sequencerGas = await estimateArbitrumSequencerGas(to, 392);
-    return sequencerGas.plus(config.chains[to.id].gasLimits.incoming);
+    const toChain = config.chains[to.id];
+    if (!toChain) {
+      throw new Error(`bridge '${this.id}' not available for ${from.id}->${to.id}.`);
+    }
+    return sequencerGas.plus(toChain.gasLimits.incoming);
   }
 }

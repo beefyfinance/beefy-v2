@@ -19,6 +19,8 @@ export const selectUserBalanceToMigrateByVaultId = createSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], migrationId: MigrationConfig['id']) =>
     migrationId,
   (migrationState, walletAddress, vaultId, migrationId) => {
+    if (!walletAddress) return { balance: BIG_ZERO, initialized: false };
+
     return (
       migrationState.byUserAddress[walletAddress]?.byVaultId[vaultId]?.byMigrationId[
         migrationId

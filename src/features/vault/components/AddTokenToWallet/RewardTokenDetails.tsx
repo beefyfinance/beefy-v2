@@ -42,7 +42,7 @@ export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardT
   return (
     <div className={clsx(classes.container, className)}>
       <div className={classes.token}>
-        <AssetsImage size={24} chainId={chainId} assetIds={[token.id]} />{' '}
+        <AssetsImage size={24} chainId={chainId} assetSymbols={[token.symbol]} />{' '}
         <div className={classes.text}>
           {t('Earn', { symbol: token.symbol })}
           {appendText ? appendText : null}

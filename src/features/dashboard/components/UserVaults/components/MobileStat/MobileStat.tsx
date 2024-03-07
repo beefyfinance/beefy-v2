@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { memo } from 'react';
+import { memo, type ReactNode } from 'react';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
 
@@ -7,7 +7,7 @@ const useStyles = makeStyles(styles);
 
 interface MobileStatsProps {
   label: string;
-  value: string;
+  value: string | ReactNode;
   valueClassName?: string;
 }
 

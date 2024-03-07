@@ -1,5 +1,5 @@
 import { selectPlatformById } from '../../features/data/selectors/platforms';
-import { selectTokenByAddress } from '../../features/data/selectors/tokens';
+import { selectTokenByAddressOrUndefined } from '../../features/data/selectors/tokens';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import type { VaultEntity } from '../../features/data/entities/vault';
 import { useAppSelector } from '../../store';
@@ -14,17 +14,17 @@ export const VaultPlatform = memo<VaultPlatformProps>(function VaultPlatform({ v
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const platform = useAppSelector(state => selectPlatformById(state, vault.platformId));
   const depositToken = useAppSelector(state =>
-    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
+    selectTokenByAddressOrUndefined(state, vault.chainId, vault.depositTokenAddress)
   );
   const provider = useAppSelector(state =>
-    depositToken.providerId ? selectPlatformById(state, depositToken.providerId) : null
+    depositToken?.providerId ? selectPlatformById(state, depositToken.providerId) : null
   );
   const platformName = platform.name;
   const providerName = provider ? provider.name : null;
 
   return (
     <>
-      {providerName && providerName !== platformName
+      {depositToken && providerName && providerName !== platformName
         ? t('VaultTag-PlatformWithProvider', { platform: platformName, provider: providerName })
         : t('VaultTag-Platform', { platform: platformName })}
     </>

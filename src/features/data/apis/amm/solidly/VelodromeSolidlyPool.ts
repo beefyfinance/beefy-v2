@@ -36,7 +36,7 @@ const VelodromeFactoryAbi: AbiItem[] = [
 ];
 
 export class VelodromeSolidlyPool extends SolidlyPool {
-  protected factoryData: FactoryData | null = null;
+  protected factoryData: FactoryData | undefined = undefined;
 
   protected getFactoryDataRequest(): ShapeWithLabel[] {
     if (!this.pairData) {

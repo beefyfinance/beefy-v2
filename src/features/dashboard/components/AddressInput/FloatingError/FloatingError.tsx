@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, type MutableRefObject, type RefObject } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Floating } from '../../../../../components/Floating';
 import type { Theme } from '@material-ui/core';
@@ -27,7 +27,7 @@ interface FloatingErrorProps {
   isAddressValid: boolean;
   isDomainValid: boolean;
   isDomainResolving: boolean;
-  anchorRef: React.RefObject<HTMLInputElement>;
+  anchorRef: RefObject<HTMLInputElement> | MutableRefObject<HTMLInputElement>;
 }
 
 export const FloatingError = memo<FloatingErrorProps>(function FloatingError({
@@ -46,7 +46,7 @@ export const FloatingError = memo<FloatingErrorProps>(function FloatingError({
       <Floating
         open={!isDomainValid}
         placement="bottom-start"
-        anchorEl={anchorRef}
+        anchorEl={anchorRef as MutableRefObject<HTMLElement>}
         className={classes.dropdown}
         display="flex"
         autoWidth={false}
@@ -61,7 +61,7 @@ export const FloatingError = memo<FloatingErrorProps>(function FloatingError({
       <Floating
         open={!isAddressValid}
         placement="bottom-start"
-        anchorEl={anchorRef}
+        anchorEl={anchorRef as MutableRefObject<HTMLElement>}
         className={classes.dropdown}
         display="flex"
         autoWidth={false}

@@ -26,10 +26,11 @@ export const selectIsTokenLoaded = (
   tokenId: TokenEntity['id']
 ) => {
   const byChainId = state.entities.tokens.byChainId;
-  if (byChainId[chainId] === undefined) {
+  const chain = byChainId[chainId];
+  if (chain === undefined) {
     throw new Error(`selectTokenById: Unknown chain id ${chainId}`);
   }
-  return byChainId[chainId].byId[tokenId] !== undefined;
+  return chain.byId[tokenId] !== undefined;
 };
 
 export const selectTokenById = (
@@ -38,27 +39,32 @@ export const selectTokenById = (
   tokenId: TokenEntity['id']
 ) => {
   const byChainId = state.entities.tokens.byChainId;
-  if (byChainId[chainId] === undefined) {
+  const chain = byChainId[chainId];
+
+  if (chain === undefined) {
     throw new Error(`selectTokenById: Unknown chain id ${chainId}`);
   }
-  if (byChainId[chainId].byId[tokenId] === undefined) {
+
+  const address = chain.byId[tokenId];
+  if (address === undefined) {
     // fallback to addressbook token
     throw new Error(
       `selectTokenById: Unknown token id ${tokenId} for chain ${chainId}, maybe you need to load the addressbook`
     );
   }
-  const address = byChainId[chainId].byId[tokenId];
-  return byChainId[chainId].byAddress[address];
+
+  return chain.byAddress[address];
 };
 
-export const selectTokenByIdOrNull = (
+export const selectTokenByIdOrUndefined = (
   state: BeefyState,
   chainId: ChainEntity['id'],
   tokenId: TokenEntity['id']
 ) => {
   const byChainId = state.entities.tokens.byChainId;
-  const address = byChainId[chainId].byId[tokenId];
-  return byChainId[chainId]?.byAddress[address] || null;
+  const address = byChainId[chainId]?.byId[tokenId];
+  if (!address) return undefined;
+  return byChainId[chainId]?.byAddress[address] || undefined;
 };
 
 export const selectTokenByAddress = (
@@ -74,11 +80,11 @@ export const selectTokenByAddress = (
   return token;
 };
 
-export const selectTokenByAddressOrNull = (
+export const selectTokenByAddressOrUndefined = (
   state: BeefyState,
   chainId: ChainEntity['id'],
   address: TokenEntity['address']
-) => state.entities.tokens.byChainId[chainId]?.byAddress[address.toLowerCase()] || null;
+) => state.entities.tokens.byChainId[chainId]?.byAddress[address.toLowerCase()] || undefined;
 
 export const selectTokensByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
   const tokensByChainId = state.entities.tokens.byChainId[chainId];
@@ -115,16 +121,20 @@ export const selectErc20TokenByAddress = (
 
 export const selectChainNativeToken = (state: BeefyState, chainId: ChainEntity['id']) => {
   const byChainId = state.entities.tokens.byChainId;
-  if (byChainId[chainId] === undefined) {
+  const chain = byChainId[chainId];
+
+  if (chain === undefined) {
     throw new Error(`selectChainNativeToken: Unknown chain id ${chainId}`);
   }
-  if (!byChainId[chainId].native) {
+
+  if (!chain.native) {
     // fallback to addressbook token
     throw new Error(
       `selectChainNativeToken: Empty native token for chain id ${chainId}, maybe you need to load the addressbook`
     );
   }
-  const token = selectTokenById(state, chainId, byChainId[chainId].native);
+
+  const token = selectTokenById(state, chainId, chain.native);
   // type narrowing
   if (!isTokenNative(token)) {
     throw new Error(
@@ -136,16 +146,20 @@ export const selectChainNativeToken = (state: BeefyState, chainId: ChainEntity['
 
 export const selectChainWrappedNativeToken = (state: BeefyState, chainId: ChainEntity['id']) => {
   const byChainId = state.entities.tokens.byChainId;
-  if (byChainId[chainId] === undefined) {
+  const chain = byChainId[chainId];
+
+  if (chain === undefined) {
     throw new Error(`selectChainWrappedNativeToken: Unknown chain id ${chainId}`);
   }
-  if (!byChainId[chainId].wnative) {
+
+  if (!chain.wnative) {
     // fallback to addressbook token
     throw new Error(
       `selectChainWrappedNativeToken: Empty wnative token for chain id ${chainId}, maybe you need to load the addressbook`
     );
   }
-  const token = selectTokenById(state, chainId, byChainId[chainId].wnative);
+
+  const token = selectTokenById(state, chainId, chain.wnative);
   // type narrowing
   if (!isTokenErc20(token)) {
     throw new Error(
@@ -206,7 +220,8 @@ export const selectTokenPriceByAddress = (
   chainId: ChainEntity['id'],
   address: string
 ) => {
-  const token = state.entities.tokens.byChainId[chainId].byAddress[address.toLowerCase()];
+  const token = state.entities.tokens.byChainId[chainId]?.byAddress[address.toLowerCase()];
+  if (!token) return BIG_ZERO;
   return selectTokenPriceByTokenOracleId(state, token.oracleId);
 };
 
@@ -233,7 +248,7 @@ export const selectHasBreakdownDataByTokenAddress = (
   depositTokenAddress: VaultEntity['depositTokenAddress'],
   chainId: ChainEntity['id']
 ) => {
-  const token = selectTokenByAddressOrNull(state, chainId, depositTokenAddress);
+  const token = selectTokenByAddressOrUndefined(state, chainId, depositTokenAddress);
   if (!token) return false;
   return selectHasBreakdownDataByOracleId(state, token.oracleId, chainId);
 };
@@ -261,21 +276,23 @@ export const selectHasBreakdownDataByOracleId = (
 
   // Must have tokens in state
   const tokens = breakdown.tokens.map(
-    address => state.entities.tokens.byChainId[chainId].byAddress[address.toLowerCase()]
+    address => state.entities.tokens.byChainId[chainId]?.byAddress[address.toLowerCase()]
   );
   if (tokens.findIndex(token => !token) !== -1) {
     return false;
   }
 
   // Must have prices of tokens in state
-  return tokens.findIndex(token => !state.entities.tokens.prices.byOracleId[token.oracleId]) === -1;
+  return (
+    tokens.findIndex(token => !state.entities.tokens.prices.byOracleId[token!.oracleId]) === -1
+  );
 };
 
 export const selectIsTokenLoadedOnChain = createCachedSelector(
   (state: BeefyState, _address: TokenEntity['address'], chainId: ChainEntity['id']) =>
     state.entities.tokens.byChainId[chainId],
   (state: BeefyState, address: TokenEntity['address']) => address.toLowerCase(),
-  (tokensByChainId, address) => (tokensByChainId.byAddress[address] === undefined ? false : true)
+  (tokensByChainId, address) => tokensByChainId?.byAddress[address] !== undefined
 )((state: BeefyState, address: TokenEntity['address'], _chainId: ChainEntity['id']) => address);
 
 export const selectWrappedToNativeSymbolMap = (state: BeefyState) => {
@@ -353,8 +370,8 @@ export const selectSupportedSwapTokensForChainAggregator = (
   providerId: string
 ) => {
   return selectSupportedSwapTokenAddressesForChainAggregator(state, chainId, providerId)
-    .map(address => selectTokenByAddressOrNull(state, chainId, address))
-    .filter(v => !!v);
+    .map(address => selectTokenByAddressOrUndefined(state, chainId, address))
+    .filter((v): v is TokenEntity => !!v);
 };
 
 export const selectSupportedSwapTokensForChainAggregatorHavingPrice = (
@@ -365,4 +382,13 @@ export const selectSupportedSwapTokensForChainAggregatorHavingPrice = (
   return selectSupportedSwapTokensForChainAggregator(state, chainId, providerId).filter(token =>
     selectTokenPriceByTokenOracleId(state, token.oracleId).gt(BIG_ZERO)
   );
+};
+
+export const selectVaultTokenSymbols = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const vault = selectVaultById(state, vaultId);
+  return vault.assetIds.map(assetId => {
+    const token = selectTokenByIdOrUndefined(state, vault.chainId, assetId);
+
+    return token?.symbol || assetId;
+  });
 };

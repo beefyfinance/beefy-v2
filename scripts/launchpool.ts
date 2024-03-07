@@ -6,7 +6,7 @@ import { promises as fs } from 'fs';
 
 import { chainRpcs, getVaultsForChain } from './common/config';
 import launchPoolABI from '../src/config/abi/boost.json';
-import erc20ABI from '../src/config/abi/erc20.json';
+import { ERC20Abi } from '../src/config/abi/ERC20Abi';
 import partners from '../src/config/boost/partners.json';
 import { AbiItem } from 'web3-utils';
 
@@ -27,7 +27,7 @@ async function boostParams(chain, boostAddress) {
   let [results] = await multicall.all([calls]);
   const params = results[0];
 
-  const tokenContract = new web3.eth.Contract(erc20ABI as AbiItem[], params.reward);
+  const tokenContract = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], params.reward);
   calls = [
     {
       earnedToken: tokenContract.methods.symbol(),

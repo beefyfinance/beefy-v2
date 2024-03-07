@@ -8,7 +8,8 @@ import {
   selectBridgeFormState,
   selectBridgeSupportedChainIdsFrom,
 } from '../../../../../data/selectors/bridge';
-import { ListItem } from '../ListItem';
+import { ChainListItem } from '../ListItem';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 
 const ChainSelector = memo(function ChainSelector() {
   const dispatch = useAppDispatch();
@@ -16,13 +17,15 @@ const ChainSelector = memo(function ChainSelector() {
   const options = useAppSelector(state => selectBridgeSupportedChainIdsFrom(state, from));
 
   const handleSelect = useCallback(
-    (chainId: string) => {
+    (chainId: ChainEntity['id']) => {
       dispatch(bridgeActions.setToChain({ chainId }));
     },
     [dispatch]
   );
 
-  return <SearchableList options={options} onSelect={handleSelect} ItemInnerComponent={ListItem} />;
+  return (
+    <SearchableList options={options} onSelect={handleSelect} ItemInnerComponent={ChainListItem} />
+  );
 });
 
 export const SelectToChainStep = memo(function SelectToChainStep() {

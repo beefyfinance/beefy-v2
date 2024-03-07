@@ -27,13 +27,13 @@ const _YearlyBreakdownTooltip = ({
   // here we get formatted values
   rates: AllValuesAsString<TotalApy>;
 }) => {
-  const rows = [];
+  const rows: { label: string; value: string; last?: boolean }[] = [];
   const { t } = useTranslation();
 
   if (isGovVault) {
     rows.push({
       label: t('Pool-Apr'),
-      value: rates.vaultApr,
+      value: rates.vaultApr ?? '?',
       last: true,
     });
     return <InterestTooltipContent rows={rows} />;
@@ -42,7 +42,7 @@ const _YearlyBreakdownTooltip = ({
   if ('vaultApr' in rates) {
     rows.push({
       label: t('Vault-Breakdown-VaultApr'),
-      value: rates.vaultApr,
+      value: rates.vaultApr ?? '?',
       last: false,
     });
   }
@@ -50,7 +50,7 @@ const _YearlyBreakdownTooltip = ({
   if ('tradingApr' in rates) {
     rows.push({
       label: t('Vault-Breakdown-TradingApr'),
-      value: rates.tradingApr,
+      value: rates.tradingApr ?? '?',
       last: false,
     });
   }
@@ -58,7 +58,7 @@ const _YearlyBreakdownTooltip = ({
   if ('liquidStakingApr' in rates) {
     rows.push({
       label: t('Vault-Breakdown-LiquidStakingApr'),
-      value: rates.liquidStakingApr,
+      value: rates.liquidStakingApr ?? '?',
       last: false,
     });
   }
@@ -66,7 +66,7 @@ const _YearlyBreakdownTooltip = ({
   if ('composablePoolApr' in rates) {
     rows.push({
       label: t('Vault-Breakdown-ComposablePoolApr'),
-      value: rates.composablePoolApr,
+      value: rates.composablePoolApr ?? '?',
       last: false,
     });
   }
@@ -74,14 +74,14 @@ const _YearlyBreakdownTooltip = ({
   if ('boostApr' in rates) {
     rows.push({
       label: t('Vault-Breakdown-BoostApr'),
-      value: rates.boostApr,
+      value: rates.boostApr ?? '?',
       last: false,
     });
   }
 
   rows.push({
     label: t('APY'),
-    value: boosted ? rates.boostedTotalApy : rates.totalApy,
+    value: boosted ? rates.boostedTotalApy ?? '?' : rates.totalApy,
     last: true,
   });
 
@@ -100,13 +100,13 @@ const _DailyBreakdownTooltip = ({
   // here we get formatted values
   rates: AllValuesAsString<TotalApy>;
 }) => {
-  const rows = [];
+  const rows: { label: string; value: string; last?: boolean }[] = [];
   const { t } = useTranslation();
 
   if (isGovVault) {
     rows.push({
       label: t('Pool-AprDaily'),
-      value: rates.vaultDaily,
+      value: rates.vaultDaily ?? '?',
       last: true,
     });
     return <InterestTooltipContent rows={rows} />;
@@ -115,7 +115,7 @@ const _DailyBreakdownTooltip = ({
   if ('vaultDaily' in rates) {
     rows.push({
       label: t('Vault-Breakdown-VaultDaily'),
-      value: rates.vaultDaily,
+      value: rates.vaultDaily ?? '?',
       last: false,
     });
   }
@@ -123,7 +123,7 @@ const _DailyBreakdownTooltip = ({
   if ('tradingDaily' in rates) {
     rows.push({
       label: t('Vault-Breakdown-TradingDaily'),
-      value: rates.tradingDaily,
+      value: rates.tradingDaily ?? '?',
       last: false,
     });
   }
@@ -131,7 +131,7 @@ const _DailyBreakdownTooltip = ({
   if ('liquidStakingDaily' in rates) {
     rows.push({
       label: t('Vault-Breakdown-LiquidStakingDaily'),
-      value: rates.liquidStakingDaily,
+      value: rates.liquidStakingDaily ?? '?',
       last: false,
     });
   }
@@ -139,7 +139,7 @@ const _DailyBreakdownTooltip = ({
   if ('composablePoolDaily' in rates) {
     rows.push({
       label: t('Vault-Breakdown-ComposablePoolDaily'),
-      value: rates.composablePoolDaily,
+      value: rates.composablePoolDaily ?? '?',
       last: false,
     });
   }
@@ -147,14 +147,14 @@ const _DailyBreakdownTooltip = ({
   if ('boostDaily' in rates) {
     rows.push({
       label: t('Vault-Breakdown-BoostDaily'),
-      value: rates.boostDaily,
+      value: rates.boostDaily ?? '?',
       last: false,
     });
   }
 
   rows.push({
     label: t('Vault-Breakdown-DailyAPY'),
-    value: boosted ? rates.boostedTotalDaily : rates.totalDaily,
+    value: boosted ? rates.boostedTotalDaily ?? '?' : rates.totalDaily,
     last: true,
   });
 
@@ -202,7 +202,7 @@ function _YearlyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
                 />
               ),
             }
-          : null
+          : undefined
       }
       loading={shouldShowApy && isLoading}
     />
@@ -250,7 +250,7 @@ function _DailyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
                 />
               ),
             }
-          : null
+          : undefined
       }
       loading={shouldShowApy && isLoading}
     />

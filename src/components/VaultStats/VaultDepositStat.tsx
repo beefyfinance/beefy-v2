@@ -1,4 +1,4 @@
-import type { VaultEntity } from '../../features/data/entities/vault';
+import { type VaultEntity } from '../../features/data/entities/vault';
 import { isGovVault, isStandardVault } from '../../features/data/entities/vault';
 import { memo, type ReactNode } from 'react';
 import { connect } from 'react-redux';
@@ -33,7 +33,9 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDeposit
   const walletAddress = selectWalletAddress(state);
 
   const isLoaded =
-    state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
+    state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
+    selectIsWalletKnown(state) &&
+    walletAddress
       ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
           .alreadyLoadedOnce
       : true;

@@ -3,7 +3,7 @@ import type { ChainEntity } from '../../../entities/chain';
 import type { TokenEntity } from '../../../entities/token';
 import { nanoid } from '@reduxjs/toolkit';
 import { sortTokens } from './tokens';
-import type { TokenAmount } from '../transact-types';
+import type { InputTokenAmount, TokenAmount } from '../transact-types';
 
 export function createQuoteId(optionId: string): string {
   return `${optionId}-${nanoid()}`;
@@ -61,4 +61,25 @@ export function onlyInputCount(inputs: TokenAmount[], count: number) {
   if (inputs.length !== count) {
     throw new Error(`Invalid input count ${inputs.length}, expected ${count}`);
   }
+}
+
+export function onlyOneInput(inputs: InputTokenAmount[]) {
+  if (inputs.length !== 1) {
+    throw new Error(`Invalid input count ${inputs.length}, expected 1`);
+  }
+  return inputs[0];
+}
+
+export function onlyOneTokenAmount(outputs: TokenAmount[]) {
+  if (outputs.length !== 1) {
+    throw new Error(`Invalid output count ${outputs.length}, expected 1`);
+  }
+  return outputs[0];
+}
+
+export function onlyOneToken(tokens: TokenEntity[]) {
+  if (tokens.length !== 1) {
+    throw new Error(`Invalid token count ${tokens.length}, expected 1`);
+  }
+  return tokens[0];
 }

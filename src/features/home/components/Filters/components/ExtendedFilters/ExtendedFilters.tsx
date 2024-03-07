@@ -32,6 +32,11 @@ export const ExtendedFilters = memo<ExtendedFiltersProps>(function ExtendedFilte
       <CheckboxFilter className={classes.checkbox} filter="onlyBoosted" label={t('Filter-Boost')} />
       <CheckboxFilter
         className={classes.checkbox}
+        filter="onlyEarningPoints"
+        label={t('Filter-Points')}
+      />
+      <CheckboxFilter
+        className={classes.checkbox}
         filter="onlyZappable"
         label={t('Filter-Zappable')}
       />

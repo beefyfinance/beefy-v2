@@ -13,12 +13,12 @@ import {
 } from '../../../../../data/selectors/on-ramp';
 import { useDispatch } from 'react-redux';
 import { SearchableList } from '../../../../../../components/SearchableList';
-import type { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 import clsx from 'clsx';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import { TokenIconAdornment } from '../TokenTitleAdornment';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
+import type { ChainEntity } from '../../../../../data/entities/chain';
 
 const useStyles = makeStyles(styles);
 
@@ -72,7 +72,7 @@ const NetworkIconPlaceholder = memo<NetworkIconPlaceholderProps>(function Networ
   return <div className={className} data-network={network} />;
 });
 
-const ListItem = memo<ItemInnerProps>(function ListItem({ value }) {
+const NetworkListItem = memo<{ value: ChainEntity['id'] }>(function NetworkListItem({ value }) {
   const classes = useStyles();
   const src = getNetworkSrc(value);
   const chain = useAppSelector(state => selectChainById(state, value));
@@ -101,7 +101,7 @@ const NetworkSelector = memo<{ fiat: string; token: string }>(function NetworkSe
   const dispatch = useDispatch();
 
   const handleSelect = useCallback(
-    (network: string) => {
+    (network: ChainEntity['id']) => {
       dispatch(onRampFormActions.selectNetwork({ network }));
     },
     [dispatch]
@@ -112,7 +112,7 @@ const NetworkSelector = memo<{ fiat: string; token: string }>(function NetworkSe
       <SearchableList
         options={sortedNetworks}
         onSelect={handleSelect}
-        ItemInnerComponent={ListItem}
+        ItemInnerComponent={NetworkListItem}
       />
     </>
   );

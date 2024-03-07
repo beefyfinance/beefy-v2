@@ -35,7 +35,7 @@ const StellaPairAbi: AbiItem[] = [
 ];
 
 export class StellaUniswapV2Pool extends UniswapV2Pool {
-  protected pairData: PairData | null = null;
+  protected pairData: PairData | undefined = undefined;
 
   protected getPairDataRequest(): ShapeWithLabel[] {
     const contract = createContract(StellaPairAbi, this.address);
@@ -51,6 +51,10 @@ export class StellaUniswapV2Pool extends UniswapV2Pool {
     const result = (untypedResult as PairDataResponse[])[0];
 
     super.consumePairDataResponse(untypedResult);
+
+    if (!this.pairData) {
+      throw new Error('Pair data is not loaded');
+    }
 
     this.pairData.devFee = new BigNumber(result.devFee);
   }

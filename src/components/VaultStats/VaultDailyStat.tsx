@@ -106,57 +106,57 @@ const DailyContentTooltip = memo<DailyTooltipContentProps>(function DailyTooltip
 }) {
   const isGovVault = useAppSelector(state => selectIsVaultGov(state, vaultId));
   const rows = useMemo(() => {
-    const items = [];
+    const items: { label: string; value: string }[] = [];
 
     if (isGovVault) {
       items.push({
         label: 'Pool-AprDaily',
-        value: rates.vaultDaily,
+        value: rates.vaultDaily ?? '?',
       });
     } else {
       if ('vaultDaily' in rates) {
         items.push({
           label: 'Vault-Breakdown-VaultDaily',
-          value: rates.vaultDaily,
+          value: rates.vaultDaily ?? '?',
         });
       }
 
       if ('tradingDaily' in rates) {
         items.push({
           label: 'Vault-Breakdown-TradingDaily',
-          value: rates.tradingDaily,
+          value: rates.tradingDaily ?? '?',
         });
       }
 
       if ('liquidStakingDaily' in rates) {
         items.push({
           label: 'Vault-Breakdown-LiquidStakingDaily',
-          value: rates.liquidStakingDaily,
+          value: rates.liquidStakingDaily ?? '?',
         });
       }
 
       if ('composablePoolDaily' in rates) {
         items.push({
           label: 'Vault-Breakdown-ComposablePoolDaily',
-          value: rates.composablePoolDaily,
+          value: rates.composablePoolDaily ?? '?',
         });
       }
 
       if ('boostDaily' in rates) {
         items.push({
           label: 'Vault-Breakdown-BoostDaily',
-          value: rates.boostDaily,
+          value: rates.boostDaily ?? '?',
         });
       }
 
       items.push({
         label: 'Vault-Breakdown-DailyAPY',
-        value: isBoosted ? rates.boostedTotalDaily : rates.totalDaily,
+        value: isBoosted ? rates.boostedTotalDaily ?? '?' : rates.totalDaily,
       });
     }
 
-    return items.length ? items : null;
+    return items.length ? items : undefined;
   }, [isGovVault, isBoosted, rates]);
 
-  return <InterestTooltipContent rows={rows} />;
+  return rows ? <InterestTooltipContent rows={rows} /> : undefined;
 });

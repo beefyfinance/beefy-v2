@@ -21,7 +21,7 @@ export function ValueBlock({
   label: ReactNode;
   value: ReactNode;
   textContent?: boolean;
-  tooltip?: { title?: string; content: ReactNode };
+  tooltip?: { title?: string; content: ReactNode } | undefined;
   usdValue?: ReactNode;
   loading?: boolean;
   blurred?: boolean;

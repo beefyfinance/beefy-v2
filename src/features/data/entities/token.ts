@@ -23,13 +23,13 @@ export interface TokenErc20 {
   oracleId: string;
   address: string;
   decimals: number;
-  buyUrl: string | null; // link to 1inch/pancake/...
+  buyUrl: string | undefined; // link to 1inch/pancake/...
   type: 'erc20';
-  website: string | null;
-  description: string | null;
-  documentation: string | null;
+  website: string | undefined;
+  description: string | undefined;
+  documentation: string | undefined;
   bridge?: string;
-  risks?: string[];
+  risks: string[];
 }
 
 /**
@@ -46,11 +46,11 @@ export interface TokenNative {
   oracleId: string;
   address: string;
   decimals: number;
-  buyUrl: string | null; // link to 1inch/pancake/...
+  buyUrl: string | undefined; // link to 1inch/pancake/...
   type: 'native';
-  website: string | null;
-  description: string | null;
-  documentation: string | null;
+  website: string | undefined;
+  description: string | undefined;
+  documentation: string | undefined;
 }
 
 // provide type guards

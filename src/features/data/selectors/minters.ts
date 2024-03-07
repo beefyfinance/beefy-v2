@@ -7,10 +7,11 @@ import { selectVaultById } from './vaults';
 
 export const selectMinterById = (state: BeefyState, minterId: MinterEntity['id']) => {
   const mintersById = state.entities.minters.byId;
-  if (mintersById[minterId] === undefined) {
+  const minter = mintersById[minterId];
+  if (minter === undefined) {
     throw new Error(`selectMinterById: Unknown minter id ${minterId}`);
   }
-  return mintersById[minterId];
+  return minter;
 };
 
 export const selectMintersByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {

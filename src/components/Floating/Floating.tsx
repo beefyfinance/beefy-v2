@@ -10,10 +10,11 @@ import {
   useFloating,
 } from '@floating-ui/react-dom';
 import type { Placement } from '@floating-ui/react-dom';
+import type { Middleware } from '@floating-ui/core/src/types';
 
 export type FloatingProps = {
   open: boolean;
-  anchorEl: MutableRefObject<HTMLElement>;
+  anchorEl: MutableRefObject<HTMLElement | null>;
   children: ReactNode;
   className?: string;
   placement?: Placement;
@@ -38,7 +39,7 @@ export const Floating = memo<FloatingProps>(function Floating({
   flip = true,
 }) {
   const middleware = useMemo(() => {
-    const middlewares = [];
+    const middlewares: Array<Middleware> = [];
     if (autoHide) middlewares.push(hide());
 
     middlewares.push(offset(4));

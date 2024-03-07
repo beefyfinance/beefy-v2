@@ -1,5 +1,4 @@
-import _BeefyV2AppMulticallUserAbi from '../../../../config/abi/BeefyV2AppMulticall.json';
-import type { AbiItem } from 'web3-utils';
+import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi';
 import type Web3 from 'web3';
 import type { VaultGov, VaultStandard } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
@@ -14,9 +13,7 @@ import { selectTokenByAddress } from '../../selectors/tokens';
 import { featureFlag_getAllowanceApiChunkSize } from '../../utils/feature-flags';
 import type { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
-
-// fix ts types
-const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];
+import { viemToWeb3Abi } from '../../../../helpers/web3';
 
 export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
   constructor(protected web3: Web3, protected chain: T) {}
@@ -29,7 +26,7 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
     walletAddress: string
   ): Promise<FetchAllAllowanceResult> {
     const mc = new this.web3.eth.Contract(
-      BeefyV2AppMulticallUserAbi,
+      viemToWeb3Abi(BeefyV2AppMulticallAbi),
       this.chain.appMulticallContractAddress
     );
 
@@ -126,7 +123,7 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
     spenderAddress: string
   ) {
     const mc = new this.web3.eth.Contract(
-      BeefyV2AppMulticallUserAbi,
+      viemToWeb3Abi(BeefyV2AppMulticallAbi),
       this.chain.appMulticallContractAddress
     );
 

@@ -13,10 +13,9 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-interface AssetsProps {
-  chainId?: ChainEntity['id'];
-  mmId?: string;
-}
+type AssetsProps = {
+  chainId: ChainEntity['id'];
+};
 
 const chainAssetTypes: Record<string, string> = {
   liquid: 'Liquid Assets',
@@ -49,7 +48,9 @@ export const Assets = memo<AssetsProps>(function Assets({ chainId }) {
   );
 });
 
-export const MMAssets = memo<AssetsProps>(function MMAssets({ mmId }) {
+export type MMAssetsProps = { mmId: string };
+
+export const MMAssets = memo<MMAssetsProps>(function MMAssets({ mmId }) {
   const mmHoldings = useAppSelector(state => selectTreasuryHoldingsByMMId(state, mmId));
   const sortedAssetsByExchange = useSortedMMHoldings(mmHoldings);
 

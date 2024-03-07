@@ -5,8 +5,9 @@ import type { ChainEntity } from '../../../entities/chain';
 import { getWeb3Instance } from '../../instances';
 import type { AmmConfigGamma } from '../../config-types';
 import BigNumber from 'bignumber.js';
-import { createContract } from '../../../../../helpers/web3';
-import { GammaHypervisorAbi, GammaProxyAbi } from '../../../../../config/abi';
+import { createContract, viemToWeb3Abi } from '../../../../../helpers/web3';
+import { GammaHypervisorAbi } from '../../../../../config/abi/GammaHypervisorAbi';
+import { GammaProxyAbi } from '../../../../../config/abi/GammaProxyAbi';
 import { TickMath } from './TickMath';
 import type { TokenAmount } from '../../transact/transact-types';
 import {
@@ -22,7 +23,7 @@ import { slipAllBy } from '../../transact/helpers/amounts';
 import abiCoder from 'web3-eth-abi';
 import { getInsertIndex } from '../../transact/helpers/zap';
 import { isFulfilledResult } from '../../../../../helpers/promises';
-import { first } from 'lodash-es';
+import { onlyOneTokenAmount } from '../../transact/helpers/options';
 
 type HypervisorResponse = {
   currentTick: string;
@@ -33,9 +34,9 @@ type HypervisorResponse = {
 export class GammaPool implements IGammaPool {
   public readonly type = 'gamma';
 
-  protected web3: Web3 | null = null;
-  protected multicall: MultiCall | null = null;
-  protected hypervisorData: GammaHypervisorData | null = null;
+  protected web3: Web3 | undefined = undefined;
+  protected multicall: MultiCall | undefined = undefined;
+  protected hypervisorData: GammaHypervisorData | undefined = undefined;
 
   constructor(
     protected address: string,
@@ -44,7 +45,7 @@ export class GammaPool implements IGammaPool {
   ) {}
 
   async getWeb3(): Promise<Web3> {
-    if (this.web3 === null) {
+    if (this.web3 === undefined) {
       this.web3 = await getWeb3Instance(this.chain);
     }
 
@@ -52,7 +53,7 @@ export class GammaPool implements IGammaPool {
   }
 
   async getMulticall(): Promise<MultiCall> {
-    if (this.multicall === null) {
+    if (this.multicall === undefined) {
       this.multicall = new MultiCall(await this.getWeb3(), this.chain.multicallAddress);
     }
 
@@ -70,7 +71,7 @@ export class GammaPool implements IGammaPool {
   }
 
   protected getHypervisorRequest(): ShapeWithLabel[] {
-    const contract = createContract(GammaHypervisorAbi, this.address);
+    const contract = createContract(viemToWeb3Abi(GammaHypervisorAbi), this.address);
     return [
       {
         currentTick: contract.methods.currentTick(),
@@ -108,7 +109,7 @@ export class GammaPool implements IGammaPool {
     }
 
     const multicall = await this.getMulticall();
-    const proxy = createContract(GammaProxyAbi, this.amm.proxyAddress);
+    const proxy = createContract(viemToWeb3Abi(GammaProxyAbi), this.amm.proxyAddress);
     const [token0, token1] = testAmounts.map(({ token }) => token);
     const [inputToken0Amount, inputToken1Amount] = testAmounts.map(({ amount }) => amount);
 
@@ -164,7 +165,7 @@ export class GammaPool implements IGammaPool {
     }
 
     const multicall = await this.getMulticall();
-    const proxy = createContract(GammaProxyAbi, this.amm.proxyAddress);
+    const proxy = createContract(viemToWeb3Abi(GammaProxyAbi), this.amm.proxyAddress);
 
     const [
       [
@@ -385,7 +386,7 @@ export class GammaPool implements IGammaPool {
     }
 
     const web3 = await this.getWeb3();
-    const hypervisor = new web3.eth.Contract(GammaHypervisorAbi, this.address);
+    const hypervisor = new web3.eth.Contract(viemToWeb3Abi(GammaHypervisorAbi), this.address);
 
     const results = await Promise.allSettled(
       tokenHolders.map(async tokenHolder =>
@@ -408,11 +409,7 @@ export class GammaPool implements IGammaPool {
   public async getZapRemoveLiquidity(request: ZapStepRequest): Promise<ZapStepResponse> {
     const { inputs, outputs, zapRouter, insertBalance, maxSlippage } = request;
 
-    if (inputs.length !== 1) {
-      throw new Error('Invalid input count');
-    }
-
-    const input = first(inputs);
+    const input = onlyOneTokenAmount(inputs);
     if (this.address.toLowerCase() !== input.token.address.toLowerCase()) {
       throw new Error('Invalid input token');
     }

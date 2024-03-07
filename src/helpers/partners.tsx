@@ -1,3 +1,5 @@
+import type { ChainEntity } from '../features/data/entities/chain';
+
 const QiDao = [
   'fantom-bifi-maxi',
   'scream-eth',
@@ -12,8 +14,8 @@ const QiDao = [
   'curve-op-f-wsteth',
 ];
 
-const Nexus = ['ethereum'];
-const OpenCover = [
+const Nexus: ChainEntity['id'][] = ['ethereum'];
+const OpenCover: ChainEntity['id'][] = [
   'polygon',
   'bsc',
   'optimism',

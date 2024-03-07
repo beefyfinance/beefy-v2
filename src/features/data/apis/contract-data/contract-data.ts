@@ -1,10 +1,8 @@
-import _BeefyV2AppMulticallAbi from '../../../../config/abi/BeefyV2AppMulticall.json';
-import type { AbiItem } from 'web3-utils';
-import type Web3 from 'web3';
+import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi';
 import type { VaultGov, VaultStandard } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
-import type { AllValuesAsString } from '../../utils/types-utils';
+import type { AsWeb3Result } from '../../utils/types-utils';
 import type { BoostEntity } from '../../entities/boost';
 import { chunk } from 'lodash-es';
 import type {
@@ -19,11 +17,9 @@ import { featureFlag_getContractDataApiChunkSize } from '../../utils/feature-fla
 import type { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
 import { selectTokenByAddress } from '../../selectors/tokens';
-import type { Web3Call } from '../../../../helpers/web3';
-import { makeBatchRequest } from '../../../../helpers/web3';
-
-// fix ts types
-const BeefyV2AppMulticallAbi = _BeefyV2AppMulticallAbi as AbiItem | AbiItem[];
+import { makeBatchRequest, viemToWeb3Abi, type Web3Call } from '../../../../helpers/web3';
+import { isFiniteNumber } from '../../../../helpers/number';
+import type Web3 from 'web3';
 
 export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi {
   constructor(protected web3: Web3, protected chain: T) {}
@@ -35,7 +31,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     boosts: BoostEntity[]
   ): Promise<FetchAllContractDataResult> {
     const mc = new this.web3.eth.Contract(
-      BeefyV2AppMulticallAbi,
+      viemToWeb3Abi(BeefyV2AppMulticallAbi),
       this.chain.appMulticallContractAddress
     );
 
@@ -87,14 +83,14 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       resultsIdx++;
     }
     for (const vaultBatch of vaultBatches) {
-      const batchRes = (results[resultsIdx] as AllValuesAsString<StandardVaultContractData>[]).map(
+      const batchRes = (results[resultsIdx] as AsWeb3Result<StandardVaultContractData>[]).map(
         (vaultRes, elemidx) => this.standardVaultFormatter(state, vaultRes, vaultBatch[elemidx])
       );
       res.standardVaults = res.standardVaults.concat(batchRes);
       resultsIdx++;
     }
     for (const vaultBatch of govVaultBatches) {
-      const batchRes = (results[resultsIdx] as AllValuesAsString<GovVaultContractData>[]).map(
+      const batchRes = (results[resultsIdx] as AsWeb3Result<GovVaultContractData>[]).map(
         (vaultRes, elemidx) => this.govVaultFormatter(state, vaultRes, vaultBatch[elemidx])
       );
       res.govVaults = res.govVaults.concat(batchRes);
@@ -173,7 +169,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
   protected standardVaultFormatter(
     state: BeefyState,
-    result: AllValuesAsString<StandardVaultContractData>,
+    result: AsWeb3Result<StandardVaultContractData>,
     standardVault: VaultStandard
   ) {
     const vault = selectVaultById(state, standardVault.id);
@@ -185,12 +181,13 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       /** always 18 decimals for PPFS */
       pricePerFullShare: new BigNumber(result.pricePerFullShare).shiftedBy(-mooToken.decimals),
       strategy: result.strategy,
-    } as StandardVaultContractData;
+      paused: result.paused,
+    } satisfies StandardVaultContractData;
   }
 
   protected govVaultFormatter(
     state: BeefyState,
-    result: AllValuesAsString<GovVaultContractData>,
+    result: AsWeb3Result<GovVaultContractData>,
     govVault: VaultGov
   ) {
     const vault = selectVaultById(state, govVault.id);
@@ -198,12 +195,11 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     return {
       id: govVault.id,
       totalSupply: new BigNumber(result.totalSupply).shiftedBy(-token.decimals),
-    } as GovVaultContractData;
+    } satisfies GovVaultContractData;
   }
 
   protected boostFormatter(
     state: BeefyState,
-
     result: BoostContractDataResponse,
     boost: BoostEntity
   ) {
@@ -215,9 +211,21 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       totalSupply: new BigNumber(result.totalSupply).shiftedBy(-depositToken.decimals),
       rewardRate: new BigNumber(result.rewardRate).shiftedBy(-earnedToken.decimals),
       /* assuming period finish is a UTC timestamp in seconds */
-      periodFinish:
-        result.periodFinish === '0' ? null : new Date(parseInt(result.periodFinish) * 1000),
+      periodFinish: this.periodFinishToDate(result.periodFinish),
       isPreStake: result.isPreStake,
-    } as BoostContractData;
+    } satisfies BoostContractData;
+  }
+
+  protected periodFinishToDate(periodFinish: string | null | undefined): Date | undefined {
+    if (!periodFinish || periodFinish === '0') {
+      return undefined;
+    }
+
+    const epochSeconds = parseInt(periodFinish);
+    if (isFiniteNumber(epochSeconds)) {
+      return new Date(epochSeconds * 1000);
+    }
+
+    return undefined;
   }
 }

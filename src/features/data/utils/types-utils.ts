@@ -8,10 +8,9 @@ export type AllValuesAs<T, U> = {
   [key in keyof T]: U;
 };
 
-/** Converts all values to type U, or U[] if the original value was an array */
-export type AllValuesAsIncludeArrays<T, U> = {
-  [key in keyof T]: T[key] extends Array<unknown> ? U[] : U;
-};
+export type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & unknown;
 
 export type KeysOfType<T, V> = { [K in keyof T]-?: T[K] extends V ? K : never }[keyof T];
 
@@ -23,3 +22,14 @@ export type SnakeToCamelCase<Key extends string> =
 export type ChangeTypeOfKeys<T extends object, Keys extends keyof T, NewType> = {
   [K in keyof T]: K extends Keys ? NewType : T[K];
 };
+
+type Web3KeepTypes = boolean;
+type Web3ConvertType<T> = T extends Array<infer U>
+  ? Web3ConvertType<U>[]
+  : T extends Web3KeepTypes
+  ? T
+  : string;
+
+export type AsWeb3Result<T extends object> = Prettify<{
+  [key in keyof T]: Web3ConvertType<T[key]>;
+}>;

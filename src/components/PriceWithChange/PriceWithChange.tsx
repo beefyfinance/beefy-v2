@@ -93,7 +93,7 @@ const WithChange = memo<WithChangeProps>(function WithChange({
     change: formatBigUsd(diffAbs, diffAbs.gte(0.01) ? 2 : 4),
     date: format(previousDate, 'MMM d, yyyy h:mm a'),
   });
-  const handleTooltipClick = useCallback<TooltipProps['onTriggerClick']>(e => {
+  const handleTooltipClick = useCallback<Exclude<TooltipProps['onTriggerClick'], undefined>>(e => {
     // don't bubble up
     e.preventDefault();
   }, []);
@@ -102,9 +102,8 @@ const WithChange = memo<WithChangeProps>(function WithChange({
     <Tooltip
       content={tooltipContent}
       onTriggerClick={handleTooltipClick}
-      triggerClass={clsx({
+      triggerClass={clsx(className, {
         [classes.priceWithChange]: true,
-        [className]: true,
         [classes.tooltipTrigger]: true,
         [classes.positive]: isPositive,
         [classes.negative]: isNegative,
