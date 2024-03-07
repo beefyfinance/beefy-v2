@@ -1,5 +1,75 @@
 [
   {
+    "id": "velodrome-v2-lusd-usdc",
+    "name": "USDC-LUSD sLP V2",
+    "type": "standard",
+    "token": "USDC-LUSD sLP V2",
+    "tokenAddress": "0x4F3da11c5caDf644ae023Dbad01008a934C993E2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2USDC-LUSD",
+    "earnedTokenAddress": "0xc0C2B86540ACF7da1a5f71B3215A6D28f2269C31",
+    "earnContractAddress": "0xc0C2B86540ACF7da1a5f71B3215A6D28f2269C31",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-lusd-usdc",
+    "status": "active",
+    "createdAt": 1709840228,
+    "platformId": "velodrome",
+    "assets": ["USDC", "LUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&token1=0xc40F949F8a4e094D1b49a23ea9241D289B7b2819&stable=true",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x4F3da11c5caDf644ae023Dbad01008a934C993E2",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-v2-susd-usdc",
+    "name": "USDC-sUSD sLP V2",
+    "type": "standard",
+    "token": "USDC-sUSD sLP V2",
+    "tokenAddress": "0xbC26519f936A90E78fe2C9aA2A03CC208f041234",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2USDC-sUSD",
+    "earnedTokenAddress": "0x12112fcc5eA780C9A667C526601697Ca5898eBD2",
+    "earnContractAddress": "0x12112fcc5eA780C9A667C526601697Ca5898eBD2",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-susd-usdc",
+    "status": "active",
+    "createdAt": 1709840228,
+    "platformId": "velodrome",
+    "assets": ["USDC", "sUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&token1=0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9&stable=true",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xbC26519f936A90E78fe2C9aA2A03CC208f041234",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "velodrome-v2-usdc-op",
     "name": "USDC-OP vLP V2",
     "type": "standard",
