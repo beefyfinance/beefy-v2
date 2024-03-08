@@ -18,7 +18,8 @@
     "assets": ["SONNE", "VELO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1DB2466d9F5e10D7090E7152B68d62703a2245F0&token1=0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db&stable=false",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x1DB2466d9F5e10D7090E7152B68d62703a2245F0&to=0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1DB2466d9F5e10D7090E7152B68d62703a2245F0&token1=0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db&type=-1",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xC4270d957C218d263e7FAE5a3bEEDC1E98B6012D",
     "network": "optimism",
     "zaps": [
