@@ -101,7 +101,7 @@ export const TokensImage = memo<TokensImageProps>(function TokensImage({
   return (
     <AssetsImage
       chainId={tokens[0].chainId}
-      assetSymbols={tokens.map(token => token.id)}
+      assetSymbols={tokens.map(token => token.symbol)}
       className={className}
       size={size}
     />
