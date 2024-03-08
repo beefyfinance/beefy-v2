@@ -3,7 +3,7 @@
     "id": "velodrome-v2-lusd-usdc",
     "name": "USDC-LUSD sLP V2",
     "type": "standard",
-    "token": "USDC-LUSD sLP V2",
+    "token": "sAMMV2-USDC/LUSD",
     "tokenAddress": "0x4F3da11c5caDf644ae023Dbad01008a934C993E2",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
@@ -24,7 +24,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&token1=0xc40F949F8a4e094D1b49a23ea9241D289B7b2819&stable=true",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&to=0xc40F949F8a4e094D1b49a23ea9241D289B7b2819",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&token1=0xc40F949F8a4e094D1b49a23ea9241D289B7b2819&type=0",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x4F3da11c5caDf644ae023Dbad01008a934C993E2",
     "network": "optimism",
     "zaps": [
@@ -38,7 +39,7 @@
     "id": "velodrome-v2-susd-usdc",
     "name": "USDC-sUSD sLP V2",
     "type": "standard",
-    "token": "USDC-sUSD sLP V2",
+    "token": "sAMMV2-USDC/sUSD",
     "tokenAddress": "0xbC26519f936A90E78fe2C9aA2A03CC208f041234",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
@@ -59,7 +60,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&token1=0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9&stable=true",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&to=0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&token1=0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9&type=0",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xbC26519f936A90E78fe2C9aA2A03CC208f041234",
     "network": "optimism",
     "zaps": [
