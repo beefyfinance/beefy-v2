@@ -124,6 +124,13 @@ const URLS: ChainProviderUrls = {
     velodrome: [
       {
         condition: (vault: VaultConfig) =>
+          vault.id.startsWith('velodrome-') && !vault.id.startsWith('velodrome-v2-'),
+        buyTokenUrl: 'https://velodrome.finance/swap?from={token0}&to={token1}',
+        addLiquidityUrl: 'https://v1.velodrome.finance/liquidity/manage?address={lp}',
+        removeLiquidityUrl: 'https://v1.velodrome.finance/liquidity/manage?address={lp}',
+      },
+      {
+        condition: (vault: VaultConfig) =>
           vault.id.startsWith('velodrome-v2-') && vault.token.includes(' sLP'),
         buyTokenUrl:
           'https://velodrome.finance/swap?from={token0:wrapped:lower}&to={token1:wrapped:lower}',
