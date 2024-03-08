@@ -1271,8 +1271,8 @@
     "assets": ["WBTC", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-usdc.e-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-usdc.e-narrow",
     "network": "polygon",
     "zaps": [
       {
@@ -1301,8 +1301,8 @@
     "assets": ["WBTC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-weth-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-weth-narrow",
     "network": "polygon",
     "zaps": [
       {
@@ -1363,8 +1363,8 @@
     "assets": ["ETH", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-weth-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-weth-narrow",
     "network": "polygon",
     "zaps": [
       {
@@ -1393,8 +1393,8 @@
     "assets": ["axlUSDC", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-axlusdc-stable",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-axlusdc-stable",
     "network": "polygon",
     "zaps": [
       {
@@ -1519,8 +1519,8 @@
     "assets": ["pUSDCe", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-usdt-stable",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-usdt-stable",
     "network": "polygon",
     "zaps": [
       {
@@ -1581,8 +1581,8 @@
     "assets": ["MATIC", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0xa2036f0538221a77A3937F1379699f44945018d0&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0xa2036f0538221a77A3937F1379699f44945018d0&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdc.e-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdc.e-narrow",
     "network": "polygon",
     "zaps": [
       {
@@ -1643,8 +1643,8 @@
     "assets": ["stMATIC", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0xa2036f0538221a77A3937F1379699f44945018d0&currency1=0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0xa2036f0538221a77A3937F1379699f44945018d0&currency1=0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-stmatic-pegged-price",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-stmatic-pegged-price",
     "network": "polygon",
     "zaps": [
       {
@@ -1673,8 +1673,8 @@
     "assets": ["MaticX", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0xa2036f0538221a77A3937F1379699f44945018d0&currency1=0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0xa2036f0538221a77A3937F1379699f44945018d0&currency1=0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-maticx-pegged-price",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-maticx-pegged-price",
     "network": "polygon",
     "zaps": [
       {
@@ -1703,8 +1703,8 @@
     "assets": ["MATIC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0xa2036f0538221a77A3937F1379699f44945018d0&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0xa2036f0538221a77A3937F1379699f44945018d0&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-weth-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-weth-narrow",
     "network": "polygon",
     "zaps": [
       {
@@ -1735,8 +1735,8 @@
     "assets": ["MATIC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-weth-wide",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-weth-wide",
     "network": "polygon",
     "zaps": [
       {
