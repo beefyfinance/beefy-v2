@@ -8,8 +8,7 @@ import { featureFlag_simulateBeefyApiError } from '../../utils/feature-flags';
 import type { TreasuryCompleteBreakdownConfig } from '../config-types';
 import type { ChainEntity } from '../../entities/chain';
 
-// export const API_URL = import.meta.env.VITE_API_URL || 'https://api.beefy.finance';
-export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+export const API_URL = import.meta.env.VITE_API_URL || 'https://api.beefy.finance';
 export const API_ZAP_URL = import.meta.env.VITE_API_ZAP_URL || `${API_URL}/zap`;
 
 export type ApyPerformanceFeeData = {
