@@ -406,8 +406,8 @@
     "assets": ["BNBx", "BTCB"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x0827841963cc8a0515b5baa59782b0a0870b5f88",
-    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/bnbx-btcb-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/bnbx-btcb-narrow",
     "network": "bsc",
     "zaps": [
       {
@@ -603,8 +603,8 @@
     "assets": ["ankrETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x5c15842fcc12313c4f94dfb6fad1af3f989d33e9",
-    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/weth-ankreth-pegged-price",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/weth-ankreth-pegged-price",
     "network": "bsc",
     "zaps": [
       {
@@ -633,8 +633,8 @@
     "assets": ["USDT", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x5eeca990e9b7489665f4b57d27d92c78bc2afbf2",
-    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/usdt-usdc-stable",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/usdt-usdc-stable",
     "network": "bsc",
     "zaps": [
       {
@@ -663,8 +663,8 @@
     "assets": ["USDT", "BNB"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x3ec1ffd5dc29190588608ae9fd4f93750e84cda2",
-    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/usdt-wbnb-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/usdt-wbnb-narrow",
     "network": "bsc",
     "zaps": [
       {
@@ -693,8 +693,8 @@
     "assets": ["ETH", "BNB"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x10bf6e7b28b1cffb1c047d7f815953931e5ee947",
-    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/weth-wbnb-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/weth-wbnb-narrow",
     "network": "bsc",
     "zaps": [
       {
@@ -723,8 +723,8 @@
     "assets": ["BTCB", "BNB"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0xd3c480ec7a47596ff8d63396227d1f7dc728a7f0",
-    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/btcb-wbnb-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/btcb-wbnb-narrow",
     "network": "bsc",
     "zaps": [
       {
@@ -753,8 +753,8 @@
     "assets": ["ankrBNB", "BNB"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x754fd74e22255780a58f125300008781d8318e3a",
-    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/ankrbnb-wbnb-pegged-price",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/ankrbnb-wbnb-pegged-price",
     "network": "bsc",
     "zaps": [
       {
@@ -783,8 +783,8 @@
     "assets": ["BNB", "stkBNB"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x86b481fce116dcd01fbebb963f1358bcc466668c",
-    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/wbnb-stkbnb-pegged-price",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/wbnb-stkbnb-pegged-price",
     "network": "bsc",
     "zaps": [
       {
@@ -813,8 +813,8 @@
     "assets": ["BNBx", "BNB"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://www.thena.fi/add?type=gamma&address=0x2ecbd508c00bbc8aa0cdc9100bf3956fcabe7677",
-    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/bnbx-wbnb-pegged-price",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/bnbx-wbnb-pegged-price",
     "network": "bsc",
     "zaps": [
       {
@@ -1448,8 +1448,8 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
+    "addLiquidityUrl": "https://thena.fi/pools/0x3c552e8aC4473222e3d794ADecFA432Eace85929",
+    "removeLiquidityUrl": "https://thena.fi/pools/0x3c552e8aC4473222e3d794ADecFA432Eace85929",
     "network": "bsc",
     "zaps": [
       {
@@ -1619,8 +1619,8 @@
     ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
+    "addLiquidityUrl": "https://thena.fi/pools/0x49ad051F4263517BD7204f75123b7C11aF9Fd31C",
+    "removeLiquidityUrl": "https://thena.fi/pools/0x49ad051F4263517BD7204f75123b7C11aF9Fd31C",
     "network": "bsc",
     "zaps": [
       {
@@ -1656,8 +1656,8 @@
     ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
+    "addLiquidityUrl": "https://thena.fi/pools/0x8D65dBe7206A768C466073aF0AB6d76f9e14Fc6D",
+    "removeLiquidityUrl": "https://thena.fi/pools/0x8D65dBe7206A768C466073aF0AB6d76f9e14Fc6D",
     "network": "bsc",
     "zaps": [
       {
@@ -1718,8 +1718,8 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
+    "addLiquidityUrl": "https://thena.fi/pools/0x9698e0c7af13B6cEF8017A5c34eb2B3d053C491C",
+    "removeLiquidityUrl": "https://thena.fi/pools/0x9698e0c7af13B6cEF8017A5c34eb2B3d053C491C",
     "network": "bsc",
     "zaps": [
       {
@@ -1866,8 +1866,8 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
+    "addLiquidityUrl": "https://thena.fi/pools/0x8A420aACA0c92e3f97CDcFdd852e01Ac5b609452",
+    "removeLiquidityUrl": "https://thena.fi/pools/0x8A420aACA0c92e3f97CDcFdd852e01Ac5b609452",
     "network": "bsc",
     "zaps": [
       {
@@ -2056,8 +2056,8 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
+    "addLiquidityUrl": "https://thena.fi/pools/0x483653bcF3a10d9a1c334CE16a19471a614F4385",
+    "removeLiquidityUrl": "https://thena.fi/pools/0x483653bcF3a10d9a1c334CE16a19471a614F4385",
     "network": "bsc",
     "zaps": [
       {
@@ -2228,8 +2228,8 @@
     ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
+    "addLiquidityUrl": "https://thena.fi/pools/0x7fCfE6b06C1F6AAd14884bA24A7f315C1c0C2cEf",
+    "removeLiquidityUrl": "https://thena.fi/pools/0x7fCfE6b06C1F6AAd14884bA24A7f315C1c0C2cEf",
     "network": "bsc",
     "zaps": [
       {
@@ -2290,8 +2290,8 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
+    "addLiquidityUrl": "https://thena.fi/pools/0x6321B57b6fdc14924be480c54e93294617E672aB",
+    "removeLiquidityUrl": "https://thena.fi/pools/0x6321B57b6fdc14924be480c54e93294617E672aB",
     "network": "bsc",
     "zaps": [
       {
