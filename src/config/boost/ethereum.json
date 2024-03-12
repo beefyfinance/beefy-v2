@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_silo-crvusd-silo",
+    "poolId": "silo-crvusd",
+    "name": "Silo",
+    "assets": ["crvUSD"],
+    "tokenAddress": "0xF62847E9A9dD2e7c0480B25AB99E71b7C1da6CED",
+    "earnedToken": "SILO",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x6f80310CA7F2C654691D1383149Fa1A57d8AB1f8",
+    "earnContractAddress": "0xAE9EFD6E72152c98Bed62C32Fffc1Bec229950a4",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "SILO",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["silo"]
+  },
+  {
     "id": "moo_curve-veth-vectorreserve",
     "poolId": "curve-veth",
     "name": "Vector",
