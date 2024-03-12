@@ -2513,113 +2513,6 @@
     ]
   },
   {
-    "id": "bvm-ftw-dai",
-    "name": "FTW-DAI vLP",
-    "type": "standard",
-    "token": "FTW-DAI vLP",
-    "tokenAddress": "0x7B809866EAA8137D902f83bF7CbE77B41D0Df70c",
-    "tokenDecimals": 18,
-    "tokenProviderId": "bvm",
-    "earnedToken": "mooBVMFTW-DAI",
-    "earnedTokenAddress": "0xbDCb3Fb19bE4BCD54a6dfeE25bb3439718eFB959",
-    "earnContractAddress": "0xbDCb3Fb19bE4BCD54a6dfeE25bb3439718eFB959",
-    "oracle": "lps",
-    "oracleId": "bvm-ftw-dai",
-    "status": "eol",
-    "createdAt": 1695881193,
-    "retireReason": "tvl",
-    "retiredAt": 1707845800,
-    "platformId": "bvm",
-    "assets": ["FTW", "DAI"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x7b809866eaa8137d902f83bf7cbe77b41d0df70c/0x108ef56f5146a060c847bb1a7755beb24eec4bd8",
-    "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x7b809866eaa8137d902f83bf7cbe77b41d0df70c/0x108ef56f5146a060c847bb1a7755beb24eec4bd8",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "base-bvm"
-      }
-    ]
-  },
-  {
-    "id": "bvm-axlusdt-axlusdc",
-    "name": "axlUSDT-axlUSDC sLP",
-    "type": "standard",
-    "token": "axlUSDT-axlUSDC sLP",
-    "tokenAddress": "0x59d286411E41BB0c754dC01d692C4A54Db314832",
-    "tokenDecimals": 18,
-    "tokenProviderId": "bvm",
-    "earnedToken": "mooBVMaxlUSDT-axlUSDC",
-    "earnedTokenAddress": "0xDec409020325D0722Ac08fF27C7A6a375aE755DB",
-    "earnContractAddress": "0xDec409020325D0722Ac08fF27C7A6a375aE755DB",
-    "oracle": "lps",
-    "oracleId": "bvm-axlusdt-axlusdc",
-    "status": "eol",
-    "createdAt": 1694662452,
-    "retireReason": "tvl",
-    "retiredAt": 1703931372,
-    "platformId": "bvm",
-    "assets": ["axlUSDT", "axlUSDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x59d286411e41bb0c754dc01d692c4a54db314832/0xb65b5853aced77228654eeaf1bf80d29f230c6a7",
-    "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x59d286411e41bb0c754dc01d692c4a54db314832/0xb65b5853aced77228654eeaf1bf80d29f230c6a7",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "base-bvm"
-      }
-    ]
-  },
-  {
-    "id": "bvm-usdc-usdbc",
-    "name": "USDC-USDbC sLP",
-    "type": "standard",
-    "token": "USDC-USDbC sLP",
-    "tokenAddress": "0x9F773b35c711F32E77842EC61d063c7374FE07b6",
-    "tokenDecimals": 18,
-    "tokenProviderId": "bvm",
-    "earnedToken": "mooBVMUSDC-USDbC",
-    "earnedTokenAddress": "0x6525626B897CC8E8649C8CB0c52D15527e72874C",
-    "earnContractAddress": "0x6525626B897CC8E8649C8CB0c52D15527e72874C",
-    "oracle": "lps",
-    "oracleId": "bvm-usdc-usdbc",
-    "status": "eol",
-    "createdAt": 1694068320,
-    "retireReason": "tvl",
-    "retiredAt": 1697816149,
-    "platformId": "bvm",
-    "assets": ["USDC", "USDbC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x9f773b35c711f32e77842ec61d063c7374fe07b6/0x500ce1cbb5327ec212b2a501f6438af0290c7485",
-    "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x9f773b35c711f32e77842ec61d063c7374fe07b6/0x500ce1cbb5327ec212b2a501f6438af0290c7485",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "base-bvm"
-      }
-    ]
-  },
-  {
     "id": "bvm-dai-usdbc",
     "name": "DAI-USDbC sLP",
     "type": "standard",
@@ -2649,44 +2542,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x110d58483e45b78a040fe052943a2ff4885d8cf5/0xe5ec7089c18b713c5e958258b1fb96c811fabc43",
     "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x110d58483e45b78a040fe052943a2ff4885d8cf5/0xe5ec7089c18b713c5e958258b1fb96c811fabc43",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "base-bvm"
-      }
-    ]
-  },
-  {
-    "id": "bvm-dai+-usdbc",
-    "name": "DAI+-USDbC sLP",
-    "type": "standard",
-    "token": "DAI+-USDbC sLP",
-    "tokenAddress": "0x42731e7774CF1b389fe2d9552bbdd6e4bB05E42b",
-    "tokenDecimals": 18,
-    "tokenProviderId": "bvm",
-    "earnedToken": "mooBVMDAI+-USDbC",
-    "earnedTokenAddress": "0xEaE6976C580Ca815f2D061eF1DF5C0506b62aB7A",
-    "earnContractAddress": "0xEaE6976C580Ca815f2D061eF1DF5C0506b62aB7A",
-    "oracle": "lps",
-    "oracleId": "bvm-dai+-usdbc",
-    "status": "eol",
-    "createdAt": 1693352053,
-    "retireReason": "tvl",
-    "retiredAt": 1696060775,
-    "platformId": "bvm",
-    "assets": ["DAI+", "USDbC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x42731e7774cf1b389fe2d9552bbdd6e4bb05e42b/0x32d077840235ab8fb340fddc0ecf29971a576235",
-    "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x42731e7774cf1b389fe2d9552bbdd6e4bb05e42b/0x32d077840235ab8fb340fddc0ecf29971a576235",
     "network": "base",
     "zaps": [
       {
@@ -2737,7 +2592,9 @@
     "earnContractAddress": "0xE6345a32eBF5e36a8FCc13610967127a67d077eF",
     "oracle": "lps",
     "oracleId": "alienbase-dai-usdbc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
+    "retiredAt": 1709759896,
     "createdAt": 1692384702,
     "platformId": "alienbase",
     "assets": ["DAI", "USDbC"],
@@ -3403,122 +3260,6 @@
     "addLiquidityUrl": "https://stargate.finance/pool/USDC-BASE/add",
     "removeLiquidityUrl": "https://stargate.finance/pool/USDC-BASE/remove",
     "network": "base"
-  },
-  {
-    "id": "bvm-weth-axlusdc",
-    "name": "axlUSDC-ETH vLP",
-    "type": "standard",
-    "token": "axlUSDC-ETH vLP",
-    "tokenAddress": "0x1c2f16EB9E2C18a87037194c5EA00F569953A1cc",
-    "tokenDecimals": 18,
-    "tokenProviderId": "bvm",
-    "earnedToken": "mooBVMaxlUSDC-ETH",
-    "earnedTokenAddress": "0xDE59Ca36F43Ed1fa7AB67C419fc20Be12A868712",
-    "earnContractAddress": "0xDE59Ca36F43Ed1fa7AB67C419fc20Be12A868712",
-    "oracle": "lps",
-    "oracleId": "bvm-weth-axlusdc",
-    "status": "eol",
-    "createdAt": 1691470624,
-    "retireReason": "tvl",
-    "retiredAt": 1696060775,
-    "platformId": "bvm",
-    "assets": ["axlUSDC", "ETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x1c2f16eb9e2c18a87037194c5ea00f569953a1cc/0x5b21fbab44ddbcd2b73d5ec34c37250e6a73fe94",
-    "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x1c2f16eb9e2c18a87037194c5ea00f569953a1cc/0x5b21fbab44ddbcd2b73d5ec34c37250e6a73fe94",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "base-bvm"
-      }
-    ]
-  },
-  {
-    "id": "bvm-usd+-usdbc",
-    "name": "USD+-USDbC sLP",
-    "type": "standard",
-    "token": "USD+-USDbC sLP",
-    "tokenAddress": "0x653685aA9913C6aB13d659A4Ea8F358eceC3D34f",
-    "tokenDecimals": 18,
-    "tokenProviderId": "bvm",
-    "earnedToken": "mooBVMUSD+-USDbC",
-    "earnedTokenAddress": "0xfe1C07a5120cEb1ab7148Ee0A680148af22332F5",
-    "earnContractAddress": "0xfe1C07a5120cEb1ab7148Ee0A680148af22332F5",
-    "oracle": "lps",
-    "oracleId": "bvm-usd+-usdbc",
-    "status": "eol",
-    "createdAt": 1691647069,
-    "retireReason": "tvl",
-    "retiredAt": 1696060775,
-    "platformId": "bvm",
-    "assets": ["USD+", "USDbC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x653685aa9913c6ab13d659a4ea8f358ecec3d34f/0xd9875fbe2a706f9fed68f066d7420d63fdc5ed76",
-    "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x653685aa9913c6ab13d659a4ea8f358ecec3d34f/0xd9875fbe2a706f9fed68f066d7420d63fdc5ed76",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "base-bvm"
-      }
-    ]
-  },
-  {
-    "id": "bvm-dai+-usd+",
-    "name": "DAI+-USD+ sLP",
-    "type": "standard",
-    "token": "DAI+-USD+ sLP",
-    "tokenAddress": "0x298C9f812c470598c5f97e3dA9261A9899b89d35",
-    "tokenDecimals": 18,
-    "tokenProviderId": "bvm",
-    "earnedToken": "mooBVMDAI+-USD+",
-    "earnedTokenAddress": "0xAD16eD82CD6a60a907203D7f6d065ce19F80D9a3",
-    "earnContractAddress": "0xAD16eD82CD6a60a907203D7f6d065ce19F80D9a3",
-    "oracle": "lps",
-    "oracleId": "bvm-dai+-usd+",
-    "status": "eol",
-    "createdAt": 1691647069,
-    "retireReason": "tvl",
-    "retiredAt": 1700566353,
-    "platformId": "bvm",
-    "assets": ["DAI+", "USD+"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x298c9f812c470598c5f97e3da9261a9899b89d35/0x0daf00a383f8897553ac1d03f4445b15afa1dcb9",
-    "removeLiquidityUrl": "https://base.velocimeter.xyz/liquidity/0x298c9f812c470598c5f97e3da9261a9899b89d35/0x0daf00a383f8897553ac1d03f4445b15afa1dcb9",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "base-bvm"
-      }
-    ]
   },
   {
     "id": "bvm-weth-usdbc",

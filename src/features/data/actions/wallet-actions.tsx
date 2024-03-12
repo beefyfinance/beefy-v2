@@ -781,7 +781,7 @@ const mintDeposit = (
           dst: mintedToken.address,
           slippage: slippageTolerance * 100,
         });
-        const amountOutWei = new BigNumber(swapData.toAmount);
+        const amountOutWei = new BigNumber(swapData.dstAmount);
         const amountOutWeiAfterSlippage = amountOutWei
           .multipliedBy(1 - slippageTolerance)
           .decimalPlaces(0, BigNumber.ROUND_FLOOR);
