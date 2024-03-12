@@ -336,12 +336,9 @@ export const transactFetchQuotes = createAsyncThunk<
 export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state: BeefyState }>(
   'transact/fetchQuotesIfNeeded',
   async (_, { getState, dispatch }) => {
-    console.log('fetchQuotesIfNeeded started');
     const state = getState();
     const quote = selectTransactSelectedQuoteOrUndefined(state);
     let shouldFetch = true;
-
-    console.log('fetchQuotesIfNeeded', quote);
 
     if (quote) {
       const option = quote.option;
@@ -349,13 +346,18 @@ export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state:
       const chainId = selectTransactSelectedChainId(state);
       const selectionId = selectTransactSelectedSelectionId(state);
       const inputAmount = selectTransactInputAmount(state);
-      const input = onlyOneInput(quote.inputs);
+      const inputAmounts = selectTransactDualInputAmounts(state);
+
+      const matchingInputs =
+        quote.option.mode === TransactMode.Deposit && quote.option.strategyId === 'cowcentrated'
+          ? inputAmounts.every((amount, index) => amount === quote.inputs[index]?.amount)
+          : onlyOneInput(quote.inputs).amount.eq(inputAmount);
 
       shouldFetch =
         option.chainId !== chainId ||
         option.vaultId !== vaultId ||
         option.selectionId !== selectionId ||
-        !input.amount.eq(inputAmount);
+        !matchingInputs;
     }
 
     if (shouldFetch) {

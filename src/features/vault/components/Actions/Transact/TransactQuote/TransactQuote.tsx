@@ -85,7 +85,7 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
 
   useEffect(() => {
     debouncedFetchQuotes(dispatch, inputAmounts);
-  }, [dispatch, mode, chainId, selectionId, inputAmounts, inputMax, debouncedFetchQuotes]);
+  }, [dispatch, mode, chainId, selectionId, inputAmounts, inputMax, dualMaxAmounts, dualInputAmounts, debouncedFetchQuotes]);
 
   console.log('TransactQuote status:', status);
 
