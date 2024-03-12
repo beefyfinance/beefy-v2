@@ -1365,38 +1365,6 @@
     ]
   },
   {
-    "id": "thena-avax-wbnb",
-    "name": "AVAX-BNB vLP",
-    "type": "standard",
-    "token": "AVAX-BNB vLP",
-    "tokenAddress": "0x7B2F91d226aD214Ac42ba21a597d99896311eCD1",
-    "tokenDecimals": 18,
-    "tokenProviderId": "thena",
-    "earnedToken": "mooThenaAVAX-BNB",
-    "earnedTokenAddress": "0x2dD19132C93DbD942B0086cE0E50DD30526D7Ba9",
-    "earnContractAddress": "0x2dD19132C93DbD942B0086cE0E50DD30526D7Ba9",
-    "oracle": "lps",
-    "oracleId": "thena-avax-wbnb",
-    "status": "eol",
-    "createdAt": 1677122554,
-    "retireReason": "rewards",
-    "retiredAt": 1682019887,
-    "platformId": "thena",
-    "assets": ["AVAX", "BNB"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "bsc-thena"
-      }
-    ]
-  },
-  {
     "id": "thena-ankrbnb-ankr",
     "name": "ankrBNB-ANKR vLP",
     "type": "standard",
