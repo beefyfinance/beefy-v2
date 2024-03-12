@@ -15,9 +15,9 @@ export type QuoteToken = {
 };
 
 export type QuoteResponse = {
-  fromToken: QuoteToken;
-  toToken: QuoteToken;
-  toAmount: string;
+  srcToken: QuoteToken;
+  dstToken: QuoteToken;
+  dstAmount: string;
 };
 
 export type SwapRequest = {
@@ -41,9 +41,9 @@ export type SwapTx = {
 };
 
 export type SwapResponse = {
-  fromToken: QuoteToken;
-  toToken: QuoteToken;
-  toAmount: string;
+  srcToken: QuoteToken;
+  dstToken: QuoteToken;
+  dstAmount: string;
   tx: SwapTx;
 };
 
