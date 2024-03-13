@@ -448,8 +448,7 @@ function addVaultToState(
   const existingDepositToken = chainState.byAddress[depositAddressKey];
   if (existingDepositToken === undefined) {
     // Add the token
-
-    addTokenToState(sliceState, depositToken, true);
+    addTokenToState(sliceState, depositToken, vault.type !== 'cowcentrated');
   } else {
     // Only add missing information
     // Note: we no longer overwrite oracleId as addressbook is now source of truth
