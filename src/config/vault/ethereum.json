@@ -1,5 +1,36 @@
 [
   {
+    "id": "aura-weeth-ezeth-rseth",
+    "name": "ezETH-weETH-rswETH",
+    "type": "standard",
+    "token": "ezETH-weETH-rswETH",
+    "tokenAddress": "0x848a5564158d84b8A8fb68ab5D004Fae11619A54",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraweETH/ezETH/rsETH",
+    "earnedTokenAddress": "0x5dA90BA82bED0AB701E6762D2bF44E08634d9776",
+    "earnContractAddress": "0x5dA90BA82bED0AB701E6762D2bF44E08634d9776",
+    "oracle": "lps",
+    "oracleId": "aura-weeth-ezeth-rseth",
+    "status": "active",
+    "createdAt": 1710340502,
+    "platformId": "aura",
+    "assets": ["ezETH", "weETH", "rswETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "NO_TIMELOCK"
+    ],
+    "strategyTypeId": "multi-lp-locked",
+    "earningPoints": true,
+    "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x848a5564158d84b8a8fb68ab5d004fae11619a5400000000000000000000066a",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x848a5564158d84b8a8fb68ab5d004fae11619a5400000000000000000000066a",
+    "network": "ethereum"
+  },
+  {
     "id": "beqiv2-pool",
     "name": "beQI Earnings Pool",
     "type": "gov",
