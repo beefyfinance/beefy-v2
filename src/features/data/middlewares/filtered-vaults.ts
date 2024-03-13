@@ -19,6 +19,14 @@ import type { RehydrateAction } from 'redux-persist/es/types';
 import { REHYDRATE } from 'redux-persist/es/constants';
 import { fetchChainConfigs } from '../actions/chains';
 import { selectIsConfigAvailable } from '../selectors/data-loader';
+import {
+  accountHasChanged,
+  chainHasChanged,
+  chainHasChangedToUnsupported,
+  userDidConnect,
+  walletHasDisconnected,
+} from '../reducers/wallet/wallet';
+import { selectWalletAddress } from '../selectors/wallet';
 
 const filteredVaultsListener = createListenerMiddleware<BeefyState>();
 
@@ -69,6 +77,14 @@ const hasSortChanged = isAnyOf(
   filteredVaultsActions.setSortFieldAndDirection
 );
 
+const hasWalletChanged = isAnyOf(
+  userDidConnect,
+  accountHasChanged,
+  walletHasDisconnected,
+  chainHasChanged,
+  chainHasChangedToUnsupported
+);
+
 /**
  * This middleware listens for when all actions that have loaded data have been fulfilled and recalculates the filtered vaults
  */
@@ -103,6 +119,25 @@ function listenForChanges() {
 
       // Recalculate
       await dispatch(recalculateFilteredVaultsAction({ dataChanged: true }));
+    },
+  });
+
+  /**
+   * This middleware listens for actions that changes the connected wallet and recalculates the filtered vaults
+   */
+  filteredVaultsListener.startListening({
+    matcher: hasWalletChanged,
+    effect: async (
+      action,
+      { dispatch, delay, cancelActiveListeners, getState, getOriginalState }
+    ) => {
+      const hasWalletChanged =
+        selectWalletAddress(getState()) !== selectWalletAddress(getOriginalState());
+      if (hasWalletChanged) {
+        cancelActiveListeners();
+        await delay(50);
+        await dispatch(recalculateFilteredVaultsAction({ dataChanged: true }));
+      }
     },
   });
 
