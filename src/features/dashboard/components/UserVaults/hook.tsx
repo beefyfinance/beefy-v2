@@ -2,7 +2,7 @@ import { sortBy } from 'lodash-es';
 import { useState, useCallback, useMemo } from 'react';
 import { useAppSelector } from '../../../../store';
 import { selectUserVaultsPnl } from '../../../data/selectors/balance';
-import { selectUserFilteredVaults } from '../../../data/selectors/filtered-vaults';
+import { selectUserDashboardFilteredVaults } from '../../../data/selectors/filtered-vaults';
 
 export type SortedOptions = {
   sort: 'atDeposit' | 'now' | 'yield' | 'pnl' | 'apy' | 'dailyYield' | 'default';
@@ -24,7 +24,7 @@ export function useSortedDashboardVaults(address: string) {
   }, []);
 
   const filteredVaults = useAppSelector(state =>
-    selectUserFilteredVaults(state, searchText, address)
+    selectUserDashboardFilteredVaults(state, searchText, address)
   );
 
   const apyByVaultId = useAppSelector(state => state.biz.apy.totalApy.byVaultId);

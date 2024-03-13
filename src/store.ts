@@ -15,6 +15,7 @@ import type { BeefyState } from './redux-types';
 import { zapMiddleware } from './features/data/middlewares/zap';
 import { balanceMiddleware } from './features/data/middlewares/balance';
 import type { Middleware } from 'redux';
+import { filteredVaultsMiddleware } from './features/data/middlewares/filtered-vaults';
 
 let middlewares: Middleware[] = [];
 
@@ -28,7 +29,13 @@ if (featureFlag_recordReduxActions()) {
 
 if (!featureFlag_replayReduxActions()) {
   // don't want this to run actions when replaying
-  middlewares = [...middlewares, walletActionsMiddleware, balanceMiddleware, zapMiddleware];
+  middlewares = [
+    ...middlewares,
+    walletActionsMiddleware,
+    balanceMiddleware,
+    zapMiddleware,
+    filteredVaultsMiddleware,
+  ];
 }
 
 export const store = configureStore({
