@@ -149,7 +149,7 @@ function listenForChanges() {
     effect: async (action, { dispatch, delay, cancelActiveListeners }) => {
       // Debounce
       cancelActiveListeners();
-      await delay(100);
+      await delay(50);
 
       // Recalculate
       await dispatch(
