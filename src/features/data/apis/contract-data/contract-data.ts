@@ -1,5 +1,5 @@
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi';
-import type { VaultGov, VaultStandard } from '../../entities/vault';
+import type { VaultCowcentrated, VaultGov, VaultStandard } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import type { AsWeb3Result } from '../../utils/types-utils';
@@ -8,6 +8,7 @@ import { chunk } from 'lodash-es';
 import type {
   BoostContractData,
   BoostContractDataResponse,
+  CowVaultContractData,
   FetchAllContractDataResult,
   GovVaultContractData,
   IContractDataApi,
@@ -16,7 +17,7 @@ import type {
 import { featureFlag_getContractDataApiChunkSize } from '../../utils/feature-flags';
 import type { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
-import { selectTokenByAddress } from '../../selectors/tokens';
+import { selectTokenByAddress, selectTokenById } from '../../selectors/tokens';
 import { makeBatchRequest, viemToWeb3Abi, type Web3Call } from '../../../../helpers/web3';
 import { isFiniteNumber } from '../../../../helpers/number';
 import type Web3 from 'web3';
@@ -28,6 +29,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     state: BeefyState,
     standardVaults: VaultStandard[],
     govVaults: VaultGov[],
+    cowVaults: VaultCowcentrated[],
     boosts: BoostEntity[]
   ): Promise<FetchAllContractDataResult> {
     const mc = new this.web3.eth.Contract(
@@ -41,6 +43,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const boostBatches = chunk(boosts, CHUNK_SIZE);
     const govVaultBatches = chunk(govVaults, CHUNK_SIZE);
     const vaultBatches = chunk(standardVaults, CHUNK_SIZE);
+    const cowVaultBatches = chunk(cowVaults, CHUNK_SIZE);
 
     const requestsForBatch: Web3Call[] = [];
 
@@ -63,6 +66,13 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
         params: { from: '0x0000000000000000000000000000000000000000' },
       });
     });
+    cowVaultBatches.forEach(cowVaultBatch => {
+      requestsForBatch.push({
+        method: mc.methods.getCowVaultInfo(cowVaultBatch.map(vault => vault.earnContractAddress))
+          .call,
+        params: { from: '0x0000000000000000000000000000000000000000' },
+      });
+    });
 
     const results: unknown[] = await makeBatchRequest(this.web3, requestsForBatch);
 
@@ -72,6 +82,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       boosts: [],
       govVaults: [],
       standardVaults: [],
+      cowVaults: [],
     };
 
     let resultsIdx = 0;
@@ -94,6 +105,13 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
         (vaultRes, elemidx) => this.govVaultFormatter(state, vaultRes, vaultBatch[elemidx])
       );
       res.govVaults = res.govVaults.concat(batchRes);
+      resultsIdx++;
+    }
+    for (const cowBatch of cowVaultBatches) {
+      const batchRes = (results[resultsIdx] as AsWeb3Result<CowVaultContractData>[]).map(
+        (vaultRes, elemidx) => this.cowVaultFormatter(state, vaultRes, cowBatch[elemidx])
+      );
+      res.cowVaults = res.cowVaults.concat(batchRes);
       resultsIdx++;
     }
 
@@ -196,6 +214,24 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       id: govVault.id,
       totalSupply: new BigNumber(result.totalSupply).shiftedBy(-token.decimals),
     } satisfies GovVaultContractData;
+  }
+
+  protected cowVaultFormatter(
+    state: BeefyState,
+    result: AsWeb3Result<CowVaultContractData>,
+    cowVault: VaultCowcentrated
+  ) {
+    const vault = selectVaultById(state, cowVault.id);
+    const tokens = vault.assetIds.map(assetId => selectTokenById(state, vault.chainId, assetId));
+    return {
+      id: vault.id,
+      balances: [
+        new BigNumber(result[0]).shiftedBy(-tokens[0].decimals),
+        new BigNumber(result[1]).shiftedBy(-tokens[1].decimals),
+      ],
+      strategy: result.strategy,
+      paused: result.paused,
+    } satisfies CowVaultContractData;
   }
 
   protected boostFormatter(

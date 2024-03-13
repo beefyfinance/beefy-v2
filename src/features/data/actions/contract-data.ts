@@ -54,7 +54,13 @@ export const fetchAllContractDataByChainAction = createAsyncThunk<
     }
   }
 
-  const res = await contractApi.fetchAllContractData(state, standardVaults, govVaults, boosts);
+  const res = await contractApi.fetchAllContractData(
+    state,
+    standardVaults,
+    govVaults,
+    cowcentratedLiquidityVaults,
+    boosts
+  );
 
   // always re-fetch the latest state
   return {

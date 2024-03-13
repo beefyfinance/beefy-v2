@@ -18,6 +18,7 @@ export interface VaultConfig {
   token: string;
   tokenAddress?: string | null;
   tokenDecimals: number;
+  depositTokenAddresses?: string[];
   tokenProviderId?: PlatformEntity['id'];
   zaps?: StrategyOptions[];
   earnedToken: string;

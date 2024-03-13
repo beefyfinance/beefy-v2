@@ -81,11 +81,16 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
    **/
   contractData: {
     byVaultId: {
-      [vaultId: VaultEntity['id']]: {
-        strategyAddress: string;
-        pricePerFullShare: BigNumber | null;
-        balances?: BigNumber[];
-      };
+      [vaultId: VaultEntity['id']]:
+        | {
+            strategyAddress: string;
+            pricePerFullShare: BigNumber | null;
+            balances?: BigNumber[];
+          }
+        | {
+            strategyAddress: string;
+            balances: BigNumber[];
+          };
     };
   };
 
@@ -262,6 +267,7 @@ function addVaultToState(
       type: 'cowcentrated',
       version: apiVault.version || 1,
       depositTokenAddress: apiVault.tokenAddress ?? 'native',
+      depositTokenAddresses: apiVault.depositTokenAddresses || [],
       zaps: apiVault.zaps || [],
       earnContractAddress: apiVault.earnContractAddress,
       earnedTokenAddress: apiVault.earnedTokenAddress,
