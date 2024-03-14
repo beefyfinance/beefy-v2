@@ -17,6 +17,9 @@ import BigNumber from 'bignumber.js';
 import type { ToggleProps } from '../../../../../../components/Toggle';
 import { Toggle } from '../../../../../../components/Toggle';
 import clsx from 'clsx';
+import buildLpIcon from '../../../../../../images/icons/build-lp.svg';
+import type { VaultEntity } from '../../../../../data/entities/vault';
+import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 
 const useStyles = makeStyles(styles);
 const DUST_HIDDEN_THRESHOLD = new BigNumber('0.01');
@@ -111,7 +114,33 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
             )}
           </div>
         </Scrollable>
+        {filteredOptionsForChain.length && <BuildLpManually vaultId={vaultId} />}
       </div>
     );
   }
 );
+
+const BuildLpManually = memo(function BuildLpManually({ vaultId }: { vaultId: VaultEntity['id'] }) {
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const { t } = useTranslation();
+  const classes = useStyles();
+
+  if (!vault.addLiquidityUrl) {
+    return null;
+  }
+
+  return (
+    <a
+      className={classes.buildLp}
+      href={vault.addLiquidityUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <div className={classes.buildLpContent}>
+        <img src={buildLpIcon} alt="buildLp" />
+        {t('Build LP Manually')}
+      </div>
+      <OpenInNewRoundedIcon fontSize="inherit" className={classes.icon} />
+    </a>
+  );
+});

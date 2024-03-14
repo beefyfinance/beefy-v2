@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { useAppSelector } from '../../../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectTransactNumTokens,
   selectTransactOptionsError,
@@ -13,7 +13,6 @@ import {
 } from '../../../../../data/selectors/transact';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import { errorToString } from '../../../../../../helpers/format';
-import { TextLoader } from '../../../../../../components/TextLoader';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
 import { DepositTokenAmountInput } from '../DepositTokenAmountInput';
 import { DepositBuyLinks } from '../DepositBuyLinks';
@@ -23,25 +22,41 @@ import { AlertError } from '../../../../../../components/Alerts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { RetirePauseReason } from '../../../RetirePauseReason';
-import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
+import { TokenAmount, TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
 import zapIcon from '../../../../../../images/icons/zap.svg';
+import { transactActions } from '../../../../../data/reducers/wallet/transact';
+import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
 const SelectedInWallet = memo(function SelectedInWallet() {
   const chainId = useAppSelector(selectTransactSelectedChainId);
   const selection = useAppSelector(selectTransactSelected);
+  const dispatch = useAppDispatch();
   const token = selection?.tokens?.[0];
 
   const balance = useAppSelector(state =>
     token ? selectUserBalanceOfToken(state, token.chainId, token.address) : undefined
   );
 
+  const handleMax = useCallback(() => {
+    token &&
+      balance &&
+      dispatch(
+        transactActions.setInputAmount({
+          amount: balance,
+          max: true,
+        })
+      );
+  }, [balance, dispatch, token]);
+
   if (!chainId || !selection || !token || !balance) {
-    return <TextLoader placeholder="0.0000000 BNB-BIFI" />;
+    return <TokenAmount amount={BIG_ZERO} decimals={18} price={BIG_ONE} />;
   }
 
-  return <TokenAmountFromEntity amount={balance} token={token} minShortPlaces={4} />;
+  return (
+    <TokenAmountFromEntity onClick={handleMax} amount={balance} token={token} minShortPlaces={4} />
+  );
 });
 
 export const DepositFormLoader = memo(function DepositFormLoader() {

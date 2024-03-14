@@ -6,7 +6,10 @@ import { useAppSelector } from '../../../../../../store';
 import { LinkButton } from '../../../../../../components/LinkButton';
 import clsx from 'clsx';
 import { memo } from 'react';
-import { selectTransactVaultId } from '../../../../../data/selectors/transact';
+import {
+  selectTransactNumTokens,
+  selectTransactVaultId,
+} from '../../../../../data/selectors/transact';
 
 const useStyles = makeStyles(styles);
 
@@ -18,23 +21,19 @@ export const DepositBuyLinks = memo<DepositBuyLinksProps>(function DepositBuyLin
   const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const hasLinks = vault.buyTokenUrl || vault.addLiquidityUrl || vault.assetIds.includes('BIFI');
+  const numTokenOptions = useAppSelector(selectTransactNumTokens);
 
-  if (!hasLinks) {
+  const showLinks = vault.addLiquidityUrl && numTokenOptions === 1;
+
+  if (!showLinks) {
     return null;
   }
 
   return (
     <div className={clsx(classes.btnContainer, className)}>
-      {vault.buyTokenUrl && <LinkButton href={vault.buyTokenUrl} text={t('Transact-BuyTkn')} />}
       {vault.addLiquidityUrl && (
         <LinkButton href={vault.addLiquidityUrl} text={t('Transact-BuildLp')} />
       )}
-      {/* {vault.assetIds.includes('BIFI') && (
-        <Link to="/bridge" className={classes.btnSecondary}>
-          {t('Header-BridgeBifi')}
-        </Link>
-      )} */}
     </div>
   );
 });

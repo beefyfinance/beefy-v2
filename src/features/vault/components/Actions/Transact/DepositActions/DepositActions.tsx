@@ -49,7 +49,7 @@ const ActionDepositDisabled = memo<ActionButtonProps>(function ActionDepositDisa
   const classes = useStyles();
 
   return (
-    <div className={classes.btns}>
+    <div className={classes.feesContainer}>
       <Button
         variant="success"
         disabled={true}
@@ -111,7 +111,7 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
       <MaxNativeNotice quote={quote} onChange={setIsDisabledByMaxNative} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <NotEnoughNotice mode="deposit" onChange={setIsDisabledByNotEnoughInput} />
-      <div className={classes.btns}>
+      <div className={classes.feesContainer}>
         <ActionConnectSwitch chainId={option.chainId}>
           <Button
             variant="success"

@@ -17,6 +17,7 @@ export const TokenSelectStep = memo(function TokenSelectStep() {
   const dispatch = useAppDispatch();
   const classes = useStyles();
   const mode = useAppSelector(selectTransactMode);
+
   const handleBack = useCallback(() => {
     dispatch(transactActions.switchStep(TransactStep.Form));
   }, [dispatch]);

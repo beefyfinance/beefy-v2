@@ -1,9 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
-import { TokenSelectButton } from '../TokenSelectButton';
 import {
   selectTransactNumTokens,
   selectTransactOptionsError,
@@ -22,15 +21,17 @@ import { TransactStatus } from '../../../../../data/reducers/wallet/transact-typ
 import { WithdrawTokenAmountInput } from '../WithdrawTokenAmountInput';
 import { WithdrawActions } from '../WithdrawActions';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
-import { WithdrawLinks } from '../WithDrawLinks';
 import zapIcon from '../../../../../../images/icons/zap.svg';
 import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice';
+import { useDispatch } from 'react-redux';
+import { transactActions } from '../../../../../data/reducers/wallet/transact';
 
 const useStyles = makeStyles(styles);
 
 const DepositedInVault = memo(function DepositedInVault() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const dispatch = useDispatch();
   const token = useAppSelector(state =>
     vault ? selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress) : null
   );
@@ -40,11 +41,24 @@ const DepositedInVault = memo(function DepositedInVault() {
       : null
   );
 
+  const handleMax = useCallback(() => {
+    token &&
+      balance &&
+      dispatch(
+        transactActions.setInputAmount({
+          amount: balance,
+          max: true,
+        })
+      );
+  }, [balance, dispatch, token]);
+
   if (!vault || !token || !balance) {
     return <TextLoader placeholder="0.0000000 BNB-BIFI" />;
   }
 
-  return <TokenAmountFromEntity amount={balance} token={token} minShortPlaces={4} />;
+  return (
+    <TokenAmountFromEntity onClick={handleMax} amount={balance} token={token} minShortPlaces={4} />
+  );
 });
 
 export const WithdrawFormLoader = memo(function WithdrawFormLoader() {
@@ -89,10 +103,8 @@ export const WithdrawForm = memo(function WithdrawForm() {
         </div>
       </div>
       <div className={classes.inputs}>
-        <TokenSelectButton />
         <WithdrawTokenAmountInput />
       </div>
-      <WithdrawLinks className={classes.links} />
       <TransactQuote title={t('Transact-YouWithdraw')} className={classes.quote} />
       <div className={classes.actions}>
         <WithdrawActions />

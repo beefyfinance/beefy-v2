@@ -30,4 +30,23 @@ export const styles = (theme: Theme) => ({
     flexGrow: 0,
     fill: theme.palette.text.middle,
   },
+  select: {
+    ...theme.typography['body-lg'],
+    color: theme.palette.text.dark,
+    display: 'flex',
+    columnGap: '8px',
+    alignItems: 'center',
+  },
+  zapIcon: {
+    height: '24px',
+    width: '24px',
+    backgroundColor: theme.palette.background.contentLight,
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    '& img': {
+      height: '18px',
+    },
+  },
 });

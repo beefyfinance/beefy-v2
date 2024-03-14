@@ -134,9 +134,8 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
       setInput(numberToString(maxValue, tokenDecimals));
       onChange(maxValue, true);
     }
-    if (value === BIG_ZERO) {
-      setInput(numberToString(value, tokenDecimals));
-    }
+
+    setInput(numberToString(value, tokenDecimals));
   }, [value, maxValue, onChange, allowInputAboveBalance, tokenDecimals]);
 
   return (

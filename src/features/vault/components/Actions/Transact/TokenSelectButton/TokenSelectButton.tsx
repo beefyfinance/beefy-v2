@@ -11,6 +11,8 @@ import clsx from 'clsx';
 import { ExpandMore } from '@material-ui/icons';
 import { TokensImage } from '../../../../../../components/TokenImage/TokenImage';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types';
+import zapIcon from '../../../../../../images/icons/zap.svg';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(styles);
 
@@ -21,6 +23,7 @@ export type TokenSelectButtonProps = {
 export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSelectButton({
   className,
 }) {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const classes = useStyles();
   const selection = useAppSelector(selectTransactSelected);
@@ -37,9 +40,14 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
       className={clsx(classes.button, className, { [classes.buttonMore]: multipleOptions })}
     >
       {selection === undefined ? (
-        <div className={classes.iconAssets}> Select</div>
+        <div className={classes.select}>
+          <div className={classes.zapIcon}>
+            <img src={zapIcon} alt="zap" />
+          </div>
+          {t('Select')}
+        </div>
       ) : (
-        <TokensImage tokens={selection.tokens} className={classes.iconAssets} />
+        <TokensImage tokens={selection.tokens} className={classes.iconAssets} size={24} />
       )}
       {multipleOptions ? <ExpandMore className={classes.iconMore} /> : null}
     </button>

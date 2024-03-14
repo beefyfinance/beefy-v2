@@ -52,4 +52,24 @@ export const styles = (theme: Theme) => ({
     borderRadius: '8px',
     background: theme.palette.background.contentLight,
   },
+  buildLp: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: theme.palette.background.contentLight,
+    borderRadius: '0px 0px 8px 8px',
+    padding: '16px 24px',
+  },
+  buildLpContent: {
+    ...theme.typography['body-lg-med'],
+    color: theme.palette.text.middle,
+    display: 'flex',
+    alignItems: 'center',
+    columnGap: '8px',
+    flex: 1,
+    textDecoration: 'none',
+  },
+  icon: {
+    color: theme.palette.text.middle,
+  },
 });

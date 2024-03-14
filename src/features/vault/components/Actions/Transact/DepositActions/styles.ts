@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => ({
     gap: '24px',
     width: '100%',
   },
-  btns: {
+  feesContainer: {
     background: theme.palette.background.contentLight,
     borderRadius: '8px',
   },

@@ -17,6 +17,7 @@ import {
   selectTokenPriceByTokenOracleId,
 } from '../../../../../data/selectors/tokens';
 import BigNumber from 'bignumber.js';
+import { TokenSelectButton } from '../TokenSelectButton';
 
 const useStyles = makeStyles(styles);
 
@@ -68,6 +69,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
         fullWidth={true}
         error={error}
         price={price}
+        endAdornement={<TokenSelectButton />}
       />
     );
   }

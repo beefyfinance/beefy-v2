@@ -64,11 +64,7 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
         allowInputAboveBalance={true}
         fullWidth={true}
         price={price}
-        endAdornement={
-          <>
-            <TokenSelectButton />
-          </>
-        }
+        endAdornement={<TokenSelectButton />}
       />
     );
   }
