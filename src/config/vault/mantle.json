@@ -1,5 +1,150 @@
 [
   {
+    "id": "moe-moe-meth",
+    "name": "MOE-mETH LP",
+    "type": "standard",
+    "token": "MOE-mETH LP",
+    "tokenAddress": "0x57dbBf8ad81898F430cF45FEad615a1e049c9F76",
+    "tokenDecimals": 18,
+    "tokenProviderId": "moe",
+    "earnedToken": "mooMoeMOE-mETH",
+    "earnedTokenAddress": "0x2747A821552A91A54AEec5eA892cDD489eafd64f",
+    "earnContractAddress": "0x2747A821552A91A54AEec5eA892cDD489eafd64f",
+    "oracle": "lps",
+    "oracleId": "moe-moe-meth",
+    "status": "active",
+    "createdAt": 1710340038,
+    "platformId": "moe",
+    "assets": ["MOE", "mETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xcda86a272531e8640cd7f1a92c01839911b90bb0",
+    "addLiquidityUrl": "https://merchantmoe.com/pool/v1/0x4515a45337f461a11ff0fe8abf3c606ae5dc00c9/0xcda86a272531e8640cd7f1a92c01839911b90bb0",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "mantle-moe"
+      }
+    ]
+  },
+  {
+    "id": "moe-wbtc-meth",
+    "name": "WBTC-mETH LP",
+    "type": "standard",
+    "token": "WBTC-mETH LP",
+    "tokenAddress": "0x198c826AF31938736539E7025d81caa7b8952094",
+    "tokenDecimals": 18,
+    "tokenProviderId": "moe",
+    "earnedToken": "mooMoeWBTC-mETH",
+    "earnedTokenAddress": "0x55b0D110f68D8C051DC4071eBef34Fd8887E3eec",
+    "earnContractAddress": "0x55b0D110f68D8C051DC4071eBef34Fd8887E3eec",
+    "oracle": "lps",
+    "oracleId": "moe-wbtc-meth",
+    "status": "active",
+    "createdAt": 1710340038,
+    "platformId": "moe",
+    "assets": ["WBTC", "mETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xcda86a272531e8640cd7f1a92c01839911b90bb0",
+    "addLiquidityUrl": "https://merchantmoe.com/pool/v1/0xcabae6f6ea1ecab08ad02fe02ce9a44f09aebfa2/0xcda86a272531e8640cd7f1a92c01839911b90bb0",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "mantle-moe"
+      }
+    ]
+  },
+  {
+    "id": "moe-usdt-meth",
+    "name": "USDT-mETH LP",
+    "type": "standard",
+    "token": "USDT-mETH LP",
+    "tokenAddress": "0x5c819961990c9F4f9fBfd4101f1D4e565B8AA0a6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "moe",
+    "earnedToken": "mooMoeUSDT-mETH",
+    "earnedTokenAddress": "0x08175349Da602674a255398516187984fEdd5738",
+    "earnContractAddress": "0x08175349Da602674a255398516187984fEdd5738",
+    "oracle": "lps",
+    "oracleId": "moe-usdt-meth",
+    "status": "active",
+    "createdAt": 1710340038,
+    "platformId": "moe",
+    "assets": ["USDT", "mETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xcda86a272531e8640cd7f1a92c01839911b90bb0",
+    "addLiquidityUrl": "https://merchantmoe.com/pool/v1/0x201eba5cc46d216ce6dc03f6a759e8e766e956ae/0xcda86a272531e8640cd7f1a92c01839911b90bb0",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "mantle-moe"
+      }
+    ]
+  },
+  {
+    "id": "moe-usdc-meth",
+    "name": "USDC-mETH LP",
+    "type": "standard",
+    "token": "USDC-mETH LP",
+    "tokenAddress": "0xaF50CD8C03096a416Fc1B88E328Bab3E09e0F175",
+    "tokenDecimals": 18,
+    "tokenProviderId": "moe",
+    "earnedToken": "mooMoeUSDC-mETH",
+    "earnedTokenAddress": "0x15a318Cfc01B50BD77c3a8d0dd560FDf44b5c046",
+    "earnContractAddress": "0x15a318Cfc01B50BD77c3a8d0dd560FDf44b5c046",
+    "oracle": "lps",
+    "oracleId": "moe-usdc-meth",
+    "status": "active",
+    "createdAt": 1710340038,
+    "platformId": "moe",
+    "assets": ["USDC", "mETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xcda86a272531e8640cd7f1a92c01839911b90bb0",
+    "addLiquidityUrl": "https://merchantmoe.com/pool/v1/0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9/0xcda86a272531e8640cd7f1a92c01839911b90bb0",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "mantle-moe"
+      }
+    ]
+  },
+  {
+    "id": "moe-wmnt-meth",
+    "name": "WMNT-mETH LP",
+    "type": "standard",
+    "token": "WMNT-mETH LP",
+    "tokenAddress": "0xa375ea3e1f92d62e3A71B668bAb09f7155267fa3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "moe",
+    "earnedToken": "mooMoeWMNT-mETH",
+    "earnedTokenAddress": "0x699ACAD1593bfEdE9aefbF5287Daf99Eba2Cb98f",
+    "earnContractAddress": "0x699ACAD1593bfEdE9aefbF5287Daf99Eba2Cb98f",
+    "oracle": "lps",
+    "oracleId": "moe-wmnt-meth",
+    "status": "active",
+    "createdAt": 1710340038,
+    "platformId": "moe",
+    "assets": ["WMNT", "mETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xcda86a272531e8640cd7f1a92c01839911b90bb0",
+    "addLiquidityUrl": "https://merchantmoe.com/pool/v1/MNT/0xcda86a272531e8640cd7f1a92c01839911b90bb0",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "mantle-moe"
+      }
+    ]
+  },
+  {
     "id": "moe-moe-wmnt",
     "name": "MOE-WMNT LP",
     "type": "standard",
