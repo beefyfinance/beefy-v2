@@ -10,8 +10,10 @@ import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsLastHarvests } from '..
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import type { ChainEntity } from '../entities/chain';
 import {
+  isCowcentratedLiquidityVault,
   isGovVault,
   isStandardVault,
+  type VaultCowcentrated,
   type VaultEntity,
   type VaultGov,
   type VaultStandard,
@@ -55,6 +57,16 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
           [address: string]: VaultEntity['id'][];
         };
       };
+      cowcentratedVault: {
+        /** Map of cowcentrated vault ids by deposit token address */
+        byDepositTokenAddress: {
+          [address: string]: VaultEntity['id'][];
+        };
+        /** Map of cowcentrated vault id by earned (receipt) token address */
+        byEarnedTokenAddress: {
+          [address: string]: VaultEntity['id'];
+        };
+      };
     };
   };
 
@@ -69,10 +81,16 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
    **/
   contractData: {
     byVaultId: {
-      [vaultId: VaultEntity['id']]: {
-        strategyAddress: string;
-        pricePerFullShare: BigNumber;
-      };
+      [vaultId: VaultEntity['id']]:
+        | {
+            strategyAddress: string;
+            pricePerFullShare: BigNumber | null;
+            balances?: BigNumber[];
+          }
+        | {
+            strategyAddress: string;
+            balances: BigNumber[];
+          };
     };
   };
 
@@ -161,7 +179,7 @@ function addContractDataToState(
     }
 
     if (
-      !sliceState.contractData.byVaultId[vaultId].pricePerFullShare.isEqualTo(
+      !sliceState.contractData.byVaultId[vaultId].pricePerFullShare?.isEqualTo(
         vaultContractData.pricePerFullShare
       )
     ) {
@@ -187,6 +205,10 @@ function getOrCreateVaultsChainState(sliceState: Draft<VaultsState>, chainId: Ch
         byDepositTokenAddress: {},
       },
       govVault: {
+        byDepositTokenAddress: {},
+      },
+      cowcentratedVault: {
+        byEarnedTokenAddress: {},
         byDepositTokenAddress: {},
       },
     };
@@ -238,6 +260,40 @@ function addVaultToState(
       pauseReason: apiVault.pauseReason,
       pausedAt: apiVault.pausedAt,
     } satisfies VaultGov;
+  } else if (apiVault.type === 'cowcentrated') {
+    vault = {
+      id: apiVault.id,
+      name: apiVault.name,
+      type: 'cowcentrated',
+      version: apiVault.version || 1,
+      depositTokenAddress: apiVault.tokenAddress ?? 'native',
+      depositTokenAddresses: apiVault.depositTokenAddresses || [],
+      zaps: apiVault.zaps || [],
+      earnContractAddress: apiVault.earnContractAddress,
+      earnedTokenAddress: apiVault.earnedTokenAddress,
+      strategyTypeId: apiVault.strategyTypeId,
+      chainId: chainId,
+      platformId: apiVault.platformId,
+      status: apiVault.status as VaultStandard['status'],
+      assetType: 'lps',
+      safetyScore: score,
+      assetIds: apiVault.assets || [],
+      risks: apiVault.risks || [],
+      buyTokenUrl: apiVault.buyTokenUrl || null,
+      addLiquidityUrl: apiVault.addLiquidityUrl || null,
+      removeLiquidityUrl: apiVault.removeLiquidityUrl || null,
+      depositFee: apiVault.depositFee ?? 0,
+      createdAt: apiVault.createdAt ?? 0,
+      updatedAt: apiVault.updatedAt || apiVault.createdAt || 0,
+      retireReason: apiVault.retireReason,
+      retiredAt: apiVault.retiredAt,
+      pauseReason: apiVault.pauseReason,
+      pausedAt: apiVault.pausedAt,
+      migrationIds: apiVault.migrationIds,
+      bridged: apiVault.bridged,
+      lendingOracle: apiVault.lendingOracle,
+      earningPoints: apiVault.earningPoints ?? false,
+    } satisfies VaultCowcentrated;
   } else if (apiVault.type === 'standard' || apiVault.type === undefined) {
     vault = {
       id: apiVault.id,
@@ -307,6 +363,23 @@ function addVaultToState(
       chainState.allBridgedIds.push(vault.id);
       sliceState.allBridgedIds.push(vault.id);
     }
+  } else if (isCowcentratedLiquidityVault(vault)) {
+    const depositTokenKey = vault.depositTokenAddress.toLowerCase();
+    const byDepositTokenAddress =
+      chainState.cowcentratedVault.byDepositTokenAddress[depositTokenKey];
+
+    if (vault.bridged) {
+      chainState.allBridgedIds.push(vault.id);
+      sliceState.allBridgedIds.push(vault.id);
+    }
+    if (byDepositTokenAddress === undefined) {
+      chainState.cowcentratedVault.byDepositTokenAddress[depositTokenKey] = [vault.id];
+    } else {
+      byDepositTokenAddress.push(vault.id);
+    }
+
+    const earnedTokenKey = vault.earnedTokenAddress.toLowerCase();
+    chainState.cowcentratedVault.byEarnedTokenAddress[earnedTokenKey] = vault.id;
   } else if (isGovVault(vault)) {
     // List of all gov vaults for deposit token
     const depositTokenKey = vault.depositTokenAddress.toLowerCase();

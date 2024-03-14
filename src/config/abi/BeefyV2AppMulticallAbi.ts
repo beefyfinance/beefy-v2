@@ -147,6 +147,47 @@ export const BeefyV2AppMulticallAbi = [
     inputs: [
       {
         internalType: 'address[]',
+        name: 'vaults',
+        type: 'address[]',
+      },
+    ],
+    name: 'getCowVaultInfo',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'token0Balance',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'token1Balance',
+            type: 'uint256',
+          },
+          {
+            internalType: 'address',
+            name: 'strategy',
+            type: 'address',
+          },
+          {
+            internalType: 'bool',
+            name: 'paused',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct CowVaultInfo[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address[]',
         name: 'govVaults',
         type: 'address[]',
       },

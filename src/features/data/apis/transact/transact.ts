@@ -21,13 +21,14 @@ import {
 import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../reducers/wallet/stepper';
-import type { VaultType } from './vaults/IVaultType';
+import { isCowcentratedVaultType, type VaultType } from './vaults/IVaultType';
 import { strategyBuildersById } from './strategies';
 import { vaultTypeBuildersById } from './vaults';
 import { uniq } from 'lodash-es';
 import { VaultStrategy } from './strategies/vault/VaultStrategy';
 import { selectZapByChainId } from '../../selectors/zap';
 import { getSwapAggregator } from '../instances';
+import { CowcentratedStrategy } from './strategies/cowcentrated/CowcentratedStrategy';
 
 export class TransactApi implements ITransactApi {
   protected async getHelpersForVault(
@@ -52,7 +53,9 @@ export class TransactApi implements ITransactApi {
     vaultId: VaultEntity['id'],
     getState: GetStateFn
   ): Promise<DepositOption[]> {
+    console.log('fetchDepositOptionsFor vaultId:', vaultId);
     const helpers = await this.getHelpersForVault(vaultId, getState);
+    console.log('fetchDepositOptionsFor helpers:', helpers);
     const { vaultType } = helpers;
     const options: DepositOption[] = [];
 
@@ -77,7 +80,9 @@ export class TransactApi implements ITransactApi {
     getState: GetStateFn
   ): Promise<DepositQuote[]> {
     const vaultId = options[0].vaultId;
+    console.log('fetchDepositQuotesFor vaultId:', vaultId);
     const helpers = await this.getHelpersForVault(vaultId, getState);
+    console.log('fetchDepositQuotesFor helpers:', helpers);
 
     // Init each strategy at most once
     const strategyIds = uniq(options.map(option => option.strategyId));
@@ -85,6 +90,7 @@ export class TransactApi implements ITransactApi {
     const strategiesById = Object.fromEntries(
       strategies.map((strategy, i) => [strategyIds[i], strategy])
     );
+    console.log('fetchDepositQuotesFor strategiesById:', strategiesById);
 
     // Call beforeQuote hooks
     await Promise.allSettled(
@@ -94,6 +100,9 @@ export class TransactApi implements ITransactApi {
         }
       })
     );
+    console.log('fetchDepositQuotesFor strategies:', strategies);
+    console.log('fetchDepositQuotesFor amounts:');
+    console.log(amounts);
 
     // Get quotes
     const quotes = await Promise.allSettled(
@@ -106,6 +115,8 @@ export class TransactApi implements ITransactApi {
         return quote;
       })
     );
+
+    console.log('quotes received: ', quotes);
 
     const [fulfilled, rejected] = partition(quotes, isFulfilledResult);
     const successfulQuotes = fulfilled
@@ -316,14 +327,20 @@ export class TransactApi implements ITransactApi {
   }
 
   private async getStrategyById(
-    strategyId: StrategyOptions['strategyId'] | 'vault',
+    strategyId: StrategyOptions['strategyId'] | 'vault' | 'cowcentrated',
     helpers: TransactHelpers
   ): Promise<IStrategy> {
     const { vault, vaultType } = helpers;
 
+    console.log('getStrategyById strategyId:', strategyId);
+
     if (strategyId === 'vault') {
       // Wrapper for common interface
       return new VaultStrategy(vaultType);
+    }
+
+    if (strategyId === 'cowcentrated' && isCowcentratedVaultType(vaultType)) {
+      return new CowcentratedStrategy(vaultType);
     }
 
     if (!isZapTransactHelpers(helpers)) {

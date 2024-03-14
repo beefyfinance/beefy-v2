@@ -104,6 +104,16 @@ export type GovVaultWithdrawOption = BaseWithdrawOption & {
   vaultType: 'gov';
 };
 
+export type CowcentratedDepositOption = BaseDepositOption & {
+  strategyId: 'cowcentrated';
+  vaultType: 'cowcentrated';
+};
+
+export type CowcentratedWithdrawOption = BaseWithdrawOption & {
+  strategyId: 'cowcentrated';
+  vaultType: 'cowcentrated';
+};
+
 export type UniswapLikeDepositOption<TAmm extends AmmEntity> = ZapBaseDepositOption & {
   strategyId: TAmm['type'];
   depositToken: TokenEntity;
@@ -167,7 +177,8 @@ export type DepositOption =
   | UniswapV2DepositOption
   | GammaDepositOption
   | SingleDepositOption
-  | CurveDepositOption;
+  | CurveDepositOption
+  | CowcentratedDepositOption;
 
 export type WithdrawOption =
   | StandardVaultWithdrawOption
@@ -176,7 +187,8 @@ export type WithdrawOption =
   | UniswapV2WithdrawOption
   | GammaWithdrawOption
   | SingleWithdrawOption
-  | CurveWithdrawOption;
+  | CurveWithdrawOption
+  | CowcentratedWithdrawOption;
 
 export type TransactOption = DepositOption | WithdrawOption;
 
@@ -306,6 +318,10 @@ export type GovVaultDepositQuote = BaseQuote<GovVaultDepositOption> & {
   vaultType: 'gov';
 };
 
+export type CowcentratedVaultDepositQuote = BaseQuote<CowcentratedDepositOption> & {
+  vaultType: 'cowcentrated';
+};
+
 export type SingleDepositQuote = BaseZapQuote<SingleDepositOption> & {
   swapQuote: QuoteResponse;
 };
@@ -344,7 +360,10 @@ export type GammaDepositQuote = BaseZapQuote<GammaDepositOption> & {
   lpQuotes: (QuoteResponse | undefined)[];
 };
 
-export type VaultDepositQuote = StandardVaultDepositQuote | GovVaultDepositQuote;
+export type VaultDepositQuote =
+  | StandardVaultDepositQuote
+  | GovVaultDepositQuote
+  | CowcentratedVaultDepositQuote;
 
 export type ZapDepositQuote =
   | SingleDepositQuote
@@ -361,6 +380,10 @@ export type StandardVaultWithdrawQuote = BaseQuote<StandardVaultWithdrawOption> 
 
 export type GovVaultWithdrawQuote = BaseQuote<GovVaultWithdrawOption> & {
   vaultType: 'gov';
+};
+
+export type CowcentratedVaultWithdrawQuote = BaseQuote<CowcentratedWithdrawOption> & {
+  vaultType: 'cowcentrated';
 };
 
 export type SingleWithdrawQuote = BaseZapQuote<SingleWithdrawOption>;
@@ -397,7 +420,10 @@ export type GammaAggregatorWithdrawQuote = BaseZapQuote<GammaWithdrawOption> & {
 };
 export type GammaWithdrawQuote = GammaBreakWithdrawQuote | GammaAggregatorWithdrawQuote;
 
-export type VaultWithdrawQuote = StandardVaultWithdrawQuote | GovVaultWithdrawQuote;
+export type VaultWithdrawQuote =
+  | StandardVaultWithdrawQuote
+  | GovVaultWithdrawQuote
+  | CowcentratedVaultWithdrawQuote;
 
 export type ZapWithdrawQuote =
   | SingleWithdrawQuote

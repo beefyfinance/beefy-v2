@@ -114,6 +114,7 @@
   "StrategyDescription-Gov-beqi": "beQI is Beefy Staked QI-ETH 80-20 Balancer Pool tokens. beQI can be staked on the Beefy platform to earn more QI-ETH BPTs. beQI gives stakers access to max lock rewards of staking QI-ETH BPTs for aveQI. You can burn beQI for QI-ETH BPTs if there is available reserves.",
   "StrategyDescription-Gov-beopx": "beOPX is Beefy Staked OPX. The token is pegged to OPX and can be staked on the Beefy platform to earn WETH or more beOPX. beOPX gives stakers access to max lock rewards of staking OPX for veOPX. You can burn beOPX for OPX if there is available OPX reserves.",
   "StrategyDescription-Gov-bevelov2": "As $VELO is retired by Velodrome, $beVELO holders are urged to move your tokens to the new beVELO Earnings Pool to ensure you can continue earning $VELOV2 rewards. With our Earnings Pool, you can share in Velodrome protocol emissions earned by Beefy's Velodrome veNFT, which we regularly claim and transfer back to you.",
+  "StrategyDescription-cowcentrated": "Bipidi Bapidi boo! Weso just placed your funds into an amazing fortune earning strat!",
   "StrategyRisk-Title-Token": "An underlying token of this vault does not meet all Beefy SAFU requirements. <DetailsBtn>See details.<DetailsBtn/>",
   "StrategyRisk-Title-Tokens": "The underlying tokens of this vault does not meet all Beefy SAFU requirements. <DetailsBtn>See details.<DetailsBtn/>",
   "StrategyRisk-Title-Platform": "The underlying contracts of this {{platform}} vault do not meet all Beefy SAFU requirements. <DetailsBtn>See details.<DetailsBtn/>",

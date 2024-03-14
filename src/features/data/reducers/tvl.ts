@@ -4,7 +4,7 @@ import { mooAmountToOracleAmount } from '../utils/ppfs';
 import type { Draft } from 'immer';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import type { BoostEntity } from '../entities/boost';
-import type { VaultEntity, VaultGov } from '../entities/vault';
+import type { VaultCowcentrated, VaultEntity, VaultGov } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
 import { selectTokenByAddress, selectTokenPriceByAddress } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
@@ -105,6 +105,21 @@ function addContractDataToState(
       }
     }
     sliceState.byVaultId[vault.id] = { tvl: tvl };
+  }
+
+  for (const cowVaultContractData of contractData.cowVaults) {
+    const vault = selectVaultById(state, cowVaultContractData.id) as VaultCowcentrated;
+    const vaultTokens = vault.depositTokenAddresses.map(address =>
+      selectTokenByAddress(state, vault.chainId, address)
+    );
+    let vaultTvl = BIG_ZERO;
+
+    vaultTokens.forEach((token, i) => {
+      const price = selectTokenPriceByAddress(state, vault.chainId, token.address);
+      vaultTvl = vaultTvl.plus(cowVaultContractData.balances[i].times(price));
+    });
+
+    sliceState.byVaultId[vault.id] = { tvl: vaultTvl };
   }
 
   // create an index of ppfs for boost tvl usage

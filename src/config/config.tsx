@@ -318,7 +318,7 @@ export const config = {
     explorerUrl: 'https://arbiscan.io',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x332f4079E042A5764060E24C72DE765c8Ea1BC95',
+    appMulticallContractAddress: '0x47bec05dC291e61cd4360322eA44882cA468dD54',
     providerName: 'Arbitrum',
     walletSettings: {
       chainId: `0x${parseInt('42161', 10).toString(16)}`,

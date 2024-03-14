@@ -31,19 +31,23 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
   const [stat, setStat] = useState<ChartStat>(() => getDefaultStat(availableStats));
 
   return (
-    <Card>
-      <CardHeader className={classes.header}>
-        <CardTitle title={t('Graph-RateHist')} />
-        <StatSwitcher
-          stat={stat}
-          availableStats={availableStats}
-          onChange={setStat}
-          type={vault.type}
-        />
-      </CardHeader>
-      <CardContent className={classes.content}>
-        <GraphWithControls vaultId={vaultId} oracleId={oracleId} stat={stat} />
-      </CardContent>
-    </Card>
+    <>
+      {vault.type !== 'cowcentrated' && (
+        <Card>
+          <CardHeader className={classes.header}>
+            <CardTitle title={t('Graph-RateHist')} />
+            <StatSwitcher
+              stat={stat}
+              availableStats={availableStats}
+              onChange={setStat}
+              type={vault.type}
+            />
+          </CardHeader>
+          <CardContent className={classes.content}>
+            <GraphWithControls vaultId={vaultId} oracleId={oracleId} stat={stat} />
+          </CardContent>
+        </Card>
+      )}
+    </>
   );
 });

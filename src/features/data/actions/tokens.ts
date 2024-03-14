@@ -115,9 +115,10 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
           getState(),
           [],
           govVault ? [govVault] : [],
+          [],
           boost ? [boost] : []
         )
-      : { boosts: [], govVaults: [], standardVaults: [] };
+      : { boosts: [], govVaults: [], standardVaults: [], cowVaults: [] };
 
     return {
       walletAddress,

@@ -448,7 +448,7 @@ function addVaultToState(
   const existingDepositToken = chainState.byAddress[depositAddressKey];
   if (existingDepositToken === undefined) {
     // Add the token
-    addTokenToState(sliceState, depositToken, true);
+    addTokenToState(sliceState, depositToken, vault.type !== 'cowcentrated');
   } else {
     // Only add missing information
     // Note: we no longer overwrite oracleId as addressbook is now source of truth
@@ -468,6 +468,7 @@ function addVaultToState(
     // Do not add native token from configs, keep config as source of truth
     if (earnedAddressKey !== 'native') {
       let token: TokenErc20;
+
       if (vault.type === 'gov') {
         // Add earned token
         token = {
@@ -484,7 +485,11 @@ function addVaultToState(
           documentation: undefined,
           risks: [],
         };
-      } else if (vault.type === 'standard' || vault.type === undefined) {
+      } else if (
+        vault.type === 'standard' ||
+        vault.type === 'cowcentrated' ||
+        vault.type === undefined
+      ) {
         // Add receipt token
         token = {
           type: 'erc20',

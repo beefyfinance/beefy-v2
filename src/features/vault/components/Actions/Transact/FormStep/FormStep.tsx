@@ -24,6 +24,7 @@ export const FormStep = memo(function FormStep() {
   const dispatch = useAppDispatch();
   const classes = useStyles();
   const mode = useAppSelector(selectTransactMode);
+  console.log('FormStep mode:', mode);
   const vaultId = useAppSelector(selectTransactVaultId);
   const Component = modeToComponent[mode];
   const handleModeChange = useCallback(

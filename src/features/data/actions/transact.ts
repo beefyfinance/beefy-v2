@@ -10,6 +10,8 @@ import { getTransactApi } from '../apis/instances';
 import { transactActions } from '../reducers/wallet/transact';
 import {
   selectTokenAmountsTotalValue,
+  selectTransactDualInputAmounts,
+  selectTransactDualMaxAmounts,
   selectTransactInputAmount,
   selectTransactInputMax,
   selectTransactOptionsForSelectionId,
@@ -100,6 +102,7 @@ export const transactInit = createAsyncThunk<
     }
 
     await Promise.all(loaders);
+    console.log('loaders finished');
   },
   {
     condition({ vaultId }, { getState }) {
@@ -133,6 +136,7 @@ export const transactFetchOptions = createAsyncThunk<
     const api = await getTransactApi();
     const state = getState();
     const method = optionsForByMode[mode];
+    console.log('fetchOptions', vaultId, mode);
     const options = await api[method](vaultId, getState);
 
     if (!options || options.length === 0) {
@@ -145,6 +149,7 @@ export const transactFetchOptions = createAsyncThunk<
       const vault = selectVaultById(state, vaultId);
       const tokens = getUniqueTokensForOptions(options, state);
       const tokensByChain = groupBy(tokens, token => token.chainId);
+      console.log('Fetching balances');
       await Promise.all(
         Object.values(tokensByChain).map(tokens =>
           dispatch(
@@ -156,7 +161,10 @@ export const transactFetchOptions = createAsyncThunk<
           )
         )
       );
+      console.log('fetching balances finished');
     }
+
+    console.log(options);
 
     return {
       options: options,
@@ -194,14 +202,29 @@ export const transactFetchQuotes = createAsyncThunk<
   void,
   { state: BeefyState }
 >('transact/fetchQuotes', async (_, { getState, dispatch }) => {
+  console.log('fetchQuotes started');
   const api = await getTransactApi();
   const state = getState();
   const mode = selectTransactOptionsMode(state);
   const inputAmount = selectTransactInputAmount(state);
   const inputMax = selectTransactInputMax(state);
+  const dualInputAmounts = selectTransactDualInputAmounts(state);
+  const dualMaxAmounts = selectTransactDualMaxAmounts(state);
   const walletAddress = selectWalletAddress(state);
-  if (inputAmount.lte(BIG_ZERO)) {
+
+  const vaultId = selectTransactVaultId(state);
+  const vault = selectVaultById(state, vaultId);
+  // This can be improved, don't worry chimpo
+
+  if (vault.type !== 'cowcentrated' && inputAmount.lte(BIG_ZERO)) {
     throw new Error(`Can not quote for 0`);
+  }
+  if (vault.type === 'cowcentrated') {
+    if (mode === TransactMode.Deposit && dualInputAmounts.every(amount => amount.lte(BIG_ZERO))) {
+      throw new Error(`Can not quote for [0, 0]`);
+    } else if (mode === TransactMode.Withdraw && inputAmount.lte(BIG_ZERO)) {
+      throw new Error(`Can not quote for 0`);
+    }
   }
 
   const selectionId = selectTransactSelectedSelectionId(state);
@@ -209,10 +232,14 @@ export const transactFetchQuotes = createAsyncThunk<
     throw new Error(`No selectionId selected`);
   }
 
+  console.log('fetchQuotes', selectionId, mode, inputAmount.toString(10), inputMax);
+
   const chainId = selectTransactSelectedChainId(state);
   if (!chainId) {
     throw new Error(`No chainId selected`);
   }
+
+  console.log('chainId', chainId);
 
   const options = selectTransactOptionsForSelectionId(state, selectionId);
   if (!options || options.length === 0) {
@@ -224,23 +251,43 @@ export const transactFetchQuotes = createAsyncThunk<
     throw new Error(`No tokens for selectionId ${selectionId}`);
   }
 
-  const vaultId = selectTransactVaultId(state);
-  const vault = selectVaultById(state, vaultId);
+  console.log('till here');
+
+  // const vaultId = selectTransactVaultId(state);
+  // const vault = selectVaultById(state, vaultId);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
+  console.log('almost there');
+
   // TODO handle differently for univ3 with multiple deposit tokens
-  const inputAmounts: InputTokenAmount[] = [
-    {
-      amount: inputAmount,
-      token: mode === TransactMode.Withdraw ? depositToken : selection.tokens[0], // for withdraw this is always depositToken / deposit is only token of selection
-      max: inputMax,
-    },
-  ];
+  const inputAmounts: InputTokenAmount[] =
+    vault.type !== 'cowcentrated' || mode === TransactMode.Withdraw
+      ? [
+          {
+            amount: inputAmount,
+            token: mode === TransactMode.Withdraw ? depositToken : selection.tokens[0], // for withdraw this is always depositToken / deposit is only token of selection
+            max: inputMax,
+          },
+        ]
+      : [
+          {
+            amount: dualInputAmounts[0],
+            token: selection.tokens[0],
+            max: dualMaxAmounts[0],
+          },
+          {
+            amount: dualInputAmounts[1],
+            token: selection.tokens[1],
+            max: dualMaxAmounts[1],
+          },
+        ];
 
   let quotes: TransactQuote[];
   if (options.every(isDepositOption)) {
+    console.log('every option is a deposit option');
     quotes = await api.fetchDepositQuotesFor(options, inputAmounts, getState);
   } else if (options.every(isWithdrawOption)) {
+    console.log('every option is a withdraw');
     quotes = await api.fetchWithdrawQuotesFor(options, inputAmounts, getState);
   } else {
     throw new Error(`Invalid options`);
@@ -299,13 +346,18 @@ export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state:
       const chainId = selectTransactSelectedChainId(state);
       const selectionId = selectTransactSelectedSelectionId(state);
       const inputAmount = selectTransactInputAmount(state);
-      const input = onlyOneInput(quote.inputs);
+      const inputAmounts = selectTransactDualInputAmounts(state);
+
+      const matchingInputs =
+        quote.option.mode === TransactMode.Deposit && quote.option.strategyId === 'cowcentrated'
+          ? inputAmounts.every((amount, index) => amount === quote.inputs[index]?.amount)
+          : onlyOneInput(quote.inputs).amount.eq(inputAmount);
 
       shouldFetch =
         option.chainId !== chainId ||
         option.vaultId !== vaultId ||
         option.selectionId !== selectionId ||
-        !input.amount.eq(inputAmount);
+        !matchingInputs;
     }
 
     if (shouldFetch) {
