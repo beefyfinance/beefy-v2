@@ -306,7 +306,12 @@
     "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://conic.finance/",
     "removeLiquidityUrl": "https://conic.finance/",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "conic"
+      }
+    ]
   },
   {
     "id": "conic-usdc",
@@ -329,7 +334,12 @@
     "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://conic.finance/",
     "removeLiquidityUrl": "https://conic.finance/",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "conic"
+      }
+    ]
   },
   {
     "id": "conic-crvusd",
@@ -352,7 +362,12 @@
     "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://conic.finance/",
     "removeLiquidityUrl": "https://conic.finance/",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "conic"
+      }
+    ]
   },
   {
     "id": "prisma-yprisma",

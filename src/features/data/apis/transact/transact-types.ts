@@ -160,6 +160,14 @@ export type CurveWithdrawOption = ZapBaseWithdrawOption & {
     | { via: 'aggregator'; viaTokens: CurveTokenOption[] }
   );
 
+export type ConicDepositOption = ZapBaseDepositOption & {
+  strategyId: 'conic';
+};
+
+export type ConicWithdrawOption = ZapBaseWithdrawOption & {
+  strategyId: 'conic';
+};
+
 export type DepositOption =
   | StandardVaultDepositOption
   | GovVaultDepositOption
@@ -167,7 +175,8 @@ export type DepositOption =
   | UniswapV2DepositOption
   | GammaDepositOption
   | SingleDepositOption
-  | CurveDepositOption;
+  | CurveDepositOption
+  | ConicDepositOption;
 
 export type WithdrawOption =
   | StandardVaultWithdrawOption
@@ -176,7 +185,8 @@ export type WithdrawOption =
   | UniswapV2WithdrawOption
   | GammaWithdrawOption
   | SingleWithdrawOption
-  | CurveWithdrawOption;
+  | CurveWithdrawOption
+  | ConicWithdrawOption;
 
 export type TransactOption = DepositOption | WithdrawOption;
 
@@ -344,6 +354,8 @@ export type GammaDepositQuote = BaseZapQuote<GammaDepositOption> & {
   lpQuotes: (QuoteResponse | undefined)[];
 };
 
+export type ConicDepositQuote = BaseZapQuote<ConicDepositOption>;
+
 export type VaultDepositQuote = StandardVaultDepositQuote | GovVaultDepositQuote;
 
 export type ZapDepositQuote =
@@ -351,7 +363,8 @@ export type ZapDepositQuote =
   | UniswapV2DepositQuote
   | SolidlyDepositQuote
   | CurveDepositQuote
-  | GammaDepositQuote;
+  | GammaDepositQuote
+  | ConicDepositQuote;
 
 export type DepositQuote = VaultDepositQuote | ZapDepositQuote;
 
@@ -399,12 +412,15 @@ export type GammaWithdrawQuote = GammaBreakWithdrawQuote | GammaAggregatorWithdr
 
 export type VaultWithdrawQuote = StandardVaultWithdrawQuote | GovVaultWithdrawQuote;
 
+export type ConicWithdrawQuote = BaseZapQuote<ConicWithdrawOption>;
+
 export type ZapWithdrawQuote =
   | SingleWithdrawQuote
   | UniswapV2WithdrawQuote
   | SolidlyWithdrawQuote
   | CurveWithdrawQuote
-  | GammaWithdrawQuote;
+  | GammaWithdrawQuote
+  | ConicWithdrawQuote;
 
 export type WithdrawQuote = VaultWithdrawQuote | ZapWithdrawQuote;
 
