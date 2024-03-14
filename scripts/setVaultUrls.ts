@@ -135,8 +135,8 @@ const URLS: ChainProviderUrls = {
         buyTokenUrl:
           'https://velodrome.finance/swap?from={token0:wrapped:lower}&to={token1:wrapped:lower}',
         addLiquidityUrl:
-          'https://velodrome.finance/deposit?token0={token0:wrapped:lower}&token1={token1:wrapped:lower}&stable=true',
-        removeLiquidityUrl: 'https://velodrome.finance/withdraw?pool={lp:lower}',
+          'https://velodrome.finance/deposit?token0={token0:wrapped}&token1={token1:wrapped}&type=0',
+        removeLiquidityUrl: 'https://velodrome.finance/withdraw?pool={lp}',
       },
       {
         condition: (vault: VaultConfig) =>
@@ -144,8 +144,8 @@ const URLS: ChainProviderUrls = {
         buyTokenUrl:
           'https://velodrome.finance/swap?from={token0:wrapped:lower}&to={token1:wrapped:lower}',
         addLiquidityUrl:
-          'https://velodrome.finance/deposit?token0={token0:wrapped:lower}&token1={token1:wrapped:lower}&stable=false',
-        removeLiquidityUrl: 'https://velodrome.finance/withdraw?pool={lp:lower}',
+          'https://velodrome.finance/deposit?token0={token0:wrapped}&token1={token1:wrapped}&type=-1',
+        removeLiquidityUrl: 'https://velodrome.finance/withdraw?pool={lp}',
       },
     ],
     curve: {
