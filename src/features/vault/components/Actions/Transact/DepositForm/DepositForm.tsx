@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
-import { TokenSelectButton } from '../TokenSelectButton';
 import {
   selectTransactNumTokens,
   selectTransactOptionsError,
@@ -22,7 +21,6 @@ import { DepositActions } from '../DepositActions';
 import { TransactQuote } from '../TransactQuote';
 import { AlertError } from '../../../../../../components/Alerts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
-import { VaultFees } from '../VaultFees';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { RetirePauseReason } from '../../../RetirePauseReason';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
@@ -91,13 +89,11 @@ export const DepositForm = memo(function DepositForm() {
         </div>
       </div>
       <div className={classes.inputs}>
-        <TokenSelectButton />
         <DepositTokenAmountInput />
       </div>
       <DepositBuyLinks className={classes.links} />
       <TransactQuote title={t('Transact-YouDeposit')} className={classes.quote} />
       <DepositActions className={classes.actions} />
-      <VaultFees className={classes.fees} />
     </>
   );
 });

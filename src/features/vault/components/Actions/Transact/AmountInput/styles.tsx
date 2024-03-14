@@ -76,5 +76,6 @@ export const styles = (theme: Theme) => ({
   endAdornement: {
     position: 'absolute' as const,
     right: 0,
+    marginRight: '12px',
   },
 });

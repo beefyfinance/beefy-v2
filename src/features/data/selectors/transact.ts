@@ -39,7 +39,7 @@ export const selectTransactInputMax = (state: BeefyState) => state.ui.transact.i
 export const selectTransactSelectedChainId = (state: BeefyState) =>
   state.ui.transact.selectedChainId;
 export const selectTransactSelectedSelectionId = (state: BeefyState) =>
-  valueOrThrow(state.ui.transact.selectedSelectionId, 'No selected selection id found');
+  state.ui.transact.selectedSelectionId || '';
 export const selectTransactSelectedQuoteId = (state: BeefyState) =>
   state.ui.transact.selectedQuoteId;
 

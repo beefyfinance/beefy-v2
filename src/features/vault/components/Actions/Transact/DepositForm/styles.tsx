@@ -36,12 +36,9 @@ export const styles = (theme: Theme) => ({
     marginTop: '12px',
   },
   quote: {
-    marginTop: '12px',
-  },
-  actions: {
     marginTop: '24px',
   },
-  fees: {
+  actions: {
     marginTop: '24px',
   },
 });

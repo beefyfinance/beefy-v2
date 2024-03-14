@@ -46,10 +46,6 @@ export const styles = (theme: Theme) => ({
   },
   actions: {
     marginTop: '24px',
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: '24px',
-    width: '100%',
   },
   fees: {
     marginTop: '24px',

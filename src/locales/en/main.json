@@ -268,7 +268,7 @@
   "Boost-Button-Claim-Unstake": "Claim & Unstake",
   "Transact-Max": "Max",
   "Transact-BuyTkn": "Buy Token",
-  "Transact-AddLiquidity": "Add Liquidity",
+  "Transact-BuildLp": "Build LP",
   "Transact-RemoveLiquidity": "Remove Liquidity",
   "Transact-Bridge": "Bridge BIFI",
   "Transactn-EnRoute": "Funds are on the way",

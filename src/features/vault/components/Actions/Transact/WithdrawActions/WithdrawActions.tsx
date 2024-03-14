@@ -29,6 +29,7 @@ import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { GlpWithdrawNotice } from '../GlpNotices';
 import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotice';
 import { NotEnoughNotice } from '../NotEnoughNotice';
+import { VaultFees } from '../VaultFees';
 
 const useStyles = makeStyles(styles);
 
@@ -105,6 +106,7 @@ type ActionWithdrawProps = {
 const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ option, quote }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const classes = useStyles();
   const [isDisabledByPriceImpact, setIsDisabledByPriceImpact] = useState(false);
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
@@ -139,17 +141,20 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ optio
       <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <NotEnoughNotice mode="withdraw" onChange={setIsDisabledByNotEnoughInput} />
-      <ActionConnectSwitch chainId={option.chainId}>
-        <Button
-          variant="success"
-          disabled={isDisabled}
-          fullWidth={true}
-          borderless={true}
-          onClick={handleClick}
-        >
-          {t(isMaxAll ? 'Transact-WithdrawAll' : 'Transact-Withdraw')}
-        </Button>
-      </ActionConnectSwitch>
+      <div className={classes.btns}>
+        <ActionConnectSwitch chainId={option.chainId}>
+          <Button
+            variant="success"
+            disabled={isDisabled}
+            fullWidth={true}
+            borderless={true}
+            onClick={handleClick}
+          >
+            {t(isMaxAll ? 'Transact-WithdrawAll' : 'Transact-Withdraw')}
+          </Button>
+        </ActionConnectSwitch>
+        <VaultFees />
+      </div>
     </>
   );
 });

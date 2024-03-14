@@ -28,7 +28,7 @@ export const DepositBuyLinks = memo<DepositBuyLinksProps>(function DepositBuyLin
     <div className={clsx(classes.btnContainer, className)}>
       {vault.buyTokenUrl && <LinkButton href={vault.buyTokenUrl} text={t('Transact-BuyTkn')} />}
       {vault.addLiquidityUrl && (
-        <LinkButton href={vault.addLiquidityUrl} text={t('Transact-AddLiquidity')} />
+        <LinkButton href={vault.addLiquidityUrl} text={t('Transact-BuildLp')} />
       )}
       {/* {vault.assetIds.includes('BIFI') && (
         <Link to="/bridge" className={classes.btnSecondary}>

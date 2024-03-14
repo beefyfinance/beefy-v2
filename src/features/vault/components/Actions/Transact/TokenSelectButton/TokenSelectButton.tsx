@@ -36,7 +36,11 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
       onClick={multipleOptions ? handleClick : undefined}
       className={clsx(classes.button, className, { [classes.buttonMore]: multipleOptions })}
     >
-      <TokensImage tokens={selection.tokens} className={classes.iconAssets} />
+      {selection === undefined ? (
+        <div className={classes.iconAssets}> Select</div>
+      ) : (
+        <TokensImage tokens={selection.tokens} className={classes.iconAssets} />
+      )}
       {multipleOptions ? <ExpandMore className={classes.iconMore} /> : null}
     </button>
   );

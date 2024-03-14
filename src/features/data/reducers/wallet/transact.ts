@@ -198,12 +198,14 @@ const transactSlice = createSlice({
       .addCase(transactFetchOptions.fulfilled, (sliceState, action) => {
         if (sliceState.options.requestId === action.meta.requestId) {
           sliceState.options.status = TransactStatus.Fulfilled;
+          const { options } = action.payload;
 
-          addOptionsToState(sliceState, action.payload.options);
+          addOptionsToState(sliceState, options);
 
-          const defaultOption = first(action.payload.options);
+          const defaultOption = first(options);
           if (defaultOption) {
-            sliceState.selectedSelectionId = defaultOption.selectionId;
+            sliceState.selectedSelectionId =
+              options.length > 1 ? undefined : defaultOption.selectionId;
             sliceState.selectedChainId = defaultOption.chainId;
           }
         }

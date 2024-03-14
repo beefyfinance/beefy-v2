@@ -13,6 +13,8 @@ import { AmountInput } from '../AmountInput';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import BigNumber from 'bignumber.js';
 import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens';
+import { TokenSelectButton } from '../TokenSelectButton';
+import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
@@ -25,19 +27,21 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
     const dispatch = useAppDispatch();
     const classes = useStyles();
     const selection = useAppSelector(selectTransactSelected);
-    const depositToken = selection.tokens[0]; // TODO univ3; only 1 deposit token supported
+    const depositToken = selection?.tokens[0]; // TODO univ3; only 1 deposit token supported
     const userBalance = useAppSelector(state =>
-      selectUserBalanceOfToken(state, depositToken.chainId, depositToken.address)
+      depositToken
+        ? selectUserBalanceOfToken(state, depositToken.chainId, depositToken.address)
+        : BIG_ZERO
     );
     const value = useAppSelector(selectTransactInputAmount);
     const price = useAppSelector(state =>
-      selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
+      depositToken ? selectTokenPriceByTokenOracleId(state, depositToken.oracleId) : BIG_ONE
     );
     const handleChange = useCallback<AmountInputProps['onChange']>(
       (value, isMax) => {
         dispatch(
           transactActions.setInputAmount({
-            amount: value.decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR),
+            amount: value.decimalPlaces(depositToken?.decimals ?? 18, BigNumber.ROUND_FLOOR),
             max: isMax,
           })
         );
@@ -54,12 +58,17 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
         className={clsx(classes.input, className)}
         value={value}
         maxValue={userBalance}
-        tokenDecimals={depositToken.decimals}
+        tokenDecimals={depositToken?.decimals ?? 18}
         onChange={handleChange}
         error={error}
         allowInputAboveBalance={true}
         fullWidth={true}
         price={price}
+        endAdornement={
+          <>
+            <TokenSelectButton />
+          </>
+        }
       />
     );
   }

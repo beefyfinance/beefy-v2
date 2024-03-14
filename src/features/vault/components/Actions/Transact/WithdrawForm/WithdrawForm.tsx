@@ -20,7 +20,6 @@ import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { AlertError } from '../../../../../../components/Alerts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { WithdrawTokenAmountInput } from '../WithdrawTokenAmountInput';
-import { VaultFees } from '../VaultFees';
 import { WithdrawActions } from '../WithdrawActions';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
 import { WithdrawLinks } from '../WithDrawLinks';
@@ -98,7 +97,6 @@ export const WithdrawForm = memo(function WithdrawForm() {
       <div className={classes.actions}>
         <WithdrawActions />
       </div>
-      <VaultFees className={classes.fees} />
     </>
   );
 });

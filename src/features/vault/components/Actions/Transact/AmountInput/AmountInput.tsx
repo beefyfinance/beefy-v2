@@ -1,11 +1,10 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
 import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { useTranslation } from 'react-i18next';
 import { formatBigNumberSignificant, formatBigUsd } from '../../../../../../helpers/format';
 
 export const useStyles = makeStyles(styles);
@@ -40,6 +39,7 @@ export type AmountInputProps = {
   allowInputAboveBalance?: boolean;
   fullWidth?: boolean;
   price?: BigNumber;
+  endAdornement?: ReactNode;
 };
 export const AmountInput = memo<AmountInputProps>(function AmountInput({
   value,
@@ -51,8 +51,8 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   allowInputAboveBalance = false,
   fullWidth = false,
   price,
+  endAdornement,
 }) {
-  const { t } = useTranslation();
   const classes = useStyles();
   const [input, setInput] = useState(() => {
     return numberToString(value, tokenDecimals);
@@ -131,6 +131,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   );
   useEffect(() => {
     if (!allowInputAboveBalance && maxValue && value.gt(maxValue)) {
+      setInput(numberToString(maxValue, tokenDecimals));
       onChange(maxValue, true);
     }
     if (value === BIG_ZERO) {
@@ -156,15 +157,8 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
         />
         {price && value.gt(0) && <div className={classes.price}>{formatBigUsd(inputUsdValue)}</div>}
       </div>
-      {maxValue && (
-        <button
-          onClick={handleMax}
-          disabled={maxValue.lte(BIG_ZERO)}
-          className={clsx(classes.endAdornement, classes.max)}
-        >
-          {t('Transact-Max')}
-        </button>
-      )}
+
+      {endAdornement && <div className={classes.endAdornement}>{endAdornement}</div>}
     </div>
   );
 });

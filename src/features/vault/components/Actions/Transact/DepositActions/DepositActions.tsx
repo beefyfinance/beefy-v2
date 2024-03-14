@@ -23,6 +23,7 @@ import { TransactStatus } from '../../../../../data/reducers/wallet/transact-typ
 import { type ActionButtonProps, ActionConnectSwitch } from '../CommonActions';
 import { GlpDepositNotice } from '../GlpNotices';
 import { NotEnoughNotice } from '../NotEnoughNotice';
+import { VaultFees } from '../VaultFees';
 
 const useStyles = makeStyles(styles);
 
@@ -45,17 +46,21 @@ const ActionDepositDisabled = memo<ActionButtonProps>(function ActionDepositDisa
   className,
 }) {
   const { t } = useTranslation();
+  const classes = useStyles();
 
   return (
-    <Button
-      variant="success"
-      disabled={true}
-      fullWidth={true}
-      borderless={true}
-      className={className}
-    >
-      {t('Transact-Deposit')}
-    </Button>
+    <div className={classes.btns}>
+      <Button
+        variant="success"
+        disabled={true}
+        fullWidth={true}
+        borderless={true}
+        className={className}
+      >
+        {t('Transact-Deposit')}
+      </Button>
+      <VaultFees />
+    </div>
   );
 });
 
@@ -106,17 +111,20 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
       <MaxNativeNotice quote={quote} onChange={setIsDisabledByMaxNative} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <NotEnoughNotice mode="deposit" onChange={setIsDisabledByNotEnoughInput} />
-      <ActionConnectSwitch chainId={option.chainId}>
-        <Button
-          variant="success"
-          disabled={isDisabled}
-          fullWidth={true}
-          borderless={true}
-          onClick={handleClick}
-        >
-          {t(isMaxAll ? 'Transact-DepositAll' : 'Transact-Deposit')}
-        </Button>
-      </ActionConnectSwitch>
+      <div className={classes.btns}>
+        <ActionConnectSwitch chainId={option.chainId}>
+          <Button
+            variant="success"
+            disabled={isDisabled}
+            fullWidth={true}
+            borderless={true}
+            onClick={handleClick}
+          >
+            {t(isMaxAll ? 'Transact-DepositAll' : 'Transact-Deposit')}
+          </Button>
+        </ActionConnectSwitch>
+        <VaultFees />
+      </div>
     </div>
   );
 });
