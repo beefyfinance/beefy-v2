@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-weth-reth",
     "status": "active",
-    "createdAt": 1710354602,
+    "createdAt": 1710522656,
     "platformId": "aerodrome",
     "assets": ["WETH", "rETH"],
     "risks": [
@@ -27,6 +27,35 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-weth-axlop",
+    "name": "axlOP-ETH vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/axlOP",
+    "tokenAddress": "0x6a071315B5Ae7da81CA56901ff13893F84776c7B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroaxlOP-ETH",
+    "earnedTokenAddress": "0x9C34D475ab4Aee4088620A9D71624772636b9e8C",
+    "earnContractAddress": "0x9C34D475ab4Aee4088620A9D71624772636b9e8C",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-axlop",
+    "status": "active",
+    "createdAt": 1710433338,
+    "platformId": "aerodrome",
+    "assets": ["axlOP", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x994ac01750047b9d35431a7ae4ed312ee955e030&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw?pair=0x6a071315B5Ae7da81CA56901ff13893F84776c7B",
     "network": "base",
     "zaps": [
       {
