@@ -2950,45 +2950,6 @@
     ]
   },
   {
-    "id": "pangolin-weth.e-png-eol",
-    "name": "WETH.e-PNG LP",
-    "type": "standard",
-    "token": "WETH.e-PNG LP",
-    "tokenAddress": "0xcf35400A595EFCF0Af591D3Aeb5a35cBCD120d54",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pangolin",
-    "earnedToken": "mooPangolinWETH.e-PNG",
-    "earnedTokenAddress": "0xa66DfCBdAfbe4B4D62535f64f1C2Fb50FF42E4C6",
-    "earnContractAddress": "0xa66DfCBdAfbe4B4D62535f64f1C2Fb50FF42E4C6",
-    "oracle": "lps",
-    "oracleId": "pangolin-weth.e-png",
-    "status": "eol",
-    "createdAt": 1629306038,
-    "retireReason": "rewards",
-    "retiredAt": 1643710675,
-    "platformId": "pangolin",
-    "assets": ["WETHe", "PNG"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
-    "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
-    "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
-    "network": "avax",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "avax-pangolin"
-      }
-    ]
-  },
-  {
     "id": "pangolin-wavax-dai.e-eol",
     "name": "DAI.e-AVAX LP",
     "type": "standard",
