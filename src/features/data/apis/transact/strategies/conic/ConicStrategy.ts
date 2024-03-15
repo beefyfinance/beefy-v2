@@ -8,7 +8,12 @@ import type {
   TokenAmount,
   ZapQuoteStep,
 } from '../../transact-types';
-import { isTokenErc20, isTokenNative, type TokenEntity } from '../../../../entities/token';
+import {
+  isTokenErc20,
+  isTokenNative,
+  type TokenEntity,
+  type TokenErc20,
+} from '../../../../entities/token';
 import {
   createOptionId,
   createQuoteId,
@@ -22,6 +27,7 @@ import {
 import { TransactMode } from '../../../../reducers/wallet/transact-types';
 import {
   selectChainWrappedNativeToken,
+  selectErc20TokenByAddress,
   selectIsTokenLoaded,
   selectTokenByAddress,
   selectTokenById,
@@ -37,7 +43,7 @@ import { getWeb3Instance } from '../../../instances';
 import { selectChainById } from '../../../../selectors/chains';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { BeefyThunk } from '../../../../../../redux-types';
-import { ZERO_FEE } from '../../helpers/quotes';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes';
 import { isStandardVault } from '../../../../entities/vault';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import ZapAbi from '../../../../../../config/abi/zap.json';
@@ -53,8 +59,9 @@ import coder from 'web3-eth-abi';
 
 export class ConicStrategy implements IStrategy {
   readonly id: string = 'conic';
-  readonly conicZap = '0x1F3aabF169aE52E868a6065CD1AE6B29Ae1a0368';
+  protected readonly conicZap = '0x1F3aabF169aE52E868a6065CD1AE6B29Ae1a0368';
   protected readonly tokens: TokenEntity[];
+  protected readonly cnc: TokenErc20;
 
   constructor(protected options: SingleStrategyOptions, protected helpers: ZapTransactHelpers) {
     const { vault, getState } = this.helpers;
@@ -66,7 +73,13 @@ export class ConicStrategy implements IStrategy {
         throw new Error(`Vault ${vault.id}: Asset ${vault.assetIds[i]} not loaded`);
       }
     }
+
     this.tokens = vault.assetIds.map(id => selectTokenById(state, vault.chainId, id));
+    this.cnc = selectErc20TokenByAddress(
+      state,
+      vault.chainId,
+      '0x9aE380F0272E2162340a5bB646c354271c0F5cFC'
+    );
   }
 
   async fetchDepositOptions(): Promise<ConicDepositOption[]> {
@@ -124,8 +137,8 @@ export class ConicStrategy implements IStrategy {
       .call();
     const lpToken = vaultType.depositToken;
     const swapAmountOut = fromWeiString(estimate.swapAmountOut, lpToken.decimals);
-
-    console.log('conic estimate res', estimate, swapAmountOut.toString(10));
+    const outputs: TokenAmount[] = [{ token: lpToken, amount: swapAmountOut }];
+    const returned: TokenAmount[] = [];
 
     const steps: ZapQuoteStep[] = [
       {
@@ -144,11 +157,11 @@ export class ConicStrategy implements IStrategy {
     return {
       id: createQuoteId(option.id),
       strategyId: 'conic',
-      priceImpact: 0,
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       option,
       inputs,
-      outputs: [{ token: lpToken, amount: swapAmountOut }],
-      returned: [],
+      outputs,
+      returned,
       allowances,
       steps,
       fee: { value: 0 },
@@ -209,7 +222,7 @@ export class ConicStrategy implements IStrategy {
       ];
 
       // CNC is rewarded by Conic if deposit rebalanced pool
-      const CNC = { token: selectTokenById(state, vault.chainId, 'CNC'), amount: BIG_ZERO };
+      const CNC = { token: this.cnc, amount: BIG_ZERO };
       // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
       const dustOutputs: OrderOutput[] = quote.outputs
         .concat(quote.inputs)
@@ -253,7 +266,7 @@ export class ConicStrategy implements IStrategy {
   async fetchWithdrawOptions(): Promise<ConicWithdrawOption[]> {
     const { vault, vaultType } = this.helpers;
     const inputs = [vaultType.depositToken];
-    console.log('conic fetchWithdrawOptions', this.tokens);
+
     return this.tokens.map(token => {
       const outputs = [token];
       const selectionId = createSelectionId(vault.chainId, outputs);
@@ -316,6 +329,7 @@ export class ConicStrategy implements IStrategy {
       .call();
     const swapAmountOut = fromWeiString(estimate.swapAmountOut, desiredToken.decimals);
     const outputs: TokenAmount[] = [{ token: desiredToken, amount: swapAmountOut }];
+    const returned: TokenAmount[] = [];
 
     const steps: ZapQuoteStep[] = [
       {
@@ -334,11 +348,11 @@ export class ConicStrategy implements IStrategy {
     return {
       id: createQuoteId(option.id),
       strategyId: 'conic',
-      priceImpact: 0,
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       option,
       inputs,
       outputs,
-      returned: [],
+      returned,
       allowances,
       steps,
       fee: ZERO_FEE,
@@ -347,7 +361,7 @@ export class ConicStrategy implements IStrategy {
 
   async fetchWithdrawStep(quote: ConicWithdrawQuote, t: TFunction<Namespace>): Promise<Step> {
     const { vault } = this.helpers;
-    const zapAction = async (dispatch, getState, extraArgument) => {
+    const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
       const slippage = selectTransactSlippage(state);
 
@@ -394,7 +408,7 @@ export class ConicStrategy implements IStrategy {
       }));
 
       // CNC is rewarded by Conic if deposit rebalanced pool
-      const CNC = { token: selectTokenById(state, vault.chainId, 'CNC'), amount: BIG_ZERO };
+      const CNC = { token: this.cnc, amount: BIG_ZERO };
       // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
       const dustOutputs: OrderOutput[] = pickTokens(
         [CNC],
