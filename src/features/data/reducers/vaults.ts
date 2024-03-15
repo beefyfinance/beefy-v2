@@ -21,6 +21,7 @@ import {
 import type { NormalizedEntity } from '../utils/normalized-entity';
 import type { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
 import { entries } from '../../../helpers/object';
+import { BIG_ZERO } from '../../../helpers/big-number';
 
 /**
  * State containing Vault infos
@@ -81,16 +82,11 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
    **/
   contractData: {
     byVaultId: {
-      [vaultId: VaultEntity['id']]:
-        | {
-            strategyAddress: string;
-            pricePerFullShare: BigNumber | null;
-            balances?: BigNumber[];
-          }
-        | {
-            strategyAddress: string;
-            balances: BigNumber[];
-          };
+      [vaultId: VaultEntity['id']]: {
+        strategyAddress: string;
+        pricePerFullShare?: BigNumber | null;
+        balances?: BigNumber[];
+      };
     };
   };
 
@@ -186,8 +182,34 @@ function addContractDataToState(
       sliceState.contractData.byVaultId[vaultId].pricePerFullShare =
         vaultContractData.pricePerFullShare;
     }
+
     if (sliceState.contractData.byVaultId[vaultId].strategyAddress !== vaultContractData.strategy) {
       sliceState.contractData.byVaultId[vaultId].strategyAddress = vaultContractData.strategy;
+    }
+  }
+
+  for (const cowVaultContractData of contractData.cowVaults) {
+    const vaultId = cowVaultContractData.id;
+
+    if (sliceState.contractData.byVaultId[vaultId] === undefined) {
+      sliceState.contractData.byVaultId[vaultId] = {
+        balances: [BIG_ZERO, BIG_ZERO],
+        strategyAddress: cowVaultContractData.strategy,
+      };
+    }
+
+    if (
+      !sliceState.contractData.byVaultId[vaultId].balances!.every((balance, index) => {
+        return balance.isEqualTo(cowVaultContractData.balances[index]);
+      })
+    ) {
+      sliceState.contractData.byVaultId[vaultId].balances = cowVaultContractData.balances;
+    }
+
+    if (
+      sliceState.contractData.byVaultId[vaultId].strategyAddress !== cowVaultContractData.strategy
+    ) {
+      sliceState.contractData.byVaultId[vaultId].strategyAddress = cowVaultContractData.strategy;
     }
   }
 }
