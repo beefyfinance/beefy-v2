@@ -142,7 +142,8 @@ const validatePools = async () => {
 };
 
 const validateSingleChain = async (chainId, uniquePoolId) => {
-  if (chainId === 'arbitrum') return { chainId, exitCode: 0, updates: {} };
+  if (chainId === 'arbitrum' || chainId === 'optimism')
+    return { chainId, exitCode: 0, updates: {} };
   let [pools, boosts] = await Promise.all([getVaultsForChain(chainId), getBoostsForChain(chainId)]);
 
   console.log(`Validating ${pools.length} pools in ${chainId}...`);
