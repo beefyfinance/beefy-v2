@@ -3,7 +3,7 @@ import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenErc20, TokenEntity } from '../entities/token';
 import { isTokenErc20 } from '../entities/token';
-import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
+import type { VaultCowcentrated, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
   isCowcentratedLiquidityVault,
   isGovVault,
@@ -63,6 +63,11 @@ export const selectIsVaultCowcentrated = createCachedSelector(
 export const selectIsVaultGov = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   vault => isGovVault(vault)
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectCowcentratedVaultDepositTokenAddresses = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  vault => (vault as VaultCowcentrated).depositTokenAddresses
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectVaultExistsById = createSelector(

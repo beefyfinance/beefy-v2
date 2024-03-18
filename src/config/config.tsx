@@ -209,7 +209,7 @@ export const config = {
     explorerUrl: 'https://optimistic.etherscan.io',
     multicallAddress: '0x820ae7bf39792d7ce7befc70b0172f4d267f1938',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x88D537a86e09B753361D70448d60D3dC2D75883d',
+    appMulticallContractAddress: '0xB089f6c9C99238FC6df256cc66d53Aed198584D9',
     providerName: 'Optimism',
     walletSettings: {
       chainId: `0x${parseInt('10', 10).toString(16)}`,

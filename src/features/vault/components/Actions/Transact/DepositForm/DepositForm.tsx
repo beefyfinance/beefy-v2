@@ -23,14 +23,19 @@ import { TransactQuote } from '../TransactQuote';
 import { AlertError } from '../../../../../../components/Alerts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { VaultFees } from '../VaultFees';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
+import {
+  selectCowcentratedVaultDepositTokenAddresses,
+  selectVaultById,
+} from '../../../../../data/selectors/vaults';
 import { RetirePauseReason } from '../../../RetirePauseReason';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
 import zapIcon from '../../../../../../images/icons/zap.svg';
-import { isCowcentratedLiquidityVault } from '../../../../../data/entities/vault';
-import type { TokenEntity } from '../../../../../data/entities/token';
+import {
+  isCowcentratedLiquidityVault,
+  type VaultCowcentrated,
+} from '../../../../../data/entities/vault';
 import type { ChainEntity } from '../../../../../data/entities/chain';
-import { selectTokenById } from '../../../../../data/selectors/tokens';
+import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
@@ -113,13 +118,21 @@ export const CowcentratedDepositForm = memo(function V3DepositForm() {
   const { t } = useTranslation();
   const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId)) as VaultCowcentrated;
+  const vaultDepositTokenAddresses = useAppSelector(state =>
+    selectCowcentratedVaultDepositTokenAddresses(state, vaultId)
+  );
 
   return (
     <>
       <div className={classes.v3Inputs}>
-        {vault.assetIds.map((assetId, index) => (
-          <V3TokenInput key={assetId} tokenId={assetId} chainId={vault.chainId} index={index} />
+        {vaultDepositTokenAddresses.map((tokenAddress, index) => (
+          <V3TokenInput
+            key={tokenAddress}
+            tokenAddress={tokenAddress}
+            chainId={vault.chainId}
+            index={index}
+          />
         ))}
       </div>
       <TransactQuote title={t('Transact-YouDeposit')} className={classes.quote} />
@@ -130,18 +143,18 @@ export const CowcentratedDepositForm = memo(function V3DepositForm() {
 });
 
 interface V3TokenInputProps {
-  tokenId: TokenEntity['id'];
+  tokenAddress: string;
   chainId: ChainEntity['id'];
   index: number;
 }
 
 export const V3TokenInput = memo<V3TokenInputProps>(function V3TokenInput({
-  tokenId,
+  tokenAddress,
   chainId,
   index,
 }) {
   const { t } = useTranslation();
-  const token = useAppSelector(state => selectTokenById(state, chainId, tokenId));
+  const token = useAppSelector(state => selectTokenByAddress(state, chainId, tokenAddress));
   const classes = useStyles();
   const balance = useAppSelector(state =>
     selectUserBalanceOfToken(state, token.chainId, token.address)
