@@ -17,7 +17,7 @@ import type {
 import { featureFlag_getContractDataApiChunkSize } from '../../utils/feature-flags';
 import type { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
-import { selectTokenByAddress, selectTokenById } from '../../selectors/tokens';
+import { selectTokenByAddress } from '../../selectors/tokens';
 import { makeBatchRequest, viemToWeb3Abi, type Web3Call } from '../../../../helpers/web3';
 import { isFiniteNumber } from '../../../../helpers/number';
 import type Web3 from 'web3';
@@ -221,10 +221,11 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     result: AsWeb3Result<CowVaultContractData>,
     cowVault: VaultCowcentrated
   ) {
-    const vault = selectVaultById(state, cowVault.id);
-    const tokens = vault.assetIds.map(assetId => selectTokenById(state, vault.chainId, assetId));
+    const tokens = cowVault.depositTokenAddresses.map(tokenAddress =>
+      selectTokenByAddress(state, cowVault.chainId, tokenAddress)
+    );
     return {
-      id: vault.id,
+      id: cowVault.id,
       balances: [
         new BigNumber(result[0]).shiftedBy(-tokens[0].decimals),
         new BigNumber(result[1]).shiftedBy(-tokens[1].decimals),

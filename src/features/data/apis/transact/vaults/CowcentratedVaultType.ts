@@ -13,7 +13,7 @@ import {
   type VaultCowcentrated,
 } from '../../../entities/vault';
 import { TransactMode } from '../../../reducers/wallet/transact-types';
-import { selectTokenByAddress, selectTokenById } from '../../../selectors/tokens';
+import { selectTokenByAddress } from '../../../selectors/tokens';
 import {
   createOptionId,
   createQuoteId,
@@ -66,8 +66,8 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     const state = getState();
     this.getState = getState;
     this.vault = vault;
-    this.depositTokens = vault.assetIds.map(tokenId =>
-      selectTokenById(state, vault.chainId, tokenId)
+    this.depositTokens = vault.depositTokenAddresses.map(tokenAddress =>
+      selectTokenByAddress(state, vault.chainId, tokenAddress)
     );
     this.vaultToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
 
@@ -189,8 +189,8 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     );
     const selectionId = createSelectionId(this.vault.chainId, [vaultToken]);
     console.log('selectionId:', selectionId);
-    const outputs = this.vault.assetIds.map(tokenId =>
-      selectTokenById(this.getState(), this.vault.chainId, tokenId)
+    const outputs = this.vault.depositTokenAddresses.map(tokenAddress =>
+      selectTokenByAddress(this.getState(), this.vault.chainId, tokenAddress)
     );
 
     console.log('fetching withdraw option');
