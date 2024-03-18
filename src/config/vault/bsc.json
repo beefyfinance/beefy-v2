@@ -1,5 +1,95 @@
 [
   {
+    "id": "thena-gamma-fil-wbnb-narrow",
+    "name": "FIL-BNB LP Narrow",
+    "type": "standard",
+    "token": "aFIL-BNB",
+    "tokenAddress": "0xc89004ce7becd2b39c44260327a603885da119B5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenaGammaFIL-BNBNarrow",
+    "earnedTokenAddress": "0x2A1b2B05A3c54C86F3f3AB837cA423ad60CF35d1",
+    "earnContractAddress": "0x2A1b2B05A3c54C86F3f3AB837cA423ad60CF35d1",
+    "oracle": "lps",
+    "oracleId": "thena-gamma-fil-wbnb-narrow",
+    "status": "active",
+    "createdAt": 1710331580,
+    "platformId": "gamma",
+    "assets": ["FIL", "BNB"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/fil-wbnb-narrow",
+    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0x786958E9DA2627510D0c8De0bF59bE994653f26a"
+      }
+    ]
+  },
+  {
+    "id": "thena-gamma-wbnb-the-wide",
+    "name": "THE-BNB LP Wide",
+    "type": "standard",
+    "token": "aTHE-BNB",
+    "tokenAddress": "0xe8EC29b75d98d3cdc47dB9797B00dCaaBeA2b15b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenaTHE-BNBWide",
+    "earnedTokenAddress": "0xA5d3c08E0afb5F4d2428630e10d31DC53a14e2E5",
+    "earnContractAddress": "0xA5d3c08E0afb5F4d2428630e10d31DC53a14e2E5",
+    "oracle": "lps",
+    "oracleId": "thena-gamma-wbnb-the-wide",
+    "status": "active",
+    "createdAt": 1710331580,
+    "platformId": "gamma",
+    "assets": ["THE", "BNB"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/wbnb-the-wide",
+    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0xFBfda960853C7002bb3f4614392503Bbd92fbA74"
+      }
+    ]
+  },
+  {
+    "id": "thena-usdv-usdt",
+    "name": "USDV-USDT sLP",
+    "type": "standard",
+    "token": "USDV-USDT sLP",
+    "tokenAddress": "0x97C4decba0438A4B6F871561963FC41B222dfa10",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenaUSDV-USDT",
+    "earnedTokenAddress": "0x677475C26C9386BB14eE0EBE8D8f7E8Da717233B",
+    "earnContractAddress": "0x677475C26C9386BB14eE0EBE8D8f7E8Da717233B",
+    "oracle": "lps",
+    "oracleId": "thena-usdv-usdt",
+    "status": "active",
+    "createdAt": 1710331580,
+    "platformId": "thena",
+    "assets": ["USDV", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://thena.fi/swap",
+    "addLiquidityUrl": "https://thena.fi/liquidity",
+    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "bsc-thena"
+      }
+    ]
+  },
+  {
     "id": "thena-gamma-bnb-rbnb",
     "name": "BNB-rBNB LP",
     "type": "standard",
@@ -2182,7 +2272,9 @@
     "earnContractAddress": "0xbb6685C25b1077a3f2ceD72C915785363dDAb191",
     "oracle": "lps",
     "oracleId": "thena-frax-busd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1710346058,
     "createdAt": 1683814958,
     "platformId": "thena",
     "assets": ["FRAX", "BUSD"],
@@ -3811,45 +3903,6 @@
       {
         "strategyId": "uniswap-v2",
         "ammId": "bsc-babyswap"
-      }
-    ]
-  },
-  {
-    "id": "biswap-sand-usdt",
-    "name": "SAND-USDT LP",
-    "type": "standard",
-    "token": "SAND-USDT BiLP",
-    "tokenAddress": "0x69f60c87AEcdb037A44cbaD67eD06464432521b6",
-    "tokenDecimals": 18,
-    "tokenProviderId": "biswap",
-    "earnedToken": "mooBiswapSAND-USDT",
-    "earnedTokenAddress": "0x558F0e2B14D87120A3bbEd6414a17b997c0655Bc",
-    "earnContractAddress": "0x558F0e2B14D87120A3bbEd6414a17b997c0655Bc",
-    "oracle": "lps",
-    "oracleId": "biswap-sand-usdt",
-    "status": "eol",
-    "createdAt": 1651677222,
-    "retireReason": "tvl",
-    "retiredAt": 1661444768,
-    "platformId": "biswap",
-    "assets": ["SAND", "USDT"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://exchange.biswap.org/#/swap?outputCurrency=0x67b725d7e342d7B611fa85e859Df9697D9378B2e",
-    "addLiquidityUrl": "https://exchange.biswap.org/#/add/0x55d398326f99059ff775485246999027b3197955/0x67b725d7e342d7B611fa85e859Df9697D9378B2e",
-    "removeLiquidityUrl": "https://exchange.biswap.org/#/remove/0x55d398326f99059ff775485246999027b3197955/0x67b725d7e342d7B611fa85e859Df9697D9378B2e",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "bsc-biswap"
       }
     ]
   },
