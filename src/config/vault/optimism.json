@@ -18,7 +18,7 @@
     "status": "active",
     "createdAt": 1710773525,
     "platformId": "beefy",
-    "assets": ["WETH", "OPTIMISM"],
+    "assets": ["WETH", "OP"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "optimism",
