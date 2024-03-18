@@ -2,7 +2,7 @@
   {
     "id": "equilibria-arb-ausdc-jun24",
     "name": "USDC 27Jun24",
-    "token": "sETH-25Apr24",
+    "token": "aUSDC-27Jun24",
     "tokenAddress": "0xBa4A858d664Ddb052158168DB04AFA3cFF5CFCC8",
     "tokenDecimals": 18,
     "tokenProviderId": "pendle",
