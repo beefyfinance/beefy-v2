@@ -74,15 +74,19 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
       {showWithdraw ? (
         <ActionClaimWithdraw quote={quote} vault={vault} />
       ) : (
-        <div className={classes.feesContainer}>
-          <ActionConnectSwitch chainId={vault.chainId}>
-            <div className={classes.buttons}>
-              <ActionWithdrawDisabled />
+        <ActionConnectSwitch
+          className={classes.feesContainer}
+          FeesComponent={WithdrawFees}
+          chainId={vault.chainId}
+        >
+          <div className={classes.buttons}>
+            <ActionWithdrawDisabled />
+            <div className={classes.feesContainer}>
               <ActionClaim vault={vault} />
+              <WithdrawFees />
             </div>
-          </ActionConnectSwitch>
-          <WithdrawFees />
-        </div>
+          </div>
+        </ActionConnectSwitch>
       )}
     </>
   );
@@ -144,7 +148,7 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ optio
   }, [dispatch, quote, t]);
 
   return (
-    <>
+    <div className={classes.actions}>
       {option.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
       <ScreamAvailableLiquidityNotice
         vaultId={option.vaultId}
@@ -168,7 +172,7 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ optio
         </ActionConnectSwitch>
         <WithdrawFees />
       </div>
-    </>
+    </div>
   );
 });
 
@@ -201,13 +205,17 @@ const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimW
   }, [dispatch, quote, t]);
 
   return (
-    <>
+    <div className={classes.actions}>
       {option.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
       <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <NotEnoughNotice mode="withdraw" onChange={setIsDisabledByNotEnoughInput} />
       <div className={classes.buttons}>
-        <ActionConnectSwitch chainId={option.chainId}>
+        <ActionConnectSwitch
+          FeesComponent={WithdrawFees}
+          className={classes.feesContainer}
+          chainId={option.chainId}
+        >
           <Button
             variant="success"
             disabled={isDisabled}
@@ -223,10 +231,13 @@ const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimW
                 : 'Transact-Withdraw'
             )}
           </Button>
-          <ActionClaim vault={vault} />
+          <div className={classes.feesContainer}>
+            <ActionClaim vault={vault} />
+            <WithdrawFees />
+          </div>
         </ActionConnectSwitch>
       </div>
-    </>
+    </div>
   );
 });
 

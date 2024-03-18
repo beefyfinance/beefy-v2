@@ -90,10 +90,5 @@ export const ActionConnectSwitch = memo<ActionConnectSwitchProps>(function Actio
     );
   }
 
-  return (
-    <div className={className}>
-      {children}
-      {FeesComponent && <FeesComponent />}
-    </div>
-  );
+  return <>{children}</>;
 });
