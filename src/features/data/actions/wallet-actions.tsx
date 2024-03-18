@@ -12,7 +12,7 @@ import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenEqual, isTokenNative } from '../entities/token';
 import type { VaultCowcentrated, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
-import { isStandardVault } from '../entities/vault';
+import { isCowcentratedLiquidityVault, isStandardVault } from '../entities/vault';
 import {
   createWalletActionErrorAction,
   createWalletActionPendingAction,
@@ -350,7 +350,9 @@ const v3Deposit = (
       viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
       vault.earnContractAddress
     );
-    const tokens = vault.assetIds.map(id => selectTokenById(state, vault.chainId, id));
+    const tokens = vault.depositTokenAddresses.map(address =>
+      selectTokenByAddress(state, vault.chainId, address)
+    );
     const rawAmounts = [amountToken0, amountToken1].map((amount, i) =>
       toWeiString(amount, tokens[i].decimals)
     );
@@ -1226,7 +1228,7 @@ function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
   const tokens: TokenEntity[] = [];
 
   // refresh vault tokens
-  if (isStandardVault(vault)) {
+  if (isStandardVault(vault) || isCowcentratedLiquidityVault(vault)) {
     for (const assetId of vault.assetIds) {
       // selectTokenById throws if token does not exist;
       // tokens in assetIds[] might not exist if vault does not have ZAP
