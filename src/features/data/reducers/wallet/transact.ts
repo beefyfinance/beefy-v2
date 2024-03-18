@@ -62,6 +62,7 @@ const initialTransactState: TransactState = {
   mode: TransactMode.Deposit,
   step: TransactStep.Form,
   selections: initialTransactTokens,
+  forceSelection: false,
   options: initialTransactOptions,
   quotes: initialTransactQuotes,
   migrateQuotes: initialTransactQuotes,
@@ -79,6 +80,7 @@ const transactSlice = createSlice({
     },
     switchStep(sliceState, action: PayloadAction<TransactStep>) {
       sliceState.step = action.payload;
+      sliceState.forceSelection = false;
     },
     selectSelection(
       sliceState,
@@ -204,9 +206,9 @@ const transactSlice = createSlice({
 
           const defaultOption = first(options);
           if (defaultOption) {
-            sliceState.selectedSelectionId =
-              options.length > 1 ? undefined : defaultOption.selectionId;
+            sliceState.selectedSelectionId = defaultOption.selectionId;
             sliceState.selectedChainId = defaultOption.chainId;
+            sliceState.forceSelection = options.length > 1;
           }
         }
       })
@@ -249,6 +251,7 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.selectedSelectionId = undefined;
   sliceState.inputAmount = BIG_ZERO;
   sliceState.inputMax = false;
+  sliceState.forceSelection = false;
 
   sliceState.options.status = TransactStatus.Idle;
   sliceState.options.error = undefined;

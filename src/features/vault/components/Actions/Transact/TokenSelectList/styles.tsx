@@ -59,6 +59,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.contentLight,
     borderRadius: '0px 0px 8px 8px',
     padding: '16px 24px',
+    textDecoration: 'none',
   },
   buildLpContent: {
     ...theme.typography['body-lg-med'],

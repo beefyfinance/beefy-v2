@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
+  selecTransactForceSelection,
   selectTransactInputAmount,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
@@ -37,11 +38,12 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
     const userBalance = useAppSelector(state =>
       selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId)
     );
-
     const value = useAppSelector(selectTransactInputAmount);
     const price = useAppSelector(state =>
       selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
     );
+    const forceSelection = useAppSelector(selecTransactForceSelection);
+
     const handleChange = useCallback<AmountInputProps['onChange']>(
       (value, isMax) => {
         dispatch(
@@ -70,6 +72,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
         error={error}
         price={price}
         endAdornement={<TokenSelectButton />}
+        disabled={forceSelection}
       />
     );
   }

@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
+  selecTransactForceSelection,
   selectTransactInputAmount,
   selectTransactSelected,
 } from '../../../../../data/selectors/transact';
@@ -14,7 +15,6 @@ import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import BigNumber from 'bignumber.js';
 import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens';
 import { TokenSelectButton } from '../TokenSelectButton';
-import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
@@ -27,21 +27,20 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
     const dispatch = useAppDispatch();
     const classes = useStyles();
     const selection = useAppSelector(selectTransactSelected);
-    const depositToken = selection?.tokens[0]; // TODO univ3; only 1 deposit token supported
+    const depositToken = selection.tokens[0]; // TODO univ3; only 1 deposit token supported
     const userBalance = useAppSelector(state =>
-      depositToken
-        ? selectUserBalanceOfToken(state, depositToken.chainId, depositToken.address)
-        : BIG_ZERO
+      selectUserBalanceOfToken(state, depositToken.chainId, depositToken.address)
     );
     const value = useAppSelector(selectTransactInputAmount);
     const price = useAppSelector(state =>
-      depositToken ? selectTokenPriceByTokenOracleId(state, depositToken.oracleId) : BIG_ONE
+      selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
     );
+    const forceSelection = useAppSelector(selecTransactForceSelection);
     const handleChange = useCallback<AmountInputProps['onChange']>(
       (value, isMax) => {
         dispatch(
           transactActions.setInputAmount({
-            amount: value.decimalPlaces(depositToken?.decimals ?? 18, BigNumber.ROUND_FLOOR),
+            amount: value.decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR),
             max: isMax,
           })
         );
@@ -58,13 +57,14 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
         className={clsx(classes.input, className)}
         value={value}
         maxValue={userBalance}
-        tokenDecimals={depositToken?.decimals ?? 18}
+        tokenDecimals={depositToken.decimals}
         onChange={handleChange}
         error={error}
         allowInputAboveBalance={true}
         fullWidth={true}
         price={price}
         endAdornement={<TokenSelectButton />}
+        disabled={forceSelection}
       />
     );
   }

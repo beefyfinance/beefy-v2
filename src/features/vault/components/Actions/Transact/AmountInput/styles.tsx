@@ -12,7 +12,7 @@ export const styles = (theme: Theme) => ({
     boxSizing: 'border-box' as const,
     position: 'relative' as const,
     justifyContent: 'space-between',
-    minHeight: '48px',
+    minHeight: '60px',
   },
   inputContent: {
     display: 'flex',
@@ -49,7 +49,7 @@ export const styles = (theme: Theme) => ({
   },
   price: {
     ...theme.typography['body-sm'],
-    lineHeight: '12px',
+    // lineHeight: '12px',
     color: theme.palette.text.dark,
   },
   max: {

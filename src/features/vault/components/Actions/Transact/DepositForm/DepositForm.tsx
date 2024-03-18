@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
+  selecTransactForceSelection,
   selectTransactNumTokens,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
@@ -26,12 +27,14 @@ import { TokenAmount, TokenAmountFromEntity } from '../../../../../../components
 import zapIcon from '../../../../../../images/icons/zap.svg';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number';
+import { TextLoader } from '../../../../../../components/TextLoader';
 
 const useStyles = makeStyles(styles);
 
 const SelectedInWallet = memo(function SelectedInWallet() {
   const chainId = useAppSelector(selectTransactSelectedChainId);
   const selection = useAppSelector(selectTransactSelected);
+  const forceSelection = useAppSelector(selecTransactForceSelection);
   const dispatch = useAppDispatch();
   const token = selection?.tokens?.[0];
 
@@ -51,6 +54,10 @@ const SelectedInWallet = memo(function SelectedInWallet() {
   }, [balance, dispatch, token]);
 
   if (!chainId || !selection || !token || !balance) {
+    return <TextLoader placeholder="0.0000000 BNB-BIFI" />;
+  }
+
+  if (forceSelection) {
     return <TokenAmount amount={BIG_ZERO} decimals={18} price={BIG_ONE} />;
   }
 

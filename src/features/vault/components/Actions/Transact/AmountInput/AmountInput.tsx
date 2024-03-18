@@ -40,6 +40,7 @@ export type AmountInputProps = {
   fullWidth?: boolean;
   price?: BigNumber;
   endAdornement?: ReactNode;
+  disabled?: boolean;
 };
 export const AmountInput = memo<AmountInputProps>(function AmountInput({
   value,
@@ -52,6 +53,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   fullWidth = false,
   price,
   endAdornement,
+  disabled,
 }) {
   const classes = useStyles();
   const [input, setInput] = useState(() => {
@@ -153,6 +155,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
           onBlur={handleBlur}
           placeholder="0"
           inputMode="decimal"
+          disabled={disabled}
         />
         {price && value.gt(0) && <div className={classes.price}>{formatBigUsd(inputUsdValue)}</div>}
       </div>

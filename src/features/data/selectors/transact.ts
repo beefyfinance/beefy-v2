@@ -39,7 +39,7 @@ export const selectTransactInputMax = (state: BeefyState) => state.ui.transact.i
 export const selectTransactSelectedChainId = (state: BeefyState) =>
   state.ui.transact.selectedChainId;
 export const selectTransactSelectedSelectionId = (state: BeefyState) =>
-  state.ui.transact.selectedSelectionId || '';
+  valueOrThrow(state.ui.transact.selectedSelectionId, 'No selected selection id found');
 export const selectTransactSelectedQuoteId = (state: BeefyState) =>
   state.ui.transact.selectedQuoteId;
 
@@ -256,3 +256,5 @@ export const selectTransactConfirmStatus = (state: BeefyState) => state.ui.trans
 export const selectTransactConfirmError = (state: BeefyState) => state.ui.transact.confirm.error;
 export const selectTransactConfirmChanges = (state: BeefyState) =>
   state.ui.transact.confirm.changes;
+
+export const selecTransactForceSelection = (state: BeefyState) => state.ui.transact.forceSelection;

@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
+  selecTransactForceSelection,
   selectTransactNumTokens,
   selectTransactSelected,
 } from '../../../../../data/selectors/transact';
@@ -28,6 +29,7 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
   const classes = useStyles();
   const selection = useAppSelector(selectTransactSelected);
   const numTokenOptions = useAppSelector(selectTransactNumTokens);
+  const forceSelection = useAppSelector(selecTransactForceSelection);
   const multipleOptions = numTokenOptions > 1;
 
   const handleClick = useCallback(() => {
@@ -39,7 +41,7 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
       onClick={multipleOptions ? handleClick : undefined}
       className={clsx(classes.button, className, { [classes.buttonMore]: multipleOptions })}
     >
-      {selection === undefined ? (
+      {forceSelection ? (
         <div className={classes.select}>
           <div className={classes.zapIcon}>
             <img src={zapIcon} alt="zap" />
@@ -47,7 +49,10 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
           {t('Select')}
         </div>
       ) : (
-        <TokensImage tokens={selection.tokens} className={classes.iconAssets} size={24} />
+        <div className={classes.select}>
+          <TokensImage tokens={selection.tokens} className={classes.iconAssets} size={24} />
+          {selection.tokens[0].symbol}
+        </div>
       )}
       {multipleOptions ? <ExpandMore className={classes.iconMore} /> : null}
     </button>

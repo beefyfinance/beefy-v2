@@ -114,7 +114,7 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
             )}
           </div>
         </Scrollable>
-        {filteredOptionsForChain.length && <BuildLpManually vaultId={vaultId} />}
+        {filteredOptionsForChain?.length > 1 && <BuildLpManually vaultId={vaultId} />}
       </div>
     );
   }

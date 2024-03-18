@@ -2,7 +2,7 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   button: {
-    padding: '4px 12px',
+    padding: '10px 12px',
     margin: 0,
     border: 'none',
     boxShadow: 'none',
@@ -15,7 +15,7 @@ export const styles = (theme: Theme) => ({
     pointerEvents: 'none' as const,
   },
   buttonMore: {
-    padding: '4px 6px 4px 12px',
+    padding: '10px 6px 10px 12px',
     cursor: 'pointer' as const,
     pointerEvents: 'auto' as const,
   },
@@ -31,7 +31,7 @@ export const styles = (theme: Theme) => ({
     fill: theme.palette.text.middle,
   },
   select: {
-    ...theme.typography['body-lg'],
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.dark,
     display: 'flex',
     columnGap: '8px',
