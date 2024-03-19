@@ -64,7 +64,7 @@
     "earnedTokenAddress": "0xF01e9f9535E834092F1d3B1712A5DC1B1B92cD07",
     "earnContractAddress": "0xF01e9f9535E834092F1d3B1712A5DC1B1B92cD07",
     "oracle": "lps",
-    "oracleId": "uniswap-op-cow-eth-usdt",
+    "oracleId": "uniswap-cow-op-moobifi-eth",
     "status": "active",
     "createdAt": 1710773525,
     "platformId": "beefy",
