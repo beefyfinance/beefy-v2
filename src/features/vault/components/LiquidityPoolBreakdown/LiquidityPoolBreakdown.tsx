@@ -10,7 +10,7 @@ import type { BreakdownMode } from './types';
 import { ChartWithLegend } from './components/ChartWithLegend';
 import { useCalculatedBreakdown } from './hooks';
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import { selectIsVaultCowcentrated, selectVaultById } from '../../../data/selectors/vaults';
+import { selectVaultById } from '../../../data/selectors/vaults';
 import type { TokenLpBreakdown } from '../../../data/entities/token';
 import {
   selectHasBreakdownDataByTokenAddress,
@@ -102,9 +102,6 @@ export const LiquidityPoolBreakdownLoader = memo<LiquidityPoolBreakdownLoaderPro
     const haveBreakdownData = useAppSelector(state =>
       selectHasBreakdownDataByTokenAddress(state, vault.depositTokenAddress, vault.chainId)
     );
-    const isCowcentratedLiquidityVault = useAppSelector(state =>
-      selectIsVaultCowcentrated(state, vaultId)
-    );
 
     // Load address book if needed
     useEffect(() => {
@@ -113,7 +110,7 @@ export const LiquidityPoolBreakdownLoader = memo<LiquidityPoolBreakdownLoaderPro
       }
     }, [dispatch, isAddressBookLoaded, shouldInitAddressBook, chainId]);
 
-    if (haveBreakdownData && !isCowcentratedLiquidityVault) {
+    if (haveBreakdownData) {
       return <LiquidityPoolBreakdown vault={vault} breakdown={breakdown} />;
     }
 
