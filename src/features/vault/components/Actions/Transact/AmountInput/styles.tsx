@@ -49,7 +49,6 @@ export const styles = (theme: Theme) => ({
   },
   price: {
     ...theme.typography['body-sm'],
-    // lineHeight: '12px',
     color: theme.palette.text.dark,
   },
   max: {
