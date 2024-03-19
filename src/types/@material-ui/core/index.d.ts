@@ -30,6 +30,7 @@ declare module '@material-ui/core/styles/createPalette' {
       default: string;
       gov: string;
       boost: string;
+      clm: string;
       inactive: string;
     };
     txsModal: {
@@ -43,6 +44,9 @@ declare module '@material-ui/core/styles/createPalette' {
       earnings: string;
       retired: string;
       paused: string;
+      clm: string;
+      platformClm: string;
+      platformGov: string;
     };
     indicators: {
       loading: string;

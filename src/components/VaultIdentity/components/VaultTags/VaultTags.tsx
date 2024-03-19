@@ -16,14 +16,20 @@ import type { TokenEntity } from '../../../../features/data/entities/token';
 import { selectTokenByAddress } from '../../../../features/data/selectors/tokens';
 import type { VaultEntity } from '../../../../features/data/entities/vault';
 import {
+  isCowcentratedLiquidityVault,
   isGovVault,
   isVaultEarningPoints,
   isVaultPaused,
   isVaultRetired,
 } from '../../../../features/data/entities/vault';
 import { VaultPlatform } from '../../../VaultPlatform';
-import { selectVaultById } from '../../../../features/data/selectors/vaults';
+import {
+  selectIsVaultCowcentrated,
+  selectIsVaultGov,
+  selectVaultById,
+} from '../../../../features/data/selectors/vaults';
 import { getBoostIconSrc } from '../../../../helpers/boostIconSrc';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -81,8 +87,17 @@ type VaultPlatformTagProps = {
   vaultId: VaultEntity['id'];
 };
 const VaultPlatformTag = memo<VaultPlatformTagProps>(function VaultPlatformTag({ vaultId }) {
+  const classes = useStyles();
+  const isGov = useAppSelector(state => selectIsVaultGov(state, vaultId));
+  const isCowcentrated = useAppSelector(state => selectIsVaultCowcentrated(state, vaultId));
+
   return (
-    <VaultTag>
+    <VaultTag
+      className={clsx({
+        [classes.platformTagGov]: isGov,
+        [classes.platformTagClm]: isCowcentrated,
+      })}
+    >
       <VaultPlatform vaultId={vaultId} />
     </VaultTag>
   );
@@ -101,6 +116,19 @@ const WormholeSTIPTag = memo(function WormholeSTIPTag() {
     >
       <>{'\uD83D\uDD25 '}</>
       {`Wormhole STIP`}
+    </VaultTagWithTooltip>
+  );
+});
+
+const CLMTag = memo(function CLMTag() {
+  const classes = useStyles();
+  return (
+    <VaultTagWithTooltip
+      content={<BasicTooltipContent title={`Cowcentrated Liquidity Managment`} />}
+      placement="bottom"
+      className={classes.vaultTagClm}
+    >
+      {`CLM`}
     </VaultTagWithTooltip>
   );
 });
@@ -138,6 +166,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   return (
     <div className={classes.vaultTags}>
       <VaultPlatformTag vaultId={vaultId} />
+      {isCowcentratedLiquidityVault(vault) && <CLMTag />}
       {vaultId === 'compound-arbitrum-usdc' && <WormholeSTIPTag />}
       {isVaultRetired(vault) ? (
         <VaultTag className={classes.vaultTagRetired}>{t('VaultTag-Retired')}</VaultTag>

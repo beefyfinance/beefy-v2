@@ -47,4 +47,13 @@ export const styles = (theme: Theme) => ({
   vaultTagPoints: {
     backgroundColor: theme.palette.background.tags.earnings,
   },
+  vaultTagClm: {
+    backgroundColor: theme.palette.background.tags.clm,
+  },
+  platformTagGov: {
+    backgroundColor: theme.palette.background.tags.platformGov,
+  },
+  platformTagClm: {
+    backgroundColor: theme.palette.background.tags.platformClm,
+  },
 });
