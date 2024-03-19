@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
 import {
+  selecTransactForceSelection,
   selectTransactNumTokens,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
@@ -40,6 +41,7 @@ const DepositedInVault = memo(function DepositedInVault() {
       ? selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId)
       : null
   );
+  const forceSelection = useAppSelector(selecTransactForceSelection);
 
   const handleMax = useCallback(() => {
     token &&
@@ -54,6 +56,10 @@ const DepositedInVault = memo(function DepositedInVault() {
 
   if (!vault || !token || !balance) {
     return <TextLoader placeholder="0.0000000 BNB-BIFI" />;
+  }
+
+  if (forceSelection) {
+    return <TokenAmountFromEntity amount={balance} token={token} minShortPlaces={4} />;
   }
 
   return (
