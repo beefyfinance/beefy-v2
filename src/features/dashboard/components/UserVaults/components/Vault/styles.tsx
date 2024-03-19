@@ -48,6 +48,9 @@ export const styles = (theme: Theme) => ({
   vaultRetired: {
     backgroundColor: theme.palette.background.vaults.inactive,
   },
+  vaultClm: {
+    backgroundColor: theme.palette.background.vaults.clm,
+  },
   toggleContainer: {
     padding: '16px',
     backgroundColor: theme.palette.background.contentDark,
