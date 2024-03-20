@@ -107,7 +107,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdc-stg",
     "status": "active",
-        "createdAt": 1709856005,
+    "createdAt": 1709856005,
     "platformId": "velodrome",
     "assets": ["USDC", "STG"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
