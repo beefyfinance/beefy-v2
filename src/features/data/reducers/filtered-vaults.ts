@@ -36,6 +36,7 @@ export type FilteredVaultsState = {
   onlyBoosted: boolean;
   onlyZappable: boolean;
   onlyEarningPoints: boolean;
+  onlyCowcentrated: boolean;
 };
 export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
 
@@ -54,6 +55,7 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   onlyBoosted: false,
   onlyZappable: false,
   onlyEarningPoints: false,
+  onlyCowcentrated: false,
 };
 
 export const filteredVaultsSlice = createSlice({
@@ -128,6 +130,13 @@ export const filteredVaultsSlice = createSlice({
     ) {
       sliceState.reseted = false;
       sliceState.onlyEarningPoints = action.payload;
+    },
+    setOnlyCowcentrated(
+      sliceState,
+      action: PayloadAction<FilteredVaultsState['onlyCowcentrated']>
+    ) {
+      sliceState.reseted = false;
+      sliceState.onlyCowcentrated = action.payload;
     },
 
     setBoolean(
