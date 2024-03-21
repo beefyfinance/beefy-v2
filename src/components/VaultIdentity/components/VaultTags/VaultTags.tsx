@@ -124,7 +124,7 @@ const CLMTag = memo(function CLMTag() {
   const classes = useStyles();
   return (
     <VaultTagWithTooltip
-      content={<BasicTooltipContent title={`Cowcentrated Liquidity Management`} />}
+      content={<BasicTooltipContent title={`Cowcentrated Liquidity Manager`} />}
       placement="bottom"
       className={classes.vaultTagClm}
     >
