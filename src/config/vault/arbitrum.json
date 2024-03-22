@@ -1,5 +1,77 @@
 [
   {
+    "id": "silo-usdce-arb",
+    "name": "USDC.e (ARB Market)",
+    "type": "standard",
+    "token": "USDC.e",
+    "tokenAddress": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloUSDCe(ARB)",
+    "earnedTokenAddress": "0x37CaF9ede3f8157163B17b46C794a7053401B296",
+    "earnContractAddress": "0x37CaF9ede3f8157163B17b46C794a7053401B296",
+    "oracle": "tokens",
+    "oracleId": "arbUSDCe",
+    "status": "active",
+    "createdAt": 1711066984,
+    "platformId": "silo",
+    "assets": ["arbUSDCe"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3"
+    }
+  },
+  {
+    "id": "silo-usdce-wbtc",
+    "name": "USDC.e (WBTC Market)",
+    "type": "standard",
+    "token": "USDC.e",
+    "tokenAddress": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloUSDCe(WBTC)",
+    "earnedTokenAddress": "0x78e2860110060af749d2971d2136B2E0d32483bf",
+    "earnContractAddress": "0x78e2860110060af749d2971d2136B2E0d32483bf",
+    "oracle": "tokens",
+    "oracleId": "arbUSDCe",
+    "status": "active",
+    "createdAt": 1711066984,
+    "platformId": "silo",
+    "assets": ["arbUSDCe"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3"
+    }
+  },
+  {
     "id": "equilibria-arb-gdai-26sep24",
     "name": "gDAI 26Sep24",
     "token": "gDAI-26Sep24",
@@ -1203,7 +1275,7 @@
   },
   {
     "id": "silo-usdc-wsteth",
-    "name": "USDC.e",
+    "name": "USDC.e (wstETH Market)",
     "type": "standard",
     "token": "USDC.e",
     "tokenAddress": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
