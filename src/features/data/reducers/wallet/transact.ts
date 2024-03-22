@@ -80,7 +80,6 @@ const transactSlice = createSlice({
     },
     switchStep(sliceState, action: PayloadAction<TransactStep>) {
       sliceState.step = action.payload;
-      sliceState.forceSelection = false;
     },
     selectSelection(
       sliceState,
@@ -88,6 +87,7 @@ const transactSlice = createSlice({
     ) {
       sliceState.selectedSelectionId = action.payload.selectionId;
       sliceState.step = TransactStep.Form;
+      sliceState.forceSelection = false;
       if (action.payload.resetInput) {
         sliceState.inputAmount = BIG_ZERO;
         sliceState.inputMax = false;
