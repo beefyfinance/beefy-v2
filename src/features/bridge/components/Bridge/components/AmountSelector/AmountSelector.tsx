@@ -17,6 +17,7 @@ import { formatBigDecimals } from '../../../../../../helpers/format';
 import BigNumber from 'bignumber.js';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
@@ -82,7 +83,24 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
         allowInputAboveBalance={true}
         error={error}
         price={price}
+        endAdornement={<MaxButton disabled={userBalance.lte(BIG_ZERO)} onClick={handleMax} />}
       />
     </div>
+  );
+});
+
+const MaxButton = memo(function MaxButton({
+  disabled,
+  onClick,
+}: {
+  disabled: boolean;
+  onClick: () => void;
+}) {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  return (
+    <button onClick={onClick} disabled={disabled} className={classes.max}>
+      {t('Transact-Max')}
+    </button>
   );
 });

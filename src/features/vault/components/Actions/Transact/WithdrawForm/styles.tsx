@@ -42,7 +42,7 @@ export const styles = (theme: Theme) => ({
     marginTop: '12px',
   },
   quote: {
-    marginTop: '12px',
+    marginTop: '24px',
   },
   actions: {
     marginTop: '24px',

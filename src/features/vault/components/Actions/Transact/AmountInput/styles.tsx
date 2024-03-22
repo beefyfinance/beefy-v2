@@ -12,7 +12,7 @@ export const styles = (theme: Theme) => ({
     boxSizing: 'border-box' as const,
     position: 'relative' as const,
     justifyContent: 'space-between',
-    minHeight: '60px',
+    minHeight: '52px',
   },
   inputContent: {
     display: 'flex',
@@ -75,6 +75,6 @@ export const styles = (theme: Theme) => ({
   endAdornement: {
     position: 'absolute' as const,
     right: 0,
-    marginRight: '12px',
+    marginRight: '8px',
   },
 });
