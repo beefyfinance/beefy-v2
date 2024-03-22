@@ -44,7 +44,8 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
   }, [dispatch]);
 
   const tokenSymbol = useMemo(() => {
-    return vault.depositTokenAddress === selection.tokens[0].address
+    return vault.depositTokenAddress === selection.tokens[0].address &&
+      selection.tokens.length !== 0
       ? 'LP'
       : selection.tokens[0].symbol;
   }, [selection.tokens, vault.depositTokenAddress]);
