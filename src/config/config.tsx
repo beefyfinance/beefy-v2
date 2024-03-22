@@ -370,6 +370,7 @@ export const config = {
       'arbwUSD+',
       'sFRAX',
       'bpt4POOL',
+      'USDT+',
     ],
   },
   avax: {
