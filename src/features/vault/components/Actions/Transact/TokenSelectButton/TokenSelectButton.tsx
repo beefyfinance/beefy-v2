@@ -44,11 +44,10 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
   }, [dispatch]);
 
   const tokenSymbol = useMemo(() => {
-    return vault.depositTokenAddress === selection.tokens[0].address &&
-      selection.tokens.length !== 0
+    return vault.assetIds.length > 1 && vault.depositTokenAddress === selection.tokens[0].address
       ? 'LP'
       : selection.tokens[0].symbol;
-  }, [selection.tokens, vault.depositTokenAddress]);
+  }, [selection.tokens, vault.assetIds.length, vault.depositTokenAddress]);
 
   const isBreakLp = useMemo(() => {
     return mode === TransactMode.Withdraw && selection.tokens.length > 1;
