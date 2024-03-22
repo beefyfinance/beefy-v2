@@ -1,5 +1,43 @@
 [
   {
+    "id": "curve-arb-usd+usdt+",
+    "name": "USD+/USDT+",
+    "token": "USD++",
+    "tokenAddress": "0x1446999B0b0E4f7aDA6Ee73f2Ae12a2cfdc5D9E7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveUSD+USDT+",
+    "earnedTokenAddress": "0x42189E9E398fD830CFcca2FC1B2c84823d72C658",
+    "earnContractAddress": "0x42189E9E398fD830CFcca2FC1B2c84823d72C658",
+    "oracle": "lps",
+    "oracleId": "curve-arb-usd+usdt+",
+    "status": "active",
+    "createdAt": 1711106050,
+    "platformId": "curve",
+    "assets": ["USD+", "USDT+"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-15/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-15/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x1446999B0b0E4f7aDA6Ee73f2Ae12a2cfdc5D9E7",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x1446999B0b0E4f7aDA6Ee73f2Ae12a2cfdc5D9E7",
+            "coins": [
+              "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65",
+              "0xb1084db8D3C05CEbd5FA9335dF95EE4b8a0edc30"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "silo-usdce-arb",
     "name": "USDC.e (ARB Market)",
     "type": "standard",
@@ -988,6 +1026,7 @@
     "oracleId": "curve-arb-usd+fraxbp",
     "status": "active",
     "createdAt": 1704699793,
+    "updatedAt": 1711106050,
     "platformId": "curve",
     "assets": ["USD+", "FRAX", "arbUSDCe"],
     "migrationIds": ["l2-convex", "l2-curve"],
