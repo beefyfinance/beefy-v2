@@ -1,5 +1,115 @@
 [
   {
+    "id": "curve-arb-usd+usdt+",
+    "name": "USD+/USDT+",
+    "token": "USD++",
+    "tokenAddress": "0x1446999B0b0E4f7aDA6Ee73f2Ae12a2cfdc5D9E7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveUSD+USDT+",
+    "earnedTokenAddress": "0x42189E9E398fD830CFcca2FC1B2c84823d72C658",
+    "earnContractAddress": "0x42189E9E398fD830CFcca2FC1B2c84823d72C658",
+    "oracle": "lps",
+    "oracleId": "curve-arb-usd+usdt+",
+    "status": "active",
+    "createdAt": 1711106050,
+    "platformId": "curve",
+    "assets": ["USD+", "USDT+"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-15/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-15/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x1446999B0b0E4f7aDA6Ee73f2Ae12a2cfdc5D9E7",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x1446999B0b0E4f7aDA6Ee73f2Ae12a2cfdc5D9E7",
+            "coins": [
+              "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65",
+              "0xb1084db8D3C05CEbd5FA9335dF95EE4b8a0edc30"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "silo-usdce-arb",
+    "name": "USDC.e (ARB Market)",
+    "type": "standard",
+    "token": "USDC.e",
+    "tokenAddress": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloUSDCe(ARB)",
+    "earnedTokenAddress": "0x37CaF9ede3f8157163B17b46C794a7053401B296",
+    "earnContractAddress": "0x37CaF9ede3f8157163B17b46C794a7053401B296",
+    "oracle": "tokens",
+    "oracleId": "arbUSDCe",
+    "status": "active",
+    "createdAt": 1711066984,
+    "platformId": "silo",
+    "assets": ["arbUSDCe"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3"
+    }
+  },
+  {
+    "id": "silo-usdce-wbtc",
+    "name": "USDC.e (WBTC Market)",
+    "type": "standard",
+    "token": "USDC.e",
+    "tokenAddress": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloUSDCe(WBTC)",
+    "earnedTokenAddress": "0x78e2860110060af749d2971d2136B2E0d32483bf",
+    "earnContractAddress": "0x78e2860110060af749d2971d2136B2E0d32483bf",
+    "oracle": "tokens",
+    "oracleId": "arbUSDCe",
+    "status": "active",
+    "createdAt": 1711066984,
+    "platformId": "silo",
+    "assets": ["arbUSDCe"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3"
+    }
+  },
+  {
     "id": "equilibria-arb-gdai-26sep24",
     "name": "gDAI 26Sep24",
     "token": "gDAI-26Sep24",
@@ -916,6 +1026,7 @@
     "oracleId": "curve-arb-usd+fraxbp",
     "status": "active",
     "createdAt": 1704699793,
+    "updatedAt": 1711106050,
     "platformId": "curve",
     "assets": ["USD+", "FRAX", "arbUSDCe"],
     "migrationIds": ["l2-convex", "l2-curve"],
@@ -1203,7 +1314,7 @@
   },
   {
     "id": "silo-usdc-wsteth",
-    "name": "USDC.e",
+    "name": "USDC.e (wstETH Market)",
     "type": "standard",
     "token": "USDC.e",
     "tokenAddress": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",

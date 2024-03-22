@@ -1531,38 +1531,6 @@
     ]
   },
   {
-    "id": "quick-gamma-wmatic-usdc-wide",
-    "name": "MATIC-USDC.e Wide LP",
-    "type": "standard",
-    "token": "awMATIC-USDC.e",
-    "tokenAddress": "0x4A83253e88e77E8d518638974530d0cBbbF3b675",
-    "tokenDecimals": 18,
-    "tokenProviderId": "quickswap",
-    "earnedToken": "mooQuickMATIC-USDCWide",
-    "earnedTokenAddress": "0x3c311026014de3B31F9A1D3bCd6AD793dC1FF830",
-    "earnContractAddress": "0x3c311026014de3B31F9A1D3bCd6AD793dC1FF830",
-    "oracle": "lps",
-    "oracleId": "quick-gamma-wmatic-usdc-wide",
-    "status": "eol",
-    "createdAt": 1686917464,
-    "retireReason": "rewards",
-    "retiredAt": 1708113204,
-    "platformId": "gamma",
-    "assets": ["MATIC", "pUSDCe"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "network": "polygon",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
-      }
-    ]
-  },
-  {
     "id": "quick-gamma-wmatic-usdc-narrow",
     "name": "MATIC-USDC.e Narrow LP",
     "type": "standard",
