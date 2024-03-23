@@ -653,7 +653,7 @@ export const config = {
   zkevm: {
     name: 'Polygon zkEVM',
     chainId: 1101,
-    rpc: ['https://zkevm-rpc.com'],
+    rpc: ['https://rpc.ankr.com/polygon_zkevm'],
     explorerUrl: 'https://zkevm.polygonscan.com/',
     multicallAddress: '0xD19ab62F83380908D65E344567378cF104cE46c2',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -667,7 +667,7 @@ export const config = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://zkevm-rpc.com'],
+      rpcUrls: ['https://rpc.ankr.com/polygon_zkevm'],
       blockExplorerUrls: ['https://zkevm.polygonscan.com/'],
     },
     gas: {
