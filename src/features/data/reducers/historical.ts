@@ -116,7 +116,7 @@ export const historicalSlice = createSlice({
           sliceState.cowcentratedRanges.byVaultId[vaultId] = {
             priceRangeMax: new BigNumber(value.priceRangeMax),
             priceRangeMin: new BigNumber(value.priceRangeMin),
-            currentPrice: new BigNumber(value.priceRangeMin),
+            currentPrice: new BigNumber(value.currentPrice),
           };
         }
       });
