@@ -1,46 +1,21 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { sortBy } from 'lodash-es';
 import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity } from '../entities/vault';
-import {
-  isGovVault,
-  isVaultPaused,
-  isVaultRetired,
-  isVaultEarningPoints,
-  shouldVaultShowInterest,
-} from '../entities/vault';
-import {
-  selectHasUserDepositInVault,
-  selectUserDepositedVaultIds,
-  selectUserVaultDepositInUsd,
-  selectUserVaultDepositTokenWalletBalanceInUsd,
-} from './balance';
+import { isGovVault } from '../entities/vault';
+import { selectUserDepositedVaultIds } from './balance';
 import {
   selectBoostById,
-  selectIsVaultPrestakedBoost,
   selectIsVaultPreStakedOrBoosted,
   selectPreStakeOrActiveBoostIds,
-  selectVaultsActiveBoostPeriodFinish,
 } from './boosts';
-import {
-  selectIsVaultBeefy,
-  selectIsVaultBlueChip,
-  selectIsVaultCorrelated,
-  selectIsVaultFeatured,
-  selectIsVaultStable,
-  selectVaultById,
-} from './vaults';
+import { selectVaultById } from './vaults';
 import { selectTokenByAddress } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import type { KeysOfType } from '../utils/types-utils';
 import type { FilteredVaultsState } from '../reducers/filtered-vaults';
 import type { PlatformEntity } from '../entities/platform';
-import { selectActiveChainIds, selectAllChainIds } from './chains';
-import { selectIsVaultIdSaved } from './saved-vaults';
-import { isEmpty } from '../../../helpers/utils';
 import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string';
 import escapeStringRegexp from 'escape-string-regexp';
-import { selectVaultSupportsZap } from './zap';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 
@@ -130,7 +105,7 @@ function searchTextToFuzzyTokenMatchers(searchText: string) {
     .map(t => fuzzyTokenRegex(t));
 }
 
-function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchText: string) {
+export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchText: string) {
   // Do not match on single characters
   if (searchText.length < 2) {
     return false;
@@ -182,7 +157,7 @@ function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchTex
   });
 }
 
-export const selectUserFilteredVaults = (
+export const selectUserDashboardFilteredVaults = (
   state: BeefyState,
   text: string,
   walletAddress?: string
@@ -201,7 +176,7 @@ export const selectUserFilteredVaults = (
   return filteredVaults;
 };
 
-function selectFilterPlatformIdsForVault(state: BeefyState, vault: VaultEntity): string[] {
+export function selectFilterPlatformIdsForVault(state: BeefyState, vault: VaultEntity): string[] {
   const vaultPlatform = selectPlatformIdForFilter(state, vault.platformId);
   const vaultPlatforms = [vaultPlatform];
 
@@ -222,214 +197,8 @@ const selectPlatformIdForFilter = createCachedSelector(
   (allIds, platformId) => (allIds.includes(platformId) ? platformId : 'other')
 )((state: BeefyState, platformId: PlatformEntity['id']) => platformId);
 
-// todo: use createSelector or put the result in the state to avoid re-computing these on every render
-// https://dev.to/nioufe/you-should-not-use-lodash-for-memoization-3441
-export const selectFilteredVaults = (state: BeefyState) => {
-  const filterOptions = selectFilterOptions(state);
-  const vaults = state.entities.vaults.allIds.map(id => selectVaultById(state, id));
-  const tvlByVaultId = state.biz.tvl.byVaultId;
-  const apyByVaultId = state.biz.apy.totalApy.byVaultId;
-  // Surface eol chains when user category is 'deposited', or 'only retired' filter is checked; otherwise, only show active chains
-  const allChainIds =
-    filterOptions.userCategory === 'deposited' || filterOptions.onlyRetired
-      ? selectAllChainIds(state)
-      : selectActiveChainIds(state);
-
-  // apply filtering
-  const shouldShowChain = createIdMap(
-    filterOptions.chainIds.length === 0 ? allChainIds : filterOptions.chainIds
-  );
-  const filteredVaults = vaults.filter(vault => {
-    if (filterOptions.vaultCategory === 'featured' && !selectIsVaultFeatured(state, vault.id)) {
-      return false;
-    }
-    if (filterOptions.vaultCategory === 'bluechip' && !selectIsVaultBlueChip(state, vault.id)) {
-      return false;
-    }
-    if (filterOptions.vaultCategory === 'stable' && !selectIsVaultStable(state, vault.id)) {
-      return false;
-    }
-    if (filterOptions.vaultCategory === 'beefy' && !selectIsVaultBeefy(state, vault.id)) {
-      return false;
-    }
-    if (filterOptions.vaultCategory === 'correlated' && !selectIsVaultCorrelated(state, vault.id)) {
-      return false;
-    }
-    if (!shouldShowChain[vault.chainId]) {
-      return false;
-    }
-
-    if (!isEmpty(filterOptions.platformIds)) {
-      const vaultPlatforms = selectFilterPlatformIdsForVault(state, vault);
-      if (!filterOptions.platformIds.some(platform => vaultPlatforms.includes(platform))) {
-        return false;
-      }
-    }
-
-    if (filterOptions.onlyRetired && !isVaultRetired(vault)) {
-      return false;
-    }
-
-    if (filterOptions.onlyPaused && !isVaultPaused(vault)) {
-      return false;
-    }
-
-    if (filterOptions.onlyZappable && !selectVaultSupportsZap(state, vault.id)) {
-      return false;
-    }
-
-    if (filterOptions.onlyEarningPoints && !isVaultEarningPoints(vault)) {
-      return false;
-    }
-
-    if (
-      !filterOptions.onlyRetired &&
-      isVaultRetired(vault) &&
-      filterOptions.userCategory !== 'deposited'
-    ) {
-      return false;
-    }
-
-    if (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) {
-      if (vault.id !== 'compound-arbitrum-usdc') {
-        return false;
-      }
-    }
-
-    if (filterOptions.assetType === 'lps' && vault.assetType !== 'lps') {
-      return false;
-    }
-    if (filterOptions.assetType === 'single' && vault.assetType !== 'single') {
-      return false;
-    }
-
-    // hide when no wallet balance of deposit token
-    if (filterOptions.userCategory === 'saved' && !selectIsVaultIdSaved(state, vault.id)) {
-      return false;
-    }
-
-    if (
-      filterOptions.userCategory === 'deposited' &&
-      !selectHasUserDepositInVault(state, vault.id)
-    ) {
-      return false;
-    }
-
-    // If the user's included a search string...
-    const searchText = simplifySearchText(filterOptions.searchText);
-    if (searchText.length > 0 && !selectVaultMatchesText(state, vault, searchText)) {
-      return false;
-    }
-
-    return true;
-  });
-
-  // apply sort
-  let sortedVaults = filteredVaults;
-
-  // Vaults are already presorted by date on the reducer
-  if (filterOptions.sort === 'default') {
-    const vaultIsActiveAndBoosted = Object.fromEntries(
-      sortedVaults.map(vault => [
-        vault.id,
-        vault.status === 'active' && selectIsVaultPreStakedOrBoosted(state, vault.id),
-      ])
-    );
-
-    if (filterOptions.userCategory === 'deposited') {
-      // Surface retired, paused and boosted
-      sortedVaults = sortBy(sortedVaults, vault =>
-        vault.status === 'eol'
-          ? -3
-          : vault.status === 'paused'
-          ? -2
-          : vaultIsActiveAndBoosted[vault.id]
-          ? -1
-          : 1
-      );
-    } else {
-      // Surface boosted
-      sortedVaults = sortBy(sortedVaults, vault =>
-        vaultIsActiveAndBoosted[vault.id]
-          ? selectIsVaultPrestakedBoost(state, vault.id)
-            ? -Number.MAX_SAFE_INTEGER
-            : -selectVaultsActiveBoostPeriodFinish(state, vault.id)
-          : vault.id === 'compound-arbitrum-usdc'
-          ? -Number.MAX_SAFE_INTEGER
-          : 1
-      );
-    }
-  }
-
-  const sortDirMul = filterOptions.sortDirection === 'desc' ? -1 : 1;
-  if (filterOptions.sort === 'apy') {
-    sortedVaults = sortBy(sortedVaults, vault => {
-      if (!shouldVaultShowInterest(vault)) {
-        return 0;
-      }
-
-      const apy = apyByVaultId[vault.id];
-      if (!apy) {
-        return -1;
-      }
-
-      if (apy.boostedTotalApy !== undefined) {
-        return sortDirMul * apy.boostedTotalApy;
-      } else if (apy.totalApy !== undefined) {
-        return sortDirMul * apy.totalApy;
-      } else if (apy.vaultApr !== undefined) {
-        return sortDirMul * apy.vaultApr;
-      } else {
-        throw new Error('Apy type not supported');
-      }
-    });
-  } else if (filterOptions.sort === 'daily') {
-    sortedVaults = sortBy(sortedVaults, vault => {
-      if (!shouldVaultShowInterest(vault)) {
-        return 0;
-      }
-
-      const apy = apyByVaultId[vault.id];
-      if (!apy) {
-        return -1;
-      }
-
-      if (apy.boostedTotalDaily !== undefined) {
-        return sortDirMul * apy.boostedTotalDaily;
-      } else if (apy.totalDaily !== undefined) {
-        return sortDirMul * apy.totalDaily;
-      } else if (apy.vaultDaily !== undefined) {
-        return sortDirMul * apy.vaultDaily;
-      } else {
-        throw new Error('Daily type not supported');
-      }
-    });
-  } else if (filterOptions.sort === 'tvl') {
-    sortedVaults = sortBy(sortedVaults, vault => {
-      const tvl = tvlByVaultId[vault.id];
-      if (!tvl) {
-        return 0;
-      }
-      return sortDirMul * tvl.tvl.toNumber();
-    });
-  } else if (filterOptions.sort === 'safetyScore') {
-    sortedVaults = sortBy(sortedVaults, vault => {
-      return sortDirMul * vault.safetyScore;
-    });
-  } else if (filterOptions.sort === 'depositValue') {
-    sortedVaults = sortBy(sortedVaults, vault => {
-      const balance = selectUserVaultDepositInUsd(state, vault.id);
-      return sortDirMul * balance.toNumber();
-    });
-  } else if (filterOptions.sort === 'walletValue') {
-    sortedVaults = sortBy(sortedVaults, vault => {
-      const balance = selectUserVaultDepositTokenWalletBalanceInUsd(state, vault.id);
-      return sortDirMul * balance.toNumber();
-    });
-  }
-
-  return sortedVaults.map(vault => vault.id);
-};
+export const selectFilteredVaults = (state: BeefyState) =>
+  state.ui.filteredVaults.sortedFilteredVaultIds;
 
 export const selectFilteredVaultCount = createSelector(selectFilteredVaults, ids => ids.length);
 
@@ -437,11 +206,3 @@ export const selectTotalVaultCount = createSelector(
   (state: BeefyState) => state.entities.vaults.allIds.length,
   c => c
 );
-
-function createIdMap(ids: string[]): Record<string, boolean> {
-  const map = {};
-  for (const id of ids) {
-    map[id] = true;
-  }
-  return map;
-}

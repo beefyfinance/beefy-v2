@@ -46,3 +46,13 @@ export class MovingAverage {
 export function isFiniteNumber(x: unknown): x is number {
   return typeof x === 'number' && isFinite(x) && !isNaN(x);
 }
+
+export const yearlyToDaily = (apy: number) => {
+  const g = Math.pow(10, Math.log10(apy + 1) / 365) - 1;
+
+  if (isNaN(g)) {
+    return 0;
+  }
+
+  return g;
+};
