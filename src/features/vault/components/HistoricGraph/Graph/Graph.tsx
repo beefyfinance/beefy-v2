@@ -140,13 +140,13 @@ export const CowcentratedChart = memo(function CowcentratedChart({
   return (
     <div className={classes.cowcentratedHeader}>
       <div className={classes.cowcentratedStat}>
-        <div className={classes.label}>
-          {t('Current Price')}{' '}
+        <div className={classes.label}>{t('Current Price')} </div>
+        <div className={classes.value}>
+          {formatBigUsd(currentPrice)}{' '}
           <span className={showInRange ? classes.inRange : classes.outOfRange}>
             ({t(showInRange ? 'In Range' : 'Out of Range')})
           </span>
         </div>
-        <div className={classes.value}>{formatBigUsd(currentPrice)}</div>
       </div>
       <div className={classes.cowcentratedStat}>
         <div className={classes.label}>{t('Min Price')}</div>

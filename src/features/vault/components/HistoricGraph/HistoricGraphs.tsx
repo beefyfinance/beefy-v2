@@ -32,7 +32,7 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
   const [stat, setStat] = useState<ChartStat>(() => getDefaultStat(availableStats));
 
   return (
-    <Card>
+    <Card className={stat === 'cowcentrated' ? classes.cowcentrated : ''}>
       <CardHeader className={classes.header}>
         <CardTitle title={t('Graph-RateHist')} />
         <StatSwitcher

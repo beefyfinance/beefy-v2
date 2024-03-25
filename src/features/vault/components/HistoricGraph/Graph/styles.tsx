@@ -52,5 +52,10 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     fontWeight: 500,
     color: theme.palette.text.secondary,
+    '& span': {
+      ...theme.typography['body-sm-med'],
+      fontWeight: 700,
+      textTransform: 'uppercase' as const,
+    },
   },
 });
