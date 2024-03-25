@@ -1,5 +1,92 @@
 [
   {
+    "id": "convex-aleth-frxeth",
+    "name": "alETH/frxETH",
+    "token": "alfrxETH-f",
+    "tokenAddress": "0xB657B895B265C38c53FFF00166cF7F6A3C70587d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveAlETH-frxETH",
+    "earnedTokenAddress": "0x26F44884D9744C0EDaB6283930DF325c200020A3",
+    "earnContractAddress": "0x26F44884D9744C0EDaB6283930DF325c200020A3",
+    "oracle": "lps",
+    "oracleId": "convex-aleth-frxeth",
+    "status": "active",
+    "createdAt": 1711355824,
+    "platformId": "convex",
+    "migrationIds": ["ethereum-convex"],
+    "assets": ["alETH", "frxETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-253/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-253/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xB657B895B265C38c53FFF00166cF7F6A3C70587d",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xB657B895B265C38c53FFF00166cF7F6A3C70587d",
+            "coins": [
+              "0x0100546F2cD4C9D97f798fFC9755E47865FF7Ee6",
+              "0x5E8422345238F34275888049021821E8E08CAa1f"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "convex-alusd-fraxbp",
+    "name": "alUSD/FRAX/USDC",
+    "token": "alUSDFRAXB3CRV-f",
+    "tokenAddress": "0xB30dA2376F63De30b42dC055C93fa474F31330A5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveAlUSD-FraxBP",
+    "earnedTokenAddress": "0xadBE02F718327628ED9A9515EC27D3d3b4950ED2",
+    "earnContractAddress": "0xadBE02F718327628ED9A9515EC27D3d3b4950ED2",
+    "oracle": "lps",
+    "oracleId": "convex-alusd-fraxbp",
+    "status": "active",
+    "createdAt": 1711355814,
+    "platformId": "convex",
+    "migrationIds": ["ethereum-convex"],
+    "assets": ["alUSD", "FRAX", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-147/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-147/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xB30dA2376F63De30b42dC055C93fa474F31330A5",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xB30dA2376F63De30b42dC055C93fa474F31330A5",
+            "coins": [
+              "0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9",
+              "0x3175Df0976dFA876431C2E9eE6Bc45b65d3473CC"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0x08780fb7e580e492c1935bee4fa5920b94aa95da",
+            "coins": [
+              "0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9",
+              "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "aura-weeth-ezeth-rseth",
     "name": "ezETH-weETH-rswETH",
     "type": "standard",
