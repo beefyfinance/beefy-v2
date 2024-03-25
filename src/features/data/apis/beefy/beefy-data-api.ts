@@ -6,6 +6,7 @@ import type {
   ApiRanges,
   ApiStat,
   ApiTimeBucket,
+  HistoricalCowcentratedChartData,
 } from './beefy-data-api-types';
 import type { VaultEntity } from '../../entities/vault';
 import type { TokenEntity } from '../../entities/token';
@@ -50,6 +51,11 @@ export class BeefyDataApi implements IBeefyDataApi {
 
   async getTvlChartData(vaultId: VaultEntity['id'], bucket: ApiTimeBucket): Promise<ApiChartData> {
     return this.getChartData('tvls', 'vault', vaultId, bucket);
+  }
+
+  async getCowcentratedChartData(): Promise<HistoricalCowcentratedChartData> {
+    const res = await axios.get('http://localhost:3000/cowData');
+    return res.data;
   }
 
   private async getChartData(

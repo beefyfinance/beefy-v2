@@ -19,20 +19,22 @@ import type { Theme } from '@material-ui/core';
 import { format, fromUnixTime } from 'date-fns';
 import { XAxisTick } from '../../../../../components/XAxisTick';
 import { getXInterval, mapRangeToTicks } from '../../../../../helpers/graph';
-import { formatPercent, formatUsd } from '../../../../../helpers/format';
+import { formatBigUsd, formatPercent, formatUsd } from '../../../../../helpers/format';
 import type { LineTogglesState } from '../LineToggles';
 import { TooltipContent } from '../TooltipContent';
 import { useChartData } from './useChartData';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../store';
 import { selectVaultById } from '../../../../data/selectors/vaults';
+import { useTranslation } from 'react-i18next';
+import { selectHistoricalCurrentCowcentratedRangesByVaultId } from '../../../../data/selectors/historical';
 
 const useStyles = makeStyles(styles);
 
 export type ChartProp = {
   vaultId: VaultEntity['id'];
   oracleId: TokenEntity['oracleId'];
-  stat: ChartStat;
+  stat: Omit<ChartStat, 'cowcentrated'>;
   bucket: ApiTimeBucket;
   toggles: LineTogglesState;
 };
@@ -116,6 +118,44 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
           />
         </AreaChart>
       </ResponsiveContainer>
+    </div>
+  );
+});
+
+export const CowcentratedChart = memo(function CowcentratedChart({
+  vaultId,
+}: {
+  vaultId: VaultEntity['id'];
+}) {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const { currentPrice, priceRangeMin, priceRangeMax } = useAppSelector(state =>
+    selectHistoricalCurrentCowcentratedRangesByVaultId(state, vaultId)
+  );
+
+  const showInRange = useMemo(() => {
+    return currentPrice.lte(priceRangeMax) && currentPrice.gte(priceRangeMin);
+  }, [currentPrice, priceRangeMax, priceRangeMin]);
+
+  return (
+    <div className={classes.cowcentratedHeader}>
+      <div className={classes.cowcentratedStat}>
+        <div className={classes.label}>
+          {t('Current Price')}{' '}
+          <span className={showInRange ? classes.inRange : classes.outOfRange}>
+            ({t(showInRange ? 'In Range' : 'Out of Range')})
+          </span>
+        </div>
+        <div className={classes.value}>{formatBigUsd(currentPrice)}</div>
+      </div>
+      <div className={classes.cowcentratedStat}>
+        <div className={classes.label}>{t('Min Price')}</div>
+        <div className={classes.value}>{formatBigUsd(priceRangeMin)}</div>
+      </div>
+      <div className={classes.cowcentratedStat}>
+        <div className={classes.label}>{t('Max Price')}</div>
+        <div className={classes.value}>{formatBigUsd(priceRangeMax)}</div>
+      </div>
     </div>
   );
 });

@@ -12,6 +12,7 @@ import { GraphWithControls } from './GraphWithControls';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { getDefaultStat } from './utils';
+import { CowcentratedChart } from './Graph';
 
 const useStyles = makeStyles(styles);
 
@@ -31,23 +32,23 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
   const [stat, setStat] = useState<ChartStat>(() => getDefaultStat(availableStats));
 
   return (
-    <>
-      {vault.type !== 'cowcentrated' && (
-        <Card>
-          <CardHeader className={classes.header}>
-            <CardTitle title={t('Graph-RateHist')} />
-            <StatSwitcher
-              stat={stat}
-              availableStats={availableStats}
-              onChange={setStat}
-              type={vault.type}
-            />
-          </CardHeader>
-          <CardContent className={classes.content}>
-            <GraphWithControls vaultId={vaultId} oracleId={oracleId} stat={stat} />
-          </CardContent>
-        </Card>
+    <Card>
+      <CardHeader className={classes.header}>
+        <CardTitle title={t('Graph-RateHist')} />
+        <StatSwitcher
+          stat={stat}
+          availableStats={availableStats}
+          onChange={setStat}
+          type={vault.type}
+        />
+      </CardHeader>
+      {stat === 'cowcentrated' ? (
+        <CowcentratedChart vaultId={vaultId} />
+      ) : (
+        <CardContent className={classes.content}>
+          <GraphWithControls vaultId={vaultId} oracleId={oracleId} stat={stat} />
+        </CardContent>
       )}
-    </>
+    </Card>
   );
 });

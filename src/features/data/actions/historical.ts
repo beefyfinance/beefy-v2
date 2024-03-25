@@ -2,7 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyDataApi } from '../apis/instances';
 import type { VaultEntity } from '../entities/vault';
-import type { ApiChartData, ApiRanges, ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
+import type {
+  ApiChartData,
+  ApiRanges,
+  ApiTimeBucket,
+  HistoricalCowcentratedChartData,
+} from '../apis/beefy/beefy-data-api-types';
 import { selectVaultById } from '../selectors/vaults';
 import { selectTokenByAddress } from '../selectors/tokens';
 import type { TokenEntity } from '../entities/token';
@@ -94,8 +99,18 @@ export const fetchHistoricalPrices = createAsyncThunk<
   return { data };
 });
 
+export const fetchCowcentratedVaultData = createAsyncThunk<
+  HistoricalCowcentratedChartData,
+  void,
+  { state: BeefyState }
+>('historical/fetchCowcentratedVaultData', async () => {
+  const api = await getBeefyDataApi();
+  const data = await api.getCowcentratedChartData();
+  return { ...data };
+});
+
 export function fetchHistoricalStat(
-  stat: ChartStat,
+  stat: Omit<ChartStat, 'cowcentrated'>,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket

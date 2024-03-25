@@ -16,7 +16,8 @@ export function selectHistoricalHasAnyChart(state: BeefyState, vaultId: VaultEnt
   return (
     selectHistoricalHasApyChart(state, vaultId) ||
     selectHistoricalHasTvlChart(state, vaultId) ||
-    selectHistoricalHasPriceChart(state, vaultId)
+    selectHistoricalHasPriceChart(state, vaultId) ||
+    selectHistoricalHasCowcentratedRanges(state, vaultId)
   );
 }
 
@@ -41,13 +42,22 @@ export function selectHistoricalHasPriceChart(
   ).some(v => v);
 }
 
+export function selectHistoricalHasCowcentratedRanges(
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) {
+  return state.biz.historical.cowcentratedRanges.byVaultId[vaultId] ? true : false;
+}
+
 export const selectHistoricalAvailableCharts = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], oracleId: TokenEntity['oracleId']) =>
     selectHistoricalHasPriceChart(state, oracleId),
   selectHistoricalHasApyChart,
   selectHistoricalHasTvlChart,
   selectVaultShouldShowInterest,
-  (hasPriceChart, hasApyChart, hasTvlChart, showApy) => {
+  (state: BeefyState, vaultId: VaultEntity['id'], _oracleId: TokenEntity['oracleId']) =>
+    selectHistoricalHasCowcentratedRanges(state, vaultId),
+  (hasPriceChart, hasApyChart, hasTvlChart, showApy, hasCowcentratedRanges) => {
     const availableCharts: ChartStat[] = [];
     if (hasApyChart && showApy) {
       availableCharts.push('apy');
@@ -57,6 +67,9 @@ export const selectHistoricalAvailableCharts = createSelector(
     }
     if (hasPriceChart) {
       availableCharts.push('price');
+    }
+    if (hasCowcentratedRanges) {
+      availableCharts.push('cowcentrated');
     }
     return availableCharts;
   }
@@ -170,7 +183,7 @@ export function selectHistoricalTvlBucketIsLoaded(
 
 export function selectHistoricalBucketStatus(
   state: BeefyState,
-  stat: ChartStat,
+  stat: Omit<ChartStat, 'cowcentrated'>,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket
@@ -189,7 +202,7 @@ export function selectHistoricalBucketStatus(
 
 export function selectHistoricalAvailableBuckets(
   state: BeefyState,
-  stat: ChartStat,
+  stat: Omit<ChartStat, 'cowcentrated'>,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId']
 ) {
@@ -207,7 +220,7 @@ export function selectHistoricalAvailableBuckets(
 
 export function selectHistoricalBucketIsLoaded(
   state: BeefyState,
-  stat: ChartStat,
+  stat: Omit<ChartStat, 'cowcentrated'>,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket
@@ -226,7 +239,7 @@ export function selectHistoricalBucketIsLoaded(
 
 export function selectHistoricalBucketData(
   state: BeefyState,
-  stat: ChartStat,
+  stat: Omit<ChartStat, 'cowcentrated'>,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket
@@ -241,4 +254,11 @@ export function selectHistoricalBucketData(
   }
 
   throw new Error(`Unknown stat: ${stat}`);
+}
+
+export function selectHistoricalCurrentCowcentratedRangesByVaultId(
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) {
+  return state.biz.historical.cowcentratedRanges.byVaultId[vaultId];
 }

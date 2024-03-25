@@ -21,6 +21,15 @@ export type ApiPoint = {
 
 export type ApiChartData = ApiPoint[];
 
+export type HistoricalCowcentratedChartData = Record<
+  string,
+  {
+    currentPrice: string;
+    priceRangeMin: string;
+    priceRangeMax: string;
+  }
+>;
+
 export interface IBeefyDataApi {
   getAvailableRanges(
     vaultId: VaultEntity['id'],
@@ -30,6 +39,8 @@ export interface IBeefyDataApi {
   getTvlChartData(vaultId: VaultEntity['id'], bucket: ApiTimeBucket): Promise<ApiChartData>;
 
   getApyChartData(vaultId: VaultEntity['id'], bucket: ApiTimeBucket): Promise<ApiChartData>;
+
+  getCowcentratedChartData(): Promise<HistoricalCowcentratedChartData>;
 
   getPriceChartData(
     oracleId: TokenEntity['oracleId'],
