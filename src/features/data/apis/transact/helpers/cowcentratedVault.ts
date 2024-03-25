@@ -4,7 +4,6 @@ import type { VaultCowcentrated } from '../../../entities/vault';
 import type { InputTokenAmount } from '../transact-types';
 import type { MultiCall } from 'eth-multicall';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
-import { selectFeesByVaultId } from '../../../selectors/fees';
 import { toWeiString } from '../../../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
 import { viemToWeb3Abi } from '../../../../../helpers/web3';
