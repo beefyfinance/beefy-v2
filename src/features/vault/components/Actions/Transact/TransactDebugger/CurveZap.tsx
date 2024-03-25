@@ -90,7 +90,6 @@ const ZapLoader = memo<ZapLoaderProps>(function ZapLoader({ vault, zap }) {
         })
         .then(support => {
           setTokensSupported(support.any);
-          console.log({ tokens, support, store: store.getState() });
         })
         .catch(error => console.error(error));
 

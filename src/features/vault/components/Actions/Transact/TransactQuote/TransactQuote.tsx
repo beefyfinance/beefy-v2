@@ -43,37 +43,27 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   const mode = useAppSelector(selectTransactMode);
   const selectionId = useAppSelector(selectTransactSelectedSelectionId);
   const selection = useAppSelector(selectTransactSelected);
-  console.log('selection');
-  console.log(selection);
   const singleInputAmount = [useAppSelector(selectTransactInputAmount)];
   const dualInputAmounts = useAppSelector(selectTransactDualInputAmounts);
   const inputAmounts =
     selection.tokens.length === 2 && mode === TransactMode.Deposit
       ? dualInputAmounts
       : singleInputAmount;
-  console.log(inputAmounts.map(v => v.toString(10)));
   const singleMaxAmount = [useAppSelector(selectTransactInputMax)];
   const dualMaxAmounts = useAppSelector(selectTransactDualMaxAmounts);
   const inputMax =
     selection.tokens.length === 2 && mode === TransactMode.Deposit
       ? dualMaxAmounts
       : singleMaxAmount;
-  // const inputAmount = useAppSelector(selectTransactInputAmount);
-  // const inputMax = useAppSelector(selectTransactInputMax);
   const chainId = useAppSelector(selectTransactSelectedChainId);
-  console.log('transactQuote selection:', selection);
-  console.log('TransactQuote selectionId:', selectionId);
   const status = useAppSelector(selectTransactQuoteStatus);
-  console.log('TransactQuote status:', status);
   const debouncedFetchQuotes = useMemo(
     () =>
       debounce(
         (dispatch: ReturnType<typeof useAppDispatch>, inputAmounts: BigNumber[]) => {
           if (inputAmounts.every(amount => amount.lte(BIG_ZERO))) {
-            console.log('clearQuotes');
             dispatch(transactActions.clearQuotes());
           } else {
-            console.log('fetching quotes');
             dispatch(transactFetchQuotesIfNeeded());
           }
         },
@@ -86,8 +76,6 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   useEffect(() => {
     debouncedFetchQuotes(dispatch, inputAmounts);
   }, [dispatch, mode, chainId, selectionId, inputAmounts, inputMax, dualMaxAmounts, dualInputAmounts, debouncedFetchQuotes]);
-
-  console.log('TransactQuote status:', status);
 
   if (status === TransactStatus.Idle) {
     return null;

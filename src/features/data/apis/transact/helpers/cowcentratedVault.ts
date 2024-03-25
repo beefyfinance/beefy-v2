@@ -20,9 +20,6 @@ export async function getCowcentratedVaultDepositSimulationAmount(
     viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
     vault.earnContractAddress
   );
-  const vaultFees = selectFeesByVaultId(state, vault.id);
-  console.log(vaultFees);
-
   const amt0 = toWeiString(userInput[0].amount, userInput[0].token.decimals);
   const amt1 = toWeiString(userInput[1].amount, userInput[1].token.decimals);
 
@@ -60,9 +57,6 @@ export async function getCowcentratedVaultWithdrawSimulationAmount(
     viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
     vault.earnContractAddress
   );
-  const vaultFees = selectFeesByVaultId(state, vault.id);
-  console.log(vaultFees);
-
   const amount = toWeiString(userInput.amount, userInput.token.decimals);
 
   type MulticallReturnType = [

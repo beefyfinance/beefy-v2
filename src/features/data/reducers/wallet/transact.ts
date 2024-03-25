@@ -123,7 +123,6 @@ const transactSlice = createSlice({
       resetQuotes(sliceState);
     },
     clearQuotes(sliceState) {
-      console.log('clearing quotes');
       resetQuotes(sliceState);
     },
     confirmPending(sliceState, action: PayloadAction<{ requestId: string }>) {
@@ -215,19 +214,13 @@ const transactSlice = createSlice({
         }
       })
       .addCase(transactFetchOptions.fulfilled, (sliceState, action) => {
-        console.log('fetch options fulfilled');
         if (sliceState.options.requestId === action.meta.requestId) {
-          console.log('fetch options fulfilled requestId match');
           sliceState.options.status = TransactStatus.Fulfilled;
-
-          console.log(action.payload.options);
 
           addOptionsToState(sliceState, action.payload.options);
 
           const defaultOption = first(action.payload.options);
           if (defaultOption) {
-            console.log('defaultOption');
-            console.log(defaultOption);
             sliceState.selectedSelectionId = defaultOption.selectionId;
             sliceState.selectedChainId = defaultOption.chainId;
           }
@@ -268,7 +261,6 @@ const transactSlice = createSlice({
 });
 
 function resetForm(sliceState: Draft<TransactState>) {
-  console.log('resetting form');
   sliceState.selectedChainId = undefined;
   sliceState.selectedSelectionId = undefined;
   sliceState.inputAmount = BIG_ZERO;

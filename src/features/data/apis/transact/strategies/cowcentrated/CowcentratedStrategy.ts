@@ -26,8 +26,6 @@ export class CowcentratedStrategy<T extends ICowcentratedVaultType> implements I
     inputs: InputTokenAmount[],
     option: DepositOption
   ): Promise<DepositQuote> {
-    console.log('strategy inputs');
-    console.log(inputs);
     return this.vaultType.fetchDepositQuote(inputs, option);
   }
 

@@ -76,16 +76,13 @@ export const V3DepositTokenAmountInput = memo<V3DepositTokenAmountInputProps>(
     const classes = useStyles();
     const selection = useAppSelector(selectTransactSelected);
     const depositToken = selection.tokens[index];
-    console.log('Deposit token:', depositToken);
     const userBalance = useAppSelector(state =>
       selectUserBalanceOfToken(state, depositToken.chainId, depositToken.address)
     );
-    console.log('User balance:', userBalance.toString(10));
     const value = useAppSelector(state => selectTransactDualInputAmount(state, index));
     const price = useAppSelector(state =>
       selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
     );
-    console.log('Selection:', selection);
 
     const error = useMemo(() => {
       return value.gt(userBalance);

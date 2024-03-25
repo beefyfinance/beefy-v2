@@ -188,12 +188,9 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       this.vault.earnContractAddress
     );
     const selectionId = createSelectionId(this.vault.chainId, [vaultToken]);
-    console.log('selectionId:', selectionId);
     const outputs = this.vault.depositTokenAddresses.map(tokenAddress =>
       selectTokenByAddress(this.getState(), this.vault.chainId, tokenAddress)
     );
-
-    console.log('fetching withdraw option');
 
     return {
       id: createOptionId('vault-cowcentrated', this.vault.id, selectionId),
