@@ -1,5 +1,55 @@
 [
   {
+    "id": "uniswap-cow-arb-arb-eth",
+    "name": "ARB-ETH",
+    "token": "ARB-ETH",
+    "tokenAddress": "0xC6F780497A95e246EB9449f5e4770916DCd6396A",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0x912CE59144191C1204E64559FE8253a0e49E6548"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapArbitrumARB-ETH",
+    "earnedTokenAddress": "0xb4f4CAC762ea999775ff425d27c2c5ef24EAb097",
+    "earnContractAddress": "0xb4f4CAC762ea999775ff425d27c2c5ef24EAb097",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-arb-eth",
+    "status": "active",
+    "createdAt": 1710773526,
+    "platformId": "beefy",
+    "assets": ["WETH", "ARB"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "type": "cowcentrated"
+  },
+  {
+    "id": "uniswap-cow-arb-wseth-eth",
+    "name": "wstETH-ETH",
+    "token": "wstETH-ETH",
+    "tokenAddress": "0x35218a1cbaC5Bbc3E57fd9Bd38219D37571b3537",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x5979D7b546E38E414F7E9822514be443A4800529",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapArbitrumETH-USDT",
+    "earnedTokenAddress": "0x86B75C2926a28aE94A0C61EA3f7dcDDDA1DE296A",
+    "earnContractAddress": "0x86B75C2926a28aE94A0C61EA3f7dcDDDA1DE296A",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-wseth-eth",
+    "status": "active",
+    "createdAt": 1710773526,
+    "platformId": "beefy",
+    "assets": ["wstETH", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "type": "cowcentrated"
+  },
+  {
     "id": "uniswap-cow-eth-usdt",
     "name": "ETH-USDT",
     "token": "ETH-USDT",
