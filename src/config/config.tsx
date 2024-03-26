@@ -257,6 +257,8 @@ export const config = {
       'omultiwUSDR',
       'sFRAX',
       'crvUSD',
+      'USDV',
+      'sDAI',
     ],
   },
   fantom: {
