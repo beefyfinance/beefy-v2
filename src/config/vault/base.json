@@ -42,7 +42,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-tbtc-t",
     "status": "active",
-    "createdAt": 1710522656,
+    "createdAt": 1711465904,
     "platformId": "aerodrome",
     "assets": ["tBTC", "T"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
