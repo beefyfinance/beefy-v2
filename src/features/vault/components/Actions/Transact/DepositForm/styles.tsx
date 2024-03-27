@@ -19,12 +19,12 @@ export const styles = (theme: Theme) => ({
     gap: '4px',
   },
   availableLabel: {
-    ...theme.typography['body-sm'],
+    ...theme.typography['body-lg'],
     color: theme.palette.text.dark,
     marginLeft: 'auto',
   },
   availableLabelAmount: {
-    ...theme.typography['body-sm-med'],
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.middle,
   },
   inputs: {

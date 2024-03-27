@@ -59,7 +59,7 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
       className={clsx(classes.button, className, { [classes.buttonMore]: multipleOptions })}
     >
       {forceSelection ? (
-        <div className={classes.select}>
+        <div className={clsx(classes.select, classes.forceSelection)}>
           <div className={classes.zapIcon}>
             <img src={zapIcon} alt="zap" />
           </div>

@@ -81,7 +81,7 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
     );
 
     return (
-      <div className={clsx(classes.container, className)}>
+      <div className={clsx(classes.container, classes.deposit, className)}>
         <div className={classes.search}>
           <SearchInput value={search} onChange={setSearch} className={classes.searchInput} />
         </div>

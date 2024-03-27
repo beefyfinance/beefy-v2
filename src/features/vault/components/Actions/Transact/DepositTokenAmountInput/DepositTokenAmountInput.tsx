@@ -53,6 +53,7 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
     }, [userBalance, value]);
 
     return (
+      // <div className={classes.inputContainer}>
       <AmountInput
         className={clsx(classes.input, className)}
         value={value}
@@ -66,6 +67,14 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
         endAdornement={<TokenSelectButton />}
         disabled={forceSelection}
       />
+      //   <input
+      //     disabled={forceSelection}
+      //     className={classes.slider}
+      //     type="range"
+      //     min="1"
+      //     max="100"
+      //   />
+      // </div>
     );
   }
 );

@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
@@ -95,13 +95,22 @@ export const DepositForm = memo(function DepositForm() {
   const { t } = useTranslation();
   const classes = useStyles();
   const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
+  const forceSelection = useAppSelector(selecTransactForceSelection);
+
+  const i18key = useMemo(() => {
+    return hasOptions
+      ? forceSelection
+        ? 'Transact-SelectToken'
+        : 'Transact-SelectAmount'
+      : 'Transact-Deposit';
+  }, [forceSelection, hasOptions]);
 
   return (
     <>
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
           {hasOptions ? <img src={zapIcon} alt="Zap" height={12} /> : null}
-          {t(hasOptions ? 'Transact-SelectToken' : 'Transact-Deposit')}
+          {t(i18key)}
         </div>
         <div className={classes.availableLabel}>
           {t('Transact-Available')}{' '}

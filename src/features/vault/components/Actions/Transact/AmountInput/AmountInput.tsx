@@ -142,14 +142,14 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
 
   return (
     <div
-      className={clsx(classes.inputContainer, {
+      className={clsx(classes.inputContainer, className, {
         [classes.fullWidth]: fullWidth,
         [classes.error]: error,
       })}
     >
       <div className={classes.inputContent}>
         <input
-          className={clsx(classes.input, className, { [classes.inputWithPrice]: Boolean(price) })}
+          className={clsx(classes.input, { [classes.inputWithPrice]: Boolean(price) })}
           value={input}
           onChange={handleChange}
           onBlur={handleBlur}

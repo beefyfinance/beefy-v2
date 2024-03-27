@@ -10,6 +10,12 @@ export const styles = (theme: Theme) => ({
     borderRadius: '0 0 12px 12px',
     overflow: 'hidden',
   },
+  withdraw: {
+    height: '360px',
+  },
+  deposit: {
+    height: '436px',
+  },
   search: {
     padding: '0 24px',
     margin: '0 0 24px 0',
