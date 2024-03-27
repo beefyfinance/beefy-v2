@@ -1,5 +1,81 @@
 [
   {
+    "id": "fx-fxn-eth",
+    "name": "FXN/ETH",
+    "token": "FXNETH-f",
+    "tokenAddress": "0xE06A65e09Ae18096B99770A809BA175FA05960e2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooFxConvexETH-FXN",
+    "earnedTokenAddress": "0x6d6947aeD08C3407bDFF56cfA509Eda98Df2E996",
+    "earnContractAddress": "0x6d6947aeD08C3407bDFF56cfA509Eda98Df2E996",
+    "oracle": "lps",
+    "oracleId": "fx-fxn-eth",
+    "status": "active",
+    "createdAt": 1711528299,
+    "platformId": "fx",
+    "assets": ["FXN", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "XXX",
+    "removeLiquidityUrl": "XXX",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xC15F285679a1Ef2d25F53D4CbD0265E1D02F2A92",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0xC15F285679a1Ef2d25F53D4CbD0265E1D02F2A92",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0x365AccFCa291e7D3914637ABf1F7635dB165Bb09"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fx-gho-fxusd",
+    "name": "GHO/fxUSD",
+    "token": "fxUSDGHO",
+    "tokenAddress": "0x74345504Eaea3D9408fC69Ae7EB2d14095643c5b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooFxConvexGHO-fxUSD",
+    "earnedTokenAddress": "0x81F040E82aae01f3921A1c1225C86ce5C57C218b",
+    "earnContractAddress": "0x81F040E82aae01f3921A1c1225C86ce5C57C218b",
+    "oracle": "lps",
+    "oracleId": "fx-gho-fxusd",
+    "status": "active",
+    "createdAt": 1711528275,
+    "platformId": "fx",
+    "assets": ["GHO", "fxUSD"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "XXX",
+    "removeLiquidityUrl": "XXX",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x74345504Eaea3D9408fC69Ae7EB2d14095643c5b",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x74345504Eaea3D9408fC69Ae7EB2d14095643c5b",
+            "coins": [
+              "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+              "0x085780639CC2cACd35E474e71f4d000e2405d8f6"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "convex-aleth-frxeth",
     "name": "alETH/frxETH",
     "token": "alfrxETH-f",
