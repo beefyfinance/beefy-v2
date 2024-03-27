@@ -1,5 +1,35 @@
 [
   {
+    "id": "mendi-linea-ezeth",
+    "name": "ezETH",
+    "type": "standard",
+    "token": "ezETH",
+    "tokenAddress": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+    "tokenDecimals": 18,
+    "earnedToken": "mooMendiezETH",
+    "earnedTokenAddress": "0xf711cdcDDa1C5F919c94573cC4E38b4cE2207750",
+    "earnContractAddress": "0xf711cdcDDa1C5F919c94573cC4E38b4cE2207750",
+    "oracle": "tokens",
+    "oracleId": "ezETH",
+    "status": "active",
+    "createdAt": 1711551959,
+    "platformId": "mendi",
+    "assets": ["ezETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://www.thenile.exchange/swap",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "pyth"
+    },
+    "earningPoints": true
+  },
+  {
     "id": "lynex-usdc-mai",
     "name": "USDC-MAI LP",
     "type": "standard",
