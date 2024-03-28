@@ -26,7 +26,7 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
   function DepositTokenAmountInput({ className }) {
     const [sliderValue, setSliderValue] = useState<number>(0);
     const dispatch = useAppDispatch();
-    const classes = useStyles();
+    const classes = useStyles({ sliderValue });
     const selection = useAppSelector(selectTransactSelected);
     const depositToken = selection.tokens[0]; // TODO univ3; only 1 deposit token supported
     const userBalance = useAppSelector(state =>
@@ -57,6 +57,7 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
 
     const handleSliderChange = useCallback(
       (value: number | string) => {
+        console.log(value);
         const parsedNumber = new BigNumber(value).toNumber();
         setSliderValue(parsedNumber);
 
