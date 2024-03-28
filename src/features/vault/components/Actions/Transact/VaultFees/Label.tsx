@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles((theme: Theme) => ({
   label: {
     ...theme.typography['subline-sm'],
+    fontWeight: 700,
     color: theme.palette.text.dark,
     display: 'flex',
     alignItems: 'center',

@@ -54,7 +54,12 @@ export const TokenAmountIcon = memo<TokenAmountIconProps>(function TokenAmountIc
       value={`~${formatBigUsd(valueInUsd)}`}
       tokenSymbol={token.symbol}
       tokenIcon={
-        <TokenImage chainId={token.chainId} tokenAddress={token.address} className={classes.icon} />
+        <TokenImage
+          chainId={token.chainId}
+          tokenAddress={token.address}
+          className={classes.icon}
+          size={24}
+        />
       }
     />
   );

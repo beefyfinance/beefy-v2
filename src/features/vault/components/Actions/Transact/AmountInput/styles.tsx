@@ -12,11 +12,13 @@ export const styles = (theme: Theme) => ({
     boxSizing: 'border-box' as const,
     position: 'relative' as const,
     justifyContent: 'space-between',
-    minHeight: '48px',
+    minHeight: '52px',
+    gap: '4px',
   },
   inputContent: {
     display: 'flex',
     flexDirection: 'column' as const,
+    width: '100%',
   },
   input: {
     ...theme.typography['h2'],
@@ -49,7 +51,6 @@ export const styles = (theme: Theme) => ({
   },
   price: {
     ...theme.typography['body-sm'],
-    lineHeight: '12px',
     color: theme.palette.text.dark,
   },
   max: {
@@ -76,5 +77,6 @@ export const styles = (theme: Theme) => ({
   endAdornement: {
     position: 'absolute' as const,
     right: 0,
+    marginRight: '8px',
   },
 });

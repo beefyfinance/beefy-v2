@@ -63,7 +63,7 @@ export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
     );
 
     return (
-      <div className={clsx(classes.container, className)}>
+      <div className={clsx(classes.container, classes.withdraw, className)}>
         <div className={classes.search}>
           <SearchInput value={search} onChange={setSearch} className={classes.searchInput} />
         </div>

@@ -18,6 +18,7 @@ export type TokenAmountProps = {
   price: BigNumber;
   minShortPlaces?: number;
   className?: string;
+  onClick?: () => void;
 };
 export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({
   amount,
@@ -25,6 +26,7 @@ export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({
   price,
   minShortPlaces = 2,
   className,
+  onClick,
 }) {
   const classes = useStyles();
   const fullAmount = formatFullBigNumber(amount, decimals);
@@ -33,13 +35,16 @@ export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({
 
   return needTooltip ? (
     <Tooltip
-      triggerClass={clsx(classes.withTooltip, className)}
+      onTriggerClick={onClick}
+      triggerClass={clsx(classes.withTooltip, className, { [classes.withOnClick]: onClick })}
       content={<BasicTooltipContent title={fullAmount} />}
     >
       {shortAmount}
     </Tooltip>
   ) : (
-    <span className={className}>{fullAmount}</span>
+    <span onClick={onClick} className={clsx(className, { [classes.withOnClick]: onClick })}>
+      {fullAmount}
+    </span>
   );
 });
 
@@ -48,9 +53,10 @@ export type TokenAmountFromEntityProps = {
   token: TokenEntity;
   minShortPlaces?: number;
   className?: string;
+  onClick?: () => void;
 };
 export const TokenAmountFromEntity = memo<TokenAmountFromEntityProps>(
-  function TokenAmountFromEntity({ amount, token, minShortPlaces = 2, className }) {
+  function TokenAmountFromEntity({ amount, token, minShortPlaces = 2, className, onClick }) {
     const price = useAppSelector(state =>
       selectTokenPriceByAddress(state, token.chainId, token.address)
     );
@@ -61,6 +67,7 @@ export const TokenAmountFromEntity = memo<TokenAmountFromEntityProps>(
         price={price}
         className={className}
         minShortPlaces={minShortPlaces}
+        onClick={onClick}
       />
     );
   }

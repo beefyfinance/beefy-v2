@@ -1,10 +1,10 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
-import { TokenSelectButton } from '../TokenSelectButton';
 import {
+  selecTransactForceSelection,
   selectTransactNumTokens,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
@@ -20,18 +20,19 @@ import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { AlertError } from '../../../../../../components/Alerts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { WithdrawTokenAmountInput } from '../WithdrawTokenAmountInput';
-import { VaultFees } from '../VaultFees';
 import { WithdrawActions } from '../WithdrawActions';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
-import { WithdrawLinks } from '../WithDrawLinks';
 import zapIcon from '../../../../../../images/icons/zap.svg';
 import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice';
+import { useDispatch } from 'react-redux';
+import { transactActions } from '../../../../../data/reducers/wallet/transact';
 
 const useStyles = makeStyles(styles);
 
 const DepositedInVault = memo(function DepositedInVault() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const dispatch = useDispatch();
   const token = useAppSelector(state =>
     vault ? selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress) : null
   );
@@ -40,12 +41,30 @@ const DepositedInVault = memo(function DepositedInVault() {
       ? selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId)
       : null
   );
+  const forceSelection = useAppSelector(selecTransactForceSelection);
+
+  const handleMax = useCallback(() => {
+    token &&
+      balance &&
+      dispatch(
+        transactActions.setInputAmount({
+          amount: balance,
+          max: true,
+        })
+      );
+  }, [balance, dispatch, token]);
 
   if (!vault || !token || !balance) {
     return <TextLoader placeholder="0.0000000 BNB-BIFI" />;
   }
 
-  return <TokenAmountFromEntity amount={balance} token={token} minShortPlaces={4} />;
+  if (forceSelection) {
+    return <TokenAmountFromEntity amount={balance} token={token} minShortPlaces={4} />;
+  }
+
+  return (
+    <TokenAmountFromEntity onClick={handleMax} amount={balance} token={token} minShortPlaces={4} />
+  );
 });
 
 export const WithdrawFormLoader = memo(function WithdrawFormLoader() {
@@ -73,6 +92,15 @@ export const WithdrawForm = memo(function WithdrawForm() {
   const { t } = useTranslation();
   const classes = useStyles();
   const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
+  const forceSelection = useAppSelector(selecTransactForceSelection);
+
+  const i18key = useMemo(() => {
+    return hasOptions
+      ? forceSelection
+        ? 'Transact-SelectToken'
+        : 'Transact-SelectAmount'
+      : 'Transact-Withdraw';
+  }, [forceSelection, hasOptions]);
 
   return (
     <>
@@ -80,7 +108,7 @@ export const WithdrawForm = memo(function WithdrawForm() {
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
           {hasOptions ? <img src={zapIcon} alt="Zap" height={12} /> : null}
-          {t(hasOptions ? 'Transact-SelectToken' : 'Transact-Withdraw')}
+          {t(i18key)}
         </div>
         <div className={classes.availableLabel}>
           {t('Transact-Available')}{' '}
@@ -90,15 +118,12 @@ export const WithdrawForm = memo(function WithdrawForm() {
         </div>
       </div>
       <div className={classes.inputs}>
-        <TokenSelectButton />
         <WithdrawTokenAmountInput />
       </div>
-      <WithdrawLinks className={classes.links} />
       <TransactQuote title={t('Transact-YouWithdraw')} className={classes.quote} />
       <div className={classes.actions}>
         <WithdrawActions />
       </div>
-      <VaultFees className={classes.fees} />
     </>
   );
 });

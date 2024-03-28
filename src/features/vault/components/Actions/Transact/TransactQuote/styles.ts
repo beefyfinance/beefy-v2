@@ -25,4 +25,8 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.dark,
     marginBottom: '8px',
   },
+  disabled: {
+    opacity: '40%',
+    pointerEvents: 'none' as const,
+  },
 });

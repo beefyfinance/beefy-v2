@@ -77,6 +77,7 @@ export type TransactState = {
   inputMax: boolean;
   mode: TransactMode;
   step: TransactStep;
+  forceSelection: boolean;
   selections: TransactSelections;
   options: TransactOptions;
   quotes: TransactQuotes;

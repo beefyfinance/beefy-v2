@@ -180,7 +180,7 @@
   "Boost-Button-Claim-Unstake": "领取奖励并取消质押",
   "Transact-Max": "最大值",
   "Transact-BuyTkn": "购买代币",
-  "Transact-AddLiquidity": "添加流动性",
+  "Transact-BuildLp": "添加流动性",
   "Transact-RemoveLiquidity": "去除流动性",
   "Transactn-EnRoute": "资金已在途中",
   "Transactn-View": "在区块浏览器上查看",
