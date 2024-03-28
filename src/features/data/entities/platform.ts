@@ -5,4 +5,5 @@
 export interface PlatformEntity {
   id: string;
   name: string;
+  risks: string[];
 }

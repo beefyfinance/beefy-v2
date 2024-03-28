@@ -8,7 +8,7 @@ import { selectChainById } from '../../../selectors/chains';
 import { getWalletConnectionApi, getWeb3Instance } from '../../instances';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import { selectUserBalanceToMigrateByVaultId } from '../../../selectors/migration';
-import { ConicLpTokenStakerAbi } from '../../../../../config/abi';
+import { ConicLpTokenStakerAbi } from '../../../../../config/abi/ConicLpTokenStakerAbi';
 import type { Step } from '../../../reducers/wallet/stepper';
 import { walletActions } from '../../../actions/wallet-actions';
 import { toWei } from '../../../../../helpers/big-number';
@@ -16,6 +16,7 @@ import { startStepperWithSteps } from '../../../actions/stepper';
 import { isTokenErc20 } from '../../../entities/token';
 import { selectAllowanceByTokenAddress } from '../../../selectors/allowances';
 import type { ConicMigrationUpdateFulfilledPayload } from './types';
+import type { AbiItem } from 'web3-utils';
 
 const CONIC_LP_TOKEN_STAKER = '0xA5241560306298efb9ed80b87427e664FFff0CF9';
 
@@ -30,9 +31,15 @@ export const fetchConicStakedBalance = createAsyncThunk<
   const web3 = await getWeb3Instance(chain);
 
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const lpTokenStaker = new web3.eth.Contract(ConicLpTokenStakerAbi, CONIC_LP_TOKEN_STAKER);
+  const lpTokenStaker = new web3.eth.Contract(
+    ConicLpTokenStakerAbi as unknown as AbiItem[],
+    CONIC_LP_TOKEN_STAKER
+  );
 
-  const lpContract = new web3.eth.Contract(ConicLpTokenStakerAbi, depositToken.address);
+  const lpContract = new web3.eth.Contract(
+    ConicLpTokenStakerAbi as unknown as AbiItem[],
+    depositToken.address
+  );
 
   const conicPoolAddress = await lpContract.methods.minter().call();
   const balance = await lpTokenStaker.methods
@@ -54,10 +61,16 @@ async function unstakeCall(
   const walletApi = await getWalletConnectionApi();
   const web3 = await walletApi.getConnectedWeb3Instance();
 
-  const lpContract = new web3.eth.Contract(ConicLpTokenStakerAbi, depositToken.address);
+  const lpContract = new web3.eth.Contract(
+    ConicLpTokenStakerAbi as unknown as AbiItem[],
+    depositToken.address
+  );
   const conicPoolAddress = await lpContract.methods.minter().call();
 
-  const lpStaker = new web3.eth.Contract(ConicLpTokenStakerAbi, CONIC_LP_TOKEN_STAKER);
+  const lpStaker = new web3.eth.Contract(
+    ConicLpTokenStakerAbi as unknown as AbiItem[],
+    CONIC_LP_TOKEN_STAKER
+  );
   const amountInWei = toWei(amount, depositToken.decimals);
   return lpStaker.methods.unstake(amountInWei.toString(10), conicPoolAddress);
 }

@@ -25,10 +25,14 @@ import { ListJoin } from '../../../ListJoin';
 import iconError from '../../../../images/icons/error.svg';
 import { ShareButton } from '../../../../features/vault/components/ShareButton';
 import type { VaultEntity } from '../../../../features/data/entities/vault';
-import { isWalletActionError } from '../../../../features/data/reducers/wallet/wallet-action';
+import {
+  type BridgeAdditionalData,
+  isWalletActionError,
+} from '../../../../features/data/reducers/wallet/wallet-action';
 import { selectChainById } from '../../../../features/data/selectors/chains';
 import { explorerTxUrl } from '../../../../helpers/url';
 import { CircularProgress } from '@material-ui/core';
+import { BIG_ZERO } from '../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
@@ -48,7 +52,7 @@ export const StepsStartContent = memo(function StepsStartContent() {
             <CircularProgress size={16} /> {t(`Stepper-${currentStepData.step}-Building-Content`)}
           </>
         ) : (
-          currentStepData?.message || '...'
+          '...'
         )}
       </div>
     </>
@@ -138,7 +142,7 @@ type SuccessContentProps = {
 
 const ZapSuccessContent = memo<SuccessContentProps>(function ZapSuccessContent({ step }) {
   const { t } = useTranslation();
-  const returned = useAppSelector(state => selectZapReturned(state, step.step));
+  const returned = useAppSelector(selectZapReturned);
 
   const dust = useMemo(() => {
     if (returned.length) {
@@ -165,7 +169,7 @@ const ZapSuccessContent = memo<SuccessContentProps>(function ZapSuccessContent({
       }
       rememberTitle={step.step === 'zap-in' ? t('Remember') : undefined}
       rememberMessage={step.step === 'zap-in' ? t('Remember-Msg') : undefined}
-      shareVaultId={step.step === 'zap-in' ? step.extraInfo.vaultId : undefined}
+      shareVaultId={step.step === 'zap-in' ? step.extraInfo?.vaultId || undefined : undefined}
     />
   );
 });
@@ -186,7 +190,8 @@ const BridgeSuccessContent = memo<SuccessContentProps>(function BridgeSuccessCon
   const { t } = useTranslation();
   const classes = useStyles();
   const walletAction = useAppSelector(selectBridgeSuccess);
-  const { quote, hash } = walletAction.data;
+  const { hash } = walletAction.data;
+  const { quote } = walletAction.additional as BridgeAdditionalData; // FIXME could be undefined
   const bridgeExplorerUrl = quote.config.explorerUrl;
   const fromChain = useAppSelector(state => selectChainById(state, quote.input.token.chainId));
   const toChain = useAppSelector(state => selectChainById(state, quote.output.token.chainId));
@@ -245,15 +250,15 @@ const FallbackSuccessContent = memo<SuccessContentProps>(function FallbackSucces
   const textParams = useMemo(() => {
     if (step.extraInfo?.rewards) {
       return {
-        amount: formatBigDecimals(walletActionsState?.data.amount, 4),
-        token: walletActionsState?.data.token.symbol,
+        amount: formatBigDecimals(walletActionsState?.additional?.amount || BIG_ZERO, 4),
+        token: walletActionsState?.additional?.token.symbol || 'unknown',
         rewards: formatBigDecimals(step.extraInfo.rewards.amount),
         rewardToken: step.extraInfo.rewards.token.symbol,
       };
     }
     return {
-      amount: formatBigDecimals(walletActionsState.data.amount, 4),
-      token: walletActionsState.data.token.symbol,
+      amount: formatBigDecimals(walletActionsState.additional?.amount || BIG_ZERO, 4),
+      token: walletActionsState.additional?.token.symbol || 'unknown',
     };
   }, [step.extraInfo?.rewards, walletActionsState]);
 

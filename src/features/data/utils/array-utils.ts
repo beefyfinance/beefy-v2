@@ -71,3 +71,14 @@ export function itemAtPercentile<T>(sortedItems: T[], percentile: number): T {
     percentile >= 1 ? sortedItems.length - 1 : Math.floor(sortedItems.length * percentile);
   return sortedItems[index];
 }
+
+export type NonEmptyArray<T> = [T, ...T[]];
+
+export function isNonEmptyArray<T>(arr: T[] | undefined | null): arr is NonEmptyArray<T> {
+  return !!arr && Array.isArray(arr) && arr.length > 0;
+}
+
+/** Pass to Array.filter to remove null/undefined and narrow type */
+export function isDefined<T>(value: T): value is Exclude<T, undefined | null> {
+  return !!value;
+}

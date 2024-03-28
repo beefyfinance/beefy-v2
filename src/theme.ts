@@ -87,7 +87,7 @@ function withCustomBreakpoints(theme: ThemeOptions) {
     const params = new URLSearchParams(window.location.search);
     const readBreakpoint = (name: string, defaultWidth: number) => {
       if (params.has(name)) {
-        return parseInt(params.get(name)) || defaultWidth;
+        return parseInt(params.get(name) || '0') || defaultWidth;
       }
       return defaultWidth;
     };
@@ -155,6 +155,7 @@ const theme = createTheme(
           warning: '#D19847',
           error: '#DA5932',
           success: '#4DB258',
+          info: '#5C70D6',
         },
       },
       text: {
@@ -246,15 +247,15 @@ const theme = createTheme(
           },
           'onboard-v2': {
             // @ts-ignore need to force above other modals
-            position: 'relative !important',
+            position: 'relative !important' as PositionProperty,
             // @ts-ignore need to force above other modals
-            zIndex: '1400 !important',
+            zIndex: '1400 !important' as ZIndexProperty,
           },
           'wcm-modal, #cryptoconnect-extension': {
             // @ts-ignore need to force above other modals
-            position: 'relative !important',
+            position: 'relative !important' as PositionProperty,
             // @ts-ignore need to force above other modals
-            zIndex: '1500 !important',
+            zIndex: '1500 !important' as ZIndexProperty,
           },
         },
       },

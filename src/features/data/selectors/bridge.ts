@@ -12,6 +12,7 @@ import {
 } from './stepper';
 import { StepContent } from '../reducers/wallet/stepper';
 import { createSelector } from '@reduxjs/toolkit';
+import { valueOrThrow } from '../utils/selector-utils';
 
 export const selectIsBridgeConfigLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.bridgeConfig.alreadyLoadedOnce;
@@ -23,7 +24,10 @@ export const selectBridgeSupportedChainIds = (state: BeefyState) =>
   state.ui.bridge.destinations.allChains;
 
 export const selectBridgeSupportedChainIdsFrom = (state: BeefyState, chainId: ChainEntity['id']) =>
-  state.ui.bridge.destinations.chainToChain[chainId];
+  valueOrThrow(
+    state.ui.bridge.destinations.chainToChain[chainId],
+    `No destinations for ${chainId}`
+  );
 
 export const selectBridgeIdsFromTo = (
   state: BeefyState,
@@ -31,10 +35,25 @@ export const selectBridgeIdsFromTo = (
   to: ChainEntity['id']
 ) => state.ui.bridge.destinations.chainToBridges[from]?.[to] || [];
 
-export const selectBridgeConfigById = (state: BeefyState, id: BeefyAnyBridgeConfig['id']) =>
-  state.ui.bridge.bridges[id];
+export const selectBridgeConfigById = (state: BeefyState, id: BeefyAnyBridgeConfig['id']) => {
+  const bridges = state.ui.bridge.bridges;
+  if (!bridges) {
+    throw new Error('Bridge config not loaded');
+  }
+  const bridge = bridges[id];
+  if (!bridge) {
+    throw new Error(`No bridge config for id ${id}`);
+  }
+  return bridge;
+};
 
-export const selectBridgeSourceChainId = (state: BeefyState) => state.ui.bridge.source;
+export const selectBridgeSourceChainId = (state: BeefyState) => {
+  const source = state.ui.bridge.source;
+  if (!source) {
+    throw new Error('Bridge config not loaded');
+  }
+  return source;
+};
 
 export const selectBridgeDepositTokenForChainId = (
   state: BeefyState,
@@ -61,11 +80,16 @@ export const selectBridgeFormStep = (state: BeefyState) =>
   state.ui.bridge.form?.step || FormStep.Loading;
 
 export const selectBridgeFormState = (state: BeefyState) => {
+  const form = state.ui.bridge.form;
+  if (!form) {
+    throw new Error('Bridge form not loaded');
+  }
+
   if (selectBridgeFormStep(state) === FormStep.Loading) {
     throw new Error('Bridge form is loading');
   }
 
-  return state.ui.bridge.form;
+  return form;
 };
 
 export const selectBridgeQuoteStatus = (state: BeefyState) => state.ui.bridge.quote.status;
@@ -73,6 +97,10 @@ export const selectBridgeQuoteStatus = (state: BeefyState) => state.ui.bridge.qu
 export const selectBridgeQuoteError = (state: BeefyState) => state.ui.bridge.quote.error;
 export const selectBridgeQuoteErrorLimits = (state: BeefyState) => {
   const error = selectBridgeQuoteError(state);
+  if (!error) {
+    return false;
+  }
+
   if (error.name === 'AllQuotesRateLimitedError' && state.ui.bridge.quote.limitError) {
     return state.ui.bridge.quote.limitError;
   }
@@ -113,7 +141,8 @@ export const selectBridgeHasSelectedQuote = (state: BeefyState) => {
 };
 
 export const selectBridgeConfirmStatus = (state: BeefyState) => state.ui.bridge.confirm.status;
-export const selectBridgeConfirmQuote = (state: BeefyState) => state.ui.bridge.confirm.quote;
+export const selectBridgeConfirmQuote = (state: BeefyState) =>
+  valueOrThrow(state.ui.bridge.confirm.quote, 'No bridge quote');
 
 export function selectBridgeTxState(state: BeefyState) {
   const items = selectStepperItems(state);

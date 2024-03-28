@@ -1,16 +1,17 @@
-import _BeefyV2AppMulticallUserAbi from '../../../../config/abi/BeefyV2AppMulticall.json';
-import type { AbiItem } from 'web3-utils';
+import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi';
 import type Web3 from 'web3';
 import type { VaultGov } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
-import type { AllValuesAsString } from '../../utils/types-utils';
+import type { AsWeb3Result } from '../../utils/types-utils';
 import type { BoostEntity } from '../../entities/boost';
-import { chunk } from 'lodash-es';
+import { chunk, groupBy } from 'lodash-es';
+
 import type {
   BoostBalance,
   FetchAllBalancesResult,
-  GovVaultPoolBalance,
+  GovVaultBalance,
+  GovVaultV2Balance,
   IBalanceApi,
   TokenBalance,
 } from './balance-types';
@@ -24,11 +25,12 @@ import {
   selectGovVaultBalanceTokenEntity,
   selectGovVaultRewardsTokenEntity,
 } from '../../selectors/balance';
-import type { Web3Call, Web3CallMethod } from '../../../../helpers/web3';
-import { makeBatchRequest } from '../../../../helpers/web3';
-
-// fix ts types
-const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];
+import {
+  makeBatchRequest,
+  viemToWeb3Abi,
+  type Web3Call,
+  type Web3CallMethod,
+} from '../../../../helpers/web3';
 
 export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   constructor(protected web3: Web3, protected chain: T) {}
@@ -41,7 +43,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     walletAddress: string
   ): Promise<FetchAllBalancesResult> {
     const mc = new this.web3.eth.Contract(
-      BeefyV2AppMulticallUserAbi,
+      viemToWeb3Abi(BeefyV2AppMulticallAbi),
       this.chain.appMulticallContractAddress
     );
 
@@ -59,8 +61,13 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
         throw new Error(`Token type unsupported`);
       }
     }
+
+    const govVaultsByVersion = groupBy(govVaults, 'version');
+    const govVaultsV1 = govVaultsByVersion['1'] || [];
+    const govVaultsV2 = govVaultsByVersion['2'] || [];
     const erc20TokensBatches = chunk(erc20Tokens, CHUNK_SIZE);
-    const boostAndGovVaultBatches = chunk([...boosts, ...govVaults], CHUNK_SIZE);
+    const boostAndGovVaultBatches = chunk([...boosts, ...govVaultsV1], CHUNK_SIZE);
+    const govVaultsV2Batches = chunk(govVaultsV2, CHUNK_SIZE);
 
     const requestsForBatch: Web3Call[] = [];
 
@@ -68,6 +75,16 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       requestsForBatch.push({
         method: mc.methods.getBoostOrGovBalance(
           boostAndGovVaultBatch.map(boostOrGovVaultt => boostOrGovVaultt.earnContractAddress),
+          walletAddress
+        ).call,
+        params: { from: '0x0000000000000000000000000000000000000000' },
+      });
+    });
+
+    govVaultsV2Batches.forEach(govVaultsV2Batch => {
+      requestsForBatch.push({
+        method: mc.methods.getGovVaultMultiBalance(
+          govVaultsV2Batch.map(gov => gov.earnContractAddress),
           walletAddress
         ).call,
         params: { from: '0x0000000000000000000000000000000000000000' },
@@ -83,12 +100,13 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
         params: { from: '0x0000000000000000000000000000000000000000' },
       });
     });
+
     requestsForBatch.push({
       method: this.web3.eth.getBalance as unknown as Web3CallMethod,
       params: walletAddress,
     });
 
-    const results: unknown[] = await makeBatchRequest(this.web3, requestsForBatch);
+    const results = await makeBatchRequest(this.web3, requestsForBatch);
 
     // now reasign results
 
@@ -102,13 +120,14 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     let boostIndex = 0;
     for (let j = 0; j < boostAndGovVaultBatches.length; j++) {
-      for (let i = 0; i < (results[resultsIdx] as unknown[]).length; i++) {
-        const boostOrGovVaultRes = results[resultsIdx][i];
+      const batchResults = results[resultsIdx] as unknown[];
+      for (let i = 0; i < batchResults.length; i++) {
+        const boostOrGovVaultRes = batchResults[i];
         if (boostIndex < boosts.length) {
           res.boosts.push(
             this.boostFormatter(
               state,
-              boostOrGovVaultRes as AllValuesAsString<BoostBalance>,
+              boostOrGovVaultRes as AsWeb3Result<BoostBalance>,
               boosts[boostIndex]
             )
           );
@@ -116,13 +135,21 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
           res.govVaults.push(
             this.govVaultFormatter(
               state,
-              boostOrGovVaultRes as AllValuesAsString<GovVaultPoolBalance>,
-              govVaults[boostIndex - boosts.length] as VaultGov
+              boostOrGovVaultRes as AsWeb3Result<GovVaultBalance>,
+              govVaultsV1[boostIndex - boosts.length]
             )
           );
         }
         boostIndex++;
       }
+      resultsIdx++;
+    }
+
+    for (const govVaultsV2Batch of govVaultsV2Batches) {
+      const batchRes = (results[resultsIdx] as AsWeb3Result<GovVaultV2Balance>[]).map(
+        (vaultRes, elemidx) => this.govVaultV2Formatter(state, vaultRes, govVaultsV2Batch[elemidx])
+      );
+      res.govVaults = res.govVaults.concat(batchRes);
       resultsIdx++;
     }
 
@@ -143,108 +170,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     return res;
   }
 
-  /* Legacy non batched method
-  public async fetchAllBalances(
-    state: BeefyState,
-    tokens: TokenEntity[],
-    govVaults: VaultGov[],
-    boosts: BoostEntity[],
-    walletAddress: string
-  ): Promise<FetchAllBalancesResult> {
-    const mc = new this.web3.eth.Contract(
-      BeefyV2AppMulticallUserAbi,
-      this.chain.appMulticallContractAddress
-    );
-
-    // if we send too much in a single call, we get "execution reversed"
-    const CHUNK_SIZE = featureFlag_getBalanceApiChunkSize();
-
-    const nativeTokens: TokenNative[] = [];
-    const erc20Tokens: TokenErc20[] = [];
-    for (const token of tokens) {
-      if (isTokenErc20(token)) {
-        erc20Tokens.push(token);
-      } else if (isTokenNative(token)) {
-        nativeTokens.push(token);
-      } else {
-        throw new Error(`Token type unsupported`);
-      }
-    }
-    const erc20TokensBatches = chunk(erc20Tokens, CHUNK_SIZE);
-    const boostAndGovVaultBatches = chunk([...boosts, ...govVaults], CHUNK_SIZE);
-
-    const boostAndGovVaultPromises = boostAndGovVaultBatches.map(boostAndGovVaultBatch => {
-      return mc.methods
-        .getBoostOrGovBalance(
-          boostAndGovVaultBatch.map(boostOrGovVaultt => boostOrGovVaultt.earnContractAddress),
-          walletAddress
-        )
-        .call();
-    });
-    const erc20TokensPromises = erc20TokensBatches.map(erc20TokenBatch =>
-      mc.methods
-        .getTokenBalances(
-          erc20TokenBatch.map(token => token.address),
-          walletAddress
-        )
-        .call()
-    );
-    const nativeTokenPromises = nativeTokens.map(_ => this.web3.eth.getBalance(walletAddress));
-
-    const results = await Promise.all([
-      ...boostAndGovVaultPromises,
-      ...erc20TokensPromises,
-      ...nativeTokenPromises,
-    ]);
-
-    // now reasign results
-
-    const res: FetchAllBalancesResult = {
-      tokens: [],
-      govVaults: [],
-      boosts: [],
-    };
-
-    let resultsIdx = 0;
-
-    let boostIndex = 0;
-    for (let j = 0; j < boostAndGovVaultBatches.length; j++) {
-      for (let i = 0; i < results[resultsIdx].length; i++) {
-        const boostOrGovVaultRes = results[resultsIdx][i];
-        if (boostIndex < boosts.length) {
-          res.boosts.push(this.boostFormatter(state, boostOrGovVaultRes, boosts[boostIndex]));
-        } else {
-          res.govVaults.push(
-            this.govVaultFormatter(
-              state,
-              boostOrGovVaultRes,
-              govVaults[boostIndex - boosts.length] as any
-            )
-          );
-        }
-        boostIndex++;
-      }
-      resultsIdx++;
-    }
-
-    for (const erc20TokenBatch of erc20TokensBatches) {
-      const batchRes = results[resultsIdx].map((vaultRes, elemidx) =>
-        this.erc20TokenFormatter(vaultRes, erc20TokenBatch[elemidx])
-      );
-      res.tokens = res.tokens.concat(batchRes);
-      resultsIdx++;
-    }
-
-    for (const nativeToken of nativeTokens) {
-      const formatted = this.nativeTokenFormatter(results[resultsIdx], nativeToken);
-      res.tokens.push(formatted);
-      resultsIdx++;
-    }
-
-    return res;
-  }*/
-
-  protected erc20TokenFormatter(result: string, token: TokenEntity): null | TokenBalance {
+  protected erc20TokenFormatter(result: string, token: TokenEntity): TokenBalance {
     const rawAmount = new BigNumber(result);
     return {
       tokenAddress: token.address,
@@ -252,7 +178,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     };
   }
 
-  protected nativeTokenFormatter(result: string, token: TokenNative): TokenBalance | null {
+  protected nativeTokenFormatter(result: string, token: TokenNative): TokenBalance {
     const rawAmount = new BigNumber(result);
     return {
       tokenAddress: token.address,
@@ -262,9 +188,9 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
   protected govVaultFormatter(
     state: BeefyState,
-    result: AllValuesAsString<GovVaultPoolBalance>,
+    result: AsWeb3Result<GovVaultBalance>,
     govVault: VaultGov
-  ): GovVaultPoolBalance | null {
+  ): GovVaultBalance {
     const balanceToken = selectGovVaultBalanceTokenEntity(state, govVault.id);
     const rewardsToken = selectGovVaultRewardsTokenEntity(state, govVault.id);
     const rawBalance = new BigNumber(result.balance);
@@ -278,15 +204,43 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
   protected boostFormatter(
     state: BeefyState,
-    result: AllValuesAsString<BoostBalance>,
+    result: AsWeb3Result<BoostBalance>,
     boost: BoostEntity
-  ): BoostBalance | null {
+  ): BoostBalance {
     const balanceToken = selectBoostBalanceTokenEntity(state, boost.id);
     const rewardsToken = selectBoostRewardsTokenEntity(state, boost.id);
     const rawBalance = new BigNumber(result.balance);
     const rawRewards = new BigNumber(result.rewards);
     return {
       boostId: boost.id,
+      balance: rawBalance.shiftedBy(-balanceToken.decimals),
+      rewards: rawRewards.shiftedBy(-rewardsToken.decimals),
+    };
+  }
+
+  /**
+   * For now this converts the result of new v2 gov vaults (multiple reward tokens) to the old 1 token format
+   */
+  protected govVaultV2Formatter(
+    state: BeefyState,
+    result: AsWeb3Result<GovVaultV2Balance>,
+    govVault: VaultGov
+  ): GovVaultBalance {
+    if (result.rewards.length !== result.rewardTokens.length || result.rewards.length === 0) {
+      throw new Error(`Invalid rewards and rewardTokens length`);
+    }
+
+    const balanceToken = selectGovVaultBalanceTokenEntity(state, govVault.id);
+    const rewardsToken = selectGovVaultRewardsTokenEntity(state, govVault.id);
+    const rawBalance = new BigNumber(result.balance);
+    const index = result.rewardTokens.findIndex(token => token === govVault.earnedTokenAddress);
+    if (index === -1) {
+      throw new Error(`Config reward token not found in result`);
+    }
+    const rawRewards = new BigNumber(result.rewards[index]);
+
+    return {
+      vaultId: govVault.id,
       balance: rawBalance.shiftedBy(-balanceToken.decimals),
       rewards: rawRewards.shiftedBy(-rewardsToken.decimals),
     };

@@ -20,7 +20,6 @@ import {
 import type { BridgeFormState } from '../reducers/wallet/bridge';
 import { FormStep } from '../reducers/wallet/bridge';
 import { BIG_ONE, BIG_ZERO, fromWeiString } from '../../../helpers/big-number';
-import { selectUserBalanceOfToken } from '../selectors/balance';
 import { selectChainById } from '../selectors/chains';
 import { orderBy, partition } from 'lodash-es';
 import { isFulfilledResult } from '../../../helpers/promises';
@@ -60,7 +59,7 @@ export const fetchBridgeConfig = createAsyncThunk<
 });
 
 type InitBridgeFormParams = {
-  walletAddress: string | null;
+  walletAddress: string | undefined;
 };
 
 type InitBridgeFormPayload = {
@@ -139,11 +138,6 @@ export const validateBridgeForm = createAsyncThunk<
   const minAmount = fromWeiString('1000', fromToken.decimals);
   if (input.amount.lt(minAmount)) {
     throw new Error(`Minimum amount is ${minAmount} ${fromToken.symbol}`);
-  }
-
-  const userBalance = selectUserBalanceOfToken(state, fromToken.chainId, fromToken.address);
-  if (input.amount.gt(userBalance)) {
-    throw new Error('Insufficient balance');
   }
 
   dispatch(quoteBridgeForm());

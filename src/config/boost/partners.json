@@ -1,4 +1,31 @@
 {
+  "vectorreserve": {
+    "title": "Vector Reserve",
+    "text": "Vector Reserve is DeFi’s first Liquidity Layer and issuer of the first LPD: vETH. Powered by EigenLayer and Superfluid Staking.",
+    "website": "https://www.vectorreserve.com/",
+    "social": {
+      "telegram": "https://t.me/vectorreserve",
+      "twitter": "http://x.com/vectorreserve"
+    }
+  },
+  "silo": {
+    "title": "Silo",
+    "text": "Silo Finance creates permissionless and risk-isolated lending markets on Arbitrum and two different deployments on Ethereum. Silo uses an isolated-pool approach where every token asset has its own lending market and is paired against the predetermined tokens called the 'bridge' assets. This novel architecture means lenders depositing bridge assets into a silo for one token would not be affected by the risks of other assets on the network even if they were to be exploited.",
+    "website": "https://www.silo.finance/",
+    "social": {
+      "discord": "https://discord.gg/silo-finance",
+      "twitter": "https://twitter.com/SiloFinance"
+    }
+  },
+  "curve": {
+    "title": "Curve",
+    "text": "Curve Finance is a decentralized exchange and automated market maker deployed on many EVM compatible chains. It specializes in efficient trading of stablecoins and volatile assets. Curve has also introduced its own over-collateralized USD stablecoin, crvUSD, powered by a unique liquidation mechanism.",
+    "website": "https://curve.fi/",
+    "social": {
+      "telegram": "https://t.me/curvefi",
+      "twitter": "https://twitter.com/CurveFinance"
+    }
+  },
   "fraxprotocol": {
     "title": "Frax",
     "text": "The Frax Protocol issues innovative, decentralized stablecoins and contains subprotocols to support them. The Frax Protocol currently issues 3 stablecoins: FRAX, FPI, and frxETH. FRAX is a USD pegged asset, the Frax Price Index (FPI) stablecoin is the first stablecoin pegged to a basket of consumer goods, and FraxEther (frxETH), which is pegged to ETH.",
@@ -237,7 +264,7 @@
   "velodrome": {
     "title": "Velodrome",
     "text": "Velodrome Finance, at its core, is a solution for protocols on Optimism to properly incentivize liquidity for their own use cases. Building on top of the groundwork laid out by Solidly, their team has addressed that first iteration's core issues to realize its full potential.",
-    "website": "https://app.velodrome.finance/swap",
+    "website": "https://velodrome.finance/swap",
     "social": {
       "discord": "https://discord.com/invite/velodrome",
       "twitter": "https://twitter.com/VelodromeFi"

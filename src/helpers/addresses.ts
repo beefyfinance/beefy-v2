@@ -17,6 +17,10 @@ export async function getAddressDomains(
   address: string,
   chains: ChainEntity[]
 ): Promise<string[] | undefined> {
+  if (!address || address === ZERO_ADDRESS) {
+    return undefined;
+  }
+
   const providers: Record<number, Provider> = (
     await Promise.all(chains.map(chain => getWeb3Instance(chain)))
   ).reduce((acc: Record<number, Provider>, web3, index) => {
@@ -28,9 +32,13 @@ export async function getAddressDomains(
 }
 
 export async function getDomainAddress(
-  address: string,
+  domain: string,
   chains: ChainEntity[]
 ): Promise<string | undefined> {
+  if (!domain) {
+    return undefined;
+  }
+
   const providers: Record<number, Provider> = (
     await Promise.all(chains.map(chain => getWeb3Instance(chain)))
   ).reduce((acc: Record<number, Provider>, web3, index) => {
@@ -38,7 +46,7 @@ export async function getDomainAddress(
     return acc;
   }, {});
 
-  return await lookupDomain(address, providers);
+  return await lookupDomain(domain, providers);
 }
 
 const DEFAULT_VALID_TLDS: string[] = [
@@ -76,7 +84,7 @@ export function isMaybeDomain(domain: string, validTlds = DEFAULT_VALID_TLDS, mi
 
   const dot = domain.lastIndexOf('.');
   if (dot < minNameLength || dot === domain.length - 1) {
-    return undefined;
+    return false;
   }
 
   const tld = domain.substring(dot + 1);

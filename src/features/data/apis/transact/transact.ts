@@ -12,44 +12,24 @@ import type { VaultEntity } from '../../entities/vault';
 import { isStandardVault } from '../../entities/vault';
 import type { GetStateFn } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
-import type { IStrategy, StrategyOptions, TransactHelpers } from './strategies/IStrategy';
+import {
+  type IStrategy,
+  isZapTransactHelpers,
+  type StrategyOptions,
+  type TransactHelpers,
+} from './strategies/IStrategy';
 import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../reducers/wallet/stepper';
 import type { VaultType } from './vaults/IVaultType';
 import { strategyBuildersById } from './strategies';
-import type { ISwapAggregator } from './swap/ISwapAggregator';
 import { vaultTypeBuildersById } from './vaults';
 import { uniq } from 'lodash-es';
 import { VaultStrategy } from './strategies/vault/VaultStrategy';
 import { selectZapByChainId } from '../../selectors/zap';
-import type { ISwapProvider } from './swap/ISwapProvider';
-import { featureFlag_disableKyber, featureFlag_disableOneInch } from '../../utils/feature-flags';
+import { getSwapAggregator } from '../instances';
 
 export class TransactApi implements ITransactApi {
-  private swapAggregator: ISwapAggregator;
-
-  protected async getSwapAggregator(): Promise<ISwapAggregator> {
-    if (!this.swapAggregator) {
-      const { SwapAggregator, WNativeSwapProvider, OneInchSwapProvider, KyberSwapProvider } =
-        await import('./swap');
-
-      const providers: ISwapProvider[] = [new WNativeSwapProvider()];
-
-      if (!featureFlag_disableOneInch()) {
-        providers.push(new OneInchSwapProvider());
-      }
-
-      if (!featureFlag_disableKyber()) {
-        providers.push(new KyberSwapProvider());
-      }
-
-      this.swapAggregator = new SwapAggregator(providers);
-    }
-
-    return this.swapAggregator;
-  }
-
   protected async getHelpersForVault(
     vaultId: VaultEntity['id'],
     getState: GetStateFn
@@ -63,7 +43,7 @@ export class TransactApi implements ITransactApi {
       vault,
       vaultType,
       zap,
-      swapAggregator: await this.getSwapAggregator(),
+      swapAggregator: await getSwapAggregator(),
       getState,
     };
   }
@@ -86,8 +66,6 @@ export class TransactApi implements ITransactApi {
         zapStrategies.map(zapStrategy => zapStrategy.fetchDepositOptions())
       );
       options.push(...zapOptions.flat());
-    } else {
-      console.debug('no zap strategies for', vaultId); // this is OK
     }
 
     return options;
@@ -106,6 +84,15 @@ export class TransactApi implements ITransactApi {
     const strategies = await Promise.all(strategyIds.map(id => this.getStrategyById(id, helpers)));
     const strategiesById = Object.fromEntries(
       strategies.map((strategy, i) => [strategyIds[i], strategy])
+    );
+
+    // Call beforeQuote hooks
+    await Promise.allSettled(
+      strategies.map(async strategy => {
+        if (strategy.beforeQuote) {
+          await strategy.beforeQuote();
+        }
+      })
     );
 
     // Get quotes
@@ -148,6 +135,11 @@ export class TransactApi implements ITransactApi {
   ): Promise<Step> {
     const helpers = await this.getHelpersForVault(quote.option.vaultId, getState);
     const strategy = await this.getStrategyById(quote.option.strategyId, helpers);
+
+    // Call beforeStep hooks
+    if (strategy.beforeStep) {
+      await strategy.beforeStep();
+    }
 
     return await strategy.fetchDepositStep(quote, t);
   }
@@ -192,6 +184,15 @@ export class TransactApi implements ITransactApi {
       strategies.map((strategy, i) => [strategyIds[i], strategy])
     );
 
+    // Call beforeQuote hooks
+    await Promise.allSettled(
+      strategies.map(async strategy => {
+        if (strategy.beforeQuote) {
+          await strategy.beforeQuote();
+        }
+      })
+    );
+
     // Get quotes
     const quotes = await Promise.allSettled(
       options.map(option => {
@@ -222,10 +223,6 @@ export class TransactApi implements ITransactApi {
   }
 
   private async getVaultTypeFor(vault: VaultEntity, getState: GetStateFn): Promise<VaultType> {
-    if (!vault.type) {
-      throw new Error(`Vault ${vault.id} has no type`);
-    }
-
     const builder = vaultTypeBuildersById[vault.type];
     if (!builder) {
       throw new Error(
@@ -249,6 +246,11 @@ export class TransactApi implements ITransactApi {
     const helpers = await this.getHelpersForVault(quote.option.vaultId, getState);
     const strategy = await this.getStrategyById(quote.option.strategyId, helpers);
 
+    // Call beforeStep hooks
+    if (strategy.beforeStep) {
+      await strategy.beforeStep();
+    }
+
     return await strategy.fetchWithdrawStep(quote, t);
   }
 
@@ -267,7 +269,7 @@ export class TransactApi implements ITransactApi {
   }
 
   private async getZapStrategiesForVault(helpers: TransactHelpers): Promise<IStrategy[]> {
-    const { vault, zap } = helpers;
+    const { vault } = helpers;
 
     // Only standard vault is supported so far
     if (!isStandardVault(vault)) {
@@ -278,7 +280,7 @@ export class TransactApi implements ITransactApi {
       return [];
     }
 
-    if (!zap) {
+    if (!isZapTransactHelpers(helpers)) {
       console.warn(`Vault ${vault.id} has zaps defined but ${vault.chainId} has no zap config`);
       return [];
     }
@@ -321,9 +323,11 @@ export class TransactApi implements ITransactApi {
 
     if (strategyId === 'vault') {
       // Wrapper for common interface
-      const strategy = new VaultStrategy(vaultType);
-      await strategy.initialize();
-      return strategy;
+      return new VaultStrategy(vaultType);
+    }
+
+    if (!isZapTransactHelpers(helpers)) {
+      throw new Error(`Strategy "${strategyId}" requires zap contract`);
     }
 
     if (!isStandardVault(vault)) {

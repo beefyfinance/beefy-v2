@@ -9,7 +9,10 @@ import { StrategyDescription } from './StrategyDescription';
 import { selectVaultTotalApy } from '../../../data/selectors/apy';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { isGovVault, shouldVaultShowInterest } from '../../../data/entities/vault';
-import { selectVaultById, selectVaultStrategyAddress } from '../../../data/selectors/vaults';
+import {
+  selectVaultById,
+  selectVaultStrategyAddressOrUndefined,
+} from '../../../data/selectors/vaults';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
 import { StatLoader } from '../../../../components/StatLoader';
@@ -25,7 +28,7 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
   const formatted = formattedTotalApy(values, <StatLoader />);
-  const stratAddr = useAppSelector(state => selectVaultStrategyAddress(state, vaultId));
+  const stratAddr = useAppSelector(state => selectVaultStrategyAddressOrUndefined(state, vaultId));
   const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
   const showApy = shouldVaultShowInterest(vault);
 
@@ -40,9 +43,11 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
           <CardTitle title={t('Vault-Strategy')} />
         </div>
         <div className={classes.cardActions}>
-          <div className={classes.cardAction}>
-            <LinkButton href={explorerAddressUrl(chain, stratAddr)} text={t('Strat-Address')} />
-          </div>
+          {stratAddr ? (
+            <div className={classes.cardAction}>
+              <LinkButton href={explorerAddressUrl(chain, stratAddr)} text={t('Strat-Address')} />
+            </div>
+          ) : null}
           <div className={classes.cardAction}>
             <LinkButton
               href={explorerAddressUrl(chain, vault.earnContractAddress)}
@@ -72,19 +77,19 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
                     <div className={classes.apyValue}>{formatted.vaultApr}</div>
                   </div>
                 )}
-                {values.tradingApr > 0 && (
+                {(values.tradingApr ?? 0) > 0 && (
                   <div className={classes.apy}>
                     <div className={classes.apyLabel}>{t('Vault-AprTrading')}</div>
                     <div className={classes.apyValue}>{formatted.tradingApr}</div>
                   </div>
                 )}
-                {values.liquidStakingApr > 0 && (
+                {(values.liquidStakingApr ?? 0) > 0 && (
                   <div className={classes.apy}>
                     <div className={classes.apyLabel}>{t('Vault-AprLiquidStaking')}</div>
                     <div className={classes.apyValue}>{formatted.liquidStakingApr}</div>
                   </div>
                 )}
-                {values.composablePoolApr > 0 && (
+                {(values.composablePoolApr ?? 0) > 0 && (
                   <div className={classes.apy}>
                     <div className={classes.apyLabel}>{t('Vault-AprComposablePool')}</div>
                     <div className={classes.apyValue}>{formatted.composablePoolApr}</div>

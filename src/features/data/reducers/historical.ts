@@ -1,4 +1,4 @@
-import type { ApiRange, ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
+import type { ApiChartData, ApiRange, ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import type { SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import {
@@ -70,7 +70,7 @@ export const historicalSlice = createSlice({
       })
       .addCase(fetchHistoricalApys.pending, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
-        setTimebucketPending(getOrInitTimeBucketFor('apys', vaultId, state), bucket);
+        setTimebucketPending(getOrCreateTimeBucketFor('apys', vaultId, state), bucket);
       })
       .addCase(fetchHistoricalApys.rejected, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
@@ -82,7 +82,7 @@ export const historicalSlice = createSlice({
       })
       .addCase(fetchHistoricalTvls.pending, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
-        setTimebucketPending(getOrInitTimeBucketFor('tvls', vaultId, state), bucket);
+        setTimebucketPending(getOrCreateTimeBucketFor('tvls', vaultId, state), bucket);
       })
       .addCase(fetchHistoricalTvls.rejected, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
@@ -94,7 +94,7 @@ export const historicalSlice = createSlice({
       })
       .addCase(fetchHistoricalPrices.pending, (state, action) => {
         const { oracleId, bucket } = action.meta.arg;
-        setTimebucketPending(getOrInitTimeBucketFor('prices', oracleId, state), bucket);
+        setTimebucketPending(getOrCreateTimeBucketFor('prices', oracleId, state), bucket);
       })
       .addCase(fetchHistoricalPrices.rejected, (state, action) => {
         const { oracleId, bucket } = action.meta.arg;
@@ -107,7 +107,7 @@ export const historicalSlice = createSlice({
   },
 });
 
-function getOrInitTimeBucketFor(
+function getOrCreateTimeBucketFor(
   key: 'tvls' | 'prices' | 'apys',
   oracleOrVaultId: string,
   state: Draft<HistoricalState>
@@ -119,15 +119,24 @@ function getOrInitTimeBucketFor(
   return state[key][subKey][oracleOrVaultId];
 }
 
-function setTimebucketPending(state: Draft<TimeBucketsState>, bucket: ApiTimeBucket) {
-  if (bucket in state.byTimebucket) {
-    state.byTimebucket[bucket].status = 'pending';
-    state.byTimebucket[bucket].error = undefined;
-  } else {
-    state.byTimebucket[bucket] = {
-      status: 'pending',
+function getOrCreateTimeBucketBucket(
+  state: Draft<TimeBucketsState>,
+  bucket: ApiTimeBucket
+): Draft<TimeBucketState> {
+  let bucketState = state.byTimebucket[bucket];
+
+  if (!bucketState) {
+    bucketState = state.byTimebucket[bucket] = {
+      status: 'idle',
     };
   }
+
+  return bucketState;
+}
+
+function setTimebucketPending(state: Draft<TimeBucketsState>, bucket: ApiTimeBucket) {
+  const bucketState = getOrCreateTimeBucketBucket(state, bucket);
+  bucketState.status = 'pending';
 }
 
 function setTimebucketRejected(
@@ -135,18 +144,20 @@ function setTimebucketRejected(
   bucket: ApiTimeBucket,
   error: SerializedError
 ) {
-  state.byTimebucket[bucket].status = 'rejected';
-  state.byTimebucket[bucket].error = error;
+  const bucketState = getOrCreateTimeBucketBucket(state, bucket);
+  bucketState.status = 'rejected';
+  bucketState.error = error;
 }
 
 function setTimebucketFulfilled(
   state: Draft<TimeBucketsState>,
   bucket: ApiTimeBucket,
-  data: TimeBucketState['data']
+  data: ApiChartData
 ) {
-  state.byTimebucket[bucket].status = 'fulfilled';
-  state.byTimebucket[bucket].error = undefined;
-  state.byTimebucket[bucket].data = data;
+  const bucketState = getOrCreateTimeBucketBucket(state, bucket);
+  bucketState.status = 'fulfilled';
+  bucketState.error = undefined;
+  bucketState.data = data;
   state.loadedTimebuckets[bucket] = data.length > 0;
 }
 

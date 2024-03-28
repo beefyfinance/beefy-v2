@@ -9,7 +9,7 @@ interface LoadingStepProps {
 
 export const LoadingStep = memo<LoadingStepProps>(function LoadingStep({ stepType }) {
   return (
-    <Step stepType={stepType} title={null}>
+    <Step stepType={stepType} title={undefined}>
       <LoadingIndicator />
     </Step>
   );

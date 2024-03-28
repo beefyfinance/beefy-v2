@@ -25,8 +25,8 @@ export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePau
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   const message = useMemo(() => {
-    let reason = null;
-    let reasonCode = null;
+    let reason: string | undefined;
+    let reasonCode: string | undefined;
 
     if (vault.status === 'eol') {
       reason = 'RetireReason';

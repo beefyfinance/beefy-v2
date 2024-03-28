@@ -62,6 +62,7 @@
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
     "addLiquidityUrl": "https://stargate.finance/pool/USDT-METIS",
+    "removeLiquidityUrl": "https://stargate.finance/pool/usdt-metis/remove",
     "network": "metis"
   },
   {
@@ -614,45 +615,6 @@
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "addLiquidityUrl": "https://netswap.io/#/add/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "removeLiquidityUrl": "https://netswap.io/#/remove/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
-    "network": "metis",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "metis-netswap"
-      }
-    ]
-  },
-  {
-    "id": "netswap-weth-m.usdc",
-    "name": "m.USDC-WETH LP",
-    "type": "standard",
-    "token": "m.USDC-WETH LP",
-    "tokenAddress": "0xF5988809ac97C65121e2c34f5D49558e3D12C253",
-    "tokenDecimals": 18,
-    "tokenProviderId": "netswap",
-    "earnedToken": "mooNetswapm.USDC-WETH",
-    "earnedTokenAddress": "0x85f287c860f02bAc3aE5023eFb547b6B7Aa4D9eD",
-    "earnContractAddress": "0x85f287c860f02bAc3aE5023eFb547b6B7Aa4D9eD",
-    "oracle": "lps",
-    "oracleId": "netswap-weth-m.usdc",
-    "status": "eol",
-    "createdAt": 1642365777,
-    "retireReason": "exploit",
-    "retiredAt": 1690624926,
-    "platformId": "netswap",
-    "assets": ["mUSDC", "WETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0x420000000000000000000000000000000000000A&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
-    "addLiquidityUrl": "https://netswap.io/#/add/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
-    "removeLiquidityUrl": "https://netswap.io/#/remove/0x420000000000000000000000000000000000000A/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     "network": "metis",
     "zaps": [
       {

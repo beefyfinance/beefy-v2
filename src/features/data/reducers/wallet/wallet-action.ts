@@ -1,6 +1,6 @@
 import type BigNumber from 'bignumber.js';
 import { WALLET_ACTION, WALLET_ACTION_RESET } from '../../actions/wallet-actions';
-import type { TokenEntity, TokenErc20 } from '../../entities/token';
+import type { TokenEntity } from '../../entities/token';
 import type { EventLog } from 'web3-core';
 import type { VaultEntity } from '../../entities/vault';
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types';
@@ -32,10 +32,12 @@ export type MigrateAdditionalData = BaseAdditionalData & {
 };
 
 export type ZapAdditionalData = BaseAdditionalData & {
+  /** Zap type */
+  type: 'zap';
   /** Vault zap is on */
   vaultId: VaultEntity['id'];
   /** Expected tokens returned to user */
-  expectedTokens: TokenErc20[];
+  expectedTokens: TokenEntity[];
 };
 
 export type BridgeAdditionalData = BaseAdditionalData & {
@@ -43,45 +45,55 @@ export type BridgeAdditionalData = BaseAdditionalData & {
   quote: IBridgeQuote<BeefyAnyBridgeConfig>;
 };
 
-export type AdditionalData =
+export type TxAdditionalData =
   | VaultAdditionalData
   | ZapAdditionalData
   | MigrateAdditionalData
   | BridgeAdditionalData;
 
-export function isZapAddtionalData(data: AdditionalData): data is ZapAdditionalData {
-  return 'vaultId' in data;
+export function isZapAdditionalData(data: TxAdditionalData | undefined): data is ZapAdditionalData {
+  return !!data && 'type' in data && data.type === 'zap';
 }
 
-export function isBridgeAdditionalData(data: AdditionalData): data is BridgeAdditionalData {
-  return 'type' in data && data.type === 'bridge';
+export function isBridgeAdditionalData(
+  data: TxAdditionalData | undefined
+): data is BridgeAdditionalData {
+  return !!data && 'type' in data && data.type === 'bridge';
+}
+
+export function isBaseAdditionalData(
+  data: TxAdditionalData | undefined
+): data is BaseAdditionalData {
+  return !!data && 'amount' in data && 'token' in data;
 }
 
 export type WalletActionsIdleState = {
-  result: null;
-  data: null;
+  result: undefined;
+  data: undefined;
+  additional: undefined;
 };
 
-export type WalletActionsErrorState<T extends AdditionalData = AdditionalData> = {
+export type WalletActionsErrorState<T extends TxAdditionalData = TxAdditionalData> = {
   result: 'error';
   data: {
     error: TrxError;
-  } & T;
+  };
+  additional?: T;
 };
 
-export type WalletActionsPendingState<T extends AdditionalData = AdditionalData> = {
+export type WalletActionsPendingState<T extends TxAdditionalData = TxAdditionalData> = {
   result: 'success_pending';
-  data: {
-    hash: TrxHash;
-  } & T;
+  data: { hash: TrxHash };
+  additional?: T;
 };
 
-export type WalletActionsSuccessState<T extends AdditionalData = AdditionalData> = {
+export type WalletActionsSuccessState<T extends TxAdditionalData = TxAdditionalData> = {
   result: 'success';
   data: {
     hash: TrxHash;
     receipt: TrxReceipt;
-  } & T;
+  };
+  additional?: T;
 };
 
 export type WalletActionsState =
@@ -113,7 +125,9 @@ export function isWalletActionSuccess(
 export function isWalletActionBridgeSuccess(
   state: WalletActionsState
 ): state is WalletActionsSuccessState<BridgeAdditionalData> {
-  return isWalletActionSuccess(state) && isBridgeAdditionalData(state.data);
+  return (
+    isWalletActionSuccess(state) && !!state.additional && isBridgeAdditionalData(state.additional)
+  );
 }
 
 export type WalletAction<T extends WalletActionsState> = {
@@ -122,8 +136,9 @@ export type WalletAction<T extends WalletActionsState> = {
 };
 
 const initialWalletActionState: WalletActionsState = {
-  result: null,
-  data: null,
+  result: undefined,
+  data: undefined,
+  additional: undefined,
 };
 
 export const walletActionsReducer = (
@@ -134,7 +149,7 @@ export const walletActionsReducer = (
     case WALLET_ACTION:
       return action.payload;
     case WALLET_ACTION_RESET:
-      return { result: null, data: null };
+      return { result: undefined, data: undefined, additional: undefined };
     default:
       return state;
   }
@@ -144,15 +159,15 @@ export function createWalletActionResetAction() {
   return {
     type: WALLET_ACTION_RESET,
     payload: {
-      result: null,
-      data: null,
+      result: undefined,
+      data: undefined,
     },
   };
 }
 
 export function createWalletActionErrorAction(
   error: TrxError,
-  additionalData: AdditionalData
+  additionalData: TxAdditionalData | undefined
 ): WalletAction<WalletActionsErrorState> {
   return {
     type: WALLET_ACTION,
@@ -160,15 +175,15 @@ export function createWalletActionErrorAction(
       result: 'error',
       data: {
         error,
-        ...additionalData,
       },
+      additional: additionalData,
     },
   };
 }
 
 export function createWalletActionPendingAction(
   hash: TrxHash,
-  additionalData: AdditionalData
+  additionalData: TxAdditionalData | undefined
 ): WalletAction<WalletActionsPendingState> {
   return {
     type: WALLET_ACTION,
@@ -176,15 +191,15 @@ export function createWalletActionPendingAction(
       result: 'success_pending',
       data: {
         hash,
-        ...additionalData,
       },
+      additional: additionalData,
     },
   };
 }
 
 export function createWalletActionSuccessAction(
   receipt: TrxReceipt,
-  additionalData: AdditionalData
+  additionalData: TxAdditionalData | undefined
 ): WalletAction<WalletActionsSuccessState> {
   return {
     type: WALLET_ACTION,
@@ -193,8 +208,8 @@ export function createWalletActionSuccessAction(
       data: {
         hash: receipt.transactionHash,
         receipt,
-        ...additionalData,
       },
+      additional: additionalData,
     },
   };
 }

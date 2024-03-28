@@ -7,9 +7,9 @@ import { fetchPartnersConfig } from '../actions/partners';
  * State containing Vault infos
  */
 export type PartnersState = {
-  insurace: {
+  openCover: {
     byChainId: {
-      [chainId: ChainEntity['id']]: boolean;
+      [chainId in ChainEntity['id']]?: boolean;
     };
   };
   qidao: {
@@ -17,15 +17,14 @@ export type PartnersState = {
       [vaultId: VaultEntity['id']]: boolean;
     };
   };
-
   nexus: {
     byChainId: {
-      [chainId: ChainEntity['id']]: boolean;
+      [chainId in ChainEntity['id']]?: boolean;
     };
   };
 };
 export const initialPartnersState: PartnersState = {
-  insurace: {
+  openCover: {
     byChainId: {},
   },
   qidao: {
@@ -44,9 +43,9 @@ export const partnersSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchPartnersConfig.fulfilled, (sliceState, action) => {
-      for (const chainId of action.payload.Insurace) {
-        if (!sliceState.insurace.byChainId[chainId]) {
-          sliceState.insurace.byChainId[chainId] = true;
+      for (const chainId of action.payload.OpenCover) {
+        if (!sliceState.openCover.byChainId[chainId]) {
+          sliceState.openCover.byChainId[chainId] = true;
         }
       }
       for (const vaultId of action.payload.QiDao) {

@@ -21,7 +21,7 @@ import { askForNetworkChange, askForWalletConnection } from '../../../../../../d
 import { walletActions } from '../../../../../../data/actions/wallet-actions';
 
 import type { MinterCardParams } from '../../MinterCard';
-import { selectMinterById } from '../../../../../../data/selectors/minters';
+import { selectMinterById, selectMinterVaultsType } from '../../../../../../data/selectors/minters';
 import { selectAllowanceByTokenAddress } from '../../../../../../data/selectors/allowances';
 import { selectChainById } from '../../../../../../data/selectors/chains';
 import { useAppDispatch, useAppSelector } from '../../../../../../../store';
@@ -61,19 +61,21 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   const depositTokenAllowance = useAppSelector(state =>
     selectAllowanceByTokenAddress(state, vault.chainId, depositToken.address, minter.minterAddress)
   );
-  const { canBurnReserves, hasEarningsPool, canZapInWithOneInch } = minter;
+
+  const minterEarningsType = useAppSelector(state => selectMinterVaultsType(state, minterId));
+
+  const { canBurnReserves, canZapInWithOneInch } = minter;
   const [contentKey, reminderKey] = useMemo(() => {
     const liquidityType = canBurnReserves ? 'Burnable' : 'Liquid';
-    const earningsType = hasEarningsPool ? 'WithEarnings' : 'WithoutEarnings';
     const zapType = canZapInWithOneInch ? 'WithZap' : 'WithoutZap';
 
     return ['Content', 'Reminder'].map(key => [
-      `Mint-${key}-${liquidityType}-${earningsType}-${zapType}`,
-      `Mint-${key}-${liquidityType}-${earningsType}`,
+      `Mint-${key}-${liquidityType}-${minterEarningsType}-${zapType}`,
+      `Mint-${key}-${liquidityType}-${minterEarningsType}`,
       `Mint-${key}-${liquidityType}`,
       `Mint-${key}`,
     ]);
-  }, [canBurnReserves, hasEarningsPool, canZapInWithOneInch]);
+  }, [canBurnReserves, canZapInWithOneInch, minterEarningsType]);
 
   const isStepping = useAppSelector(selectIsStepperStepping);
 
@@ -214,7 +216,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
         </div>
         <Paper component="form">
           <div className={classes.inputLogo}>
-            <AssetsImage assetIds={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
+            <AssetsImage assetSymbols={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
           </div>
           <InputBase
             placeholder="0.00"
@@ -244,7 +246,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
         </div>
         <Paper component="form">
           <div className={classes.inputLogo}>
-            <AssetsImage assetIds={[minter.mintedToken.symbol]} size={20} chainId={chain.id} />
+            <AssetsImage assetSymbols={[minter.mintedToken.symbol]} size={20} chainId={chain.id} />
           </div>
           <InputBase disabled={true} placeholder="0.00" value={formData.deposit.input} />
         </Paper>

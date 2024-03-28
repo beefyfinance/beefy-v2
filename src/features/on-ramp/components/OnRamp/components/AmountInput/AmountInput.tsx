@@ -49,7 +49,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
     return numberToString(value, maxDecimals);
   });
 
-  const handleChange = useCallback<InputBaseProps['onChange']>(
+  const handleChange = useCallback<Exclude<InputBaseProps['onChange'], undefined>>(
     e => {
       const rawInput = e.target.value;
 
@@ -80,7 +80,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
     [setInput, maxDecimals, onChange]
   );
 
-  const handleBlur = useCallback<InputBaseProps['onBlur']>(
+  const handleBlur = useCallback<Exclude<InputBaseProps['onBlur'], undefined>>(
     e => {
       const rawInput = e.target.value;
 

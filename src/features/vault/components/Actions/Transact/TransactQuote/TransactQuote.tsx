@@ -41,7 +41,7 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   const inputAmount = useAppSelector(selectTransactInputAmount);
   const inputMax = useAppSelector(selectTransactInputMax);
   const chainId = useAppSelector(selectTransactSelectedChainId);
-  const selectionid = useAppSelector(selectTransactSelectedSelectionId);
+  const selectionId = useAppSelector(selectTransactSelectedSelectionId);
   const status = useAppSelector(selectTransactQuoteStatus);
   const debouncedFetchQuotes = useMemo(
     () =>
@@ -54,14 +54,14 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
           }
         },
         200,
-        { leading: true, trailing: true, maxWait: 1000 }
+        { leading: false, trailing: true, maxWait: 1000 }
       ),
     []
   );
 
   useEffect(() => {
     debouncedFetchQuotes(dispatch, inputAmount);
-  }, [dispatch, mode, chainId, selectionid, inputAmount, inputMax, debouncedFetchQuotes]);
+  }, [dispatch, mode, chainId, selectionId, inputAmount, inputMax, debouncedFetchQuotes]);
 
   if (status === TransactStatus.Idle) {
     return null;
@@ -98,7 +98,7 @@ const QuoteLoading = memo(function QuoteLoading() {
 });
 
 const QuoteLoaded = memo(function QuoteLoaded() {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const classes = useStyles();
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isZap = isZapQuote(quote);
@@ -115,7 +115,7 @@ const QuoteLoaded = memo(function QuoteLoaded() {
           />
         ))}
       </div>
-      {quote.returned.length ? (
+      {/*      {quote.returned.length ? (
         <div className={classes.returned}>
           <div className={classes.returnedTitle}>{t('Transact-Returned')}</div>
           <div className={classes.tokenAmounts}>
@@ -129,7 +129,7 @@ const QuoteLoaded = memo(function QuoteLoaded() {
             ))}
           </div>
         </div>
-      ) : null}
+      ) : null}*/}
       {isZap ? (
         <>
           <ZapRoute quote={quote} className={classes.route} />

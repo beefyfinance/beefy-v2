@@ -2,9 +2,9 @@ import BigNumber from 'bignumber.js';
 import { uniqBy } from 'lodash-es';
 import type { Action } from 'redux';
 import boostAbi from '../../../config/abi/boost.json';
-import erc20Abi from '../../../config/abi/erc20.json';
-import vaultAbi from '../../../config/abi/vault.json';
-import minterAbi from '../../../config/abi/minter.json';
+import { ERC20Abi } from '../../../config/abi/ERC20Abi';
+import { StandardVaultAbi } from '../../../config/abi/StandardVaultAbi';
+import { MinterAbi } from '../../../config/abi/MinterAbi';
 import type { BeefyState, BeefyThunk } from '../../../redux-types';
 import { getOneInchApi, getWalletConnectionApi } from '../apis/instances';
 import type { BoostEntity } from '../entities/boost';
@@ -13,17 +13,15 @@ import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenEqual, isTokenNative } from '../entities/token';
 import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { isStandardVault } from '../entities/vault';
-import type {
-  AdditionalData,
-  TrxError,
-  TrxHash,
-  TrxReceipt,
-} from '../reducers/wallet/wallet-action';
 import {
   createWalletActionErrorAction,
   createWalletActionPendingAction,
   createWalletActionResetAction,
   createWalletActionSuccessAction,
+  type TrxError,
+  type TrxHash,
+  type TrxReceipt,
+  type TxAdditionalData,
 } from '../reducers/wallet/wallet-action';
 import {
   selectBoostUserBalanceInToken,
@@ -38,7 +36,7 @@ import {
   selectErc20TokenByAddress,
   selectIsTokenLoaded,
   selectTokenByAddress,
-  selectTokenByAddressOrNull,
+  selectTokenByAddressOrUndefined,
   selectTokenById,
 } from '../selectors/tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
@@ -55,7 +53,6 @@ import { selectChainById } from '../selectors/chains';
 import { BIG_ZERO, toWei, toWeiString } from '../../../helpers/big-number';
 import { updateSteps } from './stepper';
 import { StepContent, stepperActions } from '../reducers/wallet/stepper';
-import { BeefyCommonBridgeAbi, BeefyZapRouterAbi } from '../../../config/abi';
 import type { PromiEvent } from 'web3-core';
 import type { ThunkDispatch } from 'redux-thunk';
 import { selectOneInchSwapAggregatorForChain, selectZapByChainId } from '../selectors/zap';
@@ -67,10 +64,35 @@ import { migratorUpdate } from './migrator';
 import type { MigrationConfig } from '../reducers/wallet/migration';
 import type { IBridgeQuote } from '../apis/bridge/providers/provider-types';
 import type { BeefyAnyBridgeConfig } from '../apis/config-types';
+import { transactActions } from '../reducers/wallet/transact';
+import { viemToWeb3Abi } from '../../../helpers/web3';
+import { BeefyCommonBridgeAbi } from '../../../config/abi/BeefyCommonBridgeAbi';
+import { BeefyZapRouterAbi } from '../../../config/abi/BeefyZapRouterAbi';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
 
+type TxRefreshOnSuccess = {
+  walletAddress: string;
+  chainId: ChainEntity['id'];
+  spenderAddress: string;
+  tokens: TokenEntity[];
+  govVaultId?: VaultEntity['id'];
+  boostId?: BoostEntity['id'];
+  minterId?: MinterEntity['id'];
+  vaultId?: VaultEntity['id'];
+  migrationId?: MigrationConfig['id'];
+  clearInput?: boolean;
+};
+
+type TxContext = {
+  additionalData?: TxAdditionalData;
+  refreshOnSuccess?: TxRefreshOnSuccess;
+};
+
+/**
+ * Called before building a transaction
+ */
 function txStart(dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>) {
   dispatch(createWalletActionResetAction());
   // should already be set by Stepper
@@ -82,6 +104,91 @@ function txStart(dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>) {
  */
 function txWallet(dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>) {
   dispatch(stepperActions.setStepContent({ stepContent: StepContent.WalletTx }));
+}
+
+/**
+ * Called when .send() succeeds / tx is submitted to RPC
+ */
+function txSubmitted(
+  dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>,
+  context: TxContext,
+  hash: TrxHash
+) {
+  const { additionalData } = context;
+  dispatch(createWalletActionPendingAction(hash, additionalData));
+  dispatch(stepperActions.setStepContent({ stepContent: StepContent.WaitingTx }));
+}
+
+/**
+ * Called when tx is successfully mined
+ */
+function txMined(
+  dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>,
+  context: TxContext,
+  receipt: TrxReceipt
+) {
+  const { additionalData, refreshOnSuccess } = context;
+
+  dispatch(createWalletActionSuccessAction(receipt, additionalData));
+  dispatch(updateSteps());
+
+  // fetch new balance and allowance of native token (gas spent) and allowance token
+  if (refreshOnSuccess) {
+    const {
+      walletAddress,
+      chainId,
+      govVaultId,
+      boostId,
+      spenderAddress,
+      tokens,
+      minterId,
+      vaultId,
+      migrationId,
+      clearInput,
+    } = refreshOnSuccess;
+
+    dispatch(
+      reloadBalanceAndAllowanceAndGovRewardsAndBoostData({
+        walletAddress: walletAddress,
+        chainId: chainId,
+        govVaultId: govVaultId,
+        boostId: boostId,
+        spenderAddress: spenderAddress,
+        tokens: tokens,
+      })
+    );
+
+    if (minterId) {
+      dispatch(
+        reloadReserves({
+          chainId: chainId,
+          minterId: minterId,
+        })
+      );
+    }
+
+    if (migrationId && vaultId && walletAddress) {
+      dispatch(migratorUpdate({ vaultId, migrationId, walletAddress }));
+    }
+
+    if (clearInput) {
+      dispatch(transactActions.clearInput());
+    }
+  }
+}
+
+/**
+ * Called when tx fails
+ */
+function txError(
+  dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>,
+  context: TxContext,
+  error: TrxError
+) {
+  const { additionalData } = context;
+
+  dispatch(createWalletActionErrorAction(error, additionalData));
+  dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
 }
 
 const approval = (token: TokenErc20, spenderAddress: string) => {
@@ -97,7 +204,7 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
     const native = selectChainNativeToken(state, token.chainId);
 
-    const contract = new web3.eth.Contract(erc20Abi as AbiItem[], token.address);
+    const contract = new web3.eth.Contract(viemToWeb3Abi(ERC20Abi), token.address);
     const maxAmount = web3.utils.toWei('8000000000', 'ether');
     const chain = selectChainById(state, token.chainId);
     const gasPrices = await getGasPriceOptions(chain);
@@ -176,7 +283,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     const native = selectChainNativeToken(state, vault.chainId);
     const isNativeToken = depositToken.id === native.id;
     const contractAddr = mooToken.address;
-    const contract = new web3.eth.Contract(vaultAbi as AbiItem[], contractAddr);
+    const contract = new web3.eth.Contract(viemToWeb3Abi(StandardVaultAbi), contractAddr);
     const rawAmount = toWei(amount, depositToken.decimals);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
@@ -213,6 +320,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
+        clearInput: true,
       }
     );
   });
@@ -248,7 +356,10 @@ const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) =
 
     const native = selectChainNativeToken(state, vault.chainId);
     const isNativeToken = depositToken.id === native.id;
-    const contract = new web3.eth.Contract(vaultAbi as AbiItem[], vault.earnContractAddress);
+    const contract = new web3.eth.Contract(
+      viemToWeb3Abi(StandardVaultAbi),
+      vault.earnContractAddress
+    );
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
@@ -281,6 +392,7 @@ const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) =
         spenderAddress: vault.earnContractAddress,
         tokens: selectVaultTokensToRefresh(state, vault),
         walletAddress: address,
+        clearInput: true,
       }
     );
   });
@@ -320,6 +432,7 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
+        clearInput: true,
       }
     );
   });
@@ -367,6 +480,7 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
+        clearInput: true,
       }
     );
   });
@@ -405,6 +519,7 @@ const claimGovVault = (vault: VaultGov) => {
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
+        clearInput: true,
       }
     );
   });
@@ -450,6 +565,7 @@ const exitGovVault = (vault: VaultGov) => {
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
+        clearInput: true,
       }
     );
   });
@@ -641,7 +757,7 @@ const mintDeposit = (
     const gasToken = selectChainNativeToken(state, chainId);
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(minterAbi as AbiItem[], minterAddress);
+    const contract = new web3.eth.Contract(viemToWeb3Abi(MinterAbi), minterAddress);
     const chain = selectChainById(state, chainId);
     const gasPrices = await getGasPriceOptions(chain);
     const amountInWei = toWei(amount, payToken.decimals);
@@ -665,7 +781,7 @@ const mintDeposit = (
           dst: mintedToken.address,
           slippage: slippageTolerance * 100,
         });
-        const amountOutWei = new BigNumber(swapData.toAmount);
+        const amountOutWei = new BigNumber(swapData.dstAmount);
         const amountOutWeiAfterSlippage = amountOutWei
           .multipliedBy(1 - slippageTolerance)
           .decimalPlaces(0, BigNumber.ROUND_FLOOR);
@@ -752,7 +868,7 @@ const burnWithdraw = (
     const gasToken = selectChainNativeToken(state, chainId);
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(minterAbi as AbiItem[], contractAddr);
+    const contract = new web3.eth.Contract(viemToWeb3Abi(MinterAbi), contractAddr);
     const chain = selectChainById(state, chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
@@ -790,7 +906,11 @@ const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => 
     }
 
     const { input, output, fee, config } = quote;
-    const viaBeefyBridgeAddress = config.chains[input.token.chainId].bridge;
+    const fromChainConfig = config.chains[input.token.chainId];
+    if (!fromChainConfig) {
+      throw new Error(`No config found for chain ${input.token.chainId}`);
+    }
+    const viaBeefyBridgeAddress = fromChainConfig.bridge;
     const fromChainId = input.token.chainId;
     const toChainId = output.token.chainId;
     const fromChain = selectChainById(state, fromChainId);
@@ -806,7 +926,10 @@ const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => 
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(BeefyCommonBridgeAbi, viaBeefyBridgeAddress);
+    const contract = new web3.eth.Contract(
+      viemToWeb3Abi(BeefyCommonBridgeAbi),
+      viaBeefyBridgeAddress
+    );
     const gasPrices = await getGasPriceOptions(fromChain);
 
     txWallet(dispatch);
@@ -835,7 +958,11 @@ const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => 
   });
 };
 
-const zapExecuteOrder = (vaultId: VaultEntity['id'], params: UserlessZapRequest) => {
+const zapExecuteOrder = (
+  vaultId: VaultEntity['id'],
+  params: UserlessZapRequest,
+  expectedTokens: TokenEntity[]
+) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -847,6 +974,9 @@ const zapExecuteOrder = (vaultId: VaultEntity['id'], params: UserlessZapRequest)
     const vault = selectVaultById(state, vaultId);
     const chain = selectChainById(state, vault.chainId);
     const zap = selectZapByChainId(state, vault.chainId);
+    if (!zap) {
+      throw new Error(`No zap found for chain ${chain.id}`);
+    }
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     const order = {
@@ -861,7 +991,7 @@ const zapExecuteOrder = (vaultId: VaultEntity['id'], params: UserlessZapRequest)
     const gasPrices = await getGasPriceOptions(chain);
     const nativeInput = order.inputs.find(input => input.token === ZERO_ADDRESS);
 
-    const contract = new web3.eth.Contract(BeefyZapRouterAbi, zap.router);
+    const contract = new web3.eth.Contract(viemToWeb3Abi(BeefyZapRouterAbi), zap.router);
     const options = {
       ...gasPrices,
       value: nativeInput ? nativeInput.amount : '0',
@@ -875,14 +1005,18 @@ const zapExecuteOrder = (vaultId: VaultEntity['id'], params: UserlessZapRequest)
       dispatch,
       transaction,
       {
+        type: 'zap',
         amount: BIG_ZERO,
         token: depositToken,
+        expectedTokens,
+        vaultId: vault.id,
       },
       {
         walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: zap.manager,
         tokens: selectZapTokensToRefresh(state, vault, order),
+        clearInput: true,
       }
     );
   });
@@ -914,9 +1048,9 @@ export const walletActions = {
   bridgeViaCommonInterface,
 };
 
-export function captureWalletErrors<ReturnType>(
-  func: BeefyThunk<Promise<ReturnType>>
-): BeefyThunk<Promise<ReturnType>> {
+export function captureWalletErrors(
+  func: BeefyThunk<Promise<unknown>>
+): BeefyThunk<Promise<unknown>> {
   return async (dispatch, getState, extraArgument) => {
     try {
       return await func(dispatch, getState, extraArgument);
@@ -926,86 +1060,32 @@ export function captureWalletErrors<ReturnType>(
           ? { message: errorToString(error.getInnerError()), friendlyMessage: error.message }
           : { message: errorToString(error) };
 
-      dispatch(
-        createWalletActionErrorAction(txError, {
-          amount: BIG_ZERO,
-          token: null,
-        })
-      );
+      dispatch(createWalletActionErrorAction(txError, undefined));
       dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
     }
   };
 }
 
-function bindTransactionEvents<T extends AdditionalData>(
+function bindTransactionEvents(
   dispatch: ThunkDispatch<BeefyState, unknown, Action<unknown>>,
   transaction: PromiEvent<unknown>,
-  additionalData: T,
-  refreshOnSuccess?: {
-    walletAddress: string;
-    chainId: ChainEntity['id'];
-    spenderAddress: string;
-    tokens: TokenEntity[];
-    govVaultId?: VaultEntity['id'];
-    boostId?: BoostEntity['id'];
-    minterId?: MinterEntity['id'];
-    vaultId?: VaultEntity['id'];
-    migrationId?: MigrationConfig['id'];
-  }
+  additionalData: TxAdditionalData,
+  refreshOnSuccess?: TxRefreshOnSuccess
 ) {
+  const context: TxContext = { additionalData, refreshOnSuccess };
+
   transaction
     .on('transactionHash', function (hash: TrxHash) {
-      dispatch(createWalletActionPendingAction(hash, additionalData));
-      dispatch(stepperActions.setStepContent({ stepContent: StepContent.WaitingTx }));
+      txSubmitted(dispatch, context, hash);
     })
     .on('receipt', function (receipt: TrxReceipt) {
-      dispatch(createWalletActionSuccessAction(receipt, additionalData));
-      dispatch(updateSteps());
-
-      // fetch new balance and allowance of native token (gas spent) and allowance token
-      if (refreshOnSuccess) {
-        const {
-          walletAddress,
-          chainId,
-          govVaultId,
-          boostId,
-          spenderAddress,
-          tokens,
-          minterId,
-          vaultId,
-          migrationId,
-        } = refreshOnSuccess;
-
-        dispatch(
-          reloadBalanceAndAllowanceAndGovRewardsAndBoostData({
-            walletAddress: walletAddress,
-            chainId: chainId,
-            govVaultId: govVaultId,
-            boostId: boostId,
-            spenderAddress: spenderAddress,
-            tokens: tokens,
-          })
-        );
-        if (minterId) {
-          dispatch(
-            reloadReserves({
-              chainId: chainId,
-              minterId: minterId,
-            })
-          );
-        }
-        if (migrationId) {
-          dispatch(migratorUpdate({ vaultId, migrationId, walletAddress }));
-        }
-      }
+      txMined(dispatch, context, receipt);
     })
     .on('error', function (error: TrxError) {
-      dispatch(createWalletActionErrorAction(error, additionalData));
-      dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
+      txError(dispatch, context, error);
     })
     .catch(error => {
-      dispatch(createWalletActionErrorAction({ message: String(error) }, additionalData));
-      dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
+      txError(dispatch, context, { message: String(error) });
     });
 }
 
@@ -1039,14 +1119,14 @@ function selectZapTokensToRefresh(
   const tokens: TokenEntity[] = selectVaultTokensToRefresh(state, vault);
 
   for (const { token: tokenAddress } of order.inputs) {
-    const token = selectTokenByAddressOrNull(state, vault.chainId, tokenAddress);
+    const token = selectTokenByAddressOrUndefined(state, vault.chainId, tokenAddress);
     if (token) {
       tokens.push(token);
     }
   }
 
   for (const { token: tokenAddress } of order.outputs) {
-    const token = selectTokenByAddressOrNull(state, vault.chainId, tokenAddress);
+    const token = selectTokenByAddressOrUndefined(state, vault.chainId, tokenAddress);
     if (token) {
       tokens.push(token);
     }

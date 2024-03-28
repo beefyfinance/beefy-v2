@@ -25,7 +25,7 @@ const useStyles = makeStyles(styles);
 export type VaultYieldStatProps = {
   vaultId: VaultEntity['id'];
   pnlData: VaultPnLDataType;
-  walletAddress?: string;
+  walletAddress: string;
 };
 
 export const VaultYieldWithRewardsStat = memo<VaultYieldStatProps>(

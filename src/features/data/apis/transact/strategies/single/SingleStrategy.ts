@@ -1,4 +1,4 @@
-import type { IStrategy, SingleStrategyOptions, TransactHelpers } from '../IStrategy';
+import type { IStrategy, SingleStrategyOptions, ZapTransactHelpers } from '../IStrategy';
 import type {
   InputTokenAmount,
   SingleDepositOption,
@@ -29,7 +29,8 @@ import {
   createQuoteId,
   createSelectionId,
   onlyAssetCount,
-  onlyInputCount,
+  onlyOneInput,
+  onlyOneToken,
   onlyVaultStandard,
 } from '../../helpers/options';
 import { first, uniqBy } from 'lodash-es';
@@ -70,7 +71,7 @@ export class SingleStrategy implements IStrategy {
   protected readonly wnative: TokenErc20;
   protected readonly native: TokenNative;
 
-  constructor(protected options: SingleStrategyOptions, protected helpers: TransactHelpers) {
+  constructor(protected options: SingleStrategyOptions, protected helpers: ZapTransactHelpers) {
     // Make sure zap was configured correctly for this vault
     const { vault, getState } = this.helpers;
 
@@ -82,9 +83,6 @@ export class SingleStrategy implements IStrategy {
     this.native = selectChainNativeToken(state, vault.chainId);
     this.wnative = selectChainWrappedNativeToken(state, vault.chainId);
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  async initialize(): Promise<void> {}
 
   async aggregatorTokenSupport() {
     const { vault, vaultType, swapAggregator, getState } = this.helpers;
@@ -130,12 +128,10 @@ export class SingleStrategy implements IStrategy {
     inputs: InputTokenAmount[],
     option: SingleDepositOption
   ): Promise<SingleDepositQuote> {
-    onlyInputCount(inputs, 1);
-
     const { vault, vaultType, swapAggregator, zap, getState } = this.helpers;
 
     // Input
-    const input = first(inputs);
+    const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Quote called with 0 input amount');
     }
@@ -163,6 +159,10 @@ export class SingleStrategy implements IStrategy {
       state
     );
     const bestQuote = first(swapQuotes); // already sorted by toAmount
+    if (!bestQuote) {
+      throw new Error('No swap quote found');
+    }
+
     const outputs = [{ token: vaultType.depositToken, amount: bestQuote.toAmount }];
     const steps: ZapQuoteStep[] = [
       {
@@ -187,7 +187,7 @@ export class SingleStrategy implements IStrategy {
       id: createQuoteId(option.id),
       strategyId: 'single',
       swapQuote: bestQuote,
-      priceImpact: calculatePriceImpact(inputs, outputs, state), // includes the zap fee
+      priceImpact: calculatePriceImpact(inputs, outputs, [], state), // includes the zap fee
       option,
       inputs,
       outputs,
@@ -276,7 +276,12 @@ export class SingleStrategy implements IStrategy {
         steps,
       };
 
-      const walletAction = walletActions.zapExecuteOrder(quote.option.vaultId, zapRequest);
+      const expectedTokens = vaultDeposit.outputs.map(output => output.token);
+      const walletAction = walletActions.zapExecuteOrder(
+        quote.option.vaultId,
+        zapRequest,
+        expectedTokens
+      );
 
       return walletAction(dispatch, getState, extraArgument);
     };
@@ -320,15 +325,13 @@ export class SingleStrategy implements IStrategy {
     inputs: InputTokenAmount[],
     option: SingleWithdrawOption
   ): Promise<SingleWithdrawQuote> {
-    onlyInputCount(inputs, 1);
-
     const { vault, swapAggregator, zap, getState } = this.helpers;
     if (!isStandardVault(vault)) {
       throw new Error('Vault is not standard');
     }
 
     // Input
-    const input = first(inputs);
+    const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Quote called with 0 input amount');
     }
@@ -389,7 +392,7 @@ export class SingleStrategy implements IStrategy {
     // Step 3. Swap if needed
     const swapInputToken = isTokenNative(withdrawnToken) ? this.wnative : withdrawnToken;
     const swapInputAmount = withdrawnAmountAfterFee;
-    const swapOutputToken = first(option.wantedOutputs);
+    const swapOutputToken = onlyOneToken(option.wantedOutputs);
     let outputs: TokenAmount[] = [{ token: swapInputToken, amount: swapInputAmount }];
     let fee: ZapFee = ZERO_FEE;
 
@@ -404,6 +407,9 @@ export class SingleStrategy implements IStrategy {
         state
       );
       const bestQuote = first(swapQuotes); // already sorted by toAmount
+      if (!bestQuote) {
+        throw new Error('No swap quote found');
+      }
 
       steps.push({
         type: 'swap',
@@ -425,7 +431,7 @@ export class SingleStrategy implements IStrategy {
     return {
       id: createQuoteId(option.id),
       strategyId: 'single',
-      priceImpact: calculatePriceImpact(inputs, outputs, state), // includes the zap fee.
+      priceImpact: calculatePriceImpact(inputs, outputs, [], state), // includes the zap fee.
       option,
       inputs,
       outputs,
@@ -449,6 +455,10 @@ export class SingleStrategy implements IStrategy {
         .filter(isZapQuoteStepSwap)
         .filter(isZapQuoteStepSwapAggregator);
 
+      if (!withdrawQuote || !swapQuotes.length) {
+        throw new Error('Invalid quote steps');
+      }
+
       // Step 1. Withdraw from vault
       const vaultWithdraw = await vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
@@ -456,7 +466,7 @@ export class SingleStrategy implements IStrategy {
       if (vaultWithdraw.outputs.length !== 1) {
         throw new Error('Withdraw output count mismatch');
       }
-      const withdrawOutput = first(vaultWithdraw.outputs);
+      const withdrawOutput = first(vaultWithdraw.outputs)!;
       if (!isTokenEqual(withdrawOutput.token, swapQuotes[0].fromToken)) {
         throw new Error('Withdraw output token mismatch');
       }
@@ -470,7 +480,7 @@ export class SingleStrategy implements IStrategy {
       const swapZaps = await Promise.all(
         swapQuotes.map(quoteStep => this.fetchZapSwapAggregator(quoteStep, zapHelpers, true))
       );
-      swapZaps.forEach(swap => steps.push(swap.zap));
+      swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
 
       // Build order (note: input to order is shares, but quote inputs are the deposit token)
       const inputs: OrderInput[] = vaultWithdraw.inputs.map(input => ({
@@ -522,7 +532,12 @@ export class SingleStrategy implements IStrategy {
         steps,
       };
 
-      const walletAction = walletActions.zapExecuteOrder(quote.option.vaultId, zapRequest);
+      const expectedTokens = quote.outputs.map(output => output.token);
+      const walletAction = walletActions.zapExecuteOrder(
+        quote.option.vaultId,
+        zapRequest,
+        expectedTokens
+      );
 
       return walletAction(dispatch, getState, extraArgument);
     };

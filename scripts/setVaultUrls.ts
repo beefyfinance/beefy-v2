@@ -1,4 +1,4 @@
-import { mapValues, omit } from 'lodash';
+import { omit } from 'lodash';
 import { getVaultsForChain } from './common/config';
 import { saveJson } from './common/files';
 import { allChainIds, AppChainId } from './common/chains';
@@ -6,6 +6,8 @@ import { sortVaultKeys } from './common/vault-fields';
 import type { VaultConfig } from '../src/features/data/apis/config-types';
 import { getTokenById } from './common/tokens';
 import { TokenEntity } from '../src/features/data/entities/token';
+import { getCurvePools } from './addCurveZap';
+import { mapValuesAsync } from './common/utils';
 
 const WARN_MISSING_ASSET_ON_ACTIVE_VAULTS_ONLY: boolean = true;
 
@@ -15,10 +17,12 @@ type ChainProviderUrls = {
   };
 };
 
+type UrlFunction = (vault: VaultConfig, key: string) => Promise<string>;
+
 type ProviderUrls = {
-  buyTokenUrl?: string;
-  addLiquidityUrl?: string;
-  removeLiquidityUrl?: string;
+  buyTokenUrl?: string | UrlFunction;
+  addLiquidityUrl?: string | UrlFunction;
+  removeLiquidityUrl?: string | UrlFunction;
 };
 
 type ProviderConfigWithCondition = ProviderUrls & {
@@ -33,6 +37,27 @@ type ProviderConfigWithCondition = ProviderUrls & {
  * Adding :lower to any of the above will lowercase the result (e.g. {token0:lower})
  */
 const URLS: ChainProviderUrls = {
+  arbitrum: {
+    curve: {
+      buyTokenUrl: curvePoolUrl,
+      addLiquidityUrl: curvePoolUrl,
+      removeLiquidityUrl: curvePoolUrl,
+    },
+  },
+  avax: {
+    curve: {
+      buyTokenUrl: curvePoolUrl,
+      addLiquidityUrl: curvePoolUrl,
+      removeLiquidityUrl: curvePoolUrl,
+    },
+  },
+  base: {
+    curve: {
+      buyTokenUrl: curvePoolUrl,
+      addLiquidityUrl: curvePoolUrl,
+      removeLiquidityUrl: curvePoolUrl,
+    },
+  },
   bsc: {
     pancakeswap: [
       {
@@ -43,6 +68,20 @@ const URLS: ChainProviderUrls = {
         removeLiquidityUrl: 'https://pancakeswap.finance/v2/remove/{token0}/{token1}',
       },
     ],
+  },
+  celo: {
+    curve: {
+      buyTokenUrl: curvePoolUrl,
+      addLiquidityUrl: curvePoolUrl,
+      removeLiquidityUrl: curvePoolUrl,
+    },
+  },
+  ethereum: {
+    curve: {
+      buyTokenUrl: curvePoolUrl,
+      addLiquidityUrl: curvePoolUrl,
+      removeLiquidityUrl: curvePoolUrl,
+    },
   },
   fantom: {
     wigoswap: {
@@ -61,6 +100,25 @@ const URLS: ChainProviderUrls = {
         removeLiquidityUrl: 'https://www.spiritswap.finance/liquidity/{token0}/{token1}',
       },
     ],
+    curve: {
+      buyTokenUrl: curvePoolUrl,
+      addLiquidityUrl: curvePoolUrl,
+      removeLiquidityUrl: curvePoolUrl,
+    },
+  },
+  kava: {
+    curve: {
+      buyTokenUrl: curvePoolUrl,
+      addLiquidityUrl: curvePoolUrl,
+      removeLiquidityUrl: curvePoolUrl,
+    },
+  },
+  moonbeam: {
+    curve: {
+      buyTokenUrl: curvePoolUrl,
+      addLiquidityUrl: curvePoolUrl,
+      removeLiquidityUrl: curvePoolUrl,
+    },
   },
   optimism: {
     velodrome: [
@@ -77,8 +135,8 @@ const URLS: ChainProviderUrls = {
         buyTokenUrl:
           'https://velodrome.finance/swap?from={token0:wrapped:lower}&to={token1:wrapped:lower}',
         addLiquidityUrl:
-          'https://velodrome.finance/deposit?token0={token0:wrapped:lower}&token1={token1:wrapped:lower}&stable=true',
-        removeLiquidityUrl: 'https://velodrome.finance/withdraw?pool={lp:lower}',
+          'https://velodrome.finance/deposit?token0={token0:wrapped}&token1={token1:wrapped}&type=0',
+        removeLiquidityUrl: 'https://velodrome.finance/withdraw?pool={lp}',
       },
       {
         condition: (vault: VaultConfig) =>
@@ -86,17 +144,59 @@ const URLS: ChainProviderUrls = {
         buyTokenUrl:
           'https://velodrome.finance/swap?from={token0:wrapped:lower}&to={token1:wrapped:lower}',
         addLiquidityUrl:
-          'https://velodrome.finance/deposit?token0={token0:wrapped:lower}&token1={token1:wrapped:lower}&stable=false',
-        removeLiquidityUrl: 'https://velodrome.finance/withdraw?pool={lp:lower}',
+          'https://velodrome.finance/deposit?token0={token0:wrapped}&token1={token1:wrapped}&type=-1',
+        removeLiquidityUrl: 'https://velodrome.finance/withdraw?pool={lp}',
       },
     ],
+    curve: {
+      buyTokenUrl: curvePoolUrl,
+      addLiquidityUrl: curvePoolUrl,
+      removeLiquidityUrl: curvePoolUrl,
+    },
+  },
+  polygon: {
+    curve: {
+      buyTokenUrl: curvePoolUrl,
+      addLiquidityUrl: curvePoolUrl,
+      removeLiquidityUrl: curvePoolUrl,
+    },
   },
 };
 
-function replaceUrlsForVault(
+const curveEndpoints = {
+  main: 0,
+  crypto: 1,
+  factory: 2,
+  'factory-tricrypto': 3,
+  'factory-stable-ng': 4,
+  'factory-crvusd': 5,
+  'factory-eywa': 6,
+  'factory-crypto': 7,
+};
+
+const curveUrlKeys = {
+  buyTokenUrl: 'swap',
+  addLiquidityUrl: 'deposit',
+  removeLiquidityUrl: 'withdraw',
+};
+
+async function curvePoolUrl(vault: VaultConfig, key: keyof ProviderUrls) {
+  const allPools = await getCurvePools(vault.network, false, true);
+  const pools = allPools.filter(pool => pool.lpTokenAddress === vault.tokenAddress);
+
+  if (pools.length) {
+    pools.sort((a, b) => curveEndpoints[a.metadata.endpoint] - curveEndpoints[b.metadata.endpoint]);
+    return pools[0].poolUrls[curveUrlKeys[key]][0];
+  }
+
+  console.log(`Could not find curve pool for ${vault.id} on ${vault.network}`);
+  return vault[key]!;
+}
+
+async function replaceUrlsForVault(
   vault: VaultConfig,
   addresses: Record<string, string>
-): ProviderUrls | undefined {
+): Promise<ProviderUrls | undefined> {
   if (!vault.tokenProviderId) {
     return undefined;
   }
@@ -120,21 +220,33 @@ function replaceUrlsForVault(
     return undefined;
   }
 
-  return mapValues(urlsForVault, url => {
-    if (!url) {
-      throw new Error(`Missing url for ${vault.id} on ${vault.network}`);
-    }
+  return mapValuesAsync(
+    urlsForVault,
+    async (url, urlKey) => {
+      if (!url) {
+        throw new Error(`Missing url for ${vault.id} on ${vault.network}`);
+      }
 
-    const replaced = Object.entries(addresses).reduce((acc, [key, value]) => {
-      return acc.replace(`{${key}}`, value);
-    }, url);
+      if (typeof url === 'function') {
+        url = await url(vault, urlKey);
+      }
 
-    if (replaced.includes('{')) {
-      throw new Error(`Missing replacement in ${replaced}`);
-    }
+      if (typeof url === 'string') {
+        const replaced = Object.entries(addresses).reduce((acc, [key, value]) => {
+          return acc.replace(`{${key}}`, value);
+        }, url);
 
-    return replaced;
-  });
+        if (replaced.includes('{')) {
+          throw new Error(`Missing replacement in ${replaced}`);
+        }
+
+        return replaced;
+      }
+
+      return undefined;
+    },
+    true
+  );
 }
 
 async function getUrlsForVault(
@@ -167,7 +279,7 @@ async function getUrlsForVault(
       replacements[`token${i}:wrapped:lower`] = replacements[`token${i}:wrapped`].toLowerCase();
     }
 
-    return replaceUrlsForVault(vault, replacements);
+    return await replaceUrlsForVault(vault, replacements);
   }
 
   return undefined;
@@ -203,7 +315,11 @@ async function start() {
   const modified = await Promise.all(allChainIds.map(getModifiedConfig));
 
   for (let i = 0; i < allChainIds.length; i++) {
-    await saveJson(`./src/config/vault/${allChainIds[i]}.json`, modified[i], true);
+    const chainId = allChainIds[i];
+    if (URLS[chainId]?.['curve']) {
+      await getCurvePools(chainId, false, false);
+    }
+    await saveJson(`./src/config/vault/${chainId}.json`, modified[i], true);
   }
 }
 

@@ -5,9 +5,9 @@ import Web3 from 'web3';
 import { promises as fs } from 'fs';
 
 import { chainRpcs } from './common/config';
-import vaultABI from '../src/config/abi/vault.json';
+import { StandardVaultAbi } from '../src/config/abi/StandardVaultAbi';
 import stratABI from '../src/config/abi/strategy.json';
-import erc20ABI from '../src/config/abi/erc20.json';
+import { ERC20Abi } from '../src/config/abi/ERC20Abi';
 import type { AbiItem } from 'web3-utils';
 import { sortVaultKeys } from './common/vault-fields';
 
@@ -15,7 +15,7 @@ let vaultsFile = './src/config/vault/$chain.json';
 
 async function vaultData(chain, vaultAddress, id) {
   const web3 = new Web3(chainRpcs[chain]);
-  const abi = [...vaultABI, ...stratABI];
+  const abi = [...(StandardVaultAbi as unknown as AbiItem[]), ...stratABI];
   const vaultContract = new web3.eth.Contract(abi as AbiItem[], vaultAddress);
   const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
   let calls: ShapeWithLabel[] = [
@@ -27,7 +27,7 @@ async function vaultData(chain, vaultAddress, id) {
   let [results] = await multicall.all([calls]);
   const params = results[0];
 
-  const tokenContract = new web3.eth.Contract(erc20ABI as AbiItem[], params.want);
+  const tokenContract = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], params.want);
   calls = [
     {
       token: tokenContract.methods.symbol(),

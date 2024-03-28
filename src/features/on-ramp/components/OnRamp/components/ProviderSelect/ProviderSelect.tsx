@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectIsCheapestProviderSelected,
   selectQuoteProviders,
-  selectSelectedQuote,
+  selectSelectedQuoteOrUndefined,
 } from '../../../../../data/selectors/on-ramp';
 import clsx from 'clsx';
 import ContentLoader from 'react-content-loader';
@@ -22,7 +22,7 @@ export type ProviderSelectProps = { pending: boolean };
 export const ProviderSelect = memo<ProviderSelectProps>(function ProviderSelect({ pending }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const quote = useAppSelector(selectSelectedQuote);
+  const quote = useAppSelector(selectSelectedQuoteOrUndefined);
   const providers = useAppSelector(selectQuoteProviders);
   const multipleProviders = useMemo(() => providers && providers.length > 1, [providers]);
   const isCheapest = useAppSelector(selectIsCheapestProviderSelected);
@@ -60,6 +60,8 @@ export const ProviderSelect = memo<ProviderSelectProps>(function ProviderSelect(
           >
             <rect x="0" y="0" rx="8" ry="8" width="152" height="16" />
           </ContentLoader>
+        ) : !quote ? (
+          <>No quote found</>
         ) : (
           <>
             <div className={classes.provider}>{PROVIDERS[quote.provider].title}</div>

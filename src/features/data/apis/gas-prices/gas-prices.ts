@@ -131,7 +131,7 @@ export class EIP1559GasPricer implements IGasPricer {
     const sortedBaseFees = sortWith(feeHistory.baseFeePerGas, compareBigNumber);
     const initialBaseFee = BigNumber.max(
       averageBigNumbers(sortedBaseFees),
-      nextBlock.baseFeePerGas
+      nextBlock.baseFeePerGas || 0
     );
     const sortedPriorityFees = sortWith(
       feeHistory.reward.map(reward => reward[0]),

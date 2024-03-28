@@ -1,10 +1,14 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
-import type { SvgIconComponent } from '@material-ui/icons';
-import { ErrorOutline, ReportProblemOutlined } from '@material-ui/icons';
-import { styles } from './styles';
+import {
+  ErrorOutline,
+  InfoOutlined,
+  ReportProblemOutlined,
+  type SvgIconComponent,
+} from '@material-ui/icons';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
+import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
@@ -48,6 +52,20 @@ export const AlertError = memo<Omit<AlertProps, 'IconComponent'>>(function Alert
       IconComponent={ReportProblemOutlined}
       children={children}
       className={clsx(classes.error, className)}
+    />
+  );
+});
+
+export const AlertInfo = memo<Omit<AlertProps, 'IconComponent'>>(function AlertWarning({
+  className,
+  children,
+}) {
+  const classes = useStyles();
+  return (
+    <Alert
+      IconComponent={InfoOutlined}
+      children={children}
+      className={clsx(classes.info, className)}
     />
   );
 });

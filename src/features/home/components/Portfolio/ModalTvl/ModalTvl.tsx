@@ -1,5 +1,5 @@
 import { Box, IconButton, makeStyles } from '@material-ui/core';
-import React, { forwardRef, memo } from 'react';
+import React, { forwardRef, memo, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../../vault/components/Card';
 import CloseIcon from '@material-ui/icons/Close';
 import { styles } from './styles';
@@ -14,6 +14,7 @@ import { Button } from '../../../../../components/Button';
 import { useAppSelector } from '../../../../../store';
 import { orderBy } from 'lodash-es';
 import { getNetworkSrc } from '../../../../../helpers/networkSrc';
+import { entries } from '../../../../../helpers/object';
 
 const useStyles = makeStyles(styles);
 
@@ -21,24 +22,24 @@ export type ModalTvlProps = {
   close: () => void;
 };
 
-interface ItemListType {
-  chainId: ChainEntity['id'];
-  tvl: number;
-}
-
 const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ModalTvl({ close }, ref) {
   const classes = useStyles();
   const { t } = useTranslation();
   const tvls = useAppSelector(selectTvlByChain);
   const activeChainIds = useAppSelector(selectActiveChainIds);
 
-  const sortedTvls = React.useMemo<ItemListType[]>(() => {
-    const list = [];
-    for (const [chainId, tvl] of Object.entries(tvls)) {
-      if (!activeChainIds.includes(chainId)) continue;
-      list.push({ tvl: tvl.toNumber(), chainId });
-    }
-    return orderBy(list, 'tvl', 'desc');
+  const sortedTvls = useMemo(() => {
+    return orderBy(
+      entries(tvls)
+        .filter((entry): entry is [ChainEntity['id'], BigNumber] => !!(entry && entry[1]))
+        .filter(([chainId]) => activeChainIds.includes(chainId))
+        .map(([chainId, tvl]) => ({
+          chainId,
+          tvl,
+        })),
+      e => e.tvl.toNumber(),
+      'desc'
+    );
   }, [tvls, activeChainIds]);
 
   return (
@@ -53,8 +54,8 @@ const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ModalTvl({ 
         <CardContent className={classes.content}>
           <div className={classes.gridScroller}>
             <div className={classes.grid}>
-              {sortedTvls.map((item: ItemListType) => (
-                <Chain key={item.chainId} chainId={item.chainId} tvl={tvls[item.chainId]} />
+              {sortedTvls.map(item => (
+                <Chain key={item.chainId} chainId={item.chainId} tvl={item.tvl} />
               ))}
             </div>
           </div>

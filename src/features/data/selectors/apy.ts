@@ -17,15 +17,20 @@ import { compoundInterest } from '../../../helpers/number';
 import { isEmpty } from '../../../helpers/utils';
 import { selectWalletAddress } from './wallet';
 
+const EMPTY_TOTAL_APY: TotalApy = {
+  totalApy: 0,
+  totalDaily: 0,
+};
+
 export const selectVaultTotalApy = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const result = state.biz.apy.totalApy.byVaultId[vaultId] || {};
+  const result = state.biz.apy.totalApy.byVaultId[vaultId] || { ...EMPTY_TOTAL_APY };
   if (vaultId === 'compound-arbitrum-usdc') {
     return {
       ...result,
-      boostedTotalApy: result.totalApy + 0.05,
-      boostApr: 0.05,
-      boostDaily: 0.05 / 365,
-      boostedTotalDaily: result.totalDaily + 0.05 / 365,
+      boostedTotalApy: result.totalApy + 0.08,
+      boostApr: 0.08,
+      boostDaily: 0.08 / 365,
+      boostedTotalDaily: result.totalDaily + 0.08 / 365,
     };
   }
 
@@ -181,7 +186,7 @@ export const selectVaultDailyYieldStats = (
     dailyUsd = nonBoostBalanceInUsd.times(apyData.totalDaily);
     dailyTokens = nonBoostBalanceInTokens.times(apyData.totalDaily);
 
-    if ('boostedTotalDaily' in apyData && boostBalance.gt(BIG_ZERO)) {
+    if (apyData.boostedTotalDaily !== undefined && boostBalance.gt(BIG_ZERO)) {
       dailyUsd = dailyUsd.plus(boostBalanceUsd.times(apyData.boostedTotalDaily));
       dailyTokens = dailyTokens.plus(boostBalance.times(apyData.boostedTotalDaily));
     }

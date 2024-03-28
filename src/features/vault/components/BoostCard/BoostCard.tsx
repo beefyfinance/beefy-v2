@@ -49,7 +49,7 @@ const CampaignBoostCard = memo<InnerBoostCardProps>(function CampaignBoostCard({
   const classes = useStyles();
   const { t } = useTranslation();
   const { title, description, learn, social } = useAppSelector(state =>
-    selectBoostCampaignById(state, boost.campaignId)
+    selectBoostCampaignById(state, boost.campaignId || '')
   );
 
   return (

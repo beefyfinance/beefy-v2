@@ -19,10 +19,17 @@ export interface TokenBalance {
   amount: BigNumber;
 }
 
-export interface GovVaultPoolBalance {
+export interface GovVaultBalance {
   vaultId: VaultEntity['id'];
   balance: BigNumber;
   rewards: BigNumber;
+}
+
+export interface GovVaultV2Balance {
+  vaultId: VaultEntity['id'];
+  balance: BigNumber;
+  rewards: BigNumber[];
+  rewardTokens: string[];
 }
 
 export interface BoostBalance {
@@ -33,6 +40,6 @@ export interface BoostBalance {
 
 export interface FetchAllBalancesResult {
   tokens: TokenBalance[];
-  govVaults: GovVaultPoolBalance[];
+  govVaults: GovVaultBalance[];
   boosts: BoostBalance[];
 }

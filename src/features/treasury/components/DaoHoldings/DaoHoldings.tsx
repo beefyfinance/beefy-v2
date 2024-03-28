@@ -7,6 +7,7 @@ import { selectTreasurySorted } from '../../../data/selectors/treasury';
 import { ChainHolding, MMHolding } from './components/ChainHolding';
 import { styles } from './styles';
 import { useMediaQuery } from '@material-ui/core';
+import type { ChainEntity } from '../../../data/entities/chain';
 
 const useStyles = makeStyles(styles);
 
@@ -21,7 +22,7 @@ function useTreasuryColumns(numColumns: number) {
     }
 
     const heights = new Array(numColumns).fill(0);
-    const columns = heights.map(() => []);
+    const columns = heights.map(() => [] as { id: string; type: string }[]);
     let nextColumn = 0;
 
     for (const treasury of sortedTreasury) {
@@ -61,7 +62,7 @@ export const DaoHoldings = memo(function DaoHoldings() {
           <div key={i} className={classes.column}>
             {columns.map(col =>
               col.type === 'chain' ? (
-                <ChainHolding key={col.id} chainId={col.id} />
+                <ChainHolding key={col.id} chainId={col.id as ChainEntity['id']} />
               ) : (
                 <MMHolding key={col.id} mmId={col.id} />
               )

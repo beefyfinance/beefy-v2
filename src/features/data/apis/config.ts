@@ -1,5 +1,5 @@
 import { config as chainConfigs } from '../../../config/config';
-import { Insurace, Nexus, QiDao } from '../../../helpers/partners';
+import { Nexus, QiDao, OpenCover } from '../../../helpers/partners';
 import type { ChainEntity } from '../entities/chain';
 import type {
   AmmConfig,
@@ -20,6 +20,7 @@ import type {
 } from './config-types';
 import { mapValues } from 'lodash-es';
 import type { MigrationConfig } from '../reducers/wallet/migration';
+import { entries, keys } from '../../../helpers/object';
 
 /**
  * A class to access beefy configuration
@@ -27,7 +28,7 @@ import type { MigrationConfig } from '../reducers/wallet/migration';
  */
 export class ConfigAPI {
   public async fetchChainConfigs(): Promise<ChainConfig[]> {
-    return Object.entries(chainConfigs).map(([id, chain]) => ({ id, ...chain }));
+    return entries(chainConfigs).map(([id, chain]) => ({ id, ...chain }));
   }
 
   public async fetchFeaturedVaults(): Promise<FeaturedVaultConfig> {
@@ -35,10 +36,10 @@ export class ConfigAPI {
   }
 
   public async fetchPartnersConfig(): Promise<PartnersConfig> {
-    return { QiDao, Insurace, Nexus };
+    return { QiDao, OpenCover, Nexus };
   }
 
-  public async fetchZapAmms(): Promise<{ [chainId: ChainEntity['id']]: AmmConfig[] }> {
+  public async fetchZapAmms(): Promise<{ [chainId in ChainEntity['id']]: AmmConfig[] }> {
     return Object.fromEntries(
       await Promise.all(
         Object.keys(chainConfigs).map(async chainId => [
@@ -50,6 +51,7 @@ export class ConfigAPI {
   }
 
   public async fetchBeefyBridgeConfig(): Promise<BeefyBridgeConfig> {
+    // json chain id string isn't automatically narrowed to ChainId
     return (await import('../../../config/beefy-bridge')).beefyBridgeConfig;
   }
 
@@ -61,13 +63,14 @@ export class ConfigAPI {
   }
 
   public async fetchZapConfigs(): Promise<ZapConfig[]> {
-    return (await import('../../../config/zap/zaps.json')).default;
+    // json chain id string isn't automatically narrowed to ChainId
+    return (await import('../../../config/zap/zaps.json')).default as ZapConfig[];
   }
 
-  public async fetchAllVaults(): Promise<{ [chainId: ChainEntity['id']]: VaultConfig[] }> {
+  public async fetchAllVaults(): Promise<{ [chainId in ChainEntity['id']]: VaultConfig[] }> {
     return Object.fromEntries(
       await Promise.all(
-        Object.keys(chainConfigs).map(async chainId => [
+        keys(chainConfigs).map(async chainId => [
           chainId,
           (await import(`../../../config/vault/${chainId}.json`)).default,
         ])
@@ -84,16 +87,12 @@ export class ConfigAPI {
       await Promise.all([
         import(`../../../config/boost/partners.json`),
         import(`../../../config/boost/campaigns.json`),
-        ...Object.keys(chainConfigs).map(
-          async chainId => import(`../../../config/boost/${chainId}.json`)
-        ),
+        ...keys(chainConfigs).map(async chainId => import(`../../../config/boost/${chainId}.json`)),
       ])
     ).map(i => i.default);
 
-    const boosts = Object.fromEntries(
-      await Promise.all(
-        Object.keys(chainConfigs).map(async (chainId, i) => [chainId, boostsPerChain[i]])
-      )
+    const boosts: Record<ChainEntity['id'], BoostConfig[]> = Object.fromEntries(
+      await Promise.all(keys(chainConfigs).map(async (chainId, i) => [chainId, boostsPerChain[i]]))
     );
 
     const boostsByChainId = mapValues(boosts, boosts =>
@@ -107,10 +106,10 @@ export class ConfigAPI {
     return { boostsByChainId, partnersById, campaignsById };
   }
 
-  public async fetchAllMinters(): Promise<{ [chainId: ChainEntity['id']]: MinterConfig[] }> {
+  public async fetchAllMinters(): Promise<{ [chainId in ChainEntity['id']]: MinterConfig[] }> {
     return Object.fromEntries(
       await Promise.all(
-        Object.keys(chainConfigs).map(async chainId => [
+        keys(chainConfigs).map(async chainId => [
           chainId,
           (await import(`../../../config/minters/${chainId}.tsx`)).minters,
         ])
@@ -119,7 +118,7 @@ export class ConfigAPI {
   }
 
   public async fetchAllMigrators(): Promise<{
-    [chainId: ChainEntity['id']]: MigrationConfig[];
+    [chainId in ChainEntity['id']]?: MigrationConfig[];
   }> {
     return Object.fromEntries(
       await Promise.all(

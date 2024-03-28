@@ -21,6 +21,7 @@ import type { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-type
 import type { LpData } from '../apis/beefy/beefy-api';
 import { isNativeAlternativeAddress } from '../../../helpers/addresses';
 import { fetchBridgeConfig } from '../actions/bridge';
+import { entries } from '../../../helpers/object';
 
 /**
  * State containing Vault infos
@@ -28,15 +29,15 @@ import { fetchBridgeConfig } from '../actions/bridge';
 export type TokensState = {
   // we need to split by chain because tokens from different chains have the same ids
   byChainId: {
-    [chainId: ChainEntity['id']]: {
+    [chainId in ChainEntity['id']]?: {
       byId: {
         [id: string]: TokenEntity['address'];
       };
       byAddress: {
         [address: string]: TokenEntity;
       };
-      native: TokenNative['id'];
-      wnative: TokenErc20['id'];
+      native: TokenNative['id'] | undefined;
+      wnative: TokenErc20['id'] | undefined;
       /**
        * we keep the list of tokens where we could be interested in fetching the balance of
        * it would be more correct to put those inside the balance reducer but this token
@@ -45,6 +46,8 @@ export type TokensState = {
        * inside the balance reducer once the config is reworked
        */
       interestingBalanceTokenAddresses: TokenEntity['address'][];
+      /** list of tokens that have an active vault */
+      tokenIdsInActiveVaults: TokenEntity['id'][];
     };
   };
   prices: {
@@ -75,51 +78,44 @@ export const tokensSlice = createSlice({
     builder.addCase(fetchChainConfigs.fulfilled, (sliceState, action) => {
       for (const chainConf of action.payload.chainConfigs) {
         const chainId = chainConf.id;
-
-        if (sliceState.byChainId[chainId] === undefined) {
-          sliceState.byChainId[chainId] = {
-            byId: {},
-            byAddress: {},
-            interestingBalanceTokenAddresses: [],
-            native: null,
-            wnative: null,
-          };
-        }
-
+        const chainState = getOrCreateTokensChainState(sliceState, chainId);
         const tokenId = chainConf.walletSettings.nativeCurrency.symbol;
+        const existingNative = chainState.byAddress['native'];
+
         const token: TokenNative = {
           id: tokenId,
           chainId: chainId,
           oracleId: tokenId,
-          decimals: chainConf.walletSettings.nativeCurrency.decimals, // TODO: not sure about that
+          decimals: chainConf.walletSettings.nativeCurrency.decimals,
           address: 'native',
           symbol: chainConf.walletSettings.nativeCurrency.symbol,
           type: 'native',
-          buyUrl: sliceState.byChainId[chainId].byAddress['native']?.buyUrl ?? null,
-          website: sliceState.byChainId[chainId].byAddress['native']?.website ?? null,
-          description: sliceState.byChainId[chainId].byAddress['native']?.description ?? null,
-          documentation: sliceState.byChainId[chainId].byAddress['native']?.documentation ?? null,
+          buyUrl: existingNative?.buyUrl ?? undefined,
+          website: existingNative?.website ?? undefined,
+          description: existingNative?.description ?? undefined,
+          documentation: existingNative?.documentation ?? undefined,
         };
-        sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
-        sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
-        sliceState.byChainId[chainId].native = token.id;
-        sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
+
+        addTokenToState(sliceState, token, true);
+        chainState.native = token.id;
       }
     });
 
     // when vault list is fetched, add all new tokens
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
-      for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
-        const chain = selectChainById(action.payload.state, chainId);
-        for (const vault of vaults) {
-          addVaultToState(action.payload.state, sliceState, chain, vault);
+      for (const [chainId, vaults] of entries(action.payload.byChainId)) {
+        if (vaults) {
+          const chain = selectChainById(action.payload.state, chainId);
+          for (const vault of vaults) {
+            addVaultToState(action.payload.state, sliceState, chain, vault);
+          }
         }
       }
     });
 
     // when boost list is fetched, add all new tokens
     builder.addCase(fetchAllBoosts.fulfilled, (sliceState, action) => {
-      for (const [chainId, boosts] of Object.entries(action.payload.boostsByChainId)) {
+      for (const [chainId, boosts] of entries(action.payload.boostsByChainId)) {
         for (const boost of boosts) {
           addBoostToState(sliceState, chainId, boost);
         }
@@ -128,9 +124,11 @@ export const tokensSlice = createSlice({
 
     // when minter list is fetched, add all new tokens
     builder.addCase(fetchAllMinters.fulfilled, (sliceState, action) => {
-      for (const [chainId, minters] of Object.entries(action.payload.byChainId)) {
-        for (const minter of minters) {
-          addMinterToState(sliceState, chainId, minter);
+      for (const [chainId, minters] of entries(action.payload.byChainId)) {
+        if (minters) {
+          for (const minter of minters) {
+            addMinterToState(sliceState, chainId, minter);
+          }
         }
       }
     });
@@ -171,15 +169,20 @@ export const tokensSlice = createSlice({
         {
           ...source,
           type: 'erc20',
-          buyUrl: null,
-          website: null,
-          documentation: null,
-          description: null,
+          buyUrl: undefined,
+          website: undefined,
+          documentation: undefined,
+          description: undefined,
+          risks: [],
         },
         true
       );
 
-      for (const [chainId, address] of Object.entries(tokens)) {
+      for (const [chainId, address] of entries(tokens)) {
+        if (!address) {
+          continue;
+        }
+
         const isSourceXErc20 = chainId === sourceToken.chainId;
 
         const token: TokenErc20 = {
@@ -203,29 +206,20 @@ function addBridgeTokenToState(
 ): TokenErc20 {
   const chainId = token.chainId;
   const addressLower = token.address.toLowerCase();
-
-  if (sliceState.byChainId[chainId] === undefined) {
-    sliceState.byChainId[chainId] = {
-      byId: {},
-      byAddress: {},
-      interestingBalanceTokenAddresses: [],
-      native: null,
-      wnative: null,
-    };
-  }
+  const chainState = getOrCreateTokensChainState(sliceState, chainId);
 
   // If it doesn't exist then, add it
-  if (sliceState.byChainId[chainId].byAddress[addressLower] === undefined) {
-    sliceState.byChainId[chainId].byAddress[addressLower] = token;
+  if (chainState.byAddress[addressLower] === undefined) {
+    chainState.byAddress[addressLower] = token;
   }
 
   // id => address mapping
-  if (sliceState.byChainId[chainId].byId[token.id] === undefined) {
-    sliceState.byChainId[chainId].byId[token.id] = addressLower;
+  if (chainState.byId[token.id] === undefined) {
+    chainState.byId[token.id] = addressLower;
   }
 
   // grab existing/added token
-  const stateToken = sliceState.byChainId[chainId].byAddress[addressLower];
+  const stateToken = chainState.byAddress[addressLower];
 
   // ensure we track balance
   if (trackBalance) {
@@ -279,9 +273,12 @@ function addBreakdownToState(sliceState: Draft<TokensState>, oracleId: string, b
     return;
   }
 
-  // All balances should be > 0
-  if (breakdown.balances.find(balance => balance === '0') !== undefined) {
-    // console.warn(`[LP Breakdown] ${oracleId} has zero balance`);
+  // At least one balance should be > 0
+  if (
+    breakdown.balances.length > 0 &&
+    breakdown.balances.find(balance => balance !== '0') === undefined
+  ) {
+    // console.warn(`[LP Breakdown] ${oracleId} has all zero balances`);
     return;
   }
 
@@ -299,45 +296,44 @@ function addAddressBookToState(
   addressBookPayload: FetchAddressBookPayload
 ) {
   const chainId = addressBookPayload.chainId;
-
-  if (sliceState.byChainId[chainId] === undefined) {
-    sliceState.byChainId[chainId] = {
-      byId: {},
-      byAddress: {},
-      interestingBalanceTokenAddresses: [],
-      native: null,
-      wnative: null,
-    };
-  }
+  const chainState = getOrCreateTokensChainState(sliceState, chainId);
 
   for (const [addressBookId, token] of Object.entries(addressBookPayload.addressBook)) {
     if (isTokenNative(token)) {
       // native tokens are preloaded when chain configs load
-      const existingToken = sliceState.byChainId[chainId].byAddress['native'];
+      const existingToken = chainState.byAddress['native'];
 
       // Add missing information
       existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
       existingToken.description = existingToken.description || token.description;
       existingToken.website = existingToken.website || token.website;
-      existingToken.documentation = existingToken.documentation || token.documentation;
       continue;
     }
 
-    if (sliceState.byChainId[chainId].byId[token.id] === undefined) {
-      sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
+    if (chainState.byId[token.id] === undefined) {
+      chainState.byId[token.id] = token.address.toLowerCase();
     }
 
-    if (sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] === undefined) {
-      sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
+    if (chainState.byAddress[token.address.toLowerCase()] === undefined) {
+      chainState.byAddress[token.address.toLowerCase()] = token;
     } else {
-      const existingToken = sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()];
+      const existingToken = chainState.byAddress[token.address.toLowerCase()];
 
-      // Addressbook is source of truth for oracle ids
+      // Address book is source of truth for oracle ids
       if (token.oracleId) {
         existingToken.oracleId = token.oracleId;
       } else {
         console.error(
           `[Addressbook] ${existingToken.id}/${existingToken.address}/${existingToken.chainId} has no oracleId`
+        );
+      }
+
+      // Address book is source of truth for symbols
+      if (token.symbol) {
+        existingToken.symbol = token.symbol;
+      } else {
+        console.error(
+          `[Addressbook] ${existingToken.id}/${existingToken.address}/${existingToken.chainId} has no symbol`
         );
       }
 
@@ -347,13 +343,18 @@ function addAddressBookToState(
       existingToken.website = existingToken.website || token.website;
       if (isTokenErc20(existingToken)) {
         existingToken.bridge = existingToken.bridge || token.bridge;
+        existingToken.risks = tempFilterRisks(existingToken.risks || token.risks || []); // FIXME remove once we support multiple risks types
       }
     }
 
-    if (addressBookId === 'WNATIVE' && !sliceState.byChainId[chainId].wnative) {
-      sliceState.byChainId[chainId].wnative = token.id;
+    if (addressBookId === 'WNATIVE' && !chainState.wnative) {
+      chainState.wnative = token.id;
     }
   }
+}
+
+function tempFilterRisks(risks: string[]) {
+  return risks.filter(risk => risk === 'NO_TIMELOCK');
 }
 
 function addBoostToState(
@@ -361,44 +362,27 @@ function addBoostToState(
   chainId: ChainEntity['id'],
   apiBoost: BoostConfig
 ) {
-  if (sliceState.byChainId[chainId] === undefined) {
-    sliceState.byChainId[chainId] = {
-      byId: {},
-      byAddress: {},
-      interestingBalanceTokenAddresses: [],
-      native: null,
-      wnative: null,
-    };
-  }
-
+  const chainState = getOrCreateTokensChainState(sliceState, chainId);
   const tokenAddress = getBoostTokenAddressFromLegacyConfig(apiBoost);
   const addressKey = tokenAddress.toLowerCase();
-  // Add if it does not exist already
-  if (sliceState.byChainId[chainId].byAddress[addressKey] === undefined) {
-    let id = apiBoost.earnedToken;
-    if (id === sliceState.byChainId[chainId].native) {
-      console.warn(
-        `addBoostToState: can not override native token ${id} with ERC20 token via earnedToken`
-      );
-      id = `${apiBoost.id}-${apiBoost.earnedToken}`;
-    }
 
-    const token: TokenEntity = {
-      id,
+  // Add if it does not exist already
+  if (chainState.byAddress[addressKey] === undefined) {
+    const token: TokenErc20 = {
+      id: apiBoost.earnedToken,
+      type: 'erc20',
       chainId: chainId,
       address: apiBoost.earnedTokenAddress,
       oracleId: apiBoost.earnedOracleId,
       decimals: apiBoost.earnedTokenDecimals,
       symbol: apiBoost.earnedToken,
-      buyUrl: null,
-      description: null,
-      website: null,
-      type: 'erc20',
-      documentation: null,
+      buyUrl: undefined,
+      description: undefined,
+      website: undefined,
+      documentation: undefined,
+      risks: [],
     };
-    sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
-    sliceState.byChainId[chainId].byAddress[addressKey] = token;
-    sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
+    addTokenToState(sliceState, token, true);
   }
 }
 
@@ -407,53 +391,33 @@ function addMinterToState(
   chainId: ChainEntity['id'],
   apiMinter: MinterConfig
 ) {
-  if (sliceState.byChainId[chainId] === undefined) {
-    sliceState.byChainId[chainId] = {
-      byId: {},
-      byAddress: {},
-      interestingBalanceTokenAddresses: [],
-      native: null,
-      wnative: null,
-    };
-  }
-
+  const chainState = getOrCreateTokensChainState(sliceState, chainId);
   for (const sourceToken of [apiMinter.depositToken, apiMinter.mintedToken]) {
     const addressKey =
       sourceToken.type === 'erc20' ? sourceToken.contractAddress.toLowerCase() : 'native';
-    // Add if it does not exist already
-    if (sliceState.byChainId[chainId].byAddress[addressKey] === undefined) {
-      const token: TokenEntity =
-        sourceToken.type === 'erc20'
-          ? {
-              id: sourceToken.symbol,
-              symbol: sourceToken.symbol,
-              chainId: chainId,
-              oracleId: sourceToken.oracleId,
-              address: sourceToken.contractAddress,
-              decimals: sourceToken.decimals,
-              buyUrl: null,
-              type: 'erc20',
-              description: null,
-              website: null,
-              documentation: null,
-            }
-          : {
-              id: sourceToken.symbol,
-              symbol: sourceToken.symbol,
-              chainId: chainId,
-              oracleId: sourceToken.oracleId,
-              address: 'native',
-              decimals: sourceToken.decimals,
-              buyUrl: null,
-              type: 'native',
-              website: null,
-              description: null,
-              documentation: null,
-            };
 
-      sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
-      sliceState.byChainId[chainId].byAddress[addressKey] = token;
-      sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
+    // Skip native tokens, they are loaded from config
+    if (addressKey === 'native') {
+      continue;
+    }
+
+    // Add if it does not exist already
+    if (chainState.byAddress[addressKey] === undefined) {
+      const token: TokenErc20 = {
+        id: sourceToken.symbol,
+        symbol: sourceToken.symbol,
+        chainId: chainId,
+        oracleId: sourceToken.oracleId,
+        address: sourceToken.contractAddress,
+        decimals: sourceToken.decimals,
+        buyUrl: undefined,
+        type: 'erc20',
+        description: undefined,
+        website: undefined,
+        documentation: undefined,
+        risks: [],
+      };
+      addTokenToState(sliceState, token, true);
     }
   }
 }
@@ -465,25 +429,26 @@ function addVaultToState(
   vault: VaultConfig
 ) {
   const chainId = chain.id;
-  if (sliceState.byChainId[chainId] === undefined) {
-    sliceState.byChainId[chainId] = {
-      byId: {},
-      byAddress: {},
-      interestingBalanceTokenAddresses: [],
-      native: null,
-      wnative: null,
-    };
+  const chainState = getOrCreateTokensChainState(sliceState, chainId);
+
+  // add assets id's from active vaults to state
+  if (vault.status === 'active' && vault.assets) {
+    for (const assetId of vault.assets) {
+      if (!chainState.tokenIdsInActiveVaults.includes(assetId)) {
+        chainState.tokenIdsInActiveVaults.push(assetId);
+      }
+    }
   }
 
+  //
+  // Deposit token
+  //
   const depositToken = getDepositTokenFromLegacyVaultConfig(chain, vault);
   const depositAddressKey = depositToken.address.toLowerCase();
-  const existingDepositToken = sliceState.byChainId[chainId].byAddress[depositAddressKey];
-
+  const existingDepositToken = chainState.byAddress[depositAddressKey];
   if (existingDepositToken === undefined) {
     // Add the token
-    sliceState.byChainId[chainId].byId[depositToken.id] = depositAddressKey;
-    sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(depositToken.address);
-    sliceState.byChainId[chainId].byAddress[depositAddressKey] = depositToken;
+    addTokenToState(sliceState, depositToken, true);
   } else {
     // Only add missing information
     // Note: we no longer overwrite oracleId as addressbook is now source of truth
@@ -492,83 +457,72 @@ function addVaultToState(
     }
   }
 
-  // add earned token data
-  const addressKey = vault.earnedTokenAddress ? vault.earnedTokenAddress.toLowerCase() : 'native';
-  if (sliceState.byChainId[chainId].byAddress[addressKey] === undefined) {
-    if (vault.type === 'gov') {
-      const addressKey =
-        vault.earnedToken === sliceState.byChainId[chainId].native
-          ? 'native'
-          : vault.earnedTokenAddress.toLowerCase();
+  //
+  // Earned token
+  //
+  const earnedAddressKey = vault.earnedTokenAddress
+    ? vault.earnedTokenAddress.toLowerCase()
+    : 'native';
+  const existingEarnedToken = chainState.byAddress[earnedAddressKey];
+  if (existingEarnedToken === undefined) {
+    // Do not add native token from configs, keep config as source of truth
+    if (earnedAddressKey !== 'native') {
+      let token: TokenErc20;
+      if (vault.type === 'gov') {
+        // Add earned token
+        token = {
+          type: 'erc20',
+          id: vault.earnedToken,
+          chainId: chainId,
+          oracleId: vault.oracleId,
+          decimals: vault.earnedTokenDecimals ?? 18,
+          address: vault.earnedTokenAddress,
+          symbol: vault.earnedToken,
+          buyUrl: undefined,
+          website: undefined,
+          description: undefined,
+          documentation: undefined,
+          risks: [],
+        };
+      } else if (vault.type === 'standard' || vault.type === undefined) {
+        // Add receipt token
+        token = {
+          type: 'erc20',
+          id: vault.earnedToken,
+          chainId: chainId,
+          oracleId: vault.oracleId,
+          address: vault.earnedTokenAddress,
+          decimals: 18, // receipt token always has 18 decimals
+          symbol: vault.earnedToken,
+          buyUrl: undefined,
+          website: undefined,
+          description: undefined,
+          documentation: undefined,
+          risks: [],
+        };
 
-      const token: TokenEntity =
-        vault.earnedToken === sliceState.byChainId[chainId].native
-          ? {
-              id: vault.earnedToken,
-              chainId: chainId,
-              oracleId: vault.earnedToken,
-              address: 'native',
-              decimals: chain.walletSettings.nativeCurrency.decimals,
-              symbol: vault.earnedToken,
-              type: 'native',
-              buyUrl: sliceState.byChainId[chainId].byAddress[addressKey]?.buyUrl ?? null,
-              website: sliceState.byChainId[chainId].byAddress[addressKey]?.website ?? null,
-              description: sliceState.byChainId[chainId].byAddress[addressKey]?.description ?? null,
-              documentation:
-                sliceState.byChainId[chainId].byAddress[addressKey]?.documentation ?? null,
-            }
-          : {
-              id: vault.earnedToken,
-              chainId: chainId,
-              oracleId: vault.earnedToken,
-              decimals: vault.earnedTokenDecimals ?? 18,
-              address: vault.earnedTokenAddress,
-              symbol: vault.earnedToken,
-              type: 'erc20',
-              buyUrl: sliceState.byChainId[chainId].byAddress[addressKey]?.buyUrl ?? null,
-              website: sliceState.byChainId[chainId].byAddress[addressKey]?.website ?? null,
-              description: sliceState.byChainId[chainId].byAddress[addressKey]?.description ?? null,
-              documentation:
-                sliceState.byChainId[chainId].byAddress[addressKey]?.documentation ?? null,
-            };
-      sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
-      sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
-      sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
-    } else {
-      // Add receipt token
-      const addressKey: string = vault.earnedTokenAddress.toLowerCase();
-      const token: TokenEntity = {
-        id: vault.earnedToken,
-        chainId: chainId,
-        oracleId: vault.oracleId,
-        address: vault.earnedTokenAddress,
-        decimals: 18, // receipt token always has 18 decimals
-        symbol: vault.earnedToken,
-        buyUrl: sliceState.byChainId[chainId].byAddress[addressKey]?.buyUrl ?? null,
-        website: sliceState.byChainId[chainId].byAddress[addressKey]?.website ?? null,
-        description: sliceState.byChainId[chainId].byAddress[addressKey]?.description ?? null,
-        documentation: sliceState.byChainId[chainId].byAddress[addressKey]?.documentation ?? null,
-        type: 'erc20',
-      };
-
-      sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
-      sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
-      sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
-
-      // Add bridged versions of receipt token
-      if (vault.bridged) {
-        addBridgedReceiptTokensToState(vault, token, vault.earnedToken, sliceState);
+        // Add bridged versions of receipt token
+        if (vault.bridged) {
+          addBridgedReceiptTokensToState(vault, token, sliceState);
+        }
+      } else {
+        throw new Error(`Unknown vault type ${vault.type}`);
       }
+
+      addTokenToState(sliceState, token, true);
     }
   } else {
     /** address book loaded first, and the vault receipt token is in the address book */
     // make sure vault token is still tagged as an interesting address
-    ensureInterestingToken(vault.earnedTokenAddress ?? 'native', chainId, sliceState);
+    if (vault.earnedTokenAddress && vault.earnedTokenAddress !== 'native') {
+      ensureInterestingToken(vault.earnedTokenAddress, chainId, sliceState);
+    }
+
     // make sure bridged tokens are added/are marked as interesting
     if (vault.type !== 'gov' && vault.bridged) {
-      const token = sliceState.byChainId[chainId].byAddress[addressKey];
+      const token = chainState.byAddress[earnedAddressKey];
       if (isTokenErc20(token)) {
-        addBridgedReceiptTokensToState(vault, token, vault.earnedToken, sliceState);
+        addBridgedReceiptTokensToState(vault, token, sliceState);
       }
     }
   }
@@ -577,35 +531,32 @@ function addVaultToState(
 function addBridgedReceiptTokensToState(
   vault: VaultConfig,
   token: TokenErc20,
-  oracleId: string,
   sliceState: Draft<TokensState>
 ) {
   if (!vault.bridged) {
     return;
   }
 
-  const bridgedTokens = Object.entries(vault.bridged).map(([chainId, address]) => ({
+  const bridgedTokens = entries(vault.bridged).map(([chainId, address]) => ({
     ...token,
     id: `${token.id}`,
     chainId,
     address,
-    oracleId,
-    description: token.description || null, // we leave description null so that addressbook can fill it in
+    description: token.description || undefined, // we leave description undefined so that addressbook can fill it in
   }));
 
   for (const bridgedToken of bridgedTokens) {
+    const chainState = getOrCreateTokensChainState(sliceState, bridgedToken.chainId);
     const bridgedAddressKey = bridgedToken.address.toLowerCase();
-    const existingBridgedToken =
-      sliceState.byChainId[bridgedToken.chainId].byAddress[bridgedAddressKey];
+    const existingBridgedToken = chainState.byAddress[bridgedAddressKey];
 
     // Add bridged receipt token
     if (!existingBridgedToken) {
-      sliceState.byChainId[bridgedToken.chainId].byId[bridgedToken.id] = bridgedAddressKey;
-      sliceState.byChainId[bridgedToken.chainId].byAddress[bridgedAddressKey] = bridgedToken;
+      addTokenToState(sliceState, bridgedToken, true);
+    } else {
+      // Make sure bridged receipt token is marked as interesting
+      ensureInterestingToken(bridgedToken.address, bridgedToken.chainId, sliceState);
     }
-
-    // Make sure bridged receipt token is marked as interesting
-    ensureInterestingToken(bridgedToken.address, bridgedToken.chainId, sliceState);
   }
 }
 
@@ -614,7 +565,44 @@ function ensureInterestingToken(
   chainId: ChainEntity['id'],
   sliceState: Draft<TokensState>
 ) {
-  if (!sliceState.byChainId[chainId].interestingBalanceTokenAddresses.includes(address)) {
-    sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(address);
+  const chainState = getOrCreateTokensChainState(sliceState, chainId);
+  if (!chainState.interestingBalanceTokenAddresses.includes(address)) {
+    chainState.interestingBalanceTokenAddresses.push(address);
+  }
+}
+
+function getOrCreateTokensChainState(sliceState: Draft<TokensState>, chainId: ChainEntity['id']) {
+  let chainState = sliceState.byChainId[chainId];
+
+  if (chainState === undefined) {
+    chainState = sliceState.byChainId[chainId] = {
+      byId: {},
+      byAddress: {},
+      interestingBalanceTokenAddresses: [],
+      tokenIdsInActiveVaults: [],
+      native: undefined,
+      wnative: undefined,
+    };
+  }
+
+  return chainState;
+}
+
+function addTokenToState(
+  sliceState: Draft<TokensState>,
+  token: TokenEntity,
+  interesting: boolean = false
+) {
+  const chainState = getOrCreateTokensChainState(sliceState, token.chainId);
+  if (token.id === chainState.native && !isTokenNative(token)) {
+    console.warn(`addTokenToState: can not override native token ${token.id} with ERC20 token`);
+    token.id = `erc20-${token.id}`;
+  }
+
+  const addressKey = token.address.toLowerCase();
+  chainState.byId[token.id] = token.address.toLowerCase();
+  chainState.byAddress[addressKey] = token;
+  if (interesting) {
+    chainState.interestingBalanceTokenAddresses.push(token.address);
   }
 }

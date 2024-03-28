@@ -47,4 +47,10 @@ export const styles = (theme: Theme) => ({
       fill: theme.palette.background.indicators.error,
     },
   },
+  info: {
+    backgroundColor: `${theme.palette.background.indicators.info}26`,
+    '& $icon': {
+      fill: theme.palette.background.indicators.info,
+    },
+  },
 });

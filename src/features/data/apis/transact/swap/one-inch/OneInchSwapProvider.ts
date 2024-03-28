@@ -32,7 +32,7 @@ export class OneInchSwapProvider implements ISwapProvider {
     chainId: ChainEntity['id'],
     state: BeefyState
   ): OneInchSwapConfig | undefined {
-    return selectSwapAggregatorForChainType<OneInchSwapConfig>(state, chainId, 'one-inch');
+    return selectSwapAggregatorForChainType<OneInchSwapConfig['type']>(state, chainId, 'one-inch');
   }
 
   async fetchQuote(request: QuoteRequest, state: BeefyState): Promise<QuoteResponse> {
@@ -55,7 +55,7 @@ export class OneInchSwapProvider implements ISwapProvider {
       fromToken: request.fromToken,
       fromAmount: request.fromAmount,
       toToken: request.toToken,
-      toAmount: fromWeiString(quote.toAmount, request.toToken.decimals),
+      toAmount: fromWeiString(quote.dstAmount, request.toToken.decimals),
       fee: config.fee,
     };
   }
@@ -85,9 +85,9 @@ export class OneInchSwapProvider implements ISwapProvider {
       fromToken: quote.fromToken,
       fromAmount: quote.fromAmount,
       toToken: quote.toToken,
-      toAmount: fromWeiString(swap.toAmount, quote.toToken.decimals),
+      toAmount: fromWeiString(swap.dstAmount, quote.toToken.decimals),
       toAmountMin: slipBy(
-        fromWeiString(swap.toAmount, quote.toToken.decimals),
+        fromWeiString(swap.dstAmount, quote.toToken.decimals),
         slippage,
         quote.toToken.decimals
       ),

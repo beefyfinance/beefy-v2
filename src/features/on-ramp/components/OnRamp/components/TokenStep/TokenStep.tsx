@@ -44,7 +44,7 @@ const ListItem = memo<ItemInnerProps>(function ListItem({ value }) {
     <>
       <AssetsImage
         chainId={undefined}
-        assetIds={assetIds}
+        assetSymbols={assetIds}
         size={24}
         className={classes.listItemIcon}
       />
@@ -55,10 +55,7 @@ const ListItem = memo<ItemInnerProps>(function ListItem({ value }) {
 
 const TokenSelector = memo<{ fiat: string }>(function TokenSelector({ fiat }) {
   const tokens = useAppSelector(state => selectSupportedTokensForFiat(state, fiat));
-  const sortedTokens = useMemo(
-    () => [...tokens].filter(token => token !== 'BIFI').sort(),
-    [tokens]
-  );
+  const sortedTokens = useMemo(() => [...tokens].sort((a, b) => a.localeCompare(b)), [tokens]);
 
   const dispatch = useAppDispatch();
 

@@ -22,6 +22,7 @@ import {
   createQuoteId,
   createSelectionId,
   onlyInputCount,
+  onlyOneInput,
 } from '../helpers/options';
 import type {
   InputTokenAmount,
@@ -44,7 +45,7 @@ import {
 import { selectFeesByVaultId } from '../../../selectors/fees';
 import { selectChainById } from '../../../selectors/chains';
 import { getWeb3Instance } from '../../instances';
-import { VaultAbi } from '../../../../../config/abi';
+import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi';
 import { BigNumber } from 'bignumber.js';
 import abiCoder from 'web3-eth-abi';
 import { getInsertIndex, getTokenAddress } from '../helpers/zap';
@@ -53,8 +54,9 @@ import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../reducers/wallet/stepper';
 import { MultiCall } from 'eth-multicall';
 import { getVaultWithdrawnFromContract, getVaultWithdrawnFromState } from '../helpers/vault';
-import { selectWalletAddress } from '../../../selectors/wallet';
+import { selectWalletAddressOrThrow } from '../../../selectors/wallet';
 import type { ZapStep } from '../zap/types';
+import type { AbiItem } from 'web3-utils';
 
 export class StandardVaultType implements IStandardVaultType {
   public readonly id = 'standard';
@@ -80,12 +82,9 @@ export class StandardVaultType implements IStandardVaultType {
     this.shareToken = shareToken;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  async initialize(): Promise<void> {}
-
   protected calculateDepositFee(input: TokenAmount, state: BeefyState): BigNumber {
     const { deposit: depositFeePercent } = selectFeesByVaultId(state, this.vault.id);
-    return depositFeePercent > 0
+    return depositFeePercent && depositFeePercent > 0
       ? input.amount
           .multipliedBy(depositFeePercent)
           .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR)
@@ -95,7 +94,7 @@ export class StandardVaultType implements IStandardVaultType {
   async fetchZapDeposit(request: VaultDepositRequest): Promise<VaultDepositResponse> {
     onlyInputCount(request.inputs, 1);
 
-    const input = first(request.inputs);
+    const input = first(request.inputs)!; // we checked length above
     if (!isTokenEqual(input.token, this.depositToken)) {
       throw new Error('Input token is not the deposit token');
     }
@@ -103,7 +102,10 @@ export class StandardVaultType implements IStandardVaultType {
     const state = this.getState();
     const chain = selectChainById(state, this.vault.chainId);
     const web3 = await getWeb3Instance(chain);
-    const vaultContract = new web3.eth.Contract(VaultAbi, this.vault.earnContractAddress);
+    const vaultContract = new web3.eth.Contract(
+      StandardVaultAbi as unknown as AbiItem[],
+      this.vault.earnContractAddress
+    );
     const ppfsRaw = await vaultContract.methods.getPricePerFullShare().call();
     const ppfs = new BigNumber(ppfsRaw);
     const inputWei = toWei(input.amount, input.token.decimals);
@@ -254,9 +256,7 @@ export class StandardVaultType implements IStandardVaultType {
     inputs: InputTokenAmount[],
     option: StandardVaultDepositOption
   ): Promise<StandardVaultDepositQuote> {
-    onlyInputCount(inputs, 1);
-
-    const input = first(inputs);
+    const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Quote called with 0 input amount');
     }
@@ -297,7 +297,7 @@ export class StandardVaultType implements IStandardVaultType {
   async fetchDepositStep(quote: TransactQuote, t: TFunction<Namespace>): Promise<Step> {
     onlyInputCount(quote.inputs, 1);
 
-    const input = first(quote.inputs);
+    const input = first(quote.inputs)!; // we checked length above
 
     return {
       step: 'deposit',
@@ -330,9 +330,8 @@ export class StandardVaultType implements IStandardVaultType {
     inputs: InputTokenAmount[],
     option: StandardVaultWithdrawOption
   ): Promise<StandardVaultWithdrawQuote> {
-    onlyInputCount(inputs, 1);
+    const input = onlyOneInput(inputs);
 
-    const input = first(inputs);
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Quote called with 0 input amount');
     }
@@ -367,7 +366,7 @@ export class StandardVaultType implements IStandardVaultType {
   async fetchWithdrawStep(quote: TransactQuote, t: TFunction<Namespace>): Promise<Step> {
     onlyInputCount(quote.inputs, 1);
 
-    const input = first(quote.inputs);
+    const input = first(quote.inputs)!; // we checked length above
 
     return {
       step: 'withdraw',
@@ -379,9 +378,7 @@ export class StandardVaultType implements IStandardVaultType {
   }
 
   async fetchZapWithdraw(request: VaultWithdrawRequest): Promise<VaultWithdrawResponse> {
-    onlyInputCount(request.inputs, 1);
-
-    const input = first(request.inputs);
+    const input = onlyOneInput(request.inputs);
     if (!isTokenEqual(input.token, this.depositToken)) {
       throw new Error('Input token is not the deposit token');
     }
@@ -390,7 +387,7 @@ export class StandardVaultType implements IStandardVaultType {
     const chain = selectChainById(state, this.vault.chainId);
     const web3 = await getWeb3Instance(chain);
     const multicall = new MultiCall(web3, chain.multicallAddress);
-    const address = selectWalletAddress(state);
+    const address = selectWalletAddressOrThrow(state);
     const { sharesToWithdrawWei, withdrawnAmountAfterFeeWei } = await getVaultWithdrawnFromContract(
       input,
       this.vault,

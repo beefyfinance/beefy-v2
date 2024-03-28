@@ -34,7 +34,7 @@ const EthereumSolidlyPairAbi: AbiItem[] = [
 ];
 
 export class EthereumSolidlyPool extends SolidlyPool {
-  protected pairData: PairData | null = null;
+  protected pairData: PairData | undefined = undefined;
 
   protected getPairDataRequest(): ShapeWithLabel[] {
     const contract = createContract(EthereumSolidlyPairAbi, this.address);
@@ -50,6 +50,10 @@ export class EthereumSolidlyPool extends SolidlyPool {
     const result = (untypedResult as PairDataResponse[])[0];
 
     super.consumePairDataResponse(untypedResult);
+
+    if (!this.pairData) {
+      throw new Error('Pair data is not loaded');
+    }
 
     this.pairData.feeRatio = new BigNumber(result.feeRatio);
   }

@@ -1,5 +1,165 @@
 [
   {
+    "id": "curve-poly-crvusd-usdc.e",
+    "name": "crvUSD/USDC.e",
+    "token": "crvusdusde",
+    "tokenAddress": "0x864490Cf55dc2Dee3f0ca4D06F5f80b2BB154a03",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveCrvUSD-USDC.e",
+    "earnedTokenAddress": "0xb6D78A6eDa4318067183C4A5076E25197f4e5009",
+    "earnContractAddress": "0xb6D78A6eDa4318067183C4A5076E25197f4e5009",
+    "oracle": "lps",
+    "oracleId": "curve-poly-crvusd-usdc.e",
+    "status": "active",
+    "createdAt": 1707298269,
+    "platformId": "curve",
+    "assets": ["crvUSD", "pUSDCe"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-30/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-30/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-30/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x864490Cf55dc2Dee3f0ca4D06F5f80b2BB154a03",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x864490Cf55dc2Dee3f0ca4D06F5f80b2BB154a03",
+            "coins": [
+              "0xc4Ce1D6F5D98D65eE25Cf85e9F2E9DcFEe6Cb5d6",
+              "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-poly-crvusd-usdt",
+    "name": "crvUSD/USDT",
+    "token": "crvusdusdt",
+    "tokenAddress": "0xA70Af99bFF6b168327f9D1480e29173e757c7904",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveCrvUSD-USDT",
+    "earnedTokenAddress": "0xf2A28ED791B268A7CCCa16bB2e69093852cc3259",
+    "earnContractAddress": "0xf2A28ED791B268A7CCCa16bB2e69093852cc3259",
+    "oracle": "lps",
+    "oracleId": "curve-poly-crvusd-usdt",
+    "status": "active",
+    "createdAt": 1707298259,
+    "platformId": "curve",
+    "assets": ["crvUSD", "USDT"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-28/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-28/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-28/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xA70Af99bFF6b168327f9D1480e29173e757c7904",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xA70Af99bFF6b168327f9D1480e29173e757c7904",
+            "coins": [
+              "0xc4Ce1D6F5D98D65eE25Cf85e9F2E9DcFEe6Cb5d6",
+              "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-poly-crvusd-usdc",
+    "name": "crvUSD/USDC",
+    "token": "crvusdusdc",
+    "tokenAddress": "0x5225010A0AE133B357861782B0B865a48471b2C5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveCrvUSD-USDC",
+    "earnedTokenAddress": "0x7D9751c9dd4435dE4b1802b4c727d745d11110B8",
+    "earnContractAddress": "0x7D9751c9dd4435dE4b1802b4c727d745d11110B8",
+    "oracle": "lps",
+    "oracleId": "curve-poly-crvusd-usdc",
+    "status": "active",
+    "createdAt": 1707298248,
+    "platformId": "curve",
+    "assets": ["crvUSD", "USDC"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-27/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-27/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-27/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x5225010A0AE133B357861782B0B865a48471b2C5",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x5225010A0AE133B357861782B0B865a48471b2C5",
+            "coins": [
+              "0xc4Ce1D6F5D98D65eE25Cf85e9F2E9DcFEe6Cb5d6",
+              "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-poly-crvusd-dai",
+    "name": "crvUSD/DAI",
+    "token": "crvusddai",
+    "tokenAddress": "0x62c949ee985b125Ff2d7ddcf4Fe7AEcB0a040E2a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveCrvUSD-DAI",
+    "earnedTokenAddress": "0xC97f5E2169CB182ab32F9BdE30a60051008a459f",
+    "earnContractAddress": "0xC97f5E2169CB182ab32F9BdE30a60051008a459f",
+    "oracle": "lps",
+    "oracleId": "curve-poly-crvusd-dai",
+    "status": "active",
+    "createdAt": 1707298143,
+    "platformId": "curve",
+    "assets": ["crvUSD", "DAI"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-29/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-29/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-29/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x62c949ee985b125Ff2d7ddcf4Fe7AEcB0a040E2a",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x62c949ee985b125Ff2d7ddcf4Fe7AEcB0a040E2a",
+            "coins": [
+              "0xc4Ce1D6F5D98D65eE25Cf85e9F2E9DcFEe6Cb5d6",
+              "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "quick-gamma-fxcbeth-weth",
     "name": "cbETH-ETH LP",
     "type": "standard",
@@ -20,7 +180,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/cbeth-weth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/cbeth-weth-pegged-price",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wbtc-weth-wide",
@@ -35,32 +202,41 @@
     "earnContractAddress": "0x44227C548272E2Dce4537746bcA4c8F036177B9e",
     "oracle": "lps",
     "oracleId": "quick-gamma-wbtc-weth-wide",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1700229087,
+    "retireReason": "rewards",
+    "retiredAt": 1708113204,
     "platformId": "gamma",
     "assets": ["ETH", "WBTC"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-weth-wide",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-weth-wide",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "compound-polygon-usdc",
-    "name": "USDC",
+    "name": "USDC.e",
     "type": "standard",
-    "token": "USDC",
+    "token": "pUSDCe",
     "tokenAddress": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "tokenDecimals": 6,
     "earnedToken": "mooCompoundBaseUSDbC",
     "earnedTokenAddress": "0x86F371838A321F92237DaD7b8DA5c76d2c084934",
     "earnContractAddress": "0x86F371838A321F92237DaD7b8DA5c76d2c084934",
     "oracle": "tokens",
-    "oracleId": "USDC",
+    "oracleId": "pUSDCe",
     "status": "active",
     "createdAt": 1698951095,
     "platformId": "compound",
-    "assets": ["USDC"],
+    "assets": ["pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -96,15 +272,24 @@
     "earnContractAddress": "0x8CaA1a3809b3C67C61Eaf5524e1cB784ED6bA8B3",
     "oracle": "lps",
     "oracleId": "quick-gamma-weth-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1698862190,
+    "retireReason": "rewards",
+    "retiredAt": 1708113204,
     "platformId": "gamma",
     "assets": ["ETH", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdt-narrow",
-    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdt-narrow",
-    "network": "polygon"
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-usdt-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-usdt-narrow",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-quick",
@@ -119,15 +304,24 @@
     "earnContractAddress": "0xc5d366eDF862F18d62831fb8333D335d625a4C00",
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-quick",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1698862190,
+    "retireReason": "rewards",
+    "retiredAt": 1708113204,
     "platformId": "gamma",
     "assets": ["QUICK", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-quick-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-quick-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-link-weth",
@@ -150,7 +344,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/link-weth-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/link-weth-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-weth-aave",
@@ -173,11 +374,18 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-aave-wide",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-aave-wide",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-bob-usdc-stable",
-    "name": "BOB-USDC Stable LP",
+    "name": "BOB-USDC.e Stable LP",
     "type": "standard",
     "token": "aUSDC-BOB",
     "tokenAddress": "0x33B0B883626C21Ce5b3aad202bC435f876aee2c4",
@@ -193,12 +401,19 @@
     "retireReason": "rewards",
     "retiredAt": 1701870175,
     "platformId": "gamma",
-    "assets": ["BOB", "USDC"],
+    "assets": ["BOB", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xB0B195aEFA3650A6908f15CdaC7D92F8a5791B0B",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xB0B195aEFA3650A6908f15CdaC7D92F8a5791B0B",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-e0a6",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "retro-gamma-cash-weth",
@@ -213,7 +428,9 @@
     "earnContractAddress": "0x18b0082C0E2Ce3f33758d735e501835B606DD44C",
     "oracle": "lps",
     "oracleId": "retro-gamma-cash-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
+    "retiredAt": 1709727638,
     "createdAt": 1693479128,
     "platformId": "gamma",
     "assets": ["CASH", "ETH"],
@@ -221,7 +438,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/cash-weth-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/cash-weth-500-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wmatic-cash",
@@ -244,7 +467,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-cash-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-cash-500-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wbtc-cash",
@@ -260,22 +489,28 @@
     "oracle": "lps",
     "oracleId": "retro-gamma-wbtc-cash",
     "status": "eol",
+    "createdAt": 1693479128,
     "retireReason": "rewards",
     "retiredAt": 1706885963,
-    "createdAt": 1693479128,
     "platformId": "gamma",
     "assets": ["CASH", "WBTC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wbtc-cash-3000-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wbtc-cash-3000-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-usdc-cash",
-    "name": "CASH-USDC LP",
+    "name": "CASH-USDC.e LP",
     "type": "standard",
-    "token": "CASH-USDC rLP",
+    "token": "CASH-USDC.e rLP",
     "tokenAddress": "0x64e14623CA543b540d0bA80477977f7c2c00a7Ea",
     "tokenDecimals": 18,
     "tokenProviderId": "retro",
@@ -289,12 +524,18 @@
     "retireReason": "rewards",
     "retiredAt": 1700566353,
     "platformId": "gamma",
-    "assets": ["CASH", "USDC"],
+    "assets": ["CASH", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-cash-100-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-cash-100-stable",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "aura-polygon-gyro-matic-stmatic",
@@ -365,7 +606,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wbtc-weth-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wbtc-weth-500-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wmatic-frxeth-narrow",
@@ -380,7 +627,9 @@
     "earnContractAddress": "0xA7980736b9EC9c0607A7F6Ce2F3045Ccec398AF8",
     "oracle": "lps",
     "oracleId": "retro-gamma-wmatic-frxeth-narrow",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
+    "retiredAt": 1709727638,
     "createdAt": 1693395784,
     "platformId": "gamma",
     "assets": ["frxETH", "MATIC"],
@@ -388,7 +637,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-frxeth-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-frxeth-500-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-frax-mimatic-",
@@ -413,7 +668,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/frax-mai-3000-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/frax-mai-3000-stable",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wmatic-maticx",
@@ -436,7 +697,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-maticx-100-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-maticx-100-pegged-price",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wmatic-stmatic",
@@ -451,7 +718,9 @@
     "earnContractAddress": "0x8AAc0f2a6cAE626b656Ca16c58A50C87CBBC7ff5",
     "oracle": "lps",
     "oracleId": "retro-gamma-wmatic-stmatic",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1711478442,
     "createdAt": 1691499559,
     "platformId": "gamma",
     "assets": ["stMATIC", "MATIC"],
@@ -459,13 +728,19 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-stmatic-100-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-stmatic-100-pegged-price",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-usdc-ageur-narrow",
-    "name": "agEUR-USDC LP",
+    "name": "agEUR-USDC.e LP",
     "type": "standard",
-    "token": "agEUR-USDC rLP",
+    "token": "agEUR-USDC.e rLP",
     "tokenAddress": "0x98b6a5EedC9382E2c4F8A38f985f2e9aC0B0E84c",
     "tokenDecimals": 18,
     "tokenProviderId": "retro",
@@ -477,12 +752,18 @@
     "status": "active",
     "createdAt": 1691447788,
     "platformId": "gamma",
-    "assets": ["agEUR", "USDC"],
+    "assets": ["agEUR", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-ageur-100-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-ageur-100-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-weth-frxeth-narrow",
@@ -505,13 +786,19 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/weth-frxeth-100-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/weth-frxeth-100-stable",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-usdc-usdt",
-    "name": "USDC-USDT LP",
+    "name": "USDC.e-USDT LP",
     "type": "standard",
-    "token": "USDC-USDT rLP",
+    "token": "USDC.e-USDT rLP",
     "tokenAddress": "0xA7565DFeb16010153D3368E002Ec53CBfaf96e05",
     "tokenDecimals": 18,
     "tokenProviderId": "retro",
@@ -523,12 +810,18 @@
     "status": "active",
     "createdAt": 1691447788,
     "platformId": "gamma",
-    "assets": ["USDC", "USDT"],
+    "assets": ["pUSDCe", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-usdt-100-stable",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-usdt-100-stable",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "pearl-usdrv3-tngbl",
@@ -660,9 +953,9 @@
   },
   {
     "id": "retro-gamma-wmatic-usdc-narrow",
-    "name": "USDC-MATIC LP",
+    "name": "USDC.e-MATIC LP",
     "type": "standard",
-    "token": "USDC-MATIC rLP",
+    "token": "USDC.e-MATIC rLP",
     "tokenAddress": "0xBE4E30b74b558E41f5837dC86562DF44aF57A013",
     "tokenDecimals": 18,
     "tokenProviderId": "retro",
@@ -674,18 +967,24 @@
     "status": "active",
     "createdAt": 1691364568,
     "platformId": "gamma",
-    "assets": ["USDC", "MATIC"],
+    "assets": ["pUSDCe", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-usdc.e-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-usdc.e-500-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-usdc-weth-narrow",
-    "name": "USDC-WETH LP",
+    "name": "USDC.e-WETH LP",
     "type": "standard",
-    "token": "USDC-WETH rLP",
+    "token": "USDC.e-WETH rLP",
     "tokenAddress": "0xe058e1FfFF9B13d3FCd4803FDb55d1Cc2fe07DDC",
     "tokenDecimals": 18,
     "tokenProviderId": "retro",
@@ -697,12 +996,18 @@
     "status": "active",
     "createdAt": 1691364568,
     "platformId": "gamma",
-    "assets": ["USDC", "ETH"],
+    "assets": ["pUSDCe", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-weth-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-weth-500-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "retro-gamma-wmatic-weth-narrow",
@@ -725,7 +1030,13 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-weth-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-weth-500-narrow",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-retro"
+      }
+    ]
   },
   {
     "id": "pearl-usdrv3-usdt",
@@ -761,7 +1072,7 @@
   },
   {
     "id": "pearl-usdc-usdrv3",
-    "name": "USDC-USDR sLP",
+    "name": "USDC.e-USDR sLP",
     "type": "standard",
     "token": "sAMM-USDCv3/USDR",
     "tokenAddress": "0xD17cb0f162f133e339C0BbFc18c36c357E681D6b",
@@ -777,7 +1088,7 @@
     "retireReason": "rewards",
     "retiredAt": 1697816149,
     "platformId": "pearl",
-    "assets": ["USDC", "USDR"],
+    "assets": ["pUSDCe", "USDR"],
     "migrationIds": ["polygon-pearl"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
@@ -913,9 +1224,9 @@
   },
   {
     "id": "quick-gamma-usdc-mimatic-stable",
-    "name": "MAI-USDC Stable LP",
+    "name": "MAI-USDC.e Stable LP",
     "type": "standard",
-    "token": "aMAI-USDC",
+    "token": "aMAI-USDC.e",
     "tokenAddress": "0x25B186eEd64ca5FDD1bc33fc4CFfd6d34069BAec",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -929,18 +1240,25 @@
     "retireReason": "rewards",
     "retiredAt": 1698574248,
     "platformId": "gamma",
-    "assets": ["MAI", "USDC"],
+    "assets": ["MAI", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wbtc-usdc-narrow",
-    "name": "WBTC-USDC Narrow LP",
+    "name": "WBTC-USDC.e Narrow LP",
     "type": "standard",
-    "token": "aWBTC-USDC",
+    "token": "aWBTC-USDC.e",
     "tokenAddress": "0x3f35705479d9d77c619b2aAC9dd7a64e57151506",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -952,12 +1270,19 @@
     "status": "active",
     "createdAt": 1686917465,
     "platformId": "gamma",
-    "assets": ["WBTC", "USDC"],
+    "assets": ["WBTC", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "network": "polygon"
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-usdc.e-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-usdc.e-narrow",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wbtc-weth-narrow",
@@ -978,15 +1303,22 @@
     "assets": ["WBTC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "network": "polygon"
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-weth-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-weth-narrow",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-usdc-weth-wide",
-    "name": "USDC-ETH Wide LP",
+    "name": "USDC.e-ETH Wide LP",
     "type": "standard",
-    "token": "awETH-USDC",
+    "token": "awETH-USDC.e",
     "tokenAddress": "0x6077177d4c41E114780D9901C9b5c784841C523f",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -995,21 +1327,30 @@
     "earnContractAddress": "0xE90f456823101221c16DFd49381cd49e1CdE8740",
     "oracle": "lps",
     "oracleId": "quick-gamma-usdc-weth-wide",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1686917465,
+    "retireReason": "rewards",
+    "retiredAt": 1708113204,
     "platformId": "gamma",
-    "assets": ["ETH", "USDC"],
+    "assets": ["ETH", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-usdc-weth-narrow",
-    "name": "USDC-ETH Narrow LP",
+    "name": "USDC.e-ETH Narrow LP",
     "type": "standard",
-    "token": "aETH-USDC",
+    "token": "aETH-USDC.e",
     "tokenAddress": "0x3Cc20A6795c4b57d9817399F68E83e71C8626580",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -1021,18 +1362,25 @@
     "status": "active",
     "createdAt": 1686917465,
     "platformId": "gamma",
-    "assets": ["ETH", "USDC"],
+    "assets": ["ETH", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "network": "polygon"
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-weth-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-weth-narrow",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-usdc-axlusdc-narrow",
-    "name": "axlUSDC-USDC Stable LP",
+    "name": "axlUSDC-USDC.e Stable LP",
     "type": "standard",
-    "token": "aaxlUSDC-USDC",
+    "token": "aaxlUSDC-USDC.e",
     "tokenAddress": "0x374C44443553d7EB86b5f77597cC67A507b19179",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -1044,12 +1392,19 @@
     "status": "active",
     "createdAt": 1686917464,
     "platformId": "gamma",
-    "assets": ["axlUSDC", "USDC"],
+    "assets": ["axlUSDC", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x750e4C4984a9e0f12978eA6742Bc1c5D248f40ed",
-    "network": "polygon"
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-axlusdc-stable",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-axlusdc-stable",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-dai-mimatic-narrow",
@@ -1074,7 +1429,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-e0a6",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-mimatic-usdt-narrow",
@@ -1099,13 +1461,20 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-e0a6",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-usdc-dai-narrow",
-    "name": "USDC-DAI Stable LP",
+    "name": "USDC.e-DAI Stable LP",
     "type": "standard",
-    "token": "awUSDC-DAI",
+    "token": "awUSDC.e-DAI",
     "tokenAddress": "0x9E31214Db6931727B7d63a0D2b6236DB455c0965",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -1114,21 +1483,30 @@
     "earnContractAddress": "0x3A1F8B9b4aB6ba1a845931eD527B6B4768Ca07B1",
     "oracle": "lps",
     "oracleId": "quick-gamma-usdc-dai-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1686917464,
+    "retireReason": "rewards",
+    "retiredAt": 1708113204,
     "platformId": "gamma",
-    "assets": ["USDC", "DAI"],
+    "assets": ["pUSDCe", "DAI"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-usdc-usdt-narrow",
-    "name": "USDC-USDT Stable LP",
+    "name": "USDC.e-USDT Stable LP",
     "type": "standard",
-    "token": "awUSDC-USDT",
+    "token": "awUSDC.e-USDT",
     "tokenAddress": "0x795f8c9B0A0Da9Cd8dea65Fc10f9B57AbC532E58",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -1140,41 +1518,25 @@
     "status": "active",
     "createdAt": 1686917464,
     "platformId": "gamma",
-    "assets": ["USDC", "USDT"],
+    "assets": ["pUSDCe", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-    "network": "polygon"
-  },
-  {
-    "id": "quick-gamma-wmatic-usdc-wide",
-    "name": "MATIC-USDC Wide LP",
-    "type": "standard",
-    "token": "awMATIC-USDC",
-    "tokenAddress": "0x4A83253e88e77E8d518638974530d0cBbbF3b675",
-    "tokenDecimals": 18,
-    "tokenProviderId": "quickswap",
-    "earnedToken": "mooQuickMATIC-USDCWide",
-    "earnedTokenAddress": "0x3c311026014de3B31F9A1D3bCd6AD793dC1FF830",
-    "earnContractAddress": "0x3c311026014de3B31F9A1D3bCd6AD793dC1FF830",
-    "oracle": "lps",
-    "oracleId": "quick-gamma-wmatic-usdc-wide",
-    "status": "active",
-    "createdAt": 1686917464,
-    "platformId": "gamma",
-    "assets": ["MATIC", "USDC"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "network": "polygon"
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-usdt-stable",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-usdt-stable",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-usdc-narrow",
-    "name": "MATIC-USDC Narrow LP",
+    "name": "MATIC-USDC.e Narrow LP",
     "type": "standard",
-    "token": "aMATIC-USDC",
+    "token": "aMATIC-USDC.e",
     "tokenAddress": "0x04d521E2c414E6d898c6F2599FdD863Edf49e247",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -1186,12 +1548,19 @@
     "status": "active",
     "createdAt": 1686917464,
     "platformId": "gamma",
-    "assets": ["MATIC", "USDC"],
+    "assets": ["MATIC", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "network": "polygon"
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdc.e-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdc.e-narrow",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "pearl-matic-usdr",
@@ -1244,9 +1613,16 @@
     "assets": ["stMATIC", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
-    "network": "polygon"
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-stmatic-pegged-price",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-stmatic-pegged-price",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-maticx-narrow",
@@ -1267,9 +1643,16 @@
     "assets": ["MaticX", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6",
-    "network": "polygon"
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-maticx-pegged-price",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-maticx-pegged-price",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-weth-narrow",
@@ -1290,9 +1673,16 @@
     "assets": ["MATIC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "network": "polygon"
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-weth-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-weth-narrow",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "quick-gamma-wmatic-weth-wide",
@@ -1307,15 +1697,24 @@
     "earnContractAddress": "0x346c16e7a76D224b9955c0F67e93b413Fc63ba3E",
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-weth-wide",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1686878623,
+    "retireReason": "rewards",
+    "retiredAt": 1708113204,
     "platformId": "gamma",
     "assets": ["MATIC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    "network": "polygon"
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-weth-wide",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-weth-wide",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
   },
   {
     "id": "pearl-dai-usdr",
@@ -1351,9 +1750,9 @@
   },
   {
     "id": "pearl-usdc-usdr",
-    "name": "USDC-USDR sLP",
+    "name": "USDC.e-USDR sLP",
     "type": "standard",
-    "token": "sAMM-USDC/USDR",
+    "token": "sAMM-USDC.e/USDR",
     "tokenAddress": "0xf6A72Bd46F53Cd5103812ea1f4B5CF38099aB797",
     "tokenDecimals": 18,
     "tokenProviderId": "pearl",
@@ -1367,7 +1766,7 @@
     "retireReason": "rewards",
     "retiredAt": 1691151208,
     "platformId": "pearl",
-    "assets": ["USDC", "multiUSDR"],
+    "assets": ["pUSDCe", "multiUSDR"],
     "migrationIds": ["polygon-pearl"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
@@ -1511,7 +1910,7 @@
   },
   {
     "id": "curve-poly-usdr",
-    "name": "USDR/DAI/USDC/USDT",
+    "name": "USDR/DAI/USDC.e/USDT",
     "type": "standard",
     "token": "USDR3CRV-f",
     "tokenAddress": "0xa138341185a9D0429B0021A11FB717B225e13e1F",
@@ -1527,13 +1926,40 @@
     "retireReason": "rewards",
     "retiredAt": 1691431139,
     "platformId": "convex",
-    "assets": ["USDR", "DAI", "USDC", "USDT"],
+    "assets": ["USDR", "DAI", "pUSDCe", "USDT"],
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-339/swap",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-339/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-339/withdraw",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xa138341185a9D0429B0021A11FB717B225e13e1F",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xa138341185a9D0429B0021A11FB717B225e13e1F",
+            "coins": [
+              "0xb5DFABd7fF7F83BAB83995E72A52B97ABb7bcf63",
+              "0xE7a24EF0C5e95Ffb0f6684b813A78F2a3AD7D171"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0x5ab5c56b9db92ba45a0b46a207286cd83c15c939",
+            "coins": [
+              "0xb5DFABd7fF7F83BAB83995E72A52B97ABb7bcf63",
+              "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+              "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+              "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "balancer-sd-maticx",
@@ -1718,13 +2144,42 @@
     "status": "active",
     "createdAt": 1678427112,
     "platformId": "convex",
-    "assets": ["MATIC", "DAI", "USDC", "USDT", "WBTC", "ETH"],
+    "assets": ["MATIC", "DAI", "pUSDCe", "USDT", "WBTC", "ETH"],
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-crypto-83/swap",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-83/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-83/withdraw",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x7BBc0e92505B485aeb3e82E828cb505DAf1E50c6",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x7BBc0e92505B485aeb3e82E828cb505DAf1E50c6",
+            "coins": [
+              "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+              "0xdAD97F7713Ae9437fa9249920eC8507e5FbB23d3"
+            ]
+          },
+          {
+            "type": "pool-fixed",
+            "target": "0x3d8eadb739d1ef95dd53d718e4810721837c69c1",
+            "coins": [
+              "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+              "0x27F8D03b3a2196956ED754baDc28D73be8830A6e",
+              "0x1a13F4Ca1d028320A707D99520AbFefca3998b7F",
+              "0x60D55F02A771d515e077c9C2403a1ef324885CeC",
+              "0x5c2ed810328349100A66B82b78a1791B101C9D61",
+              "0x28424507fefb6f7f8E9D3860F56504E4e5f5f390"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "balancer-poly-wsteth-eth",
@@ -1760,9 +2215,9 @@
   },
   {
     "id": "balancer-usdc-wusdr",
-    "name": "wUSDR-USDC",
+    "name": "wUSDR-USDC.e",
     "type": "standard",
-    "token": "wUSDR-USDC Poly",
+    "token": "wUSDR-USDC.e Poly",
     "tokenAddress": "0x34A81e8956BF20b7448b31990A2c06F96830a6e4",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
@@ -1776,7 +2231,7 @@
     "retireReason": "rewards",
     "retiredAt": 1688077282,
     "platformId": "balancer",
-    "assets": ["wUSDR", "USDC"],
+    "assets": ["wUSDR", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1900,13 +2355,42 @@
     "status": "active",
     "createdAt": 1678690832,
     "platformId": "convex",
-    "assets": ["CRV", "DAI", "USDC", "USDT", "WBTC", "ETH"],
+    "assets": ["CRV", "DAI", "pUSDCe", "USDT", "WBTC", "ETH"],
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-crypto-1/swap",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-1/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-1/withdraw",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xc7c939A474CB10EB837894D1ed1a77C61B268Fa7",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0xc7c939A474CB10EB837894D1ed1a77C61B268Fa7",
+            "coins": [
+              "0x172370d5Cd63279eFa6d502DAB29171933a610AF",
+              "0xdAD97F7713Ae9437fa9249920eC8507e5FbB23d3"
+            ]
+          },
+          {
+            "type": "pool-fixed",
+            "target": "0x3d8eadb739d1ef95dd53d718e4810721837c69c1",
+            "coins": [
+              "0x172370d5Cd63279eFa6d502DAB29171933a610AF",
+              "0x27F8D03b3a2196956ED754baDc28D73be8830A6e",
+              "0x1a13F4Ca1d028320A707D99520AbFefca3998b7F",
+              "0x60D55F02A771d515e077c9C2403a1ef324885CeC",
+              "0x5c2ed810328349100A66B82b78a1791B101C9D61",
+              "0x28424507fefb6f7f8E9D3860F56504E4e5f5f390"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "polygon-bifi-maxi",
@@ -1962,7 +2446,7 @@
       "LINK",
       "UNI",
       "AAVE",
-      "USDC",
+      "pUSDCe",
       "USDT",
       "DAI",
       "BUSD"
@@ -2042,9 +2526,9 @@
   },
   {
     "id": "kyber-usdc-mai",
-    "name": "MAI-USDC LP",
+    "name": "MAI-USDC.e LP",
     "type": "standard",
-    "token": "MAI-USDC kLP",
+    "token": "MAI-USDC.e kLP",
     "tokenAddress": "0x8Eed28c5353987B9e679899c2A047434e600DCeD",
     "tokenDecimals": 18,
     "tokenProviderId": "kyber",
@@ -2058,7 +2542,7 @@
     "retireReason": "rewards",
     "retiredAt": 1690903973,
     "platformId": "kyber",
-    "assets": ["MAI", "USDC"],
+    "assets": ["MAI", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -2075,9 +2559,9 @@
   },
   {
     "id": "dystopia-usd+-usdc",
-    "name": "USD+-USDC sLP",
+    "name": "USD+-USDC.e sLP",
     "type": "standard",
-    "token": "USD+-USDC sLP",
+    "token": "USD+-USDC.e sLP",
     "tokenAddress": "0x421a018cC5839c4C0300AfB21C725776dc389B1a",
     "tokenDecimals": 18,
     "tokenProviderId": "dystopia",
@@ -2091,7 +2575,7 @@
     "retireReason": "rewards",
     "retiredAt": 1697816149,
     "platformId": "dystopia",
-    "assets": ["USD+", "USDC"],
+    "assets": ["USD+", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -2224,9 +2708,9 @@
   },
   {
     "id": "dystopia-wmatic-usdc",
-    "name": "USDC-MATIC vLP",
+    "name": "USDC.e-MATIC vLP",
     "type": "standard",
-    "token": "USDC-MATIC vLP",
+    "token": "USDC.e-MATIC vLP",
     "tokenAddress": "0x60c088234180b36EDcec7AA8Aa23912Bb6bed114",
     "tokenDecimals": 18,
     "tokenProviderId": "dystopia",
@@ -2240,7 +2724,7 @@
     "retireReason": "tvl",
     "retiredAt": 1704791264,
     "platformId": "dystopia",
-    "assets": ["USDC", "MATIC"],
+    "assets": ["pUSDCe", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "IL_HIGH", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -2288,9 +2772,9 @@
   },
   {
     "id": "dystopia-usdc-weth",
-    "name": "ETH-USDC vLP",
+    "name": "ETH-USDC.e vLP",
     "type": "standard",
-    "token": "ETH-USDC vLP",
+    "token": "ETH-USDC.e vLP",
     "tokenAddress": "0xCE1923D2242BBA540f1d56c8E23b1FBEAe2596dc",
     "tokenDecimals": 18,
     "tokenProviderId": "dystopia",
@@ -2304,7 +2788,7 @@
     "retireReason": "tvl",
     "retiredAt": 1670263732,
     "platformId": "dystopia",
-    "assets": ["ETH", "USDC"],
+    "assets": ["ETH", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "IL_HIGH", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -2320,9 +2804,9 @@
   },
   {
     "id": "dystopia-usdc-frax",
-    "name": "FRAX-USDC sLP",
+    "name": "FRAX-USDC.e sLP",
     "type": "standard",
-    "token": "FRAX-USDC sLP",
+    "token": "FRAX-USDC.e sLP",
     "tokenAddress": "0x53227c83a98Ba1035FEd912Da6cE26a0c11C7C66",
     "tokenDecimals": 18,
     "tokenProviderId": "dystopia",
@@ -2336,7 +2820,7 @@
     "retireReason": "tvl",
     "retiredAt": 1670263732,
     "platformId": "dystopia",
-    "assets": ["FRAX", "USDC"],
+    "assets": ["FRAX", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -2359,9 +2843,9 @@
   },
   {
     "id": "stargate-polygon-usdc",
-    "name": "USDC LP",
+    "name": "USDC.e LP",
     "type": "standard",
-    "token": "S*USDC",
+    "token": "S*USDC.e",
     "tokenAddress": "0x1205f31718499dBf1fCa446663B532Ef87481fe1",
     "tokenDecimals": 6,
     "tokenProviderId": "stargate",
@@ -2373,7 +2857,7 @@
     "status": "active",
     "createdAt": 1658491884,
     "platformId": "stargate",
-    "assets": ["USDC"],
+    "assets": ["pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -2544,9 +3028,26 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory-crypto/13/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory-crypto/13/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-crypto-13/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-13/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-13/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xFb6FE7802bA9290ef8b00CA16Af4Bc26eb663a28",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0xFb6FE7802bA9290ef8b00CA16Af4Bc26eb663a28",
+            "coins": [
+              "0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
+              "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "balancer-2brl-bbamusd",
@@ -2647,9 +3148,9 @@
   },
   {
     "id": "balancer-matic-usdc-eth-bal",
-    "name": "MATIC/USDC/ETH/BAL",
+    "name": "MATIC/USDC.e/ETH/BAL",
     "type": "standard",
-    "token": "MATIC/USDC/ETH/BAL BPT",
+    "token": "MATIC/USDC.e/ETH/BAL BPT",
     "tokenAddress": "0x0297e37f1873D2DAb4487Aa67cD56B58E2F27875",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
@@ -2663,7 +3164,7 @@
     "retireReason": "rewards",
     "retiredAt": 1689007467,
     "platformId": "balancer",
-    "assets": ["MATIC", "USDC", "ETH", "BAL"],
+    "assets": ["MATIC", "pUSDCe", "ETH", "BAL"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -2679,9 +3180,9 @@
   },
   {
     "id": "balancer-usdc-link-eth-bal-aave",
-    "name": "USDC/LINK/ETH/BAL/AAVE",
+    "name": "USDC.e/LINK/ETH/BAL/AAVE",
     "type": "standard",
-    "token": "USDC/LINK/ETH/BAL/AAVE BPT",
+    "token": "USDC.e/LINK/ETH/BAL/AAVE BPT",
     "tokenAddress": "0x36128D5436d2d70cab39C9AF9CcE146C38554ff0",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
@@ -2695,7 +3196,7 @@
     "retireReason": "rewards",
     "retiredAt": 1669201739,
     "platformId": "balancer",
-    "assets": ["USDC", "oldLINK", "ETH", "BAL", "AAVE"],
+    "assets": ["pUSDCe", "oldLINK", "ETH", "BAL", "AAVE"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -2933,7 +3434,7 @@
   },
   {
     "id": "mai-curve-mai-3pool",
-    "name": "MAI/DAI/USDC/USDT",
+    "name": "MAI/DAI/USDC.e/USDT",
     "type": "standard",
     "token": "mai+am3CRV",
     "tokenAddress": "0x447646e84498552e62eCF097Cc305eaBFFF09308",
@@ -2949,7 +3450,7 @@
     "retireReason": "rewards",
     "retiredAt": 1666869374,
     "platformId": "mai",
-    "assets": ["MAI", "DAI", "USDC", "USDT"],
+    "assets": ["MAI", "DAI", "pUSDCe", "USDT"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -2962,9 +3463,36 @@
     ],
     "strategyTypeId": "multi-lp",
     "depositFee": 0.005,
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/107/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/107/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-107/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-107/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-107/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x447646e84498552e62eCF097Cc305eaBFFF09308",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x447646e84498552e62eCF097Cc305eaBFFF09308",
+            "coins": [
+              "0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
+              "0xE7a24EF0C5e95Ffb0f6684b813A78F2a3AD7D171"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0x5ab5c56b9db92ba45a0b46a207286cd83c15c939",
+            "coins": [
+              "0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
+              "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+              "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+              "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "beefy-beqi-earnings",
@@ -2979,7 +3507,8 @@
     "earnContractAddress": "0x5D060698F179E7D2233480A44d6D3979e4Ae9e7f",
     "oracle": "tokens",
     "oracleId": "beQI",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "createdAt": 1650557675,
     "platformId": "beefy",
     "assets": ["beQI"],
@@ -2993,7 +3522,8 @@
     ],
     "strategyTypeId": "beqi",
     "excluded": "beefy-beqi",
-    "network": "polygon"
+    "network": "polygon",
+    "retiredAt": 1708531102
   },
   {
     "id": "giddy-giddy",
@@ -3026,9 +3556,9 @@
   },
   {
     "id": "giddy-giddy-usdc",
-    "name": "GIDDY-USDC LP",
+    "name": "GIDDY-USDC.e LP",
     "type": "standard",
-    "token": "GIDDY-USDC SLP",
+    "token": "GIDDY-USDC.e SLP",
     "tokenAddress": "0xDE990994309BC08E57aca82B1A19170AD84323E8",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
@@ -3042,7 +3572,7 @@
     "retireReason": "rewards",
     "retiredAt": 1681138569,
     "platformId": "giddy",
-    "assets": ["GIDDY", "USDC"],
+    "assets": ["GIDDY", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?tokens=MATIC&tokens=0x67eB41A14C0fe5CD701FC9d5A3D6597A72F641a6&chainId=137",
@@ -3058,7 +3588,7 @@
   },
   {
     "id": "curve-am3crv",
-    "name": "DAI/USDC/USDT",
+    "name": "DAI/USDC.e/USDT",
     "type": "standard",
     "token": "am3CRV",
     "tokenAddress": "0xE7a24EF0C5e95Ffb0f6684b813A78F2a3AD7D171",
@@ -3074,7 +3604,7 @@
     "retireReason": "rewards",
     "retiredAt": 1695059742,
     "platformId": "curve",
-    "assets": ["DAI", "USDC", "USDT"],
+    "assets": ["DAI", "pUSDCe", "USDT"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -3086,9 +3616,36 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/aave/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/aave/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/aave/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/aave/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/aave/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x445FE580eF8d70FF569aB36e80c647af338db351",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x445FE580eF8d70FF569aB36e80c647af338db351",
+            "coins": [
+              "0x27F8D03b3a2196956ED754baDc28D73be8830A6e",
+              "0x1a13F4Ca1d028320A707D99520AbFefca3998b7F",
+              "0x60D55F02A771d515e077c9C2403a1ef324885CeC"
+            ]
+          },
+          {
+            "type": "fixed-deposit-underlying",
+            "target": "0x445FE580eF8d70FF569aB36e80c647af338db351",
+            "coins": [
+              "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+              "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+              "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "quick-quick",
@@ -3124,9 +3681,9 @@
   },
   {
     "id": "sushi-poly-usdc-bifi",
-    "name": "oldBIFI-USDC SLP",
+    "name": "oldBIFI-USDC.e SLP",
     "type": "standard",
-    "token": "oldBIFI-USDC SLP",
+    "token": "oldBIFI-USDC.e SLP",
     "tokenAddress": "0x180237bd326d5245D0898336F54b3c8012c5c62f",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
@@ -3140,7 +3697,7 @@
     "retireReason": "rewards",
     "retiredAt": 1677683221,
     "platformId": "sushi",
-    "assets": ["USDC", "oldBIFI"],
+    "assets": ["pUSDCe", "oldBIFI"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -3191,9 +3748,34 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/ren/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/ren/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/ren/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/ren/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/ren/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xC2d95EEF97Ec6C17551d45e77B590dc1F9117C67",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xC2d95EEF97Ec6C17551d45e77B590dc1F9117C67",
+            "coins": [
+              "0x5c2ed810328349100A66B82b78a1791B101C9D61",
+              "0xDBf31dF14B66535aF65AaC99C32e9eA844e14501"
+            ]
+          },
+          {
+            "type": "fixed-deposit-underlying",
+            "target": "0xC2d95EEF97Ec6C17551d45e77B590dc1F9117C67",
+            "coins": [
+              "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+              "0xDBf31dF14B66535aF65AaC99C32e9eA844e14501"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "ape-banana-matic",
@@ -3251,7 +3833,7 @@
     "status": "active",
     "createdAt": 1678690832,
     "platformId": "convex",
-    "assets": ["DAI", "USDC", "USDT", "WBTC", "ETH"],
+    "assets": ["DAI", "pUSDCe", "USDT", "WBTC", "ETH"],
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -3263,15 +3845,44 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/atricrypto3/swap",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto3/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto3/withdraw",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x92215849c439E1f8612b6646060B4E3E5ef822cC",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x92215849c439E1f8612b6646060B4E3E5ef822cC",
+            "coins": [
+              "0xE7a24EF0C5e95Ffb0f6684b813A78F2a3AD7D171",
+              "0x5c2ed810328349100A66B82b78a1791B101C9D61",
+              "0x28424507fefb6f7f8E9D3860F56504E4e5f5f390"
+            ]
+          },
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x1d8b86e3d88cdb2d34688e87e72f388cb541b7c8",
+            "coins": [
+              "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+              "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+              "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+              "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+              "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "polywise-usdc-wise-eol",
-    "name": "WISE-USDC LP",
+    "name": "WISE-USDC.e LP",
     "type": "standard",
-    "token": "WISE-USDC LP",
+    "token": "WISE-USDC.e LP",
     "tokenAddress": "0x2F9209Ef6fA6C002bf6fC99124336e24F88B62D0",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -3285,7 +3896,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "polywise",
-    "assets": ["polyWISE", "USDC"],
+    "assets": ["polyWISE", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x4c19DdeebAF84cA3A255730295AD9d824D4Ff51f&outputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x4c19DdeebAF84cA3A255730295AD9d824D4Ff51f/0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
@@ -3361,9 +3972,9 @@
   },
   {
     "id": "polyalpha-alpha-usdc-eol",
-    "name": "ALPHA-USDC LP",
+    "name": "ALPHA-USDC.e LP",
     "type": "standard",
-    "token": "ALPHA-USDC LP",
+    "token": "ALPHA-USDC.e LP",
     "tokenAddress": "0x944a8B12D898E878F92cfC18eee5E6f3f7e2E70d",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -3376,7 +3987,7 @@
     "createdAt": 1632219357,
     "retiredAt": 1646317670,
     "platformId": "jetswap",
-    "assets": ["ALPHA", "USDC"],
+    "assets": ["ALPHA", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://polygon-exchange.jetswap.finance/#/swap?outputCurrency=0x0B048D6e01a6b9002C291060bF2179938fd8264c",
     "addLiquidityUrl": "https://polygon-exchange.jetswap.finance/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0x0B048D6e01a6b9002C291060bF2179938fd8264c",
@@ -3421,9 +4032,9 @@
   },
   {
     "id": "sandman-delirium-usdc-eol",
-    "name": "DELIRIUM-USDC LP",
+    "name": "DELIRIUM-USDC.e LP",
     "type": "standard",
-    "token": "DELIRIUM-USDC LP",
+    "token": "DELIRIUM-USDC.e LP",
     "tokenAddress": "0x2F051dB1634eEa2081590860ab8E756D452f2239",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -3436,7 +4047,7 @@
     "createdAt": 1632157642,
     "retiredAt": 1646317670,
     "platformId": "sandman",
-    "assets": ["DELIRIUM", "USDC"],
+    "assets": ["DELIRIUM", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x238779aFfE6FFD475cB7e84582FcA7789F310Dc8",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x238779aFfE6FFD475cB7e84582FcA7789F310Dc8",
@@ -3651,9 +4262,9 @@
   },
   {
     "id": "ape-usdc-dai",
-    "name": "USDC-DAI ALP",
+    "name": "USDC.e-DAI ALP",
     "type": "standard",
-    "token": "USDC-DAI ALP",
+    "token": "USDC.e-DAI ALP",
     "tokenAddress": "0x5b13B583D4317aB15186Ed660A1E4C65C10da659",
     "tokenDecimals": 18,
     "tokenProviderId": "apeswap",
@@ -3667,7 +4278,7 @@
     "retireReason": "rewards",
     "retiredAt": 1689007467,
     "platformId": "apeswap",
-    "assets": ["USDC", "DAI"],
+    "assets": ["pUSDCe", "DAI"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -3732,7 +4343,7 @@
   },
   {
     "id": "ironswap-iron",
-    "name": "IRON/USDC/USDT/DAI",
+    "name": "IRON/USDC.e/USDT/DAI",
     "type": "standard",
     "token": "IRON-IS3USD",
     "tokenAddress": "0x985D40feDAA3208DAbaCDFDCA00CbeAAc9543949",
@@ -3748,7 +4359,7 @@
     "retireReason": "tvl",
     "retiredAt": 1656000864,
     "platformId": "ironswap",
-    "assets": ["IRON", "USDC", "USDT", "DAI"],
+    "assets": ["IRON", "pUSDCe", "USDT", "DAI"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -3793,9 +4404,9 @@
   },
   {
     "id": "polypup-ball-usdc-ball-eol",
-    "name": "BALL-USDC QLP",
+    "name": "BALL-USDC.e QLP",
     "type": "standard",
-    "token": "BALL-USDC QLP",
+    "token": "BALL-USDC.e QLP",
     "tokenAddress": "0x0097692463fD591aEf388851FE2d756505f498AC",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -3809,7 +4420,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "polypup",
-    "assets": ["BALL", "USDC"],
+    "assets": ["BALL", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x883aBe4168705d2e5dA925d28538B7a6AA9d8419",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x883aBe4168705d2e5dA925d28538B7a6AA9d8419",
@@ -3855,9 +4466,9 @@
   },
   {
     "id": "quick-usdc-quick-eol",
-    "name": "QUICK-USDC LP",
+    "name": "QUICK-USDC.e LP",
     "type": "standard",
-    "token": "QUICK-USDC LP",
+    "token": "QUICK-USDC.e LP",
     "tokenAddress": "0x1F1E4c845183EF6d50E9609F16f6f9cAE43BC9Cb",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -3871,7 +4482,7 @@
     "retireReason": "rewards",
     "retiredAt": 1655131078,
     "platformId": "quickswap",
-    "assets": ["QUICK", "USDC"],
+    "assets": ["QUICK", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -3895,9 +4506,9 @@
   },
   {
     "id": "pearzap-pear-usdc",
-    "name": "PEAR-USDC LP",
+    "name": "PEAR-USDC.e LP",
     "type": "standard",
-    "token": "PEAR-USDC LP",
+    "token": "PEAR-USDC.e LP",
     "tokenAddress": "0xa1d88Ce0d030B51342a05f9Dcc10AC4214592DAc",
     "tokenDecimals": 18,
     "tokenProviderId": "waultfinance",
@@ -3911,7 +4522,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "pearzap",
-    "assets": ["PEAR", "USDC"],
+    "assets": ["PEAR", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.wault.finance/polygon/#/swap?outputCurrency=0xc8bcb58caEf1bE972C0B638B1dD8B0748Fdc8A44",
     "addLiquidityUrl": "https://swap.wault.finance/polygon/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0xc8bcb58caEf1bE972C0B638B1dD8B0748Fdc8A44",
@@ -3957,9 +4568,9 @@
   },
   {
     "id": "quick-guard-usdc-eol",
-    "name": "GUARD-USDC LP",
+    "name": "GUARD-USDC.e LP",
     "type": "standard",
-    "token": "GUARD-USDC LP",
+    "token": "GUARD-USDC.e LP",
     "tokenAddress": "0xD2EeeEdfcAF1457F7BC9cbA28d5316F73BB83b49",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -3973,7 +4584,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646317670,
     "platformId": "quickswap",
-    "assets": ["GUARD", "USDC"],
+    "assets": ["GUARD", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
@@ -4225,9 +4836,9 @@
   },
   {
     "id": "polycracker-lith-usdc-eol",
-    "name": "LITHIUM-USDC LP",
+    "name": "LITHIUM-USDC.e LP",
     "type": "standard",
-    "token": "LITHIUM-USDC LP",
+    "token": "LITHIUM-USDC.e LP",
     "tokenAddress": "0x1b9c6d8b372C410426CF803fd20a815aA7B454c2",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -4240,7 +4851,7 @@
     "createdAt": 1627397974,
     "retiredAt": 1646317670,
     "platformId": "polywantsacracker",
-    "assets": ["LITHIUM", "USDC"],
+    "assets": ["LITHIUM", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xfE1a200637464FBC9B60Bc7AeCb9b86c0E1d486E",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xfE1a200637464FBC9B60Bc7AeCb9b86c0E1d486E",
@@ -4255,9 +4866,9 @@
   },
   {
     "id": "dinoswap-usdc-mimatic-eol",
-    "name": "MAI-USDC LP",
+    "name": "MAI-USDC.e LP",
     "type": "standard",
-    "token": "MAI-USDC QLP",
+    "token": "MAI-USDC.e QLP",
     "tokenAddress": "0x160532D2536175d65C03B97b0630A9802c274daD",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -4271,7 +4882,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "dinoswap",
-    "assets": ["MAI", "USDC"],
+    "assets": ["MAI", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -4296,9 +4907,9 @@
   },
   {
     "id": "jetswap-poly-usdc-usdt",
-    "name": "USDC-USDT LP",
+    "name": "USDC.e-USDT LP",
     "type": "standard",
-    "token": "USDC-USDT LP",
+    "token": "USDC.e-USDT LP",
     "tokenAddress": "0x20BF018FDDBa3b352f3d913FE1c81b846fE0F490",
     "tokenDecimals": 18,
     "tokenProviderId": "jetswap",
@@ -4312,7 +4923,7 @@
     "retireReason": "rewards",
     "retiredAt": 1686234513,
     "platformId": "jetswap",
-    "assets": ["USDC", "USDT"],
+    "assets": ["pUSDCe", "USDT"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://polygon-exchange.jetswap.finance/#/add/0xc2132D05D31c914a87C6611C10748AEb04B58e8F/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "removeLiquidityUrl": "https://polygon-exchange.jetswap.finance/#/remove/0xc2132D05D31c914a87C6611C10748AEb04B58e8F/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -4326,9 +4937,9 @@
   },
   {
     "id": "mai-usdc-mimatic",
-    "name": "MAI-USDC LP",
+    "name": "MAI-USDC.e LP",
     "type": "standard",
-    "token": "MAI-USDC QLP",
+    "token": "MAI-USDC.e QLP",
     "tokenAddress": "0x160532D2536175d65C03B97b0630A9802c274daD",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -4342,7 +4953,7 @@
     "retireReason": "rewards",
     "retiredAt": 1688584399,
     "platformId": "mai",
-    "assets": ["MAI", "USDC"],
+    "assets": ["MAI", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -4367,9 +4978,9 @@
   },
   {
     "id": "polypup-usdc-bone-eol",
-    "name": "BONE-USDC QLP",
+    "name": "BONE-USDC.e QLP",
     "type": "standard",
-    "token": "BONE-USDC QLP",
+    "token": "BONE-USDC.e QLP",
     "tokenAddress": "0x2CC05c660f35E8692CA99dB95922CB744d44ef20",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -4383,7 +4994,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "polypup",
-    "assets": ["BONE", "USDC"],
+    "assets": ["BONE", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x6bb45cEAC714c52342Ef73ec663479da35934bf7",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x6bb45cEAC714c52342Ef73ec663479da35934bf7",
@@ -4555,8 +5166,10 @@
     "earnContractAddress": "0xBa58D7131Ca50DdFB458f37ea0De6fdcebFe836B",
     "oracle": "lps",
     "oracleId": "telxchange-quick-aave-tel",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1626327159,
+    "retireReason": "rewards",
+    "retiredAt": 1707845800,
     "platformId": "telxchange",
     "assets": ["TEL", "AAVE"],
     "risks": [
@@ -4628,11 +5241,40 @@
     "createdAt": 1625140527,
     "retiredAt": 1646317670,
     "platformId": "curve",
-    "assets": ["DAI", "USDC", "USDT", "WBTC", "ETH"],
+    "assets": ["DAI", "pUSDCe", "USDT", "WBTC", "ETH"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/atricrypto/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/atricrypto/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/atricrypto/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x751B1e21756bDbc307CBcC5085c042a0e9AaEf36",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x751B1e21756bDbc307CBcC5085c042a0e9AaEf36",
+            "coins": [
+              "0xE7a24EF0C5e95Ffb0f6684b813A78F2a3AD7D171",
+              "0x5c2ed810328349100A66B82b78a1791B101C9D61",
+              "0x28424507fefb6f7f8E9D3860F56504E4e5f5f390"
+            ]
+          },
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x3fcd5de6a9fc8a99995c406c77dda3ed7e406f81",
+            "coins": [
+              "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+              "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+              "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+              "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+              "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "dfyn-ice-dfyn-eol",
@@ -4667,7 +5309,7 @@
   },
   {
     "id": "ironswap-3usd",
-    "name": "USDC/USDT/DAI",
+    "name": "USDC.e/USDT/DAI",
     "type": "standard",
     "token": "IS3USD",
     "tokenAddress": "0xb4d09ff3dA7f9e9A2BA029cb0A81A989fd7B8f17",
@@ -4683,7 +5325,7 @@
     "retireReason": "tvl",
     "retiredAt": 1656000864,
     "platformId": "ironswap",
-    "assets": ["USDC", "USDT", "DAI"],
+    "assets": ["pUSDCe", "USDT", "DAI"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.iron.finance/swap/pools/is3usd/deposit",
     "removeLiquidityUrl": "https://app.iron.finance/swap/pools/is3usd/withdraw",
@@ -4721,9 +5363,9 @@
   },
   {
     "id": "jetswap-poly-pwings-usdc-eol",
-    "name": "pWINGS-USDC LP",
+    "name": "pWINGS-USDC.e LP",
     "type": "standard",
-    "token": "pWINGS-USDC LP",
+    "token": "pWINGS-USDC.e LP",
     "tokenAddress": "0xaf623E96d38191038C48990Df298e07Fb77b56c3",
     "tokenDecimals": 18,
     "tokenProviderId": "jetswap",
@@ -4736,7 +5378,7 @@
     "createdAt": 1625844034,
     "retiredAt": 1646317670,
     "platformId": "jetswap",
-    "assets": ["pWINGS", "USDC"],
+    "assets": ["pWINGS", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://polygon-exchange.jetswap.finance/#/swap?outputCurrency=0x845E76A8691423fbc4ECb8Dd77556Cb61c09eE25",
     "addLiquidityUrl": "https://polygon-exchange.jetswap.finance/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x845E76A8691423fbc4ECb8Dd77556Cb61c09eE25",
@@ -4814,9 +5456,9 @@
   },
   {
     "id": "quick-usdc-mimatic-eol",
-    "name": "MAI-USDC LP",
+    "name": "MAI-USDC.e LP",
     "type": "standard",
-    "token": "MAI-USDC QLP",
+    "token": "MAI-USDC.e QLP",
     "tokenAddress": "0x160532D2536175d65C03B97b0630A9802c274daD",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -4830,7 +5472,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "quickswap",
-    "assets": ["MAI", "USDC"],
+    "assets": ["MAI", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
@@ -4970,9 +5612,9 @@
   },
   {
     "id": "boneswap-quick-usdc-bone-eol",
-    "name": "BONE-USDC LP",
+    "name": "BONE-USDC.e LP",
     "type": "standard",
-    "token": "BONE-USDC LP",
+    "token": "BONE-USDC.e LP",
     "tokenAddress": "0xc4DA04f471210063f8C79a09D6152D63085451a5",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -4986,7 +5628,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "boneswap",
-    "assets": ["BONEswap", "USDC"],
+    "assets": ["BONEswap", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x80244C2441779361F35803b8C711C6c8fC6054a3",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x80244C2441779361F35803b8C711C6c8fC6054a3/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -5245,9 +5887,9 @@
   },
   {
     "id": "polypup-usdc-pup-eol",
-    "name": "PUP-USDC QLP",
+    "name": "PUP-USDC.e QLP",
     "type": "standard",
-    "token": "PUP-USDC QLP",
+    "token": "PUP-USDC.e QLP",
     "tokenAddress": "0x767f8BD67a5f133BdDF3b285c5E2FD3D157A2cdC",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -5261,7 +5903,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "polypup",
-    "assets": ["PUP", "USDC"],
+    "assets": ["PUP", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0xcFe2cF35D2bDDE84967e67d00aD74237e234CE59",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xcFe2cF35D2bDDE84967e67d00aD74237e234CE59",
@@ -5663,9 +6305,9 @@
   },
   {
     "id": "polyyeld-quick-usdc-yeld-eol",
-    "name": "YELD-USDC QLP",
+    "name": "YELD-USDC.e QLP",
     "type": "standard",
-    "token": "YELD-USDC QLP",
+    "token": "YELD-USDC.e QLP",
     "tokenAddress": "0xAD8f4c66b28756458Fc419AA67aD2207A21A6997",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -5678,7 +6320,7 @@
     "createdAt": 1624239489,
     "retiredAt": 1646317670,
     "platformId": "polyyeld",
-    "assets": ["USDC", "YELD"],
+    "assets": ["pUSDCe", "YELD"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0xd0f3121A190d85dE0AB6131f2bCEcdbfcfB38891&outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xd0f3121A190d85dE0AB6131f2bCEcdbfcfB38891/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -5718,9 +6360,9 @@
   },
   {
     "id": "quick-usdc-pbnb-eol",
-    "name": "pBNB-USDC QLP",
+    "name": "pBNB-USDC.e QLP",
     "type": "standard",
-    "token": "pBNB-USDC QLP",
+    "token": "pBNB-USDC.e QLP",
     "tokenAddress": "0xE55cb144E02Cffb6fBD65d9a4BD62378998Bc267",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -5734,7 +6376,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "quickswap",
-    "assets": ["USDC", "PBNB"],
+    "assets": ["pUSDCe", "PBNB"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0xE55cb144E02Cffb6fBD65d9a4BD62378998Bc267&outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xE55cb144E02Cffb6fBD65d9a4BD62378998Bc267/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -5792,9 +6434,9 @@
   },
   {
     "id": "quick-usdc-dai",
-    "name": "USDC-DAI LP",
+    "name": "USDC.e-DAI LP",
     "type": "standard",
-    "token": "USDC-DAI QLP",
+    "token": "USDC.e-DAI QLP",
     "tokenAddress": "0xf04adBF75cDFc5eD26eeA4bbbb991DB002036Bdd",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -5808,7 +6450,7 @@
     "retireReason": "rewards",
     "retiredAt": 1659773332,
     "platformId": "quickswap",
-    "assets": ["USDC", "DAI"],
+    "assets": ["pUSDCe", "DAI"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -5929,9 +6571,9 @@
   },
   {
     "id": "quick-usdc-eth",
-    "name": "USDC-ETH LP",
+    "name": "USDC.e-ETH LP",
     "type": "standard",
-    "token": "USDC-ETH QLP",
+    "token": "USDC.e-ETH QLP",
     "tokenAddress": "0x853Ee4b2A13f8a742d64C8F088bE7bA2131f670d",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -5945,7 +6587,7 @@
     "retireReason": "rewards",
     "retiredAt": 1665418750,
     "platformId": "quickswap",
-    "assets": ["USDC", "ETH"],
+    "assets": ["pUSDCe", "ETH"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -6065,9 +6707,9 @@
   },
   {
     "id": "iron-iron-usdc-quick-eol",
-    "name": "IRON-USDC LP",
+    "name": "IRON-USDC.e LP",
     "type": "standard",
-    "token": "IRON-USDC QLP",
+    "token": "IRON-USDC.e QLP",
     "tokenAddress": "0x2Bbe0F728f4d5821F84eeE0432D2A4be7C0cB7Fc",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -6080,7 +6722,7 @@
     "createdAt": 1622727165,
     "retiredAt": 1646317670,
     "platformId": "quickswap",
-    "assets": ["IRON", "USDC"],
+    "assets": ["IRON", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xD86b5923F3AD7b585eD81B448170ae026c65ae9a",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xD86b5923F3AD7b585eD81B448170ae026c65ae9a/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -6195,9 +6837,9 @@
   },
   {
     "id": "sushi-poly-usdc-dai",
-    "name": "USDC-DAI SLP",
+    "name": "USDC.e-DAI SLP",
     "type": "standard",
-    "token": "USDC-DAI SLP",
+    "token": "USDC.e-DAI SLP",
     "tokenAddress": "0xCD578F016888B57F1b1e3f887f392F0159E26747",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
@@ -6211,7 +6853,7 @@
     "retireReason": "rewards",
     "retiredAt": 1667319839,
     "platformId": "sushi",
-    "assets": ["USDC", "DAI"],
+    "assets": ["pUSDCe", "DAI"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -6435,9 +7077,9 @@
   },
   {
     "id": "quick-btc-usdc",
-    "name": "WBTC-USDC LP",
+    "name": "WBTC-USDC.e LP",
     "type": "standard",
-    "token": "WBTC-USDC QLP",
+    "token": "WBTC-USDC.e QLP",
     "tokenAddress": "0xF6a637525402643B0654a54bEAd2Cb9A83C8B498",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -6451,7 +7093,7 @@
     "retireReason": "rewards",
     "retiredAt": 1665418750,
     "platformId": "quickswap",
-    "assets": ["WBTC", "USDC"],
+    "assets": ["WBTC", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -6505,9 +7147,9 @@
   },
   {
     "id": "iron-iron-usdc-eol",
-    "name": "IRON-USDC LP",
+    "name": "IRON-USDC.e LP",
     "type": "standard",
-    "token": "IRON-USDC LP",
+    "token": "IRON-USDC.e LP",
     "tokenAddress": "0x85dE135fF062Df790A5f20B79120f17D3da63b2d",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
@@ -6520,7 +7162,7 @@
     "createdAt": 1622026912,
     "retiredAt": 1646317670,
     "platformId": "sushi",
-    "assets": ["IRON", "USDC"],
+    "assets": ["IRON", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?outputCurrency=0xD86b5923F3AD7b585eD81B448170ae026c65ae9a",
     "addLiquidityUrl": "https://www.sushi.com/earn/matic:0x85de135ff062df790a5f20b79120f17d3da63b2d/add",
@@ -6535,9 +7177,9 @@
   },
   {
     "id": "quick-matic-usdc",
-    "name": "MATIC-USDC LP",
+    "name": "MATIC-USDC.e LP",
     "type": "standard",
-    "token": "MATIC-USDC QLP",
+    "token": "MATIC-USDC.e QLP",
     "tokenAddress": "0x6e7a5FAFcec6BB1e78bAE2A1F0B612012BF14827",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -6551,7 +7193,7 @@
     "retireReason": "rewards",
     "retiredAt": 1665418750,
     "platformId": "quickswap",
-    "assets": ["MATIC", "USDC"],
+    "assets": ["MATIC", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -6702,9 +7344,9 @@
   },
   {
     "id": "sushi-poly-usdc-usdt",
-    "name": "USDC-USDT LP",
+    "name": "USDC.e-USDT LP",
     "type": "standard",
-    "token": "USDC-USDT SLP",
+    "token": "USDC.e-USDT SLP",
     "tokenAddress": "0x4B1F1e2435A9C96f7330FAea190Ef6A7C8D70001",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
@@ -6718,7 +7360,7 @@
     "retireReason": "rewards",
     "retiredAt": 1669201739,
     "platformId": "sushi",
-    "assets": ["USDC", "USDT"],
+    "assets": ["pUSDCe", "USDT"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -6936,9 +7578,9 @@
   },
   {
     "id": "sushi-poly-usdc-eth",
-    "name": "USDC-ETH LP",
+    "name": "USDC.e-ETH LP",
     "type": "standard",
-    "token": "USDC-ETH SLP",
+    "token": "USDC.e-ETH SLP",
     "tokenAddress": "0x34965ba0ac2451A34a0471F04CCa3F990b8dea27",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
@@ -6952,7 +7594,7 @@
     "retireReason": "rewards",
     "retiredAt": 1677683221,
     "platformId": "sushi",
-    "assets": ["USDC", "ETH"],
+    "assets": ["pUSDCe", "ETH"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -7078,9 +7720,9 @@
   },
   {
     "id": "quick-usdc-usdt",
-    "name": "USDC-USDT LP",
+    "name": "USDC.e-USDT LP",
     "type": "standard",
-    "token": "USDC-USDT QLP",
+    "token": "USDC.e-USDT QLP",
     "tokenAddress": "0x2cF7252e74036d1Da831d11089D326296e64a728",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -7094,7 +7736,7 @@
     "retireReason": "rewards",
     "retiredAt": 1665418750,
     "platformId": "quickswap",
-    "assets": ["USDC", "USDT"],
+    "assets": ["pUSDCe", "USDT"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -7304,9 +7946,9 @@
   },
   {
     "id": "krill-krill-usdc-eol",
-    "name": "KRILL-USDC LP",
+    "name": "KRILL-USDC.e LP",
     "type": "standard",
-    "token": "KRILL-USDC LP",
+    "token": "KRILL-USDC.e LP",
     "tokenAddress": "0x6405Ebc22cB0899FC21f414085Ac4044B4721a0d",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -7319,7 +7961,7 @@
     "createdAt": 1619551330,
     "retiredAt": 1622510175,
     "platformId": "polywhale",
-    "assets": ["KRILL", "USDC"],
+    "assets": ["KRILL", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x05089c9ebffa4f0aca269e32056b1b36b37ed71b&outputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x05089C9EBFFa4F0AcA269e32056b1b36B37ED71b",
@@ -7448,9 +8090,9 @@
   },
   {
     "id": "polysage-usdc-sage-eol",
-    "name": "SAGE-USDC LP",
+    "name": "SAGE-USDC.e LP",
     "type": "standard",
-    "token": "SAGE-USDC LP",
+    "token": "SAGE-USDC.e LP",
     "tokenAddress": "0x62F089467e22de4bc1FB5EE605eDe7e782b76B29",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -7464,7 +8106,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "polysage",
-    "assets": ["SAGE", "USDC"],
+    "assets": ["SAGE", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x2ed945Dc703D85c80225d95ABDe41cdeE14e1992",
@@ -7498,9 +8140,9 @@
   },
   {
     "id": "wexpoly-usdc-wex-eol",
-    "name": "USDC-WEXpoly LP",
+    "name": "USDC.e-WEXpoly LP",
     "type": "standard",
-    "token": "USDC-WEXpoly WLP",
+    "token": "USDC.e-WEXpoly WLP",
     "tokenAddress": "0x5DE6a3CcA10d3F788EEdbD4923e31D4658bf6f9a",
     "tokenDecimals": 18,
     "tokenProviderId": "waultfinance",
@@ -7514,7 +8156,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "waultfinance",
-    "assets": ["WEXpoly", "USDC"],
+    "assets": ["WEXpoly", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -7578,9 +8220,9 @@
   },
   {
     "id": "wexpoly-wbtc-usdc-eol",
-    "name": "WBTC-USDC LP",
+    "name": "WBTC-USDC.e LP",
     "type": "standard",
-    "token": "WBTC-USDC WLP",
+    "token": "WBTC-USDC.e WLP",
     "tokenAddress": "0x30eEf213D4B9C809f5776Ae56cC39f02f19F742f",
     "tokenDecimals": 18,
     "tokenProviderId": "waultfinance",
@@ -7594,7 +8236,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "waultfinance",
-    "assets": ["WBTC", "USDC"],
+    "assets": ["WBTC", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -7852,9 +8494,9 @@
   },
   {
     "id": "wexpoly-usdc-dai-eol",
-    "name": "USDC-DAI LP",
+    "name": "USDC.e-DAI LP",
     "type": "standard",
-    "token": "USDC-DAI WLP",
+    "token": "USDC.e-DAI WLP",
     "tokenAddress": "0x8E5c5AE2542116b5715b12bb2d391A770a607075",
     "tokenDecimals": 18,
     "tokenProviderId": "waultfinance",
@@ -7868,7 +8510,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "waultfinance",
-    "assets": ["DAI", "USDC"],
+    "assets": ["DAI", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -7892,9 +8534,9 @@
   },
   {
     "id": "wexpoly-matic-usdc-eol",
-    "name": "MATIC-USDC LP",
+    "name": "MATIC-USDC.e LP",
     "type": "standard",
-    "token": "MATIC-USDC WLP",
+    "token": "MATIC-USDC.e WLP",
     "tokenAddress": "0x8312A29A91D9Fac706F4d2ADEB1FA4540faD1673",
     "tokenDecimals": 18,
     "tokenProviderId": "waultfinance",
@@ -7908,7 +8550,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "waultfinance",
-    "assets": ["MATIC", "USDC"],
+    "assets": ["MATIC", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -7931,9 +8573,9 @@
   },
   {
     "id": "wexpoly-usdc-usdt-eol",
-    "name": "USDC-USDT LP",
+    "name": "USDC.e-USDT LP",
     "type": "standard",
-    "token": "USDC-USDT WLP",
+    "token": "USDC.e-USDT WLP",
     "tokenAddress": "0x7242e19A0937ac33472febD69462668a4cf5bbC5",
     "tokenDecimals": 18,
     "tokenProviderId": "waultfinance",
@@ -7947,7 +8589,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "waultfinance",
-    "assets": ["USDT", "USDC"],
+    "assets": ["USDT", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -7970,9 +8612,9 @@
   },
   {
     "id": "wexpoly-wex-usdc-eol",
-    "name": "WEXpoly-USDC LP",
+    "name": "WEXpoly-USDC.e LP",
     "type": "standard",
-    "token": "WEXpoly-USDC LP",
+    "token": "WEXpoly-USDC.e LP",
     "tokenAddress": "0x5DE6a3CcA10d3F788EEdbD4923e31D4658bf6f9a",
     "tokenDecimals": 18,
     "tokenProviderId": "waultfinance",
@@ -7986,7 +8628,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "waultfinance",
-    "assets": ["WEXpoly", "USDC"],
+    "assets": ["WEXpoly", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -8126,7 +8768,7 @@
   },
   {
     "id": "curve-poly-eurt",
-    "name": "EURt/DAI/USDC/USDT",
+    "name": "EURt/DAI/USDC.e/USDT",
     "type": "standard",
     "token": "crvEURT",
     "tokenAddress": "0x600743B1d8A96438bD46836fD34977a00293f6Aa",
@@ -8140,7 +8782,7 @@
     "status": "active",
     "createdAt": 1678690832,
     "platformId": "convex",
-    "assets": ["EURt", "DAI", "USDC", "USDT"],
+    "assets": ["EURt", "DAI", "pUSDCe", "USDT"],
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": [
       "COMPLEXITY_LOW",
@@ -8153,9 +8795,36 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/eurtusd/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/eurtusd/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/eurtusd/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/eurtusd/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/eurtusd/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xB446BF7b8D6D4276d0c75eC0e3ee8dD7Fe15783A",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0xB446BF7b8D6D4276d0c75eC0e3ee8dD7Fe15783A",
+            "coins": [
+              "0x7BDF330f423Ea880FF95fC41A280fD5eCFD3D09f",
+              "0xE7a24EF0C5e95Ffb0f6684b813A78F2a3AD7D171"
+            ]
+          },
+          {
+            "type": "fixed",
+            "target": "0x225fb4176f0e20cdb66b4a3df70ca3063281e855",
+            "coins": [
+              "0x7BDF330f423Ea880FF95fC41A280fD5eCFD3D09f",
+              "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+              "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+              "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "jarvis-4eur",
@@ -8187,9 +8856,28 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/37/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/37/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-37/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-37/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-37/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xAd326c253A84e9805559b73A08724e11E49ca651",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xAd326c253A84e9805559b73A08724e11E49ca651",
+            "coins": [
+              "0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c",
+              "0xE2Aa7db6dA1dAE97C5f5C6914d285fBfCC32A128",
+              "0xE111178A87A3BFf0c8d18DECBa5798827539Ae99",
+              "0x7BDF330f423Ea880FF95fC41A280fD5eCFD3D09f"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "quick-dpi-eth-eol",
@@ -8341,9 +9029,9 @@
   },
   {
     "id": "sushi-poly-frax-usdc-eol",
-    "name": "FRAX-USDC SLP",
+    "name": "FRAX-USDC.e SLP",
     "type": "standard",
-    "token": "FRAX-USDC SLP",
+    "token": "FRAX-USDC.e SLP",
     "tokenAddress": "0x9e20a8d3501BF96EDA8e69b96DD84840058a1cB0",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
@@ -8357,7 +9045,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "sushi",
-    "assets": ["FRAX", "USDC"],
+    "assets": ["FRAX", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -8496,9 +9184,9 @@
   },
   {
     "id": "sushi-poly-usdc-bct",
-    "name": "BCT-USDC SLP",
+    "name": "BCT-USDC.e SLP",
     "type": "standard",
-    "token": "BCT-USDC SLP",
+    "token": "BCT-USDC.e SLP",
     "tokenAddress": "0x1E67124681b402064CD0ABE8ed1B5c79D2e02f64",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
@@ -8512,7 +9200,7 @@
     "retireReason": "rewards",
     "retiredAt": 1677683221,
     "platformId": "sushi",
-    "assets": ["BCT", "USDC"],
+    "assets": ["BCT", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -8687,9 +9375,9 @@
   },
   {
     "id": "dinoswap-xmark-usdc-eol",
-    "name": "xMARK-USDC LP",
+    "name": "xMARK-USDC.e LP",
     "type": "standard",
-    "token": "xMARK-USDC LP",
+    "token": "xMARK-USDC.e LP",
     "tokenAddress": "0x97A95deb56d689802F02f50c25EBCda5d0A49591",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
@@ -8703,7 +9391,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "dinoswap",
-    "assets": ["xMARK", "USDC"],
+    "assets": ["xMARK", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0xf153eff70dc0bf3b085134928daeea248d9b30d0",
     "addLiquidityUrl": "https://www.sushi.com/earn/matic:0x97a95deb56d689802f02f50c25ebcda5d0a49591/add",
@@ -8718,9 +9406,9 @@
   },
   {
     "id": "quick-usdc-rusd-eol",
-    "name": "rUSD-USDC LP",
+    "name": "rUSD-USDC.e LP",
     "type": "standard",
-    "token": "rUSD-USDC QLP",
+    "token": "rUSD-USDC.e QLP",
     "tokenAddress": "0x5EF8747d1dc4839e92283794a10d448357973aC0",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -8734,7 +9422,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "quickswap",
-    "assets": ["rUSD", "USDC"],
+    "assets": ["rUSD", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -8946,9 +9634,26 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/23/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/23/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-23/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-23/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-23/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xA69b0D5c0C401BBA2d5162138613B5E38584F63F",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xA69b0D5c0C401BBA2d5162138613B5E38584F63F",
+            "coins": [
+              "0x8ca194A3b22077359b5732DE53373D4afC11DeE3",
+              "0x5d146d8B1dACb1EBBA5cb005ae1059DA8a1FbF57"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "popsicle-ice-eth",
@@ -9142,9 +9847,9 @@
   },
   {
     "id": "dinoswap-dino-usdc-eol",
-    "name": "DINO-USDC LP",
+    "name": "DINO-USDC.e LP",
     "type": "standard",
-    "token": "DINO-USDC LP",
+    "token": "DINO-USDC.e LP",
     "tokenAddress": "0x3324af8417844e70b81555A6D1568d78f4D4Bf1f",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
@@ -9158,7 +9863,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "dinoswap",
-    "assets": ["DINO", "USDC"],
+    "assets": ["DINO", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0xAa9654BECca45B5BDFA5ac646c939C62b527D394",
     "addLiquidityUrl": "https://www.sushi.com/earn/matic:0x3324af8417844e70b81555a6d1568d78f4d4bf1f/add",
@@ -9367,9 +10072,9 @@
   },
   {
     "id": "polygonfarm-spade-usdc-eol",
-    "name": "SPADE-USDC LP",
+    "name": "SPADE-USDC.e LP",
     "type": "standard",
-    "token": "SPADE-USDC LP",
+    "token": "SPADE-USDC.e LP",
     "tokenAddress": "0x6Fd8aAe9f85A7Db14c45453daAB81aa3085E4bA3",
     "tokenDecimals": 18,
     "tokenProviderId": "sushi",
@@ -9383,7 +10088,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "polygonfarm",
-    "assets": ["SPADE", "USDC"],
+    "assets": ["SPADE", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0xf5EA626334037a2cf0155D49eA6462fDdC6Eff19",
     "addLiquidityUrl": "https://www.sushi.com/earn/matic:0x6fd8aae9f85a7db14c45453daab81aa3085e4ba3/add",
@@ -9578,22 +10283,22 @@
   },
   {
     "id": "aave-usdc-eol",
-    "name": "USDC",
+    "name": "USDC.e",
     "type": "standard",
-    "token": "USDC",
+    "token": "USDC.e",
     "tokenAddress": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "tokenDecimals": 6,
     "earnedToken": "mooAaveUSDC",
     "earnedTokenAddress": "0xE71f3C11D4535a7F8c5FB03FDA57899B2C9c721F",
     "earnContractAddress": "0xE71f3C11D4535a7F8c5FB03FDA57899B2C9c721F",
     "oracle": "tokens",
-    "oracleId": "USDC",
+    "oracleId": "pUSDCe",
     "status": "eol",
     "createdAt": 1620539520,
     "retireReason": "rewards",
     "retiredAt": 1646317670,
     "platformId": "aave",
-    "assets": ["USDC"],
+    "assets": ["pUSDCe"],
     "risks": [
       "COMPLEXITY_MID",
       "BATTLE_TESTED",
@@ -9670,9 +10375,9 @@
   },
   {
     "id": "cafe-pbrew-usdc-eol",
-    "name": "pBREW-USDC LP",
+    "name": "pBREW-USD.e LP",
     "type": "standard",
-    "token": "pBREW-USDC LP",
+    "token": "pBREW-USDC.e LP",
     "tokenAddress": "0x723e866989Cacc8EFC346e1DCf5a9D73572bCFc8",
     "tokenDecimals": 18,
     "tokenProviderId": "cafeswap",
@@ -9686,7 +10391,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646317670,
     "platformId": "cafeswap",
-    "assets": ["pBREW", "USDC"],
+    "assets": ["pBREW", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://polygondex.cafeswap.finance/#/swap?outputCurrency=0xb5106a3277718ecad2f20ab6b86ce0fee7a21f09",
     "addLiquidityUrl": "https://polygondex.cafeswap.finance/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xb5106a3277718ecad2f20ab6b86ce0fee7a21f09",
@@ -9695,9 +10400,9 @@
   },
   {
     "id": "sing-usdc-sing-eol",
-    "name": "SING-USDC LP",
+    "name": "SING-USDC.e LP",
     "type": "standard",
-    "token": "SING-USDC ALP",
+    "token": "SING-USDC.e ALP",
     "tokenAddress": "0x6046eB198AbC5Ea4f17027bC00a2aeE0420E84EE",
     "tokenDecimals": 18,
     "tokenProviderId": "apeswap",
@@ -9711,7 +10416,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646317670,
     "platformId": "singular",
-    "assets": ["SING", "USDC"],
+    "assets": ["SING", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0xCB898b0eFb084Df14dd8E018dA37B4d0f06aB26D",
     "addLiquidityUrl": "https://apeswap.finance/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xCB898b0eFb084Df14dd8E018dA37B4d0f06aB26D",
@@ -9751,9 +10456,9 @@
   },
   {
     "id": "farmhero-quick-usdc-honor-eol",
-    "name": "HONOR-USDC QLP",
+    "name": "HONOR-USDC.e QLP",
     "type": "standard",
-    "token": "HONOR-USDC QLP",
+    "token": "HONOR-USDC.e QLP",
     "tokenAddress": "0x46489f825f11d7473D20279699b108aCAA246e73",
     "tokenDecimals": 18,
     "tokenProviderId": "farmhero",
@@ -9767,7 +10472,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646317670,
     "platformId": "quickswap",
-    "assets": ["HONOR", "USDC"],
+    "assets": ["HONOR", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0xb82A20B4522680951F11c94c54B8800c1C237693",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xb82A20B4522680951F11c94c54B8800c1C237693",
@@ -9782,9 +10487,9 @@
   },
   {
     "id": "farmhero-wault-usdc-honor-eol",
-    "name": "HONOR-USDC WLP",
+    "name": "HONOR-USDC.e WLP",
     "type": "standard",
-    "token": "HONOR-USDC WLP",
+    "token": "HONOR-USDC.e WLP",
     "tokenAddress": "0x4Bd5dF4300b7c5309cB1A0143e4A6d0184B878e1",
     "tokenDecimals": 18,
     "tokenProviderId": "farmhero",
@@ -9798,7 +10503,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646317670,
     "platformId": "waultfinance",
-    "assets": ["HONOR", "USDC"],
+    "assets": ["HONOR", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.wault.finance/polygon/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0xb82A20B4522680951F11c94c54B8800c1C237693",
     "addLiquidityUrl": "https://swap.wault.finance/polygon/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xb82A20B4522680951F11c94c54B8800c1C237693",
@@ -9838,9 +10543,9 @@
   },
   {
     "id": "ironswap-ice-usdc-eol",
-    "name": "ICE-USDC LP",
+    "name": "ICE-USDC.e LP",
     "type": "standard",
-    "token": "ICE-USDC LP",
+    "token": "ICE-USDC.e LP",
     "tokenAddress": "0x34832D9AC4127a232C1919d840f7aaE0fcb7315B",
     "tokenDecimals": 18,
     "tokenProviderId": "ironswap",
@@ -9854,7 +10559,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646317670,
     "platformId": "dfyn",
-    "assets": ["ironICE", "USDC"],
+    "assets": ["ironICE", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?outputCurrency=0x4A81f8796e0c6Ad4877A51C86693B0dE8093F2ef",
     "addLiquidityUrl": "https://exchange.dfyn.network/#/add/0x4A81f8796e0c6Ad4877A51C86693B0dE8093F2ef/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -9927,9 +10632,9 @@
   },
   {
     "id": "pzap-pzap-usdc-eol",
-    "name": "PZAP-USDC LP",
+    "name": "PZAP-USDC.e LP",
     "type": "standard",
-    "token": "PZAP-USDC LP",
+    "token": "PZAP-USDC.e LP",
     "tokenAddress": "0x1df7ADAeD1F7f36C822A3079198815b284aD8475",
     "tokenDecimals": 18,
     "tokenProviderId": "polyzap",
@@ -9943,7 +10648,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646317670,
     "platformId": "polyzap",
-    "assets": ["PZAP", "USDC"],
+    "assets": ["PZAP", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://polyzap.app/#/swap?outputCurrency=0xeb2778f74E5ee038E67AA6c77f0F0451ABd748FD",
     "addLiquidityUrl": "https://polyzap.app/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0xeb2778f74E5ee038E67AA6c77f0F0451ABd748FD",
@@ -10203,9 +10908,26 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/22/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/22/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-22/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-22/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-22/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xeF75E9C7097842AcC5D0869E1dB4e5fDdf4BFDDA",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xeF75E9C7097842AcC5D0869E1dB4e5fDdf4BFDDA",
+            "coins": [
+              "0xa926db7a4CC0cb1736D5ac60495ca8Eb7214B503",
+              "0x769434dcA303597C8fc4997Bf3DAB233e961Eda2"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "quick-gns-dai-eol",
@@ -10637,8 +11359,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/72/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/72/withdraw",
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-72/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-72/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-72/withdraw",
     "network": "polygon"
   },
   {
@@ -10933,7 +11656,8 @@
     "earnContractAddress": "0xDBFf95e99FccC8fbd90648B9E42C0F152518b9B8",
     "oracle": "tokens",
     "oracleId": "beQI",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "createdAt": 1650557677,
     "platformId": "beefy",
     "assets": ["beQI"],
@@ -10947,7 +11671,8 @@
     ],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0x580A84C73811E1839F75d86d75d88cCa0c241fF4",
-    "network": "polygon"
+    "network": "polygon",
+    "retiredAt": 1708531102
   },
   {
     "id": "quick-wmatic-maticx",
@@ -11031,9 +11756,9 @@
   },
   {
     "id": "quick-bnb-usdc-eol",
-    "name": "BNB-USDC LP",
+    "name": "BNB-USDC.e LP",
     "type": "standard",
-    "token": "BNB-USDC LP",
+    "token": "BNB-USDC.e LP",
     "tokenAddress": "0x40A5Df3E37152d4DaF279e0450289Af76472b02e",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -11047,7 +11772,7 @@
     "retireReason": "rewards",
     "retiredAt": 1651422223,
     "platformId": "quickswap",
-    "assets": ["BNB", "USDC"],
+    "assets": ["BNB", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -11065,9 +11790,9 @@
   },
   {
     "id": "kyber-usdc-jeur-eol",
-    "name": "jEUR-USDC LP",
+    "name": "jEUR-USDC.e LP",
     "type": "standard",
-    "token": "jEUR-USDC LP",
+    "token": "jEUR-USDC.e LP",
     "tokenAddress": "0xa1219DBE76eEcBf7571Fed6b020Dd9154396B70e",
     "tokenDecimals": 18,
     "tokenProviderId": "kyber",
@@ -11081,7 +11806,7 @@
     "retireReason": "rewards",
     "retiredAt": 1651422223,
     "platformId": "jarvis",
-    "assets": ["jEUR", "USDC"],
+    "assets": ["jEUR", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -11140,9 +11865,9 @@
   },
   {
     "id": "kyber-usdc-jgbp-eol",
-    "name": "jGBP-USDC LP",
+    "name": "jGBP-USDC.e LP",
     "type": "standard",
-    "token": "jGBP-USDC LP",
+    "token": "jGBP-USDC.e LP",
     "tokenAddress": "0xbb2d00675B775E0F8acd590e08DA081B2a36D3a6",
     "tokenDecimals": 18,
     "tokenProviderId": "kyber",
@@ -11156,7 +11881,7 @@
     "retireReason": "rewards",
     "retiredAt": 1651422223,
     "platformId": "jarvis",
-    "assets": ["jGBP", "USDC"],
+    "assets": ["jGBP", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -11174,9 +11899,9 @@
   },
   {
     "id": "kyber-usdc-jchf-eol",
-    "name": "jCHF-USDC LP",
+    "name": "jCHF-USDC.e LP",
     "type": "standard",
-    "token": "jCHF-USDC LP",
+    "token": "jCHF-USDC.e LP",
     "tokenAddress": "0x439E6A13a5ce7FdCA2CC03bF31Fb631b3f5EF157",
     "tokenDecimals": 18,
     "tokenProviderId": "kyber",
@@ -11190,7 +11915,7 @@
     "retireReason": "rewards",
     "retiredAt": 1651422223,
     "platformId": "jarvis",
-    "assets": ["jCHF", "USDC"],
+    "assets": ["jCHF", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -11319,9 +12044,9 @@
   },
   {
     "id": "cometh-eth-usdc-eol",
-    "name": "ETH-USDC LP",
+    "name": "ETH-USDC.e LP",
     "type": "standard",
-    "token": "ETH-USDC LP",
+    "token": "ETH-USDC.e LP",
     "tokenAddress": "0x1Edb2D8f791D2a51D56979bf3A25673D6E783232",
     "tokenDecimals": 18,
     "tokenProviderId": "cometh",
@@ -11335,7 +12060,7 @@
     "retireReason": "rewards",
     "retiredAt": 1654097535,
     "platformId": "cometh",
-    "assets": ["ETH", "USDC"],
+    "assets": ["ETH", "pUSDCe"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.cometh.io/#/swap?inputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "addLiquidityUrl": "https://swap.cometh.io/#/add/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -11412,9 +12137,9 @@
   },
   {
     "id": "cometh-usdc-must-eol",
-    "name": "USDC-MUST LP",
+    "name": "USDC.e-MUST LP",
     "type": "standard",
-    "token": "USDC-MUST LP",
+    "token": "USDC.e-MUST LP",
     "tokenAddress": "0x12A2aBcFcADc04681929F0c199bDf812967207E4",
     "tokenDecimals": 18,
     "tokenProviderId": "cometh",
@@ -11428,7 +12153,7 @@
     "retireReason": "rewards",
     "retiredAt": 1654097535,
     "platformId": "cometh",
-    "assets": ["USDC", "MUST"],
+    "assets": ["pUSDCe", "MUST"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.cometh.io/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x9c78ee466d6cb57a4d01fd887d2b5dfb2d46288f",
     "addLiquidityUrl": "https://swap.cometh.io/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0x9c78ee466d6cb57a4d01fd887d2b5dfb2d46288f",
@@ -11483,9 +12208,9 @@
   },
   {
     "id": "quick-usdc-newquick",
-    "name": "newQUICK-USDC LP",
+    "name": "newQUICK-USDC.e LP",
     "type": "standard",
-    "token": "newQUICK-USDC QLP",
+    "token": "newQUICK-USDC.e QLP",
     "tokenAddress": "0x747375305B825c49FB97eE0AC09d19Ec9Ef94BD2",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -11499,7 +12224,7 @@
     "retireReason": "rewards",
     "retiredAt": 1665418750,
     "platformId": "quickswap",
-    "assets": ["newQUICK", "USDC"],
+    "assets": ["newQUICK", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -11582,9 +12307,26 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/85/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/85/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-85/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-85/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-85/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xE8dCeA7Fb2Baf7a9F4d9af608F06d78a687F8d9A",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xE8dCeA7Fb2Baf7a9F4d9af608F06d78a687F8d9A",
+            "coins": [
+              "0x8343091F2499FD4b6174A46D067A920a3b851FF9",
+              "0x6AE7Dfc73E0dDE2aa99ac063DcF7e8A63265108c"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "jarvis-2nzd",
@@ -11616,9 +12358,26 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/228/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/228/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-228/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-228/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-228/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x976A750168801F58E8AEdbCfF9328138D544cc09",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x976A750168801F58E8AEdbCfF9328138D544cc09",
+            "coins": [
+              "0x6b526Daf03B4C47AF2bcc5860B12151823Ff70E0",
+              "0xeaFE31Cd9e8E01C8f0073A2C974f728Fb80e9DcE"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "jarvis-2jpy2",
@@ -11650,9 +12409,26 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/255/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/255/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-255/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-255/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-255/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xaA91CDD7abb47F821Cf07a2d38Cc8668DEAf1bdc",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xaA91CDD7abb47F821Cf07a2d38Cc8668DEAf1bdc",
+            "coins": [
+              "0x8343091F2499FD4b6174A46D067A920a3b851FF9",
+              "0x431D5dfF03120AFA4bDf332c61A6e1766eF37BDB"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "jarvis-2eur",
@@ -11684,9 +12460,26 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/209/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/209/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-209/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-209/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-209/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x2fFbCE9099cBed86984286A54e5932414aF4B717",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x2fFbCE9099cBed86984286A54e5932414aF4B717",
+            "coins": [
+              "0xE0B52e49357Fd4DAf2c15e02058DCE6BC0057db4",
+              "0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "quick-matic-near-eol",
@@ -11973,8 +12766,10 @@
     "earnContractAddress": "0x5c26afCd15Fb65Ec27f99F47474A1D5b03673b49",
     "oracle": "lps",
     "oracleId": "quick-weth-tel",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1653558100,
+    "retireReason": "rewards",
+    "retiredAt": 1707845800,
     "platformId": "quickswap",
     "assets": ["ETH", "TEL"],
     "risks": [
@@ -12000,9 +12795,9 @@
   },
   {
     "id": "quick-usdc-tel",
-    "name": "USDC-TEL LP",
+    "name": "USDC.e-TEL LP",
     "type": "standard",
-    "token": "USDC-TEL LP",
+    "token": "USDC.e-TEL LP",
     "tokenAddress": "0xa5cABfC725DFa129f618D527E93702d10412f039",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -12011,10 +12806,12 @@
     "earnContractAddress": "0x9456B29cb8E40962DbCbe7b2474Ae2028D8c4651",
     "oracle": "lps",
     "oracleId": "quick-usdc-tel",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1653558999,
+    "retireReason": "rewards",
+    "retiredAt": 1707845800,
     "platformId": "quickswap",
-    "assets": ["USDC", "TEL"],
+    "assets": ["pUSDCe", "TEL"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -12277,9 +13074,9 @@
   },
   {
     "id": "quick-tusd-usdc",
-    "name": "TUSD-USDC LP",
+    "name": "TUSD-USDC.e LP",
     "type": "standard",
-    "token": "TUSD-USDC LP",
+    "token": "TUSD-USDC.e LP",
     "tokenAddress": "0x17a7829cc1167ecdA8b9668414a5405050846F8A",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -12293,7 +13090,7 @@
     "retireReason": "rewards",
     "retiredAt": 1659773332,
     "platformId": "quickswap",
-    "assets": ["TUSD", "USDC"],
+    "assets": ["TUSD", "pUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -12385,9 +13182,26 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/286/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/286/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-286/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-286/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-286/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x2C3cc8e698890271c8141be9F6fD6243d56B39f1",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x2C3cc8e698890271c8141be9F6fD6243d56B39f1",
+            "coins": [
+              "0x7BDF330f423Ea880FF95fC41A280fD5eCFD3D09f",
+              "0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "jarvis-2eurp",
@@ -12419,15 +13233,32 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/285/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/285/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-285/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-285/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-285/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x0f110c55EfE62c16D553A3d3464B77e1853d0e97",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x0f110c55EfE62c16D553A3d3464B77e1853d0e97",
+            "coins": [
+              "0xE2Aa7db6dA1dAE97C5f5C6914d285fBfCC32A128",
+              "0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "balancer-wbtc-usdc-eth",
-    "name": "WBTC/USDC/ETH",
+    "name": "WBTC/USDC.e/ETH",
     "type": "standard",
-    "token": "WBTC/USDC/ETH BPT",
+    "token": "WBTC/USDC.e/ETH BPT",
     "tokenAddress": "0x03cD191F589d12b0582a99808cf19851E468E6B5",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
@@ -12441,7 +13272,7 @@
     "retireReason": "rewards",
     "retiredAt": 1689007467,
     "platformId": "balancer",
-    "assets": ["WBTC", "USDC", "ETH"],
+    "assets": ["WBTC", "pUSDCe", "ETH"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -12485,8 +13316,25 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://polygon.curve.fi/factory/304/deposit",
-    "removeLiquidityUrl": "https://polygon.curve.fi/factory/304/withdraw",
-    "network": "polygon"
+    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-304/swap",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-304/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-304/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x2F3E9CA3bFf85B91D9fe6a9f3e8F9B1A6a4c3cF4",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x2F3E9CA3bFf85B91D9fe6a9f3e8F9B1A6a4c3cF4",
+            "coins": [
+              "0x18ec0A6E18E5bc3784fDd3a3634b31245ab704F6",
+              "0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c"
+            ]
+          }
+        ]
+      }
+    ]
   }
 ]

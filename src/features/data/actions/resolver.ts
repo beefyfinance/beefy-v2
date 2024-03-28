@@ -24,7 +24,7 @@ export const resolveAddressToDomain = createAsyncThunk<
 >(
   'resolver/addressToDomain',
   async ({ address }, { getState }) => {
-    if (!isValidAddress(address)) {
+    if (!address || !isValidAddress(address)) {
       throw new Error('Invalid address');
     }
 
@@ -74,7 +74,7 @@ export const resolveDomainToAddress = createAsyncThunk<
 >(
   'resolver/domainToAddress',
   async ({ domain }, { getState }) => {
-    if (!isMaybeDomain(domain)) {
+    if (!domain || !isMaybeDomain(domain)) {
       throw new Error('Invalid domain');
     }
 

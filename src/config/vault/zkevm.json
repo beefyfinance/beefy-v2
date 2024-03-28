@@ -12,7 +12,9 @@
     "earnContractAddress": "0xa386e948d25E19A0B08C8E15b8B9d49ffa5d9a32",
     "oracle": "lps",
     "oracleId": "balancer-zkevm-wsteth-ankreth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1710882786,
     "createdAt": 1703950221,
     "platformId": "balancer",
     "assets": ["ankrETH", "wstETH"],
@@ -72,7 +74,9 @@
     "earnContractAddress": "0x6baBA5bFc7b2Aae4b239BC3272D21d05804d57E7",
     "oracle": "lps",
     "oracleId": "quick-gamma-zk-weth-quick",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1708974810,
     "createdAt": 1699099136,
     "platformId": "gamma",
     "assets": ["QUICK", "ETH"],
@@ -80,7 +84,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9&currency1=0x68286607A1d43602d880D349187c3c48c0fD05E6",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9&currency1=0x68286607A1d43602d880D349187c3c48c0fD05E6",
-    "network": "zkevm"
+    "network": "zkevm",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "zkevm-gamma-quickswap",
+        "tokenHolder": "0x1e2D8f84605D32a2CBf302E30bFd2387bAdF35dD"
+      }
+    ]
   },
   {
     "id": "quick-gamma-zk-link-weth",
@@ -95,7 +106,9 @@
     "earnContractAddress": "0xC25706f2f908065d40130fB0f7ce5463a3C23eFF",
     "oracle": "lps",
     "oracleId": "quick-gamma-zk-link-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1708974810,
     "createdAt": 1699099136,
     "platformId": "gamma",
     "assets": ["LINK", "ETH"],
@@ -103,7 +116,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4B16e4752711A7ABEc32799C976F3CeFc0111f2B&currency1=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4B16e4752711A7ABEc32799C976F3CeFc0111f2B&currency1=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9",
-    "network": "zkevm"
+    "network": "zkevm",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "zkevm-gamma-quickswap",
+        "tokenHolder": "0x1e2D8f84605D32a2CBf302E30bFd2387bAdF35dD"
+      }
+    ]
   },
   {
     "id": "quick-gamma-zk-weth-aave",
@@ -118,7 +138,9 @@
     "earnContractAddress": "0x65A360bb4E4C8Fc6134dcFE645B1bd5FB11D36CB",
     "oracle": "lps",
     "oracleId": "quick-gamma-zk-weth-aave",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1708974810,
     "createdAt": 1699099136,
     "platformId": "gamma",
     "assets": ["AAVE", "ETH"],
@@ -126,7 +148,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9&currency1=0x68791CFE079814c46e0E25C19Bcc5BFC71A744f7",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9&currency1=0x68791CFE079814c46e0E25C19Bcc5BFC71A744f7",
-    "network": "zkevm"
+    "network": "zkevm",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "zkevm-gamma-quickswap",
+        "tokenHolder": "0x1e2D8f84605D32a2CBf302E30bFd2387bAdF35dD"
+      }
+    ]
   },
   {
     "id": "quick-gamma-zk-crv-weth",
@@ -141,7 +170,9 @@
     "earnContractAddress": "0x215886A8DBF3eB528a95A21eF3bbeac18f2b2fE3",
     "oracle": "lps",
     "oracleId": "quick-gamma-zk-crv-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1708974810,
     "createdAt": 1699099136,
     "platformId": "gamma",
     "assets": ["CRV", "ETH"],
@@ -149,7 +180,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x3d5320821BfCa19fb0B5428F2c79d63bd5246f89&currency1=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e95",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x3d5320821BfCa19fb0B5428F2c79d63bd5246f89&currency1=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9",
-    "network": "zkevm"
+    "network": "zkevm",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "zkevm-gamma-quickswap",
+        "tokenHolder": "0x1e2D8f84605D32a2CBf302E30bFd2387bAdF35dD"
+      }
+    ]
   },
   {
     "id": "quick-zk-qlp",
@@ -194,7 +232,9 @@
     "earnContractAddress": "0x253A00D09D3836138fDBa455FDE95F9D280359aE",
     "oracle": "lps",
     "oracleId": "quick-gamma-zk-weth-matic-narrow",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1708974810,
     "createdAt": 1689280073,
     "platformId": "gamma",
     "assets": ["MATIC", "ETH"],
@@ -202,7 +242,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9&currency1=0xa2036f0538221a77A3937F1379699f44945018d0",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9&currency1=0xa2036f0538221a77A3937F1379699f44945018d0",
-    "network": "zkevm"
+    "network": "zkevm",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "zkevm-gamma-quickswap",
+        "tokenHolder": "0x1e2D8f84605D32a2CBf302E30bFd2387bAdF35dD"
+      }
+    ]
   },
   {
     "id": "quick-gamma-zk-usdt-usdc",
@@ -217,7 +264,9 @@
     "earnContractAddress": "0x65862C640CE6FbC3fb289cd93ee8F0dFFEBC2FFe",
     "oracle": "lps",
     "oracleId": "quick-gamma-zk-usdt-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1708974810,
     "createdAt": 1689280073,
     "platformId": "gamma",
     "assets": ["USDC", "USDT"],
@@ -225,7 +274,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1E4a5963aBFD975d8c9021ce480b42188849D41d&currency1=0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1E4a5963aBFD975d8c9021ce480b42188849D41d&currency1=0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035",
-    "network": "zkevm"
+    "network": "zkevm",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "zkevm-gamma-quickswap",
+        "tokenHolder": "0x1e2D8f84605D32a2CBf302E30bFd2387bAdF35dD"
+      }
+    ]
   },
   {
     "id": "quick-gamma-zk-weth-wbtc-narrow",
@@ -240,7 +296,9 @@
     "earnContractAddress": "0x00D7813501216d8B54cC86caA427f6fCf444854d",
     "oracle": "lps",
     "oracleId": "quick-gamma-zk-weth-wbtc-narrow",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1708974810,
     "createdAt": 1689280073,
     "platformId": "gamma",
     "assets": ["ETH", "WBTC"],
@@ -248,7 +306,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9&currency1=0xEA034fb02eB1808C2cc3adbC15f447B93CbE08e1",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9&currency1=0xEA034fb02eB1808C2cc3adbC15f447B93CbE08e1",
-    "network": "zkevm"
+    "network": "zkevm",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "zkevm-gamma-quickswap",
+        "tokenHolder": "0x1e2D8f84605D32a2CBf302E30bFd2387bAdF35dD"
+      }
+    ]
   },
   {
     "id": "quick-gamma-zk-weth-usdc-narrow",
@@ -263,7 +328,9 @@
     "earnContractAddress": "0x8368E179cb01a6E76fC7e689a65AAbd933B99260",
     "oracle": "lps",
     "oracleId": "quick-gamma-zk-weth-usdc-narrow",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1708974810,
     "createdAt": 1689280073,
     "platformId": "gamma",
     "assets": ["ETH", "USDC"],
@@ -271,7 +338,14 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9&currency1=0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035",
     "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9&currency1=0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035",
-    "network": "zkevm"
+    "network": "zkevm",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "zkevm-gamma-quickswap",
+        "tokenHolder": "0x1e2D8f84605D32a2CBf302E30bFd2387bAdF35dD"
+      }
+    ]
   },
   {
     "id": "balancer-zkevm-reth-eth",
@@ -316,7 +390,9 @@
     "earnContractAddress": "0x906e60166A4B185016e53597fA12FBB1424e47d7",
     "oracle": "lps",
     "oracleId": "balancer-zkevm-wsteth-reth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1710346058,
     "createdAt": 1701092834,
     "platformId": "balancer",
     "assets": ["wstETH", "rETH"],
@@ -346,7 +422,9 @@
     "earnContractAddress": "0xcb25214EC41Ea480068638897FcBd6F1206F5521",
     "oracle": "lps",
     "oracleId": "balancer-zkevm-wsteth-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1710346058,
     "createdAt": 1689280073,
     "platformId": "balancer",
     "assets": ["wstETH", "ETH"],

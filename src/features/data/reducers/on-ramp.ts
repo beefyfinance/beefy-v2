@@ -12,28 +12,30 @@ import type { ApiQuote, ApiQuoteRequest } from '../apis/on-ramp/on-ramp-types';
 import { first, orderBy } from 'lodash-es';
 import type { OnRampTypes, Quote } from './on-ramp-types';
 import { CountryError, FormStep, InputMode } from './on-ramp-types';
+import type { ChainEntity } from '../entities/chain';
+import { isDefined } from '../utils/array-utils';
 
 const initialState: OnRampTypes = {
   step: FormStep.SelectToken,
   lastStep: FormStep.SelectToken,
-  country: { value: null, error: null },
-  fiat: { value: null, error: null },
-  token: { value: null, error: null },
-  network: { value: null, error: null },
-  input: { value: null, error: null, mode: InputMode.Fiat },
+  country: { value: undefined, error: undefined },
+  fiat: { value: undefined, error: undefined },
+  token: { value: undefined, error: undefined },
+  network: { value: undefined, error: undefined },
+  input: { value: 0, error: undefined, mode: InputMode.Fiat },
   canQuote: false,
   allFiat: [],
   byFiat: {},
   quote: {
-    requestId: null,
+    requestId: undefined,
     status: 'idle',
-    error: null,
-    request: null,
-    response: null,
+    error: undefined,
+    request: undefined,
+    response: undefined,
     providers: [],
     byProvider: {},
-    provider: null,
-    cheapestProvider: null,
+    provider: undefined,
+    cheapestProvider: undefined,
   },
 };
 
@@ -99,6 +101,7 @@ export const onRamp = createSlice({
         clearQuote(sliceState);
         sliceState.input.value = action.payload.amount;
       }
+      ``;
     },
     toggleInputMode(sliceState) {
       clearQuote(sliceState);
@@ -113,7 +116,7 @@ export const onRamp = createSlice({
 
       setStep(sliceState, FormStep.SelectNetwork);
     },
-    selectNetwork(sliceState, action: PayloadAction<{ network: string }>) {
+    selectNetwork(sliceState, action: PayloadAction<{ network: ChainEntity['id'] }>) {
       if (sliceState.network.value !== action.payload.network) {
         clearQuote(sliceState);
         sliceState.network.value = action.payload.network;
@@ -171,8 +174,6 @@ export const onRamp = createSlice({
                     sliceState.byFiat[fiatSymbol].allTokens.push(tokenSymbol);
                     sliceState.byFiat[fiatSymbol].byToken[tokenSymbol] = {
                       id: tokenSymbol,
-                      minFiat: Number.MAX_VALUE,
-                      maxFiat: 0,
                       allNetworks: [],
                       byNetwork: {},
                     };
@@ -186,6 +187,8 @@ export const onRamp = createSlice({
                         id: network,
                         allProviders: [],
                         byProvider: {},
+                        minFiat: Number.MAX_VALUE,
+                        maxFiat: 0,
                       };
                     }
                     if (
@@ -211,11 +214,23 @@ export const onRamp = createSlice({
                       const min =
                         method.minLimit === null || method.minLimit === 0 ? 0.01 : method.minLimit;
                       const max = method.maxLimit === null ? Number.MAX_VALUE : method.maxLimit;
-                      if (min < sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].minFiat) {
-                        sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].minFiat = min;
+                      if (
+                        min <
+                        sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].byNetwork[network]
+                          .minFiat
+                      ) {
+                        sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].byNetwork[
+                          network
+                        ].minFiat = min;
                       }
-                      if (max > sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].maxFiat) {
-                        sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].maxFiat = max;
+                      if (
+                        max >
+                        sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].byNetwork[network]
+                          .maxFiat
+                      ) {
+                        sliceState.byFiat[fiatSymbol].byToken[tokenSymbol].byNetwork[
+                          network
+                        ].maxFiat = max;
                       }
 
                       if (
@@ -232,8 +247,8 @@ export const onRamp = createSlice({
                           network
                         ].byProvider[providerKey].byMethod[method.paymentMethod] = {
                           id: method.paymentMethod,
-                          minLimit: method.minLimit,
-                          maxLimit: method.maxLimit,
+                          minLimit: method.minLimit || undefined,
+                          maxLimit: method.maxLimit || undefined,
                         };
                       }
                     }
@@ -271,8 +286,8 @@ export const onRamp = createSlice({
         sliceState.quote.requestId = action.meta.requestId;
         sliceState.quote.status = 'pending';
         sliceState.quote.request = action.meta.arg;
-        sliceState.quote.response = null;
-        sliceState.quote.error = null;
+        sliceState.quote.response = undefined;
+        sliceState.quote.error = undefined;
       })
       .addCase(fetchOnRampQuote.rejected, (sliceState, action) => {
         if (sliceState.quote.requestId === action.meta.requestId) {
@@ -295,20 +310,22 @@ export const onRamp = createSlice({
                 )
               );
 
-              return cheapest ? cheapest : null;
+              return cheapest ? cheapest : undefined;
             })
-            .filter(entry => !!entry);
+            .filter(isDefined);
 
           if (quotes.length) {
+            const cheapestQuote = first(orderBy(quotes, 'rate', 'desc'))!; // we just checked length
+
             sliceState.quote.status = 'fulfilled';
-            sliceState.quote.error = null;
+            sliceState.quote.error = undefined;
             sliceState.quote.response = action.payload;
             sliceState.quote.byProvider = quotes.reduce((all, next) => {
               all[next.provider] = next;
               return all;
             }, {});
             sliceState.quote.providers = Object.keys(sliceState.quote.byProvider);
-            sliceState.quote.cheapestProvider = first(orderBy(quotes, 'rate', 'desc')).provider;
+            sliceState.quote.cheapestProvider = cheapestQuote.provider;
             sliceState.quote.provider = sliceState.quote.cheapestProvider;
           } else {
             sliceState.quote.status = 'rejected';

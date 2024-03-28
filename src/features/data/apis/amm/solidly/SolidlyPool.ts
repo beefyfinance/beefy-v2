@@ -1,28 +1,27 @@
 import type Web3 from 'web3';
 import { BigNumber } from 'bignumber.js';
 import { MultiCall, type ShapeWithLabel } from 'eth-multicall';
-import { SolidlyPairAbi } from '../../../../../config/abi';
+import { SolidlyPairAbi } from '../../../../../config/abi/SolidlyPairAbi';
 import type { ChainEntity } from '../../../entities/chain';
-import { createContract } from '../../../../../helpers/web3';
+import { createContract, viemToWeb3Abi } from '../../../../../helpers/web3';
 import { getWeb3Instance } from '../../instances';
 import { BIG_ONE, BIG_ZERO, fromWei, toWei } from '../../../../../helpers/big-number';
 import type {
   AddLiquidityRatio,
   AddLiquidityResult,
-  IPool,
+  IUniswapLikePool,
   RemoveLiquidityResult,
   SwapFeeParams,
   SwapResult,
 } from '../types';
-import { WANT_TYPE } from '../types';
 import type { ZapStep, ZapStepRequest, ZapStepResponse } from '../../transact/zap/types';
-import { first } from 'lodash-es';
 import type { TokenAmount } from '../../transact/transact-types';
 import { slipAllBy, slipBy } from '../../transact/helpers/amounts';
 import { isTokenNative, type TokenEntity } from '../../../entities/token';
 import abiCoder from 'web3-eth-abi';
 import { getInsertIndex } from '../../transact/helpers/zap';
 import type { AmmEntitySolidly } from '../../../entities/zap';
+import { onlyOneTokenAmount } from '../../transact/helpers/options';
 
 export enum MetadataKeys {
   decimals0,
@@ -76,12 +75,12 @@ export type LiquidityAmounts = {
   amountB: BigNumber;
 };
 
-export class SolidlyPool implements IPool {
+export class SolidlyPool implements IUniswapLikePool {
   public readonly type = 'solidly';
 
-  protected pairData: PairData | null = null;
-  private web3: Web3 | null = null;
-  private multicall: MultiCall | null = null;
+  protected pairData: PairData | undefined = undefined;
+  private web3: Web3 | undefined = undefined;
+  private multicall: MultiCall | undefined = undefined;
 
   constructor(
     protected address: string,
@@ -90,7 +89,7 @@ export class SolidlyPool implements IPool {
   ) {}
 
   async getWeb3(): Promise<Web3> {
-    if (this.web3 === null) {
+    if (this.web3 === undefined) {
       this.web3 = await getWeb3Instance(this.chain);
     }
 
@@ -98,7 +97,7 @@ export class SolidlyPool implements IPool {
   }
 
   async getMulticall(): Promise<MultiCall> {
-    if (this.multicall === null) {
+    if (this.multicall === undefined) {
       this.multicall = new MultiCall(await this.getWeb3(), this.chain.multicallAddress);
     }
 
@@ -106,7 +105,7 @@ export class SolidlyPool implements IPool {
   }
 
   protected getPairDataRequest(): ShapeWithLabel[] {
-    const contract = createContract(SolidlyPairAbi, this.address);
+    const contract = createContract(viemToWeb3Abi(SolidlyPairAbi), this.address);
     return [
       {
         totalSupply: contract.methods.totalSupply(),
@@ -126,8 +125,8 @@ export class SolidlyPool implements IPool {
       token1: result.metadata[MetadataKeys.token1],
       reserves0: new BigNumber(result.metadata[MetadataKeys.reserves0]),
       reserves1: new BigNumber(result.metadata[MetadataKeys.reserves1]),
-      decimals0: new BigNumber(result.metadata[MetadataKeys.decimals0]).e, // 1e18 -> 18
-      decimals1: new BigNumber(result.metadata[MetadataKeys.decimals1]).e,
+      decimals0: new BigNumber(result.metadata[MetadataKeys.decimals0]).e!, // 1e18 -> 18
+      decimals1: new BigNumber(result.metadata[MetadataKeys.decimals1]).e!,
       stable: result.metadata[MetadataKeys.stable],
     };
   }
@@ -261,6 +260,10 @@ export class SolidlyPool implements IPool {
     decimalsIn: number,
     decimalsOut: number
   ): number {
+    if (!this.pairData) {
+      throw new Error('Pair data is not loaded');
+    }
+
     // swap a small sample amount, which won't suffer price impact
     // we use normalized 1e-9 to avoid rounder-to-zero errors due to differences in token decimals
     const sampleAmountIn = toWei(BIG_ONE.shiftedBy(-9), 18);
@@ -296,6 +299,10 @@ export class SolidlyPool implements IPool {
   }
 
   protected getAddLiquidityRatioStable(amountIn: BigNumber): AddLiquidityRatio {
+    if (!this.pairData) {
+      throw new Error('Pair data is not loaded');
+    }
+
     const { reserves0, reserves1, decimals0, decimals1 } = this.pairData;
     const reserves0Normalized = this.normalize(reserves0, decimals0);
     const reserves1Normalized = this.normalize(reserves1, decimals1);
@@ -670,6 +677,10 @@ export class SolidlyPool implements IPool {
   }
 
   protected getInOut(tokenIn: string): InOut {
+    if (!this.pairData) {
+      throw new Error('Pair data is not loaded');
+    }
+
     const inIsToken0 = this.isToken0(tokenIn);
     return {
       reservesIn: inIsToken0 ? this.pairData.reserves0 : this.pairData.reserves1,
@@ -682,10 +693,18 @@ export class SolidlyPool implements IPool {
   }
 
   protected isToken0(token: string): boolean {
+    if (!this.pairData) {
+      throw new Error('Pair data is not loaded');
+    }
+
     return this.pairData.token0.toLowerCase() === token.toLowerCase();
   }
 
   protected isTokenInPair(token: TokenEntity): boolean {
+    if (!this.pairData) {
+      throw new Error('Pair data is not loaded');
+    }
+
     if (isTokenNative(token)) {
       return false;
     }
@@ -732,14 +751,6 @@ export class SolidlyPool implements IPool {
     return amountIn.multipliedBy(reservesOut).dividedToIntegerBy(reservesIn);
   }
 
-  getWantType(): WANT_TYPE {
-    if (!this.pairData) {
-      throw new Error('Pair data is not loaded');
-    }
-
-    return this.pairData.stable ? WANT_TYPE.SOLIDLY_STABLE : WANT_TYPE.SOLIDLY_VOLATILE;
-  }
-
   protected buildZapSwapTx(
     amountIn: BigNumber,
     amountOutMin: BigNumber,
@@ -748,6 +759,11 @@ export class SolidlyPool implements IPool {
     deadline: number,
     insertBalance: boolean
   ): ZapStep {
+    const pairData = this.pairData;
+    if (!pairData) {
+      throw new Error('Pair data is not loaded');
+    }
+
     return {
       target: this.amm.routerAddress,
       value: '0',
@@ -783,7 +799,7 @@ export class SolidlyPool implements IPool {
         [
           amountIn.toString(10),
           amountOutMin.toString(10),
-          routes.map(({ from, to }) => [from, to, this.pairData.stable]),
+          routes.map(({ from, to }) => [from, to, pairData.stable]),
           to,
           deadline.toString(10),
         ]
@@ -799,8 +815,8 @@ export class SolidlyPool implements IPool {
 
   async getZapSwap(request: ZapStepRequest): Promise<ZapStepResponse> {
     const { inputs, outputs, maxSlippage, zapRouter, insertBalance } = request;
-    const input = first(inputs);
-    const output = first(outputs);
+    const input = onlyOneTokenAmount(inputs);
+    const output = onlyOneTokenAmount(outputs);
 
     if (!this.isTokenInPair(input.token) || !this.isTokenInPair(output.token)) {
       throw new Error('Invalid token');
@@ -817,14 +833,16 @@ export class SolidlyPool implements IPool {
       outputs,
       minOutputs: [minOutput],
       returned: [],
-      zap: this.buildZapSwapTx(
-        toWei(input.amount, input.token.decimals),
-        toWei(minOutput.amount, minOutput.token.decimals),
-        [{ from: input.token.address, to: output.token.address }],
-        zapRouter,
-        deadline,
-        insertBalance
-      ),
+      zaps: [
+        this.buildZapSwapTx(
+          toWei(input.amount, input.token.decimals),
+          toWei(minOutput.amount, minOutput.token.decimals),
+          [{ from: input.token.address, to: output.token.address }],
+          zapRouter,
+          deadline,
+          insertBalance
+        ),
+      ],
     };
   }
 
@@ -904,6 +922,10 @@ export class SolidlyPool implements IPool {
   }
 
   async getZapAddLiquidity(request: ZapStepRequest): Promise<ZapStepResponse> {
+    if (!this.pairData) {
+      throw new Error('Pair data is not loaded');
+    }
+
     const { inputs, outputs, maxSlippage, zapRouter, insertBalance } = request;
 
     if (inputs.length !== 2) {
@@ -923,24 +945,26 @@ export class SolidlyPool implements IPool {
       outputs,
       minOutputs: slipAllBy(outputs, maxSlippage),
       returned: [],
-      zap: this.buildZapAddLiquidityTx(
-        inputs[0].token.address,
-        inputs[1].token.address,
-        this.pairData.stable,
-        toWei(inputs[0].amount, inputs[0].token.decimals),
-        toWei(inputs[1].amount, inputs[1].token.decimals),
-        toWei(
-          slipBy(inputs[0].amount, maxSlippage, inputs[0].token.decimals),
-          inputs[0].token.decimals
+      zaps: [
+        this.buildZapAddLiquidityTx(
+          inputs[0].token.address,
+          inputs[1].token.address,
+          this.pairData.stable,
+          toWei(inputs[0].amount, inputs[0].token.decimals),
+          toWei(inputs[1].amount, inputs[1].token.decimals),
+          toWei(
+            slipBy(inputs[0].amount, maxSlippage, inputs[0].token.decimals),
+            inputs[0].token.decimals
+          ),
+          toWei(
+            slipBy(inputs[1].amount, maxSlippage, inputs[1].token.decimals),
+            inputs[1].token.decimals
+          ),
+          zapRouter,
+          deadline,
+          insertBalance
         ),
-        toWei(
-          slipBy(inputs[1].amount, maxSlippage, inputs[1].token.decimals),
-          inputs[1].token.decimals
-        ),
-        zapRouter,
-        deadline,
-        insertBalance
-      ),
+      ],
     };
   }
 
@@ -1009,13 +1033,13 @@ export class SolidlyPool implements IPool {
   }
 
   async getZapRemoveLiquidity(request: ZapStepRequest): Promise<ZapStepResponse> {
-    const { inputs, outputs, maxSlippage, zapRouter, insertBalance } = request;
-
-    if (inputs.length !== 1) {
-      throw new Error('Invalid input count');
+    if (!this.pairData) {
+      throw new Error('Pair data is not loaded');
     }
 
-    const input = first(inputs);
+    const { inputs, outputs, maxSlippage, zapRouter, insertBalance } = request;
+
+    const input = onlyOneTokenAmount(inputs);
     if (this.address.toLowerCase() !== input.token.address.toLowerCase()) {
       throw new Error('Invalid input token');
     }
@@ -1038,17 +1062,19 @@ export class SolidlyPool implements IPool {
       outputs,
       minOutputs,
       returned: [],
-      zap: this.buildZapRemoveLiquidityTx(
-        outputs[0].token.address,
-        outputs[1].token.address,
-        this.pairData.stable,
-        toWei(input.amount, input.token.decimals),
-        toWei(minOutputs[0].amount, minOutputs[0].token.decimals),
-        toWei(minOutputs[1].amount, minOutputs[1].token.decimals),
-        zapRouter,
-        deadline,
-        insertBalance
-      ),
+      zaps: [
+        this.buildZapRemoveLiquidityTx(
+          outputs[0].token.address,
+          outputs[1].token.address,
+          this.pairData.stable,
+          toWei(input.amount, input.token.decimals),
+          toWei(minOutputs[0].amount, minOutputs[0].token.decimals),
+          toWei(minOutputs[1].amount, minOutputs[1].token.decimals),
+          zapRouter,
+          deadline,
+          insertBalance
+        ),
+      ],
     };
   }
 }

@@ -4,14 +4,21 @@ import type { ChainEntity } from '../entities/chain';
 import { first, orderBy } from 'lodash-es';
 import { selectTokenPriceByAddress } from './tokens';
 import { selectWalletAddressIfKnown } from './wallet';
-import { selectUserBalanceOfToken } from './balance';
+import {
+  selectUserBalanceOfToken,
+  selectUserVaultDepositInDepositTokenExcludingBoostsBridged,
+} from './balance';
 import type { TokenAmount, TransactOption, TransactQuote } from '../apis/transact/transact-types';
 import BigNumber from 'bignumber.js';
 import { TransactStatus } from '../reducers/wallet/transact-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
+import { valueOrThrow } from '../utils/selector-utils';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
-export const selectTransactVaultId = (state: BeefyState) => state.ui.transact.vaultId;
+export const selectTransactVaultId = (state: BeefyState) =>
+  valueOrThrow(state.ui.transact.vaultId, 'No transact vaultId found');
+export const selectTransactVaultIdOrUndefined = (state: BeefyState) => state.ui.transact.vaultId;
+
 export const selectTransactMode = (state: BeefyState) => state.ui.transact.mode;
 export const selectTransactSlippage = (state: BeefyState) => state.ui.transact.swapSlippage;
 
@@ -32,22 +39,33 @@ export const selectTransactInputMax = (state: BeefyState) => state.ui.transact.i
 export const selectTransactSelectedChainId = (state: BeefyState) =>
   state.ui.transact.selectedChainId;
 export const selectTransactSelectedSelectionId = (state: BeefyState) =>
-  state.ui.transact.selectedSelectionId;
+  valueOrThrow(state.ui.transact.selectedSelectionId, 'No selected selection id found');
 export const selectTransactSelectedQuoteId = (state: BeefyState) =>
   state.ui.transact.selectedQuoteId;
 
 export const selectTransactQuoteError = (state: BeefyState) => state.ui.transact.quotes.error;
 
-export const selectTransactSelectedQuote = createSelector(
+export const selectTransactSelectedQuote = (state: BeefyState) =>
+  valueOrThrow(selectTransactSelectedQuoteOrUndefined(state), 'No selected quote found');
+
+export const selectTransactSelectedQuoteOrUndefined = createSelector(
   (state: BeefyState) => selectTransactSelectedQuoteId(state),
   (state: BeefyState) => state.ui.transact.quotes.byQuoteId,
-  (id, byQuoteId) => (id ? byQuoteId[id] || null : null)
+  (id, byQuoteId) => {
+    return id ? byQuoteId[id] : undefined;
+  }
 );
 
 export const selectTransactQuoteById = createSelector(
   (state: BeefyState, quoteId: TransactQuote['id']) => quoteId,
   (state: BeefyState) => state.ui.transact.quotes.byQuoteId,
-  (id, byQuoteId) => (id ? byQuoteId[id] || null : null)
+  (id, byQuoteId) => {
+    const quote = byQuoteId[id];
+    if (!quote) {
+      throw new Error(`No quote found for id ${id}`);
+    }
+    return quote;
+  }
 );
 
 export const selectTransactQuoteStatus = (state: BeefyState) => state.ui.transact.quotes.status;
@@ -72,6 +90,23 @@ export const selectTransactSelected = createSelector(
   (selectionId, bySelectionId) => bySelectionId[selectionId] || undefined
 );
 
+export const selectTransactDepositInputAmountExceedsBalance = (state: BeefyState) => {
+  const selection = selectTransactSelected(state);
+  const depositToken = selection.tokens[0];
+  const userBalance = selectUserBalanceOfToken(state, depositToken.chainId, depositToken.address);
+  const value = selectTransactInputAmount(state);
+
+  return value.gt(userBalance);
+};
+
+export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyState) => {
+  const vaultId = selectTransactVaultId(state);
+  const userBalance = selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId);
+  const value = selectTransactInputAmount(state);
+
+  return value.gt(userBalance);
+};
+
 export const selectTransactTokenChains = (state: BeefyState) =>
   state.ui.transact.selections.allChainIds;
 
@@ -83,6 +118,9 @@ export const selectTransactWithdrawSelectionsForChain = (
   chainId: ChainEntity['id']
 ) => {
   const selectionsForChain = state.ui.transact.selections.byChainId[chainId];
+  if (!selectionsForChain) {
+    return [];
+  }
 
   return selectionsForChain.map(
     selectionId => state.ui.transact.selections.bySelectionId[selectionId]
@@ -141,6 +179,9 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
 ) => {
   const walletAddress = selectWalletAddressIfKnown(state);
   const selectionsForChain = state.ui.transact.selections.byChainId[chainId];
+  if (!selectionsForChain) {
+    return [];
+  }
   const options = selectionsForChain.map(
     selectionId => state.ui.transact.selections.bySelectionId[selectionId]
   );
@@ -151,6 +192,10 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
       .map(option => {
         const tokens = option.tokens;
         const token = first(tokens);
+        if (!token) {
+          throw new Error('Missing token from options');
+        }
+
         const balance = selectUserBalanceOfToken(
           state,
           token.chainId,

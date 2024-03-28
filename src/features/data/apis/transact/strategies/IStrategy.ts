@@ -12,12 +12,14 @@ import type { VaultEntity } from '../../../entities/vault';
 import type { BeefyState } from '../../../../../redux-types';
 import type {
   AmmEntity,
+  AmmEntityGamma,
   AmmEntitySolidly,
   AmmEntityUniswapV2,
   ZapEntity,
 } from '../../../entities/zap';
 import type { Step } from '../../../reducers/wallet/stepper';
 import type { Namespace, TFunction } from 'react-i18next';
+import type { CurveMethod } from './curve/types';
 
 export type SwapAggregatorId = 'one-inch' | 'kyber';
 
@@ -43,18 +45,39 @@ export type UniswapV2StrategyOptions = UniswapLikeStrategyOptions<AmmEntityUnisw
 
 export type SolidlyStrategyOptions = UniswapLikeStrategyOptions<AmmEntitySolidly>;
 
+export type CurveStrategyOptions = {
+  strategyId: 'curve';
+  /** Address of the curve pool. Can be undefined if same as the LP token (want) */
+  poolAddress?: string | undefined;
+  /** Methods to interact with pool, @see curve/types.ts */
+  methods: CurveMethod[];
+} & OptionalStrategySwapOption;
+
+export type GammaStrategyOptions = {
+  strategyId: 'gamma';
+  ammId: AmmEntityGamma['id'];
+  /** where are the LP tokens held while earning, not needed for merkle as tokens held in strategy */
+  tokenHolder?: string | undefined;
+} & OptionalStrategySwapOption;
+
+export type ConicStrategyOptions = {
+  strategyId: 'conic';
+} & OptionalStrategySwapOption;
+
 export type StrategyOptions =
   | SingleStrategyOptions
   | UniswapV2StrategyOptions
-  | SolidlyStrategyOptions;
+  | SolidlyStrategyOptions
+  | CurveStrategyOptions
+  | GammaStrategyOptions
+  | ConicStrategyOptions;
 
 export interface IStrategy {
   readonly id: string;
 
-  /**
-   * Asynchronously called after constructor.
-   */
-  initialize(): Promise<void>;
+  beforeQuote?(): Promise<void>;
+
+  beforeStep?(): Promise<void>;
 
   fetchDepositOptions(): Promise<DepositOption[]>;
 
@@ -69,13 +92,26 @@ export interface IStrategy {
   fetchWithdrawStep(quote: TransactQuote, t: TFunction<Namespace>): Promise<Step>;
 }
 
-export type TransactHelpers = {
+type BaseTransactHelpers = {
   swapAggregator: ISwapAggregator;
   vault: VaultEntity;
   vaultType: VaultType;
-  zap: ZapEntity | undefined;
   getState: () => BeefyState;
 };
+
+export type ZaplessTransactHelpers = BaseTransactHelpers & {
+  zap: undefined;
+};
+
+export type ZapTransactHelpers = BaseTransactHelpers & {
+  zap: ZapEntity;
+};
+
+export type TransactHelpers = ZaplessTransactHelpers | ZapTransactHelpers;
+
+export function isZapTransactHelpers(helpers: TransactHelpers): helpers is ZapTransactHelpers {
+  return helpers.zap !== undefined;
+}
 
 export type StrategyConstructor = new (
   options: StrategyOptions,

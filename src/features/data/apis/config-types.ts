@@ -6,11 +6,15 @@ import type { StrategyOptions } from './transact/strategies/IStrategy';
 import type { ZapFee } from './transact/transact-types';
 import type { ChangeTypeOfKeys } from '../utils/types-utils';
 import type BigNumber from 'bignumber.js';
+import type { Address } from 'viem';
 
 export interface VaultConfig {
   id: string;
   name: string;
+  /** defaults to standard */
   type?: 'standard' | 'gov' /*| 'concentrated-liquidity'*/;
+  /** version of vault type defaults to 1 */
+  version?: number;
   token: string;
   tokenAddress?: string | null;
   tokenDecimals: number;
@@ -50,6 +54,7 @@ export interface VaultConfig {
   bridged?: Record<ChainEntity['id'], string>;
   /* Oracle can be ChainLink | Pyth, then the oracle address*/
   lendingOracle?: { provider: string; address?: string; loops?: number };
+  earningPoints?: boolean;
 }
 
 export interface FeaturedVaultConfig {
@@ -58,7 +63,7 @@ export interface FeaturedVaultConfig {
 
 export interface PartnersConfig {
   QiDao: VaultEntity['id'][];
-  Insurace: ChainEntity['id'][];
+  OpenCover: ChainEntity['id'][];
   Nexus: ChainEntity['id'][];
 }
 
@@ -141,8 +146,35 @@ export interface CeloGasConfig {
 
 export type GasConfig = StandardGasConfig | EIP1559GasConfig | CeloGasConfig;
 
-export interface ChainConfig {
-  id: string;
+type ChainId =
+  | 'ethereum'
+  | 'polygon'
+  | 'bsc'
+  | 'optimism'
+  | 'fantom'
+  | 'arbitrum'
+  | 'avax'
+  | 'cronos'
+  | 'moonbeam'
+  | 'moonriver'
+  | 'metis'
+  | 'fuse'
+  | 'kava'
+  | 'canto'
+  | 'zksync'
+  | 'zkevm'
+  | 'base'
+  | 'gnosis'
+  | 'linea'
+  | 'mantle'
+  | 'aurora'
+  | 'emerald'
+  | 'celo'
+  | 'heco'
+  | 'harmony';
+
+export type ChainConfig = {
+  id: ChainId;
   name: string;
   eol?: number;
   chainId: number;
@@ -152,6 +184,7 @@ export interface ChainConfig {
   explorerTokenUrlTemplate?: string;
   explorerTxUrlTemplate?: string;
   multicallAddress: string;
+  multicall3Address: Address;
   appMulticallContractAddress: string;
   providerName: string;
   walletSettings: {
@@ -168,11 +201,14 @@ export interface ChainConfig {
   gas: GasConfig;
   stableCoins: string[];
   new?: boolean;
-}
+};
 
 export interface AmmConfigBase {
   id: string;
   name: string;
+}
+
+export interface AmmConfigUniswapV2LikeBase extends AmmConfigBase {
   routerAddress: string;
   factoryAddress: string;
   pairInitHash: string;
@@ -181,19 +217,25 @@ export interface AmmConfigBase {
   swapFeeDenominator: string;
 }
 
-export interface AmmConfigUniswapV2 extends AmmConfigBase {
+export interface AmmConfigUniswapV2 extends AmmConfigUniswapV2LikeBase {
   readonly type: 'uniswap-v2';
   mintFeeNumerator: string;
   mintFeeDenominator: string;
   getAmountOutMode: 'getAmountOut' | 'getAmountsOut' | 'getAmountOutWithFee';
 }
 
-export interface AmmConfigSolidly extends AmmConfigBase {
+export interface AmmConfigSolidly extends AmmConfigUniswapV2LikeBase {
   readonly type: 'solidly';
   getAmountOutMode: 'getAmountOut';
 }
 
-export type AmmConfig = AmmConfigUniswapV2 | AmmConfigSolidly;
+export interface AmmConfigGamma extends AmmConfigBase {
+  readonly type: 'gamma';
+  proxyAddress: string;
+}
+
+export type AmmConfigUniswapV2Like = AmmConfigUniswapV2 | AmmConfigSolidly;
+export type AmmConfig = AmmConfigUniswapV2Like | AmmConfigGamma;
 
 export function isSolidlyAmmConfig(amm: AmmConfig): amm is AmmConfigSolidly {
   return amm.type === 'solidly';
@@ -231,7 +273,11 @@ export interface KyberSwapSwapConfig {
 
 export type SwapAggregatorConfig = OneInchSwapConfig | KyberSwapSwapConfig;
 
-export type SwapAggregatorConfigLoose = ChangeTypeOfKeys<SwapAggregatorConfig, 'type', string>; // loosen type
+export type SwapAggregatorConfigLoose = ChangeTypeOfKeys<
+  SwapAggregatorConfig,
+  'type' | 'chainId',
+  string
+>; // loosen type
 
 export interface MinterConfigTokenErc20 {
   oracleId: string;
@@ -259,7 +305,6 @@ export interface MinterConfig {
   depositToken: MinterConfigToken;
   mintedToken: MinterConfigToken;
   canBurnReserves: boolean;
-  hasEarningsPool: boolean;
   reserveBalanceMethod?: string;
   vaultIds: string[];
   canZapInWithOneInch?: boolean;
@@ -268,6 +313,7 @@ export interface MinterConfig {
 export type PlatformConfig = {
   id: string;
   name: string;
+  risks?: string[];
 };
 
 export interface TokenHoldingConfig {
@@ -315,7 +361,7 @@ export function isTokenHoldingConfig(token: TreasuryHoldingConfig): token is Tok
 }
 
 export type TreasuryConfig = {
-  [chainId: ChainEntity['id']]: {
+  [chainId in ChainEntity['id']]: {
     [address: string]: {
       name: string;
       balances: {
@@ -391,7 +437,7 @@ export type BeefyCommonBridgeConfig = {
   /** Url of bridge explorer, use {{hash}} for outgoing tx hash */
   explorerUrl?: string;
   /** Chains supported by this bridge */
-  chains: Record<ChainEntity['id'], BeefyCommonBridgeChainConfig>;
+  chains: Partial<Record<ChainEntity['id'], BeefyCommonBridgeChainConfig>>;
 };
 
 export type BeefyLayerZeroBridgeConfig = BeefyCommonBridgeConfig & {
@@ -436,7 +482,7 @@ export type BeefyBridgeConfig = Readonly<{
   /**
    * xTokens per chain
    */
-  tokens: Record<ChainEntity['id'], string>;
+  tokens: Partial<Record<ChainEntity['id'], string>>;
   /**
    * Config per bridge
    */

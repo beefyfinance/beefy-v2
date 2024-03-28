@@ -1,12 +1,12 @@
 import type { ChainEntity } from '../../entities/chain';
 import {
-  type AmmEntity,
   type AmmEntitySolidly,
+  type AmmEntityUniswapLike,
   type AmmEntityUniswapV2,
   isSolidlyAmm,
   isUniswapV2Amm,
 } from '../../entities/zap';
-import type { IPool } from './types';
+import type { IUniswapLikePool } from './types';
 import { UniswapV2Pool } from './uniswap-v2/UniswapV2Pool';
 import { SolidlyPool } from './solidly/SolidlyPool';
 import { MdexUniswapV2Pool } from './uniswap-v2/MdexUniswapV2Pool';
@@ -52,38 +52,38 @@ const mapSolidly = {
   'ethereum-solidly': EthereumSolidlyPool,
 } as const satisfies Record<string, typeof SolidlyPool>;
 
-export async function getPool(
+export async function getUniswapLikePool(
   lpAddress: string,
   amm: AmmEntityUniswapV2,
   chain: ChainEntity
 ): Promise<UniswapV2Pool>;
-export async function getPool(
+export async function getUniswapLikePool(
   lpAddress: string,
   amm: AmmEntitySolidly,
   chain: ChainEntity
 ): Promise<SolidlyPool>;
-export async function getPool(
+export async function getUniswapLikePool(
   lpAddress: string,
-  amm: AmmEntity,
+  amm: AmmEntityUniswapLike,
   chain: ChainEntity
-): Promise<IPool>;
-export async function getPool(
+): Promise<IUniswapLikePool>;
+export async function getUniswapLikePool(
   lpAddress: string,
-  amm: AmmEntity,
+  amm: AmmEntityUniswapLike,
   chain: ChainEntity
-): Promise<IPool> {
+): Promise<IUniswapLikePool> {
   if (isUniswapV2Amm(amm)) {
     const Constructor: typeof UniswapV2Pool = mapUniswapV2[amm.id] || UniswapV2Pool;
-    return await initPool(new Constructor(lpAddress, amm, chain));
+    return await initUniswapLikePool(new Constructor(lpAddress, amm, chain));
   } else if (isSolidlyAmm(amm)) {
     const Constructor: typeof SolidlyPool = mapSolidly[amm.id] || SolidlyPool;
-    return await initPool(new Constructor(lpAddress, amm, chain));
+    return await initUniswapLikePool(new Constructor(lpAddress, amm, chain));
   } else {
     throw new Error(`Unknown AMM type`);
   }
 }
 
-async function initPool<T extends IPool>(pool: T): Promise<T> {
+async function initUniswapLikePool<T extends IUniswapLikePool>(pool: T): Promise<T> {
   await pool.updateAllData();
   return pool;
 }

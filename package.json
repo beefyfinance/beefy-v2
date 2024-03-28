@@ -27,7 +27,7 @@
     "@web3-onboard/walletconnect": "^2.5.1",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
-    "blockchain-addressbook": "^0.46.17",
+    "blockchain-addressbook": "^0.46.56",
     "clsx": "^1.1.1",
     "date-fns": "^2.29.3",
     "eip-712": "^1.0.0",
@@ -54,6 +54,7 @@
     "recharts": "^2.4.3",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
+    "viem": "^2.7.13",
     "web3": "^1.7.5"
   },
   "resolutions": {
@@ -74,9 +75,9 @@
     "launchpool": "ts-node ./scripts/launchpool.ts",
     "vault": "ts-node ./scripts/addVault.ts",
     "pause": "ts-node ./scripts/pausePlatform.ts && prettier --write src/config/vault",
-    "migratePlatform": "ts-node ./scripts/migratePlatform.ts",
     "setVaultUrls": "ts-node -r dotenv/config ./scripts/setVaultUrls.ts && prettier --write ./src/config/vault/*.json",
     "setVaultStatus": "ts-node -r dotenv/config ./scripts/setVaultStatus.ts",
+    "addCurveZap": "ts-node -r dotenv/config ./scripts/addCurveZap.ts",
     "checkVaultTokenDecimals": "ts-node -r dotenv/config ./scripts/checkVaultTokenDecimals.ts && prettier --write ./src/config/vault/*.json",
     "checkZapAddresses": "ts-node -r dotenv/config ./scripts/checkZapAddresses.ts",
     "makeExcludeConfig": "ts-node -r dotenv/config ./scripts/makeExcludeConfig.ts",
@@ -87,7 +88,8 @@
     "analyze-bundle": "tsc && cross-env ANALYZE_BUNDLE=true vite build",
     "analyze-sources": "madge --extensions js,jsx,ts,tsx ./src --image madge.svg",
     "prettier:check": "prettier --check src/**/*.{ts,tsx,json}",
-    "prettier:fix": "prettier --write src/**/*.{ts,tsx,json}"
+    "prettier:fix": "prettier --write src/**/*.{ts,tsx,json}",
+    "lint": "eslint --ext .ts,.tsx src"
   },
   "browserslist": {
     "production": [
@@ -128,7 +130,7 @@
     "rollup-plugin-visualizer": "^5.9.0",
     "ts-command-line-args": "^2.5.1",
     "ts-node": "^10.8.2",
-    "typescript": "4.9.3",
+    "typescript": "5.3.2",
     "vite": "^4.1.4",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^2.4.0"

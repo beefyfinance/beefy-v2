@@ -1,6 +1,7 @@
 import type BigNumber from 'bignumber.js';
 import type { ShapeWithLabel } from 'eth-multicall';
 import type { ZapStepRequest, ZapStepResponse } from '../transact/zap/types';
+import type { TokenAmount } from '../transact/transact-types';
 
 export type SwapResult = {
   amountIn: BigNumber;
@@ -33,22 +34,12 @@ export type AddLiquidityRatio = {
   amount1: BigNumber;
 };
 
-// Must match BeefyZapOneInch::WantType
-export enum WANT_TYPE {
-  SINGLE,
-  UNISWAP_V2,
-  SOLIDLY_STABLE,
-  SOLIDLY_VOLATILE,
-}
-
 export type SwapFeeParams = {
   numerator: BigNumber;
   denominator: BigNumber;
 };
 
-export interface IPool {
-  readonly type: string;
-
+export interface IUniswapLikePool extends IPool {
   getOptimalSwapAmount(fullAmountIn: BigNumber, tokenIn: string): BigNumber;
 
   swap(amountIn: BigNumber, tokenIn: string, updateReserves?: boolean): SwapResult;
@@ -59,13 +50,40 @@ export interface IPool {
 
   getAddLiquidityRatio(amountIn: BigNumber): AddLiquidityRatio;
 
-  updateAllData(otherCalls?: ShapeWithLabel[][]): Promise<unknown[][]>;
-
-  getWantType(): WANT_TYPE;
-
   getZapSwap(request: ZapStepRequest): Promise<ZapStepResponse>;
 
   getZapAddLiquidity(request: ZapStepRequest): Promise<ZapStepResponse>;
 
   getZapRemoveLiquidity(request: ZapStepRequest): Promise<ZapStepResponse>;
+}
+
+export type GammaHypervisorData = {
+  currentTick: BigNumber;
+  totalSupply: BigNumber;
+  totalAmounts: [BigNumber, BigNumber];
+  sqrtPrice: BigNumber;
+  priceRatio: BigNumber;
+};
+
+export interface IGammaPool extends IPool {
+  getHypervisorData(): GammaHypervisorData;
+
+  getAddLiquidityRatio(testAmounts: TokenAmount[]): Promise<BigNumber>;
+
+  getOptimalAddLiquidity(inputs: TokenAmount[]): Promise<TokenAmount[]>;
+
+  quoteRemoveLiquidity(
+    sharesWei: BigNumber,
+    tokenHolders: [string, ...string[]]
+  ): Promise<BigNumber[]>;
+
+  getZapAddLiquidity(request: ZapStepRequest): Promise<ZapStepResponse>;
+
+  getZapRemoveLiquidity(request: ZapStepRequest): Promise<ZapStepResponse>;
+}
+
+export interface IPool {
+  readonly type: string;
+
+  updateAllData(otherCalls?: ShapeWithLabel[][]): Promise<unknown[][]>;
 }

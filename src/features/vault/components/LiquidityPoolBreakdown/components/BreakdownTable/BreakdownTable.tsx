@@ -36,7 +36,7 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
       {assets.map(asset => (
         <div key={asset.address} className={classes.row}>
           <div className={clsx(classes.cell, classes.asset)}>
-            <AssetsImage className={classes.icon} chainId={chainId} assetIds={[asset.symbol]} />{' '}
+            <AssetsImage className={classes.icon} chainId={chainId} assetSymbols={[asset.symbol]} />{' '}
             {asset.symbol}
           </div>
           <div className={classes.cell}>
@@ -55,7 +55,7 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
           <AssetsImage
             className={classes.icon}
             chainId={chainId}
-            assetIds={assets.map(asset => asset.symbol)}
+            assetSymbols={assets.map(asset => asset.symbol)}
           />{' '}
           LP
         </div>

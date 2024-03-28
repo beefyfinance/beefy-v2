@@ -38,15 +38,15 @@ export type TransactSelections = {
   allSelectionIds: string[];
   bySelectionId: Record<TransactOption['selectionId'], TransactSelection>;
   allChainIds: ChainEntity['id'][];
-  byChainId: Record<ChainEntity['id'], TransactOption['selectionId'][]>;
+  byChainId: Partial<Record<ChainEntity['id'], TransactOption['selectionId'][]>>;
 };
 
 export type TransactOptions = {
-  vaultId: VaultEntity['id'];
+  vaultId: VaultEntity['id'] | undefined;
   mode: TransactMode;
   status: TransactStatus;
-  error: SerializedError;
-  requestId: string | null;
+  error: SerializedError | undefined;
+  requestId: string | undefined;
   allOptionIds: TransactOption['id'][];
   byOptionId: Record<TransactOption['id'], TransactOption>;
   bySelectionId: Record<TransactOption['selectionId'], TransactOption['id'][]>;
@@ -56,22 +56,22 @@ export type TransactQuotes = {
   allQuoteIds: string[];
   byQuoteId: Record<TransactQuote['id'], TransactQuote>;
   status: TransactStatus;
-  requestId: string;
-  error: SerializedError | null;
+  requestId: string | undefined;
+  error: SerializedError | undefined;
 };
 
 export type TransactConfirm = {
   changes: QuoteOutputTokenAmountChange[];
   status: TransactStatus;
-  requestId: string | null;
-  error: SerializedError | null;
+  requestId: string | undefined;
+  error: SerializedError | undefined;
 };
 
 export type TransactState = {
-  vaultId: VaultEntity['id'] | null;
-  selectedChainId: string | null;
-  selectedSelectionId: string | null;
-  selectedQuoteId: string | null;
+  vaultId: VaultEntity['id'] | undefined;
+  selectedChainId: ChainEntity['id'] | undefined;
+  selectedSelectionId: string | undefined;
+  selectedQuoteId: string | undefined;
   swapSlippage: number;
   inputAmount: BigNumber;
   inputMax: boolean;

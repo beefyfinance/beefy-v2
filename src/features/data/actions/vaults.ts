@@ -10,7 +10,7 @@ import type { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
 
 export interface FulfilledAllVaultsPayload {
   byChainId: {
-    [chainId: ChainEntity['id']]: VaultConfig[];
+    [chainId in ChainEntity['id']]?: VaultConfig[];
   };
   state: BeefyState;
 }
