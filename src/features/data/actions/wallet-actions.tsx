@@ -35,7 +35,6 @@ import {
   selectChainWrappedNativeToken,
   selectErc20TokenByAddress,
   selectIsTokenLoaded,
-  selectIsTokenLoadedOnChain,
   selectTokenByAddress,
   selectTokenByAddressOrUndefined,
   selectTokenById,
@@ -1240,12 +1239,14 @@ function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
   }
   if (isCowcentratedLiquidityVault(vault)) {
     vault.depositTokenAddresses.forEach(tokenAddress => {
-      if (selectIsTokenLoadedOnChain(state, vault.chainId, tokenAddress)) {
-        selectTokenByAddress(state, vault.chainId, tokenAddress);
-      }
+      tokens.push(selectTokenByAddress(state, vault.chainId, tokenAddress));
     });
   }
-  tokens.push(selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress));
+
+  // clm deposit tokens aren't erc20 and don't share balanceOf
+  if (!isCowcentratedLiquidityVault(vault)) {
+    tokens.push(selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress));
+  }
   tokens.push(selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress));
 
   // and native token because we spent gas
