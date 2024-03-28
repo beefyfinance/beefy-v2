@@ -14,47 +14,6 @@ export const styles = (theme: Theme) => ({
     borderRadius: '8px',
   },
 
-  slider: {
-    '-webkit-appearance': 'none' as const,
-    width: '100%',
-    borderRadius: '0px 0px 8px 8px',
-    margin: 0,
-    padding: 0,
-    backgroundColor: theme.palette.background.contentLight,
-    overflow: 'hidden',
-    '&::-webkit-slider-thumb': {
-      '-webkit-appearance': 'none' as const,
-      appearance: 'none' as const,
-      width: '8px',
-      height: '8px',
-      borderRadius: '50%',
-      backgroundColor: theme.palette.text.dark,
-      border: `2px solid ${theme.palette.text.secondary}`,
-      cursor: 'pointer' as const,
-      boxShadow: `-407px 0 0 400px ${theme.palette.text.dark}`,
-    },
-    '&::-webkit-range-thumb': {
-      '-webkit-appearance': 'none' as const,
-      appearance: 'none' as const,
-      borderRadius: '50%',
-      cursor: 'pointer' as const,
-      overflow: 'hidden',
-    },
-    '&::-webkit-slider-runnable-track': {
-      backgroundColor: theme.palette.background.contentLight,
-      borderRadius: '0px 0px 8px 8px',
-    },
-  },
-  errorRange: {
-    backgroundColor: `${theme.palette.background.indicators.error}7F`,
-    '&::-webkit-slider-thumb': {
-      backgroundColor: theme.palette.background.indicators.error,
-      boxShadow: `-407px 0 0 400px ${theme.palette.background.indicators.error}7F`,
-    },
-    '&::-webkit-slider-runnable-track': {
-      backgroundColor: `${theme.palette.background.indicators.error}7F`,
-    },
-  },
   dataList: {
     ...theme.typography['body-sm'],
     color: theme.palette.text.dark,
@@ -68,5 +27,39 @@ export const styles = (theme: Theme) => ({
   },
   active: {
     color: theme.palette.text.primary,
+  },
+
+  slider: {
+    '-webkit-appearance': 'none' as const,
+    height: '8px',
+    width: '100%',
+    zIndex: 999,
+    margin: 0,
+    padding: 0,
+
+    borderRadius: '0px 0px 8px 8px',
+    outline: 'none',
+    border: 'none',
+    '&::-webkit-slider-thumb': {
+      '-webkit-appearance': 'none' as const,
+      height: '16px',
+      width: '16px',
+      background: theme.palette.text.dark,
+      border: `2px solid ${theme.palette.text.secondary}`,
+      borderRadius: '50%',
+      '&:hover': {
+        cursor: 'pointer' as const,
+      },
+    },
+  },
+  sliderBackground: {
+    background: props =>
+      `linear-gradient(to right, ${theme.palette.text.secondary} 0%,${theme.palette.text.secondary} ${props.sliderValue}%,${theme.palette.background.contentLight} ${props.sliderValue}%, ${theme.palette.background.contentLight} 100%)`,
+  },
+  errorRange: {
+    background: `${theme.palette.background.indicators.error}7F`,
+    '&::-webkit-slider-thumb': {
+      background: theme.palette.background.indicators.error,
+    },
   },
 });

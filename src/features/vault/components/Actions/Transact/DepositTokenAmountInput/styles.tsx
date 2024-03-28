@@ -28,6 +28,7 @@ export const styles = (theme: Theme) => ({
   active: {
     color: theme.palette.text.primary,
   },
+
   slider: {
     '-webkit-appearance': 'none' as const,
     height: '8px',
@@ -35,8 +36,7 @@ export const styles = (theme: Theme) => ({
     zIndex: 999,
     margin: 0,
     padding: 0,
-    background: props =>
-      `linear-gradient(to right, ${theme.palette.text.secondary} 0%, ${theme.palette.background.contentLight} ${props.sliderValue}%)`,
+
     borderRadius: '0px 0px 8px 8px',
     outline: 'none',
     border: 'none',
@@ -47,13 +47,19 @@ export const styles = (theme: Theme) => ({
       background: theme.palette.text.dark,
       border: `2px solid ${theme.palette.text.secondary}`,
       borderRadius: '50%',
-      cursor: 'pointer' as const,
+      '&:hover': {
+        cursor: 'pointer' as const,
+      },
     },
   },
+  sliderBackground: {
+    background: props =>
+      `linear-gradient(to right, ${theme.palette.text.secondary} 0%,${theme.palette.text.secondary} ${props.sliderValue}%,${theme.palette.background.contentLight} ${props.sliderValue}%, ${theme.palette.background.contentLight} 100%)`,
+  },
   errorRange: {
-    backgroundColor: `${theme.palette.background.indicators.error}7F`,
+    background: `${theme.palette.background.indicators.error}7F`,
     '&::-webkit-slider-thumb': {
-      backgroundColor: theme.palette.background.indicators.error,
+      background: theme.palette.background.indicators.error,
     },
   },
 });

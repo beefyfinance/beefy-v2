@@ -30,7 +30,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
   function WithdrawTokenAmountInput({ className }) {
     const [sliderValue, setSliderValue] = useState<number>(0);
     const dispatch = useAppDispatch();
-    const classes = useStyles();
+    const classes = useStyles({ sliderValue });
     const vaultId = useAppSelector(selectTransactVaultId);
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
     const depositToken = useAppSelector(state =>
@@ -101,7 +101,10 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
         />
         <input
           disabled={forceSelection}
-          className={clsx(classes.slider, { [classes.errorRange]: error })}
+          className={clsx(classes.slider, {
+            [classes.sliderBackground]: !error,
+            [classes.errorRange]: error,
+          })}
           onChange={e => handleSliderChange(e.target.value)}
           value={sliderValue}
           type="range"
@@ -111,7 +114,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
         <div className={classes.dataList}>
           {[0, 25, 50, 75, 100].map(item => (
             <div
-              className={sliderValue >= item && !error ? classes.active : ''}
+              className={sliderValue === item && !error ? classes.active : ''}
               onClick={() => handleSliderChange(item)}
               key={`index-${item}`}
             >{`${item}%`}</div>

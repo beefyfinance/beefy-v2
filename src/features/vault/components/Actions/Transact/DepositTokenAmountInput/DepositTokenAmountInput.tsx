@@ -95,7 +95,10 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
         />
         <input
           disabled={forceSelection}
-          className={clsx(classes.slider, { [classes.errorRange]: error })}
+          className={clsx(classes.slider, {
+            [classes.sliderBackground]: !error,
+            [classes.errorRange]: error,
+          })}
           onChange={e => handleSliderChange(e.target.value)}
           value={sliderValue}
           type="range"
@@ -105,7 +108,7 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
         <div className={classes.dataList}>
           {[0, 25, 50, 75, 100].map(item => (
             <div
-              className={sliderValue >= item && !error ? classes.active : ''}
+              className={item === sliderValue && !error ? classes.active : ''}
               onClick={() => handleSliderChange(item)}
               key={`index-${item}`}
             >{`${item}%`}</div>
