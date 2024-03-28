@@ -315,6 +315,7 @@ function addVaultToState(
       bridged: apiVault.bridged,
       lendingOracle: apiVault.lendingOracle,
       earningPoints: apiVault.earningPoints ?? false,
+      feeTier: apiVault.feeTier ?? '0.05',
     } satisfies VaultCowcentrated;
   } else if (apiVault.type === 'standard' || apiVault.type === undefined) {
     vault = {

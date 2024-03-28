@@ -22,7 +22,8 @@
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": "0.05"
   },
   {
     "id": "uniswap-cow-arb-wseth-eth",
@@ -47,7 +48,8 @@
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": "0.01"
   },
   {
     "id": "uniswap-cow-eth-usdt",
@@ -72,7 +74,8 @@
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": ""
   },
   {
     "id": "uniswap-cow-usdc-usdc.e",
@@ -97,7 +100,8 @@
     "risks": ["IL_LOW", "MCAP_HIGH", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": "0.01"
   },
   {
     "id": "uniswap-cow-weeth-eth",
@@ -122,7 +126,8 @@
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": "0.01"
   },
   {
     "id": "equilibria-arb-eeth-seth",

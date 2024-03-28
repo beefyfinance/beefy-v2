@@ -56,6 +56,7 @@ export interface VaultConfig {
   /* Oracle can be ChainLink | Pyth, then the oracle address*/
   lendingOracle?: { provider: string; address?: string; loops?: number };
   earningPoints?: boolean;
+  feeTier?: string;
 }
 
 export interface FeaturedVaultConfig {

@@ -22,7 +22,8 @@
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "optimism",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": "0.3"
   },
   {
     "id": "uniswap-cow-op-op-eth-t2",
@@ -47,7 +48,8 @@
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "optimism",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": "0.05"
   },
   {
     "id": "uniswap-cow-op-susd-usdc-t2",
@@ -72,7 +74,8 @@
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "optimism",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": "0.01"
   },
   {
     "id": "uniswap-cow-op-op-eth",
@@ -97,7 +100,8 @@
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "optimism",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": "0.05"
   },
   {
     "id": "uniswap-cow-op-susd-usdc",
@@ -122,7 +126,8 @@
     "risks": ["IL_LOW", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "optimism",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": "0.01"
   },
   {
     "id": "uniswap-cow-op-moobifi-eth",
@@ -147,7 +152,8 @@
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "optimism",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": "0.3"
   },
   {
     "id": "velodrome-v2-pool-weth",
