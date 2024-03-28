@@ -71,7 +71,6 @@ import { BeefyCommonBridgeAbi } from '../../../config/abi/BeefyCommonBridgeAbi';
 import { BeefyZapRouterAbi } from '../../../config/abi/BeefyZapRouterAbi';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
 import { selectTransactSelectedQuote } from '../selectors/transact';
-import { selectToken } from '../selectors/on-ramp';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
