@@ -6,7 +6,6 @@
     "token": "USDC",
     "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
     "tokenDecimals": 6,
-    "tokenProviderId": "aave",
     "earnedToken": "mooAaveUSDC",
     "earnedTokenAddress": "0x61d93cd5CcBa9072E1E58A812fbC760820075a0b",
     "earnContractAddress": "0x61d93cd5CcBa9072E1E58A812fbC760820075a0b",
