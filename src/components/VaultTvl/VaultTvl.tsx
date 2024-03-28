@@ -50,8 +50,8 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
   }
 
   const { percent, underlyingTvl } = getVaultUnderlyingTvlAndBeefySharePercent(
-    breakdown.totalSupply,
-    breakdown.price,
+    vault,
+    breakdown,
     tvl
   );
 

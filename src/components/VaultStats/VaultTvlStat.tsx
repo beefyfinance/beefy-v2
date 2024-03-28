@@ -56,8 +56,8 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
   }
 
   const { percent, underlyingTvl } = getVaultUnderlyingTvlAndBeefySharePercent(
-    breakdown.totalSupply,
-    breakdown.price,
+    vault,
+    breakdown,
     tvl
   );
 

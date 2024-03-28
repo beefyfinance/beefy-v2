@@ -76,6 +76,9 @@ export interface LpData {
   tokens: string[];
   balances: string[];
   totalSupply: string;
+  underlyingPrice?: number;
+  underlyingBalances?: string[];
+  underlyingLiquidity?: string;
 }
 
 export interface BeefyAPILpBreakdownResponse {
