@@ -1690,7 +1690,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-wsteth-snx",
     "status": "active",
-    "createdAt": 1707298819,
+    "createdAt": 1711662420,
     "platformId": "velodrome",
     "assets": ["wstETH", "SNX"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
