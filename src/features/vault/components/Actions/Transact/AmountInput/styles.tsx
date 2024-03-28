@@ -13,10 +13,12 @@ export const styles = (theme: Theme) => ({
     position: 'relative' as const,
     justifyContent: 'space-between',
     minHeight: '52px',
+    gap: '4px',
   },
   inputContent: {
     display: 'flex',
     flexDirection: 'column' as const,
+    width: '100%',
   },
   input: {
     ...theme.typography['h2'],

@@ -41,6 +41,7 @@ export type AmountInputProps = {
   price?: BigNumber;
   endAdornement?: ReactNode;
   disabled?: boolean;
+  errorClassName?: string;
 };
 export const AmountInput = memo<AmountInputProps>(function AmountInput({
   value,
@@ -54,6 +55,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   price,
   endAdornement,
   disabled,
+  errorClassName = '',
 }) {
   const classes = useStyles();
   const [input, setInput] = useState(() => {
@@ -144,6 +146,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
     <div
       className={clsx(classes.inputContainer, className, {
         [classes.fullWidth]: fullWidth,
+        [errorClassName]: error && errorClassName,
         [classes.error]: error,
       })}
     >

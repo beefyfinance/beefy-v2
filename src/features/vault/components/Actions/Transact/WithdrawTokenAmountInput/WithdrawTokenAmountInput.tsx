@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo } from 'react';
+import React, { memo, useCallback, useMemo, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
@@ -28,6 +28,7 @@ export type WithdrawTokenAmountInputProps = {
 
 export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
   function WithdrawTokenAmountInput({ className }) {
+    const [sliderValue, setSliderValue] = useState<number>(0);
     const dispatch = useAppDispatch();
     const classes = useStyles();
     const vaultId = useAppSelector(selectTransactVaultId);
@@ -52,8 +53,31 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
             max: isMax,
           })
         );
+
+        if (value.gt(userBalance)) {
+          setSliderValue(100);
+        } else {
+          setSliderValue(value.times(100).dividedBy(userBalance).toNumber());
+        }
       },
-      [dispatch, depositToken]
+      [dispatch, depositToken.decimals, userBalance]
+    );
+
+    const handleSliderChange = useCallback(
+      (value: number | string) => {
+        const parsedNumber = new BigNumber(value).toNumber();
+        setSliderValue(parsedNumber);
+
+        dispatch(
+          transactActions.setInputAmount({
+            amount: userBalance
+              .multipliedBy(parsedNumber / 100)
+              .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR),
+            max: value === 100,
+          })
+        );
+      },
+      [depositToken.decimals, dispatch, userBalance]
     );
 
     const error = useMemo(() => {
@@ -61,19 +85,39 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
     }, [userBalance, value]);
 
     return (
-      <AmountInput
-        className={clsx(classes.input, className)}
-        value={value}
-        maxValue={userBalance}
-        tokenDecimals={depositToken.decimals}
-        onChange={handleChange}
-        allowInputAboveBalance={true}
-        fullWidth={true}
-        error={error}
-        price={price}
-        endAdornement={<TokenSelectButton />}
-        disabled={forceSelection}
-      />
+      <div className={classes.inputContainer}>
+        <AmountInput
+          className={clsx(classes.input, className)}
+          value={value}
+          maxValue={userBalance}
+          tokenDecimals={depositToken.decimals}
+          onChange={handleChange}
+          allowInputAboveBalance={true}
+          fullWidth={true}
+          error={error}
+          price={price}
+          endAdornement={<TokenSelectButton />}
+          disabled={forceSelection}
+        />
+        <input
+          disabled={forceSelection}
+          className={clsx(classes.slider, { [classes.errorRange]: error })}
+          onChange={e => handleSliderChange(e.target.value)}
+          value={sliderValue}
+          type="range"
+          min="1"
+          max="100"
+        />
+        <div className={classes.dataList}>
+          {[0, 25, 50, 75, 100].map(item => (
+            <div
+              className={sliderValue >= item && !error ? classes.active : ''}
+              onClick={() => handleSliderChange(item)}
+              key={`index-${item}`}
+            >{`${item}%`}</div>
+          ))}
+        </div>
+      </div>
     );
   }
 );
