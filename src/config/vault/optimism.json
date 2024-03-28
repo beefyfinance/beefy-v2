@@ -1677,6 +1677,36 @@
     ]
   },
   {
+    "id": "velodrome-v2-wsteth-snx",
+    "name": "wstETH-SNX vLP v2",
+    "type": "standard",
+    "token": "wstETH-SNX vLP v2",
+    "tokenAddress": "0x8F0364Cd47Fb819953D9096Bda1ec8017829aAa2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2wstETH-SNX",
+    "earnedTokenAddress": "0x6DFc84940130756c71bc2bb9bf9e4C2d6C143Da2",
+    "earnContractAddress": "0x6DFc84940130756c71bc2bb9bf9e4C2d6C143Da2",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-wsteth-snx",
+    "status": "active",
+    "createdAt": 1711662420,
+    "platformId": "velodrome",
+    "assets": ["wstETH", "SNX"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb&to=0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb&token1=0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4&stable=false",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x8F0364Cd47Fb819953D9096Bda1ec8017829aAa2",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "beets-eclp-wsteth-eth",
     "name": "Gyroscope wstETH-ETH",
     "type": "standard",
