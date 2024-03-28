@@ -804,6 +804,32 @@ export const config = {
     },
     stableCoins: ['USDT', 'USDC', 'DAI'],
   },
+  fraxtal: {
+    new: true,
+    name: 'Fraxtal',
+    chainId: 252,
+    rpc: ['https://rpc.frax.com'],
+    explorerUrl: 'https://fraxscan.com',
+    multicallAddress: '0x',
+    multicall3Address: '0x',
+    appMulticallContractAddress: '0x',
+    providerName: 'Frax',
+    walletSettings: {
+      chainId: `0x${parseInt('252', 10).toString(16)}`,
+      chainName: 'Fraxtal',
+      nativeCurrency: {
+        name: 'Frax ETH',
+        symbol: 'frxETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://rpc.frax.com'],
+      blockExplorerUrls: ['https://fraxscan.com'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['TODO'],
+  },
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,
