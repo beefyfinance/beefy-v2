@@ -35,6 +35,7 @@ import {
   selectChainWrappedNativeToken,
   selectErc20TokenByAddress,
   selectIsTokenLoaded,
+  selectIsTokenLoadedOnChain,
   selectTokenByAddress,
   selectTokenByAddressOrUndefined,
   selectTokenById,
@@ -70,6 +71,7 @@ import { BeefyCommonBridgeAbi } from '../../../config/abi/BeefyCommonBridgeAbi';
 import { BeefyZapRouterAbi } from '../../../config/abi/BeefyZapRouterAbi';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
 import { selectTransactSelectedQuote } from '../selectors/transact';
+import { selectToken } from '../selectors/on-ramp';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -1228,7 +1230,7 @@ function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
   const tokens: TokenEntity[] = [];
 
   // refresh vault tokens
-  if (isStandardVault(vault) || isCowcentratedLiquidityVault(vault)) {
+  if (isStandardVault(vault)) {
     for (const assetId of vault.assetIds) {
       // selectTokenById throws if token does not exist;
       // tokens in assetIds[] might not exist if vault does not have ZAP
@@ -1236,6 +1238,13 @@ function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
         tokens.push(selectTokenById(state, vault.chainId, assetId));
       }
     }
+  }
+  if (isCowcentratedLiquidityVault(vault)) {
+    vault.depositTokenAddresses.forEach(tokenAddress => {
+      if (selectIsTokenLoadedOnChain(state, vault.chainId, tokenAddress)) {
+        selectTokenByAddress(state, vault.chainId, tokenAddress);
+      }
+    });
   }
   tokens.push(selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress));
   tokens.push(selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress));
