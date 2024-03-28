@@ -153,7 +153,7 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
   for (const vaultId of allVaultIds) {
     const vault = selectVaultById(state, vaultId);
 
-    if (isStandardVault(vault)) {
+    if (isStandardVault(vault) || isCowcentratedLiquidityVault(vault)) {
       // standard vaults via receipt tokens
       let deposited = false;
       const balance = selectUserBalanceOfToken(
