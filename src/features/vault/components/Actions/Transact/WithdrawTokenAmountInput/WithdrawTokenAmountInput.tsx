@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo, useState } from 'react';
+import React, { memo, useCallback, useMemo, type CSSProperties } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
@@ -19,6 +19,7 @@ import {
 } from '../../../../../data/selectors/tokens';
 import BigNumber from 'bignumber.js';
 import { TokenSelectButton } from '../TokenSelectButton';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
@@ -28,9 +29,8 @@ export type WithdrawTokenAmountInputProps = {
 
 export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
   function WithdrawTokenAmountInput({ className }) {
-    const [sliderValue, setSliderValue] = useState<number>(0);
     const dispatch = useAppDispatch();
-    const classes = useStyles({ sliderValue });
+    const classes = useStyles();
     const vaultId = useAppSelector(selectTransactVaultId);
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
     const depositToken = useAppSelector(state =>
@@ -53,20 +53,13 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
             max: isMax,
           })
         );
-
-        if (value.gt(userBalance)) {
-          setSliderValue(100);
-        } else {
-          setSliderValue(value.times(100).dividedBy(userBalance).toNumber());
-        }
       },
-      [dispatch, depositToken.decimals, userBalance]
+      [dispatch, depositToken.decimals]
     );
 
     const handleSliderChange = useCallback(
       (value: number | string) => {
         const parsedNumber = new BigNumber(value).toNumber();
-        setSliderValue(parsedNumber);
 
         dispatch(
           transactActions.setInputAmount({
@@ -84,6 +77,13 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
       return value.gt(userBalance);
     }, [userBalance, value]);
 
+    const sliderValue = useMemo(() => {
+      return value
+        .times(100)
+        .dividedBy(userBalance ?? BIG_ZERO)
+        .toNumber();
+    }, [userBalance, value]);
+
     return (
       <div className={classes.inputContainer}>
         <AmountInput
@@ -96,7 +96,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
           fullWidth={true}
           error={error}
           price={price}
-          endAdornement={<TokenSelectButton />}
+          endAdornment={<TokenSelectButton />}
           disabled={forceSelection}
         />
         <input
@@ -105,6 +105,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
             [classes.sliderBackground]: !error,
             [classes.errorRange]: error,
           })}
+          style={{ '--value': `${sliderValue}%` } as CSSProperties}
           onChange={e => handleSliderChange(e.target.value)}
           value={sliderValue}
           type="range"
@@ -114,7 +115,10 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
         <div className={classes.dataList}>
           {[0, 25, 50, 75, 100].map(item => (
             <div
-              className={sliderValue === item && !error ? classes.active : ''}
+              className={clsx(classes.itemList, {
+                [classes.active]: item === sliderValue && !error,
+                [classes.itemDisabled]: forceSelection,
+              })}
               onClick={() => handleSliderChange(item)}
               key={`index-${item}`}
             >{`${item}%`}</div>

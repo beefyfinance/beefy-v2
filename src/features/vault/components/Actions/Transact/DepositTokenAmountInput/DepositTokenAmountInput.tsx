@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo, useState } from 'react';
+import React, { memo, useCallback, useMemo, type CSSProperties } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
@@ -15,6 +15,7 @@ import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import BigNumber from 'bignumber.js';
 import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens';
 import { TokenSelectButton } from '../TokenSelectButton';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
@@ -24,9 +25,8 @@ export type DepositTokenAmountInputProps = {
 
 export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
   function DepositTokenAmountInput({ className }) {
-    const [sliderValue, setSliderValue] = useState<number>(0);
     const dispatch = useAppDispatch();
-    const classes = useStyles({ sliderValue });
+    const classes = useStyles();
     const selection = useAppSelector(selectTransactSelected);
     const depositToken = selection.tokens[0]; // TODO univ3; only 1 deposit token supported
     const userBalance = useAppSelector(state =>
@@ -45,22 +45,13 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
             max: isMax,
           })
         );
-
-        if (value.gt(userBalance)) {
-          setSliderValue(100);
-        } else {
-          setSliderValue(value.times(100).dividedBy(userBalance).toNumber());
-        }
       },
-      [dispatch, depositToken.decimals, userBalance]
+      [dispatch, depositToken.decimals]
     );
 
     const handleSliderChange = useCallback(
       (value: number | string) => {
-        console.log(value);
         const parsedNumber = new BigNumber(value).toNumber();
-        setSliderValue(parsedNumber);
-
         dispatch(
           transactActions.setInputAmount({
             amount: userBalance
@@ -72,9 +63,15 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
       },
       [depositToken.decimals, dispatch, userBalance]
     );
-
     const error = useMemo(() => {
       return value.gt(userBalance);
+    }, [userBalance, value]);
+
+    const sliderValue = useMemo(() => {
+      return value
+        .times(100)
+        .dividedBy(userBalance.gt(BIG_ZERO) ? userBalance : 1)
+        .toNumber();
     }, [userBalance, value]);
 
     return (
@@ -90,7 +87,7 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
           allowInputAboveBalance={true}
           fullWidth={true}
           price={price}
-          endAdornement={<TokenSelectButton />}
+          endAdornment={<TokenSelectButton />}
           disabled={forceSelection}
         />
         <input
@@ -99,6 +96,7 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
             [classes.sliderBackground]: !error,
             [classes.errorRange]: error,
           })}
+          style={{ '--value': `${sliderValue}%` } as CSSProperties}
           onChange={e => handleSliderChange(e.target.value)}
           value={sliderValue}
           type="range"
@@ -108,7 +106,10 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
         <div className={classes.dataList}>
           {[0, 25, 50, 75, 100].map(item => (
             <div
-              className={item === sliderValue && !error ? classes.active : ''}
+              className={clsx(classes.itemList, {
+                [classes.active]: item === sliderValue && !error,
+                [classes.itemDisabled]: forceSelection,
+              })}
               onClick={() => handleSliderChange(item)}
               key={`index-${item}`}
             >{`${item}%`}</div>

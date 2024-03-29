@@ -39,7 +39,7 @@ export type AmountInputProps = {
   allowInputAboveBalance?: boolean;
   fullWidth?: boolean;
   price?: BigNumber;
-  endAdornement?: ReactNode;
+  endAdornment?: ReactNode;
   disabled?: boolean;
   errorClassName?: string;
 };
@@ -53,7 +53,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   allowInputAboveBalance = false,
   fullWidth = false,
   price,
-  endAdornement,
+  endAdornment,
   disabled,
   errorClassName = '',
 }) {
@@ -163,7 +163,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
         {price && value.gt(0) && <div className={classes.price}>{formatBigUsd(inputUsdValue)}</div>}
       </div>
 
-      {endAdornement && <div className={classes.endAdornement}>{endAdornement}</div>}
+      {endAdornment && <div className={classes.endAdornment}>{endAdornment}</div>}
     </div>
   );
 });

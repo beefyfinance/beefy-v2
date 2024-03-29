@@ -83,7 +83,7 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
         allowInputAboveBalance={true}
         error={error}
         price={price}
-        endAdornement={<MaxButton disabled={userBalance.lte(BIG_ZERO)} onClick={handleMax} />}
+        endAdornment={<MaxButton disabled={userBalance.lte(BIG_ZERO)} onClick={handleMax} />}
       />
     </div>
   );

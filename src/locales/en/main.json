@@ -550,7 +550,7 @@
   "Transact-ClaimRewards": "Claim Rewards Only",
   "Transact-ClaimWithdrawAll": "Claim & Withdraw All",
   "Transact-SelectToken": "Select token",
-  "Transact-SelectAmount": "Select Amount",
+  "Transact-SelectAmount": "Select amount",
   "Transact-SelectProvider": "Select provider",
   "Transact-Available": "Available:",
   "Transact-ZapRoute": "Zap Route",

@@ -15,20 +15,24 @@ export const styles = (theme: Theme) => ({
   },
 
   dataList: {
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.dark,
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
     marginTop: '4px',
+  },
+  itemList: {
+    ...theme.typography['body-sm'],
+    color: theme.palette.text.dark,
     '&:hover': {
       cursor: 'pointer' as const,
     },
   },
+  itemDisabled: {
+    pointerEvents: 'none' as const,
+  },
   active: {
     color: theme.palette.text.primary,
   },
-
   slider: {
     '-webkit-appearance': 'none' as const,
     height: '8px',
@@ -36,7 +40,6 @@ export const styles = (theme: Theme) => ({
     zIndex: 999,
     margin: 0,
     padding: 0,
-
     borderRadius: '0px 0px 8px 8px',
     outline: 'none',
     border: 'none',
@@ -53,8 +56,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   sliderBackground: {
-    background: props =>
-      `linear-gradient(to right, ${theme.palette.text.secondary} 0%,${theme.palette.text.secondary} ${props.sliderValue}%,${theme.palette.background.contentLight} ${props.sliderValue}%, ${theme.palette.background.contentLight} 100%)`,
+    background: `linear-gradient(to right, ${theme.palette.text.secondary} 0%,${theme.palette.text.secondary} var(--value),${theme.palette.background.contentLight} var(--value), ${theme.palette.background.contentLight} 100%)`,
   },
   errorRange: {
     background: `${theme.palette.background.indicators.error}7F`,
