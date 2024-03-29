@@ -24,16 +24,6 @@ const EMPTY_TOTAL_APY: TotalApy = {
 
 export const selectVaultTotalApy = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const result = state.biz.apy.totalApy.byVaultId[vaultId] || { ...EMPTY_TOTAL_APY };
-  if (vaultId === 'compound-arbitrum-usdc') {
-    return {
-      ...result,
-      boostedTotalApy: result.totalApy + 0.08,
-      boostApr: 0.08,
-      boostDaily: 0.08 / 365,
-      boostedTotalDaily: result.totalDaily + 0.08 / 365,
-    };
-  }
-
   return result;
 };
 

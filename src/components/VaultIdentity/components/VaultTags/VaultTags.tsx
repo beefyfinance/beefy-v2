@@ -88,7 +88,7 @@ const VaultPlatformTag = memo<VaultPlatformTagProps>(function VaultPlatformTag({
   );
 });
 
-const WormholeSTIPTag = memo(function WormholeSTIPTag() {
+export const WormholeSTIPTag = memo(function WormholeSTIPTag() {
   const classes = useStyles();
   const { isOverflowing, ref } = useIsOverflowingHorizontally();
   return (
@@ -138,7 +138,6 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   return (
     <div className={classes.vaultTags}>
       <VaultPlatformTag vaultId={vaultId} />
-      {vaultId === 'compound-arbitrum-usdc' && <WormholeSTIPTag />}
       {isVaultRetired(vault) ? (
         <VaultTag className={classes.vaultTagRetired}>{t('VaultTag-Retired')}</VaultTag>
       ) : isVaultPaused(vault) ? (
