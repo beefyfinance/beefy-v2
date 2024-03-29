@@ -80,7 +80,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
     const sliderValue = useMemo(() => {
       return value
         .times(100)
-        .dividedBy(userBalance ?? BIG_ZERO)
+        .dividedBy(userBalance.gt(BIG_ZERO) ? userBalance : 1)
         .toNumber();
     }, [userBalance, value]);
 
