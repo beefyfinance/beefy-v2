@@ -78,6 +78,8 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
     depositTokenProviderName,
     chainName,
     chainNativeToken,
+    depositToken0,
+    depositToken1,
   ]);
 
   return (
