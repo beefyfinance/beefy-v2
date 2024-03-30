@@ -260,6 +260,8 @@ export const config = {
       'crvUSD',
       'USDV',
       'sDAI',
+      'aOptUSDC',
+      'aOptUSDCn',
     ],
   },
   fantom: {
