@@ -88,23 +88,6 @@ const VaultPlatformTag = memo<VaultPlatformTagProps>(function VaultPlatformTag({
   );
 });
 
-export const WormholeSTIPTag = memo(function WormholeSTIPTag() {
-  const classes = useStyles();
-  const { isOverflowing, ref } = useIsOverflowingHorizontally();
-  return (
-    <VaultTagWithTooltip
-      content={<BasicTooltipContent title={`Wormhole STIP`} />}
-      placement="bottom"
-      disabled={!isOverflowing}
-      className={classes.vaultTagBoost}
-      ref={ref}
-    >
-      <>{'\uD83D\uDD25 '}</>
-      {`Wormhole STIP`}
-    </VaultTagWithTooltip>
-  );
-});
-
 const PointsTag = memo(function PointsTag() {
   const classes = useStyles();
   const { t } = useTranslation();
