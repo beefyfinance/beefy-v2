@@ -201,6 +201,7 @@ export const config = {
       'DOLA',
       'USDT+',
       'vUSDT',
+      'USDV',
     ],
   },
   optimism: {
