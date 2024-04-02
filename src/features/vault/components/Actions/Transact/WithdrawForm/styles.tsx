@@ -25,12 +25,12 @@ export const styles = (theme: Theme) => ({
     gap: '4px',
   },
   availableLabel: {
-    ...theme.typography['body-sm'],
+    ...theme.typography['body-lg'],
     color: theme.palette.text.dark,
     marginLeft: 'auto',
   },
   availableLabelAmount: {
-    ...theme.typography['body-sm-med'],
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.middle,
   },
   inputs: {
@@ -42,14 +42,10 @@ export const styles = (theme: Theme) => ({
     marginTop: '12px',
   },
   quote: {
-    marginTop: '12px',
+    marginTop: '24px',
   },
   actions: {
     marginTop: '24px',
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: '24px',
-    width: '100%',
   },
   fees: {
     marginTop: '24px',

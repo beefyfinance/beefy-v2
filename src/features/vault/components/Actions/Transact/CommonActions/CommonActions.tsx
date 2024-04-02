@@ -60,22 +60,34 @@ export type ActionConnectSwitchProps = {
   className?: string;
   chainId?: ChainEntity['id'];
   children: ReactNode;
+  FeesComponent?: React.FC;
 };
 
 export const ActionConnectSwitch = memo<ActionConnectSwitchProps>(function ActionConnectSwitch({
   children,
   className,
   chainId,
+  FeesComponent,
 }) {
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const connectedChainId = useAppSelector(selectCurrentChainId);
 
   if (!isWalletConnected) {
-    return <ActionConnect className={className} />;
+    return (
+      <div className={className}>
+        <ActionConnect />
+        {FeesComponent && <FeesComponent />}
+      </div>
+    );
   }
 
   if (chainId && chainId !== connectedChainId) {
-    return <ActionSwitch chainId={chainId} className={className} />;
+    return (
+      <div className={className}>
+        <ActionSwitch chainId={chainId} />
+        {FeesComponent && <FeesComponent />}
+      </div>
+    );
   }
 
   return <>{children}</>;

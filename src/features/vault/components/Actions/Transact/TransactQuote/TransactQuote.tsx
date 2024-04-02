@@ -13,12 +13,12 @@ import {
   selectTransactSelectedChainId,
   selectTransactSelectedQuote,
   selectTransactSelectedSelectionId,
+  selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { transactFetchQuotesIfNeeded } from '../../../../../data/actions/transact';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { TokenAmountIcon, TokenAmountIconLoader } from '../TokenAmountIcon/TokenAmountIcon';
-import { QuoteArrowDivider } from '../QuoteArrowDivider';
 import { isZapQuote } from '../../../../../data/apis/transact/transact-types';
 import { ZapRoute } from '../ZapRoute';
 import { QuoteTitleRefresh } from '../QuoteTitleRefresh';
@@ -27,6 +27,7 @@ import { TransactStatus } from '../../../../../data/reducers/wallet/transact-typ
 import { ZapSlippage } from '../ZapSlippage';
 import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
+import { selectVaultById } from '../../../../../data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 
@@ -64,12 +65,11 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   }, [dispatch, mode, chainId, selectionId, inputAmount, inputMax, debouncedFetchQuotes]);
 
   if (status === TransactStatus.Idle) {
-    return null;
+    return <QuoteIdle title={title} className={className} />;
   }
 
   return (
     <div className={clsx(classes.container, className)}>
-      <QuoteArrowDivider className={classes.divider} />
       <QuoteTitleRefresh
         title={title}
         enableRefresh={status === TransactStatus.Fulfilled || status === TransactStatus.Rejected}
@@ -77,6 +77,24 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
       {status === TransactStatus.Pending ? <QuoteLoading /> : null}
       {status === TransactStatus.Fulfilled ? <QuoteLoaded /> : null}
       {status === TransactStatus.Rejected ? <QuoteError /> : null}
+    </div>
+  );
+});
+
+const QuoteIdle = memo<TransactQuoteProps>(function QuoteIdle({ title, className }) {
+  const classes = useStyles();
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  return (
+    <div className={clsx(classes.container, classes.disabled, className)}>
+      <QuoteTitleRefresh title={title} enableRefresh={true} />
+      <div className={classes.tokenAmounts}>
+        <TokenAmountIcon
+          amount={BIG_ZERO}
+          chainId={vault.chainId}
+          tokenAddress={vault.depositTokenAddress}
+        />
+      </div>
     </div>
   );
 });
