@@ -54,7 +54,7 @@ export interface ApyCLM {
   totalApy: number;
 }
 
-export type ApyData = ApyGovVault | ApyMaxiVault | ApyStandard | ApyCo;
+export type ApyData = ApyGovVault | ApyMaxiVault | ApyStandard | ApyCLM;
 
 export function isStandardVaultApy(apy: ApyData): apy is ApyStandard {
   return 'compoundingsPerYear' in apy;
