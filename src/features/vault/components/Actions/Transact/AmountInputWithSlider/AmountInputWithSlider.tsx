@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core';
 import type { TokenEntity } from '../../../../../data/entities/token';
 
 type AmountInputWithSliderProps = AmountInputProps & {
-  onSliderChange: (v: string | number) => void;
+  onSliderChange: (v: number) => void;
   selectedToken: TokenEntity;
 };
 
@@ -62,10 +62,10 @@ export const AmountInputWithSlider = memo<AmountInputWithSliderProps>(
             [classes.errorRange]: error,
           })}
           style={{ '--value': `${sliderValue}%` } as CSSProperties}
-          onChange={e => onSliderChange(e.target.value)}
+          onChange={e => onSliderChange(parseInt(e.target.value))}
           value={sliderValue}
           type="range"
-          min="1"
+          min="0"
           max="100"
         />
         <div className={classes.dataList}>

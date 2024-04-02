@@ -50,13 +50,11 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
     ) satisfies AmountInputProps['onChange'];
 
     const handleSliderChange = useCallback(
-      (value: number | string) => {
-        const parsedNumber = new BigNumber(value).toNumber();
-
+      (value: number) => {
         dispatch(
           transactActions.setInputAmount({
             amount: userBalance
-              .multipliedBy(parsedNumber / 100)
+              .multipliedBy(value / 100)
               .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR),
             max: value === 100,
           })
