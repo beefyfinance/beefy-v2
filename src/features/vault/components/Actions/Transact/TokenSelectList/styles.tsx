@@ -3,19 +3,15 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   container: {
     padding: '24px 0 0 0',
-    height: '400px', // TODO
+    height: '469px',
     width: '100%',
     display: 'flex',
     flexDirection: 'column' as const,
     borderRadius: '0 0 12px 12px',
     overflow: 'hidden',
   },
-  withdraw: {
-    height: '360px',
-  },
-  deposit: {
-    height: '436px',
-  },
+  withdraw: {},
+  deposit: {},
   search: {
     padding: '0 24px',
     margin: '0 0 24px 0',
