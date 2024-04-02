@@ -79,6 +79,14 @@ const _YearlyBreakdownTooltip = ({
     });
   }
 
+  if ('clmApr' in rates) {
+    rows.push({
+      label: t('Vault-Breakdown-CLMApr'),
+      value: rates.clmApr ?? '?',
+      last: false,
+    });
+  }
+
   rows.push({
     label: t('APY'),
     value: boosted ? rates.boostedTotalApy ?? '?' : rates.totalApy,
