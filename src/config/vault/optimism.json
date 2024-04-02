@@ -1,5 +1,31 @@
 [
   {
+    "id": "uniswap-cow-op-op-eth-t3",
+    "name": "OP-ETH",
+    "token": "OP-ETH",
+    "tokenAddress": "0x68F5C0A2DE713a54991E01858Fd27a3832401849",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x4200000000000000000000000000000000000042"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOptimismOP-ETH",
+    "earnedTokenAddress": "0x944Df2E9b7dbc28DbaDB25DDbF6C890Dc9d4e347",
+    "earnContractAddress": "0x944Df2E9b7dbc28DbaDB25DDbF6C890Dc9d4e347",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-op-eth-t3",
+    "status": "active",
+    "createdAt": 1710773529,
+    "platformId": "beefy",
+    "assets": ["WETH", "OP"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.3"
+  },
+  {
     "id": "uniswap-cow-op-moobifi-eth-t2",
     "name": "mooBIFI-ETH",
     "token": "mooBIFI-ETH",
