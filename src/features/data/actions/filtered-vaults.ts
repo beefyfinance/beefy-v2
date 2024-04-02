@@ -126,9 +126,7 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
         }
 
         if (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) {
-          if (vault.id !== 'compound-arbitrum-usdc') {
-            return false;
-          }
+          return false;
         }
 
         // User category: All / Saved Vaults / My Vaults
@@ -244,8 +242,6 @@ function applyDefaultSort(
       ? selectIsVaultPrestakedBoost(state, vault.id)
         ? -Number.MAX_SAFE_INTEGER
         : -selectVaultsActiveBoostPeriodFinish(state, vault.id)
-      : vault.id === 'compound-arbitrum-usdc'
-      ? -Number.MAX_SAFE_INTEGER
       : 1
   ).map(v => v.id);
 }

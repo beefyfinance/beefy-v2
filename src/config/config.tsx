@@ -260,6 +260,8 @@ export const config = {
       'crvUSD',
       'USDV',
       'sDAI',
+      'aOptUSDC',
+      'aOptUSDCn',
     ],
   },
   fantom: {
@@ -753,7 +755,7 @@ export const config = {
   linea: {
     name: 'Linea',
     chainId: 59144,
-    rpc: ['https://linea.drpc.org'],
+    rpc: ['https://linea.blockpi.network/v1/rpc/public'],
     explorerUrl: 'https://lineascan.build',
     multicallAddress: '0x91BB303E972995EbE5f593BCddBb6F5Ef49Dbcbd',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -767,7 +769,7 @@ export const config = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://linea.drpc.org'],
+      rpcUrls: ['https://linea.blockpi.network/v1/rpc/public'],
       blockExplorerUrls: ['https://lineascan.build'],
     },
     gas: {
