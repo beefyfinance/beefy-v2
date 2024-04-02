@@ -1,5 +1,146 @@
 [
   {
+    "id": "mendi-linea-lev-wsteth",
+    "name": "wstETH Leveraged",
+    "type": "standard",
+    "token": "wstETH",
+    "tokenAddress": "0xB5beDd42000b71FddE22D3eE8a79Bd49A568fC8F",
+    "tokenDecimals": 18,
+    "earnedToken": "mooMendiLeveragewstETH",
+    "earnedTokenAddress": "0xBF71FbCe0d4Fc460D36fa1d13B397a3cd5c45220",
+    "earnContractAddress": "0xBF71FbCe0d4Fc460D36fa1d13B397a3cd5c45220",
+    "oracle": "tokens",
+    "oracleId": "wstETH",
+    "status": "active",
+    "createdAt": 1712056277,
+    "platformId": "mendi",
+    "assets": ["wstETH"],
+    "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lending",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x8eCE1AbA32716FdDe8D6482bfd88E9a0ee01f565"
+    }
+  },
+  {
+    "id": "mendi-linea-lev-weth",
+    "name": "WETH Leveraged",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f",
+    "tokenDecimals": 18,
+    "earnedToken": "mooMendiLeverageWETH",
+    "earnedTokenAddress": "0x23EC7f31a5c74D5Fe21aa386A7519028DBD6bA40",
+    "earnContractAddress": "0x23EC7f31a5c74D5Fe21aa386A7519028DBD6bA40",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1712056277,
+    "platformId": "mendi",
+    "assets": ["WETH"],
+    "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lending",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "pyth"
+    }
+  },
+  {
+    "id": "mendi-linea-lev-usdc",
+    "name": "USDC Leveraged",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
+    "tokenDecimals": 6,
+    "earnedToken": "mooMendiLeverageUSDC",
+    "earnedTokenAddress": "0x9ab545Ab024a8Da2302f5b0D016F4f5501e330d1",
+    "earnContractAddress": "0x9ab545Ab024a8Da2302f5b0D016F4f5501e330d1",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1712056277,
+    "platformId": "mendi",
+    "assets": ["USDC"],
+    "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lending",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "pyth"
+    }
+  },
+  {
+    "id": "mendi-linea-lev-usdt",
+    "name": "USDT Leveraged",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0xA219439258ca9da29E9Cc4cE5596924745e12B93",
+    "tokenDecimals": 6,
+    "earnedToken": "mooMendiLeverageUSDT",
+    "earnedTokenAddress": "0xC3C757EA1429231C437736746Eb77A2344EAcb81",
+    "earnContractAddress": "0xC3C757EA1429231C437736746Eb77A2344EAcb81",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1712056277,
+    "platformId": "mendi",
+    "assets": ["USDT"],
+    "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lending",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "pyth"
+    }
+  },
+  {
+    "id": "mendi-linea-lev-wbtc",
+    "name": "WBTC Leveraged",
+    "type": "standard",
+    "token": "WBTC",
+    "tokenAddress": "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
+    "tokenDecimals": 8,
+    "earnedToken": "mooMendiLeverageWBTC",
+    "earnedTokenAddress": "0x639041dD8cD48B52C12414235d97E1313cbbceff",
+    "earnContractAddress": "0x639041dD8cD48B52C12414235d97E1313cbbceff",
+    "oracle": "tokens",
+    "oracleId": "WBTC",
+    "status": "active",
+    "createdAt": 1712056277,
+    "platformId": "mendi",
+    "assets": ["WBTC"],
+    "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lending",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "pyth"
+    }
+  },
+  {
     "id": "mendi-linea-ezeth",
     "name": "ezETH",
     "type": "standard",
