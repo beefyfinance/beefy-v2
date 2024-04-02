@@ -29,6 +29,7 @@ import {
   selectVaultById,
 } from '../../../../features/data/selectors/vaults';
 import { getBoostIconSrc } from '../../../../helpers/boostIconSrc';
+import clm from '../../../../images/icons/clm.svg';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
@@ -120,7 +121,7 @@ const WormholeSTIPTag = memo(function WormholeSTIPTag() {
   );
 });
 
-const CLMTag = memo(function CLMTag() {
+export const CLMTag = memo(function CLMTag({ vault }: { vault: VaultEntity }) {
   const classes = useStyles();
   return (
     <VaultTagWithTooltip
@@ -128,7 +129,8 @@ const CLMTag = memo(function CLMTag() {
       placement="bottom"
       className={classes.vaultTagClm}
     >
-      {`CLM`}
+      <img src={clm} height={16} />
+      {`CLM | ${isCowcentratedLiquidityVault(vault) && vault.feeTier}%`}
     </VaultTagWithTooltip>
   );
 });
@@ -166,7 +168,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   return (
     <div className={classes.vaultTags}>
       <VaultPlatformTag vaultId={vaultId} />
-      {isCowcentratedLiquidityVault(vault) && <CLMTag />}
+      {isCowcentratedLiquidityVault(vault) && <CLMTag vault={vault} />}
       {vaultId === 'compound-arbitrum-usdc' && <WormholeSTIPTag />}
       {isVaultRetired(vault) ? (
         <VaultTag className={classes.vaultTagRetired}>{t('VaultTag-Retired')}</VaultTag>

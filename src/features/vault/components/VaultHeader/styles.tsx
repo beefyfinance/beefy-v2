@@ -20,6 +20,9 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['h1'],
     color: theme.palette.text.middle,
     margin: '0 0 0 12px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
   },
   labelsHolder: {
     display: 'flex',
