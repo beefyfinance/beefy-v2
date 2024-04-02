@@ -19,7 +19,8 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5e03c94fc5fb2e21882000a96df0b63d2c4312e2/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5e03c94fc5fb2e21882000a96df0b63d2c4312e2/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "earningPoints": true
   },
   {
     "id": "aavev3-arb-usdc",
