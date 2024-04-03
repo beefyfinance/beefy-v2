@@ -1,4 +1,4 @@
-import type { VaultEntity } from '../../features/data/entities/vault';
+import { isCowcentratedLiquidityVault, type VaultEntity } from '../../features/data/entities/vault';
 import { memo, useMemo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
@@ -6,7 +6,10 @@ import { selectVaultById } from '../../features/data/selectors/vaults';
 import { VaultValueStat } from '../VaultValueStat';
 import { selectVaultTvl } from '../../features/data/selectors/tvl';
 import { formatBigUsd, formatSmallPercent } from '../../helpers/format';
-import { selectLpBreakdownByTokenAddress } from '../../features/data/selectors/tokens';
+import {
+  selectLpBreakdownByTokenAddress,
+  selectTokenByAddress,
+} from '../../features/data/selectors/tokens';
 import type { BigNumber } from 'bignumber.js';
 import { InterestTooltipContent } from '../InterestTooltipContent';
 import type { PlatformEntity } from '../../features/data/entities/platform';
@@ -45,6 +48,11 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
     vault.depositTokenAddress
   );
 
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const platformId = isCowcentratedLiquidityVault(vault)
+    ? depositToken.providerId!
+    : vault.platformId;
+
   if (!breakdown) {
     return {
       label,
@@ -56,8 +64,8 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
   }
 
   const { percent, underlyingTvl } = getVaultUnderlyingTvlAndBeefySharePercent(
-    breakdown.totalSupply,
-    breakdown.price,
+    vault,
+    breakdown,
     tvl
   );
 
@@ -69,7 +77,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
     loading: false,
     tooltip: (
       <TvlShareTooltip
-        platformId={vault.platformId}
+        platformId={platformId}
         underlyingTvl={underlyingTvl}
         vaultTvl={tvl}
         percent={percent}

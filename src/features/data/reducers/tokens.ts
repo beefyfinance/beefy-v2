@@ -282,6 +282,13 @@ function addBreakdownToState(sliceState: Draft<TokensState>, oracleId: string, b
     return;
   }
 
+  if (
+    breakdown.underlyingBalances &&
+    breakdown.underlyingBalances.length !== breakdown.tokens.length
+  ) {
+    return;
+  }
+
   // Replace native stand-ins
   breakdown.tokens = breakdown.tokens.map(address =>
     isNativeAlternativeAddress(address) ? 'native' : address

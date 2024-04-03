@@ -48,6 +48,9 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.tags.earnings,
   },
   vaultTagClm: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
     backgroundColor: theme.palette.background.tags.clm,
   },
   platformTagGov: {

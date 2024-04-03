@@ -1228,7 +1228,7 @@ function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
   const tokens: TokenEntity[] = [];
 
   // refresh vault tokens
-  if (isStandardVault(vault) || isCowcentratedLiquidityVault(vault)) {
+  if (isStandardVault(vault)) {
     for (const assetId of vault.assetIds) {
       // selectTokenById throws if token does not exist;
       // tokens in assetIds[] might not exist if vault does not have ZAP
@@ -1237,7 +1237,16 @@ function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
       }
     }
   }
-  tokens.push(selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress));
+  if (isCowcentratedLiquidityVault(vault)) {
+    vault.depositTokenAddresses.forEach(tokenAddress => {
+      tokens.push(selectTokenByAddress(state, vault.chainId, tokenAddress));
+    });
+  }
+
+  // clm deposit tokens aren't erc20 and don't share balanceOf
+  if (!isCowcentratedLiquidityVault(vault)) {
+    tokens.push(selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress));
+  }
   tokens.push(selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress));
 
   // and native token because we spent gas

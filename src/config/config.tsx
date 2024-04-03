@@ -681,7 +681,7 @@ export const config = {
     explorerUrl: 'https://basescan.org',
     multicallAddress: '0xbA790ec6F95D68123E772A43b314464585B311b4',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x354D3d7B61230C88F5f50176d9329d13366FbC28',
+    appMulticallContractAddress: '0x09C74A4bd3453e1C15D6624F24b3A02059a4dA15',
     providerName: 'Base',
     walletSettings: {
       chainId: `0x${parseInt('8453', 10).toString(16)}`,

@@ -59,7 +59,6 @@ export const DepositFormLoader = memo(function DepositFormLoader() {
   const { t } = useTranslation();
   const classes = useStyles();
   const status = useAppSelector(selectTransactOptionsStatus);
-  console.log('DepositFormLoader status:', status);
   const error = useAppSelector(selectTransactOptionsError);
   const isLoading = status === TransactStatus.Idle || status === TransactStatus.Pending;
   const isError = status === TransactStatus.Rejected;

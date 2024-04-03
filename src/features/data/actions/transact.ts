@@ -102,7 +102,6 @@ export const transactInit = createAsyncThunk<
     }
 
     await Promise.all(loaders);
-    console.log('loaders finished');
   },
   {
     condition({ vaultId }, { getState }) {
@@ -136,7 +135,6 @@ export const transactFetchOptions = createAsyncThunk<
     const api = await getTransactApi();
     const state = getState();
     const method = optionsForByMode[mode];
-    console.log('fetchOptions', vaultId, mode);
     const options = await api[method](vaultId, getState);
 
     if (!options || options.length === 0) {
@@ -149,7 +147,6 @@ export const transactFetchOptions = createAsyncThunk<
       const vault = selectVaultById(state, vaultId);
       const tokens = getUniqueTokensForOptions(options, state);
       const tokensByChain = groupBy(tokens, token => token.chainId);
-      console.log('Fetching balances');
       await Promise.all(
         Object.values(tokensByChain).map(tokens =>
           dispatch(
@@ -161,10 +158,7 @@ export const transactFetchOptions = createAsyncThunk<
           )
         )
       );
-      console.log('fetching balances finished');
     }
-
-    console.log(options);
 
     return {
       options: options,
@@ -202,7 +196,6 @@ export const transactFetchQuotes = createAsyncThunk<
   void,
   { state: BeefyState }
 >('transact/fetchQuotes', async (_, { getState, dispatch }) => {
-  console.log('fetchQuotes started');
   const api = await getTransactApi();
   const state = getState();
   const mode = selectTransactOptionsMode(state);
@@ -232,14 +225,10 @@ export const transactFetchQuotes = createAsyncThunk<
     throw new Error(`No selectionId selected`);
   }
 
-  console.log('fetchQuotes', selectionId, mode, inputAmount.toString(10), inputMax);
-
   const chainId = selectTransactSelectedChainId(state);
   if (!chainId) {
     throw new Error(`No chainId selected`);
   }
-
-  console.log('chainId', chainId);
 
   const options = selectTransactOptionsForSelectionId(state, selectionId);
   if (!options || options.length === 0) {
@@ -251,13 +240,9 @@ export const transactFetchQuotes = createAsyncThunk<
     throw new Error(`No tokens for selectionId ${selectionId}`);
   }
 
-  console.log('till here');
-
   // const vaultId = selectTransactVaultId(state);
   // const vault = selectVaultById(state, vaultId);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-
-  console.log('almost there');
 
   // TODO handle differently for univ3 with multiple deposit tokens
   const inputAmounts: InputTokenAmount[] =
@@ -284,10 +269,8 @@ export const transactFetchQuotes = createAsyncThunk<
 
   let quotes: TransactQuote[];
   if (options.every(isDepositOption)) {
-    console.log('every option is a deposit option');
     quotes = await api.fetchDepositQuotesFor(options, inputAmounts, getState);
   } else if (options.every(isWithdrawOption)) {
-    console.log('every option is a withdraw');
     quotes = await api.fetchWithdrawQuotesFor(options, inputAmounts, getState);
   } else {
     throw new Error(`Invalid options`);

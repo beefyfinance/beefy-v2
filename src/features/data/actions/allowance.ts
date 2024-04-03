@@ -45,7 +45,6 @@ export const fetchAllAllowanceAction = createAsyncThunk<
     } else if (isStandardVault(vault)) {
       standardVaults.push(vault);
     }
-    //TODO add v3 allowance
   }
 
   // always re-fetch state as late as possible

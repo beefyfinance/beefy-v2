@@ -151,6 +151,7 @@
   "Vault-Breakdown-LiquidStakingApr": "Liquid Staking APR",
   "Vault-Breakdown-ComposablePoolApr": "Composable Pool APR",
   "Vault-Breakdown-BoostApr": "Boost APR",
+  "Vault-Breakdown-CLMApr": "CLM APR",
   "Vault-Breakdown-VaultDaily": "Vault Daily",
   "Vault-Breakdown-TradingDaily": "Trading Daily",
   "Vault-Breakdown-LiquidStakingDaily": "Liquid Staking Daily",
@@ -668,5 +669,6 @@
   "TokenBridge-native": "Native",
   "TokenBridge-Tooltip-native": "Token is native to {{chain}}",
   "TokenBridge-Tooltip-bridge": "Token is bridged to {{chain}} via <website>{{bridge}}</website>",
-  "MarketMaker-Managed": "Funds being managed by a Market Maker"
+  "MarketMaker-Managed": "Funds being managed by a Market Maker",
+  "CLM-Beta-Banner": "Beefy CLM is in public beta, so be conscious of risks. Read the <LinkDocs>docs</LinkDocs> before using and provide your <LinkFeedback>feedback</LinkFeedback>. Audited by Cyfrin and Zellic."
 }

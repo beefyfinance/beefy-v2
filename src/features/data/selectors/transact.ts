@@ -114,10 +114,6 @@ export const selectTransactDepositInputAmountsExceedBalances = (state: BeefyStat
   const userBalances = depositTokens.map(token =>
     selectUserBalanceOfToken(state, token.chainId, token.address)
   );
-  console.log(
-    'selectTransactDepositInputAmountsExceedBalances:',
-    depositTokens.every((_, index) => inputAmounts[index].lte(userBalances[index]))
-  );
   return depositTokens.some((_, index) => inputAmounts[index].gt(userBalances[index]));
 };
 

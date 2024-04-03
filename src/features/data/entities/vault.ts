@@ -147,6 +147,7 @@ export interface VaultGov {
 export type VaultCowcentrated = Omit<VaultStandard, 'type'> & {
   type: 'cowcentrated';
   depositTokenAddresses: string[];
+  feeTier: string;
 };
 
 export function isGovVault(vault: VaultEntity): vault is VaultGov {

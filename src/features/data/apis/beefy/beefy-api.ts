@@ -49,7 +49,12 @@ export interface ApyStandard {
   lpFee: number;
 }
 
-export type ApyData = ApyGovVault | ApyMaxiVault | ApyStandard;
+export interface ApyCLM {
+  clmApr: number;
+  totalApy: number;
+}
+
+export type ApyData = ApyGovVault | ApyMaxiVault | ApyStandard | ApyCLM;
 
 export function isStandardVaultApy(apy: ApyData): apy is ApyStandard {
   return 'compoundingsPerYear' in apy;
@@ -76,6 +81,9 @@ export interface LpData {
   tokens: string[];
   balances: string[];
   totalSupply: string;
+  underlyingPrice?: number;
+  underlyingBalances?: string[];
+  underlyingLiquidity?: string;
 }
 
 export interface BeefyAPILpBreakdownResponse {

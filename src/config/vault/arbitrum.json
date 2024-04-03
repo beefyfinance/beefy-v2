@@ -1,5 +1,31 @@
 [
   {
+    "id": "uniswap-cow-arb-arb-eth-t2",
+    "name": "ARB-ETH",
+    "token": "ARB-ETH",
+    "tokenAddress": "0xC6F780497A95e246EB9449f5e4770916DCd6396A",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0x912CE59144191C1204E64559FE8253a0e49E6548"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapArbitrumARB-ETH",
+    "earnedTokenAddress": "0xe30487B1A9cdb67e1e3B4cC79389E23d186cAA14",
+    "earnContractAddress": "0xe30487B1A9cdb67e1e3B4cC79389E23d186cAA14",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-arb-eth-t2",
+    "status": "active",
+    "createdAt": 1710773529,
+    "platformId": "beefy",
+    "assets": ["WETH", "ARB"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "type": "cowcentrated",
+    "feeTier": "0.05"
+  },
+  {
     "id": "uniswap-cow-arb-arb-eth",
     "name": "ARB-ETH",
     "token": "ARB-ETH",
@@ -22,7 +48,8 @@
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": "0.05"
   },
   {
     "id": "uniswap-cow-arb-wseth-eth",
@@ -47,7 +74,8 @@
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": "0.01"
   },
   {
     "id": "uniswap-cow-eth-usdt",
@@ -72,7 +100,8 @@
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": ""
   },
   {
     "id": "uniswap-cow-usdc-usdc.e",
@@ -97,7 +126,8 @@
     "risks": ["IL_LOW", "MCAP_HIGH", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": "0.01"
   },
   {
     "id": "uniswap-cow-weeth-eth",
@@ -122,7 +152,8 @@
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
-    "type": "cowcentrated"
+    "type": "cowcentrated",
+    "feeTier": "0.01"
   },
   {
     "id": "equilibria-arb-eeth-seth",

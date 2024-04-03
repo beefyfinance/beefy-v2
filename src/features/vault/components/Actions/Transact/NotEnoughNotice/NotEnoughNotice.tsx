@@ -32,8 +32,6 @@ export const NotEnoughNotice = memo<NotEnoughProps>(function NotEnoughNotice({
       : selectTransactWithdrawInputAmountExceedsBalance
   );
 
-  console.log('NotEnoughNotice inputAmountExceedsBalance:', inputAmountExceedsBalance);
-
   useEffect(() => {
     onChange(inputAmountExceedsBalance);
   }, [inputAmountExceedsBalance, onChange]);
