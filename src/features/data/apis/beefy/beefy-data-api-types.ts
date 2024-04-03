@@ -40,8 +40,6 @@ export interface IBeefyDataApi {
 
   getApyChartData(vaultId: VaultEntity['id'], bucket: ApiTimeBucket): Promise<ApiChartData>;
 
-  getCowcentratedChartData(): Promise<HistoricalCowcentratedChartData>;
-
   getPriceChartData(
     oracleId: TokenEntity['oracleId'],
     bucket: ApiTimeBucket

@@ -59,6 +59,9 @@ export const selectHistoricalAvailableCharts = createSelector(
     selectHistoricalHasCowcentratedRanges(state, vaultId),
   (hasPriceChart, hasApyChart, hasTvlChart, showApy, hasCowcentratedRanges) => {
     const availableCharts: ChartStat[] = [];
+    if (hasCowcentratedRanges) {
+      availableCharts.push('cowcentrated');
+    }
     if (hasApyChart && showApy) {
       availableCharts.push('apy');
     }
@@ -67,9 +70,6 @@ export const selectHistoricalAvailableCharts = createSelector(
     }
     if (hasPriceChart) {
       availableCharts.push('price');
-    }
-    if (hasCowcentratedRanges) {
-      availableCharts.push('cowcentrated');
     }
     return availableCharts;
   }

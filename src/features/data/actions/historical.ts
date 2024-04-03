@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
-import { getBeefyDataApi } from '../apis/instances';
+import { getBeefyApi, getBeefyDataApi } from '../apis/instances';
 import type { VaultEntity } from '../entities/vault';
 import type {
   ApiChartData,
@@ -104,7 +104,7 @@ export const fetchCowcentratedVaultData = createAsyncThunk<
   void,
   { state: BeefyState }
 >('historical/fetchCowcentratedVaultData', async () => {
-  const api = await getBeefyDataApi();
+  const api = await getBeefyApi();
   const data = await api.getCowcentratedChartData();
   return { ...data };
 });
