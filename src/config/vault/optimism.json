@@ -1,5 +1,43 @@
 [
   {
+    "id": "aavev3-op-usdc-2",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+    "tokenDecimals": 6,
+    "earnedToken": "mooAaveUSDC",
+    "earnedTokenAddress": "0x72683E768d3dedbBb8B08e5526aA1ee56B21041C",
+    "earnContractAddress": "0x72683E768d3dedbBb8B08e5526aA1ee56B21041C",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1712146781,
+    "platformId": "aave",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://velodrome.finance/swap?to=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x16a9FA2FDa030272Ce99B29CF780dFA30361E0f3"
+    }
+  },
+  {
     "id": "velodrome-v2-usdc-sonne",
     "name": "SONNE-USDC vLP V2",
     "type": "standard",
