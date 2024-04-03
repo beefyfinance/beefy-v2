@@ -7,7 +7,7 @@ import { mapValuesDeep } from '../../utils/array-utils';
 import { featureFlag_simulateBeefyApiError } from '../../utils/feature-flags';
 import type { TreasuryCompleteBreakdownConfig } from '../config-types';
 import type { ChainEntity } from '../../entities/chain';
-import type { HistoricalCowcentratedChartData } from './beefy-data-api-types';
+import type { AllCowcentradedVaultRangesFullfiledPayload } from '../../actions/tokens';
 
 export const API_URL = import.meta.env.VITE_API_URL || 'https://api.beefy.finance';
 export const API_ZAP_URL = import.meta.env.VITE_API_ZAP_URL || `${API_URL}/zap`;
@@ -260,8 +260,10 @@ export class BeefyAPI {
     return res.data;
   }
 
-  async getCowcentratedChartData(): Promise<HistoricalCowcentratedChartData> {
-    const res = await this.api.get<HistoricalCowcentratedChartData>('cowData');
+  async getAllCowcentratedVaultRanges(): Promise<AllCowcentradedVaultRangesFullfiledPayload> {
+    const res = await this.api.get<AllCowcentradedVaultRangesFullfiledPayload>('cowData', {
+      params: { _: this.getCacheBuster('short') },
+    });
     return res.data;
   }
 

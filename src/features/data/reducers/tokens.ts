@@ -6,10 +6,20 @@ import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllPricesAction } from '../actions/prices';
 import type { FetchAddressBookPayload } from '../actions/tokens';
-import { fetchAddressBookAction, fetchAllAddressBookAction } from '../actions/tokens';
+import {
+  fetchAddressBookAction,
+  fetchAllAddressBookAction,
+  fetchAllCowcentratedVaultRanges,
+} from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
 import type { ChainEntity } from '../entities/chain';
-import type { TokenEntity, TokenErc20, TokenLpBreakdown, TokenNative } from '../entities/token';
+import type {
+  CowcentratedRanges,
+  TokenEntity,
+  TokenErc20,
+  TokenLpBreakdown,
+  TokenNative,
+} from '../entities/token';
 import { isTokenErc20, isTokenNative } from '../entities/token';
 import { selectChainById } from '../selectors/chains';
 import {
@@ -60,11 +70,17 @@ export type TokensState = {
       [tokenId: TokenEntity['oracleId']]: TokenLpBreakdown;
     };
   };
+  cowcentratedRanges: {
+    byVaultId: {
+      [tokenId: TokenEntity['oracleId']]: CowcentratedRanges;
+    };
+  };
 };
 export const initialTokensState: TokensState = {
   byChainId: {},
   prices: { byOracleId: {} },
   breakdown: { byOracleId: {} },
+  cowcentratedRanges: { byVaultId: {} },
 };
 
 export const tokensSlice = createSlice({
@@ -159,43 +175,53 @@ export const tokensSlice = createSlice({
     });
 
     // tokens from beefy bridge
-    builder.addCase(fetchBridgeConfig.fulfilled, (sliceState, action) => {
-      const {
-        config: { source, tokens },
-      } = action.payload;
+    builder
+      .addCase(fetchBridgeConfig.fulfilled, (sliceState, action) => {
+        const {
+          config: { source, tokens },
+        } = action.payload;
 
-      const sourceToken = addBridgeTokenToState(
-        sliceState,
-        {
-          ...source,
-          type: 'erc20',
-          buyUrl: undefined,
-          website: undefined,
-          documentation: undefined,
-          description: undefined,
-          risks: [],
-        },
-        true
-      );
+        const sourceToken = addBridgeTokenToState(
+          sliceState,
+          {
+            ...source,
+            type: 'erc20',
+            buyUrl: undefined,
+            website: undefined,
+            documentation: undefined,
+            description: undefined,
+            risks: [],
+          },
+          true
+        );
 
-      for (const [chainId, address] of entries(tokens)) {
-        if (!address) {
-          continue;
+        for (const [chainId, address] of entries(tokens)) {
+          if (!address) {
+            continue;
+          }
+
+          const isSourceXErc20 = chainId === sourceToken.chainId;
+
+          const token: TokenErc20 = {
+            ...sourceToken,
+            id: isSourceXErc20 ? `x${sourceToken.id}` : sourceToken.id,
+            chainId,
+            address,
+          };
+
+          // no need to track xerc20 on source chain
+          addBridgeTokenToState(sliceState, token, !isSourceXErc20);
         }
-
-        const isSourceXErc20 = chainId === sourceToken.chainId;
-
-        const token: TokenErc20 = {
-          ...sourceToken,
-          id: isSourceXErc20 ? `x${sourceToken.id}` : sourceToken.id,
-          chainId,
-          address,
-        };
-
-        // no need to track xerc20 on source chain
-        addBridgeTokenToState(sliceState, token, !isSourceXErc20);
-      }
-    });
+      })
+      .addCase(fetchAllCowcentratedVaultRanges.fulfilled, (sliceState, action) => {
+        for (const [oracleId, value] of Object.entries(action.payload)) {
+          sliceState.cowcentratedRanges.byVaultId[oracleId] = {
+            priceRangeMax: new BigNumber(value.priceRangeMax),
+            priceRangeMin: new BigNumber(value.priceRangeMin),
+            currentPrice: new BigNumber(value.currentPrice),
+          };
+        }
+      });
   },
 });
 

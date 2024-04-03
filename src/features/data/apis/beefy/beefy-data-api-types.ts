@@ -21,15 +21,6 @@ export type ApiPoint = {
 
 export type ApiChartData = ApiPoint[];
 
-export type HistoricalCowcentratedChartData = Record<
-  string,
-  {
-    currentPrice: string;
-    priceRangeMin: string;
-    priceRangeMax: string;
-  }
->;
-
 export interface IBeefyDataApi {
   getAvailableRanges(
     vaultId: VaultEntity['id'],

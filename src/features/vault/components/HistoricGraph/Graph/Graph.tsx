@@ -27,7 +27,7 @@ import { styles } from './styles';
 import { useAppSelector } from '../../../../../store';
 import { selectVaultById } from '../../../../data/selectors/vaults';
 import { useTranslation } from 'react-i18next';
-import { selectHistoricalCurrentCowcentratedRangesByVaultId } from '../../../../data/selectors/historical';
+import { selectCurrentCowcentratedRangesByVaultId } from '../../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
@@ -130,7 +130,7 @@ export const CowcentratedChart = memo(function CowcentratedChart({
   const classes = useStyles();
   const { t } = useTranslation();
   const { currentPrice, priceRangeMin, priceRangeMax } = useAppSelector(state =>
-    selectHistoricalCurrentCowcentratedRangesByVaultId(state, vaultId)
+    selectCurrentCowcentratedRangesByVaultId(state, vaultId)
   );
 
   const showInRange = useMemo(() => {

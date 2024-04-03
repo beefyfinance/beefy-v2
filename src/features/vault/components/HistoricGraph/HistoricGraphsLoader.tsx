@@ -6,11 +6,9 @@ import {
   selectHistoricalHasCowcentratedRanges,
   selectHistoricalRangesStatus,
 } from '../../../data/selectors/historical';
-import {
-  fetchCowcentratedVaultData,
-  fetchHistoricalRanges,
-} from '../../../data/actions/historical';
+import { fetchHistoricalRanges } from '../../../data/actions/historical';
 import { HistoricGraphs } from './HistoricGraphs';
+import { fetchAllCowcentratedVaultRanges } from '../../../data/actions/tokens';
 
 export type HistoricGraphsLoaderProps = {
   vaultId: VaultEntity['id'];
@@ -31,7 +29,7 @@ export const HistoricGraphsLoader = memo<HistoricGraphsLoaderProps>(function His
       dispatch(fetchHistoricalRanges({ vaultId }));
     }
     if (!hasCowcentratedData) {
-      dispatch(fetchCowcentratedVaultData());
+      dispatch(fetchAllCowcentratedVaultRanges());
     }
   }, [dispatch, hasCowcentratedData, rangesStatus, vaultId]);
 

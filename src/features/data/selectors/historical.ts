@@ -46,7 +46,7 @@ export function selectHistoricalHasCowcentratedRanges(
   state: BeefyState,
   vaultId: VaultEntity['id']
 ) {
-  return state.biz.historical.cowcentratedRanges.byVaultId[vaultId] ? true : false;
+  return state.entities.tokens.cowcentratedRanges.byVaultId[vaultId] ? true : false;
 }
 
 export const selectHistoricalAvailableCharts = createSelector(
@@ -254,11 +254,4 @@ export function selectHistoricalBucketData(
   }
 
   throw new Error(`Unknown stat: ${stat}`);
-}
-
-export function selectHistoricalCurrentCowcentratedRangesByVaultId(
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-) {
-  return state.biz.historical.cowcentratedRanges.byVaultId[vaultId];
 }

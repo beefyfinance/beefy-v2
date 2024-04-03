@@ -2,7 +2,6 @@ import type { ApiChartData, ApiRange, ApiTimeBucket } from '../apis/beefy/beefy-
 import type { SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  fetchCowcentratedVaultData,
   fetchHistoricalApys,
   fetchHistoricalPrices,
   fetchHistoricalRanges,
@@ -13,8 +12,6 @@ import type { HistoricalState, TimeBucketsState, TimeBucketState } from './histo
 import type { Draft } from 'immer';
 import { mapValues } from 'lodash-es';
 import { TIME_BUCKETS } from '../../vault/components/HistoricGraph/utils';
-import BigNumber from 'bignumber.js';
-// import BigNumber from 'bignumber.js';
 
 const initialState: HistoricalState = {
   ranges: {
@@ -27,9 +24,6 @@ const initialState: HistoricalState = {
     byVaultId: {},
   },
   tvls: {
-    byVaultId: {},
-  },
-  cowcentratedRanges: {
     byVaultId: {},
   },
 };
@@ -109,16 +103,6 @@ export const historicalSlice = createSlice({
       .addCase(fetchHistoricalPrices.fulfilled, (state, action) => {
         const { oracleId, bucket } = action.meta.arg;
         setTimebucketFulfilled(state.prices.byOracleId[oracleId], bucket, action.payload.data);
-      })
-      .addCase(fetchCowcentratedVaultData.fulfilled, (sliceState, action) => {
-        //TODO do for each vault indiviadually
-        for (const [vaultId, value] of Object.entries(action.payload)) {
-          sliceState.cowcentratedRanges.byVaultId[vaultId] = {
-            priceRangeMax: new BigNumber(value.priceRangeMax),
-            priceRangeMin: new BigNumber(value.priceRangeMin),
-            currentPrice: new BigNumber(value.currentPrice),
-          };
-        }
       });
   },
 });
