@@ -14,6 +14,7 @@ import { ShareButton } from '../ShareButton';
 import { punctuationWrap } from '../../../../helpers/string';
 import { SaveButton } from '../SaveButton';
 import { selectVaultTokenSymbols } from '../../../data/selectors/tokens';
+import { CLMTag } from '../../../../components/VaultIdentity/components/VaultTags';
 
 const useStyles = makeStyles(styles);
 
@@ -31,14 +32,18 @@ export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId
     <div className={classes.header}>
       <div className={classes.titleHolder}>
         <AssetsImage assetSymbols={vaultTokenSymbols} size={48} chainId={vault.chainId} />
-        <h1 className={classes.title}>
+        <div className={classes.title}>
           {punctuationWrap(vault.name)}{' '}
-          {!isGovVault(vault)
-            ? isCowcentratedLiquidityVault(vault)
-              ? t('Vault-clm')
-              : t('Vault-vault')
-            : ''}
-        </h1>
+          {!isGovVault(vault) ? (
+            isCowcentratedLiquidityVault(vault) ? (
+              <CLMTag vault={vault} />
+            ) : (
+              t('Vault-vault')
+            )
+          ) : (
+            ''
+          )}
+        </div>
       </div>
       <div className={classes.labelsHolder}>
         <div className={classes.platformLabel}>
