@@ -130,7 +130,12 @@ export const CLMTag = memo(function CLMTag({ vault }: { vault: VaultEntity }) {
       className={classes.vaultTagClm}
     >
       <img src={clm} height={16} />
-      {`CLM | ${isCowcentratedLiquidityVault(vault) && vault.feeTier}%`}
+      CLM
+      {isCowcentratedLiquidityVault(vault) && vault.feeTier && (
+        <>
+          <div className={classes.divider} /> <span>{`${vault.feeTier}%`}</span>
+        </>
+      )}
     </VaultTagWithTooltip>
   );
 });

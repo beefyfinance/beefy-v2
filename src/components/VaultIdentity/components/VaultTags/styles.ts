@@ -51,12 +51,22 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
+    fontWeight: 700,
     backgroundColor: theme.palette.background.tags.clm,
+    '& span': {
+      fontWeight: 500,
+    },
   },
   platformTagGov: {
     backgroundColor: theme.palette.background.tags.platformGov,
   },
   platformTagClm: {
     backgroundColor: theme.palette.background.tags.platformClm,
+  },
+  divider: {
+    height: '8px',
+    width: '1px',
+    borderRadius: '8px',
+    backgroundColor: '#D9D9D94C',
   },
 });
