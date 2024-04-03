@@ -23,7 +23,7 @@
     "strategyTypeId": "cowcentrated",
     "network": "optimism",
     "type": "cowcentrated",
-    "feeTier": "0.01"
+    "feeTier": "0.1"
   },
   {
     "id": "uniswap-cow-op-op-eth-t3",
