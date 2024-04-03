@@ -11,4 +11,7 @@ export const styles = (theme: Theme) => ({
   content: {
     padding: 0,
   },
+  cowcentrated: {
+    backgroundColor: 'transparent',
+  },
 });
