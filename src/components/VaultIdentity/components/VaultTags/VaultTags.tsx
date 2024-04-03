@@ -29,7 +29,7 @@ import {
   selectVaultById,
 } from '../../../../features/data/selectors/vaults';
 import { getBoostIconSrc } from '../../../../helpers/boostIconSrc';
-import clm from '../../../../images/icons/clm-tag.svg';
+import clm from '../../../../images/icons/clm.svg';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
