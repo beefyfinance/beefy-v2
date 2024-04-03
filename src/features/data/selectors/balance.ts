@@ -846,12 +846,3 @@ export const selectUserRewardsByVaultId = (
 
   return { rewards, rewardsTokens, totalRewardsUsd };
 };
-
-const EMPTY_WORMHOLE_BALANCE = {
-  bridged: BIG_ZERO,
-  pendingRewards: BIG_ZERO,
-};
-export const selectWormholeBalance = (state: BeefyState, walletAddress?: string) => {
-  const walletBalance = _selectWalletBalance(state, walletAddress);
-  return walletBalance?.wormhole || EMPTY_WORMHOLE_BALANCE;
-};

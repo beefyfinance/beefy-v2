@@ -1,15 +1,12 @@
-import React, { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import React, { memo, useCallback } from 'react';
+
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectTransactInputAmount,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
-import clsx from 'clsx';
 import { selectUserVaultDepositInDepositTokenExcludingBoostsBridged } from '../../../../../data/selectors/balance';
 import type { AmountInputProps } from '../AmountInput';
-import { AmountInput } from '../AmountInput';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import {
@@ -17,8 +14,7 @@ import {
   selectTokenPriceByTokenOracleId,
 } from '../../../../../data/selectors/tokens';
 import BigNumber from 'bignumber.js';
-
-const useStyles = makeStyles(styles);
+import { AmountInputWithSlider } from '../AmountInputWithSlider';
 
 export type WithdrawTokenAmountInputProps = {
   className?: string;
@@ -27,7 +23,7 @@ export type WithdrawTokenAmountInputProps = {
 export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
   function WithdrawTokenAmountInput({ className }) {
     const dispatch = useAppDispatch();
-    const classes = useStyles();
+
     const vaultId = useAppSelector(selectTransactVaultId);
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
     const depositToken = useAppSelector(state =>
@@ -36,11 +32,11 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
     const userBalance = useAppSelector(state =>
       selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId)
     );
-
     const value = useAppSelector(selectTransactInputAmount);
     const price = useAppSelector(state =>
       selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
     );
+
     const handleChange = useCallback<AmountInputProps['onChange']>(
       (value, isMax) => {
         dispatch(
@@ -50,24 +46,32 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
           })
         );
       },
-      [dispatch, depositToken]
+      [dispatch, depositToken.decimals]
+    ) satisfies AmountInputProps['onChange'];
+
+    const handleSliderChange = useCallback(
+      (value: number) => {
+        dispatch(
+          transactActions.setInputAmount({
+            amount: userBalance
+              .multipliedBy(value / 100)
+              .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR),
+            max: value === 100,
+          })
+        );
+      },
+      [depositToken.decimals, dispatch, userBalance]
     );
 
-    const error = useMemo(() => {
-      return value.gt(userBalance);
-    }, [userBalance, value]);
-
     return (
-      <AmountInput
-        className={clsx(classes.input, className)}
-        value={value}
+      <AmountInputWithSlider
+        className={className}
         maxValue={userBalance}
-        tokenDecimals={depositToken.decimals}
         onChange={handleChange}
-        allowInputAboveBalance={true}
-        fullWidth={true}
-        error={error}
+        onSliderChange={handleSliderChange}
+        value={value}
         price={price}
+        selectedToken={depositToken}
       />
     );
   }

@@ -50,10 +50,10 @@ export const itemStyles = (theme: Theme) => ({
     color: theme.palette.text.middle,
     height: '24px',
   },
-  marginWithEndAdornement: {
+  marginWithendAdornment: {
     marginRight: '8px',
   },
-  endAdornement: {
+  endAdornment: {
     marginLeft: 'auto',
     display: 'flex',
   },

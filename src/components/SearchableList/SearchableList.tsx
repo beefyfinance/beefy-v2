@@ -57,7 +57,7 @@ export const SearchableList = memo<SearchableListProps>(function SearchableList(
                 value={value}
                 onSelect={handleSelect}
                 ItemInnerComponent={ItemInnerComponent}
-                EndAdornementComponent={EndComponent}
+                EndAdornmentComponent={EndComponent}
               />
             ))
           ) : (

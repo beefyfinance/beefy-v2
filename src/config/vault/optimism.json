@@ -1,5 +1,43 @@
 [
   {
+    "id": "aavev3-op-usdc-2",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+    "tokenDecimals": 6,
+    "earnedToken": "mooAaveUSDC",
+    "earnedTokenAddress": "0x72683E768d3dedbBb8B08e5526aA1ee56B21041C",
+    "earnContractAddress": "0x72683E768d3dedbBb8B08e5526aA1ee56B21041C",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1712146781,
+    "platformId": "aave",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://velodrome.finance/swap?to=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x16a9FA2FDa030272Ce99B29CF780dFA30361E0f3"
+    }
+  },
+  {
     "id": "velodrome-v2-usdc-sonne",
     "name": "SONNE-USDC vLP V2",
     "type": "standard",
@@ -1668,6 +1706,36 @@
     "buyTokenUrl": "https://velodrome.finance/swap?from=0x1f32b1c2345538c0c6f582fcb022739c4a194ebb&to=0xbc7b1ff1c6989f006a1185318ed4e7b5796e66e1",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1f32b1c2345538c0c6f582fcb022739c4a194ebb&token1=0xbc7b1ff1c6989f006a1185318ed4e7b5796e66e1&type=-1",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x7c9a7243f6a359781996822a141a28dc48aa258b",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-v2-wsteth-snx",
+    "name": "wstETH-SNX vLP v2",
+    "type": "standard",
+    "token": "wstETH-SNX vLP v2",
+    "tokenAddress": "0x8F0364Cd47Fb819953D9096Bda1ec8017829aAa2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2wstETH-SNX",
+    "earnedTokenAddress": "0x6DFc84940130756c71bc2bb9bf9e4C2d6C143Da2",
+    "earnContractAddress": "0x6DFc84940130756c71bc2bb9bf9e4C2d6C143Da2",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-wsteth-snx",
+    "status": "active",
+    "createdAt": 1711662420,
+    "platformId": "velodrome",
+    "assets": ["wstETH", "SNX"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb&to=0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb&token1=0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4&stable=false",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x8F0364Cd47Fb819953D9096Bda1ec8017829aAa2",
     "network": "optimism",
     "zaps": [
       {
@@ -7274,7 +7342,9 @@
     "earnContractAddress": "0x48Ae9C58AF01b3Ddd522fC3E161ac4318964c4EE",
     "oracle": "lps",
     "oracleId": "velodrome-lyra-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1711990050,
     "createdAt": 1657556186,
     "platformId": "velodrome",
     "assets": ["LYRA", "opUSDCe"],
