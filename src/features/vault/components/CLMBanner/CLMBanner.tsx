@@ -7,11 +7,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   container: {
     ...theme.typography['body-lg'],
     color: theme.palette.text.primary,
-    padding: '8px 16px',
+    padding: '16px',
     backgroundColor: theme.palette.background.contentDark,
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
+    borderRadius: '8px',
     '& img': {
       height: '24px',
     },
