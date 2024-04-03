@@ -62,7 +62,7 @@
     "createdAt": 1712088215,
     "platformId": "ichi",
     "assets": ["WBTC", "WETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "ichi-solidly",
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x3aab2285ddcddad8edf438c1bab47e1a9d05a9b4&currency1=0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f&strategy=Yield%20IQ%20(wBTC)",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x3aab2285ddcddad8edf438c1bab47e1a9d05a9b4&currency1=0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f&strategy=Yield%20IQ%20(wBTC)",
