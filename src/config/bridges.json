@@ -82,6 +82,12 @@
     "website": "https://bridge.arbitrum.io/"
   },
   {
+    "id": "fraxtal-canonical",
+    "name": "Fraxtal Bridge",
+    "tagName": "Fraxtal",
+    "website": "https://mainnet.frax.com/tools/bridge/deposit"
+  },
+  {
     "id": "avax-canonical",
     "name": "Avax Bridge",
     "tagName": "Avax",

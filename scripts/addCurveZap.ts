@@ -164,6 +164,7 @@ const chainIdToCurveChainId = {
   moonbeam: 'moonbeam',
   optimism: 'optimism',
   polygon: 'polygon',
+  fraxtal: 'fraxtal',
 };
 
 const curveEndpoints = [

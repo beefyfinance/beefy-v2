@@ -117,6 +117,9 @@ export const styles = (theme: Theme) => ({
   'headerNetwork-mantle': {
     backgroundColor: 'rgba(18, 18, 18, 0.2)',
   },
+  'headerNetwork-fraxtal': {
+    backgroundColor: 'rgba(18, 18, 18, 0.2)',
+  },
   'headerMM-system9': {
     backgroundColor: 'rgba(243, 243, 200, 0.5)',
   },
