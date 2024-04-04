@@ -333,5 +333,17 @@
     "priorityTokens": ["ETH", "WETH", "USDC", "USDT", "DAI", "WBTC", "wstETH"],
     "blockedTokens": [],
     "blockedVaults": []
+  },
+  {
+    "id": "kyber-mantle",
+    "type": "kyber",
+    "chainId": "mantle",
+    "fee": {
+      "value": 0.0005,
+      "recipient": "0x997A95C097Ade5Cb48649D38F929A5e422dFe96E"
+    },
+    "priorityTokens": ["MNT", "WMNT", "USDC", "USDT", "WETH", "mETH", "WBTC"],
+    "blockedTokens": [],
+    "blockedVaults": []
   }
 ]

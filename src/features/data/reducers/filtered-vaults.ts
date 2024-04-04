@@ -8,10 +8,13 @@ import type {
   SortDirectionType,
   SortType,
   UserCategoryType,
-  VaultCategoryType,
   VaultAssetType,
+  VaultCategoryType,
 } from './filtered-vaults-types';
 import { isValidUserCategory } from './filtered-vaults-types';
+import type { VaultEntity } from '../entities/vault';
+import { fetchAllVaults } from '../actions/vaults';
+import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults';
 
 /**
  * State containing Vault infos
@@ -37,6 +40,8 @@ export type FilteredVaultsState = {
   onlyZappable: boolean;
   onlyEarningPoints: boolean;
   onlyCowcentrated: boolean;
+  filteredVaultIds: VaultEntity['id'][];
+  sortedFilteredVaultIds: VaultEntity['id'][];
 };
 export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
 
@@ -56,14 +61,20 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   onlyZappable: false,
   onlyEarningPoints: false,
   onlyCowcentrated: false,
+  filteredVaultIds: [],
+  sortedFilteredVaultIds: [],
 };
 
 export const filteredVaultsSlice = createSlice({
   name: 'filtered-vaults',
   initialState: initialFilteredVaultsState,
   reducers: {
-    reset() {
-      return initialFilteredVaultsState;
+    reset(sliceState) {
+      return {
+        ...initialFilteredVaultsState,
+        filteredVaultIds: sliceState.filteredVaultIds,
+        sortedFilteredVaultIds: sliceState.sortedFilteredVaultIds,
+      };
     },
     setSort(sliceState, action: PayloadAction<FilteredVaultsState['sort']>) {
       sliceState.reseted = false;
@@ -108,37 +119,6 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState.platformIds = action.payload;
     },
-    setOnlyRetired(sliceState, action: PayloadAction<FilteredVaultsState['onlyRetired']>) {
-      sliceState.reseted = false;
-      sliceState.onlyRetired = action.payload;
-    },
-    setOnlyPaused(sliceState, action: PayloadAction<FilteredVaultsState['onlyPaused']>) {
-      sliceState.reseted = false;
-      sliceState.onlyPaused = action.payload;
-    },
-    setOnlyBoosted(sliceState, action: PayloadAction<FilteredVaultsState['onlyBoosted']>) {
-      sliceState.reseted = false;
-      sliceState.onlyBoosted = action.payload;
-    },
-    setOnlyZappable(sliceState, action: PayloadAction<FilteredVaultsState['onlyZappable']>) {
-      sliceState.reseted = false;
-      sliceState.onlyZappable = action.payload;
-    },
-    setOnlyEarningPoints(
-      sliceState,
-      action: PayloadAction<FilteredVaultsState['onlyEarningPoints']>
-    ) {
-      sliceState.reseted = false;
-      sliceState.onlyEarningPoints = action.payload;
-    },
-    setOnlyCowcentrated(
-      sliceState,
-      action: PayloadAction<FilteredVaultsState['onlyCowcentrated']>
-    ) {
-      sliceState.reseted = false;
-      sliceState.onlyCowcentrated = action.payload;
-    },
-
     setBoolean(
       sliceState,
       action: PayloadAction<{ filter: FilteredVaultBooleanKeys; value: boolean }>
@@ -146,6 +126,22 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState[action.payload.filter] = action.payload.value;
     },
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchAllVaults.fulfilled, (state, action) => {
+        if (state.filteredVaultIds.length === 0) {
+          const allVaultIds = Object.values(action.payload.byChainId).flatMap(vaults =>
+            vaults.map(v => v.id)
+          );
+          state.filteredVaultIds = allVaultIds;
+          state.sortedFilteredVaultIds = allVaultIds;
+        }
+      })
+      .addCase(recalculateFilteredVaultsAction.fulfilled, (state, action) => {
+        state.filteredVaultIds = action.payload.filtered;
+        state.sortedFilteredVaultIds = action.payload.sorted;
+      });
   },
 });
 
@@ -162,6 +158,7 @@ export const userCategoryTransform = createTransform(
 export const chanIdsTransform = createTransform(
   (chanIds: FilteredVaultsState['chainIds']) => chanIds,
   (chainIdsFromLocalStorage: FilteredVaultsState['chainIds']) => {
+    // TODO fix so we use real list of eol chains
     return chainIdsFromLocalStorage.filter(chainId => !['heco', 'harmony'].includes(chainId));
   },
   { whitelist: ['chainIds'] }

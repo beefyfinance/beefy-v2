@@ -274,3 +274,5 @@ export const selectTransactConfirmStatus = (state: BeefyState) => state.ui.trans
 export const selectTransactConfirmError = (state: BeefyState) => state.ui.transact.confirm.error;
 export const selectTransactConfirmChanges = (state: BeefyState) =>
   state.ui.transact.confirm.changes;
+
+export const selecTransactForceSelection = (state: BeefyState) => state.ui.transact.forceSelection;

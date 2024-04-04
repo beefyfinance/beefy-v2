@@ -6,7 +6,7 @@ import { Step } from '../../../../../../components/Step';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectBridgeSupportedChainIds } from '../../../../../data/selectors/bridge';
 import { ChainListItem } from '../ListItem';
-import { BalanceEndAdornment } from '../BalanceEndAdornement';
+import { BalanceEndAdornment } from '../BalanceEndAdornment';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 
 const ChainSelector = memo(function ChainSelector() {

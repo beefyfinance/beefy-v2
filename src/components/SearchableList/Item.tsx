@@ -13,14 +13,14 @@ type ItemProps = {
   className?: string;
   value: string;
   onSelect: (value: string) => void;
-  EndAdornementComponent?: FC<ItemInnerProps> | null;
+  EndAdornmentComponent?: FC<ItemInnerProps> | null;
   ItemInnerComponent?: FC<ItemInnerProps>;
 };
 export const Item = memo<ItemProps>(function Item({
   value,
   onSelect,
   ItemInnerComponent = ItemInner,
-  EndAdornementComponent,
+  EndAdornmentComponent,
   className,
 }) {
   const classes = useStyles();
@@ -31,8 +31,8 @@ export const Item = memo<ItemProps>(function Item({
   return (
     <button onClick={handleClick} className={clsx(classes.item, className)}>
       <ItemInnerComponent value={value} />
-      <div className={classes.endAdornement}>
-        {EndAdornementComponent && <EndAdornementComponent value={value} />}
+      <div className={classes.endAdornment}>
+        {EndAdornmentComponent && <EndAdornmentComponent value={value} />}
         <ChevronRight className={clsx(classes.arrow)} />
       </div>
     </button>

@@ -45,7 +45,7 @@ export const beefyBridgeConfig = {
           },
         },
       },
-    },
+    } /*
     {
       id: 'chainlink',
       title: 'Chainlink',
@@ -76,7 +76,7 @@ export const beefyBridgeConfig = {
           },
         },
       },
-    },
+    },*/,
     {
       id: 'layer-zero',
       title: 'LayerZero',
