@@ -39,7 +39,6 @@ export type FilteredVaultsState = {
   onlyBoosted: boolean;
   onlyZappable: boolean;
   onlyEarningPoints: boolean;
-  onlyCowcentrated: boolean;
   filteredVaultIds: VaultEntity['id'][];
   sortedFilteredVaultIds: VaultEntity['id'][];
 };
@@ -60,7 +59,6 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   onlyBoosted: false,
   onlyZappable: false,
   onlyEarningPoints: false,
-  onlyCowcentrated: false,
   filteredVaultIds: [],
   sortedFilteredVaultIds: [],
 };

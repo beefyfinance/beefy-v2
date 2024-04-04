@@ -42,11 +42,6 @@ export const ExtendedFilters = memo<ExtendedFiltersProps>(function ExtendedFilte
       />
       <CheckboxFilter
         className={classes.checkbox}
-        filter="onlyCowcentrated"
-        label={t('Filter-Cowcentrated')}
-      />
-      <CheckboxFilter
-        className={classes.checkbox}
         filter="onlyRetired"
         label={t('Filter-Retired')}
       />

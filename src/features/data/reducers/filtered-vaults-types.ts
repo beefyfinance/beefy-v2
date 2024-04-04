@@ -9,7 +9,7 @@ export type SortType =
 
 export type SortDirectionType = 'asc' | 'desc';
 
-export type VaultCategoryType = 'all' | 'featured' | 'stable' | 'bluechip' | 'beefy' | 'correlated';
+export type VaultCategoryType = 'all' | 'featured' | 'stable' | 'bluechip' | 'correlated' | 'clm';
 
 export type VaultAssetType = 'all' | 'lps' | 'single';
 

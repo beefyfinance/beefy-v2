@@ -44,7 +44,6 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.onlyZappable ? 1 : 0) +
     (filterOptions.onlyEarningPoints ? 1 : 0) +
-    (filterOptions.onlyCowcentrated ? 1 : 0) +
     (filterOptions.assetType !== 'all' ? 1 : 0) +
     (filterOptions.vaultCategory !== 'all' ? 1 : 0) +
     (filterOptions.sort !== 'default' ? 1 : 0) +
@@ -63,7 +62,6 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.onlyBoosted !== false ||
     filterOptions.onlyZappable !== false ||
     filterOptions.onlyEarningPoints !== false ||
-    filterOptions.onlyCowcentrated !== false ||
     filterOptions.searchText !== '' ||
     filterOptions.platformIds.length > 0 ||
     filterOptions.sort !== 'default' ||
@@ -80,7 +78,6 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.onlyBoosted !== false ||
     filterOptions.onlyZappable !== false ||
     filterOptions.onlyEarningPoints !== false ||
-    filterOptions.onlyCowcentrated !== false ||
     filterOptions.searchText !== '' ||
     filterOptions.platformIds.length > 0 ||
     filterOptions.chainIds.length > 0
