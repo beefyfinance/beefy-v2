@@ -140,22 +140,24 @@ export const selectAllStandardVaultsByChainId = createSelector(
   (byIds, vaultIds): VaultStandard[] => vaultIds.map(id => byIds[id]).filter(isStandardVault)
 );
 
-export const selectStandardVaultIdsByDepositTokenAddress = createCachedSelector(
+export const selectNonGovVaultIdsByDepositTokenAddress = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) => chainId,
   (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
     tokenAddress.toLowerCase(),
   (state: BeefyState, _chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) =>
     state.entities.vaults.byChainId,
   (chainId, tokenAddress, byChainId) =>
-    byChainId[chainId]?.standardVault.byDepositTokenAddress[tokenAddress] || []
+    (byChainId[chainId]?.standardVault.byDepositTokenAddress[tokenAddress] || []).concat(
+      byChainId[chainId]?.cowcentratedVault.byDepositTokenAddress[tokenAddress] || []
+    )
 )(
   (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
     `${chainId}-${tokenAddress.toLowerCase()}`
 );
 
-export const selectFirstStandardVaultByDepositTokenAddress = createCachedSelector(
+export const selectFirstNonGovVaultByDepositTokenAddress = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
-    selectStandardVaultIdsByDepositTokenAddress(state, chainId, tokenAddress),
+    selectNonGovVaultIdsByDepositTokenAddress(state, chainId, tokenAddress),
   (state: BeefyState, _chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) =>
     state.entities.vaults.byId,
   (ids, byId) => (ids.length > 0 && !!ids[0] ? byId[ids[0]] : undefined)

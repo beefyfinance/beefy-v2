@@ -9,7 +9,7 @@ import {
 import type { AssetsImageType } from '../AssetsImage';
 import { AssetsImage } from '../AssetsImage';
 import { singleAssetExists } from '../../helpers/singleAssetSrc';
-import { selectFirstStandardVaultByDepositTokenAddress } from '../../features/data/selectors/vaults';
+import { selectFirstNonGovVaultByDepositTokenAddress } from '../../features/data/selectors/vaults';
 
 export type TokenImageProps = {
   tokenAddress: TokenEntity['address'];
@@ -54,7 +54,7 @@ const TokenWithoutAsset = memo<TokenWithoutAssetProps>(function TokenWithoutAsse
 }) {
   // The assets of a LP are defined on the vault config for a vault with that deposit token
   const vault = useAppSelector(state =>
-    selectFirstStandardVaultByDepositTokenAddress(state, token.chainId, token.address)
+    selectFirstNonGovVaultByDepositTokenAddress(state, token.chainId, token.address)
   );
   const vaultTokenSymbols = useAppSelector(state =>
     vault ? selectVaultTokenSymbols(state, vault.id) : []
