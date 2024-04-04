@@ -8,7 +8,11 @@ import { styles } from './styles';
 import { StrategyDescription } from './StrategyDescription';
 import { selectVaultTotalApy } from '../../../data/selectors/apy';
 import type { VaultEntity } from '../../../data/entities/vault';
-import { isGovVault, shouldVaultShowInterest } from '../../../data/entities/vault';
+import {
+  isCowcentratedLiquidityVault,
+  isGovVault,
+  shouldVaultShowInterest,
+} from '../../../data/entities/vault';
 import {
   selectVaultById,
   selectVaultStrategyAddressOrUndefined,
@@ -45,13 +49,15 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         <div className={classes.cardActions}>
           {stratAddr ? (
             <div className={classes.cardAction}>
-              <LinkButton href={explorerAddressUrl(chain, stratAddr)} text={t('Strat-Address')} />
+              <LinkButton href={explorerAddressUrl(chain, stratAddr)} text={t('Strat-Contract')} />
             </div>
           ) : null}
           <div className={classes.cardAction}>
             <LinkButton
               href={explorerAddressUrl(chain, vault.earnContractAddress)}
-              text={t('Strat-AddressVault')}
+              text={t(
+                isCowcentratedLiquidityVault(vault) ? 'Strat-CLMContract' : 'Strat-ContractVault'
+              )}
             />
           </div>
         </div>

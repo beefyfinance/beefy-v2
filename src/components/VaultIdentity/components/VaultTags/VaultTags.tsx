@@ -29,8 +29,8 @@ import {
   selectVaultById,
 } from '../../../../features/data/selectors/vaults';
 import { getBoostIconSrc } from '../../../../helpers/boostIconSrc';
-import clm from '../../../../images/icons/clm.svg';
 import clsx from 'clsx';
+import { getIcon } from '../../../../helpers/iconSrc';
 
 const useStyles = makeStyles(styles);
 
@@ -112,7 +112,7 @@ export const CLMTag = memo(function CLMTag({ vault }: { vault: VaultEntity }) {
       placement="bottom"
       className={classes.vaultTagClm}
     >
-      <img src={clm} height={16} />
+      <img src={getIcon('clm')} height={16} />
       CLM
       {isCowcentratedLiquidityVault(vault) && vault.feeTier && (
         <>
