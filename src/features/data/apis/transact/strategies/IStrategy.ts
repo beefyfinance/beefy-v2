@@ -60,12 +60,17 @@ export type GammaStrategyOptions = {
   tokenHolder?: string | undefined;
 } & OptionalStrategySwapOption;
 
+export type ConicStrategyOptions = {
+  strategyId: 'conic';
+} & OptionalStrategySwapOption;
+
 export type StrategyOptions =
   | SingleStrategyOptions
   | UniswapV2StrategyOptions
   | SolidlyStrategyOptions
   | CurveStrategyOptions
-  | GammaStrategyOptions;
+  | GammaStrategyOptions
+  | ConicStrategyOptions;
 
 export interface IStrategy {
   readonly id: string;

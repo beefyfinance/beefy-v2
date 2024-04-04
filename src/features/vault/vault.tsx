@@ -30,7 +30,6 @@ import { PnLGraphLoader } from './components/PnLGraph';
 import { VaultsStats } from './components/VaultsStats';
 import { HistoricGraphsLoader } from './components/HistoricGraph';
 import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
-import { WormholeBridge } from './components/WormholeBridge/WormholeBridge';
 import { CLMBanner } from './components/CLMBanner';
 
 const useStyles = makeStyles(styles);
@@ -95,7 +94,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
           </div>
           <div className={classes.columnInfo}>
             {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
-            {vaultId === 'compound-arbitrum-usdc' ? <WormholeBridge /> : null}
+
             {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
             {!isGovVault(vault) ? (
               <PnLGraphLoader vaultId={vaultId} address={walletAddress} />

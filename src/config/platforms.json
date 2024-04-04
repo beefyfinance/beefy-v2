@@ -953,6 +953,12 @@
     "risks": ["NO_TIMELOCK"]
   },
   {
+    "id": "fx",
+    "name": "f(x) Protocol",
+    "filter": true,
+    "risks": ["NO_TIMELOCK"]
+  },
+  {
     "id": "lynex",
     "name": "Lynex",
     "filter": true

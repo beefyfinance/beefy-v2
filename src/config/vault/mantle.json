@@ -454,6 +454,11 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/WMNT",
     "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
     "lendingOracle": {
       "provider": "pyth"
     }
@@ -478,6 +483,11 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/METH",
     "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
     "lendingOracle": {
       "provider": "pyth"
     }
@@ -502,6 +512,11 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/WETH",
     "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
     "lendingOracle": {
       "provider": "pyth"
     }
@@ -526,6 +541,11 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/USDT",
     "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
     "lendingOracle": {
       "provider": "pyth"
     }
@@ -550,6 +570,11 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/USDC",
     "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
     "lendingOracle": {
       "provider": "pyth"
     }
@@ -574,6 +599,11 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://bridge.mantle.xyz/",
     "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
     "lendingOracle": {
       "provider": "pyth"
     }

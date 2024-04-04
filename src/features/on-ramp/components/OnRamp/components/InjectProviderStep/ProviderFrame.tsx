@@ -41,7 +41,7 @@ export const ProviderFrame = memo(function ProviderFrame() {
         frameBorder="0"
         title={title}
         className={clsx(classes.iframe, classes.iframeMtPellerin)}
-        allow="usb; ethereum; clipboard-write"
+        allow="usb; ethereum; clipboard-write; payment; microphone; camera"
         loading="lazy"
       />
     )

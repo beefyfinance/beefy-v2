@@ -79,6 +79,7 @@ const uiReducer = combineReducers<BeefyState['ui']>({
       key: 'filters',
       storage,
       transforms: [userCategoryTransform, chanIdsTransform],
+      blacklist: ['filteredVaultIds', 'sortedFilteredVaultIds'],
     },
     filteredVaultsSlice.reducer
   ),

@@ -42,14 +42,10 @@ export const styles = (theme: Theme) => ({
     marginTop: '12px',
   },
   quote: {
-    marginTop: '12px',
+    marginTop: '24px',
   },
   actions: {
     marginTop: '24px',
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: '24px',
-    width: '100%',
   },
   fees: {
     marginTop: '24px',

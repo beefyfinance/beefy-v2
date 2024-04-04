@@ -32,7 +32,6 @@ import {
 } from '../entities/vault';
 import { uniqueTokens } from '../../../helpers/tokens';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { BigNumber } from 'bignumber.js';
 import { entries } from '../../../helpers/object';
 import type { BoostEntity } from '../entities/boost';
 
@@ -204,32 +203,5 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
   return {
     walletAddress,
     vaultIds: depositedIds,
-  };
-});
-
-export type FetchWormholeBalanceParams = { walletAddress: string };
-export type FetchWormholeBalanceFulfilledPayload = {
-  walletAddress: string;
-  bridged: BigNumber;
-  pendingRewards: BigNumber;
-};
-
-export const fetchWormholeBalanceAction = createAsyncThunk<
-  FetchWormholeBalanceFulfilledPayload,
-  FetchWormholeBalanceParams,
-  { state: BeefyState }
->('balance/fetchWormholeBalanceAction', async ({ walletAddress }) => {
-  const params = new URLSearchParams({ address: walletAddress });
-  const response = await fetch(`https://wac.gfx.xyz/usersummary?${params}`);
-  const data = (await response.json()) as {
-    bridged_amount: number;
-    pending_rewards: number;
-    moo_cusdc_held: number;
-  };
-
-  return {
-    walletAddress,
-    bridged: new BigNumber(data.bridged_amount),
-    pendingRewards: new BigNumber(data.pending_rewards),
   };
 });

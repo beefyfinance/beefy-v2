@@ -12,11 +12,16 @@ export const styles = (theme: Theme) => ({
     boxSizing: 'border-box' as const,
     position: 'relative' as const,
     justifyContent: 'space-between',
-    minHeight: '48px',
+    minHeight: '52px',
+    gap: '8px',
   },
   inputContent: {
     display: 'flex',
     flexDirection: 'column' as const,
+    flexBasis: '50%',
+    flexGrow: 1,
+    flexShrink: 1,
+    minWidth: 0,
   },
   input: {
     ...theme.typography['h2'],
@@ -30,6 +35,8 @@ export const styles = (theme: Theme) => ({
     height: 'auto',
     cursor: 'default',
     outline: 0,
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
     '&::placeholder': {
       color: theme.palette.text.dark,
       opacity: 1,
@@ -49,32 +56,11 @@ export const styles = (theme: Theme) => ({
   },
   price: {
     ...theme.typography['body-sm'],
-    lineHeight: '12px',
     color: theme.palette.text.dark,
   },
-  max: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.light,
-    backgroundColor: theme.palette.background.border,
-    border: 'none',
-    boxShadow: 'none',
-    outline: 'none',
-    borderRadius: '4px',
-    margin: 0,
-    padding: '6px 12px',
-    minWidth: 0,
+  endAdornment: {
+    flexGrow: 0,
     flexShrink: 0,
-    cursor: 'pointer',
-    marginRight: '12px',
-    '&:disabled': {
-      color: theme.palette.text.dark,
-      backgroundColor: theme.palette.background.buttons.button,
-      borderColor: theme.palette.background.contentLight,
-      opacity: 0.4,
-    },
-  },
-  endAdornement: {
-    position: 'absolute' as const,
-    right: 0,
+    flexBasis: 'auto',
   },
 });

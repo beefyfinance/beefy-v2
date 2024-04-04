@@ -64,6 +64,7 @@ const initialTransactState: TransactState = {
   mode: TransactMode.Deposit,
   step: TransactStep.Form,
   selections: initialTransactTokens,
+  forceSelection: false,
   options: initialTransactOptions,
   quotes: initialTransactQuotes,
   migrateQuotes: initialTransactQuotes,
@@ -89,6 +90,7 @@ const transactSlice = createSlice({
     ) {
       sliceState.selectedSelectionId = action.payload.selectionId;
       sliceState.step = TransactStep.Form;
+      sliceState.forceSelection = false;
       if (action.payload.resetInput) {
         sliceState.inputAmount = BIG_ZERO;
         sliceState.inputMax = false;
@@ -216,13 +218,15 @@ const transactSlice = createSlice({
       .addCase(transactFetchOptions.fulfilled, (sliceState, action) => {
         if (sliceState.options.requestId === action.meta.requestId) {
           sliceState.options.status = TransactStatus.Fulfilled;
+          const { options } = action.payload;
 
-          addOptionsToState(sliceState, action.payload.options);
+          addOptionsToState(sliceState, options);
 
-          const defaultOption = first(action.payload.options);
+          const defaultOption = first(options);
           if (defaultOption) {
             sliceState.selectedSelectionId = defaultOption.selectionId;
             sliceState.selectedChainId = defaultOption.chainId;
+            sliceState.forceSelection = options.length > 1;
           }
         }
       })
@@ -267,6 +271,7 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.inputMax = false;
   sliceState.dualInputAmounts = [BIG_ZERO, BIG_ZERO];
   sliceState.dualInputMax = [false, false];
+  sliceState.forceSelection = false;
 
   sliceState.options.status = TransactStatus.Idle;
   sliceState.options.error = undefined;

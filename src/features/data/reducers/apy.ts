@@ -1,30 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { Draft } from 'immer';
 import type { BeefyState } from '../../../redux-types';
-import { fetchApyAction } from '../actions/apy';
+import { fetchApyAction, recalculateTotalApyAction } from '../actions/apy';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import type { ApyData } from '../apis/beefy/beefy-api';
-import type {
-  BoostContractData,
-  FetchAllContractDataResult,
-} from '../apis/contract-data/contract-data-types';
+import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import type { BoostEntity } from '../entities/boost';
 import type { VaultEntity } from '../entities/vault';
-import { isGovVault } from '../entities/vault';
-import {
-  selectActiveVaultBoostIds,
-  selectBoostById,
-  selectIsBoostActiveOrPreStake,
-  selectIsVaultBoosted,
-} from '../selectors/boosts';
-import { selectIsConfigAvailable } from '../selectors/data-loader';
+import { selectBoostById } from '../selectors/boosts';
 import { selectTokenByAddress, selectTokenPriceByAddress } from '../selectors/tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
 import { createIdMap } from '../utils/array-utils';
 import { mooAmountToOracleAmount } from '../utils/ppfs';
 import { BIG_ONE } from '../../../helpers/big-number';
 import type { BigNumber } from 'bignumber.js';
+import { getBoostStatusFromContractState } from './boosts';
 
 // boost is expressed as APR
 interface AprData {
@@ -71,6 +62,7 @@ export interface ApyState {
     };
   };
 }
+
 export const initialApyState: ApyState = {
   rawApy: { byVaultId: {}, byBoostId: {} },
   totalApy: { byVaultId: {} },
@@ -83,29 +75,26 @@ export const apySlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    builder.addCase(fetchApyAction.fulfilled, (sliceState, action) => {
-      for (const [vaultId, apy] of Object.entries(action.payload.data)) {
-        sliceState.rawApy.byVaultId[vaultId] = apy;
-      }
-
-      // recompute total apy to have it ready to render vault list super fast
-      const state = action.payload.state;
-      const updatedState: BeefyState = { ...state, biz: { ...state.biz, apy: sliceState } };
-      recomputeTotalApy(updatedState, sliceState);
-    });
-
-    builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
-      const state = action.payload.state;
-      addContractDataToState(state, sliceState, action.payload.data);
-    });
-
-    builder.addCase(
-      reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
-      (sliceState, action) => {
+    builder
+      .addCase(fetchApyAction.fulfilled, (sliceState, action) => {
+        for (const [vaultId, apy] of Object.entries(action.payload.data)) {
+          sliceState.rawApy.byVaultId[vaultId] = apy;
+        }
+      })
+      .addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
         const state = action.payload.state;
-        addContractDataToState(state, sliceState, action.payload.contractData);
-      }
-    );
+        addContractDataToState(state, sliceState, action.payload.data);
+      })
+      .addCase(
+        reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
+        (sliceState, action) => {
+          const state = action.payload.state;
+          addContractDataToState(state, sliceState, action.payload.contractData);
+        }
+      )
+      .addCase(recalculateTotalApyAction.fulfilled, (sliceState, action) => {
+        sliceState.totalApy.byVaultId = action.payload.totals;
+      });
   },
 });
 
@@ -114,23 +103,19 @@ function addContractDataToState(
   sliceState: Draft<ApyState>,
   contractData: FetchAllContractDataResult
 ) {
-  const activeBoostsByVaultIds: { [vaultId: VaultEntity['id']]: BoostContractData[] } = {};
-
   // create a quick access map
   const vaultDataByVaultId = createIdMap(contractData.standardVaults);
 
   for (const boostContractData of contractData.boosts) {
     const boost = selectBoostById(state, boostContractData.id);
     const vault = selectVaultById(state, boost.vaultId);
-    const isBoostActiveOrPrestake = selectIsBoostActiveOrPreStake(state, boostContractData.id);
+    // we can't use the selectIsBoostActiveOrPreStake selector here as state is not updated yet
+    const boostStatus = getBoostStatusFromContractState(boost.id, boostContractData);
+    const isBoostActiveOrPrestake = boostStatus === 'active' || boostStatus === 'prestake';
     // boost is expired, don't count apy
     if (!isBoostActiveOrPrestake) {
       continue;
     }
-    if (activeBoostsByVaultIds[vault.id] === undefined) {
-      activeBoostsByVaultIds[vault.id] = [];
-    }
-    activeBoostsByVaultIds[vault.id].push(boostContractData);
 
     /**
      * Some boosts can yield rewards in mooToken, be it from the same vault
@@ -189,114 +174,4 @@ function addContractDataToState(
     // add data to state
     sliceState.rawApy.byBoostId[boost.id] = { apr };
   }
-
-  // recompute total apy to have it ready to render vault list super fast
-  const updatedState: BeefyState = { ...state, biz: { ...state.biz, apy: sliceState } };
-  recomputeTotalApy(updatedState, sliceState, activeBoostsByVaultIds);
 }
-
-function recomputeTotalApy(
-  state: BeefyState,
-  sliceState: Draft<ApyState>,
-  // we need up to date boost data to know if we need to include boost apy
-  newActiveBoostsByVaultIds: { [vaultId: VaultEntity['id']]: BoostContractData[] } = {}
-) {
-  // no point in computing if all data is not loaded
-  if (!selectIsConfigAvailable(state)) {
-    return;
-  }
-
-  for (const [vaultId, apy] of Object.entries(sliceState.rawApy.byVaultId)) {
-    const values: TotalApy = {
-      totalApy: 0,
-      totalDaily: 0,
-    };
-
-    // sometimes we get vault ids in the api that are not yet configure
-    // locally, so we have to check that the vault exists first
-    if (state.entities.vaults.byId[vaultId] === undefined) {
-      continue;
-    }
-
-    const vault = selectVaultById(state, vaultId);
-    const isBoosted =
-      newActiveBoostsByVaultIds[vaultId] !== undefined || selectIsVaultBoosted(state, vaultId);
-
-    let boostApr = 0;
-    if (isBoosted) {
-      // todo: not sure why but we only use the first
-      const latestActiveBoostId =
-        newActiveBoostsByVaultIds[vaultId] !== undefined
-          ? newActiveBoostsByVaultIds[vaultId][0].id
-          : selectActiveVaultBoostIds(state, vaultId)[0];
-      boostApr = sliceState.rawApy.byBoostId[latestActiveBoostId]?.apr || 0;
-    }
-
-    values.totalApy = 'totalApy' in apy ? apy.totalApy : 0;
-
-    if ('vaultApr' in apy && apy.vaultApr) {
-      values.vaultApr = apy.vaultApr;
-      values.vaultDaily = apy.vaultApr / 365;
-    }
-
-    if ('tradingApr' in apy && apy.tradingApr) {
-      values.tradingApr = apy.tradingApr;
-      values.tradingDaily = apy.tradingApr / 365;
-    }
-
-    if ('composablePoolApr' in apy && apy.composablePoolApr) {
-      values.composablePoolApr = apy.composablePoolApr;
-      values.composablePoolDaily = apy.composablePoolApr / 365;
-    }
-
-    if ('liquidStakingApr' in apy && apy.liquidStakingApr) {
-      values.liquidStakingApr = apy.liquidStakingApr;
-      values.liquidStakingDaily = apy.liquidStakingApr / 365;
-    }
-
-    if ('clmApr' in apy && apy.clmApr) {
-      values.clmApr = apy.clmApr;
-      values.clmAprDaily = apy.clmApr / 365;
-    }
-
-    if (
-      values.vaultDaily ||
-      values.tradingDaily ||
-      values.composablePoolDaily ||
-      values.liquidStakingDaily
-    ) {
-      values.totalDaily =
-        (values.vaultDaily || 0) +
-        (values.tradingDaily || 0) +
-        (values.composablePoolDaily || 0) +
-        (values.liquidStakingDaily || 0) +
-        (values.clmAprDaily || 0);
-    } else {
-      values.totalDaily = yearlyToDaily(values.totalApy);
-    }
-
-    if (isGovVault(vault) && 'vaultApr' in apy) {
-      values.totalApy = apy.vaultApr / 1;
-      values.totalDaily = apy.vaultApr / 365;
-    }
-
-    if (isBoosted) {
-      values.boostApr = boostApr;
-      values.boostDaily = boostApr / 365;
-      values.boostedTotalApy = values.boostApr ? values.totalApy + values.boostApr : 0;
-      values.boostedTotalDaily = values.boostDaily ? values.totalDaily + values.boostDaily : 0;
-    }
-
-    sliceState.totalApy.byVaultId[vaultId] = values;
-  }
-}
-
-const yearlyToDaily = (apy: number) => {
-  const g = Math.pow(10, Math.log10(apy + 1) / 365) - 1;
-
-  if (isNaN(g)) {
-    return 0;
-  }
-
-  return g;
-};
