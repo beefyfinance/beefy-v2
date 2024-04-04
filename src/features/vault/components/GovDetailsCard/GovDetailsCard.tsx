@@ -43,7 +43,7 @@ export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
         <CardTitle title={t('Gov-Pool')} />
         <LinkButton
           href={explorerAddressUrl(chain, vault.earnContractAddress)}
-          text={t('Strat-PoolAddress')}
+          text={t('Strat-PoolContract')}
         />
       </CardHeader>
       <CardContent>
