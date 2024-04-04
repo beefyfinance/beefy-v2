@@ -201,6 +201,72 @@ export function formatBigDecimals(value: BigNumber, maxPlaces: number = 8, strip
   return strip ? stripTrailingZeros(fixed) : fixed;
 }
 
+const subchars = '₀₁₂₃₄₅₆₇₈₉';
+function toSubString(input: string) {
+  return input.replace(/[0-9]/g, m => subchars[+m]);
+}
+
+function condenseZeros(value: string, fractionDigits?: number | undefined) {
+  // Get whole and fraction part
+  const [whole, fraction] = value.split('.');
+
+  // No fraction
+  if (!fraction || !fraction.length) {
+    return whole;
+  }
+
+  // Default allow all digits
+  if (fractionDigits === undefined) {
+    fractionDigits = fraction.length;
+  }
+
+  // Condense zeros
+  let subLength = 0;
+  const formattedFraction = fraction.replace(/0*$/, '').replace(/^0{3,}/, match => {
+    const removed = match.length.toString();
+    const sub = toSubString(removed);
+    subLength = sub.length;
+    return `0${sub}`;
+  });
+
+  return `${whole}.${formattedFraction.slice(0, fractionDigits + subLength)}`;
+}
+
+export function formatBigDecimalsCondensed(value: BigNumber, maxDigits: number = 8) {
+  if (value.isZero()) {
+    return '0';
+  }
+
+  // Work out how many digits we have for whole and fraction
+  const wholeDigits = value
+    .absoluteValue()
+    .decimalPlaces(0, BigNumber.ROUND_FLOOR)
+    .toString(10).length;
+  const fractionDigits = maxDigits - wholeDigits;
+
+  // Whole number only
+  if (fractionDigits <= 0) {
+    return value.decimalPlaces(0, BigNumber.ROUND_FLOOR).toString(10);
+  }
+
+  return condenseZeros(value.toString(10), fractionDigits);
+}
+
+export function formatNumberCondensed(value: number, maxDigits: number = 8) {
+  if (value === 0) {
+    return '0';
+  }
+
+  const wholeDigits = Math.abs(value).toFixed(0).length;
+  const fractionDigits = maxDigits - wholeDigits;
+
+  if (fractionDigits <= 0) {
+    return value.toFixed(0);
+  }
+
+  return condenseZeros(value.toFixed(32), fractionDigits);
+}
+
 export function formatFullBigNumber(
   value: BigNumber,
   maxDp: number,
@@ -241,7 +307,7 @@ export function formatSignificantBigNumber(
   const sigPlaces = getFirstNonZeroDecimal(tokensPerCent, decimals) + extraPlaces;
   const places = Math.max(Math.min(sigPlaces, decimals), minPlaces);
 
-  return stripTrailingZeros(
+  return condenseZeros(
     value.toFormat(places, roundMode, {
       prefix: '',
       decimalSeparator: '.',

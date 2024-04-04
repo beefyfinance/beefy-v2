@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { formatBigDecimals } from '../../../../../../../../helpers/format';
+import { formatBigDecimalsCondensed } from '../../../../../../../../helpers/format';
 import type { ChainEntity } from '../../../../../../../data/entities/chain';
 import clsx from 'clsx';
 import type { TokenEntity } from '../../../../../../../data/entities/token';
@@ -37,7 +37,9 @@ export const ListItem = memo<ListItemProps>(function ListItem({
       <div className={classes.symbol}>
         <ListJoin items={tokenSymbols} />
       </div>
-      {balance ? <div className={classes.balance}>{formatBigDecimals(balance, 4)}</div> : null}
+      {balance ? (
+        <div className={classes.balance}>{formatBigDecimalsCondensed(balance, 8)}</div>
+      ) : null}
       <ChevronRight className={classes.arrow} />
     </button>
   );

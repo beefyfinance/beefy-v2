@@ -13,8 +13,7 @@ import {
   selectStepperItems,
   selectZapReturned,
 } from '../../../../features/data/selectors/stepper';
-import { formatBigDecimals } from '../../../../helpers/format';
-
+import { formatBigDecimalsCondensed } from '../../../../helpers/format';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { Button } from '../../../Button';
 import { TransactionLink } from '../TransactionLink';
@@ -150,7 +149,7 @@ const ZapSuccessContent = memo<SuccessContentProps>(function ZapSuccessContent({
         <ListJoin
           items={returned.map(
             item =>
-              `${formatBigDecimals(item.amount, Math.min(item.token.decimals, 8))} ${
+              `${formatBigDecimalsCondensed(item.amount, Math.min(item.token.decimals, 8))} ${
                 item.token.symbol
               }`
           )}
@@ -250,14 +249,14 @@ const FallbackSuccessContent = memo<SuccessContentProps>(function FallbackSucces
   const textParams = useMemo(() => {
     if (step.extraInfo?.rewards) {
       return {
-        amount: formatBigDecimals(walletActionsState?.additional?.amount || BIG_ZERO, 4),
+        amount: formatBigDecimalsCondensed(walletActionsState?.additional?.amount || BIG_ZERO, 4),
         token: walletActionsState?.additional?.token.symbol || 'unknown',
-        rewards: formatBigDecimals(step.extraInfo.rewards.amount),
+        rewards: formatBigDecimalsCondensed(step.extraInfo.rewards.amount),
         rewardToken: step.extraInfo.rewards.token.symbol,
       };
     }
     return {
-      amount: formatBigDecimals(walletActionsState.additional?.amount || BIG_ZERO, 4),
+      amount: formatBigDecimalsCondensed(walletActionsState.additional?.amount || BIG_ZERO, 4),
       token: walletActionsState.additional?.token.symbol || 'unknown',
     };
   }, [step.extraInfo?.rewards, walletActionsState]);
