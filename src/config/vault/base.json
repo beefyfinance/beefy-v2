@@ -3566,43 +3566,6 @@
     ]
   },
   {
-    "id": "baseswap-mim-usdbc",
-    "name": "MIM-USDbC LP",
-    "type": "standard",
-    "token": "MIM-USDbC LP",
-    "tokenAddress": "0xa2b120Cab75AEfDfAFdA6A14713349A3096EED79",
-    "tokenDecimals": 18,
-    "tokenProviderId": "baseswap",
-    "earnedToken": "mooBaseSwapMIM-USDbC",
-    "earnedTokenAddress": "0x8D6200469abE439A131D24E017E610aEDfb63E55",
-    "earnContractAddress": "0x8D6200469abE439A131D24E017E610aEDfb63E55",
-    "oracle": "lps",
-    "oracleId": "baseswap-mim-usdbc",
-    "status": "active",
-    "createdAt": 1693580890,
-    "platformId": "baseswap",
-    "assets": ["MIM", "USDbC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://baseswap.fi/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x4A3A6Dd60A34bB2Aba60D73B4C88315E9CeB6A3D",
-    "removeLiquidityUrl": "https://baseswap.fi/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x4A3A6Dd60A34bB2Aba60D73B4C88315E9CeB6A3D",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "base-baseswap"
-      }
-    ]
-  },
-  {
     "id": "baseswap-cbeth-weth",
     "name": "cbETH-ETH LP",
     "type": "standard",
