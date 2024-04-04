@@ -1,5 +1,34 @@
 [
   {
+    "id": "lynex-usdc-mendi",
+    "name": "MENDI-USDC LP",
+    "type": "standard",
+    "token": "MENDI-USDC vLP",
+    "tokenAddress": "0xE5e19bBF39c76A8c980B48F2Ec89d0dE877bF567",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lynex",
+    "earnedToken": "mooLynexUSDC-MENDI",
+    "earnedTokenAddress": "0x84237d2a5f8bD4e9D89F6156043E79d9D7Ed4367",
+    "earnContractAddress": "0x84237d2a5f8bD4e9D89F6156043E79d9D7Ed4367",
+    "oracle": "lps",
+    "oracleId": "lynex-usdc-mendi",
+    "status": "active",
+    "createdAt": 1712227180,
+    "platformId": "lynex",
+    "assets": ["MENDI", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xe5e19bbf39c76a8c980b48f2ec89d0de877bf567",
+    "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xe5e19bbf39c76a8c980b48f2ec89d0de877bf567",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "linea-solidly-lynex"
+      }
+    ]
+  },
+  {
     "id": "lynex-ichi-usdc-lynx",
     "name": "USDC-LYNX LP",
     "type": "standard",
