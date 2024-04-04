@@ -31,6 +31,7 @@ import { ZapSlippage } from '../ZapSlippage';
 import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
+import { isCowcentratedLiquidityVault } from '../../../../../data/entities/vault';
 
 const useStyles = makeStyles(styles);
 
@@ -99,15 +100,32 @@ const QuoteIdle = memo<TransactQuoteProps>(function QuoteIdle({ title, className
   const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const transactMode = useAppSelector(selectTransactMode);
+
   return (
     <div className={clsx(classes.container, classes.disabled, className)}>
       <QuoteTitleRefresh title={title} enableRefresh={true} />
       <div className={classes.tokenAmounts}>
-        <TokenAmountIcon
-          amount={BIG_ZERO}
-          chainId={vault.chainId}
-          tokenAddress={vault.depositTokenAddress}
-        />
+        {isCowcentratedLiquidityVault(vault) && transactMode === TransactMode.Withdraw ? (
+          <>
+            {vault.depositTokenAddresses.map(tokenAddress => {
+              return (
+                <TokenAmountIcon
+                  key={tokenAddress}
+                  amount={BIG_ZERO}
+                  chainId={vault.chainId}
+                  tokenAddress={tokenAddress}
+                />
+              );
+            })}
+          </>
+        ) : (
+          <TokenAmountIcon
+            amount={BIG_ZERO}
+            chainId={vault.chainId}
+            tokenAddress={vault.depositTokenAddress}
+          />
+        )}
       </div>
     </div>
   );

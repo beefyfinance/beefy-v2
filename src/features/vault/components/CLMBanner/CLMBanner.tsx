@@ -1,7 +1,7 @@
 import { makeStyles, type Theme } from '@material-ui/core';
 import { memo } from 'react';
-import clm from '../../../../images/icons/clm.svg';
 import { Trans, useTranslation } from 'react-i18next';
+import { getIcon } from '../../../../helpers/iconSrc';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -27,7 +27,7 @@ export const CLMBanner = memo(function CLMBanner() {
   const classes = useStyles();
   return (
     <div className={classes.container}>
-      <img src={clm} alt="clm" />
+      <img src={getIcon('clm')} alt="clm" />
       <div>
         <Trans
           t={t}
