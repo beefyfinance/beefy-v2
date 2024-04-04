@@ -1,5 +1,41 @@
 [
   {
+    "id": "aerodrome-ezeth-weth",
+    "name": "ezETH-ETH vLP",
+    "type": "standard",
+    "token": "vAMM-ezETH/WETH",
+    "tokenAddress": "0x0C8bF3cb3E1f951B284EF14aa95444be86a33E2f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroezETH-ETH",
+    "earnedTokenAddress": "0xAB7EeE0a368079D2fBfc83599eD0148a16d0Ea09",
+    "earnContractAddress": "0xAB7EeE0a368079D2fBfc83599eD0148a16d0Ea09",
+    "oracle": "lps",
+    "oracleId": "aerodrome-ezeth-weth",
+    "status": "active",
+    "createdAt": 1712237278,
+    "platformId": "aerodrome",
+    "assets": ["ezETH", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x2416092f143378750bb29b79ed961ab195cceea5&token1=0x4200000000000000000000000000000000000006&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "compound-base-usdc",
     "name": "USDC",
     "type": "standard",
@@ -612,7 +648,7 @@
     "createdAt": 1703168135,
     "platformId": "aerodrome",
     "assets": ["ETH", "USDC"],
-    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_HIGH", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
@@ -640,7 +676,7 @@
     "createdAt": 1703168135,
     "platformId": "aerodrome",
     "assets": ["DAI", "USDC"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_HIGH", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
