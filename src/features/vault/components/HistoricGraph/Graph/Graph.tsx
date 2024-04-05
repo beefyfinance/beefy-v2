@@ -19,13 +19,13 @@ import type { Theme } from '@material-ui/core';
 import { format, fromUnixTime } from 'date-fns';
 import { XAxisTick } from '../../../../../components/XAxisTick';
 import { getXInterval, mapRangeToTicks } from '../../../../../helpers/graph';
-import { formatBigUsd, formatPercent, formatUsd } from '../../../../../helpers/format';
+import { formatBigDecimals, formatPercent, formatUsd } from '../../../../../helpers/format';
 import type { LineTogglesState } from '../LineToggles';
 import { TooltipContent } from '../TooltipContent';
 import { useChartData } from './useChartData';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../store';
-import { selectVaultById } from '../../../../data/selectors/vaults';
+import { selectCowVaultById, selectVaultById } from '../../../../data/selectors/vaults';
 import { useTranslation } from 'react-i18next';
 import { selectCurrentCowcentratedRangesByVaultId } from '../../../../data/selectors/tokens';
 
@@ -133,6 +133,9 @@ export const CowcentratedChart = memo(function CowcentratedChart({
     selectCurrentCowcentratedRangesByVaultId(state, vaultId)
   );
 
+  const vault = useAppSelector(state => selectCowVaultById(state, vaultId));
+  const priceString = `${vault.assetIds[1]}/${vault.assetIds[0]}`;
+
   const showInRange = useMemo(() => {
     return currentPrice.lte(priceRangeMax) && currentPrice.gte(priceRangeMin);
   }, [currentPrice, priceRangeMax, priceRangeMin]);
@@ -141,20 +144,26 @@ export const CowcentratedChart = memo(function CowcentratedChart({
     <div className={classes.cowcentratedHeader}>
       <div className={classes.cowcentratedStat}>
         <div className={classes.label}>{t('Min Price')}</div>
-        <div className={classes.value}>{formatBigUsd(priceRangeMin)}</div>
+        <div className={classes.value}>
+          {formatBigDecimals(priceRangeMin, 4)} <span>{priceString}</span>
+        </div>
       </div>
       <div className={classes.cowcentratedStat}>
-        <div className={classes.label}>{t('Current Price')} </div>
-        <div className={classes.value}>
-          {formatBigUsd(currentPrice)}{' '}
+        <div className={classes.label}>
+          {t('Current Price')}{' '}
           <span className={showInRange ? classes.inRange : classes.outOfRange}>
             ({t(showInRange ? 'In Range' : 'Out of Range')})
           </span>
         </div>
+        <div className={classes.value}>
+          {formatBigDecimals(currentPrice, 4)} <span>{priceString}</span>
+        </div>
       </div>
       <div className={classes.cowcentratedStat}>
         <div className={classes.label}>{t('Max Price')}</div>
-        <div className={classes.value}>{formatBigUsd(priceRangeMax)}</div>
+        <div className={classes.value}>
+          {formatBigDecimals(priceRangeMax, 4)} <span>{priceString}</span>
+        </div>
       </div>
     </div>
   );

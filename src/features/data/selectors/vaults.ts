@@ -91,6 +91,17 @@ export const selectGovVaultById = (state: BeefyState, vaultId: VaultEntity['id']
   return vault;
 };
 
+export const selectCowVaultById = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultCowcentrated => {
+  const vault = selectVaultById(state, vaultId);
+  if (!isCowcentratedLiquidityVault(vault)) {
+    throw new Error(`selectCowVaultById: Vault ${vaultId} is not a cowcentrated vault`);
+  }
+  return vault;
+};
+
 export const selectStandardVaultById = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   standardVault => {
