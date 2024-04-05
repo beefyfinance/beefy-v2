@@ -167,6 +167,7 @@ type ChainId =
   | 'gnosis'
   | 'linea'
   | 'mantle'
+  | 'fraxtal'
   | 'aurora'
   | 'emerald'
   | 'celo'
