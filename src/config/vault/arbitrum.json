@@ -1,5 +1,57 @@
 [
   {
+    "id": "uniswap-cow-arb-eth-usdc",
+    "name": "ETH-USDC",
+    "token": "ETH-USDC",
+    "tokenAddress": "0xC6962004f452bE9203591991D15f6b388e09E8D0",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapArbitrumETH-USDC",
+    "earnedTokenAddress": "0xeDd08A6FF7aEEe1E4DCCC103198af06B2316d8B8",
+    "earnContractAddress": "0xeDd08A6FF7aEEe1E4DCCC103198af06B2316d8B8",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-eth-usdc",
+    "status": "active",
+    "createdAt": 1712582016,
+    "platformId": "beefy",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "type": "cowcentrated",
+    "feeTier": "0.05"
+  },
+  {
+    "id": "uniswap-cow-arb-pendle-eth",
+    "name": "PENDLE-ETH",
+    "token": "PENDLE-ETH",
+    "tokenAddress": "0xdbaeB7f0DFe3a0AAFD798CCECB5b22E708f7852c",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0c880f6761F1af8d9Aa9C466984b80DAb9a8c9e8",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapArbitrumPENDLE-ETH",
+    "earnedTokenAddress": "0x2a2e016F9c30c7dA5a41b21c19e9619ff78ab673",
+    "earnContractAddress": "0x2a2e016F9c30c7dA5a41b21c19e9619ff78ab673",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-pendle-eth",
+    "status": "active",
+    "createdAt": 1712582016,
+    "platformId": "beefy",
+    "assets": ["PENDLE", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "type": "cowcentrated",
+    "feeTier": "0.30"
+  },
+  {
     "id": "uniswap-cow-arb-arb-eth-t3",
     "name": "ARB-ETH",
     "token": "ARB-ETH",
