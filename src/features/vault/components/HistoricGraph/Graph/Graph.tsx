@@ -28,6 +28,7 @@ import { useAppSelector } from '../../../../../store';
 import { selectCowVaultById, selectVaultById } from '../../../../data/selectors/vaults';
 import { useTranslation } from 'react-i18next';
 import { selectCurrentCowcentratedRangesByVaultId } from '../../../../data/selectors/tokens';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -142,7 +143,7 @@ export const CowcentratedChart = memo(function CowcentratedChart({
 
   return (
     <div className={classes.cowcentratedHeader}>
-      <div className={classes.cowcentratedStat}>
+      <div className={clsx(classes.cowcentratedStat, classes.roundBottomLeft)}>
         <div className={classes.label}>{t('Min Price')}</div>
         <div className={classes.value}>
           {formatBigDecimals(priceRangeMin, 4)} <span>{priceString}</span>
@@ -159,7 +160,7 @@ export const CowcentratedChart = memo(function CowcentratedChart({
           {formatBigDecimals(currentPrice, 4)} <span>{priceString}</span>
         </div>
       </div>
-      <div className={classes.cowcentratedStat}>
+      <div className={clsx(classes.cowcentratedStat, classes.roundBottomRight)}>
         <div className={classes.label}>{t('Max Price')}</div>
         <div className={classes.value}>
           {formatBigDecimals(priceRangeMax, 4)} <span>{priceString}</span>

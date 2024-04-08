@@ -59,4 +59,10 @@ export const styles = (theme: Theme) => ({
       color: theme.palette.text.dark,
     },
   },
+  roundBottomLeft: {
+    borderBottomLeftRadius: '8px',
+  },
+  roundBottomRight: {
+    borderBottomRightRadius: '8px',
+  },
 });
