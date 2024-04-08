@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import type { TimeBucketType } from '../../../../../data/apis/analytics/analytics-types';
-import { formatUsd } from '../../../../../../helpers/format';
+import { formatLargeUsd } from '../../../../../../helpers/format';
 
 export const TIME_BUCKET: TimeBucketType[] = ['1h_1d', '1h_1w', '1d_1M', '1d_all'];
 
@@ -29,5 +29,5 @@ export function formatUnderlyingTick(value: number, minMax: [number, number]) {
 }
 
 export function formatUsdTick(value: number) {
-  return formatUsd(value);
+  return formatLargeUsd(value);
 }

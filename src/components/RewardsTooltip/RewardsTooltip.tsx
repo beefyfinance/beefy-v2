@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { selectUserRewardsByVaultId } from '../../features/data/selectors/balance';
 import type { TokenEntity } from '../../features/data/entities/token';
 import type BigNumber from 'bignumber.js';
-import { formatBigNumber, formatBigUsd } from '../../helpers/format';
+import { formatTokenDisplayCondensed, formatLargeUsd } from '../../helpers/format';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
@@ -46,6 +46,7 @@ export const RewardsTooltip = memo<RewardsTooltipProps>(function RewardsTooltip(
 
 interface RewardsType {
   rewardToken: TokenEntity['oracleId'];
+  rewardTokenDecimals: TokenEntity['decimals'];
   rewards: BigNumber;
   rewardsUsd: BigNumber;
 }
@@ -66,9 +67,13 @@ export const RewardsTooltipContent = memo<RewardsTooltipContentProps>(
             return (
               <div key={tokenRewards.rewardToken}>
                 <div className={classes.rewardsText}>
-                  {formatBigNumber(tokenRewards.rewards)} {tokenRewards.rewardToken}
+                  {formatTokenDisplayCondensed(
+                    tokenRewards.rewards,
+                    tokenRewards.rewardTokenDecimals
+                  )}{' '}
+                  {tokenRewards.rewardToken}
                 </div>
-                <div className={classes.usdPrice}>{formatBigUsd(tokenRewards.rewardsUsd)}</div>
+                <div className={classes.usdPrice}>{formatLargeUsd(tokenRewards.rewardsUsd)}</div>
               </div>
             );
           })}

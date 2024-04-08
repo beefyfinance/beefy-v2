@@ -13,8 +13,7 @@ import {
   selectStepperItems,
   selectZapReturned,
 } from '../../../../features/data/selectors/stepper';
-import { formatBigDecimals } from '../../../../helpers/format';
-
+import { formatTokenDisplayCondensed } from '../../../../helpers/format';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { Button } from '../../../Button';
 import { TransactionLink } from '../TransactionLink';
@@ -150,7 +149,7 @@ const ZapSuccessContent = memo<SuccessContentProps>(function ZapSuccessContent({
         <ListJoin
           items={returned.map(
             item =>
-              `${formatBigDecimals(item.amount, Math.min(item.token.decimals, 8))} ${
+              `${formatTokenDisplayCondensed(item.amount, item.token.decimals)} ${
                 item.token.symbol
               }`
           )}
@@ -250,14 +249,23 @@ const FallbackSuccessContent = memo<SuccessContentProps>(function FallbackSucces
   const textParams = useMemo(() => {
     if (step.extraInfo?.rewards) {
       return {
-        amount: formatBigDecimals(walletActionsState?.additional?.amount || BIG_ZERO, 4),
+        amount: formatTokenDisplayCondensed(
+          walletActionsState?.additional?.amount || BIG_ZERO,
+          walletActionsState?.additional?.token?.decimals || 18
+        ),
         token: walletActionsState?.additional?.token.symbol || 'unknown',
-        rewards: formatBigDecimals(step.extraInfo.rewards.amount),
+        rewards: formatTokenDisplayCondensed(
+          step.extraInfo.rewards.amount,
+          step.extraInfo.rewards.token.decimals
+        ),
         rewardToken: step.extraInfo.rewards.token.symbol,
       };
     }
     return {
-      amount: formatBigDecimals(walletActionsState.additional?.amount || BIG_ZERO, 4),
+      amount: formatTokenDisplayCondensed(
+        walletActionsState?.additional?.amount || BIG_ZERO,
+        walletActionsState?.additional?.token?.decimals || 18
+      ),
       token: walletActionsState.additional?.token.symbol || 'unknown',
     };
   }, [step.extraInfo?.rewards, walletActionsState]);

@@ -7,7 +7,7 @@ import { Value } from './Value';
 import { Label } from './Label';
 import { useTranslation } from 'react-i18next';
 import { LabelTooltip } from './LabelTooltip';
-import { formatSmallPercent } from '../../../../../../helpers/format';
+import { formatPercent } from '../../../../../../helpers/format';
 import type { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 
@@ -53,11 +53,11 @@ const ZapFees = memo<ZapFeesProps>(function ZapFees({ quote }) {
       <Value>
         {hasDiscountFee ? (
           <>
-            <span className={classes.discounted}>{formatSmallPercent(fee.value, 2, 2, true)}</span>
-            <span className={classes.original}>{formatSmallPercent(fee.original, 2, 2, true)}</span>
+            <span className={classes.discounted}>{formatPercent(fee.value, 2)}</span>
+            <span className={classes.original}>{formatPercent(fee.original, 2)}</span>
           </>
         ) : (
-          formatSmallPercent(fee.value)
+          formatPercent(fee.value)
         )}
       </Value>
     </>

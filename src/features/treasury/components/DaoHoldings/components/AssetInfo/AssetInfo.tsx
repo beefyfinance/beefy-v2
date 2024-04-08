@@ -4,7 +4,7 @@ import { memo, useMemo } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
-import { formatBigUsd } from '../../../../../../helpers/format';
+import { formatLargeUsd } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import {
@@ -83,7 +83,7 @@ const AssetContainer = memo<AssetContainerProps>(function AssetContainer({ token
       <div className={classes.assetFlex}>{children}</div>
       <div>
         <div className={classes.value}>{token.balance.shiftedBy(-token.decimals).toFixed(2)}</div>
-        <div className={classes.subValue}>{formatBigUsd(token.usdValue)}</div>
+        <div className={classes.subValue}>{formatLargeUsd(token.usdValue)}</div>
       </div>
     </div>
   );
@@ -174,7 +174,7 @@ const MMAssetContainer = memo<MMAssetContainerProps>(function AssetContainer({
       <div className={classes.assetFlex}>{children}</div>
       <div>
         <div className={classes.value}>{holding.balance.toFixed(2)}</div>
-        <div className={classes.subValue}>{formatBigUsd(holding.usdValue)}</div>
+        <div className={classes.subValue}>{formatLargeUsd(holding.usdValue)}</div>
       </div>
     </div>
   );

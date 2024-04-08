@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button';
-import { formatFullBigNumber, formatSignificantBigNumber } from '../../../../../../helpers/format';
+import { formatTokenDisplayCondensed, formatTokenDisplay } from '../../../../../../helpers/format';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../../../store';
 import { initBoostForm } from '../../../../../data/actions/scenarios';
 import { startStepper } from '../../../../../data/actions/stepper';
@@ -21,10 +21,7 @@ import {
 import { selectBoostById } from '../../../../../data/selectors/boosts';
 import { selectIsAddressBookLoaded } from '../../../../../data/selectors/data-loader';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
-import {
-  selectErc20TokenByAddress,
-  selectTokenPriceByAddress,
-} from '../../../../../data/selectors/tokens';
+import { selectErc20TokenByAddress } from '../../../../../data/selectors/tokens';
 import { selectStandardVaultById } from '../../../../../data/selectors/vaults';
 import { selectIsWalletKnown, selectWalletAddress } from '../../../../../data/selectors/wallet';
 import { selectIsApprovalNeededForBoostStaking } from '../../../../../data/selectors/wallet-actions';
@@ -61,9 +58,6 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
   );
   const mooToken = useAppSelector(state =>
     selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
-  );
-  const oraclePrice = useAppSelector(state =>
-    selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
   const boostPendingRewards = useAppSelector(state =>
@@ -188,16 +182,16 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
           {balance.gt(0) ? (
             <Tooltip
               content={
-                <BasicTooltipContent title={formatFullBigNumber(balance, mooToken.decimals)} />
+                <BasicTooltipContent title={formatTokenDisplay(balance, mooToken.decimals)} />
               }
             >
               {t(isStake ? 'Available' : 'Staked')}{' '}
-              <span>{formatSignificantBigNumber(balance, mooToken.decimals, oraclePrice)}</span>
+              <span>{formatTokenDisplayCondensed(balance, mooToken.decimals)}</span>
             </Tooltip>
           ) : (
             <>
               {t(isStake ? 'Available' : 'Staked')}{' '}
-              <span>{formatSignificantBigNumber(balance, mooToken.decimals, oraclePrice)}</span>
+              <span>{formatTokenDisplayCondensed(balance, mooToken.decimals)}</span>
             </>
           )}
         </div>

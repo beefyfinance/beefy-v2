@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import React, { memo } from 'react';
-import { formatPercent } from '../../../../helpers/format';
+import { formatLargePercent } from '../../../../helpers/format';
 import type { BaseEntry } from '../../../data/utils/array-utils';
 import { styles } from './styles';
 import { CHART_COLORS } from '../../../../helpers/charts';
@@ -45,7 +45,7 @@ const Label = memo<LabelProps>(function Label({ item, formatter }) {
   const labelFormatted = formatter ? formatter(label) : label;
   return (
     <div className={clsx(classes.label)}>
-      {labelFormatted} <span>{formatPercent(item.percentage, 2, '0%')}</span>
+      {labelFormatted} <span>{formatLargePercent(item.percentage, 2, '0%')}</span>
     </div>
   );
 });

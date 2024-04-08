@@ -16,7 +16,7 @@ import {
   selectIsWalletKnown,
   selectWalletAddress,
 } from '../../features/data/selectors/wallet';
-import { formatBigUsd } from '../../helpers/format';
+import { formatLargeUsd } from '../../helpers/format';
 import type { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { useAppSelector } from '../../store';
@@ -34,7 +34,7 @@ const _BoostedVaultDepositedLarge = connect(
       : selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(state, vault.id);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const hasDeposit = deposit.gt(0);
-    const depositUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vaultId));
+    const depositUsd = formatLargeUsd(selectUserVaultDepositInUsd(state, vaultId));
     const blurred = selectIsBalanceHidden(state);
     const walletAddress = selectWalletAddress(state);
     const isLoaded =
@@ -93,7 +93,7 @@ const _NonBoostedVaultDeposited = connect(
       : selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(state, vault.id);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const hasDeposit = deposit.gt(0);
-    const depositUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vaultId));
+    const depositUsd = formatLargeUsd(selectUserVaultDepositInUsd(state, vaultId));
     const blurred = selectIsBalanceHidden(state);
     const walletAddress = selectWalletAddress(state);
     const isLoaded =

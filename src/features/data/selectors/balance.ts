@@ -801,6 +801,7 @@ export const selectUserRewardsByVaultId = (
 ) => {
   const rewards: {
     rewardToken: TokenEntity['oracleId'];
+    rewardTokenDecimals: TokenEntity['decimals'];
     rewards: BigNumber;
     rewardsUsd: BigNumber;
   }[] = [];
@@ -819,6 +820,7 @@ export const selectUserRewardsByVaultId = (
 
     rewards.push({
       rewardToken: earnedToken.oracleId,
+      rewardTokenDecimals: earnedToken.decimals,
       rewards: rewardsEarnedToken,
       rewardsUsd: rewardsEarnedUsd,
     });
@@ -837,6 +839,7 @@ export const selectUserRewardsByVaultId = (
 
         rewards.push({
           rewardToken: tokenOracleId,
+          rewardTokenDecimals: rewardToken.decimals,
           rewards: boostPendingRewards,
           rewardsUsd: tokenRewardsUsd,
         });

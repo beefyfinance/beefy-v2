@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import { memo, type MouseEvent, type ReactNode, useCallback, useEffect, useState } from 'react';
-import { formatBigUsd } from '../../../../helpers/format';
+import { formatLargeUsd } from '../../../../helpers/format';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import {
   selectTokenByAddress,
@@ -124,7 +124,7 @@ const NavToken = memo<NavTokenProps>(function NavToken({ token, className }) {
   return (
     <div className={clsx(classes.navToken, className)}>
       <img alt={symbol} src={icon} height={24} className={classes.navIcon} />
-      {formatBigUsd(price)}
+      {formatLargeUsd(price)}
     </div>
   );
 });
@@ -153,7 +153,7 @@ const TooltipToken = memo<TooltipTokenProps>(function TooltipToken({ token }) {
     <>
       <img alt={symbol} src={icon} height={24} className={classes.icon} />
       <div className={classes.symbol}>{symbol}</div>
-      <div className={classes.price}>{formatBigUsd(price)}</div>
+      <div className={classes.price}>{formatLargeUsd(price)}</div>
       <a
         href={explorer.url}
         target="_blank"

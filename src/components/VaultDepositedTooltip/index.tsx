@@ -18,7 +18,7 @@ import {
 import type { TokenEntity } from '../../features/data/entities/token';
 import type BigNumber from 'bignumber.js';
 import { TokenAmount } from '../TokenAmount';
-import { formatBigUsd } from '../../helpers/format';
+import { formatLargeUsd } from '../../helpers/format';
 import { useTranslation } from 'react-i18next';
 import { selectChainById } from '../../features/data/selectors/chains';
 import { selectBoostById } from '../../features/data/selectors/boosts';
@@ -47,7 +47,7 @@ const EntryDisplay = memo<EntryDisplayProps>(function VaultEntry({
         <div className={classes.amount}>
           <TokenAmount amount={entry.amount} price={price} decimals={depositToken.decimals} />
         </div>
-        <div className={classes.value}>{formatBigUsd(value)}</div>
+        <div className={classes.value}>{formatLargeUsd(value)}</div>
       </div>
     </>
   );

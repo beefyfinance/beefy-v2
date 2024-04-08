@@ -138,6 +138,7 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
 
   const selections = selectTransactWithdrawSelectionsForChain(state, chainId).map(selection => ({
     ...selection,
+    decimals: 0,
     balanceValue: BIG_ZERO,
     balance: undefined,
   }));
@@ -161,6 +162,7 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
         return {
           ...selection,
           balance,
+          decimals: token.decimals,
           price,
           balanceValue: balance.multipliedBy(price),
         };
@@ -207,6 +209,7 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
         return {
           ...option,
           balance,
+          decimals: token.decimals,
           price,
           balanceValue: balance.multipliedBy(price),
         };
