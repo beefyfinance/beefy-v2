@@ -3,13 +3,13 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
 import { Banner } from '../Banner';
-import Snap from '../../../images/partners/snapshot-logo.svg';
+import clm from '../../../images/icons/clm.svg';
 
 const useStyles = makeStyles(styles);
 
 export const AnnouncementBanner = memo(function AnnouncementBanner() {
   const classes = useStyles();
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideBIP77', false);
+  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideClmbanner', false);
 
   const closeBanner = useCallback(() => {
     setHideBanner(true);
@@ -21,23 +21,24 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
 
   return (
     <Banner
-      icon={<img alt="snapshot" src={Snap} className={classes.icon} />}
+      icon={<img alt="snapshot" src={clm} className={classes.icon} />}
       text={
         <>
-          [BIP:77] Contributor Funding Q2 2024. Discuss on
-          <a className={classes.link} target="__blank" href="https://discord.gg/beefyfinance">
-            {' '}
-            Discord{' '}
-          </a>
-          and vote on{' '}
+          {`Beefy's revolutionary Cowcentrated Liquidity Management beta is live! Discover a wealth of
+          features in a whole new approach to liquidity and learn more with our launch`}{' '}
+          <a className={classes.link} target="__blank" href="https://beefy.com/articles/clm/">
+            blog post
+          </a>{' '}
+          and new{' '}
           <a
             className={classes.link}
-            href="https://snapshot.org/#/beefydao.eth/proposal/0x0a8191d68040041a1e91562897c7563c0f4658c4b22e496813a18810cd7674c2"
+            href="https://docs.beefy.finance/beefy-products/clm"
             target="_blank"
             rel="noopener"
           >
-            Snapshot.
+            documentation
           </a>
+          .
         </>
       }
       onClose={closeBanner}
