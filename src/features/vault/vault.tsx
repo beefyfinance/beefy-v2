@@ -14,7 +14,7 @@ import {
 } from '../data/selectors/vaults';
 import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
 import type { VaultEntity } from '../data/entities/vault';
-import { isGovVault } from '../data/entities/vault';
+import { isCowcentratedLiquidityVault, isGovVault } from '../data/entities/vault';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { TechLoader } from '../../components/TechLoader';
 import { VaultMeta } from './components/VaultMeta';
@@ -30,6 +30,7 @@ import { PnLGraphLoader } from './components/PnLGraph';
 import { VaultsStats } from './components/VaultsStats';
 import { HistoricGraphsLoader } from './components/HistoricGraph';
 import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
+import { CLMBanner } from './components/CLMBanner';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -80,6 +81,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
       <VaultMeta vaultId={vaultId} />
       <BusdBannerVault vaultId={vaultId} />
       <VaultHeader vaultId={vaultId} />
+      {isCowcentratedLiquidityVault(vault) && <CLMBanner />}
       <VaultsStats vaultId={vaultId} />
       <div className={classes.contentContainer}>
         <div className={classes.contentColumns}>

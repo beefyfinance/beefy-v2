@@ -8,7 +8,7 @@ import { styles } from './styles';
 const useStyles = makeStyles(styles);
 
 export type StatSwitcherProps = {
-  type: 'standard' | 'gov';
+  type: 'standard' | 'gov' | 'cowcentrated';
   availableStats: ChartStat[];
   stat: ChartStat;
   onChange: (newStat: ChartStat) => void;

@@ -8,9 +8,10 @@ import {
   selectTransactQuoteStatus,
   selectTransactSelectedQuoteOrUndefined,
 } from '../../../../../data/selectors/transact';
-import type {
-  TransactOption,
-  TransactQuote,
+import {
+  isCowcentratedDepositQuote,
+  type TransactOption,
+  type TransactQuote,
 } from '../../../../../data/apis/transact/transact-types';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 import { PriceImpactNotice } from '../PriceImpactNotice';
@@ -24,6 +25,7 @@ import { type ActionButtonProps, ActionConnectSwitch } from '../CommonActions';
 import { GlpDepositNotice } from '../GlpNotices';
 import { NotEnoughNotice } from '../NotEnoughNotice';
 import { VaultFees } from '../VaultFees';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
@@ -35,7 +37,11 @@ export const DepositActions = memo<DepositActionsProps>(function DepositActions(
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const option = quote ? quote.option : null;
 
-  if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
+  const isCowcentratedEmptyDeposit = quote
+    ? isCowcentratedDepositQuote(quote) && quote.outputs[0].amount.eq(BIG_ZERO)
+    : false;
+
+  if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled || isCowcentratedEmptyDeposit) {
     return <ActionDepositDisabled className={className} />;
   }
 
@@ -86,6 +92,7 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
+  const isCowDepositQuote = isCowcentratedDepositQuote(quote);
 
   const isDisabled =
     isTxInProgress ||
@@ -120,7 +127,7 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
             borderless={true}
             onClick={handleClick}
           >
-            {t(isMaxAll ? 'Transact-DepositAll' : 'Transact-Deposit')}
+            {t(isMaxAll && !isCowDepositQuote ? 'Transact-DepositAll' : 'Transact-Deposit')}
           </Button>
         </ActionConnectSwitch>
         <VaultFees />

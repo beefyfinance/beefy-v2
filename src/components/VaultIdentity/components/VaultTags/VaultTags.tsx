@@ -16,14 +16,21 @@ import type { TokenEntity } from '../../../../features/data/entities/token';
 import { selectTokenByAddress } from '../../../../features/data/selectors/tokens';
 import type { VaultEntity } from '../../../../features/data/entities/vault';
 import {
+  isCowcentratedLiquidityVault,
   isGovVault,
   isVaultEarningPoints,
   isVaultPaused,
   isVaultRetired,
 } from '../../../../features/data/entities/vault';
 import { VaultPlatform } from '../../../VaultPlatform';
-import { selectVaultById } from '../../../../features/data/selectors/vaults';
+import {
+  selectIsVaultCowcentrated,
+  selectIsVaultGov,
+  selectVaultById,
+} from '../../../../features/data/selectors/vaults';
 import { getBoostIconSrc } from '../../../../helpers/boostIconSrc';
+import clsx from 'clsx';
+import { getIcon } from '../../../../helpers/iconSrc';
 
 const useStyles = makeStyles(styles);
 
@@ -81,10 +88,38 @@ type VaultPlatformTagProps = {
   vaultId: VaultEntity['id'];
 };
 const VaultPlatformTag = memo<VaultPlatformTagProps>(function VaultPlatformTag({ vaultId }) {
+  const classes = useStyles();
+  const isGov = useAppSelector(state => selectIsVaultGov(state, vaultId));
+  const isCowcentrated = useAppSelector(state => selectIsVaultCowcentrated(state, vaultId));
+
   return (
-    <VaultTag>
+    <VaultTag
+      className={clsx({
+        [classes.platformTagGov]: isGov,
+        [classes.platformTagClm]: isCowcentrated,
+      })}
+    >
       <VaultPlatform vaultId={vaultId} />
     </VaultTag>
+  );
+});
+
+export const CLMTag = memo(function CLMTag({ vault }: { vault: VaultEntity }) {
+  const classes = useStyles();
+  return (
+    <VaultTagWithTooltip
+      content={<BasicTooltipContent title={`Cowcentrated Liquidity Manager`} />}
+      placement="bottom"
+      className={classes.vaultTagClm}
+    >
+      <img src={getIcon('clm')} height={16} />
+      CLM
+      {isCowcentratedLiquidityVault(vault) && vault.feeTier && (
+        <>
+          <div className={classes.divider} /> <span>{`${vault.feeTier}%`}</span>
+        </>
+      )}
+    </VaultTagWithTooltip>
   );
 });
 
@@ -121,6 +156,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   return (
     <div className={classes.vaultTags}>
       <VaultPlatformTag vaultId={vaultId} />
+      {isCowcentratedLiquidityVault(vault) && <CLMTag vault={vault} />}
       {isVaultRetired(vault) ? (
         <VaultTag className={classes.vaultTagRetired}>{t('VaultTag-Retired')}</VaultTag>
       ) : isVaultPaused(vault) ? (

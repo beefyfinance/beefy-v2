@@ -12,12 +12,13 @@ export interface VaultConfig {
   id: string;
   name: string;
   /** defaults to standard */
-  type?: 'standard' | 'gov' /*| 'concentrated-liquidity'*/;
+  type?: 'standard' | 'gov' | 'cowcentrated';
   /** version of vault type defaults to 1 */
   version?: number;
   token: string;
   tokenAddress?: string | null;
   tokenDecimals: number;
+  depositTokenAddresses?: string[];
   tokenProviderId?: PlatformEntity['id'];
   zaps?: StrategyOptions[];
   earnedToken: string;
@@ -55,6 +56,7 @@ export interface VaultConfig {
   /* Oracle can be ChainLink | Pyth, then the oracle address*/
   lendingOracle?: { provider: string; address?: string; loops?: number };
   earningPoints?: boolean;
+  feeTier?: string;
 }
 
 export interface FeaturedVaultConfig {

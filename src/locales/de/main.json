@@ -15,9 +15,9 @@
   "Filter-DropdwnDflt": "Alle",
   "Filter-AsstSingle": "Einzelne Anlagen",
   "Filter-Categories": "Kategorien",
-  "Filter-CatgryAll": "Alle",
-  "Filter-CatgryBeefy": "Beefy Vaults",
-  "Filter-CatgryLowRsk": "Risikoarm",
+  "Filter-CategoryAll": "Alle",
+  "Filter-CategoryBeefy": "Beefy Vaults",
+  "Filter-CategoryLowRsk": "Risikoarm",
   "Filter-SortSafety": "Sicherheit",
   "Filter-HideZero": "Nullsalden ausblenden",
   "Filter-Type": "Vault Typ:",
@@ -62,7 +62,7 @@
   "Safety-HowCalc": "Wie ist es kalkuliert?",
   "Safety-Meaning": "Was bedeutet das?",
 
-  "Strat-Address": "Strategie Adresse",
+  "Strat-Contract": "Strategie Adresse",
 
   "Token-Detail": "Einzelheiten des Anlageguts",
   "Token-NoDescrip": "Keine Beschreibung vorhanden.",

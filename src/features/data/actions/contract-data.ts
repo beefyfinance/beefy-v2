@@ -3,8 +3,8 @@ import type { BeefyState } from '../../../redux-types';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { getContractDataApi } from '../apis/instances';
 import type { ChainEntity } from '../entities/chain';
-import type { VaultGov, VaultStandard } from '../entities/vault';
-import { isGovVault } from '../entities/vault';
+import type { VaultCowcentrated, VaultGov, VaultStandard } from '../entities/vault';
+import { isGovVault, isStandardVault } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
 import { selectVaultIdsByChainId, selectVaultById } from '../selectors/vaults';
@@ -43,15 +43,24 @@ export const fetchAllContractDataByChainAction = createAsyncThunk<
   );
   const standardVaults: VaultStandard[] = [];
   const govVaults: VaultGov[] = [];
+  const cowcentratedLiquidityVaults: VaultCowcentrated[] = [];
   for (const vault of allVaults) {
     if (isGovVault(vault)) {
       govVaults.push(vault);
-    } else {
+    } else if (isStandardVault(vault)) {
       standardVaults.push(vault);
+    } else {
+      cowcentratedLiquidityVaults.push(vault);
     }
   }
 
-  const res = await contractApi.fetchAllContractData(state, standardVaults, govVaults, boosts);
+  const res = await contractApi.fetchAllContractData(
+    state,
+    standardVaults,
+    govVaults,
+    cowcentratedLiquidityVaults,
+    boosts
+  );
 
   // always re-fetch the latest state
   return {

@@ -138,6 +138,13 @@ const YearlyTooltipContent = memo<YearlyTooltipContentProps>(function YearlyTool
         });
       }
 
+      if ('clmApr' in rates) {
+        items.push({
+          label: 'Vault-Breakdown-CLMApr',
+          value: rates.clmApr ?? '?',
+        });
+      }
+
       items.push({
         label: 'APY',
         value: isBoosted ? rates.boostedTotalApy ?? '?' : rates.totalApy,

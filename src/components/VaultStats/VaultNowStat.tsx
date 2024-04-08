@@ -14,6 +14,7 @@ import {
 } from '../../features/data/selectors/analytics';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
 import type { VaultPnLDataType } from './types';
+import { selectIsVaultCowcentrated } from '../../features/data/selectors/vaults';
 
 export type VaultNowStatProps = {
   vaultId: VaultEntity['id'];
@@ -34,7 +35,9 @@ function mapStateToProps(
 
   const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
 
-  if (!vaultTimeline) {
+  const isCowcentratedVault = selectIsVaultCowcentrated(state, vaultId);
+
+  if (!vaultTimeline || isCowcentratedVault) {
     return {
       label,
       value: '-',

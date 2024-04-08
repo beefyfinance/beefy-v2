@@ -36,6 +36,14 @@ export const selectTransactOptionsMode = (state: BeefyState) => state.ui.transac
 export const selectTransactInputAmount = (state: BeefyState) => state.ui.transact.inputAmount;
 export const selectTransactInputMax = (state: BeefyState) => state.ui.transact.inputMax;
 
+export const selectTransactDualInputAmount = (state: BeefyState, index: number) =>
+  state.ui.transact.dualInputAmounts[index] ?? BIG_ZERO;
+export const selectTransactDualInputAmounts = (state: BeefyState) =>
+  state.ui.transact.dualInputAmounts;
+export const selectTransactDualMaxAmount = (state: BeefyState, index: number) =>
+  state.ui.transact.dualInputMax[index] ?? false;
+export const selectTransactDualMaxAmounts = (state: BeefyState) => state.ui.transact.dualInputMax;
+
 export const selectTransactSelectedChainId = (state: BeefyState) =>
   state.ui.transact.selectedChainId;
 export const selectTransactSelectedSelectionId = (state: BeefyState) =>
@@ -97,6 +105,16 @@ export const selectTransactDepositInputAmountExceedsBalance = (state: BeefyState
   const value = selectTransactInputAmount(state);
 
   return value.gt(userBalance);
+};
+
+export const selectTransactDepositInputAmountsExceedBalances = (state: BeefyState) => {
+  const selection = selectTransactSelected(state);
+  const depositTokens = selection.tokens;
+  const inputAmounts = selectTransactDualInputAmounts(state);
+  const userBalances = depositTokens.map(token =>
+    selectUserBalanceOfToken(state, token.chainId, token.address)
+  );
+  return depositTokens.some((_, index) => inputAmounts[index].gt(userBalances[index]));
 };
 
 export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyState) => {

@@ -136,6 +136,7 @@ const theme = createTheme(
           default: '#242842',
           gov: '#342763',
           boost: '#DB8332',
+          clm: '#252C63',
           inactive: '#242032',
         },
         txsModal: {
@@ -146,9 +147,12 @@ const theme = createTheme(
         },
         tags: {
           boost: 'rgba(219, 131, 50, 0.50)',
-          earnings: '#5C70D6',
           retired: 'rgba(209, 83, 71, 0.3)',
           paused: 'rgba(209, 152, 71, 0.3)',
+          earnings: '#5C70D6',
+          clm: '#0052CC',
+          platformClm: '#38428F',
+          platformGov: '#4B388F',
         },
         indicators: {
           loading: '#D6D05D',

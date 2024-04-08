@@ -23,6 +23,7 @@ export const styles = (theme: Theme) => ({
     padding: `6px 16px`,
     flexGrow: 1,
     flexShrink: 0,
+    position: 'relative' as const,
     '&:hover': {
       color: theme.palette.text.middle,
       boxShadow: 'none',

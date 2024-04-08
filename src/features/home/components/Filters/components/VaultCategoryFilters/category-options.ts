@@ -1,10 +1,15 @@
 import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
 
-export const CATEGORY_OPTIONS: Record<FilteredVaultsState['vaultCategory'], string> = {
-  all: 'Filter-CatgryAll',
-  featured: 'Filter-CatgryFeatured',
-  stable: 'Filter-CatgryStabl',
-  bluechip: 'Filter-CatgryBlue',
-  beefy: 'Filter-CatgryBeefy',
-  correlated: 'Filter-CatgryCorrelated',
+export type VaultCategory = {
+  i18nKey: string;
+  highlight?: 'beta' | undefined;
+};
+
+export const CATEGORY_OPTIONS: Record<FilteredVaultsState['vaultCategory'], VaultCategory> = {
+  all: { i18nKey: 'Filter-CategoryAll' },
+  featured: { i18nKey: 'Filter-CategoryFeatured' },
+  stable: { i18nKey: 'Filter-CategoryStable' },
+  bluechip: { i18nKey: 'Filter-CategoryBlue' },
+  correlated: { i18nKey: 'Filter-CategoryCorrelated' },
+  clm: { i18nKey: 'Filter-CategoryCLM', highlight: 'beta' },
 };

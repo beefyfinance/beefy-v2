@@ -15,6 +15,7 @@ import {
 } from '../../../../../data/selectors/tokens';
 import BigNumber from 'bignumber.js';
 import { AmountInputWithSlider } from '../AmountInputWithSlider';
+import { TokenSelectButton } from '../TokenSelectButton';
 
 export type WithdrawTokenAmountInputProps = {
   className?: string;
@@ -72,6 +73,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
         value={value}
         price={price}
         selectedToken={depositToken}
+        endAdornment={<TokenSelectButton />}
       />
     );
   }

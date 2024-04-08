@@ -11,8 +11,8 @@ import type { BoostEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenEqual, isTokenNative } from '../entities/token';
-import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
-import { isStandardVault } from '../entities/vault';
+import type { VaultCowcentrated, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
+import { isCowcentratedLiquidityVault, isStandardVault } from '../entities/vault';
 import {
   createWalletActionErrorAction,
   createWalletActionPendingAction,
@@ -68,6 +68,8 @@ import { transactActions } from '../reducers/wallet/transact';
 import { viemToWeb3Abi } from '../../../helpers/web3';
 import { BeefyCommonBridgeAbi } from '../../../config/abi/BeefyCommonBridgeAbi';
 import { BeefyZapRouterAbi } from '../../../config/abi/BeefyZapRouterAbi';
+import { BeefyCowcentratedLiquidityVaultAbi } from '../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
+import { selectTransactSelectedQuote } from '../selectors/transact';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -326,6 +328,62 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
   });
 };
 
+const v3Deposit = (vault: VaultCowcentrated, amountToken0: BigNumber, amountToken1: BigNumber) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    txStart(dispatch);
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const walletApi = await getWalletConnectionApi();
+    const chain = selectChainById(state, vault.chainId);
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const contract = new web3.eth.Contract(
+      viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
+      vault.earnContractAddress
+    );
+    const tokens = vault.depositTokenAddresses.map(address =>
+      selectTokenByAddress(state, vault.chainId, address)
+    );
+    const rawAmounts = [amountToken0, amountToken1].map((amount, i) =>
+      toWeiString(amount, tokens[i].decimals)
+    );
+    const gasPrices = await getGasPriceOptions(chain);
+
+    const estimatedLiquidity = toWeiString(
+      selectTransactSelectedQuote(state)?.outputs[0].amount.times(0.99),
+      18
+    );
+    txWallet(dispatch);
+
+    const transaction = (() => {
+      return contract.methods
+        .deposit(rawAmounts[0], rawAmounts[1], estimatedLiquidity)
+        .send({ from: address, ...gasPrices });
+    })();
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      {
+        spender: vault.earnContractAddress,
+        amount: selectTransactSelectedQuote(state)?.outputs[0].amount,
+        token: depositToken,
+      },
+      {
+        walletAddress: address,
+        chainId: vault.chainId,
+        spenderAddress: vault.earnContractAddress,
+        tokens: selectVaultTokensToRefresh(state, vault),
+        clearInput: true,
+      }
+    );
+  });
+};
+
 const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -387,6 +445,70 @@ const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) =
       dispatch,
       transaction,
       { spender: vault.earnContractAddress, amount: oracleAmount, token: depositToken },
+      {
+        chainId: vault.chainId,
+        spenderAddress: vault.earnContractAddress,
+        tokens: selectVaultTokensToRefresh(state, vault),
+        walletAddress: address,
+        clearInput: true,
+      }
+    );
+  });
+};
+
+const v3Withdraw = (vault: VaultCowcentrated, withdrawAmount: BigNumber, max: boolean) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    txStart(dispatch);
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const walletApi = await getWalletConnectionApi();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const chain = selectChainById(state, vault.chainId);
+
+    const contract = new web3.eth.Contract(
+      viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
+      vault.earnContractAddress
+    );
+    const gasPrices = await getGasPriceOptions(chain);
+
+    const outputs = selectTransactSelectedQuote(state).outputs;
+
+    const estimatedLiquidity0 = toWeiString(
+      outputs[0].amount.times(0.99),
+      outputs[0].token.decimals
+    );
+    const estimatedLiquidity1 = toWeiString(
+      outputs[1].amount.times(0.99),
+      outputs[1].token.decimals
+    );
+
+    const sharesToWithdrawWei = toWeiString(withdrawAmount, 18);
+
+    txWallet(dispatch);
+    const transaction = (() => {
+      if (max) {
+        return contract.methods
+          .withdrawAll(estimatedLiquidity0, estimatedLiquidity1)
+          .send({ from: address, ...gasPrices });
+      } else {
+        return contract.methods
+          .withdraw(sharesToWithdrawWei, estimatedLiquidity0, estimatedLiquidity1)
+          .send({ from: address, ...gasPrices });
+      }
+    })();
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      {
+        spender: vault.earnContractAddress,
+        amount: withdrawAmount,
+        token: selectTokenByAddress(state, vault.chainId, vault.earnContractAddress),
+      },
       {
         chainId: vault.chainId,
         spenderAddress: vault.earnContractAddress,
@@ -1031,7 +1153,9 @@ const resetWallet = () => {
 export const walletActions = {
   approval,
   deposit,
+  v3Deposit,
   withdraw,
+  v3Withdraw,
   stakeGovVault,
   unstakeGovVault,
   claimGovVault,
@@ -1102,7 +1226,16 @@ function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
       }
     }
   }
-  tokens.push(selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress));
+  if (isCowcentratedLiquidityVault(vault)) {
+    vault.depositTokenAddresses.forEach(tokenAddress => {
+      tokens.push(selectTokenByAddress(state, vault.chainId, tokenAddress));
+    });
+  }
+
+  // clm deposit tokens aren't erc20 and don't share balanceOf
+  if (!isCowcentratedLiquidityVault(vault)) {
+    tokens.push(selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress));
+  }
   tokens.push(selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress));
 
   // and native token because we spent gas

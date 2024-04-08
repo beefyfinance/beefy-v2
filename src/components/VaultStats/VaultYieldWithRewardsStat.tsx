@@ -19,6 +19,7 @@ import clsx from 'clsx';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
 import { Tooltip } from '../Tooltip';
 import type { VaultPnLDataType } from './types';
+import { selectIsVaultCowcentrated } from '../../features/data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 
@@ -43,13 +44,15 @@ export const VaultYieldWithRewardsStat = memo<VaultYieldStatProps>(
       selectUserRewardsByVaultId(state, vaultId, walletAddress)
     );
 
+    const isCowcentratedVault = useAppSelector(state => selectIsVaultCowcentrated(state, vaultId));
+
     const { totalYield, totalYieldUsd, tokenDecimals } = pnlData;
 
     const hasRewards = useMemo(() => {
       return rewards.length !== 0 ? true : false;
     }, [rewards.length]);
 
-    if (!vaultTimeline || !isLoaded) {
+    if (!vaultTimeline || !isLoaded || isCowcentratedVault) {
       return (
         <VaultValueStat
           label="VaultStat-Yield"

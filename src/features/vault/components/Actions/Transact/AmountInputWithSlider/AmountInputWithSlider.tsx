@@ -1,7 +1,6 @@
-import { memo, type CSSProperties, useMemo } from 'react';
+import { memo, type CSSProperties, useMemo, type ReactNode } from 'react';
 import { AmountInput, type AmountInputProps } from '../AmountInput/AmountInput';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { TokenSelectButton } from '../TokenSelectButton';
 import { selecTransactForceSelection } from '../../../../../data/selectors/transact';
 import { useAppSelector } from '../../../../../../store';
 import clsx from 'clsx';
@@ -12,6 +11,7 @@ import type { TokenEntity } from '../../../../../data/entities/token';
 type AmountInputWithSliderProps = AmountInputProps & {
   onSliderChange: (v: number) => void;
   selectedToken: TokenEntity;
+  endAdornment: ReactNode;
 };
 
 const useStyles = makeStyles(styles);
@@ -25,6 +25,7 @@ export const AmountInputWithSlider = memo<AmountInputWithSliderProps>(
     selectedToken,
     className,
     price,
+    endAdornment,
   }) {
     const forceSelection = useAppSelector(selecTransactForceSelection);
     const classes = useStyles();
@@ -52,7 +53,7 @@ export const AmountInputWithSlider = memo<AmountInputWithSliderProps>(
           allowInputAboveBalance={true}
           fullWidth={true}
           price={price}
-          endAdornment={<TokenSelectButton />}
+          endAdornment={endAdornment}
           disabled={forceSelection}
         />
         <input
