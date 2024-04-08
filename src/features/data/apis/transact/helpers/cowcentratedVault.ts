@@ -7,6 +7,8 @@ import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../../config/abi/Be
 import { toWeiString } from '../../../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
 import { viemToWeb3Abi } from '../../../../../helpers/web3';
+import { selectVaultStrategyAddress } from '../../../selectors/vaults';
+import { BeefyCowcentratedLiquidityStrategyAbi } from '../../../../../config/abi/BeefyCowcentratedLiquidityStrategyAbi';
 
 export async function getCowcentratedVaultDepositSimulationAmount(
   userInput: InputTokenAmount[],
@@ -15,10 +17,16 @@ export async function getCowcentratedVaultDepositSimulationAmount(
   web3: Web3,
   multicall: MultiCall
 ) {
+  const strategyAddress = selectVaultStrategyAddress(state, vault.id);
   const vaultContract = new web3.eth.Contract(
     viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
     vault.earnContractAddress
   );
+  const strategyContract = new web3.eth.Contract(
+    viemToWeb3Abi(BeefyCowcentratedLiquidityStrategyAbi),
+    strategyAddress
+  );
+
   const amt0 = toWeiString(userInput[0].amount, userInput[0].token.decimals);
   const amt1 = toWeiString(userInput[1].amount, userInput[1].token.decimals);
 
@@ -28,16 +36,22 @@ export async function getCowcentratedVaultDepositSimulationAmount(
         depositPreview: [string, string, string];
         totalSupply: string;
         balances: [string, string];
+      },
+      {
+        isCalm: boolean;
       }
     ]
   ];
 
-  const [[vaultData]]: MulticallReturnType = (await multicall.all([
+  const [[vaultData, strategyData]]: MulticallReturnType = (await multicall.all([
     [
       {
         depositPreview: vaultContract.methods.previewDeposit(amt0, amt1),
         totalSupply: vaultContract.methods.totalSupply(),
         balances: vaultContract.methods.balances(),
+      },
+      {
+        isCalm: strategyContract.methods.isCalm(),
       },
     ],
   ])) as MulticallReturnType;
@@ -50,8 +64,8 @@ export async function getCowcentratedVaultDepositSimulationAmount(
 
   const ratio = depositPreviewAmount.div(totalSupply);
 
-  const returnAmount0 = ratio.times(new BigNumber(vaultData.balances[0]));
-  const returnAmount1 = ratio.times(new BigNumber(vaultData.balances[1]));
+  const returnAmount0 = ratio.times(new BigNumber(vaultData.balances[0]).plus(amt0));
+  const returnAmount1 = ratio.times(new BigNumber(vaultData.balances[1]).plus(amt1));
 
   return {
     depositPreviewAmount,
@@ -59,6 +73,7 @@ export async function getCowcentratedVaultDepositSimulationAmount(
     usedToken1,
     returnAmount0,
     returnAmount1,
+    isCalm: strategyData.isCalm,
   };
 }
 
