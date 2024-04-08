@@ -245,7 +245,6 @@ const transactSlice = createSlice({
       })
       .addCase(transactFetchQuotes.fulfilled, (sliceState, action) => {
         if (sliceState.quotes.requestId === action.meta.requestId) {
-          console.log();
           if (action.payload.quotes.length === 0) {
             sliceState.quotes.status = TransactStatus.Rejected;
             sliceState.quotes.error = { name: 'No quotes returned.' };
