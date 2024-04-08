@@ -38,10 +38,14 @@ export async function getCowcentratedVaultDepositSimulationAmount(
     ],
   ])) as MulticallReturnType;
 
-  const depositPreview = new BigNumber(vaultData.depositPreview);
+  const depositPreview = new BigNumber(vaultData.depositPreview[0]);
+  const usedToken0 = new BigNumber(vaultData.depositPreview[1]);
+  const usedToken1 = new BigNumber(vaultData.depositPreview[1]);
 
   return {
     depositPreviewAmount: depositPreview,
+    usedToken0,
+    usedToken1,
   };
 }
 

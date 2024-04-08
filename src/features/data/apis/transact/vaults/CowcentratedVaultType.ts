@@ -146,6 +146,26 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       inputs,
       outputs,
       returned: [],
+      amountsUsed: [
+        {
+          token: this.depositTokens[0],
+          amount: resp.usedToken0,
+        },
+        {
+          token: this.depositTokens[1],
+          amount: resp.usedToken1,
+        },
+      ],
+      amountsReturned: [
+        {
+          token: this.depositTokens[0],
+          amount: resp.usedToken0,
+        },
+        {
+          token: this.depositTokens[1],
+          amount: resp.usedToken1,
+        },
+      ],
       allowances,
       priceImpact: 0,
     };

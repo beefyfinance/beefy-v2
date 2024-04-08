@@ -330,6 +330,8 @@ export type GovVaultDepositQuote = BaseQuote<GovVaultDepositOption> & {
 
 export type CowcentratedVaultDepositQuote = BaseQuote<CowcentratedDepositOption> & {
   vaultType: 'cowcentrated';
+  amountsUsed: TokenAmount[];
+  amountsReturned: TokenAmount[];
 };
 
 export type SingleDepositQuote = BaseZapQuote<SingleDepositOption> & {
@@ -461,6 +463,12 @@ export type QuoteOutputTokenAmountChange = TokenAmount & {
 
 export function isZapQuote(quote: TransactQuote): quote is ZapQuote {
   return 'steps' in quote;
+}
+
+export function isCowcentratedDepositQuote(
+  quote: TransactQuote
+): quote is CowcentratedVaultDepositQuote {
+  return isDepositQuote(quote) && quote.strategyId === 'cowcentrated' && 'amountsUsed' in quote;
 }
 
 export function isVaultWithdrawQuote(quote: TransactQuote): quote is VaultWithdrawQuote {
