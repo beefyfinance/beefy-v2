@@ -138,26 +138,6 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
         spenderAddress: this.vault.earnContractAddress,
       }));
 
-    console.log('Got deposit quote');
-    console.log(
-      `You'll be using ${resp.usedToken0
-        .shiftedBy(-this.depositTokens[0].decimals)
-        .toString()} of ${this.depositTokens[0].symbol}`
-    );
-    console.log(
-      `You'll be using ${resp.usedToken1
-        .shiftedBy(-this.depositTokens[1].decimals)
-        .toString()} of ${this.depositTokens[1].symbol}`
-    );
-    console.log(`You'll get ${resp.depositPreviewAmount.toString()} shares`);
-    console.log(
-      `Those shares will break down to ${resp.returnAmount0
-        .shiftedBy(-this.depositTokens[0].decimals)
-        .toString()} and ${resp.returnAmount1
-        .shiftedBy(-this.depositTokens[1].decimals)
-        .toString()} of the deposit tokens`
-    );
-
     return {
       id: createQuoteId(option.id),
       strategyId: option.strategyId,
@@ -194,16 +174,10 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
 
   async fetchDepositStep(quote: TransactQuote, t: TFunction<Namespace>): Promise<Step> {
     onlyInputCount(quote.inputs, 2);
-    const isMaxDeposit = quote.inputs.every(input => input.max);
     return {
       step: 'deposit',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-      action: walletActions.v3Deposit(
-        this.vault,
-        quote.inputs[0].amount,
-        quote.inputs[1].amount,
-        isMaxDeposit
-      ),
+      action: walletActions.v3Deposit(this.vault, quote.inputs[0].amount, quote.inputs[1].amount),
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };

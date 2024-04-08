@@ -328,12 +328,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
   });
 };
 
-const v3Deposit = (
-  vault: VaultCowcentrated,
-  amountToken0: BigNumber,
-  amountToken1: BigNumber,
-  max: boolean
-) => {
+const v3Deposit = (vault: VaultCowcentrated, amountToken0: BigNumber, amountToken1: BigNumber) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -365,15 +360,9 @@ const v3Deposit = (
     txWallet(dispatch);
 
     const transaction = (() => {
-      if (max) {
-        return contract.methods
-          .depositAll(estimatedLiquidity)
-          .send({ from: address, ...gasPrices });
-      } else {
-        return contract.methods
-          .deposit(rawAmounts[0], rawAmounts[1], estimatedLiquidity)
-          .send({ from: address, ...gasPrices });
-      }
+      return contract.methods
+        .deposit(rawAmounts[0], rawAmounts[1], estimatedLiquidity)
+        .send({ from: address, ...gasPrices });
     })();
 
     bindTransactionEvents(

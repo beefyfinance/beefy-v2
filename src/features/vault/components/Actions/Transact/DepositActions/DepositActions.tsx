@@ -8,9 +8,10 @@ import {
   selectTransactQuoteStatus,
   selectTransactSelectedQuoteOrUndefined,
 } from '../../../../../data/selectors/transact';
-import type {
-  TransactOption,
-  TransactQuote,
+import {
+  isCowcentratedDepositQuote,
+  type TransactOption,
+  type TransactQuote,
 } from '../../../../../data/apis/transact/transact-types';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 import { PriceImpactNotice } from '../PriceImpactNotice';
@@ -86,6 +87,7 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
+  const isCowDepositQuote = isCowcentratedDepositQuote(quote);
 
   const isDisabled =
     isTxInProgress ||
@@ -120,7 +122,7 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
             borderless={true}
             onClick={handleClick}
           >
-            {t(isMaxAll ? 'Transact-DepositAll' : 'Transact-Deposit')}
+            {t(isMaxAll && !isCowDepositQuote ? 'Transact-DepositAll' : 'Transact-Deposit')}
           </Button>
         </ActionConnectSwitch>
         <VaultFees />
