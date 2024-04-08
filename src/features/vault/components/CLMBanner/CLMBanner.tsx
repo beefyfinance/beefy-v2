@@ -36,7 +36,7 @@ export const CLMBanner = memo(function CLMBanner() {
             LinkDocs: (
               <a
                 className={classes.link}
-                href={'https://beefy.com/discord'}
+                href={'https://docs.beefy.finance/beefy-products/clm'}
                 target="_blank"
                 rel="noopener"
               />

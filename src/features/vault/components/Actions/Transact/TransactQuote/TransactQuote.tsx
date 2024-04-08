@@ -165,7 +165,7 @@ const QuoteLoaded = memo(function QuoteLoaded() {
   return (
     <>
       <div className={classes.tokenAmounts}>
-        {quote.strategyId === 'cowcentrated' && isCowcentratedDepositQuote(quote) ? (
+        {isCowcentratedDepositQuote(quote) ? (
           <CowcentratedLoadedQuote quote={quote} />
         ) : (
           <>
@@ -222,18 +222,16 @@ export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
       <div className={classes.amountReturned}>
         {quote.amountsUsed.map(tokenReturned => {
           return (
-            tokenReturned.amount.gt(BIG_ZERO) && (
-              <TokenAmountIcon
-                key={tokenReturned.token.id}
-                amount={tokenReturned.amount}
-                chainId={tokenReturned.token.chainId}
-                tokenAddress={tokenReturned.token.address}
-                showSymbol={false}
-                className={classes.fullWidth}
-                tokenImageSize={28}
-                amountWithValueClassName={classes.alignItemsEnd}
-              />
-            )
+            <TokenAmountIcon
+              key={tokenReturned.token.id}
+              amount={tokenReturned.amount}
+              chainId={tokenReturned.token.chainId}
+              tokenAddress={tokenReturned.token.address}
+              showSymbol={false}
+              className={classes.fullWidth}
+              tokenImageSize={28}
+              amountWithValueClassName={classes.alignItemsEnd}
+            />
           );
         })}
       </div>
