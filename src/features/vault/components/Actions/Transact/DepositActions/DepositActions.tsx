@@ -25,6 +25,7 @@ import { type ActionButtonProps, ActionConnectSwitch } from '../CommonActions';
 import { GlpDepositNotice } from '../GlpNotices';
 import { NotEnoughNotice } from '../NotEnoughNotice';
 import { VaultFees } from '../VaultFees';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
@@ -36,7 +37,11 @@ export const DepositActions = memo<DepositActionsProps>(function DepositActions(
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const option = quote ? quote.option : null;
 
-  if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
+  const isCowcentratedEmptyDeposit = quote
+    ? isCowcentratedDepositQuote(quote) && quote.outputs[0].amount.eq(BIG_ZERO)
+    : false;
+
+  if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled || isCowcentratedEmptyDeposit) {
     return <ActionDepositDisabled className={className} />;
   }
 
