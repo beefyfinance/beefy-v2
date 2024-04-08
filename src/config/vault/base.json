@@ -1,31 +1,5 @@
 [
   {
-    "id": "uniswap-cow-base-degen-eth-t1",
-    "name": "DEGEN-ETH",
-    "token": "DEGEN-ETH",
-    "tokenAddress": "0xc9034c3E7F58003E6ae0C8438e7c8f4598d5ACAA",
-    "tokenDecimals": 18,
-    "depositTokenAddresses": [
-      "0x4200000000000000000000000000000000000006",
-      "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed"
-    ],
-    "tokenProviderId": "uniswap",
-    "earnedToken": "cowUniswapBaseDEGEN-ETH",
-    "earnedTokenAddress": "0xd61E3A4C58F59bcD42535D6C039F5d5F71cd6Cd2",
-    "earnContractAddress": "0xd61E3A4C58F59bcD42535D6C039F5d5F71cd6Cd2",
-    "oracle": "lps",
-    "oracleId": "uniswap-cow-base-degen-eth-t1",
-    "status": "active",
-    "createdAt": 1710773529,
-    "platformId": "beefy",
-    "assets": ["WETH", "DEGEN"],
-    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
-    "network": "base",
-    "type": "cowcentrated",
-    "feeTier": "0.3"
-  },
-  {
     "id": "compound-base-usdc",
     "name": "USDC",
     "type": "standard",
