@@ -139,7 +139,11 @@ const QuoteError = memo(function QuoteError() {
   const { t } = useTranslation();
   const error = useAppSelector(selectTransactQuoteError);
 
-  return (
+  return error && error?.code === 'calm' ? (
+    <AlertError>
+      <p>{t('Transact-Quote-Error-Calm')}</p>
+    </AlertError>
+  ) : (
     <AlertError>
       <p>{t('Transact-Quote-Error')}</p>
       {error && error.message ? <p>{error.message}</p> : null}
@@ -233,7 +237,7 @@ export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
           );
         })}
       </div>
-      <div className={classes.label}>{t('Your position will be')}</div>
+      <div className={classes.label}>{t('Your Position Will Be')}</div>
       <div className={classes.cowcentratedSharesDepositContainer}>
         <TokenAmountIcon
           key={shares.token.id}
