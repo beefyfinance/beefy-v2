@@ -64,8 +64,8 @@ export async function getCowcentratedVaultDepositSimulationAmount(
 
   const ratio = depositPreviewAmount.div(totalSupply);
 
-  const returnAmount0 = ratio.times(new BigNumber(vaultData.balances[0]).plus(new BigNumber(amt0)));
-  const returnAmount1 = ratio.times(new BigNumber(vaultData.balances[1]).plus(new BigNumber(amt1)));
+  const returnAmount0 = ratio.times(new BigNumber(vaultData.balances[0]).plus(usedToken0));
+  const returnAmount1 = ratio.times(new BigNumber(vaultData.balances[1]).plus(usedToken1));
 
   return {
     depositPreviewAmount,
