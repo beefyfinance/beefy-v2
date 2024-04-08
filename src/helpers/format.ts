@@ -137,10 +137,17 @@ export function formatUsd(input: BigNumberish, decimals: number = 2): string {
 
 /**
  * Formats: 123 -> $123, 1234 -> $1234, 1234567 -> $1.23M etc
+ * @param input
+ * @param decimals decimal places to display if formatted value <  decimalsUnder
+ * @param minOrder order of magnitude to start showing units (1=k, 2=M, 3=B etc.)
+ * @param decimalsUnder formatted value under which to show decimals
  */
-export function formatLargeUsd(input: BigNumberish, decimals: number = 2): string {
-  const minOrder = 2; // show units for 1m+
-  const decimalsUnder = 1000; // show 2 decimal places values < 1000
+export function formatLargeUsd(
+  input: BigNumberish,
+  decimals: number = 2,
+  minOrder: number = 2,
+  decimalsUnder: BigNumberish = 1000
+): string {
   const value = toBigNumber(input);
 
   if (value.isZero()) {
@@ -260,7 +267,7 @@ function formatLargeNumber(
 
   const { value, unit } = toMagnitude(inputValue, minOrder);
 
-  return `${formatGrouped(value, value.lt(decimalsUnder) ? decimals : 0)}${unit}`;
+  return `${formatGrouped(value, value.absoluteValue().lt(decimalsUnder) ? decimals : 0)}${unit}`;
 }
 
 export function zeroPad(value: number | undefined, length: number): string {
