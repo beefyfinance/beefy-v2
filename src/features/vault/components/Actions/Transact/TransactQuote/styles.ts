@@ -29,4 +29,40 @@ export const styles = (theme: Theme) => ({
     opacity: '40%',
     pointerEvents: 'none' as const,
   },
+  cowcentratedDepositContainer: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '8px',
+  },
+  cowcentratedSharesDepositContainer: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+  },
+  amountReturned: {
+    display: 'flex',
+    gap: '4px',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  mainLp: {
+    borderRadius: '8px 8px 0px 0px',
+  },
+  fullWidth: {
+    width: '100%',
+    flexDirection: 'row-reverse' as const,
+    backgroundColor: theme.palette.background.contentDark,
+  },
+  borderRadiusToken0: {
+    borderRadius: '0px 0px 0px 8px',
+  },
+  borderRadiusToken1: {
+    borderRadius: '0px 0px 8px 0px',
+  },
+  label: {
+    ...theme.typography['body-lg'],
+    color: theme.palette.text.dark,
+  },
+  alignItemsEnd: {
+    alignItems: 'flex-end',
+  },
 });

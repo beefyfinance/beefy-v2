@@ -23,12 +23,18 @@ export type TokenAmountIconProps = {
   tokenAddress: TokenEntity['address'];
   chainId: TokenEntity['chainId'];
   className?: string;
+  showSymbol?: boolean;
+  tokenImageSize?: number;
+  amountWithValueClassName?: string;
 };
 export const TokenAmountIcon = memo<TokenAmountIconProps>(function TokenAmountIcon({
   amount,
   tokenAddress,
   chainId,
   className,
+  showSymbol = true,
+  tokenImageSize = 24,
+  amountWithValueClassName,
 }) {
   const classes = useStyles();
   const token = useAppSelector(state => selectTokenByAddress(state, chainId, tokenAddress));
@@ -42,6 +48,7 @@ export const TokenAmountIcon = memo<TokenAmountIconProps>(function TokenAmountIc
   return (
     <TokenAmountIconComponent
       className={className}
+      amountWithValueClassName={amountWithValueClassName}
       amount={
         <TokenAmount
           amount={amount}
@@ -52,13 +59,13 @@ export const TokenAmountIcon = memo<TokenAmountIconProps>(function TokenAmountIc
         />
       }
       value={`~${formatBigUsd(valueInUsd)}`}
-      tokenSymbol={token.symbol}
+      tokenSymbol={showSymbol ? token.symbol : null}
       tokenIcon={
         <TokenImage
           chainId={token.chainId}
           tokenAddress={token.address}
           className={classes.icon}
-          size={24}
+          size={tokenImageSize}
         />
       }
     />
@@ -85,21 +92,29 @@ export const TokenAmountIconLoader = memo<TokenAmountIconLoaderProps>(
 type TokenAmountIconComponentProps = {
   amount: ReactNode;
   value: ReactNode;
-  tokenSymbol: ReactNode;
+  tokenSymbol?: ReactNode;
   tokenIcon?: ReactNode;
   className?: string;
+  amountWithValueClassName?: string;
 };
 const TokenAmountIconComponent = memo<TokenAmountIconComponentProps>(
-  function TokenAmountIconComponent({ amount, value, tokenSymbol, tokenIcon, className }) {
+  function TokenAmountIconComponent({
+    amount,
+    value,
+    tokenSymbol,
+    tokenIcon,
+    className,
+    amountWithValueClassName,
+  }) {
     const classes = useStyles();
     return (
       <div className={clsx(classes.holder, className)}>
-        <div className={classes.amountWithValue}>
+        <div className={clsx(classes.amountWithValue, amountWithValueClassName)}>
           {amount}
           <div className={classes.value}>{value}</div>
         </div>
         <div className={classes.tokenWithIcon}>
-          <span className={classes.token}>{tokenSymbol}</span>
+          {tokenSymbol && <span className={classes.token}>{tokenSymbol}</span>}
           {tokenIcon}
         </div>
       </div>
