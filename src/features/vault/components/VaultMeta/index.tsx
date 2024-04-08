@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { memo } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
-import { isGovVault } from '../../../data/entities/vault';
+import { isCowcentratedLiquidityVault, isGovVault } from '../../../data/entities/vault';
 import { Meta } from '../../../../components/Meta/Meta';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
@@ -21,7 +21,11 @@ export const VaultMeta = memo<VaultMetaProps>(function VaultMeta({ vaultId }) {
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const platform = useAppSelector(state => selectPlatformById(state, vault.platformId));
-  const titleKey = isGovVault(vault) ? 'Meta-Vault-Title-Gov' : 'Meta-Vault-Title';
+  const titleKey = isGovVault(vault)
+    ? 'Meta-Vault-Title-Gov'
+    : isCowcentratedLiquidityVault(vault)
+    ? 'Meta-Vault-Title-Cow'
+    : 'Meta-Vault-Title';
 
   return (
     <Meta
