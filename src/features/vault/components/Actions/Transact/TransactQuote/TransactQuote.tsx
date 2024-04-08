@@ -22,7 +22,11 @@ import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { transactFetchQuotesIfNeeded } from '../../../../../data/actions/transact';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { TokenAmountIcon, TokenAmountIconLoader } from '../TokenAmountIcon/TokenAmountIcon';
-import { isZapQuote } from '../../../../../data/apis/transact/transact-types';
+import {
+  isCowcentratedDepositQuote,
+  isZapQuote,
+  type CowcentratedVaultDepositQuote,
+} from '../../../../../data/apis/transact/transact-types';
 import { ZapRoute } from '../ZapRoute';
 import { QuoteTitleRefresh } from '../QuoteTitleRefresh';
 import { AlertError } from '../../../../../../components/Alerts';
@@ -135,11 +139,7 @@ const QuoteError = memo(function QuoteError() {
   const { t } = useTranslation();
   const error = useAppSelector(selectTransactQuoteError);
 
-  return error && error?.code === 'calm' ? (
-    <AlertError>
-      <p>{t('Transact-Quote-Error-Calm')}</p>
-    </AlertError>
-  ) : (
+  return (
     <AlertError>
       <p>{t('Transact-Quote-Error')}</p>
       {error && error.message ? <p>{error.message}</p> : null}
@@ -157,19 +157,26 @@ const QuoteLoaded = memo(function QuoteLoaded() {
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isZap = isZapQuote(quote);
 
+  console.log(quote);
   return (
     <>
       <div className={classes.tokenAmounts}>
-        {quote.outputs.map(({ token, amount }) => (
-          <TokenAmountIcon
-            key={token.address}
-            amount={amount}
-            chainId={token.chainId}
-            tokenAddress={token.address}
-          />
-        ))}
+        {quote.strategyId === 'cowcentrated' && isCowcentratedDepositQuote(quote) ? (
+          <CowcentratedLoadedQuote quote={quote} />
+        ) : (
+          <>
+            {quote.outputs.map(({ token, amount }) => (
+              <TokenAmountIcon
+                key={token.address}
+                amount={amount}
+                chainId={token.chainId}
+                tokenAddress={token.address}
+              />
+            ))}
+          </>
+        )}
       </div>
-      {/* {quote.returned.length ? (
+      {/*      {quote.returned.length ? (
         <div className={classes.returned}>
           <div className={classes.returnedTitle}>{t('Transact-Returned')}</div>
           <div className={classes.tokenAmounts}>
@@ -183,7 +190,7 @@ const QuoteLoaded = memo(function QuoteLoaded() {
             ))}
           </div>
         </div>
-      ) : null} */}
+      ) : null}*/}
       {isZap ? (
         <>
           <ZapRoute quote={quote} className={classes.route} />
@@ -191,5 +198,67 @@ const QuoteLoaded = memo(function QuoteLoaded() {
         </>
       ) : null}
     </>
+  );
+});
+
+export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
+  quote,
+}: {
+  quote: CowcentratedVaultDepositQuote;
+}) {
+  const { t } = useTranslation();
+  const shares = quote.outputs[0];
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+
+  const classes = useStyles();
+
+  return (
+    <div className={classes.cowcentratedDepositContainer}>
+      <div className={classes.amountReturned}>
+        {quote.amountsUsed.map(tokenReturned => {
+          return (
+            tokenReturned.amount.gt(BIG_ZERO) && (
+              <TokenAmountIcon
+                key={tokenReturned.token.id}
+                amount={tokenReturned.amount}
+                chainId={tokenReturned.token.chainId}
+                tokenAddress={tokenReturned.token.address}
+                showSymbol={false}
+                className={classes.fullWidth}
+                tokenImageSize={28}
+                amountWithValueClassName={classes.alignItemsEnd}
+              />
+            )
+          );
+        })}
+      </div>
+      <div className={classes.label}>{t('Your position will be')}</div>
+      <div className={classes.cowcentratedSharesDepositContainer}>
+        <TokenAmountIcon
+          key={shares.token.id}
+          amount={shares.amount}
+          chainId={shares.token.chainId}
+          tokenAddress={vault.depositTokenAddress}
+          className={classes.mainLp}
+        />
+        <div className={classes.amountReturned}>
+          {quote.amountsReturned.map((tokenReturned, i) => {
+            return (
+              <TokenAmountIcon
+                key={tokenReturned.token.id}
+                amount={tokenReturned.amount}
+                chainId={tokenReturned.token.chainId}
+                tokenAddress={tokenReturned.token.address}
+                className={clsx(classes.fullWidth, classes[`borderRadiusToken${i}`])}
+                showSymbol={false}
+                tokenImageSize={28}
+                amountWithValueClassName={classes.alignItemsEnd}
+              />
+            );
+          })}
+        </div>
+      </div>
+    </div>
   );
 });
