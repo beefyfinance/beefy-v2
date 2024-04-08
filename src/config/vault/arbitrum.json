@@ -1,5 +1,31 @@
 [
   {
+    "id": "uniswap-cow-arb-wbtc-eth",
+    "name": "WBTC-ETH",
+    "token": "WBTC-ETH",
+    "tokenAddress": "0x2f5e87C9312fa29aed5c179E456625D79015299c",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapArbitrumWBTC-ETH",
+    "earnedTokenAddress": "0x8d8E012D80e2a7B3b4de2a050C0CF923a0064a8E",
+    "earnContractAddress": "0x8d8E012D80e2a7B3b4de2a050C0CF923a0064a8E",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-wbtc-eth",
+    "status": "active",
+    "createdAt": 1712582016,
+    "platformId": "beefy",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "type": "cowcentrated",
+    "feeTier": "0.05"
+  },
+  {
     "id": "uniswap-cow-arb-eth-usdc",
     "name": "ETH-USDC",
     "token": "ETH-USDC",
