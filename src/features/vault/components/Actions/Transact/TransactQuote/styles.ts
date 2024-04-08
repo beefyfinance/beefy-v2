@@ -37,10 +37,11 @@ export const styles = (theme: Theme) => ({
   cowcentratedSharesDepositContainer: {
     display: 'flex',
     flexDirection: 'column' as const,
+    gap: '2px',
   },
   amountReturned: {
     display: 'flex',
-    gap: '4px',
+    gap: '2px',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
