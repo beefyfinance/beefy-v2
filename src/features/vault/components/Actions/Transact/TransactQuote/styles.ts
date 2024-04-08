@@ -66,4 +66,7 @@ export const styles = (theme: Theme) => ({
   alignItemsEnd: {
     alignItems: 'flex-end',
   },
+  link: {
+    color: theme.palette.text.primary,
+  },
 });

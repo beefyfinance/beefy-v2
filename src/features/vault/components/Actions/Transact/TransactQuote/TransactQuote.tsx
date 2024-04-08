@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import React, { memo, useEffect, useMemo } from 'react';
 import clsx from 'clsx';
@@ -136,12 +136,28 @@ const QuoteIdle = memo<TransactQuoteProps>(function QuoteIdle({ title, className
 });
 
 const QuoteError = memo(function QuoteError() {
+  const classes = useStyles();
   const { t } = useTranslation();
   const error = useAppSelector(selectTransactQuoteError);
 
   return error && error?.code === 'calm' ? (
     <AlertError>
-      <p>{t('Transact-Quote-Error-Calm')}</p>
+      <p>
+        <Trans
+          t={t}
+          i18nKey={'Transact-Quote-Error-Calm'}
+          components={{
+            LinkCalm: (
+              <a
+                className={classes.link}
+                href={'https://docs.beefy.finance/beefy-products/clm#calmness-check'}
+                target="_blank"
+                rel="noopener"
+              />
+            ),
+          }}
+        />
+      </p>
     </AlertError>
   ) : (
     <AlertError>
