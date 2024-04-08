@@ -184,6 +184,17 @@ export const V3TokenInput = memo<V3TokenInputProps>(function V3TokenInput({
   const balance = useAppSelector(state =>
     selectUserBalanceOfToken(state, token.chainId, token.address)
   );
+  const dispatch = useAppDispatch();
+
+  const handleMax = useCallback(() => {
+    dispatch(
+      transactActions.setDualInputAmount({
+        amount: balance,
+        max: true,
+        index,
+      })
+    );
+  }, [dispatch, balance, index]);
 
   return (
     <div>
@@ -192,7 +203,12 @@ export const V3TokenInput = memo<V3TokenInputProps>(function V3TokenInput({
         <div className={classes.availableLabel}>
           {t('Transact-Available')}{' '}
           <span className={classes.availableLabelAmount}>
-            <TokenAmountFromEntity amount={balance} token={token} minShortPlaces={4} />
+            <TokenAmountFromEntity
+              onClick={handleMax}
+              amount={balance}
+              token={token}
+              minShortPlaces={4}
+            />
           </span>
         </div>
       </div>

@@ -51,11 +51,18 @@ export const styles = (theme: Theme) => ({
   value: {
     ...theme.typography['body-lg-med'],
     fontWeight: 500,
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
     '& span': {
       ...theme.typography['body-sm-med'],
       fontWeight: 700,
       textTransform: 'uppercase' as const,
+      color: theme.palette.text.dark,
     },
+  },
+  roundBottomLeft: {
+    borderBottomLeftRadius: '8px',
+  },
+  roundBottomRight: {
+    borderBottomRightRadius: '8px',
   },
 });
