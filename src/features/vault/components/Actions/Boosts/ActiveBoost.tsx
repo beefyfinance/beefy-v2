@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { Trans, useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import { formatBigDecimals } from '../../../../../helpers/format';
+import { formatTokenDisplayCondensed } from '../../../../../helpers/format';
 import { askForNetworkChange, askForWalletConnection } from '../../../../data/actions/wallet';
 import { selectVaultById } from '../../../../data/selectors/vaults';
 import { selectCurrentChainId, selectIsWalletConnected } from '../../../../data/selectors/wallet';
@@ -146,7 +146,8 @@ export function ActiveBoost({ boostId, title }: { boostId: BoostEntity['id']; ti
         <div className={classes.boostStat}>
           <div className={classes.boostStatLabel}>{t('Boost-Rewards')}</div>
           <div className={classes.boostStatValue}>
-            {formatBigDecimals(boostPendingRewards, 8)} {rewardToken.symbol}
+            {formatTokenDisplayCondensed(boostPendingRewards, rewardToken.decimals)}{' '}
+            {rewardToken.symbol}
           </div>
         </div>
         {!isPreStake ? (

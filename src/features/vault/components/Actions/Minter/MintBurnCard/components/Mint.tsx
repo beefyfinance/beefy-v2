@@ -5,7 +5,7 @@ import { CardContent } from '../../../../Card';
 import { AssetsImage } from '../../../../../../../components/AssetsImage';
 import { styles } from '../styles';
 import BigNumber from 'bignumber.js';
-import { formatBigDecimals, formatBigNumberSignificant } from '../../../../../../../helpers/format';
+import { formatTokenDisplayCondensed, formatTokenInput } from '../../../../../../../helpers/format';
 import { selectVaultById } from '../../../../../../data/selectors/vaults';
 import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance';
 import {
@@ -101,7 +101,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           ...formData.deposit,
           input: isString(depositTokenBalance)
             ? depositTokenBalance
-            : formatBigNumberSignificant(depositTokenBalance),
+            : formatTokenInput(depositTokenBalance, depositToken.decimals),
           amount: new BigNumber(depositTokenBalance),
           max: true,
         },
@@ -128,7 +128,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       if (value.isEqualTo(input)) return input;
       if (input === '') return '';
       if (input === '.') return `0.`;
-      return formatBigNumberSignificant(value);
+      return formatTokenInput(value, depositToken.decimals);
     })();
 
     setFormData({
@@ -210,7 +210,8 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           <div className={classes.label}>
             {t('wallet')}{' '}
             <span className={classes.value}>
-              {formatBigDecimals(depositTokenBalance, 8)} {depositToken.symbol}
+              {formatTokenDisplayCondensed(depositTokenBalance, depositToken.decimals)}{' '}
+              {depositToken.symbol}
             </span>
           </div>
         </div>
@@ -240,7 +241,8 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           <div className={classes.label}>
             {t('wallet')}
             <span className={classes.value}>
-              {formatBigDecimals(mintedTokenBalance)} {mintedToken.symbol}
+              {formatTokenDisplayCondensed(mintedTokenBalance, mintedToken.decimals)}{' '}
+              {mintedToken.symbol}
             </span>
           </div>
         </div>

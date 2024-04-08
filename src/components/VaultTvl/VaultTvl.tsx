@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { isCowcentratedLiquidityVault, type VaultEntity } from '../../features/data/entities/vault';
 import { selectVaultTvl } from '../../features/data/selectors/tvl';
 import { selectVaultById } from '../../features/data/selectors/vaults';
-import { formatBigUsd } from '../../helpers/format';
+import { formatLargeUsd } from '../../helpers/format';
 import type { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { BIG_ZERO } from '../../helpers/big-number';
@@ -92,11 +92,11 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
     const { t } = useTranslation();
 
     const value = useMemo(() => {
-      return formatBigUsd(vaultTvl);
+      return formatLargeUsd(vaultTvl);
     }, [vaultTvl]);
 
     const subValue = useMemo(() => {
-      return breakdown ? formatBigUsd(underlyingTvl) : null;
+      return breakdown ? formatLargeUsd(underlyingTvl) : null;
     }, [breakdown, underlyingTvl]);
 
     return (

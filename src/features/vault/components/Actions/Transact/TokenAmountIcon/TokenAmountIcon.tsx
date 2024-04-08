@@ -8,7 +8,7 @@ import {
   selectTokenPriceByAddress,
 } from '../../../../../data/selectors/tokens';
 import { TokenAmount } from '../../../../../../components/TokenAmount';
-import { formatBigUsd } from '../../../../../../helpers/format';
+import { formatLargeUsd } from '../../../../../../helpers/format';
 import { TokenImage } from '../../../../../../components/TokenImage/TokenImage';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
@@ -58,7 +58,7 @@ export const TokenAmountIcon = memo<TokenAmountIconProps>(function TokenAmountIc
           minShortPlaces={4}
         />
       }
-      value={`~${formatBigUsd(valueInUsd)}`}
+      value={`~${formatLargeUsd(valueInUsd)}`}
       tokenSymbol={showSymbol ? token.symbol : null}
       tokenIcon={
         <TokenImage

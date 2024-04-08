@@ -2,7 +2,7 @@ import type { VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
-import { formatBigUsd } from '../../helpers/format';
+import { formatLargeUsd } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import { selectUserRewardsByVaultId } from '../../features/data/selectors/balance';
 import { RewardsTooltip } from '../RewardsTooltip/RewardsTooltip';
@@ -44,7 +44,7 @@ function mapStateToProps(state: BeefyState, { vaultId, walletAddress }: VaultRew
   return {
     label,
     value: <RewardsTooltip size={20} vaultId={vaultId} walletAddress={walletAddress} />,
-    subValue: formatBigUsd(totalRewardsUsd),
+    subValue: formatLargeUsd(totalRewardsUsd),
     blur: false,
     loading: !isLoaded,
     boosted: false,

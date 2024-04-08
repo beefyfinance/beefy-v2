@@ -8,7 +8,7 @@ import { selectActiveChainIds, selectChainById } from '../../../../data/selector
 import type { ChainEntity } from '../../../../data/entities/chain';
 import { selectTvlByChain } from '../../../../data/selectors/tvl';
 import type BigNumber from 'bignumber.js';
-import { formatBigUsd } from '../../../../../helpers/format';
+import { formatLargeUsd } from '../../../../../helpers/format';
 import { ContentLoading } from '../../../../../components/ContentLoading';
 import { Button } from '../../../../../components/Button';
 import { useAppSelector } from '../../../../../store';
@@ -81,7 +81,11 @@ const Chain = memo<ChainProps>(function Chain({ chainId, tvl }) {
       <Box>
         <div className={classes.chainText}>{chain.name}</div>
         <>
-          {tvl ? <div className={classes.chainValue}>{formatBigUsd(tvl)}</div> : <ContentLoading />}
+          {tvl ? (
+            <div className={classes.chainValue}>{formatLargeUsd(tvl)}</div>
+          ) : (
+            <ContentLoading />
+          )}
         </>
       </Box>
     </Box>

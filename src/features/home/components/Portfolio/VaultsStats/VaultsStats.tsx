@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { Box, Grid, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { formatBigUsd } from '../../../../../helpers/format';
+import { formatLargeUsd } from '../../../../../helpers/format';
 import { StatLoader } from '../../../../../components/StatLoader';
 import { styles } from './styles';
 import { selectTotalTvl } from '../../../../data/selectors/tvl';
@@ -38,7 +38,7 @@ export const VaultsStats = () => {
           </div>
         </Box>
         <div className={classes.value}>
-          <ValueText value={formatBigUsd(totalTvl)} />
+          <ValueText value={formatLargeUsd(totalTvl)} />
         </div>
       </Box>
       <Box className={classes.stat}>

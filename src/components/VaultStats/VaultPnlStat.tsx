@@ -2,7 +2,7 @@ import type { VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
-import { formatBigUsd, formatPercent } from '../../helpers/format';
+import { formatLargeUsd, formatLargePercent } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import {
   selectIsAnalyticsLoadedByAddress,
@@ -57,8 +57,8 @@ function mapStateToProps(
 
   return {
     label,
-    value: formatBigUsd(totalPnlUsd),
-    subValue: formatPercent(pnlPercentage),
+    value: formatLargeUsd(totalPnlUsd),
+    subValue: formatLargePercent(pnlPercentage),
     blur: false,
     loading: !isLoaded,
     boosted: false,

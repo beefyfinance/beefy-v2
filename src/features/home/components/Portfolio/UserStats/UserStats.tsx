@@ -2,7 +2,7 @@ import type { PropsWithChildren } from 'react';
 import { memo } from 'react';
 import { Hidden, makeStyles, useMediaQuery } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { formatPercent, formatUsd } from '../../../../../helpers/format';
+import { formatLargePercent, formatLargeUsd } from '../../../../../helpers/format';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../store';
 import { selectUserGlobalStats } from '../../../../data/selectors/apy';
@@ -46,25 +46,25 @@ export const UserStats = memo(function UserStats() {
     <div className={classes.userStats}>
       <UserStat
         label={t('Portfolio-Deposited')}
-        value={formatUsd(stats.deposited)}
+        value={formatLargeUsd(stats.deposited)}
         blurred={hideBalance}
       />
       <UserStat
         label={t('Portfolio-YieldMnth')}
-        value={formatUsd(stats.monthly)}
+        value={formatLargeUsd(stats.monthly)}
         blurred={hideBalance}
       />
       <Hidden xsDown>
         <UserStat
           label={t('Portfolio-YieldDay')}
-          value={formatUsd(stats.daily)}
+          value={formatLargeUsd(stats.daily)}
           blurred={hideBalance}
         />
       </Hidden>
       <VisibleAbove width={430}>
         <UserStat
           label={t('Portfolio-AvgAPY')}
-          value={formatPercent(stats.apy, 2, '0%')}
+          value={formatLargePercent(stats.apy, 2, '0%')}
           blurred={hideBalance}
         />
       </VisibleAbove>

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import React, { memo } from 'react';
-import { formatPercent } from '../../../../helpers/format';
+import { formatLargePercent } from '../../../../helpers/format';
 import type { BaseEntry } from '../../../data/utils/array-utils';
 import { styles } from './styles';
 import { CHART_COLORS } from '../../../../helpers/charts';
@@ -20,7 +20,7 @@ export const ExposureBar = memo<ExposureBarProps>(function ExposureBar({ data })
           key={item.key}
           style={{
             backgroundColor: CHART_COLORS[i],
-            width: formatPercent(item.percentage, 2, '0%'),
+            width: formatLargePercent(item.percentage, 2, '0%'),
           }}
           className={classes.barItem}
         />

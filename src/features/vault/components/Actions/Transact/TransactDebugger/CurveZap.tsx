@@ -14,7 +14,7 @@ import type { ISwapAggregator } from '../../../../../data/apis/transact/swap/ISw
 import { isTokenEqual, type TokenEntity } from '../../../../../data/entities/token';
 import { getSwapAggregator } from '../../../../../data/apis/instances';
 import { uniqBy } from 'lodash-es';
-import { formatBigUsd } from '../../../../../../helpers/format';
+import { formatLargeUsd } from '../../../../../../helpers/format';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
@@ -141,7 +141,7 @@ const Zap = memo<ZapProps>(function Zap({ aggregatorSupportedTokens, vault, zap 
                   {token.address}
                 </div>
                 <div>{token.token ? token.token.symbol : '❌'}</div>
-                <div>{token.price ? formatBigUsd(token.price) : '❌'}</div>
+                <div>{token.price ? formatLargeUsd(token.price) : '❌'}</div>
                 <div>{token.inAggregator ? '✔' : '⚠️'}</div>
               </Fragment>
             ))}

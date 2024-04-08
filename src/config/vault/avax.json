@@ -358,44 +358,6 @@
     ]
   },
   {
-    "id": "solisnek-dola-usdc",
-    "name": "DOLA-USDC sLP",
-    "type": "standard",
-    "token": "DOLA-USDC sLP",
-    "tokenAddress": "0x7680D9F07f80B11A7a96E4443398245D917998e6",
-    "tokenDecimals": 18,
-    "tokenProviderId": "solisnek",
-    "earnedToken": "mooSoliSnekDOLA-USDC",
-    "earnedTokenAddress": "0xE2455bf6d70DAF37368743334D1000939f608916",
-    "earnContractAddress": "0xE2455bf6d70DAF37368743334D1000939f608916",
-    "oracle": "lps",
-    "oracleId": "solisnek-dola-usdc",
-    "status": "eol",
-    "createdAt": 1682949068,
-    "retireReason": "rewards",
-    "retiredAt": 1693479749,
-    "platformId": "solisnek",
-    "assets": ["DOLA", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.solisnek.finance/swap?from=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&to=0x221743dc9e954be4f86844649bf19b43d6f8366d",
-    "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0x7680d9f07f80b11a7a96e4443398245d917998e6",
-    "network": "avax",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "avax-solisnek"
-      }
-    ]
-  },
-  {
     "id": "solisnek-btc.b-wbtc.e",
     "name": "BTC.b-WBTC.e sLP",
     "type": "standard",

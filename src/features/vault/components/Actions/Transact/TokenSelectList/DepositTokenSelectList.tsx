@@ -105,6 +105,7 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
                   selectionId={option.id}
                   tokens={option.tokens}
                   balance={option.balance}
+                  decimals={option.decimals}
                   chainId={selectedChain}
                   onSelect={handleTokenSelect}
                 />

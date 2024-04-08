@@ -2,7 +2,7 @@ import { Container, makeStyles } from '@material-ui/core';
 import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SummaryStats } from '../../../../components/SummaryStats';
-import { formatBigUsd } from '../../../../helpers/format';
+import { formatLargeUsd } from '../../../../helpers/format';
 import { styles } from './styles';
 import { ReactComponent as WalletIcon } from '../../../../images/icons/wallet.svg';
 import { ReactComponent as VaultIcon } from '../../../../images/icons/vault.svg';
@@ -23,12 +23,12 @@ export const DaoSummary = memo(function DaoSummary() {
     return [
       {
         title: t('Summary-Holdings'),
-        value: formatBigUsd(holdings),
+        value: formatLargeUsd(holdings),
         Icon: WalletIcon,
       },
       {
         title: t('Summary-Stables'),
-        value: formatBigUsd(stables),
+        value: formatLargeUsd(stables),
         Icon: DailyIcon,
       },
       {

@@ -77,6 +77,7 @@ export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
                   selectionId={option.id}
                   tokens={option.tokens}
                   balance={option.balance}
+                  decimals={option.decimals}
                   chainId={selectedChain}
                   onSelect={handleTokenSelect}
                 />

@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { memo } from 'react';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { formatBigDecimals } from '../../../../../../helpers/format';
+import { formatTokenDisplayCondensed } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import { selectBridgeDepositTokenForChainId } from '../../../../../data/selectors/bridge';
@@ -27,7 +27,11 @@ export const BalanceEndAdornment = memo(function BalanceEndAdornment({
   const showComponent = isWalletConnected && balance.isGreaterThan(BIG_ZERO);
 
   if (showComponent) {
-    return <div className={classes.balance}>{formatBigDecimals(balance, 4)}</div>;
+    return (
+      <div className={classes.balance}>
+        {formatTokenDisplayCondensed(balance, token.decimals, 6)}
+      </div>
+    );
   }
 
   return null;

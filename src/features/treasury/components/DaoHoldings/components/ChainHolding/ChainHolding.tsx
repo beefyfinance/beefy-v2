@@ -3,7 +3,7 @@ import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import { makeStyles } from '@material-ui/core';
-import { formatBigUsd } from '../../../../../../helpers/format';
+import { formatLargeUsd } from '../../../../../../helpers/format';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import {
   selectTreasuryBalanceByChainId,
@@ -43,7 +43,7 @@ export const ChainHolding = memo<ChainHoldingProps>(function ChainHolding({ chai
           <div className={classes.chainName}>{chain.name}</div>
           <ExplorerLinks chainId={chainId} />
         </div>
-        <div className={classes.usdValue}>{formatBigUsd(totalUsd)}</div>
+        <div className={classes.usdValue}>{formatLargeUsd(totalUsd)}</div>
       </div>
       <Assets chainId={chainId} />
     </div>
@@ -68,7 +68,7 @@ export const MMHolding = memo<MMHoldingProps>(function MMHolding({ mmId }) {
             <div className={classes.marketMakerAnnotation}>MM</div>
           </Tooltip>
         </div>
-        <div className={classes.usdValue}>{formatBigUsd(totalUsd)}</div>
+        <div className={classes.usdValue}>{formatLargeUsd(totalUsd)}</div>
       </div>
       <MMAssets mmId={mmId} />
     </div>
