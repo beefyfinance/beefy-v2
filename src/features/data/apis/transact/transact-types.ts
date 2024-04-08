@@ -332,6 +332,7 @@ export type CowcentratedVaultDepositQuote = BaseQuote<CowcentratedDepositOption>
   vaultType: 'cowcentrated';
   amountsUsed: TokenAmount[];
   amountsReturned: TokenAmount[];
+  isCalm: boolean;
 };
 
 export type SingleDepositQuote = BaseZapQuote<SingleDepositOption> & {

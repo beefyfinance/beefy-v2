@@ -188,6 +188,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       ],
       allowances,
       priceImpact: 0,
+      isCalm: resp.isCalm,
     };
   }
 

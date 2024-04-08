@@ -3,10 +3,11 @@ import { first } from 'lodash-es';
 import type { PayloadAction, SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { transactFetchOptions, transactFetchQuotes, transactInit } from '../../actions/transact';
-import type {
-  QuoteOutputTokenAmountChange,
-  TransactOption,
-  TransactQuote,
+import {
+  isCowcentratedDepositQuote,
+  type QuoteOutputTokenAmountChange,
+  type TransactOption,
+  type TransactQuote,
 } from '../../apis/transact/transact-types';
 import type { Draft } from 'immer';
 import { BIG_ZERO } from '../../../../helpers/big-number';
@@ -244,10 +245,18 @@ const transactSlice = createSlice({
       })
       .addCase(transactFetchQuotes.fulfilled, (sliceState, action) => {
         if (sliceState.quotes.requestId === action.meta.requestId) {
+          console.log();
           if (action.payload.quotes.length === 0) {
             sliceState.quotes.status = TransactStatus.Rejected;
             sliceState.quotes.error = { name: 'No quotes returned.' };
+          } else if (
+            isCowcentratedDepositQuote(action.payload.quotes[0]) &&
+            !action.payload.quotes[0].isCalm
+          ) {
+            sliceState.quotes.status = TransactStatus.Rejected;
+            sliceState.quotes.error = { code: 'calm' };
           } else {
+            isCowcentratedDepositQuote(action.payload.quotes[0]);
             sliceState.quotes.status = TransactStatus.Fulfilled;
 
             addQuotesToState(sliceState, action.payload.quotes);

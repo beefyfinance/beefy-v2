@@ -135,7 +135,11 @@ const QuoteError = memo(function QuoteError() {
   const { t } = useTranslation();
   const error = useAppSelector(selectTransactQuoteError);
 
-  return (
+  return error && error?.code === 'calm' ? (
+    <AlertError>
+      <p>{t('Transact-Quote-Error-Calm')}</p>
+    </AlertError>
+  ) : (
     <AlertError>
       <p>{t('Transact-Quote-Error')}</p>
       {error && error.message ? <p>{error.message}</p> : null}
@@ -165,7 +169,7 @@ const QuoteLoaded = memo(function QuoteLoaded() {
           />
         ))}
       </div>
-      {/*      {quote.returned.length ? (
+      {/* {quote.returned.length ? (
         <div className={classes.returned}>
           <div className={classes.returnedTitle}>{t('Transact-Returned')}</div>
           <div className={classes.tokenAmounts}>
@@ -179,7 +183,7 @@ const QuoteLoaded = memo(function QuoteLoaded() {
             ))}
           </div>
         </div>
-      ) : null}*/}
+      ) : null} */}
       {isZap ? (
         <>
           <ZapRoute quote={quote} className={classes.route} />
