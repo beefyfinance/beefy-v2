@@ -138,6 +138,26 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
         spenderAddress: this.vault.earnContractAddress,
       }));
 
+    console.log('Got deposit quote');
+    console.log(
+      `You'll be using ${resp.usedToken0
+        .shiftedBy(-this.depositTokens[0].decimals)
+        .toString()} of ${this.depositTokens[0].symbol}`
+    );
+    console.log(
+      `You'll be using ${resp.usedToken1
+        .shiftedBy(-this.depositTokens[1].decimals)
+        .toString()} of ${this.depositTokens[1].symbol}`
+    );
+    console.log(`You'll get ${resp.depositPreviewAmount.toString()} shares`);
+    console.log(
+      `Those shares will break down to ${resp.returnAmount0
+        .shiftedBy(-this.depositTokens[0].decimals)
+        .toString()} and ${resp.returnAmount1
+        .shiftedBy(-this.depositTokens[1].decimals)
+        .toString()} of the deposit tokens`
+    );
+
     return {
       id: createQuoteId(option.id),
       strategyId: option.strategyId,
@@ -149,21 +169,21 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       amountsUsed: [
         {
           token: this.depositTokens[0],
-          amount: resp.usedToken0,
+          amount: resp.usedToken0.shiftedBy(-this.depositTokens[0].decimals),
         },
         {
           token: this.depositTokens[1],
-          amount: resp.usedToken1,
+          amount: resp.usedToken1.shiftedBy(-this.depositTokens[1].decimals),
         },
       ],
       amountsReturned: [
         {
           token: this.depositTokens[0],
-          amount: resp.usedToken0,
+          amount: resp.returnAmount0.shiftedBy(-this.depositTokens[0].decimals),
         },
         {
           token: this.depositTokens[1],
-          amount: resp.usedToken1,
+          amount: resp.returnAmount1.shiftedBy(-this.depositTokens[1].decimals),
         },
       ],
       allowances,

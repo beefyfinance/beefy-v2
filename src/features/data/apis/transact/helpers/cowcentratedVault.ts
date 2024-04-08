@@ -25,7 +25,9 @@ export async function getCowcentratedVaultDepositSimulationAmount(
   type MulticallReturnType = [
     [
       {
-        depositPreview: string;
+        depositPreview: [string, string, string];
+        totalSupply: string;
+        balances: [string, string];
       }
     ]
   ];
@@ -34,18 +36,29 @@ export async function getCowcentratedVaultDepositSimulationAmount(
     [
       {
         depositPreview: vaultContract.methods.previewDeposit(amt0, amt1),
+        totalSupply: vaultContract.methods.totalSupply(),
+        balances: vaultContract.methods.balances(),
       },
     ],
   ])) as MulticallReturnType;
 
-  const depositPreview = new BigNumber(vaultData.depositPreview[0]);
+  const depositPreviewAmount = new BigNumber(vaultData.depositPreview[0]);
   const usedToken0 = new BigNumber(vaultData.depositPreview[1]);
-  const usedToken1 = new BigNumber(vaultData.depositPreview[1]);
+  const usedToken1 = new BigNumber(vaultData.depositPreview[2]);
+
+  const totalSupply = new BigNumber(vaultData.totalSupply).plus(depositPreviewAmount);
+
+  const ratio = depositPreviewAmount.div(totalSupply);
+
+  const returnAmount0 = ratio.times(new BigNumber(vaultData.balances[0]));
+  const returnAmount1 = ratio.times(new BigNumber(vaultData.balances[1]));
 
   return {
-    depositPreviewAmount: depositPreview,
+    depositPreviewAmount,
     usedToken0,
     usedToken1,
+    returnAmount0,
+    returnAmount1,
   };
 }
 
