@@ -37,6 +37,7 @@ import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number';
 import { TextLoader } from '../../../../../../components/TextLoader';
+import { selectIsContractDataLoadedOnChain } from '../../../../../data/selectors/data-loader';
 
 const useStyles = makeStyles(styles);
 
@@ -80,10 +81,17 @@ export const DepositFormLoader = memo(function DepositFormLoader() {
   const classes = useStyles();
   const status = useAppSelector(selectTransactOptionsStatus);
   const error = useAppSelector(selectTransactOptionsError);
-  const isLoading = status === TransactStatus.Idle || status === TransactStatus.Pending;
-  const isError = status === TransactStatus.Rejected;
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const isCowVault = isCowcentratedLiquidityVault(vault);
+  const isContractDataLoaded = useAppSelector(state =>
+    selectIsContractDataLoadedOnChain(state, vault.chainId)
+  );
+  const isLoading =
+    status === TransactStatus.Idle ||
+    status === TransactStatus.Pending ||
+    (isCowVault && !isContractDataLoaded);
+  const isError = status === TransactStatus.Rejected;
 
   return (
     <div className={classes.container}>
