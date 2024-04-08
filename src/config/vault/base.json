@@ -1,5 +1,41 @@
 [
   {
+    "id": "aerodrome-ezeth-weth",
+    "name": "ezETH-ETH vLP",
+    "type": "standard",
+    "token": "vAMM-ezETH/WETH",
+    "tokenAddress": "0x0C8bF3cb3E1f951B284EF14aa95444be86a33E2f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroezETH-ETH",
+    "earnedTokenAddress": "0xAB7EeE0a368079D2fBfc83599eD0148a16d0Ea09",
+    "earnContractAddress": "0xAB7EeE0a368079D2fBfc83599eD0148a16d0Ea09",
+    "oracle": "lps",
+    "oracleId": "aerodrome-ezeth-weth",
+    "status": "active",
+    "createdAt": 1712237278,
+    "platformId": "aerodrome",
+    "assets": ["ezETH", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x2416092f143378750bb29b79ed961ab195cceea5&token1=0x4200000000000000000000000000000000000006&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "compound-base-usdc",
     "name": "USDC",
     "type": "standard",
@@ -36,6 +72,35 @@
       "provider": "chainlink",
       "address": "0x7e860098F58bBFC8648a4311b374B1D669a2bc6B"
     }
+  },
+  {
+    "id": "aerodrome-weth-doginme",
+    "name": "doginme-ETH vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/doginme",
+    "tokenAddress": "0x139E9f235588A9720e7Eab045da29dC781c4b658",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodoginme-ETH",
+    "earnedTokenAddress": "0xe061fF2edaC3dA4F27A43df55F1Ae8118a1a916f",
+    "earnContractAddress": "0xe061fF2edaC3dA4F27A43df55F1Ae8118a1a916f",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-doginme",
+    "status": "active",
+    "createdAt": 1712195843,
+    "platformId": "aerodrome",
+    "assets": ["doginme", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x6921b130d297cc43754afba22e5eac0fbf8db75b&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
   },
   {
     "id": "aerodrome-snx-usdc",
@@ -583,7 +648,7 @@
     "createdAt": 1703168135,
     "platformId": "aerodrome",
     "assets": ["ETH", "USDC"],
-    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_HIGH", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
@@ -611,7 +676,7 @@
     "createdAt": 1703168135,
     "platformId": "aerodrome",
     "assets": ["DAI", "USDC"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_HIGH", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
@@ -3562,43 +3627,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-bvm"
-      }
-    ]
-  },
-  {
-    "id": "baseswap-mim-usdbc",
-    "name": "MIM-USDbC LP",
-    "type": "standard",
-    "token": "MIM-USDbC LP",
-    "tokenAddress": "0xa2b120Cab75AEfDfAFdA6A14713349A3096EED79",
-    "tokenDecimals": 18,
-    "tokenProviderId": "baseswap",
-    "earnedToken": "mooBaseSwapMIM-USDbC",
-    "earnedTokenAddress": "0x8D6200469abE439A131D24E017E610aEDfb63E55",
-    "earnContractAddress": "0x8D6200469abE439A131D24E017E610aEDfb63E55",
-    "oracle": "lps",
-    "oracleId": "baseswap-mim-usdbc",
-    "status": "active",
-    "createdAt": 1693580890,
-    "platformId": "baseswap",
-    "assets": ["MIM", "USDbC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://baseswap.fi/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x4A3A6Dd60A34bB2Aba60D73B4C88315E9CeB6A3D",
-    "removeLiquidityUrl": "https://baseswap.fi/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x4A3A6Dd60A34bB2Aba60D73B4C88315E9CeB6A3D",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "base-baseswap"
       }
     ]
   },
