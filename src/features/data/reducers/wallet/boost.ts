@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import { formatBigDecimals, formatBigNumberSignificant } from '../../../../helpers/format';
+import { formatTokenInput } from '../../../../helpers/format';
 import type { BeefyState } from '../../../../redux-types';
 import { initiateBoostForm } from '../../actions/boosts';
 import type { BoostEntity } from '../../entities/boost';
@@ -55,7 +55,7 @@ export const boostSlice = createSlice({
           ? selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenAddress) // mootoken
           : selectBoostUserBalanceInToken(state, boost.id); // staked
       sliceState.amount = balance;
-      sliceState.formattedInput = formatBigDecimals(balance, balanceToken.decimals);
+      sliceState.formattedInput = formatTokenInput(balance, balanceToken.decimals);
       sliceState.max = true;
     },
     setInput(
@@ -94,7 +94,7 @@ export const boostSlice = createSlice({
         if (value.isEqualTo(input)) return input;
         if (input === '') return '';
         if (input === '.') return `0.`;
-        return formatBigNumberSignificant(value, balanceToken.decimals);
+        return formatTokenInput(value, balanceToken.decimals);
       })();
 
       sliceState.formattedInput = formattedInput;

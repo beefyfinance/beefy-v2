@@ -1,9 +1,9 @@
 import type { VaultEntity } from '../../features/data/entities/vault';
 import { memo, useMemo } from 'react';
 import {
-  formatBigUsd,
-  formatFullBigNumber,
-  formatSignificantBigNumber,
+  formatLargeUsd,
+  formatTokenDisplayCondensed,
+  formatTokenDisplay,
 } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import {
@@ -43,7 +43,7 @@ export const VaultYieldWithRewardsStat = memo<VaultYieldStatProps>(
       selectUserRewardsByVaultId(state, vaultId, walletAddress)
     );
 
-    const { totalYield, totalYieldUsd, oraclePrice, tokenDecimals } = pnlData;
+    const { totalYield, totalYieldUsd, tokenDecimals } = pnlData;
 
     const hasRewards = useMemo(() => {
       return rewards.length !== 0 ? true : false;
@@ -67,13 +67,13 @@ export const VaultYieldWithRewardsStat = memo<VaultYieldStatProps>(
           <div className={classes.flexEnd}>
             <Tooltip
               content={
-                <BasicTooltipContent title={formatFullBigNumber(totalYield, tokenDecimals)} />
+                <BasicTooltipContent title={formatTokenDisplay(totalYield, tokenDecimals)} />
               }
               triggerClass={clsx(classes.textGreen, classes.textOverflow, classes.maxWidth80, {
                 [classes.maxWidth60]: hasRewards,
               })}
             >
-              {formatSignificantBigNumber(totalYield, tokenDecimals, oraclePrice, 0, 2)}
+              {formatTokenDisplayCondensed(totalYield, tokenDecimals)}
             </Tooltip>
             {hasRewards && (
               <>
@@ -83,7 +83,7 @@ export const VaultYieldWithRewardsStat = memo<VaultYieldStatProps>(
             )}
           </div>
         }
-        subValue={formatBigUsd(totalYieldUsd)}
+        subValue={formatLargeUsd(totalYieldUsd)}
         showLabel={false}
         loading={false}
       />

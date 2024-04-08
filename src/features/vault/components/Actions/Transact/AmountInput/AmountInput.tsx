@@ -1,11 +1,11 @@
-import React, { memo, useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
+import React, { memo, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
 import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { formatBigNumberSignificant, formatBigUsd } from '../../../../../../helpers/format';
+import { formatTokenInput, formatLargeUsd } from '../../../../../../helpers/format';
 
 export const useStyles = makeStyles(styles);
 
@@ -26,7 +26,7 @@ function numberToString(value: BigNumber, tokenDecimals: number): string {
     return '';
   }
 
-  return formatBigNumberSignificant(value, tokenDecimals);
+  return formatTokenInput(value, tokenDecimals);
 }
 
 export type AmountInputProps = {
@@ -160,7 +160,9 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
           inputMode="decimal"
           disabled={disabled}
         />
-        {price && value.gt(0) && <div className={classes.price}>{formatBigUsd(inputUsdValue)}</div>}
+        {price && value.gt(0) && (
+          <div className={classes.price}>{formatLargeUsd(inputUsdValue)}</div>
+        )}
       </div>
 
       {endAdornment && <div className={classes.endAdornment}>{endAdornment}</div>}

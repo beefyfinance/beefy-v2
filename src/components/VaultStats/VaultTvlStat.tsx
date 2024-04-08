@@ -5,7 +5,7 @@ import type { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { VaultValueStat } from '../VaultValueStat';
 import { selectVaultTvl } from '../../features/data/selectors/tvl';
-import { formatBigUsd, formatSmallPercent } from '../../helpers/format';
+import { formatLargeUsd, formatPercent } from '../../helpers/format';
 import { selectLpBreakdownByTokenAddress } from '../../features/data/selectors/tokens';
 import type { BigNumber } from 'bignumber.js';
 import { InterestTooltipContent } from '../InterestTooltipContent';
@@ -48,7 +48,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
   if (!breakdown) {
     return {
       label,
-      value: formatBigUsd(tvl),
+      value: formatLargeUsd(tvl),
       subValue: null,
       blur: false,
       loading: false,
@@ -63,8 +63,8 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
 
   return {
     label,
-    value: formatBigUsd(tvl),
-    subValue: formatBigUsd(underlyingTvl),
+    value: formatLargeUsd(tvl),
+    subValue: formatLargeUsd(underlyingTvl),
     blur: false,
     loading: false,
     tooltip: (
@@ -96,16 +96,16 @@ export const TvlShareTooltip = memo<TvlShareTooltipProps>(function TvlShareToolt
     return [
       {
         label: 'Vault-Breakdown-Tvl-Vault',
-        value: formatBigUsd(vaultTvl),
+        value: formatLargeUsd(vaultTvl),
       },
       {
         label: 'Vault-Breakdown-Tvl-Underlying',
-        value: formatBigUsd(underlyingTvl),
+        value: formatLargeUsd(underlyingTvl),
         labelTextParams: { platform: platform.name },
       },
       {
         label: 'Vault-Breakdown-Tvl-Share',
-        value: formatSmallPercent(percent),
+        value: formatPercent(percent),
       },
     ];
   }, [vaultTvl, underlyingTvl, platform.name, percent]);

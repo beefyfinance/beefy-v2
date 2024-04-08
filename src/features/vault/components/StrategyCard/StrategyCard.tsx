@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { formattedTotalApy } from '../../../../helpers/format';
+import { formatTotalApy } from '../../../../helpers/format';
 import { LinkButton } from '../../../../components/LinkButton';
 import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { styles } from './styles';
@@ -27,7 +27,7 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
-  const formatted = formattedTotalApy(values, <StatLoader />);
+  const formatted = formatTotalApy(values, <StatLoader />);
   const stratAddr = useAppSelector(state => selectVaultStrategyAddressOrUndefined(state, vaultId));
   const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
   const showApy = shouldVaultShowInterest(vault);

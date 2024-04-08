@@ -1,11 +1,11 @@
 import { BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../redux-types';
-import { formatBigDecimals } from '../../../helpers/format';
+import { formatTokenDisplayCondensed } from '../../../helpers/format';
 import { isTokenErc20 } from '../entities/token';
 import { type Step, StepContent } from '../reducers/wallet/stepper';
 import type { TokenAmount } from '../apis/transact/transact-types';
 import { selectChainNativeToken, selectTokenByAddressOrUndefined } from './tokens';
-import { BIG_ZERO, fromWeiString } from '../../../helpers/big-number';
+import { BIG_ZERO, fromWei, fromWeiString } from '../../../helpers/big-number';
 import { selectVaultById } from './vaults';
 import { ZERO_ADDRESS } from '../../../helpers/addresses';
 import {
@@ -60,7 +60,7 @@ export function selectMintResult(state: BeefyState) {
 
   const result = {
     type: 'mint',
-    amount: formatBigDecimals(amount, 4),
+    amount: formatTokenDisplayCondensed(amount, mintToken.decimals),
     token: mintToken,
   };
 
@@ -95,9 +95,9 @@ export function selectMintResult(state: BeefyState) {
 
   if (!mintTransferEvent && userTransferEvent) {
     result.type = 'buy';
-    result.amount = formatBigDecimals(
-      new BigNumber(userTransferEvent.returnValues.value).shiftedBy(-mintToken.decimals),
-      4
+    result.amount = formatTokenDisplayCondensed(
+      fromWei(userTransferEvent.returnValues.value, mintToken.decimals),
+      mintToken.decimals
     );
   }
 

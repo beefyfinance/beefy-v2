@@ -3,9 +3,9 @@ import { memo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
 import {
-  formatBigUsd,
-  formatFullBigNumber,
-  formatSignificantBigNumber,
+  formatLargeUsd,
+  formatTokenDisplayCondensed,
+  formatTokenDisplay,
 } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import {
@@ -55,13 +55,13 @@ function mapStateToProps(
     };
   }
 
-  const { totalYield, totalYieldUsd, oraclePrice, tokenDecimals } = pnlData;
+  const { totalYield, totalYieldUsd, tokenDecimals } = pnlData;
 
   return {
     label,
-    value: formatSignificantBigNumber(totalYield, tokenDecimals, oraclePrice, 0, 2),
-    tooltip: <BasicTooltipContent title={formatFullBigNumber(totalYield, tokenDecimals)} />,
-    subValue: formatBigUsd(totalYieldUsd),
+    value: formatTokenDisplayCondensed(totalYield, tokenDecimals),
+    tooltip: <BasicTooltipContent title={formatTokenDisplay(totalYield, tokenDecimals)} />,
+    subValue: formatLargeUsd(totalYieldUsd),
     blur: false,
     loading: !isLoaded,
     boosted: false,

@@ -19,7 +19,7 @@ import type { Theme } from '@material-ui/core';
 import { format, fromUnixTime } from 'date-fns';
 import { XAxisTick } from '../../../../../components/XAxisTick';
 import { getXInterval, mapRangeToTicks } from '../../../../../helpers/graph';
-import { formatPercent, formatUsd } from '../../../../../helpers/format';
+import { formatLargePercent, formatLargeUsd } from '../../../../../helpers/format';
 import type { LineTogglesState } from '../LineToggles';
 import { TooltipContent } from '../TooltipContent';
 import { useChartData } from './useChartData';
@@ -54,8 +54,8 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
   }, [data.length, isMobile]);
   const yTickFormatter = useMemo(() => {
     return stat === 'apy'
-      ? (value: number) => formatPercent(value)
-      : (value: number) => formatUsd(value);
+      ? (value: number) => formatLargePercent(value)
+      : (value: number) => formatLargeUsd(value);
   }, [stat]);
   const yDomain = useMemo(() => {
     return [min, max];

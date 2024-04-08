@@ -4,14 +4,17 @@ import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { selectUserBalanceOfToken } from '../../features/data/selectors/balance';
-import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
+import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
 import {
   selectIsBalanceHidden,
   selectIsWalletKnown,
   selectWalletAddress,
 } from '../../features/data/selectors/wallet';
 import { VaultValueStat } from '../VaultValueStat';
-import { selectTokenPriceByAddress } from '../../features/data/selectors/tokens';
+import {
+  selectTokenByAddress,
+  selectTokenPriceByAddress,
+} from '../../features/data/selectors/tokens';
 
 export type VaultWalletStatProps = {
   vaultId: VaultEntity['id'];
@@ -54,8 +57,9 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultWalletStatProps) {
   }
 
   const price = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const totalInWallet = formatBigDecimals(tokensInWallet, 4);
-  const totalInWalletUsd = formatBigUsd(tokensInWallet.times(price));
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const totalInWallet = formatTokenDisplayCondensed(tokensInWallet, depositToken.decimals, 6);
+  const totalInWalletUsd = formatLargeUsd(tokensInWallet.times(price));
 
   return {
     label,

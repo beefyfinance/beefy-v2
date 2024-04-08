@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { Button } from '../../../../../../components/Button';
-import { formatBigDecimals } from '../../../../../../helpers/format';
+import { formatTokenDisplayCondensed } from '../../../../../../helpers/format';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { startStepper } from '../../../../../data/actions/stepper';
 import { walletActions } from '../../../../../data/actions/wallet-actions';
@@ -16,6 +16,8 @@ import {
 } from '../../../../../data/selectors/balance';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 import { styles } from './styles';
+import { selectStandardVaultById } from '../../../../../data/selectors/vaults';
+import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
@@ -29,7 +31,10 @@ export const BoostPastActionCard = memo<BoostPastCardActionCardProps>(function B
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
-
+  const vault = useAppSelector(state => selectStandardVaultById(state, boost.vaultId));
+  const depositToken = useAppSelector(state =>
+    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
+  );
   const boostBalance = useAppSelector(state => selectBoostUserBalanceInToken(state, boost.id));
   const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
   const boostPendingRewards = useAppSelector(state =>
@@ -61,12 +66,14 @@ export const BoostPastActionCard = memo<BoostPastCardActionCardProps>(function B
       </div>
       <div className={classes.balances}>
         <div className={classes.balance}>
-          {t('Staked')} <span>{formatBigDecimals(boostBalance, 4)}</span>
+          {t('Staked')}{' '}
+          <span>{formatTokenDisplayCondensed(boostBalance, depositToken.decimals)}</span>
         </div>
         <div className={classes.balance}>
           {t('Earned')}{' '}
           <span>
-            {formatBigDecimals(boostPendingRewards, 4)} {rewardToken.symbol}
+            {formatTokenDisplayCondensed(boostPendingRewards, rewardToken.decimals)}{' '}
+            {rewardToken.symbol}
           </span>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { LabeledStat } from '../LabeledStat';
 import { useTranslation } from 'react-i18next';
-import { formattedTotalApy } from '../../helpers/format';
+import { formatTotalApy } from '../../helpers/format';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import {
   selectDidAPIReturnValuesForVault,
@@ -177,7 +177,7 @@ function _YearlyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   );
   const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
 
-  const formatted = formattedTotalApy(values);
+  const formatted = formatTotalApy(values);
 
   return (
     <ValueBlock
@@ -223,7 +223,7 @@ function _DailyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   );
   const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
 
-  const formatted = formattedTotalApy(values);
+  const formatted = formatTotalApy(values);
 
   return (
     <ValueBlock

@@ -8,10 +8,10 @@ import { useTranslation } from 'react-i18next';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import {
-  formatBigUsd,
-  formatFullBigNumber,
-  formatPercent,
-  formatSignificantBigNumber,
+  formatLargeUsd,
+  formatTokenDisplayCondensed,
+  formatTokenDisplay,
+  formatLargePercent,
 } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
 import type { VaultEntity } from '../../../../../data/entities/vault';
@@ -56,7 +56,7 @@ export const Header = memo<HeaderProps>(function Header({ vaultId }) {
           amount={balanceAtDeposit}
           price={oraclePriceAtDeposit}
           decimals={tokenDecimals}
-          subValue={formatBigUsd(usdBalanceAtDeposit)}
+          subValue={formatLargeUsd(usdBalanceAtDeposit)}
           minShortPlaces={4}
         />
       </HeaderItem>
@@ -65,7 +65,7 @@ export const Header = memo<HeaderProps>(function Header({ vaultId }) {
           amount={deposit}
           price={oraclePrice}
           decimals={tokenDecimals}
-          subValue={formatBigUsd(depositUsd)}
+          subValue={formatLargeUsd(depositUsd)}
           minShortPlaces={4}
         />
       </HeaderItem>
@@ -76,7 +76,7 @@ export const Header = memo<HeaderProps>(function Header({ vaultId }) {
           decimals={tokenDecimals}
           className={classes.greenValue}
           percentage={yieldPercentage}
-          subValue={formatBigUsd(totalYieldUsd)}
+          subValue={formatLargeUsd(totalYieldUsd)}
           minShortPlaces={4}
         />
       </HeaderItem>
@@ -130,8 +130,8 @@ const UsdValue = memo<UsdValueProps>(function UsdValue({ value, className, perce
   const classes = useStyles();
   return (
     <div className={clsx(classes.value, className)}>
-      <div>{formatBigUsd(value)}</div>
-      {percentage && <span>({formatPercent(percentage)})</span>}
+      <div>{formatLargeUsd(value)}</div>
+      {percentage && <span>({formatLargePercent(percentage)})</span>}
     </div>
   );
 });
@@ -151,21 +151,19 @@ const SharesValue = memo<SharesValueProps>(function SharesValue({
   percentage,
   amount,
   decimals,
-  minShortPlaces = 2,
-  price,
   subValue,
 }) {
   const classes = useStyles();
 
-  const fullAmount = formatFullBigNumber(amount, decimals);
-  const shortAmount = formatSignificantBigNumber(amount, decimals, price, 0, minShortPlaces);
+  const fullAmount = formatTokenDisplay(amount, decimals);
+  const shortAmount = formatTokenDisplayCondensed(amount, decimals);
 
   return (
     <Tooltip content={<BasicTooltipContent title={fullAmount} />}>
       <div>
         <div className={clsx(classes.value, className)}>
           <div className={clsx(classes.withTooltip, classes.textOverflow)}>{shortAmount}</div>
-          {percentage && <span>({formatPercent(percentage)})</span>}
+          {percentage && <span>({formatLargePercent(percentage)})</span>}
         </div>
         {subValue && <div className={classes.subValue}>{subValue}</div>}
       </div>
