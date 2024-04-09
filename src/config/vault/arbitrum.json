@@ -19,7 +19,8 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x952083cde7aaa11ab8449057f7de23a970aa8472/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x952083cde7aaa11ab8449057f7de23a970aa8472/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "earningPoints": true
   },
   {
     "id": "equilibria-arb-rseth-27jun24",
@@ -41,7 +42,8 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6ae79089b2cf4be441480801bb741a531d94312b/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6ae79089b2cf4be441480801bb741a531d94312b/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "earningPoints": true
   },
   {
     "id": "uniswap-cow-arb-wbtc-eth",
