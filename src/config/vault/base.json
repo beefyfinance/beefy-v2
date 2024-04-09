@@ -1101,7 +1101,7 @@
     "oracle": "tokens",
     "oracleId": "wstETH",
     "status": "active",
-    "createdAt": 1712639165,
+    "createdAt": 1712680927,
     "platformId": "sonne",
     "assets": ["wstETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
