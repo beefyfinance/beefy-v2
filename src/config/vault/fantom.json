@@ -336,12 +336,7 @@
     ],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x7381eD41F6dE418DdE5e84B55590422a57917886",
-    "network": "fantom",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
+    "network": "fantom"
   },
   {
     "id": "beets-fantom-layer-of-the-opera",
