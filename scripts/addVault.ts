@@ -37,7 +37,7 @@ async function vaultData(chain, vaultAddress, id) {
   [results] = await multicall.all([calls]);
   const token = results[0];
 
-  const provider =
+  let provider =
     params.mooToken.startsWith('mooCurve') || params.mooToken.startsWith('mooConvex')
       ? 'curve'
       : params.mooToken.startsWith('mooCake')
@@ -46,6 +46,7 @@ async function vaultData(chain, vaultAddress, id) {
       ? 'thena'
       : id.substring(0, id.indexOf('-'));
   const platform = params.mooToken.startsWith('mooConvex') ? 'convex' : provider;
+  if (platform === 'equilibria') provider = 'pendle';
   const ammId = `${chain}-${platform}`;
 
   return { ...params, ...token, ...{ provider, platform, ammId } };
