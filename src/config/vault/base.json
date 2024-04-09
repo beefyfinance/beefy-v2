@@ -1111,7 +1111,11 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xa669E5272E60f78299F4824495cE01a3923f4380"
+    }
   },
   {
     "id": "aerodrome-weth-axlusdc",
