@@ -20,7 +20,7 @@ export const minters: MinterConfig[] = [
       contractAddress: '0x6c9D885B37b131aa68794ee1549fFB80be381Fa9',
       decimals: 18,
     },
-    canBurnReserves: true,
+    canBurn: 'reserves',
     reserveBalanceMethod: 'withdrawableBalance',
     vaultIds: ['beqiv2-pool'],
   },

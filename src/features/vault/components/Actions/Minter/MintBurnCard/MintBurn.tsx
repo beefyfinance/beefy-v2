@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo, useState } from 'react';
 import { Button, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Card, CardHeader } from '../../../Card';
@@ -16,23 +16,24 @@ export const MintBurn = memo(function MintBurn({ vaultId, minterId }: MinterCard
   const classes = useStyles();
   const { t } = useTranslation();
   const minter = useAppSelector(state => selectMinterById(state, minterId));
-
-  const [mintBurn, setMintBurn] = React.useState('mint');
-
-  const { canBurnReserves } = minter;
+  const canBurn = !!minter.canBurn;
+  const canMint = !minter.disableMint;
+  const [mintBurn, setMintBurn] = useState(canMint ? 'mint' : 'burn');
 
   return (
     <>
       <Card>
         <CardHeader disableDefaultClass={true} className={classes.header}>
           <div className={classes.tabs}>
-            <Button
-              onClick={() => setMintBurn('mint')}
-              className={clsx(classes.tab, { [classes.selected]: mintBurn === 'mint' })}
-            >
-              {t('action', { action: t('mint'), token: minter.mintedToken.symbol })}
-            </Button>
-            {canBurnReserves ? (
+            {canMint ? (
+              <Button
+                onClick={() => setMintBurn('mint')}
+                className={clsx(classes.tab, { [classes.selected]: mintBurn === 'mint' })}
+              >
+                {t('action', { action: t('mint'), token: minter.mintedToken.symbol })}
+              </Button>
+            ) : null}
+            {canBurn ? (
               <Button
                 onClick={() => setMintBurn('burn')}
                 className={clsx(classes.tab, { [classes.selected]: mintBurn === 'burn' })}
