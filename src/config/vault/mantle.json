@@ -1,5 +1,63 @@
 [
   {
+    "id": "moe-lend-wmnt",
+    "name": "LEND-WMNT LP",
+    "type": "standard",
+    "token": "LEND-WMNT LP",
+    "tokenAddress": "0x30ac02b4c99D140CDE2a212ca807CBdA35D4f6b5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "moe",
+    "earnedToken": "mooMoeLEND-WMNT",
+    "earnedTokenAddress": "0xCfA68F7dA7d3e00f0F10B66bDD2E05dB96036897",
+    "earnContractAddress": "0xCfA68F7dA7d3e00f0F10B66bDD2E05dB96036897",
+    "oracle": "lps",
+    "oracleId": "moe-lend-wmnt",
+    "status": "active",
+    "createdAt": 1712664921,
+    "platformId": "moe",
+    "assets": ["LEND", "WMNT"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x25356aeca4210eF7553140edb9b8026089E49396",
+    "addLiquidityUrl": "https://merchantmoe.com/pool/v1/MNT/0xcda86a272531e8640cd7f1a92c01839911b90bb0",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "mantle-moe"
+      }
+    ]
+  },
+  {
+    "id": "moe-lend-meth",
+    "name": "LEND-mETH LP",
+    "type": "standard",
+    "token": "LEND-mETH LP",
+    "tokenAddress": "0xFb16B5CCC62dc125834c33BF6B063c87e6e6F581",
+    "tokenDecimals": 18,
+    "tokenProviderId": "moe",
+    "earnedToken": "mooMoeLEND-mETH",
+    "earnedTokenAddress": "0x9f99864A33BDD154c2bCC7BF19CB758865CB63c2",
+    "earnContractAddress": "0x9f99864A33BDD154c2bCC7BF19CB758865CB63c2",
+    "oracle": "lps",
+    "oracleId": "moe-lend-meth",
+    "status": "active",
+    "createdAt": 1712664921,
+    "platformId": "moe",
+    "assets": ["LEND", "mETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x25356aeca4210eF7553140edb9b8026089E49396",
+    "addLiquidityUrl": "https://merchantmoe.com/pool/v1/0x25356aeca4210eF7553140edb9b8026089E49396/0xcda86a272531e8640cd7f1a92c01839911b90bb0",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "mantle-moe"
+      }
+    ]
+  },
+  {
     "id": "moe-moe-meth",
     "name": "MOE-mETH LP",
     "type": "standard",
