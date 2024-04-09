@@ -2,8 +2,9 @@ import type { ChartStat } from '../../../../data/reducers/historical-types';
 import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ToggleButtons } from '../../../../../components/ToggleButtons';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useMediaQuery, type Theme } from '@material-ui/core';
 import { styles } from './styles';
+import { LabeledSelect } from '../../../../../components/LabeledSelect';
 
 const useStyles = makeStyles(styles);
 
@@ -28,7 +29,27 @@ export const StatSwitcher = memo<StatSwitcherProps>(function StatSwitcher({
     );
   }, [availableStats, t, type]);
 
+  const mobileView = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+
   return (
-    <ToggleButtons value={stat} options={options} onChange={onChange} buttonsClass={classes.tabs} />
+    <>
+      {mobileView ? (
+        <>
+          <LabeledSelect
+            selectClass={classes.select}
+            options={options}
+            value={stat}
+            onChange={onChange}
+          />
+        </>
+      ) : (
+        <ToggleButtons
+          value={stat}
+          options={options}
+          onChange={onChange}
+          buttonsClass={classes.tabs}
+        />
+      )}
+    </>
   );
 });
