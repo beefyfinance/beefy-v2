@@ -18,12 +18,12 @@ export const PerformanceFees = memo<PerformanceFeesProps>(function PerformanceFe
     .filter(([key]) => key in fees)
     .map(([key, label]) => ({
       label: t(label),
-      value: `${formatLargePercent(fees[key], 2, '0%')}`,
+      value: `${formatLargePercent(fees[key], 4, '0%')}`,
     }));
 
   rows.push({
     label: t('Transact-Fee-TotalFee'),
-    value: `${formatLargePercent(fees.total, 2, '0%')}`,
+    value: `${formatLargePercent(fees.total, 4, '0%')}`,
   });
 
   return <InterestTooltipContent rows={rows} />;
