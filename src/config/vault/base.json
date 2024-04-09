@@ -1089,6 +1089,31 @@
     }
   },
   {
+    "id": "sonne-base-wsteth",
+    "name": "wstETH",
+    "type": "standard",
+    "token": "wstETH",
+    "tokenAddress": "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452",
+    "tokenDecimals": 6,
+    "earnedToken": "mooSonneWstETH",
+    "earnedTokenAddress": "0x79C123B1895E0FCB2E0CC7d2c7b0FEa067fBb446",
+    "earnContractAddress": "0x79C123B1895E0FCB2E0CC7d2c7b0FEa067fBb446",
+    "oracle": "tokens",
+    "oracleId": "wstETH",
+    "status": "active",
+    "createdAt": 1712639165,
+    "platformId": "sonne",
+    "assets": ["wstETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-axlusdc",
     "name": "ETH-axlUSDC vLP",
     "type": "standard",
