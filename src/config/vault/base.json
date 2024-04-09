@@ -1094,7 +1094,7 @@
     "type": "standard",
     "token": "wstETH",
     "tokenAddress": "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452",
-    "tokenDecimals": 6,
+    "tokenDecimals": 18,
     "earnedToken": "mooSonneWstETH",
     "earnedTokenAddress": "0x79C123B1895E0FCB2E0CC7d2c7b0FEa067fBb446",
     "earnContractAddress": "0x79C123B1895E0FCB2E0CC7d2c7b0FEa067fBb446",
