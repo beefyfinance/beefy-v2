@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { Button, InputBase, makeStyles, Paper } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { CardContent } from '../../../../Card';
@@ -12,21 +12,29 @@ import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../../../../../data/selectors/wallet';
-import { selectErc20TokenByAddress } from '../../../../../../data/selectors/tokens';
+import {
+  selectErc20TokenByAddress,
+  selectTokenByAddress,
+} from '../../../../../../data/selectors/tokens';
 import { isString } from 'lodash-es';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../../data/actions/wallet';
 import { walletActions } from '../../../../../../data/actions/wallet-actions';
 import type { MinterCardParams } from '../../MinterCard';
-import { selectMinterById, selectMinterReserves } from '../../../../../../data/selectors/minters';
+import {
+  selectMinterById,
+  selectMinterReserves,
+  selectMinterTotalSupply,
+} from '../../../../../../data/selectors/minters';
 import { selectAllowanceByTokenAddress } from '../../../../../../data/selectors/allowances';
 import { selectChainById } from '../../../../../../data/selectors/chains';
 import { AlertWarning } from '../../../../../../../components/Alerts';
 import { useAppDispatch, useAppSelector } from '../../../../../../../store';
-import { BIG_ZERO } from '../../../../../../../helpers/big-number';
+import { BIG_ZERO, fromWei, toWei } from '../../../../../../../helpers/big-number';
 import { stepperActions } from '../../../../../../data/reducers/wallet/stepper';
 import { startStepper } from '../../../../../../data/actions/stepper';
 import { selectIsStepperStepping } from '../../../../../../data/selectors/stepper';
 import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
+import { isTokenErc20 } from '../../../../../../data/entities/token';
 
 const useStyles = makeStyles(styles);
 export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) {
@@ -41,7 +49,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     state => selectCurrentChainId(state) === vault.chainId
   );
   const depositToken = useAppSelector(state =>
-    selectErc20TokenByAddress(state, vault.chainId, minter.depositToken.contractAddress)
+    selectTokenByAddress(state, vault.chainId, minter.depositToken.contractAddress)
   );
   const mintedToken = useAppSelector(state =>
     selectErc20TokenByAddress(state, vault.chainId, minter.mintedToken.contractAddress)
@@ -56,7 +64,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     selectAllowanceByTokenAddress(state, vault.chainId, mintedToken.address, minter.burnerAddress!)
   );
   const reserves = useAppSelector(state => selectMinterReserves(state, minter.id));
-
+  const totalSupply = useAppSelector(state => selectMinterTotalSupply(state, minter.id));
   const isStepping = useAppSelector(selectIsStepperStepping);
 
   const [formData, setFormData] = React.useState({
@@ -72,6 +80,19 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     },
     slippageTolerance: 0.01,
   });
+
+  const outputAmount = useMemo(() => {
+    if (minter.canBurn === 'supply') {
+      const inputWei = toWei(formData.withdraw.amount, mintedToken.decimals);
+      const outputWei = inputWei
+        .times(reserves)
+        .div(totalSupply)
+        .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR);
+      return fromWei(outputWei, depositToken.decimals);
+    }
+
+    return formData.withdraw.amount;
+  }, [minter.canBurn, formData.withdraw.amount, reserves, totalSupply, depositToken, mintedToken]);
 
   const handleMax = () => {
     if (mintedTokenBalance > BIG_ZERO) {
@@ -133,6 +154,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     // minted token does not need allowance to burn itself
     if (
       minter.burnerAddress !== mintedToken.address &&
+      isTokenErc20(mintedToken) &&
       mintedTokenAllowance.isLessThan(formData.withdraw.amount)
     ) {
       dispatch(
@@ -171,20 +193,29 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   return (
     <CardContent className={classes.cardContent}>
       <div className={classes.content}>
-        {t('Burn-Content', {
-          mintedToken: minter.mintedToken.symbol,
-          depositToken: minter.depositToken.symbol,
-        })}
+        {t(
+          [
+            `Burn-${minter.canBurn}-${minter.id}-Content`,
+            `Burn-${minter.canBurn}-Content`,
+            'Burn-Content',
+          ],
+          {
+            mintedToken: minter.mintedToken.symbol,
+            depositToken: minter.depositToken.symbol,
+          }
+        )}
       </div>
-      <div className={classes.boxReserves}>
-        <div className={classes.reservesText}>
-          {t('reserves', { token: minter.depositToken.symbol })}
+      {minter.canBurn === 'reserves' ? (
+        <div className={classes.boxReserves}>
+          <div className={classes.reservesText}>
+            {t('reserves', { token: minter.depositToken.symbol })}
+          </div>
+          <AssetsImage assetSymbols={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
+          <div className={classes.amountReserves}>
+            {reserves.shiftedBy(-depositToken.decimals).toFixed(2)} {depositToken.symbol}
+          </div>
         </div>
-        <AssetsImage assetSymbols={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
-        <div className={classes.amountReserves}>
-          {reserves.shiftedBy(-depositToken.decimals).toFixed(2)} {depositToken.symbol}
-        </div>
-      </div>
+      ) : null}
       <div className={classes.inputContainer}>
         <div className={classes.balances}>
           <div className={classes.label}>
@@ -233,7 +264,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           <div className={classes.inputLogo}>
             <AssetsImage assetSymbols={[minter.depositToken.symbol]} size={20} chainId={chain.id} />
           </div>
-          <InputBase disabled={true} placeholder="0.00" value={formData.withdraw.input} />
+          <InputBase disabled={true} placeholder="0.00" value={outputAmount} />
         </Paper>
       </div>
       <>
