@@ -28,8 +28,6 @@ const overrides = {
   'baseswap-axlwbtc-usdbc': { harvestOnDeposit: undefined },
   'kinetix-klp': { harvestOnDeposit: undefined },
   'bifi-vault': { beefyFeeRecipient: undefined }, // TODO: remove
-  'lynex-gamma-wbtc-weth': { harvestOnDeposit: undefined },
-  'lynex-ichi-wbtc-weth': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
