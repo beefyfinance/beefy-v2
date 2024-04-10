@@ -1,5 +1,25 @@
 [
   {
+    "id": "moo_uniswap-cow-arb-pendle-eth-beefy",
+    "poolId": "uniswap-cow-arb-pendle-eth",
+    "name": "Beefy",
+    "tagIcon": "arb",
+    "tagText": "Beefy CLM Boost",
+    "assets": ["PENDLE", "ETH"],
+    "tokenAddress": "0x2a2e016F9c30c7dA5a41b21c19e9619ff78ab673",
+    "earnedToken": "ARB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+    "earnContractAddress": "0x9F9C95ebE8c3A94697663c732E576dE994b668ae",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "ARB",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "arb-ltipp",
+    "partners": ["arbitrum", "pendle"]
+  },
+  {
     "id": "moo_silo-usdce-arb-silo",
     "poolId": "silo-usdce-arb",
     "name": "Silo",

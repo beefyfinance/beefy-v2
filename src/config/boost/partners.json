@@ -1,4 +1,22 @@
 {
+  "arbitrum": {
+    "title": "Arbitrum",
+    "text": "Arbitrum is a Layer 2 scaling solution for Ethereum, designed to be technically inclusive, sustainable, and socially inclusive. It enhances transaction speeds and reduces costs, leveraging Ethereum's security through optimistic rollup technology, while remaining neutral and open to all users.",
+    "website": "https://arbitrum.io/",
+    "social": {
+      "discord": "https://discord.gg/arbitrum",
+      "twitter": "https://twitter.com/arbitrum"
+    }
+  },
+  "pendle": {
+    "title": "Pendle",
+    "text": "Pendle is a permissionless yield-trading protocol where users can execute various yield-management strategies.",
+    "website": "https://www.pendle.finance/",
+    "social": {
+      "telegram": "https://t.me/pendlefinance",
+      "twitter": "https://twitter.com/pendle_fi"
+    }
+  },
   "vectorreserve": {
     "title": "Vector Reserve",
     "text": "Vector Reserve is DeFi’s first Liquidity Layer and issuer of the first LPD: vETH. Powered by EigenLayer and Superfluid Staking.",
