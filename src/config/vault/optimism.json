@@ -1173,6 +1173,81 @@
     }
   },
   {
+    "id": "sonne-op-wsteth",
+    "name": "wstETH",
+    "type": "standard",
+    "token": "wstETH",
+    "tokenAddress": "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSonneWstETH",
+    "earnedTokenAddress": "0xAEC2F9E3dFDB1D8a834baDBB75D2CAdec86AA7CD",
+    "earnContractAddress": "0xAEC2F9E3dFDB1D8a834baDBB75D2CAdec86AA7CD",
+    "oracle": "tokens",
+    "oracleId": "WSTETH",
+    "status": "active",
+    "createdAt": 1712760420,
+    "platformId": "sonne",
+    "assets": ["wstETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "sonne-op-snx",
+    "name": "SNX",
+    "type": "standard",
+    "token": "SNX",
+    "tokenAddress": "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSonneSNX",
+    "earnedTokenAddress": "0x8d75E2ea7dfcDeB85F2726c4667A9a7A2efbfD14",
+    "earnContractAddress": "0x8d75E2ea7dfcDeB85F2726c4667A9a7A2efbfD14",
+    "oracle": "tokens",
+    "oracleId": "SNX",
+    "status": "active",
+    "createdAt": 1712769420,
+    "platformId": "sonne",
+    "assets": ["SNX"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "sonne-op-usdc-native",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+    "tokenDecimals": 6,
+    "earnedToken": "mooSonneUSDCNative",
+    "earnedTokenAddress": "0x4c04718E616CCb2fC30F7c4476207E8A7F0c276a",
+    "earnContractAddress": "0x4c04718E616CCb2fC30F7c4476207E8A7F0c276a",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1712772699,
+    "platformId": "sonne",
+    "assets": ["USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "sonne-op-op",
     "name": "OP",
     "type": "standard",
