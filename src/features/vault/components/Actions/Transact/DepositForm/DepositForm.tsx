@@ -38,7 +38,6 @@ import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number';
 import { TextLoader } from '../../../../../../components/TextLoader';
-import { selectIsContractDataLoadedOnChain } from '../../../../../data/selectors/data-loader';
 
 const useStyles = makeStyles(styles);
 
@@ -85,15 +84,11 @@ export const DepositFormLoader = memo(function DepositFormLoader() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isCowVault = isCowcentratedLiquidityVault(vault);
-  const isContractDataLoaded = useAppSelector(state =>
-    selectIsContractDataLoadedOnChain(state, vault.chainId)
-  );
   const strategy = useAppSelector(state => selectVaultStrategyAddressOrUndefined(state, vaultId));
   const isLoading =
     status === TransactStatus.Idle ||
     status === TransactStatus.Pending ||
-    (isCowVault && (!isContractDataLoaded || strategy !== undefined));
-  console.log(`isLoading ${isLoading} - strategy ${strategy}`);
+    (isCowVault && strategy === undefined);
   const isError = status === TransactStatus.Rejected;
 
   return (
