@@ -98,6 +98,7 @@ export async function initHomeDataV4(store: BeefyStore) {
   await chainListPromise;
   // pre-load the addressbook
   const addressBookPromise = store.dispatch(fetchAllAddressBookAction());
+  await addressBookPromise;
   // we need the chain list to handle the vault list
   store.dispatch((await vaultListFulfill)());
   await boostListPromise;
