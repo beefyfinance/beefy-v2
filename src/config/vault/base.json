@@ -396,6 +396,35 @@
     ]
   },
   {
+    "id": "aerodrome-rsr-bsdeth",
+    "name": "RSR-bsdETH vLP",
+    "type": "standard",
+    "token": "vAMM-RSR/bsdETH",
+    "tokenAddress": "0x95F04B5594e2a944CA91d56933D119841eeF9a99",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroRSR-bsdETH",
+    "earnedTokenAddress": "0x22a0B976b3c2f1f695e25A15b8449a785F17f8Ae",
+    "earnContractAddress": "0x22a0B976b3c2f1f695e25A15b8449a785F17f8Ae",
+    "oracle": "lps",
+    "oracleId": "aerodrome-rsr-bsdeth",
+    "status": "active",
+    "createdAt": 1712773065,
+    "platformId": "aerodrome",
+    "assets": ["RSR", "bsdETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xab36452dbac151be02b16ca17d8919826072f64a&token1=0xcb327b99ff831bf8223cced12b1338ff3aa322ff&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-bwell",
     "name": "WELL-WETH vLP",
     "type": "standard",
