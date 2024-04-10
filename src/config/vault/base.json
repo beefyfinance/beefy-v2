@@ -1,5 +1,41 @@
 [
   {
+    "id": "aerodrome-usd+-sfrax",
+    "name": "USD+-sFRAX vLP",
+    "type": "standard",
+    "token": "vAMM-USD+/sFRAX",
+    "tokenAddress": "0xbB38EeBd670A9F3cafe6D3170862ccD930cB25f9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroUSD+-sFRAX",
+    "earnedTokenAddress": "0x5A60F3eCe2B663796Cd2b86c213Cf2274CD4fb4F",
+    "earnContractAddress": "0x5A60F3eCe2B663796Cd2b86c213Cf2274CD4fb4F",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usd+-sfrax",
+    "status": "active",
+    "createdAt": 1712753799,
+    "platformId": "aerodrome",
+    "assets": ["USD+", "sFRAX"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_LOW",
+      "MCAP_SMALL",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&token1=0xe4796ccb6bb5de2290c417ac337f2b66ca2e770e&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-sfrxeth-aero",
     "name": "sfrxETH-AERO vLP",
     "type": "standard",
