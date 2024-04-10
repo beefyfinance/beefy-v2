@@ -92,7 +92,7 @@ export const DepositFormLoader = memo(function DepositFormLoader() {
   const isLoading =
     status === TransactStatus.Idle ||
     status === TransactStatus.Pending ||
-    (isCowVault && !isContractDataLoaded);
+    (isCowVault && (!isContractDataLoaded || strategy !== undefined));
   console.log(`isLoading ${isLoading} - strategy ${strategy}`);
   const isError = status === TransactStatus.Rejected;
 
