@@ -24,6 +24,7 @@ import { TransactStatus } from '../../../../../data/reducers/wallet/transact-typ
 import {
   selectCowcentratedVaultDepositTokenAddresses,
   selectVaultById,
+  selectVaultStrategyAddressOrUndefined,
 } from '../../../../../data/selectors/vaults';
 import { RetirePauseReason } from '../../../RetirePauseReason';
 import { TokenAmount, TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
@@ -87,10 +88,12 @@ export const DepositFormLoader = memo(function DepositFormLoader() {
   const isContractDataLoaded = useAppSelector(state =>
     selectIsContractDataLoadedOnChain(state, vault.chainId)
   );
+  const strategy = useAppSelector(state => selectVaultStrategyAddressOrUndefined(state, vaultId));
   const isLoading =
     status === TransactStatus.Idle ||
     status === TransactStatus.Pending ||
     (isCowVault && !isContractDataLoaded);
+  console.log(`isLoading ${isLoading} - strategy ${strategy}`);
   const isError = status === TransactStatus.Rejected;
 
   return (
