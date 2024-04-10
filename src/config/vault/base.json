@@ -85,41 +85,12 @@
     "oracle": "lps",
     "oracleId": "aerodrome-rsr-bsdeth",
     "status": "active",
-    "createdAt": 1712722695,
+    "createdAt": 1712773065,
     "platformId": "aerodrome",
     "assets": ["RSR", "bsdETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xab36452dbac151be02b16ca17d8919826072f64a&token1=0xcb327b99ff831bf8223cced12b1338ff3aa322ff&stable=false",
-    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "base-aerodrome"
-      }
-    ]
-  },
-  {
-    "id": "aerodrome-weth-tn100x",
-    "name": "TN100x-ETH vLP",
-    "type": "standard",
-    "token": "vAMM-WETH/TN100x",
-    "tokenAddress": "0x8f5F1D63599362115e7F9fe71BFD5ab883D82c82",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnedToken": "mooAeroTN100x-ETH",
-    "earnedTokenAddress": "0xBF5c3221f50B8bBfa8aC78DE1576088187fD5167",
-    "earnContractAddress": "0xBF5c3221f50B8bBfa8aC78DE1576088187fD5167",
-    "oracle": "lps",
-    "oracleId": "aerodrome-weth-tn100x",
-    "status": "active",
-    "createdAt": 1712722695,
-    "platformId": "aerodrome",
-    "assets": ["TN100x", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x5b5dee44552546ecea05edea01dcd7be7aa6144a&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
