@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertError, AlertWarning } from '../../../../../../components/Alerts';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox';
-import { formatPercent } from '../../../../../../helpers/format';
+import { formatLargePercent } from '../../../../../../helpers/format';
 import type { TransactQuote } from '../../../../../data/apis/transact/transact-types';
 import { isZapQuote } from '../../../../../data/apis/transact/transact-types';
 
@@ -57,7 +57,9 @@ export const PriceImpactNotice = memo<PriceImpactNoticeProps>(function PriceImpa
   return (
     <AlertComponent className={className}>
       <p>
-        {t('Transact-Notice-PriceImpact', { priceImpact: formatPercent(-priceImpact, 2, '0.00%') })}
+        {t('Transact-Notice-PriceImpact', {
+          priceImpact: formatLargePercent(-priceImpact, 2, '0.00%'),
+        })}
       </p>
       {shouldConfirm && !hideCheckbox ? (
         <LabelledCheckbox

@@ -2,7 +2,11 @@ import React, { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button';
-import { formatBigDecimals, formatBigUsd } from '../../../../../../helpers/format';
+import {
+  formatLargeUsd,
+  formatTokenDisplay,
+  formatTokenDisplayCondensed,
+} from '../../../../../../helpers/format';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
 import {
@@ -55,10 +59,12 @@ const ConfirmReady = memo(function ConfirmReady() {
     selectTokenPriceByAddress(state, quote.fee.token.chainId, quote.fee.token.address)
   );
   const fee = useMemo(() => {
-    return `${formatBigDecimals(quote.fee.amount, 4)} ${quote.fee.token.symbol}`;
+    return `${formatTokenDisplayCondensed(quote.fee.amount, quote.fee.token.decimals, 6)} ${
+      quote.fee.token.symbol
+    }`;
   }, [quote.fee]);
   const usdFee = useMemo(() => {
-    return formatBigUsd(quote.fee.amount.multipliedBy(tokenPrice));
+    return formatLargeUsd(quote.fee.amount.multipliedBy(tokenPrice));
   }, [tokenPrice, quote.fee.amount]);
 
   const handleBridge = useCallback(() => {
@@ -79,7 +85,7 @@ const ConfirmReady = memo(function ConfirmReady() {
         <div className={clsx(classes.step, classes.stepFrom)}>
           <div className={classes.tokenAmount}>
             {t('Bridge-From-Send', {
-              amount: formatBigDecimals(quote.input.amount, quote.input.token.decimals),
+              amount: formatTokenDisplay(quote.input.amount, quote.input.token.decimals),
               token: quote.input.token.symbol,
             })}
           </div>
@@ -120,7 +126,7 @@ const ConfirmReady = memo(function ConfirmReady() {
         <div className={clsx(classes.step, classes.stepTo)}>
           <div className={classes.tokenAmount}>
             {t('Bridge-To-Receive', {
-              amount: formatBigDecimals(quote.input.amount, quote.input.token.decimals),
+              amount: formatTokenDisplay(quote.input.amount, quote.input.token.decimals),
               token: quote.input.token.symbol,
             })}
           </div>

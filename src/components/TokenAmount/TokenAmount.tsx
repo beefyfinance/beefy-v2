@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { formatFullBigNumber, formatSignificantBigNumber } from '../../helpers/format';
+import { formatTokenDisplayCondensed, formatTokenDisplay } from '../../helpers/format';
 import { Tooltip } from '../Tooltip';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
 import type { BigNumber } from 'bignumber.js';
@@ -23,14 +23,12 @@ export type TokenAmountProps = {
 export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({
   amount,
   decimals,
-  price,
-  minShortPlaces = 2,
   className,
   onClick,
 }) {
   const classes = useStyles();
-  const fullAmount = formatFullBigNumber(amount, decimals);
-  const shortAmount = formatSignificantBigNumber(amount, decimals, price, 0, minShortPlaces);
+  const fullAmount = formatTokenDisplay(amount, decimals);
+  const shortAmount = formatTokenDisplayCondensed(amount, decimals);
   const needTooltip = shortAmount.length < fullAmount.length;
 
   return needTooltip ? (

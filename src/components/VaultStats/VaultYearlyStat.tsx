@@ -3,7 +3,7 @@ import React, { memo, useMemo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
 import { selectIsVaultGov } from '../../features/data/selectors/vaults';
-import { formattedTotalApy } from '../../helpers/format';
+import { formatTotalApy } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import {
   selectVaultApyAvailable,
@@ -66,7 +66,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultYearlyStatProps) {
   }
 
   const values = selectVaultTotalApy(state, vaultId);
-  const formatted = formattedTotalApy(values, '???');
+  const formatted = formatTotalApy(values, '???');
   const isBoosted = selectIsVaultBoosted(state, vaultId);
   const isPrestake = selectIsVaultPrestakedBoost(state, vaultId);
 
@@ -135,6 +135,13 @@ const YearlyTooltipContent = memo<YearlyTooltipContentProps>(function YearlyTool
         items.push({
           label: 'Vault-Breakdown-BoostApr',
           value: rates.boostApr ?? '?',
+        });
+      }
+
+      if ('clmApr' in rates) {
+        items.push({
+          label: 'Vault-Breakdown-CLMApr',
+          value: rates.clmApr ?? '?',
         });
       }
 

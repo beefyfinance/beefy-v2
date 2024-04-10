@@ -7,14 +7,18 @@ import type { AbiItem } from 'web3-utils';
 import type Web3 from 'web3';
 import { buildExecute, buildFetchBalance } from '../utils';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
+import type { ChainEntity } from '../../../entities/chain';
 
 const id = 'l2-convex';
 
 const convexVoterProxy = '0x989AEb4d175e16225E39E87d0D97A3360524AD80';
-const crvFactory = '0xabC000d88f23Bb45525E447528DBF656A9D55bf5';
+const crvFactory = (chainId: ChainEntity['id']) =>
+  chainId === 'fraxtal'
+    ? '0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c'
+    : '0xabC000d88f23Bb45525E447528DBF656A9D55bf5';
 
 async function getStakingAddress(vault: VaultEntity, web3: Web3, _: BeefyState): Promise<string> {
-  const factory = new web3.eth.Contract(CurveAbi, crvFactory);
+  const factory = new web3.eth.Contract(CurveAbi, crvFactory(vault.chainId));
   const gauge = await factory.methods.get_gauge_from_lp_token(vault.depositTokenAddress).call();
   if (gauge == ZERO_ADDRESS) return gauge;
   const Gauge = new web3.eth.Contract(CurveAbi, gauge);

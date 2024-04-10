@@ -14,9 +14,9 @@ import {
 } from '../selectors/filtered-vaults';
 import {
   selectAllVaultIds,
-  selectIsVaultBeefy,
   selectIsVaultBlueChip,
   selectIsVaultCorrelated,
+  selectIsVaultCowcentrated,
   selectIsVaultFeatured,
   selectIsVaultStable,
   selectVaultById,
@@ -98,7 +98,7 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
         if (filterOptions.vaultCategory === 'stable' && !selectIsVaultStable(state, vault.id)) {
           return false;
         }
-        if (filterOptions.vaultCategory === 'beefy' && !selectIsVaultBeefy(state, vault.id)) {
+        if (filterOptions.vaultCategory === 'clm' && !selectIsVaultCowcentrated(state, vault.id)) {
           return false;
         }
         if (

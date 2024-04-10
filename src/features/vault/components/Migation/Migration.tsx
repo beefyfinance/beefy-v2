@@ -8,7 +8,7 @@ import { isVaultActive } from '../../../data/entities/vault';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
-import { formatBigDecimals } from '../../../../helpers/format';
+import { formatTokenDisplayCondensed } from '../../../../helpers/format';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
@@ -100,7 +100,7 @@ const Migrator = memo<{ migrationId: MigrationConfig['id'] } & MigrationProps>(f
         <div className={classes.content}>
           <div>
             {t('Migration-Text', {
-              balance: formatBigDecimals(balance, 18),
+              balance: formatTokenDisplayCondensed(balance, 18),
               migrator: migrator.name,
             })}
           </div>

@@ -90,3 +90,20 @@ const BreakLp = memo(function BreakLp({ tokens }: { tokens: TokenEntity[] }) {
     </div>
   );
 });
+
+type V3TokenButton = TokenSelectButtonProps & {
+  token: TokenEntity;
+};
+
+export const V3TokenButton = memo<V3TokenButton>(function V3TokenButton({ className, token }) {
+  const classes = useStyles();
+
+  return (
+    <div className={clsx(classes.button, className)}>
+      <div className={classes.select}>
+        <TokensImage tokens={[token]} className={classes.iconAssets} size={24} />
+        {token.symbol}
+      </div>
+    </div>
+  );
+});

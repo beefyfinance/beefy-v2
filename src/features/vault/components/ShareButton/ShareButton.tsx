@@ -24,7 +24,7 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectVaultTotalApy } from '../../../data/selectors/apy';
-import { formatPercent } from '../../../../helpers/format';
+import { formatLargePercent } from '../../../../helpers/format';
 import type { BeefyState } from '../../../../redux-types';
 import {
   selectBoostById,
@@ -61,7 +61,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   const commonVaultDetails = useMemo<CommonVaultDetails>(() => {
     return {
       vaultName: vault.name,
-      vaultApy: formatPercent(apys.totalApy, 2),
+      vaultApy: formatLargePercent(apys.totalApy, 2),
       vaultUrl: `https://app.beefy.com/vault/${vault.id}`,
       chainName: chain.name,
       chainTag: '#' + chain.name.toLowerCase().replace(/[^a-z0-9-_]/gi, ''),
@@ -99,7 +99,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
 
           return {
             kind: 'boosted',
-            vaultApy: formatPercent(apys.boostedTotalApy, 2),
+            vaultApy: formatLargePercent(apys.boostedTotalApy, 2),
             boostToken: boostToken.symbol,
             boostTokenTag: '$' + boostToken.symbol.replace(/[^a-z0-9-_]/gi, ''),
             partnerName: boost.name,

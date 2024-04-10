@@ -6,9 +6,8 @@ export interface IMinterApi {
   fetchMinterReserves(minter: MinterConfig): Promise<FetchMinterReservesResult>;
 }
 
-export type FetchMinterReservesResult = BigNumber;
-
-export interface FetchMinterReservesReloadResult {
+export type FetchMinterReservesResult = {
   id: MinterEntity['id'];
   reserves: BigNumber;
-}
+  totalSupply: BigNumber;
+};

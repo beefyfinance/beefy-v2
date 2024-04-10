@@ -23,7 +23,13 @@ import {
 } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 import type { TokenEntity } from '../entities/token';
-import { isGovVault, isStandardVault, type VaultEntity, type VaultGov } from '../entities/vault';
+import {
+  isCowcentratedLiquidityVault,
+  isGovVault,
+  isStandardVault,
+  type VaultEntity,
+  type VaultGov,
+} from '../entities/vault';
 import { uniqueTokens } from '../../../helpers/tokens';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { entries } from '../../../helpers/object';
@@ -100,7 +106,9 @@ export const fetchBalanceAction = createAsyncThunk<
         if (isGovVault(vault)) {
           govVaults.push(vault);
         } else {
-          tokens.push(selectTokenByAddress(state, chain.id, vault.depositTokenAddress));
+          if (!isCowcentratedLiquidityVault(vault)) {
+            tokens.push(selectTokenByAddress(state, chain.id, vault.depositTokenAddress));
+          }
           tokens.push(selectTokenByAddress(state, chain.id, vault.earnedTokenAddress));
         }
       }
@@ -144,7 +152,7 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
   for (const vaultId of allVaultIds) {
     const vault = selectVaultById(state, vaultId);
 
-    if (isStandardVault(vault)) {
+    if (isStandardVault(vault) || isCowcentratedLiquidityVault(vault)) {
       // standard vaults via receipt tokens
       let deposited = false;
       const balance = selectUserBalanceOfToken(

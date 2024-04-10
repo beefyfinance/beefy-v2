@@ -75,6 +75,8 @@ export type TransactState = {
   swapSlippage: number;
   inputAmount: BigNumber;
   inputMax: boolean;
+  dualInputAmounts: BigNumber[];
+  dualInputMax: boolean[];
   mode: TransactMode;
   step: TransactStep;
   forceSelection: boolean;

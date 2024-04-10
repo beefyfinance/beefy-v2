@@ -1,6 +1,11 @@
 import { memo, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import type { VaultEntity, VaultStandard } from '../../../data/entities/vault';
+import {
+  isCowcentratedLiquidityVault,
+  type VaultCowcentrated,
+  type VaultEntity,
+  type VaultStandard,
+} from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectPlatformById } from '../../../data/selectors/platforms';
@@ -20,7 +25,9 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
 }) {
   const { t, i18n } = useTranslation();
   // Only included when !isGovVault so we can type assert to VaultStandard
-  const vault = useAppSelector(state => selectVaultById(state, vaultId)) as VaultStandard;
+  const vault = useAppSelector(state => selectVaultById(state, vaultId)) as
+    | VaultStandard
+    | VaultCowcentrated;
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const vaultPlatform = useAppSelector(state => selectPlatformById(state, vault.platformId));
   const depositToken = useAppSelector(state =>
@@ -38,7 +45,11 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
   const chainName = chain.name;
   const chainNativeToken = chain.walletSettings.nativeCurrency.symbol;
 
+  const depositToken0 = isCowcentratedLiquidityVault(vault) ? vault.assetIds[0] : null;
+  const depositToken1 = isCowcentratedLiquidityVault(vault) ? vault.assetIds[1] : null;
+
   let i18nKey = `StrategyDescription-${vault.strategyTypeId}`;
+
   if (!i18n.exists(i18nKey, { ns: 'risks' })) {
     i18nKey = 'StrategyDescription-default';
   }
@@ -50,6 +61,8 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
       depositTokenProvider: depositTokenProviderName,
       chain: chainName,
       nativeToken: chainNativeToken,
+      depositToken0,
+      depositToken1,
       ns: 'risks',
     };
 
@@ -65,6 +78,8 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
     depositTokenProviderName,
     chainName,
     chainNativeToken,
+    depositToken0,
+    depositToken1,
   ]);
 
   return (

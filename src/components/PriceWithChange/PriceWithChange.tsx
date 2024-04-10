@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { selectPriceWithChange } from '../../features/data/selectors/tokens';
-import { formatBigUsd, formatPercent } from '../../helpers/format';
+import { formatLargeUsd, formatLargePercent, formatUsd } from '../../helpers/format';
 import type BigNumber from 'bignumber.js';
 import { fetchHistoricalPrices } from '../../features/data/actions/historical';
 import type { ApiTimeBucket } from '../../features/data/apis/beefy/beefy-data-api-types';
@@ -64,7 +64,7 @@ const WithoutChange = memo<WithoutChangeProps>(function WithoutChange({ price, c
 
   return (
     <div className={clsx(classes.priceWithChange, className)}>
-      <div className={classes.price}>{formatBigUsd(price)}</div>
+      <div className={classes.price}>{formatLargeUsd(price)}</div>
     </div>
   );
 });
@@ -90,7 +90,7 @@ const WithChange = memo<WithChangeProps>(function WithChange({
   const isPositive = diff.gt(BIG_ZERO);
   const isNegative = diff.lt(BIG_ZERO);
   const tooltipContent = t(`Price-Change-${isPositive ? 'Up' : isNegative ? 'Down' : 'Flat'}`, {
-    change: formatBigUsd(diffAbs, diffAbs.gte(0.01) ? 2 : 4),
+    change: formatUsd(diffAbs, diffAbs.gte(0.01) ? 2 : 4),
     date: format(previousDate, 'MMM d, yyyy h:mm a'),
   });
   const handleTooltipClick = useCallback<Exclude<TooltipProps['onTriggerClick'], undefined>>(e => {
@@ -109,11 +109,11 @@ const WithChange = memo<WithChangeProps>(function WithChange({
         [classes.negative]: isNegative,
       })}
     >
-      <div className={classes.price}>{formatBigUsd(price, price.gte(0.01) ? 2 : 4)}</div>
+      <div className={classes.price}>{formatUsd(price, price.gte(0.01) ? 2 : 4)}</div>
       <div className={classes.change}>
         <div className={classes.changeValue}>
           {isPositive ? '+' : isNegative ? '-' : ''}
-          {formatPercent(percentChange, 2)}
+          {formatLargePercent(percentChange, 2)}
         </div>
       </div>
     </Tooltip>

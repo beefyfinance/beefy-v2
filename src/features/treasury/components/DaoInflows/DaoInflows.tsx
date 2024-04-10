@@ -5,7 +5,7 @@ import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ContentLoading } from '../../../../components/ContentLoading';
 import { Section } from '../../../../components/Section';
-import { formatBigUsd } from '../../../../helpers/format';
+import { formatLargeUsd } from '../../../../helpers/format';
 import { useAppSelector } from '../../../../store';
 import type { ChainEntity } from '../../../data/entities/chain';
 import { selectChainById } from '../../../data/selectors/chains';
@@ -61,7 +61,7 @@ const Chain = memo<ChainProps>(function Chain({ chainId, value }) {
         <div className={classes.chainText}>{chain.name}</div>
         <>
           {value ? (
-            <div className={classes.chainValue}>{formatBigUsd(value)}</div>
+            <div className={classes.chainValue}>{formatLargeUsd(value)}</div>
           ) : (
             <ContentLoading />
           )}

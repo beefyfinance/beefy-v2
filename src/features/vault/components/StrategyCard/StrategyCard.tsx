@@ -1,14 +1,18 @@
 import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { formattedTotalApy } from '../../../../helpers/format';
+import { formatTotalApy } from '../../../../helpers/format';
 import { LinkButton } from '../../../../components/LinkButton';
 import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { styles } from './styles';
 import { StrategyDescription } from './StrategyDescription';
 import { selectVaultTotalApy } from '../../../data/selectors/apy';
 import type { VaultEntity } from '../../../data/entities/vault';
-import { isGovVault, shouldVaultShowInterest } from '../../../data/entities/vault';
+import {
+  isCowcentratedLiquidityVault,
+  isGovVault,
+  shouldVaultShowInterest,
+} from '../../../data/entities/vault';
 import {
   selectVaultById,
   selectVaultStrategyAddressOrUndefined,
@@ -27,7 +31,7 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
-  const formatted = formattedTotalApy(values, <StatLoader />);
+  const formatted = formatTotalApy(values, <StatLoader />);
   const stratAddr = useAppSelector(state => selectVaultStrategyAddressOrUndefined(state, vaultId));
   const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
   const showApy = shouldVaultShowInterest(vault);
@@ -45,13 +49,15 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         <div className={classes.cardActions}>
           {stratAddr ? (
             <div className={classes.cardAction}>
-              <LinkButton href={explorerAddressUrl(chain, stratAddr)} text={t('Strat-Address')} />
+              <LinkButton href={explorerAddressUrl(chain, stratAddr)} text={t('Strat-Contract')} />
             </div>
           ) : null}
           <div className={classes.cardAction}>
             <LinkButton
               href={explorerAddressUrl(chain, vault.earnContractAddress)}
-              text={t('Strat-AddressVault')}
+              text={t(
+                isCowcentratedLiquidityVault(vault) ? 'Strat-CLMContract' : 'Strat-ContractVault'
+              )}
             />
           </div>
         </div>

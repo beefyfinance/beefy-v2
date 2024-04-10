@@ -2,7 +2,7 @@ import type { VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
-import { formatBigUsd } from '../../helpers/format';
+import { formatLargeUsd } from '../../helpers/format';
 import {
   selectVaultApyAvailable,
   selectVaultShouldShowInterest,
@@ -68,7 +68,7 @@ function mapStateToProps(
 
   return {
     label,
-    value: formatBigUsd(dailyUsd),
+    value: formatLargeUsd(dailyUsd),
     subValue: null,
     blur: false,
     loading: !isLoaded,

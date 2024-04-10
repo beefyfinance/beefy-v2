@@ -4,7 +4,7 @@ import type { CalculatedAsset } from '../../types';
 import type { PieProps } from 'recharts';
 import { Cell, Pie, PieChart, Sector } from 'recharts';
 import { styles } from './styles';
-import { formatPercent } from '../../../../../../helpers/format';
+import { formatLargePercent } from '../../../../../../helpers/format';
 
 const useStyles = makeStyles(styles);
 
@@ -41,7 +41,7 @@ const ActiveShape = function ({
         {payload.symbol}
       </text>
       <text x={cx} y={cy} dy={8} textAnchor="middle" alignmentBaseline="middle" fill="#D0D0DA">
-        {formatPercent(payload.percent)}
+        {formatLargePercent(payload.percent)}
       </text>
       <Sector
         cx={cx}

@@ -1,7 +1,7 @@
 import type { VaultFee } from '../../../../../data/reducers/fees';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatPercent } from '../../../../../../helpers/format';
+import { formatLargePercent } from '../../../../../../helpers/format';
 import { InterestTooltipContent } from '../../../../../../components/InterestTooltipContent';
 
 export type PerformanceFeesProps = { fees: VaultFee };
@@ -18,12 +18,12 @@ export const PerformanceFees = memo<PerformanceFeesProps>(function PerformanceFe
     .filter(([key]) => key in fees)
     .map(([key, label]) => ({
       label: t(label),
-      value: `${formatPercent(fees[key], 2, '0%')}`,
+      value: `${formatLargePercent(fees[key], 2, '0%')}`,
     }));
 
   rows.push({
     label: t('Transact-Fee-TotalFee'),
-    value: `${formatPercent(fees.total, 2, '0%')}`,
+    value: `${formatLargePercent(fees.total, 2, '0%')}`,
   });
 
   return <InterestTooltipContent rows={rows} />;

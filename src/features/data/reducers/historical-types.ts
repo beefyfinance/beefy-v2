@@ -4,7 +4,7 @@ import type { TokenEntity } from '../entities/token';
 import type { SerializedError } from '@reduxjs/toolkit';
 
 type LoadingStatus = 'idle' | 'pending' | 'rejected' | 'fulfilled';
-export type ChartStat = 'apy' | 'tvl' | 'price';
+export type ChartStat = 'apy' | 'tvl' | 'price' | 'cowcentrated';
 
 type WithStatus<T extends object> = {
   status: LoadingStatus;

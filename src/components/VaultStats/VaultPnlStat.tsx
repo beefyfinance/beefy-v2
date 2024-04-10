@@ -2,13 +2,14 @@ import type { VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
-import { formatBigUsd, formatPercent } from '../../helpers/format';
+import { formatLargeUsd, formatLargePercent } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import {
   selectIsAnalyticsLoadedByAddress,
   selectUserDepositedTimelineByVaultId,
 } from '../../features/data/selectors/analytics';
 import type { VaultPnLDataType } from './types';
+import { selectIsVaultCowcentrated } from '../../features/data/selectors/vaults';
 
 export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];
@@ -29,7 +30,9 @@ function mapStateToProps(
 
   const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
 
-  if (!vaultTimeline) {
+  const isCowcentratedVault = selectIsVaultCowcentrated(state, vaultId);
+
+  if (!vaultTimeline || isCowcentratedVault) {
     return {
       label,
       value: '-',
@@ -54,8 +57,8 @@ function mapStateToProps(
 
   return {
     label,
-    value: formatBigUsd(totalPnlUsd),
-    subValue: formatPercent(pnlPercentage),
+    value: formatLargeUsd(totalPnlUsd),
+    subValue: formatLargePercent(pnlPercentage),
     blur: false,
     loading: !isLoaded,
     boosted: false,

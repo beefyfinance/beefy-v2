@@ -392,3 +392,10 @@ export const selectVaultTokenSymbols = (state: BeefyState, vaultId: VaultEntity[
     return token?.symbol || assetId;
   });
 };
+
+export const selectCurrentCowcentratedRangesByVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => {
+  return state.entities.tokens.cowcentratedRanges.byVaultId[vaultId];
+};

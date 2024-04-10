@@ -5,7 +5,7 @@ import { CardContent } from '../../../../Card';
 import { AssetsImage } from '../../../../../../../components/AssetsImage';
 import { styles } from '../styles';
 import BigNumber from 'bignumber.js';
-import { formatBigDecimals, formatBigNumberSignificant } from '../../../../../../../helpers/format';
+import { formatTokenDisplayCondensed, formatTokenInput } from '../../../../../../../helpers/format';
 import { selectVaultById } from '../../../../../../data/selectors/vaults';
 import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance';
 import {
@@ -45,9 +45,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     state => selectCurrentChainId(state) === vault.chainId
   );
   const depositToken = useAppSelector(state =>
-    minter.depositToken.type === 'native'
-      ? selectTokenByAddress(state, vault.chainId, minter.depositToken.contractAddress)
-      : selectErc20TokenByAddress(state, vault.chainId, minter.depositToken.contractAddress)
+    selectTokenByAddress(state, vault.chainId, minter.depositToken.contractAddress)
   );
   const mintedToken = useAppSelector(state =>
     selectErc20TokenByAddress(state, vault.chainId, minter.mintedToken.contractAddress)
@@ -64,9 +62,9 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
 
   const minterEarningsType = useAppSelector(state => selectMinterVaultsType(state, minterId));
 
-  const { canBurnReserves, canZapInWithOneInch } = minter;
+  const { canBurn, canZapInWithOneInch } = minter;
   const [contentKey, reminderKey] = useMemo(() => {
-    const liquidityType = canBurnReserves ? 'Burnable' : 'Liquid';
+    const liquidityType = canBurn ? 'Burnable' : 'Liquid';
     const zapType = canZapInWithOneInch ? 'WithZap' : 'WithoutZap';
 
     return ['Content', 'Reminder'].map(key => [
@@ -75,7 +73,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       `Mint-${key}-${liquidityType}`,
       `Mint-${key}`,
     ]);
-  }, [canBurnReserves, canZapInWithOneInch, minterEarningsType]);
+  }, [canBurn, canZapInWithOneInch, minterEarningsType]);
 
   const isStepping = useAppSelector(selectIsStepperStepping);
 
@@ -101,7 +99,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           ...formData.deposit,
           input: isString(depositTokenBalance)
             ? depositTokenBalance
-            : formatBigNumberSignificant(depositTokenBalance),
+            : formatTokenInput(depositTokenBalance, depositToken.decimals),
           amount: new BigNumber(depositTokenBalance),
           max: true,
         },
@@ -128,7 +126,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       if (value.isEqualTo(input)) return input;
       if (input === '') return '';
       if (input === '.') return `0.`;
-      return formatBigNumberSignificant(value);
+      return formatTokenInput(value, depositToken.decimals);
     })();
 
     setFormData({
@@ -210,7 +208,8 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           <div className={classes.label}>
             {t('wallet')}{' '}
             <span className={classes.value}>
-              {formatBigDecimals(depositTokenBalance, 8)} {depositToken.symbol}
+              {formatTokenDisplayCondensed(depositTokenBalance, depositToken.decimals)}{' '}
+              {depositToken.symbol}
             </span>
           </div>
         </div>
@@ -240,7 +239,8 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           <div className={classes.label}>
             {t('wallet')}
             <span className={classes.value}>
-              {formatBigDecimals(mintedTokenBalance)} {mintedToken.symbol}
+              {formatTokenDisplayCondensed(mintedTokenBalance, mintedToken.decimals)}{' '}
+              {mintedToken.symbol}
             </span>
           </div>
         </div>

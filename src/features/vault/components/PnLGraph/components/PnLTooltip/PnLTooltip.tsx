@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import { format } from 'date-fns';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatBigNumberSignificant, formatBigUsd } from '../../../../../../helpers/format';
+import { formatLargeUsd, formatTokenDisplayCondensed } from '../../../../../../helpers/format';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -54,11 +54,11 @@ export const PnLTooltip = memo<TooltipProps>(function PnLTooltip({ active, paylo
         <div>{formattedDate}</div>
         <div className={classes.item}>
           <div>{t('pnl-tooltip-deposit')}</div>
-          <div className={classes.value}>{formatBigNumberSignificant(shares)}</div>
+          <div className={classes.value}>{formatTokenDisplayCondensed(shares, 18)}</div>
         </div>
         <div className={classes.item}>
           <div>{t('pnl-tooltip-deposit-usd')}</div>
-          <div className={classes.value}>{formatBigUsd(usdBalance)}</div>
+          <div className={classes.value}>{formatLargeUsd(usdBalance)}</div>
         </div>
       </div>
     );

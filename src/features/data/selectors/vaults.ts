@@ -3,8 +3,9 @@ import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenErc20, TokenEntity } from '../entities/token';
 import { isTokenErc20 } from '../entities/token';
-import type { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
+import type { VaultCowcentrated, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
+  isCowcentratedLiquidityVault,
   isGovVault,
   isStandardVault,
   isVaultPaused,
@@ -54,9 +55,19 @@ export const selectIsVaultRetired = createCachedSelector(
   vault => isVaultRetired(vault)
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
+export const selectIsVaultCowcentrated = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  vault => isCowcentratedLiquidityVault(vault)
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
 export const selectIsVaultGov = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   vault => isGovVault(vault)
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectCowcentratedVaultDepositTokenAddresses = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  vault => (vault as VaultCowcentrated).depositTokenAddresses
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectVaultExistsById = createSelector(
@@ -80,10 +91,22 @@ export const selectGovVaultById = (state: BeefyState, vaultId: VaultEntity['id']
   return vault;
 };
 
+export const selectCowVaultById = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultCowcentrated => {
+  const vault = selectVaultById(state, vaultId);
+  if (!isCowcentratedLiquidityVault(vault)) {
+    throw new Error(`selectCowVaultById: Vault ${vaultId} is not a cowcentrated vault`);
+  }
+  return vault;
+};
+
 export const selectStandardVaultById = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   standardVault => {
-    if (!isStandardVault(standardVault)) {
+    // if (!isStandardVault(standardVault)) {
+    if (isGovVault(standardVault)) {
       throw new Error(`selectStandardVaultById: Vault ${standardVault.id} is not a standard vault`);
     }
     return standardVault;
@@ -128,22 +151,24 @@ export const selectAllStandardVaultsByChainId = createSelector(
   (byIds, vaultIds): VaultStandard[] => vaultIds.map(id => byIds[id]).filter(isStandardVault)
 );
 
-export const selectStandardVaultIdsByDepositTokenAddress = createCachedSelector(
+export const selectNonGovVaultIdsByDepositTokenAddress = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) => chainId,
   (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
     tokenAddress.toLowerCase(),
   (state: BeefyState, _chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) =>
     state.entities.vaults.byChainId,
   (chainId, tokenAddress, byChainId) =>
-    byChainId[chainId]?.standardVault.byDepositTokenAddress[tokenAddress] || []
+    (byChainId[chainId]?.standardVault.byDepositTokenAddress[tokenAddress] || []).concat(
+      byChainId[chainId]?.cowcentratedVault.byDepositTokenAddress[tokenAddress] || []
+    )
 )(
   (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
     `${chainId}-${tokenAddress.toLowerCase()}`
 );
 
-export const selectFirstStandardVaultByDepositTokenAddress = createCachedSelector(
+export const selectFirstNonGovVaultByDepositTokenAddress = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
-    selectStandardVaultIdsByDepositTokenAddress(state, chainId, tokenAddress),
+    selectNonGovVaultIdsByDepositTokenAddress(state, chainId, tokenAddress),
   (state: BeefyState, _chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) =>
     state.entities.vaults.byId,
   (ids, byId) => (ids.length > 0 && !!ids[0] ? byId[ids[0]] : undefined)

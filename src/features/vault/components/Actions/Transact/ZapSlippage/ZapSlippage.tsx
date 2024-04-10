@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
-import { formatSmallPercent } from '../../../../../../helpers/format';
+import { formatPercent } from '../../../../../../helpers/format';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectTransactSlippage } from '../../../../../data/selectors/transact';
 import { ErrorOutline, ExpandLess, ExpandMore, ReportProblemOutlined } from '@material-ui/icons';
@@ -182,7 +182,7 @@ const SlippageButton = memo<SlippageButtonProps>(function SlippageButton({
   const handleClick = useCallback(() => onChange(value * 100), [onChange, value]);
   return (
     <button onClick={handleClick} {...rest}>
-      {formatSmallPercent(value, 1)}
+      {formatPercent(value, 1)}
     </button>
   );
 });
@@ -237,13 +237,13 @@ export const ZapSlippage = memo<ZapSlippageProps>(function ZapSlippage({ classNa
                     slippage >= SLIPPAGE_DANGER ? 'Danger' : 'Warning'
                   }`,
                   {
-                    slippage: formatSmallPercent(slippage, 1),
+                    slippage: formatPercent(slippage, 1),
                   }
                 )}
                 Icon={slippage >= SLIPPAGE_DANGER ? ReportProblemOutlined : ErrorOutline}
               />
             ) : null}
-            {formatSmallPercent(slippage, 1)}
+            {formatPercent(slippage, 1)}
           </div>
           <Icon className={classes.icon} />
         </div>

@@ -1,13 +1,14 @@
 import type BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../redux-types';
 import type { BoostEntity } from '../../entities/boost';
-import type { VaultGov, VaultStandard } from '../../entities/vault';
+import type { VaultCowcentrated, VaultGov, VaultStandard } from '../../entities/vault';
 
 export interface IContractDataApi {
   fetchAllContractData(
     state: BeefyState,
     standardVaults: VaultStandard[],
     govVaults: VaultGov[],
+    cowVaults: VaultCowcentrated[],
     boosts: BoostEntity[]
   ): Promise<FetchAllContractDataResult>;
 }
@@ -37,6 +38,13 @@ export interface StandardVaultContractData {
   paused: boolean;
 }
 
+export interface CowVaultContractData {
+  id: string;
+  balances: BigNumber[];
+  strategy: string;
+  paused: boolean;
+}
+
 export interface BoostContractDataResponse {
   id: string;
   totalSupply: string;
@@ -57,4 +65,5 @@ export interface FetchAllContractDataResult {
   boosts: BoostContractData[];
   standardVaults: StandardVaultContractData[];
   govVaults: GovVaultContractData[];
+  cowVaults: CowVaultContractData[];
 }

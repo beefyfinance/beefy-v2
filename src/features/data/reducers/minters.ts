@@ -19,6 +19,9 @@ export type MintersState = NormalizedEntity<MinterEntity> & {
   reservesById: {
     [minterId: MinterEntity['id']]: BigNumber;
   };
+  totalSupplyById: {
+    [minterId: MinterEntity['id']]: BigNumber;
+  };
 };
 
 export const initialMintersState: MintersState = {
@@ -27,6 +30,7 @@ export const initialMintersState: MintersState = {
   byChainId: {},
   byVaultId: {},
   reservesById: {},
+  totalSupplyById: {},
 };
 
 export const mintersSlice = createSlice({
@@ -46,9 +50,11 @@ export const mintersSlice = createSlice({
     builder.addCase(initiateMinterForm.fulfilled, (sliceState, action) => {
       //Add Reserves to State
       sliceState.reservesById[action.payload.minterId] = action.payload.reserves;
+      sliceState.totalSupplyById[action.payload.minterId] = action.payload.totalSupply;
     });
     builder.addCase(reloadReserves.fulfilled, (sliceState, action) => {
-      sliceState.reservesById[action.payload.reserves.id] = action.payload.reserves.reserves;
+      sliceState.reservesById[action.payload.id] = action.payload.reserves;
+      sliceState.totalSupplyById[action.payload.id] = action.payload.totalSupply;
     });
   },
 });

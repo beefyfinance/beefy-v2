@@ -21,13 +21,14 @@ import {
 import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../reducers/wallet/stepper';
-import type { VaultType } from './vaults/IVaultType';
+import { isCowcentratedVaultType, type VaultType } from './vaults/IVaultType';
 import { strategyBuildersById } from './strategies';
 import { vaultTypeBuildersById } from './vaults';
 import { uniq } from 'lodash-es';
 import { VaultStrategy } from './strategies/vault/VaultStrategy';
 import { selectZapByChainId } from '../../selectors/zap';
 import { getSwapAggregator } from '../instances';
+import { CowcentratedStrategy } from './strategies/cowcentrated/CowcentratedStrategy';
 
 export class TransactApi implements ITransactApi {
   protected async getHelpersForVault(
@@ -316,7 +317,7 @@ export class TransactApi implements ITransactApi {
   }
 
   private async getStrategyById(
-    strategyId: StrategyOptions['strategyId'] | 'vault',
+    strategyId: StrategyOptions['strategyId'] | 'vault' | 'cowcentrated',
     helpers: TransactHelpers
   ): Promise<IStrategy> {
     const { vault, vaultType } = helpers;
@@ -324,6 +325,10 @@ export class TransactApi implements ITransactApi {
     if (strategyId === 'vault') {
       // Wrapper for common interface
       return new VaultStrategy(vaultType);
+    }
+
+    if (strategyId === 'cowcentrated' && isCowcentratedVaultType(vaultType)) {
+      return new CowcentratedStrategy(vaultType);
     }
 
     if (!isZapTransactHelpers(helpers)) {

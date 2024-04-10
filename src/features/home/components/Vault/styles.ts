@@ -22,6 +22,9 @@ export const styles = (theme: Theme) => ({
   vaultRetired: {
     backgroundColor: theme.palette.background.vaults.inactive,
   },
+  vaultCowcentrated: {
+    backgroundColor: theme.palette.background.vaults.clm,
+  },
   vaultInner: {
     display: 'grid',
     gridTemplateColumns: '1fr',
