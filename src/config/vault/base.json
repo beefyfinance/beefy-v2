@@ -1,5 +1,149 @@
 [
   {
+    "id": "aerodrome-sfrxeth-aero",
+    "name": "sfrxETH-AERO vLP",
+    "type": "standard",
+    "token": "vAMM-sfrxETH/AERO",
+    "tokenAddress": "0xE25bc9133D26F62C9FA03b6750f3F3Ba57E9eB44",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerosfrxETH-AERO",
+    "earnedTokenAddress": "0x8251eA1b51CCD54A26f18022cB40aA8A919Db06f",
+    "earnContractAddress": "0x8251eA1b51CCD54A26f18022cB40aA8A919Db06f",
+    "oracle": "lps",
+    "oracleId": "aerodrome-sfrxeth-aero",
+    "status": "active",
+    "createdAt": 1712752806,
+    "platformId": "aerodrome",
+    "assets": ["sfrxETH", "AERO"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x1f55a02a049033e3419a8e2975cf3f572f4e6e9a&token1=0x940181a94a35a4569e4529a3cdfb74e38fd98631&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-sfrxeth-fxs",
+    "name": "sfrxETH-FXS vLP",
+    "type": "standard",
+    "token": "vAMM-sfrxETH/FXS",
+    "tokenAddress": "0x1bDEb67E8B0D700b7717C7F3a7341859B7Dac784",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerosfrxETH-FXS",
+    "earnedTokenAddress": "0xd73996B73122906f4B43766DeACbD05c00FE46b4",
+    "earnContractAddress": "0xd73996B73122906f4B43766DeACbD05c00FE46b4",
+    "oracle": "lps",
+    "oracleId": "aerodrome-sfrxeth-fxs",
+    "status": "active",
+    "createdAt": 1712752806,
+    "platformId": "aerodrome",
+    "assets": ["sfrxETH", "FXS"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x1f55a02a049033e3419a8e2975cf3f572f4e6e9a&token1=0x23432452b720c80553458496d4d9d7c5003280d0&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-usdc-sfrax",
+    "name": "sFRAX-USDC vLP",
+    "type": "standard",
+    "token": "vAMM-USDC/sFRAX",
+    "tokenAddress": "0xf0e08Fa759B9C3099B0Dd63f73f79984AEb6254f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroUSDC-sFRAX",
+    "earnedTokenAddress": "0x9757f8aF3a5A50844eA334C538De43a5EB835e88",
+    "earnContractAddress": "0x9757f8aF3a5A50844eA334C538De43a5EB835e88",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usdc-sfrax",
+    "status": "active",
+    "createdAt": 1712752806,
+    "platformId": "aerodrome",
+    "assets": ["sFRAX", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&token1=0xe4796ccb6bb5de2290c417ac337f2b66ca2e770e&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-fxs-usdc",
+    "name": "FXS-USDC vLP",
+    "type": "standard",
+    "token": "vAMM-FXS/USDC",
+    "tokenAddress": "0xa2D4414421e5531E727d532ef018109f59d22340",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroFXS-USDC",
+    "earnedTokenAddress": "0x2cCd7Ed44cD801836A32930351ccc2d64Da76170",
+    "earnContractAddress": "0x2cCd7Ed44cD801836A32930351ccc2d64Da76170",
+    "oracle": "lps",
+    "oracleId": "aerodrome-fxs-usdc",
+    "status": "active",
+    "createdAt": 1712752806,
+    "platformId": "aerodrome",
+    "assets": ["FXS", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x23432452b720c80553458496d4d9d7c5003280d0&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-wbasedoge-aero",
     "name": "wBaseDOGE-AERO vLP",
     "type": "standard",
