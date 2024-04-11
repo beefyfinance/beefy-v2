@@ -482,7 +482,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-ezeth-weth",
     "status": "active",
-    "createdAt": 1712798484,
+    "createdAt": 1712801020,
     "platformId": "aerodrome",
     "assets": ["ezETH", "ETH"],
     "risks": [
