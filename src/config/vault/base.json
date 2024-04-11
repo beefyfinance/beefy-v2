@@ -85,7 +85,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-weth-chad",
     "status": "active",
-    "createdAt": 1712814542,
+    "createdAt": 1712839749,
     "platformId": "aerodrome",
     "assets": ["CHAD", "WETH"],
     "risks": [
@@ -121,7 +121,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-anime-weth",
     "status": "active",
-    "createdAt": 1712814542,
+    "createdAt": 1712839749,
     "platformId": "aerodrome",
     "assets": ["ANIME", "WETH"],
     "risks": [
@@ -157,7 +157,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-aero-usd+",
     "status": "active",
-    "createdAt": 1712814541,
+    "createdAt": 1712839749,
     "platformId": "aerodrome",
     "assets": ["USD+", "AERO"],
     "risks": [
