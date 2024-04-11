@@ -109,7 +109,7 @@
   },
   {
     "id": "aerodrome-weth-jarvis",
-    "name": "JARVIS-ETH vLP",
+    "name": "JARVIS-ETH vLP Briber",
     "type": "standard",
     "token": "vAMM-WETH/JARVIS",
     "tokenAddress": "0xeff0891e5a1bd47a8F1e77ABebfEE4145974D088",
