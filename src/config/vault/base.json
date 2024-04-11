@@ -480,7 +480,7 @@
     "earnedTokenAddress": "0x90A7de0E16CA4521B1E4C3dBBA4edAA2354aB81B",
     "earnContractAddress": "0x90A7de0E16CA4521B1E4C3dBBA4edAA2354aB81B",
     "oracle": "lps",
-    "oracleId": "aerodrome-ezeth-weth",
+    "oracleId": "aerodrome-ezeth-weth-s",
     "status": "active",
     "createdAt": 1712801020,
     "platformId": "aerodrome",
