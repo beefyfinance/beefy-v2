@@ -1,5 +1,60 @@
 [
   {
+    "id": "mshards-wmnt",
+    "name": "WMNT",
+    "type": "standard",
+    "token": "WMNT",
+    "tokenAddress": "0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8",
+    "tokenDecimals": 18,
+    "earnedToken": "moomShardsWMNT",
+    "earnedTokenAddress": "0x850dDE2cB6f1D5eb36968d8f5e3BE3Bb10b12D2C",
+    "earnContractAddress": "0x850dDE2cB6f1D5eb36968d8f5e3BE3Bb10b12D2C",
+    "oracle": "tokens",
+    "oracleId": "WMNT",
+    "status": "active",
+    "createdAt": 1712664921,
+    "platformId": "mshards",
+    "assets": ["WMNT"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://merchantmoe.com/trade",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "moe-usdt-mshards",
+    "name": "mShards-USDT LP",
+    "type": "standard",
+    "token": "mShards-USDT LP",
+    "tokenAddress": "0x4bbf96c93ec63a4d021020aee024abe100597a31",
+    "tokenDecimals": 18,
+    "tokenProviderId": "moe",
+    "earnedToken": "mooMoeUSDT-mShards",
+    "earnedTokenAddress": "0x784A2843984EDcC4740648dC91E5C7444254a397",
+    "earnContractAddress": "0x784A2843984EDcC4740648dC91E5C7444254a397",
+    "oracle": "lps",
+    "oracleId": "moe-usdt-mshards",
+    "status": "active",
+    "createdAt": 1712664921,
+    "platformId": "moe",
+    "assets": ["mShards", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xD7782b99671DD23203eBd4584FC71cf2B3dbB111",
+    "addLiquidityUrl": "https://merchantmoe.com/pool/v1/0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE/0xD7782b99671DD23203eBd4584FC71cf2B3dbB111",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "mantle-moe"
+      }
+    ]
+  },
+  {
     "id": "moe-lend-wmnt",
     "name": "LEND-WMNT LP",
     "type": "standard",

@@ -37,8 +37,8 @@ export const excludeChains: Record<string, { count: number; hash: string }> = {
     hash: '0x8bc8e4abf4228c9dcf41bf674a325cddfc0956bad8af1c4d6a57a340057fcd67',
   },
   mantle: {
-    count: 23,
-    hash: '0x93d3a31bd7ce9a3ec21f4056e4c3c79b9fd6a8d700de61b8e7e0f6c7c1a6e482',
+    count: 25,
+    hash: '0x8cb505cef33d683c017aca1fe2176f52168cf362ef24214cbb9ba1b252521f3a',
   },
 };
 

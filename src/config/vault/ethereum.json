@@ -1,5 +1,27 @@
 [
   {
+    "id": "curve-lend-crv-crvusd",
+    "name": "crvUSD (CRV Market)",
+    "token": "cvcrvUSD",
+    "tokenAddress": "0xCeA18a8752bb7e7817F9AE7565328FE415C0f2cA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve-lend",
+    "earnedToken": "mooCurveLendCRV-crvUSD",
+    "earnedTokenAddress": "0x576D38f58cfcd6499e815095E589537088028cFB",
+    "earnContractAddress": "0x576D38f58cfcd6499e815095E589537088028cFB",
+    "oracle": "lps",
+    "oracleId": "curve-lend-crv-crvusd",
+    "status": "active",
+    "createdAt": 1712810154,
+    "platformId": "curve-lend",
+    "assets": ["crvUSD"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single-lp",
+    "addLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-3/vault/deposit",
+    "removeLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-3/vault/deposit",
+    "network": "ethereum"
+  },
+  {
     "id": "fx-fxn-eth",
     "name": "FXN/ETH",
     "token": "FXNETH-f",

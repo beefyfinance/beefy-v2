@@ -111,13 +111,18 @@ export function formatLargePercent<T = string>(
 /**
  * @param input as decimal e.g. 0.01 to represent 1%
  * @param decimals decimal places
+ * @param roundMode
  */
-export function formatPercent(input: BigNumberish, decimals: number = 2): string {
+export function formatPercent(
+  input: BigNumberish,
+  decimals: number = 2,
+  roundMode: BigNumber.RoundingMode = BigNumber.ROUND_FLOOR
+): string {
   const percent = toBigNumber(input).shiftedBy(2);
 
   return percent.isZero()
     ? '0%'
-    : percent.toFormat(decimals, BigNumber.ROUND_FLOOR, {
+    : percent.toFormat(decimals, roundMode, {
         prefix: '',
         decimalSeparator: '.',
         groupSeparator: ',',

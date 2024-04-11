@@ -428,6 +428,10 @@
     "name": "Curve"
   },
   {
+    "id": "curve-lend",
+    "name": "Curve Lend"
+  },
+  {
     "id": "oliveswap",
     "name": "OliveSwap"
   },
@@ -961,6 +965,11 @@
   {
     "id": "lynex",
     "name": "Lynex",
+    "filter": true
+  },
+  {
+    "id": "mshards",
+    "name": "mShards",
     "filter": true
   }
 ]

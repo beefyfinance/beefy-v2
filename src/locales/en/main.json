@@ -372,6 +372,8 @@
   "Mint-Reminder-Burnable-OnlyEarnings": "{{mintedToken}} can be staked into Beefy Earnings Pool. {{mintedToken}} can be exchanged back to {{depositToken}} when there is a supply in our reserves.",
   "burn": "Burn",
   "Burn-Content": "Burn {{mintedToken}} for {{depositToken}} when there is {{depositToken}} in reserves. Our reserves increase when users deposit {{depositToken}} for {{mintedToken}}.",
+  "Burn-supply-Content": "Burn {{mintedToken}} for {{depositToken}}.",
+  "Burn-supply-beftm-Content": "Beefy's beFTM product has been deprecated following the governance vote, and all FTM tokens are now unlocked and available to redeem as FTM at a 1:1 rate.",
   "action": "{{action}} {{token}}",
   "reserves": "{{token}} RESERVES: ",
   "noreserves": "Insufficient {{token}} available in reserves.",

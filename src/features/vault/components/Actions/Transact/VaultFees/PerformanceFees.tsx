@@ -1,8 +1,10 @@
 import type { VaultFee } from '../../../../../data/reducers/fees';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatLargePercent } from '../../../../../../helpers/format';
+import { formatPercent } from '../../../../../../helpers/format';
 import { InterestTooltipContent } from '../../../../../../components/InterestTooltipContent';
+import { BigNumber } from 'bignumber.js';
+import { isFiniteNumber } from '../../../../../../helpers/number';
 
 export type PerformanceFeesProps = { fees: VaultFee };
 
@@ -18,12 +20,16 @@ export const PerformanceFees = memo<PerformanceFeesProps>(function PerformanceFe
     .filter(([key]) => key in fees)
     .map(([key, label]) => ({
       label: t(label),
-      value: `${formatLargePercent(fees[key], 2, '0%')}`,
+      value: `${
+        isFiniteNumber(fees[key]) ? formatPercent(fees[key], 2, BigNumber.ROUND_HALF_CEIL) : '?'
+      }`,
     }));
 
   rows.push({
     label: t('Transact-Fee-TotalFee'),
-    value: `${formatLargePercent(fees.total, 2, '0%')}`,
+    value: `${
+      isFiniteNumber(fees.total) ? formatPercent(fees.total, 2, BigNumber.ROUND_HALF_CEIL) : '?'
+    }`,
   });
 
   return <InterestTooltipContent rows={rows} />;
