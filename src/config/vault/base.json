@@ -1,5 +1,34 @@
 [
   {
+    "id": "aerodrome-weth-doginme-bribe",
+    "name": "doginme-ETH vLP Briber",
+    "type": "standard",
+    "token": "vAMM-WETH/doginme",
+    "tokenAddress": "0x139E9f235588A9720e7Eab045da29dC781c4b658",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroBribedoginme-ETH",
+    "earnedTokenAddress": "0x3eCdF28Aca74D8211BB04B8aD0c616eB58e2d7F0",
+    "earnContractAddress": "0x3eCdF28Aca74D8211BB04B8aD0c616eB58e2d7F0",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-doginme-bribe",
+    "status": "active",
+    "createdAt": 1712845094,
+    "platformId": "aerodrome",
+    "assets": ["doginme", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp-bribe",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x6921b130d297cc43754afba22e5eac0fbf8db75b&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-aero-ovn",
     "name": "OVN-AERO vLP",
     "type": "standard",
