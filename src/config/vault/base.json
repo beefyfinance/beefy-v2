@@ -1,5 +1,70 @@
 [
   {
+    "id": "aerodrome-lusd-pool",
+    "name": "LUSD-POOL vLP",
+    "type": "standard",
+    "token": "vAMM-LUSD/POOL",
+    "tokenAddress": "0x0b15b1d434f86eCaa83d14398C8Db6d162F3921e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroLUSD-POOL",
+    "earnedTokenAddress": "0xbF93166bE905Cb8E3C16bDA16a4eF3c3e46e1C1d",
+    "earnContractAddress": "0xbF93166bE905Cb8E3C16bDA16a4eF3c3e46e1C1d",
+    "oracle": "lps",
+    "oracleId": "aerodrome-lusd-pool",
+    "status": "active",
+    "createdAt": 1712860490,
+    "platformId": "aerodrome",
+    "assets": ["LUSD", "POOL"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x368181499736d0c0cc614dbb145e2ec1ac86b8c6&token1=0xd652c5425aea2afd5fb142e120fecf79e18fafc3&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-lusd-usdc",
+    "name": "LUSD-USDC sLP",
+    "type": "standard",
+    "token": "sAMM-LUSD/USDC",
+    "tokenAddress": "0xf53B7Af40BE75043eeBa493C622F4f56b3C27A31",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroLUSD-USDC",
+    "earnedTokenAddress": "0x6C340D16a2A2f00b0F27336749BEa76fB2De501f",
+    "earnContractAddress": "0x6C340D16a2A2f00b0F27336749BEa76fB2De501f",
+    "oracle": "lps",
+    "oracleId": "aerodrome-lusd-usdc",
+    "status": "active",
+    "createdAt": 1712860489,
+    "platformId": "aerodrome",
+    "assets": ["LUSD", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x368181499736d0c0cc614dbb145e2ec1ac86b8c6&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=true",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-aero-ovn",
     "name": "OVN-AERO vLP",
     "type": "standard",
