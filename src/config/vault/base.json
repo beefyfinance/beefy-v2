@@ -137,6 +137,42 @@
     ]
   },
   {
+    "id": "aerodrome-weth-npc",
+    "name": "NPC-ETH vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/NPC",
+    "tokenAddress": "0x5E14319D52c9C18a04BFBBE12dd3a0FE3C1A816a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroNPC-ETH",
+    "earnedTokenAddress": "0x54b0EA8860B5E8b419FbDd200e05c7DC1ba97413",
+    "earnContractAddress": "0x54b0EA8860B5E8b419FbDd200e05c7DC1ba97413",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-npc",
+    "status": "active",
+    "createdAt": 1712894845,
+    "platformId": "aerodrome",
+    "assets": ["NPC", "WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xb166e8b140d35d9d8226e40c09f757bac5a4d87d&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-chad",
     "name": "CHAD-ETH vLP",
     "type": "standard",

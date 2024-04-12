@@ -727,6 +727,7 @@ export const config = {
       'wUSDR',
       'USDC+',
       'sFRAX',
+      'LUSD',
     ],
   },
   gnosis: {
