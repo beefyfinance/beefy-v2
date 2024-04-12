@@ -177,7 +177,6 @@ const QuoteLoaded = memo(function QuoteLoaded() {
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isZap = isZapQuote(quote);
 
-  console.log(quote);
   return (
     <>
       <div className={classes.tokenAmounts}>

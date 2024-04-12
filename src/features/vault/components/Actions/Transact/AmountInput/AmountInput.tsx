@@ -35,6 +35,7 @@ export type AmountInputProps = {
   tokenDecimals?: number;
   onChange: (value: BigNumber, isMax: boolean) => void;
   error?: boolean;
+  warning?: boolean;
   className?: string;
   allowInputAboveBalance?: boolean;
   fullWidth?: boolean;
@@ -42,6 +43,7 @@ export type AmountInputProps = {
   endAdornment?: ReactNode;
   disabled?: boolean;
   errorClassName?: string;
+  warningClassName?: string;
 };
 export const AmountInput = memo<AmountInputProps>(function AmountInput({
   value,
@@ -49,6 +51,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   onChange,
   tokenDecimals = 2,
   error = false,
+  warning = false,
   className,
   allowInputAboveBalance = false,
   fullWidth = false,
@@ -56,6 +59,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   endAdornment,
   disabled,
   errorClassName = '',
+  warningClassName = '',
 }) {
   const classes = useStyles();
   const [input, setInput] = useState(() => {
@@ -147,7 +151,9 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
       className={clsx(classes.inputContainer, className, {
         [classes.fullWidth]: fullWidth,
         [errorClassName]: error && errorClassName,
+        [warningClassName]: warning && warningClassName,
         [classes.error]: error,
+        [classes.warning]: warning,
       })}
     >
       <div className={classes.inputContent}>
