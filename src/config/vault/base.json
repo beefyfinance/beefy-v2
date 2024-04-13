@@ -2453,7 +2453,8 @@
     "oracle": "lps",
     "oracleId": "balancer-base-usdc-usdbc-axlusdc",
     "status": "active",
-    "createdAt": 1713018583,
+    "createdAt": 1694110890,
+    "updatedAt": 1713018583,
     "platformId": "aura",
     "assets": ["USDC", "USDbC", "axlUSDC"],
     "risks": [
@@ -2483,7 +2484,8 @@
     "oracle": "lps",
     "oracleId": "balancer-base-weth-reth",
     "status": "active",
-    "createdAt": 1713018583,
+    "createdAt": 1694110890,
+    "updatedAt": 1713018583,
     "platformId": "aura",
     "assets": ["rETH", "ETH"],
     "risks": [
@@ -4659,7 +4661,8 @@
     "oracle": "lps",
     "oracleId": "balancer-base-cbeth-weth",
     "status": "active",
-    "createdAt": 1713018583,
+    "createdAt": 1694131744,
+    "updatedAt": 1713018583,
     "platformId": "aura",
     "assets": ["cbETH", "ETH"],
     "risks": [
