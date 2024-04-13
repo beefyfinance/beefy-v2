@@ -23,8 +23,8 @@
   },
   {
     "id": "uniswap-cow-arb-eth-usdt",
-    "name": "ETH-USDT",
-    "token": "ETH-USDT",
+    "name": "WETH-USDT",
+    "token": "WETH-USDT",
     "tokenAddress": "0x641C00A822e8b671738d32a431a4Fb6074E5c79d",
     "tokenDecimals": 18,
     "depositTokenAddresses": [
@@ -49,8 +49,8 @@
   },
   {
     "id": "uniswap-cow-arb-magic-weth",
-    "name": "MAGIC-ETH",
-    "token": "MAGIC-ETH",
+    "name": "MAGIC-WETH",
+    "token": "MAGIC-WETH",
     "tokenAddress": "0x59D72DDB29Da32847A4665d08ffc8464A7185FAE",
     "tokenDecimals": 18,
     "depositTokenAddresses": [
@@ -147,8 +147,8 @@
   },
   {
     "id": "uniswap-cow-arb-wbtc-eth",
-    "name": "WBTC-ETH",
-    "token": "WBTC-ETH",
+    "name": "WBTC-WETH",
+    "token": "WBTC-WETH",
     "tokenAddress": "0x2f5e87C9312fa29aed5c179E456625D79015299c",
     "tokenDecimals": 18,
     "depositTokenAddresses": [
@@ -173,8 +173,8 @@
   },
   {
     "id": "uniswap-cow-arb-eth-usdc",
-    "name": "ETH-USDC",
-    "token": "ETH-USDC",
+    "name": "WETH-USDC",
+    "token": "WETH-USDC",
     "tokenAddress": "0xC6962004f452bE9203591991D15f6b388e09E8D0",
     "tokenDecimals": 18,
     "depositTokenAddresses": [
@@ -199,8 +199,8 @@
   },
   {
     "id": "uniswap-cow-arb-pendle-eth",
-    "name": "PENDLE-ETH",
-    "token": "PENDLE-ETH",
+    "name": "PENDLE-WETH",
+    "token": "PENDLE-WETH",
     "tokenAddress": "0xdbaeB7f0DFe3a0AAFD798CCECB5b22E708f7852c",
     "tokenDecimals": 18,
     "depositTokenAddresses": [
@@ -225,8 +225,8 @@
   },
   {
     "id": "uniswap-cow-arb-arb-eth-t3",
-    "name": "ARB-ETH",
-    "token": "ARB-ETH",
+    "name": "ARB-WETH",
+    "token": "ARB-WETH",
     "tokenAddress": "0xC6F780497A95e246EB9449f5e4770916DCd6396A",
     "tokenDecimals": 18,
     "depositTokenAddresses": [
