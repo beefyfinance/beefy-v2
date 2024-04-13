@@ -1,5 +1,35 @@
 [
   {
+    "id": "aura-base-tbtc-weth",
+    "name": "tBTC-ETH",
+    "type": "standard",
+    "token": "tBTC-ETH Base",
+    "tokenAddress": "0x52e281318Fed4eFFfb8E46c0847a8f9B71a461A8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraBasetBTC-WETH",
+    "earnedTokenAddress": "0x715a4a6Afb44f87f8C4eE8d945Eb6B630A11E72c",
+    "earnContractAddress": "0x715a4a6Afb44f87f8C4eE8d945Eb6B630A11E72c",
+    "oracle": "lps",
+    "oracleId": "aura-base-tbtc-weth",
+    "status": "active",
+    "createdAt": 1713018583,
+    "platformId": "aura",
+    "assets": ["tBTC", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0x52e281318fed4efffb8e46c0847a8f9b71a461a8000200000000000000000018/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0x52e281318fed4efffb8e46c0847a8f9b71a461a8000200000000000000000018/withdraw",
+    "network": "base"
+  },
+  {
     "id": "aerodrome-lusd-pool",
     "name": "LUSD-POOL vLP",
     "type": "standard",
