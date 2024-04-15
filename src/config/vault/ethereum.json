@@ -15,6 +15,7 @@
     "createdAt": 1712810154,
     "platformId": "curve-lend",
     "assets": ["crvUSD"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-3/vault/deposit",
