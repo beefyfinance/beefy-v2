@@ -95,6 +95,78 @@
     ]
   },
   {
+    "id": "aerodrome-usda-eura",
+    "name": "USDA-EURA vLP",
+    "type": "standard",
+    "token": "vAMM-USDA/EURA",
+    "tokenAddress": "0x79eF3eCDa775860a2351ae2A7B80C4d80ba47F72",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroUSDA-EURA",
+    "earnedTokenAddress": "0x1345216de8C3E7e0076b862087607d63595465Ae",
+    "earnContractAddress": "0x1345216de8C3E7e0076b862087607d63595465Ae",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usda-eura",
+    "status": "active",
+    "createdAt": 1713169238,
+    "platformId": "aerodrome",
+    "assets": ["USDA", "EURA"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_LOW",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xa61beb4a3d02decb01039e378237032b351125b4&token1=0x0000206329b97db379d5e1bf586bbdb969c63274&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-usda-usdc",
+    "name": "USDA-USDC sLP",
+    "type": "standard",
+    "token": "sAMM-USDA/USDC",
+    "tokenAddress": "0xE503312E932a3647AeAC8b00A8Bd1d04E6A73C08",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroUSDA-USDC",
+    "earnedTokenAddress": "0xb78a44BB1B12fB3F93E24a0b80AbA74FA79bEC45",
+    "earnContractAddress": "0xb78a44BB1B12fB3F93E24a0b80AbA74FA79bEC45",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usda-usdc",
+    "status": "active",
+    "createdAt": 1713169238,
+    "platformId": "aerodrome",
+    "assets": ["USDA", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&token1=0x0000206329b97db379d5e1bf586bbdb969c63274&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-aero-ovn",
     "name": "OVN-AERO vLP",
     "type": "standard",
@@ -3257,7 +3329,7 @@
   },
   {
     "id": "aerodrome-ageur-usdbc",
-    "name": "agEUR-USDbC vLP",
+    "name": "EURA-USDbC vLP",
     "type": "standard",
     "token": "vAMM-agEUR/USDbC",
     "tokenAddress": "0xA56bE957d432a5d0eDc040B27078d9726f54E7f6",
@@ -3270,8 +3342,9 @@
     "oracleId": "aerodrome-ageur-usdbc",
     "status": "active",
     "createdAt": 1693493753,
+    "updatedAt": 1713166198,
     "platformId": "aerodrome",
-    "assets": ["agEUR", "USDbC"],
+    "assets": ["EURA", "USDbC"],
     "risks": [
       "COMPLEXITY_LOW",
       "IL_LOW",
