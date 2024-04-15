@@ -1,10 +1,11 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectTransactDualInputAmount,
   selectTransactInputAmount,
   selectTransactSelected,
+  selectTransactSelectedQuoteOrUndefined,
 } from '../../../../../data/selectors/transact';
 
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
@@ -16,6 +17,8 @@ import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/t
 
 import { AmountInputWithSlider } from '../AmountInputWithSlider';
 import { TokenSelectButton, V3TokenButton } from '../TokenSelectButton';
+import { isCowcentratedDepositQuote } from '../../../../../data/apis/transact/transact-types';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 export type DepositTokenAmountInputProps = {
   className?: string;
@@ -92,6 +95,8 @@ export const V3DepositTokenAmountInput = memo<V3DepositTokenAmountInputProps>(
       selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
     );
 
+    const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
+
     const handleChange = useCallback<AmountInputProps['onChange']>(
       (value, isMax) => {
         dispatch(
@@ -120,6 +125,14 @@ export const V3DepositTokenAmountInput = memo<V3DepositTokenAmountInputProps>(
       [depositToken.decimals, dispatch, index, userBalance]
     );
 
+    const noSingleSideAllowed = useMemo(() => {
+      return quote
+        ? isCowcentratedDepositQuote(quote) &&
+            quote.outputs.every(inputToken => inputToken.amount.eq(BIG_ZERO)) &&
+            value.gt(BIG_ZERO)
+        : false;
+    }, [quote, value]);
+
     return (
       <AmountInputWithSlider
         className={className}
@@ -130,6 +143,7 @@ export const V3DepositTokenAmountInput = memo<V3DepositTokenAmountInputProps>(
         onSliderChange={handleSliderChange}
         selectedToken={depositToken}
         endAdornment={<V3TokenButton token={depositToken} />}
+        warning={noSingleSideAllowed}
       />
     );
   }

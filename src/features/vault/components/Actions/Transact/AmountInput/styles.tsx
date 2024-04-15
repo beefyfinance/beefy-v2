@@ -51,6 +51,9 @@ export const styles = (theme: Theme) => ({
   error: {
     border: `1px solid ${theme.palette.background.indicators.error}`,
   },
+  warning: {
+    border: `1px solid ${theme.palette.background.indicators.warning}`,
+  },
   fullWidth: {
     width: '100%',
   },
