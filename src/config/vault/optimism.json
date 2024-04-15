@@ -38,6 +38,80 @@
     }
   },
   {
+    "id": "velodrome-v2-usda-eura",
+    "name": "USDA-EURA vLP V2",
+    "type": "standard",
+    "token": "vAMMV2-USDA/EURA",
+    "tokenAddress": "0xce85B91A150Cd04945dcb5523fbe76F8088bEe57",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2USDA-EURA",
+    "earnedTokenAddress": "0x52b76C23d65e998836604E1760399D3e0B959ED8",
+    "earnContractAddress": "0x52b76C23d65e998836604E1760399D3e0B959ED8",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-usda-eura",
+    "status": "active",
+    "createdAt": 1713169238,
+    "platformId": "velodrome",
+    "assets": ["USDA", "EURA"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x9485aca5bbbe1667ad97c7fe7c4531a624c8b1ed&to=0x0000206329b97db379d5e1bf586bbdb969c63274",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x0000206329b97DB379d5E1Bf586BbDB969C63274&token1=0x9485aca5bbBE1667AD97c7fE7C4531a624C8b1ED&type=-1",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xce85B91A150Cd04945dcb5523fbe76F8088bEe57",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-v2-usda-usdc",
+    "name": "USDA-USDC sLP V2",
+    "type": "standard",
+    "token": "vAMMV2-USDA/USDC",
+    "tokenAddress": "0xE8309787A1a79461205644aEc92D0149a4a95361",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2USDA-USDC",
+    "earnedTokenAddress": "0x4F5310B114859B947A593F0ddE4b162672cae5af",
+    "earnContractAddress": "0x4F5310B114859B947A593F0ddE4b162672cae5af",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-usda-usdc",
+    "status": "active",
+    "createdAt": 1713169238,
+    "platformId": "velodrome",
+    "assets": ["USDA", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x0b2c639c533813f4aa9d7837caf62653d097ff85&to=0x0000206329b97db379d5e1bf586bbdb969c63274",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x0000206329b97DB379d5E1Bf586BbDB969C63274&token1=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&type=0",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xE8309787A1a79461205644aEc92D0149a4a95361",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "velodrome-v2-usdc-sonne",
     "name": "SONNE-USDC vLP V2",
     "type": "standard",
@@ -2365,9 +2439,9 @@
   },
   {
     "id": "velodrome-v2-usdc-ageur",
-    "name": "agEUR-USDCe vLP V2",
+    "name": "EURA-USDCe vLP V2",
     "type": "standard",
-    "token": "agEUR-USDCe vLP V2",
+    "token": "vAMMV2-USDC/agEUR",
     "tokenAddress": "0x4BE2CBE40521279b8fc561e65Bb842bf73ec3a80",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
@@ -2378,8 +2452,9 @@
     "oracleId": "velodrome-v2-usdc-ageur",
     "status": "active",
     "createdAt": 1688210852,
+    "updatedAt": 1713166198,
     "platformId": "velodrome",
-    "assets": ["agEUR", "opUSDCe"],
+    "assets": ["EURA", "opUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -2439,9 +2514,9 @@
   },
   {
     "id": "velodrome-v2-jeur-ageur",
-    "name": "jEUR-agEUR sLP V2",
+    "name": "jEUR-EURA sLP V2",
     "type": "standard",
-    "token": "jEUR-agEUR sLP V2",
+    "token": "sAMMV2-jEUR/agEUR",
     "tokenAddress": "0x3DD9556a521d6e57bE480c94da102fedf0429aba",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
@@ -2452,8 +2527,9 @@
     "oracleId": "velodrome-v2-jeur-ageur",
     "status": "active",
     "createdAt": 1688104101,
+    "updatedAt": 1713166198,
     "platformId": "velodrome",
-    "assets": ["jEUR", "agEUR"],
+    "assets": ["jEUR", "EURA"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -4066,9 +4142,9 @@
   },
   {
     "id": "velodrome-v2-op-ageur",
-    "name": "agEUR-OP vLP V2",
+    "name": "EURA-OP vLP V2",
     "type": "standard",
-    "token": "agEUR-OP vLP V2",
+    "token": "vAMMV2-OP/agEUR",
     "tokenAddress": "0xeFe139aa71b674168f5823360A824B3714f2718D",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
@@ -4079,8 +4155,9 @@
     "oracleId": "velodrome-v2-op-ageur",
     "status": "active",
     "createdAt": 1688039323,
+    "updatedAt": 1713166198,
     "platformId": "velodrome",
-    "assets": ["agEUR", "OP"],
+    "assets": ["EURA", "OP"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://velodrome.finance/swap?from=0x9485aca5bbbe1667ad97c7fe7c4531a624c8b1ed&to=0x4200000000000000000000000000000000000042",
@@ -6314,9 +6391,9 @@
   },
   {
     "id": "velodrome-jeur-ageur",
-    "name": "jEUR-agEUR sLP",
+    "name": "jEUR-EURA sLP",
     "type": "standard",
-    "token": "jEUR-agEUR sLP",
+    "token": "sAMM-jEUR/agEUR",
     "tokenAddress": "0x050D6Dbc73F6993A29e1327846117C4F5Fc7D68E",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
@@ -6330,7 +6407,7 @@
     "retireReason": "rewards",
     "retiredAt": 1690357628,
     "platformId": "velodrome",
-    "assets": ["jEUR", "agEUR"],
+    "assets": ["jEUR", "EURA"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -6495,9 +6572,9 @@
   },
   {
     "id": "velodrome-ageur-mai",
-    "name": "agEUR-MAI vLP",
+    "name": "EURA-MAI vLP",
     "type": "standard",
-    "token": "agEUR-MAI vLP",
+    "token": "vAMM-agEUR/MAI",
     "tokenAddress": "0x389d9aeA762fd5F9FBD4434D8E11295F15097B67",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
@@ -6511,7 +6588,7 @@
     "retireReason": "rewards",
     "retiredAt": 1690357628,
     "platformId": "velodrome",
-    "assets": ["agEUR", "MAI"],
+    "assets": ["EURA", "MAI"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -6871,9 +6948,9 @@
   },
   {
     "id": "velodrome-usdc-ageur",
-    "name": "agEUR-USDCe vLP",
+    "name": "EURA-USDCe vLP",
     "type": "standard",
-    "token": "agEUR-USDCe vLP",
+    "token": "vAMM-USDC/agEUR",
     "tokenAddress": "0x7866C6072B09539fC0FDE82963846b80203d7beb",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
@@ -6887,7 +6964,7 @@
     "retireReason": "rewards",
     "retiredAt": 1690357628,
     "platformId": "velodrome",
-    "assets": ["agEUR", "opUSDCe"],
+    "assets": ["EURA", "opUSDCe"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
