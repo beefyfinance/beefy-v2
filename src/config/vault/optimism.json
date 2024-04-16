@@ -2452,7 +2452,6 @@
     "oracleId": "velodrome-v2-usdc-ageur",
     "status": "active",
     "createdAt": 1688210852,
-    "updatedAt": 1713166198,
     "platformId": "velodrome",
     "assets": ["EURA", "opUSDCe"],
     "risks": [
@@ -2527,7 +2526,6 @@
     "oracleId": "velodrome-v2-jeur-ageur",
     "status": "active",
     "createdAt": 1688104101,
-    "updatedAt": 1713166198,
     "platformId": "velodrome",
     "assets": ["jEUR", "EURA"],
     "risks": [
@@ -4155,7 +4153,6 @@
     "oracleId": "velodrome-v2-op-ageur",
     "status": "active",
     "createdAt": 1688039323,
-    "updatedAt": 1713166198,
     "platformId": "velodrome",
     "assets": ["EURA", "OP"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],

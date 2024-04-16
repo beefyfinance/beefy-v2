@@ -3342,7 +3342,6 @@
     "oracleId": "aerodrome-ageur-usdbc",
     "status": "active",
     "createdAt": 1693493753,
-    "updatedAt": 1713166198,
     "platformId": "aerodrome",
     "assets": ["EURA", "USDbC"],
     "risks": [
