@@ -108,7 +108,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-usda-eura",
     "status": "active",
-    "createdAt": 1713169238,
+    "createdAt": 1713268046,
     "platformId": "aerodrome",
     "assets": ["USDA", "EURA"],
     "risks": [
@@ -144,7 +144,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-usda-usdc",
     "status": "active",
-    "createdAt": 1713169238,
+    "createdAt": 1713268046,
     "platformId": "aerodrome",
     "assets": ["USDA", "USDC"],
     "risks": [

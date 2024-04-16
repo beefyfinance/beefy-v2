@@ -51,7 +51,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usda-eura",
     "status": "active",
-    "createdAt": 1713169238,
+    "createdAt": 1713268046,
     "platformId": "velodrome",
     "assets": ["USDA", "EURA"],
     "risks": [
@@ -88,7 +88,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-usda-usdc",
     "status": "active",
-    "createdAt": 1713169238,
+    "createdAt": 1713268046,
     "platformId": "velodrome",
     "assets": ["USDA", "USDC"],
     "risks": [
