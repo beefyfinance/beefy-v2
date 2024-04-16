@@ -17,6 +17,7 @@ import {
   selectTransactOptionsForSelectionId,
   selectTransactOptionsMode,
   selectTransactOptionsVaultId,
+  selectTransactQuoteStatus,
   selectTransactSelectedChainId,
   selectTransactSelectedQuoteOrUndefined,
   selectTransactSelectedSelectionId,
@@ -50,7 +51,7 @@ import { selectAllowanceByTokenAddress } from '../selectors/allowances';
 import { walletActions } from './wallet-actions';
 import type { ThunkAction } from 'redux-thunk';
 import { startStepperWithSteps } from './stepper';
-import { TransactMode } from '../reducers/wallet/transact-types';
+import { TransactMode, TransactStatus } from '../reducers/wallet/transact-types';
 import { selectTokenByAddress } from '../selectors/tokens';
 import { groupBy, uniqBy } from 'lodash-es';
 import { fetchAllowanceAction } from './allowance';
@@ -321,7 +322,7 @@ export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state:
   async (_, { getState, dispatch }) => {
     const state = getState();
     const quote = selectTransactSelectedQuoteOrUndefined(state);
-    let shouldFetch = true;
+    let shouldFetch = selectTransactQuoteStatus(state) !== TransactStatus.Fulfilled;
 
     if (quote) {
       const option = quote.option;
