@@ -71,7 +71,7 @@
       {
         "strategyId": "gamma",
         "ammId": "linea-gamma-lynex",
-        "tokenHolder": "0x48C93b97A6AFf589B4Bc8B60865165ab19D509A0"
+        "tokenHolder": "0xf213573c49B89e4ACEDE11bC97aaF2a88F02f878"
       }
     ]
   },
@@ -101,7 +101,7 @@
       {
         "strategyId": "gamma",
         "ammId": "linea-gamma-lynex",
-        "tokenHolder": "0x48C93b97A6AFf589B4Bc8B60865165ab19D509A0"
+        "tokenHolder": "0x133629348F5f3632f46D8Fd0A5C3b49a4fADf2B6"
       }
     ],
     "earningPoints": true
@@ -132,7 +132,7 @@
       {
         "strategyId": "gamma",
         "ammId": "linea-gamma-lynex",
-        "tokenHolder": "0x48C93b97A6AFf589B4Bc8B60865165ab19D509A0"
+        "tokenHolder": "0x86d2D7709D390bd2946A335147965E54947c82d7"
       }
     ]
   },
