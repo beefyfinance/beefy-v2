@@ -730,6 +730,7 @@ export const config = {
       'sFRAX',
       'LUSD',
       'USDA',
+      'EURA',
     ],
   },
   gnosis: {
