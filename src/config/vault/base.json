@@ -1,5 +1,41 @@
 [
   {
+    "id": "aerodrome-crvusd-usdc",
+    "name": "crvUSD-USDC sLP",
+    "type": "standard",
+    "token": "sAMM-crvUSD/USDC",
+    "tokenAddress": "0x7F6095FECb6b67c08F1b8397701d666d71d703e0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerocrvUSD-USDC",
+    "earnedTokenAddress": "0xa9Fa1c5eC681BCFdF7ff43250eCB314320Bfe9bF",
+    "earnContractAddress": "0xa9Fa1c5eC681BCFdF7ff43250eCB314320Bfe9bF",
+    "oracle": "lps",
+    "oracleId": "aerodrome-crvusd-usdc",
+    "status": "active",
+    "createdAt": 1713368619,
+    "platformId": "aerodrome",
+    "assets": ["crvUSD", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x368181499736d0c0cc614dbb145e2ec1ac86b8c6&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=true",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aura-base-tbtc-weth",
     "name": "tBTC-ETH",
     "type": "standard",
@@ -84,7 +120,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x368181499736d0c0cc614dbb145e2ec1ac86b8c6&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&token1=0x417ac0e078398c154edfadd9ef675d30be60af93&stable=true",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
