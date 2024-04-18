@@ -1,5 +1,35 @@
 [
   {
+    "id": "velodrome-v2-velo-xzoomer",
+    "name": "VELO-xZOOMER vLP V2",
+    "type": "standard",
+    "token": "vAMMV2-VELO/xZOOMER",
+    "tokenAddress": "0x24CaD669E6fb30196ebFB6A8eaaedf2359E82B6a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2VELO-xZOOMER",
+    "earnedTokenAddress": "0x5A33f6a73b914D81f5317d4C2fe68f12b8BfEedf",
+    "earnContractAddress": "0x5A33f6a73b914D81f5317d4C2fe68f12b8BfEedf",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-velo-xzoomer",
+    "status": "active",
+    "createdAt": 1713479730,
+    "platformId": "velodrome",
+    "assets": ["VELOV2", "xZOOMER"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x9560e827af36c94d2ac33a39bce1fe78631088db&to=0xb962150760f9a3bb00e3e9cf48297ee20ada4a33",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db&token1=0xB962150760F9A3bB00e3E9Cf48297EE20AdA4A33&type=-1",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x24CaD669E6fb30196ebFB6A8eaaedf2359E82B6a",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "aavev3-op-usdc-2",
     "name": "USDC",
     "type": "standard",

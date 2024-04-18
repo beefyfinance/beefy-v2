@@ -1,5 +1,34 @@
 [
   {
+    "id": "aerodrome-aero-zoomer",
+    "name": "AERO-ZOOMER sLP",
+    "type": "standard",
+    "token": "vAMM-AER0/ZOOMER",
+    "tokenAddress": "0x45D8c7BF5be7c99D39cDC724f60497BD79546458",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroAERO-ZOOMER",
+    "earnedTokenAddress": "0xD1cE64586e91cA7C0eaF88A4e58e4F3586Ddf5b1",
+    "earnContractAddress": "0xD1cE64586e91cA7C0eaF88A4e58e4F3586Ddf5b1",
+    "oracle": "lps",
+    "oracleId": "aerodrome-aero-zoomer",
+    "status": "active",
+    "createdAt": 1713479422,
+    "platformId": "aerodrome",
+    "assets": ["AERO", "ZOOMER"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x940181a94a35a4569e4529a3cdfb74e38fd98631&token1=0xd1db4851bcf5b41442caa32025ce0afe6b8eabc2&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-crvusd-usdc",
     "name": "crvUSD-USDC sLP",
     "type": "standard",
