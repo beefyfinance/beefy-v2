@@ -49,18 +49,10 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   const mode = useAppSelector(selectTransactMode);
   const selectionId = useAppSelector(selectTransactSelectedSelectionId);
   const selection = useAppSelector(selectTransactSelected);
-  const singleInputAmount = [useAppSelector(selectTransactInputAmount)];
+  const singleInputAmount = useAppSelector(selectTransactInputAmount);
   const dualInputAmounts = useAppSelector(selectTransactDualInputAmounts);
-  const inputAmounts =
-    selection.tokens.length === 2 && mode === TransactMode.Deposit
-      ? dualInputAmounts
-      : singleInputAmount;
-  const singleMaxAmount = [useAppSelector(selectTransactInputMax)];
+  const singleMaxAmount = useAppSelector(selectTransactInputMax);
   const dualMaxAmounts = useAppSelector(selectTransactDualMaxAmounts);
-  const inputMax =
-    selection.tokens.length === 2 && mode === TransactMode.Deposit
-      ? dualMaxAmounts
-      : singleMaxAmount;
   const chainId = useAppSelector(selectTransactSelectedChainId);
   const status = useAppSelector(selectTransactQuoteStatus);
   const debouncedFetchQuotes = useMemo(
@@ -80,8 +72,13 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   );
 
   useEffect(() => {
-    debouncedFetchQuotes(dispatch, inputAmounts);
-  }, [dispatch, mode, chainId, selectionId, inputAmounts, inputMax, dualMaxAmounts, dualInputAmounts, debouncedFetchQuotes]);
+    debouncedFetchQuotes(
+      dispatch,
+      selection && selection.tokens.length === 2 && mode === TransactMode.Deposit
+        ? dualInputAmounts
+        : [singleInputAmount]
+    );
+  }, [dispatch, mode, chainId, selectionId, selection, singleInputAmount, dualInputAmounts, singleMaxAmount, dualMaxAmounts, debouncedFetchQuotes]);
 
   if (status === TransactStatus.Idle) {
     return <QuoteIdle title={title} className={className} />;
@@ -177,7 +174,6 @@ const QuoteLoaded = memo(function QuoteLoaded() {
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isZap = isZapQuote(quote);
 
-  console.log(quote);
   return (
     <>
       <div className={classes.tokenAmounts}>

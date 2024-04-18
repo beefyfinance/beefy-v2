@@ -7,6 +7,9 @@ export const styles = (theme: Theme) => ({
   errorInput: {
     borderStyle: 'solid solid hidden solid',
   },
+  warningInput: {
+    borderStyle: 'solid solid hidden solid',
+  },
   inputContainer: {
     width: '100%',
     display: 'flex',
@@ -62,6 +65,12 @@ export const styles = (theme: Theme) => ({
     background: `${theme.palette.background.indicators.error}7F`,
     '&::-webkit-slider-thumb': {
       background: theme.palette.background.indicators.error,
+    },
+  },
+  warningRange: {
+    background: `${theme.palette.background.indicators.warning}7F`,
+    '&::-webkit-slider-thumb': {
+      background: theme.palette.background.indicators.warning,
     },
   },
 });

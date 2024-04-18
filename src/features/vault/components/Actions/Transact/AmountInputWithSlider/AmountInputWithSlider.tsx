@@ -12,6 +12,7 @@ type AmountInputWithSliderProps = AmountInputProps & {
   onSliderChange: (v: number) => void;
   selectedToken: TokenEntity;
   endAdornment: ReactNode;
+  warning?: boolean;
 };
 
 const useStyles = makeStyles(styles);
@@ -26,6 +27,7 @@ export const AmountInputWithSlider = memo<AmountInputWithSliderProps>(
     className,
     price,
     endAdornment,
+    warning,
   }) {
     const forceSelection = useAppSelector(selecTransactForceSelection);
     const classes = useStyles();
@@ -45,6 +47,7 @@ export const AmountInputWithSlider = memo<AmountInputWithSliderProps>(
         <AmountInput
           className={clsx(classes.input, className)}
           errorClassName={classes.errorInput}
+          warningClassName={classes.warningInput}
           value={value}
           maxValue={maxValue}
           tokenDecimals={selectedToken.decimals}
@@ -55,12 +58,14 @@ export const AmountInputWithSlider = memo<AmountInputWithSliderProps>(
           price={price}
           endAdornment={endAdornment}
           disabled={forceSelection}
+          warning={warning}
         />
         <input
           disabled={forceSelection}
           className={clsx(classes.slider, {
-            [classes.sliderBackground]: !error,
+            [classes.sliderBackground]: !error || !warning,
             [classes.errorRange]: error,
+            [classes.warningRange]: warning && !error,
           })}
           style={{ '--value': `${sliderValue}%` } as CSSProperties}
           onChange={e => onSliderChange(parseInt(e.target.value))}

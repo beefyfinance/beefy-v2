@@ -45,9 +45,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     state => selectCurrentChainId(state) === vault.chainId
   );
   const depositToken = useAppSelector(state =>
-    minter.depositToken.type === 'native'
-      ? selectTokenByAddress(state, vault.chainId, minter.depositToken.contractAddress)
-      : selectErc20TokenByAddress(state, vault.chainId, minter.depositToken.contractAddress)
+    selectTokenByAddress(state, vault.chainId, minter.depositToken.contractAddress)
   );
   const mintedToken = useAppSelector(state =>
     selectErc20TokenByAddress(state, vault.chainId, minter.mintedToken.contractAddress)
@@ -64,9 +62,9 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
 
   const minterEarningsType = useAppSelector(state => selectMinterVaultsType(state, minterId));
 
-  const { canBurnReserves, canZapInWithOneInch } = minter;
+  const { canBurn, canZapInWithOneInch } = minter;
   const [contentKey, reminderKey] = useMemo(() => {
-    const liquidityType = canBurnReserves ? 'Burnable' : 'Liquid';
+    const liquidityType = canBurn ? 'Burnable' : 'Liquid';
     const zapType = canZapInWithOneInch ? 'WithZap' : 'WithoutZap';
 
     return ['Content', 'Reminder'].map(key => [
@@ -75,7 +73,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       `Mint-${key}-${liquidityType}`,
       `Mint-${key}`,
     ]);
-  }, [canBurnReserves, canZapInWithOneInch, minterEarningsType]);
+  }, [canBurn, canZapInWithOneInch, minterEarningsType]);
 
   const isStepping = useAppSelector(selectIsStepperStepping);
 

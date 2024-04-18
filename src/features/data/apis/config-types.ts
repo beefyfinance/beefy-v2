@@ -303,11 +303,12 @@ export type MinterConfigToken = MinterConfigTokenErc20 | MinterConfigTokenNative
 export interface MinterConfig {
   id: string;
   name: string;
+  disableMint?: boolean;
   minterAddress: string;
   burnerAddress?: string;
   depositToken: MinterConfigToken;
   mintedToken: MinterConfigToken;
-  canBurnReserves: boolean;
+  canBurn: false | 'reserves' | 'supply';
   reserveBalanceMethod?: string;
   vaultIds: string[];
   canZapInWithOneInch?: boolean;

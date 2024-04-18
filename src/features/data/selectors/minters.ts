@@ -29,6 +29,10 @@ export const selectMinterReserves = (state: BeefyState, minterId: MinterEntity['
   return state.entities.minters.reservesById[minterId];
 };
 
+export const selectMinterTotalSupply = (state: BeefyState, minterId: MinterEntity['id']) => {
+  return state.entities.minters.totalSupplyById[minterId];
+};
+
 export const selectAreMintersLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.minters.alreadyLoadedOnce;
 
