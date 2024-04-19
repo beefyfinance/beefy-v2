@@ -1,5 +1,35 @@
 [
   {
+    "id": "beets-trio-of-the-stables",
+    "name": "Trio of the Stables",
+    "type": "standard",
+    "token": "Trio of the Stables",
+    "tokenAddress": "0xaAc7B8d6D7009428d6DdaD895bdf50C6FCBbe2C0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsTriooftheStables",
+    "earnedTokenAddress": "0xEd6e49d62e960963D7376240A0b6aF869c0b5c04",
+    "earnContractAddress": "0xEd6e49d62e960963D7376240A0b6aF869c0b5c04",
+    "oracle": "lps",
+    "oracleId": "beets-trio-of-the-stables",
+    "status": "active",
+    "createdAt": 1713530545,
+    "platformId": "beethovenx",
+    "assets": ["axlUSDC", "lzUSDC", "fUSDCe"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://beets.fi/pool/0xaac7b8d6d7009428d6ddad895bdf50c6fcbbe2c000000000000000000000080d",
+    "removeLiquidityUrl": "https://beets.fi/pool/0xaac7b8d6d7009428d6ddad895bdf50c6fcbbe2c000000000000000000000080d",
+    "network": "fantom"
+  },
+  {
     "id": "equalizer-ichi-wftm-lzusdc",
     "name": "WFTM-lzUSDC LP",
     "type": "standard",

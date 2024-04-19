@@ -316,6 +316,7 @@ export const config = {
       'axlUSDC',
       'lzUSDC',
       'lzUSDT',
+      'fUSDCe',
     ],
   },
   arbitrum: {
