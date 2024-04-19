@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "aura-arb-ezeth-wsteth",
     "status": "active",
-    "createdAt": 1713114044,
+    "createdAt": 1713521423,
     "platformId": "aura",
     "assets": ["ezETH", "wstETH"],
     "risks": [
