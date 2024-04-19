@@ -27,7 +27,8 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516/withdraw",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "earningPoints": true
   },
   {
     "id": "curve-lend-arb-arb-crvusd",
