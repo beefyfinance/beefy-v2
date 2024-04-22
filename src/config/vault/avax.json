@@ -1,9 +1,9 @@
 [
   {
     "id": "balancer-avax-savax-avax",
-    "name": "sAVAX-WAVAX",
+    "name": "sAVAX-AVAX",
     "type": "standard",
-    "token": "sAVAX-WAVAX Avax",
+    "token": "sAVAX-AVAX Avax",
     "tokenAddress": "0xfD2620C9cfceC7D152467633B3B0Ca338D3d78cc",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
