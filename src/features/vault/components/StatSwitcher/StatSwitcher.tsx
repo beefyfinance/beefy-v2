@@ -1,18 +1,17 @@
-import type { ChartStat } from '../../../../data/reducers/historical-types';
 import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ToggleButtons } from '../../../../../components/ToggleButtons';
+import { ToggleButtons } from '../../../../components/ToggleButtons';
 import { makeStyles, useMediaQuery, type Theme } from '@material-ui/core';
 import { styles } from './styles';
-import { LabeledSelect } from '../../../../../components/LabeledSelect';
+import { LabeledSelect } from '../../../../components/LabeledSelect';
 
 const useStyles = makeStyles(styles);
 
 export type StatSwitcherProps = {
   type: 'standard' | 'gov' | 'cowcentrated';
-  availableStats: ChartStat[];
-  stat: ChartStat;
-  onChange: (newStat: ChartStat) => void;
+  availableStats: string[];
+  stat: string;
+  onChange: (newStat: string) => void;
 };
 
 export const StatSwitcher = memo<StatSwitcherProps>(function StatSwitcher({

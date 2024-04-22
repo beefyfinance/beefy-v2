@@ -1,4 +1,3 @@
-import type { ChartStat } from '../../../data/reducers/historical-types';
 import type { VaultEntity } from '../../../data/entities/vault';
 import React, { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +6,7 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectHistoricalAvailableCharts } from '../../../data/selectors/historical';
 import { Card, CardContent, CardHeader, CardTitle } from '../Card';
-import { StatSwitcher } from './StatSwitcher';
+import { StatSwitcher } from '../StatSwitcher';
 import { GraphWithControls } from './GraphWithControls';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
@@ -29,7 +28,7 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
   const availableStats = useAppSelector(state =>
     selectHistoricalAvailableCharts(state, vaultId, oracleId)
   );
-  const [stat, setStat] = useState<ChartStat>(() => getDefaultStat(availableStats));
+  const [stat, setStat] = useState<string>(() => getDefaultStat(availableStats));
 
   return (
     <Card className={stat === 'cowcentrated' ? classes.cowcentrated : ''}>
