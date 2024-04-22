@@ -50,7 +50,7 @@ const socialLinks = [
   },
   {
     title: 'Discord',
-    path: 'https://beefy.com/discord',
+    path: 'https://beefy.finance/discord',
     Icon: IconDiscord,
   },
   {
