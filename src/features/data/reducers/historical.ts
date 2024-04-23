@@ -3,6 +3,7 @@ import type { SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchHistoricalApys,
+  fetchHistoricalCowcentratedRanges,
   fetchHistoricalPrices,
   fetchHistoricalRanges,
   fetchHistoricalTvls,
@@ -24,6 +25,9 @@ const initialState: HistoricalState = {
     byVaultId: {},
   },
   tvls: {
+    byVaultId: {},
+  },
+  clm: {
     byVaultId: {},
   },
 };
@@ -66,6 +70,7 @@ export const historicalSlice = createSlice({
         initAllTimeBuckets(state, oracleId, vaultId);
         state.apys.byVaultId[vaultId].availableTimebuckets = getBucketsFromRange(ranges.apys);
         state.tvls.byVaultId[vaultId].availableTimebuckets = getBucketsFromRange(ranges.tvls);
+        state.clm.byVaultId[vaultId].availableTimebuckets = getBucketsFromRange(ranges.clm);
         state.prices.byOracleId[oracleId].availableTimebuckets = getBucketsFromRange(ranges.prices);
       })
       .addCase(fetchHistoricalApys.pending, (state, action) => {
@@ -103,20 +108,32 @@ export const historicalSlice = createSlice({
       .addCase(fetchHistoricalPrices.fulfilled, (state, action) => {
         const { oracleId, bucket } = action.meta.arg;
         setTimebucketFulfilled(state.prices.byOracleId[oracleId], bucket, action.payload.data);
+      })
+      .addCase(fetchHistoricalCowcentratedRanges.pending, (state, action) => {
+        const { vaultId, bucket } = action.meta.arg;
+        setTimebucketPending(getOrCreateTimeBucketFor('clm', vaultId, state), bucket);
+      })
+      .addCase(fetchHistoricalCowcentratedRanges.rejected, (state, action) => {
+        const { vaultId, bucket } = action.meta.arg;
+        setTimebucketRejected(state.clm.byVaultId[vaultId], bucket, action.error);
+      })
+      .addCase(fetchHistoricalCowcentratedRanges.fulfilled, (state, action) => {
+        const { vaultId, bucket } = action.meta.arg;
+        setTimebucketFulfilled(state.clm.byVaultId[vaultId], bucket, action.payload.data);
       });
   },
 });
 
 function getOrCreateTimeBucketFor(
-  key: 'tvls' | 'prices' | 'apys',
-  oracleOrVaultId: string,
+  key: 'tvls' | 'prices' | 'apys' | 'clm',
+  oracleOrVaultIdOrVaultAddress: string,
   state: Draft<HistoricalState>
 ): Draft<TimeBucketsState> {
   const subKey = key === 'prices' ? 'byOracleId' : 'byVaultId';
-  if (!state[key][subKey][oracleOrVaultId]) {
-    state[key][subKey][oracleOrVaultId] = initialTimeBucketsState();
+  if (!state[key][subKey][oracleOrVaultIdOrVaultAddress]) {
+    state[key][subKey][oracleOrVaultIdOrVaultAddress] = initialTimeBucketsState();
   }
-  return state[key][subKey][oracleOrVaultId];
+  return state[key][subKey][oracleOrVaultIdOrVaultAddress];
 }
 
 function getOrCreateTimeBucketBucket(
@@ -172,6 +189,10 @@ function initAllTimeBuckets(state: Draft<HistoricalState>, oracleId: string, vau
 
   if (!(vaultId in state.tvls.byVaultId)) {
     state.tvls.byVaultId[vaultId] = initialTimeBucketsState();
+  }
+
+  if (!(vaultId in state.clm.byVaultId)) {
+    state.clm.byVaultId[vaultId] = initialTimeBucketsState();
   }
 }
 

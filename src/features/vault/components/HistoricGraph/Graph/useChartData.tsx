@@ -1,14 +1,20 @@
 import type { ChartStat } from '../../../../data/reducers/historical-types';
 import type { VaultEntity } from '../../../../data/entities/vault';
 import type { TokenEntity } from '../../../../data/entities/token';
-import type { ApiPoint, ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
+import type {
+  ApiCowcentratedPoint,
+  ApiPoint,
+  ApiTimeBucket,
+} from '../../../../data/apis/beefy/beefy-data-api-types';
 import { useMemo } from 'react';
 import { getBucketParams } from '../utils';
 import { useAppSelector } from '../../../../../store';
 import { selectHistoricalBucketData } from '../../../../data/selectors/historical';
 import { MovingAverage } from '../../../../../helpers/number';
 
-export type ChartDataPoint = ApiPoint & { ma: number };
+export type ChartDataPoint =
+  | ApiPoint
+  | (ApiCowcentratedPoint & { ma: number; ranges?: [number, number] });
 
 export type ChartData = {
   data: ChartDataPoint[];
@@ -18,7 +24,7 @@ export type ChartData = {
 };
 
 export function useChartData(
-  stat: Omit<ChartStat, 'cowcentrated'>,
+  stat: ChartStat,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket
@@ -32,13 +38,26 @@ export function useChartData(
   const chartData: ChartData = useMemo(() => {
     if (data && data.length) {
       const values = data.map(d => d.v);
-      const min = Math.min(...values);
-      const max = Math.max(...values);
+      let min = Math.min(...values);
+      let max = Math.max(...values);
+
+      if (stat === 'clm') {
+        min = Math.min(...data.map(d => (d as ApiCowcentratedPoint).min));
+        max = Math.max(...data.map(d => (d as ApiCowcentratedPoint).max));
+      }
+
       const avg = values.reduce((a, b) => a + b, 0) / values.length;
       const ma = new MovingAverage(maPeriods);
 
       return {
-        data: data.map(point => ({ ...point, ma: ma.next(point.v) })),
+        data: data.map(point => {
+          if (stat === 'clm') {
+            const { min, max } = point as ApiCowcentratedPoint;
+            return { ...point, ma: ma.next(point.v), ranges: [min, max] };
+          } else {
+            return { ...point, ma: ma.next(point.v) };
+          }
+        }),
         min,
         max,
         avg,
@@ -51,7 +70,7 @@ export function useChartData(
       max: 0,
       avg: 0,
     };
-  }, [data, maPeriods]);
+  }, [data, maPeriods, stat]);
 
   // Remove any extra points that were only there to compute moving average
   return useMemo(() => {

@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => ({
     gap: '1px',
     gridTemplateColumns: 'repeat(3,minmax(0,1fr))',
     [theme.breakpoints.down('xs')]: {
-      gridTemplateColumns: 'repeat(2,minmax(0,1fr))',
+      gridTemplateColumns: '1fr',
     },
   },
   cowcentratedStat: {
@@ -35,12 +35,6 @@ export const styles = (theme: Theme) => ({
       textTransform: 'uppercase' as const,
       color: theme.palette.text.dark,
     },
-  },
-  roundBottomLeft: {
-    borderBottomLeftRadius: '8px',
-  },
-  roundBottomRight: {
-    borderBottomRightRadius: '8px',
   },
   fullWidth: {
     widht: '100%',

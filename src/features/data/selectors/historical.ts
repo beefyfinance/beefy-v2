@@ -46,7 +46,9 @@ export function selectHistoricalHasCowcentratedRanges(
   state: BeefyState,
   vaultId: VaultEntity['id']
 ) {
-  return state.entities.tokens.cowcentratedRanges.byVaultId[vaultId] ? true : false;
+  return Object.values(
+    state.biz.historical.clm.byVaultId[vaultId]?.availableTimebuckets || {}
+  ).some(v => v);
 }
 
 export const selectHistoricalAvailableCharts = createSelector(
@@ -60,7 +62,7 @@ export const selectHistoricalAvailableCharts = createSelector(
   (hasPriceChart, hasApyChart, hasTvlChart, showApy, hasCowcentratedRanges) => {
     const availableCharts: ChartStat[] = [];
     if (hasCowcentratedRanges) {
-      availableCharts.push('cowcentrated');
+      availableCharts.push('clm');
     }
     if (hasApyChart && showApy) {
       availableCharts.push('apy');
@@ -71,6 +73,7 @@ export const selectHistoricalAvailableCharts = createSelector(
     if (hasPriceChart) {
       availableCharts.push('price');
     }
+
     return availableCharts;
   }
 );
@@ -99,6 +102,14 @@ export function selectHistoricalPriceBucketStatus(
   return state.biz.historical.prices.byOracleId[oracleId]?.byTimebucket[bucket]?.status || 'idle';
 }
 
+export function selectHistoricalCowcentratedRangesBucketStatus(
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  bucket: ApiTimeBucket
+) {
+  return state.biz.historical.clm.byVaultId[vaultId]?.byTimebucket[bucket]?.status || 'idle';
+}
+
 export function selectHistoricalApyBucketData(
   state: BeefyState,
   vaultId: VaultEntity['id'],
@@ -123,6 +134,14 @@ export function selectHistoricalPriceBucketData(
   return state.biz.historical.prices.byOracleId[oracleId]?.byTimebucket[bucket]?.data || [];
 }
 
+export function selectHistoricalCowcentratedRangesBucketData(
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  bucket: ApiTimeBucket
+) {
+  return state.biz.historical.clm.byVaultId[vaultId]?.byTimebucket[bucket]?.data || [];
+}
+
 const unavailableBuckets = mapValues(TIME_BUCKETS, () => false);
 
 export function selectHistoricalPriceAvailableBuckets(
@@ -142,6 +161,13 @@ export function selectHistoricalTvlAvailableBuckets(state: BeefyState, vaultId: 
   return state.biz.historical.tvls.byVaultId[vaultId]?.availableTimebuckets || unavailableBuckets;
 }
 
+export function selectHistoricalCowcentratedRangesAvailableBuckets(
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) {
+  return state.biz.historical.clm.byVaultId[vaultId]?.availableTimebuckets || unavailableBuckets;
+}
+
 export function selectHistoricalPriceLoadedBuckets(
   state: BeefyState,
   oracleId: TokenEntity['oracleId']
@@ -155,6 +181,13 @@ export function selectHistoricalApyLoadedBuckets(state: BeefyState, vaultId: Vau
 
 export function selectHistoricalTvlLoadedBuckets(state: BeefyState, vaultId: VaultEntity['id']) {
   return state.biz.historical.tvls.byVaultId[vaultId]?.loadedTimebuckets || unavailableBuckets;
+}
+
+export function selectHistoricalCowcentratedRangesloadedBuckets(
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) {
+  return state.biz.historical.clm.byVaultId[vaultId]?.loadedTimebuckets || unavailableBuckets;
 }
 
 export function selectHistoricalPriceBucketIsLoaded(
@@ -181,9 +214,17 @@ export function selectHistoricalTvlBucketIsLoaded(
   return selectHistoricalTvlLoadedBuckets(state, vaultId)[bucket];
 }
 
+export function selectHistoricalCowcentratedRangesBucketIsLoaded(
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  bucket: ApiTimeBucket
+) {
+  return selectHistoricalCowcentratedRangesloadedBuckets(state, vaultId)[bucket];
+}
+
 export function selectHistoricalBucketStatus(
   state: BeefyState,
-  stat: Omit<ChartStat, 'cowcentrated'>,
+  stat: ChartStat,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket
@@ -195,6 +236,8 @@ export function selectHistoricalBucketStatus(
       return selectHistoricalTvlBucketStatus(state, vaultId, bucket);
     case 'price':
       return selectHistoricalPriceBucketStatus(state, oracleId, bucket);
+    case 'clm':
+      return selectHistoricalCowcentratedRangesBucketStatus(state, vaultId, bucket);
   }
 
   throw new Error(`Unknown stat: ${stat}`);
@@ -202,7 +245,7 @@ export function selectHistoricalBucketStatus(
 
 export function selectHistoricalAvailableBuckets(
   state: BeefyState,
-  stat: Omit<ChartStat, 'cowcentrated'>,
+  stat: ChartStat,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId']
 ) {
@@ -213,6 +256,8 @@ export function selectHistoricalAvailableBuckets(
       return selectHistoricalTvlAvailableBuckets(state, vaultId);
     case 'price':
       return selectHistoricalPriceAvailableBuckets(state, oracleId);
+    case 'clm':
+      return selectHistoricalCowcentratedRangesAvailableBuckets(state, vaultId);
   }
 
   throw new Error(`Unknown stat: ${stat}`);
@@ -220,7 +265,7 @@ export function selectHistoricalAvailableBuckets(
 
 export function selectHistoricalBucketIsLoaded(
   state: BeefyState,
-  stat: Omit<ChartStat, 'cowcentrated'>,
+  stat: ChartStat,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket
@@ -232,6 +277,8 @@ export function selectHistoricalBucketIsLoaded(
       return selectHistoricalTvlBucketIsLoaded(state, vaultId, bucket);
     case 'price':
       return selectHistoricalPriceBucketIsLoaded(state, oracleId, bucket);
+    case 'clm':
+      return selectHistoricalCowcentratedRangesBucketIsLoaded(state, vaultId, bucket);
   }
 
   throw new Error(`Unknown stat: ${stat}`);
@@ -239,7 +286,7 @@ export function selectHistoricalBucketIsLoaded(
 
 export function selectHistoricalBucketData(
   state: BeefyState,
-  stat: Omit<ChartStat, 'cowcentrated'>,
+  stat: ChartStat,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket
@@ -251,6 +298,8 @@ export function selectHistoricalBucketData(
       return selectHistoricalTvlBucketData(state, vaultId, bucket);
     case 'price':
       return selectHistoricalPriceBucketData(state, oracleId, bucket);
+    case 'clm':
+      return selectHistoricalCowcentratedRangesBucketData(state, vaultId, bucket);
   }
 
   throw new Error(`Unknown stat: ${stat}`);

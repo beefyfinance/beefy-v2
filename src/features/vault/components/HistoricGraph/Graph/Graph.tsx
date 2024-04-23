@@ -1,9 +1,10 @@
-import { memo, useCallback, useMemo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import type { TooltipProps } from 'recharts';
 import {
   Area,
-  AreaChart,
+  Bar,
   CartesianGrid,
+  ComposedChart,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -19,7 +20,11 @@ import type { Theme } from '@material-ui/core';
 import { format, fromUnixTime } from 'date-fns';
 import { XAxisTick } from '../../../../../components/XAxisTick';
 import { getXInterval, mapRangeToTicks } from '../../../../../helpers/graph';
-import { formatLargePercent, formatLargeUsd } from '../../../../../helpers/format';
+import {
+  formatPercent,
+  formatTokenDisplayCondensed,
+  formatUsd,
+} from '../../../../../helpers/format';
 import type { LineTogglesState } from '../LineToggles';
 import { TooltipContent } from '../TooltipContent';
 import { useChartData } from './useChartData';
@@ -32,7 +37,7 @@ const useStyles = makeStyles(styles);
 export type ChartProp = {
   vaultId: VaultEntity['id'];
   oracleId: TokenEntity['oracleId'];
-  stat: Omit<ChartStat, 'cowcentrated'>;
+  stat: ChartStat;
   bucket: ApiTimeBucket;
   toggles: LineTogglesState;
 };
@@ -54,8 +59,10 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
   }, [data.length, isMobile]);
   const yTickFormatter = useMemo(() => {
     return stat === 'apy'
-      ? (value: number) => formatLargePercent(value)
-      : (value: number) => formatLargeUsd(value);
+      ? (value: number) => formatPercent(value)
+      : stat === 'clm'
+      ? (value: number) => formatTokenDisplayCondensed(value, 18)
+      : (value: number) => formatUsd(value);
   }, [stat]);
   const yDomain = useMemo(() => {
     return [min, max];
@@ -63,26 +70,35 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
   const yTicks = useMemo(() => {
     return mapRangeToTicks(min, max);
   }, [min, max]);
+  const isCowcentrated = useMemo(() => stat === 'clm', [stat]);
   const tooltipContentCreator = useCallback(
     (props: TooltipProps<number, string>) => (
       <TooltipContent
         {...props}
         stat={stat}
         bucket={bucket}
-        toggles={toggles}
+        toggles={isCowcentrated ? { movingAverage: false, average: false } : toggles}
         valueFormatter={yTickFormatter}
         avg={avg}
         vaultType={vaultType}
       />
     ),
-    [stat, bucket, toggles, yTickFormatter, avg, vaultType]
+    [stat, bucket, isCowcentrated, toggles, yTickFormatter, avg, vaultType]
   );
+
+  console.log(data);
 
   return (
     <div className={classes.chartContainer}>
-      <ResponsiveContainer height={200}>
-        <AreaChart data={data} className={classes.graph} height={200} margin={chartMargin}>
-          <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />
+      <ResponsiveContainer height={250}>
+        <ComposedChart
+          data={data}
+          className={classes.graph}
+          height={200}
+          margin={chartMargin}
+          barCategoryGap={'20%'}
+        >
+          <CartesianGrid strokeDasharray="2 2" vertical={!isCowcentrated} stroke="#363B63" />
           <XAxis
             dataKey="t"
             tickMargin={10}
@@ -97,13 +113,14 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
             stroke="#F5F5FF"
             strokeWidth={1.5}
             fill="rgba(255, 255, 255, 0.05)"
-            fillOpacity={100}
+            fillOpacity={isCowcentrated ? 0 : 100}
           />
+          {isCowcentrated ? <Bar dataKey="ranges" fill="#6A71AE4C" /> : null}
           <Tooltip content={tooltipContentCreator} wrapperStyle={{ outline: 'none' }} />
-          {toggles.movingAverage ? (
+          {!isCowcentrated && toggles.movingAverage ? (
             <Area dataKey="ma" stroke="#5C70D6" strokeWidth={1.5} fill="none" />
           ) : null}
-          {toggles.average ? (
+          {!isCowcentrated && toggles.average ? (
             <ReferenceLine y={avg} stroke="#4DB258" strokeWidth={1.5} strokeDasharray="3 3" />
           ) : null}
           <YAxis
@@ -114,7 +131,7 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
             stroke="#363B63"
             ticks={yTicks}
           />
-        </AreaChart>
+        </ComposedChart>
       </ResponsiveContainer>
     </div>
   );
