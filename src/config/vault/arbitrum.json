@@ -100,6 +100,78 @@
     "network": "arbitrum"
   },
   {
+    "id": "silo-eth-ezeth",
+    "name": "ETH (ezETH Market)",
+    "type": "standard",
+    "token": "ETH",
+    "tokenAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloArbWETH(ezETH)",
+    "earnedTokenAddress": "0x6a96e55c6a8ab9380E006D7C83232d3E7a935402",
+    "earnContractAddress": "0x6a96e55c6a8ab9380E006D7C83232d3E7a935402",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "createdAt": 1712847748,
+    "platformId": "silo",
+    "assets": ["ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612"
+    }
+  },
+  {
+    "id": "silo-eth-pendle-ezeth",
+    "name": "ETH (PT-ezETH Market)",
+    "type": "standard",
+    "token": "ETH",
+    "tokenAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloArbWETH(PT-ezETH)",
+    "earnedTokenAddress": "0xf15Bf589aC1F4b1Bc20c3f9A922BaA14101bC368",
+    "earnContractAddress": "0xf15Bf589aC1F4b1Bc20c3f9A922BaA14101bC368",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "createdAt": 1712847748,
+    "platformId": "silo",
+    "assets": ["ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612"
+    }
+  },
+  {
     "id": "curve-lend-arb-crv-crvusd",
     "name": "crvUSD (CRV Market)",
     "token": "cvcrvUSD",
