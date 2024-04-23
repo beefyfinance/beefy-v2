@@ -112,7 +112,7 @@
     "oracle": "tokens",
     "oracleId": "ETH",
     "status": "active",
-    "createdAt": 1712847748,
+    "createdAt": 1713892433,
     "platformId": "silo",
     "assets": ["ETH"],
     "risks": [
@@ -148,7 +148,7 @@
     "oracle": "tokens",
     "oracleId": "ETH",
     "status": "active",
-    "createdAt": 1712847748,
+    "createdAt": 1713892433,
     "platformId": "silo",
     "assets": ["ETH"],
     "risks": [
