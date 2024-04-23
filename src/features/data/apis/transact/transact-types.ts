@@ -15,6 +15,7 @@ import type {
 } from '../../entities/zap';
 import type { PlatformEntity } from '../../entities/platform';
 import type { CurveTokenOption } from './strategies/curve/types';
+import type { StargatePath } from './strategies/stargate-crosschain-single/types';
 
 export type TokenAmount<T extends TokenEntity = TokenEntity> = {
   amount: BigNumber;
@@ -64,10 +65,13 @@ type BaseOption = {
   /** should be unique over all strategies and token selections */
   id: string;
   vaultId: VaultEntity['id'];
+  /** chain the tx is executed on */
   chainId: ChainEntity['id'];
   /** governs how selections are grouped in the UI, should be consistent for the same deposit input/withdraw output token(s) per chain */
   selectionId: string;
   selectionOrder: number;
+  /** chain the output ends up on */
+  selectionChainId?: ChainEntity['id'];
   inputs: TokenEntity[];
   wantedOutputs: TokenEntity[];
 };
@@ -156,6 +160,10 @@ export type SingleWithdrawOption = ZapBaseWithdrawOption & {
   strategyId: 'single';
 };
 
+export type StargateCrossChainSingleDepositOption = ZapBaseDepositOption & {
+  strategyId: 'stargate-crosschain-single';
+};
+
 export type CurveDepositOption = ZapBaseDepositOption & {
   strategyId: 'curve';
 } & (
@@ -178,6 +186,10 @@ export type ConicWithdrawOption = ZapBaseWithdrawOption & {
   strategyId: 'conic';
 };
 
+export type StargateCrossChainSingleWithdrawOption = ZapBaseWithdrawOption & {
+  strategyId: 'stargate-crosschain-single';
+};
+
 export type DepositOption =
   | StandardVaultDepositOption
   | GovVaultDepositOption
@@ -187,7 +199,8 @@ export type DepositOption =
   | SingleDepositOption
   | CurveDepositOption
   | CowcentratedDepositOption
-  | ConicDepositOption;
+  | ConicDepositOption
+  | StargateCrossChainSingleDepositOption;
 
 export type WithdrawOption =
   | StandardVaultWithdrawOption
@@ -198,7 +211,8 @@ export type WithdrawOption =
   | SingleWithdrawOption
   | CurveWithdrawOption
   | CowcentratedWithdrawOption
-  | ConicWithdrawOption;
+  | ConicWithdrawOption
+  | StargateCrossChainSingleWithdrawOption;
 
 export type TransactOption = DepositOption | WithdrawOption;
 
@@ -238,6 +252,14 @@ export type ZapQuoteStepSwapPool = BaseZapQuoteStepSwap & {
 
 export type ZapQuoteStepSwap = ZapQuoteStepSwapAggregator | ZapQuoteStepSwapPool;
 
+export type ZapQuoteStepBridge = {
+  type: 'bridge';
+  from: TokenAmount;
+  to: TokenAmount;
+  providerId: string;
+  fee: TokenAmount;
+};
+
 export type ZapQuoteStepBuild = {
   type: 'build';
   inputs: TokenAmount[];
@@ -276,7 +298,8 @@ export type ZapQuoteStep =
   | ZapQuoteStepBuild
   | ZapQuoteStepDeposit
   | ZapQuoteStepSplit
-  | ZapQuoteStepUnused;
+  | ZapQuoteStepUnused
+  | ZapQuoteStepBridge;
 
 export function isZapQuoteStepSwap(step: ZapQuoteStep): step is ZapQuoteStepSwap {
   return step.type === 'swap';
@@ -284,6 +307,10 @@ export function isZapQuoteStepSwap(step: ZapQuoteStep): step is ZapQuoteStepSwap
 
 export function isZapQuoteStepWithdraw(step: ZapQuoteStep): step is ZapQuoteStepSwap {
   return step.type === 'withdraw';
+}
+
+export function isZapQuoteStepBridge(step: ZapQuoteStep): step is ZapQuoteStepBridge {
+  return step.type === 'bridge';
 }
 
 export function isZapQuoteStepBuild(step: ZapQuoteStep): step is ZapQuoteStepBuild {
@@ -339,6 +366,11 @@ export type SingleDepositQuote = BaseZapQuote<SingleDepositOption> & {
   swapQuote: QuoteResponse;
 };
 
+export type StargateCrossChainSingleDepositQuote =
+  BaseZapQuote<StargateCrossChainSingleDepositOption> & {
+    path: StargatePath;
+  };
+
 export type UniswapLikePoolDepositQuote = BaseZapQuote<
   UniswapLikeDepositOption<AmmEntityUniswapLike>
 > & {
@@ -386,7 +418,8 @@ export type ZapDepositQuote =
   | SolidlyDepositQuote
   | CurveDepositQuote
   | GammaDepositQuote
-  | ConicDepositQuote;
+  | ConicDepositQuote
+  | StargateCrossChainSingleDepositQuote;
 
 export type DepositQuote = VaultDepositQuote | ZapDepositQuote;
 
@@ -403,6 +436,11 @@ export type CowcentratedVaultWithdrawQuote = BaseQuote<CowcentratedWithdrawOptio
 };
 
 export type SingleWithdrawQuote = BaseZapQuote<SingleWithdrawOption>;
+
+export type StargateCrossChainSingleWithdrawQuote =
+  BaseZapQuote<StargateCrossChainSingleWithdrawOption> & {
+    path: StargatePath;
+  };
 
 export type UniswapLikeBreakWithdrawQuote = BaseZapQuote<
   UniswapLikeWithdrawOption<AmmEntityUniswapLike>
@@ -449,7 +487,8 @@ export type ZapWithdrawQuote =
   | SolidlyWithdrawQuote
   | CurveWithdrawQuote
   | GammaWithdrawQuote
-  | ConicWithdrawQuote;
+  | ConicWithdrawQuote
+  | StargateCrossChainSingleWithdrawQuote;
 
 export type WithdrawQuote = VaultWithdrawQuote | ZapWithdrawQuote;
 

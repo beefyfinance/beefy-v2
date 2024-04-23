@@ -13,6 +13,7 @@ export enum TransactStep {
   Loading,
   Form,
   TokenSelect,
+  ChainSelect,
   QuoteSelect,
 }
 

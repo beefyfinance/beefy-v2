@@ -7,19 +7,25 @@ import { ReactComponent as BackArrow } from '../../../../../../images/back-arrow
 const useStyles = makeStyles(styles);
 
 export type StepHeaderProps = {
+  title: string;
   onBack?: () => void;
-  children: ReactNode;
+  children?: ReactNode;
 };
-export const StepHeader = memo<StepHeaderProps>(function StepHeader({ onBack, children }) {
+export const StepHeader = memo<StepHeaderProps>(function StepHeader({ title, onBack, children }) {
   const classes = useStyles();
 
   return (
     <div className={classes.container}>
       {onBack ? (
         <button onClick={onBack} className={classes.backButton}>
-          <BackArrow className={classes.backIcon} />
+          <div className={classes.backIcon}>
+            <BackArrow className={classes.backArrow} />
+          </div>{' '}
+          {title}
         </button>
-      ) : null}
+      ) : (
+        title
+      )}
       {children}
     </div>
   );

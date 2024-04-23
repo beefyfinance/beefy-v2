@@ -13,11 +13,13 @@ import { Card } from '../../Card';
 import { TokenSelectStep } from './TokenSelectStep';
 import { TransactStep } from '../../../../data/reducers/wallet/transact-types';
 import { QuoteSelectStep } from './QuoteSelectStep';
+import { ChainSelectStep } from './ChainSelectStep';
 
 const stepToComponent: Record<TransactStep, ComponentType> = {
   [TransactStep.Loading]: LoadingStep,
   [TransactStep.Form]: FormStep,
   [TransactStep.TokenSelect]: TokenSelectStep,
+  [TransactStep.ChainSelect]: ChainSelectStep,
   [TransactStep.QuoteSelect]: QuoteSelectStep,
 };
 

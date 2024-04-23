@@ -104,6 +104,14 @@ export function selectMintResult(state: BeefyState) {
   return result;
 }
 
+export function selectWalletActionSuccess(state: BeefyState): WalletActionsSuccessState {
+  if (isWalletActionSuccess(state.user.walletActions)) {
+    return state.user.walletActions;
+  }
+
+  throw new Error('Not wallet action success');
+}
+
 export function selectBridgeSuccess(
   state: BeefyState
 ): WalletActionsSuccessState<BridgeAdditionalData> {

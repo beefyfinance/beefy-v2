@@ -3,6 +3,7 @@ import React, { Fragment, memo, useCallback, useMemo } from 'react';
 import type {
   ZapQuote,
   ZapQuoteStep,
+  ZapQuoteStepBridge,
   ZapQuoteStepBuild,
   ZapQuoteStepDeposit,
   ZapQuoteStepSplit,
@@ -23,6 +24,8 @@ import { QuoteTitle } from '../QuoteTitle';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types';
 import { selectZapSwapProviderName } from '../../../../../data/selectors/zap';
+import { selectChainById } from '../../../../../data/selectors/chains';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
@@ -65,6 +68,45 @@ const StepContentSwap = memo<StepContentProps<ZapQuoteStepSwap>>(function StepCo
         ),
         toAmount: (
           <TokenAmountFromEntity amount={step.toAmount} token={step.toToken} minShortPlaces={4} />
+        ),
+      }}
+    />
+  );
+});
+
+const StepContentBridge = memo<StepContentProps<ZapQuoteStepBridge>>(function StepContentSwap({
+  step,
+}) {
+  const { t } = useTranslation();
+  const { providerId, from, to, fee } = step;
+  const platformName = useAppSelector(state =>
+    selectZapSwapProviderName(state, providerId, 'pool', t)
+  );
+  const sourceChain = useAppSelector(state => selectChainById(state, from.token.chainId));
+  const destChain = useAppSelector(state => selectChainById(state, to.token.chainId));
+  const i18nKey = fee.amount.gt(BIG_ZERO)
+    ? 'Transact-Route-Step-Bridge-Fee'
+    : 'Transact-Route-Step-Bridge';
+
+  return (
+    <Trans
+      t={t}
+      i18nKey={i18nKey}
+      values={{
+        fromChain: sourceChain.name,
+        toChain: destChain.name,
+        fromToken: from.token.symbol,
+        toToken: to.token.symbol,
+        feeToken: fee.token.symbol,
+        via: platformName,
+      }}
+      components={{
+        fromAmount: (
+          <TokenAmountFromEntity amount={from.amount} token={from.token} minShortPlaces={4} />
+        ),
+        toAmount: <TokenAmountFromEntity amount={to.amount} token={to.token} minShortPlaces={4} />,
+        feeAmount: (
+          <TokenAmountFromEntity amount={fee.amount} token={fee.token} minShortPlaces={4} />
         ),
       }}
     />
@@ -224,6 +266,7 @@ const StepContentComponents: Record<
   withdraw: StepContentWithdraw,
   split: StepContentSplit,
   unused: StepContentUnused,
+  bridge: StepContentBridge,
 };
 
 type StepProps = {

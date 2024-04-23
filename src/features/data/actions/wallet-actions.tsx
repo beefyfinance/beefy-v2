@@ -55,7 +55,10 @@ import { updateSteps } from './stepper';
 import { StepContent, stepperActions } from '../reducers/wallet/stepper';
 import type { PromiEvent } from 'web3-core';
 import type { ThunkDispatch } from 'redux-thunk';
-import { selectOneInchSwapAggregatorForChain, selectZapByChainId } from '../selectors/zap';
+import {
+  selectOneInchSwapAggregatorForChain,
+  selectZapByChainIdOrUndefined,
+} from '../selectors/zap';
 import type { UserlessZapRequest, ZapOrder } from '../apis/transact/zap/types';
 import { ZERO_ADDRESS } from '../../../helpers/addresses';
 import { MultiCall } from 'eth-multicall';
@@ -69,7 +72,12 @@ import { viemToWeb3Abi } from '../../../helpers/web3';
 import { BeefyCommonBridgeAbi } from '../../../config/abi/BeefyCommonBridgeAbi';
 import { BeefyZapRouterAbi } from '../../../config/abi/BeefyZapRouterAbi';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
-import { selectTransactSelectedQuote } from '../selectors/transact';
+import { selectTransactSelectedQuote, selectTransactSlippage } from '../selectors/transact';
+import type { TokenAmount } from '../apis/transact/transact-types';
+import type { StargateConfig } from '../apis/transact/strategies/stargate-crosschain-single/types';
+import { StargateComposerAbi } from '../../../config/abi/StargateComposerAbi';
+import abiCoder from 'web3-eth-abi';
+import { slipBy } from '../apis/transact/helpers/amounts';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -1083,7 +1091,8 @@ const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => 
 const zapExecuteOrder = (
   vaultId: VaultEntity['id'],
   params: UserlessZapRequest,
-  expectedTokens: TokenEntity[]
+  expectedTokens: TokenEntity[],
+  sourceChainId?: ChainEntity['id'] | undefined
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -1094,10 +1103,10 @@ const zapExecuteOrder = (
     }
 
     const vault = selectVaultById(state, vaultId);
-    const chain = selectChainById(state, vault.chainId);
-    const zap = selectZapByChainId(state, vault.chainId);
-    if (!zap) {
-      throw new Error(`No zap found for chain ${chain.id}`);
+    const sourceChain = selectChainById(state, sourceChainId || vault.chainId);
+    const sourceZap = selectZapByChainIdOrUndefined(state, sourceChain.id);
+    if (!sourceZap) {
+      throw new Error(`No zap found for chain ${sourceChain.id}`);
     }
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
@@ -1110,10 +1119,10 @@ const zapExecuteOrder = (
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const gasPrices = await getGasPriceOptions(chain);
+    const gasPrices = await getGasPriceOptions(sourceChain);
     const nativeInput = order.inputs.find(input => input.token === ZERO_ADDRESS);
 
-    const contract = new web3.eth.Contract(viemToWeb3Abi(BeefyZapRouterAbi), zap.router);
+    const contract = new web3.eth.Contract(viemToWeb3Abi(BeefyZapRouterAbi), sourceZap.router);
     const options = {
       ...gasPrices,
       value: nativeInput ? nativeInput.amount : '0',
@@ -1135,9 +1144,107 @@ const zapExecuteOrder = (
       },
       {
         walletAddress: address,
-        chainId: vault.chainId,
-        spenderAddress: zap.manager,
+        chainId: sourceChain.id,
+        spenderAddress: sourceZap.manager,
         tokens: selectZapTokensToRefresh(state, vault, order),
+        clearInput: true,
+      }
+    );
+  });
+};
+
+const stargateBridgeZap = (
+  vaultId: VaultEntity['id'],
+  from: TokenAmount,
+  bridgeCost: TokenAmount,
+  fromStargateConfig: StargateConfig,
+  toStargateConfig: StargateConfig,
+  fromPoolId: string,
+  toPoolId: string
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    txStart(dispatch);
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const vault = selectVaultById(state, vaultId);
+    const chain = selectChainById(state, vault.chainId);
+    const slippage = selectTransactSlippage(state);
+    const walletApi = await getWalletConnectionApi();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const gasPrices = await getGasPriceOptions(chain);
+    const contract = new web3.eth.Contract(
+      viemToWeb3Abi(StargateComposerAbi),
+      fromStargateConfig.composerAddress
+    );
+    const value = toWeiString(
+      isTokenEqual(from.token, bridgeCost.token)
+        ? bridgeCost.amount.plus(from.amount)
+        : bridgeCost.amount,
+      bridgeCost.token.decimals
+    );
+    const options = {
+      ...gasPrices,
+      value,
+      from: address,
+    };
+
+    const lzTxObj = [
+      toStargateConfig.depositGasLimit, // dstGasForCall TODO: change when withdrawing
+      '0', // dstNativeAmount
+      '0x', // dstNativeAddr (bytes)
+    ];
+
+    const payload = abiCoder.encodeParameters(
+      ['uint8', 'bytes'],
+      [
+        0, // 0 for deposit, 1 for withdraw TODO: change when withdrawing
+        abiCoder.encodeParameters(
+          ['address', 'address', 'address'],
+          [
+            vault.earnContractAddress, // vault address
+            vault.depositTokenAddress === 'native' ? ZERO_ADDRESS : vault.depositTokenAddress, // deposit token address
+            address,
+          ]
+        ),
+      ]
+    );
+
+    const minAmount = slipBy(from.amount, slippage, from.token.decimals);
+
+    txWallet(dispatch);
+    const transaction = contract.methods
+      .swap(
+        toStargateConfig.chainId, // _dstChainId
+        fromPoolId, // _srcPoolId
+        toPoolId, // _dstPoolId
+        address, // _refundAddress
+        toWeiString(from.amount, from.token.decimals), // _amountLD
+        toWeiString(minAmount, from.token.decimals), // _minAmountLD
+        lzTxObj, // _lzTxParams
+        toStargateConfig.zapReceiverAddress, // _to
+        payload // _payload
+      )
+      .send(options);
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      {
+        type: 'zap',
+        amount: from.amount,
+        token: from.token,
+        expectedTokens: [],
+        vaultId: vault.id,
+      },
+      {
+        walletAddress: address,
+        chainId: vault.chainId,
+        spenderAddress: fromStargateConfig.composerAddress,
+        tokens: selectVaultTokensToRefresh(state, vault).concat(from.token),
         clearInput: true,
       }
     );
@@ -1170,6 +1277,7 @@ export const walletActions = {
   zapExecuteOrder,
   migrateUnstake,
   bridgeViaCommonInterface,
+  stargateBridgeZap,
 };
 
 export function captureWalletErrors(

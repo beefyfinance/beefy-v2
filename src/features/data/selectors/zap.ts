@@ -8,9 +8,13 @@ import { selectPlatformByIdOrUndefined } from './platforms';
 import type { TFunction } from 'react-i18next';
 import { isZapQuoteStepSwap, type ZapQuoteStep } from '../apis/transact/transact-types';
 import { uniqBy } from 'lodash-es';
+import { valueOrThrow } from '../utils/selector-utils';
+
+export const selectZapByChainIdOrUndefined = (state: BeefyState, chainId: ChainEntity['id']) =>
+  state.entities.zaps.zaps.byChainId[chainId] || undefined;
 
 export const selectZapByChainId = (state: BeefyState, chainId: ChainEntity['id']) =>
-  state.entities.zaps.zaps.byChainId[chainId] || undefined;
+  valueOrThrow(selectZapByChainIdOrUndefined(state, chainId), `No zap for chain ${chainId}`);
 
 export const selectSwapAggregatorById = (state: BeefyState, id: SwapAggregatorEntity['id']) =>
   state.entities.zaps.aggregators.byId[id] || undefined;

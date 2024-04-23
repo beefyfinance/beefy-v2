@@ -65,7 +65,10 @@ export type TransactInitArgs = {
   vaultId: VaultEntity['id'];
 };
 
-export type TransactInitPayload = void;
+export type TransactInitPayload = {
+  vaultId: VaultEntity['id'];
+  chainId: ChainEntity['id'];
+};
 
 export const transactInit = createAsyncThunk<
   TransactInitPayload,
@@ -101,7 +104,11 @@ export const transactInit = createAsyncThunk<
       loaders.push(dispatch(fetchFees()));
     }
 
-    await Promise.all(loaders);
+    if (loaders.length) {
+      await Promise.all(loaders);
+    }
+
+    return { vaultId, chainId: vault.chainId };
   },
   {
     condition({ vaultId }, { getState }) {
@@ -337,7 +344,7 @@ export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state:
           : onlyOneInput(quote.inputs).amount.eq(inputAmount);
 
       shouldFetch =
-        option.chainId !== chainId ||
+        (option.selectionChainId ?? option.chainId) !== chainId ||
         option.vaultId !== vaultId ||
         option.selectionId !== selectionId ||
         !matchingInputs;

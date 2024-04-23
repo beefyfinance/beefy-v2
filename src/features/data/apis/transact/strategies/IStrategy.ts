@@ -36,6 +36,10 @@ export type SingleStrategyOptions = {
   strategyId: 'single';
 } & OptionalStrategySwapOption;
 
+export type StargateCrossChainSingleStrategyOptions = {
+  strategyId: 'stargate-crosschain-single';
+} & OptionalStrategySwapOption;
+
 export type UniswapLikeStrategyOptions<TAmm extends AmmEntity> = {
   strategyId: TAmm['type'];
   ammId: TAmm['id'];
@@ -66,6 +70,7 @@ export type ConicStrategyOptions = {
 
 export type StrategyOptions =
   | SingleStrategyOptions
+  | StargateCrossChainSingleStrategyOptions
   | UniswapV2StrategyOptions
   | SolidlyStrategyOptions
   | CurveStrategyOptions

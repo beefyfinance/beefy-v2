@@ -26,7 +26,7 @@ import { strategyBuildersById } from './strategies';
 import { vaultTypeBuildersById } from './vaults';
 import { uniq } from 'lodash-es';
 import { VaultStrategy } from './strategies/vault/VaultStrategy';
-import { selectZapByChainId } from '../../selectors/zap';
+import { selectZapByChainIdOrUndefined } from '../../selectors/zap';
 import { getSwapAggregator } from '../instances';
 import { CowcentratedStrategy } from './strategies/cowcentrated/CowcentratedStrategy';
 
@@ -38,7 +38,7 @@ export class TransactApi implements ITransactApi {
     const state = getState();
     const vault = selectVaultById(state, vaultId);
     const vaultType = await this.getVaultTypeFor(vault, getState);
-    const zap = selectZapByChainId(state, vault.chainId);
+    const zap = selectZapByChainIdOrUndefined(state, vault.chainId);
 
     return {
       vault,
@@ -62,11 +62,17 @@ export class TransactApi implements ITransactApi {
 
     // zaps
     const zapStrategies = await this.getZapStrategiesForVault(helpers);
+    if (vaultId === 'silo-usdce-arb') {
+      console.log(zapStrategies);
+    }
     if (zapStrategies.length) {
       const zapOptions = await allFulfilled(
         zapStrategies.map(zapStrategy => zapStrategy.fetchDepositOptions())
       );
       options.push(...zapOptions.flat());
+      if (vaultId === 'silo-usdce-arb') {
+        console.log(options);
+      }
     }
 
     return options;

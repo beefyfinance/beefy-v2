@@ -4,10 +4,9 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectTransactVaultId,
+  selectTransactSelectedChainId,
   selectTransactWithdrawSelectionsForChainWithBalances,
 } from '../../../../../data/selectors/transact';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { SearchInput } from '../../../../../../components/SearchInput';
 import { Scrollable } from '../../../../../../components/Scrollable';
 import type { ListItemProps } from './components/ListItem';
@@ -26,13 +25,10 @@ export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const classes = useStyles();
-    const vaultId = useAppSelector(selectTransactVaultId);
-    const vault = useAppSelector(state => selectVaultById(state, vaultId));
-    // const availableChains = useAppSelector(selectTransactTokenChains);
-    const [selectedChain] = useState(vault.chainId);
+    const selectedChainId = useAppSelector(selectTransactSelectedChainId);
     const [search, setSearch] = useState('');
     const optionsForChain = useAppSelector(state =>
-      selectTransactWithdrawSelectionsForChainWithBalances(state, selectedChain)
+      selectTransactWithdrawSelectionsForChainWithBalances(state, selectedChainId)
     );
     const filteredOptionsForChain = useMemo(() => {
       let options = optionsForChain;
@@ -49,7 +45,6 @@ export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
 
       return options;
     }, [optionsForChain, search]);
-    // const hasMultipleChains = availableChains.length > 1;
     const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
       selectionId => {
         dispatch(
@@ -67,7 +62,6 @@ export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
         <div className={classes.search}>
           <SearchInput value={search} onChange={setSearch} className={classes.searchInput} />
         </div>
-        {/*hasMultipleChains ? <div className={classes.chainSelector}>TODO {selectedChain}</div> : null*/}
         <Scrollable className={classes.listContainer}>
           <div className={classes.list}>
             {filteredOptionsForChain.length ? (
@@ -78,7 +72,7 @@ export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
                   tokens={option.tokens}
                   balance={option.balance}
                   decimals={option.decimals}
-                  chainId={selectedChain}
+                  chainId={selectedChainId}
                   onSelect={handleTokenSelect}
                 />
               ))

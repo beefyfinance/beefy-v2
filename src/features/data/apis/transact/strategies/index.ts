@@ -20,6 +20,11 @@ function makeLazyLoader<T extends StrategyConstructor>(loader: () => Promise<T>)
 
 export const strategyBuildersById = {
   single: makeLazyLoader(async () => (await import('./single/SingleStrategy')).SingleStrategy),
+  'stargate-crosschain-single': makeLazyLoader(
+    async () =>
+      (await import('./stargate-crosschain-single/StargateCrossChainSingleStrategy'))
+        .StargateCrossChainSingleStrategy
+  ),
   'uniswap-v2': makeLazyLoader(
     async () => (await import('./uniswap-v2/UniswapV2Strategy')).UniswapV2Strategy
   ),
