@@ -27,4 +27,9 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     textAlign: 'right' as const,
   },
+  cowcentrated: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
 });

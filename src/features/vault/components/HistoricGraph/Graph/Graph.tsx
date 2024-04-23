@@ -81,9 +81,10 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
         valueFormatter={yTickFormatter}
         avg={avg}
         vaultType={vaultType}
+        vaultId={vaultId}
       />
     ),
-    [stat, bucket, isCowcentrated, toggles, yTickFormatter, avg, vaultType]
+    [stat, bucket, isCowcentrated, toggles, yTickFormatter, avg, vaultType, vaultId]
   );
 
   console.log(data);
@@ -96,7 +97,7 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
           className={classes.graph}
           height={200}
           margin={chartMargin}
-          barCategoryGap={'20%'}
+          barCategoryGap={'30%'}
         >
           <CartesianGrid strokeDasharray="2 2" vertical={!isCowcentrated} stroke="#363B63" />
           <XAxis

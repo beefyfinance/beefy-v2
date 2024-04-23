@@ -9,6 +9,7 @@ import {
 } from '../../../../data/selectors/tokens';
 import type { VaultEntity } from '../../../../data/entities/vault';
 import { styles } from './styles';
+import { BIG_ZERO } from '../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
@@ -29,6 +30,10 @@ export const CowcentratedRanges = memo(function CowcentratedRanges({
   const showInRange = useMemo(() => {
     return currentPrice.lte(priceRangeMax) && currentPrice.gte(priceRangeMin);
   }, [currentPrice, priceRangeMax, priceRangeMin]);
+
+  if (currentPrice.eq(BIG_ZERO) || priceRangeMin.eq(BIG_ZERO) || priceRangeMax.eq(BIG_ZERO)) {
+    return null;
+  }
 
   return (
     <>

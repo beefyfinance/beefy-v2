@@ -8,16 +8,22 @@ import { format, fromUnixTime } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { getBucketParams } from '../utils';
 import { styles } from './styles';
+import type { VaultEntity } from '../../../../data/entities/vault';
+import { useAppSelector } from '../../../../../store';
+import { selectVaultTokenSymbols } from '../../../../data/selectors/tokens';
+import { formatTokenDisplayCondensed } from '../../../../../helpers/format';
+import { isArray } from 'lodash-es';
 
 const useStyles = makeStyles(styles);
 
 export type TooltipContentProps = TooltipProps<number, string> & {
-  stat: Omit<ChartStat, 'cowcentrated'>;
+  stat: ChartStat;
   bucket: ApiTimeBucket;
   toggles: LineTogglesState;
   valueFormatter: (value: number) => string;
   avg: number;
   vaultType: 'standard' | 'gov' | 'cowcentrated';
+  vaultId: VaultEntity['id'];
 };
 
 export const TooltipContent = memo<TooltipContentProps>(function TooltipContent({
@@ -29,6 +35,7 @@ export const TooltipContent = memo<TooltipContentProps>(function TooltipContent(
   valueFormatter,
   avg,
   vaultType,
+  vaultId,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -38,9 +45,13 @@ export const TooltipContent = memo<TooltipContentProps>(function TooltipContent(
     return null;
   }
 
-  const [valueLine, maLine] = payload!;
-  const [value, ma] = [valueLine?.value, maLine?.value];
+  const [valueLine, maLineOrRanges] = payload!;
+  const value = valueLine?.value;
+  const maOrRanges: number | number[] | undefined = maLineOrRanges?.value;
   const { t: timestamp } = valueLine.payload;
+
+  const ranges: number[] =
+    vaultType === 'cowcentrated' && stat === 'clm' && isArray(maOrRanges) ? maOrRanges : [0, 0];
 
   return (
     <div className={classes.content}>
@@ -62,10 +73,35 @@ export const TooltipContent = memo<TooltipContentProps>(function TooltipContent(
               <div>{t('Moving-Average')}:</div>
               <div className={classes.labelDetail}>{`(${maPeriods} ${t(maUnit)})`}</div>
             </div>
-            {ma ? <div className={classes.value}>{valueFormatter(ma)}</div> : null}
+            {maOrRanges ? <div className={classes.value}>{valueFormatter(maOrRanges)}</div> : null}
           </>
+        ) : null}
+
+        {vaultType === 'cowcentrated' && stat === 'clm' ? (
+          <Ranges vaultId={vaultId} ranges={ranges} />
         ) : null}
       </div>
     </div>
+  );
+});
+
+const Ranges = memo<{ vaultId: VaultEntity['id']; ranges: number[] }>(function Ranges({
+  vaultId,
+  ranges,
+}) {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const symbols = useAppSelector(state => selectVaultTokenSymbols(state, vaultId));
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const priceString = `${symbols[1]}/${symbols[0]}`;
+
+  return (
+    <>
+      <div className={classes.label}>{t('Range')}:</div>
+      <div className={classes.value}>
+        {formatTokenDisplayCondensed(ranges[0], 18)} - {formatTokenDisplayCondensed(ranges[1], 18)}{' '}
+        {/* {priceString} */}
+      </div>
+    </>
   );
 });
