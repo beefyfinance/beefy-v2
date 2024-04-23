@@ -19,7 +19,7 @@ import { makeStyles, useMediaQuery } from '@material-ui/core';
 import type { Theme } from '@material-ui/core';
 import { format, fromUnixTime } from 'date-fns';
 import { XAxisTick } from '../../../../../components/XAxisTick';
-import { getXInterval, mapRangeToTicks } from '../../../../../helpers/graph';
+import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../helpers/graph';
 import {
   formatPercent,
   formatTokenDisplayCondensed,
@@ -31,6 +31,7 @@ import { useChartData } from './useChartData';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../store';
 import { selectVaultById } from '../../../../data/selectors/vaults';
+import { max as lodashMax } from 'lodash-es';
 
 const useStyles = makeStyles(styles);
 
@@ -51,12 +52,15 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
   const chartMargin = useMemo(() => {
     return { top: 14, right: isMobile ? 16 : 24, bottom: 0, left: isMobile ? 16 : 24 };
   }, [isMobile]);
+
   const xTickFormatter = useMemo(() => {
     return (value: number) => formatDateTimeTick(value, bucket);
   }, [bucket]);
+
   const xTickInterval = useMemo(() => {
     return getXInterval(data.length, isMobile);
   }, [data.length, isMobile]);
+
   const yTickFormatter = useMemo(() => {
     return stat === 'apy'
       ? (value: number) => formatPercent(value)
@@ -64,12 +68,23 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
       ? (value: number) => formatTokenDisplayCondensed(value, 18)
       : (value: number) => formatUsd(value);
   }, [stat]);
+
+  const diff = useMemo(() => {
+    return domainOffSet(min, max, 0.8);
+  }, [max, min]);
+
+  const startYDomain = useMemo(() => {
+    return lodashMax([0, min - diff])!;
+  }, [diff, min]);
+
   const yDomain = useMemo(() => {
-    return [min, max];
-  }, [min, max]);
+    return [startYDomain, max + diff];
+  }, [diff, max, startYDomain]);
+
   const yTicks = useMemo(() => {
-    return mapRangeToTicks(min, max);
-  }, [min, max]);
+    return mapRangeToTicks(min, max + diff);
+  }, [min, max, diff]);
+
   const isCowcentrated = useMemo(() => stat === 'clm', [stat]);
   const tooltipContentCreator = useCallback(
     (props: TooltipProps<number, string>) => (
@@ -81,13 +96,10 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
         valueFormatter={yTickFormatter}
         avg={avg}
         vaultType={vaultType}
-        vaultId={vaultId}
       />
     ),
-    [stat, bucket, isCowcentrated, toggles, yTickFormatter, avg, vaultType, vaultId]
+    [stat, bucket, isCowcentrated, toggles, yTickFormatter, avg, vaultType]
   );
-
-  console.log(data);
 
   return (
     <div className={classes.chartContainer}>

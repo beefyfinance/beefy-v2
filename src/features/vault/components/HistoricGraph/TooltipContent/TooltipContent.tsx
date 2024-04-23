@@ -8,10 +8,6 @@ import { format, fromUnixTime } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { getBucketParams } from '../utils';
 import { styles } from './styles';
-import type { VaultEntity } from '../../../../data/entities/vault';
-import { useAppSelector } from '../../../../../store';
-import { selectVaultTokenSymbols } from '../../../../data/selectors/tokens';
-import { formatTokenDisplayCondensed } from '../../../../../helpers/format';
 import { isArray } from 'lodash-es';
 
 const useStyles = makeStyles(styles);
@@ -23,7 +19,6 @@ export type TooltipContentProps = TooltipProps<number, string> & {
   valueFormatter: (value: number) => string;
   avg: number;
   vaultType: 'standard' | 'gov' | 'cowcentrated';
-  vaultId: VaultEntity['id'];
 };
 
 export const TooltipContent = memo<TooltipContentProps>(function TooltipContent({
@@ -35,7 +30,6 @@ export const TooltipContent = memo<TooltipContentProps>(function TooltipContent(
   valueFormatter,
   avg,
   vaultType,
-  vaultId,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -58,50 +52,46 @@ export const TooltipContent = memo<TooltipContentProps>(function TooltipContent(
       <div className={classes.timestamp}>
         {format(fromUnixTime(timestamp), 'MMM d, yyyy h:mm a')}
       </div>
-      <div className={classes.grid}>
+      <div className={classes.itemContainer}>
         <div className={classes.label}>{t([`Graph-${vaultType}-${stat}`, `Graph-${stat}`])}:</div>
         {value ? <div className={classes.value}>{valueFormatter(value)}</div> : null}
-        {toggles.average ? (
-          <>
-            <div className={classes.label}>{t('Average')}:</div>
-            <div className={classes.value}>{valueFormatter(avg)}</div>
-          </>
-        ) : null}
-        {toggles.movingAverage ? (
-          <>
-            <div className={classes.label}>
-              <div>{t('Moving-Average')}:</div>
-              <div className={classes.labelDetail}>{`(${maPeriods} ${t(maUnit)})`}</div>
-            </div>
-            {maOrRanges ? <div className={classes.value}>{valueFormatter(maOrRanges)}</div> : null}
-          </>
-        ) : null}
-
-        {vaultType === 'cowcentrated' && stat === 'clm' ? (
-          <Ranges vaultId={vaultId} ranges={ranges} />
-        ) : null}
       </div>
+      {toggles.average ? (
+        <div className={classes.itemContainer}>
+          <div className={classes.label}>{t('Average')}:</div>
+          <div className={classes.value}>{valueFormatter(avg)}</div>
+        </div>
+      ) : null}
+      {toggles.movingAverage ? (
+        <div className={classes.itemContainer}>
+          <div className={classes.label}>
+            <div>{t('Moving-Average')}:</div>
+            <div className={classes.labelDetail}>{`(${maPeriods} ${t(maUnit)})`}</div>
+          </div>
+          {maOrRanges ? <div className={classes.value}>{valueFormatter(maOrRanges)}</div> : null}
+        </div>
+      ) : null}
+
+      {vaultType === 'cowcentrated' && stat === 'clm' ? (
+        <Ranges valueFormatter={valueFormatter} ranges={ranges} />
+      ) : null}
     </div>
   );
 });
 
-const Ranges = memo<{ vaultId: VaultEntity['id']; ranges: number[] }>(function Ranges({
-  vaultId,
-  ranges,
-}) {
+const Ranges = memo<{
+  ranges: number[];
+  valueFormatter: (value: number) => string;
+}>(function Ranges({ ranges, valueFormatter }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const symbols = useAppSelector(state => selectVaultTokenSymbols(state, vaultId));
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const priceString = `${symbols[1]}/${symbols[0]}`;
 
   return (
-    <>
+    <div className={classes.itemContainer}>
       <div className={classes.label}>{t('Range')}:</div>
       <div className={classes.value}>
-        {formatTokenDisplayCondensed(ranges[0], 18)} - {formatTokenDisplayCondensed(ranges[1], 18)}{' '}
-        {/* {priceString} */}
+        {valueFormatter(ranges[0])} - {valueFormatter(ranges[1])}{' '}
       </div>
-    </>
+    </div>
   );
 });

@@ -42,8 +42,8 @@ export function useChartData(
       let max = Math.max(...values);
 
       if (stat === 'clm') {
-        min = Math.min(...data.map(d => (d as ApiCowcentratedPoint).min)) * 0.8;
-        max = Math.max(...data.map(d => (d as ApiCowcentratedPoint).max)) * 1.2;
+        min = Math.min(...data.map((d: ApiCowcentratedPoint) => Math.min(d.min, d.v)));
+        max = Math.max(...data.map((d: ApiCowcentratedPoint) => Math.max(d.max, d.v)));
       }
 
       const avg = values.reduce((a, b) => a + b, 0) / values.length;
