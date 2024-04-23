@@ -1,5 +1,35 @@
 [
   {
+    "id": "quick-gamma-nativeusdc-weth-narrow",
+    "name": "USDC-ETH Narrow LP",
+    "type": "standard",
+    "token": "aUSDC-WETH",
+    "tokenAddress": "0x3974FbDC22741A1632E024192111107b202F214f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "quickswap",
+    "earnedToken": "mooQuickUSDC-ETHNarrow",
+    "earnedTokenAddress": "0x0514335D86463544220CBa8ca83B675AbD624525",
+    "earnContractAddress": "0x0514335D86463544220CBa8ca83B675AbD624525",
+    "oracle": "lps",
+    "oracleId": "quick-gamma-nativeusdc-weth-narrow",
+    "status": "active",
+    "createdAt": 1713733611,
+    "platformId": "gamma",
+    "assets": ["USDC", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc-weth-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc-weth-narrow",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
+  },
+  {
     "id": "curve-poly-crvusd-usdc.e",
     "name": "crvUSD/USDC.e",
     "token": "crvusdusde",
