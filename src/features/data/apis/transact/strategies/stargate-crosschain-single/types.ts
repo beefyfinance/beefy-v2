@@ -11,8 +11,6 @@ export type StargateConfig = {
   zapReceiverAddress?: string;
   /** Gas limit for zap deposit tx (deposit into vault) */
   depositGasLimit: string;
-  /** Gas limit for zap withdraw tx (sending token only) */
-  withdrawGasLimit: string;
 };
 
 export type StargateConfigToken = {

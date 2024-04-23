@@ -196,7 +196,6 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
             toToken: path.source.token,
           }
     );
-    console.log('quoteRequestsPerPath', quoteRequestsPerPath);
 
     const quotesPerPath = await Promise.all(
       quoteRequestsPerPath.map(async quoteRequest => {
@@ -207,7 +206,6 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
         return await swapAggregator.fetchQuotes(quoteRequest, state);
       })
     );
-    console.log('quotesPerPath', quotesPerPath);
 
     const quotePerPath = quotesPerPath.map((quotes, i) => {
       if (quotes === undefined) {
@@ -224,7 +222,6 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
       // fetchQuotes is already sorted by toAmount
       return first(quotes);
     });
-    console.log('quotePerPath', quotePerPath);
 
     const swapOutputPerPath = quotePerPath.map(quote => {
       if (quote === undefined) {
@@ -232,7 +229,6 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
       }
       return { token: quote.toToken, amount: quote.toAmount };
     });
-    console.log('swapOutputPerPath', swapOutputPerPath);
 
     const bridgeOutputPerPath = await Promise.all(
       swapOutputPerPath.map(async (output, i) => ({
@@ -240,7 +236,6 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
         token: paths[i].dest.token,
       }))
     );
-    console.log('bridgeOutputPerPath', bridgeOutputPerPath);
 
     const possible = bridgeOutputPerPath
       .map((amount, i) => ({
@@ -253,7 +248,6 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
         path: paths[i],
       }))
       .sort((a, b) => b.output.amount.comparedTo(a.output.amount));
-    console.log('possible', possible);
 
     const best = possible[0];
 
@@ -508,7 +502,6 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
             toToken: path.source.token,
           }
     );
-    console.log('quoteRequestsPerPath', quoteRequestsPerPath);
 
     const quotesPerPath = await Promise.all(
       quoteRequestsPerPath.map(async quoteRequest => {
@@ -519,7 +512,6 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
         return await swapAggregator.fetchQuotes(quoteRequest, state);
       })
     );
-    console.log('quotesPerPath', quotesPerPath);
 
     const quotePerPath = quotesPerPath.map((quotes, i) => {
       if (quotes === undefined) {
@@ -536,7 +528,6 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
       // fetchQuotes is already sorted by toAmount
       return first(quotes);
     });
-    console.log('quotePerPath', quotePerPath);
 
     const swapOutputPerPath = quotePerPath.map(quote => {
       if (quote === undefined) {
@@ -544,7 +535,6 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
       }
       return { token: quote.toToken, amount: quote.toAmount };
     });
-    console.log('swapOutputPerPath', swapOutputPerPath);
 
     const bridgeOutputPerPath = await Promise.all(
       swapOutputPerPath.map(async (output, i) => ({
@@ -552,7 +542,6 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
         token: paths[i].dest.token,
       }))
     );
-    console.log('bridgeOutputPerPath', bridgeOutputPerPath);
 
     const possible = bridgeOutputPerPath
       .map((amount, i) => ({
@@ -565,7 +554,6 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
         path: paths[i],
       }))
       .sort((a, b) => b.output.amount.comparedTo(a.output.amount));
-    console.log('possible', possible);
 
     const best = possible[0];
 
@@ -873,21 +861,6 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
           swapSupport.any.some(s => isTokenEqual(s, p.source.token)))
     );
 
-    if (vault.id === 'silo-eth-pendle-weeth') {
-      console.log({
-        depositToken: vaultType.depositToken,
-        swapSupport,
-        pathsFromVaultChain: this.paths.filter(
-          p =>
-            p.canWithdraw &&
-            p.source.token.chainId === vault.chainId &&
-            p.dest.token.chainId !== vault.chainId
-        ),
-        possiblePaths,
-        tokens: uniqueTokens(possiblePaths.map(p => p.dest.token).flat()),
-      });
-    }
-
     return uniqueTokens(possiblePaths.map(p => p.dest.token).flat());
   }
 
@@ -994,12 +967,6 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
     if (!receiverAddress) {
       throw new Error(`No zap receiver address found for chain id ${toChain.id}`);
     }
-
-    console.log(
-      vault.earnContractAddress,
-      vault.depositTokenAddress,
-      toStargateConfig.zapReceiverAddress
-    );
 
     const web3 = await getWeb3Instance(fromChain);
     const contract = new web3.eth.Contract(
