@@ -8,11 +8,18 @@ import {
   selectUserBalanceOfToken,
   selectUserVaultDepositInDepositTokenExcludingBoostsBridged,
 } from './balance';
-import type { TokenAmount, TransactOption, TransactQuote } from '../apis/transact/transact-types';
+import {
+  isCowcentratedDepositQuote,
+  type InputTokenAmount,
+  type TokenAmount,
+  type TransactOption,
+  type TransactQuote,
+} from '../apis/transact/transact-types';
 import BigNumber from 'bignumber.js';
 import { TransactStatus } from '../reducers/wallet/transact-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { valueOrThrow } from '../utils/selector-utils';
+import type { TokenEntity } from '../entities/token';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
@@ -124,6 +131,27 @@ export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyStat
   const value = selectTransactInputAmount(state);
 
   return value.gt(userBalance);
+};
+
+export const selectTransactCowcentratedDepositNotSingleSideAllowed = (state: BeefyState) => {
+  const quote = selectTransactSelectedQuote(state);
+
+  const noSingleSideAllowed =
+    isCowcentratedDepositQuote(quote) &&
+    quote.outputs.every(inputToken => inputToken.amount.eq(BIG_ZERO));
+
+  let inputToken: InputTokenAmount<TokenEntity> | null = null;
+  let neededToken: InputTokenAmount<TokenEntity> | null = null;
+
+  for (const input of quote.inputs) {
+    if (input.amount.gt(BIG_ZERO)) {
+      inputToken = input;
+    } else {
+      neededToken = input;
+    }
+  }
+
+  return { noSingleSideAllowed, inputToken, neededToken };
 };
 
 export const selectTransactTokenChainIds = (state: BeefyState) =>

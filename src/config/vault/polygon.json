@@ -1,5 +1,35 @@
 [
   {
+    "id": "quick-gamma-nativeusdc-weth-narrow",
+    "name": "USDC-ETH Narrow LP",
+    "type": "standard",
+    "token": "aUSDC-WETH",
+    "tokenAddress": "0x3974FbDC22741A1632E024192111107b202F214f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "quickswap",
+    "earnedToken": "mooQuickUSDC-ETHNarrow",
+    "earnedTokenAddress": "0x0514335D86463544220CBa8ca83B675AbD624525",
+    "earnContractAddress": "0x0514335D86463544220CBa8ca83B675AbD624525",
+    "oracle": "lps",
+    "oracleId": "quick-gamma-nativeusdc-weth-narrow",
+    "status": "active",
+    "createdAt": 1713733611,
+    "platformId": "gamma",
+    "assets": ["USDC", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc-weth-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc-weth-narrow",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+      }
+    ]
+  },
+  {
     "id": "curve-poly-crvusd-usdc.e",
     "name": "crvUSD/USDC.e",
     "token": "crvusdusde",
@@ -738,7 +768,7 @@
   },
   {
     "id": "retro-gamma-usdc-ageur-narrow",
-    "name": "agEUR-USDC.e LP",
+    "name": "EURA-USDC.e LP",
     "type": "standard",
     "token": "agEUR-USDC.e rLP",
     "tokenAddress": "0x98b6a5EedC9382E2c4F8A38f985f2e9aC0B0E84c",
@@ -752,7 +782,7 @@
     "status": "active",
     "createdAt": 1691447788,
     "platformId": "gamma",
-    "assets": ["agEUR", "pUSDCe"],
+    "assets": ["EURA", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-ageur-100-narrow",
@@ -778,7 +808,9 @@
     "earnContractAddress": "0x964eA598DF006F692105A951a774ff9825a454Fe",
     "oracle": "lps",
     "oracleId": "retro-gamma-weth-frxeth-narrow",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1713202188,
     "createdAt": 1691447788,
     "platformId": "gamma",
     "assets": ["frxETH", "ETH"],
@@ -2281,9 +2313,9 @@
   },
   {
     "id": "balancer-jeur-ageur",
-    "name": "jEUR-agEUR",
+    "name": "jEUR-EURA",
     "type": "standard",
-    "token": "jEUR-agEUR",
+    "token": "jEUR-EURA",
     "tokenAddress": "0xa48D164F6eB0EDC68bd03B56fa59E12F24499aD1",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
@@ -2297,7 +2329,7 @@
     "retireReason": "rewards",
     "retiredAt": 1679770018,
     "platformId": "balancer",
-    "assets": ["jEUR", "agEUR"],
+    "assets": ["jEUR", "EURA"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -11332,7 +11364,7 @@
   },
   {
     "id": "jarvis-5eur-eol",
-    "name": "agEUR-4EUR",
+    "name": "EURA-4EUR",
     "type": "standard",
     "token": "ag5eur",
     "tokenAddress": "0x81212149b983602474fcD0943E202f38b38d7484",
@@ -11348,7 +11380,7 @@
     "retireReason": "rewards",
     "retiredAt": 1648830610,
     "platformId": "jarvis",
-    "assets": ["agEUR", "4EUR"],
+    "assets": ["EURA", "4EUR"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -12432,9 +12464,9 @@
   },
   {
     "id": "jarvis-2eur",
-    "name": "agEUR-jEUR LP",
+    "name": "EURA-jEUR LP",
     "type": "standard",
-    "token": "agEUR-jEUR LP",
+    "token": "EURA-jEUR LP",
     "tokenAddress": "0x2fFbCE9099cBed86984286A54e5932414aF4B717",
     "tokenDecimals": 18,
     "tokenProviderId": "curve",
@@ -12448,7 +12480,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675811643,
     "platformId": "jarvis",
-    "assets": ["agEUR", "jEUR"],
+    "assets": ["EURA", "jEUR"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",

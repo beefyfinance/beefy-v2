@@ -12,7 +12,7 @@ import { GraphWithControls } from './GraphWithControls';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { getDefaultStat } from './utils';
-import { CowcentratedChart } from './Graph';
+import { CowcentratedChart } from './CowcentratedRanges';
 
 const useStyles = makeStyles(styles);
 

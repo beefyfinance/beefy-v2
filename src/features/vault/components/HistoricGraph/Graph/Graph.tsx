@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import type { TooltipProps } from 'recharts';
 import {
   Area,
@@ -19,20 +19,13 @@ import type { Theme } from '@material-ui/core';
 import { format, fromUnixTime } from 'date-fns';
 import { XAxisTick } from '../../../../../components/XAxisTick';
 import { getXInterval, mapRangeToTicks } from '../../../../../helpers/graph';
-import {
-  formatLargePercent,
-  formatLargeUsd,
-  formatTokenDisplayCondensed,
-} from '../../../../../helpers/format';
+import { formatLargePercent, formatLargeUsd } from '../../../../../helpers/format';
 import type { LineTogglesState } from '../LineToggles';
 import { TooltipContent } from '../TooltipContent';
 import { useChartData } from './useChartData';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../store';
-import { selectCowVaultById, selectVaultById } from '../../../../data/selectors/vaults';
-import { useTranslation } from 'react-i18next';
-import { selectCurrentCowcentratedRangesByVaultId } from '../../../../data/selectors/tokens';
-import clsx from 'clsx';
+import { selectVaultById } from '../../../../data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 
@@ -123,53 +116,6 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
           />
         </AreaChart>
       </ResponsiveContainer>
-    </div>
-  );
-});
-
-export const CowcentratedChart = memo(function CowcentratedChart({
-  vaultId,
-}: {
-  vaultId: VaultEntity['id'];
-}) {
-  const classes = useStyles();
-  const { t } = useTranslation();
-  const { currentPrice, priceRangeMin, priceRangeMax } = useAppSelector(state =>
-    selectCurrentCowcentratedRangesByVaultId(state, vaultId)
-  );
-
-  const vault = useAppSelector(state => selectCowVaultById(state, vaultId));
-  const priceString = `${vault.assetIds[1]}/${vault.assetIds[0]}`;
-
-  const showInRange = useMemo(() => {
-    return currentPrice.lte(priceRangeMax) && currentPrice.gte(priceRangeMin);
-  }, [currentPrice, priceRangeMax, priceRangeMin]);
-
-  return (
-    <div className={classes.cowcentratedHeader}>
-      <div className={clsx(classes.cowcentratedStat, classes.roundBottomLeft)}>
-        <div className={classes.label}>{t('Min Price')}</div>
-        <div className={classes.value}>
-          {formatTokenDisplayCondensed(priceRangeMin, 18)} <span>{priceString}</span>
-        </div>
-      </div>
-      <div className={classes.cowcentratedStat}>
-        <div className={classes.label}>
-          {t('Current Price')}{' '}
-          <span className={showInRange ? classes.inRange : classes.outOfRange}>
-            ({t(showInRange ? 'In Range' : 'Out of Range')})
-          </span>
-        </div>
-        <div className={classes.value}>
-          {formatTokenDisplayCondensed(currentPrice, 18)} <span>{priceString}</span>
-        </div>
-      </div>
-      <div className={clsx(classes.cowcentratedStat, classes.roundBottomRight)}>
-        <div className={classes.label}>{t('Max Price')}</div>
-        <div className={classes.value}>
-          {formatTokenDisplayCondensed(priceRangeMax, 18)} <span>{priceString}</span>
-        </div>
-      </div>
     </div>
   );
 });

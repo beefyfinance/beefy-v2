@@ -25,7 +25,7 @@ import { type ActionButtonProps, ActionConnectSwitch } from '../CommonActions';
 import { GlpDepositNotice } from '../GlpNotices';
 import { NotEnoughNotice } from '../NotEnoughNotice';
 import { VaultFees } from '../VaultFees';
-import { BIG_ZERO } from '../../../../../../helpers/big-number';
+import { CowcentratedNoSingleSideAllowedNotice } from '../CowcentratedNoSingleSideAllowedNotice';
 
 const useStyles = makeStyles(styles);
 
@@ -37,11 +37,7 @@ export const DepositActions = memo<DepositActionsProps>(function DepositActions(
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const option = quote ? quote.option : null;
 
-  const isCowcentratedEmptyDeposit = quote
-    ? isCowcentratedDepositQuote(quote) && quote.outputs[0].amount.eq(BIG_ZERO)
-    : false;
-
-  if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled || isCowcentratedEmptyDeposit) {
+  if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
     return <ActionDepositDisabled className={className} />;
   }
 
@@ -87,6 +83,7 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
   const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
+  const [isDisabledByNoAllowedSingleSide, setIsDisabledByNoAllowedSingleSide] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const isMaxAll = useMemo(() => {
@@ -100,7 +97,8 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
     isDisabledByMaxNative ||
     isDisabledByConfirm ||
     isDisabledByGlpLock ||
-    isDisabledByNotEnoughInput;
+    isDisabledByNotEnoughInput ||
+    isDisabledByNoAllowedSingleSide;
 
   const handleClick = useCallback(() => {
     dispatch(transactSteps(quote, t));
@@ -118,6 +116,7 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
       <MaxNativeNotice quote={quote} onChange={setIsDisabledByMaxNative} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <NotEnoughNotice mode="deposit" onChange={setIsDisabledByNotEnoughInput} />
+      <CowcentratedNoSingleSideAllowedNotice onChange={setIsDisabledByNoAllowedSingleSide} />
       <div className={classes.feesContainer}>
         <ActionConnectSwitch chainId={option.chainId}>
           <Button

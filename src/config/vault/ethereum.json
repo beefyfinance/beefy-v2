@@ -1,5 +1,43 @@
 [
   {
+    "id": "fx-pyusd-fxusd",
+    "name": "PYUSD/fxUSD",
+    "token": "fxUSDpyUSD",
+    "tokenAddress": "0xd6982da59F1D26476E259559508f4135135cf9b8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooFxConvexPYUSD-fxUSD",
+    "earnedTokenAddress": "0x3334D380CA00FC9388E21B259673bB3d2BcD2D95",
+    "earnContractAddress": "0x3334D380CA00FC9388E21B259673bB3d2BcD2D95",
+    "oracle": "lps",
+    "oracleId": "fx-pyusd-fxusd",
+    "status": "active",
+    "createdAt": 1713340879,
+    "platformId": "fx",
+    "assets": ["PYUSD", "fxUSD"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-107/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-107/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xd6982da59F1D26476E259559508f4135135cf9b8",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xd6982da59F1D26476E259559508f4135135cf9b8",
+            "coins": [
+              "0x6c3ea9036406852006290770BEdFcAbA0e23A0e8",
+              "0x085780639CC2cACd35E474e71f4d000e2405d8f6"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curve-lend-crv-crvusd",
     "name": "crvUSD (CRV Market)",
     "token": "cvcrvUSD",
@@ -15,6 +53,7 @@
     "createdAt": 1712810154,
     "platformId": "curve-lend",
     "assets": ["crvUSD"],
+    "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-3/vault/deposit",
@@ -39,8 +78,8 @@
     "assets": ["FXN", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "XXX",
-    "removeLiquidityUrl": "XXX",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-311/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-311/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -77,8 +116,8 @@
     "assets": ["GHO", "fxUSD"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "XXX",
-    "removeLiquidityUrl": "XXX",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-111/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-111/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -609,7 +648,9 @@
     "earnContractAddress": "0x0c0b12343885427A80b3d9d2c552e178Cb216d69",
     "oracle": "lps",
     "oracleId": "aura-silo-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
+    "retiredAt": 1713202188,
     "createdAt": 1706114574,
     "platformId": "aura",
     "assets": ["SILO", "ETH"],

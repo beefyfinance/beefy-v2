@@ -1,5 +1,177 @@
 [
   {
+    "id": "aura-arb-ezeth-wsteth",
+    "name": "ezETH-wstETH",
+    "type": "standard",
+    "token": "ezETH-wstETH Arb",
+    "tokenAddress": "0xB61371Ab661B1ACec81C699854D2f911070C059E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraArbezETH-wstETH",
+    "earnedTokenAddress": "0xEFAd727469e7e4e410376986AB0af8B6F9559fDc",
+    "earnContractAddress": "0xEFAd727469e7e4e410376986AB0af8B6F9559fDc",
+    "oracle": "lps",
+    "oracleId": "aura-arb-ezeth-wsteth",
+    "status": "active",
+    "createdAt": 1713521423,
+    "platformId": "aura",
+    "assets": ["ezETH", "wstETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516/withdraw",
+    "network": "arbitrum",
+    "earningPoints": true
+  },
+  {
+    "id": "curve-lend-arb-arb-crvusd",
+    "name": "crvUSD (ARB Market)",
+    "token": "cvcrvUSD",
+    "tokenAddress": "0x65592b1F12c07D434e95c7BF87F4f2f464e950e4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve-lend",
+    "earnedToken": "mooCurveLendARB-crvUSD",
+    "earnedTokenAddress": "0x928e9075a880Bc40f55BcDB5dF3D8697E924b2c4",
+    "earnContractAddress": "0x928e9075a880Bc40f55BcDB5dF3D8697E924b2c4",
+    "oracle": "lps",
+    "oracleId": "curve-lend-arb-arb-crvusd",
+    "status": "active",
+    "createdAt": 1713171111,
+    "platformId": "curve-lend",
+    "assets": ["crvUSD"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single-lp",
+    "addLiquidityUrl": "https://lend.curve.fi/#/arbitrum/markets/one-way-market-5/vault/deposit",
+    "removeLiquidityUrl": "https://lend.curve.fi/#/arbitrum/markets/one-way-market-5/vault/withdraw",
+    "network": "arbitrum"
+  },
+  {
+    "id": "curve-lend-arb-wbtc-crvusd",
+    "name": "crvUSD (WBTC Market)",
+    "token": "cvcrvUSD",
+    "tokenAddress": "0x60D38b12d22BF423F28082bf396ff8F28cC506B1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve-lend",
+    "earnedToken": "mooCurveLendWBTC-crvUSD",
+    "earnedTokenAddress": "0x536CF168B627727acEeCeA4f3C2059F5AA1de456",
+    "earnContractAddress": "0x536CF168B627727acEeCeA4f3C2059F5AA1de456",
+    "oracle": "lps",
+    "oracleId": "curve-lend-arb-wbtc-crvusd",
+    "status": "active",
+    "createdAt": 1713171101,
+    "platformId": "curve-lend",
+    "assets": ["crvUSD"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single-lp",
+    "addLiquidityUrl": "https://lend.curve.fi/#/arbitrum/markets/one-way-market-1/vault/deposit",
+    "removeLiquidityUrl": "https://lend.curve.fi/#/arbitrum/markets/one-way-market-1/vault/withdraw",
+    "network": "arbitrum"
+  },
+  {
+    "id": "curve-lend-arb-weth-crvusd",
+    "name": "crvUSD (WETH Market)",
+    "token": "cvcrvUSD",
+    "tokenAddress": "0x49014A8eB1585cBee6A7a9A50C3b81017BF6Cc4d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve-lend",
+    "earnedToken": "mooCurveLendWETH-crvUSD",
+    "earnedTokenAddress": "0xb46192aA0640AB9990228d0671DB5ecf67034D27",
+    "earnContractAddress": "0xb46192aA0640AB9990228d0671DB5ecf67034D27",
+    "oracle": "lps",
+    "oracleId": "curve-lend-arb-weth-crvusd",
+    "status": "active",
+    "createdAt": 1713171091,
+    "platformId": "curve-lend",
+    "assets": ["crvUSD"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single-lp",
+    "addLiquidityUrl": "https://lend.curve.fi/#/arbitrum/markets/one-way-market-0/vault/deposit",
+    "removeLiquidityUrl": "https://lend.curve.fi/#/arbitrum/markets/one-way-market-0/vault/withdraw",
+    "network": "arbitrum"
+  },
+  {
+    "id": "silo-eth-ezeth",
+    "name": "ETH (ezETH Market)",
+    "type": "standard",
+    "token": "ETH",
+    "tokenAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloArbWETH(ezETH)",
+    "earnedTokenAddress": "0x6a96e55c6a8ab9380E006D7C83232d3E7a935402",
+    "earnContractAddress": "0x6a96e55c6a8ab9380E006D7C83232d3E7a935402",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "createdAt": 1713892433,
+    "platformId": "silo",
+    "assets": ["ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612"
+    }
+  },
+  {
+    "id": "silo-eth-pendle-ezeth",
+    "name": "ETH (PT-ezETH Market)",
+    "type": "standard",
+    "token": "ETH",
+    "tokenAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloArbWETH(PT-ezETH)",
+    "earnedTokenAddress": "0xf15Bf589aC1F4b1Bc20c3f9A922BaA14101bC368",
+    "earnContractAddress": "0xf15Bf589aC1F4b1Bc20c3f9A922BaA14101bC368",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "createdAt": 1713892433,
+    "platformId": "silo",
+    "assets": ["ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612"
+    }
+  },
+  {
     "id": "curve-lend-arb-crv-crvusd",
     "name": "crvUSD (CRV Market)",
     "token": "cvcrvUSD",
@@ -23,8 +195,8 @@
   },
   {
     "id": "uniswap-cow-arb-eth-usdt",
-    "name": "ETH-USDT",
-    "token": "ETH-USDT",
+    "name": "WETH-USDT",
+    "token": "WETH-USDT",
     "tokenAddress": "0x641C00A822e8b671738d32a431a4Fb6074E5c79d",
     "tokenDecimals": 18,
     "depositTokenAddresses": [
@@ -49,8 +221,8 @@
   },
   {
     "id": "uniswap-cow-arb-magic-weth",
-    "name": "MAGIC-ETH",
-    "token": "MAGIC-ETH",
+    "name": "MAGIC-WETH",
+    "token": "MAGIC-WETH",
     "tokenAddress": "0x59D72DDB29Da32847A4665d08ffc8464A7185FAE",
     "tokenDecimals": 18,
     "depositTokenAddresses": [
@@ -147,8 +319,8 @@
   },
   {
     "id": "uniswap-cow-arb-wbtc-eth",
-    "name": "WBTC-ETH",
-    "token": "WBTC-ETH",
+    "name": "WBTC-WETH",
+    "token": "WBTC-WETH",
     "tokenAddress": "0x2f5e87C9312fa29aed5c179E456625D79015299c",
     "tokenDecimals": 18,
     "depositTokenAddresses": [
@@ -173,8 +345,8 @@
   },
   {
     "id": "uniswap-cow-arb-eth-usdc",
-    "name": "ETH-USDC",
-    "token": "ETH-USDC",
+    "name": "WETH-USDC",
+    "token": "WETH-USDC",
     "tokenAddress": "0xC6962004f452bE9203591991D15f6b388e09E8D0",
     "tokenDecimals": 18,
     "depositTokenAddresses": [
@@ -199,8 +371,8 @@
   },
   {
     "id": "uniswap-cow-arb-pendle-eth",
-    "name": "PENDLE-ETH",
-    "token": "PENDLE-ETH",
+    "name": "PENDLE-WETH",
+    "token": "PENDLE-WETH",
     "tokenAddress": "0xdbaeB7f0DFe3a0AAFD798CCECB5b22E708f7852c",
     "tokenDecimals": 18,
     "depositTokenAddresses": [
@@ -225,8 +397,8 @@
   },
   {
     "id": "uniswap-cow-arb-arb-eth-t3",
-    "name": "ARB-ETH",
-    "token": "ARB-ETH",
+    "name": "ARB-WETH",
+    "token": "ARB-WETH",
     "tokenAddress": "0xC6F780497A95e246EB9449f5e4770916DCd6396A",
     "tokenDecimals": 18,
     "depositTokenAddresses": [
@@ -802,7 +974,9 @@
     "earnContractAddress": "0x70f9daff47ddFB3A8E776450fba0F0301022aF57",
     "oracle": "tokens",
     "oracleId": "ETH",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1713202188,
     "createdAt": 1709726583,
     "platformId": "silo",
     "assets": ["ETH"],
