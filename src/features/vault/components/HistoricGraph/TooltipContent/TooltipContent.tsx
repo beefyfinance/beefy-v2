@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { getBucketParams } from '../utils';
 import { styles } from './styles';
 import { isArray } from 'lodash-es';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -35,6 +36,11 @@ export const TooltipContent = memo<TooltipContentProps>(function TooltipContent(
   const { t } = useTranslation();
   const { maPeriods, maUnit } = useMemo(() => getBucketParams(bucket), [bucket]);
 
+  const isClmTooltip = useMemo(
+    () => vaultType === 'cowcentrated' && stat === 'clm',
+    [stat, vaultType]
+  );
+
   if (!active) {
     return null;
   }
@@ -44,8 +50,7 @@ export const TooltipContent = memo<TooltipContentProps>(function TooltipContent(
   const maOrRanges: number | number[] | undefined = maLineOrRanges?.value;
   const { t: timestamp } = valueLine.payload;
 
-  const ranges: number[] =
-    vaultType === 'cowcentrated' && stat === 'clm' && isArray(maOrRanges) ? maOrRanges : [0, 0];
+  const ranges: number[] = isClmTooltip && isArray(maOrRanges) ? maOrRanges : [0, 0];
 
   return (
     <div className={classes.content}>
@@ -54,7 +59,12 @@ export const TooltipContent = memo<TooltipContentProps>(function TooltipContent(
       </div>
       <div className={classes.itemContainer}>
         <div className={classes.label}>{t([`Graph-${vaultType}-${stat}`, `Graph-${stat}`])}:</div>
-        {value ? <div className={classes.value}>{valueFormatter(value)}</div> : null}
+        {value ? (
+          <div className={classes.value}>
+            {isClmTooltip ? <RangeIndicator ranges={ranges} value={value} /> : null}
+            {valueFormatter(value)}
+          </div>
+        ) : null}
       </div>
       {toggles.average ? (
         <div className={classes.itemContainer}>
@@ -77,6 +87,17 @@ export const TooltipContent = memo<TooltipContentProps>(function TooltipContent(
       ) : null}
     </div>
   );
+});
+
+const RangeIndicator = memo<{ ranges: number[]; value: number }>(function RangeIndicator({
+  ranges,
+  value,
+}) {
+  const classes = useStyles();
+
+  const isOnRange = useMemo(() => value >= ranges[0] && value <= ranges[1], [ranges, value]);
+
+  return <div className={clsx(classes.rangeIndicator, { [classes.onRange]: isOnRange })} />;
 });
 
 const Ranges = memo<{

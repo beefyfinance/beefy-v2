@@ -27,6 +27,9 @@ export const styles = (theme: Theme) => ({
   },
   value: {
     ...theme.typography['body-lg-med'],
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
     textAlign: 'right' as const,
   },
   itemContainer: {
@@ -34,5 +37,14 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: '8px',
+  },
+  rangeIndicator: {
+    width: '8px',
+    height: '8px',
+    borderRadius: '50%',
+    backgroundColor: theme.palette.background.indicators.error,
+  },
+  onRange: {
+    backgroundColor: theme.palette.background.indicators.success,
   },
 });
