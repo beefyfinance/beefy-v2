@@ -25,7 +25,7 @@ export const StatSwitcher = memo<StatSwitcherProps>(function StatSwitcher({
   const { t } = useTranslation();
   const options: Record<string, string> = useMemo(() => {
     return Object.fromEntries(
-      availableStats.map(stat => [stat, t([`Graph-${type}-${stat}`, `Graph-${stat}`])])
+      availableStats.map(stat => [stat, t([`Graph-${stat}`, `Graph-${type}-${stat}`])])
     );
   }, [availableStats, t, type]);
 
