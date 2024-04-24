@@ -1,5 +1,84 @@
 [
   {
+    "id": "convex-tricrypto-gho",
+    "name": "GHO/WBTC/wstETH",
+    "token": "GHOBTCwstE",
+    "tokenAddress": "0x8Cd52ee292313C4D851e71A7064F096504aB3eE9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveTriCryptoGHO",
+    "earnedTokenAddress": "0xbbAD3dE35c76524F55DBf1cAFE782D6a69E0c3E6",
+    "earnContractAddress": "0xbbAD3dE35c76524F55DBf1cAFE782D6a69E0c3E6",
+    "oracle": "lps",
+    "oracleId": "convex-tricrypto-gho",
+    "status": "active",
+    "createdAt": 1713931100,
+    "platformId": "convex",
+    "assets": ["GHO", "WBTC", "wstETH"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-31/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-31/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x8Cd52ee292313C4D851e71A7064F096504aB3eE9",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x8Cd52ee292313C4D851e71A7064F096504aB3eE9",
+            "coins": [
+              "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+              "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "convex-gho-crvusd",
+    "name": "GHO/crvUSD",
+    "token": "GHOcrvUSD",
+    "tokenAddress": "0x635EF0056A597D13863B73825CcA297236578595",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveGHO-crvUSD",
+    "earnedTokenAddress": "0x94AcD52eDDe27357dab8FaBdF9DB4bbd54F1E85E",
+    "earnContractAddress": "0x94AcD52eDDe27357dab8FaBdF9DB4bbd54F1E85E",
+    "oracle": "lps",
+    "oracleId": "convex-gho-crvusd",
+    "status": "active",
+    "createdAt": 1713930911,
+    "platformId": "convex",
+    "assets": ["GHO", "crvUSD"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-117/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-117/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x635EF0056A597D13863B73825CcA297236578595",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x635EF0056A597D13863B73825CcA297236578595",
+            "coins": [
+              "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+              "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "fx-pyusd-fxusd",
     "name": "PYUSD/fxUSD",
     "token": "fxUSDpyUSD",
