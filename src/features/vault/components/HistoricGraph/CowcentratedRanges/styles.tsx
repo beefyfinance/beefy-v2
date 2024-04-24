@@ -20,10 +20,10 @@ export const styles = (theme: Theme) => ({
     textTransform: 'uppercase' as const,
   },
   inRange: {
-    color: theme.palette.primary.main,
+    color: theme.palette.background.indicators.success,
   },
   outOfRange: {
-    color: theme.palette.background.buttons.boost,
+    color: theme.palette.background.indicators.error,
   },
   value: {
     ...theme.typography['body-lg-med'],
