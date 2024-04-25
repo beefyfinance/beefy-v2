@@ -142,7 +142,11 @@ export const fetchHistoricalCowcentratedRanges = createAsyncThunk<
     const state = getState();
     const vault = selectVaultById(state, vaultId) as VaultCowcentrated;
     const api = await getBeefyDataApi();
-    const rawData = await api.getCowcentratedRangesChartData(vaultAddress, bucket, chainId);
+    const bucketToUse =
+      Date.now() / 1000 - vault.createdAt >= 60 * 60 * 24 * 30
+        ? bucket
+        : ('1h_1M' as ApiTimeBucket);
+    const rawData = await api.getCowcentratedRangesChartData(vaultAddress, bucketToUse, chainId);
 
     const token0 = selectTokenByAddress(state, chainId, vault.depositTokenAddresses[0]);
     const token1 = selectTokenByAddress(state, chainId, vault.depositTokenAddresses[1]);
