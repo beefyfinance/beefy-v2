@@ -1,5 +1,77 @@
 [
   {
+    "id": "aerodrome-usd+-eusd",
+    "name": "USD+-eUSD sLP",
+    "type": "standard",
+    "token": "sAMM-USD+/eUSD",
+    "tokenAddress": "0x8041e2A135D2da7A8E21E4B14113D8245EC532e1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroUSD+-eUSD",
+    "earnedTokenAddress": "0x478162ae7199A59E76bB246Cb8649542DCDd33Bd",
+    "earnContractAddress": "0x478162ae7199A59E76bB246Cb8649542DCDd33Bd",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usd+-eusd",
+    "status": "active",
+    "createdAt": 1713992031,
+    "platformId": "aerodrome",
+    "assets": ["USD+", "eUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376&token1=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&stable=true",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-usd+-wsteth",
+    "name": "USD+-wstETH vLP",
+    "type": "standard",
+    "token": "vAMM-USD+/wstETH",
+    "tokenAddress": "0xf15B30a0a823f588B523fD794A43939F0B1dC582",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroUSD+-wstETH",
+    "earnedTokenAddress": "0xD0f8f87e8Ce4831dD67C65000FACdee012945eeD",
+    "earnContractAddress": "0xD0f8f87e8Ce4831dD67C65000FACdee012945eeD",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usd+-wsteth",
+    "status": "active",
+    "createdAt": 1713992030,
+    "platformId": "aerodrome",
+    "assets": ["USD+", "wstETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376&token1=0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452&stable=false",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-crvusd-usdc",
     "name": "crvUSD-USDC sLP",
     "type": "standard",
