@@ -57,7 +57,7 @@ import type { Namespace, TFunction } from 'react-i18next';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import { isStandardVault } from '../../../../entities/vault';
 import { slipBy } from '../../helpers/amounts';
-import { nativeToWNative, uniqueTokens, wnativeToNative } from '../../helpers/tokens';
+import { uniqueTokens, wnativeToNative } from '../../helpers/tokens';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
@@ -67,7 +67,7 @@ import {
 import { fetchZapAggregatorSwap } from '../../zap/swap';
 import type { ChainEntity } from '../../../../entities/chain';
 import { selectChainById } from '../../../../selectors/chains';
-import { stargateConfigs, stargatePaths } from './config';
+import { stargateConfigs, stargatePaths, stargatePools } from './config';
 import { isDefined } from '../../../../utils/array-utils';
 import {
   type LibraryGetFeesResult,
@@ -101,8 +101,6 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
   protected readonly native: TokenNative;
   protected readonly depositToken: TokenEntity;
   protected readonly paths: StargatePath[];
-  protected readonly sourcesByChainId: Partial<Record<ChainEntity['id'], StargatePath[]>>;
-  protected readonly destinationsByChainId: Partial<Record<ChainEntity['id'], StargatePath[]>>;
 
   constructor(protected options: SingleStrategyOptions, protected helpers: ZapTransactHelpers) {
     // Make sure zap was configured correctly for this vault
@@ -732,75 +730,50 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
   protected selectPaths(state: BeefyState): StargatePath[] {
     return stargatePaths
       .map(path => {
+        const source = stargatePools.get(path.source);
+        if (!source) {
+          return undefined;
+        }
+
+        const dest = stargatePools.get(path.dest);
+        if (!dest) {
+          return undefined;
+        }
+
         const sourceToken = selectTokenByAddressOrUndefined(
           state,
-          path.source.chainId,
-          path.source.tokenAddress
+          source.chainId,
+          source.tokenAddress
         );
         if (!sourceToken) {
           return undefined;
         }
 
-        const destToken = selectTokenByAddressOrUndefined(
-          state,
-          path.dest.chainId,
-          path.dest.tokenAddress
-        );
+        const destToken = selectTokenByAddressOrUndefined(state, dest.chainId, dest.tokenAddress);
         if (!destToken) {
           return undefined;
         }
 
         return {
           canDeposit:
-            this.canSendZapFromChain(state, path.source.chainId) &&
-            this.canReceiveZapDepositToChain(path.dest.chainId),
+            this.canSendZapFromChain(state, source.chainId) &&
+            this.canReceiveZapDepositToChain(dest.chainId),
           canWithdraw:
-            this.canSendZapFromChain(state, path.source.chainId) &&
-            this.canReceiveZapWithdrawToChain(path.dest.chainId),
+            this.canSendZapFromChain(state, source.chainId) &&
+            this.canReceiveZapWithdrawToChain(dest.chainId),
           source: {
-            ...path.source,
+            ...source,
             token: sourceToken,
-            zap: selectZapByChainId(state, path.source.chainId),
+            zap: selectZapByChainId(state, source.chainId),
           },
           dest: {
-            ...path.dest,
+            ...dest,
             token: destToken,
-            zap: selectZapByChainId(state, path.dest.chainId),
+            zap: selectZapByChainId(state, dest.chainId),
           },
         };
       })
       .filter(isDefined);
-  }
-
-  protected async aggregatorTokenSupport(type: keyof StargatePath) {
-    const { vault, swapAggregator, getState } = this.helpers;
-
-    const state = getState();
-    const tokenSupportPerChain = await Promise.all(
-      entries(type === 'source' ? this.sourcesByChainId : this.destinationsByChainId).map(
-        async ([chainId, paths]) => {
-          if (!paths || paths.length === 0) {
-            return [];
-          }
-          const tokens = paths.map(path => path.source.token);
-          const tokenSupport = await swapAggregator.fetchTokenSupport(
-            tokens,
-            vault.id,
-            chainId,
-            state,
-            this.options.swap
-          );
-          return tokenSupport.any;
-        }
-      )
-    );
-
-    return uniqueTokens(tokenSupportPerChain.flat());
-  }
-
-  protected toWrappedNative(state: BeefyState, token: TokenEntity): TokenEntity {
-    const wnative = selectChainWrappedNativeToken(state, token.chainId);
-    return nativeToWNative(token, wnative);
   }
 
   protected toNative(state: BeefyState, token: TokenEntity): TokenEntity {

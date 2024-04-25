@@ -13,7 +13,8 @@ export type StargateConfig = {
   depositGasLimit: string;
 };
 
-export type StargateConfigToken = {
+export type StargateConfigPool = {
+  id: string;
   chainId: ChainEntity['id'];
   symbol: string;
   poolAddress: string;
@@ -23,16 +24,19 @@ export type StargateConfigToken = {
   feeLibraryAddress: string;
 };
 
-export type StargateConfigPath = { source: StargateConfigToken; dest: StargateConfigToken };
+export type StargateConfigPath = {
+  source: StargateConfigPool['id'];
+  dest: StargateConfigPool['id'];
+};
 
 export type StargatePath = {
   canDeposit: boolean;
   canWithdraw: boolean;
-  source: StargateConfigPath['source'] & {
+  source: StargateConfigPool & {
     token: TokenEntity;
     zap: ZapEntity;
   };
-  dest: StargateConfigPath['dest'] & {
+  dest: StargateConfigPool & {
     token: TokenEntity;
     zap: ZapEntity;
   };

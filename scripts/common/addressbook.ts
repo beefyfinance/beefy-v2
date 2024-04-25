@@ -49,10 +49,11 @@ export const getChainAddressBook = memoize(
           address: bookToken.address,
           decimals: bookToken.decimals,
           symbol: bookToken.symbol,
-          buyUrl: null,
-          website: bookToken.website || null,
-          description: bookToken.description || null,
-          documentation: bookToken.documentation || null,
+          buyUrl: undefined,
+          website: bookToken.website || undefined,
+          description: bookToken.description || undefined,
+          documentation: bookToken.documentation || undefined,
+          risks: [],
           type: 'erc20',
         };
       } else if (tokenId === nativeSymbol) {
@@ -65,10 +66,10 @@ export const getChainAddressBook = memoize(
             address: bookToken.address,
             decimals: bookToken.decimals,
             symbol: nativeSymbol,
-            buyUrl: null,
-            website: bookToken.website || null,
-            description: bookToken.description || null,
-            documentation: bookToken.documentation || null,
+            buyUrl: undefined,
+            website: bookToken.website || undefined,
+            description: bookToken.description || undefined,
+            documentation: bookToken.documentation || undefined,
             type: 'native',
           };
         } else {
@@ -79,10 +80,10 @@ export const getChainAddressBook = memoize(
             address: 'native',
             decimals: bookToken.decimals,
             symbol: nativeSymbol,
-            buyUrl: null,
-            website: bookToken.website || null,
-            description: bookToken.description || null,
-            documentation: bookToken.documentation || null,
+            buyUrl: undefined,
+            website: bookToken.website || undefined,
+            description: bookToken.description || undefined,
+            documentation: bookToken.documentation || undefined,
             type: 'native',
           };
         }
@@ -94,10 +95,11 @@ export const getChainAddressBook = memoize(
           address: bookToken.address,
           decimals: bookToken.decimals,
           symbol: bookToken.symbol,
-          buyUrl: null,
-          website: bookToken.website || null,
-          description: bookToken.description || null,
-          documentation: bookToken.documentation || null,
+          buyUrl: undefined,
+          website: bookToken.website || undefined,
+          description: bookToken.description || undefined,
+          documentation: bookToken.documentation || undefined,
+          risks: [],
           type: 'erc20',
         };
       }
