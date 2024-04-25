@@ -504,7 +504,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-mog-weth-bribe",
     "status": "active",
-    "createdAt": 1713918517,
+    "createdAt": 1713992031,
     "platformId": "aerodrome",
     "assets": ["Mog", "WETH"],
     "risks": [
