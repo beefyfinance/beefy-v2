@@ -1,5 +1,31 @@
 [
   {
+    "id": "uniswap-cow-arb-eth-usdc.e",
+    "name": "ETH-USDC.e",
+    "token": "ETH-USDC.e",
+    "tokenAddress": "0xC31E54c7a869B9FcBEcc14363CF510d1c41fa443",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapArbitrumETH-USDC.e",
+    "earnedTokenAddress": "0xd9d5d3743b67FF04fE2F5c18Ddd596Cf370A8126",
+    "earnContractAddress": "0xd9d5d3743b67FF04fE2F5c18Ddd596Cf370A8126",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-eth-usdc.e",
+    "status": "active",
+    "createdAt": 1714071919,
+    "platformId": "beefy",
+    "assets": ["WETH", "arbUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "type": "cowcentrated",
+    "feeTier": "0.05"
+  },
+  {
     "id": "aura-arb-ezeth-wsteth",
     "name": "ezETH-wstETH",
     "type": "standard",
