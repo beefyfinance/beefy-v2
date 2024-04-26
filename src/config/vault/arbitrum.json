@@ -10,7 +10,7 @@
       "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
     ],
     "tokenProviderId": "uniswap",
-    "earnedToken": "cowUniswapArbitrumwstETH-USDC.e",
+    "earnedToken": "cowUniswapArbitrumtBTC-ETH",
     "earnedTokenAddress": "0x9aA49971f4956D7831b2CD1c9AF7ED931b5f91BC",
     "earnContractAddress": "0x9aA49971f4956D7831b2CD1c9AF7ED931b5f91BC",
     "oracle": "lps",
