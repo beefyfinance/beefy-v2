@@ -14,6 +14,7 @@
     "oracleId": "quick-gamma-nativeusdc-weth-narrow",
     "status": "active",
     "createdAt": 1713733611,
+    "updatedAt": 1714127710,
     "platformId": "gamma",
     "assets": ["USDC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -25,7 +26,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0xc1ecAD1D0Db5A997478f22492FAa2A209DD4F461"
       }
     ]
   },
@@ -191,7 +192,7 @@
   },
   {
     "id": "quick-gamma-fxcbeth-weth",
-    "name": "cbETH-ETH LP",
+    "name": "cbETH-ETH Pegged LP",
     "type": "standard",
     "token": "acbETH-ETH",
     "tokenAddress": "0x0668331b4606bEb78A1c8314e08d8B07653fbD3C",
@@ -232,10 +233,9 @@
     "earnContractAddress": "0x44227C548272E2Dce4537746bcA4c8F036177B9e",
     "oracle": "lps",
     "oracleId": "quick-gamma-wbtc-weth-wide",
-    "status": "eol",
+    "status": "active",
     "createdAt": 1700229087,
-    "retireReason": "rewards",
-    "retiredAt": 1708113204,
+    "updatedAt": 1714127710,
     "platformId": "gamma",
     "assets": ["ETH", "WBTC"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -247,7 +247,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0x09D8CAb9DE699De01E47FCDaB50364F455dC712b"
       }
     ]
   },
@@ -291,7 +291,7 @@
   },
   {
     "id": "quick-gamma-weth-usdt",
-    "name": "USDT-WETH LP",
+    "name": "USDT-WETH Narrow LP",
     "type": "standard",
     "token": "aWETH-USDT",
     "tokenAddress": "0x5928f9f61902b139e1c40cBa59077516734ff09f",
@@ -302,10 +302,9 @@
     "earnContractAddress": "0x8CaA1a3809b3C67C61Eaf5524e1cB784ED6bA8B3",
     "oracle": "lps",
     "oracleId": "quick-gamma-weth-usdt",
-    "status": "eol",
+    "status": "active",
     "createdAt": 1698862190,
-    "retireReason": "rewards",
-    "retiredAt": 1708113204,
+    "updatedAt": 1714127710,
     "platformId": "gamma",
     "assets": ["ETH", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -317,13 +316,13 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0xEF8909ceD1fFA213e56B783C1a1A463dD1FF8048"
       }
     ]
   },
   {
     "id": "quick-gamma-wmatic-quick",
-    "name": "QUICK-MATIC LP",
+    "name": "QUICK-MATIC Narrow LP",
     "type": "standard",
     "token": "aQUICK-MATIC",
     "tokenAddress": "0x7f09bD2801A7b795dF29C273C4afbB0Ff15E2D63",
@@ -334,10 +333,9 @@
     "earnContractAddress": "0xc5d366eDF862F18d62831fb8333D335d625a4C00",
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-quick",
-    "status": "eol",
+    "status": "active",
     "createdAt": 1698862190,
-    "retireReason": "rewards",
-    "retiredAt": 1708113204,
+    "updatedAt": 1714127710,
     "platformId": "gamma",
     "assets": ["QUICK", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -349,13 +347,13 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0x479C32cbf558bB1a54e6C5e6e874a67d0F2DDdca"
       }
     ]
   },
   {
     "id": "quick-gamma-link-weth",
-    "name": "LINK-WETH LP",
+    "name": "LINK-WETH Narrow LP",
     "type": "standard",
     "token": "aLINK-WETH",
     "tokenAddress": "0x3dA7e0320C04D88b71e0ada960AaD3d21f10CAdf",
@@ -385,7 +383,7 @@
   },
   {
     "id": "quick-gamma-weth-aave",
-    "name": "AAVE-WETH LP",
+    "name": "AAVE-WETH Wide LP",
     "type": "standard",
     "token": "aWETH-AAVE",
     "tokenAddress": "0x5bA383530Db75A22E028239dbc777C7Ee8CE4752",
@@ -1515,10 +1513,9 @@
     "earnContractAddress": "0x3A1F8B9b4aB6ba1a845931eD527B6B4768Ca07B1",
     "oracle": "lps",
     "oracleId": "quick-gamma-usdc-dai-narrow",
-    "status": "eol",
+    "status": "active",
     "createdAt": 1686917464,
-    "retireReason": "rewards",
-    "retiredAt": 1708113204,
+    "updatedAt": 1714127710,
     "platformId": "gamma",
     "assets": ["pUSDCe", "DAI"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1530,7 +1527,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0x14e845491fB2dad506DD628d49741F28dc601e14"
       }
     ]
   },
@@ -1729,10 +1726,9 @@
     "earnContractAddress": "0x346c16e7a76D224b9955c0F67e93b413Fc63ba3E",
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-weth-wide",
-    "status": "eol",
+    "status": "active",
     "createdAt": 1686878623,
-    "retireReason": "rewards",
-    "retiredAt": 1708113204,
+    "updatedAt": 1714127710,
     "platformId": "gamma",
     "assets": ["MATIC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1744,7 +1740,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0x6Ed9f18397ACd914CBCde1323F0Dd696E0ac79B7"
       }
     ]
   },
