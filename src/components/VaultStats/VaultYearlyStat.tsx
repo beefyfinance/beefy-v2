@@ -145,10 +145,10 @@ const YearlyTooltipContent = memo<YearlyTooltipContentProps>(function YearlyTool
         });
       }
 
-      if ('merkleApr' in rates) {
+      if ('merklApr' in rates) {
         items.push({
-          label: 'Vault-Breakdown-MerkleApr',
-          value: rates.merkleApr ?? '?',
+          label: 'Vault-Breakdown-MerklApr',
+          value: rates.merklApr ?? '?',
         });
       }
 

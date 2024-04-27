@@ -40,8 +40,8 @@ export interface TotalApy {
   boostedTotalDaily?: number;
   clmApr?: number;
   clmAprDaily?: number;
-  merkleApr?: number;
-  merkleAprDaily?: number;
+  merklApr?: number;
+  merklAprDaily?: number;
 }
 
 /**

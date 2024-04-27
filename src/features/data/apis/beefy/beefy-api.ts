@@ -53,7 +53,7 @@ export interface ApyStandard {
 export interface ApyCLM {
   clmApr: number;
   totalApy: number;
-  merkleApr?: number;
+  merklApr?: number;
 }
 
 export type ApyData = ApyGovVault | ApyMaxiVault | ApyStandard | ApyCLM;
