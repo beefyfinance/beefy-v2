@@ -87,6 +87,14 @@ const _YearlyBreakdownTooltip = ({
     });
   }
 
+  if ('merkleApr' in rates) {
+    rows.push({
+      label: t('Vault-Breakdown-MerkleApr'),
+      value: rates.merkleApr ?? '?',
+      last: false,
+    });
+  }
+
   rows.push({
     label: t('APY'),
     value: boosted ? rates.boostedTotalApy ?? '?' : rates.totalApy,

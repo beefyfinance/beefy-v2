@@ -77,6 +77,11 @@ export const recalculateTotalApyAction = createAsyncThunk<
       total.clmAprDaily = apy.clmApr / 365;
     }
 
+    if ('merkleApr' in apy && apy.merkleApr) {
+      total.merkleApr = apy.merkleApr;
+      total.merkleAprDaily = apy.merkleApr / 365;
+    }
+
     if (
       total.vaultDaily ||
       total.tradingDaily ||

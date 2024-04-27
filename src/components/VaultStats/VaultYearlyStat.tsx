@@ -145,6 +145,13 @@ const YearlyTooltipContent = memo<YearlyTooltipContentProps>(function YearlyTool
         });
       }
 
+      if ('merkleApr' in rates) {
+        items.push({
+          label: 'Vault-Breakdown-MerkleApr',
+          value: rates.merkleApr ?? '?',
+        });
+      }
+
       items.push({
         label: 'APY',
         value: isBoosted ? rates.boostedTotalApy ?? '?' : rates.totalApy,
