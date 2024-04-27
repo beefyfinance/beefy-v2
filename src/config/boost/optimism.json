@@ -1,7 +1,7 @@
 [
   {
-    "id": "moo_curve-op-tricrv-beefy",
-    "poolId": "curve-op-tricrv",
+    "id": "moo_velodrome-v2-velo-usdc-beefy",
+    "poolId": "velodrome-v2-velo-usdc",
     "name": "Beefy",
     "tagIcon": "zap",
     "tagText": "Zap Launch Boost",
