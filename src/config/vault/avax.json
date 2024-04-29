@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "balancer-avax-savax-avax",
     "status": "active",
-    "createdAt": 1714121576,
+    "createdAt": 1714408659,
     "platformId": "balancer",
     "assets": ["sAVAX", "AVAX"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],

@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-wrseth",
     "status": "active",
-    "createdAt": 1714152828,
+    "createdAt": 1714408660,
     "platformId": "velodrome",
     "assets": ["wrsETH", "ETH"],
     "risks": [
