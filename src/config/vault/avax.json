@@ -1,5 +1,28 @@
 [
   {
+    "id": "balancer-avax-savax-avax",
+    "name": "sAVAX-AVAX",
+    "type": "standard",
+    "token": "sAVAX-AVAX Avax",
+    "tokenAddress": "0xfD2620C9cfceC7D152467633B3B0Ca338D3d78cc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerAvaxsAVAX-WAVAX",
+    "earnedTokenAddress": "0x883b1899e6F8a896Ee22654A6deBA41Ef4BA47Cf",
+    "earnContractAddress": "0x883b1899e6F8a896Ee22654A6deBA41Ef4BA47Cf",
+    "oracle": "lps",
+    "oracleId": "balancer-avax-savax-avax",
+    "status": "active",
+    "createdAt": 1714121576,
+    "platformId": "balancer",
+    "assets": ["sAVAX", "AVAX"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/avalanche/pool/0xfd2620c9cfcec7d152467633b3b0ca338d3d78cc00000000000000000000001c/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/avalanche/pool/0xfd2620c9cfcec7d152467633b3b0ca338d3d78cc00000000000000000000001c/withdraw",
+    "network": "avax"
+  },
+  {
     "id": "png-weth.e-wavax",
     "name": "WETH.e-AVAX LP",
     "type": "standard",
