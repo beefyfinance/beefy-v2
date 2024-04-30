@@ -90,38 +90,6 @@
     ]
   },
   {
-    "id": "thena-gamma-bnb-rbnb",
-    "name": "BNB-rBNB LP",
-    "type": "standard",
-    "token": "aWBNB-RBNB",
-    "tokenAddress": "0x3513292A2E0e0C6FB0A82196D7ed8eB499fe5772",
-    "tokenDecimals": 18,
-    "tokenProviderId": "thena",
-    "earnedToken": "mooThenaGamma_BNB-rBNB",
-    "earnedTokenAddress": "0x7E53e117B1C7eC252526Fbb1A414849Eaa31727D",
-    "earnContractAddress": "0x7E53e117B1C7eC252526Fbb1A414849Eaa31727D",
-    "oracle": "lps",
-    "oracleId": "thena-gamma-bnb-rbnb",
-    "status": "eol",
-    "retireReason": "rewards",
-    "retiredAt": 1708974810,
-    "createdAt": 1700639110,
-    "platformId": "gamma",
-    "assets": ["BNB", "rBNB"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://thena.fi/add?type=gamma&address=0x3513292a2e0e0c6fb0a82196d7ed8eb499fe5772",
-    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "bsc-gamma-thena-f75c",
-        "tokenHolder": "0x0f75C0004bcda3DF44B8375197F3f2c0915edA8c"
-      }
-    ]
-  },
-  {
     "id": "pancake-ichi-usdt-wbnb",
     "name": "USDT-BNB LP",
     "type": "standard",
