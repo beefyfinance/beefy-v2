@@ -411,7 +411,7 @@
     "earnContractAddress": "0x914a02E02dB217E6f5BdBaC65ab4510Ab208ae89",
     "oracle": "lps",
     "oracleId": "prisma-mkusd-ultra",
-    "status": "paused",
+    "status": "eol",
     "pausedAt": 1711628697,
     "createdAt": 1708591199,
     "platformId": "prisma",
@@ -437,7 +437,9 @@
           }
         ]
       }
-    ]
+    ],
+    "retireReason": "tvl",
+    "retiredAt": 1714462317
   },
   {
     "id": "prisma-mkusd-paypool",
@@ -451,7 +453,7 @@
     "earnContractAddress": "0x3AFa8b3AB875DFFb6F1AF182BA4475345814A4B4",
     "oracle": "lps",
     "oracleId": "prisma-mkusd-paypool",
-    "status": "paused",
+    "status": "eol",
     "pausedAt": 1711628697,
     "createdAt": 1708590349,
     "platformId": "prisma",
@@ -486,7 +488,9 @@
           }
         ]
       }
-    ]
+    ],
+    "retireReason": "tvl",
+    "retiredAt": 1714462317
   },
   {
     "id": "curve-veth",
@@ -686,7 +690,7 @@
     "earnContractAddress": "0x1632c328748994aa5616aa8379e8FcbBabDC0F0A",
     "oracle": "lps",
     "oracleId": "prisma-yprisma",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1706514996,
     "platformId": "prisma",
     "assets": ["yPRISMA", "PRISMA"],
@@ -712,7 +716,9 @@
           }
         ]
       }
-    ]
+    ],
+    "retireReason": "tvl",
+    "retiredAt": 1714462317
   },
   {
     "id": "aura-silo-weth",
@@ -923,7 +929,7 @@
     "earnContractAddress": "0x1ae9de00696488A88192C942dB5711e4185f035f",
     "oracle": "lps",
     "oracleId": "prisma-mkusd-prisma",
-    "status": "paused",
+    "status": "eol",
     "pausedAt": 1711628697,
     "createdAt": 1703151542,
     "platformId": "prisma",
@@ -950,7 +956,9 @@
           }
         ]
       }
-    ]
+    ],
+    "retireReason": "tvl",
+    "retiredAt": 1714462317
   },
   {
     "id": "convex-usdc+",
@@ -1090,7 +1098,7 @@
     "earnContractAddress": "0x190951D3951F08Dd9DFe8557E146f09c3f90102E",
     "oracle": "lps",
     "oracleId": "prisma-cvxprisma",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1701336860,
     "platformId": "prisma",
     "assets": ["cvxPRISMA", "PRISMA"],
@@ -1116,7 +1124,9 @@
           }
         ]
       }
-    ]
+    ],
+    "retireReason": "tvl",
+    "retiredAt": 1714462317
   },
   {
     "id": "prisma-mkusd-usdc",
@@ -1130,7 +1140,7 @@
     "earnContractAddress": "0x7E0977F71d62E2d993e2dC68E086A7752FF0652d",
     "oracle": "lps",
     "oracleId": "prisma-mkusd-usdc",
-    "status": "paused",
+    "status": "eol",
     "pausedAt": 1711628697,
     "createdAt": 1701336444,
     "platformId": "prisma",
@@ -1157,7 +1167,9 @@
           }
         ]
       }
-    ]
+    ],
+    "retireReason": "tvl",
+    "retiredAt": 1714462317
   },
   {
     "id": "prisma-mkusd-fraxbp",
@@ -1172,7 +1184,7 @@
     "earnContractAddress": "0xfe494Acd28dfC989A4B6853eF8D1495a1d43F2E0",
     "oracle": "lps",
     "oracleId": "prisma-mkusd-fraxbp",
-    "status": "paused",
+    "status": "eol",
     "pausedAt": 1711628697,
     "createdAt": 1700728622,
     "platformId": "prisma",
@@ -1208,7 +1220,9 @@
           }
         ]
       }
-    ]
+    ],
+    "retireReason": "tvl",
+    "retiredAt": 1714462317
   },
   {
     "id": "prisma-mkusd-crvusd",
@@ -1223,7 +1237,7 @@
     "earnContractAddress": "0x1899221899E2d1e38BD6d64Dc55E71EA8e90B43B",
     "oracle": "lps",
     "oracleId": "prisma-mkusd-crvusd",
-    "status": "paused",
+    "status": "eol",
     "pausedAt": 1711628697,
     "createdAt": 1700728264,
     "platformId": "prisma",
@@ -1250,7 +1264,9 @@
           }
         ]
       }
-    ]
+    ],
+    "retireReason": "tvl",
+    "retiredAt": 1714462317
   },
   {
     "id": "prisma-prisma-eth",
@@ -1265,7 +1281,7 @@
     "earnContractAddress": "0xF1eEc85f30fb1a4F4f53CF14090df1F619CA6474",
     "oracle": "lps",
     "oracleId": "prisma-prisma-eth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1700728623,
     "platformId": "prisma",
     "assets": ["PRISMA", "ETH"],
@@ -1291,7 +1307,9 @@
           }
         ]
       }
-    ]
+    ],
+    "retireReason": "tvl",
+    "retiredAt": 1714462317
   },
   {
     "id": "curve-crvusd-sdai",
