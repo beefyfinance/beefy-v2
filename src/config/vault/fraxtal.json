@@ -1,5 +1,95 @@
 [
   {
+    "id": "ra-wbtc-frax",
+    "name": "FRAX-WBTC vLP",
+    "type": "standard",
+    "token": "FRAX-WBTC vLP",
+    "tokenAddress": "0x2010dD6089082463c13Af7a715D68cfd9AbfAD03",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ra",
+    "earnedToken": "mooRaFRAX-WBTC",
+    "earnedTokenAddress": "0x253A00D09D3836138fDBa455FDE95F9D280359aE",
+    "earnContractAddress": "0x253A00D09D3836138fDBa455FDE95F9D280359aE",
+    "oracle": "lps",
+    "oracleId": "ra-wbtc-frax",
+    "status": "active",
+    "createdAt": 1714564995,
+    "platformId": "ra",
+    "assets": ["FRAX", "WBTC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://www.ra.exchange/swap?to=0x7F3a9Afc827AeEdb0c5dC1A66C0Baa41cD7289F0",
+    "addLiquidityUrl": "https://www.ra.exchange/manage/v1/0x2010dD6089082463c13Af7a715D68cfd9AbfAD03",
+    "removeLiquidityUrl": "https://www.ra.exchange/manage/v1/0x2010dD6089082463c13Af7a715D68cfd9AbfAD03",
+    "network": "fraxtal",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "fraxtal-ra"
+      }
+    ]
+  },
+  {
+    "id": "ra-wbtc-wfrxeth",
+    "name": "WBTC-frxETH vLP",
+    "type": "standard",
+    "token": "WBTC-frxETH vLP",
+    "tokenAddress": "0x59e8F1FDE7C3E49B5b8c9EBFba73216F94F3D992",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ra",
+    "earnedToken": "mooRaWBTC-frxETH",
+    "earnedTokenAddress": "0x00D7813501216d8B54cC86caA427f6fCf444854d",
+    "earnContractAddress": "0x00D7813501216d8B54cC86caA427f6fCf444854d",
+    "oracle": "lps",
+    "oracleId": "ra-wbtc-wfrxeth",
+    "status": "active",
+    "createdAt": 1714564995,
+    "platformId": "ra",
+    "assets": ["WBTC", "frxETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://www.ra.exchange/swap?to=0x7F3a9Afc827AeEdb0c5dC1A66C0Baa41cD7289F0",
+    "addLiquidityUrl": "https://www.ra.exchange/manage/v1/0x59e8F1FDE7C3E49B5b8c9EBFba73216F94F3D992",
+    "removeLiquidityUrl": "https://www.ra.exchange/manage/v1/0x59e8F1FDE7C3E49B5b8c9EBFba73216F94F3D992",
+    "network": "fraxtal",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "fraxtal-ra"
+      }
+    ]
+  },
+  {
+    "id": "ra-fxs-wfrxeth",
+    "name": "FXS-frxETH vLP",
+    "type": "standard",
+    "token": "FXS-frxETH vLP",
+    "tokenAddress": "0x4f66cBd698F1fe6E2692D1De5d758027a5272787",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ra",
+    "earnedToken": "mooRaFXS-frxETH",
+    "earnedTokenAddress": "0xbA5412D21AE8bd03c2901EFf0fae308acFabB85c",
+    "earnContractAddress": "0xbA5412D21AE8bd03c2901EFf0fae308acFabB85c",
+    "oracle": "lps",
+    "oracleId": "ra-fxs-wfrxeth",
+    "status": "active",
+    "createdAt": 1714564995,
+    "platformId": "ra",
+    "assets": ["FXS", "frxETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://www.ra.exchange/swap?to=0xFc00000000000000000000000000000000000002",
+    "addLiquidityUrl": "https://www.ra.exchange/manage/v1/0x4f66cbd698f1fe6e2692d1de5d758027a5272787",
+    "removeLiquidityUrl": "https://www.ra.exchange/manage/v1/0x4f66cbd698f1fe6e2692d1de5d758027a5272787",
+    "network": "fraxtal",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "fraxtal-ra"
+      }
+    ]
+  },
+  {
     "id": "curve-fraxtal-tricrv",
     "name": "crvUSD/wfrxETH/CRV",
     "token": "triCRV",
