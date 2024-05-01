@@ -636,7 +636,8 @@
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0x9b53ef6f13077727d22cb4acad1119c79a97be17"
   },
   {
     "id": "velodrome-v2-usdc-weth",

@@ -281,6 +281,9 @@ function addVaultToState(
       retiredAt: apiVault.retiredAt,
       pauseReason: apiVault.pauseReason,
       pausedAt: apiVault.pausedAt,
+      zaps: apiVault.zaps || [],
+      earningPoints: apiVault.earningPoints ?? false,
+      poolTogether: apiVault.poolTogether,
     } satisfies VaultGov;
   } else if (apiVault.type === 'cowcentrated') {
     vault = {
@@ -316,6 +319,7 @@ function addVaultToState(
       lendingOracle: apiVault.lendingOracle,
       earningPoints: apiVault.earningPoints ?? false,
       feeTier: apiVault.feeTier ?? '0.05',
+      poolTogether: apiVault.poolTogether,
     } satisfies VaultCowcentrated;
   } else if (apiVault.type === 'standard' || apiVault.type === undefined) {
     vault = {
@@ -349,6 +353,7 @@ function addVaultToState(
       bridged: apiVault.bridged,
       lendingOracle: apiVault.lendingOracle,
       earningPoints: apiVault.earningPoints ?? false,
+      poolTogether: apiVault.poolTogether,
     } satisfies VaultStandard;
   } else {
     throw new Error(`Unknown vault type: ${apiVault.type}`);

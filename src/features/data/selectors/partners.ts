@@ -25,3 +25,8 @@ export const selectIsBeFTM = (state: BeefyState, vaultId: VaultEntity['id']) => 
   const vault = selectVaultById(state, vaultId);
   return vault.id === 'beefy-beFTM';
 };
+
+export const selectIsPoolTogether = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const vault = selectVaultById(state, vaultId);
+  return vault.poolTogether !== undefined;
+};
