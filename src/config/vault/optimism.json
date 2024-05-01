@@ -4541,45 +4541,6 @@
     ]
   },
   {
-    "id": "velodrome-usd+-dai+",
-    "name": "USD+-DAI+ sLP",
-    "type": "standard",
-    "token": "USD+-DAI+ sLP",
-    "tokenAddress": "0x69C28d5BbE392eF48C0dC347C575023dAf0CD243",
-    "tokenDecimals": 18,
-    "tokenProviderId": "velodrome",
-    "earnedToken": "mooVelodromeUSD+-DAI+",
-    "earnedTokenAddress": "0xE82A0fE3Cf39d8f43CBeb202242eECB8b00B15AB",
-    "earnContractAddress": "0xE82A0fE3Cf39d8f43CBeb202242eECB8b00B15AB",
-    "oracle": "lps",
-    "oracleId": "velodrome-usd+-dai+",
-    "status": "eol",
-    "createdAt": 1680535940,
-    "retireReason": "tvl",
-    "retiredAt": 1703155937,
-    "platformId": "velodrome",
-    "assets": ["USD+", "DAI+"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://velodrome.finance/swap?from=0x73cb180bf0521828d8849bc8CF2B920918e23032&to=0x970D50d09F3a656b43E11B0D45241a84e3a6e011",
-    "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x69C28d5BbE392eF48C0dC347C575023dAf0CD243",
-    "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x69C28d5BbE392eF48C0dC347C575023dAf0CD243",
-    "network": "optimism",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "optimism-velodrome"
-      }
-    ]
-  },
-  {
     "id": "beets-overnight-pulse-v2",
     "name": "Overnight Pulse Act II",
     "type": "standard",
