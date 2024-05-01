@@ -199,6 +199,7 @@
   "Vault-LpBreakdown-YourDeposit": "Your Deposit",
   "Vault-LpBreakdown-1LP": "1 LP",
   "Vault-LpBreakdown-TotalPool": "Total Pool",
+  "Vault-LpBreakdown-Underlying": "Underlying Pool",
   "Vault-LpBreakdown-Asset": "Asset",
   "Vault-LpBreakdown-TokenAmount": "Token Amount",
   "Vault-LpBreakdown-Value": "Value",

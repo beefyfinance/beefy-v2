@@ -16,7 +16,7 @@ import {
   selectHasBreakdownDataByTokenAddress,
   selectLpBreakdownByTokenAddress,
 } from '../../../data/selectors/tokens';
-import type { VaultEntity } from '../../../data/entities/vault';
+import { isCowcentratedLiquidityVault, type VaultEntity } from '../../../data/entities/vault';
 import {
   selectIsAddressBookLoaded,
   selectShouldInitAddressBook,
@@ -45,8 +45,11 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
       }
       map['one'] = t('Vault-LpBreakdown-1LP');
       map['total'] = t('Vault-LpBreakdown-TotalPool');
+      if (isCowcentratedLiquidityVault(vault)) {
+        map['underlying'] = t('Vault-LpBreakdown-Underlying');
+      }
       return map;
-    }, [userBalance, t]);
+    }, [userBalance, t, vault]);
 
     const onTabChange = useCallback(
       (newTab: string) => {

@@ -23,8 +23,11 @@ export type CalculatedBreakdownData = {
   totalAmount: BigNumber;
   oneAmount: BigNumber;
   userAmount: BigNumber;
+  underlyingAmount: BigNumber;
   totalValue: BigNumber;
   userValue: BigNumber;
   oneValue: BigNumber;
+  underlyingValue: BigNumber;
   userBalance: BigNumber;
+  underlyingBalance: BigNumber;
 };
