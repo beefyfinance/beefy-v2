@@ -1,5 +1,43 @@
 [
   {
+    "id": "velodrome-v2-weth-wrseth",
+    "name": "wrsETH-ETH vLP V2",
+    "type": "standard",
+    "token": "vAMMV2-WETH/wrsETH",
+    "tokenAddress": "0xE48b4E392E4FC29aC2600c3C8EFe0404A15D60D9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2WETH-wrsETH",
+    "earnedTokenAddress": "0xDbE946E16c4e0De9a44065B868265Ac05c437fB6",
+    "earnContractAddress": "0xDbE946E16c4e0De9a44065B868265Ac05c437fB6",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-weth-wrseth",
+    "status": "active",
+    "createdAt": 1714408660,
+    "platformId": "velodrome",
+    "assets": ["wrsETH", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x4200000000000000000000000000000000000006&to=0x87eEE96D50Fb761AD85B1c982d28A042169d61b1",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x87eEE96D50Fb761AD85B1c982d28A042169d61b1&type=-1",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xE48b4E392E4FC29aC2600c3C8EFe0404A15D60D9",
+    "network": "optimism",
+    "earningPoints": true,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "curve-op-tricrv",
     "name": "crvUSD/OP/CRV",
     "token": "3CRV-OP",
