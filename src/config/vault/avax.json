@@ -16,7 +16,7 @@
     "createdAt": 1714408659,
     "platformId": "balancer",
     "assets": ["sAVAX", "AVAX"],
-    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/avalanche/pool/0xfd2620c9cfcec7d152467633b3b0ca338d3d78cc00000000000000000000001c/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/avalanche/pool/0xfd2620c9cfcec7d152467633b3b0ca338d3d78cc00000000000000000000001c/withdraw",
