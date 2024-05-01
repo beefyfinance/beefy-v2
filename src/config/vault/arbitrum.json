@@ -1,5 +1,35 @@
 [
   {
+    "id": "aura-arb-gyro-ausdc-ausdt",
+    "name": "Gyroscope Aave USDC/USDT",
+    "type": "standard",
+    "token": "Aave USDC/USDT Arb",
+    "tokenAddress": "0x125bC5a031B2Db6733bfa35d914ffa428095978B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraGyroaUSDCn/aUSDTn",
+    "earnedTokenAddress": "0xb39a6c02BB32199c5C2e937a9c96Fe8F79E18763",
+    "earnContractAddress": "0xb39a6c02BB32199c5C2e937a9c96Fe8F79E18763",
+    "oracle": "lps",
+    "oracleId": "aura-arb-gyro-ausdc-ausdt",
+    "status": "active",
+    "createdAt": 1714564996,
+    "platformId": "aura",
+    "assets": ["stataArbUSDCn", "stataArbUSDTn"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0x125bc5a031b2db6733bfa35d914ffa428095978b/join/",
+    "removeLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0x125bc5a031b2db6733bfa35d914ffa428095978b/exit/",
+    "network": "arbitrum"
+  },
+  {
     "id": "uniswap-cow-arb-tbtc-weth",
     "name": "tBTC-ETH",
     "token": "tBTC-ETH",

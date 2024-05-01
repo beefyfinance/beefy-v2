@@ -379,6 +379,8 @@ export const config = {
       'sFRAX',
       'bpt4POOL',
       'USDT+',
+      'stataArbUSDCn',
+      'stataArbUSDTn',
     ],
   },
   avax: {
