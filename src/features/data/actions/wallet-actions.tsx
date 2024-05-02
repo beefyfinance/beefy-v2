@@ -1185,7 +1185,7 @@ const claimMerkl = (chainId: ChainEntity['id']) => {
       proof: true,
     });
     const unclaimedRewards = Object.entries(rewards)
-      .filter(([_, reward]) => reward.unclaimed !== '0')
+      .filter(([_, reward]) => reward.unclaimed !== '0' && reward.symbol !== 'aglaMerkl')
       .map(([tokenAddress, reward]) => ({
         token: tokenAddress,
         amount: reward.accumulated, // proof requires 'accumulated' amount

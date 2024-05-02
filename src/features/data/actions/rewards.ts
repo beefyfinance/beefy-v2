@@ -95,7 +95,7 @@ export const fetchMerklRewardsAction = createAsyncThunk<
         }))
         .filter(r => r.unclaimed.gt(BIG_ZERO)),
     }))
-    .filter(r => r.unclaimed.gt(BIG_ZERO));
+    .filter(r => r.unclaimed.gt(BIG_ZERO) && r.symbol !== 'aglaMerkl');
 
   const byTokenAddress = keyBy(rewardsPerToken, r => r.address);
 
