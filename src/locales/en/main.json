@@ -685,7 +685,7 @@
   "MarketMaker-Managed": "Funds being managed by a Market Maker",
   "CLM-Beta-Banner": "Beefy CLM is in public beta, so be conscious of risks. Read the <LinkDocs>docs</LinkDocs> before using and provide your <LinkFeedback>feedback</LinkFeedback>. Audited by Cyfrin and Zellic.",
   "Rewards-Title": "CLM Incentives",
-  "Rewards-Description": "This position is receiving additional incentives through Merkl. Rewards are distributed every 6 hours, and all available rewards across all positions will be claimed simultaneously.",
+  "Rewards-Description": "This position is receiving rewards through Merkl in addition to trading fees. These rewards are distributed several times per day and are claimed with all other available rewards from Merkl.",
   "Rewards-Claim": "Claim All",
   "Rewards-OtherRewards": "Other Rewards ({{value}})"
 }
