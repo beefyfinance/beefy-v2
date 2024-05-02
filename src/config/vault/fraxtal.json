@@ -1,5 +1,162 @@
 [
   {
+    "id": "curve-fraxtal-frax-usdt",
+    "name": "FRAX/USDT",
+    "token": "FRAXUSDT",
+    "tokenAddress": "0xcAEF324bea3Ff5c7a08710081294F3344fFAdC54",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveFRAX-USDT",
+    "earnedTokenAddress": "0xA7A8c620e3bC24892f24248daB495809aF75b091",
+    "earnContractAddress": "0xA7A8c620e3bC24892f24248daB495809aF75b091",
+    "oracle": "lps",
+    "oracleId": "curve-fraxtal-frax-usdt",
+    "status": "active",
+    "createdAt": 1714639985,
+    "platformId": "convex",
+    "assets": ["FRAX", "USDT"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-2/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-2/withdraw",
+    "network": "fraxtal",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xcAEF324bea3Ff5c7a08710081294F3344fFAdC54",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xcAEF324bea3Ff5c7a08710081294F3344fFAdC54",
+            "coins": [
+              "0xFc00000000000000000000000000000000000001",
+              "0x4d15EA9C2573ADDAeD814e48C148b5262694646A"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-fraxtal-frax-dai",
+    "name": "FRAX/DAI",
+    "token": "FRAXDAI",
+    "tokenAddress": "0x86d7FA03a70c428D3E28092F4509a16f16eC5b7C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveFRAX-DAI",
+    "earnedTokenAddress": "0xb72AfbdAFBBa235776C93a1a58D29A479fE8D863",
+    "earnContractAddress": "0xb72AfbdAFBBa235776C93a1a58D29A479fE8D863",
+    "oracle": "lps",
+    "oracleId": "curve-fraxtal-frax-dai",
+    "status": "active",
+    "createdAt": 1714639974,
+    "platformId": "convex",
+    "assets": ["FRAX", "DAI"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-3/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-3/withdraw",
+    "network": "fraxtal",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x86d7FA03a70c428D3E28092F4509a16f16eC5b7C",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x86d7FA03a70c428D3E28092F4509a16f16eC5b7C",
+            "coins": [
+              "0xFc00000000000000000000000000000000000001",
+              "0xf6a011fAC307f55Cd4bA8e43b8b93f39808DdaA9"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-fraxtal-frax-pyusd",
+    "name": "FRAX/PYUSD",
+    "token": "FRAXPYUSD",
+    "tokenAddress": "0x35c6c59277f8fA9Ae98dea29b0546D79957ACDd8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveFRAX-PYUSD",
+    "earnedTokenAddress": "0x7838cc24498267A0f195597E9818cA3cf30E8675",
+    "earnContractAddress": "0x7838cc24498267A0f195597E9818cA3cf30E8675",
+    "oracle": "lps",
+    "oracleId": "curve-fraxtal-frax-pyusd",
+    "status": "active",
+    "createdAt": 1714639948,
+    "platformId": "convex",
+    "assets": ["FRAX", "PYUSD"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-7/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-7/withdraw",
+    "network": "fraxtal",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x35c6c59277f8fA9Ae98dea29b0546D79957ACDd8",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x35c6c59277f8fA9Ae98dea29b0546D79957ACDd8",
+            "coins": [
+              "0xFc00000000000000000000000000000000000001",
+              "0xfb1520DbDc9230ef5dD5e6fd3Bbb6647B570E190"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-fraxtal-trifxs",
+    "name": "FRAX/wfrxETH/FXS",
+    "token": "TriFXS",
+    "tokenAddress": "0xa0D3911349e701A1F49C1Ba2dDA34b4ce9636569",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveTriFXS",
+    "earnedTokenAddress": "0xd07844349eDB8C59Ee601DCC21E6EE387D083353",
+    "earnContractAddress": "0xd07844349eDB8C59Ee601DCC21E6EE387D083353",
+    "oracle": "lps",
+    "oracleId": "curve-fraxtal-trifxs",
+    "status": "active",
+    "createdAt": 1714638240,
+    "platformId": "convex",
+    "assets": ["FRAX", "wfrxETH", "FXS"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-tricrypto-1/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-tricrypto-1/withdraw",
+    "network": "fraxtal",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xa0D3911349e701A1F49C1Ba2dDA34b4ce9636569",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0xa0D3911349e701A1F49C1Ba2dDA34b4ce9636569",
+            "coins": [
+              "0xFc00000000000000000000000000000000000001",
+              "0xFC00000000000000000000000000000000000006",
+              "0xFc00000000000000000000000000000000000002"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "ra-wbtc-frax",
     "name": "FRAX-WBTC vLP",
     "type": "standard",
