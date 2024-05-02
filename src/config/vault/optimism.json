@@ -1,5 +1,43 @@
 [
   {
+    "id": "velodrome-v2-weth-wrseth",
+    "name": "wrsETH-ETH vLP V2",
+    "type": "standard",
+    "token": "vAMMV2-WETH/wrsETH",
+    "tokenAddress": "0xE48b4E392E4FC29aC2600c3C8EFe0404A15D60D9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2WETH-wrsETH",
+    "earnedTokenAddress": "0xDbE946E16c4e0De9a44065B868265Ac05c437fB6",
+    "earnContractAddress": "0xDbE946E16c4e0De9a44065B868265Ac05c437fB6",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-weth-wrseth",
+    "status": "active",
+    "createdAt": 1714408660,
+    "platformId": "velodrome",
+    "assets": ["wrsETH", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x4200000000000000000000000000000000000006&to=0x87eEE96D50Fb761AD85B1c982d28A042169d61b1",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x87eEE96D50Fb761AD85B1c982d28A042169d61b1&type=-1",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xE48b4E392E4FC29aC2600c3C8EFe0404A15D60D9",
+    "network": "optimism",
+    "earningPoints": true,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "curve-op-tricrv",
     "name": "crvUSD/OP/CRV",
     "token": "3CRV-OP",
@@ -3464,7 +3502,9 @@
     "earnContractAddress": "0x35775aA87b4CA1c04a6c579c90cE9add09247958",
     "oracle": "lps",
     "oracleId": "velodrome-v2-dola-mai",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1714505422,
     "createdAt": 1688058796,
     "platformId": "velodrome",
     "assets": ["DOLA", "MAI"],
@@ -4499,45 +4539,6 @@
     "zaps": [
       {
         "strategyId": "single"
-      }
-    ]
-  },
-  {
-    "id": "velodrome-usd+-dai+",
-    "name": "USD+-DAI+ sLP",
-    "type": "standard",
-    "token": "USD+-DAI+ sLP",
-    "tokenAddress": "0x69C28d5BbE392eF48C0dC347C575023dAf0CD243",
-    "tokenDecimals": 18,
-    "tokenProviderId": "velodrome",
-    "earnedToken": "mooVelodromeUSD+-DAI+",
-    "earnedTokenAddress": "0xE82A0fE3Cf39d8f43CBeb202242eECB8b00B15AB",
-    "earnContractAddress": "0xE82A0fE3Cf39d8f43CBeb202242eECB8b00B15AB",
-    "oracle": "lps",
-    "oracleId": "velodrome-usd+-dai+",
-    "status": "eol",
-    "createdAt": 1680535940,
-    "retireReason": "tvl",
-    "retiredAt": 1703155937,
-    "platformId": "velodrome",
-    "assets": ["USD+", "DAI+"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://velodrome.finance/swap?from=0x73cb180bf0521828d8849bc8CF2B920918e23032&to=0x970D50d09F3a656b43E11B0D45241a84e3a6e011",
-    "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x69C28d5BbE392eF48C0dC347C575023dAf0CD243",
-    "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0x69C28d5BbE392eF48C0dC347C575023dAf0CD243",
-    "network": "optimism",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "optimism-velodrome"
       }
     ]
   },
