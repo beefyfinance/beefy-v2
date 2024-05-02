@@ -78,7 +78,7 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
           />
         </CardHeader>
         <CardContent disableDefaultClass={true} className={classes.layout}>
-          <ChartWithLegend breakdown={calculatedBreakdown} />
+          <ChartWithLegend breakdown={calculatedBreakdown} tab={tab} />
           <BreakdownTable mode={tab} breakdown={calculatedBreakdown} />
         </CardContent>
       </Card>
