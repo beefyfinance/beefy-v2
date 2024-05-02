@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectBridgeFormState,
   selectBridgeDepositTokenForChainId,
+  selectBridgeFormState,
 } from '../../../../../data/selectors/bridge';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
@@ -13,10 +13,11 @@ import {
   AmountInput,
   type AmountInputProps,
 } from '../../../../../vault/components/Actions/Transact/AmountInput';
-import { formatBigDecimals } from '../../../../../../helpers/format';
+import { formatTokenDisplayCondensed } from '../../../../../../helpers/format';
 import BigNumber from 'bignumber.js';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
@@ -69,7 +70,7 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
         <div onClick={handleMax} className={classes.balance}>
           {t('Transact-Available')}{' '}
           <span>
-            {formatBigDecimals(userBalance, 4)} {fromToken.symbol}
+            {formatTokenDisplayCondensed(userBalance, fromToken.decimals, 4)} {fromToken.symbol}
           </span>
         </div>
       </div>
@@ -82,7 +83,24 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
         allowInputAboveBalance={true}
         error={error}
         price={price}
+        endAdornment={<MaxButton disabled={userBalance.lte(BIG_ZERO)} onClick={handleMax} />}
       />
     </div>
+  );
+});
+
+const MaxButton = memo(function MaxButton({
+  disabled,
+  onClick,
+}: {
+  disabled: boolean;
+  onClick: () => void;
+}) {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  return (
+    <button onClick={onClick} disabled={disabled} className={classes.max}>
+      {t('Transact-Max')}
+    </button>
   );
 });

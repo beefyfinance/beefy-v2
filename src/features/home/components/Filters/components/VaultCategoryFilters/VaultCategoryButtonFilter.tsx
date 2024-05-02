@@ -1,5 +1,9 @@
 import { memo, useCallback, useMemo } from 'react';
-import type { ToggleButtonsProps } from '../../../../../../components/ToggleButtons';
+import {
+  ToggleButton,
+  type ToggleButtonProps,
+  type ToggleButtonsProps,
+} from '../../../../../../components/ToggleButtons';
 import { ToggleButtons } from '../../../../../../components/ToggleButtons';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
@@ -7,6 +11,28 @@ import { selectFilterVaultCategory } from '../../../../../data/selectors/filtere
 import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { CATEGORY_OPTIONS } from './category-options';
+import { makeStyles } from '@material-ui/core';
+import { styles } from './styles';
+
+const useStyles = makeStyles(styles);
+
+const CategoryToggleButton = memo<ToggleButtonProps>(function CategoryToggleButton(props) {
+  const classes = useStyles();
+  const { value, label: originalLabel } = props;
+  const label = useMemo(() => {
+    const option = CATEGORY_OPTIONS[value];
+    if (option && option.highlight) {
+      return (
+        <>
+          {originalLabel} <span className={classes.highlight}>{option.highlight}</span>
+        </>
+      );
+    }
+    return originalLabel;
+  }, [value, originalLabel, classes]);
+
+  return <ToggleButton {...props} label={label} />;
+});
 
 export type VaultCategoryButtonFilterProps = {
   className?: string;
@@ -21,7 +47,7 @@ export const VaultCategoryButtonFilter = memo<VaultCategoryButtonFilterProps>(
         Object.fromEntries(
           Object.entries(CATEGORY_OPTIONS)
             .filter(([key]) => key !== allKey)
-            .map(([key, label]) => [key, t(label)])
+            .map(([key, cat]) => [key, t(cat.i18nKey)])
         ),
       [t]
     );
@@ -43,6 +69,7 @@ export const VaultCategoryButtonFilter = memo<VaultCategoryButtonFilterProps>(
         buttonsClass={className}
         fullWidth={false}
         untoggleValue={allKey}
+        ButtonComponent={CategoryToggleButton}
       />
     );
   }

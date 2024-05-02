@@ -14,7 +14,7 @@ import {
   selectIsWalletKnown,
   selectWalletAddress,
 } from '../../features/data/selectors/wallet';
-import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
+import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
 import type { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 
@@ -35,8 +35,8 @@ const _GovVaultRewards = connect((state: BeefyState, { vaultId }: { vaultId: Vau
   const hasRewards = rewardsEarnedUsd.gt(0);
   return {
     earnedToken,
-    rewardsEarnedToken: formatBigDecimals(rewardsEarnedToken, 4, !hasRewards),
-    rewardsEarnedUsd: formatBigUsd(rewardsEarnedUsd),
+    rewardsEarnedToken: formatTokenDisplayCondensed(rewardsEarnedToken, earnedToken.decimals, 4),
+    rewardsEarnedUsd: formatLargeUsd(rewardsEarnedUsd),
     blurred,
     hasRewards,
     loading: !isLoaded,

@@ -1,12 +1,15 @@
-import type { VaultEntity } from '../../features/data/entities/vault';
+import { isCowcentratedLiquidityVault, type VaultEntity } from '../../features/data/entities/vault';
 import { memo, useMemo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { VaultValueStat } from '../VaultValueStat';
 import { selectVaultTvl } from '../../features/data/selectors/tvl';
-import { formatBigUsd, formatSmallPercent } from '../../helpers/format';
-import { selectLpBreakdownByTokenAddress } from '../../features/data/selectors/tokens';
+import { formatLargeUsd, formatPercent } from '../../helpers/format';
+import {
+  selectLpBreakdownByTokenAddress,
+  selectTokenByAddress,
+} from '../../features/data/selectors/tokens';
 import type { BigNumber } from 'bignumber.js';
 import { InterestTooltipContent } from '../InterestTooltipContent';
 import type { PlatformEntity } from '../../features/data/entities/platform';
@@ -45,10 +48,15 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
     vault.depositTokenAddress
   );
 
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const platformId = isCowcentratedLiquidityVault(vault)
+    ? depositToken.providerId!
+    : vault.platformId;
+
   if (!breakdown) {
     return {
       label,
-      value: formatBigUsd(tvl),
+      value: formatLargeUsd(tvl),
       subValue: null,
       blur: false,
       loading: false,
@@ -56,20 +64,20 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
   }
 
   const { percent, underlyingTvl } = getVaultUnderlyingTvlAndBeefySharePercent(
-    breakdown.totalSupply,
-    breakdown.price,
+    vault,
+    breakdown,
     tvl
   );
 
   return {
     label,
-    value: formatBigUsd(tvl),
-    subValue: formatBigUsd(underlyingTvl),
+    value: formatLargeUsd(tvl),
+    subValue: formatLargeUsd(underlyingTvl),
     blur: false,
     loading: false,
     tooltip: (
       <TvlShareTooltip
-        platformId={vault.platformId}
+        platformId={platformId}
         underlyingTvl={underlyingTvl}
         vaultTvl={tvl}
         percent={percent}
@@ -96,16 +104,16 @@ export const TvlShareTooltip = memo<TvlShareTooltipProps>(function TvlShareToolt
     return [
       {
         label: 'Vault-Breakdown-Tvl-Vault',
-        value: formatBigUsd(vaultTvl),
+        value: formatLargeUsd(vaultTvl),
       },
       {
         label: 'Vault-Breakdown-Tvl-Underlying',
-        value: formatBigUsd(underlyingTvl),
+        value: formatLargeUsd(underlyingTvl),
         labelTextParams: { platform: platform.name },
       },
       {
         label: 'Vault-Breakdown-Tvl-Share',
-        value: formatSmallPercent(percent),
+        value: formatPercent(percent),
       },
     ];
   }, [vaultTvl, underlyingTvl, platform.name, percent]);

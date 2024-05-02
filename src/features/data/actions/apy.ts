@@ -72,6 +72,16 @@ export const recalculateTotalApyAction = createAsyncThunk<
       total.liquidStakingDaily = apy.liquidStakingApr / 365;
     }
 
+    if ('clmApr' in apy && apy.clmApr) {
+      total.clmApr = apy.clmApr;
+      total.clmAprDaily = apy.clmApr / 365;
+    }
+
+    if ('merklApr' in apy && apy.merklApr) {
+      total.merklApr = apy.merklApr;
+      total.merklAprDaily = apy.merklApr / 365;
+    }
+
     if (
       total.vaultDaily ||
       total.tradingDaily ||
@@ -82,7 +92,8 @@ export const recalculateTotalApyAction = createAsyncThunk<
         (total.vaultDaily || 0) +
         (total.tradingDaily || 0) +
         (total.composablePoolDaily || 0) +
-        (total.liquidStakingDaily || 0);
+        (total.liquidStakingDaily || 0) +
+        (total.clmAprDaily || 0);
     } else {
       total.totalDaily = yearlyToDaily(total.totalApy);
     }

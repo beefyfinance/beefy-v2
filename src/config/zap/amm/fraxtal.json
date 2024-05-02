@@ -1,0 +1,14 @@
+[
+  {
+    "id": "fraxtal-ra",
+    "name": "Ra",
+    "type": "solidly",
+    "routerAddress": "0xAAA45c8F5ef92a000a121d102F4e89278a711Faa",
+    "factoryAddress": "0xAAA16c016BF556fcD620328f0759252E29b1AB57",
+    "pairInitHash": "0xcb7c02cbd29b030bd31d01ea3b178b1604616dff95e99022dca71f6869e61574",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "5",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
+  }
+]

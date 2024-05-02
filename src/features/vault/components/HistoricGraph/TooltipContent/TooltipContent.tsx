@@ -12,12 +12,12 @@ import { styles } from './styles';
 const useStyles = makeStyles(styles);
 
 export type TooltipContentProps = TooltipProps<number, string> & {
-  stat: ChartStat;
+  stat: Omit<ChartStat, 'cowcentrated'>;
   bucket: ApiTimeBucket;
   toggles: LineTogglesState;
   valueFormatter: (value: number) => string;
   avg: number;
-  vaultType: 'standard' | 'gov';
+  vaultType: 'standard' | 'gov' | 'cowcentrated';
 };
 
 export const TooltipContent = memo<TooltipContentProps>(function TooltipContent({

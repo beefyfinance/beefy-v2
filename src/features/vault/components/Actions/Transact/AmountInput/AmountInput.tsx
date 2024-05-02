@@ -1,12 +1,11 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { memo, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
 import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { useTranslation } from 'react-i18next';
-import { formatBigNumberSignificant, formatBigUsd } from '../../../../../../helpers/format';
+import { formatTokenInput, formatLargeUsd } from '../../../../../../helpers/format';
 
 export const useStyles = makeStyles(styles);
 
@@ -27,7 +26,7 @@ function numberToString(value: BigNumber, tokenDecimals: number): string {
     return '';
   }
 
-  return formatBigNumberSignificant(value, tokenDecimals);
+  return formatTokenInput(value, tokenDecimals);
 }
 
 export type AmountInputProps = {
@@ -36,10 +35,15 @@ export type AmountInputProps = {
   tokenDecimals?: number;
   onChange: (value: BigNumber, isMax: boolean) => void;
   error?: boolean;
+  warning?: boolean;
   className?: string;
   allowInputAboveBalance?: boolean;
   fullWidth?: boolean;
   price?: BigNumber;
+  endAdornment?: ReactNode;
+  disabled?: boolean;
+  errorClassName?: string;
+  warningClassName?: string;
 };
 export const AmountInput = memo<AmountInputProps>(function AmountInput({
   value,
@@ -47,12 +51,16 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   onChange,
   tokenDecimals = 2,
   error = false,
+  warning = false,
   className,
   allowInputAboveBalance = false,
   fullWidth = false,
   price,
+  endAdornment,
+  disabled,
+  errorClassName = '',
+  warningClassName = '',
 }) {
-  const { t } = useTranslation();
   const classes = useStyles();
   const [input, setInput] = useState(() => {
     return numberToString(value, tokenDecimals);
@@ -131,40 +139,39 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   );
   useEffect(() => {
     if (!allowInputAboveBalance && maxValue && value.gt(maxValue)) {
+      setInput(numberToString(maxValue, tokenDecimals));
       onChange(maxValue, true);
     }
-    if (value === BIG_ZERO) {
-      setInput(numberToString(value, tokenDecimals));
-    }
+
+    setInput(numberToString(value, tokenDecimals));
   }, [value, maxValue, onChange, allowInputAboveBalance, tokenDecimals]);
 
   return (
     <div
-      className={clsx(classes.inputContainer, {
+      className={clsx(classes.inputContainer, className, {
         [classes.fullWidth]: fullWidth,
+        [errorClassName]: error && errorClassName,
+        [warningClassName]: warning && warningClassName,
         [classes.error]: error,
+        [classes.warning]: warning,
       })}
     >
       <div className={classes.inputContent}>
         <input
-          className={clsx(classes.input, className, { [classes.inputWithPrice]: Boolean(price) })}
+          className={clsx(classes.input, { [classes.inputWithPrice]: Boolean(price) })}
           value={input}
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="0"
           inputMode="decimal"
+          disabled={disabled}
         />
-        {price && value.gt(0) && <div className={classes.price}>{formatBigUsd(inputUsdValue)}</div>}
+        {price && value.gt(0) && (
+          <div className={classes.price}>{formatLargeUsd(inputUsdValue)}</div>
+        )}
       </div>
-      {maxValue && (
-        <button
-          onClick={handleMax}
-          disabled={maxValue.lte(BIG_ZERO)}
-          className={clsx(classes.endAdornement, classes.max)}
-        >
-          {t('Transact-Max')}
-        </button>
-      )}
+
+      {endAdornment && <div className={classes.endAdornment}>{endAdornment}</div>}
     </div>
   );
 });

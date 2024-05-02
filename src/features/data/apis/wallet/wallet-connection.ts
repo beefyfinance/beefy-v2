@@ -23,6 +23,7 @@ import type { provider } from 'web3-core';
 import { featureFlag_walletConnectChainId } from '../../utils/feature-flags';
 import type { WalletHelpers } from '@web3-onboard/common/dist/types';
 import type { WalletConnectOptions } from '@web3-onboard/walletconnect/dist/types';
+import { isDefined } from '../../utils/array-utils';
 import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url'; // eslint-disable-line import/no-unresolved
 
 const walletConnectImages: Record<string, string> = {
@@ -110,6 +111,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   private static createMetamaskModule(): WalletInit {
     return createMetamaskModule({
       options: {
+        enableAnalytics: false,
+        checkInstallationImmediately: false,
         extensionOnly: false,
         dappMetadata: {
           name: 'Beefy',
@@ -139,6 +142,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   private static createInjectedWalletsModule() {
     return createInjectedWallets({
       custom: customInjectedWallets,
+      disable6963Support: false,
     });
   }
 
@@ -370,7 +374,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     const maxWait = 5000;
     const injectedNamespaces = uniq(
       [...customInjectedWallets, ...standardInjectedWallets].map(wallet => wallet.injectedNamespace)
-    );
+    ).filter(isDefined);
     const anyNamespaceExists = () => {
       if (window) {
         for (const namespace of injectedNamespaces) {

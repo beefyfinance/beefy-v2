@@ -3,282 +3,189 @@ import type { TotalApy } from '../features/data/reducers/apy';
 import { toNumber } from 'web3-utils';
 import type { ReactNode } from 'react';
 import type { AllValuesAs } from '../features/data/utils/types-utils';
-import { BIG_ONE, BIG_ZERO, isBigNumber, toBigNumber } from './big-number';
+import { type BigNumberish, toBigNumber } from './big-number';
 import type { SerializedError } from '@reduxjs/toolkit';
 import { isString, padStart } from 'lodash-es';
 import { strictEntries } from './object';
 
-export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
-  const number = num.toFormat({
-    prefix: '',
-    decimalSeparator: '.',
-    groupSeparator: '',
-    groupSize: 0,
-    secondaryGroupSize: 0,
-  });
-  if (number.length <= digits + 1) {
-    return number;
+/**
+ * Format a (BigNumber|number) to a string of {decimals} decimal places
+ * Example use: input fields
+ * @param value number or BigNumber
+ * @param decimals how many decimal places to output (how many decimals the token has)
+ */
+export function formatTokenInput(value: BigNumberish, decimals: number): string {
+  return toDecimalPlaces(value, decimals).toString(10);
+}
+
+/**
+ * Format a (BigNumber|number) to a string for display
+ * Strips trailing decimal 0s
+ * @param input number or BigNumber
+ * @param decimals
+ */
+export function formatTokenDisplay(input: BigNumberish, decimals: number) {
+  return formatGrouped(toBigNumber(input), decimals);
+}
+
+/**
+ * Format a (BigNumber|number) to a shortened string for display
+ * Attempts to only show {digits} overall digits (will show more if whole part is longer)
+ * Condenses leading decimal zeros to subscript notation
+ * @param input number or BigNumber
+ * @param decimals how many decimals the token has
+ * @param digits how many overall digits to display (default: 8)
+ */
+export function formatTokenDisplayCondensed(
+  input: BigNumberish,
+  decimals: number,
+  digits: number = 8
+): string {
+  const value = toDecimalPlaces(input, decimals);
+
+  if (value.isZero()) {
+    return '0';
   }
-  const [wholes, decimals] = number.split('.');
-  if (wholes.length >= digits) {
-    return wholes;
+
+  // Default/Clamp: all decimals
+  if (digits === undefined || digits > decimals) {
+    digits = decimals;
   }
-  const pattern = new RegExp(`^[0]*[0-9]{0,${digits - (wholes === '0' ? 0 : wholes.length)}}`);
-  const matches = decimals.match(pattern);
-  if (!matches || matches.length === 0) {
-    throw new Error('No match found');
+
+  // Work out how many digits we have for whole and fraction
+  const wholeDigits = value
+    .absoluteValue()
+    .decimalPlaces(0, BigNumber.ROUND_FLOOR)
+    .toString(10).length;
+  const decimalDigits = digits - wholeDigits;
+
+  // Whole number only
+  if (decimalDigits <= 0) {
+    return formatGrouped(value, 0);
   }
-  return `${wholes}.${matches[0]}`;
+
+  return condenseDecimalZeros(formatGrouped(value, decimals), decimalDigits);
 }
 
 /**
  * Formats a number to output as a percent% string
- * @param percent as decimal e.g. 0.01 to represent 1%
- * @param dp
- * @param placeholder
+ * @param input as decimal e.g. 0.01 to represent 1%
+ * @param decimals decimal places
+ * @param missingPlaceholder to show if percent is null or undefined
+ * @param veryLargePlaceholder to show if percent is very large
  */
-export function formatPercent<T = string>(
-  percent: number | BigNumber | null | undefined,
-  dp = 2,
-  placeholder: T | string = '?'
+export function formatLargePercent<T = string>(
+  input: BigNumberish | null | undefined,
+  decimals = 2,
+  missingPlaceholder: T | string = '?',
+  veryLargePlaceholder: T | string = '🔥'
 ): T | string {
-  if (!percent && percent !== 0) return placeholder;
+  const minOrder = 2; // show units for 1m+
+  const decimalsUnder = 1000; // show 2 decimal places values < 1000
+  if (input === null || input === undefined) {
+    return missingPlaceholder;
+  }
 
-  if (percent === 0) {
+  const ratio = toBigNumber(input);
+  if (ratio.isNaN()) {
+    return missingPlaceholder;
+  }
+
+  if (ratio.isZero()) {
     return '0%';
   }
 
-  // Convert to number
-  const numberPercent: number = (isBigNumber(percent) ? percent.toNumber() : percent) * 100;
-
-  const units = ['', 'k', 'M', 'B', 'T', 'Q', 'S'];
-  const order = Math.floor(Math.log10(numberPercent) / 3);
-
-  // Show fire symbol if very large %
-  if (order >= units.length - 1) return `🔥`;
-
-  // Magnitude to display
-  let unitToDisplay = '';
-  let num: number = numberPercent;
-  if (order > 1) {
-    num = numberPercent / 1000 ** order;
-    unitToDisplay = units[order];
+  if (!ratio.isFinite()) {
+    return ratio.isPositive() ? veryLargePlaceholder : missingPlaceholder;
   }
 
-  // Format output
-  return num < 999
-    ? `${num.toFixed(dp)}${unitToDisplay}%`
-    : numberPercent.toLocaleString('en-US', {
-        maximumFractionDigits: 0,
-        minimumFractionDigits: 0,
-      }) + '%';
+  const { value, unit } = toMagnitude(ratio.shiftedBy(2), minOrder);
+
+  if (unit === undefined) {
+    return veryLargePlaceholder;
+  }
+
+  return `${formatGrouped(value, value.lt(decimalsUnder) ? decimals : 0)}${unit}%`;
 }
 
 /**
- * @param percent 0..1
- * @param maxPlaces
- * @param minPlaces
- * @param formatZero
+ * @param input as decimal e.g. 0.01 to represent 1%
+ * @param decimals decimal places
+ * @param roundMode
  */
-export function formatSmallPercent(
-  percent: number,
-  maxPlaces: number = 2,
-  minPlaces: number = 0,
-  formatZero: boolean = false
+export function formatPercent(
+  input: BigNumberish,
+  decimals: number = 2,
+  roundMode: BigNumber.RoundingMode = BigNumber.ROUND_FLOOR
 ): string {
-  return !formatZero && percent === 0
+  const percent = toBigNumber(input).shiftedBy(2);
+
+  return percent.isZero()
     ? '0%'
-    : (percent * 100).toLocaleString('en-US', {
-        maximumFractionDigits: maxPlaces,
-        minimumFractionDigits: minPlaces,
-      }) + '%';
+    : percent.toFormat(decimals, roundMode, {
+        prefix: '',
+        decimalSeparator: '.',
+        groupSeparator: ',',
+        groupSize: 3,
+        secondaryGroupSize: 0,
+        fractionGroupSeparator: '',
+        fractionGroupSize: 0,
+        suffix: '%',
+      });
 }
 
-export function formattedTotalApy(
+export function formatUsd(input: BigNumberish, decimals: number = 2): string {
+  const value = toBigNumber(input);
+  const prefix = value.isNegative() ? '-$' : '$';
+  return `${prefix}${formatGrouped(value.absoluteValue(), decimals)}`;
+}
+
+/**
+ * Formats: 123 -> $123, 1234 -> $1234, 1234567 -> $1.23M etc
+ * @param input
+ * @param decimals decimal places to display if formatted value <  decimalsUnder
+ * @param minOrder order of magnitude to start showing units (1=k, 2=M, 3=B etc.)
+ * @param decimalsUnder formatted value under which to show decimals
+ */
+export function formatLargeUsd(
+  input: BigNumberish,
+  decimals: number = 2,
+  minOrder: number = 2,
+  decimalsUnder: BigNumberish = 1000
+): string {
+  const value = toBigNumber(input);
+
+  if (value.isZero()) {
+    return '$0';
+  }
+
+  const prefix = value.isNegative() ? '-$' : '$';
+  return `${prefix}${formatLargeNumber(value.absoluteValue(), decimals, minOrder, decimalsUnder)}`;
+}
+
+export function formatTotalApy(
   totalApy: TotalApy,
   placeholder?: string
 ): AllValuesAs<TotalApy, string>;
-export function formattedTotalApy(
+export function formatTotalApy(
   totalApy: TotalApy,
   placeholder?: ReactNode
 ): AllValuesAs<TotalApy, ReactNode>;
-export function formattedTotalApy(
+/**
+ * Formats a TotalApy object to a string for display
+ */
+export function formatTotalApy(
   totalApy: TotalApy,
   placeholder: ReactNode = '?'
 ): AllValuesAs<TotalApy, string | ReactNode> {
   return Object.fromEntries(
     strictEntries(totalApy).map(([key, value]) => {
       const formattedValue = key.toLowerCase().includes('daily')
-        ? formatPercent(value, 4, placeholder)
-        : formatPercent(value, 2, placeholder);
+        ? formatLargePercent(value, 4, placeholder)
+        : formatLargePercent(value, 2, placeholder);
       return [key, formattedValue];
     })
   ) as AllValuesAs<TotalApy, string | ReactNode>; // required keys in input so should exist in output
-}
-
-/**
- * Formats: 123 -> $123, 1234 -> $1.23k, 1234567 -> $1.23M etc
- * Supports `BigNumber`, but only for values than can fit in normal js `number`
- */
-export function formatUsd(
-  input: number | BigNumber,
-  oraclePrice: number | BigNumber | undefined = undefined
-): string {
-  const value: number = oraclePrice
-    ? toBigNumber(input).times(oraclePrice).toNumber()
-    : isBigNumber(input)
-    ? input.toNumber()
-    : input;
-
-  if (value === 0) {
-    return '$0';
-  }
-
-  const order = Math.floor(Math.log10(value) / 3);
-  const units = ['', 'k', 'M', 'B', 'T'];
-  const shouldShowUnits = order > 1; // only use units if 1M+
-  let unitToDisplay = '';
-  let num: number = value;
-
-  if (shouldShowUnits) {
-    num = value / 1000 ** order;
-    unitToDisplay = units[order];
-  }
-  const prefix = '$';
-
-  return num < 999
-    ? prefix + num.toFixed(2) + unitToDisplay
-    : value.toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        maximumFractionDigits: 0,
-        minimumFractionDigits: 0,
-      });
-}
-
-export function getBigNumOrder(num: BigNumber): number {
-  const nEstr = num.abs().decimalPlaces(0, BigNumber.ROUND_FLOOR).toExponential();
-  const parts = nEstr.split('e');
-  const exp = parseInt(parts[1] || '0');
-  return Math.floor(exp / 3);
-}
-
-export function formatBigUsd(value: BigNumber, places: number = 2) {
-  if (value.lt(BIG_ZERO)) {
-    return '-$' + formatBigNumber(value.negated(), places);
-  }
-
-  return '$' + formatBigNumber(value, places);
-}
-
-export function formatBigNumber(value: BigNumber, places: number = 2) {
-  value = value.decimalPlaces(places, BigNumber.ROUND_FLOOR);
-
-  if (value.isZero()) {
-    return '0';
-  }
-  const order = getBigNumOrder(value);
-  if (value.abs().gte(100)) {
-    value = value.decimalPlaces(0, BigNumber.ROUND_FLOOR);
-  }
-  if (order < 2 && value.abs().gte(100)) {
-    return value.toNumber().toLocaleString('en-US', {
-      maximumFractionDigits: 0,
-      minimumFractionDigits: 0,
-    });
-  }
-  const units = ['', 'k', 'M', 'B', 'T', 'Q'];
-
-  return value.shiftedBy(-order * 3).toFixed(places) + units[order];
-}
-
-export function formatBigDecimals(value: BigNumber, maxPlaces: number = 8, strip = true) {
-  if (value.isZero() && strip) {
-    return '0';
-  }
-
-  const fixed = value.toFixed(maxPlaces);
-  return strip ? stripTrailingZeros(fixed) : fixed;
-}
-
-export function formatFullBigNumber(
-  value: BigNumber,
-  maxDp: number,
-  roundMode: BigNumber.RoundingMode = BigNumber.ROUND_FLOOR
-) {
-  return stripTrailingZeros(
-    value.toFormat(maxDp, roundMode, {
-      prefix: '',
-      decimalSeparator: '.',
-      groupSeparator: ',',
-      groupSize: 3,
-      secondaryGroupSize: 0,
-      fractionGroupSeparator: '.',
-      fractionGroupSize: 0,
-      suffix: '',
-    })
-  );
-}
-
-/**
- * Formats only to enough decimals to show $0.01 worth
- * @param value token amount to format
- * @param decimals number of decimals the token has
- * @param price price in USD per 1 token
- * @param extraPlaces number of decimals more than needed to show $0.01
- * @param minPlaces minimum number of decimals to show
- * @param roundMode
- */
-export function formatSignificantBigNumber(
-  value: BigNumber,
-  decimals: number,
-  price: BigNumber,
-  extraPlaces: number = 0,
-  minPlaces: number = 2,
-  roundMode: BigNumber.RoundingMode = BigNumber.ROUND_FLOOR
-) {
-  const tokensPerCent = BIG_ONE.dividedBy(price.multipliedBy(100));
-  const sigPlaces = getFirstNonZeroDecimal(tokensPerCent, decimals) + extraPlaces;
-  const places = Math.max(Math.min(sigPlaces, decimals), minPlaces);
-
-  return stripTrailingZeros(
-    value.toFormat(places, roundMode, {
-      prefix: '',
-      decimalSeparator: '.',
-      groupSeparator: ',',
-      groupSize: 3,
-      secondaryGroupSize: 0,
-      fractionGroupSeparator: '.',
-      fractionGroupSize: 0,
-      suffix: '',
-    })
-  );
-}
-
-function getFirstNonZeroDecimal(value: BigNumber, max: number): number {
-  let position = 0;
-
-  if (value.isEqualTo(BIG_ZERO) || value.gte(BIG_ONE)) {
-    return 0;
-  }
-
-  while (value.lt(BIG_ONE) && position < max) {
-    value = value.multipliedBy(10);
-    ++position;
-  }
-
-  return position;
-}
-
-export const stripTrailingZeros = str => {
-  return str.replace(/(\.[0-9]*?)(0+$)/, '$1').replace(/\.$/, '');
-};
-
-export function byDecimals(number, tokenDecimals = 18) {
-  const decimals = new BigNumber(10).exponentiatedBy(tokenDecimals);
-  return new BigNumber(number)
-    .dividedBy(decimals)
-    .decimalPlaces(tokenDecimals, BigNumber.ROUND_FLOOR);
 }
 
 export const formatCountdown = deadline => {
@@ -348,6 +255,90 @@ export function errorToString(
     : `${error?.message || error?.name || error?.code || String(error) || fallbackMessage}`;
 }
 
+/**
+ * Defaults: 123 -> 123, 1234 -> 1,234, 1234567 -> 1.23M etc
+ */
+function formatLargeNumber(
+  input: BigNumberish,
+  decimals: number = 2,
+  minOrder: number = 2,
+  decimalsUnder: BigNumberish = 1000
+): string {
+  const inputValue = toBigNumber(input);
+
+  if (inputValue.isZero()) {
+    return '0';
+  }
+
+  const { value, unit } = toMagnitude(inputValue, minOrder);
+
+  return `${formatGrouped(value, value.absoluteValue().lt(decimalsUnder) ? decimals : 0)}${unit}`;
+}
+
 export function zeroPad(value: number | undefined, length: number): string {
   return padStart((value || 0).toString(), length, '0');
+}
+
+function toMagnitude(value: BigNumber, minOrder: number = 1) {
+  if (value.e === null) {
+    return { value: value, unit: '' };
+  }
+
+  const order = Math.floor(value.e / 3);
+  if (order < minOrder || order < 0) {
+    return { value: value, unit: '' };
+  }
+
+  const units = ['', 'k', 'M', 'B', 'T', 'Q', 'S'];
+  const newValue = value.shiftedBy(-order * 3);
+  return { value: newValue, unit: units[order] };
+}
+
+function toSubString(input: string) {
+  const subchars = '₀₁₂₃₄₅₆₇₈₉';
+  return input.replace(/[0-9]/g, m => subchars[+m]);
+}
+
+function condenseDecimalZeros(value: string, decimalDigits: number) {
+  // Get whole and fraction part
+  const [whole, decimal] = value.split('.');
+
+  // No decimal part
+  if (!decimal || !decimal.length) {
+    return whole;
+  }
+
+  // Condense zeros
+  let subLength = 0;
+  const formattedDecimal = decimal.replace(/0*$/, '').replace(/^0{3,}/, match => {
+    const removed = match.length.toString();
+    const sub = toSubString(removed);
+    subLength = sub.length;
+    return `0${sub}`;
+  });
+
+  return `${whole}.${formattedDecimal.slice(0, decimalDigits + subLength).replace(/0*$/, '')}`;
+}
+
+function toDecimalPlaces(value: BigNumberish, decimals: number): BigNumber {
+  return toBigNumber(value).decimalPlaces(decimals, BigNumber.ROUND_FLOOR);
+}
+
+function formatGrouped(value: BigNumber, decimals: number): string {
+  return stripTrailingZeros(
+    value.toFormat(decimals, BigNumber.ROUND_FLOOR, {
+      prefix: '',
+      decimalSeparator: '.',
+      groupSeparator: ',',
+      groupSize: 3,
+      secondaryGroupSize: 0,
+      fractionGroupSeparator: '.',
+      fractionGroupSize: 0,
+      suffix: '',
+    })
+  );
+}
+
+function stripTrailingZeros(str: string) {
+  return str.replace(/(\.[0-9]*?)(0+$)/, '$1').replace(/\.$/, '');
 }

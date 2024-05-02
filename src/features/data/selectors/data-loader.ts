@@ -83,6 +83,13 @@ export const selectShouldInitArticles = (state: BeefyState) => {
   return isInitialLoader(state.ui.dataLoader.global.articles);
 };
 
+export const selectIsContractDataLoadedOnChain = (
+  state: BeefyState,
+  chainId: ChainEntity['id']
+) => {
+  return state.ui.dataLoader.byChainId[chainId]?.contractData.alreadyLoadedOnce;
+};
+
 export const selectIsZapLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.zapConfigs.alreadyLoadedOnce &&
   state.ui.dataLoader.global.zapSwapAggregators.alreadyLoadedOnce &&

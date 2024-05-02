@@ -5,6 +5,7 @@ export const minters: MinterConfig[] = [
     id: 'beftm',
     name: 'beFTM',
     minterAddress: '0xD42Db865A8e78ebF9F7C081Bc0A4fDD4314b5fEf',
+    burnerAddress: '0x7381eD41F6dE418DdE5e84B55590422a57917886',
     depositToken: {
       symbol: 'FTM',
       oracleId: 'FTM',
@@ -19,8 +20,10 @@ export const minters: MinterConfig[] = [
       contractAddress: '0x7381eD41F6dE418DdE5e84B55590422a57917886',
       decimals: 18,
     },
+    disableMint: true,
     canZapInWithOneInch: true,
-    canBurnReserves: false,
+    canBurn: 'supply',
+    reserveBalanceMethod: 'balanceOfWant',
     vaultIds: [
       'beefy-beFTM',
       'beefy-beFTM-earnings',
@@ -47,7 +50,7 @@ export const minters: MinterConfig[] = [
       contractAddress: '0x44e314190D9E4cE6d4C0903459204F8E21ff940A',
       decimals: 18,
     },
-    canBurnReserves: false,
+    canBurn: false,
     vaultIds: ['beefy-binspirit', 'spirit-binspirit-spirit'],
   },
 ];

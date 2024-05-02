@@ -10,7 +10,7 @@ import {
   selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged,
   selectUserVaultDepositInUsd,
 } from '../../features/data/selectors/balance';
-import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
+import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
 import {
   selectIsBalanceHidden,
   selectIsWalletKnown,
@@ -18,6 +18,7 @@ import {
 } from '../../features/data/selectors/wallet';
 import { VaultValueStat } from '../VaultValueStat';
 import { VaultDepositedTooltip } from '../VaultDepositedTooltip';
+import { selectTokenByAddress } from '../../features/data/selectors/tokens';
 
 export type VaultDepositStatProps = {
   vaultId: VaultEntity['id'];
@@ -67,8 +68,9 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDeposit
     };
   }
 
-  const totalDeposited = formatBigDecimals(deposit, 8, false);
-  const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vaultId));
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const totalDeposited = formatTokenDisplayCondensed(deposit, depositToken.decimals, 6);
+  const totalDepositedUsd = formatLargeUsd(selectUserVaultDepositInUsd(state, vaultId));
 
   // if bridged, or boosted, add tooltip
   let tooltip: ReactNode | undefined;

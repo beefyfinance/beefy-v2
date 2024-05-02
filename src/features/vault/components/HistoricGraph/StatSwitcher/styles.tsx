@@ -8,4 +8,8 @@ export const styles = (theme: Theme) => ({
       marginTop: 0,
     },
   },
+  select: {
+    width: '100%',
+    backgroundColor: theme.palette.background.contentPrimary,
+  },
 });

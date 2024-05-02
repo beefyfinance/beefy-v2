@@ -8,9 +8,10 @@ import {
   selectTransactQuoteStatus,
   selectTransactSelectedQuoteOrUndefined,
 } from '../../../../../data/selectors/transact';
-import type {
-  TransactOption,
-  TransactQuote,
+import {
+  isCowcentratedDepositQuote,
+  type TransactOption,
+  type TransactQuote,
 } from '../../../../../data/apis/transact/transact-types';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 import { PriceImpactNotice } from '../PriceImpactNotice';
@@ -23,6 +24,8 @@ import { TransactStatus } from '../../../../../data/reducers/wallet/transact-typ
 import { type ActionButtonProps, ActionConnectSwitch } from '../CommonActions';
 import { GlpDepositNotice } from '../GlpNotices';
 import { NotEnoughNotice } from '../NotEnoughNotice';
+import { VaultFees } from '../VaultFees';
+import { CowcentratedNoSingleSideAllowedNotice } from '../CowcentratedNoSingleSideAllowedNotice';
 
 const useStyles = makeStyles(styles);
 
@@ -45,17 +48,21 @@ const ActionDepositDisabled = memo<ActionButtonProps>(function ActionDepositDisa
   className,
 }) {
   const { t } = useTranslation();
+  const classes = useStyles();
 
   return (
-    <Button
-      variant="success"
-      disabled={true}
-      fullWidth={true}
-      borderless={true}
-      className={className}
-    >
-      {t('Transact-Deposit')}
-    </Button>
+    <div className={classes.feesContainer}>
+      <Button
+        variant="success"
+        disabled={true}
+        fullWidth={true}
+        borderless={true}
+        className={className}
+      >
+        {t('Transact-Deposit')}
+      </Button>
+      <VaultFees />
+    </div>
   );
 });
 
@@ -76,11 +83,13 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
   const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
+  const [isDisabledByNoAllowedSingleSide, setIsDisabledByNoAllowedSingleSide] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
+  const isCowDepositQuote = isCowcentratedDepositQuote(quote);
 
   const isDisabled =
     isTxInProgress ||
@@ -88,7 +97,8 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
     isDisabledByMaxNative ||
     isDisabledByConfirm ||
     isDisabledByGlpLock ||
-    isDisabledByNotEnoughInput;
+    isDisabledByNotEnoughInput ||
+    isDisabledByNoAllowedSingleSide;
 
   const handleClick = useCallback(() => {
     dispatch(transactSteps(quote, t));
@@ -106,17 +116,21 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
       <MaxNativeNotice quote={quote} onChange={setIsDisabledByMaxNative} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <NotEnoughNotice mode="deposit" onChange={setIsDisabledByNotEnoughInput} />
-      <ActionConnectSwitch chainId={option.chainId}>
-        <Button
-          variant="success"
-          disabled={isDisabled}
-          fullWidth={true}
-          borderless={true}
-          onClick={handleClick}
-        >
-          {t(isMaxAll ? 'Transact-DepositAll' : 'Transact-Deposit')}
-        </Button>
-      </ActionConnectSwitch>
+      <CowcentratedNoSingleSideAllowedNotice onChange={setIsDisabledByNoAllowedSingleSide} />
+      <div className={classes.feesContainer}>
+        <ActionConnectSwitch chainId={option.chainId}>
+          <Button
+            variant="success"
+            disabled={isDisabled}
+            fullWidth={true}
+            borderless={true}
+            onClick={handleClick}
+          >
+            {t(isMaxAll && !isCowDepositQuote ? 'Transact-DepositAll' : 'Transact-Deposit')}
+          </Button>
+        </ActionConnectSwitch>
+        <VaultFees />
+      </div>
     </div>
   );
 });

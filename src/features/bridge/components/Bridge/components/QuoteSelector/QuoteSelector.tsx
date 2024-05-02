@@ -13,7 +13,7 @@ import {
   selectBridgeQuoteSelectedId,
   selectBridgeQuoteStatus,
 } from '../../../../../data/selectors/bridge';
-import { formatBigDecimals, formatBigUsd } from '../../../../../../helpers/format';
+import { formatLargeUsd, formatTokenDisplayCondensed } from '../../../../../../helpers/format';
 import { bridgeActions } from '../../../../../data/reducers/wallet/bridge';
 import clsx from 'clsx';
 import { getBridgeProviderIcon } from '../../../../../../helpers/bridgeProviderSrc';
@@ -66,7 +66,9 @@ const QuoteLimited = memo<QuoteLimitedProps>(function QuoteLimited({ quoteId }) 
       </div>
       <div className={classes.quoteLimit}>
         <Lock className={classes.quoteLimitIcon} />
-        <div>{t('Bridge-Quote-RateLimited', { amount: formatBigDecimals(limit, 4) })}</div>
+        <div>
+          {t('Bridge-Quote-RateLimited', { amount: formatTokenDisplayCondensed(limit, 18, 6) })}
+        </div>
       </div>
     </div>
   );
@@ -96,7 +98,7 @@ const QuoteButton = memo<QuoteButtonProps>(function QuoteButton({ quoteId, selec
     selectTokenPriceByAddress(state, quote.fee.token.chainId, quote.fee.token.address)
   );
   const usdFee = useMemo(() => {
-    return formatBigUsd(quote.fee.amount.multipliedBy(tokenPrice));
+    return formatLargeUsd(quote.fee.amount.multipliedBy(tokenPrice));
   }, [tokenPrice, quote.fee.amount]);
 
   return (
@@ -112,7 +114,8 @@ const QuoteButton = memo<QuoteButtonProps>(function QuoteButton({ quoteId, selec
         providerId={quote.config.id}
         fee={
           <>
-            ~{formatBigDecimals(quote.fee.amount, 4)} {quote.fee.token.symbol} ({usdFee})
+            ~{formatTokenDisplayCondensed(quote.fee.amount, quote.fee.token.decimals, 6)}{' '}
+            {quote.fee.token.symbol} ({usdFee})
           </>
         }
         time={<>~{timeEstimate}</>}
@@ -227,8 +230,8 @@ const QuotesError = memo(function QuotesError() {
             ? 'Bridge-Quotes-AllRateLimited-Wait'
             : 'Bridge-Quotes-AllRateLimited',
           {
-            current: formatBigDecimals(errorLimits.current, 4),
-            max: formatBigDecimals(errorLimits.max, 4),
+            current: formatTokenDisplayCondensed(errorLimits.current, 18, 4),
+            max: formatTokenDisplayCondensed(errorLimits.max, 18, 4),
           }
         )}
       </AlertError>

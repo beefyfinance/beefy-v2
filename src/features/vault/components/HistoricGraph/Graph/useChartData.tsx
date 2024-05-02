@@ -18,7 +18,7 @@ export type ChartData = {
 };
 
 export function useChartData(
-  stat: ChartStat,
+  stat: Omit<ChartStat, 'cowcentrated'>,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket

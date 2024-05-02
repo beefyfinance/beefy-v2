@@ -3,7 +3,7 @@ import { memo, useMemo } from 'react';
 import type { VaultEntity } from '../../../../../data/entities/vault';
 import { useAppSelector } from '../../../../../../store';
 import { selectVaultDailyYieldStats, selectVaultTotalApy } from '../../../../../data/selectors/apy';
-import { formatBigUsd, formattedTotalApy } from '../../../../../../helpers/format';
+import { formatLargeUsd, formatTotalApy } from '../../../../../../helpers/format';
 import { useTranslation } from 'react-i18next';
 import { selectIsVaultBoosted } from '../../../../../data/selectors/boosts';
 import { styles } from './styles';
@@ -22,7 +22,7 @@ export const TabletStats = memo<TableStatsInterface>(function TabletStats({ vaul
   const { dailyUsd } = useAppSelector(state => selectVaultDailyYieldStats(state, vaultId));
 
   const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
-  const formatted = useMemo(() => formattedTotalApy(values, '???'), [values]);
+  const formatted = useMemo(() => formatTotalApy(values, '???'), [values]);
   const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
 
   return (
@@ -32,7 +32,7 @@ export const TabletStats = memo<TableStatsInterface>(function TabletStats({ vaul
         value={isBoosted ? formatted.boostedTotalApy : formatted.totalApy}
         valueClassName={isBoosted ? classes.boostText : ''}
       />
-      <MobileStat label={t('Dashboard-Filter-DailyYield')} value={formatBigUsd(dailyUsd)} />
+      <MobileStat label={t('Dashboard-Filter-DailyYield')} value={formatLargeUsd(dailyUsd)} />
     </div>
   );
 });

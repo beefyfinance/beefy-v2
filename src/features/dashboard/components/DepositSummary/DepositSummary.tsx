@@ -1,7 +1,7 @@
 import { Container, makeStyles } from '@material-ui/core';
 import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatUsd } from '../../../../helpers/format';
+import { formatLargeUsd } from '../../../../helpers/format';
 import { useAppSelector } from '../../../../store';
 import { selectUserGlobalStats } from '../../../data/selectors/apy';
 import { SummaryStats } from '../../../../components/SummaryStats';
@@ -34,7 +34,7 @@ export const DepositSummary = memo<DepositSummaryProps>(function DepositSummary(
     return [
       {
         title: t('Summary-Deposit'),
-        value: formatUsd(stats.deposited),
+        value: formatLargeUsd(stats.deposited),
         Icon: WalletIcon,
       },
       {
@@ -44,12 +44,12 @@ export const DepositSummary = memo<DepositSummaryProps>(function DepositSummary(
       },
       {
         title: t('Summary-Yield'),
-        value: formatUsd(totalYieldUsd.toNumber()),
+        value: formatLargeUsd(totalYieldUsd.toNumber()),
         Icon: MonthlyIcon,
       },
       {
         title: t('Summary-Daily'),
-        value: formatUsd(stats.daily),
+        value: formatLargeUsd(stats.daily),
         Icon: DailyIcon,
       },
     ];

@@ -24,7 +24,7 @@ const useStyles = makeStyles(styles);
 export type HistoricGraphProp = {
   vaultId: VaultEntity['id'];
   oracleId: TokenEntity['oracleId'];
-  stat: ChartStat;
+  stat: Omit<ChartStat, 'cowcentrated'>;
 };
 
 export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithControls({

@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { memo } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
-import { formatBigUsd } from '../../../../../../helpers/format';
+import { formatLargeUsd } from '../../../../../../helpers/format';
 import type { BreakdownMode, CalculatedBreakdownData } from '../../types';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
@@ -47,7 +47,7 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
               className={classes.tokenAmount}
             />
           </div>
-          <div className={classes.cell}>{formatBigUsd(asset[valueField])}</div>
+          <div className={classes.cell}>{formatLargeUsd(asset[valueField])}</div>
         </div>
       ))}
       <div className={clsx(classes.row, classes.footer)}>
@@ -67,7 +67,7 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
             className={classes.tokenAmount}
           />
         </div>
-        <div className={classes.cell}>{formatBigUsd(breakdown[valueField])}</div>
+        <div className={classes.cell}>{formatLargeUsd(breakdown[valueField])}</div>
       </div>
     </div>
   );

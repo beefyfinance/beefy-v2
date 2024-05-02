@@ -1,4 +1,13 @@
 {
+  "arb-ltipp": {
+    "title": "Beefy LTIPP",
+    "description": "Earn extra incentives awarded to Beefy's CLM through Arbitrum's incentives program. Users earn extra $ARB tokens for staking into selected CLMs, while trading fees get automatically claimed and compounded back into the position.",
+    "learn": "https://beefy.com/articles/clm/",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://twitter.com/beefyfinance"
+    }
+  },
   "zap-v3": {
     "title": "Zap V3 Launch",
     "description": "Celebrate Zap V3 launch with Beefy's Optimism Governance Fund campaign. Users earn $OP tokens for utilizing Zap V3 on Optimism, with monthly rewards and partner launchpool boosts on select vaults.",

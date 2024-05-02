@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { formatFullBigNumber, formatSignificantBigNumber } from '../../helpers/format';
+import { formatTokenDisplayCondensed, formatTokenDisplay } from '../../helpers/format';
 import { Tooltip } from '../Tooltip';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
 import type { BigNumber } from 'bignumber.js';
@@ -18,28 +18,31 @@ export type TokenAmountProps = {
   price: BigNumber;
   minShortPlaces?: number;
   className?: string;
+  onClick?: () => void;
 };
 export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({
   amount,
   decimals,
-  price,
-  minShortPlaces = 2,
   className,
+  onClick,
 }) {
   const classes = useStyles();
-  const fullAmount = formatFullBigNumber(amount, decimals);
-  const shortAmount = formatSignificantBigNumber(amount, decimals, price, 0, minShortPlaces);
+  const fullAmount = formatTokenDisplay(amount, decimals);
+  const shortAmount = formatTokenDisplayCondensed(amount, decimals);
   const needTooltip = shortAmount.length < fullAmount.length;
 
   return needTooltip ? (
     <Tooltip
-      triggerClass={clsx(classes.withTooltip, className)}
+      onTriggerClick={onClick}
+      triggerClass={clsx(classes.withTooltip, className, { [classes.withOnClick]: onClick })}
       content={<BasicTooltipContent title={fullAmount} />}
     >
       {shortAmount}
     </Tooltip>
   ) : (
-    <span className={className}>{fullAmount}</span>
+    <span onClick={onClick} className={clsx(className, { [classes.withOnClick]: onClick })}>
+      {fullAmount}
+    </span>
   );
 });
 
@@ -48,9 +51,10 @@ export type TokenAmountFromEntityProps = {
   token: TokenEntity;
   minShortPlaces?: number;
   className?: string;
+  onClick?: () => void;
 };
 export const TokenAmountFromEntity = memo<TokenAmountFromEntityProps>(
-  function TokenAmountFromEntity({ amount, token, minShortPlaces = 2, className }) {
+  function TokenAmountFromEntity({ amount, token, minShortPlaces = 2, className, onClick }) {
     const price = useAppSelector(state =>
       selectTokenPriceByAddress(state, token.chainId, token.address)
     );
@@ -61,6 +65,7 @@ export const TokenAmountFromEntity = memo<TokenAmountFromEntityProps>(
         price={price}
         className={className}
         minShortPlaces={minShortPlaces}
+        onClick={onClick}
       />
     );
   }

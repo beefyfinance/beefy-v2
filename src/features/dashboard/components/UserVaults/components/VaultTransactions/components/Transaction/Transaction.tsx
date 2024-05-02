@@ -4,7 +4,10 @@ import { styles } from './styles';
 import type { VaultTimelineAnalyticsEntity } from '../../../../../../../data/entities/analytics';
 import clsx from 'clsx';
 import { formatISO9075 } from 'date-fns';
-import { formatBigUsd, formatSignificantBigNumber } from '../../../../../../../../helpers/format';
+import {
+  formatTokenDisplayCondensed,
+  formatLargeUsd,
+} from '../../../../../../../../helpers/format';
 import { BIG_ZERO } from '../../../../../../../../helpers/big-number';
 import { Row, RowMobile } from '../../../Row/Row';
 import { InfoGrid } from '../InfoGrid';
@@ -96,7 +99,7 @@ export const Transaction = memo<TransactionProps>(function Transaction({ data, t
         </div>
         {/*Usd Balance */}
         <div className={classes.column}>
-          <div className={classes.stat}>{formatBigUsd(usdBalance || BIG_ZERO)}</div>
+          <div className={classes.stat}>{formatLargeUsd(usdBalance || BIG_ZERO)}</div>
         </div>
       </InfoGrid>
     </Row>
@@ -111,44 +114,24 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
   const { t } = useTranslation();
   const chainId = data.source?.chain || data.chain;
   const chain = useAppSelector(state => selectChainById(state, chainId));
-  const {
-    datetime,
-    shareBalance,
-    usdBalance,
-    underlyingDiff,
-    shareToUnderlyingPrice,
-    underlyingToUsdPrice,
-    underlyingBalance,
-    transactionHash,
-  } = data;
+  const { datetime, shareBalance, usdBalance, underlyingDiff, underlyingBalance, transactionHash } =
+    data;
 
   const amountClassName = useMemo(() => {
     return underlyingDiff.gt(BIG_ZERO) ? classes.textGreen : classes.textRed;
   }, [classes.textGreen, classes.textRed, underlyingDiff]);
 
   const balance = useMemo(() => {
-    return formatSignificantBigNumber(
-      underlyingBalance,
-      tokenDecimals,
-      underlyingToUsdPrice || BIG_ZERO,
-      0,
-      2
-    );
-  }, [underlyingBalance, tokenDecimals, underlyingToUsdPrice]);
+    return formatTokenDisplayCondensed(underlyingBalance, tokenDecimals);
+  }, [underlyingBalance, tokenDecimals]);
 
   const mooTokenBal = useMemo(() => {
-    return formatSignificantBigNumber(shareBalance, 18, shareToUnderlyingPrice, 0, 2);
-  }, [shareBalance, shareToUnderlyingPrice]);
+    return formatTokenDisplayCondensed(shareBalance, 18);
+  }, [shareBalance]);
 
   const diff = useMemo(() => {
-    return formatSignificantBigNumber(
-      underlyingDiff,
-      tokenDecimals,
-      underlyingToUsdPrice || BIG_ZERO,
-      0,
-      2
-    );
-  }, [underlyingDiff, tokenDecimals, underlyingToUsdPrice]);
+    return formatTokenDisplayCondensed(underlyingDiff, tokenDecimals);
+  }, [underlyingDiff, tokenDecimals]);
 
   return (
     <RowMobile className={classes.gridMobile}>
@@ -189,7 +172,7 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
         />
         <MobileStat
           label={t('Dashboard-Filter-UsdBalance')}
-          value={formatBigUsd(usdBalance || BIG_ZERO)}
+          value={formatLargeUsd(usdBalance || BIG_ZERO)}
         />
       </InfoGrid>
     </RowMobile>

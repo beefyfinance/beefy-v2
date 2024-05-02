@@ -3,7 +3,7 @@ import { memo } from 'react';
 import type { CalculatedAsset } from '../../types';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import type { ChainEntity } from '../../../../../data/entities/chain';
-import { formatPercent } from '../../../../../../helpers/format';
+import { formatLargePercent } from '../../../../../../helpers/format';
 import { styles } from './styles';
 import clsx from 'clsx';
 
@@ -23,7 +23,7 @@ export const Legend = memo<LegendProps>(function Legend({ chainId, assets, class
         <div key={asset.address} className={classes.item}>
           <div className={classes.key} style={{ backgroundColor: asset.color }} />
           <AssetsImage chainId={chainId} assetSymbols={[asset.symbol]} className={classes.icon} />
-          {formatPercent(asset.percent)}
+          {formatLargePercent(asset.percent)}
         </div>
       ))}
     </div>

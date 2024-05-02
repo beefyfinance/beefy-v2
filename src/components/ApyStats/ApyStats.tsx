@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { LabeledStat } from '../LabeledStat';
 import { useTranslation } from 'react-i18next';
-import { formattedTotalApy } from '../../helpers/format';
+import { formatTotalApy } from '../../helpers/format';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import {
   selectDidAPIReturnValuesForVault,
@@ -75,6 +75,22 @@ const _YearlyBreakdownTooltip = ({
     rows.push({
       label: t('Vault-Breakdown-BoostApr'),
       value: rates.boostApr ?? '?',
+      last: false,
+    });
+  }
+
+  if ('clmApr' in rates) {
+    rows.push({
+      label: t('Vault-Breakdown-CLMApr'),
+      value: rates.clmApr ?? '?',
+      last: false,
+    });
+  }
+
+  if ('merklApr' in rates) {
+    rows.push({
+      label: t('Vault-Breakdown-MerklApr'),
+      value: rates.merklApr ?? '?',
       last: false,
     });
   }
@@ -177,7 +193,7 @@ function _YearlyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   );
   const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
 
-  const formatted = formattedTotalApy(values);
+  const formatted = formatTotalApy(values);
 
   return (
     <ValueBlock
@@ -223,7 +239,7 @@ function _DailyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   );
   const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
 
-  const formatted = formattedTotalApy(values);
+  const formatted = formatTotalApy(values);
 
   return (
     <ValueBlock

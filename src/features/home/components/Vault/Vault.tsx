@@ -2,7 +2,11 @@ import React, { memo } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { selectIsVaultGov, selectIsVaultRetired } from '../../../data/selectors/vaults';
+import {
+  selectIsVaultCowcentrated,
+  selectIsVaultGov,
+  selectIsVaultRetired,
+} from '../../../data/selectors/vaults';
 import clsx from 'clsx';
 import { useAppSelector } from '../../../../store';
 import { Link } from 'react-router-dom';
@@ -18,6 +22,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
   const classes = useStyles();
   const isRetired = useAppSelector(state => selectIsVaultRetired(state, vaultId));
   const isGov = useAppSelector(state => selectIsVaultGov(state, vaultId));
+  const isCowcentrated = useAppSelector(state => selectIsVaultCowcentrated(state, vaultId));
 
   return (
     <Link
@@ -26,6 +31,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
         [classes.vault]: true,
         [classes.vaultRetired]: isRetired,
         [classes.vaultEarnings]: isGov,
+        [classes.vaultCowcentrated]: isCowcentrated,
       })}
     >
       <div className={classes.vaultInner}>

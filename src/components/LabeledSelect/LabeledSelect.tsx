@@ -1,4 +1,4 @@
-import type { FC, MouseEventHandler } from 'react';
+import type { FC, MouseEventHandler, ReactNode } from 'react';
 import * as React from 'react';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
@@ -58,7 +58,7 @@ type DropdownItemProps<V extends string = string> = {
 };
 
 export type DropdownItemLabelProps<V extends string = string> = {
-  label: string;
+  label: ReactNode;
   value: V;
 };
 
@@ -106,13 +106,13 @@ const DropdownItem = memo(function DropdownItem<V extends string = string>({
   );
 });
 
-const DropdownItemLabel = memo(function DropdownItemLabel<V extends string = string>({
+export const DropdownItemLabel = memo(function DropdownItemLabel<V extends string = string>({
   label,
 }: DropdownItemLabelProps<V>) {
   return <>{label}</>;
 });
 
-const SelectedItem = memo(function SelectedItem<V extends string = string>({
+export const SelectedItem = memo(function SelectedItem<V extends string = string>({
   value,
   options,
 }: SelectedItemProps<V>) {

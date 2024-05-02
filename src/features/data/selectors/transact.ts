@@ -8,11 +8,18 @@ import {
   selectUserBalanceOfToken,
   selectUserVaultDepositInDepositTokenExcludingBoostsBridged,
 } from './balance';
-import type { TokenAmount, TransactOption, TransactQuote } from '../apis/transact/transact-types';
+import {
+  isCowcentratedDepositQuote,
+  type InputTokenAmount,
+  type TokenAmount,
+  type TransactOption,
+  type TransactQuote,
+} from '../apis/transact/transact-types';
 import BigNumber from 'bignumber.js';
 import { TransactStatus } from '../reducers/wallet/transact-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { valueOrThrow } from '../utils/selector-utils';
+import type { TokenEntity } from '../entities/token';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
@@ -35,6 +42,14 @@ export const selectTransactOptionsMode = (state: BeefyState) => state.ui.transac
 
 export const selectTransactInputAmount = (state: BeefyState) => state.ui.transact.inputAmount;
 export const selectTransactInputMax = (state: BeefyState) => state.ui.transact.inputMax;
+
+export const selectTransactDualInputAmount = (state: BeefyState, index: number) =>
+  state.ui.transact.dualInputAmounts[index] ?? BIG_ZERO;
+export const selectTransactDualInputAmounts = (state: BeefyState) =>
+  state.ui.transact.dualInputAmounts;
+export const selectTransactDualMaxAmount = (state: BeefyState, index: number) =>
+  state.ui.transact.dualInputMax[index] ?? false;
+export const selectTransactDualMaxAmounts = (state: BeefyState) => state.ui.transact.dualInputMax;
 
 export const selectTransactSelectedChainId = (state: BeefyState) =>
   state.ui.transact.selectedChainId;
@@ -99,12 +114,43 @@ export const selectTransactDepositInputAmountExceedsBalance = (state: BeefyState
   return value.gt(userBalance);
 };
 
+export const selectTransactDepositInputAmountsExceedBalances = (state: BeefyState) => {
+  const selection = selectTransactSelected(state);
+  const depositTokens = selection.tokens;
+  const inputAmounts = selectTransactDualInputAmounts(state);
+  const userBalances = depositTokens.map(token =>
+    selectUserBalanceOfToken(state, token.chainId, token.address)
+  );
+  return depositTokens.some((_, index) => inputAmounts[index].gt(userBalances[index]));
+};
+
 export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyState) => {
   const vaultId = selectTransactVaultId(state);
   const userBalance = selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId);
   const value = selectTransactInputAmount(state);
 
   return value.gt(userBalance);
+};
+
+export const selectTransactCowcentratedDepositNotSingleSideAllowed = (state: BeefyState) => {
+  const quote = selectTransactSelectedQuote(state);
+
+  const noSingleSideAllowed =
+    isCowcentratedDepositQuote(quote) &&
+    quote.outputs.every(inputToken => inputToken.amount.eq(BIG_ZERO));
+
+  let inputToken: InputTokenAmount<TokenEntity> | null = null;
+  let neededToken: InputTokenAmount<TokenEntity> | null = null;
+
+  for (const input of quote.inputs) {
+    if (input.amount.gt(BIG_ZERO)) {
+      inputToken = input;
+    } else {
+      neededToken = input;
+    }
+  }
+
+  return { noSingleSideAllowed, inputToken, neededToken };
 };
 
 export const selectTransactTokenChains = (state: BeefyState) =>
@@ -138,6 +184,7 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
 
   const selections = selectTransactWithdrawSelectionsForChain(state, chainId).map(selection => ({
     ...selection,
+    decimals: 0,
     balanceValue: BIG_ZERO,
     balance: undefined,
   }));
@@ -161,6 +208,7 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
         return {
           ...selection,
           balance,
+          decimals: token.decimals,
           price,
           balanceValue: balance.multipliedBy(price),
         };
@@ -207,6 +255,7 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
         return {
           ...option,
           balance,
+          decimals: token.decimals,
           price,
           balanceValue: balance.multipliedBy(price),
         };
@@ -256,3 +305,5 @@ export const selectTransactConfirmStatus = (state: BeefyState) => state.ui.trans
 export const selectTransactConfirmError = (state: BeefyState) => state.ui.transact.confirm.error;
 export const selectTransactConfirmChanges = (state: BeefyState) =>
   state.ui.transact.confirm.changes;
+
+export const selecTransactForceSelection = (state: BeefyState) => state.ui.transact.forceSelection;

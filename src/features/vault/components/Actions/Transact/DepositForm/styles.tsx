@@ -32,16 +32,18 @@ export const styles = (theme: Theme) => ({
     flexWrap: 'nowrap' as const,
     gap: '12px',
   },
+  v3Inputs: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '24px',
+  },
   links: {
     marginTop: '12px',
   },
   quote: {
-    marginTop: '12px',
-  },
-  actions: {
     marginTop: '24px',
   },
-  fees: {
+  actions: {
     marginTop: '24px',
   },
 });

@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { FC, ReactNode } from 'react';
 import { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
@@ -9,7 +9,7 @@ const useStyles = makeStyles(styles);
 
 export type ToggleButtonProps = {
   value: string;
-  label: string;
+  label: ReactNode;
   onClick: (value: string) => void;
   className?: string;
 };

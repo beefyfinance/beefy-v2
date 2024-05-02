@@ -3,10 +3,11 @@ import { first } from 'lodash-es';
 import type { PayloadAction, SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { transactFetchOptions, transactFetchQuotes, transactInit } from '../../actions/transact';
-import type {
-  QuoteOutputTokenAmountChange,
-  TransactOption,
-  TransactQuote,
+import {
+  isCowcentratedDepositQuote,
+  type QuoteOutputTokenAmountChange,
+  type TransactOption,
+  type TransactQuote,
 } from '../../apis/transact/transact-types';
 import type { Draft } from 'immer';
 import { BIG_ZERO } from '../../../../helpers/big-number';
@@ -59,9 +60,12 @@ const initialTransactState: TransactState = {
   swapSlippage: 0.01, // 1% default
   inputAmount: BIG_ZERO,
   inputMax: false,
+  dualInputAmounts: [BIG_ZERO, BIG_ZERO],
+  dualInputMax: [false, false],
   mode: TransactMode.Deposit,
   step: TransactStep.Form,
   selections: initialTransactTokens,
+  forceSelection: false,
   options: initialTransactOptions,
   quotes: initialTransactQuotes,
   migrateQuotes: initialTransactQuotes,
@@ -76,6 +80,7 @@ const transactSlice = createSlice({
       sliceState.mode = action.payload;
       sliceState.step = TransactStep.Form;
       sliceState.inputAmount = BIG_ZERO;
+      sliceState.dualInputAmounts = [BIG_ZERO, BIG_ZERO];
     },
     switchStep(sliceState, action: PayloadAction<TransactStep>) {
       sliceState.step = action.payload;
@@ -86,9 +91,12 @@ const transactSlice = createSlice({
     ) {
       sliceState.selectedSelectionId = action.payload.selectionId;
       sliceState.step = TransactStep.Form;
+      sliceState.forceSelection = false;
       if (action.payload.resetInput) {
         sliceState.inputAmount = BIG_ZERO;
         sliceState.inputMax = false;
+        sliceState.dualInputAmounts = [BIG_ZERO, BIG_ZERO];
+        sliceState.dualInputMax = [false, false];
       }
     },
     setInputAmount(sliceState, action: PayloadAction<{ amount: BigNumber; max: boolean }>) {
@@ -99,9 +107,22 @@ const transactSlice = createSlice({
         sliceState.inputMax = action.payload.max;
       }
     },
+    setDualInputAmount(
+      sliceState,
+      action: PayloadAction<{ index: number; amount: BigNumber; max: boolean }>
+    ) {
+      if (!sliceState.dualInputAmounts[action.payload.index].isEqualTo(action.payload.amount)) {
+        sliceState.dualInputAmounts[action.payload.index] = action.payload.amount;
+      }
+      if (sliceState.dualInputMax[action.payload.index] !== action.payload.max) {
+        sliceState.dualInputMax[action.payload.index] = action.payload.max;
+      }
+    },
     clearInput(sliceState) {
       sliceState.inputAmount = BIG_ZERO;
       sliceState.inputMax = false;
+      sliceState.dualInputAmounts = [BIG_ZERO, BIG_ZERO];
+      sliceState.dualInputMax = [false, false];
       resetQuotes(sliceState);
     },
     clearQuotes(sliceState) {
@@ -198,13 +219,15 @@ const transactSlice = createSlice({
       .addCase(transactFetchOptions.fulfilled, (sliceState, action) => {
         if (sliceState.options.requestId === action.meta.requestId) {
           sliceState.options.status = TransactStatus.Fulfilled;
+          const { options } = action.payload;
 
-          addOptionsToState(sliceState, action.payload.options);
+          addOptionsToState(sliceState, options);
 
-          const defaultOption = first(action.payload.options);
+          const defaultOption = first(options);
           if (defaultOption) {
             sliceState.selectedSelectionId = defaultOption.selectionId;
             sliceState.selectedChainId = defaultOption.chainId;
+            sliceState.forceSelection = options.length > 1;
           }
         }
       })
@@ -225,7 +248,14 @@ const transactSlice = createSlice({
           if (action.payload.quotes.length === 0) {
             sliceState.quotes.status = TransactStatus.Rejected;
             sliceState.quotes.error = { name: 'No quotes returned.' };
+          } else if (
+            isCowcentratedDepositQuote(action.payload.quotes[0]) &&
+            !action.payload.quotes[0].isCalm
+          ) {
+            sliceState.quotes.status = TransactStatus.Rejected;
+            sliceState.quotes.error = { code: 'calm' };
           } else {
+            isCowcentratedDepositQuote(action.payload.quotes[0]);
             sliceState.quotes.status = TransactStatus.Fulfilled;
 
             addQuotesToState(sliceState, action.payload.quotes);
@@ -247,6 +277,9 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.selectedSelectionId = undefined;
   sliceState.inputAmount = BIG_ZERO;
   sliceState.inputMax = false;
+  sliceState.dualInputAmounts = [BIG_ZERO, BIG_ZERO];
+  sliceState.dualInputMax = [false, false];
+  sliceState.forceSelection = false;
 
   sliceState.options.status = TransactStatus.Idle;
   sliceState.options.error = undefined;
