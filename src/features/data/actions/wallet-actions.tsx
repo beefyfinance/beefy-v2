@@ -1191,7 +1191,7 @@ const claimMerkl = (chainId: ChainEntity['id']) => {
         amount: reward.accumulated, // proof requires 'accumulated' amount
         proof: reward.proof,
       }));
-    const users = [address];
+    const users = new Array(unclaimedRewards.length).fill(address);
     const tokens = unclaimedRewards.map(reward => reward.token);
     const amounts = unclaimedRewards.map(reward => reward.amount);
     const proofs = unclaimedRewards.map(reward => reward.proof);
@@ -1220,6 +1220,7 @@ const claimMerkl = (chainId: ChainEntity['id']) => {
         tokens: tokens
           .map(token => selectTokenByAddressOrUndefined(state, chainId, token))
           .filter(isDefined),
+        rewards: true,
       }
     );
   });
