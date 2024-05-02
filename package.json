@@ -27,7 +27,7 @@
     "@web3-onboard/walletconnect": "^2.5.1",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
-    "blockchain-addressbook": "^0.46.60",
+    "blockchain-addressbook": "^0.46.98",
     "clsx": "^1.1.1",
     "date-fns": "^2.29.3",
     "eip-712": "^1.0.0",
