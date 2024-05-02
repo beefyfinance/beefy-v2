@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { ToggleButtons } from '../../../../components/ToggleButtons';
 import { useTranslation } from 'react-i18next';
 import { BreakdownTable } from './components/BreakdownTable';
 import type { BreakdownMode } from './types';
@@ -22,6 +21,7 @@ import {
   selectShouldInitAddressBook,
 } from '../../../data/selectors/data-loader';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
+import { StatSwitcher } from '../StatSwitcher';
 
 const useStyles = makeStyles(styles);
 
@@ -44,7 +44,11 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
         map['user'] = t('Vault-LpBreakdown-YourDeposit');
       }
       map['one'] = t('Vault-LpBreakdown-1LP');
-      map['total'] = t('Vault-LpBreakdown-TotalPool');
+      map['total'] = t(
+        isCowcentratedLiquidityVault(vault)
+          ? 'Vault-LpBreakdown-ClmPool'
+          : 'Vault-LpBreakdown-TotalPool'
+      );
       if (isCowcentratedLiquidityVault(vault)) {
         map['underlying'] = t('Vault-LpBreakdown-Underlying');
       }
@@ -70,12 +74,7 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
       <Card>
         <CardHeader className={classes.header}>
           <CardTitle title={'LP Breakdown'} />
-          <ToggleButtons
-            buttonsClass={classes.tabs}
-            options={tabs}
-            onChange={onTabChange}
-            value={tab}
-          />
+          <StatSwitcher onChange={onTabChange} options={tabs} stat={tab} />
         </CardHeader>
         <CardContent disableDefaultClass={true} className={classes.layout}>
           <ChartWithLegend breakdown={calculatedBreakdown} tab={tab} />
