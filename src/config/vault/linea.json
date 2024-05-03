@@ -1,5 +1,36 @@
 [
   {
+    "id": "lynex-gamma-weeth-weth",
+    "name": "weETH-ETH LP",
+    "type": "standard",
+    "token": "weETH-ETH LP",
+    "tokenAddress": "0x530071b0373Ab3029cAd32E0c19b75253e231b69",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lynex",
+    "earnedToken": "mooLynexGammaweETH-WETH",
+    "earnedTokenAddress": "0xb9A23E2569C262a92635D825142f310BEAfB0Be0",
+    "earnContractAddress": "0xb9A23E2569C262a92635D825142f310BEAfB0Be0",
+    "oracle": "lps",
+    "oracleId": "lynex-gamma-weeth-weth",
+    "status": "active",
+    "createdAt": 1714738522,
+    "platformId": "gamma",
+    "assets": ["weETH", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/weeth-weth-pegged-price",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/weeth-weth-pegged-price",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "linea-gamma-lynex",
+        "tokenHolder": "0x1480808349772759DF7422a3440EDb998A749C3c"
+      }
+    ],
+    "earningPoints": true
+  },
+  {
     "id": "nile-ezeth-weth",
     "name": "ezETH-ETH Correlated LP",
     "type": "standard",

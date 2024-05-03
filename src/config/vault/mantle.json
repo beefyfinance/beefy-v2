@@ -1,5 +1,92 @@
 [
   {
+    "id": "lendle-mantle-usde",
+    "name": "USDe",
+    "type": "standard",
+    "token": "USDe",
+    "tokenAddress": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+    "tokenDecimals": 18,
+    "earnedToken": "mooLendleUSDe",
+    "earnedTokenAddress": "0xFb038D9f7eD2e754612381af193f5570470C5182",
+    "earnContractAddress": "0xFb038D9f7eD2e754612381af193f5570470C5182",
+    "oracle": "tokens",
+    "oracleId": "mantleUSDe",
+    "status": "active",
+    "createdAt": 1714746204,
+    "platformId": "lendle",
+    "assets": ["USDe"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "pyth"
+    }
+  },
+  {
+    "id": "moe-ena-wmnt",
+    "name": "ENA-WMNT LP",
+    "type": "standard",
+    "token": "ENA-WMNT LP",
+    "tokenAddress": "0x32C1882bAf179f6059d101AAD3feAC15B2B90dA3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "moe",
+    "earnedToken": "mooMoeENA-WMNT",
+    "earnedTokenAddress": "0x169368136E48d4Dbeecc70BE3ed79012ee689556",
+    "earnContractAddress": "0x169368136E48d4Dbeecc70BE3ed79012ee689556",
+    "oracle": "lps",
+    "oracleId": "moe-ena-wmnt",
+    "status": "active",
+    "createdAt": 1714740553,
+    "platformId": "moe",
+    "assets": ["ENA", "WMNT"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
+    "addLiquidityUrl": "https://merchantmoe.com/pool/v1/0x58538e6A46E07434d7E7375Bc268D3cb839C0133/MNT",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "mantle-moe"
+      }
+    ]
+  },
+  {
+    "id": "moe-usdt-ena",
+    "name": "ENA-USDT LP",
+    "type": "standard",
+    "token": "ENA-USDT LP",
+    "tokenAddress": "0xFf53524D0E01A00EcEc997d2EBb5f06860068709",
+    "tokenDecimals": 18,
+    "tokenProviderId": "moe",
+    "earnedToken": "mooMoeUSDT-ENA",
+    "earnedTokenAddress": "0xB6B7b01b23f181f3C9a3e7220f0448224eA5C667",
+    "earnContractAddress": "0xB6B7b01b23f181f3C9a3e7220f0448224eA5C667",
+    "oracle": "lps",
+    "oracleId": "moe-usdt-ena",
+    "status": "active",
+    "createdAt": 1714740553,
+    "platformId": "moe",
+    "assets": ["ENA", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
+    "addLiquidityUrl": "https://merchantmoe.com/pool/v1/0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE/0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "mantle-moe"
+      }
+    ]
+  },
+  {
     "id": "mshards-wmnt",
     "name": "WMNT",
     "type": "standard",
