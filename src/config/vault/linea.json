@@ -1,5 +1,35 @@
 [
   {
+    "id": "nile-ezeth-weth",
+    "name": "ezETH-ETH Correlated LP",
+    "type": "standard",
+    "token": "cAMM-ezETH/WETH",
+    "tokenAddress": "0xA9A1Fb9F6664A0B6BFB1F52724fd7b23842248C5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnedToken": "mooNileezETH-WETH",
+    "earnedTokenAddress": "0x063091e4532eD93CE93347C6c8338dcA0832ddb0",
+    "earnContractAddress": "0x063091e4532eD93CE93347C6c8338dcA0832ddb0",
+    "oracle": "lps",
+    "oracleId": "nile-ezeth-weth",
+    "status": "active",
+    "createdAt": 1714666480,
+    "platformId": "nile",
+    "assets": ["ezETH", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://www.thenile.exchange/manage/v1/0xa9a1fb9f6664a0b6bfb1f52724fd7b23842248c5",
+    "removeLiquidityUrl": "https://www.thenile.exchange/manage/v1/0xa9a1fb9f6664a0b6bfb1f52724fd7b23842248c5",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "linea-solidly-nile"
+      }
+    ],
+    "earningPoints": true
+  },
+  {
     "id": "lynex-ichi-usdt-lynx",
     "name": "USDT-LYNX LP",
     "type": "standard",

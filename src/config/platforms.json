@@ -977,5 +977,11 @@
     "name": "Ra",
     "filter": true,
     "risks": ["NO_TIMELOCK"]
+  },
+  {
+    "id": "nile",
+    "name": "Nile",
+    "filter": true,
+    "risks": ["NO_TIMELOCK"]
   }
 ]
