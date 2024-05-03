@@ -814,7 +814,7 @@ export const config = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['USDT', 'USDC', 'DAI'],
+    stableCoins: ['USDT', 'USDC', 'DAI', 'USDe'],
   },
   fraxtal: {
     new: true,
