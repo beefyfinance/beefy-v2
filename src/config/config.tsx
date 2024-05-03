@@ -379,6 +379,7 @@ export const config = {
       'sFRAX',
       'bpt4POOL',
       'USDT+',
+      'aaUSDC',
       'stataArbUSDCn',
       'stataArbUSDTn',
     ],
@@ -788,7 +789,7 @@ export const config = {
       baseMinimum: '7',
       baseSafetyMargin: 0.2,
     },
-    stableCoins: ['USDT', 'USDC', 'DAI', 'MAI', 'USD+', 'USDT+'],
+    stableCoins: ['USDT', 'USDC', 'DAI', 'MAI', 'USDT+', 'USD+'],
   },
   mantle: {
     name: 'Mantle',
