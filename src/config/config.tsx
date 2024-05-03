@@ -789,7 +789,7 @@ export const config = {
       baseMinimum: '7',
       baseSafetyMargin: 0.2,
     },
-    stableCoins: ['USDT', 'USDC', 'DAI', 'MAI', 'USDT+', 'USD+'],
+    stableCoins: ['USDT', 'USDC', 'DAI', 'MAI', 'USDT+', 'USD+', 'LUSD'],
   },
   mantle: {
     name: 'Mantle',
