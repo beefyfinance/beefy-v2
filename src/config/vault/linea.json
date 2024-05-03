@@ -1,5 +1,41 @@
 [
   {
+    "id": "nile-usdc-lusd",
+    "name": "USDC-LUSD Correlated LP",
+    "type": "standard",
+    "token": "cAMM-USDC/LUSD",
+    "tokenAddress": "0x641d5eAa27e516E1CF1F5C84B5EC25C45b7e3f0D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnedToken": "mooNileUSDC-LUSD",
+    "earnedTokenAddress": "0x7A6A9dEb7dFfA150224ece4d381f327C59a6bBab",
+    "earnContractAddress": "0x7A6A9dEb7dFfA150224ece4d381f327C59a6bBab",
+    "oracle": "lps",
+    "oracleId": "nile-usdc-lusd",
+    "status": "active",
+    "createdAt": 1714666480,
+    "platformId": "nile",
+    "assets": ["USDC", "LUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://www.thenile.exchange/manage/v1/0x641d5eAa27e516E1CF1F5C84B5EC25C45b7e3f0D",
+    "removeLiquidityUrl": "https://www.thenile.exchange/manage/v1/0x641d5eAa27e516E1CF1F5C84B5EC25C45b7e3f0D",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "linea-solidly-nile"
+      }
+    ]
+  },
+  {
     "id": "lynex-gamma-weeth-weth",
     "name": "weETH-ETH LP",
     "type": "standard",
