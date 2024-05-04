@@ -1,5 +1,125 @@
 [
   {
+    "id": "thena-gamma-weeth-eth-narrow",
+    "name": "weETH-ETH LP Narrow",
+    "type": "standard",
+    "token": "aWEETH-ETH",
+    "tokenAddress": "0xc2c05763Ea35c4db63C49631206F07215d6d0D39",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenaGammaweETH-ETHNarrow",
+    "earnedTokenAddress": "0xcCcDB0F6eCcd5f231d4737A00C554322167d814B",
+    "earnContractAddress": "0xcCcDB0F6eCcd5f231d4737A00C554322167d814B",
+    "oracle": "lps",
+    "oracleId": "thena-gamma-weeth-eth-narrow",
+    "status": "active",
+    "createdAt": 1714848944,
+    "platformId": "gamma",
+    "assets": ["weETH", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://thena.fi/pools/0xc0e1c9fec0d8888039095da014382d027f27069d",
+    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0x98C6F030F1B58edD1037b32348307E4667559a40"
+      }
+    ]
+  },
+  {
+    "id": "thena-gamma-eth-usdt-narrow",
+    "name": "ETH-USDT LP Narrow",
+    "type": "standard",
+    "token": "aETH-USDT",
+    "tokenAddress": "0x01DD2d28eeB95D740acb5344b1e2C99b61CC3e64",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenaGammaETH-USDTNarrow",
+    "earnedTokenAddress": "0x45070826065cF98C4A843fe3D811dBFc0e4bF107",
+    "earnContractAddress": "0x45070826065cF98C4A843fe3D811dBFc0e4bF107",
+    "oracle": "lps",
+    "oracleId": "thena-gamma-eth-usdt-narrow",
+    "status": "active",
+    "createdAt": 1714848944,
+    "platformId": "gamma",
+    "assets": ["ETH", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/weth-usdt-narrow",
+    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0x8A07590FfC632cB258Fe627B25D304CC7Cc3998B"
+      }
+    ]
+  },
+  {
+    "id": "thena-gamma-ankrbnb-btcb-narrow",
+    "name": "ankrBNB-BTCB LP Narrow",
+    "type": "standard",
+    "token": "aANKRBNB-BTCB",
+    "tokenAddress": "0x4589C07b77bc5271a3A84FE83e255ec370277be8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenaGammaankrBNB-BTCBNarrow",
+    "earnedTokenAddress": "0x56429A5A436936c596F0bd6baaae13a0c9984B86",
+    "earnContractAddress": "0x56429A5A436936c596F0bd6baaae13a0c9984B86",
+    "oracle": "lps",
+    "oracleId": "thena-gamma-ankrbnb-btcb-narrow",
+    "status": "active",
+    "createdAt": 1714848944,
+    "platformId": "gamma",
+    "assets": ["ankrBNB", "BTCB"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/ankrbnb-btcb-narrow",
+    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0xBe4D4fA65fc80593B0B06a2b155fFe93F1419358"
+      }
+    ]
+  },
+  {
+    "id": "thena-gamma-ankrbnb-ankr-narrow",
+    "name": "ankrBNB-ANKR LP Narrow",
+    "type": "standard",
+    "token": "aANKRBNB-ANKR",
+    "tokenAddress": "0x3f8f3caefF393B1994a9968E835Fd38eCba6C1be",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnedToken": "mooThenaGammaankrBNB-ANKRNarrow",
+    "earnedTokenAddress": "0xbe8686Bce22E05a9156BC9D77344075fE32471bB",
+    "earnContractAddress": "0xbe8686Bce22E05a9156BC9D77344075fE32471bB",
+    "oracle": "lps",
+    "oracleId": "thena-gamma-ankrbnb-ankr-narrow",
+    "status": "active",
+    "createdAt": 1714848944,
+    "platformId": "gamma",
+    "assets": ["ankrBNB", "ANKR"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/ankrbnb-ankr-narrow",
+    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "bsc-gamma-thena-f75c",
+        "tokenHolder": "0xd44ad81474d075c3Bf0307830977A5804BfC0bc7"
+      }
+    ]
+  },
+  {
     "id": "thena-gamma-fil-wbnb-narrow",
     "name": "FIL-BNB LP Narrow",
     "type": "standard",
