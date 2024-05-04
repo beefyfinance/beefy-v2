@@ -740,7 +740,7 @@ export const config = {
   gnosis: {
     name: 'Gnosis',
     chainId: 100,
-    rpc: ['https://gnosis.oat.farm'],
+    rpc: ['https://rpc.gnosischain.com'],
     explorerUrl: 'https://gnosisscan.io',
     multicallAddress: '0x2840463Ea288c26B66E24f92E8C704e1aB6b095c',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
