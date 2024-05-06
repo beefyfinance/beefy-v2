@@ -31,7 +31,8 @@ export type Step = {
     | 'bridge'
     | 'zap-in'
     | 'zap-out'
-    | 'migration';
+    | 'migration'
+    | 'claim-rewards';
   message: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   action: ThunkAction<any, any, any, any>;
