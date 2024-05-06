@@ -22,37 +22,29 @@ export type VaultTag =
  *
  * Sometimes also named "pool"
  */
-export interface VaultStandard {
+export type VaultCommon = {
   id: string;
   name: string;
-  type: 'standard';
   version: number;
   depositTokenAddress: string;
   zaps: StrategyOptions[];
-
   /**
    * ASSETS are basically the assets that are in that vault
    * So if you go into a BIFI vault, the assets is of course only BIFI
    * But if you join the curve aTriCrypto vault your assets will be BTC,ETH and USDT
    */
   assetIds: TokenEntity['id'][];
-
   chainId: ChainEntity['id'];
-
   earnedTokenAddress: string;
-
   /**
    * The vault contract address
    */
   earnContractAddress: string;
-
   strategyTypeId: string;
-
   /**
    * The protocol this vault rely on (Curve, boo finance, etc)
    */
   platformId: PlatformEntity['id'];
-
   status: 'active' | 'eol' | 'paused';
   createdAt: number;
   /** Used for sorting, not required in config but defaults to createdAt on load so always available on entity */
@@ -61,91 +53,34 @@ export interface VaultStandard {
   retiredAt?: number;
   pauseReason?: string;
   pausedAt?: number;
-
-  assetType: 'lps' | 'single';
-
   safetyScore: number;
-
   risks: string[];
-
   buyTokenUrl: string | null;
   addLiquidityUrl: string | null;
   removeLiquidityUrl: string | null;
-
   depositFee: number;
-
   migrationIds?: string[];
   /** Map of chain->address of bridged receipt tokens */
   bridged?: Record<ChainEntity['id'], string>;
   lendingOracle?: { provider: string; address?: string; loops?: number };
   earningPoints: boolean;
-}
+  poolTogether: string | undefined;
+};
 
-export interface VaultGov {
-  id: string;
-  name: string;
+export type VaultStandard = VaultCommon & {
+  type: 'standard';
+  assetType: 'lps' | 'single';
+};
+
+export type VaultGov = VaultCommon & {
   type: 'gov';
-  version: number;
-  depositTokenAddress: string;
-
-  /**
-   * ASSETS are basically the assets that are in that vault
-   * So if you go into a BIFI vault, the assets is of course only BIFI
-   * But if you join the curve aTriCrypto vault your assets will be BTC,ETH and USDT
-   */
-  assetIds: TokenEntity['id'][];
-
-  chainId: ChainEntity['id'];
-
-  earnedTokenAddress: string;
-
-  /**
-   * Vault address "treasury", we ask this address about user balances
-   */
-  earnContractAddress: string;
-
-  /**
-   * so bifi-gov and bifi-maxi, are very special
-   * those are the way in which we distribute platform revenue back to bifi holders
-   * bifi-gov is stake BIFI earn NATIVE (gas token) without autocompounding
-   * bifi-maxi is stake BIFI earn BIFI with autocompounding
-   * bifi-maxi basically uses bifi-gov underneath
-   * so all the money in BIFI-MAXI is actually inside the BIFI-GOV of that chain
-   * so in order not to count TVL twice. when we count the tvl of the gov pools
-   * we must exclude/substract the tvl from the maxi vault
-   */
-  excludedId: null | VaultEntity['id'];
-
-  strategyTypeId: string;
-
-  platformId: PlatformEntity['id'];
-
-  status: 'active' | 'eol' | 'paused';
-  createdAt: number;
-  /** Used for sorting, not required in config but defaults to createdAt on load so always available on entity */
-  updatedAt: number;
-  retireReason?: string;
-  retiredAt?: number;
-  pauseReason?: string;
-  pausedAt?: number;
-
   assetType: 'single';
+  excludedId: null | VaultEntity['id'];
+};
 
-  safetyScore: number;
-
-  risks: string[];
-
-  buyTokenUrl: string | null;
-  addLiquidityUrl: null;
-  removeLiquidityUrl: null;
-
-  depositFee: number;
-
-  migrationIds?: string[];
-}
-
-export type VaultCowcentrated = Omit<VaultStandard, 'type'> & {
+export type VaultCowcentrated = VaultCommon & {
   type: 'cowcentrated';
+  assetType: 'lps';
   depositTokenAddresses: string[];
   feeTier: string;
 };

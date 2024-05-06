@@ -57,6 +57,7 @@ export interface VaultConfig {
   lendingOracle?: { provider: string; address?: string; loops?: number };
   earningPoints?: boolean;
   feeTier?: string;
+  poolTogether?: string;
 }
 
 export interface FeaturedVaultConfig {
