@@ -1,5 +1,44 @@
 [
   {
+    "id": "curve-arb-usdc-usdm",
+    "name": "USDC/USDM",
+    "token": "usdc-usdm",
+    "tokenAddress": "0x4bD135524897333bec344e50ddD85126554E58B4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveUSDC-USDM",
+    "earnedTokenAddress": "0x1B4dD8911cd2028Ea230f82E7BD91F1651Cb4AaB",
+    "earnContractAddress": "0x1B4dD8911cd2028Ea230f82E7BD91F1651Cb4AaB",
+    "oracle": "lps",
+    "oracleId": "curve-arb-usdc-usdm",
+    "status": "active",
+    "createdAt": 1714983060,
+    "platformId": "curve",
+    "assets": ["USDC", "USDM"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-30/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-30/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x4bD135524897333bec344e50ddD85126554E58B4",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x4bD135524897333bec344e50ddD85126554E58B4",
+            "coins": [
+              "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+              "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "aura-arb-gyro-ausdc-ausdt",
     "name": "Gyroscope Aave USDC/USDT",
     "type": "standard",
