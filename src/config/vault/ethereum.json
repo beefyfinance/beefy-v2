@@ -1,5 +1,123 @@
 [
   {
+    "id": "curve-sdai-usdm",
+    "name": "sDAI/USDM",
+    "token": "sdai-usdm",
+    "tokenAddress": "0x425BfB93370F14fF525aDb6EaEAcfE1f4e3b5802",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurve_sDAI-USDM",
+    "earnedTokenAddress": "0xa11654Bb4286d0ffCc1f76AacbEf7125ad972BA8",
+    "earnContractAddress": "0xa11654Bb4286d0ffCc1f76AacbEf7125ad972BA8",
+    "oracle": "lps",
+    "oracleId": "curve-sdai-usdm",
+    "status": "active",
+    "createdAt": 1714981418,
+    "platformId": "curve",
+    "migrationIds": ["ethereum-convex"],
+    "assets": ["sDAI", "USDM"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-23/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-23/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x425BfB93370F14fF525aDb6EaEAcfE1f4e3b5802",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x425BfB93370F14fF525aDb6EaEAcfE1f4e3b5802",
+            "coins": [
+              "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+              "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "convex-tricrypto-gho",
+    "name": "GHO/WBTC/wstETH",
+    "token": "GHOBTCwstE",
+    "tokenAddress": "0x8Cd52ee292313C4D851e71A7064F096504aB3eE9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveTriCryptoGHO",
+    "earnedTokenAddress": "0xbbAD3dE35c76524F55DBf1cAFE782D6a69E0c3E6",
+    "earnContractAddress": "0xbbAD3dE35c76524F55DBf1cAFE782D6a69E0c3E6",
+    "oracle": "lps",
+    "oracleId": "convex-tricrypto-gho",
+    "status": "active",
+    "createdAt": 1713931100,
+    "platformId": "convex",
+    "assets": ["GHO", "WBTC", "wstETH"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-31/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-31/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x8Cd52ee292313C4D851e71A7064F096504aB3eE9",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x8Cd52ee292313C4D851e71A7064F096504aB3eE9",
+            "coins": [
+              "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+              "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "convex-gho-crvusd",
+    "name": "GHO/crvUSD",
+    "token": "GHOcrvUSD",
+    "tokenAddress": "0x635EF0056A597D13863B73825CcA297236578595",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveGHO-crvUSD",
+    "earnedTokenAddress": "0x94AcD52eDDe27357dab8FaBdF9DB4bbd54F1E85E",
+    "earnContractAddress": "0x94AcD52eDDe27357dab8FaBdF9DB4bbd54F1E85E",
+    "oracle": "lps",
+    "oracleId": "convex-gho-crvusd",
+    "status": "active",
+    "createdAt": 1713930911,
+    "platformId": "convex",
+    "assets": ["GHO", "crvUSD"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-117/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-117/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x635EF0056A597D13863B73825CcA297236578595",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x635EF0056A597D13863B73825CcA297236578595",
+            "coins": [
+              "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+              "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "fx-pyusd-fxusd",
     "name": "PYUSD/fxUSD",
     "token": "fxUSDpyUSD",
@@ -321,95 +439,6 @@
     }
   },
   {
-    "id": "prisma-mkusd-ultra",
-    "name": "mkUSD/ULTRA",
-    "token": "MKULTRA",
-    "tokenAddress": "0xC236BAE6e35b3Fb7335e1c35CA0862Ce92bd5DE3",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnedToken": "mooPrismaMkUSD-ULTRA",
-    "earnedTokenAddress": "0x914a02E02dB217E6f5BdBaC65ab4510Ab208ae89",
-    "earnContractAddress": "0x914a02E02dB217E6f5BdBaC65ab4510Ab208ae89",
-    "oracle": "lps",
-    "oracleId": "prisma-mkusd-ultra",
-    "status": "paused",
-    "pausedAt": 1711628697,
-    "createdAt": 1708591199,
-    "platformId": "prisma",
-    "assets": ["mkUSD", "ULTRA"],
-    "migrationIds": ["ethereum-prisma"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-101/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-101/withdraw",
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0xC236BAE6e35b3Fb7335e1c35CA0862Ce92bd5DE3",
-        "methods": [
-          {
-            "type": "dynamic-deposit",
-            "target": "0xC236BAE6e35b3Fb7335e1c35CA0862Ce92bd5DE3",
-            "coins": [
-              "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
-              "0x35282d87011f87508D457F08252Bc5bFa52E10A0"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "prisma-mkusd-paypool",
-    "name": "mkUSD/PYUSD/USDC",
-    "token": "mkUSDPay",
-    "tokenAddress": "0x9e10f9Fb6F0D32B350CEe2618662243d4f24C64a",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnedToken": "mooPrismaMkUSD-PayPool",
-    "earnedTokenAddress": "0x3AFa8b3AB875DFFb6F1AF182BA4475345814A4B4",
-    "earnContractAddress": "0x3AFa8b3AB875DFFb6F1AF182BA4475345814A4B4",
-    "oracle": "lps",
-    "oracleId": "prisma-mkusd-paypool",
-    "status": "paused",
-    "pausedAt": 1711628697,
-    "createdAt": 1708590349,
-    "platformId": "prisma",
-    "assets": ["mkUSD", "PYUSD", "USDC"],
-    "migrationIds": ["ethereum-prisma"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-91/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-91/withdraw",
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0x9e10f9Fb6F0D32B350CEe2618662243d4f24C64a",
-        "methods": [
-          {
-            "type": "fixed-deposit-int128",
-            "target": "0x9e10f9Fb6F0D32B350CEe2618662243d4f24C64a",
-            "coins": [
-              "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
-              "0x383E6b4437b59fff47B619CBA855CA29342A8559"
-            ]
-          },
-          {
-            "type": "pool-dynamic-deposit",
-            "target": "0xe07a16358aa878cbda2d49a88e5106871e0db307",
-            "coins": [
-              "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
-              "0x6c3ea9036406852006290770BEdFcAbA0e23A0e8",
-              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "curve-veth",
     "name": "vETH/ETH",
     "token": "vETHETH",
@@ -607,7 +636,7 @@
     "earnContractAddress": "0x1632c328748994aa5616aa8379e8FcbBabDC0F0A",
     "oracle": "lps",
     "oracleId": "prisma-yprisma",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1706514996,
     "platformId": "prisma",
     "assets": ["yPRISMA", "PRISMA"],
@@ -633,7 +662,9 @@
           }
         ]
       }
-    ]
+    ],
+    "retireReason": "tvl",
+    "retiredAt": 1714462317
   },
   {
     "id": "aura-silo-weth",
@@ -844,7 +875,7 @@
     "earnContractAddress": "0x1ae9de00696488A88192C942dB5711e4185f035f",
     "oracle": "lps",
     "oracleId": "prisma-mkusd-prisma",
-    "status": "paused",
+    "status": "eol",
     "pausedAt": 1711628697,
     "createdAt": 1703151542,
     "platformId": "prisma",
@@ -871,7 +902,9 @@
           }
         ]
       }
-    ]
+    ],
+    "retireReason": "tvl",
+    "retiredAt": 1714462317
   },
   {
     "id": "convex-usdc+",
@@ -1011,7 +1044,7 @@
     "earnContractAddress": "0x190951D3951F08Dd9DFe8557E146f09c3f90102E",
     "oracle": "lps",
     "oracleId": "prisma-cvxprisma",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1701336860,
     "platformId": "prisma",
     "assets": ["cvxPRISMA", "PRISMA"],
@@ -1037,7 +1070,9 @@
           }
         ]
       }
-    ]
+    ],
+    "retireReason": "tvl",
+    "retiredAt": 1714462317
   },
   {
     "id": "prisma-mkusd-usdc",
@@ -1051,7 +1086,7 @@
     "earnContractAddress": "0x7E0977F71d62E2d993e2dC68E086A7752FF0652d",
     "oracle": "lps",
     "oracleId": "prisma-mkusd-usdc",
-    "status": "paused",
+    "status": "eol",
     "pausedAt": 1711628697,
     "createdAt": 1701336444,
     "platformId": "prisma",
@@ -1078,7 +1113,9 @@
           }
         ]
       }
-    ]
+    ],
+    "retireReason": "tvl",
+    "retiredAt": 1714462317
   },
   {
     "id": "prisma-mkusd-fraxbp",
@@ -1093,7 +1130,7 @@
     "earnContractAddress": "0xfe494Acd28dfC989A4B6853eF8D1495a1d43F2E0",
     "oracle": "lps",
     "oracleId": "prisma-mkusd-fraxbp",
-    "status": "paused",
+    "status": "eol",
     "pausedAt": 1711628697,
     "createdAt": 1700728622,
     "platformId": "prisma",
@@ -1129,49 +1166,9 @@
           }
         ]
       }
-    ]
-  },
-  {
-    "id": "prisma-mkusd-crvusd",
-    "name": "mkUSD/crvUSD",
-    "type": "standard",
-    "token": "mkcrvUSD-f",
-    "tokenAddress": "0x3de254A0f838a844F727fee81040e0FA7884B935",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnedToken": "mooPrismaMKUSD-crvUSD",
-    "earnedTokenAddress": "0x1899221899E2d1e38BD6d64Dc55E71EA8e90B43B",
-    "earnContractAddress": "0x1899221899E2d1e38BD6d64Dc55E71EA8e90B43B",
-    "oracle": "lps",
-    "oracleId": "prisma-mkusd-crvusd",
-    "status": "paused",
-    "pausedAt": 1711628697,
-    "createdAt": 1700728264,
-    "platformId": "prisma",
-    "assets": ["mkUSD", "crvUSD"],
-    "migrationIds": ["ethereum-prisma"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-17/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-17/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-17/withdraw",
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0x3de254A0f838a844F727fee81040e0FA7884B935",
-        "methods": [
-          {
-            "type": "fixed-deposit-int128",
-            "target": "0x3de254A0f838a844F727fee81040e0FA7884B935",
-            "coins": [
-              "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
-              "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"
-            ]
-          }
-        ]
-      }
-    ]
+    ],
+    "retireReason": "tvl",
+    "retiredAt": 1714462317
   },
   {
     "id": "prisma-prisma-eth",
@@ -1186,7 +1183,7 @@
     "earnContractAddress": "0xF1eEc85f30fb1a4F4f53CF14090df1F619CA6474",
     "oracle": "lps",
     "oracleId": "prisma-prisma-eth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1700728623,
     "platformId": "prisma",
     "assets": ["PRISMA", "ETH"],
@@ -1212,7 +1209,9 @@
           }
         ]
       }
-    ]
+    ],
+    "retireReason": "tvl",
+    "retiredAt": 1714462317
   },
   {
     "id": "curve-crvusd-sdai",
@@ -3177,7 +3176,9 @@
     "earnContractAddress": "0x61F96CA5c79c9753C93244c73f1d4b4a90c1aC8c",
     "oracle": "lps",
     "oracleId": "sushi-mainnet-usdc-weth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1714130472,
     "createdAt": 1674075066,
     "platformId": "sushi",
     "assets": ["WETH", "USDC"],
@@ -4140,7 +4141,9 @@
     "earnContractAddress": "0xa7739fd3d12ac7F16D8329AF3Ee407e19De10D8D",
     "oracle": "lps",
     "oracleId": "convex-steth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1714505422,
     "createdAt": 1667828510,
     "platformId": "convex",
     "assets": ["stETH", "ETH"],

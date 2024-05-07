@@ -39,6 +39,8 @@ const mapSolidly = {
   'fantom-spirit-v2': SpiritSwapV2SolidlyPool,
   'fantom-fvm': BVMSolidlyPool,
   'optimism-velodrome': VelodromeSolidlyPool,
+  'linea-solidly-nile': VelodromeSolidlyPool,
+  'fraxtal-ra': VelodromeSolidlyPool,
   'optimism-velodrome-v2': VelodromeV2SolidlyPool,
   'base-aerodrome': VelodromeV2SolidlyPool,
   'fantom-equalizer': VelodromeSolidlyPool,

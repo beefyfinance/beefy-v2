@@ -25,16 +25,18 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
   const { t } = useTranslation();
   const classes = useStyles();
 
+  const options = useMemo(() => {
+    return {
+      Overview: t('Graph-Overview'),
+      Fees: t('Graph-Fees'),
+    };
+  }, [t]);
+
   return (
     <Card className={classes.card}>
       <CardHeader className={classes.header}>
         <CardTitle title={t('Graph-PositionPerformance')} />
-        <StatSwitcher
-          stat={stat}
-          availableStats={['Overview', 'Fees']}
-          onChange={setStat}
-          type={'cowcentrated'}
-        />
+        <StatSwitcher stat={stat} options={options} onChange={setStat} />
       </CardHeader>
 
       <CardContent className={classes.content}>

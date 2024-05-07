@@ -7,6 +7,7 @@ import { Migration } from '../Migation';
 import { isDevelopment } from '../../../data/utils/feature-flags';
 import { DisplacedBalances } from '../DisplacedBalances';
 import { NoSafuRisks } from '../NoSafuRisks';
+import { Merkl } from './Rewards/Merkl/Merkl';
 
 const TransactDebugger = lazy(() => import(`./Transact/TransactDebugger/TransactDebugger`));
 
@@ -23,6 +24,7 @@ export const Actions = memo<ActionsProps>(function Actions({ vaultId }) {
       <Transact vaultId={vaultId} />
       <Boosts vaultId={vaultId} />
       <Minters vaultId={vaultId} />
+      <Merkl vaultId={vaultId} />
     </>
   );
 });

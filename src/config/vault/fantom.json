@@ -1,5 +1,146 @@
 [
   {
+    "id": "wigo-wftm-usdc.e",
+    "name": "USDC.e-FTM LP",
+    "type": "standard",
+    "token": "USDC.e-FTM LP",
+    "tokenAddress": "0x2D0Ed226891E256d94F1071E2F94FBcDC9060E14",
+    "tokenDecimals": 18,
+    "tokenProviderId": "wigoswap",
+    "earnedToken": "mooWigoSwapWFTM-USDC.e",
+    "earnedTokenAddress": "0x7F080Fc19f02E832e0820763CDF1875219013ca3",
+    "earnContractAddress": "0x7F080Fc19f02E832e0820763CDF1875219013ca3",
+    "oracle": "lps",
+    "oracleId": "wigo-wftm-usdc.e",
+    "status": "active",
+    "createdAt": 1714118857,
+    "platformId": "wigoswap",
+    "assets": ["fUSDCe", "FTM"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://wigoswap.io/swap?outputCurrency=0x2F733095B80A04b38b0D10cC884524a3d09b836a",
+    "addLiquidityUrl": "https://wigoswap.io/add/FTM/0x2F733095B80A04b38b0D10cC884524a3d09b836a",
+    "removeLiquidityUrl": "https://wigoswap.io/remove/FTM/0x2F733095B80A04b38b0D10cC884524a3d09b836a",
+    "network": "fantom",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "fantom-wigoswap"
+      }
+    ]
+  },
+  {
+    "id": "wigo-wftm-lzusdc",
+    "name": "lzUSDC-FTM LP",
+    "type": "standard",
+    "token": "lzUSDC-FTM LP",
+    "tokenAddress": "0x8dD580271D823CBDC4a1C6153f69Dad594C521Fd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "wigoswap",
+    "earnedToken": "mooWigoSwapWFTM-lzUSDC",
+    "earnedTokenAddress": "0x0775540316A61F273B0D69be830ef4A1Eb85b67f",
+    "earnContractAddress": "0x0775540316A61F273B0D69be830ef4A1Eb85b67f",
+    "oracle": "lps",
+    "oracleId": "wigo-wftm-lzusdc",
+    "status": "active",
+    "createdAt": 1714118857,
+    "platformId": "wigoswap",
+    "assets": ["lzUSDC", "FTM"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://wigoswap.io/swap?outputCurrency=0x28a92dde19D9989F39A49905d7C9C2FAc7799bDf",
+    "addLiquidityUrl": "https://wigoswap.io/add/FTM/0x28a92dde19D9989F39A49905d7C9C2FAc7799bDf",
+    "removeLiquidityUrl": "https://wigoswap.io/remove/FTM/0x28a92dde19D9989F39A49905d7C9C2FAc7799bDf",
+    "network": "fantom",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "fantom-wigoswap"
+      }
+    ]
+  },
+  {
+    "id": "wigo-axlusdc-wftm",
+    "name": "axlUSDC-FTM LP",
+    "type": "standard",
+    "token": "axlUSDC-FTM LP",
+    "tokenAddress": "0x084F933B6401a72291246B5B5eD46218a68773e6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "wigoswap",
+    "earnedToken": "mooWigoSwapaxlUSDC-WFTM",
+    "earnedTokenAddress": "0x6DB56D219e69576Cb5c6e384f1092c91E581fD1C",
+    "earnContractAddress": "0x6DB56D219e69576Cb5c6e384f1092c91E581fD1C",
+    "oracle": "lps",
+    "oracleId": "wigo-axlusdc-wftm",
+    "status": "active",
+    "createdAt": 1714118857,
+    "platformId": "wigoswap",
+    "assets": ["axlUSDC", "FTM"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://wigoswap.io/swap?outputCurrency=0x1B6382DBDEa11d97f24495C9A90b7c88469134a4",
+    "addLiquidityUrl": "https://wigoswap.io/add/0x1B6382DBDEa11d97f24495C9A90b7c88469134a4/FTM",
+    "removeLiquidityUrl": "https://wigoswap.io/remove/0x1B6382DBDEa11d97f24495C9A90b7c88469134a4/FTM",
+    "network": "fantom",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "fantom-wigoswap"
+      }
+    ]
+  },
+  {
+    "id": "beets-trio-of-the-stables",
+    "name": "Trio of the Stables",
+    "type": "standard",
+    "token": "Trio of the Stables",
+    "tokenAddress": "0xaAc7B8d6D7009428d6DdaD895bdf50C6FCBbe2C0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsTriooftheStables",
+    "earnedTokenAddress": "0xEd6e49d62e960963D7376240A0b6aF869c0b5c04",
+    "earnContractAddress": "0xEd6e49d62e960963D7376240A0b6aF869c0b5c04",
+    "oracle": "lps",
+    "oracleId": "beets-trio-of-the-stables",
+    "status": "active",
+    "createdAt": 1713530545,
+    "platformId": "beethovenx",
+    "assets": ["axlUSDC", "lzUSDC", "fUSDCe"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://beets.fi/pool/0xaac7b8d6d7009428d6ddad895bdf50c6fcbbe2c000000000000000000000080d",
+    "removeLiquidityUrl": "https://beets.fi/pool/0xaac7b8d6d7009428d6ddad895bdf50c6fcbbe2c000000000000000000000080d",
+    "network": "fantom"
+  },
+  {
     "id": "equalizer-ichi-wftm-lzusdc",
     "name": "WFTM-lzUSDC LP",
     "type": "standard",

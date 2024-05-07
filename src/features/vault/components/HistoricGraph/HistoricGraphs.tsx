@@ -1,5 +1,6 @@
+import type { ChartStat } from '../../../data/reducers/historical-types';
 import type { VaultEntity } from '../../../data/entities/vault';
-import React, { memo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
@@ -28,18 +29,19 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
   const availableStats = useAppSelector(state =>
     selectHistoricalAvailableCharts(state, vaultId, oracleId)
   );
-  const [stat, setStat] = useState<string>(() => getDefaultStat(availableStats));
+  const [stat, setStat] = useState<ChartStat>(() => getDefaultStat(availableStats));
+
+  const options: Record<string, string> = useMemo(() => {
+    return Object.fromEntries(
+      availableStats.map(stat => [stat, t([`Graph-${vault.type}-${stat}`, `Graph-${stat}`])])
+    );
+  }, [availableStats, t, vault.type]);
 
   return (
     <Card className={stat === 'cowcentrated' ? classes.cowcentrated : ''}>
       <CardHeader className={classes.header}>
         <CardTitle title={t('Graph-RateHist')} />
-        <StatSwitcher
-          stat={stat}
-          availableStats={availableStats}
-          onChange={setStat}
-          type={vault.type}
-        />
+        <StatSwitcher stat={stat} options={options} onChange={stat => setStat(stat as ChartStat)} />
       </CardHeader>
       {stat === 'cowcentrated' ? (
         <CowcentratedChart vaultId={vaultId} />
