@@ -38,13 +38,15 @@ export function useChartData(
   const chartData: ChartData = useMemo(() => {
     if (data && data.length) {
       const values = data.map(d => d.v);
-      let min = Math.min(...values);
-      let max = Math.max(...values);
 
-      if (stat === 'clm') {
-        min = Math.min(...data.map((d: ApiCowcentratedPoint) => Math.min(d.min, d.v)));
-        max = Math.max(...data.map((d: ApiCowcentratedPoint) => Math.max(d.max, d.v)));
-      }
+      const isCowcentrated = stat === 'clm';
+
+      const min = isCowcentrated
+        ? Math.min(...data.map((d: ApiCowcentratedPoint) => Math.min(d.min, d.v)))
+        : Math.min(...values);
+      const max = isCowcentrated
+        ? Math.max(...data.map((d: ApiCowcentratedPoint) => Math.max(d.max, d.v)))
+        : Math.max(...values);
 
       const avg = values.reduce((a, b) => a + b, 0) / values.length;
       const ma = new MovingAverage(maPeriods);

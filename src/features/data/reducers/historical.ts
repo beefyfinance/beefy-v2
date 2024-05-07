@@ -13,6 +13,7 @@ import type { HistoricalState, TimeBucketsState, TimeBucketState } from './histo
 import type { Draft } from 'immer';
 import { mapValues } from 'lodash-es';
 import { TIME_BUCKETS } from '../../vault/components/HistoricGraph/utils';
+import { isCowcentratedLiquidityVault } from '../entities/vault';
 
 const initialState: HistoricalState = {
   ranges: {
@@ -60,7 +61,9 @@ export const historicalSlice = createSlice({
         };
       })
       .addCase(fetchHistoricalRanges.fulfilled, (state, action) => {
-        const { vaultId, oracleId, ranges } = action.payload;
+        const { vault, oracleId, ranges } = action.payload;
+
+        const vaultId = vault.id;
 
         state.ranges.byVaultId[vaultId] = {
           status: 'fulfilled',
@@ -70,7 +73,9 @@ export const historicalSlice = createSlice({
         initAllTimeBuckets(state, oracleId, vaultId);
         state.apys.byVaultId[vaultId].availableTimebuckets = getBucketsFromRange(ranges.apys);
         state.tvls.byVaultId[vaultId].availableTimebuckets = getBucketsFromRange(ranges.tvls);
-        state.clm.byVaultId[vaultId].availableTimebuckets = getBucketsFromRange(ranges.clm);
+        if (isCowcentratedLiquidityVault(vault)) {
+          state.clm.byVaultId[vaultId].availableTimebuckets = getBucketsFromRange(ranges.clm);
+        }
         state.prices.byOracleId[oracleId].availableTimebuckets = getBucketsFromRange(ranges.prices);
       })
       .addCase(fetchHistoricalApys.pending, (state, action) => {

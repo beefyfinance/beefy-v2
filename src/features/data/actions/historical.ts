@@ -22,7 +22,7 @@ import type { ChainEntity } from '../entities/chain';
 import BigNumber from 'bignumber.js';
 
 export interface HistoricalRangesPayload {
-  vaultId: VaultEntity['id'];
+  vault: VaultEntity;
   oracleId: TokenEntity['oracleId'];
   ranges: ApiRanges;
 }
@@ -40,25 +40,15 @@ export const fetchHistoricalRanges = createAsyncThunk<
   const vault = selectVaultById(state, vaultId);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const api = await getBeefyDataApi();
-  let ranges = {
-    apys: { min: 0, max: 0 },
-    prices: { min: 0, max: 0 },
-    tvls: { min: 0, max: 0 },
-    clm: { min: 0, max: 0 },
-  } satisfies ApiRanges;
 
-  if (isCowcentratedLiquidityVault(vault)) {
-    ranges = await api.getAvailableRanges(
-      vaultId,
-      depositToken.oracleId,
-      vault.earnContractAddress,
-      vault.chainId
-    );
-  } else {
-    ranges = await api.getAvailableRanges(vaultId, depositToken.oracleId);
-  }
+  const ranges = await api.getAvailableRanges(
+    vaultId,
+    depositToken.oracleId,
+    isCowcentratedLiquidityVault(vault) ? vault.earnContractAddress : undefined,
+    isCowcentratedLiquidityVault(vault) ? vault.chainId : undefined
+  );
 
-  return { vaultId, oracleId: depositToken.oracleId, ranges };
+  return { vault, oracleId: depositToken.oracleId, ranges };
 });
 
 export interface HistoricalApysPayload {
