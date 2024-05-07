@@ -44,7 +44,7 @@ export const CLMBanner = memo(function CLMBanner() {
             LinkFeedback: (
               <a
                 className={classes.link}
-                href={'https://beefy.com/discord'}
+                href={'https://beefy.finance/discord'}
                 target="_blank"
                 rel="noopener"
               />

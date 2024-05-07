@@ -1,5 +1,152 @@
 [
   {
+    "id": "curve-arb-usdc-usdm",
+    "name": "USDC/USDM",
+    "token": "usdc-usdm",
+    "tokenAddress": "0x4bD135524897333bec344e50ddD85126554E58B4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveUSDC-USDM",
+    "earnedTokenAddress": "0x1B4dD8911cd2028Ea230f82E7BD91F1651Cb4AaB",
+    "earnContractAddress": "0x1B4dD8911cd2028Ea230f82E7BD91F1651Cb4AaB",
+    "oracle": "lps",
+    "oracleId": "curve-arb-usdc-usdm",
+    "status": "active",
+    "createdAt": 1714983060,
+    "platformId": "curve",
+    "assets": ["USDC", "USDM"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-30/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-30/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x4bD135524897333bec344e50ddD85126554E58B4",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x4bD135524897333bec344e50ddD85126554E58B4",
+            "coins": [
+              "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+              "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "aura-arb-gyro-ausdc-ausdt",
+    "name": "Gyroscope Aave USDC/USDT",
+    "type": "standard",
+    "token": "Aave USDC/USDT Arb",
+    "tokenAddress": "0x125bC5a031B2Db6733bfa35d914ffa428095978B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraGyroaUSDCn/aUSDTn",
+    "earnedTokenAddress": "0xb39a6c02BB32199c5C2e937a9c96Fe8F79E18763",
+    "earnContractAddress": "0xb39a6c02BB32199c5C2e937a9c96Fe8F79E18763",
+    "oracle": "lps",
+    "oracleId": "aura-arb-gyro-ausdc-ausdt",
+    "status": "active",
+    "createdAt": 1714564996,
+    "platformId": "aura",
+    "assets": ["stataArbUSDCn", "stataArbUSDTn"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0x125bc5a031b2db6733bfa35d914ffa428095978b/join/",
+    "removeLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0x125bc5a031b2db6733bfa35d914ffa428095978b/exit/",
+    "network": "arbitrum"
+  },
+  {
+    "id": "uniswap-cow-arb-tbtc-weth",
+    "name": "tBTC-ETH",
+    "token": "tBTC-ETH",
+    "tokenAddress": "0xCb198a55e2a88841E855bE4EAcaad99422416b33",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapArbitrumtBTC-ETH",
+    "earnedTokenAddress": "0x9aA49971f4956D7831b2CD1c9AF7ED931b5f91BC",
+    "earnContractAddress": "0x9aA49971f4956D7831b2CD1c9AF7ED931b5f91BC",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-tbtc-weth",
+    "status": "active",
+    "createdAt": 1714135473,
+    "platformId": "beefy",
+    "assets": ["tBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "type": "cowcentrated",
+    "feeTier": "0.05"
+  },
+  {
+    "id": "uniswap-cow-arb-wsteth-usdc.e",
+    "name": "wstETH-USDC.e",
+    "token": "wstETH-USDC.e",
+    "tokenAddress": "0xC7341e85996EeB05897d3DeC79448b6e4cCc09CF",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x5979D7b546E38E414F7E9822514be443A4800529",
+      "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapArbitrumwstETH-USDC.e",
+    "earnedTokenAddress": "0x4C32b8d26E6ab2Ce401772514C999768f63Afb4e",
+    "earnContractAddress": "0x4C32b8d26E6ab2Ce401772514C999768f63Afb4e",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-wsteth-usdc.e",
+    "status": "active",
+    "createdAt": 1714135473,
+    "platformId": "beefy",
+    "assets": ["wstETH", "arbUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "type": "cowcentrated",
+    "feeTier": "0.05"
+  },
+  {
+    "id": "uniswap-cow-arb-eth-usdc.e",
+    "name": "ETH-USDC.e",
+    "token": "ETH-USDC.e",
+    "tokenAddress": "0xC31E54c7a869B9FcBEcc14363CF510d1c41fa443",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapArbitrumETH-USDC.e",
+    "earnedTokenAddress": "0xd9d5d3743b67FF04fE2F5c18Ddd596Cf370A8126",
+    "earnContractAddress": "0xd9d5d3743b67FF04fE2F5c18Ddd596Cf370A8126",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-eth-usdc.e",
+    "status": "active",
+    "createdAt": 1714135473,
+    "platformId": "beefy",
+    "assets": ["WETH", "arbUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "type": "cowcentrated",
+    "feeTier": "0.05"
+  },
+  {
     "id": "aura-arb-ezeth-wsteth",
     "name": "ezETH-wstETH",
     "type": "standard",
@@ -98,6 +245,78 @@
     "addLiquidityUrl": "https://lend.curve.fi/#/arbitrum/markets/one-way-market-0/vault/deposit",
     "removeLiquidityUrl": "https://lend.curve.fi/#/arbitrum/markets/one-way-market-0/vault/withdraw",
     "network": "arbitrum"
+  },
+  {
+    "id": "silo-eth-ezeth",
+    "name": "ETH (ezETH Market)",
+    "type": "standard",
+    "token": "ETH",
+    "tokenAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloArbWETH(ezETH)",
+    "earnedTokenAddress": "0x6a96e55c6a8ab9380E006D7C83232d3E7a935402",
+    "earnContractAddress": "0x6a96e55c6a8ab9380E006D7C83232d3E7a935402",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "createdAt": 1713892433,
+    "platformId": "silo",
+    "assets": ["ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612"
+    }
+  },
+  {
+    "id": "silo-eth-pendle-ezeth",
+    "name": "ETH (PT-ezETH Market)",
+    "type": "standard",
+    "token": "ETH",
+    "tokenAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloArbWETH(PT-ezETH)",
+    "earnedTokenAddress": "0xf15Bf589aC1F4b1Bc20c3f9A922BaA14101bC368",
+    "earnContractAddress": "0xf15Bf589aC1F4b1Bc20c3f9A922BaA14101bC368",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "createdAt": 1713892433,
+    "platformId": "silo",
+    "assets": ["ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612"
+    }
   },
   {
     "id": "curve-lend-arb-crv-crvusd",
@@ -846,7 +1065,9 @@
     "earnContractAddress": "0x2D48323e76D1cdcdC9F57FB20480871268f08705",
     "oracle": "lps",
     "oracleId": "equilibria-arb-eeth-seth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1714130472,
     "createdAt": 1710143480,
     "platformId": "equilibria",
     "assets": ["ETH"],
@@ -983,7 +1204,9 @@
     "earnContractAddress": "0x7975d9EcCe584aDcE00efd16520853Dad66a7775",
     "oracle": "lps",
     "oracleId": "equilibria-arb-rseth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1714130472,
     "createdAt": 1708929068,
     "platformId": "equilibria",
     "assets": ["rsETH"],
@@ -1006,7 +1229,9 @@
     "earnContractAddress": "0x245d1c493342464ba568BCfb058C1069dFdc07B5",
     "oracle": "lps",
     "oracleId": "equilibria-arb-eeth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1714130472,
     "createdAt": 1707723612,
     "platformId": "equilibria",
     "assets": ["weETH"],
@@ -1141,7 +1366,9 @@
     "earnContractAddress": "0xA9052A4Dc90070349b0e22dAE8eEdf8bba74d435",
     "oracle": "lps",
     "oracleId": "aura-arb-wsteth-sfrxeth-reth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1714130472,
     "createdAt": 1704975503,
     "platformId": "aura",
     "assets": ["wstETH", "sfrxETH", "rETH"],
@@ -3133,7 +3360,9 @@
     "earnContractAddress": "0x12c997FAdca32dB01E3145DE7Bf9cdB06455391D",
     "oracle": "lps",
     "oracleId": "aura-cbeth-wsteth-reth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1714130472,
     "createdAt": 1692957284,
     "platformId": "aura",
     "assets": ["cbETH", "wstETH", "rETH"],
@@ -4113,44 +4342,6 @@
     ]
   },
   {
-    "id": "ramses-mai-gdai",
-    "name": "MAI-gDAI sLP",
-    "type": "standard",
-    "token": "MAI-gDAI sLP",
-    "tokenAddress": "0xeeFD88a21Cf767737a956Bb98c3E0368E12594Cd",
-    "tokenDecimals": 18,
-    "tokenProviderId": "ramses",
-    "earnedToken": "mooRamsesMAI-gDAI",
-    "earnedTokenAddress": "0xfa650F9916b3385f933e87E5dB21329c0f492A21",
-    "earnContractAddress": "0xfa650F9916b3385f933e87E5dB21329c0f492A21",
-    "oracle": "lps",
-    "oracleId": "ramses-mai-gdai",
-    "status": "eol",
-    "createdAt": 1680280353,
-    "retireReason": "tvl",
-    "retiredAt": 1691431139,
-    "platformId": "ramses",
-    "assets": ["MAI", "gDAI"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x3F56e0c36d275367b8C502090EDF38289b3dEa0d&to=0xd85E038593d7A098614721EaE955EC2022B9B91B",
-    "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0xeeFD88a21Cf767737a956Bb98c3E0368E12594Cd",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "arbitrum-ramses"
-      }
-    ]
-  },
-  {
     "id": "ramses-frax-dei",
     "name": "FRAX-DEI sLP",
     "type": "standard",
@@ -5052,45 +5243,6 @@
     "buyTokenUrl": "https://solidlizard.finance/swap?from=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&to=0x463913D3a3D3D291667D53B8325c598Eb88D3B0e",
     "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
     "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0x9E7fB82fdF08a6aAba760A81F0A64602Af045d2a",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "arbitrum-solidlizard"
-      }
-    ]
-  },
-  {
-    "id": "solidlizard-lusd-usdc",
-    "name": "LUSD-USDC.e sLP",
-    "type": "standard",
-    "token": "LUSD-USDC.e sLP",
-    "tokenAddress": "0xB1E9b823295B3C69ac651C05D987B67189ff20AD",
-    "tokenDecimals": 18,
-    "tokenProviderId": "solidlizard",
-    "earnedToken": "mooSolidLizardLUSD-USDC",
-    "earnedTokenAddress": "0xC1bfe1b2cFbFc97e3f6bdb3162132dDfbAe4927F",
-    "earnContractAddress": "0xC1bfe1b2cFbFc97e3f6bdb3162132dDfbAe4927F",
-    "oracle": "lps",
-    "oracleId": "solidlizard-lusd-usdc",
-    "status": "eol",
-    "createdAt": 1677861237,
-    "retireReason": "rewards",
-    "retiredAt": 1684254120,
-    "platformId": "solidlizard",
-    "assets": ["LUSD", "arbUSDCe"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MEDIUM",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://solidlizard.finance/swap?from=0x93b346b6BC2548dA6A1E7d98E9a421B42541425b&to=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
-    "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
-    "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
     "network": "arbitrum",
     "zaps": [
       {

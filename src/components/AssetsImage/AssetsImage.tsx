@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core';
 import { getSingleAssetSrc } from '../../helpers/singleAssetSrc';
 import clsx from 'clsx';
 import type { ChainEntity } from '../../features/data/entities/chain';
+import missingAssetUrl from '../../images/single-assets/missing-asset.svg';
 
 const useStyles = makeStyles(styles);
 const maxSupportedAssets = 8;
@@ -38,21 +39,17 @@ export const AssetsImage = memo<AssetsImageType>(function AssetsImage({
       data-count={uris.length}
       style={size !== DEFAULT_SIZE ? { width: size, height: size } : undefined}
     >
-      {uris.map((uri, i) =>
-        uri ? (
-          <img
-            src={uri}
-            key={uri}
-            alt=""
-            role="presentation"
-            className={classes.iconImg}
-            width={size}
-            height={size}
-          />
-        ) : (
-          <div key={i} className={clsx(classes.iconImg, classes.iconImgPlaceholder)} />
-        )
-      )}
+      {uris.map((uri, i) => (
+        <img
+          src={uri ?? missingAssetUrl}
+          key={uri ?? i}
+          alt=""
+          role="presentation"
+          className={classes.iconImg}
+          width={size}
+          height={size}
+        />
+      ))}
     </div>
   );
 });

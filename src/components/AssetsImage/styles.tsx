@@ -241,9 +241,4 @@ export const styles = () => ({
     objectFit: 'contain' as const,
     display: 'block',
   },
-  iconImgPlaceholder: {
-    backgroundColor: 'magenta',
-    border: 'solid 2px black',
-    borderRadius: '100%',
-  },
 });

@@ -1,5 +1,102 @@
 [
   {
+    "id": "nile-usdc-lusd",
+    "name": "USDC-LUSD Correlated LP",
+    "type": "standard",
+    "token": "cAMM-USDC/LUSD",
+    "tokenAddress": "0x641d5eAa27e516E1CF1F5C84B5EC25C45b7e3f0D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnedToken": "mooNileUSDC-LUSD",
+    "earnedTokenAddress": "0x7A6A9dEb7dFfA150224ece4d381f327C59a6bBab",
+    "earnContractAddress": "0x7A6A9dEb7dFfA150224ece4d381f327C59a6bBab",
+    "oracle": "lps",
+    "oracleId": "nile-usdc-lusd",
+    "status": "active",
+    "createdAt": 1714666480,
+    "platformId": "nile",
+    "assets": ["USDC", "LUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://www.thenile.exchange/manage/v1/0x641d5eAa27e516E1CF1F5C84B5EC25C45b7e3f0D",
+    "removeLiquidityUrl": "https://www.thenile.exchange/manage/v1/0x641d5eAa27e516E1CF1F5C84B5EC25C45b7e3f0D",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "linea-solidly-nile"
+      }
+    ]
+  },
+  {
+    "id": "lynex-gamma-weeth-weth",
+    "name": "weETH-ETH LP",
+    "type": "standard",
+    "token": "weETH-ETH LP",
+    "tokenAddress": "0x530071b0373Ab3029cAd32E0c19b75253e231b69",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lynex",
+    "earnedToken": "mooLynexGammaweETH-WETH",
+    "earnedTokenAddress": "0xb9A23E2569C262a92635D825142f310BEAfB0Be0",
+    "earnContractAddress": "0xb9A23E2569C262a92635D825142f310BEAfB0Be0",
+    "oracle": "lps",
+    "oracleId": "lynex-gamma-weeth-weth",
+    "status": "active",
+    "createdAt": 1714738522,
+    "platformId": "gamma",
+    "assets": ["weETH", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/weeth-weth-pegged-price",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/weeth-weth-pegged-price",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "linea-gamma-lynex",
+        "tokenHolder": "0x1480808349772759DF7422a3440EDb998A749C3c"
+      }
+    ],
+    "earningPoints": true
+  },
+  {
+    "id": "nile-ezeth-weth",
+    "name": "ezETH-ETH Correlated LP",
+    "type": "standard",
+    "token": "cAMM-ezETH/WETH",
+    "tokenAddress": "0xA9A1Fb9F6664A0B6BFB1F52724fd7b23842248C5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnedToken": "mooNileezETH-WETH",
+    "earnedTokenAddress": "0x063091e4532eD93CE93347C6c8338dcA0832ddb0",
+    "earnContractAddress": "0x063091e4532eD93CE93347C6c8338dcA0832ddb0",
+    "oracle": "lps",
+    "oracleId": "nile-ezeth-weth",
+    "status": "active",
+    "createdAt": 1714666480,
+    "platformId": "nile",
+    "assets": ["ezETH", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://www.thenile.exchange/manage/v1/0xa9a1fb9f6664a0b6bfb1f52724fd7b23842248c5",
+    "removeLiquidityUrl": "https://www.thenile.exchange/manage/v1/0xa9a1fb9f6664a0b6bfb1f52724fd7b23842248c5",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "linea-solidly-nile"
+      }
+    ],
+    "earningPoints": true
+  },
+  {
     "id": "lynex-ichi-usdt-lynx",
     "name": "USDT-LYNX LP",
     "type": "standard",
@@ -103,8 +200,7 @@
         "ammId": "linea-gamma-lynex",
         "tokenHolder": "0x133629348F5f3632f46D8Fd0A5C3b49a4fADf2B6"
       }
-    ],
-    "earningPoints": true
+    ]
   },
   {
     "id": "lynex-gamma-stone-weth",

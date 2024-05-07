@@ -1,13 +1,13 @@
 import type { ChartStat } from '../../../data/reducers/historical-types';
 import type { VaultEntity } from '../../../data/entities/vault';
-import React, { memo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectHistoricalAvailableCharts } from '../../../data/selectors/historical';
 import { Card, CardContent, CardHeader, CardTitle } from '../Card';
-import { StatSwitcher } from './StatSwitcher';
+import { StatSwitcher } from '../StatSwitcher';
 import { GraphWithControls } from './GraphWithControls';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
@@ -31,16 +31,17 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
   );
   const [stat, setStat] = useState<ChartStat>(() => getDefaultStat(availableStats));
 
+  const options: Record<string, string> = useMemo(() => {
+    return Object.fromEntries(
+      availableStats.map(stat => [stat, t([`Graph-${stat}`, `Graph-${vault.type}-${stat}`])])
+    );
+  }, [availableStats, t, vault.type]);
+
   return (
     <Card className={classes.container}>
       <CardHeader className={classes.header}>
         <CardTitle title={t('Graph-RateHist')} />
-        <StatSwitcher
-          stat={stat}
-          availableStats={availableStats}
-          onChange={setStat}
-          type={vault.type}
-        />
+        <StatSwitcher stat={stat} options={options} onChange={stat => setStat(stat as ChartStat)} />
       </CardHeader>
       <CardContent className={classes.content}>
         {stat === 'clm' && <CowcentratedRanges vaultId={vaultId} />}

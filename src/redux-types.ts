@@ -35,6 +35,7 @@ import type { MigrationState } from './features/data/reducers/wallet/migration';
 import type { TooltipsState } from './features/data/reducers/tooltips';
 import type { AddToWalletState } from './features/data/reducers/add-to-wallet';
 import type { ArticlesState } from './features/data/reducers/articles';
+import type { RewardsState } from './features/data/reducers/wallet/rewards';
 
 export interface BeefyState {
   entities: {
@@ -64,6 +65,7 @@ export interface BeefyState {
     wallet: WalletState;
     walletActions: WalletActionsState;
     migration: MigrationState;
+    rewards: RewardsState;
   };
   ui: {
     dataLoader: DataLoaderState;

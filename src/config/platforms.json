@@ -971,5 +971,17 @@
     "id": "mshards",
     "name": "mShards",
     "filter": true
+  },
+  {
+    "id": "ra",
+    "name": "Ra",
+    "filter": true,
+    "risks": ["NO_TIMELOCK"]
+  },
+  {
+    "id": "nile",
+    "name": "Nile",
+    "filter": true,
+    "risks": ["NO_TIMELOCK"]
   }
 ]

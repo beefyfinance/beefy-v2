@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { persistStore } from 'redux-persist';
 import { rootReducer } from './features/data/reducers';
 import { loggerMiddleware } from './features/data/middlewares/logger';
-import { walletActionsMiddleware } from './features/data/middlewares/wallet';
 import { debugRecorderMiddleware } from './features/data/middlewares/debug/debug-record';
 import {
   featureFlag_logReduxActions,
@@ -17,6 +16,7 @@ import { balanceMiddleware } from './features/data/middlewares/balance';
 import { apyMiddleware } from './features/data/middlewares/apy';
 import { zapMiddleware } from './features/data/middlewares/zap';
 import { filteredVaultsMiddleware } from './features/data/middlewares/filtered-vaults';
+import { walletMiddleware } from './features/data/middlewares/wallet';
 
 let middlewares: Middleware[] = [];
 
@@ -32,11 +32,11 @@ if (!featureFlag_replayReduxActions()) {
   // don't want this to run actions when replaying
   middlewares = [
     ...middlewares,
-    walletActionsMiddleware,
     balanceMiddleware,
     apyMiddleware,
     zapMiddleware,
     filteredVaultsMiddleware,
+    walletMiddleware,
   ];
 }
 

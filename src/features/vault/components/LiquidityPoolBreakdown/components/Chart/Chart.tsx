@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import type { CalculatedAsset } from '../../types';
 import type { PieProps } from 'recharts';
 import { Cell, Pie, PieChart, Sector } from 'recharts';
@@ -21,7 +21,8 @@ type ActiveShapeProps = {
   strokeWidth: number;
   payload: CalculatedAsset;
   percent: number;
-  value: CalculatedAsset['percent'];
+  value: number;
+  dataKey: 'percent' | 'underlyingPercent';
 };
 const ActiveShape = function ({
   cx,
@@ -34,6 +35,7 @@ const ActiveShape = function ({
   stroke,
   strokeWidth,
   payload,
+  dataKey,
 }: ActiveShapeProps) {
   return (
     <g>
@@ -41,7 +43,7 @@ const ActiveShape = function ({
         {payload.symbol}
       </text>
       <text x={cx} y={cy} dy={8} textAnchor="middle" alignmentBaseline="middle" fill="#D0D0DA">
-        {formatLargePercent(payload.percent)}
+        {formatLargePercent(payload[dataKey])}
       </text>
       <Sector
         cx={cx}
@@ -60,8 +62,9 @@ const ActiveShape = function ({
 
 export type ChartProps = {
   assets: CalculatedAsset[];
+  isUnderlying?: boolean;
 };
-export const Chart = memo<ChartProps>(function Chart({ assets }) {
+export const Chart = memo<ChartProps>(function Chart({ assets, isUnderlying }) {
   const classes = useStyles();
   const [activeIndex, setActiveIndex] = useState<undefined | number>(undefined);
   const onPieEnter = useCallback<Exclude<PieProps['onMouseEnter'], undefined>>(
@@ -74,12 +77,21 @@ export const Chart = memo<ChartProps>(function Chart({ assets }) {
     setActiveIndex(undefined);
   }, [setActiveIndex]);
 
+  const dataKey = useMemo(() => (isUnderlying ? 'underlyingPercent' : 'percent'), [isUnderlying]);
+
+  const activeShapeConstructor = useCallback(
+    (props: ActiveShapeProps) => {
+      return <ActiveShape {...props} dataKey={dataKey} />;
+    },
+    [dataKey]
+  );
+
   return (
     <div className={classes.holder}>
       <PieChart width={164} height={164}>
         <Pie
           data={assets}
-          dataKey="percent"
+          dataKey={dataKey}
           valueKey="symbol"
           cx="50%"
           cy="50%"
@@ -90,7 +102,7 @@ export const Chart = memo<ChartProps>(function Chart({ assets }) {
           endAngle={450}
           onMouseEnter={onPieEnter}
           onMouseLeave={onPieLeave}
-          activeShape={ActiveShape}
+          activeShape={props => activeShapeConstructor(props)}
           activeIndex={activeIndex}
         >
           {assets.map(asset => (
