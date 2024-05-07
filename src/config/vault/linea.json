@@ -200,8 +200,7 @@
         "ammId": "linea-gamma-lynex",
         "tokenHolder": "0x133629348F5f3632f46D8Fd0A5C3b49a4fADf2B6"
       }
-    ],
-    "earningPoints": true
+    ]
   },
   {
     "id": "lynex-gamma-stone-weth",
