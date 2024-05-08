@@ -29,6 +29,8 @@ const overrides = {
   'kinetix-klp': { harvestOnDeposit: undefined },
   'bifi-vault': { beefyFeeRecipient: undefined }, // TODO: remove
   'png-wbtc.e-usdc': { harvestOnDeposit: undefined },
+  'gmx-arb-glp': { harvestOnDeposit: undefined },
+  'gmx-arb-gmx': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
