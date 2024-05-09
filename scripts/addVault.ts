@@ -49,9 +49,9 @@ async function vaultData(chain, vaultAddress, id) {
   const platform = params.mooToken.startsWith('mooConvex') ? 'convex' : provider;
   if (platform === 'equilibria') provider = 'pendle';
   const migrationIds =
-    provider === 'curve' && chain === 'ethereum'
+    ['curve', 'curve-lend'].includes(provider) && chain === 'ethereum'
       ? ['ethereum-convex']
-      : provider === 'curve'
+      : ['curve', 'curve-lend'].includes(provider)
       ? ['l2-convex', 'l2-curve']
       : [];
 
