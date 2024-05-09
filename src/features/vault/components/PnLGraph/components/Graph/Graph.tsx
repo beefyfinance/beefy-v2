@@ -8,8 +8,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { useAppSelector } from '../../../../../../store';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { usePnLChartData } from '../../hooks';
 import { PnLTooltip } from '../PnLTooltip';
 import type { Theme } from '@material-ui/core';
@@ -31,20 +29,9 @@ interface GraphProps {
 }
 
 export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address }) {
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
   const classes = useStyles();
 
-  const productKey = useMemo(() => {
-    return `beefy:vault:${vault.chainId}:${vault.earnContractAddress.toLowerCase()}`;
-  }, [vault.chainId, vault.earnContractAddress]);
-
-  const { chartData, isLoading } = usePnLChartData(
-    TIME_BUCKET[period],
-    productKey,
-    vaultId,
-    address
-  );
+  const { chartData, isLoading } = usePnLChartData(TIME_BUCKET[period], vaultId, address);
 
   const { data, minUnderlying, maxUnderlying, minUsd, maxUsd } = chartData;
 

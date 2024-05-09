@@ -25,7 +25,6 @@ export const NO_CHART_DATA = { data: [], minUnderlying: 0, maxUnderlying: 0, min
 
 export const usePnLChartData = (
   timebucket: TimeBucketType,
-  productKey: string,
   vaultId: VaultEntity['id'],
   address?: string
 ) => {
@@ -69,7 +68,7 @@ export const usePnLChartData = (
       if (sharesStatus === 'idle') {
         dispatch(
           fetchShareToUnderlying({
-            productKey,
+            productType: 'vault',
             vaultId,
             walletAddress,
             timebucket,
@@ -79,7 +78,7 @@ export const usePnLChartData = (
       if (underlyingStatus === 'idle') {
         dispatch(
           fetchUnderlyingToUsd({
-            productKey,
+            productType: 'vault',
             vaultId,
             walletAddress,
             timebucket,
@@ -92,7 +91,7 @@ export const usePnLChartData = (
           () =>
             dispatch(
               fetchShareToUnderlying({
-                productKey,
+                productType: 'vault',
                 vaultId,
                 walletAddress,
                 timebucket,
@@ -108,7 +107,7 @@ export const usePnLChartData = (
           () =>
             dispatch(
               fetchUnderlyingToUsd({
-                productKey,
+                productType: 'vault',
                 vaultId,
                 walletAddress,
                 timebucket,
@@ -119,7 +118,7 @@ export const usePnLChartData = (
         return () => clearTimeout(handleUnderlyingToUsd);
       }
     }
-  }, [dispatch, sharesStatus, underlyingStatus, timebucket, productKey, vaultId, walletAddress]);
+  }, [dispatch, sharesStatus, underlyingStatus, timebucket, vaultId, walletAddress]);
 
   const isLoading = useMemo(() => {
     return underlyingStatus !== 'fulfilled' || sharesStatus !== 'fulfilled';

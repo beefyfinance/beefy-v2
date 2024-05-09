@@ -19,7 +19,19 @@ export interface TimelineAnalyticsConfig {
   usd_diff: number | null;
 }
 
-export type AnalyticsUserTimelineResponse = TimelineAnalyticsConfig[];
+export interface CLMTimelineAnalyticsConfig {
+  token0_to_usd: number;
+  token1_to_usd: number;
+  underlying0_balance: number;
+  underlying1_balance: number;
+  underlying0_diff: number;
+  underlying1_diff: number;
+}
+
+export type AnalyticsUserTimelineResponse = {
+  databarnTimeline: TimelineAnalyticsConfig[];
+  clmTimeline: CLMTimelineAnalyticsConfig[];
+};
 
 export interface PriceAnalyticsConfig {
   date: string;

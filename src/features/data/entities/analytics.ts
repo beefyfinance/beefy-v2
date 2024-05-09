@@ -1,5 +1,8 @@
 import type BigNumber from 'bignumber.js';
-import type { TimelineAnalyticsConfig } from '../apis/analytics/analytics-types';
+import type {
+  CLMTimelineAnalyticsConfig,
+  TimelineAnalyticsConfig,
+} from '../apis/analytics/analytics-types';
 import type { ChangeTypeOfKeys, SnakeToCamelCase } from '../utils/types-utils';
 import type { ChainEntity } from './chain';
 
@@ -29,3 +32,20 @@ export type VaultTimelineAnalyticsEntity = VTACWithDateTime & {
     chain: ChainEntity['id'];
   };
 };
+
+type CLMACSnake = {
+  [K in keyof CLMTimelineAnalyticsConfig as SnakeToCamelCase<K>]: CLMTimelineAnalyticsConfig[K];
+};
+
+type CLMABigNumber = ChangeTypeOfKeys<
+  CLMACSnake,
+  | 'token0ToUsd'
+  | 'token1ToUsd'
+  | 'underlying0Balance'
+  | 'underlying1Balance'
+  | 'underlyingDiff0'
+  | 'underlyingDiff1',
+  BigNumber
+>;
+
+export type CLMTimelineAnalyticsEntity = CLMABigNumber;
