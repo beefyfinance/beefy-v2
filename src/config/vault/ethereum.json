@@ -1,5 +1,42 @@
 [
   {
+    "id": "silo-eth-pendle-eeth-eth",
+    "name": "WETH (PT-eETH Market)",
+    "type": "standard",
+    "token": "WETH (PT-eETH Market)",
+    "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloWETH(PT-eETH)",
+    "earnedTokenAddress": "0xc2CA275bC2BB07fC8167E43aB11402FA1ac54c54",
+    "earnContractAddress": "0xc2CA275bC2BB07fC8167E43aB11402FA1ac54c54",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1715253565,
+    "platformId": "silo",
+    "assets": ["WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=ethereum&from=0x0000000000000000000000000000000000000000&to=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
+    }
+  },
+  {
     "id": "curve-lend-tbtc-crvusd",
     "name": "crvUSD (tBTC Market)",
     "token": "cvcrvUSD",
