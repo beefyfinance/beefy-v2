@@ -1,5 +1,71 @@
 [
   {
+    "id": "uniswap-cow-arb-silo-weth",
+    "name": "SILO-ETH",
+    "token": "SILO-ETH",
+    "tokenAddress": "0xd3E11119d2680c963F1CDCffeCe0c4adE823Fb58",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0341C0C0ec423328621788d4854119B97f44E391",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapArbitrumSILO-ETH",
+    "earnedTokenAddress": "0xe3EAc56810C885067dC4C43A8049A07D9Bb127a4",
+    "earnContractAddress": "0xe3EAc56810C885067dC4C43A8049A07D9Bb127a4",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-silo-weth",
+    "status": "active",
+    "createdAt": 1715253566,
+    "platformId": "beefy",
+    "assets": ["SILO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "type": "cowcentrated",
+    "feeTier": "1"
+  },
+  {
+    "id": "curve-arb-fethxeth",
+    "name": "fETH/xETH/ETH",
+    "token": "fxETH",
+    "tokenAddress": "0xF7Fed8Ae0c5B78c19Aadd68b700696933B0Cefd9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurve_fETH-xETH-ETH",
+    "earnedTokenAddress": "0x2b021308797d2C19FDe3682640f2091248F78181",
+    "earnContractAddress": "0x2b021308797d2C19FDe3682640f2091248F78181",
+    "oracle": "lps",
+    "oracleId": "curve-arb-fethxeth",
+    "status": "active",
+    "createdAt": 1715154067,
+    "platformId": "convex",
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "assets": ["fETH", "xETH", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-2/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-2/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xF7Fed8Ae0c5B78c19Aadd68b700696933B0Cefd9",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0xF7Fed8Ae0c5B78c19Aadd68b700696933B0Cefd9",
+            "coins": [
+              "0xc608Dfb90A430Df79a8a1eDBC8be7f1A0Eb4E763",
+              "0x55380fe7A1910dFf29A47B622057ab4139DA42C5",
+              "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curve-arb-usdc-usdm",
     "name": "USDC/USDM",
     "token": "usdc-usdm",

@@ -3,10 +3,10 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   content: {
     ...theme.typography['body-lg'],
-    color: theme.palette.text.tooltips,
+    color: theme.palette.text.primary,
     padding: '12px 16px',
     minWidth: '250px',
-    background: '#fff',
+    background: '#1B1D32',
     borderRadius: '8px',
     textAlign: 'left' as const,
   },
@@ -18,13 +18,33 @@ export const styles = (theme: Theme) => ({
     gridTemplateColumns: '1fr 1fr',
     gap: '8px 16px',
   },
-  label: {},
+  label: {
+    color: theme.palette.text.dark,
+  },
   labelDetail: {
     ...theme.typography['body-sm'],
     lineHeight: 1,
   },
   value: {
     ...theme.typography['body-lg-med'],
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
     textAlign: 'right' as const,
+  },
+  itemContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '8px',
+  },
+  rangeIndicator: {
+    width: '8px',
+    height: '8px',
+    borderRadius: '50%',
+    backgroundColor: theme.palette.background.indicators.error,
+  },
+  onRange: {
+    backgroundColor: theme.palette.background.indicators.success,
   },
 });
