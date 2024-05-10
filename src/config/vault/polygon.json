@@ -1,65 +1,5 @@
 [
   {
-    "id": "quick-gamma-nativeusdc-usdt-stable",
-    "name": "USDC-USDT Stable LP",
-    "type": "standard",
-    "token": "aUSDC-USDT",
-    "tokenAddress": "0x953e523eA34E85AC55D40Be1Ff71D52aa62497b7",
-    "tokenDecimals": 18,
-    "tokenProviderId": "quickswap",
-    "earnedToken": "mooQuickUSDC-USDTStable",
-    "earnedTokenAddress": "0xD8929465caF0E73a4dd706EDb6EAc090a059217F",
-    "earnContractAddress": "0xD8929465caF0E73a4dd706EDb6EAc090a059217F",
-    "oracle": "lps",
-    "oracleId": "quick-gamma-nativeusdc-usdt-stable",
-    "status": "active",
-    "createdAt": 1714135472,
-    "platformId": "gamma",
-    "assets": ["USDC", "USDT"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc-usdt-stable",
-    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc-usdt-stable",
-    "network": "polygon",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x72a50FD092C78804fA53F7f8f235a66e5A7c930a"
-      }
-    ]
-  },
-  {
-    "id": "quick-gamma-nativeusdc-dai-stable",
-    "name": "USDC-DAI Stable LP",
-    "type": "standard",
-    "token": "aUSDC-DAI",
-    "tokenAddress": "0x39f223B2E0405FA62CeC7DC476FC5A307B435069",
-    "tokenDecimals": 18,
-    "tokenProviderId": "quickswap",
-    "earnedToken": "mooQuickUSDC-DAIStable",
-    "earnedTokenAddress": "0x5bA5F3c001934F33284E28CB73A8ec18b724a0d2",
-    "earnContractAddress": "0x5bA5F3c001934F33284E28CB73A8ec18b724a0d2",
-    "oracle": "lps",
-    "oracleId": "quick-gamma-nativeusdc-dai-stable",
-    "status": "active",
-    "createdAt": 1714135472,
-    "platformId": "gamma",
-    "assets": ["USDC", "DAI"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc-dai-stable",
-    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc-dai-stable",
-    "network": "polygon",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x678073E286Dff0d8EfBC54581EdB56576356dE31"
-      }
-    ]
-  },
-  {
     "id": "quick-gamma-wmatic-nativeusdc-narrow",
     "name": "USDC-MATIC Narrow LP",
     "type": "standard",
@@ -73,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-nativeusdc-narrow",
     "status": "active",
-    "createdAt": 1714135472,
+    "createdAt": 1715336299,
     "platformId": "gamma",
     "assets": ["USDC", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -103,7 +43,7 @@
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-usdt-narrow",
     "status": "active",
-    "createdAt": 1714135471,
+    "createdAt": 1715336299,
     "platformId": "gamma",
     "assets": ["USDT", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
