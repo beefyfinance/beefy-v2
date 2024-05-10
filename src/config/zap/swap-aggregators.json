@@ -101,7 +101,7 @@
     "chainId": "avax",
     "fee": {
       "value": 0.0005,
-      "recipient": "0x515888C6585D076F3FeC413Cf44b457F507A8D3f"
+      "recipient": "0x2A9c05F5E7b96a93119c2234Af03E2315f02e8b4"
     },
     "priorityTokens": [
       "AVAX",
@@ -256,7 +256,7 @@
     "chainId": "avax",
     "fee": {
       "value": 0.0005,
-      "recipient": "0x515888C6585D076F3FeC413Cf44b457F507A8D3f"
+      "recipient": "0x2A9c05F5E7b96a93119c2234Af03E2315f02e8b4"
     },
     "priorityTokens": [
       "AVAX",
