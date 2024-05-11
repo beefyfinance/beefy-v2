@@ -737,6 +737,7 @@ export const config = {
       'LUSD',
       'USDA',
       'EURA',
+      'rgUSD',
     ],
   },
   gnosis: {
