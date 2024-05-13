@@ -15,6 +15,7 @@ import {
 import { WithdrawTokenSelectList } from '../TokenSelectList/WithdrawTokenSelectList';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import { ChainIcon } from '../../../../../bridge/components/Bridge/components/ChainIcon';
+import { ExpandMore } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
@@ -42,6 +43,7 @@ export const TokenSelectStep = memo(function TokenSelectStep() {
           <button className={classes.chainSelectorBtn} onClick={handleSelectChain}>
             <ChainIcon chainId={selectedChainId} className={classes.chainSelectorIcon} />
             {selectedChain.name}
+            <ExpandMore />
           </button>
         ) : null}
       </StepHeader>
