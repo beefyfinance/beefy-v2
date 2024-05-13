@@ -512,6 +512,7 @@ export const config = {
   moonriver: {
     name: 'Moonriver',
     chainId: 1285,
+    eol: 1715594061,
     rpc: ['https://rpc.api.moonriver.moonbeam.network/'],
     explorerUrl: 'https://moonriver.moonscan.io',
     multicallAddress: '0x7f6fE34C51d5352A0CF375C0Fbe03bD19eCD8460',
