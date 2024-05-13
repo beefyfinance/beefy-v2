@@ -6,7 +6,7 @@ import { ERC20Abi } from '../../../config/abi/ERC20Abi';
 import { StandardVaultAbi } from '../../../config/abi/StandardVaultAbi';
 import { MinterAbi } from '../../../config/abi/MinterAbi';
 import type { BeefyState, BeefyThunk } from '../../../redux-types';
-import { getOneInchApi, getWalletConnectionApi } from '../apis/instances';
+import { getMerklRewardsApi, getOneInchApi, getWalletConnectionApi } from '../apis/instances';
 import type { BoostEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
@@ -73,6 +73,9 @@ import { BeefyCommonBridgeAbi } from '../../../config/abi/BeefyCommonBridgeAbi';
 import { BeefyZapRouterAbi } from '../../../config/abi/BeefyZapRouterAbi';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
 import { selectTransactSelectedQuote, selectTransactSlippage } from '../selectors/transact';
+import { AngleMerklDistributorAbi } from '../../../config/abi/AngleMerklDistributor';
+import { isDefined } from '../utils/array-utils';
+import { fetchAllRewardsAction } from './rewards';
 import type { TokenAmount } from '../apis/transact/transact-types';
 import type { StargateConfig } from '../apis/transact/strategies/stargate-crosschain-single/types';
 import { StargateComposerAbi } from '../../../config/abi/StargateComposerAbi';
@@ -92,6 +95,7 @@ type TxRefreshOnSuccess = {
   minterId?: MinterEntity['id'];
   vaultId?: VaultEntity['id'];
   migrationId?: MigrationConfig['id'];
+  rewards?: boolean;
   clearInput?: boolean;
 };
 
@@ -155,6 +159,7 @@ function txMined(
       vaultId,
       migrationId,
       clearInput,
+      rewards,
     } = refreshOnSuccess;
 
     dispatch(
@@ -183,6 +188,10 @@ function txMined(
 
     if (clearInput) {
       dispatch(transactActions.clearInput());
+    }
+
+    if (rewards) {
+      dispatch(fetchAllRewardsAction({ walletAddress }));
     }
   }
 }
@@ -1251,6 +1260,79 @@ const stargateBridgeZap = (
   });
 };
 
+const claimMerkl = (chainId: ChainEntity['id']) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    txStart(dispatch);
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const merklDistributors: Partial<Record<ChainEntity['id'], string>> = {
+      ethereum: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+      polygon: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+      optimism: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+      arbitrum: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+      base: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+      gnosis: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+      zkevm: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+    };
+    const distributorAddress = merklDistributors[chainId];
+    if (!distributorAddress) {
+      throw new Error(`No Merkl contract found for chain ${chainId}`);
+    }
+
+    const chain = selectChainById(state, chainId);
+    const native = selectChainNativeToken(state, chainId);
+    const merklApi = await getMerklRewardsApi();
+    const rewards = await merklApi.fetchUserRewards({
+      chainId: chain.networkChainId,
+      user: address,
+      proof: true,
+    });
+    const unclaimedRewards = Object.entries(rewards)
+      .filter(([_, reward]) => reward.unclaimed !== '0' && reward.symbol !== 'aglaMerkl')
+      .map(([tokenAddress, reward]) => ({
+        token: tokenAddress,
+        amount: reward.accumulated, // proof requires 'accumulated' amount
+        proof: reward.proof,
+      }));
+    const users = new Array(unclaimedRewards.length).fill(address);
+    const tokens = unclaimedRewards.map(reward => reward.token);
+    const amounts = unclaimedRewards.map(reward => reward.amount);
+    const proofs = unclaimedRewards.map(reward => reward.proof);
+
+    const walletApi = await getWalletConnectionApi();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const contract = new web3.eth.Contract(
+      viemToWeb3Abi(AngleMerklDistributorAbi),
+      distributorAddress
+    );
+    const gasPrices = await getGasPriceOptions(chain);
+
+    txWallet(dispatch);
+    const transaction = contract.methods
+      .claim(users, tokens, amounts, proofs)
+      .send({ from: address, ...gasPrices });
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      { amount: BIG_ZERO, token: native }, // TODO fix so these are not required
+      {
+        walletAddress: address,
+        chainId: chainId,
+        spenderAddress: distributorAddress, // TODO fix so these are not required
+        tokens: tokens
+          .map(token => selectTokenByAddressOrUndefined(state, chainId, token))
+          .filter(isDefined),
+        rewards: true,
+      }
+    );
+  });
+};
+
 const resetWallet = () => {
   return captureWalletErrors(async dispatch => {
     dispatch(createWalletActionResetAction());
@@ -1277,6 +1359,7 @@ export const walletActions = {
   zapExecuteOrder,
   migrateUnstake,
   bridgeViaCommonInterface,
+  claimMerkl,
   stargateBridgeZap,
 };
 

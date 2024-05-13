@@ -550,6 +550,7 @@ export const selectUserLpBreakdownBalance = (
   walletAddress?: string
 ) => {
   const lpTotalSupplyDecimal = new BigNumber(breakdown.totalSupply);
+  const underlyingTotalSupplyDecimal = new BigNumber(breakdown?.underlyingLiquidity || 0);
   const userBalanceDecimal = isGovVault(vault)
     ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id, walletAddress)
     : selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(
@@ -561,29 +562,49 @@ export const selectUserLpBreakdownBalance = (
   const userShareOfPool = lpTotalSupplyDecimal.gt(BIG_ZERO)
     ? userBalanceDecimal.dividedBy(lpTotalSupplyDecimal)
     : BIG_ZERO;
+
   const oneLpShareOfPool = lpTotalSupplyDecimal.gt(BIG_ZERO)
     ? BIG_ONE.dividedBy(lpTotalSupplyDecimal)
     : BIG_ZERO;
 
+  const underlyingShareOfPool = underlyingTotalSupplyDecimal.gt(BIG_ZERO)
+    ? underlyingTotalSupplyDecimal.dividedBy(underlyingTotalSupplyDecimal)
+    : BIG_ZERO;
+
   const assets = breakdown.tokens.map((tokenAddress, i) => {
     const reserves = new BigNumber(breakdown.balances[i]);
+    const underlyingReserves = new BigNumber(
+      breakdown.underlyingBalances ? breakdown.underlyingBalances[i] : 0
+    );
     const assetToken = selectTokenByAddress(state, vault.chainId, tokenAddress);
     const valuePerDecimal = selectTokenPriceByAddress(state, vault.chainId, tokenAddress);
     const totalValue = reserves.multipliedBy(valuePerDecimal);
+    const totalUnderlyingValue = underlyingReserves.multipliedBy(valuePerDecimal);
 
     return {
       ...assetToken,
       totalAmount: reserves,
       userAmount: userShareOfPool.multipliedBy(reserves),
       oneAmount: oneLpShareOfPool.multipliedBy(reserves),
+      underlyingAmount: underlyingShareOfPool.multipliedBy(underlyingReserves),
       totalValue,
+      totalUnderlyingValue,
       userValue: userShareOfPool.multipliedBy(totalValue),
       oneValue: oneLpShareOfPool.multipliedBy(totalValue),
+      underlyingValue: underlyingShareOfPool.multipliedBy(totalUnderlyingValue),
       price: valuePerDecimal,
     };
   });
 
-  return { assets, userShareOfPool, lpTotalSupplyDecimal, userBalanceDecimal, oneLpShareOfPool };
+  return {
+    assets,
+    userShareOfPool,
+    lpTotalSupplyDecimal,
+    userBalanceDecimal,
+    oneLpShareOfPool,
+    underlyingTotalSupplyDecimal,
+    underlyingShareOfPool,
+  };
 };
 
 export const selectUserExposureByKey = (

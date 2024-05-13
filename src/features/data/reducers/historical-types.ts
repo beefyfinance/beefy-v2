@@ -1,10 +1,15 @@
-import type { ApiChartData, ApiRanges, ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
+import type {
+  ApiChartData,
+  ApiCowcentratedChartData,
+  ApiRanges,
+  ApiTimeBucket,
+} from '../apis/beefy/beefy-data-api-types';
 import type { VaultEntity } from '../entities/vault';
 import type { TokenEntity } from '../entities/token';
 import type { SerializedError } from '@reduxjs/toolkit';
 
 type LoadingStatus = 'idle' | 'pending' | 'rejected' | 'fulfilled';
-export type ChartStat = 'apy' | 'tvl' | 'price' | 'cowcentrated';
+export type ChartStat = 'apy' | 'tvl' | 'price' | 'clm';
 
 type WithStatus<T extends object> = {
   status: LoadingStatus;
@@ -16,7 +21,7 @@ export type RangeState = WithStatus<{
 }>;
 
 export type TimeBucketState = WithStatus<{
-  data: ApiChartData;
+  data: ApiChartData | ApiCowcentratedChartData;
 }>;
 
 export type TimeBucketsState = {
@@ -44,6 +49,11 @@ export interface HistoricalState {
     };
   };
   tvls: {
+    byVaultId: {
+      [vaultId: VaultEntity['id']]: TimeBucketsState;
+    };
+  };
+  clm: {
     byVaultId: {
       [vaultId: VaultEntity['id']]: TimeBucketsState;
     };

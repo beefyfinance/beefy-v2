@@ -1,18 +1,18 @@
 import type { ChartStat } from '../../../data/reducers/historical-types';
 import type { VaultEntity } from '../../../data/entities/vault';
-import React, { memo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectHistoricalAvailableCharts } from '../../../data/selectors/historical';
 import { Card, CardContent, CardHeader, CardTitle } from '../Card';
-import { StatSwitcher } from './StatSwitcher';
+import { StatSwitcher } from '../StatSwitcher';
 import { GraphWithControls } from './GraphWithControls';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { getDefaultStat } from './utils';
-import { CowcentratedChart } from './CowcentratedRanges';
+import { CowcentratedRanges } from './CowcentratedRanges';
 
 const useStyles = makeStyles(styles);
 
@@ -31,24 +31,22 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
   );
   const [stat, setStat] = useState<ChartStat>(() => getDefaultStat(availableStats));
 
+  const options: Record<string, string> = useMemo(() => {
+    return Object.fromEntries(
+      availableStats.map(stat => [stat, t([`Graph-${stat}`, `Graph-${vault.type}-${stat}`])])
+    );
+  }, [availableStats, t, vault.type]);
+
   return (
-    <Card className={stat === 'cowcentrated' ? classes.cowcentrated : ''}>
+    <Card className={classes.container}>
       <CardHeader className={classes.header}>
         <CardTitle title={t('Graph-RateHist')} />
-        <StatSwitcher
-          stat={stat}
-          availableStats={availableStats}
-          onChange={setStat}
-          type={vault.type}
-        />
+        <StatSwitcher stat={stat} options={options} onChange={stat => setStat(stat as ChartStat)} />
       </CardHeader>
-      {stat === 'cowcentrated' ? (
-        <CowcentratedChart vaultId={vaultId} />
-      ) : (
-        <CardContent className={classes.content}>
-          <GraphWithControls vaultId={vaultId} oracleId={oracleId} stat={stat} />
-        </CardContent>
-      )}
+      <CardContent className={classes.content}>
+        {stat === 'clm' && <CowcentratedRanges vaultId={vaultId} />}
+        <GraphWithControls vaultId={vaultId} oracleId={oracleId} stat={stat} />
+      </CardContent>
     </Card>
   );
 });

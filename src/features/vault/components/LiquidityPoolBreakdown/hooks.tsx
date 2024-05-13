@@ -25,11 +25,25 @@ export function useCalculatedBreakdown(
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
 
-  const { assets, userShareOfPool, lpTotalSupplyDecimal, userBalanceDecimal, oneLpShareOfPool } =
-    useAppSelector(state => selectUserLpBreakdownBalance(state, vault, breakdown));
+  const {
+    assets,
+    userShareOfPool,
+    lpTotalSupplyDecimal,
+    userBalanceDecimal,
+    oneLpShareOfPool,
+    underlyingShareOfPool,
+    underlyingTotalSupplyDecimal,
+  } = useAppSelector(state => selectUserLpBreakdownBalance(state, vault, breakdown));
 
-  const totalValue = useMemo(() => {
-    return assets.reduce((total, asset) => total.plus(asset.totalValue), BIG_ZERO);
+  const { totalValue, totalUnderlyingValue } = useMemo(() => {
+    return assets.reduce(
+      (total, asset) => {
+        total.totalValue = total.totalValue.plus(asset.totalValue);
+        total.totalUnderlyingValue = total.totalUnderlyingValue.plus(asset.totalUnderlyingValue);
+        return total; // Add this line to return the updated total object
+      },
+      { totalValue: BIG_ZERO, totalUnderlyingValue: BIG_ZERO }
+    );
   }, [assets]);
 
   const assetsWithTokens = useMemo(() => {
@@ -37,8 +51,11 @@ export function useCalculatedBreakdown(
       ...asset,
       color: chartColors[i % assets.length],
       percent: totalValue.gt(BIG_ZERO) ? asset.totalValue.dividedBy(totalValue).toNumber() : 0,
+      underlyingPercent: totalUnderlyingValue.gt(BIG_ZERO)
+        ? asset.totalUnderlyingValue.dividedBy(totalUnderlyingValue).toNumber()
+        : 0,
     }));
-  }, [assets, totalValue]);
+  }, [assets, totalUnderlyingValue, totalValue]);
 
   return {
     chainId: vault.chainId,
@@ -51,5 +68,8 @@ export function useCalculatedBreakdown(
     oneValue: oneLpShareOfPool.multipliedBy(totalValue),
     userValue: userShareOfPool.multipliedBy(totalValue),
     userBalance: userBalanceDecimal,
+    underlyingBalance: underlyingShareOfPool,
+    underlyingAmount: underlyingTotalSupplyDecimal,
+    underlyingValue: totalUnderlyingValue,
   };
 }
