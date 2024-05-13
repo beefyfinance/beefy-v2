@@ -6,6 +6,8 @@ export const styles = (theme: Theme) => ({
   },
   errorContent: {
     backgroundColor: 'rgba(219, 50, 50, 0.1)',
+    whiteSpace: 'pre-wrap',
+    overflowY: 'auto',
   },
   content: {
     marginTop: '12px',

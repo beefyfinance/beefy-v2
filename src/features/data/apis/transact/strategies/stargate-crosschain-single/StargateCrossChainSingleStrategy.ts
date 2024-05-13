@@ -56,7 +56,7 @@ import type { Step } from '../../../../reducers/wallet/stepper';
 import type { Namespace, TFunction } from 'react-i18next';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import { isStandardVault } from '../../../../entities/vault';
-import { slipBy } from '../../helpers/amounts';
+import { mergeTokenAmounts, slipBy } from '../../helpers/amounts';
 import { uniqueTokens, wnativeToNative } from '../../helpers/tokens';
 import {
   selectChainNativeToken,
@@ -354,7 +354,7 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
       bridgeZap.zaps.forEach(zap => steps.push(zap));
 
       // Build order
-      const inputs: OrderInput[] = [bridgeCost].concat(quote.inputs).map(input => ({
+      const inputs: OrderInput[] = mergeTokenAmounts([bridgeCost], quote.inputs).map(input => ({
         token: getTokenAddress(input.token),
         amount: toWeiString(input.amount, input.token.decimals),
       }));
@@ -669,10 +669,12 @@ export class StargateCrossChainSingleStrategy implements IStrategy {
       bridgeZap.zaps.forEach(zap => steps.push(zap));
 
       // Build order (note: input to order is shares, but quote inputs are the deposit token)
-      const inputs: OrderInput[] = [bridgeCost].concat(vaultWithdraw.inputs).map(input => ({
-        token: getTokenAddress(input.token),
-        amount: toWeiString(input.amount, input.token.decimals),
-      }));
+      const inputs: OrderInput[] = mergeTokenAmounts([bridgeCost], vaultWithdraw.inputs).map(
+        input => ({
+          token: getTokenAddress(input.token),
+          amount: toWeiString(input.amount, input.token.decimals),
+        })
+      );
 
       // Nothing is a required output on this side of the bridge
       const requiredOutputs: OrderOutput[] = [];
