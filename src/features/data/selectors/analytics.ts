@@ -1,28 +1,43 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { PnL } from '../../../helpers/pnl';
+import { PnL, clmPnl } from '../../../helpers/pnl';
 import type { BeefyState } from '../../../redux-types';
 import type { TimeBucketType } from '../apis/analytics/analytics-types';
 import type { VaultEntity } from '../entities/vault';
-import { isGovVault } from '../entities/vault';
-import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
+import { isCowcentratedLiquidityVault, isGovVault } from '../entities/vault';
+import {
+  selectLpBreakdownByTokenAddress,
+  selectTokenByAddress,
+  selectTokenPriceByAddress,
+} from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
-import { selectUserDepositedVaultIds } from './balance';
+import { selectUserDepositedVaultIds, selectUserLpBreakdownBalance } from './balance';
 import { selectWalletAddress } from './wallet';
 import { selectIsConfigAvailable } from './data-loader';
 import type { AnalyticsBucketData } from '../reducers/analytics';
+import type {
+  CLMTimelineAnalyticsEntity,
+  VaultTimelineAnalyticsEntity,
+} from '../entities/analytics';
 
 export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], address?: string) =>
     address || selectWalletAddress(state),
   (state: BeefyState, _vaultId: VaultEntity['id'], _address?: string) => state.user.analytics,
-  (state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId,
-  (walletAddress, analyticsState, vaultId) => {
+  (state: BeefyState, vaultId: VaultEntity['id'], _address?: string) =>
+    selectVaultById(state, vaultId),
+
+  (walletAddress, analyticsState, vault) => {
     if (!walletAddress) {
       return [];
     }
 
-    return analyticsState.byAddress[walletAddress.toLowerCase()]?.timeline.byVaultId[vaultId] || [];
+    return (
+      analyticsState.byAddress[walletAddress.toLowerCase()]?.timeline[
+        isCowcentratedLiquidityVault(vault) ? 'clmTimeline' : 'databarnTimeline'
+      ].byVaultId[vault.id] || []
+    );
   }
 )((state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
 
@@ -76,7 +91,7 @@ export const selectVaultPnl = (
   const ppfs = selectVaultPricePerFullShare(state, vault.id).shiftedBy(18 - depositToken.decimals);
 
   const pnl = new PnL();
-  for (const row of sortedTimeline) {
+  for (const row of sortedTimeline as VaultTimelineAnalyticsEntity[]) {
     if (row.shareDiff && row.shareToUnderlyingPrice && row.underlyingToUsdPrice) {
       pnl.addTransaction({
         shares: row.shareDiff,
@@ -117,6 +132,67 @@ export const selectVaultPnl = (
     tokenDecimals: depositToken.decimals,
     oraclePrice,
     oraclePriceAtDeposit,
+  };
+};
+
+export const selectClmPnl = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  const vault = selectVaultById(state, vaultId);
+
+  const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
+
+  for (const tx of sortedTimeline) {
+    console.log(tx);
+  }
+
+  const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
+
+  const breakdown = selectLpBreakdownByTokenAddress(
+    state,
+    vault.chainId,
+    vault.depositTokenAddress
+  );
+
+  const { assets } = selectUserLpBreakdownBalance(state, vault, breakdown);
+
+  const token0 = assets[0];
+  const token1 = assets[1];
+
+  const pnl = new clmPnl();
+
+  for (const tx of sortedTimeline as CLMTimelineAnalyticsEntity[]) {
+    pnl.addTransaction({
+      shares: tx.shareDiff,
+      token0ToUsd: tx.token0ToUsd,
+      token1ToUsd: tx.token1ToUsd,
+      token0Amount: tx.underlying0Diff,
+      token1Amount: tx.underlying1Diff,
+    });
+  }
+
+  const { token0Shares, token1Shares, remainingShares } = pnl.getRemainingShares();
+  const { token0EntryPrice, token1EntryPrice } = pnl.getRemainingSharesAvgEntryPrice();
+
+  const oraclePriceAtDeposit = token0Shares
+    .times(token0EntryPrice)
+    .plus(token1Shares.times(token1EntryPrice));
+
+  return {
+    userSharesAtDeposit: remainingShares,
+    token0EntryPrice,
+    token1EntryPrice,
+    token0SharesAtDeposit: token0Shares,
+    token1SharesAtDeposit: token1Shares,
+    token0SharesAtDepositToUsd: token0Shares.times(token0EntryPrice),
+    token1SharesAtDepositToUsd: token1Shares.times(token1EntryPrice),
+    sharesAtDepositToUsd: oraclePriceAtDeposit,
+    shares: remainingShares,
+    sharesNowToUsd: remainingShares.times(oraclePrice),
+    token0,
+    token1,
   };
 };
 

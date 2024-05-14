@@ -1,13 +1,14 @@
 import { makeStyles } from '@material-ui/core';
 import React, { memo, useCallback } from 'react';
 import { useAppSelector } from '../../../../store';
-import type { VaultEntity } from '../../../data/entities/vault';
+import { isCowcentratedLiquidityVault, type VaultEntity } from '../../../data/entities/vault';
 import { selectHasDataToShowGraphByVaultId } from '../../../data/selectors/analytics';
 import { Footer } from './components/Footer';
 import { Graph } from './components/Graph';
 import { Header } from './components/Header';
 import { useVaultPeriods } from './hooks';
 import { styles } from './styles';
+import { selectVaultById } from '../../../data/selectors/vaults';
 
 export const useStyles = makeStyles(styles);
 
@@ -21,7 +22,9 @@ export const PnLGraphLoader = memo<PnLGraphProps>(function PnLGraphLoader({ vaul
     selectHasDataToShowGraphByVaultId(state, vaultId, address)
   );
 
-  if (hasData) {
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+
+  if (hasData && !isCowcentratedLiquidityVault(vault)) {
     return <PnLGraph address={address} vaultId={vaultId} />;
   }
   return null;

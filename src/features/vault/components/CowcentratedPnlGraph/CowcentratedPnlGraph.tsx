@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
 
 import { Card, CardTitle, CardHeader, CardContent } from '../Card';
@@ -6,20 +6,37 @@ import { useTranslation } from 'react-i18next';
 import { StatSwitcher } from '../StatSwitcher';
 import { styles } from './styles';
 import { makeStyles, useMediaQuery, type Theme } from '@material-ui/core';
-import { Stat } from './components/Stat';
 import { RangeSwitcher } from '../HistoricGraph/RangeSwitcher';
 import type { TimeRange } from '../HistoricGraph/utils';
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import { formatDateTimeTick } from '../PnLGraph/components/Graph/helpers';
+import { GraphHeader } from './components/GraphHeader';
+import { useAppSelector } from '../../../../store';
+import { selectVaultById } from '../../../data/selectors/vaults';
+import { selectHasBreakdownDataByTokenAddress } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
 interface CowcentratedPnlGraphProps {
-  _vaultId: VaultEntity['id'];
+  vaultId: VaultEntity['id'];
 }
 
+export const CowcentratedPnlGraphLoader = memo<CowcentratedPnlGraphProps>(
+  function CowcentratedPnlGraphLoader({ vaultId }) {
+    const vault = useAppSelector(state => selectVaultById(state, vaultId));
+
+    const haveBreakdownData = useAppSelector(state =>
+      selectHasBreakdownDataByTokenAddress(state, vault.depositTokenAddress, vault.chainId)
+    );
+
+    if (haveBreakdownData) {
+      return <CowcentratedPnlGraph vaultId={vaultId} />;
+    }
+  }
+);
+
 export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function CowcentratedPnlGraph({
-  _vaultId,
+  vaultId,
 }) {
   const [stat, setStat] = useState<string>('Overview');
   const { t } = useTranslation();
@@ -38,35 +55,8 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
         <CardTitle title={t('Graph-PositionPerformance')} />
         <StatSwitcher stat={stat} options={options} onChange={setStat} />
       </CardHeader>
-
       <CardContent className={classes.content}>
-        <div className={classes.statsContainer}>
-          <Stat
-            label={'At Deposit'}
-            value0={'1.2432 WBTC'}
-            value1={'22.34 ETH '}
-            value2="1.11 LP"
-            subValue0="$555"
-            subValue1="$444"
-            subValue2="$1"
-          />
-          <Stat
-            label={'Now'}
-            value0={'1.2432 WBTC'}
-            value1={'22.34 ETH '}
-            value2="1.11 LP"
-            subValue0="$555"
-            subValue1="$444"
-            subValue2="$1"
-          />
-          <Stat
-            label={'Change'}
-            value0={'+0.05 WBTC'}
-            value1={'+1.3 ETH'}
-            value2="-$432 PNL"
-            value2ClassName={classes.red}
-          />
-        </div>
+        <GraphHeader vaultId={vaultId} />
         <DummyGraph />
         <div className={classes.footer}>
           <div>- Position Value</div>

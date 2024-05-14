@@ -97,7 +97,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
             {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
 
             {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
-            {isCowcentratedLiquidityVault(vault) && <CowcentratedPnlGraph _vaultId={vaultId} />}
+            {isCowcentratedLiquidityVault(vault) && <CowcentratedPnlGraph vaultId={vaultId} />}
             {!isGovVault(vault) ? (
               <PnLGraphLoader vaultId={vaultId} address={walletAddress} />
             ) : null}

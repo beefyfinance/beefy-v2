@@ -1,10 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getAnalyticsApi } from '../apis/instances';
-import type { VaultTimelineAnalyticsEntity } from '../entities/analytics';
+import type {
+  CLMTimelineAnalyticsEntity,
+  VaultTimelineAnalyticsEntity,
+} from '../entities/analytics';
 import BigNumber from 'bignumber.js';
 import type {
   AnalyticsPriceResponse,
+  CLMTimelineAnalyticsConfig,
   TimeBucketType,
   TimelineAnalyticsConfig,
 } from '../apis/analytics/analytics-types';
@@ -14,11 +18,12 @@ import { selectVaultById } from '../selectors/vaults';
 
 export interface fetchWalletTimelineFulfilled {
   timeline: VaultTimelineAnalyticsEntity[];
+  cowcentratedTimeline: CLMTimelineAnalyticsEntity[];
   walletAddress: string;
   state: BeefyState;
 }
 
-function makeTransactionId(config: TimelineAnalyticsConfig): string {
+function makeTransactionId(config: TimelineAnalyticsConfig | CLMTimelineAnalyticsConfig): string {
   if (config.transaction_hash) {
     return config.transaction_hash;
   }
@@ -35,7 +40,7 @@ export const fetchWalletTimeline = createAsyncThunk<
 >('analytics/fetchWalletTimeline', async ({ walletAddress }, { getState }) => {
   const api = await getAnalyticsApi();
 
-  const { databarnTimeline } = await api.getWalletTimeline(walletAddress);
+  const { databarnTimeline, clmTimeline } = await api.getWalletTimeline(walletAddress);
 
   const timeline = databarnTimeline.map((row): VaultTimelineAnalyticsEntity => {
     return {
@@ -60,7 +65,35 @@ export const fetchWalletTimeline = createAsyncThunk<
     };
   });
 
-  return { timeline, walletAddress: walletAddress.toLowerCase(), state: getState() };
+  const cowcentratedTimeline = clmTimeline.map((row): CLMTimelineAnalyticsEntity => {
+    return {
+      transactionId: makeTransactionId(row), // old data doesn't have transaction_hash
+      datetime: new Date(row.datetime),
+      productKey: row.product_key,
+      displayName: row.display_name,
+      chain: row.chain,
+      isEol: row.is_eol,
+      isDashboardEol: row.is_dashboard_eol,
+      transactionHash: row.transaction_hash,
+      token0ToUsd: new BigNumber(row.token0_to_usd),
+      token1ToUsd: new BigNumber(row.token1_to_usd),
+      underlying0Balance: new BigNumber(row.underlying0_balance),
+      underlying1Balance: new BigNumber(row.underlying1_balance),
+      underlying0Diff: new BigNumber(row.underlying0_diff),
+      underlying1Diff: new BigNumber(row.underlying1_diff),
+      usdBalance: isFiniteNumber(row.usd_balance) ? new BigNumber(row.usd_balance) : null,
+      usdDiff: isFiniteNumber(row.usd_diff) ? new BigNumber(row.usd_diff) : null,
+      shareBalance: new BigNumber(row.share_balance),
+      shareDiff: new BigNumber(row.share_diff),
+    };
+  });
+
+  return {
+    timeline,
+    cowcentratedTimeline,
+    walletAddress: walletAddress.toLowerCase(),
+    state: getState(),
+  };
 });
 
 interface DataMartPricesFulfilled {

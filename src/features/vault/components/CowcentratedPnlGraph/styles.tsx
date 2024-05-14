@@ -27,17 +27,6 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     gap: '1px',
   },
-  statsContainer: {
-    display: 'grid',
-    gap: '1px',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    [theme.breakpoints.down('xs')]: {
-      gridTemplateColumns: 'repeat(1, 1fr)',
-    },
-  },
-  red: {
-    color: theme.palette.background.indicators.error,
-  },
   graphContainer: {
     backgroundColor: theme.palette.background.contentPrimary,
     padding: '16px',

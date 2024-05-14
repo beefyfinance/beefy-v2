@@ -19,6 +19,7 @@ import {
 import { selectUserBalanceOfTokensIncludingBoostsBridged } from '../../../data/selectors/balance';
 import { fetchShareToUnderlying, fetchUnderlyingToUsd } from '../../../data/actions/analytics';
 import { selectWalletAddress } from '../../../data/selectors/wallet';
+import type { VaultTimelineAnalyticsEntity } from '../../../data/entities/analytics';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], minUnderlying: 0, maxUnderlying: 0, minUsd: 0, maxUsd: 0 };
@@ -135,7 +136,7 @@ export const usePnLChartData = (
 
       const data = getInvestorTimeserie(
         timebucket,
-        vaultTimeline,
+        vaultTimeline as VaultTimelineAnalyticsEntity[],
         filteredSharesToUnderlying,
         filteredUnderlyingToUsd,
         vaultLastDeposit,

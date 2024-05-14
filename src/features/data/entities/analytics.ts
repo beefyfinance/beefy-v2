@@ -39,13 +39,27 @@ type CLMACSnake = {
 
 type CLMABigNumber = ChangeTypeOfKeys<
   CLMACSnake,
+  | 'shareBalance'
+  | 'shareDiff'
   | 'token0ToUsd'
   | 'token1ToUsd'
   | 'underlying0Balance'
   | 'underlying1Balance'
-  | 'underlyingDiff0'
-  | 'underlyingDiff1',
+  | 'underlying0Diff'
+  | 'underlying1Diff',
   BigNumber
 >;
 
-export type CLMTimelineAnalyticsEntity = CLMABigNumber;
+type CLMAOptionalBigNumber = ChangeTypeOfKeys<
+  CLMABigNumber,
+  'usdBalance' | 'usdDiff',
+  BigNumber | null
+>;
+
+export type CLMTimelineAnalyticsEntity = ChangeTypeOfKeys<
+  CLMAOptionalBigNumber,
+  'datetime',
+  Date
+> & {
+  transactionId: string;
+};

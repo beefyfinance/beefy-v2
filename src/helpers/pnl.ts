@@ -68,7 +68,7 @@ export class PnL {
       const entryUsdAmount = entryShareAmount.times(entryPrice);
 
       const withdrawShareAmount = sharesToSell.times(transaction.ppfs);
-      const withdrawUsdAmount = withdrawShareAmount.times(transaction.price);
+      const withdrawUsdAmount = withdrawShareAmount.times(entryPrice);
 
       trxPnl = trxPnl.plus(withdrawShareAmount.minus(entryShareAmount));
       trxPnlUsd = trxPnlUsd.plus(withdrawUsdAmount.minus(entryUsdAmount));
@@ -144,5 +144,129 @@ export class PnL {
       return BIG_ZERO;
     }
     return totalPpfs.div(totalShares);
+  }
+}
+
+interface ClmPnlState {
+  sharesFifo: {
+    boughtShares: BigNumber;
+    remainingShares: BigNumber;
+    token0ToUsd: BigNumber;
+    token1ToUsd: BigNumber;
+    token0Amount: BigNumber;
+    token1Amount: BigNumber;
+  }[];
+  realizedPnl: PnLBreakdown;
+}
+
+interface ClmPnlTransaction {
+  shares: BigNumber;
+  token0ToUsd: BigNumber;
+  token1ToUsd: BigNumber;
+  token0Amount: BigNumber;
+  token1Amount: BigNumber;
+}
+
+export class clmPnl {
+  private state: ClmPnlState;
+
+  constructor() {
+    this.state = {
+      sharesFifo: [],
+      realizedPnl: {
+        shares: BIG_ZERO,
+        usd: BIG_ZERO,
+      },
+    };
+  }
+
+  addTransaction(transaction: ClmPnlTransaction) {
+    if (transaction.shares.isZero()) {
+      return;
+    }
+
+    if (transaction.shares.isPositive()) {
+      this.state.sharesFifo.push({
+        boughtShares: transaction.shares,
+        remainingShares: transaction.shares,
+        token0ToUsd: transaction.token0ToUsd,
+        token1ToUsd: transaction.token1ToUsd,
+        token0Amount: transaction.token0Amount,
+        token1Amount: transaction.token1Amount,
+      });
+      return;
+    }
+
+    let remainingSharesToSell = transaction.shares.negated();
+    let trxPnl = BIG_ZERO;
+    let trxPnlUsd = BIG_ZERO;
+    let idx = 0;
+    for (; idx < this.state.sharesFifo.length; idx++) {
+      const { remainingShares, token0Amount, token1Amount, token0ToUsd, token1ToUsd } =
+        this.state.sharesFifo[idx];
+      if (remainingShares.isZero()) {
+        continue;
+      }
+
+      const token0AmountToUsd = token0Amount.times(token0ToUsd);
+      const token1AmountToUsd = token1Amount.times(token1ToUsd);
+
+      const entryPrice = token0AmountToUsd.plus(token1AmountToUsd);
+
+      const sharesToSell = BigNumber.min(remainingSharesToSell, remainingShares);
+
+      const entryShareAmount = remainingShares;
+      const entryUsdAmount = entryShareAmount.times(entryPrice);
+
+      const withdrawShareAmount = sharesToSell.times(1);
+      const withdrawUsdAmount = withdrawShareAmount.times(entryPrice);
+
+      trxPnl = trxPnl.plus(withdrawShareAmount.minus(entryShareAmount));
+      trxPnlUsd = trxPnlUsd.plus(withdrawUsdAmount.minus(entryUsdAmount));
+
+      remainingSharesToSell = remainingSharesToSell.minus(sharesToSell);
+      this.state.sharesFifo[idx].remainingShares = remainingShares.minus(sharesToSell);
+
+      if (remainingSharesToSell.isZero()) {
+        break;
+      }
+    }
+
+    this.state.realizedPnl.usd = this.state.realizedPnl.usd.plus(trxPnlUsd);
+    this.state.realizedPnl.shares = this.state.realizedPnl.usd.plus(trxPnl);
+    return;
+  }
+
+  getRemainingShares(): {
+    remainingShares: BigNumber;
+    token0Shares: BigNumber;
+    token1Shares: BigNumber;
+  } {
+    let remainingShares = BIG_ZERO;
+    let token0Shares = BIG_ZERO;
+    let token1Shares = BIG_ZERO;
+    for (const trx of this.state.sharesFifo) {
+      remainingShares = remainingShares.plus(trx.remainingShares);
+      token0Shares = token0Shares.plus(trx.token0Amount);
+      token1Shares = token1Shares.plus(trx.token1Amount);
+    }
+    return { remainingShares, token0Shares, token1Shares };
+  }
+
+  getRemainingSharesAvgEntryPrice(): { token0EntryPrice: BigNumber; token1EntryPrice: BigNumber } {
+    let totalSharesToken0 = BIG_ZERO;
+    let totalSharesToken1 = BIG_ZERO;
+    let totalCostToken0 = BIG_ZERO;
+    let totalCostToken1 = BIG_ZERO;
+    for (const { token1Amount, token0Amount, token0ToUsd, token1ToUsd } of this.state.sharesFifo) {
+      totalSharesToken0 = totalSharesToken0.plus(token0Amount);
+      totalSharesToken1 = totalSharesToken1.plus(token1Amount);
+      totalCostToken0 = totalCostToken0.plus(token0Amount.times(token0ToUsd));
+      totalCostToken1 = totalCostToken1.plus(token1Amount.times(token1ToUsd));
+    }
+    return {
+      token0EntryPrice: totalCostToken0.div(totalSharesToken0),
+      token1EntryPrice: totalCostToken1.div(totalSharesToken1),
+    };
   }
 }

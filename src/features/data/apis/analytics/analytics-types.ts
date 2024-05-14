@@ -1,36 +1,38 @@
 import type BigNumber from 'bignumber.js';
 import type { ChainEntity } from '../../entities/chain';
 
-export interface TimelineAnalyticsConfig {
-  datetime: string;
-  product_key: string;
-  display_name: string;
+export interface CommonTimelineAnalyticsConfig {
   chain: ChainEntity['id'];
-  is_eol: boolean;
+  datetime: string;
+  display_name: string;
   is_dashboard_eol: boolean;
-  transaction_hash: string;
+  is_eol: boolean;
+  product_key: string;
   share_balance: number;
   share_diff: number;
+  transaction_hash: string;
+  usd_balance: number | null;
+  usd_diff: number | null;
+}
+export type TimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
   share_to_underlying_price: number;
   underlying_balance: number;
   underlying_diff: number;
   underlying_to_usd_price: number | null;
-  usd_balance: number | null;
-  usd_diff: number | null;
-}
+};
 
-export interface CLMTimelineAnalyticsConfig {
+export type CLMTimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
   token0_to_usd: number;
   token1_to_usd: number;
   underlying0_balance: number;
   underlying1_balance: number;
   underlying0_diff: number;
   underlying1_diff: number;
-}
+};
 
 export type AnalyticsUserTimelineResponse = {
-  databarnTimeline: TimelineAnalyticsConfig[];
   clmTimeline: CLMTimelineAnalyticsConfig[];
+  databarnTimeline: TimelineAnalyticsConfig[];
 };
 
 export interface PriceAnalyticsConfig {
