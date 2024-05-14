@@ -74,6 +74,78 @@
     ]
   },
   {
+    "id": "aerodrome-usdc-rgusd",
+    "name": "rgUSD-USDC sLP",
+    "type": "standard",
+    "token": "sAMM-USDC/rgUSD",
+    "tokenAddress": "0xF8CCE695B387424122d59ae2d01fA8CE359CfB00",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerorgUSD-USDC",
+    "earnedTokenAddress": "0x8C9df9654EEaD95Fb05e491FF490c5B193BFAbc9",
+    "earnContractAddress": "0x8C9df9654EEaD95Fb05e491FF490c5B193BFAbc9",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usdc-rgusd",
+    "status": "active",
+    "createdAt": 1715389073,
+    "platformId": "aerodrome",
+    "assets": ["rgUSD", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&token1=0x8E5E9DF4F0EA39aE5270e79bbABFCc34203A3470&type=0",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-rgusd-eusd",
+    "name": "rgUSD-eUSD sLP",
+    "type": "standard",
+    "token": "sAMM-rgUSD/eUSD",
+    "tokenAddress": "0xd7AdbF474E991f4AEbF95C0b095001ce661aAD17",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerorgUSD-eUSD",
+    "earnedTokenAddress": "0x998C93F7a4a7B6ebFf162083c95C70d3B8758776",
+    "earnContractAddress": "0x998C93F7a4a7B6ebFf162083c95C70d3B8758776",
+    "oracle": "lps",
+    "oracleId": "aerodrome-rgusd-eusd",
+    "status": "active",
+    "createdAt": 1715389073,
+    "platformId": "aerodrome",
+    "assets": ["rgUSD", "eUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x8E5E9DF4F0EA39aE5270e79bbABFCc34203A3470&token1=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&type=0",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "equalizer-base-ichi-weth-usdbc",
     "name": "ETH-USDbC LP",
     "type": "standard",

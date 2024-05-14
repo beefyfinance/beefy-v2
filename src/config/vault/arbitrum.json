@@ -2883,10 +2883,9 @@
     "earnContractAddress": "0xc452eedb65fb95BB1C3aB0dC0f9363E77f636189",
     "oracle": "lps",
     "oracleId": "joe-auto-weth-usdc",
-    "status": "eol",
+    "status": "active",
     "createdAt": 1699756642,
-    "retireReason": "rewards",
-    "retiredAt": 1711990050,
+    "updatedAt": 1715616312,
     "platformId": "traderjoe",
     "assets": ["WETH", "USDC"],
     "risks": [
