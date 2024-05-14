@@ -198,6 +198,8 @@ export class clmPnl {
     }
 
     let remainingSharesToSell = transaction.shares.negated();
+    const remainingToken0SharesToSell = transaction.token0Amount.negated();
+    const remainingToken1SharesToSell = transaction.token1Amount.negated();
     let trxPnl = BIG_ZERO;
     let trxPnlUsd = BIG_ZERO;
     let idx = 0;
@@ -214,6 +216,8 @@ export class clmPnl {
       const entryPrice = token0AmountToUsd.plus(token1AmountToUsd);
 
       const sharesToSell = BigNumber.min(remainingSharesToSell, remainingShares);
+      const token0SharesToSell = BigNumber.min(remainingToken0SharesToSell, token0Amount);
+      const token1SharesToSell = BigNumber.min(remainingToken1SharesToSell, token1Amount);
 
       const entryShareAmount = remainingShares;
       const entryUsdAmount = entryShareAmount.times(entryPrice);
@@ -226,6 +230,8 @@ export class clmPnl {
 
       remainingSharesToSell = remainingSharesToSell.minus(sharesToSell);
       this.state.sharesFifo[idx].remainingShares = remainingShares.minus(sharesToSell);
+      this.state.sharesFifo[idx].token0Amount = token0Amount.minus(token0SharesToSell);
+      this.state.sharesFifo[idx].token1Amount = token1Amount.minus(token1SharesToSell);
 
       if (remainingSharesToSell.isZero()) {
         break;
