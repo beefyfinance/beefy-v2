@@ -14,6 +14,7 @@ import { GraphHeader } from './components/GraphHeader';
 import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectHasBreakdownDataByTokenAddress } from '../../../data/selectors/tokens';
+import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
 
 const useStyles = makeStyles(styles);
 
@@ -29,7 +30,10 @@ export const CowcentratedPnlGraphLoader = memo<CowcentratedPnlGraphProps>(
       selectHasBreakdownDataByTokenAddress(state, vault.depositTokenAddress, vault.chainId)
     );
 
-    if (haveBreakdownData) {
+    const chainId = vault.chainId;
+    const isAddressBookLoaded = useAppSelector(state => selectIsAddressBookLoaded(state, chainId));
+
+    if (haveBreakdownData && isAddressBookLoaded) {
       return <CowcentratedPnlGraph vaultId={vaultId} />;
     }
   }

@@ -5,7 +5,12 @@ import { Stat } from '../Stat';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../store';
 import { selectClmPnl } from '../../../../../data/selectors/analytics';
-import { formatLargeUsd, formatTokenDisplayCondensed } from '../../../../../../helpers/format';
+import {
+  formatLargeUsd,
+  formatPositiveOrNegative,
+  formatTokenDisplayCondensed,
+} from '../../../../../../helpers/format';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 interface GraphHeaderProps {
   vaultId: VaultEntity['id'];
@@ -22,6 +27,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   red: {
     color: theme.palette.background.indicators.error,
+  },
+  green: {
+    color: theme.palette.background.indicators.success,
   },
 }));
 
@@ -40,6 +48,9 @@ export const GraphHeader = memo<GraphHeaderProps>(function GraphHeader({ vaultId
     token1SharesAtDeposit,
     token1,
     token0,
+    token0Diff,
+    token1Diff,
+    pnl,
   } = useAppSelector(state => selectClmPnl(state, vaultId));
 
   return (
@@ -72,10 +83,18 @@ export const GraphHeader = memo<GraphHeaderProps>(function GraphHeader({ vaultId
       />
       <Stat
         label={t('Change')}
-        value0={'+0.05 WBTC'}
-        value1={'+1.3 ETH'}
-        value2="-$432 PNL"
-        value2ClassName={classes.red}
+        value0={formatPositiveOrNegative(
+          token0Diff,
+          formatTokenDisplayCondensed(token0Diff, token0.decimals, 6),
+          token0.symbol
+        )}
+        value1={formatPositiveOrNegative(
+          token1Diff,
+          formatTokenDisplayCondensed(token1Diff, token1.decimals, 6),
+          token1.symbol
+        )}
+        value2={formatPositiveOrNegative(pnl, formatLargeUsd(pnl), 'PNL')}
+        value2ClassName={pnl.gt(BIG_ZERO) ? classes.green : classes.red}
       />
     </div>
   );
