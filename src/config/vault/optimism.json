@@ -2381,7 +2381,7 @@
     "oracleId": "velodrome-v2-susd-lusd",
     "status": "eol",
     "retireReason": "tvl",
-    "retiredAt": 1715784934 ,
+    "retiredAt": 1715784934,
     "createdAt": 1689918804,
     "platformId": "velodrome",
     "assets": ["sUSD", "LUSD"],

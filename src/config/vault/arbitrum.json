@@ -3413,7 +3413,7 @@
     "oracleId": "balancer-weth-reth",
     "status": "eol",
     "retireReason": "rewards",
-    "retiredAt": 1715784934 ,
+    "retiredAt": 1715784934,
     "createdAt": 1700600674,
     "platformId": "aura",
     "assets": ["rETH", "ETH"],

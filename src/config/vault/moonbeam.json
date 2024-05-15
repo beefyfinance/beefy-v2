@@ -83,7 +83,7 @@
     "oracleId": "USDT",
     "status": "eol",
     "retireReason": "rewards",
-    "retiredAt": 1715784934 ,
+    "retiredAt": 1715784934,
     "createdAt": 1677251242,
     "platformId": "moonwell",
     "assets": ["USDTxc"],
