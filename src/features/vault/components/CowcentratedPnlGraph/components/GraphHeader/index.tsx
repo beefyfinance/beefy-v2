@@ -51,6 +51,7 @@ export const GraphHeader = memo<GraphHeaderProps>(function GraphHeader({ vaultId
     token0Diff,
     token1Diff,
     pnl,
+    holdDiff,
   } = useAppSelector(state => selectClmPnl(state, vaultId));
 
   return (
@@ -93,8 +94,14 @@ export const GraphHeader = memo<GraphHeaderProps>(function GraphHeader({ vaultId
           formatTokenDisplayCondensed(token1Diff, token1.decimals, 6),
           token1.symbol
         )}
-        value2={formatPositiveOrNegative(pnl, formatLargeUsd(pnl), 'PNL')}
-        value2ClassName={pnl.gt(BIG_ZERO) ? classes.green : classes.red}
+        value2={
+          <div className={pnl.gt(BIG_ZERO) ? classes.green : classes.red}>
+            {formatPositiveOrNegative(pnl, formatLargeUsd(pnl), 'PNL')}{' '}
+            <span className={holdDiff.gt(BIG_ZERO) ? classes.green : classes.red}>
+              {formatPositiveOrNegative(holdDiff, formatLargeUsd(holdDiff), 'HOLD')}
+            </span>
+          </div>
+        }
       />
     </div>
   );

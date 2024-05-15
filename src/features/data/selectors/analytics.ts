@@ -143,7 +143,6 @@ export const selectClmPnl = (
   const vault = selectVaultById(state, vaultId);
 
   const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
-  console.log(sortedTimeline);
 
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
 
@@ -177,6 +176,14 @@ export const selectClmPnl = (
     .times(token0EntryPrice)
     .plus(token1Shares.times(token1EntryPrice));
 
+  const positionPnl = userBalanceDecimal.times(oraclePrice).minus(oraclePriceAtDeposit);
+
+  const sharesNowToUsd = remainingShares.times(oraclePrice);
+
+  const hold = token0Shares.times(token0.price).plus(token1Shares.times(token1.price));
+
+  const holdDiff = sharesNowToUsd.minus(hold);
+
   return {
     userSharesAtDeposit: remainingShares,
     token0EntryPrice,
@@ -187,12 +194,13 @@ export const selectClmPnl = (
     token1SharesAtDepositToUsd: token1Shares.times(token1EntryPrice),
     sharesAtDepositToUsd: oraclePriceAtDeposit,
     shares: remainingShares,
-    sharesNowToUsd: remainingShares.times(oraclePrice),
+    sharesNowToUsd,
     token0,
     token1,
     token0Diff: token0.userAmount.minus(token0Shares),
     token1Diff: token1.userAmount.minus(token1Shares),
-    pnl: userBalanceDecimal.times(oraclePrice).minus(oraclePriceAtDeposit),
+    pnl: positionPnl,
+    holdDiff,
   };
 };
 

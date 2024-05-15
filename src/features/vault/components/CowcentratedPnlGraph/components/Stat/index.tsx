@@ -1,12 +1,12 @@
 import { makeStyles, type Theme } from '@material-ui/core';
 import clsx from 'clsx';
-import React, { memo } from 'react';
+import React, { memo, type ReactNode } from 'react';
 
 interface StatProps {
   label: string;
   value0: string;
   value1: string;
-  value2?: string;
+  value2?: ReactNode;
   subValue0?: string;
   subValue1?: string;
   subValue2?: string;
@@ -67,7 +67,6 @@ export const Stat = memo<StatProps>(function Stat({
         {value1}
         {subValue1 && <div className={classes.subValue}>{subValue1}</div>}
       </div>
-
       {value2 && (
         <div className={clsx(classes.value, classes.lastValue, value2ClassName)}>
           {value2}
