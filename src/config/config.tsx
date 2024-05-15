@@ -264,6 +264,7 @@ export const config = {
       'aOptUSDC',
       'aOptUSDCn',
       'USDA',
+      'HAI',
     ],
   },
   fantom: {
