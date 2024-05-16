@@ -7,7 +7,7 @@
     "tokenAddress": "0x45AC3a4C1d17DB713839728B752604E40e5ABa72",
     "tokenDecimals": 18,
     "tokenProviderId": "aerodrome",
-    "earnedToken": "mooAeroweETH-WETH",
+    "earnedToken": "mooAerobsdETH-hyUSD",
     "earnedTokenAddress": "0xF7385b00e01eb1e29FF9786Be731A6614388Ad9A",
     "earnContractAddress": "0xF7385b00e01eb1e29FF9786Be731A6614388Ad9A",
     "oracle": "lps",
