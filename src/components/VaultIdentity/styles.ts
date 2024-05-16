@@ -112,4 +112,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-fraxtal': {
     backgroundColor: '#000',
   },
+  'vaultNetwork-mode': {
+    backgroundColor: '#000',
+  },
 });

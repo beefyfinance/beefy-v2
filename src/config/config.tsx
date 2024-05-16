@@ -264,6 +264,7 @@ export const config = {
       'aOptUSDC',
       'aOptUSDCn',
       'USDA',
+      'HAI',
     ],
   },
   fantom: {
@@ -512,6 +513,7 @@ export const config = {
   moonriver: {
     name: 'Moonriver',
     chainId: 1285,
+    eol: 1715594061,
     rpc: ['https://rpc.api.moonriver.moonbeam.network/'],
     explorerUrl: 'https://moonriver.moonscan.io',
     multicallAddress: '0x7f6fE34C51d5352A0CF375C0Fbe03bD19eCD8460',
@@ -820,7 +822,6 @@ export const config = {
     stableCoins: ['USDT', 'USDC', 'DAI', 'USDe'],
   },
   fraxtal: {
-    new: true,
     name: 'Fraxtal',
     chainId: 252,
     rpc: ['https://rpc.frax.com'],
@@ -848,6 +849,36 @@ export const config = {
       priorityMinimum: '10000000', // 0.01 gwei
     },
     stableCoins: ['crvUSD', 'FRAX', 'frxUSDC', 'USDC', 'PYUSD', 'DAI', 'USDT'],
+  },
+  mode: {
+    new: true,
+    name: 'Mode',
+    chainId: 34443,
+    rpc: ['https://mainnet.mode.network'],
+    explorerUrl: 'https://explorer.mode.network/',
+    multicallAddress: '0xAb35d11199216c7F7368080Cf41beD8f3AbBc4E4',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x7Cba02979594b0f535E0077E9748407a48641c89',
+    providerName: 'Mode',
+    walletSettings: {
+      chainId: `0x${parseInt('34443', 10).toString(16)}`,
+      chainName: 'Mode',
+      nativeCurrency: {
+        name: 'ETH',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://mainnet.mode.network'],
+      blockExplorerUrls: ['https://explorer.mode.network/'],
+    },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.7,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '10000000', // 0.01 gwei
+    },
+    stableCoins: ['USDC', 'USDT'],
   },
   aurora: {
     name: 'Aurora',

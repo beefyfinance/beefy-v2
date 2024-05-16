@@ -170,6 +170,7 @@ type ChainId =
   | 'linea'
   | 'mantle'
   | 'fraxtal'
+  | 'mode'
   | 'aurora'
   | 'emerald'
   | 'celo'
