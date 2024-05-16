@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   green: {
     color: theme.palette.background.indicators.success,
   },
+  gray: {
+    color: theme.palette.text.dark,
+  },
 }));
 
 export const GraphHeader = memo<GraphHeaderProps>(function GraphHeader({ vaultId }) {
@@ -51,7 +54,7 @@ export const GraphHeader = memo<GraphHeaderProps>(function GraphHeader({ vaultId
     token0Diff,
     token1Diff,
     pnl,
-    holdDiff,
+    hold,
   } = useAppSelector(state => selectClmPnl(state, vaultId));
 
   return (
@@ -97,9 +100,7 @@ export const GraphHeader = memo<GraphHeaderProps>(function GraphHeader({ vaultId
         value2={
           <div className={pnl.gt(BIG_ZERO) ? classes.green : classes.red}>
             {formatPositiveOrNegative(pnl, formatLargeUsd(pnl), 'PNL')}{' '}
-            <span className={holdDiff.gt(BIG_ZERO) ? classes.green : classes.red}>
-              {formatPositiveOrNegative(holdDiff, formatLargeUsd(holdDiff), 'HOLD')}
-            </span>
+            <span className={classes.gray}>{`${formatLargeUsd(hold)} HOLD`}</span>
           </div>
         }
       />

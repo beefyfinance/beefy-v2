@@ -15,27 +15,34 @@ import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectHasBreakdownDataByTokenAddress } from '../../../data/selectors/tokens';
 import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
+import { selectHasDataToShowGraphByVaultId } from '../../../data/selectors/analytics';
 
 const useStyles = makeStyles(styles);
 
 interface CowcentratedPnlGraphProps {
   vaultId: VaultEntity['id'];
+  address?: string;
 }
 
 export const CowcentratedPnlGraphLoader = memo<CowcentratedPnlGraphProps>(
-  function CowcentratedPnlGraphLoader({ vaultId }) {
+  function CowcentratedPnlGraphLoader({ vaultId, address }) {
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
     const haveBreakdownData = useAppSelector(state =>
       selectHasBreakdownDataByTokenAddress(state, vault.depositTokenAddress, vault.chainId)
     );
+    const hasData = useAppSelector(state =>
+      selectHasDataToShowGraphByVaultId(state, vaultId, address)
+    );
 
     const chainId = vault.chainId;
     const isAddressBookLoaded = useAppSelector(state => selectIsAddressBookLoaded(state, chainId));
 
-    if (haveBreakdownData && isAddressBookLoaded) {
-      return <CowcentratedPnlGraph vaultId={vaultId} />;
+    if (haveBreakdownData && isAddressBookLoaded && hasData) {
+      return <CowcentratedPnlGraph vaultId={vaultId} address={address} />;
     }
+
+    return null;
   }
 );
 
@@ -78,8 +85,9 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
 });
 
 const data = [
-  { v: 1, t: 17564645, ma: 1 },
-  { v: 5, t: 17564647, ma: 4 },
+  { v: 1, t: 17564645, ma: 1290, token0: 400, token1: 900 },
+  { v: 5, t: 17564647, ma: 1500, token0: 750, token1: 800 },
+  { v: 5, t: 17564648, ma: 1300, token0: 800, token1: 500 },
 ];
 
 const DummyGraph = memo(function DummyGraph() {
@@ -105,10 +113,8 @@ const DummyGraph = memo(function DummyGraph() {
             stroke="#363B63"
             padding="no-gap"
           />
-
-          <Area dataKey="ma" stroke="#5C70D6" strokeWidth={1.5} fill="none" />
-
-          <YAxis dataKey="v" mirror={true} stroke="#363B63" />
+          <Area dataKey="ma" stroke="#5C70D6" strokeWidth={1.5} fill="none" />{' '}
+          <YAxis mirror={true} stroke="#363B63" />
         </AreaChart>
       </ResponsiveContainer>
     </div>

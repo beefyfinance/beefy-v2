@@ -182,8 +182,6 @@ export const selectClmPnl = (
 
   const hold = token0Shares.times(token0.price).plus(token1Shares.times(token1.price));
 
-  const holdDiff = sharesNowToUsd.minus(hold);
-
   return {
     userSharesAtDeposit: remainingShares,
     token0EntryPrice,
@@ -200,7 +198,7 @@ export const selectClmPnl = (
     token0Diff: token0.userAmount.minus(token0Shares),
     token1Diff: token1.userAmount.minus(token1Shares),
     pnl: positionPnl,
-    holdDiff,
+    hold,
   };
 };
 
