@@ -6,9 +6,11 @@ import type {
   ApiRanges,
   ApiStat,
   ApiTimeBucket,
+  ApiCowcentratedChartData,
 } from './beefy-data-api-types';
 import type { VaultEntity } from '../../entities/vault';
 import type { TokenEntity } from '../../entities/token';
+import type { ChainEntity } from '../../entities/chain';
 
 export class BeefyDataApi implements IBeefyDataApi {
   private readonly version = 'v2';
@@ -25,12 +27,16 @@ export class BeefyDataApi implements IBeefyDataApi {
 
   async getAvailableRanges(
     vaultId: VaultEntity['id'],
-    oracleId: TokenEntity['oracleId']
+    oracleId: TokenEntity['oracleId'],
+    vaultAddress?: VaultEntity['earnContractAddress'],
+    chainId?: ChainEntity['id']
   ): Promise<ApiRanges> {
     const res = await this.data.get<ApiRanges>(`ranges/`, {
       params: {
         vault: vaultId,
         oracle: oracleId,
+        vaultAddress,
+        chain: chainId,
       },
     });
 
@@ -50,6 +56,22 @@ export class BeefyDataApi implements IBeefyDataApi {
 
   async getTvlChartData(vaultId: VaultEntity['id'], bucket: ApiTimeBucket): Promise<ApiChartData> {
     return this.getChartData('tvls', 'vault', vaultId, bucket);
+  }
+
+  async getCowcentratedRangesChartData(
+    vaultAddress: VaultEntity['earnContractAddress'],
+    bucket: ApiTimeBucket,
+    chainId: ChainEntity['id']
+  ): Promise<ApiCowcentratedChartData> {
+    const res = await this.data.get<ApiCowcentratedChartData>(`clmRanges/`, {
+      params: {
+        vaultAddress,
+        chain: chainId,
+        bucket,
+      },
+    });
+
+    return res.data;
   }
 
   private async getChartData(

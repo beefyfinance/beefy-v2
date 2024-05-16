@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { ToggleButtons } from '../../../../components/ToggleButtons';
 import { useTranslation } from 'react-i18next';
 import { BreakdownTable } from './components/BreakdownTable';
 import type { BreakdownMode } from './types';
@@ -16,12 +15,13 @@ import {
   selectHasBreakdownDataByTokenAddress,
   selectLpBreakdownByTokenAddress,
 } from '../../../data/selectors/tokens';
-import type { VaultEntity } from '../../../data/entities/vault';
+import { isCowcentratedLiquidityVault, type VaultEntity } from '../../../data/entities/vault';
 import {
   selectIsAddressBookLoaded,
   selectShouldInitAddressBook,
 } from '../../../data/selectors/data-loader';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
+import { StatSwitcher } from '../StatSwitcher';
 
 const useStyles = makeStyles(styles);
 
@@ -44,9 +44,16 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
         map['user'] = t('Vault-LpBreakdown-YourDeposit');
       }
       map['one'] = t('Vault-LpBreakdown-1LP');
-      map['total'] = t('Vault-LpBreakdown-TotalPool');
+      map['total'] = t(
+        isCowcentratedLiquidityVault(vault)
+          ? 'Vault-LpBreakdown-ClmPool'
+          : 'Vault-LpBreakdown-TotalPool'
+      );
+      if (isCowcentratedLiquidityVault(vault)) {
+        map['underlying'] = t('Vault-LpBreakdown-Underlying');
+      }
       return map;
-    }, [userBalance, t]);
+    }, [userBalance, t, vault]);
 
     const onTabChange = useCallback(
       (newTab: string) => {
@@ -67,15 +74,10 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
       <Card>
         <CardHeader className={classes.header}>
           <CardTitle title={'LP Breakdown'} />
-          <ToggleButtons
-            buttonsClass={classes.tabs}
-            options={tabs}
-            onChange={onTabChange}
-            value={tab}
-          />
+          <StatSwitcher onChange={onTabChange} options={tabs} stat={tab} />
         </CardHeader>
         <CardContent disableDefaultClass={true} className={classes.layout}>
-          <ChartWithLegend breakdown={calculatedBreakdown} />
+          <ChartWithLegend breakdown={calculatedBreakdown} tab={tab} />
           <BreakdownTable mode={tab} breakdown={calculatedBreakdown} />
         </CardContent>
       </Card>

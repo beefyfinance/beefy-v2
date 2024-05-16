@@ -60,6 +60,11 @@ export const getTransactApi = createDependencyFactory(
   () => import('./transact/transact')
 );
 
+export const getMerklRewardsApi = createDependencyFactory(
+  async ({ MerklRewardsApi }) => new MerklRewardsApi(),
+  () => import('./rewards/merkl/merkl-api')
+);
+
 export const getSwapAggregator = createDependencyFactory(
   async ({ SwapAggregator, WNativeSwapProvider, OneInchSwapProvider, KyberSwapProvider }) => {
     const providers: ISwapProvider[] = [new WNativeSwapProvider()];

@@ -37,19 +37,25 @@ async function vaultData(chain, vaultAddress, id) {
   [results] = await multicall.all([calls]);
   const token = results[0];
 
-  let provider =
-    params.mooToken.startsWith('mooCurve') || params.mooToken.startsWith('mooConvex')
-      ? 'curve'
-      : params.mooToken.startsWith('mooCake')
-      ? 'pancakeswap'
-      : params.mooToken.startsWith('mooThena')
-      ? 'thena'
-      : id.substring(0, id.indexOf('-'));
+  let provider = params.mooToken.startsWith('mooCurveLend')
+    ? 'curve-lend'
+    : params.mooToken.startsWith('mooCurve') || params.mooToken.startsWith('mooConvex')
+    ? 'curve'
+    : params.mooToken.startsWith('mooCake')
+    ? 'pancakeswap'
+    : params.mooToken.startsWith('mooThena')
+    ? 'thena'
+    : id.substring(0, id.indexOf('-'));
   const platform = params.mooToken.startsWith('mooConvex') ? 'convex' : provider;
   if (platform === 'equilibria') provider = 'pendle';
-  const ammId = `${chain}-${platform}`;
+  const migrationIds =
+    ['curve', 'curve-lend'].includes(provider) && chain === 'ethereum'
+      ? ['ethereum-convex']
+      : ['curve', 'curve-lend'].includes(provider)
+      ? ['l2-convex', 'l2-curve']
+      : [];
 
-  return { ...params, ...token, ...{ provider, platform, ammId } };
+  return { ...params, ...token, ...{ provider, platform, migrationIds } };
 }
 
 async function generateVault() {
@@ -75,6 +81,7 @@ async function generateVault() {
     status: 'active',
     platformId: vault.platform,
     assets: [vault.token],
+    migrationIds: vault.migrationIds,
     strategyTypeId: 'multi-lp',
     risks: ['COMPLEXITY_LOW', 'IL_NONE', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
     addLiquidityUrl: 'XXX',

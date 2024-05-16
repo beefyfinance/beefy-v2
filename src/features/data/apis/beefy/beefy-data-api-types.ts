@@ -1,9 +1,10 @@
 import type { VaultEntity } from '../../entities/vault';
 import type { TokenEntity } from '../../entities/token';
+import type { ChainEntity } from '../../entities/chain';
 
 export type ApiTimeBucket = '1h_1d' | '1h_1w' | '1d_1M' | '1d_1Y';
 
-export type ApiStat = 'prices' | 'apys' | 'tvls';
+export type ApiStat = 'prices' | 'apys' | 'tvls' | 'clm';
 
 export type ApiRange = {
   min: number;
@@ -19,12 +20,20 @@ export type ApiPoint = {
   v: number;
 };
 
+export type ApiCowcentratedPoint = ApiPoint & {
+  min: number;
+  max: number;
+};
+
 export type ApiChartData = ApiPoint[];
+export type ApiCowcentratedChartData = ApiCowcentratedPoint[];
 
 export interface IBeefyDataApi {
   getAvailableRanges(
     vaultId: VaultEntity['id'],
-    oracleId: TokenEntity['oracleId']
+    oracleId: TokenEntity['oracleId'],
+    vaultAddress?: VaultEntity['earnContractAddress'],
+    chainId?: ChainEntity['id']
   ): Promise<ApiRanges>;
 
   getTvlChartData(vaultId: VaultEntity['id'], bucket: ApiTimeBucket): Promise<ApiChartData>;
@@ -35,4 +44,10 @@ export interface IBeefyDataApi {
     oracleId: TokenEntity['oracleId'],
     bucket: ApiTimeBucket
   ): Promise<ApiChartData>;
+
+  getCowcentratedRangesChartData(
+    vaultAddress: VaultEntity['earnContractAddress'],
+    bucket: ApiTimeBucket,
+    chainId: ChainEntity['id']
+  ): Promise<ApiCowcentratedChartData>;
 }
