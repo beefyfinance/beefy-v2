@@ -1,5 +1,40 @@
 [
   {
+    "id": "aerodrome-bsdeth-hyusd",
+    "name": "bsdETH-hyUSD vLP",
+    "type": "standard",
+    "token": "vAMM-bsdETH/hyUSD",
+    "tokenAddress": "0x45AC3a4C1d17DB713839728B752604E40e5ABa72",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroweETH-WETH",
+    "earnedTokenAddress": "0xF7385b00e01eb1e29FF9786Be731A6614388Ad9A",
+    "earnContractAddress": "0xF7385b00e01eb1e29FF9786Be731A6614388Ad9A",
+    "oracle": "lps",
+    "oracleId": "aerodrome-bsdeth-hyusd",
+    "status": "active",
+    "createdAt": 1715856789,
+    "platformId": "aerodrome",
+    "assets": ["bsdETH", "hyUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xCb327b99fF831bF8223cCEd12B1338FF3aA322Ff&token1=0xCc7FF230365bD730eE4B352cC2492CEdAC49383e&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weeth-weth",
     "name": "weETH-ETH vLP",
     "type": "standard",
