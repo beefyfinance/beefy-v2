@@ -42,6 +42,7 @@ const mapSolidly = {
   'linea-solidly-nile': VelodromeSolidlyPool,
   'fraxtal-ra': VelodromeSolidlyPool,
   'optimism-velodrome-v2': VelodromeV2SolidlyPool,
+  // 'mode-velodrome': VelodromeSolidlyPool,
   'base-aerodrome': VelodromeV2SolidlyPool,
   'fantom-equalizer': VelodromeSolidlyPool,
   'canto-velocimeter': VelodromeSolidlyPool,

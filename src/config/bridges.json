@@ -88,6 +88,12 @@
     "website": "https://mainnet.frax.com/tools/bridge/deposit"
   },
   {
+    "id": "mode-canonical",
+    "name": "Mode Bridge",
+    "tagName": "Mode",
+    "website": "https://app.mode.network/"
+  },
+  {
     "id": "avax-canonical",
     "name": "Avax Bridge",
     "tagName": "Avax",

@@ -103,5 +103,10 @@
     "chainId": "fraxtal",
     "router": "0x63B257a372AA04c8a078D43BCAAdaD359ce1faa2",
     "manager": "0xBFd177B973AC0F760782abedFDdec1C18e163aeE"
+  },
+  {
+    "chainId": "mode",
+    "router": "0xf2068e1FE1A80E7f5Ba80D6ABD6e8618aD4E959E",
+    "manager": "0x19e730Ab391b79F03CFA2ffc2C5e3fc617F0eEfe"
   }
 ]
