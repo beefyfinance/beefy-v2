@@ -1,5 +1,34 @@
 [
   {
+    "id": "aerodrome-weth-ghst",
+    "name": "ETH-GHST vLP",
+    "type": "standard",
+    "token": "vAMM-WETH-GHST",
+    "tokenAddress": "0x0DFb9Cb66A18468850d6216fCc691aa20ad1e091",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroWETH-GHST",
+    "earnedTokenAddress": "0x2494f1E2BADE141cE74d444d6F9012d7948AA362",
+    "earnContractAddress": "0x2494f1E2BADE141cE74d444d6F9012d7948AA362",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-ghst",
+    "status": "active",
+    "createdAt": 1716034908,
+    "platformId": "aerodrome",
+    "assets": ["ETH", "GHST"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xcD2F22236DD9Dfe2356D7C543161D4d260FD9BcB&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-bsdeth-hyusd",
     "name": "bsdETH-hyUSD vLP",
     "type": "standard",
@@ -16,13 +45,7 @@
     "createdAt": 1715856789,
     "platformId": "aerodrome",
     "assets": ["bsdETH", "hyUSD"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_HIGH",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xCb327b99fF831bF8223cCEd12B1338FF3aA322Ff&token1=0xCc7FF230365bD730eE4B352cC2492CEdAC49383e&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
