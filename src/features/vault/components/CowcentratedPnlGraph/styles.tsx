@@ -29,7 +29,6 @@ export const styles = (theme: Theme) => ({
   },
   graphContainer: {
     backgroundColor: theme.palette.background.contentPrimary,
-    padding: '16px',
   },
   footer: {
     display: 'flex',
@@ -37,7 +36,7 @@ export const styles = (theme: Theme) => ({
     gap: '16px',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '16px 24px',
+    padding: '12px 24px',
     borderRadius: '0px 0px 12px 12px',
     backgroundColor: theme.palette.background.contentPrimary,
     [theme.breakpoints.down('sm')]: {
@@ -62,6 +61,34 @@ export const styles = (theme: Theme) => ({
           transition: 'ease-in-out 0.5s',
         },
       },
+    },
+  },
+  legendContainer: {
+    ...theme.typography['body-lg-med'],
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.5px',
+    color: theme.palette.text.dark,
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+  },
+  usdReferenceLine: {
+    height: '2px',
+    width: '12px',
+    backgroundColor: '#606FCF',
+    borderRadius: '4px',
+  },
+  tabsContainer: {
+    '& .MuiTabs-root': {
+      minHeight: '24px',
+    },
+    '& .MuiTab-root': {
+      ...theme.typography['subline-lg'],
+      minHeight: '22px',
+      padding: '0px',
+    },
+    '& .MuiTabs-flexContainer': {
+      gap: '12px',
     },
   },
 });

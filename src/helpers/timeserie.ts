@@ -5,7 +5,10 @@ import type {
   ApiProductPriceRow,
   TimeBucketType,
 } from '../features/data/apis/analytics/analytics-types';
-import type { VaultTimelineAnalyticsEntity } from '../features/data/entities/analytics';
+import type {
+  CLMTimelineAnalyticsEntity,
+  VaultTimelineAnalyticsEntity,
+} from '../features/data/entities/analytics';
 import { BIG_ZERO } from './big-number';
 import { roundDownMinutes } from './date';
 import { samplingPeriodMs } from './sampling-period';
@@ -137,6 +140,100 @@ export function getInvestorTimeserie(
     shareBalance: currentShareBalance.toNumber(),
     underlyingBalance: currentShareBalance.times(currentPpfs).toNumber(),
     usdBalance: currentShareBalance.times(currentPpfs).times(currentPrice).toNumber(),
+  });
+
+  return pricesTs;
+}
+
+export function getClmInvestorTimeserie(
+  timeBucket: TimeBucketType,
+  timeline: CLMTimelineAnalyticsEntity[],
+  underlyingToUsd: ApiProductPriceRow[],
+  firstDate: Date,
+  currentPrice: BigNumber,
+  currentShareBalance: BigNumber
+): { t: number; v: number }[] {
+  // so, first we need to generate datetime keys for each row
+  const { bucketSize: bucketSizeStr, timeRange: timeRangeStr } =
+    timeBucketToSamplingPeriod(timeBucket);
+  const bucketSize = samplingPeriodMs[bucketSizeStr];
+  const timeRange = samplingPeriodMs[timeRangeStr];
+
+  const lastDate = new Date(Math.floor(new Date().getTime() / bucketSize) * bucketSize);
+  const firstDate1 = new Date(lastDate.getTime() - timeRange);
+
+  const fixedDate = max([firstDate, firstDate1]);
+
+  // Use the current price to fill in any missing prices in the past 24 hours (otherwise set to 0)
+
+  const sortedUnderlyingToUsd = sortAndFixPrices(underlyingToUsd, currentPrice);
+
+  let balanceIdx = 0;
+  let underlyingIdx = 0;
+  let currentDate = fixedDate;
+
+  const pricesTs: { t: number; v: number }[] = [];
+
+  //We should be adding precise initial ppfs and price as first data point
+  if (isEqual(timeline[0].datetime, fixedDate)) {
+    const { underlying0Diff, underlying1Diff, token1ToUsd, token0ToUsd } = timeline[0];
+
+    const priceAtDeposit = underlying0Diff
+      .times(token0ToUsd)
+      .plus(underlying1Diff.times(token1ToUsd));
+
+    pricesTs.push({
+      t: roundDownMinutes(timeline[0].datetime).getTime(),
+      v: priceAtDeposit.toNumber(),
+    });
+    currentDate = new Date(currentDate.getTime() + bucketSize);
+  }
+
+  // Need at least one row in each series to work from
+  if (sortedUnderlyingToUsd.length) {
+    while (currentDate <= lastDate) {
+      // add a row for each date
+      // find the corresponding balance row
+      while (
+        balanceIdx < timeline.length - 1 &&
+        isAfter(currentDate, timeline[balanceIdx + 1].datetime)
+      ) {
+        balanceIdx++;
+      }
+      // find the corresponding shares row
+
+      // find the corresponding underlying row
+      while (
+        underlyingIdx < sortedUnderlyingToUsd.length - 1 &&
+        isAfter(currentDate, sortedUnderlyingToUsd[underlyingIdx + 1].date)
+      ) {
+        underlyingIdx++;
+      }
+
+      // now we have the correct rows for this date
+      const shareBalance = timeline[balanceIdx].shareBalance;
+      if (shareBalance && !shareBalance.isEqualTo(BIG_ZERO)) {
+        // Shares to underlying
+
+        // Underlying to usd
+        const underlying = sortedUnderlyingToUsd[underlyingIdx];
+        const usdBalance = timeline[balanceIdx].shareBalance.times(underlying.value);
+
+        pricesTs.push({
+          //return date on seconds
+          t: currentDate.getTime(),
+          v: usdBalance.toNumber(),
+        });
+      }
+
+      currentDate = new Date(currentDate.getTime() + bucketSize);
+    }
+  }
+
+  pricesTs.push({
+    //round down our to the last hours, since first item of the api do the same
+    t: roundDownMinutes(new Date()).getTime(),
+    v: currentShareBalance.times(currentPrice).toNumber(),
   });
 
   return pricesTs;

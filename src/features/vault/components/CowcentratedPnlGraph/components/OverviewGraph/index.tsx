@@ -8,75 +8,56 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { usePnLChartData } from '../../hooks';
-import { PnLTooltip } from '../PnLTooltip';
+import { usePnLChartData } from './hooks';
 import type { Theme } from '@material-ui/core';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { GraphLoader } from '../../../GraphLoader';
 import { max } from 'lodash-es';
 import {
-  formatUnderlyingTick,
-  formatUsdTick,
-  formatDateTimeTick,
-  TIME_BUCKET,
   domainOffSet,
   getXInterval,
   mapRangeToTicks,
+  formatUsdTick,
+  formatDateTimeTick,
+  TIME_BUCKET,
 } from '../../../../../../helpers/graph';
-import { Legend } from '../Legend';
 import { styles } from './styles';
 import { XAxisTick } from '../../../../../../components/XAxisTick';
 
 const useStyles = makeStyles(styles);
 
-interface GraphProps {
+interface CLMOverviewGraphProps {
   vaultId: string;
   period: number;
   address?: string;
 }
 
-export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address }) {
+export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverviewGraph({
+  vaultId,
+  period,
+  address,
+}) {
   const classes = useStyles();
 
   const { chartData, isLoading } = usePnLChartData(TIME_BUCKET[period], vaultId, address);
 
-  const { data, minUnderlying, maxUnderlying, minUsd, maxUsd } = chartData;
-
-  const underlyingDiff = useMemo(() => {
-    return domainOffSet(minUnderlying, maxUnderlying, 0.88);
-  }, [maxUnderlying, minUnderlying]);
+  const { data, minUsd, maxUsd } = chartData;
 
   const usdDiff = useMemo(() => {
     return domainOffSet(minUsd, maxUsd, 0.88);
   }, [maxUsd, minUsd]);
 
-  const startUnderlyingDomain = useMemo(() => {
-    return max([0, minUnderlying - underlyingDiff])!;
-  }, [minUnderlying, underlyingDiff]);
-
   const startUsdDomain = useMemo(() => {
     return max([0, minUsd - usdDiff])!;
   }, [minUsd, usdDiff]);
-
-  const underlyingAxisDomain = useMemo<[number, number]>(() => {
-    return [startUnderlyingDomain, maxUnderlying + underlyingDiff];
-  }, [maxUnderlying, startUnderlyingDomain, underlyingDiff]);
 
   const usdAxisDomain = useMemo<[number, number]>(() => {
     return [startUsdDomain, maxUsd + usdDiff];
   }, [maxUsd, startUsdDomain, usdDiff]);
 
-  const underlyingTicks = useMemo(() => {
-    return mapRangeToTicks(startUnderlyingDomain, maxUnderlying + underlyingDiff);
-  }, [maxUnderlying, startUnderlyingDomain, underlyingDiff]);
-
   const usdTicks = useMemo(() => {
     return mapRangeToTicks(startUsdDomain, maxUsd + usdDiff);
   }, [maxUsd, startUsdDomain, usdDiff]);
-
-  const underlyingTickFormatter = useMemo(() => {
-    return (value: number) => formatUnderlyingTick(value, underlyingAxisDomain);
-  }, [underlyingAxisDomain]);
 
   const dateTimeTickFormatter = useMemo(() => {
     return (value: number) => formatDateTimeTick(value, TIME_BUCKET[period]);
@@ -98,11 +79,10 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
 
   return (
     <div className={classes.graphContainer}>
-      <Legend vaultId={vaultId} />
-      <ResponsiveContainer width="100%" height={200}>
+      <ResponsiveContainer width="100%" height={220}>
         <LineChart
           width={450}
-          height={200}
+          height={220}
           data={data}
           margin={{ top: 14, right: xMargin, bottom: 0, left: xMargin }}
           className={classes.graph}
@@ -110,7 +90,7 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
           <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />
           <XAxis
             tickFormatter={dateTimeTickFormatter}
-            dataKey="datetime"
+            dataKey="t"
             padding="no-gap"
             tickMargin={10}
             stroke="#363B63"
@@ -118,33 +98,15 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
             tick={XAxisTick}
           />
           <Line
-            yAxisId="underliying"
-            strokeWidth={1.5}
-            dataKey="underlyingBalance"
-            stroke="#4DB258"
-            dot={false}
-            type="linear"
-          />
-          <Line
             yAxisId="usd"
             strokeWidth={1.5}
-            dataKey="usdBalance"
+            dataKey="v"
             stroke="#5C70D6"
             dot={false}
             type="linear"
           />
           <YAxis
-            stroke="#4DB258"
-            strokeWidth={1.5}
-            tickFormatter={underlyingTickFormatter}
-            yAxisId="underliying"
-            domain={underlyingAxisDomain}
-            ticks={underlyingTicks}
-            mirror={true}
-          />
-          <YAxis
-            stroke="#5C70D6"
-            orientation="right"
+            stroke="#363B63"
             strokeWidth={1.5}
             tickFormatter={formatUsdTick}
             yAxisId="usd"
@@ -152,7 +114,7 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
             ticks={usdTicks}
             mirror={true}
           />
-          <Tooltip wrapperStyle={{ outline: 'none' }} content={<PnLTooltip />} />
+          <Tooltip wrapperStyle={{ outline: 'none' }} />
         </LineChart>
       </ResponsiveContainer>
     </div>

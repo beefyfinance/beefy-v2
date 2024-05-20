@@ -1,21 +1,23 @@
-import { memo, useMemo, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { memo, useCallback, useMemo, useState } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
 
 import { Card, CardTitle, CardHeader, CardContent } from '../Card';
 import { useTranslation } from 'react-i18next';
 import { StatSwitcher } from '../StatSwitcher';
 import { styles } from './styles';
-import { makeStyles, useMediaQuery, type Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { RangeSwitcher } from '../HistoricGraph/RangeSwitcher';
-import type { TimeRange } from '../HistoricGraph/utils';
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from 'recharts';
-import { formatDateTimeTick } from '../PnLGraph/components/Graph/helpers';
+import { getAvailableRanges, getDefaultTimeRange, type TimeRange } from '../HistoricGraph/utils';
 import { GraphHeader } from './components/GraphHeader';
 import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectHasBreakdownDataByTokenAddress } from '../../../data/selectors/tokens';
 import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
 import { selectHasDataToShowGraphByVaultId } from '../../../data/selectors/analytics';
+import { CLMOverviewGraph } from './components/OverviewGraph';
+import { useVaultPeriods } from './components/OverviewGraph/hooks';
+import { BasicTabs } from '../../../../components/Tabs/BasicTabs';
 
 const useStyles = makeStyles(styles);
 
@@ -48,6 +50,7 @@ export const CowcentratedPnlGraphLoader = memo<CowcentratedPnlGraphProps>(
 
 export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function CowcentratedPnlGraph({
   vaultId,
+  address,
 }) {
   const [stat, setStat] = useState<string>('Overview');
   const { t } = useTranslation();
@@ -60,6 +63,10 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
     };
   }, [t]);
 
+  const labels = useVaultPeriods(vaultId, address);
+
+  const [period, setPeriod] = useState<number>(labels.length - 1);
+
   return (
     <Card className={classes.card}>
       <CardHeader className={classes.header}>
@@ -68,55 +75,25 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
       </CardHeader>
       <CardContent className={classes.content}>
         <GraphHeader vaultId={vaultId} />
-        <DummyGraph />
+        <div className={classes.graphContainer}>
+          <CLMOverviewGraph period={period} address={address} vaultId={vaultId} />
+        </div>
         <div className={classes.footer}>
-          <div>- Position Value</div>
-          <RangeSwitcher
-            availableRanges={['1Day', '1Year']}
-            range={'1Day'}
-            onChange={(newBucket: TimeRange) => {
-              console.log(newBucket);
-            }}
-          />
+          <div className={classes.legendContainer}>
+            <div className={classes.usdReferenceLine} />
+            Position $ Value
+          </div>
+          <div className={classes.tabsContainer}>
+            <BasicTabs
+              onChange={(newValue: number) => {
+                setPeriod(newValue);
+              }}
+              labels={labels}
+              value={period}
+            />
+          </div>
         </div>
       </CardContent>
     </Card>
-  );
-});
-
-const data = [
-  { v: 1, t: 17564645, ma: 1290, token0: 400, token1: 900 },
-  { v: 5, t: 17564647, ma: 1500, token0: 750, token1: 800 },
-  { v: 5, t: 17564648, ma: 1300, token0: 800, token1: 500 },
-];
-
-const DummyGraph = memo(function DummyGraph() {
-  const classes = useStyles();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
-  const chartMargin = useMemo(() => {
-    return { top: 14, right: isMobile ? 16 : 24, bottom: 0, left: isMobile ? 16 : 24 };
-  }, [isMobile]);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const xTickFormatter = useMemo(() => {
-    return (value: number) => formatDateTimeTick(value, '1h_1d');
-  }, []);
-  return (
-    <div className={classes.graphContainer}>
-      <ResponsiveContainer height={200}>
-        <AreaChart data={data} className={classes.graph} height={200} margin={chartMargin}>
-          <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />
-          <XAxis
-            tickFormatter={xTickFormatter}
-            dataKey="t"
-            tickMargin={10}
-            stroke="#363B63"
-            padding="no-gap"
-          />
-          <Area dataKey="ma" stroke="#5C70D6" strokeWidth={1.5} fill="none" />{' '}
-          <YAxis mirror={true} stroke="#363B63" />
-        </AreaChart>
-      </ResponsiveContainer>
-    </div>
   );
 });

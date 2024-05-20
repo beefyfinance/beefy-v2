@@ -100,9 +100,9 @@ export const GraphHeader = memo<GraphHeaderProps>(function GraphHeader({ vaultId
         value2={
           <div className={pnl.gt(BIG_ZERO) ? classes.green : classes.red}>
             {formatPositiveOrNegative(pnl, formatLargeUsd(pnl), 'PNL')}{' '}
-            <span className={classes.gray}>{`${formatLargeUsd(hold)} HOLD`}</span>
           </div>
         }
+        subValue2={`${formatLargeUsd(hold)} HOLD`}
       />
     </div>
   );

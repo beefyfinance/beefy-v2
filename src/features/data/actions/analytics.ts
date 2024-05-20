@@ -15,6 +15,7 @@ import type {
 import type { VaultEntity } from '../entities/vault';
 import { isFiniteNumber } from '../../../helpers/number';
 import { selectVaultById } from '../selectors/vaults';
+import { selectTokenByAddress } from '../selectors/tokens';
 
 export interface fetchWalletTimelineFulfilled {
   timeline: VaultTimelineAnalyticsEntity[];
@@ -155,6 +156,28 @@ export const fetchUnderlyingToUsd = createAsyncThunk<
       vault.earnContractAddress,
       vault.chainId
     );
+    return {
+      data,
+      vaultId,
+      timebucket,
+      walletAddress: walletAddress.toLocaleLowerCase(),
+      state,
+    };
+  }
+);
+
+export const fetchClmUnderlyingToUsd = createAsyncThunk<
+  DataMartPricesFulfilled,
+  Omit<DataMartPricesProps, 'productType'>,
+  { state: BeefyState }
+>(
+  'analytics/fetchClmUnderlyingToUsd',
+  async ({ timebucket, walletAddress, vaultId }, { getState }) => {
+    const state = getState();
+    const vault = selectVaultById(state, vaultId);
+    const token = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
+    const api = await getAnalyticsApi();
+    const data = await api.getClmPrices(token.oracleId, timebucket);
     return {
       data,
       vaultId,

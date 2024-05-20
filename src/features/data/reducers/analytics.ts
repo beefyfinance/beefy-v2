@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+  fetchClmUnderlyingToUsd,
   fetchShareToUnderlying,
   fetchUnderlyingToUsd,
   fetchWalletTimeline,
@@ -134,6 +135,29 @@ export const analyticsSlice = createSlice({
     });
 
     builder.addCase(fetchUnderlyingToUsd.rejected, (sliceState, action) => {
+      const { timebucket, walletAddress, vaultId } = action.meta.arg;
+      setStatus(sliceState, 'underlyingToUsd', vaultId, timebucket, walletAddress, 'rejected');
+    });
+
+    builder.addCase(fetchClmUnderlyingToUsd.fulfilled, (sliceState, action) => {
+      const { data, vaultId, walletAddress, timebucket } = action.payload;
+      const bucketState = setStatus(
+        sliceState,
+        'underlyingToUsd',
+        vaultId,
+        timebucket,
+        walletAddress,
+        'fulfilled'
+      );
+      bucketState.data = data;
+    });
+
+    builder.addCase(fetchClmUnderlyingToUsd.pending, (sliceState, action) => {
+      const { timebucket, walletAddress, vaultId } = action.meta.arg;
+      setStatus(sliceState, 'underlyingToUsd', vaultId, timebucket, walletAddress, 'pending');
+    });
+
+    builder.addCase(fetchClmUnderlyingToUsd.rejected, (sliceState, action) => {
       const { timebucket, walletAddress, vaultId } = action.meta.arg;
       setStatus(sliceState, 'underlyingToUsd', vaultId, timebucket, walletAddress, 'rejected');
     });

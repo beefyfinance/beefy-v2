@@ -31,7 +31,7 @@ import { VaultsStats } from './components/VaultsStats';
 import { HistoricGraphsLoader } from './components/HistoricGraph';
 import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
 import { CLMBanner } from './components/CLMBanner';
-import { CowcentratedPnlGraph } from './components/CowcentratedPnlGraph';
+import { CowcentratedPnlGraphLoader } from './components/CowcentratedPnlGraph';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -98,7 +98,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
 
             {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
             {isCowcentratedLiquidityVault(vault) && (
-              <CowcentratedPnlGraph vaultId={vaultId} address={walletAddress} />
+              <CowcentratedPnlGraphLoader vaultId={vaultId} address={walletAddress} />
             )}
             {!isGovVault(vault) ? (
               <PnLGraphLoader vaultId={vaultId} address={walletAddress} />
