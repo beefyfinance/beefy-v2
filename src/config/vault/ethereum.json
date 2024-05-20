@@ -1,5 +1,44 @@
 [
   {
+    "id": "fx-dola-fxusd",
+    "name": "DOLA/fxUSD",
+    "token": "fxUSDDola",
+    "tokenAddress": "0x189B4e49B5cAf33565095097b4B960F14032C7D0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooFxConvexDOLA-fxUSD",
+    "earnedTokenAddress": "0xdB41502E5341CDBa0658AcC4033e4480385A5D49",
+    "earnContractAddress": "0xdB41502E5341CDBa0658AcC4033e4480385A5D49",
+    "oracle": "lps",
+    "oracleId": "fx-dola-fxusd",
+    "status": "active",
+    "createdAt": 1715931834,
+    "platformId": "fx",
+    "assets": ["DOLA", "fxUSD"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-108/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-108/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x189B4e49B5cAf33565095097b4B960F14032C7D0",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x189B4e49B5cAf33565095097b4B960F14032C7D0",
+            "coins": [
+              "0x865377367054516e17014CcdED1e7d814EDC9ce4",
+              "0x085780639CC2cACd35E474e71f4d000e2405d8f6"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "silo-eth-pendle-eeth-eth",
     "name": "WETH (PT-eETH Market)",
     "type": "standard",
