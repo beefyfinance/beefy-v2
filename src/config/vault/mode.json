@@ -28,7 +28,13 @@
     "buyTokenUrl": "https://velodrome.finance/swap?from=0xdfc7c877a950e49d2610114102175a06c2e3167a&to=eth",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xd988097fb8612cc24eeC14542bC03424c656005f&token1=0xf0F161fDA2712DB8b566946122a5af183995e2eD&type=-1",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x4B1BC95478826F6bC42d0471C68eEA6526576D85",
-    "network": "mode"
+    "network": "mode",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "mode-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-mode-weth-usdc",
@@ -59,7 +65,13 @@
     "buyTokenUrl": "https://velodrome.finance/swap?from=0xdfc7c877a950e49d2610114102175a06c2e3167a&to=eth",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xd988097fb8612cc24eeC14542bC03424c656005f&type=-1",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xCc16Bfda354353B2E03214d2715F514706Be044C",
-    "network": "mode"
+    "network": "mode",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "mode-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-mode-weth-mode",
@@ -90,7 +102,13 @@
     "buyTokenUrl": "https://velodrome.finance/swap?from=0xdfc7c877a950e49d2610114102175a06c2e3167a&to=eth",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xDfc7C877a950e49D2610114102175A06C2e3167a&type=-1",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x0fba984c97539B3fb49ACDA6973288D0EFA903DB",
-    "network": "mode"
+    "network": "mode",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "mode-velodrome-v2"
+      }
+    ]
   },
   {
     "id": "velodrome-mode-usdc-mode",
@@ -121,6 +139,12 @@
     "buyTokenUrl": "https://velodrome.finance/swap?from=0xdfc7c877a950e49d2610114102175a06c2e3167a&to=eth",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xd988097fb8612cc24eeC14542bC03424c656005f&token1=0xDfc7C877a950e49D2610114102175A06C2e3167a&type=-1",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x283bA4E204DFcB6381BCBf2cb5d0e765A2B57bC2",
-    "network": "mode"
+    "network": "mode",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "mode-velodrome-v2"
+      }
+    ]
   }
 ]
