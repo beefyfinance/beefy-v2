@@ -1,14 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
-
 import { Card, CardTitle, CardHeader, CardContent } from '../Card';
 import { useTranslation } from 'react-i18next';
 import { StatSwitcher } from '../StatSwitcher';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
-import { RangeSwitcher } from '../HistoricGraph/RangeSwitcher';
-import { getAvailableRanges, getDefaultTimeRange, type TimeRange } from '../HistoricGraph/utils';
 import { GraphHeader } from './components/GraphHeader';
 import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
@@ -81,7 +77,7 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
         <div className={classes.footer}>
           <div className={classes.legendContainer}>
             <div className={classes.usdReferenceLine} />
-            Position $ Value
+            {t('Position Value')}
           </div>
           <div className={classes.tabsContainer}>
             <BasicTabs

@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import {
   CartesianGrid,
   Line,
@@ -7,6 +7,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  type TooltipProps,
 } from 'recharts';
 import { usePnLChartData } from './hooks';
 import type { Theme } from '@material-ui/core';
@@ -23,6 +24,7 @@ import {
 } from '../../../../../../helpers/graph';
 import { styles } from './styles';
 import { XAxisTick } from '../../../../../../components/XAxisTick';
+import { OverviewTooltip } from '../OverviewTooltip';
 
 const useStyles = makeStyles(styles);
 
@@ -73,6 +75,11 @@ export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverview
     return xsDown ? 16 : 24;
   }, [xsDown]);
 
+  const tooltipContentCreator = useCallback(
+    (props: TooltipProps<number, string>) => <OverviewTooltip {...props} />,
+    []
+  );
+
   if (isLoading) {
     return <GraphLoader imgHeight={220} />;
   }
@@ -114,7 +121,7 @@ export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverview
             ticks={usdTicks}
             mirror={true}
           />
-          <Tooltip wrapperStyle={{ outline: 'none' }} />
+          <Tooltip wrapperStyle={{ outline: 'none' }} content={tooltipContentCreator} />
         </LineChart>
       </ResponsiveContainer>
     </div>

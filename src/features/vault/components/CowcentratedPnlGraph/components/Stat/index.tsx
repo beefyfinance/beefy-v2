@@ -9,7 +9,7 @@ interface StatProps {
   value2?: ReactNode;
   subValue0?: string;
   subValue1?: string;
-  subValue2?: string;
+  subValue2?: ReactNode;
   value2ClassName?: string;
 }
 
@@ -25,8 +25,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   label: {
-    ...theme.typography['subline-sm'],
+    ...theme.typography['body-sm-med'],
+    fontWeight: 700,
     color: theme.palette.text.dark,
+    textTransform: 'uppercase' as const,
   },
   value: {
     ...theme.typography['body-lg-med'],
@@ -34,10 +36,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
   },
   subValue: {
     ...theme.typography['body-sm-med'],
+    color: theme.palette.text.secondary,
   },
   lastValue: {
     color: theme.palette.text.dark,

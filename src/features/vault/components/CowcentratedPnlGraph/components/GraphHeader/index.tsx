@@ -11,6 +11,7 @@ import {
   formatTokenDisplayCondensed,
 } from '../../../../../../helpers/format';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
+import { Tooltip } from '../../../../../../components/Tooltip';
 
 interface GraphHeaderProps {
   vaultId: VaultEntity['id'];
@@ -34,6 +35,40 @@ const useStyles = makeStyles((theme: Theme) => ({
   gray: {
     color: theme.palette.text.dark,
   },
+  tooltipContent: {
+    ...theme.typography['body-lg'],
+    color: theme.palette.text.primary,
+    padding: '8px',
+    minWidth: '120px',
+    background: theme.palette.background.contentDark,
+    borderRadius: '4px',
+    textAlign: 'left' as const,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+  },
+  tooltipTitle: {
+    ...theme.typography['subline-sm'],
+    fontWeight: 700,
+    color: theme.palette.text.primary,
+  },
+  itemContainer: {
+    display: 'flex',
+    alignIterms: 'center',
+    justifyContent: 'space-between',
+  },
+
+  label: {
+    ...theme.typography['body-sm'],
+
+    color: theme.palette.text.secondary,
+  },
+  value: {
+    ...theme.typography['subline-sm'],
+    fontWeight: 700,
+    color: theme.palette.text.primary,
+  },
+  arrow: { color: theme.palette.background.contentDark },
 }));
 
 export const GraphHeader = memo<GraphHeaderProps>(function GraphHeader({ vaultId }) {
@@ -56,6 +91,8 @@ export const GraphHeader = memo<GraphHeaderProps>(function GraphHeader({ vaultId
     pnl,
     hold,
   } = useAppSelector(state => selectClmPnl(state, vaultId));
+
+  const holdDiff = sharesNowToUsd.minus(hold);
 
   return (
     <div className={classes.statsContainer}>
@@ -102,7 +139,28 @@ export const GraphHeader = memo<GraphHeaderProps>(function GraphHeader({ vaultId
             {formatPositiveOrNegative(pnl, formatLargeUsd(pnl), 'PNL')}{' '}
           </div>
         }
-        subValue2={`${formatLargeUsd(hold)} HOLD`}
+        subValue2={
+          <Tooltip
+            children={<div>{`${formatLargeUsd(hold)} HOLD`}</div>}
+            content={
+              <div>
+                <div className={classes.tooltipTitle}>{t('CLM vs HOLD')}</div>
+                <div className={classes.itemContainer}>
+                  <div className={classes.label}>{t('if HOLD')}</div>
+                  <div className={classes.value}>{formatLargeUsd(hold)}</div>
+                </div>
+                <div className={classes.itemContainer}>
+                  <div className={classes.label}>{t('vs CLM')}</div>
+                  <div className={classes.value}>
+                    {formatPositiveOrNegative(holdDiff, formatLargeUsd(holdDiff))}
+                  </div>
+                </div>
+              </div>
+            }
+            contentClass={classes.tooltipContent}
+            arrowClass={classes.arrow}
+          />
+        }
       />
     </div>
   );
