@@ -79,7 +79,6 @@ export const analyticsSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchWalletTimeline.fulfilled, (sliceState, action) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { timeline, cowcentratedTimeline, state } = action.payload;
       const walletAddress = action.payload.walletAddress.toLowerCase();
 
@@ -350,7 +349,6 @@ function handleCommonVaultsTimeline(timeline: VaultTimelineAnalyticsEntity[], st
 }
 
 function handleCLMsTimeline(timeline: CLMTimelineAnalyticsEntity[], state: BeefyState) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, vaultTxs] = partition(timeline, tx => tx.productKey.startsWith('beefy:boost'));
   /// // Group txs by vault id (display name = vault id)
 

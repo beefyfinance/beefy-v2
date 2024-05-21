@@ -1,31 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import type { TimeBucketType } from '../../../../../data/apis/analytics/analytics-types';
 import type { VaultEntity } from '../../../../../data/entities/vault';
 import {
   selectLastVaultDepositStart,
-  selectShareToUnderlyingTimebucketByVaultId,
   selectUnderlyingToUsdTimebucketByVaultId,
   selectUserDepositedTimelineByVaultId,
 } from '../../../../../data/selectors/analytics';
 import { selectUserBalanceOfTokensIncludingBoostsBridged } from '../../../../../data/selectors/balance';
-import {
-  selectDepositTokenByVaultId,
-  selectTokenPriceByAddress,
-} from '../../../../../data/selectors/tokens';
-import {
-  selectVaultById,
-  selectVaultPricePerFullShare,
-} from '../../../../../data/selectors/vaults';
+import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
+import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet';
-import {
-  fetchClmUnderlyingToUsd,
-  fetchUnderlyingToUsd,
-} from '../../../../../data/actions/analytics';
+import { fetchClmUnderlyingToUsd } from '../../../../../data/actions/analytics';
 import { eachDayOfInterval, isAfter } from 'date-fns';
 import { maxBy, minBy } from 'lodash';
-import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { getClmInvestorTimeserie } from '../../../../../../helpers/timeserie';
 import type { CLMTimelineAnalyticsEntity } from '../../../../../data/entities/analytics';
 
