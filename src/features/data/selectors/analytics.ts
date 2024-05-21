@@ -199,6 +199,7 @@ export const selectClmPnl = (
     token1Diff: token1.userAmount.minus(token1Shares),
     pnl: positionPnl,
     hold,
+    holdDiff: sharesNowToUsd.minus(hold),
   };
 };
 

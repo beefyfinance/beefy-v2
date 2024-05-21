@@ -63,7 +63,7 @@ export const OverviewTooltip = memo<OverviewTooltipProps>(function OverviewToolt
         {format(fromUnixTime(timestamp), 'MMM d, yyyy h:mm a')}
       </div>
       <div className={classes.itemContainer}>
-        <div className={classes.label}>{t('Graph-cowcentrated-clm')}:</div>
+        <div className={classes.label}>{t('Graph-cowcentrated-overview-tooltip')}:</div>
         {value ? <div className={classes.value}>{formatUsd(value)}</div> : null}
       </div>
     </div>

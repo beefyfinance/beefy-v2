@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import type { VaultEntity } from '../../../../../data/entities/vault';
-import { makeStyles, type Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { Stat } from '../Stat';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../store';
@@ -12,64 +12,14 @@ import {
 } from '../../../../../../helpers/format';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { Tooltip } from '../../../../../../components/Tooltip';
+import { HelpOutline } from '@material-ui/icons';
+import { styles } from './styles';
 
 interface GraphHeaderProps {
   vaultId: VaultEntity['id'];
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-  statsContainer: {
-    display: 'grid',
-    gap: '1px',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    [theme.breakpoints.down('xs')]: {
-      gridTemplateColumns: 'repeat(1, 1fr)',
-    },
-  },
-  red: {
-    color: theme.palette.background.indicators.error,
-  },
-  green: {
-    color: theme.palette.background.indicators.success,
-  },
-  gray: {
-    color: theme.palette.text.dark,
-  },
-  tooltipContent: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.primary,
-    padding: '8px',
-    minWidth: '120px',
-    background: theme.palette.background.contentDark,
-    borderRadius: '4px',
-    textAlign: 'left' as const,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-  },
-  tooltipTitle: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
-    color: theme.palette.text.primary,
-  },
-  itemContainer: {
-    display: 'flex',
-    alignIterms: 'center',
-    justifyContent: 'space-between',
-  },
-
-  label: {
-    ...theme.typography['body-sm'],
-
-    color: theme.palette.text.secondary,
-  },
-  value: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
-    color: theme.palette.text.primary,
-  },
-  arrow: { color: theme.palette.background.contentDark },
-}));
+const useStyles = makeStyles(styles);
 
 export const GraphHeader = memo<GraphHeaderProps>(function GraphHeader({ vaultId }) {
   const classes = useStyles();
@@ -90,9 +40,8 @@ export const GraphHeader = memo<GraphHeaderProps>(function GraphHeader({ vaultId
     token1Diff,
     pnl,
     hold,
+    holdDiff,
   } = useAppSelector(state => selectClmPnl(state, vaultId));
-
-  const holdDiff = sharesNowToUsd.minus(hold);
 
   return (
     <div className={classes.statsContainer}>
@@ -141,16 +90,20 @@ export const GraphHeader = memo<GraphHeaderProps>(function GraphHeader({ vaultId
         }
         subValue2={
           <Tooltip
-            children={<div>{`${formatLargeUsd(hold)} HOLD`}</div>}
+            children={
+              <div className={classes.tooltip}>
+                {`${formatLargeUsd(hold)} HOLD`} <HelpOutline />
+              </div>
+            }
             content={
               <div>
                 <div className={classes.tooltipTitle}>{t('CLM vs HOLD')}</div>
                 <div className={classes.itemContainer}>
-                  <div className={classes.label}>{t('if HOLD')}</div>
+                  <div className={classes.label}>{t('IF HELD')}</div>
                   <div className={classes.value}>{formatLargeUsd(hold)}</div>
                 </div>
                 <div className={classes.itemContainer}>
-                  <div className={classes.label}>{t('vs CLM')}</div>
+                  <div className={classes.label}>{t('VS CLM')}</div>
                   <div className={classes.value}>
                     {formatPositiveOrNegative(holdDiff, formatLargeUsd(holdDiff))}
                   </div>
