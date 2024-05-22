@@ -24,6 +24,7 @@ export const styles = (theme: Theme) => ({
     gridTemplateColumns: 'repeat(2,minmax(0, 50fr))',
     columnGap: '8px',
     position: 'relative' as const,
+    alignItems: 'start',
   },
   statMobile: {
     ...theme.typography['body-sm'],

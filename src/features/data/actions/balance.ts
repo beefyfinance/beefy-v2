@@ -24,7 +24,7 @@ import {
 import { selectWalletAddress } from '../selectors/wallet';
 import type { TokenEntity } from '../entities/token';
 import {
-  isCowcentratedLiquidityVault,
+  isCowcentratedVault,
   isGovVault,
   isStandardVault,
   type VaultEntity,
@@ -106,7 +106,7 @@ export const fetchBalanceAction = createAsyncThunk<
         if (isGovVault(vault)) {
           govVaults.push(vault);
         } else {
-          if (!isCowcentratedLiquidityVault(vault)) {
+          if (!isCowcentratedVault(vault)) {
             tokens.push(selectTokenByAddress(state, chain.id, vault.depositTokenAddress));
           }
           tokens.push(selectTokenByAddress(state, chain.id, vault.earnedTokenAddress));
@@ -152,7 +152,7 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
   for (const vaultId of allVaultIds) {
     const vault = selectVaultById(state, vaultId);
 
-    if (isStandardVault(vault) || isCowcentratedLiquidityVault(vault)) {
+    if (isStandardVault(vault) || isCowcentratedVault(vault)) {
       // standard vaults via receipt tokens
       let deposited = false;
       const balance = selectUserBalanceOfToken(

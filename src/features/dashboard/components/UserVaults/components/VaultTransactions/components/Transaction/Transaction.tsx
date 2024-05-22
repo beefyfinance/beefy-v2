@@ -1,12 +1,16 @@
 import React, { memo, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import type { VaultTimelineAnalyticsEntity } from '../../../../../../../data/entities/analytics';
+import {
+  type CLMTimelineAnalyticsEntity,
+  isVaultTimelineAnalyticsEntity,
+  type VaultTimelineAnalyticsEntity,
+} from '../../../../../../../data/entities/analytics';
 import clsx from 'clsx';
 import { formatISO9075 } from 'date-fns';
 import {
-  formatTokenDisplayCondensed,
   formatLargeUsd,
+  formatTokenDisplayCondensed,
 } from '../../../../../../../../helpers/format';
 import { BIG_ZERO } from '../../../../../../../../helpers/big-number';
 import { Row, RowMobile } from '../../../Row/Row';
@@ -22,28 +26,112 @@ import { VaultNetwork } from '../../../../../../../../components/VaultIdentity';
 
 const useStyles = makeStyles(styles);
 
-interface TransactionProps {
-  data: VaultTimelineAnalyticsEntity;
+type TransactionProps = {
+  data: VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity;
   tokenDecimals: number;
-}
+};
+
+type TransactionStatProps<
+  T extends VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity =
+    | VaultTimelineAnalyticsEntity
+    | CLMTimelineAnalyticsEntity
+> = {
+  data: T;
+  mobile?: boolean;
+  tokenDecimals: number;
+};
+
+const StandardAmountStat = memo<TransactionStatProps<VaultTimelineAnalyticsEntity>>(
+  function StandardAmountStat({ data, tokenDecimals, mobile }) {
+    const classes = useStyles();
+    const { underlyingDiff } = data;
+
+    return (
+      <TokenAmount
+        className={clsx(
+          underlyingDiff.gt(BIG_ZERO) ? classes.textGreen : classes.textRed,
+          mobile ? classes.statMobile : classes.stat
+        )}
+        amount={underlyingDiff}
+        decimals={tokenDecimals}
+      />
+    );
+  }
+);
+
+const CowcentratedAmountStat = memo<TransactionStatProps<CLMTimelineAnalyticsEntity>>(
+  function CowcentratedAmountStat({ data, mobile }) {
+    const classes = useStyles();
+    const { underlying0Diff, underlying1Diff } = data;
+
+    return (
+      <>
+        <TokenAmount
+          className={clsx(
+            underlying0Diff.gt(BIG_ZERO) ? classes.textGreen : classes.textRed,
+            mobile ? classes.statMobile : classes.stat
+          )}
+          amount={underlying0Diff}
+          decimals={18}
+        />
+        {'/'}
+        <TokenAmount
+          className={clsx(
+            underlying1Diff.gt(BIG_ZERO) ? classes.textGreen : classes.textRed,
+            mobile ? classes.statMobile : classes.stat
+          )}
+          amount={underlying1Diff}
+          decimals={18}
+        />
+      </>
+    );
+  }
+);
+
+const StandardBalanceStat = memo<TransactionStatProps<VaultTimelineAnalyticsEntity>>(
+  function StandardBalanceStat({ data, tokenDecimals, mobile }) {
+    const classes = useStyles();
+    const { shareBalance, shareToUnderlyingPrice } = data;
+
+    return (
+      <TokenAmount
+        amount={shareBalance.times(shareToUnderlyingPrice)}
+        decimals={tokenDecimals}
+        className={mobile ? classes.statMobile : classes.stat}
+      />
+    );
+  }
+);
+
+const CowcentratedBalanceStat = memo<TransactionStatProps<CLMTimelineAnalyticsEntity>>(
+  function CowcentratedBalanceStat({ data, mobile }) {
+    const classes = useStyles();
+    const { underlying0Balance, underlying1Balance } = data;
+
+    return (
+      <>
+        <TokenAmount
+          amount={underlying0Balance}
+          decimals={18}
+          className={mobile ? classes.statMobile : classes.stat}
+        />
+        {'/'}
+        <TokenAmount
+          amount={underlying1Balance}
+          decimals={18}
+          className={mobile ? classes.statMobile : classes.stat}
+        />
+      </>
+    );
+  }
+);
 
 export const Transaction = memo<TransactionProps>(function Transaction({ data, tokenDecimals }) {
   const classes = useStyles();
-  const chainId = data.source?.chain || data.chain;
+  const isStandard = isVaultTimelineAnalyticsEntity(data);
+  const chainId = isStandard ? data.source?.chain || data.chain : data.chain;
   const chain = useAppSelector(state => selectChainById(state, chainId));
-  const {
-    datetime,
-    shareBalance,
-    usdBalance,
-    underlyingDiff,
-    shareToUnderlyingPrice,
-    underlyingToUsdPrice,
-    transactionHash,
-  } = data;
-
-  const amountClassName = useMemo(() => {
-    return underlyingDiff.gt(BIG_ZERO) ? classes.textGreen : classes.textRed;
-  }, [classes.textGreen, classes.textRed, underlyingDiff]);
+  const { datetime, shareBalance, usdBalance, transactionHash } = data;
 
   return (
     <Row>
@@ -72,30 +160,23 @@ export const Transaction = memo<TransactionProps>(function Transaction({ data, t
       <InfoGrid>
         {/*Amount */}
         <div className={classes.column}>
-          <TokenAmount
-            className={clsx(amountClassName, classes.stat)}
-            amount={underlyingDiff}
-            decimals={tokenDecimals}
-            price={underlyingToUsdPrice || BIG_ZERO}
-          />
+          {isStandard ? (
+            <StandardAmountStat data={data} tokenDecimals={tokenDecimals} />
+          ) : (
+            <CowcentratedAmountStat data={data} tokenDecimals={tokenDecimals} />
+          )}
         </div>
+        {/*Balance */}
         <div className={classes.column}>
-          {/*Balance */}
-          <TokenAmount
-            amount={shareBalance.times(shareToUnderlyingPrice)}
-            decimals={tokenDecimals}
-            price={underlyingToUsdPrice || BIG_ZERO}
-            className={classes.stat}
-          />
+          {isStandard ? (
+            <StandardBalanceStat data={data} tokenDecimals={tokenDecimals} />
+          ) : (
+            <CowcentratedBalanceStat data={data} tokenDecimals={tokenDecimals} />
+          )}
         </div>
         {/*MooTokenBal */}
         <div className={classes.column}>
-          <TokenAmount
-            amount={shareBalance}
-            decimals={18}
-            price={shareToUnderlyingPrice}
-            className={classes.stat}
-          />
+          <TokenAmount amount={shareBalance} decimals={18} className={classes.stat} />
         </div>
         {/*Usd Balance */}
         <div className={classes.column}>
@@ -112,34 +193,24 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const chainId = data.source?.chain || data.chain;
+  const isStandard = isVaultTimelineAnalyticsEntity(data);
+  const chainId = isStandard ? data.source?.chain || data.chain : data.chain;
   const chain = useAppSelector(state => selectChainById(state, chainId));
-  const { datetime, shareBalance, usdBalance, underlyingDiff, underlyingBalance, transactionHash } =
-    data;
-
-  const amountClassName = useMemo(() => {
-    return underlyingDiff.gt(BIG_ZERO) ? classes.textGreen : classes.textRed;
-  }, [classes.textGreen, classes.textRed, underlyingDiff]);
-
-  const balance = useMemo(() => {
-    return formatTokenDisplayCondensed(underlyingBalance, tokenDecimals);
-  }, [underlyingBalance, tokenDecimals]);
+  const { datetime, shareBalance, usdBalance, transactionHash } = data;
 
   const mooTokenBal = useMemo(() => {
     return formatTokenDisplayCondensed(shareBalance, 18);
   }, [shareBalance]);
 
-  const diff = useMemo(() => {
-    return formatTokenDisplayCondensed(underlyingDiff, tokenDecimals);
-  }, [underlyingDiff, tokenDecimals]);
-
   return (
     <RowMobile className={classes.gridMobile}>
       <VaultNetwork className={classes.vaultNetwork} chainId={chainId} />
       <InfoGrid>
-        <div className={clsx(amountClassName, classes.statMobile)}>{`${
-          underlyingDiff.gt(BIG_ZERO) ? ' +' : ''
-        } ${diff}`}</div>
+        {isStandard ? (
+          <StandardAmountStat data={data} tokenDecimals={tokenDecimals} mobile />
+        ) : (
+          <CowcentratedAmountStat data={data} tokenDecimals={tokenDecimals} mobile />
+        )}
         {/* Date */}
         <div className={classes.statMobile}>
           {transactionHash ? (
@@ -163,7 +234,13 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
         <MobileStat
           valueClassName={classes.textOverflow}
           label={t('Dashboard-Filter-Balance')}
-          value={balance}
+          value={
+            isStandard ? (
+              <StandardBalanceStat data={data} tokenDecimals={tokenDecimals} mobile />
+            ) : (
+              <CowcentratedBalanceStat data={data} tokenDecimals={tokenDecimals} mobile />
+            )
+          }
         />
         <MobileStat
           valueClassName={classes.textOverflow}

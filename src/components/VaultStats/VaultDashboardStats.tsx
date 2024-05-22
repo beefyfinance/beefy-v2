@@ -24,7 +24,6 @@ export type VaultStatsProps = {
 export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ vaultId, address }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
   const pnlData = useAppSelector(state => selectVaultPnl(state, vaultId, address));
 
   return (

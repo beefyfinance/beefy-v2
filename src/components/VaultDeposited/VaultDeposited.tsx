@@ -74,7 +74,7 @@ const _BoostedVaultDepositedLarge = connect(
     return (
       <ValueBlock
         label={t('Vault-deposited')}
-        value={<TokenAmountFromEntity amount={deposit} token={depositToken} minShortPlaces={4} />}
+        value={<TokenAmountFromEntity amount={deposit} token={depositToken} />}
         usdValue={hasDeposit ? depositUsd : null}
         blurred={blurred}
         loading={loading}
@@ -133,7 +133,7 @@ const _NonBoostedVaultDeposited = connect(
     return (
       <ValueBlock
         label={t('Vault-deposited')}
-        value={<TokenAmountFromEntity amount={deposit} token={depositToken} minShortPlaces={4} />}
+        value={<TokenAmountFromEntity amount={deposit} token={depositToken} />}
         usdValue={hasDeposit ? depositUsd : null}
         blurred={blurred}
         loading={loading}

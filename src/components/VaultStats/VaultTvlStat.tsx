@@ -1,4 +1,4 @@
-import { isCowcentratedLiquidityVault, type VaultEntity } from '../../features/data/entities/vault';
+import { isCowcentratedVault, type VaultEntity } from '../../features/data/entities/vault';
 import { memo, useMemo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
@@ -49,9 +49,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
   );
 
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const platformId = isCowcentratedLiquidityVault(vault)
-    ? depositToken.providerId!
-    : vault.platformId;
+  const platformId = isCowcentratedVault(vault) ? depositToken.providerId! : vault.platformId;
 
   if (!breakdown) {
     return {

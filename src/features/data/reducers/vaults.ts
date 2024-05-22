@@ -10,7 +10,7 @@ import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsLastHarvests } from '..
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import type { ChainEntity } from '../entities/chain';
 import {
-  isCowcentratedLiquidityVault,
+  isCowcentratedVault,
   isGovVault,
   isStandardVault,
   type VaultCowcentrated,
@@ -386,7 +386,7 @@ function addVaultToState(
       chainState.allBridgedIds.push(vault.id);
       sliceState.allBridgedIds.push(vault.id);
     }
-  } else if (isCowcentratedLiquidityVault(vault)) {
+  } else if (isCowcentratedVault(vault)) {
     const depositTokenKey = vault.depositTokenAddress.toLowerCase();
     const byDepositTokenAddress =
       chainState.cowcentratedVault.byDepositTokenAddress[depositTokenKey];

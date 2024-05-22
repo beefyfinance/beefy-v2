@@ -1,6 +1,16 @@
 import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
+  vaultRow: {
+    borderBottom: `solid 2px ${theme.palette.background.contentDark}`,
+    '&:last-child': {
+      borderBottom: 0,
+      borderBottomLeftRadius: '8px',
+      borderBottomRightRadius: '8px',
+      backgroundClip: 'padding-box',
+      overflow: 'hidden',
+    },
+  },
   vault: {
     display: 'grid',
     position: 'relative' as const,
@@ -8,13 +18,6 @@ export const styles = (theme: Theme) => ({
     background: theme.palette.background.contentPrimary,
     padding: '24px 16px',
     textDecoration: 'none',
-    borderBottom: `solid 2px ${theme.palette.background.contentDark}`,
-    '&:last-child': {
-      borderBottom: 0,
-      borderBottomLeftRadius: '8px',
-      borderBottomRightRadius: '8px',
-      backgroundClip: 'padding-box',
-    },
     '&:hover': {
       cursor: 'pointer',
     },

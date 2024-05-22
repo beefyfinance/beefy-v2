@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { isCowcentratedLiquidityVault, type VaultEntity } from '../../features/data/entities/vault';
+import { isCowcentratedVault, type VaultEntity } from '../../features/data/entities/vault';
 import { selectVaultTvl } from '../../features/data/selectors/tvl';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { formatLargeUsd } from '../../helpers/format';
@@ -44,7 +44,7 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
 
   const token = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
-  const platformId = isCowcentratedLiquidityVault(vault) ? token.providerId : vault.platformId;
+  const platformId = isCowcentratedVault(vault) ? token.providerId : vault.platformId;
 
   if (!breakdown) {
     return {

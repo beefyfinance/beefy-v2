@@ -2,12 +2,11 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   mobileStat: {
+    ...theme.typography['body-sm'],
     display: 'flex',
     alignItems: 'center',
     columnGap: '8px',
-    ...theme.typography['body-sm'],
     color: theme.palette.text.dark,
-    '& div': {},
     [theme.breakpoints.down('md')]: {
       justifyContent: 'space-between',
     },
