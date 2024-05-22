@@ -26,7 +26,7 @@ export interface fetchWalletTimelineFulfilled {
 
 function makeTransactionId(config: TimelineAnalyticsConfig | CLMTimelineAnalyticsConfig): string {
   if (config.transaction_hash) {
-    return config.transaction_hash;
+    return `${config.chain}:${config.transaction_hash}`;
   }
 
   // old data doesn't have transaction_hash so we try to make an id that is the same for a given vault/boost tx
@@ -45,6 +45,7 @@ export const fetchWalletTimeline = createAsyncThunk<
 
   const timeline = databarnTimeline.map((row): VaultTimelineAnalyticsEntity => {
     return {
+      type: 'standard',
       transactionId: makeTransactionId(row), // old data doesn't have transaction_hash
       datetime: new Date(row.datetime),
       productKey: row.product_key,
@@ -68,7 +69,8 @@ export const fetchWalletTimeline = createAsyncThunk<
 
   const cowcentratedTimeline = clmTimeline.map((row): CLMTimelineAnalyticsEntity => {
     return {
-      transactionId: makeTransactionId(row), // old data doesn't have transaction_hash
+      type: 'cowcentrated',
+      transactionId: makeTransactionId(row),
       datetime: new Date(row.datetime),
       productKey: row.product_key,
       displayName: row.display_name,
@@ -82,8 +84,8 @@ export const fetchWalletTimeline = createAsyncThunk<
       underlying1Balance: new BigNumber(row.underlying1_balance),
       underlying0Diff: new BigNumber(row.underlying0_diff),
       underlying1Diff: new BigNumber(row.underlying1_diff),
-      usdBalance: isFiniteNumber(row.usd_balance) ? new BigNumber(row.usd_balance) : null,
-      usdDiff: isFiniteNumber(row.usd_diff) ? new BigNumber(row.usd_diff) : null,
+      usdBalance: new BigNumber(row.usd_balance),
+      usdDiff: new BigNumber(row.usd_diff),
       shareBalance: new BigNumber(row.share_balance),
       shareDiff: new BigNumber(row.share_diff),
     };

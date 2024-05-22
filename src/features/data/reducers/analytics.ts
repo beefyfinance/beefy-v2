@@ -30,15 +30,10 @@ export interface AnalyticsState {
   byAddress: {
     [address: string]: {
       timeline: {
-        databarnTimeline: {
-          byVaultId: {
-            [vaultId: VaultEntity['id']]: VaultTimelineAnalyticsEntity[];
-          };
-        };
-        clmTimeline: {
-          byVaultId: {
-            [vaultId: VaultEntity['id']]: CLMTimelineAnalyticsEntity[];
-          };
+        byVaultId: {
+          [vaultId: VaultEntity['id']]:
+            | VaultTimelineAnalyticsEntity[]
+            | CLMTimelineAnalyticsEntity[];
         };
       };
       shareToUnderlying: {
@@ -79,18 +74,16 @@ export const analyticsSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchWalletTimeline.fulfilled, (sliceState, action) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { timeline, cowcentratedTimeline, state } = action.payload;
       const walletAddress = action.payload.walletAddress.toLowerCase();
 
       const addressState = getOrCreateAnalyticsAddressState(sliceState, walletAddress);
 
-      const commonVaultsByVaultId = handleCommonVaultsTimeline(timeline, state);
+      const commonVaultsByVaultId = handleStandardTimeline(timeline, state);
 
-      const clmsByVaultId = handleCLMsTimeline(cowcentratedTimeline, state);
+      const clmsByVaultId = handleCowcentratedTimeline(cowcentratedTimeline, state);
 
-      addressState.timeline.databarnTimeline.byVaultId = commonVaultsByVaultId;
-      addressState.timeline.clmTimeline.byVaultId = clmsByVaultId;
+      addressState.timeline.byVaultId = { ...commonVaultsByVaultId, ...clmsByVaultId };
     });
 
     builder.addCase(fetchShareToUnderlying.fulfilled, (sliceState, action) => {
@@ -248,7 +241,7 @@ function getOrCreateAnalyticsAddressState(
 
   if (!addressState) {
     addressState = sliceState.byAddress[walletAddress] = {
-      timeline: { clmTimeline: { byVaultId: {} }, databarnTimeline: { byVaultId: {} } },
+      timeline: { byVaultId: {} },
       shareToUnderlying: { byVaultId: {} },
       underlyingToUsd: { byVaultId: {} },
     };
@@ -257,7 +250,7 @@ function getOrCreateAnalyticsAddressState(
   return addressState;
 }
 
-function handleCommonVaultsTimeline(timeline: VaultTimelineAnalyticsEntity[], state: BeefyState) {
+function handleStandardTimeline(timeline: VaultTimelineAnalyticsEntity[], state: BeefyState) {
   // Separate out all boost txs
   const [boostTxs, vaultTxs] = partition(timeline, tx => tx.productKey.startsWith('beefy:boost'));
 
@@ -349,8 +342,7 @@ function handleCommonVaultsTimeline(timeline: VaultTimelineAnalyticsEntity[], st
   return byVaultId;
 }
 
-function handleCLMsTimeline(timeline: CLMTimelineAnalyticsEntity[], state: BeefyState) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+function handleCowcentratedTimeline(timeline: CLMTimelineAnalyticsEntity[], state: BeefyState) {
   const [_, vaultTxs] = partition(timeline, tx => tx.productKey.startsWith('beefy:boost'));
   /// // Group txs by vault id (display name = vault id)
 

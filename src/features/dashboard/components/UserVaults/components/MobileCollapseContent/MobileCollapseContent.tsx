@@ -10,6 +10,8 @@ import { VaultTransactions } from '../VaultTransactions';
 import { DashboardPnLGraph } from '../../../../../vault/components/PnLGraph';
 import { useAppSelector } from '../../../../../../store';
 import { selectHasDataToShowGraphByVaultId } from '../../../../../data/selectors/analytics';
+import { selectIsVaultCowcentrated } from '../../../../../data/selectors/vaults';
+import { DashboardCowcentratedPnLGraph } from '../../../../../vault/components/CowcentratedPnlGraph';
 
 const useStyles = makeStyles(styles);
 
@@ -25,6 +27,8 @@ export const MobileCollapseContent = memo<MobileCollapseContentProps>(
     const classes = useStyles();
     const [listComponent, setShowStats] = useState<ListComponentType>('stats');
     const { t } = useTranslation();
+    const isCowcentrated = useAppSelector(state => selectIsVaultCowcentrated(state, vaultId));
+    const GraphComponent = isCowcentrated ? DashboardCowcentratedPnLGraph : DashboardPnLGraph;
 
     const hasAnalyticsData = useAppSelector(state =>
       selectHasDataToShowGraphByVaultId(state, vaultId, address)
@@ -59,7 +63,7 @@ export const MobileCollapseContent = memo<MobileCollapseContentProps>(
           <VaultDashboardMobileStats address={address} vaultId={vaultId} />
         )}
         {listComponent === 'txHistory' && <VaultTransactions address={address} vaultId={vaultId} />}
-        {listComponent === 'chart' && <DashboardPnLGraph address={address} vaultId={vaultId} />}
+        {listComponent === 'chart' && <GraphComponent address={address} vaultId={vaultId} />}
       </div>
     );
   }

@@ -47,11 +47,7 @@ export const VaultTransactions = memo<VaultTransactionsProps>(function VaultTran
       <TransactionsFilter sortOptions={sortedOptions} handleSort={handleSort} />
       {sortedTimeline.map(tx => {
         return (
-          <TxComponent
-            key={tx.datetime.getTime()}
-            tokenDecimals={depositToken.decimals}
-            data={tx}
-          />
+          <TxComponent key={tx.transactionId} tokenDecimals={depositToken.decimals} data={tx} />
         );
       })}
     </div>

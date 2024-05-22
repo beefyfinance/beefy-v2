@@ -59,12 +59,10 @@ const DepositedInVault = memo(function DepositedInVault() {
   }
 
   if (forceSelection) {
-    return <TokenAmountFromEntity amount={balance} token={token} minShortPlaces={4} />;
+    return <TokenAmountFromEntity amount={balance} token={token} />;
   }
 
-  return (
-    <TokenAmountFromEntity onClick={handleMax} amount={balance} token={token} minShortPlaces={4} />
-  );
+  return <TokenAmountFromEntity onClick={handleMax} amount={balance} token={token} />;
 });
 
 export const WithdrawFormLoader = memo(function WithdrawFormLoader() {

@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useMemo, useState } from 'react';
 import type { Theme } from '@material-ui/core';
-import { Collapse, makeStyles, useMediaQuery } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
 import type { VaultEntity } from '../../../../../data/entities/vault';
 import { VaultIdentity } from '../../../../../../components/VaultIdentity';
@@ -20,6 +20,7 @@ import { DashboardPnLGraph } from '../../../../../vault/components/PnLGraph';
 import { ToggleButtons } from '../../../../../../components/ToggleButtons';
 import { useTranslation } from 'react-i18next';
 import { selectHasDataToShowGraphByVaultId } from '../../../../../data/selectors/analytics';
+import { DashboardCowcentratedPnLGraph } from '../../../../../vault/components/CowcentratedPnlGraph';
 
 const useStyles = makeStyles(styles);
 
@@ -39,10 +40,10 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
   const hasAnalyticsData = useAppSelector(state =>
     selectHasDataToShowGraphByVaultId(state, vaultId, address)
   );
-
+  const GraphComponent = isCowcentrated ? DashboardCowcentratedPnLGraph : DashboardPnLGraph;
   const handleOpen = useCallback(() => {
-    setOpen(!open);
-  }, [open]);
+    setOpen(o => !o);
+  }, [setOpen]);
 
   const mobileView = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
 
@@ -66,7 +67,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
   }, []);
 
   return (
-    <div>
+    <div className={classes.vaultRow}>
       <div
         onClick={handleOpen}
         className={clsx({
@@ -75,7 +76,6 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
           [classes.vaultClm]: isCowcentrated,
           [classes.vaultPaused]: isPaused,
           [classes.vaultRetired]: isRetired,
-          vault: true,
         })}
       >
         <div className={classes.vaultInner}>
@@ -83,8 +83,8 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
           <VaultDashboardStats vaultId={vaultId} address={address} />
         </div>
       </div>
-      <Collapse in={open} timeout="auto">
-        {mobileView ? (
+      {open ? (
+        mobileView ? (
           <MobileCollapseContent address={address} vaultId={vaultId} />
         ) : (
           <>
@@ -98,13 +98,11 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
               {listComponent === 'txHistory' && (
                 <VaultTransactions address={address} vaultId={vaultId} />
               )}
-              {listComponent === 'chart' && (
-                <DashboardPnLGraph address={address} vaultId={vaultId} />
-              )}
+              {listComponent === 'chart' && <GraphComponent address={address} vaultId={vaultId} />}
             </div>
           </>
-        )}
-      </Collapse>
+        )
+      ) : null}
     </div>
   );
 });

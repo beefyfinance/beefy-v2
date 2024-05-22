@@ -32,8 +32,9 @@ import { sortBy } from 'lodash-es';
 import { createSelector } from '@reduxjs/toolkit';
 import { selectChainById } from './chains';
 import { selectVaultPnl } from './analytics';
-import type { VaultPnLDataType } from '../../../components/VaultStats/types';
 import { entries } from '../../../helpers/object';
+import type { UserLpBreakdownBalance } from './balance-types';
+import { isUserClmPnl, type UserVaultPnl } from './analytics-types';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (walletAddress) {
@@ -548,7 +549,7 @@ export const selectUserLpBreakdownBalance = (
   vault: VaultEntity,
   breakdown: TokenLpBreakdown,
   walletAddress?: string
-) => {
+): UserLpBreakdownBalance => {
   const lpTotalSupplyDecimal = new BigNumber(breakdown.totalSupply);
   const underlyingTotalSupplyDecimal = new BigNumber(breakdown?.underlyingLiquidity || 0);
   const userBalanceDecimal = isGovVault(vault)
@@ -797,7 +798,7 @@ export const selectUserVaultBalances = (state: BeefyState) => {
 
 export const selectUserVaultsPnl = (state: BeefyState, walletAddress?: string) => {
   const userVaults = selectUserDepositedVaultIds(state, walletAddress);
-  const vaults: Record<string, VaultPnLDataType> = {};
+  const vaults: Record<string, UserVaultPnl> = {};
   for (const vaultId of userVaults) {
     vaults[vaultId] = selectVaultPnl(state, vaultId, walletAddress);
   }
@@ -809,7 +810,8 @@ export const selectUserTotalYieldUsd = (state: BeefyState, walletAddress?: strin
 
   let totalYieldUsd = BIG_ZERO;
   for (const vaultPnl of Object.values(vaultPnls)) {
-    totalYieldUsd = totalYieldUsd.plus(vaultPnl.totalYieldUsd);
+    // TODO fix for CLM
+    totalYieldUsd = totalYieldUsd.plus(isUserClmPnl(vaultPnl) ? BIG_ZERO : vaultPnl.totalYieldUsd);
   }
 
   return totalYieldUsd;

@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { PnL, clmPnl } from '../../../helpers/pnl';
+import { ClmPnl, PnL } from '../../../helpers/pnl';
 import type { BeefyState } from '../../../redux-types';
 import type { TimeBucketType } from '../apis/analytics/analytics-types';
-import type { VaultEntity } from '../entities/vault';
-import { isCowcentratedLiquidityVault, isGovVault } from '../entities/vault';
+import { isCowcentratedVault, isGovVault, type VaultEntity } from '../entities/vault';
 import {
   selectLpBreakdownByTokenAddress,
   selectTokenByAddress,
@@ -15,31 +13,39 @@ import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { selectUserDepositedVaultIds, selectUserLpBreakdownBalance } from './balance';
 import { selectWalletAddress } from './wallet';
 import { selectIsConfigAvailable } from './data-loader';
-import type { AnalyticsBucketData } from '../reducers/analytics';
+import type { AnalyticsBucketData, AnalyticsState } from '../reducers/analytics';
 import type {
   CLMTimelineAnalyticsEntity,
   VaultTimelineAnalyticsEntity,
 } from '../entities/analytics';
+import { createSelector } from '@reduxjs/toolkit';
+import type { UserClmPnl, UserGovPnl, UserStandardPnl, UserVaultPnl } from './analytics-types';
+
+export const selectUserAnalytics = createSelector(
+  (state: BeefyState, address?: string) => address || selectWalletAddress(state),
+  (state: BeefyState, _address?: string) => state.user.analytics,
+  (walletAddress, analyticsState): AnalyticsState['byAddress']['0x'] | undefined => {
+    if (!walletAddress) {
+      return undefined;
+    }
+
+    return analyticsState.byAddress[walletAddress.toLowerCase()] || undefined;
+  }
+);
 
 export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], address?: string) =>
-    address || selectWalletAddress(state),
-  (state: BeefyState, _vaultId: VaultEntity['id'], _address?: string) => state.user.analytics,
+    selectUserAnalytics(state, address),
   (state: BeefyState, vaultId: VaultEntity['id'], _address?: string) =>
     selectVaultById(state, vaultId),
-
-  (walletAddress, analyticsState, vault) => {
-    if (!walletAddress) {
+  (userAnalytics, vault): VaultTimelineAnalyticsEntity[] | CLMTimelineAnalyticsEntity[] => {
+    if (!userAnalytics) {
       return [];
     }
 
-    return (
-      analyticsState.byAddress[walletAddress.toLowerCase()]?.timeline[
-        isCowcentratedLiquidityVault(vault) ? 'clmTimeline' : 'databarnTimeline'
-      ].byVaultId[vault.id] || []
-    );
+    return userAnalytics.timeline.byVaultId[vault.id] || [];
   }
-)((state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
+)((_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
 
 export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAddress: string) => {
   if (!walletAddress) {
@@ -62,7 +68,7 @@ export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAd
   }
 
   for (const chainId of Object.values(dataByAddress.byChainId)) {
-    if (chainId.balance.alreadyLoadedOnce && chainId.balance.status === 'fulfilled') {
+    if (chainId.balance.alreadyLoadedOnce) {
       // if any chain has already loaded, then  data is available
       return true;
     }
@@ -75,12 +81,15 @@ export const selectIsAnalyticsLoadedByAddress = (state: BeefyState, walletAddres
   return state.ui.dataLoader.byAddress[walletAddress]?.global.timeline.alreadyLoadedOnce || false;
 };
 
-export const selectVaultPnl = (
+export const selectStandardGovPnl = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
-) => {
+): UserStandardPnl | UserGovPnl => {
   const vault = selectVaultById(state, vaultId);
+  if (isCowcentratedVault(vault)) {
+    throw new Error('This function should not be called for cowcentrated vaults');
+  }
 
   const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
 
@@ -120,6 +129,7 @@ export const selectVaultPnl = (
   const pnlPercentage = totalPnlUsd.dividedBy(usdBalanceAtDeposit);
 
   return {
+    type: vault.type,
     totalYield,
     totalYieldUsd,
     totalPnlUsd,
@@ -139,7 +149,7 @@ export const selectClmPnl = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
-) => {
+): UserClmPnl => {
   const vault = selectVaultById(state, vaultId);
 
   const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
@@ -157,7 +167,7 @@ export const selectClmPnl = (
   const token0 = assets[0];
   const token1 = assets[1];
 
-  const pnl = new clmPnl();
+  const pnl = new ClmPnl();
 
   for (const tx of sortedTimeline as CLMTimelineAnalyticsEntity[]) {
     pnl.addTransaction({
@@ -183,6 +193,7 @@ export const selectClmPnl = (
   const hold = token0Shares.times(token0.price).plus(token1Shares.times(token1.price));
 
   return {
+    type: 'cowcentrated',
     userSharesAtDeposit: remainingShares,
     token0EntryPrice,
     token1EntryPrice,
@@ -198,9 +209,22 @@ export const selectClmPnl = (
     token0Diff: token0.userAmount.minus(token0Shares),
     token1Diff: token1.userAmount.minus(token1Shares),
     pnl: positionPnl,
+    pnlPercentage: positionPnl.dividedBy(oraclePriceAtDeposit),
     hold,
     holdDiff: sharesNowToUsd.minus(hold),
   };
+};
+
+export const selectVaultPnl = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+): UserVaultPnl => {
+  const vault = selectVaultById(state, vaultId);
+  if (isCowcentratedVault(vault)) {
+    return selectClmPnl(state, vaultId, walletAddress);
+  }
+  return selectStandardGovPnl(state, vaultId, walletAddress);
 };
 
 export const selectLastVaultDepositStart = (

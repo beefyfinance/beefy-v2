@@ -1,11 +1,11 @@
 import type { VaultEntity } from '../../features/data/entities/vault';
-import { memo } from 'react';
+import { memo, type ReactNode } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
 import {
   formatLargeUsd,
-  formatTokenDisplayCondensed,
   formatTokenDisplay,
+  formatTokenDisplayCondensed,
 } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import {
@@ -13,13 +13,12 @@ import {
   selectUserDepositedTimelineByVaultId,
 } from '../../features/data/selectors/analytics';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
-import type { VaultPnLDataType } from './types';
-import { selectIsVaultCowcentrated } from '../../features/data/selectors/vaults';
+import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types';
 
 export type VaultYieldStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
-  pnlData: VaultPnLDataType;
+  pnlData: UserVaultPnl;
   walletAddress: string;
 };
 
@@ -30,14 +29,10 @@ function mapStateToProps(
   { vaultId, className, pnlData, walletAddress }: VaultYieldStatProps
 ) {
   const label = 'VaultStat-Yield';
-
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
-
   const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
 
-  const isCowcentratedVault = selectIsVaultCowcentrated(state, vaultId);
-
-  if (!vaultTimeline || isCowcentratedVault) {
+  if (!vaultTimeline) {
     return {
       label,
       value: '-',
@@ -58,13 +53,23 @@ function mapStateToProps(
     };
   }
 
-  const { totalYield, totalYieldUsd, tokenDecimals } = pnlData;
+  let value: string, subValue: string | null, tooltip: ReactNode | null;
+  if (isUserClmPnl(pnlData)) {
+    value = 'N/A';
+    subValue = null;
+    tooltip = null;
+  } else {
+    const { totalYield, totalYieldUsd, tokenDecimals } = pnlData;
+    value = formatTokenDisplayCondensed(totalYield, tokenDecimals);
+    tooltip = <BasicTooltipContent title={formatTokenDisplay(totalYield, tokenDecimals)} />;
+    subValue = formatLargeUsd(totalYieldUsd);
+  }
 
   return {
     label,
-    value: formatTokenDisplayCondensed(totalYield, tokenDecimals),
-    tooltip: <BasicTooltipContent title={formatTokenDisplay(totalYield, tokenDecimals)} />,
-    subValue: formatLargeUsd(totalYieldUsd),
+    value,
+    tooltip,
+    subValue,
     blur: false,
     loading: !isLoaded,
     boosted: false,

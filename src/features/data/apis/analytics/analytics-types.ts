@@ -8,13 +8,14 @@ export interface CommonTimelineAnalyticsConfig {
   is_dashboard_eol: boolean;
   is_eol: boolean;
   product_key: string;
+}
+
+export type TimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
+  transaction_hash: string | null;
   share_balance: number;
   share_diff: number;
-  transaction_hash: string;
   usd_balance: number | null;
   usd_diff: number | null;
-}
-export type TimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
   share_to_underlying_price: number;
   underlying_balance: number;
   underlying_diff: number;
@@ -22,12 +23,17 @@ export type TimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
 };
 
 export type CLMTimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
-  token0_to_usd: number;
-  token1_to_usd: number;
-  underlying0_balance: number;
-  underlying1_balance: number;
-  underlying0_diff: number;
-  underlying1_diff: number;
+  transaction_hash: string;
+  share_balance: string;
+  share_diff: string;
+  usd_balance: string;
+  usd_diff: string;
+  token0_to_usd: string;
+  token1_to_usd: string;
+  underlying0_balance: string;
+  underlying1_balance: string;
+  underlying0_diff: string;
+  underlying1_diff: string;
 };
 
 export type AnalyticsUserTimelineResponse = {

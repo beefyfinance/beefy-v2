@@ -167,7 +167,7 @@ interface ClmPnlTransaction {
   token1Amount: BigNumber;
 }
 
-export class clmPnl {
+export class ClmPnl {
   private state: ClmPnlState;
 
   constructor() {

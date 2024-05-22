@@ -1,6 +1,6 @@
-import { memo, useMemo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
-import { Card, CardTitle, CardHeader, CardContent } from '../Card';
+import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { useTranslation } from 'react-i18next';
 import { StatSwitcher } from '../StatSwitcher';
 import { styles } from './styles';
@@ -13,7 +13,7 @@ import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
 import { selectHasDataToShowGraphByVaultId } from '../../../data/selectors/analytics';
 import { CLMOverviewGraph } from './components/OverviewGraph';
 import { useVaultPeriods } from './components/OverviewGraph/hooks';
-import { BasicTabs } from '../../../../components/Tabs/BasicTabs';
+import { Footer } from './components/Footer';
 
 const useStyles = makeStyles(styles);
 
@@ -51,16 +51,13 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
   const [stat, setStat] = useState<string>('Overview');
   const { t } = useTranslation();
   const classes = useStyles();
-
   const options = useMemo(() => {
     return {
       Overview: t('Graph-Overview'),
       Fees: t('Graph-Fees'),
     };
   }, [t]);
-
   const labels = useVaultPeriods(vaultId, address);
-
   const [period, setPeriod] = useState<number>(labels.length - 1);
 
   return (
@@ -74,22 +71,29 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
         <div className={classes.graphContainer}>
           <CLMOverviewGraph period={period} address={address} vaultId={vaultId} />
         </div>
-        <div className={classes.footer}>
-          <div className={classes.legendContainer}>
-            <div className={classes.usdReferenceLine} />
-            {t('Position Value')}
-          </div>
-          <div className={classes.tabsContainer}>
-            <BasicTabs
-              onChange={(newValue: number) => {
-                setPeriod(newValue);
-              }}
-              labels={labels}
-              value={period}
-            />
-          </div>
-        </div>
+        <Footer labels={labels} vaultId={vaultId} period={period} handlePeriod={setPeriod} />
       </CardContent>
     </Card>
   );
 });
+
+export const DashboardCowcentratedPnLGraph = memo<CowcentratedPnlGraphProps>(
+  function DashboardCowcentratedPnLGraph({ vaultId, address }) {
+    const classes = useStyles();
+    const labels = useVaultPeriods(vaultId, address);
+    const [period, setPeriod] = useState<number>(labels.length - 1);
+
+    return (
+      <div className={classes.dashboardPnlContainer}>
+        <CLMOverviewGraph address={address} period={period} vaultId={vaultId} />
+        <Footer
+          tabsClassName={classes.tabsDashboard}
+          labels={labels}
+          vaultId={vaultId}
+          period={period}
+          handlePeriod={setPeriod}
+        />
+      </div>
+    );
+  }
+);

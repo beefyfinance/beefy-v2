@@ -5,7 +5,7 @@ import type { TokenErc20, TokenEntity } from '../entities/token';
 import { isTokenErc20 } from '../entities/token';
 import type { VaultCowcentrated, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
-  isCowcentratedLiquidityVault,
+  isCowcentratedVault,
   isGovVault,
   isStandardVault,
   isVaultPaused,
@@ -57,7 +57,7 @@ export const selectIsVaultRetired = createCachedSelector(
 
 export const selectIsVaultCowcentrated = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
-  vault => isCowcentratedLiquidityVault(vault)
+  vault => isCowcentratedVault(vault)
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectIsVaultGov = createCachedSelector(
@@ -96,7 +96,7 @@ export const selectCowVaultById = (
   vaultId: VaultEntity['id']
 ): VaultCowcentrated => {
   const vault = selectVaultById(state, vaultId);
-  if (!isCowcentratedLiquidityVault(vault)) {
+  if (!isCowcentratedVault(vault)) {
     throw new Error(`selectCowVaultById: Vault ${vaultId} is not a cowcentrated vault`);
   }
   return vault;

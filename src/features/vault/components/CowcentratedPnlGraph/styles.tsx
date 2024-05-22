@@ -30,19 +30,7 @@ export const styles = (theme: Theme) => ({
   graphContainer: {
     backgroundColor: theme.palette.background.contentPrimary,
   },
-  footer: {
-    display: 'flex',
-    flexWrap: 'nowrap' as const,
-    gap: '16px',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '12px 24px',
-    borderRadius: '0px 0px 12px 12px',
-    backgroundColor: theme.palette.background.contentPrimary,
-    [theme.breakpoints.down('sm')]: {
-      padding: '8px 16px',
-    },
-  },
+
   graph: {
     '& text': {
       ...theme.typography['subline-sm'],
@@ -63,32 +51,16 @@ export const styles = (theme: Theme) => ({
       },
     },
   },
-  legendContainer: {
-    ...theme.typography['body-lg-med'],
-    textTransform: 'uppercase' as const,
-    letterSpacing: '0.5px',
-    color: theme.palette.text.dark,
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-  },
-  usdReferenceLine: {
-    height: '2px',
-    width: '12px',
-    backgroundColor: '#606FCF',
-    borderRadius: '4px',
-  },
-  tabsContainer: {
-    '& .MuiTabs-root': {
-      minHeight: '24px',
+  dashboardPnlContainer: {
+    backgroundColor: theme.palette.background.contentPrimary,
+    borderRadius: '12px',
+    [theme.breakpoints.down('sm')]: {
+      borderRadius: '0px',
     },
+  },
+  tabsDashboard: {
     '& .MuiTab-root': {
-      ...theme.typography['subline-lg'],
-      minHeight: '22px',
-      padding: '0px',
-    },
-    '& .MuiTabs-flexContainer': {
-      gap: '12px',
+      ...theme.typography['subline-sm'],
     },
   },
 });
