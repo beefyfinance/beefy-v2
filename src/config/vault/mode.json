@@ -34,7 +34,8 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ]
+    ],
+    "earningPoints": true
   },
   {
     "id": "velodrome-mode-ezeth-eth",
@@ -71,7 +72,8 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ]
+    ],
+    "earningPoints": true
   },
   {
     "id": "velodrome-mode-usdt-usdc",
