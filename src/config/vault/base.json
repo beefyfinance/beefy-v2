@@ -132,6 +132,42 @@
     ]
   },
   {
+    "id": "aerodrome-dola-rgusd",
+    "name": "DOLA-rgUSD sLP",
+    "type": "standard",
+    "token": "sAMM-DOLA/rgUSD",
+    "tokenAddress": "0xBA15D0494fE4f0cAECD7730F6D77BeB6DD0feca9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroDOLA-rgUSD",
+    "earnedTokenAddress": "0xE7A8955c4D8FC271bf9b51ad7dC4c665b199C2B3",
+    "earnContractAddress": "0xE7A8955c4D8FC271bf9b51ad7dC4c665b199C2B3",
+    "oracle": "lps",
+    "oracleId": "aerodrome-dola-rgusd",
+    "status": "active",
+    "createdAt": 1716446393,
+    "platformId": "aerodrome",
+    "assets": ["DOLA", "rgUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4621b7A9c75199271F773Ebd9A499dbd165c3191&token1=0x8E5E9DF4F0EA39aE5270e79bbABFCc34203A3470&type=0",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-usdc-rgusd",
     "name": "rgUSD-USDC sLP",
     "type": "standard",
