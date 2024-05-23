@@ -1,5 +1,44 @@
 [
   {
+    "id": "curve-poly-asdcrv",
+    "name": "CRV/asdCRV",
+    "token": "asdCRVCRV-f",
+    "tokenAddress": "0x7101308DAF4E16c822083A458dC9395039c08f2D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveAsdCRV",
+    "earnedTokenAddress": "0x5d57B68f8BaF06A88AD88B751702ac7f2aCb357d",
+    "earnContractAddress": "0x5d57B68f8BaF06A88AD88B751702ac7f2aCb357d",
+    "oracle": "lps",
+    "oracleId": "curve-poly-asdcrv",
+    "status": "active",
+    "createdAt": 1716455129,
+    "platformId": "convex",
+    "assets": ["CRV", "asdCRV"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-210/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-210/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x5D8c2b31e80a35E211D51e62B1c7FB70322cbf25",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x5D8c2b31e80a35E211D51e62B1c7FB70322cbf25",
+            "coins": [
+              "0x172370d5Cd63279eFa6d502DAB29171933a610AF",
+              "0x75289388d50364c3013583d97bd70cED0e183e32"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "quick-gamma-wmatic-nativeusdc-narrow",
     "name": "USDC-MATIC Narrow LP",
     "type": "standard",
