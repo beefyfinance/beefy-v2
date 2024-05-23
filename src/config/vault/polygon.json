@@ -436,7 +436,7 @@
     "createdAt": 1698862190,
     "updatedAt": 1714127710,
     "platformId": "gamma",
-    "assets": ["QUICK", "MATIC"],
+    "assets": ["newQUICK", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-quick-narrow",
@@ -465,6 +465,7 @@
     "oracleId": "quick-gamma-link-weth",
     "status": "active",
     "createdAt": 1698862190,
+    "updatedAt": 1716216604,
     "platformId": "gamma",
     "assets": ["oldLINK", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -476,7 +477,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0x558BDe303ae5C36536B0FB60D9311B2354B4411F"
       }
     ]
   },
@@ -495,6 +496,7 @@
     "oracleId": "quick-gamma-weth-aave",
     "status": "active",
     "createdAt": 1698862190,
+    "updatedAt": 1716216604,
     "platformId": "gamma",
     "assets": ["AAVE", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -506,7 +508,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0xCc8F6eE92BA32B926fBDa053333F4dE45842A4A6"
       }
     ]
   },
@@ -1400,6 +1402,7 @@
     "oracleId": "quick-gamma-wbtc-usdc-narrow",
     "status": "active",
     "createdAt": 1686917465,
+    "updatedAt": 1716216604,
     "platformId": "gamma",
     "assets": ["WBTC", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1411,7 +1414,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0xD4a88FDBdd57c465E125c0021b40f58eb86aA13E"
       }
     ]
   },
@@ -1430,6 +1433,7 @@
     "oracleId": "quick-gamma-wbtc-weth-narrow",
     "status": "active",
     "createdAt": 1686917465,
+    "updatedAt": 1716216604,
     "platformId": "gamma",
     "assets": ["WBTC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1441,7 +1445,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0xf68A6697831FBA78f25CdFb1394b858fEd6F3659"
       }
     ]
   },
@@ -1492,6 +1496,7 @@
     "oracleId": "quick-gamma-usdc-weth-narrow",
     "status": "active",
     "createdAt": 1686917465,
+    "updatedAt": 1716216604,
     "platformId": "gamma",
     "assets": ["ETH", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1503,7 +1508,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0x63E495D7e87CF451d986D6E03015cD78b0CaEeda"
       }
     ]
   },
@@ -1677,6 +1682,7 @@
     "oracleId": "quick-gamma-wmatic-usdc-narrow",
     "status": "active",
     "createdAt": 1686917464,
+    "updatedAt": 1716216604,
     "platformId": "gamma",
     "assets": ["MATIC", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1688,7 +1694,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0x24E4538ED0AC083a870828236DAa2c0F95ae6b30"
       }
     ]
   },
@@ -1799,6 +1805,7 @@
     "oracleId": "quick-gamma-wmatic-weth-narrow",
     "status": "active",
     "createdAt": 1686878623,
+    "updatedAt": 1716216604,
     "platformId": "gamma",
     "assets": ["MATIC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1810,7 +1817,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0x14bcD2bC6e516fa296636a55d1cc24fa89Cbc5B1"
       }
     ]
   },
