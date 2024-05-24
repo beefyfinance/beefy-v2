@@ -20,7 +20,6 @@
     "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-10/vault/deposit",
     "removeLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-10/vault/withdraw",
-    "earningPoints": true,
     "network": "ethereum"
   },
   {
