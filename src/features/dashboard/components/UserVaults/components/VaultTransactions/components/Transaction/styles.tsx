@@ -67,4 +67,31 @@ export const styles = (theme: Theme) => ({
       height: '16px',
     },
   },
+  cowcentratedTokenAmounts: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '4px',
+  },
+  tokenIconAmount: {
+    ...theme.typography['body-lg-med'],
+    color: theme.palette.text.middle,
+    display: 'flex',
+    gap: '4px',
+    alignItems: 'center',
+  },
+  tokenIcon: {
+    flex: '0 0 auto',
+  },
+  tokenAmount: {
+    flex: '1 1 50%',
+  },
+  tokenIconAmountMobile: {
+    ...theme.typography['body-sm'],
+  },
+  tokenIconAmountPositive: {
+    color: theme.palette.primary.main,
+  },
+  tokenIconAmountNegative: {
+    color: theme.palette.background.indicators.error,
+  },
 });

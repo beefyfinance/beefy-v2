@@ -29,7 +29,11 @@ import {
 import { RetirePauseReason } from '../../../RetirePauseReason';
 import { TokenAmount, TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
 import zapIcon from '../../../../../../images/icons/zap.svg';
-import { isCowcentratedVault, type VaultCowcentrated } from '../../../../../data/entities/vault';
+import {
+  isCowcentratedVault,
+  isVaultActive,
+  type VaultCowcentrated,
+} from '../../../../../data/entities/vault';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
@@ -88,7 +92,7 @@ export const DepositFormLoader = memo(function DepositFormLoader() {
 
   return (
     <div className={classes.container}>
-      {vault.status !== 'active' ? (
+      {!isVaultActive(vault) ? (
         <RetirePauseReason vaultId={vaultId} />
       ) : isLoading ? (
         <LoadingIndicator text={t('Transact-Loading')} />

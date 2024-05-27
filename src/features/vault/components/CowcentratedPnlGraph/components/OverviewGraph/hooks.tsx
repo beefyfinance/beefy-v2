@@ -7,7 +7,7 @@ import {
   selectUnderlyingToUsdTimebucketByVaultId,
   selectUserDepositedTimelineByVaultId,
 } from '../../../../../data/selectors/analytics';
-import { selectUserBalanceOfTokensIncludingBoostsBridged } from '../../../../../data/selectors/balance';
+import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../../../data/selectors/balance';
 import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet';
@@ -37,13 +37,7 @@ export const usePnLChartData = (
     selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const currentMooTokenBalance = useAppSelector(state =>
-    selectUserBalanceOfTokensIncludingBoostsBridged(
-      state,
-      vault.id,
-      vault.chainId,
-      vault.earnContractAddress,
-      walletAddress
-    )
+    selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vault.id, walletAddress)
   );
   const vaultLastDeposit = useAppSelector(state =>
     selectLastVaultDepositStart(state, vaultId, walletAddress)

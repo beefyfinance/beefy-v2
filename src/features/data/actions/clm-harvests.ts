@@ -1,17 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { type VaultEntity } from '../entities/vault';
 import type { BeefyState } from '../../../redux-types';
-import {
-  selectClmTokens,
-  selectVaultById,
-  selectVaultStrategyAddressOrUndefined,
-} from '../selectors/vaults';
+import { selectVaultById, selectVaultStrategyAddressOrUndefined } from '../selectors/vaults';
 import { getClmApi } from '../apis/instances';
 import type {
   ApiClmHarvestPriceRow,
   ClmPendingRewardsResponse,
 } from '../apis/clm-api/clm-api-types';
 import type { ChainEntity } from '../entities/chain';
+import { selectCowcentratedVaultDepositTokens } from '../selectors/tokens';
 
 interface FetchClmHarvestsFulfilledAction {
   data: ApiClmHarvestPriceRow[];
@@ -47,7 +44,7 @@ export const fetchClmPendingRewards = createAsyncThunk<
 
   const { chainId, earnContractAddress: vaultAddress } = vault;
 
-  const { token0, token1 } = selectClmTokens(state, vaultId);
+  const { token0, token1 } = selectCowcentratedVaultDepositTokens(state, vaultId);
 
   const stratAddr = selectVaultStrategyAddressOrUndefined(state, vaultId);
   const api = await getClmApi();
