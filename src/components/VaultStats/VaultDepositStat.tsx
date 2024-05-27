@@ -1,14 +1,13 @@
 import type { VaultEntity } from '../../features/data/entities/vault';
-import { isGovVault, isStandardVault } from '../../features/data/entities/vault';
+import { isStandardVault } from '../../features/data/entities/vault';
 import { memo, type ReactNode } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import {
-  selectGovVaultUserStakedBalanceInDepositToken,
-  selectStandardVaultUserBalanceInDepositTokenExcludingBoostsBridged,
-  selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged,
-  selectUserVaultDepositInUsd,
+  selectUserVaultBalanceInUsdIncludingBoostsBridged,
+  selectUserVaultBalanceInDepositToken,
+  selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
 } from '../../features/data/selectors/balance';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
 import {
@@ -52,10 +51,7 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDeposit
     };
   }
 
-  // deposit can be moo or oracle
-  const deposit = isGovVault(vault)
-    ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
-    : selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(state, vault.id);
+  const deposit = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(state, vault.id);
 
   if (!deposit.gt(0)) {
     return {
@@ -70,15 +66,14 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDeposit
 
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const totalDeposited = formatTokenDisplayCondensed(deposit, depositToken.decimals, 6);
-  const totalDepositedUsd = formatLargeUsd(selectUserVaultDepositInUsd(state, vaultId));
+  const totalDepositedUsd = formatLargeUsd(
+    selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vaultId)
+  );
 
   // if bridged, or boosted, add tooltip
   let tooltip: ReactNode | undefined;
   if (isStandardVault(vault)) {
-    const onlyVaultDeposit = selectStandardVaultUserBalanceInDepositTokenExcludingBoostsBridged(
-      state,
-      vault.id
-    );
+    const onlyVaultDeposit = selectUserVaultBalanceInDepositToken(state, vault.id);
     if (onlyVaultDeposit.lt(deposit)) {
       tooltip = <VaultDepositedTooltip vaultId={vault.id} />;
     }

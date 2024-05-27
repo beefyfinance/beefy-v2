@@ -8,7 +8,7 @@ import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectIsAddressBookLoaded } from './data-loader';
 import type { VaultEntity } from '../entities/vault';
 import { createCachedSelector } from 're-reselect';
-import { selectVaultById } from './vaults';
+import { selectCowcentratedVaultById, selectVaultById } from './vaults';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import {
   selectHistoricalPriceBucketData,
@@ -403,5 +403,23 @@ export const selectCurrentCowcentratedRangesByVaultId = (
       priceRangeMax: BIG_ZERO,
       priceRangeMin: BIG_ZERO,
     }
+  );
+};
+
+export const selectCowcentratedVaultDepositTokens = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): [TokenEntity, TokenEntity] => {
+  const vault = selectCowcentratedVaultById(state, vaultId);
+  const tokens = vault.depositTokenAddresses.map(address =>
+    selectTokenByAddress(state, vault.chainId, address)
+  );
+
+  if (tokens.length === 2) {
+    return [tokens[0], tokens[1]];
+  }
+
+  throw new Error(
+    `selectCowcentratedVaultDepositTokens: Vault ${vaultId} does not have 2 token addresses`
   );
 };

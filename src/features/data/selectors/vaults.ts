@@ -66,8 +66,8 @@ export const selectIsVaultGov = createCachedSelector(
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectCowcentratedVaultDepositTokenAddresses = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
-  vault => (vault as VaultCowcentrated).depositTokenAddresses
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectCowcentratedVaultById(state, vaultId),
+  vault => vault.depositTokenAddresses
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectVaultExistsById = createSelector(
@@ -91,13 +91,13 @@ export const selectGovVaultById = (state: BeefyState, vaultId: VaultEntity['id']
   return vault;
 };
 
-export const selectCowVaultById = (
+export const selectCowcentratedVaultById = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ): VaultCowcentrated => {
   const vault = selectVaultById(state, vaultId);
   if (!isCowcentratedVault(vault)) {
-    throw new Error(`selectCowVaultById: Vault ${vaultId} is not a cowcentrated vault`);
+    throw new Error(`selectCowcentratedVaultById: Vault ${vaultId} is not a cowcentrated vault`);
   }
   return vault;
 };
@@ -105,11 +105,22 @@ export const selectCowVaultById = (
 export const selectStandardVaultById = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   standardVault => {
-    // if (!isStandardVault(standardVault)) {
-    if (isGovVault(standardVault)) {
+    if (!isStandardVault(standardVault)) {
       throw new Error(`selectStandardVaultById: Vault ${standardVault.id} is not a standard vault`);
     }
     return standardVault;
+  }
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectStandardOrCowcentratedVaultById = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  vault => {
+    if (!isStandardVault(vault) && !isCowcentratedVault(vault)) {
+      throw new Error(
+        `selectStandardOrCowcentratedVaultById: Vault ${vault.id} is not a standard or cowcentrated vault`
+      );
+    }
+    return vault;
   }
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
