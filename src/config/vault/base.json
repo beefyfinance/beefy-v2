@@ -132,6 +132,42 @@
     ]
   },
   {
+    "id": "aerodrome-dola-rgusd",
+    "name": "DOLA-rgUSD sLP",
+    "type": "standard",
+    "token": "sAMM-DOLA/rgUSD",
+    "tokenAddress": "0xBA15D0494fE4f0cAECD7730F6D77BeB6DD0feca9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroDOLA-rgUSD",
+    "earnedTokenAddress": "0xE7A8955c4D8FC271bf9b51ad7dC4c665b199C2B3",
+    "earnContractAddress": "0xE7A8955c4D8FC271bf9b51ad7dC4c665b199C2B3",
+    "oracle": "lps",
+    "oracleId": "aerodrome-dola-rgusd",
+    "status": "active",
+    "createdAt": 1716446393,
+    "platformId": "aerodrome",
+    "assets": ["DOLA", "rgUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4621b7A9c75199271F773Ebd9A499dbd165c3191&token1=0x8E5E9DF4F0EA39aE5270e79bbABFCc34203A3470&type=0",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-usdc-rgusd",
     "name": "rgUSD-USDC sLP",
     "type": "standard",
@@ -298,7 +334,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376&token1=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376&token1=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -372,7 +408,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x368181499736d0c0cc614dbb145e2ec1ac86b8c6&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x368181499736d0c0cc614dbb145e2ec1ac86b8c6&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -575,7 +611,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&token1=0x417ac0e078398c154edfadd9ef675d30be60af93&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&token1=0x417ac0e078398c154edfadd9ef675d30be60af93&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -1433,7 +1469,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x2416092f143378750bb29b79ed961ab195cceea5&token1=0x4200000000000000000000000000000000000006&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x2416092f143378750bb29b79ed961ab195cceea5&token1=0x4200000000000000000000000000000000000006&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "earningPoints": true,
@@ -1483,6 +1519,42 @@
     }
   },
   {
+    "id": "aerodrome-weth-l2ve",
+    "name": "L2VE-ETH vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/L2VE",
+    "tokenAddress": "0x253Da544f498b85429F6ACDc6E98B36b36c1C824",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroL2VE-ETH",
+    "earnedTokenAddress": "0xE0927cfb0F281Ae086fcd93DAd49F6e9dD318Aef",
+    "earnContractAddress": "0xE0927cfb0F281Ae086fcd93DAd49F6e9dD318Aef",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-l2ve",
+    "status": "active",
+    "createdAt": 1716325841,
+    "platformId": "aerodrome",
+    "assets": ["L2VE", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xA19328fb05ce6FD204D16c2a2A98F7CF434c12F4&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-doginme",
     "name": "doginme-ETH vLP",
     "type": "standard",
@@ -1501,7 +1573,7 @@
     "assets": ["doginme", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x6921b130d297cc43754afba22e5eac0fbf8db75b&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x6921b130d297cc43754afba22e5eac0fbf8db75b&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -1530,7 +1602,7 @@
     "assets": ["SNX", "USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x22e6966B799c4D5B13BE962E1D117b56327FDa66&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x22e6966B799c4D5B13BE962E1D117b56327FDa66&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -1566,7 +1638,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b&token1=0x26f3901aC8a79c50fb0d8289C74f0d09AdC42E29&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b&token1=0x26f3901aC8a79c50fb0d8289C74f0d09AdC42E29&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -1602,7 +1674,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -1633,7 +1705,7 @@
     "assets": ["axlOP", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x994ac01750047b9d35431a7ae4ed312ee955e030&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x994ac01750047b9d35431a7ae4ed312ee955e030&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw?pair=0x6a071315B5Ae7da81CA56901ff13893F84776c7B",
     "network": "base",
     "zaps": [
@@ -1662,7 +1734,7 @@
     "assets": ["DOG", "AERO"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x940181a94a35a4569e4529a3cdfb74e38fd98631&token1=0x9e53e88dcff56d3062510a745952dec4cefdff9e&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x940181a94a35a4569e4529a3cdfb74e38fd98631&token1=0x9e53e88dcff56d3062510a745952dec4cefdff9e&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -1691,7 +1763,7 @@
     "assets": ["DOG", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x9e53e88dcff56d3062510a745952dec4cefdff9e&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x9e53e88dcff56d3062510a745952dec4cefdff9e&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -1720,7 +1792,7 @@
     "assets": ["TYBG", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aero.drome.eth.limo/deposit?token0=0x0d97f261b1e88845184f678e2d1e7a98d9fd38de&token1=0x4200000000000000000000000000000000000006&stable=false",
+    "addLiquidityUrl": "https://aero.drome.eth.limo/deposit?token0=0x0d97f261b1e88845184f678e2d1e7a98d9fd38de&token1=0x4200000000000000000000000000000000000006&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -1749,7 +1821,7 @@
     "assets": ["ETH", "bsdETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xCb327b99fF831bF8223cCEd12B1338FF3aA322Ff&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xCb327b99fF831bF8223cCEd12B1338FF3aA322Ff&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "earningPoints": true,
@@ -1786,7 +1858,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&token1=eth&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&token1=eth&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -1822,7 +1894,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": " https://aerodrome.finance/deposit?token0=0xbf1aeA8670D2528E08334083616dD9C5F3B087aE&token1=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&stable=true",
+    "addLiquidityUrl": " https://aerodrome.finance/deposit?token0=0xbf1aeA8670D2528E08334083616dD9C5F3B087aE&token1=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -1858,7 +1930,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": " https://aerodrome.finance/deposit?token0=0x85483696cc9970ad9edd786b2c5ef735f38d156f&token1=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&stable=true",
+    "addLiquidityUrl": " https://aerodrome.finance/deposit?token0=0x85483696cc9970ad9edd786b2c5ef735f38d156f&token1=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -1887,7 +1959,7 @@
     "assets": ["tBTC", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x236aa50979d5f3de3bd1eeb40e81137f22ab794b&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x236aa50979d5f3de3bd1eeb40e81137f22ab794b&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -1916,7 +1988,7 @@
     "assets": ["USDC", "AERO"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&token1=0x940181a94a35a4569e4529a3cdfb74e38fd98631&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&token1=0x940181a94a35a4569e4529a3cdfb74e38fd98631&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -1999,7 +2071,7 @@
     "assets": ["SONNE", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x22a2488fe295047ba13bd8cccdbc8361dbd8cf7c&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x22a2488fe295047ba13bd8cccdbc8361dbd8cf7c&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -2034,7 +2106,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -2062,7 +2134,7 @@
     "assets": ["ETH", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -2090,7 +2162,7 @@
     "assets": ["DAI", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -2118,7 +2190,7 @@
     "assets": ["USDC", "eUSD"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&token1=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&token1=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -2146,7 +2218,7 @@
     "assets": ["USDC", "MAI"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&token1=0xbf1aeA8670D2528E08334083616dD9C5F3B087aE&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&token1=0xbf1aeA8670D2528E08334083616dD9C5F3B087aE&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -2174,7 +2246,7 @@
     "assets": ["DOLA", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4621b7a9c75199271f773ebd9a499dbd165c3191&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4621b7a9c75199271f773ebd9a499dbd165c3191&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -2451,7 +2523,7 @@
     "assets": ["ETH", "axlUSDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xeb466342c4d449bc9f53a865d5cb90586f405215&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xeb466342c4d449bc9f53a865d5cb90586f405215&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -2480,7 +2552,7 @@
     "assets": ["AERO", "wstETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x940181a94A35A4569E4529A3CDfB74e38FD98631&token1=0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x940181a94A35A4569E4529A3CDfB74e38FD98631&token1=0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -2509,7 +2581,7 @@
     "assets": ["ETH", "wstETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -2581,7 +2653,7 @@
     "assets": ["hyUSD", "eUSD"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xCc7FF230365bD730eE4B352cC2492CEdAC49383e&token1=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xCc7FF230365bD730eE4B352cC2492CEdAC49383e&token1=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -2610,7 +2682,7 @@
     "assets": ["eUSD", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -2958,7 +3030,7 @@
     "assets": ["OVN", "USD+"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xa3d1a8deb97b111454b294e2324efad13a9d8396&token1=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xa3d1a8deb97b111454b294e2324efad13a9d8396&token1=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -3236,7 +3308,7 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://aerodrome.finance/swap?from=0x4621b7a9c75199271f773ebd9a499dbd165c3191&to=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4621b7a9c75199271f773ebd9a499dbd165c3191&token1=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4621b7a9c75199271f773ebd9a499dbd165c3191&token1=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -3265,7 +3337,7 @@
     "assets": ["USDC", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/connect?token0=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/connect?token0=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -3294,7 +3366,7 @@
     "assets": ["WETH", "DAI"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/connect?token0=0x4200000000000000000000000000000000000006&token1=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/connect?token0=0x4200000000000000000000000000000000000006&token1=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -3643,7 +3715,7 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://aerodrome.finance/swap?from=0x4621b7a9c75199271f773ebd9a499dbd165c3191&to=0xbf1aea8670d2528e08334083616dd9c5f3b087ae",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xbf1aea8670d2528e08334083616dd9c5f3b087ae&token1=0x4621b7a9c75199271f773ebd9a499dbd165c3191&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xbf1aea8670d2528e08334083616dd9c5f3b087ae&token1=0x4621b7a9c75199271f773ebd9a499dbd165c3191&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -3672,7 +3744,7 @@
     "assets": ["WELL", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/connect?token0=0x4200000000000000000000000000000000000006&token1=0xFF8adeC2221f9f4D8dfbAFa6B9a297d17603493D&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/connect?token0=0x4200000000000000000000000000000000000006&token1=0xFF8adeC2221f9f4D8dfbAFa6B9a297d17603493D&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -3701,7 +3773,7 @@
     "assets": ["AERO", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x940181a94a35a4569e4529a3cdfb74e38fd98631&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x940181a94a35a4569e4529a3cdfb74e38fd98631&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -3737,7 +3809,7 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xb79dd08ea68a908a97220c76d19a6aa9cbde4376&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -3766,7 +3838,7 @@
     "assets": ["SONNE", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x22a2488fE295047Ba13BD8cCCdBC8361DBD8cf7c&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x22a2488fE295047Ba13BD8cCCdBC8361DBD8cf7c&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -3799,7 +3871,7 @@
     "assets": ["THALES", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&token1=0xf34e0cff046e154CAfCae502C7541b9E5FD8C249&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&token1=0xf34e0cff046e154CAfCae502C7541b9E5FD8C249&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -3830,7 +3902,7 @@
     "assets": ["UNIDX", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x6B4712AE9797C199edd44F897cA09BC57628a1CF&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x6B4712AE9797C199edd44F897cA09BC57628a1CF&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -3859,7 +3931,7 @@
     "assets": ["THALES", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xf34e0cff046e154CAfCae502C7541b9E5FD8C249&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xf34e0cff046e154CAfCae502C7541b9E5FD8C249&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -3895,7 +3967,7 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xA61BeB4A3d02decb01039e378237032B351125B4&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xA61BeB4A3d02decb01039e378237032B351125B4&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -3925,7 +3997,7 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://aerodrome.finance/swap?from=0x940181a94a35a4569e4529a3cdfb74e38fd98631&to=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x940181a94a35a4569e4529a3cdfb74e38fd98631&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x940181a94a35a4569e4529a3cdfb74e38fd98631&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -3954,7 +4026,7 @@
     "assets": ["MAI", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xbf1aea8670d2528e08334083616dd9c5f3b087ae&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xbf1aea8670d2528e08334083616dd9c5f3b087ae&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -3983,7 +4055,7 @@
     "assets": ["tBTC", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -4012,7 +4084,7 @@
     "assets": ["tBTC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b&token1=0x4200000000000000000000000000000000000006&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b&token1=0x4200000000000000000000000000000000000006&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -4048,7 +4120,7 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x65a2508C429a6078a7BC2f7dF81aB575BD9D9275&token1=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x65a2508C429a6078a7BC2f7dF81aB575BD9D9275&token1=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -4077,7 +4149,7 @@
     "assets": ["cbETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x2ae3f1ec7f1f5012cfeab0185bfc7aa3cf0dec22&token1=0x4200000000000000000000000000000000000006&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x2ae3f1ec7f1f5012cfeab0185bfc7aa3cf0dec22&token1=0x4200000000000000000000000000000000000006&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -4106,7 +4178,7 @@
     "assets": ["DOLA", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4621b7a9c75199271f773ebd9a499dbd165c3191&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4621b7a9c75199271f773ebd9a499dbd165c3191&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -4135,7 +4207,7 @@
     "assets": ["ETH", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -4164,7 +4236,7 @@
     "assets": ["DAI", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x50c5725949a6f0c72e6c4a641f24049a917db0cb&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=true",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x50c5725949a6f0c72e6c4a641f24049a917db0cb&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -4193,7 +4265,7 @@
     "assets": ["wUSDR", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x9483ab65847a447e36d21af1cab8c87e9712ff93&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&stable=false",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x9483ab65847a447e36d21af1cab8c87e9712ff93&token1=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -4345,9 +4417,8 @@
     "earnContractAddress": "0xE6345a32eBF5e36a8FCc13610967127a67d077eF",
     "oracle": "lps",
     "oracleId": "alienbase-dai-usdbc",
-    "status": "eol",
-    "retireReason": "tvl",
-    "retiredAt": 1709759896,
+    "status": "active",
+    "updatedAt": 1716417830,
     "createdAt": 1692384702,
     "platformId": "alienbase",
     "assets": ["DAI", "USDbC"],
@@ -4436,9 +4507,8 @@
     "earnContractAddress": "0x1E8Be52feFa2131CE60889FB0E7438c340D4b7f4",
     "oracle": "lps",
     "oracleId": "alienbase-dai+-usd+",
-    "status": "eol",
-    "retireReason": "rewards",
-    "retiredAt": 1708974810,
+    "status": "active",
+    "updatedAt": 1716417830,
     "createdAt": 1692128324,
     "platformId": "alienbase",
     "assets": ["DAI+", "USD+"],

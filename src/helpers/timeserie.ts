@@ -200,7 +200,6 @@ export function getClmInvestorTimeserie(
       ) {
         balanceIdx++;
       }
-      // find the corresponding shares row
 
       // find the corresponding underlying row
       while (

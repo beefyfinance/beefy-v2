@@ -40,6 +40,7 @@ export type UserClmPnl = {
   pnl: BigNumber;
   pnlPercentage: BigNumber;
   hold: BigNumber;
+  holdDiff: BigNumber;
 };
 
 export type UserVaultPnl = UserStandardPnl | UserGovPnl | UserClmPnl;

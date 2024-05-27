@@ -211,6 +211,7 @@ export const selectClmPnl = (
     pnl: positionPnl,
     pnlPercentage: positionPnl.dividedBy(oraclePriceAtDeposit),
     hold,
+    holdDiff: sharesNowToUsd.minus(hold),
   };
 };
 
