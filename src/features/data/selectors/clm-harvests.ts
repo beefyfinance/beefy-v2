@@ -124,7 +124,7 @@ export const selectClmAutocompundedFeesByVaultAddress = (
     token1Symbol,
     token0Decimals,
     token1Decimals,
-    totalAutocompouned: token0AccruedRewards.plus(token1AccruedRewards),
+    totalAutocompouned: token0AccruedRewardsToUsd.plus(token1AccruedRewardsToUsd),
     totalPending: pendingRewards0ToUsd.plus(pendingRewards1ToUsd),
   };
 };
