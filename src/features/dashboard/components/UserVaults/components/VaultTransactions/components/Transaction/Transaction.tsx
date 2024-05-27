@@ -69,7 +69,7 @@ const CowcentratedAmountStat = memo<TransactionStatProps<CLMTimelineAnalyticsEnt
   function CowcentratedAmountStat({ tx, mobile }) {
     const classes = useStyles();
     const { underlying0Diff, underlying1Diff } = tx;
-    const [token0, token1] = useAppSelector(state =>
+    const { token0, token1 } = useAppSelector(state =>
       selectCowcentratedVaultDepositTokens(state, tx.vaultId)
     );
     const variant0 = underlying0Diff.isZero()
@@ -156,7 +156,7 @@ const CowcentratedBalanceStat = memo<TransactionStatProps<CLMTimelineAnalyticsEn
   function CowcentratedBalanceStat({ tx, mobile }) {
     const classes = useStyles();
     const { underlying0Balance, underlying1Balance } = tx;
-    const [token0, token1] = useAppSelector(state =>
+    const { token0, token1 } = useAppSelector(state =>
       selectCowcentratedVaultDepositTokens(state, tx.vaultId)
     );
 

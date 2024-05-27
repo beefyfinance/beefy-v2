@@ -133,7 +133,7 @@ export const fetchHistoricalCowcentratedRanges = createAsyncThunk<
         ? bucket
         : ('1h_1M' as ApiTimeBucket);
     const rawData = await api.getCowcentratedRangesChartData(vaultAddress, bucketToUse, chainId);
-    const [token0, token1] = selectCowcentratedVaultDepositTokens(state, vaultId);
+    const { token0, token1 } = selectCowcentratedVaultDepositTokens(state, vaultId);
 
     const data = rawData.map(item => {
       return {

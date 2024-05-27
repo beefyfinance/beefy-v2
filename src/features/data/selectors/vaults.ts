@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
-import type { TokenErc20, TokenEntity } from '../entities/token';
+import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenErc20 } from '../entities/token';
 import type { VaultCowcentrated, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
@@ -16,9 +16,7 @@ import {
   selectIsBeefyToken,
   selectIsTokenBluechip,
   selectIsTokenStable,
-  selectTokenByAddress,
   selectTokenByIdOrUndefined,
-  selectTokenPriceByAddress,
 } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE } from '../../../helpers/big-number';
@@ -357,42 +355,4 @@ export const selectVaultHasPlatformWithRisks = (
   } else {
     return { risks: false };
   }
-};
-
-export const selectClmTokens = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const vault = selectVaultById(state, vaultId);
-
-  if (!isCowcentratedVault(vault)) {
-    throw new Error(`selectClmTokens: Vault ${vaultId} is not a cowcentrated vault`);
-  }
-  const tokenAddresses = isCowcentratedVault(vault) && vault.depositTokenAddresses;
-
-  const token0 = selectTokenByAddress(state, vault.chainId, tokenAddresses[0]);
-  const token1 = selectTokenByAddress(state, vault.chainId, tokenAddresses[1]);
-
-  return {
-    token0,
-    token1,
-  };
-};
-
-export const selectClmTokenWithPricesByVaultId = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  vaultId: VaultEntity['id']
-) => {
-  const { token1, token0 } = selectClmTokens(state, vaultId);
-  const token0Price = selectTokenPriceByAddress(state, chainId, token0.address);
-  const token1Price = selectTokenPriceByAddress(state, chainId, token1.address);
-
-  return {
-    token0: {
-      ...token0,
-      price: token0Price,
-    },
-    token1: {
-      ...token1,
-      price: token1Price,
-    },
-  };
 };

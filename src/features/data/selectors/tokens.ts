@@ -409,17 +409,33 @@ export const selectCurrentCowcentratedRangesByVaultId = (
 export const selectCowcentratedVaultDepositTokens = (
   state: BeefyState,
   vaultId: VaultEntity['id']
-): [TokenEntity, TokenEntity] => {
+) => {
   const vault = selectCowcentratedVaultById(state, vaultId);
-  const tokens = vault.depositTokenAddresses.map(address =>
-    selectTokenByAddress(state, vault.chainId, address)
-  );
+  const token0 = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddresses[0]);
+  const token1 = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddresses[1]);
 
-  if (tokens.length === 2) {
-    return [tokens[0], tokens[1]];
-  }
+  return {
+    token0,
+    token1,
+  };
+};
 
-  throw new Error(
-    `selectCowcentratedVaultDepositTokens: Vault ${vaultId} does not have 2 token addresses`
-  );
+export const selectCowcentratedVaultDepositTokensWithPrices = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => {
+  const { token1, token0 } = selectCowcentratedVaultDepositTokens(state, vaultId);
+  const token0Price = selectTokenPriceByTokenOracleId(state, token0.oracleId);
+  const token1Price = selectTokenPriceByTokenOracleId(state, token1.oracleId);
+
+  return {
+    token0: {
+      ...token0,
+      price: token0Price,
+    },
+    token1: {
+      ...token1,
+      price: token1Price,
+    },
+  };
 };
