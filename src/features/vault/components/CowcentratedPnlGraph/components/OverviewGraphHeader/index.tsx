@@ -15,13 +15,15 @@ import { Tooltip } from '../../../../../../components/Tooltip';
 import { HelpOutline } from '@material-ui/icons';
 import { styles } from './styles';
 
-interface GraphHeaderProps {
+interface OverviewGraphHeaderProps {
   vaultId: VaultEntity['id'];
 }
 
 const useStyles = makeStyles(styles);
 
-export const GraphHeader = memo<GraphHeaderProps>(function GraphHeader({ vaultId }) {
+export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function OverviewGraphHeader({
+  vaultId,
+}) {
   const classes = useStyles();
 
   const { t } = useTranslation();

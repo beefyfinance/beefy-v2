@@ -39,6 +39,7 @@ import { tooltipsSlice } from './tooltips';
 import { addToWalletSlice } from './add-to-wallet';
 import { articlesSlice } from './articles';
 import { rewardsReducer } from './wallet/rewards';
+import { clmHarvestsSlice } from './clm-harvests';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -55,6 +56,7 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
     { key: 'articles', storage, whitelist: ['lastReadArticleId'] },
     articlesSlice.reducer
   ),
+  harvests: clmHarvestsSlice.reducer,
 });
 const bizReducer = combineReducers<BeefyState['biz']>({
   tvl: tvlSlice.reducer,
